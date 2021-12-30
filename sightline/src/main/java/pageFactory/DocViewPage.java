@@ -2394,7 +2394,7 @@ public class DocViewPage {
 	}
 
      //Added By Vijaya.Rani
-	public Element getDocView_FamilyMemberDocListDoc() {
+	public Element getDocView_DocListPageDocs() {
 		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr/td[3]");
 	}
 	//Added by Aathith
@@ -16793,9 +16793,9 @@ public class DocViewPage {
 		getDocView_Analytics_Thread_ViewDoclist().waitAndClick(15);
 
 		driver.waitForPageToBeReady();
-		base.waitForElement(getDocView_FamilyMemberDocListDoc());
-		if (getDocView_FamilyMemberDocListDoc().Displayed()) {
-			softAssertion.assertTrue(getDocView_FamilyMemberDocListDoc().getWebElement().isDisplayed());
+		base.waitForElement(getDocView_DocListPageDocs());
+		if (getDocView_DocListPageDocs().Displayed()) {
+			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
 			base.passedStep("Selected document is display in Doc List ");
 		} else {
 			base.failedStep("Selected document is not display in Doc List");
@@ -17895,4 +17895,64 @@ public class DocViewPage {
 			
 		}
 	}
+	
+	/**
+	 * @Author Vijaya.Rani Created on 30/12/2021
+	 * @Description perform NearDupe WithOut Select Docs Action ViewInDocList.id-50872
+	 * 
+	 */
+	public void performNearDupeWithOutSelectDocActionViewInDocList() {
+		
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(5);
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(3);
+
+		try {
+			softAssertion.assertEquals(getDocView_NearViewInDoclist().Enabled().booleanValue(), true);
+			base.passedStep("View In Doc List action is disable when document is not selected from NearDupe");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("View In Doc List action is not disable when document is not selected from NearDupe");
+		}
+
+	}
+	
+	/**
+	 * @Author Vijaya.Rani Created on 30/12/2021
+	 * @Description perform NearDupe Select Docs Action ViewInDocList. id-50872
+	 * 
+	 */
+	public void performNearDupeSelectDocsActionViewInDocList() {
+
+		driver.waitForPageToBeReady();
+		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+		driver.waitForPageToBeReady();
+		Point p = getDocView_Analytics_NearDupeTab().getWebElement().getLocation();
+		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(5);
+
+
+		for (int i = 1; i <= 1; i++) {
+			base.waitForElement(getDocView_Analytics_NearDupe_Doc(i));
+			getDocView_Analytics_NearDupe_Doc(i).waitAndClick(5);
+		}
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(3);
+
+		base.waitForElement(getDocView_NearViewInDoclist());
+		getDocView_NearViewInDoclist().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_DocListPageDocs());
+		if (getDocView_DocListPageDocs().Displayed()) {
+			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
+			base.passedStep("Selected document is display in Doc List ");
+		} else {
+			base.failedStep("Selected document is not display in Doc List");
+		}
+
+	} 
 }
