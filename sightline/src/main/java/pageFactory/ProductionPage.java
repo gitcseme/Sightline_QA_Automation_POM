@@ -845,6 +845,28 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element getGenerateLoadFile_TIFF() {
+		return driver.FindElementByXPath("//input[@id='chkTIFFProduceLoadFile']");
+	}
+	public Element getRadioButton_GenerateTIFF() {		
+		return driver.FindElementByXPath("(//input[@id='CommonTIFFSettings_FileType']//following-sibling::i)[1]");
+			}
+	public Element getProductionNameInManageView(String productionName) {
+		return driver.FindElementByXPath("*//span[contains(text(),'" + productionName + "')]");
+	}
+
+	public Element getDeleteBtn(String Templatename) {
+		return driver.FindElementByXPath("//td[text()='" + Templatename + "']/..//td//a[text()='Delete']");
+	}
+
+	public Element getProductionFromHomepage(String productionName) {
+		return driver.FindElementByXPath("//div[@id='cardCanvas']//a[contains(text(),'"+ productionName +"')]");
+	}
+
+	public Element getProductionFromDropDown(String productionset) {
+		return driver
+				.FindElementByXPath("//select[@id='ProductionSets']//option[contains(text(),'" + productionset + "')]");
+	}
 	public Element getValueRedactedDocs() {
 		return driver.FindElementByXPath("//label[contains(text(),'Redacted Documents: ')]//following-sibling::label");
 	}
@@ -9162,6 +9184,102 @@ public class ProductionPage {
 
 		UtilityLog.info("Expected message - " + ExpectedMsg);
 		Reporter.log("Expected message - " + ExpectedMsg, true);
+
+	}
+	
+
+	/**
+	 * @author Sowndarya.velraj
+	 * @Description : Method to save a production as template and verifying it in
+	 *              Manage template tab
+	 * @param productionname : productionname is String value that name of
+	 *                       Production need to select production.
+	 * @throws InterruptedException
+	 */
+	public void saveProductionAsTemplateAndVerifyInManageTemplateTab(String productionname, String templateName)
+			throws InterruptedException {
+
+		base.stepInfo("click on gear icon of the current production");
+		driver.waitForPageToBeReady();
+		
+		getProdname_Gearicon(productionname).waitAndClick(10);
+
+		base.stepInfo("click on save as Template");
+		getprod_Action_SaveTemplate().waitAndClick(10);
+
+		base.waitForElement(getprod_Templatetext());
+		getprod_Templatetext().Click();
+		getprod_Templatetext().SendKeys(templateName);
+
+		getProdExport_SaveButton().waitAndClick(10);
+		base.VerifySuccessMessage("Production Saved as a Custom Template.");
+
+		getManageTemplates().waitAndClick(10);
+
+		getDeleteBtn(templateName).ScrollTo();
+		getDeleteBtn(templateName).isElementAvailable(5);
+		base.stepInfo("Delete option is displayed");
+		
+		getViewBtn(templateName).ScrollTo();
+		getViewBtn(templateName).isElementAvailable(5);
+		base.stepInfo("View option is displayed");
+		getViewBtn(templateName).waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		if (getProductionNameInManageView(templateName).isElementAvailable(5)) {
+			base.passedStep("Production which is saved as template is displayed after selecting view option");
+		}
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void prodGenerationInCompletedStatus(String productionname) throws InterruptedException {
+
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().Click();
+
+		base.stepInfo("Filtering the Completed production");
+
+		base.waitForElement(getFilterByDRAFT());
+		
+		getFilterByDRAFT().waitAndClick(10);
+		base.stepInfo("Filtering avoids draft status production");
+
+		base.waitForElement(getFilterByFAILED());
+		getFilterByFAILED().waitAndClick(10);
+		base.stepInfo("Filtering avoids failed status production");
+
+		base.waitForElement(getFilterByINPROGRESS());
+		getFilterByINPROGRESS().waitAndClick(10);
+		base.stepInfo("Filtering avoids failed status production");
+
+		base.waitForElement(getFilterByCOMPLETED());
+		getFilterByCOMPLETED().waitAndClick(10);
+		base.stepInfo("Filtering avoids completed status production");
+
+		base.waitForElement(getFilterDropDown());
+		getFilterDropDown().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		
+		String completedProd = getProductionFromHomepage(productionname).getText();
+		System.out.println("completed production is:" + completedProd);
+		base.passedStep("Filtered out completed status production only");
+	}
+	/**
+	 * @author Sowndarya.velraj
+	 * @Description : Method to select the created productionset from the dropdown
+	 * @param productionSet : productionSet is String value that name of Production
+	 *                      need to select production.
+	 */
+	public void navigateToProductionPageByNewProductionSet(String productionSet) {
+
+		driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		getOptionExportSet().Click();
+		getProductionFromDropDown(productionSet).waitAndClick(5);
 
 	}
 

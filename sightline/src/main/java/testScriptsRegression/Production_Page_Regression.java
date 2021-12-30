@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -52,6 +53,8 @@ public class Production_Page_Regression {
 	String tagname;
 	String productionname;
 	String batesNumber;
+	String productionSet;
+	String templateName;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -1433,7 +1436,7 @@ public class Production_Page_Regression {
 	 *                 section and document is redacted then selected Metadata
 	 *                 should not be displayed on DAT
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 26)
+	@Test(enabled = false, groups = { " regression" }, priority = 26)
 	public void verifyPDFWithAnnotationLayer() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48502- Production Sprint 08");
@@ -1462,7 +1465,7 @@ public class Production_Page_Regression {
 		page.fillingNativeSection();
 		page.fillingPDFWithRedactedDocumentsInAnnotationLayer();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, null);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
 
 		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
@@ -1476,7 +1479,7 @@ public class Production_Page_Regression {
 	 *                 section and Audio is redacted then selected Metadata should
 	 *                 not be displayed on DATF
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 27)
+	@Test(enabled = false, groups = { " regression" }, priority = 27)
 	public void verifyMP3WithAnnotationLayer() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48503- Production Sprint 08");
@@ -1503,10 +1506,10 @@ public class Production_Page_Regression {
 		baseClass.waitForElement(page.getDATRedactionsCBox());
 		page.getDATRedactionsCBox().waitAndClick(10);
 		page.fillingNativeSection();
-		page.fillingPDFSection();
+//		page.fillingTheTIFFSection();
 		page.fillingMP3();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, null);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
 
 		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
@@ -1514,6 +1517,121 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 	}
 
+	/**
+	 * @author Sowndarya.Velraj created on:12/28/21 TESTCASE No:RPMXCON-47844
+	 * @Description:To Verify the Create/Display of Template with newly created
+	 *                 Project and Production Set.
+	 */ 
+	@Test(enabled = false, groups = { " regression" }, priority = 28)
+	public void createTemplateWithNewProductionSet() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-47844- Production Sprint 08");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		templateName="templateName" + Utility.dynamicNameAppender();
+		productionSet = "productionSet" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		
+		baseClass.stepInfo("Searching for a content and performing bulk folder action");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		baseClass.stepInfo("Navigating to Production Home page and creating new production set");
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.CreateProductionSets(productionSet);
+		page.selectingDefaultSecurityGroup();
+		page.navigateToProductionPageByNewProductionSet(productionSet);
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
+		
+		driver.getWebDriver().get(Input.url + "Production/Home");
+		page.selectingDefaultSecurityGroup();
+		page.navigateToProductionPageByNewProductionSet(productionSet);
+		page.prodGenerationInCompletedStatus(productionname);
+		page.saveProductionAsTemplateAndVerifyInManageTemplateTab(productionname, templateName);
+		
+		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:12/30/21 TESTCASE No:RPMXCON-48322
+	 * @Description:To verify that "Generate Load File" is enabled by default for TIFF components.
+	 */ 
+	@Test(enabled = true, groups = { " regression" }, priority = 29)
+	public void verifyGenerateLoadFileForTIFF() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48322- Production Sprint 09");
+		UtilityLog.info(Input.prodPath);
+		boolean flag;
+		
+		baseClass.stepInfo("Navigating to Production Home page and creating new production set");
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.getTIFFChkBox().waitAndClick(5);
+		page.getTIFFTab().waitAndClick(5);
+		page.getRadioButton_GenerateTIFF().waitAndClick(5);
+		driver.scrollingToBottomofAPage();
+		page.getAdvancedTabInTIFF().waitAndClick(5);
+		flag = page.getGenerateLoadFile_TIFF().GetAttribute("value").contains("true");
+
+		if (!flag) {
+
+			Assert.assertTrue(false);
+			baseClass.failedStep("Generate Load File is not enabled by default  for TIFF components.");
+		} else {
+			Assert.assertTrue(true);
+			baseClass.passedStep("Generate Load File is  enabled by default  for TIFF components.");
+		}
+		
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:12/30/21 TESTCASE No:RPMXCON-48323
+	 * @Description:To verify that "Generate Load File" is enabled by default for PDF components.
+	 */ 
+	@Test(enabled = true, groups = { " regression" }, priority = 30)
+	public void verifyGenerateLoadFileForPDF() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48323- Production Sprint 09");
+		UtilityLog.info(Input.prodPath);
+		boolean flag;
+		
+		baseClass.stepInfo("Navigating to Production Home page and creating new production set");
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.getTIFFChkBox().waitAndClick(5);
+		page.getTIFFTab().waitAndClick(5);
+		page.getPDFGenerateRadioButton().waitAndClick(5);
+		driver.scrollingToBottomofAPage();
+		page.getAdvancedTabInTIFF().waitAndClick(5);
+		flag = page.getGenerateLoadFile_TIFF().GetAttribute("value").contains("true");
+
+		if (!flag) {
+
+			Assert.assertTrue(false);
+			baseClass.failedStep("Generate Load File is not enabled by default  for PDF components.");
+		} else {
+			Assert.assertTrue(true);
+			baseClass.passedStep("Generate Load File is  enabled by default  for PDF components.");
+		}
+		
+	}
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
