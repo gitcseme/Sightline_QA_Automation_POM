@@ -11731,6 +11731,7 @@ public class DocViewPage {
 			e.printStackTrace();
 			base.failedStep("Failed to verify coding form tag name in docview page");
 		}
+		softAssertion.assertAll();
 	}
 
 	/**
