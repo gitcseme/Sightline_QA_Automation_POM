@@ -159,8 +159,8 @@
 	<pageRange>1-2</pageRange>
 	<fullPageRange>1-4</fullPageRange>
 	<iconColor>#E64634</iconColor>
-		<testSecondDocID>ID00000104</testSecondDocID>
-	<testTenthDocID>ID00000667</testTenthDocID>
+		<testSecondDocId>ID00000104</testSecondDocId>
+	<testTenthDocId>ID00000667</testTenthDocId>
 
 
 	<!-- Baskar Indium Audio Search to DocView MiniList - modify on 9/01/21 -->
@@ -175,7 +175,7 @@
 	<searchStringStar>*</searchStringStar>
 	<docIDs>ID0000</docIDs>
 
-	<!-- Raghuram Indium modified on 12/1/21 -->
+	<!-- Raghuram Indium modified on 12/30/21 -->
 	<docHighlightColor>#CDD9E1</docHighlightColor>
 	<sortDataBy>DocID</sortDataBy>
 	<sortType>Ascending</sortType>
@@ -192,6 +192,11 @@
 	<selectionHighlightColor>#B0BED9</selectionHighlightColor>
 	<searchString7>term</searchString7>
 	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is in progress, you cannot overwrite it. Please wait until SavedSearch is completed.</errMsgSinceExecutionInProgress>
+	<validBatchFileLocation>\Misc\ValidBatchFiles\</validBatchFileLocation>
+	<fileDataErrMsg>Error in file saving</fileDataErrMsg>
+	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error</batchColumnHeaderErrorFileName>
+	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet</BatchFileWithMultiplesheetFile>
+	<savedSearchColor>#FFFFFF</savedSearchColor>
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 

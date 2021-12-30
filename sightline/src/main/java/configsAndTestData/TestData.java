@@ -153,7 +153,7 @@ public class TestData {
 	public String testSecondDocId;
 	public String testTenthDocId;
 
-	// Added by Raghuram - Last Modified 12/28/21
+	// Added by Raghuram - Last Modified 12/30/21
 	public String docHighlightColor;
 	public String sortType;
 	public String sortDataBy;
@@ -172,6 +172,11 @@ public class TestData {
 	public String selectionHighlightColor;
 	public String searchString7;
 	public String errMsgSinceExecutionInProgress;
+	public String validBatchFileLocation;
+	public String fileDataErrMsg;
+	public String batchColumnHeaderErrorFileName;
+	public String BatchFileWithMultiplesheetFile;
+	public String savedSearchColor;
 
 	// Added by jeevitha
 	public String colorCodeOfRed;
