@@ -1105,6 +1105,14 @@ public class DocListPage {
 	public ElementCollection getNextColumnCountAfterSuffle() {
 		return driver.FindElementsByXPath("//th[text()='CustodianName']/following::tr//td[7]");
 	}
+	
+	//Added by Gopinath - 29/12/2021
+	public Element getPersistantHitCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkPersistSerachHits']//..//i");
+	}
+	public Element getSelectAssignmentExisting(String assignmentName) {
+		return driver.FindElementByXPath("//*[@id='jstreeComplete']//a[contains(.,'" + assignmentName + "')]");
+	}
 
 	public DocListPage(Driver driver) {
 
@@ -4045,4 +4053,53 @@ public class DocListPage {
 		
 		
 	}
+	
+	/**
+	 * @author Gopinath,Modified by: Gopinath,Modified date :: 01/10/2021
+	 * @Description :Method for bulk assign with persistant.
+	 */
+	public void bulkAssignWithPersistantHit(String assignmentName) throws InterruptedException {
+		try {
+			driver.scrollPageToTop();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocList_actionButton().Visible();
+				}
+			}), Input.wait60);
+			getDocList_actionButton().isElementAvailable(15);
+			getDocList_actionButton().waitAndClick(10);
+			Thread.sleep(Input.wait30 / 10);
+			getDocList_action_BulkAssignButton().isElementAvailable(10);
+			getDocList_action_BulkAssignButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			UtilityLog.info("performing bulk assign");
+			driver.waitForPageToBeReady();
+			
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectAssignmentExisting(assignmentName).Visible();
+				}
+			}), Input.wait60);
+			driver.waitForPageToBeReady();
+			getSelectAssignmentExisting(assignmentName).Click();
+			getPersistantHitCheckBox().isElementAvailable(15);
+			getPersistantHitCheckBox().Click();
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			base.waitTillElemetToBeClickable(getContinueButton());
+			getContinueButton().waitAndClick(20);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+				}
+			}), Input.wait30);
+			getFinalizeButton().isElementAvailable(15);
+			getFinalizeButton().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Failed to perfrom bulk assign operation" + e.getMessage());
+		}
+
+	}
+	
 }
