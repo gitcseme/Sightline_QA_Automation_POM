@@ -734,6 +734,57 @@ public class DocView_Regression2 {
 	assignmentsPage.deleteAssgnmntUsingPagination(assname);
 	}
 	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51113
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 17)
+	public void verifyImagesTabDropDownAsSA() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51113");
+		baseClass.stepInfo("Verify user after impersonation can select any of the menu option from Images tab- Zoom in, Zoom out, rotation, Slider, Fit to Width");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoRMU();
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		sessionSearch.basicContentSearch(Input.searchString1);
+	    sessionSearch.ViewInDocView();
+	    docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.clickingImagesTab();
+	    DocViewPage docviewpage = new DocViewPage(driver);	
+		docviewpage.selectDocIdInMiniDocList(Input.testTenthDocId);	
+		driver.scrollPageToTop();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesIconDocView());
+		if(docViewRedact.imagesTabDropDown().isDisplayed()) {
+			baseClass.passedStep("images Tab drop down is Visible");
+		} else {
+			baseClass.failedStep("images Tab drop down is not visible");
+		}
+		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesTabZoomOut());
+		docViewRedact.imagesTabZoomOut().Click();
+		if(docViewRedact.imagesTabZoomOut().isDisplayed()) {
+			baseClass.passedStep("images Tab zomm out is Visible");
+		} else {
+			baseClass.failedStep("images Tab zoom out is not visible");
+		}
+		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesTabZoomIn());
+		docViewRedact.imagesTabZoomIn().Click();
+		if(docViewRedact.imagesTabZoomIn().isDisplayed()) {
+			baseClass.passedStep("images Tab zoom in is Visible");
+		} else {
+			baseClass.failedStep("images Tab zoom in is not visible");
+		}
+		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesTabZoomFitToScreen());
+		docViewRedact.imagesTabZoomFitToScreen().Click();
+		if(docViewRedact.imagesTabZoomIn().isDisplayed()) {
+			baseClass.passedStep("images Tab fit to screen option is avilablee");
+		} else {
+			baseClass.failedStep("images Tab fit to screen option is not avilable");
+		}
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

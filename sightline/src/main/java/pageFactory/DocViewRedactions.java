@@ -1103,6 +1103,20 @@ public class DocViewRedactions {
 	public Element activeDocId() {
 		return driver.FindElementByXPath("//span[@id='activeDocumentId']");
 	}
+	
+	// images tab elements  - Added by krishna
+	
+			public Element imagesTabDropDown() {
+				return driver.FindElementById("AvailableImagesDropDown");}
+			
+			public Element imagesTabZoomOut() {
+				return driver.FindElementById("zoomOut_divDocViewerImage");}
+			
+			public Element imagesTabZoomIn() {
+				return driver.FindElementById("zoomIn_divDocViewerImage");}
+			
+			public Element imagesTabZoomFitToScreen() {
+				return driver.FindElementById("fitContent_divDocViewerImage");}
 
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
