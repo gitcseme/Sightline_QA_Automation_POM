@@ -8990,7 +8990,7 @@ public class SessionSearch {
 		 * @param SearchString
 		 * @return
 		 */
-		public int advContentSearchWithoutURL(String SearchString) {
+		public String advContentSearchWithoutURL(String SearchString) {
 			base.waitForElement(getAdvancedContentSearchInputCurrent());
 			getAdvancedContentSearchInputCurrent().SendKeys(SearchString);
 			base.waitForElement(getQuerySearchButton());
@@ -9011,9 +9011,55 @@ public class SessionSearch {
 				}
 			}), Input.wait90);
 
-			int pureHit = Integer.parseInt(getPureHitsCount().getText());
+			String pureHit = getPureHitsCount().getText();
 			UtilityLog.info("Search is done purehit is : " + pureHit);
 			return pureHit;
+		}
+	/**
+	 * @author Jayanthi.ganesan	
+	 * @param folderName
+	 * @throws InterruptedException
+	 */
+		
+		public void bulkFolderWithOutHitADD(String folderName) throws InterruptedException {
+			base.waitForElement( getBulkActionButton());		
+			getBulkActionButton().waitAndClick(5);
+			base.waitForElement( getBulkFolderAction());
+			getBulkFolderAction().waitAndClick(5);
+			base.waitForElement( getBulkNewTab());
+			getBulkNewTab().waitAndClick(20);
+			base.waitForElement(getEnterFolderName());
+			getEnterFolderName().SendKeys(folderName);
+			base.waitForElement( getFolderAllRoot());			
+	    	getFolderAllRoot().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+				}
+			}), Input.wait60);
+			getContinueButton().Click();
+
+			final BaseClass bc = new BaseClass(driver);
+			final int Bgcount = bc.initialBgCount();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+				}
+			}), Input.wait60);
+			getFinalizeButton().Click();
+
+			base.VerifySuccessMessage("Records saved successfully");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return bc.initialBgCount() == Bgcount + 1;
+				}
+			}), Input.wait60);
+			UtilityLog.info("Bulk folder is done, folder is : " + folderName);
+			Reporter.log("Bulk folder is done, folder is : " + folderName, true);
+			driver.getWebDriver().navigate().refresh();
 		}
 
 	}
