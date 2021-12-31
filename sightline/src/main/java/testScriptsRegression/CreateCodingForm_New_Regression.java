@@ -3554,6 +3554,151 @@ public class CreateCodingForm_New_Regression {
 		// logout
 		loginPage.logout();
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			RPMXCON-51206
+	 * @Description : Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form for Tag/Comments/Metadata objects.
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 58)
+	public void verifySaveCompleteValidateTagCommentMetaCodingForm() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51206");
+	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form for Tag/Comments/Metadata objects");
+	    String cfName = "CF"+Utility.dynamicNameAppender();
+	    String tag="cfTag"+Utility.dynamicNameAppender();
+	    String assignName = "Assignment"+Utility.dynamicNameAppender();
+		
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+       
+	 	// create tag
+	 	tagsAndFoldersPage.CreateTag(tag,"Default Security Group");
+	 	
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	driver.waitForPageToBeReady();
+	 	codingForm.addNewCodingFormButton();
+	 	baseClass.waitForElement(codingForm.getCodingForm_Tag(tag));
+	 	codingForm.getCodingForm_Tag(tag).waitAndClick(10);
+	 	codingForm.firstCheckBox(Input.comments);
+	 	codingForm.addTwoCheckBox(Input.metaData);
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.selectRadioOrCheckGroup("check item");
+	 	codingForm.selectDefaultActions(4, Input.required);
+	 	codingForm.passingCodingFormName(cfName);
+	 	codingForm.getCodingForm_HelpMsg(0).SendKeys(Input.helpText);
+	 	codingForm.getCodingForm_ErrorMsg(4).SendKeys(Input.errorMsg);
+	 	codingForm.getCodingForm_HelpMsg(4).SendKeys(Input.helpText);
+	 	codingForm.saveCodingForm();
+	 	baseClass.stepInfo("Coding form added with tag, comment,two metadata,check item, make it required created");
+		
+		// Assign to security group
+		codingForm.assignCodingFormToSG(cfName);
+		baseClass.stepInfo("Coding form assigned to security group");
+		
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		baseClass.stepInfo("Search with text input for docs completed");
+
+		// Creating Assignment from Basic search
+		assignmentPage = new AssignmentsPage(driver);
+		assignmentPage.assignmentCreation(assignName, cfName);
+		assignmentPage.toggleCodingStampEnabled();
+		baseClass.stepInfo("Doc is Assigned from basic Search and Assignment '" + assignName + "' is created Successfully");
+		assignmentPage.add2ReviewerAndDistribute();
+		assignmentPage.selectAssignmentToViewinDocviewThreadMap(assignName);
+		driver.waitForPageToBeReady();
+		//docViewPage.DocViewCodingForm4thCheckBox().waitAndClick(5);
+		docViewPage.getSaveDoc().waitAndClick(10);
+		docViewPage.errorMessage();
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		
+		// Select the Assignment from dashboard
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		
+		// Edit coding Form and complete Action
+		driver.waitForPageToBeReady();
+		//docViewPage.DocViewCodingForm4thCheckBox().waitAndClick(5);
+		docViewPage.getCompleteDocBtn().waitAndClick(10);
+		docViewPage.errorMessage();
+		baseClass.passedStep("Verified on click of 'Save'/'Complete button coding form should be validated as per the customized coding form for Tag/Comments/Metadata objects");
+		
+		// logout
+		loginPage.logout();
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			RPMXCON-51207
+	 * @Description : Verify on click of 'Save'/'Complete button coding form should be validated as per the customized Tags and Radio Group combined along with Radio Item on coding form screen.
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 59)
+	public void verifySaveCompleteValidate2TagRadioItemCodingForm() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51207");
+	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized Tags and Radio Group combined along with Radio Item on coding form screen");
+	    String cfName = "CF"+Utility.dynamicNameAppender();
+	    String assignName = "Assignment"+Utility.dynamicNameAppender();
+		
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+	 	
+	 	
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	driver.waitForPageToBeReady();
+	 	codingForm.addNewCodingFormButton();
+	 	codingForm.addTwoCheckBox(Input.tag);
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.selectRadioOrCheckGroup(0,"radio item");
+	 	codingForm.selectRadioOrCheckGroup(1,"radio item");
+	 	codingForm.selectDefaultActions(2, Input.optional);
+	 	codingForm.selectDefaultActions(3, Input.notSelectable);
+	 	codingForm.passingCodingFormName(cfName);
+	 	codingForm.saveCodingForm();
+	 	baseClass.stepInfo("Coding form added with tag,radio item, make it optional and not selectable created");
+		
+		// Assign to security group
+		codingForm.assignCodingFormToSG(cfName);
+		baseClass.stepInfo("Coding form assigned to security group");
+		
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		baseClass.stepInfo("Search with text input for docs completed");
+
+		// Creating Assignment from Basic search
+		assignmentPage = new AssignmentsPage(driver);
+		assignmentPage.assignmentCreation(assignName, cfName);
+		assignmentPage.toggleCodingStampEnabled();
+		baseClass.stepInfo("Doc is Assigned from basic Search and Assignment '" + assignName + "' is created Successfully");
+		assignmentPage.add2ReviewerAndDistribute();
+		assignmentPage.selectAssignmentToViewinDocviewThreadMap(assignName);
+		driver.waitForPageToBeReady();
+		docViewPage.getSaveDoc().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		
+		// Select the Assignment from dashboard
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		
+		// Edit coding Form and complete Action
+		driver.waitForPageToBeReady();
+		docViewPage.getCompleteDocBtn().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Document completed successfully");
+		baseClass.passedStep("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized Tags and Radio Group combined along with Radio Item on coding form screen");
+		
+		// logout
+		loginPage.logout();
+	}
 
 
 		
