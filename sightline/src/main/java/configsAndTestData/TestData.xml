@@ -21,8 +21,7 @@
 	<totalNumberOfDocsincludeadvoption>103
 	</totalNumberOfDocsincludeadvoption>
 	<historyTab>History</historyTab>
-	<documentConceptualTab>liDocumentConceptualSimilar
-	</documentConceptualTab>
+	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
 	<randomText>Test</randomText>
 	<metaDataName>CustodianName</metaDataName>
 	<is_Or_Range>range</is_Or_Range>
@@ -221,6 +220,7 @@
 	<performaceBatchFile>\performance BatchFile\</performaceBatchFile>
 	<bullHornIconColor>#E74735</bullHornIconColor>
 	<progresBarColor>#3276B1</progresBarColor>
+    <BatchFileduplicateHeader>BatchFile_duplicateHeader_Error</BatchFileduplicateHeader>
 
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>
@@ -369,8 +369,7 @@
 	<tiffPageCountText>TIFFPAGECOUNT</tiffPageCountText>
 
 	<!-- Added by Gopinath Created date - 27/12/2021 -->
-	<errorQueryFileLocation>\BatchFiles\InvalidQuery\
-	</errorQueryFileLocation>
+	<errorQueryFileLocation>\BatchFiles\InvalidQuery\</errorQueryFileLocation>
 	<invalidNameText>Invalid Name</invalidNameText>
 <threadDocWithToolTip>ID00000703</threadDocWithToolTip>
 		<conceptualDoc>ID00000001</conceptualDoc>

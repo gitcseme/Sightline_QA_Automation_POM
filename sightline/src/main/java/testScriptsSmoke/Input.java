@@ -292,6 +292,7 @@ public class Input {
 	public static String performaceBatchFile;
 	public static String bullHornIconColor;
 	public static String progresBarColor;
+	public static String BatchFileduplicateHeader;
 
 	// Added by gopinath - 25/10/2021
 	public static String audioSearch;
@@ -709,7 +710,8 @@ public class Input {
 		batchFileNewLocation = testData.getBatchFileNewLocation();
 		bullHornIconColor = testData.getBullHornIconColor();
 		progresBarColor = testData.getProgresBarColor();
-
+		BatchFileduplicateHeader= testData.getBatchFileduplicateHeader();
+		
 		/**
 		 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
 		 *         by:Gopinath.

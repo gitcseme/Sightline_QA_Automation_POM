@@ -2748,6 +2748,89 @@ public class SavedSearchRegression_New_Set_04 {
 		login.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description: Verify that relevant error message appears when user
+	 *               duplicates/(Repeats) - batch Search \"column header in same
+	 *               sheet\" and tries to upload same file in Saved Search Screen.s
+	 *               [RPMXCON-48538]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	public void verifyBatchFileError() throws InterruptedException {
+
+		String fileName = Input.BatchFileduplicateHeader;
+		String fileFormat = ".xlsx";
+		String sheetNum = "1";
+		String batchNodeToCheck = fileName + "_" + sheetNum + "_Sheet" + sheetNum;
+
+		base.stepInfo("Test case Id: RPMXCON-48538 - Saved Search Sprint 09");
+		base.stepInfo(
+				"Verify that relevant error message appears when user duplicates/(Repeats) - batch Search \"column header in same sheet\" and tries to upload same file in Saved Search Screen.s");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as : " + Input.pa1FullName);
+
+		saveSearch.navigateToSSPage();
+
+		// upload batch file
+		saveSearch.uploadBatchFile_D(Input.invalidBatchFileNewLocation, fileName + fileFormat, false);
+		saveSearch.getSubmitToUpload().Click();
+		saveSearch.verifyBatchUploadMessage("DataFailure", false);
+
+		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(2);
+		softAssertion.assertFalse(saveSearch.verifyNodePresent(batchNodeToCheck),
+				"Searches not uploaded in Saved search screen.");
+		softAssertion.assertAll();
+
+		login.logout();
+	}
+
+	/**
+	 * @Author  jeevitha
+	 * @Description : When the user selects any query from Saved search, selected
+	 *              search and it's folder is highlighted indicating the
+	 *              selection[RPMXCON-47424]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
+	public void verifySearchUnderNodeHighlight() throws Exception {
+		String search = "Search" + Utility.dynamicNameAppender();
+		String passMsg = "Selected folder is highlighted";
+		String failMsg = "Selected folder is Not highlighted / highlighted with wrong color code";
+
+		// Login as RMU
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Test case Id: RPMXCON-47424");
+		base.stepInfo(
+				"When the user selects any query from Saved search, selected search and it's folder is highlighted indicating the selection");
+
+		// Saved Search
+		String node = saveSearch.createSearchGroupAndReturn(null, "PA");
+
+		// basic search
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearchInNewNode(search, node);
+
+		// selectsaved query from node
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectNode1(node);
+		saveSearch.savedSearch_SearchandSelect(search, "Yes");
+		base.stepInfo("Selected : " + search);
+		driver.waitForPageToBeReady();
+		String bgColor = saveSearch.getSelectWithName(search).GetCssValue("background-color");
+		bgColor = base.rgbTohexaConvertor(bgColor);
+		System.out.println(bgColor);
+
+		// Text Comparision
+		base.textCompareEquals(bgColor, Input.savedSearchColor, passMsg, failMsg);
+
+		// delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, node);
+		login.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
