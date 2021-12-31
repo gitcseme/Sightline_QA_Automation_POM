@@ -306,7 +306,9 @@ public class TallyPage {
 	}
 	public Element getTally_FoldersCheckBox(String checkBoxName) {
 		return driver.FindElementByXPath("//*[@id='divFolderGroupTree']//*[text()='"+checkBoxName+"']");
-	}
+	}	
+	public Element getTally_PrjCheckBox(String checkBoxName) {
+		return driver.FindElementByXPath("//span[text()='"+checkBoxName+"']/parent::label/i");}
 	public Element getTally_ClickMetaSourceButton() {
 		return driver.FindElementByXPath("//*[@id='select-source1']");
 	}
@@ -325,6 +327,9 @@ public class TallyPage {
 	public Element getTally_foldersSaveSelections() {
 		return driver.FindElementByXPath("//button[@id='folder']");
 	}
+	public Element getTally_PrjSaveSelections() {
+		return driver.FindElementByXPath("//button[@id='project']");
+	}
 	
 	public Element getTally_Assignments() {
 		return driver.FindElementByXPath("//strong[text()=' Assignments']/parent::a//span[@class='fa fa-plus']");
@@ -332,11 +337,17 @@ public class TallyPage {
 	public Element getTally_Folders() {
 		return driver.FindElementByXPath("//strong[text()='Folders']/parent::a//span[@class='fa fa-plus']");
 	}
+	public Element getTally_Projects() {
+		return driver.FindElementByXPath("//strong[text()='Projects']/parent::a//span[@class='fa fa-plus']");
+	}
 	public Element getTally_SecurityGroup() {
 		return driver.FindElementByXPath("//strong[text()='Security Groups']/parent::a//span[@class='fa fa-plus']");
 	}
 	public ElementCollection getTallyChartMetaData() {
 		return driver.FindElementsByCssSelector("div[id='tallyChart'] > svg > g:nth-child(2) > text");
+	}
+	public Element getTally_SelectedSource() {
+		return driver.FindElementByXPath("//ul[@id='bitlist-sources']/li");
 	}
 	public TallyPage(Driver driver) {
 
@@ -1083,6 +1094,7 @@ public class TallyPage {
 	 * @author Jayanthi.ganesan
 	 */
 	public void SelectSource_SavedSearch(String saveSearch) {
+		base.stepInfo("**selecting source as search--"+saveSearch+"**");
 		base.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().Click();
 		base.waitForElement(getTally_Searches());
@@ -1152,6 +1164,7 @@ public class TallyPage {
 	 */
 
 	public void SelectSource_Assignment(String assignmentName) {
+		base.stepInfo("**Selecting source as Assignment --"+assignmentName+"**");
 		base.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().Click();
 		base.waitForElement(getTally_Assignments());
@@ -1170,13 +1183,18 @@ public class TallyPage {
 	 * @author Jayanthi.ganesan
 	 */
 	public void SelectSource_Folder(String folderName) {
+		base.stepInfo("**Selecting source as Folder--"+folderName+"**");
 		base.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().Click();
 		base.waitForElement(getTally_Folders());
 		getTally_Folders().Click();
 		driver.scrollingToElementofAPage(getTally_FoldersCheckBox(folderName));
+		getTally_FoldersCheckBox(folderName).ScrollTo();
+		base.waitTime(2);
 		getTally_FoldersCheckBox(folderName).waitAndClick(5);
+		base.waitTime(2);
 		driver.scrollingToElementofAPage(getTally_foldersSaveSelections());
+		getTally_foldersSaveSelections().ScrollTo();
 		base.waitForElement(getTally_foldersSaveSelections());
 		getTally_foldersSaveSelections().Click();
 	}
@@ -1184,14 +1202,18 @@ public class TallyPage {
 	 * @author Jayanthi.ganesan
 	 */
 	public void SelectSource_SecurityGroup(String securityGroup) {
+		base.stepInfo("**Selecting source as security group --"+securityGroup+"**");
 		base.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().Click();
 		base.waitForElement(getTally_SecurityGroup());
 		getTally_SecurityGroup().Click();
 		driver.scrollingToElementofAPage(getTally_SecurityGroupCheckBox(securityGroup));
+		base.waitTime(2);
 		getTally_SecurityGroupCheckBox(securityGroup).waitAndClick(5);
+		base.waitTime(2);
 		driver.scrollingToElementofAPage(getTally_SearchSaveSelections());
 		base.waitForElement(getTally_SGSaveSelections());
+		getTally_SGSaveSelections().ScrollTo();
 		getTally_SGSaveSelections().Click();
 	}
 	/**
@@ -1235,5 +1257,67 @@ public class TallyPage {
 			
 return metaData;
 	}
-
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param prjName
+	 */
+	public void selectSource_Project(String prjName) {
+		base.stepInfo("**Selecting source as project --"+prjName+"**");
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
+		base.waitForElement(getTally_Projects());
+		getTally_Projects().Click();
+		base.waitTime(2);
+		driver.scrollingToElementofAPage(getTally_PrjCheckBox(prjName));
+		getTally_PrjCheckBox(prjName).waitAndClick(15);
+		base.waitTime(2);
+		getTally_PrjSaveSelections().ScrollTo();
+		driver.scrollingToElementofAPage(getTally_PrjSaveSelections());
+		base.waitForElement(getTally_PrjSaveSelections());
+		base.waitTime(2);
+		getTally_PrjSaveSelections().waitAndClick(15);
+	}
+/**
+ * @author Jayanthi.ganesan
+ * @param i
+ * @param name
+ */
+	public void selectSources_PA(int i, String name) {
+		if(i==0)
+			selectSource_Project(name);
+		if(i==1)		
+			SelectSource_Folder(name);
+		if(i==2)
+			SelectSource_SavedSearch(name);
+		if(i==3)
+			SelectSource_SecurityGroup(name);
+		
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param i
+	 * @param name
+	 */
+	public void selectSources_RMU(int i, String name) {
+		if(i==0)
+			SelectSource_Assignment(name);
+		if(i==1)
+			SelectSource_Folder(name);
+		if(i==2)
+			SelectSource_SavedSearch(name);
+		if(i==3)
+			SelectSource_SecurityGroup(name);
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void verifySourceSelected() {
+		if(getTally_SelectedSource().isElementAvailable(3)) {
+			base.passedStep("Source Selected get reflected.");
+			String sourceName=getTally_SelectedSource().getText();
+		}
+		else {
+			base.failedStep("Source Selected Not reflected.");
+		}
+	}
 }
