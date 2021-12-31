@@ -18324,8 +18324,40 @@ public class DocViewPage {
 		}else {
 			base.failedStep("Selected docs are not present in the DocList Page");
 		}
-		
-		
-		
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 06/12/2021 Modified date:N/A
+	 * @Description: This method used to verify checkmark icon
+	 * 
+	 */
+
+	public void validateCheckMarkCodeSameAs(String comment) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getVerifyPrincipalDocument());
+		String prnDoc = getVerifyPrincipalDocument().getText();
+		editCodingForm(comment);
+		completeButton();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getVerifyPrincipalDocument());
+		String secDoc = getVerifyPrincipalDocument().getText();
+		if (prnDoc != secDoc) {
+			getverifyCodeSameAsLast().WaitUntilPresent().ScrollTo();
+			base.passedStep("Cursor navigated to next document in minidoclist");
+		} else {
+			base.failedStep("Cursor not navigated to next document in minidoclist");
+		}
+		for (int i = 2; i <= 3; i++) {
+			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(i));
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		clickCodeSameAs();
+		clickCodeSameAsLast();
+		driver.waitForPageToBeReady();
+		getverifyCodeSameAsLast().WaitUntilPresent().ScrollTo();
+		boolean flag=getverifyCodeSameAsLast().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Checkmark icon displayed for completed document");
+		softAssertion.assertAll();
 	}
 }

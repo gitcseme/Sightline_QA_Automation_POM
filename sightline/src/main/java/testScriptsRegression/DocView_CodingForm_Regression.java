@@ -7035,10 +7035,102 @@ public class DocView_CodingForm_Regression {
 		
 		docViewPage.validateWithoutEditUsingSave();
 		
-//		codingForm.assignCodingFormToSG("Default Project Coding Form");
-//		driver.waitForPageToBeReady();
-//		codingForm.deleteCodingForm(cfName,cfName);
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
+		driver.waitForPageToBeReady();
+		codingForm.deleteCodingForm(cfName,cfName);
 		
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date:31/12/21 Modified date: NA Modified by: Baskar
+	 * @Description : To verify that Project Admin cannot complete or save or Save
+	 *              and Next the document, cannot save stamp
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 163)
+	public void validateProjectAdminCodeSameA() throws InterruptedException, AWTException {
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		softAssertion=new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50988");
+		baseClass.stepInfo("To verify that Project Admin cannot complete or "
+				+ "save or Save and Next the document, cannot save stamp");
+		
+		// Login As
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Session search to docview
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+		// validation for pa
+		if (docViewPage.getCodeSameAsLast().isDisplayed() && docViewPage.getSaveAndNextButton().isDisplayed()
+				&& docViewPage.getSaveButton().isDisplayed() && docViewPage.getCodingFormStampButton().isDisplayed()) {
+			baseClass.failedStep("Coding form default options are avilable");
+		} else {
+			baseClass.passedStep("Coding form default options are not avilable");
+		}
+		baseClass.waitForElement(docViewPage.getDocView_EditMode());
+		docViewPage.getDocView_EditMode().waitAndClick(10);
+		docViewPage.getHeader().Click();
+		if (docViewPage.getDocView_HdrCoddingForm().Displayed()) {
+			baseClass.failedStep("Coding from child window expand button is available");
+		}
+		else {
+			baseClass.passedStep("Coding from child window expand button is not available");
+		}
+		
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date:31/12/21 Modified date: NA Modified by: Baskar
+	 * @Description : Verify checkmark should be displayed for document completed 
+	 *                same as last after code same as this action
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 164)
+	public void validateCheckMarkIcon() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-51260");
+		
+		baseClass.stepInfo("Verify checkmark should be displayed for document completed same "
+				+ "as last after code same as this action");
+		String assignName = "Assignment" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validate checkmark icon and code same as last button
+		docViewPage.validateCheckMarkCodeSameAs(comment);
+
 		// logout
 		loginPage.logout();
 	}
