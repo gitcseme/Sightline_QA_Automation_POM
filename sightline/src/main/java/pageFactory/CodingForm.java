@@ -1295,6 +1295,10 @@ public class CodingForm {
 	public Element getCodingForm_MetaData(String fieldText) {
 		return driver.FindElementByXPath("//strong[text()='" + fieldText + "']//parent::label");
 	}
+	//Added by Aathith
+	public Element getCF_TagTypes(int i) {
+		return driver.FindElementByXPath(".//*[@id='c-"+i+"']//select[@id='"+i+"']");
+	}
 
 	public CodingForm(Driver driver) {
 
@@ -4560,6 +4564,30 @@ public class CodingForm {
 		getSaveCFBtn().waitAndClick(5);
 		deleteCodingForm(cfName, cfName);
 		base.VerifySuccessMessage("Coding form deleted successfully");
+	}
+	/**
+	 * @author Aathith
+	 * @Description : this method used for to select tag type
+	 */
+	public void selectRadioOrCheckGroup(int i,String TagType) {
+		int index=i+1;
+		switch (TagType) {
+		case "check item":
+			if (TagType.equalsIgnoreCase("check item"))
+				getCF_TagTypes(i).selectFromDropdown().selectByVisibleText("Check Item");
+				getCF_CheckGrpObject().waitAndClick(10);
+				driver.scrollPageToTop();
+				getCodingForm_AddToFormButton().waitAndClick(10);
+				getCF_CheckGroup(i).selectFromDropdown().selectByIndex(index);
+		case "radio item":
+			if (TagType.equalsIgnoreCase("radio item")) {
+				getCF_TagTypes(i).selectFromDropdown().selectByVisibleText("Radio Item");
+				getCF_RadioGrpObject().waitAndClick(10);
+				driver.scrollPageToTop();
+				getCodingForm_AddToFormButton().waitAndClick(10);
+				getCF_RadioGroup(i).selectFromDropdown().selectByIndex(index);
+			}
+		}
 	}
 
 }
