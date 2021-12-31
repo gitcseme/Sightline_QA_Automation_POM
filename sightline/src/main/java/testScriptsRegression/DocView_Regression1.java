@@ -28,6 +28,7 @@ import pageFactory.MiniDocListPage;
 import pageFactory.ProductionPage;
 import pageFactory.RedactionPage;
 import pageFactory.ReusableDocViewPage;
+import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -2611,36 +2612,293 @@ public class DocView_Regression1 {
 			docView.selectDocumentFromMiniDocList(rowNumber);
 		}
 		
-	@AfterMethod(alwaysRun = true)
-	public void close() {
-		try {
+		/**
+		 * @author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
+		 * @Testcase_id : 51727 - Verify that persistent hits should be highligted when documents are assigned to new assignment from Saved Search.
+		 * @Description : Verify that persistent hits should be highligted when documents are assigned to new assignment from Saved Search.
+		 */
+		@Test(groups = { "regression" }, priority = 30)
+		public void verifyPersistantHitByReviewerByCreatingNewAssignment() throws InterruptedException {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51727 spint 09");
+
+			AssignmentsPage assgnPage = new AssignmentsPage(driver);
+			SessionSearch search = new SessionSearch(driver);
+			String searchname1 = Input.randomText + Utility.dynamicNameAppender();
+			final String assignStamp = Input.randomText + Utility.dynamicNameAppender();
+			final String searchname = searchname1;
+
+			baseClass.stepInfo("####  Verify that persistent hits should be highligted when documents are assigned to new assignment from Saved Search. ####");
+
+			baseClass.stepInfo("Basic Search");
+			search.basicContentSearch(Input.searchString1);
+
+			baseClass.stepInfo("Save searched content");
+			search.saveSearch(searchname);
+
+			SavedSearch savedSearch = new SavedSearch(driver);
+
+			baseClass.stepInfo("Open Doc list from Saved search page");
+			savedSearch.savedSearchToDocList(searchname);
+
+			DocListPage docList = new DocListPage(driver);
+
+			baseClass.stepInfo("Selecting all documents in current page");
+			docList.selectAllDocumentsInCurrentPageOnly();
+			
+			baseClass.stepInfo("Assignment Creation");
+			assgnPage.assignmentCreationWithPersistantHitDocList(assignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Toggle Coding Stamp Enabled");
+			assgnPage.toggleCodingStampEnabled();
+			
+			baseClass.stepInfo("Assignment Distributing To Reviewer");
+			assgnPage.assignmentDistributingToReviewer();
+
 			loginPage.logout();
-		} finally {
-			loginPage.closeBrowser();
-			LoginPage.clearBrowserCache();
-		} 
-	}
-	
-     @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		 
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 		try{ //if any tc failed and dint logout!
- 		loginPage.logout();
- 		}catch (Exception e) {
-			// TODO: handle exception
+			baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			baseClass.stepInfo("Selecting the assignment");
+			assgnPage.SelectAssignmentByReviewer(assignStamp);
+		
+			docView = new DocViewPage(driver);
+			
+			baseClass.stepInfo("Click on persistant hit eye icon.");
+			docView.clickOnPersistantHitEyeIcon();
+			
+			baseClass.stepInfo("Verify Persistent Hits Panel Displayed");
+			docView.verifyPersistentHitsPanelDisplayed();
+			
+			baseClass.stepInfo("Verifying persistent Hits Displayed.");
+			docView.verifyPersistentHitsDisplayed(Input.searchString1);
 		}
- 	}
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
-     
-     
-     
-     
-     
-     
+		
+		/**
+		 * @author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
+		 * @Testcase_id : 51726 - Verify that persistent hits should be highligted when documents are assigned to new assignment from Advanced Search.
+		 * @Description : Verify that persistent hits should be highligted when documents are assigned to new assignment from Advanced Search
+		 */
+		@Test(groups = { "regression" }, priority = 31)
+		public void verifyPersistantHitPanelByReviewerByAdvanceSearch() throws InterruptedException {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51726 spint 09");
+
+			AssignmentsPage assgnPage = new AssignmentsPage(driver);
+			SessionSearch search = new SessionSearch(driver);
+			final String assignStamp = Input.randomText + Utility.dynamicNameAppender();
+			
+
+			baseClass.stepInfo("####  Verify that persistent hits should be highligted when documents are assigned to new assignment from Advanced Search ####");
+
+			baseClass.stepInfo("Advance metadata Search");
+			search.metaDataSearchInAdvancedSearch(Input.metaDataName, Input.metaDataCN);
+
+
+			baseClass.stepInfo("Selected Doclist");
+			search.ViewInDocList();
+
+			DocListPage docList = new DocListPage(driver);
+
+			baseClass.stepInfo("Selecting all documents in current page");
+			docList.selectAllDocumentsInCurrentPageOnly();
+			
+			baseClass.stepInfo("Assignment Creation");
+			assgnPage.assignmentCreationWithPersistantHitDocList(assignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Toggle Coding Stamp Enabled");
+			assgnPage.toggleCodingStampEnabled();
+			
+			baseClass.stepInfo("Assignment Distributing To Reviewer");
+			assgnPage.assignmentDistributingToReviewer();
+
+			loginPage.logout();
+			baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			baseClass.stepInfo("Selecting the assignment");
+			assgnPage.SelectAssignmentByReviewer(assignStamp);
+		
+			docView = new DocViewPage(driver);
+			
+			baseClass.stepInfo("Click on persistant hit eye icon.");
+			docView.clickOnPersistantHitEyeIcon();
+			
+			baseClass.stepInfo("Verify Persistent Hits Panel Displayed");
+			docView.verifyPersistentHitsPanelDisplayed();
+		}
+		
+		
+		/**
+		 * @author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
+		 * @Testcase_id : 51725 - Verify that persistent hits should be highligted when documents are assigned to new assignment from Basic Search.
+		 * @Description : Verify that persistent hits should be highligted when documents are assigned to new assignment from Basic Search.
+		 */
+		@Test(groups = { "regression" }, priority = 32)
+		public void verifyPersistantHitPanelByReviewerByBasicSearch() throws InterruptedException {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51725 spint 09");
+
+			AssignmentsPage assgnPage = new AssignmentsPage(driver);
+			SessionSearch search = new SessionSearch(driver);
+			final String assignStamp = Input.randomText + Utility.dynamicNameAppender();
+
+			baseClass.stepInfo("#### Verify that persistent hits should be highligted when documents are assigned to new assignment from Basic Search. ####");
+
+			baseClass.stepInfo("Basic Search");
+			search.basicContentSearch(Input.searchString1);
+
+			baseClass.stepInfo("Selected Doclist");
+			search.ViewInDocList();
+
+			DocListPage docList = new DocListPage(driver);
+
+			baseClass.stepInfo("Selecting all documents in current page");
+			docList.selectAllDocumentsInCurrentPageOnly();
+			
+			baseClass.stepInfo("Assignment Creation");
+			assgnPage.assignmentCreationWithPersistantHitDocList(assignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Toggle Coding Stamp Enabled");
+			assgnPage.toggleCodingStampEnabled();
+			
+			baseClass.stepInfo("Assignment Distributing To Reviewer");
+			assgnPage.assignmentDistributingToReviewer();
+
+			loginPage.logout();
+			baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			baseClass.stepInfo("Selecting the assignment");
+			assgnPage.SelectAssignmentByReviewer(assignStamp);
+		
+			docView = new DocViewPage(driver);
+			
+			baseClass.stepInfo("Click on persistant hit eye icon.");
+			docView.clickOnPersistantHitEyeIcon();
+			
+			baseClass.stepInfo("Verify Persistent Hits Panel Displayed");
+			docView.verifyPersistentHitsPanelDisplayed();
+			
+			baseClass.stepInfo("Verifying persistent Hits Displayed.");
+			docView.verifyPersistentHitsDisplayed(Input.searchString1);
+		}
+		
+		
+		/**
+		 * @author Gopinath
+		 * TestCase Id: 51757 Verify that all relevant hits should be displayed on persistent hits panel when navigated to doc view.
+		 * Description:To Verify that all relevant hits should be displayed on persistent hits panel when navigated to doc view.             
+		 * @throws InterruptedException 
+		 */
+		@Test(groups = { "regression" }, priority = 32)
+		public void verifySearchTermDisplayOnPersistentHitPanal() throws InterruptedException {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51757");
+			baseClass.stepInfo("#### Verify that all relevant hits should be displayed on persistent hits panel when navigated to doc view with ad hoc search and keywords highlighting ####");
+
+			docView = new DocViewPage(driver);
+			SessionSearch session = new SessionSearch(driver);
+
+			baseClass.stepInfo("Basic Basic content search");
+			session.basicContentSearch(Input.searchString2);
+			
+			baseClass.stepInfo("Navigate to  DocView page");
+			session.ViewInDocView();
+			
+			baseClass.stepInfo("Persistent Hit With search string");
+			docView.persistenHitWithSearchString(Input.searchString2);
+		}
+		
+		/**
+		 * @author Gopinath
+		 * @TestCase Id : 51730 Verify that persistent hits should be highligted when documents are assigned to existing assignment from Saved Search > Doc List
+		 * @Description : To Verify that persistent hits should be highligted when documents are assigned to existing assignment from Saved Search > Doc List              
+		 * @throws InterruptedException 
+		 */
+		@Test
+		public void verifyPersistentHItAfterAssignedToExistingAssignment() throws InterruptedException {
+			String BasicSearchName = Input.randomText + Utility.dynamicNameAppender();
+			String AssignName = Input.randomText + Utility.dynamicNameAppender();
+			baseClass=new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51926");
+			baseClass.stepInfo("#### Verify that when user is viewing a document in DocView, the entry for the same document in mini-DocList must always present fully in the visible area of the mini-DocList (to the user) ####");
+			
+			docView = new DocViewPage(driver);
+			SessionSearch session = new SessionSearch(driver);
+			SavedSearch savesearch=new SavedSearch(driver);
+			AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+			DocListPage doclistpage = new DocListPage(driver);
+			assignmentPage.createAssignment(AssignName, Input.codingFormName);
+			baseClass.stepInfo("New Assignment created");
+			
+			session.basicContentSearch(Input.searchString2);
+			baseClass.stepInfo("Basic Basic content search completed");
+			
+			session.saveSearch(BasicSearchName);
+			baseClass.stepInfo("Basic search saved succssfully");
+			
+			savesearch.savedSearchToDocList(BasicSearchName);
+			baseClass.stepInfo("Navigated to DocList Page");
+			
+			doclistpage.DoclisttobulkAssign(Input.randomText,"10");
+			baseClass.stepInfo("All Doc list selected and navigated bulk assign");
+			
+			assignmentPage.assignDocstoExisting(AssignName);
+			baseClass.stepInfo("Docs are assign to existing assignment");
+			
+			assignmentPage.editAssignment(AssignName);
+			baseClass.stepInfo("Assignment selected and navigated to edit assignment page");
+			
+			assignmentPage.assignmentDistributingToReviewer();
+			baseClass.stepInfo("Reviews added and distributed to Reviewer");
+			
+			loginPage.logout();
+			baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			assignmentPage.SelectAssignmentByReviewer(AssignName);
+			
+			docView.persistenHitWithSearchString(Input.searchString2);
+			
+		}
+
+		@AfterMethod(alwaysRun = true)
+		public void close() {
+			try {
+				loginPage.logout();
+			} finally {
+				loginPage.closeBrowser();
+				LoginPage.clearBrowserCache();
+			} 
+		}
+		
+	     @AfterMethod(alwaysRun = true)
+		 public void takeScreenShot(ITestResult result) {
+	 	 if(ITestResult.FAILURE==result.getStatus()){
+	 		 
+	 		Utility bc = new Utility(driver);
+	 		bc.screenShot(result);
+	 		try{ //if any tc failed and dint logout!
+	 		loginPage.logout();
+	 		}catch (Exception e) {
+				// TODO: handle exception
+			}
+	 	}
+	 	 System.out.println("Executed :" + result.getMethod().getMethodName());
+	 	
+	     }
      
 }

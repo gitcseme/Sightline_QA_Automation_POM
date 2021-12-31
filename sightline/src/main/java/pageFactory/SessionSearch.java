@@ -9061,5 +9061,50 @@ public class SessionSearch {
 			Reporter.log("Bulk folder is done, folder is : " + folderName, true);
 			driver.getWebDriver().navigate().refresh();
 		}
+		
+		/**
+		 * @Author Gopinath
+		 * @Description: To Create Metadata advanced search.
+		 */
+		public void metaDataSearchInAdvancedSearch(String metaDataField, String val1) {
+
+			// To make sure we are in basic search page
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			base.waitForElement(getAdvancedSearchLink());
+			getAdvancedSearchLink().waitAndClick(3);
+			base.waitForElement(getContentAndMetaDatabtn());
+			getContentAndMetaDatabtn().waitAndClick(3);
+			// Enter search string
+			base.waitForElement(getAdvanceSearch_MetadataBtn());
+			getAdvanceSearch_MetadataBtn().waitAndClick(3);
+			base.waitForElement(getSelectMetaData());
+			// getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+			base.waitForElement(getSelectMetaData());
+			getSelectMetaData().waitAndClick(3);
+			base.waitForElement(SelectFromDropDown(metaDataField));
+			SelectFromDropDown(metaDataField).waitAndClick(10);
+			base.waitForElement(getMetaDataSearchText1());
+			getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().waitAndClick(3);
+			// Click on Search button
+			base.waitForElement(getQuerySearchButton());
+			getQuerySearchButton().waitAndClick(3);
+			if (getTallyContinue().isElementAvailable(3)) {
+				getTallyContinue().waitAndClick(5);
+			}
+			// two handle twosearch strings
+
+			base.waitForElement(getPureHitsCount());
+			// verify counts for all the tiles
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+				}
+			}), Input.wait90);
+
+			int pureHit = Integer.parseInt(getPureHitsCount().getText());
+			base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
+		}
 
 	}

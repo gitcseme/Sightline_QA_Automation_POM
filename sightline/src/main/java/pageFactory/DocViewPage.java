@@ -18360,4 +18360,40 @@ public class DocViewPage {
 		base.passedStep("Checkmark icon displayed for completed document");
 		softAssertion.assertAll();
 	}
+	
+	/**
+	 * @author Gopinath
+	 * Description: Method for verifying the search string is displayed on persistent hit panal or not with its count
+	 * @param SearchString : SearchString is String value that search term.
+	 */
+	public void persistenHitWithSearchString(String SearchString) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPersistantHitEyeIcon());
+		getPersistantHitEyeIcon().waitAndClick(5);
+		base.waitForElementCollection(getHitPanels());
+		int numOfPanels = getHitPanels().size();
+		boolean flag = false;
+		for (int i = 2; i <= numOfPanels; i++) {
+
+			if (getTermInHitPanels(i).getText().contains(SearchString)) {
+				String hitCount = getTermInHitPanels(i).getText();
+
+				System.out.println("Search hit terms" + " '" + SearchString + "'"
+						+ " is displayed on persistent hits panel and the hit count of " + SearchString + " is"
+						+ hitCount.replace(SearchString, ""));
+				base.passedStep("Search hit terms" + " '" + SearchString + "'"
+						+ " is displayed on persistent hits panel and the hit count of " + SearchString + " is"
+						+ hitCount.replace(SearchString, ""));
+				flag = true;
+
+				break;
+			}
+
+		}
+		if (flag == false) {
+			System.out.println("Search hit term is displayed on persistent hits panel");
+			base.failedStep("Search hit term is displayed on persistent hits panel");
+		}
+
+	}
 }
