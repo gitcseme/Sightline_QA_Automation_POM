@@ -1462,7 +1462,36 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	public Element getDocView_Navigate_ButtonText() {
+		return driver.FindElementByXPath("//p[contains(text(),'This action will not save')]");
+	}
+	
+	public Element getDocView_Navigate_NoButton() {
+		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[@id='btnNo']");
+	}
+	
+	public Element getDocView_Navigate_YesButton() {
+		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[@id='btnYes']");
+	}
+	
+	public Element getDocList_BackToSource_Button() {
+		return driver.FindElementByXPath("//a[text()='Back to Source']");
+	}
+	
+	public Element getDocList_DocId() {
+		return driver.FindElementByXPath("//*[@id='dtDocList']//td[@class='sorting_1']");
+	}
+	
+	
+	public Element getDocView_ThreadMapTab_FirstDoc_Text() {
+		return driver.FindElementByXPath("//*[@id='dtDocumentThreadedDocuments']//thead//tr[@id='threadedDocumentIdRow']//th[2]");
+	}
+	
+	public Element getDocView_ThreadMapTab_SecDoc_Text() {
+		return driver.FindElementByXPath("//*[@id='dtDocumentThreadedDocuments']//thead//tr[@id='threadedDocumentIdRow']//th[3]");
+	}
 
+	
 	public Element get_textHighlightedColor() {
 		return driver.FindElementByCssSelector("g:nth-child(2) > rect:nth-child(1)");
 	}
@@ -18244,5 +18273,59 @@ public class DocViewPage {
 			}
 		}
 		driver.waitForPageToBeReady();
+	}
+	
+	
+	
+	
+	/**
+	 * @author Mohan.Venugopal Created Date: 31/12/2021
+	 * @description To select docs from threadMap tab and view in Doclist
+	 */
+	public void selectDocsFromThreadMapAndViewInDocList() {
+		
+		driver.waitForPageToBeReady();
+		
+		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(3);;
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_ThreadMapTab_FirstDoc_Text());
+		String docId1= getDocView_ThreadMapTab_FirstDoc_Text().getText();
+		System.out.println(docId1);
+		base.waitForElement(getDocView_ThreadMapTab_SecDoc_Text());
+		String docId2 = getDocView_ThreadMapTab_SecDoc_Text().getText();
+		System.out.println(docId2);
+		
+		
+		
+		for (int i = 2; i <= 3; i++) {
+			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
+			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
+		}
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+
+		base.waitForElement(getDocView_Analytics_Thread_ViewDoclist());
+		getDocView_Analytics_Thread_ViewDoclist().waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		
+		base.waitForElement(getDocList_BackToSource_Button());
+		softAssertion.assertTrue(getDocList_BackToSource_Button().isElementAvailable(5));
+		softAssertion.assertAll();
+		base.passedStep("Docs are navigated to DocList successfully");
+		
+		String docIds = getDocList_DocId().getText();
+		System.out.println(docIds);
+		if (docIds.contains("ID0000")) {
+			base.passedStep("Selected docs are present in the DocList Page");
+		}else {
+			base.failedStep("Selected docs are not present in the DocList Page");
+		}
+		
+		
+		
 	}
 }
