@@ -6386,6 +6386,100 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.fillingGeneratePage();
 		}
 
+		/**
+		 * @author Brundha Test case id-RPMXCON-48376
+		 * @Description To verify that user select the PrivTag and if non-audio document
+		 *              is not associated to that selected tag then Native should
+		 *              produced.
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 78)
+		public void VerifyPrivTagNotAssociatedNativeProduced() throws Exception {
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-48376 -Production Sprint 09");
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.selectPrivDocsInTiffSection(tagname);
+			page.fillingTextSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+
+		}
+
+		/**
+		 * @author Brundha Test case id-RPMXCON-48378
+		 * @Description To verify that if PRIV document is selected and TIFF or PDF
+		 *              sections are not selected then Native should be generated
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 79)
+		public void verifyPDFOrTIFFNotSelectedNativeGenerate() throws Exception {
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-48378 -Production Sprint 09");
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkTagExisting(tagname);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+
+		}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void close() {
