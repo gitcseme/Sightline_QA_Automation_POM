@@ -24,6 +24,7 @@ import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocViewMetaDataPage;
@@ -604,7 +605,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 	
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority =14)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority =15)
 	public void verifyDownloadDropdownDocViewAsSA() throws InterruptedException{
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -654,7 +655,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 	
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority =14)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority =16)
 	public void verifyNavigationToDocViewAsSAimpersonation() throws InterruptedException, AWTException{
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -698,6 +699,40 @@ public class DocView_Regression2 {
 		}
 	}
 		
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51013
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 17)
+	public void verifyImagesTabFromAssignmentAsSA() throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoRMU();
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51013");
+		baseClass.stepInfo("To verify that after impersonating, system admin can view persistent search on doc view.");
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		baseClass.stepInfo("Search the non audio documents and Create new assignment");
+		assignmentsPage.createAssignment(assname, codingForm);
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignExisting(assname);
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.checkingPersistentHitPanel();
+		if(docViewRedact.getKeywordInPersistentHitPanel_test().isDisplayed()) {
+			baseClass.passedStep("Keyword assigned to security group is present in the persistent hit panel");
+		} else {
+			baseClass.failedStep("Keyword assigned to security group is not present in the panel");
+		}
+	
+	assignmentsPage.deleteAssgnmntUsingPagination(assname);
+	}
 	
 
 	@AfterMethod(alwaysRun = true)
