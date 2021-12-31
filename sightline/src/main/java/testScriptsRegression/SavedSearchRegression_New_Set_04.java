@@ -104,6 +104,18 @@ public class SavedSearchRegression_New_Set_04 {
 		return users;
 	}
 
+	@DataProvider(name = "verifyOverwrittingSavedSearchAsUser")
+	public Object[][] verifyOverwrittingSavedSearchASUser() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName, "Yes", "COMPLETED", 1 },
+				{ Input.pa1userName, Input.pa1password, Input.pa1FullName, "No", "DRAFT", 1 },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName, "Yes", "COMPLETED", 1 },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName, "No", "DRAFT", 1 },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName, "Yes", "COMPLETED", 1 },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName, "No", "DRAFT", 1 } };
+
+		return users;
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod)
 			throws IOException, ParseException, InterruptedException {
@@ -2788,7 +2800,7 @@ public class SavedSearchRegression_New_Set_04 {
 	}
 
 	/**
-	 * @Author  jeevitha
+	 * @Author jeevitha
 	 * @Description : When the user selects any query from Saved search, selected
 	 *              search and it's folder is highlighted indicating the
 	 *              selection[RPMXCON-47424]
@@ -2830,7 +2842,94 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.deleteNode(Input.mySavedSearch, node);
 		login.logout();
 	}
-	
+
+	/**
+	 * @author Raghuram A Date: 12/31/21 Modified date:N/A Modified by:N/A
+	 * @Description: Verify that relevant error message appears when user modifies
+	 *               (Rename with xyz) - batch Search "column header in Sheet2" and
+	 *               tries to upload same file in Saved Search Screen
+	 *               [RPMXCON-48539]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
+	public void verifyBatchFileRenamedHeaderSheet2() throws InterruptedException {
+
+		String fileName = Input.BatchFileWithMultiplesheetFile;
+		String fileFormat = ".xlsx";
+		String batchNodeToCheck = fileName + "_" + 1 + "_Sheet" + 1;
+		String renamedbatchSheet = fileName + "_" + 2 + "_Sheet" + 2;
+
+		base.stepInfo("Test case Id: RPMXCON-48539 - Saved Search Sprint 09");
+		base.stepInfo(
+				"Verify that relevant error message appears when user modifies (Rename with xyz) - batch Search \"column header in Sheet2\" and tries to upload same file in Saved Search Screen");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as : " + Input.pa1FullName);
+
+		saveSearch.navigateToSSPage();
+
+		// upload batch file
+		saveSearch.uploadBatchFile_D(Input.invalidBatchFileNewLocation, fileName + fileFormat, false);
+		saveSearch.getSubmitToUpload().Click();
+		saveSearch.verifyBatchUploadMessage("DataFailure", false);
+
+		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(2);
+		softAssertion.assertFalse(saveSearch.verifyNodePresent(batchNodeToCheck),
+				"Searches not uploaded in Saved search screen.");
+		softAssertion.assertFalse(saveSearch.verifyNodePresent(renamedbatchSheet),
+				"Searches not uploaded in Saved search screen.");
+		softAssertion.assertAll();
+
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/31/21 Modified date:N/A Modified by: Description
+	 *         : Overwriting saved Searches - User should be allowed to overwrite
+	 *         the search in Completed/Draft status - RPMXCON-48943 Sprint 09
+	 */
+	@Test(enabled = true, dataProvider = "verifyOverwrittingSavedSearchAsUser", groups = {
+			"regression" }, priority = 39)
+	public void verifyOverwrittingSavedSearchInCompletedAndDraftStatusAsPAUandRMUandRev(String userName,
+			String password, String fullName, String Query, String Status, int searchNum) throws Exception {
+
+		String searchName1 = "Search Name" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-48943 - Saved Search Sprint 09");
+		base.stepInfo(
+				"Overwriting saved Searches - User should be allowed to overwrite the search in Completed/Draft status");
+
+		login.loginToSightLine(userName, password);
+		base.stepInfo("Loggedin As : " + fullName);
+
+		// saving the Search
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		session.basicContentSearchWithSaveChanges(Input.searchString1, Query, "First");
+		session.saveSearch(searchName1);
+
+		// selecting the savedSearch
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName1, "Yes");
+		saveSearch.verifyExecutionStatusInSavedSearchPage(Status);
+
+		// modifying the saved search
+		saveSearch.getSavedSearchEditButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		session.modifySearchTextArea(searchNum, Input.searchString1, Input.searchString2, "Save");
+		session.getSearchButton().Click();
+
+		// Overwriting the the same saved saerch
+		driver.waitForPageToBeReady();
+		session.saveAsOverwrittenSearch(Input.mySavedSearch, searchName1, "First", "Success", "", null);
+
+		// Deleting the SavedSearch
+		saveSearch.navigateToSSPage();
+		saveSearch.deleteSearch(searchName1, Input.mySavedSearch, "Yes");
+		login.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
