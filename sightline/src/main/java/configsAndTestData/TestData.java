@@ -83,6 +83,7 @@ public class TestData {
 	public String nearDupeBulkAssignReviewer;
 	public String nearDupeBulkAssignReviewId;
 	public String theardMapViewId;
+	public String nearDupeViewDocId;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;

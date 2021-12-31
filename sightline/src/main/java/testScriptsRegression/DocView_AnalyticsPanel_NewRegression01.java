@@ -723,7 +723,8 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 11)
+	// @Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
+	// }, priority = 11)
 	public void verifyViewTheDocsFromDocViewThreadMap(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -765,7 +766,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	// @Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyCheckMarkIconAndCodeSameAsFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48716");
@@ -1030,6 +1031,151 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		// Thread Map View in Doc List
 		docView.performThreadMapViewInDocList();
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 31/12/21 NA Modified date: NA Modified by:NA
+	 * Description :To verify that after impersonating user can view the document in
+	 * the doc list from Doc View->Thread Map.'RPMXCON-50871' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	public void verifyViewAllInDocListInAnalyticalThreadMap() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50871");
+		baseClass.stepInfo(
+				"To verify that after impersonating user can view the document in the doc list from Doc View->Thread Map.");
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+
+		// login as SA
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
+
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Step 1: Impersonate SA to RMU, search docs and Search for docs");
+		baseClass.impersonateSAtoRMU();
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssignThreadedDocs();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 2: Create new assignment and distribute docs to reviewer");
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentspage.add3ReviewerAndDistribute();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
+		docView.selectDocIdInMiniDocList(Input.nearDupeViewDocId);
+		docView.performThreadMapViewInDocList();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Step 1: Impersonate PAU to RMU, select assignment and go to Docview");
+		baseClass.impersonatePAtoRMU();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
+		docView.selectDocIdInMiniDocList(Input.nearDupeViewDocId);
+		docView.performThreadMapViewInDocList();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Step 1: Impersonate PAU to Reviewer,select assignment and go to Docview");
+		baseClass.impersonatePAtoReviewer();
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
+		docView.performThreadMapViewInDocList();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Step 1: Impersonate RMU to Reviewer,select assignment and go to Docview");
+		baseClass.impersonateRMUtoReviewer();
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
+		docView.selectDocIdInMiniDocList(Input.nearDupeViewDocId);
+		docView.performThreadMapViewInDocList();
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 31/12/21 NA Modified date: NA Modified by:NA
+	 * Description :To verify user can select single document in the Near Dupe panel
+	 * in doc view and view in doc list.'RPMXCON-50870 Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	public void verifyViewInDocListSelectSingleDocInNearDupe()
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50870");
+		baseClass.stepInfo(
+				"To verify user can select single document in the Near Dupe panel in doc view and view in doc list.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// LOGIN AS RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo(
+				"Searching documents based on search string to get NearDupe documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignNearDupeDocuments();
+
+		// create Assignment and disturbute docs
+		assignmentsPage.assignNearDupeDocstoNewAssgn(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// NearDupe ViewIn DocList without Select Docs
+		driver.waitForPageToBeReady();
+		docView.performNearDupeSelectDocsActionViewInDocList();
+
+		// logout
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// NearDupe ViewIn DocList without Select Docs
+		driver.waitForPageToBeReady();
+		docView.performNearDupeSelectDocsActionViewInDocList();
 
 		// logout
 		loginPage.logout();
