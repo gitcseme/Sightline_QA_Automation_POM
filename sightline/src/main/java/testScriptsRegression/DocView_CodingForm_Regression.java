@@ -7134,6 +7134,290 @@ public class DocView_CodingForm_Regression {
 		// logout
 		loginPage.logout();
 	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description :Verify on click of 'Save'/'Complete button coding form should be validated as per the customized"+
+	 *                  " coding form using Tag objects along with "Selected" condition
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 165)
+	public void verifyCompleteButtonTagObjectsValidation() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51211");
+	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using Tag objects along with \"Selected\" condition");
+	    docViewPage = new DocViewPage(driver);
+		codingForm = new CodingForm(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		reusableDocView=new ReusableDocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+	    String codingform = "cf"+Utility.dynamicNameAppender();
+	    String assgnCoding = "codingAssgn"+Utility.dynamicNameAppender();
+	    String defaultAction="Make It Display But Not Selectable";
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	codingForm.createCodingFormUsingTwoObjects(codingform, null, null, null, "tag");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.selectDefaultActions(0,defaultAction);
+	 	codingForm.saveCodingForm();
+	 	//create assignment and asign to coding form
+	 	sessionSearch.basicContentSearch("null");
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assgnCoding, codingform);
+		assignmentPage.add2ReviewerAndDistribute();
+		//Impersonate as reviewer
+		baseClass.impersonateRMUtoReviewer();
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		reusableDocView.completeButton();
+		baseClass.VerifySuccessMessage("Document completed successfully");
+		baseClass.passedStep("Review manager: Coding form validated successfully");
+		//validations in docviewPage
+		loginPage.logout();
+		//LogIn as reviewer
+		loginPage.loginToSightLine(Input.rev1userName,Input.rev1password);
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		reusableDocView.completeButton();
+		baseClass.VerifySuccessMessage("Document completed successfully");
+		baseClass.passedStep("Review manager: Coding form validated successfully");
+		//validations in docviewPage
+		loginPage.logout();
+		//Delete assignment and codingform
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.deleteCodingForm(codingform,codingform);	
+		codingForm.verifyCodingFormIsDeleted(codingform);
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description :Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form 
+	 *                       using Tags and Check group combined with Check Item
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 166)
+	public void verifyCompleteButtonValidationUsingTagCheckGroup() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51208");
+	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form"+
+	                           " using Tags and Check group combined with Check Item");
+	    docViewPage = new DocViewPage(driver);
+		codingForm = new CodingForm(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		reusableDocView=new ReusableDocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
+	    String codingform = "CFMetadatas"+Utility.dynamicNameAppender();
+	    String assgnCoding = "codingAssgn"+Utility.dynamicNameAppender();
+	    String tagName ="tag"+Utility.dynamicNameAppender();
+	    String defaultAction="Make It Hidden";  String defaultAction1="Make It Required";
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+	 	// create new coding form
+	 	tagsAndFoldersPage.CreateTag(tagName, Input.securityGroup);
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	codingForm.createCodingFormUsingFirstObject(codingform,"tag");
+	 	codingForm.CreateCodingFormWithParameter(codingform, tagName, null, null, "tag");
+	 	baseClass.stepInfo("Coding form created by using two tags");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.getCF_CheckGrpObject().waitAndClick(10);
+	    codingForm.addcodingFormAddButton();
+	    codingForm.selectTagTypeByIndex("check item",1,0);
+	    codingForm.getCF_CheckGrpObject().waitAndClick(10);
+	    codingForm.addcodingFormAddButton();
+	    codingForm.selectTagTypeByIndex("check item",2,1);
+	 	codingForm.selectDefaultActions(2,defaultAction);
+	 	codingForm.selectDefaultActions(3,defaultAction1);
+	 	codingForm.saveCodingForm();
+	 	//create assignment and asign to coding form
+	 	sessionSearch.basicContentSearch("null");
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assgnCoding, codingform);
+		assignmentPage.add2ReviewerAndDistribute();
+		//Impersonate as reviewer
+		baseClass.impersonateRMUtoReviewer();
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		reusableDocView.completeButton();
+		baseClass.VerifyErrorMessage("Coding Form validation failed");
+		baseClass.passedStep("Review manager: Coding form validation is failed as expected");
+		//validations in docviewPage
+		loginPage.logout();
+		//LogIn as reviewer
+		loginPage.loginToSightLine(Input.rev1userName,Input.rev1password);
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		reusableDocView.completeButton();
+		baseClass.VerifyErrorMessage("Coding Form validation failed");
+		baseClass.passedStep("Reviewer: Coding form validation is failed as expected");
+		//validations in docviewPage
+		loginPage.logout();
+		//Delete assignment and codingform
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.deleteCodingForm(codingform,codingform);	
+		codingForm.verifyCodingFormIsDeleted(codingform);
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description :Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using
+	 *                 Tags objects along with Selected and "Not Selected" condition
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 167)
+	public void verifyCompleteButtonValidationUsingTagRadiogrpLogics() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51213");
+	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using "+
+	                     "Tags objects along with Selected and \"Not Selected\" condition");
+	    docViewPage = new DocViewPage(driver);
+		codingForm = new CodingForm(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		reusableDocView=new ReusableDocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
+	    String codingform = "CFMetadatas"+Utility.dynamicNameAppender();
+	    String assgnCoding = "codingAssgn"+Utility.dynamicNameAppender();
+	    String tagName ="tag"+Utility.dynamicNameAppender();
+	    String defaultAction="Make It Hidden";  String defaultAction1="Make It Required";
+	    String actionName = "Make this Required";  String actionName1 = "Make this Optional";
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+	 	// create new coding form
+	 	tagsAndFoldersPage.CreateTag(tagName, Input.securityGroup);
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	codingForm.createCodingFormUsingFirstObject(codingform,"tag");
+	 	codingForm.CreateCodingFormWithParameter(codingform, tagName, null, null, "tag");
+	 	codingForm.addcodingFormAddButton();
+	 	baseClass.stepInfo("Coding form created by two tags");
+	 	codingForm.getCF_RadioGrpObject().waitAndClick(10);
+	    codingForm.addcodingFormAddButton();
+	    codingForm.selectTagTypeByIndex("radio item",1,0);
+	    codingForm.getCF_RadioGrpObject().waitAndClick(10);
+	    codingForm.addcodingFormAddButton();
+	    codingForm.selectTagTypeByIndex("radio item",2,1);
+	 	codingForm.selectDefaultActions(2,defaultAction);
+	 	String expectedFirstObjectName = codingForm.getCFObjectsLabel(0);
+	 	System.out.println(expectedFirstObjectName);
+	 	codingForm.selectDefaultActions(3,defaultAction1);
+	 	String expectedSecondObjectName = codingForm.getCFObjectsLabel(1);
+	 	System.out.println(expectedSecondObjectName);
+	 	codingForm.selectFieldLogicValues(2,expectedSecondObjectName,"Selected",actionName);
+	 	codingForm.selectFieldLogicValues(3,expectedFirstObjectName,"Not Selected",actionName1);
+	 	baseClass.stepInfo(defaultAction+" and "+defaultAction1+" are selected respectively");
+	 	codingForm.saveCodingForm();
+	 	//create assignment and asign to coding form
+	 	sessionSearch.basicContentSearch("null");
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assgnCoding, codingform);
+		assignmentPage.add2ReviewerAndDistribute();
+		//Impersonate as reviewer
+		baseClass.impersonateRMUtoReviewer();
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		baseClass.waitForElement(codingForm.selectTagInPreviewBox(2));
+		codingForm.selectTagInPreviewBox(2).waitAndClick(10);
+		reusableDocView.completeButton();
+		baseClass.VerifyErrorMessage("Coding Form validation failed");
+		baseClass.passedStep("Review manager: Coding form validation is failed as expected");
+		//validations in docviewPage
+		loginPage.logout();
+		//LogIn as reviewer
+		loginPage.loginToSightLine(Input.rev1userName,Input.rev1password);
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		baseClass.waitForElement(codingForm.selectTagInPreviewBox(2));
+		codingForm.selectTagInPreviewBox(2).waitAndClick(10);
+		reusableDocView.completeButton();
+		baseClass.VerifyErrorMessage("Coding Form validation failed");
+		baseClass.passedStep("Reviewer: Coding form validation is failed as expected");
+		//validations in docviewPage
+		loginPage.logout();
+		//Delete assignment and codingform
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.deleteCodingForm(codingform,codingform);	
+		codingForm.verifyCodingFormIsDeleted(codingform);
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description : Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form 
+	 *               using Comments objects along with "Not Selected" condition
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 168)
+	public void verifyCompleteValidationUsingCommentsLogics() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51212");
+	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form"+
+	                             " using Comments objects along with \"Not Selected\" condition");
+	    docViewPage = new DocViewPage(driver);
+		codingForm = new CodingForm(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		reusableDocView=new ReusableDocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
+	    String codingform = "CFMetadatas"+Utility.dynamicNameAppender();
+	    String assgnCoding = "codingAssgn"+Utility.dynamicNameAppender();
+	    String defaultAction="Make It Optional";   String defaultAction1="Make It Required";
+	    String actionName = "Make this Read Only";
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	codingForm.createCodingFormUsingTwoObjects(codingform, null, null, null, "comment");
+	 	baseClass.stepInfo("Coding form created by two comments");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.selectDefaultActions(0,defaultAction);
+	 	String expectedFirstObjectName = codingForm.getCFObjectsLabel(0);
+	 	codingForm.selectDefaultActions(1,defaultAction1);
+	 	codingForm.selectFieldLogicValues(1,expectedFirstObjectName,"Not Selected",actionName);
+	 	baseClass.stepInfo(defaultAction+" and "+defaultAction1+" are selected respectively");
+	 	codingForm.saveCodingForm();
+	 	//create assignment and asign to coding form
+	 	sessionSearch.basicContentSearch("null");
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assgnCoding, codingform);
+		assignmentPage.add2ReviewerAndDistribute();
+		//Impersonate as reviewer
+		baseClass.impersonateRMUtoReviewer();
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		baseClass.waitTillElemetToBeClickable(reusableDocView.getDocument_CommentsTextBox());
+		reusableDocView.getDocument_CommentsTextBox().Clear();
+		reusableDocView.getDocument_CommentsTextBox().SendKeys(Input.searchString1);
+		reusableDocView.completeButton();
+		baseClass.VerifyErrorMessage("Coding Form validation failed");
+		baseClass.passedStep("Review manager: Coding form validation is failed as expected");
+		//validations in docviewPage
+		loginPage.logout();
+		//LogIn as reviewer
+		loginPage.loginToSightLine(Input.rev1userName,Input.rev1password);
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		baseClass.waitTillElemetToBeClickable(reusableDocView.getDocument_CommentsTextBox());
+		reusableDocView.getDocument_CommentsTextBox().Clear();
+		reusableDocView.getDocument_CommentsTextBox().SendKeys(Input.searchString1);
+		reusableDocView.completeButton();
+		baseClass.VerifyErrorMessage("Coding Form validation failed");
+		baseClass.passedStep("Reviewer: Coding form validation is failed as expected");
+		//validations in docviewPage
+		loginPage.logout();
+		//Delete assignment and codingform
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.deleteCodingForm(codingform,codingform);	
+		codingForm.verifyCodingFormIsDeleted(codingform);
+		loginPage.logout();
+	}
 	
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {
