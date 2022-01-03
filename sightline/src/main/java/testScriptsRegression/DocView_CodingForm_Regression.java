@@ -7419,6 +7419,139 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author : Baskar date: NA Modified date:29/12/2021 Modified by: Baskar
+	 * Description : Verify comment, metadata should be indexed for the document when user clicks 
+	 *              'Complete same as last doc' to the document in context of an assignment
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 169)
+	public void validateCommentAndMetadataPureHitCont() throws InterruptedException, AWTException {
+		projectPage = new ProjectPage(driver);
+		securityGroupPage = new SecurityGroupsPage(driver);
+		commentsPage = new CommentsPage(driver);
+		docViewPage = new DocViewPage(driver);
+		codingForm = new CodingForm(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51151");
+		baseClass.stepInfo("Verify comment, metadata should be indexed for the document when user clicks "
+				+ "'Complete same as last doc' to the document in context of an assignment");
+		UtilityLog.info("Started Execution for prerequisite");
+		String assignName = "AAsign" + Utility.dynamicNameAppender();
+		String addComment = "addomment" + Utility.dynamicNameAppender();
+		String cfName = "coding" + Utility.dynamicNameAppender();
+		String commentText = "ct" + Utility.dynamicNameAppender();
+		String metadataText = "mt" + Utility.dynamicNameAppender();
+
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+
+		// Custom Field created with INT DataType
+		projectPage.addCustomFieldProjectDataType(projectFieldINT, "NVARCHAR");
+		baseClass.stepInfo("Custom meta data field created with INT datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(projectFieldINT);
+		baseClass.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		commentsPage.AddComments(addComment);
+
+		// Creating Coding Form
+		codingForm.createCommentAndMetadata(projectFieldINT, addComment, cfName);
+		baseClass.stepInfo("Project field added to coding form in Doc view");
+		
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignName, cfName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+		
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer '" + Input.rev1userName + "'");
+
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// verify the coding form panel
+		int size=docViewPage.verifyCommentAndMetadataUsingComplete(addComment, commentText, projectFieldINT, metadataText);
+		baseClass.stepInfo("Checking index of comment and metadata for saved document");
+		int pureHit=sessionSearch.metadataAndCommentSearch(projectFieldINT, metadataText, addComment, commentText);
+
+		softAssertion.assertEquals(size, pureHit);
+		softAssertion.assertAll();
+		
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+	}
+	
+	/**
+	 * @Author : Baskar date:03/01/21 Modified date: NA Modified by: Baskar
+	 * @Description : Verify when stamp is saved from completed document then stamp 
+	 *                should be applied to the un complete document to complete those
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 170)
+	public void validateSavedStampForCompleteDocs() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-51578");
+		baseClass.stepInfo("Verify when stamp is saved from completed document then stamp "
+				+ "should be applied to the un complete document to complete those");
+		String assignName = "Assignment" + Utility.dynamicNameAppender();
+		String stamp = "stamp" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssignNearDupeDocuments();
+		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.toggleDisableCodeOutsideReviewersBatch();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		
+		docViewPage.completedDocsSavingstap(stamp, comment, 1);
+
+		// logout
+		loginPage.logout();
+	}
+	
+	
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {
 		return new Object[][] { 
