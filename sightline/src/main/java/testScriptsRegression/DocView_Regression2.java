@@ -784,6 +784,69 @@ public class DocView_Regression2 {
 			baseClass.failedStep("images Tab fit to screen option is not avilable");
 		}
 	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-59994
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 18)
+	public void verifyRedactionTagSelectionAsSA() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-49994");
+		baseClass.stepInfo("Verify the automatically selection of the redaction tag when System Admin impersonates as RMU/Reviewer");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoRMU();
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		sessionSearch.basicContentSearch(Input.searchString1);
+	    sessionSearch.ViewInDocView();
+	    docViewRedact = new DocViewRedactions(driver);
+	    docViewRedact.clickingRedactionIcon();
+	    baseClass.waitForElement(docViewRedact.thisPageRedaction());
+		baseClass.waitTillElemetToBeClickable(docViewRedact.thisPageRedaction());
+		docViewRedact.thisPageRedaction().Click();
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
+		baseClass.stepInfo("First redaction tag on the list saved successfully");
+	}
+	
+	
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51432
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true,dataProvider = "userDetails", alwaysRun = true , groups = { "regression" }, priority = 19)
+	public void verifySearchBoxNotPresent(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51432");
+		baseClass.stepInfo("Verify that search box is eliminated from presentation in DocView with no visible remnant");
+		loginPage.loginToSightLine(userName, password);
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		sessionSearch.basicContentSearch(Input.searchString1);
+	    sessionSearch.ViewInDocView();
+	    docViewRedact = new DocViewRedactions(driver);
+	    driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.getSearchIcon().Visible() && docViewRedact.HighliteIcon().Enabled();
+			}
+		}), Input.wait30);
+	    baseClass.waitTillElemetToBeClickable(docViewRedact.getSearchIcon());
+	    docViewRedact.getSearchIcon().waitAndFind(30);
+	    if(docViewRedact.getInputSearchBox().Visible()) {
+	    	baseClass.failedStep("The search box is present in the default view of DocView");
+	    } else {
+	    	baseClass.passedStep("The search box is not present in the default view of docview");
+	    }    
+	    
+	}
 
 
 	@AfterMethod(alwaysRun = true)
