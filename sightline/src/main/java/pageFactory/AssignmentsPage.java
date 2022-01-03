@@ -30,7 +30,7 @@ public class AssignmentsPage {
 	BaseClass bc;
 	SoftAssert assertion;
 	SessionSearch search;
-	LoginPage lp;
+	LoginPage lp; 
 
 	public Element getAssignmentActionDropdown() {
 		return driver.FindElementByXPath("//*[@id='ulActions']/../button[@class='btn btn-defualt dropdown-toggle']");
@@ -8444,4 +8444,121 @@ public class AssignmentsPage {
         assertion.assertEquals(colourGreen, "#A9C981");
         assertion.assertAll();
     }
+	
+	 
+    /**
+	 * @author gopinath.srinivasan
+	 * @Description : Method for creating new new bulk assignment with enabling persistant hit check box,
+	 * @param assignmentName : assignmentName is String value that name of assignment name need to create.
+	 * @param codingForm : codingForm is String value that name of coding form.
+	 */
+	public void assignmentCreationWithPersistantHitDocList(String assignmentName, String codingForm) {
+		try {
+			driver.scrollPageToTop();
+			DocListPage docList = new DocListPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return docList.getDocList_actionButton().Visible();
+				}
+			}), Input.wait60);
+			docList.getDocList_actionButton().isElementAvailable(15);
+			docList.getDocList_actionButton().waitAndClick(10);
+			bc.waitTime(3);
+			docList.getDocList_action_BulkAssignButton().isElementAvailable(10);
+			docList.getDocList_action_BulkAssignButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			UtilityLog.info("performing bulk assign");
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAssgn_NewAssignmnet());
+			getAssgn_NewAssignmnet().isElementAvailable(15);
+			bc.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
+			getAssgn_NewAssignmnet().waitAndClick(5);
+			bc.waitForElement(getbulkassgnpopup());
+			getbulkassgnpopup().isElementAvailable(10);
+			assertion.assertTrue(getbulkassgnpopup().isDisplayed());
+			try {
+				bc.waitForElement(getContinueBulkAssign());
+				getContinueBulkAssign().isElementAvailable(15);
+				bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+				getContinueBulkAssign().waitAndClick(10);
+			} catch (Exception e) {
+				bc.waitForElement(getContinueBulkAssign());
+				getContinueBulkAssign().isElementAvailable(15);
+				bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+				getContinueBulkAssign().waitAndClick(10);
+			}
+			bc.waitForElement(getAssgn_TotalCount());
+			getAssgn_TotalCount().isElementAvailable(10);
+			bc.waitForElement(getFinalizeButton());
+			bc.waitTillElemetToBeClickable(getFinalizeButton());
+			getFinalizeButton().isElementAvailable(10);
+			getFinalizeButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			try {
+				bc.waitForElement(getAssignmentName());
+				getAssignmentName().isElementAvailable(15);
+				getAssignmentName().SendKeys(assignmentName);
+			} catch (Exception e) {
+				getAssignmentName().isElementAvailable(15);
+				bc.waitForElement(getAssignmentName());
+				getAssignmentName().Clear();
+				getAssignmentName().SendKeys(assignmentName);
+			}
+			getParentAssignmentGroupName().isElementAvailable(10);
+			getParentAssignmentGroupName().isDisplayed();
+			bc.waitForElement(getSelectedClassification());
+			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+			bc.waitForElement(getAssignmentCodingFormDropDown());
+			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+			bc.waitForElement(getAssignmentSaveButton());
+			bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
+			getAssignmentSaveButton().waitAndClick(5);
+			try {
+				if (getAssignmentErrorText().isElementAvailable(5)) {
+					driver.waitForPageToBeReady();
+					bc.waitForElement(getAssignmentName());
+					getAssignmentName().SendKeys(assignmentName);
+					bc.waitForElement(getAssignmentSaveButton());
+					getAssignmentSaveButton().waitAndClick(5);
+				}
+			} catch (org.openqa.selenium.NoSuchElementException e) {
+				e.printStackTrace();
+			}
+			System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
+			UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
+			bc.waitForElement(getNumberOfAssignmentsToBeShown());
+			getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getAssgn_Pagination());
+			int count = ((getAssgnPaginationCount().size()) - 2);
+			for (int i = 0; i < count; i++) {
+				driver.waitForPageToBeReady();
+				Boolean status = getSelectAssignment(assignmentName).isElementAvailable(5);
+				if (status == true) {
+					driver.scrollingToElementofAPage(getSelectAssignment(assignmentName));
+					getSelectAssignment(assignmentName).waitAndClick(5);
+					driver.scrollPageToTop();
+					getAssignmentActionDropdown().isElementAvailable(10);
+					bc.waitTime(1);
+					bc.waitForElement(getAssignmentActionDropdown());
+					getAssignmentActionDropdown().Click();
+					bc.stepInfo("Expected assignment found in the page " + i);
+					break;
+				} else {
+					driver.scrollingToBottomofAPage();
+					bc.waitForElement(getAssgnPaginationNextButton());
+					getAssgnPaginationNextButton().Click();
+					bc.stepInfo("Expected assignment not found in the page " + i);
+				}
+			}
+			getAssignmentAction_EditAssignment().isElementAvailable(15);
+			bc.waitForElement(getAssignmentAction_EditAssignment());
+			bc.waitTillElemetToBeClickable(getAssignmentAction_EditAssignment());
+			getAssignmentAction_EditAssignment().waitAndClick(5);
+		}catch(Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while creating new new bulk assignment with enabling persistant hit check box"+e.getLocalizedMessage());
+		}
+	
+	}
   }

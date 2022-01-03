@@ -2438,6 +2438,17 @@ public class DocViewPage {
 	}
 
 	// added sakthivel
+
+		public Element getVerifyNearDuppin() {
+			return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//i[@class='fa fa-link']");
+		}
+		
+	//Added by Gopinath - 03/01/2022
+		public ElementCollection getPersistantNames() {
+			return driver.FindElementsByXPath("//div[@id='divPersistentSearch']//p//span");
+		}	
+		
+
 	public Element getVerifyNearDuppin() {
 		return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//i[@class='fa fa-link']");
 	}
@@ -2450,6 +2461,7 @@ public class DocViewPage {
 	public ElementCollection getCheckMarkIcon() {
 		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']");
 	}
+
 
 	public DocViewPage(Driver driver) {
 
@@ -18363,6 +18375,72 @@ public class DocViewPage {
 		softAssertion.assertAll();
 	}
 
+	
+	/**
+	 * @author Gopinath
+	 * Description: Method for verifying the search string is displayed on persistent hit panal or not with its count
+	 * @param SearchString : SearchString is String value that search term.
+	 */
+	public void persistenHitWithSearchString(String SearchString) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPersistantHitEyeIcon());
+		getPersistantHitEyeIcon().waitAndClick(5);
+		base.waitForElementCollection(getHitPanels());
+		int numOfPanels = getHitPanels().size();
+		boolean flag = false;
+		for (int i = 2; i <= numOfPanels; i++) {
+
+			if (getTermInHitPanels(i).getText().contains(SearchString)) {
+				String hitCount = getTermInHitPanels(i).getText();
+
+				System.out.println("Search hit terms" + " '" + SearchString + "'"
+						+ " is displayed on persistent hits panel and the hit count of " + SearchString + " is"
+						+ hitCount.replace(SearchString, ""));
+				base.passedStep("Search hit terms" + " '" + SearchString + "'"
+						+ " is displayed on persistent hits panel and the hit count of " + SearchString + " is"
+						+ hitCount.replace(SearchString, ""));
+				flag = true;
+
+				break;
+			}
+
+		}
+		if (flag == false) {
+			System.out.println("Search hit term is displayed on persistent hits panel");
+			base.failedStep("Search hit term is displayed on persistent hits panel");
+		}
+
+	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * Description: Method for verify persistant hits on docview.
+	 * @param keywords : keywords is list of String values that keywords to display in persistant.
+	 */
+	public void verifyPersistantHitsWithDocView(List<String> keywords) {
+		List<String> persisatantNames = new ArrayList<String>();
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getPersistantHitEyeIcon());
+			List<WebElement> persistantNames = getPersistantNames().FindWebElements();
+			for(WebElement persistantName :persistantNames ) {
+				persisatantNames.add(persistantName.getAttribute("data-custom-id").trim());
+			}
+			base.passedStep("Persistant hits are : "+persisatantNames);
+			if(persisatantNames.containsAll(keywords)) {
+				base.passedStep("All keywords are displayed in persistant hit panel");
+			}else {
+				base.failedStep("All keywords are not displayed in persistant hit panel");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while getting persistant hits in doc view"+e.getLocalizedMessage());
+		}
+	}
+		
+=======
+
 	/**
 	 * @Author Vijaya.Rani Created on 3/1/2022
 	 * @Description perform Conceptual Select Multiple Docs Action ViewInDocList.
@@ -18492,6 +18570,9 @@ public class DocViewPage {
 		base.passedStep("Checkmark icon displayed for document");
 		softAssertion.assertAll();
 	}
+
+
+
 	/**
 	 * @author Indium-Baskar date: 06/12/2021 Modified date:N/A
 	 * @Description: This method used to validate Code same as icon and coding stamp should apply 
@@ -18639,4 +18720,5 @@ public class DocViewPage {
 		softAssertion.assertTrue(flag);
 		softAssertion.assertAll();
 	}
+
 }
