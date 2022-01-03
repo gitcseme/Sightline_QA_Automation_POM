@@ -57,8 +57,8 @@ public class DocView_MiniDocList_Regression {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -67,10 +67,10 @@ public class DocView_MiniDocList_Regression {
 		assignmentPage = new AssignmentsPage(driver);
 		docViewPage = new DocViewPage(driver);
 		reusableDocViewPage = new ReusableDocViewPage(driver);
-		savedSearch=new SavedSearch(driver);
-		keywordPage=new KeywordPage(driver);
-		codingForm=new CodingForm(driver);
-		softAssertion=new SoftAssert();
+		savedSearch = new SavedSearch(driver);
+		keywordPage = new KeywordPage(driver);
+		codingForm = new CodingForm(driver);
+		softAssertion = new SoftAssert();
 
 	}
 
@@ -79,7 +79,6 @@ public class DocView_MiniDocList_Regression {
 		System.out.println("Executing method : " + testMethod.getName());
 		UtilityLog.info("Executing method : " + testMethod.getName());
 	}
-
 
 	/**
 	 * Author : Raghuram A date: NA Modified date: 8/24/21 Modified by: Raghuram A
@@ -140,8 +139,6 @@ public class DocView_MiniDocList_Regression {
 
 	}
 
-
-
 	/**
 	 * Author : Baskar date: NA Modified date: NA Modified by: Baskar Description :
 	 * Verify that when mini doc list is configured then should refresh the
@@ -151,7 +148,7 @@ public class DocView_MiniDocList_Regression {
 	 * @throws InterruptedException
 	 */
 
-    @Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void PersistentHitsPanelRefreshedImmediately() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51988");
 		sessionSearch = new SessionSearch(driver);
@@ -180,7 +177,7 @@ public class DocView_MiniDocList_Regression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	
+
 	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyLoadingDisplayedAfterEnteringDocumentNumber() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51865");
@@ -260,7 +257,7 @@ public class DocView_MiniDocList_Regression {
 	 * @description Verify that "select all" check-box must no longer appear for any
 	 *              user in the mini-docList 'RPMXCON-51872'
 	 */
-	 @Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifySelectAllCheckBox() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51872");
 
@@ -498,7 +495,7 @@ public class DocView_MiniDocList_Regression {
 	 * order configuration, then the optimized sort order should be presented with
 	 * the default fields from mini doc list
 	 */
-	 @Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyOptimizedSortOrder() throws InterruptedException {
 		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
@@ -654,7 +651,6 @@ public class DocView_MiniDocList_Regression {
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		miniDocListpage.checkmarkVerification(assignmentNameToCreate);
 
-
 	}
 
 	/**
@@ -741,7 +737,7 @@ public class DocView_MiniDocList_Regression {
 	 *              be the first document
 	 */
 
-	 @Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyingPrincipalDocumentUsingLastDocBtn() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51597");
 		String assignment = "Assignment07" + Utility.dynamicNameAppender();
@@ -898,7 +894,6 @@ public class DocView_MiniDocList_Regression {
 
 	}
 
-
 	/**
 	 * Author : Mohan date: 9/07/21 Modified date:N/A Modified by: Mohan Description
 	 * : Verify Configure Mini DocList modal window should be launched on click of
@@ -968,7 +963,6 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo(
 				"To Verify Configure Mini DocList modal window should be launched on click of the small gear icon from Mini DocList child window is done successfully");
 
-
 	}
 
 	/**
@@ -977,7 +971,7 @@ public class DocView_MiniDocList_Regression {
 	 * from analytics panel
 	 */
 
-	 @Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyDocSelectionMiniDoclist() {
 		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass.stepInfo("Test case Id: RPMXCON-51393");
@@ -1013,7 +1007,6 @@ public class DocView_MiniDocList_Regression {
 
 		miniDocListpage.verifyArrowMarkInMiniDocList();
 
-
 	}
 
 	/**
@@ -1023,7 +1016,7 @@ public class DocView_MiniDocList_Regression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	 @Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyDocsFromMiniDoclistAndChildWindow() throws InterruptedException {
 		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass.stepInfo("Test case Id: RPMXCON-51390");
@@ -1044,7 +1037,6 @@ public class DocView_MiniDocList_Regression {
 
 		// Select the Gear icon and an doc from the child window
 		miniDocListpage.selectDocFromMiniDocListChildWindow();
-
 
 	}
 
@@ -1154,11 +1146,10 @@ public class DocView_MiniDocList_Regression {
 
 	}
 
-	
 	/**
 	 * @Author : Baskar date: 06/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify when Code same action selected from mini doc list 
-	 *                child window and Save/Complete clicked from coding form child window
+	 * @Description : Verify when Code same action selected from mini doc list child
+	 *              window and Save/Complete clicked from coding form child window
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 31)
 	public void verifyingCompleteTickMarkChildWindow() throws InterruptedException {
@@ -1194,14 +1185,13 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
 
 	}
-	
-	
+
 	/**
 	 * @Author : Baskar date: 07/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify when Code same action selected from mini doc list child window 
-	 *                and Save/Complete clicked from coding form parent window
+	 * @Description : Verify when Code same action selected from mini doc list child
+	 *              window and Save/Complete clicked from coding form parent window
 	 */
-	
+
 	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyCodeSameAsMiniDocListChildWindowCodingParentWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51368");
@@ -1236,14 +1226,13 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
 
 	}
-	
-	
+
 	/**
 	 * @Author : Baskar date: 07/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify when Code same action selected from mini doc list and 
-	 *                Save/Complete clicked from coding form child window
+	 * @Description : Verify when Code same action selected from mini doc list and
+	 *              Save/Complete clicked from coding form child window
 	 */
-	
+
 	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifyUncomplteBtnChildWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51367");
@@ -1278,16 +1267,15 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
 
 	}
-	
-	
+
 	/**
 	 * @Author : Baskar date: 08/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify user is allowed to select up to 4 webfields from a preselected 
-	 *                list to display in the panel of mini doclist in the optimized mode 
-	 *                [RPMXCON-15074, RPMXCON-13255]
+	 * @Description : To verify user is allowed to select up to 4 webfields from a
+	 *              preselected list to display in the panel of mini doclist in the
+	 *              optimized mode [RPMXCON-15074, RPMXCON-13255]
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 34)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyAscendingOrderInMiniDocList() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50883");
 
@@ -1317,15 +1305,15 @@ public class DocView_MiniDocList_Regression {
 		miniDocListpage.sortingVerifyAfterSelectedWebFields();
 
 	}
-	
-	
+
 	/**
 	 * @Author : Baskar date: 12/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify user is allowed to select 4 webfields from a preselected 
-	 *                list to display in the panel of mini doc list in the optimized mode
+	 * @Description : To verify user is allowed to select 4 webfields from a
+	 *              preselected list to display in the panel of mini doc list in the
+	 *              optimized mode
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 35)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void verifyOptimizedModeInMinidocList() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50884");
 
@@ -1355,14 +1343,15 @@ public class DocView_MiniDocList_Regression {
 		miniDocListpage.optimizedSortToSelcetWebFields();
 
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 12/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify when user selects more than 4 webfields from a preselected 
-	 *                list to display in the panel of mini doc list in the optimized mode
+	 * @Description : To verify when user selects more than 4 webfields from a
+	 *              preselected list to display in the panel of mini doc list in the
+	 *              optimized mode
 	 */
-	
-    @Test(enabled = true,groups = { "regression" }, priority = 36)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
 	public void shouldNotSelectMoreThanFourWebFields() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50885");
 
@@ -1392,14 +1381,14 @@ public class DocView_MiniDocList_Regression {
 		miniDocListpage.moreThanFourWebFieldNotDraggable();
 
 	}
-	
-	
+
 	/**
 	 * @Author : Baskar date: 13/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify document should be complete on selecting 'Remove code same' action
+	 * @Description : Verify document should be complete on selecting 'Remove code
+	 *              same' action
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 37)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
 	public void documentShouldCompleteWhenRemoveCodeSameAs() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51233");
 		String assgnColour = "AssignColour" + Utility.dynamicNameAppender();
@@ -1429,17 +1418,17 @@ public class DocView_MiniDocList_Regression {
 		assignmentPage.SelectAssignmentByReviewer(Asssignment);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
-		miniDocListpage.removeCodeSameAsAndCompleteDocs(assgnColour,Input.stampSelection);
+		miniDocListpage.removeCodeSameAsAndCompleteDocs(assgnColour, Input.stampSelection);
 
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 19/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify warning message should be displayed when completed documents 
-	 *                are selected for code same action from mini doc list
+	 * @Description : Verify warning message should be displayed when completed
+	 *              documents are selected for code same action from mini doc list
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 38)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
 	public void warningMsgForCompletedCodeSameAs() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51409");
 		String Asssignment = "AssignmentWarningMsg" + Utility.dynamicNameAppender();
@@ -1469,15 +1458,14 @@ public class DocView_MiniDocList_Regression {
 		miniDocListpage.warningMsgForCompletedDocsCodeSameAs();
 
 	}
-	
-	
+
 	/**
 	 * @Author : Baskar date: 19/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify document should not be selected in mini doc list when 
-	 *                document viewed from history does not exists in mini doc list
+	 * @Description : Verify document should not be selected in mini doc list when
+	 *              document viewed from history does not exists in mini doc list
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 39)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyDocsShouldNotSelectFromMiniDocListInHistrotyDropDown() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51394");
 
@@ -1488,19 +1476,19 @@ public class DocView_MiniDocList_Regression {
 		// search to Assignment creation
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-		
+
 		miniDocListpage.docsShouldNotOfMiniDocList(0);
 
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 19/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify on click of the document navigation focus should set 
-	 *                in mini doc list child window when prior document is viewed 
-	 *                from history drop down of mini doc list child window
+	 * @Description : Verify on click of the document navigation focus should set in
+	 *              mini doc list child window when prior document is viewed from
+	 *              history drop down of mini doc list child window
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 40)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void childWindowHistoryDropDownFocus() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51392");
 
@@ -1511,19 +1499,19 @@ public class DocView_MiniDocList_Regression {
 		// search to Assignment creation
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
-		
+
 		miniDocListpage.focusOnChildWindowHistoryDrpDw();
 
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 19/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify on click of the document navigation document should be selected 
-	 *                in mini doc list child window when prior document is viewed from history 
-	 *                drop down of mini doc list child window
+	 * @Description : Verify on click of the document navigation document should be
+	 *              selected in mini doc list child window when prior document is
+	 *              viewed from history drop down of mini doc list child window
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 41)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
 	public void historyDropDownMiniDicListChild() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51391");
 
@@ -1534,19 +1522,19 @@ public class DocView_MiniDocList_Regression {
 		// search to Assignment creation
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
-		
+
 		miniDocListpage.selectDocFromHistoryDropDown();
 
 	}
-	
 
 	/**
 	 * @Author : Baskar date: 22/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify that document is selected to view from history drop down 
-	 *                selection when hits panel is open then enable/disable should be retained
+	 * @Description : Verify that document is selected to view from history drop
+	 *              down selection when hits panel is open then enable/disable
+	 *              should be retained
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 42)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 42)
 	public void verifyHitPanel() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51751");
 		String hitTerms = "Than" + Utility.dynamicNameAppender();
@@ -1556,29 +1544,30 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 //		Add keywords
-		this.driver.getWebDriver().get(Input.url+"Keywords/Keywords");
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		keywordPage.AddKeyword(hitTerms, hitTerms);
-		
+
 //		Go to docview via advanced search
 		sessionSearch.advancedContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-		
+
 		docViewPage.getPersistentHit(hitTerms);
 		docViewPage.verifyPersistentHitPanel(hitTerms);
-		
-		this.driver.getWebDriver().get(Input.url+"Keywords/Keywords");
+
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		keywordPage.getDeleteButton(hitTerms).waitAndClick(5);
 		keywordPage.getYesButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 19/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify documents folder action is done successfully from mini doclist
+	 * @Description : To verify documents folder action is done successfully from
+	 *              mini doclist
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 43)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 43)
 	public void verifyFolderActionForMiniDocList() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51734");
 		String folderName = "AFolder" + Utility.dynamicNameAppender();
@@ -1590,22 +1579,22 @@ public class DocView_MiniDocList_Regression {
 		// search to Assignment creation
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
-		
-		docViewPage.performFolderAction(folderName,1);
+
+		docViewPage.performFolderAction(folderName, 1);
 //		verify code same as icon should not present in minidoclist for folder performed
-		boolean flag=docViewPage.geDocView_MiniList_CodeSameAsIcon().isElementPresent();
+		boolean flag = docViewPage.geDocView_MiniList_CodeSameAsIcon().isElementPresent();
 		Assert.assertFalse(flag);
 		baseClass.passedStep("Code same as icon not displayed in minidoclist after performing folder action");
 	}
-	
-	
+
 	/**
 	 * @Author : Baskar date: 17/11/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify that when document is completed from child window then 
-	 *                principal document being viewing must always be the first document
+	 * @Description : Verify that when document is completed from child window then
+	 *              principal document being viewing must always be the first
+	 *              document
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 44)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 44)
 	public void principalDocsAlwaysBeFirst() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51569");
 		baseClass.stepInfo("Verify that when document is completed from child window then "
@@ -1633,35 +1622,35 @@ public class DocView_MiniDocList_Regression {
 		// Selecting the assignment from dashboard
 		assignmentPage.SelectAssignmentByReviewer(Asssignment);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
-		
+
 		docViewPage.verifyPrincipaDocumentBeFirst();
-		
+
 		// logout
 		driver.waitForPageToBeReady();
 		loginPage.logout();
-		
+
 //		Doing house keeping activity
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-		
+
 		assignmentPage.deleteAssgnmntUsingPagination(Asssignment);
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 17/11/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify check mark icon should be displayed in the mini doc list
-                      for completed document after applying coding stamp
+	 * @Description : Verify check mark icon should be displayed in the mini doc
+	 *              list for completed document after applying coding stamp
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 45)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
 	public void verifyCheckMarkIcon() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51042");
 		baseClass.stepInfo("Verify check mark icon should be displayed in "
 				+ "the mini doc list for completed document after applying coding stamp");
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
 		String stampText = "Text" + Utility.dynamicNameAppender();
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -1672,31 +1661,32 @@ public class DocView_MiniDocList_Regression {
 		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
 		assignmentPage.toggleCodingStampEnabled();
 		assignmentPage.assignmentDistributingToReviewerManager();
-		
+
 		baseClass.impersonateRMUtoReviewer();
-		
+
 		docViewPage.selectAssignmentfromDashborad(Asssignment);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
-		
+
 		docViewPage.verifyCheckMarkIcon(stampText, Input.stampSelection);
 		reusableDocViewPage.deleteStampColour(Input.stampSelection);
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 17/11/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify warning message is prompted when navigates to other page 
-	 *               without completing or saving 'Code same as this' action from 
-	 *               Dov View > mini doc list redirected from Edit Assignment > Manage Reviewers
+	 * @Description : Verify warning message is prompted when navigates to other
+	 *              page without completing or saving 'Code same as this' action
+	 *              from Dov View > mini doc list redirected from Edit Assignment >
+	 *              Manage Reviewers
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 46)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
 	public void verifyNavigatesToOtherPageUsingYesNoBtn() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50949");
 		baseClass.stepInfo("Verify warning message is prompted when navigates to "
 				+ "other page without completing or saving 'Code same as this' "
 				+ "action from Dov View > mini doc list redirected from Edit Assignment > Manage Reviewers");
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -1706,34 +1696,34 @@ public class DocView_MiniDocList_Regression {
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
 		assignmentPage.assignmentDistributingToReviewer();
-		
+
 		// logout
 		loginPage.logout();
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
 
 		docViewPage.selectAssignmentfromDashborad(Asssignment);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
-		
+
 		docViewPage.verifyOtherPageNavUsingYesAndNoBtn();
 	}
-	
-	
+
 	/**
 	 * @Author : Baskar date: 17/11/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify warning message is prompted to the user when user clicks 
-	 *                browser refresh button without completing or saving from mini doc list panel
+	 * @Description : Verify warning message is prompted to the user when user
+	 *              clicks browser refresh button without completing or saving from
+	 *              mini doc list panel
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 47)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 47)
 	public void verifyNavigateToRefreshInReload() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50920");
 		baseClass.stepInfo("Verify warning message is prompted to the user when "
 				+ "user clicks browser refresh button without completing or saving from mini doc list panel");
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -1743,39 +1733,39 @@ public class DocView_MiniDocList_Regression {
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
 		assignmentPage.assignmentDistributingToReviewer();
-		
+
 		driver.getWebDriver().navigate().back();
 		assignmentPage.manageAssignmentToDocViewAsRmu(Asssignment);
 		// verify from manage assignment
 		docViewPage.verifyOtherPageNavUsingReloadBtn();
-		
+
 		// logout
 		loginPage.logout();
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
 
 		docViewPage.selectAssignmentfromDashborad(Asssignment);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
-		
+
 		docViewPage.verifyOtherPageNavUsingReloadBtn();
-		
+
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 17/11/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify that sorting sequence of documents 
-	 *                should not save for all users of assignment
+	 * @Description : To verify that sorting sequence of documents should not save
+	 *              for all users of assignment
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 48)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 48)
 	public void verifySortSequenceForOtherUser() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50898");
-		baseClass.stepInfo("To verify that sorting sequence of documents should not "
-				+ "save for all users of assignment");
+		baseClass.stepInfo(
+				"To verify that sorting sequence of documents should not " + "save for all users of assignment");
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -1785,24 +1775,24 @@ public class DocView_MiniDocList_Regression {
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
 		assignmentPage.assignmentDistributingToTwoReviewer();
-		
+
 		// logout
 		loginPage.logout();
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
 
 		docViewPage.selectAssignmentfromDashborad(Asssignment);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
-		
-		String userOne=miniDocListpage.currentSortOrderShouldBeDisplayed();
+
+		String userOne = miniDocListpage.currentSortOrderShouldBeDisplayed();
 		System.out.println(userOne);
 		baseClass.stepInfo("Sort sequence done for user one in manual mode");
 		driver.waitForPageToBeReady();
 		// logout
 		loginPage.logout();
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev2userName + "'");
@@ -1811,46 +1801,46 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verifying sort sequence in second user");
-		String userTwo=miniDocListpage.againDocviewToViewNewChanges();
+		String userTwo = miniDocListpage.againDocviewToViewNewChanges();
 		System.out.println(userTwo);
 		softAssertion.assertNotEquals(userOne, userTwo);
 		baseClass.passedStep("Sort Sequence not displayed for second user for same assignment");
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 17/11/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify mini doc list form doc view page when user redirects 
-	 *                from Basic search and Save Search.
+	 * @Description : To verify mini doc list form doc view page when user redirects
+	 *              from Basic search and Save Search.
 	 */
-	
-	@Test(enabled = true,groups = { "regression" }, priority = 49)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 49)
 	public void savedSearchAndBasicToDocView() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50896");
 		baseClass.stepInfo("To verify mini doc list form doc view page when "
 				+ "user redirects from Basic search and Save Search.");
-		String savedSearchs = "AsavedToDocview" +Utility.dynamicNameAppender();
-		
+		String savedSearchs = "AsavedToDocview" + Utility.dynamicNameAppender();
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		// Saved search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(savedSearchs);
-		
+
 //		sessionSearch=new SessionSearch(driver);
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("User navigated to docview page from basic search page");
 
 		docViewPage.verifyMiniDocListPanel();
-		
+
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 16/11/2021 Modified date: NA Modified by: Baskar
 	 * @Description : Verify that updated metadata should displayed on Mini doc list
 	 */
 
-	@Test(enabled = true,groups = { "regression" }, priority = 50)
+	@Test(enabled = true, groups = { "regression" }, priority = 50)
 	public void verifyUpadteMetaDataValueOnMiniDocList() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51143");
 		baseClass.stepInfo("Verify that updated metadata should displayed on Mini doc list");
@@ -1870,14 +1860,234 @@ public class DocView_MiniDocList_Regression {
 		sessionSearch.ViewInDocView();
 
 		// verify metadata fields in minidoclist
-		docViewPage.metaDataTextInMiniDocList(textMeta,text);
+		docViewPage.metaDataTextInMiniDocList(textMeta, text);
 		miniDocListpage.metaDataValueToBeDisplayed(textMeta, text);
-		codingForm=new CodingForm(driver);
+		codingForm = new CodingForm(driver);
 		codingForm.assignCodingFormToSG(Input.codeFormName);
 		driver.waitForPageToBeReady();
 	}
 
-	
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify warning message is displayed when user do not select
+	 *              any web fields from preselected list to display in the panel of
+	 *              mini doc list in the manual mode [RPMXCON-50879]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 51)
+	public void verifyWarningMsgForManualMode() throws InterruptedException {
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+
+		// Login as a Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50879");
+		baseClass.stepInfo(
+				"To verify warning message is displayed when user do not select any web fields from preselected list to display in the panel of mini doc list in the manual mode");
+
+		// search to Assignment creation And distribute to Rev
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(Asssignment, Input.codeFormName);
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// navigate to docview and Perform Manual sort
+		driver.getWebDriver().navigate().back();
+		assignmentPage.manageAssignmentToDocViewAsRmu(Asssignment);
+		miniDocListpage.clickManualSortButton();
+
+		// Remove All the fields and save
+		miniDocListpage.removingSelectedWebFieldInConfigureList();
+		baseClass.passedStep("Removed All the fields");
+		baseClass.waitForElement(miniDocListpage.getMiniDocListConfirmationButton("Save"));
+		miniDocListpage.getMiniDocListConfirmationButton("Save").Click();
+
+		// verify Error Msg
+		baseClass.VerifyErrorMessage("Please select columns to display");
+
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		docViewPage.selectAssignmentfromDashborad(Asssignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		miniDocListpage.clickManualSortButton();
+
+		// Remove All the fields and save
+		miniDocListpage.removingSelectedWebFieldInConfigureList();
+		baseClass.passedStep("Removed All the fields");
+		baseClass.waitForElement(miniDocListpage.getMiniDocListConfirmationButton("Save"));
+		miniDocListpage.getMiniDocListConfirmationButton("Save").Click();
+
+		// verify Error Msg
+		baseClass.VerifyErrorMessage("Please select columns to display");
+
+		loginPage.logout();
+
+		// Login as a Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		// delete Created Assignment
+		assignmentPage.deleteAssgnmntUsingPagination(Asssignment);
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify error message is displayed when user do not select
+	 *              any web fields from preselected list to display in the panel of
+	 *              mini doc list in the optimizedmode[RPMXCON-50886]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 52)
+	public void verifyWarningMsgForOptimizedMode() throws InterruptedException {
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+
+		// Login as a Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50886");
+		baseClass.stepInfo(
+				"To verify error message is displayed when user do not select any web fields from preselected list to display in the panel of mini doc list in the optimizedmode");
+
+		// search to Assignment creation And distribute to Rev
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(Asssignment, Input.codeFormName);
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// navigate to docview and Perform Manual sort
+		driver.getWebDriver().navigate().back();
+		assignmentPage.manageAssignmentToDocViewAsRmu(Asssignment);
+		miniDocListpage.configureMiniDocListPopupOpen();
+
+		// Remove All the fields and save
+		miniDocListpage.removingSelectedWebFieldInConfigureList();
+		baseClass.passedStep("Removed All the fields");
+		baseClass.waitForElement(miniDocListpage.getMiniDocListConfirmationButton("Save"));
+		miniDocListpage.getMiniDocListConfirmationButton("Save").Click();
+
+		// verify Error Msg
+		baseClass.VerifyErrorMessage("Please select columns to display");
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		docViewPage.selectAssignmentfromDashborad(Asssignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		miniDocListpage.configureMiniDocListPopupOpen();
+
+		// Remove All the fields and save
+		miniDocListpage.removingSelectedWebFieldInConfigureList();
+		baseClass.passedStep("Removed All the fields");
+		baseClass.waitForElement(miniDocListpage.getMiniDocListConfirmationButton("Save"));
+		miniDocListpage.getMiniDocListConfirmationButton("Save").Click();
+
+		// verify Error Msg
+		baseClass.VerifyErrorMessage("Please select columns to display");
+
+		loginPage.logout();
+
+		// Login as a Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		// delete Created Assignment
+		assignmentPage.deleteAssgnmntUsingPagination(Asssignment);
+	}
+
+	/**
+	 * @author Raghuram.A Date: 1/3/21 Modified date:N/A Modified by: N/A
+	 * @Description : To verify that warning message is displayed if user select
+	 *              action without selecting any document in Mini doc list.
+	 *              [RPMXCON-50899]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 53)
+	public void verifyWarningMsgWhenNoDocSelected() throws InterruptedException {
+
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50899");
+		baseClass.stepInfo(
+				"To verify that warning message is displayed if user select action without selecting any document in Mini doc list.");
+
+		// basic search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		// click folder in action DD.
+		docViewPage.getDocView_Mini_ActionButton().waitAndClick(5);
+		docViewPage.getDocView_Mini_FolderAction().waitAndClick(5);
+
+		// verify warning msg
+		baseClass.VerifyWarningMessage("Please select at least one document");
+
+	}
+
+	/**
+	 * @author Raghuram A Date: 1/3/21 Modified date:N/A Modified by: N/A
+	 *         Description : Validate sharing modified search/groups to Security
+	 *         Group which are already shared-RPMXCON-48711 Sprint 09
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 54)
+	public void validateCheckMarkIconForComplete() throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48711 - Saved Search Sprint 09");
+		baseClass.stepInfo(
+				"Verify check mark icon should be displayed in the mini doc list for completed document after clicking the 'Code same as last doc'");
+		String assignName = "Assignment" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+
+		// selecting the assignment
+		driver.waitForPageToBeReady();
+		miniDocListpage.getDashBoardLink().waitAndClick(2);
+		driver.waitForPageToBeReady();
+		miniDocListpage.chooseAnAssignmentFromDashBoard(assignName);
+
+		// validate checkmark icon and code same as last button
+		docViewPage.validateCodeSameAsLatAction(comment);
+
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validate checkmark icon and code same as last button
+		docViewPage.validateCodeSameAsLatAction(comment);
+
+		loginPage.logout();
+
+		// Login as a Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		// delete Created Assignment
+		assignmentPage.deleteAssgnmntUsingPagination(assignName);
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
