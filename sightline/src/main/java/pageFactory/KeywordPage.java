@@ -3,6 +3,8 @@ package pageFactory;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.testng.Reporter;
@@ -32,6 +34,12 @@ public class KeywordPage {
     
     public Element getDeleteButton(String keywordName){ return driver.FindElementByXPath("//td[text()='"+keywordName+"']/parent::tr//a[text()='Delete']"); }
  
+    //Added by Gopinath - 03/01/2022
+    public Element getKeyword(int rowNum){ return driver.FindElementByXPath("//table[@id='KeywordsDatatable']//tbody//tr["+rowNum+"]//td[4]"); }
+    public ElementCollection totalRows(){ return driver.FindElementsByXPath("//table[@id='KeywordsDatatable']//tbody//tr"); }
+    public Element getNextButton(){ return driver.FindElementByXPath("//a[text()='Next']/parent::li"); }
+    public Element getNextButtonEle(){ return driver.FindElementByXPath("//a[text()='Next']"); }
+    
   
     //Annotation Layer added successfully
     public KeywordPage(Driver driver){
@@ -112,6 +120,90 @@ public class KeywordPage {
         base.CloseSuccessMsgpopup();    	
     	
     }
-   
+    /**
+	 * @author Gopinath
+	 * Description: Method for navigating to keyword page.
+	 */
+    public void navigateToKeywordPage(){
+    	try {
+    		driver.getWebDriver().get(Input.url+"Keywords/Keywords");
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		base.failedStep("Navigaing to keyword page is failed"+e.getLocalizedMessage());
+    	}
+    }
+    
+    /**
+   	 * @author Gopinath
+   	 * @Description: Method for getting all keywords
+   	 * @return keywords : keywords list of String values that total keywords in keywords table.
+   	 */
+       public List<String> getAllKeywords(){
+    	   List<String> keywords = new ArrayList<String>();
+       	try {
+       		driver.getWebDriver().get(Input.url+"Keywords/Keywords");
+       		base.waitTime(2);
+       		getKeyword(1).isElementAvailable(15);
+       		int rowCount = totalRows().FindWebElements().size();
+       		for(int i=0;i<rowCount;i++) {
+       			keywords.add(getKeyword(i+1).getText().trim());
+       			String getNextButtonAtt = getNextButton().GetAttribute("class");
+       			if((i==rowCount-1)&&!(getNextButtonAtt.contains("disabled"))) {
+       				driver.scrollingToBottomofAPage();
+       				driver.waitForPageToBeReady();
+       				getNextButtonEle().isElementAvailable(8);
+       				getNextButtonEle().Click();
+       				driver.waitForPageToBeReady();
+       				rowCount = totalRows().FindWebElements().size();
+       				i=-1;
+       			}
+       		}
+       		System.out.println("Keywords are "+keywords);
+       		base.passedStep("Keywords are "+keywords);
+       	}catch(Exception e) {
+       		e.printStackTrace();
+       		base.failedStep("Execption occured while verifying all keywords"+e.getLocalizedMessage());
+       	}
+       	return keywords;
+       }
  
+       /**
+      	 * @author Gopinath
+      	 * @Description: Method for getting all keywords
+      	 * @param keyword : keyword is String value that name of keyword.
+      	 */
+       public void deleteKeywordByName(String keyword) {
+    	  	try {
+           		driver.getWebDriver().get(Input.url+"Keywords/Keywords");
+           		base.waitTime(2);
+           		getKeyword(1).isElementAvailable(15);
+           		int rowCount = totalRows().FindWebElements().size();
+           		for(int i=0;i<rowCount;i++) {
+           			String val =getKeyword(i+1).getText();
+           			if(getKeyword(i+1).getText().trim().equalsIgnoreCase(keyword)) {
+           				base.waitForElement(getDeleteButton(keyword));
+           		    	getDeleteButton(keyword).waitAndClick(5);
+           		    	base.waitForElement(getYesButton());
+           		    	getYesButton().waitAndClick(5);
+           		    	base.VerifySuccessMessage("Keyword Highlighting Group successfully deleted");
+           		        base.CloseSuccessMsgpopup(); 
+           		        break;
+           			}
+           			String getNextButtonAtt = getNextButton().GetAttribute("class");
+           			if((i==rowCount-1)&&!(getNextButtonAtt.contains("disabled"))) {
+           				driver.scrollingToBottomofAPage();
+           				driver.waitForPageToBeReady();
+           				getNextButtonEle().isElementAvailable(8);
+           				getNextButtonEle().Click();
+           				driver.waitForPageToBeReady();
+           				rowCount = totalRows().FindWebElements().size();
+           				i=-1;
+           			}
+           		}
+    		}catch(Exception e) {
+           		e.printStackTrace();
+           		base.failedStep("Execption occured while deleting keyword"+e.getLocalizedMessage());
+           	}
+       	
+       }
  }

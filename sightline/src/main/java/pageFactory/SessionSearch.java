@@ -46,7 +46,7 @@ public class SessionSearch {
 	public Element getEnterSearchString() {
 		return driver.FindElementByXPath(".//*[@id='xEdit']/li/input");
 	}
-
+ 
 	public Element getSearchButton() {
 		return driver.FindElementById("btnBasicSearch");
 	}

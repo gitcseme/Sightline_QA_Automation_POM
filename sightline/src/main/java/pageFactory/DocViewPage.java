@@ -2440,7 +2440,11 @@ public class DocViewPage {
 		public Element getVerifyNearDuppin() {
 			return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//i[@class='fa fa-link']");
 		}
-
+		
+	//Added by Gopinath - 03/01/2022
+		public ElementCollection getPersistantNames() {
+			return driver.FindElementsByXPath("//div[@id='divPersistentSearch']//p//span");
+		}	
 		
 	public DocViewPage(Driver driver) {
 
@@ -18396,4 +18400,32 @@ public class DocViewPage {
 		}
 
 	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * Description: Method for verify persistant hits on docview.
+	 * @param keywords : keywords is list of String values that keywords to display in persistant.
+	 */
+	public void verifyPersistantHitsWithDocView(List<String> keywords) {
+		List<String> persisatantNames = new ArrayList<String>();
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getPersistantHitEyeIcon());
+			List<WebElement> persistantNames = getPersistantNames().FindWebElements();
+			for(WebElement persistantName :persistantNames ) {
+				persisatantNames.add(persistantName.getAttribute("data-custom-id").trim());
+			}
+			base.passedStep("Persistant hits are : "+persisatantNames);
+			if(persisatantNames.containsAll(keywords)) {
+				base.passedStep("All keywords are displayed in persistant hit panel");
+			}else {
+				base.failedStep("All keywords are not displayed in persistant hit panel");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while getting persistant hits in doc view"+e.getLocalizedMessage());
+		}
+	}
+		
 }

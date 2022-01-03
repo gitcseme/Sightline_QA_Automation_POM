@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.interactions.Actions;
@@ -22,6 +23,7 @@ import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
 import pageFactory.MiniDocListPage;
@@ -2804,19 +2806,41 @@ public class DocView_Regression1 {
 		public void verifySearchTermDisplayOnPersistentHitPanal() throws InterruptedException {
 			baseClass = new BaseClass(driver);
 			baseClass.stepInfo("Test case Id: RPMXCON-51757");
+			String keywordname = Input.randomText +Utility.dynamicNameAppender();
+			String keyword = Input.randomText +Utility.dynamicNameAppender();
 			baseClass.stepInfo("#### Verify that all relevant hits should be displayed on persistent hits panel when navigated to doc view with ad hoc search and keywords highlighting ####");
 
+			KeywordPage keywordPage = new KeywordPage(driver);
+			
+			baseClass.stepInfo("Navigate to keyword page");
+			keywordPage.navigateToKeywordPage();
+		
+			baseClass.stepInfo("Add keyword");
+			keywordPage.AddKeyword(keywordname, keyword);
+			
+			baseClass.stepInfo("Get All Keywords in keywords lsit table");
+			List<String> keywords = keywordPage.getAllKeywords();
+			
 			docView = new DocViewPage(driver);
 			SessionSearch session = new SessionSearch(driver);
 
 			baseClass.stepInfo("Basic Basic content search");
-			session.basicContentSearch(Input.searchString2);
+			session.basicContentSearch(Input.searchString1);
 			
 			baseClass.stepInfo("Navigate to  DocView page");
 			session.ViewInDocView();
 			
 			baseClass.stepInfo("Persistent Hit With search string");
-			docView.persistenHitWithSearchString(Input.searchString2);
+			docView.persistenHitWithSearchString(Input.searchString1);
+			
+			baseClass.stepInfo("Verify Persistant Hits With Doc View");
+			docView.verifyPersistantHitsWithDocView(keywords);
+			
+			baseClass.stepInfo("Navigate to keyword page");
+			keywordPage.navigateToKeywordPage();
+			
+			baseClass.stepInfo("Delete keyword");
+			keywordPage.deleteKeywordByName(keyword);
 		}
 		
 		/**

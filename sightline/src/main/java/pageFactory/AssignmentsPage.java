@@ -30,7 +30,7 @@ public class AssignmentsPage {
 	BaseClass bc;
 	SoftAssert assertion;
 	SessionSearch search;
-	LoginPage lp;
+	LoginPage lp; 
 
 	public Element getAssignmentActionDropdown() {
 		return driver.FindElementByXPath("//*[@id='ulActions']/../button[@class='btn btn-defualt dropdown-toggle']");
