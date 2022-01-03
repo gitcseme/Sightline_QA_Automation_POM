@@ -3559,7 +3559,7 @@ public class CreateCodingForm_New_Regression {
 	 * 			RPMXCON-51206
 	 * @Description : Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form for Tag/Comments/Metadata objects.
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 58)
+	@Test(enabled = true,groups = { "regression" }, priority = 57)
 	public void verifySaveCompleteValidateTagCommentMetaCodingForm() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-51206");
 	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form for Tag/Comments/Metadata objects");
@@ -3636,7 +3636,7 @@ public class CreateCodingForm_New_Regression {
 	 * 			RPMXCON-51207
 	 * @Description : Verify on click of 'Save'/'Complete button coding form should be validated as per the customized Tags and Radio Group combined along with Radio Item on coding form screen.
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 59)
+	@Test(enabled = true,groups = { "regression" }, priority = 58)
 	public void verifySaveCompleteValidate2TagRadioItemCodingForm() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-51207");
 	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized Tags and Radio Group combined along with Radio Item on coding form screen");
@@ -3695,6 +3695,171 @@ public class CreateCodingForm_New_Regression {
 		docViewPage.getCompleteDocBtn().waitAndClick(10);
 		baseClass.VerifySuccessMessage("Document completed successfully");
 		baseClass.passedStep("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized Tags and Radio Group combined along with Radio Item on coding form screen");
+		
+		// logout
+		loginPage.logout();
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			RPMXCON-51214
+	 * @Description : Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using Metadata objects along with "Not Selected" condition.
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 59)
+	public void verifySaveCompleteValidatemetaDataNotSelectedCodingForm() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51214");
+	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using Metadata objects along with \"Not Selected\" condition");
+	   
+	    String cfName = "CF"+Utility.dynamicNameAppender();
+	    String assignName = "CFAssignment"+Utility.dynamicNameAppender();
+	    String meta = "demo"+Utility.dynamicNameAppender();
+		String meta1 = "demo"+Utility.dynamicNameAppender();
+		String intData= "INT";
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+
+		// Custom Field created with INT DataType
+		projectPage.clickingManageButton();
+		projectPage.addMetaDataFieldUsingIntergerType(meta, intData, Input.docBasic, Input.tinyInt);
+		projectPage.addMetaDataFieldUsingIntergerType(meta1, intData, Input.docBasic, Input.tinyInt);
+		baseClass.stepInfo("Custom meta data field created with integer");
+		
+		securityGroupPage.addProjectFieldtoSG(meta);
+		securityGroupPage.addProjectFieldtoSG(meta1);
+		baseClass.stepInfo("Custom metadata integer field assign to security group");
+		
+		loginPage.logout();
+		
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
+       
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	codingForm.saveCodingForm2MetaDataAddLogicNotSelected(cfName,meta,meta1);
+	 	baseClass.stepInfo("Coding form created 2 metaData add logic is not Selected");
+		
+		// Assign to security group
+		codingForm.assignCodingFormToSG(cfName);
+		baseClass.stepInfo("Coding form assigned to security group");
+		
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		baseClass.stepInfo("Search with text input for docs completed");
+
+		// Creating Assignment from Basic search
+		assignmentPage = new AssignmentsPage(driver);
+		assignmentPage.assignmentCreation(assignName, cfName);
+		assignmentPage.toggleCodingStampEnabled();
+		baseClass.stepInfo("Doc is Assigned from basic Search and Assignment '" + assignName + "' is created Successfully");
+		assignmentPage.add2ReviewerAndDistribute();
+		assignmentPage.selectAssignmentToViewinDocviewThreadMap(assignName);
+		driver.waitForPageToBeReady();
+		docViewPage.getSaveDoc().waitAndClick(10);
+		docViewPage.errorMessage();
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		
+		// Select the Assignment from dashboard
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		
+		// Edit coding Form and complete Action
+		driver.waitForPageToBeReady();
+		docViewPage.getCompleteDocBtn().waitAndClick(10);
+		docViewPage.errorMessage();
+		baseClass.passedStep("Verified on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using Metadata objects along with \"Not Selected\" condition");
+		
+		// logout
+		loginPage.logout();
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			RPMXCON-51215
+	 * @Description : Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using all objects along with all condition and Radio Item
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 60)
+	public void verifySaveCompleteValidateAllObjectAlongWithRadioItemdCodingForm() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51215");
+	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using all objects along with all condition and Radio Item");
+	   
+	    String cfName = "CF"+Utility.dynamicNameAppender();
+	    String assignName = "CFAssignment"+Utility.dynamicNameAppender();
+	    String tagName = "tag"+Utility.dynamicNameAppender();
+		
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
+	 	
+	 	 // create tag
+		tagsAndFoldersPage.CreateTag(tagName,"Default Security Group");
+		
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	driver.waitForPageToBeReady();
+	 	codingForm.addNewCodingFormButton();
+	 	baseClass.waitForElement(codingForm.getCodingForm_Tag(tagName));
+	 	codingForm.getCodingForm_Tag(tagName).waitAndClick(10);
+	 	codingForm.firstCheckBox(Input.comments);
+	 	codingForm.firstCheckBox(Input.metaData);
+	 	codingForm.specialObjectsBox("staticText");
+	 	codingForm.specialObjectsBox("radio");
+	 	codingForm.specialObjectsBox("check");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.getCF_TagTypes(0).selectFromDropdown().selectByVisibleText("Radio Item");
+	 	driver.waitForPageToBeReady();
+	 	codingForm.getCF_RadioGroup(0).selectFromDropdown().selectByIndex(1);
+	 	codingForm.selectDefaultActions(1, Input.hidden);
+	 	codingForm.selectDefaultActions(2, Input.notSelectable);
+	 	codingForm.selectDefaultActions(4, Input.optional);
+	 	codingForm.getCodingForm_ErrorMsg(4).SendKeys(Input.errorMsg);
+	 	codingForm.getCodingForm_HelpMsg(4).SendKeys(Input.helpText);
+	 	codingForm.selectDefaultActions(5, Input.required);
+	 	driver.waitForPageToBeReady();
+	 	driver.scrollPageToTop();
+	 	codingForm.addLogicOptionWithIndex(1, 1, Input.select, Input.thisHidden);
+	 	codingForm.addLogicOptionWithIndex(2, 1, Input.notSelect, Input.thisReadOnly);
+	 	codingForm.addLogicOptionWithIndexWithoutIncreace(4, 1, Input.select, Input.thisOptional);
+	 	codingForm.addLogicOptionWithIndexWithoutIncreace(5, 1, Input.notSelect, Input.thisRequired);
+	 	codingForm.passingCodingFormName(cfName);
+	 	codingForm.saveCodingForm();
+	 	baseClass.stepInfo("Coding form created all object along with radio item");
+		
+		// Assign to security group
+		codingForm.assignCodingFormToSG(cfName);
+		baseClass.stepInfo("Coding form assigned to security group");
+		
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		baseClass.stepInfo("Search with text input for docs completed");
+
+		// Creating Assignment from Basic search
+		assignmentPage = new AssignmentsPage(driver);
+		assignmentPage.assignmentCreation(assignName, cfName);
+		assignmentPage.toggleCodingStampEnabled();
+		baseClass.stepInfo("Doc is Assigned from basic Search and Assignment '" + assignName + "' is created Successfully");
+		assignmentPage.add2ReviewerAndDistribute();
+		assignmentPage.selectAssignmentToViewinDocviewThreadMap(assignName);
+		driver.waitForPageToBeReady();
+		docViewPage.getSaveDoc().waitAndClick(10);
+		docViewPage.errorMessage();
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		
+		// Select the Assignment from dashboard
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		
+		// Edit coding Form and complete Action
+		driver.waitForPageToBeReady();
+		docViewPage.getCompleteDocBtn().waitAndClick(10);
+		docViewPage.errorMessage();
+		baseClass.passedStep("Verified on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using all objects along with all condition and Radio Item");
 		
 		// logout
 		loginPage.logout();
