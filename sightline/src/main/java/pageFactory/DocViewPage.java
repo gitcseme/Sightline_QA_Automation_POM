@@ -1465,33 +1465,33 @@ public class DocViewPage {
 	public Element getDocView_Navigate_ButtonText() {
 		return driver.FindElementByXPath("//p[contains(text(),'This action will not save')]");
 	}
-	
+
 	public Element getDocView_Navigate_NoButton() {
 		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[@id='btnNo']");
 	}
-	
+
 	public Element getDocView_Navigate_YesButton() {
 		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[@id='btnYes']");
 	}
-	
+
 	public Element getDocList_BackToSource_Button() {
 		return driver.FindElementByXPath("//a[text()='Back to Source']");
 	}
-	
+
 	public Element getDocList_DocId() {
 		return driver.FindElementByXPath("//*[@id='dtDocList']//td[@class='sorting_1']");
 	}
-	
-	
+
 	public Element getDocView_ThreadMapTab_FirstDoc_Text() {
-		return driver.FindElementByXPath("//*[@id='dtDocumentThreadedDocuments']//thead//tr[@id='threadedDocumentIdRow']//th[2]");
-	}
-	
-	public Element getDocView_ThreadMapTab_SecDoc_Text() {
-		return driver.FindElementByXPath("//*[@id='dtDocumentThreadedDocuments']//thead//tr[@id='threadedDocumentIdRow']//th[3]");
+		return driver.FindElementByXPath(
+				"//*[@id='dtDocumentThreadedDocuments']//thead//tr[@id='threadedDocumentIdRow']//th[2]");
 	}
 
-	
+	public Element getDocView_ThreadMapTab_SecDoc_Text() {
+		return driver.FindElementByXPath(
+				"//*[@id='dtDocumentThreadedDocuments']//thead//tr[@id='threadedDocumentIdRow']//th[3]");
+	}
+
 	public Element get_textHighlightedColor() {
 		return driver.FindElementByCssSelector("g:nth-child(2) > rect:nth-child(1)");
 	}
@@ -2430,18 +2430,24 @@ public class DocViewPage {
 	public Element getDocView_DocListPageDocs() {
 		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr/td[3]");
 	}
-	
-	//Added by Aathith
+
+	// Added by Aathith
 
 	public Element getAttachCountTextBox() {
 		return driver.FindElementByXPath("//input[@projectfieldname='AttachCount']");
 	}
-	// added sakthivel
-		public Element getVerifyNearDuppin() {
-			return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//i[@class='fa fa-link']");
-		}
 
-		
+	// added sakthivel
+	public Element getVerifyNearDuppin() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//i[@class='fa fa-link']");
+	}
+
+	// Added By Vijaya.Rani
+	public Element getDocView_Analytics_Conceptual_Docs(int rowno) {
+		return driver
+				.FindElementByXPath("//table[@id='dtDocumentConceptuallySimilar']//tbody/tr[" + rowno + "]//label");
+	}
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -13310,7 +13316,6 @@ public class DocViewPage {
 		reusableDocView.deleteStampColour(Input.stampSelection);
 	}
 
-
 	/**
 	 * @author Indium-Baskar date: 30/11/2021 Modified date:N/A
 	 * @Description: This method used to verify saved colour should not clickable
@@ -13619,20 +13624,18 @@ public class DocViewPage {
 		}
 
 		driver.waitForPageToBeReady();
-		
-			try {
-				if (geDocView_ThreadMap_CodeSameAsIcon(1).isElementAvailable(5)) {
-					softAssertion.assertTrue(geDocView_ThreadMap_CodeSameAsIcon(1).isElementAvailable(5));
 
-					base.failedStep("CodeAsSame icon is displayed for the selected docs ");
-				}
-			} catch (Exception e) {
+		try {
+			if (geDocView_ThreadMap_CodeSameAsIcon(1).isElementAvailable(5)) {
+				softAssertion.assertTrue(geDocView_ThreadMap_CodeSameAsIcon(1).isElementAvailable(5));
 
-				base.passedStep("CodeAsSame icon is not displayed for the selected docs");
-				UtilityLog.info("Verification failed due to " + e.getMessage());
+				base.failedStep("CodeAsSame icon is displayed for the selected docs ");
 			}
+		} catch (Exception e) {
 
-		
+			base.passedStep("CodeAsSame icon is not displayed for the selected docs");
+			UtilityLog.info("Verification failed due to " + e.getMessage());
+		}
 
 	}
 
@@ -15374,7 +15377,6 @@ public class DocViewPage {
 			base.passedStep("The Code Same As Action is Not Avaliable in Near Dupes");
 		}
 	}
-
 
 	/**
 	 * @author Vijaya.Rani date: 13/12/2021 Modified date:N/A
@@ -17845,12 +17847,12 @@ public class DocViewPage {
 			base.failedStep("Cursor not navigated to next document");
 		}
 	}
-	
 
 	/**
 	 * @author Gopianth
 	 * @Description : this method used for verifying persistent Hits Displayed.
-	 * @param searchValue : searchValue is string value that search term will appear on persistant hits.
+	 * @param searchValue : searchValue is string value that search term will appear
+	 *                    on persistant hits.
 	 * 
 	 */
 	public void verifyPersistentHitsDisplayed(String searchValue) {
@@ -17865,21 +17867,20 @@ public class DocViewPage {
 				if (getTermInHitPanels(i).getText().contains(searchValue)) {
 					System.out.println("Found " + searchValue);
 					base.passedStep(searchValue + " term is present in persistent hit panel.");
-				}else if(i==numOfPanels) {
+				} else if (i == numOfPanels) {
 					base.failedStep(searchValue + " term is not present in persistent hit panel.");
 				}
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception while  verifying persistent Hits Displayed." + e.getMessage());
 		}
 	}
-	
-	
+
 	/**
-	 * @author Gopinath
-	 * Description: select the documnet from min doc list and verify loaded in default view or not
+	 * @author Gopinath Description: select the documnet from min doc list and
+	 *         verify loaded in default view or not
 	 * @param RowNumber(select the document from mini doc list by it's row number
 	 */
 	public void selectDocumentFromMiniDocList(int RowNumber) {
@@ -17888,41 +17889,41 @@ public class DocViewPage {
 			base.waitForElement(getDocView_MiniDocListIds(RowNumber));
 			getDocView_MiniDocListIds(RowNumber).waitAndClick(6);
 			base.waitForElement(getDocViewSelectedDocId());
-			if(getDocViewSelectedDocId().isElementAvailable(3)==true) {
+			if (getDocViewSelectedDocId().isElementAvailable(3) == true) {
 				base.passedStep("Document is selcted from min Doclist");
-			}
-			else {
+			} else {
 				base.failedStep("Unable to select document from Mini doc lIst");
 			}
 			softAssertion.assertTrue(getDocView_IconDownload().isElementAvailable(3));
-			if(getDocView_IconDownload().isElementAvailable(5)==true) {
+			if (getDocView_IconDownload().isElementAvailable(5) == true) {
 				base.passedStep("Document is loaded in default view");
-			}
-			else {
+			} else {
 				base.failedStep("Unable to oad the document in default view");
 			}
 			String DocId = getDocViewSelectedDocId().getText();
-			if(getDocViewMiniDocIdCheckBoxArrowRight(DocId).isElementAvailable(RowNumber)==true) {
+			if (getDocViewMiniDocIdCheckBoxArrowRight(DocId).isElementAvailable(RowNumber) == true) {
 				base.passedStep("same document is  fully in visible area of mini doc list");
-				
-			}
-			else {
+
+			} else {
 				base.failedStep("document is not in visible area of mini doc list");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception while select the documnet from min doc list and verify loaded in default view or not." + e.getMessage());
-			
+			base.failedStep(
+					"Exception while select the documnet from min doc list and verify loaded in default view or not."
+							+ e.getMessage());
+
 		}
 	}
-	
+
 	/**
 	 * @Author Vijaya.Rani Created on 30/12/2021
-	 * @Description perform NearDupe WithOut Select Docs Action ViewInDocList.id-50872
+	 * @Description perform NearDupe WithOut Select Docs Action
+	 *              ViewInDocList.id-50872
 	 * 
 	 */
 	public void performNearDupeWithOutSelectDocActionViewInDocList() {
-		
+
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(5);
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
@@ -17937,7 +17938,7 @@ public class DocViewPage {
 		}
 
 	}
-	
+
 	/**
 	 * @Author Vijaya.Rani Created on 30/12/2021
 	 * @Description perform NearDupe Select Docs Action ViewInDocList. id-50872
@@ -17972,8 +17973,8 @@ public class DocViewPage {
 		} else {
 			base.failedStep("Selected document is not display in Doc List");
 		}
-	} 
-	
+	}
+
 	/**
 	 * @author Indium-Sakthivel date: 29/12/2021 Modified date:N/A
 	 * @Description:verify Docview coding form child window then should be on Images
@@ -18274,31 +18275,27 @@ public class DocViewPage {
 		}
 		driver.waitForPageToBeReady();
 	}
-	
-	
-	
-	
+
 	/**
 	 * @author Mohan.Venugopal Created Date: 31/12/2021
 	 * @description To select docs from threadMap tab and view in Doclist
 	 */
 	public void selectDocsFromThreadMapAndViewInDocList() {
-		
+
 		driver.waitForPageToBeReady();
-		
+
 		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
-		getDocView_Analytics_liDocumentThreadMap().waitAndClick(3);;
-		
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(3);
+		;
+
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_ThreadMapTab_FirstDoc_Text());
-		String docId1= getDocView_ThreadMapTab_FirstDoc_Text().getText();
+		String docId1 = getDocView_ThreadMapTab_FirstDoc_Text().getText();
 		System.out.println(docId1);
 		base.waitForElement(getDocView_ThreadMapTab_SecDoc_Text());
 		String docId2 = getDocView_ThreadMapTab_SecDoc_Text().getText();
 		System.out.println(docId2);
-		
-		
-		
+
 		for (int i = 2; i <= 3; i++) {
 			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
 			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
@@ -18309,23 +18306,23 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_Analytics_Thread_ViewDoclist());
 		getDocView_Analytics_Thread_ViewDoclist().waitAndClick(10);
-		
+
 		driver.waitForPageToBeReady();
-		
+
 		base.waitForElement(getDocList_BackToSource_Button());
 		softAssertion.assertTrue(getDocList_BackToSource_Button().isElementAvailable(5));
 		softAssertion.assertAll();
 		base.passedStep("Docs are navigated to DocList successfully");
-		
+
 		String docIds = getDocList_DocId().getText();
 		System.out.println(docIds);
 		if (docIds.contains("ID0000")) {
 			base.passedStep("Selected docs are present in the DocList Page");
-		}else {
+		} else {
 			base.failedStep("Selected docs are not present in the DocList Page");
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 06/12/2021 Modified date:N/A
 	 * @Description: This method used to verify checkmark icon
@@ -18355,9 +18352,122 @@ public class DocViewPage {
 		clickCodeSameAsLast();
 		driver.waitForPageToBeReady();
 		getverifyCodeSameAsLast().WaitUntilPresent().ScrollTo();
-		boolean flag=getverifyCodeSameAsLast().isDisplayed();
+		boolean flag = getverifyCodeSameAsLast().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep("Checkmark icon displayed for completed document");
 		softAssertion.assertAll();
+	}
+
+	/**
+	 * @Author Vijaya.Rani Created on 3/1/2022
+	 * @Description perform Conceptual Select Multiple Docs Action ViewInDocList. id-50860
+	 * 
+	 */
+	public void performConceptualSelectSetOfDocsActionViewInDocList() {
+
+		driver.waitForPageToBeReady();
+		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		Point p = getDocView_Analytics_liDocumentConceptualSimilarab().getWebElement().getLocation();
+		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
+
+		for (int i = 1; i <= 2; i++) {
+			base.waitForElement(getDocView_Analytics_Conceptual_Docs(i));
+			getDocView_Analytics_Conceptual_Docs(i).waitAndClick(5);
+		}
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(3);
+
+		base.waitForElement(getViewInDocListAnalyticalDropDown());
+		getViewInDocListAnalyticalDropDown().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_DocListPageDocs());
+
+		if (getDocView_DocListPageDocs().Displayed()) {
+			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
+			base.passedStep("Selected document is display in Doc List ");
+		} else {
+			base.failedStep("Selected document is not display in Doc List");
+		}
+
+	}
+	
+	/**
+	 * @Author Vijaya.Rani Created on 03/01/2022
+	 * @Description To perform ViewInDocList Conceputual Signle docs in the DocView Test Case
+	 *              id: RPMXCON-50861 
+	 *
+	 */
+	public void performViewInDocListConceputualSignledocs () throws InterruptedException {
+		
+		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		Point p = getDocView_Analytics_liDocumentConceptualSimilarab().getWebElement().getLocation();
+		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
+
+		base.waitForElement(getDocView_Analytics_Conceptual_FirstDoc());
+		getDocView_Analytics_Conceptual_FirstDoc().waitAndClick(10);
+		
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+
+		base.waitForElement(getViewInDocListAnalyticalDropDown());
+		getViewInDocListAnalyticalDropDown().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_DocListPageDocs());
+
+		if (getDocView_DocListPageDocs().Displayed()) {
+			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
+			base.passedStep("Selected document is display in Doc List ");
+		} else {
+			base.failedStep("Selected document is not display in Doc List");
+		}
+
+	}
+	
+	/**
+	 * @Author Vijaya.Rani Created on 03/01/2022
+	 * @Description To perform ViewInDocList Family Member docs in the DocView Test Case
+	 *              id: RPMXCON-50864 
+	 *
+	 */
+	public void performViewInDocListInFamilyMemberdocs () throws InterruptedException {
+		
+		base.waitForElement(getDocView_Analytics_FamilyTab());
+		getDocView_Analytics_FamilyTab().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().Displayed();
+			}
+		}), Input.wait60);
+		getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().waitAndClick(10);
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+		
+		base.waitForElement(getViewInDocListAnalyticalDropDown());
+		getViewInDocListAnalyticalDropDown().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_DocListPageDocs());
+
+		if (getDocView_DocListPageDocs().Displayed()) {
+			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
+			base.passedStep("Selected document is display in Doc List ");
+		} else {
+			base.failedStep("Selected document is not display in Doc List");
+		}
+
 	}
 }
