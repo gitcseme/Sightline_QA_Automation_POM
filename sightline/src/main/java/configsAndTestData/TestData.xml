@@ -18,8 +18,7 @@
 	<metaDataCN>P Allen</metaDataCN>
 	<metaDataCNcount>1135</metaDataCNcount>
 	<totalNumberOfDocs>1202</totalNumberOfDocs>
-	<totalNumberOfDocsincludeadvoption>103
-	</totalNumberOfDocsincludeadvoption>
+	<totalNumberOfDocsincludeadvoption>103</totalNumberOfDocsincludeadvoption>
 	<historyTab>History</historyTab>
 	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
 	<randomText>Test</randomText>
@@ -59,7 +58,7 @@
 	<ThreadQuery>"testing the same"</ThreadQuery>
 	<NewDocId>ID00001178</NewDocId>
 	<MetaDataId>ID00001360</MetaDataId>
-	<documentToBeScrolled>5147</documentToBeScrolled>
+	<documentToBeScrolled>ID00001352-I</documentToBeScrolled>
 	<conceptualDocument>ID00004389</conceptualDocument>
 	<conceptualDocs1>ID00000703</conceptualDocs1>
 	<conceptualDocumentReviewer>ID00001178</conceptualDocumentReviewer>
@@ -95,7 +94,6 @@
 	<nearDupeBulkAssignReviewId>ID00004969</nearDupeBulkAssignReviewId>
 	<theardMapViewId>ID00001129</theardMapViewId>
 	<nearDupeViewDocId>ID00001404</nearDupeViewDocId>
-	
 
 
 
@@ -126,8 +124,7 @@
 
 	<!-- Added by Gopinath -->
 	<historyTab>History</historyTab>
-	<documentConceptualTab>liDocumentConceptualSimilar
-	</documentConceptualTab>
+	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
 	<randomText>Test</randomText>
 	<metaDataName>CustodianName</metaDataName>
 	<is_Or_Range>range</is_Or_Range>
@@ -211,9 +208,7 @@
 
 
 	<!-- Added by Gopinath Modified date - 21/09/2021 -->
-	<codeSameAsLastMsg>Code this document the same as the last coded
-		document
-	</codeSameAsLastMsg>
+	<codeSameAsLastMsg>Code this document the same as the last coded document</codeSameAsLastMsg>
 
 	<!-- Added by Jeevitha -->
 	<colorCodeOfRed>#FF0000</colorCodeOfRed>
@@ -223,7 +218,7 @@
 	<bullHornIconColor>#E74735</bullHornIconColor>
 	<progresBarColor>#3276B1</progresBarColor>
     <BatchFileduplicateHeader>BatchFile_duplicateHeader_Error</BatchFileduplicateHeader>
-
+    
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>
 	<endTime>00:00:01</endTime>
@@ -298,9 +293,9 @@
 	<EmailAuthourName>gouri dhavalikar</EmailAuthourName>
 	<MetaDataEAName>EmailAuthorName</MetaDataEAName>
 	<MetaDataDomainName>gmail.com</MetaDataDomainName>
-	<MetaDataReciepientsDomain>EmailRecipientDomains
-	</MetaDataReciepientsDomain>
+	<MetaDataReciepientsDomain>EmailRecipientDomains</MetaDataReciepientsDomain>
 	<KeyWordColour>Blue</KeyWordColour>
+	
 	<!-- Added by Baskar Created date - 24/11/2021 -->
 	<tinyInt>Tiny - 20 Characters</tinyInt>
 	<smallInt>Small - 50 Characters</smallInt>
@@ -310,8 +305,7 @@
 	<docBasic>Doc Basic</docBasic>
 
 	<!-- Added by Gopinath Created date - 25/11/2021 -->
-	<exText>The configured format is applicable only to OCRed text and
-		production generated text, and not to ingested text.</exText>
+	<exText>The configured format is applicable only to OCRed text and production generated text, and not to ingested text.</exText>
 
 	<!-- Added by Gopinath Created date - 29/11/2021 -->
 	<paginationDocId>ID00000196</paginationDocId>
@@ -354,9 +348,7 @@
 	<thankyouText>thank you</thankyouText>
 
 	<!-- Added by Gopinath Created date - 08/12/2021 -->
-	<anotherRemarkMessage>Another user has applied redactions, annotations
-		or Reviewer Remarks to this document since you presented it in
-		DocView.</anotherRemarkMessage>
+	<anotherRemarkMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.</anotherRemarkMessage>
 
 	<!-- Added by Gopinath Created date - 09/12/2021 -->
 	<familyMembersDocId>ID00001251</familyMembersDocId>
