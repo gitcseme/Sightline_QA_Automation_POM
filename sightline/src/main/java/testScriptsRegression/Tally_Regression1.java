@@ -32,25 +32,24 @@ public class Tally_Regression1 {
 	SessionSearch search;
 	BaseClass bc;
 	String hitsCountPA;
-	List<String> exp1 =Arrays.asList("2", "Auto", "Gavin","Jaydeep","Owen","P Allen","Sai","Tyler","ViKas Mestry");
-    List<String> exp2=Arrays.asList("Compressed Data (Headerle", "Document", "Drawing", "Email","Image","Microsoft Word Document", "MS Excel Worksheet/Template (OLE)","MS Outlook Message", "Other Document", "Spreadsheet");
-	List<String> exp3=Arrays.asList("", "general announcement/corp/enron@enron","gouri dhavalikar", "gouri.dhavalikar@symphonyteleca.com", "Jaydeep Gatlewar@symphonyteleca.com",
-			"Phillip K Allen", "Sai.Theodare@symphonyteleca.com", "satish pawal", "Vikas.Mestry@symphonyteleca.com","Vishal.Parikh@symphonyteleca.com");
-	List<String> exp4=Arrays.asList("","/o=exchangelabs/ou=exchange administrative group","/o=exchangelabs/ou=exchange administrative group","imceanotes-general+20announcement_corp_enron+40en","Phillip K Allen");
+	List<String> exp1 =Arrays.asList("2", "Gavin","Jaydeep","Owen","P Allen","Sai","Tyler","ViKas Mestry");
+    List<String> exp2=Arrays.asList("Document", "Microsoft Word Document", "MS Excel Worksheet/Template (OLE)", "MS Outlook Message");
+	List<String> exp3=Arrays.asList("","gouri.dhavalikar@symphonyteleca.com", "Jaydeep Gatlewar", "Jaydeep Gatlewar@symphonyteleca.com","Sai Theodare", "Sai.Theodare@symphonyteleca.com","ViKas Mestry","Vikas.Mestry@symphonyteleca.com","Vishal.Parikh@symphonyteleca.com");
+	List<String> exp4=Arrays.asList("","gouri.dhavalikar@symphonyteleca.com","Jaydeep.Gatlewar@symphonyteleca.com","Sai.Theodare@symphonyteleca.com","Vikas.Mestry@symphonyteleca.com","Vishal.Parikh@symphonyteleca.com");
 	String SearchName="Tally"+Utility.dynamicNameAppender();
 	String  assgnName="Tally"+Utility.dynamicNameAppender();
 	String  folderName="Tally"+Utility.dynamicNameAppender();
 	String securityGrpName="Tally"+Utility.dynamicNameAppender(); 
 	String projectName=Input.projectName;
 	String[] sourceName_RMU = { assgnName, folderName,SearchName,"Default Security Group"};
-	String[] sourceName_PA = { Input.projectName, folderName,SearchName,"Default Security Group" };
+	String[] sourceName_PA = {"Regression_AllDataset_Consilio1", folderName,SearchName,"Default Security Group" };
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -58,14 +57,13 @@ public class Tally_Regression1 {
 		// Login as a PA
 		lp = new LoginPage(driver);
 		// Search and save it
-		search = new SessionSearch(driver);
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		SecurityGroupsPage securityPage = new SecurityGroupsPage(driver);
 		SessionSearch ss = new SessionSearch(driver);
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
-		ss.advMetaDataSearchQueryInsert(Input.metaDataName,Input.TallyCN);
-		ss.selectOperator("OR");
-		hitsCountPA=ss.advContentSearchWithoutURL(Input.TallySearch);
-		ss.saveSearchAdvanced_New(SearchName, Input.shareSearchDefaultSG);
+		ss.basicContentSearch(Input.TallySearch);
+		hitsCountPA=ss.verifyPureHitsCount();
+		ss.saveSearchAtAnyRootGroup(SearchName, Input.shareSearchDefaultSG);
 		ss.bulkAssign();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assgnName, Input.codeFormName);
@@ -74,7 +72,14 @@ public class Tally_Regression1 {
 		driver.getWebDriver().get(Input.url+"Search/Searches");
 		ss.bulkFolderWithOutHitADD(folderName);
 		lp.logout();
-		lp.quitBrowser();
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityPage.AddSecurityGroup(securityGrpName);
+		ss.basicContentSearch(Input.TallySearch);
+		ss.bulkRelease(securityGrpName);
+		bc.stepInfo("Created a security group" + securityGrpName + "Bulk Realese is done");
+		lp.logout();
+		lp.quitBrowser();  
 
 	}
 /**
@@ -100,61 +105,13 @@ public class Tally_Regression1 {
 		tp.tallyActions();
 		String totalDocsCount = tp.bulkRelease(securitygroupname,false);
 		bc.stepInfo("sucessfully released tally docs to security group  -"+securitygroupname);
-		SessionSearch search = new SessionSearch(driver);
-		search.switchToWorkproduct();
-		search.selectSecurityGinWPS(securitygroupname);
-		bc.stepInfo("Configured a search query with Security group-" + securitygroupname);
-		search.serarchWP();
-		String expectedCount = search.verifyPureHitsCount();
-		softAssertion.assertEquals(totalDocsCount, expectedCount);
-		bc.stepInfo("Document Count associated to selected security group in search page is "+expectedCount);
+		softAssertion.assertEquals(totalDocsCount,hitsCountPA );
+		bc.stepInfo("Document Count associated to selected security group in search page is "+hitsCountPA);
 		securityPage.deleteSecurityGroups(securitygroupname);
 		softAssertion.assertAll();
 		bc.passedStep("The docs released to Security group "+securitygroupname+" is reflected as expected");
 	}
 	
-	/**
-	 * @author Jayanthi.ganesan
-	 * @throws InterruptedException
-	 */
-		@Test(groups = { "regression" }, priority = 2)
-		public void ValidateSubTally_BulkRelease() throws InterruptedException {
-			bc.stepInfo("Test case Id: RPMXCON-56226");
-			bc.stepInfo("To Verify Admin can release all the documents in subtally");
-			SoftAssert softAssertion = new SoftAssert();
-			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-			String securitygroupname ="SG" + Utility.dynamicNameAppender();
-			SecurityGroupsPage securityPage = new SecurityGroupsPage(driver);
-			driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
-			securityPage.AddSecurityGroup(securitygroupname);
-			bc.stepInfo("Added security group -"+securitygroupname);
-			TallyPage tp = new TallyPage(driver);
-			tp.navigateTo_Tallypage();
-			tp.SelectSource_SavedSearch(SearchName);
-			tp.selectTallyByMetaDataField(Input.metaDataName);
-			bc.stepInfo("Created Tally Report for saved search-"+SearchName);
-			driver.waitForPageToBeReady();
-			tp.tallyActions();
-			bc.waitTime(2);
-			tp.getTally_actionSubTally().Click();
-			tp.selectMetaData_SubTally(Input.docFileName);
-			driver.waitForPageToBeReady();
-			bc.stepInfo("Created SubTally Report");
-			tp.subTallyActions();
-			String totalDocsCount = tp.bulkRelease(securitygroupname,true);
-			bc.stepInfo("sucessfully released sub-tally docs to security group  -"+securitygroupname);
-			SessionSearch search = new SessionSearch(driver);
-			search.switchToWorkproduct();
-			search.selectSecurityGinWPS(securitygroupname);
-			bc.stepInfo("Configured a search query with Security group-" + securitygroupname);
-			search.serarchWP();
-			String expectedCount = search.verifyPureHitsCount();
-			softAssertion.assertEquals(totalDocsCount, expectedCount);
-			bc.stepInfo("Document Count associated to selected security group in search page is "+expectedCount);
-		//	securityPage.deleteSecurityGroups(securitygroupname);
-			softAssertion.assertAll();
-			bc.passedStep("The docs released to Security group "+securitygroupname+" is reflected as expected");
-		}
 		/**
 		 * @author Jayanthi.ganesan
 		 * @param username
@@ -162,14 +119,12 @@ public class Tally_Regression1 {
 		 * @param role
 		 * @throws InterruptedException
 		 */
-		@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 3)
+		@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 2)
 		public void ValidateTally_ViewInDocView(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56212");
 			bc.stepInfo("To verify Admin/RMU will be able to view tallied documents in a doc view(Tally)");
 			SoftAssert softAssertion = new SoftAssert();
 			lp.loginToSightLine(username, password);
-			String saveSearchName = null;
-			String hitsCountexpected=null;
 			bc.stepInfo("Logged in as -" + role);
 			TallyPage tp = new TallyPage(driver);
 			tp.navigateTo_Tallypage();
@@ -191,7 +146,7 @@ public class Tally_Regression1 {
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-		@Test(groups = { "regression" }, priority = 4)
+		@Test(groups = { "regression" }, priority = 3)
 		public void verifyTally_Assignments() throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56204");
 			bc.stepInfo("To Verify RMU will have a report in Tally with document counts by metadata fields for assignment groups.");
@@ -224,18 +179,13 @@ public class Tally_Regression1 {
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5)
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 4)
 		public void verifyTally_Searches(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56203");
 			bc.stepInfo("To Verify Admin/RMU will have a report in Tally with document counts by metadata fields for searches.");
 			String[] metadata = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" };
 			lp.loginToSightLine(username, password);
 			bc.stepInfo("Logged in as " + role);
-			SessionSearch ss = new SessionSearch(driver);
-			ss.advMetaDataSearchQueryInsert(Input.metaDataName,Input.TallyCN);
-			ss.selectOperator("OR");
-			ss.advContentSearchWithoutURL(Input.TallySearch);
-			ss.saveSearchAdvanced_New(SearchName, Input.shareSearchDefaultSG);
 			SoftAssert softAssertion = new SoftAssert();
 			TallyPage tp = new TallyPage(driver);
 			tp.navigateTo_Tallypage();
@@ -263,11 +213,14 @@ public class Tally_Regression1 {
 			}
 		}
 		//savedSearchToTally
+		
+
+		
 		/**
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 6)
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5)
 		public void verifyTallyDropDown(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56196");
 			bc.stepInfo("To Verify \"Tally By\" Drop Down And \"Apply\" button on Tally Page");
@@ -277,7 +230,6 @@ public class Tally_Regression1 {
 			SoftAssert softAssertion = new SoftAssert();
 			TallyPage tp = new TallyPage(driver);
 			for(int k=0;k<4;k++) {
-				bc.stepInfo("**To Verify Tally Report if Source is **");
 				tp.navigateTo_Tallypage();
 				if(role=="PA") {
 				tp.selectSources_PA(k,sourceName_PA[k]);}
@@ -290,6 +242,87 @@ public class Tally_Regression1 {
 				softAssertion.assertAll();
 			}
 			bc.passedStep("Sucessfully verified tally by drop down and apply button if source is-- "+sourceName_PA[k] );
+			}
+		}
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+			@Test(groups = { "regression" }, priority = 6)
+			public void ValidateSubTally_BulkRelease() throws InterruptedException {
+				bc.stepInfo("Test case Id: RPMXCON-56226");
+				bc.stepInfo("To Verify Admin can release all the documents in subtally");
+				SoftAssert softAssertion = new SoftAssert();
+				lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+				String securityGrp_SubTally ="SG" + Utility.dynamicNameAppender();
+				SecurityGroupsPage securityPage = new SecurityGroupsPage(driver);
+				driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+				securityPage.AddSecurityGroup(securityGrp_SubTally);
+				bc.stepInfo("Added security group -"+securityGrp_SubTally);
+				TallyPage tp = new TallyPage(driver);
+				tp.navigateTo_Tallypage();
+				tp.SelectSource_SavedSearch(SearchName);
+				tp.selectTallyByMetaDataField(Input.metaDataName);
+				bc.stepInfo("Created Tally Report for saved search-"+SearchName);
+				driver.waitForPageToBeReady();
+				tp.tallyActions();
+				bc.waitTime(2);
+				tp.getTally_actionSubTally().Click();
+				tp.selectMetaData_SubTally(Input.docFileName);
+				driver.waitForPageToBeReady();
+				bc.stepInfo("Created SubTally Report");
+				tp.subTallyActions();
+				String totalDocsCount = tp.bulkRelease(securityGrp_SubTally,true);
+				bc.stepInfo("sucessfully released sub-tally docs to security group  -"+securityGrp_SubTally);
+				SessionSearch search = new SessionSearch(driver);
+				search.switchToWorkproduct();
+				search.selectSecurityGinWPS(securityGrp_SubTally);
+				bc.stepInfo("Configured a search query with Security group-" + securityGrp_SubTally);
+				search.serarchWP();
+				String expectedCount = search.verifyPureHitsCount();
+				softAssertion.assertEquals(totalDocsCount, expectedCount);
+				bc.stepInfo("Document Count associated to selected security group in search page is "+expectedCount);
+			//	securityPage.deleteSecurityGroups(securitygroupname);
+				softAssertion.assertAll();
+				bc.passedStep("The docs released to Security group "+securityGrp_SubTally+" is reflected as expected");
+			}
+		
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+		@Test( groups = { "regression" }, priority = 7)
+		public void verifyTally_SG() throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-48704");
+			bc.stepInfo("To Verify Admin/RMU will have a report that provides ability to view the document volume by metadata "
+					+ "fields for security groups in Tally.");
+			String[] metadata = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" };
+			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+			bc.stepInfo("Logged in as PA");
+			SoftAssert softAssertion = new SoftAssert();
+			TallyPage tp = new TallyPage(driver);
+			tp.navigateTo_Tallypage();
+			tp.SelectSource_SecurityGroup(securityGrpName);
+			for (int i = 0; i < metadata.length; i++) {
+				bc.stepInfo("**To Verify Tally Report if Tally By MetaData as-" + metadata[i] + "**");
+				tp.selectTallyByMetaDataField(metadata[i]);
+				tp.validateMetaDataFieldName(metadata[i]);
+				if (i == 0) {
+					softAssertion.assertEquals(exp1, tp.verifyTallyChart());
+				}
+				if (i == 1) {
+					softAssertion.assertEquals(exp2, tp.verifyTallyChart());
+				}
+				if (i == 2) {
+					softAssertion.assertEquals(exp3, tp.verifyTallyChart());
+				}
+				if (i == 3) {
+					softAssertion.assertEquals(exp4, tp.verifyTallyChart());
+				}
+				softAssertion.assertAll();
+				bc.passedStep(
+						"Verified whether user will have a report in Tally with document counts by metadata "
+								+ "fields for Searches if Tally by metadata is " + metadata[i]);
 			}
 		}
 	@BeforeMethod
@@ -306,6 +339,7 @@ public class Tally_Regression1 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			lp.quitBrowser();
 		}
 		try {
 			lp.logout();
@@ -329,20 +363,7 @@ public class Tally_Regression1 {
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-	/*	try {
-		//	Input in = new Input();
-		//	in.loadEnvConfig();
-			driver = new Driver();
-			lp = new LoginPage(driver);
-			SavedSearch savedSearch = new SavedSearch(driver);
-			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-			savedSearch.SaveSearchDelete(saveSearchNamePA);
-			lp.logout();
-			LoginPage.clearBrowserCache();
-			lp.quitBrowser();
-		} catch (Exception e) {
-			lp.quitBrowser();
-		}  */
+		System.out.println("**Executed Tally Regression1**");
 
 	}
 }
