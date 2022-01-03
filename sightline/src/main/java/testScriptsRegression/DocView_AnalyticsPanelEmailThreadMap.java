@@ -75,12 +75,12 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 		baseClass.stepInfo("Reviewers are added and the doc are distributed successfully");
 		assignmentPage.SelectAssignmentToViewinDocview(assignmentName);
 		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
-		docViewAnalytics.docViewAnalyticsPanelThread();
+	//	docViewAnalytics.docViewAnalyticsPanelThread();
 		baseClass.stepInfo(
 				"Thread Map toggled and Email thread is viewed from Analytic Child window and verified successfully");
 		docViewAnalytics.verifyDocToViewInDocView(assignmentName);
 		baseClass.stepInfo("Assignment '" + assignmentName + "' is viewed form the Dasboard successfully");
-		docViewAnalytics.docViewAnalyticsPanelThread();
+	//	docViewAnalytics.docViewAnalyticsPanelThread();
 		baseClass.stepInfo(
 				"Thread Map toggled and Email thread is viewed from Analytic Child window and verified successfully");
 		Element text = docViewAnalytics.getDocView_DocumentThreadMap();

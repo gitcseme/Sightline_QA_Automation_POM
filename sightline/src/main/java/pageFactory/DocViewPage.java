@@ -2449,9 +2449,7 @@ public class DocViewPage {
 		}	
 		
 
-	public Element getVerifyNearDuppin() {
-		return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//i[@class='fa fa-link']");
-	}
+	
 
 	// Added By Vijaya.Rani
 	public Element getDocView_Analytics_Conceptual_Docs(int rowno) {
@@ -5028,9 +5026,11 @@ public class DocViewPage {
 	 * @Author Mohan Created on 26/08/2021
 	 * @Description To View thread map in Analytics panel RPMXCON-51846
 	 */
-	public void docViewAnalyticsPanelThread() {
+	public void docViewAnalyticsPanelThread(String textValue) {
 
 		try {
+			
+			driver.waitForPageToBeReady();
 			driver.WaitUntil(new Callable<Boolean>() {
 				public Boolean call() {
 					return getGearIcon().Visible() && getGearIcon().Enabled();
@@ -5046,6 +5046,9 @@ public class DocViewPage {
 				}
 			}, Input.wait30);
 			getDocView_ChildWindowPopOut().Click();
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			
 			Set<String> allWindowsId1 = driver.WindowHandles();
 			for (String eachId : allWindowsId1) {
 				if (!parentWindowID.equals(eachId)) {
@@ -5056,6 +5059,10 @@ public class DocViewPage {
 							return getDocView_DocumentThreadMap().Visible() && getDocView_DocumentThreadMap().Enabled();
 						}
 					}, Input.wait30);
+					String actualText = getDocView_DocumentThreadMap().getText();
+					System.out.println(actualText);
+					softAssertion.assertEquals(actualText, textValue);
+					softAssertion.assertAll();
 
 					driver.switchTo().window(parentWindowID);
 					driver.scrollPageToTop();
@@ -6927,14 +6934,11 @@ public class DocViewPage {
 
 		try {
 
+			
 			driver.waitForPageToBeReady();
-			for (int i = 2; i <= 2; i++) {
-				driver.waitForPageToBeReady();
-				base.waitForElement(getDocView_MiniDoc_Selectdoc(i));
-				getDocView_MiniDoc_Selectdoc(i).ScrollTo();
-				getDocView_MiniDoc_Selectdoc(i).waitAndClick(5);
-			}
-
+			base.waitForElement(getDocView_MiniDoc_Selectdoc(1));
+			getDocView_MiniDoc_Selectdoc(1).ScrollTo();
+			getDocView_MiniDoc_Selectdoc(1).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			base.waitForElement(getMetaDataDocId(text));
 			getMetaDataDocId(text).ScrollTo();
@@ -7017,19 +7021,18 @@ public class DocViewPage {
 				getDocView_MiniDoc_Selectdoc(i).waitAndClick(10);
 			}
 
-			for (int j = 11; j <= 11; j++) {
-				driver.waitForPageToBeReady();
-				base.waitForElement(getDocView_Analytics_ThreadMap_EmailDocs(j));
-				getDocView_Analytics_ThreadMap_EmailDocs(j).ScrollTo();
-				getDocView_Analytics_ThreadMap_EmailDocs(j).waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_Analytics_ThreadMap_EmailDocs(21));
+			getDocView_Analytics_ThreadMap_EmailDocs(21).ScrollTo();
+			getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(5);
 				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
 				base.passedStep(
 						"Document is selected with the checked checkbox and horizontal scroll bar is continue to be at the same position that it was when the document was selected.");
-				getDocView_Analytics_ThreadMap_EmailDocs(j).waitAndClick(7);
+				getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(7);
 				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
 				base.stepInfo(
 						"Document is unchecked after moving scroll bar to right then horizontal scroll bar is at same position it was when document was unchecked.");
-			}
+			
 
 		} catch (Exception e) {
 
@@ -7068,20 +7071,17 @@ public class DocViewPage {
 				}
 			}
 
-			String analyticsWindowID = driver.getWebDriver().getWindowHandle();
-
-			for (int j = 20; j <= 20; j++) {
-				driver.waitForPageToBeReady();
-				getDocView_Analytics_ThreadMap_EmailDocs(j).ScrollTo();
-				getDocView_Analytics_ThreadMap_EmailDocs(j).waitAndClick(10);
-				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
-				base.passedStep(
-						"Document is selected with the checked checkbox and horizontal scroll bar is continue to be at the same position that it was when the document was selected.");
-				getDocView_Analytics_ThreadMap_EmailDocs(j).waitAndClick(5);
-				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
-				base.stepInfo(
-						"Document is unchecked after moving scroll bar to right then horizontal scroll bar is at same position it was when document was unchecked.");
-			}
+			driver.waitForPageToBeReady();
+			getDocView_Analytics_ThreadMap_EmailDocs(21).ScrollTo();
+			getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(10);
+			softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
+			base.passedStep(
+					"Document is selected with the checked checkbox and horizontal scroll bar is continue to be at the same position that it was when the document was selected.");
+			getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(5);
+			softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
+			base.stepInfo(
+					"Document is unchecked after moving scroll bar to right then horizontal scroll bar is at same position it was when document was unchecked.");
+			
 			driver.getWebDriver().close();
 			driver.switchTo().window(parentWindowID);
 
@@ -18439,7 +18439,7 @@ public class DocViewPage {
 		}
 	}
 		
-=======
+
 
 	/**
 	 * @Author Vijaya.Rani Created on 3/1/2022
