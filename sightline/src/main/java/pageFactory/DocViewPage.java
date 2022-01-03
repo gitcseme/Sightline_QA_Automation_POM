@@ -2458,6 +2458,9 @@ public class DocViewPage {
 		return driver
 				.FindElementByXPath("//table[@id='dtDocumentConceptuallySimilar']//tbody/tr[" + rowno + "]//label");
 	}
+	public ElementCollection getCheckMarkIcon() {
+		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']");
+	}
 
 
 	public DocViewPage(Driver driver) {
@@ -18565,6 +18568,156 @@ public class DocViewPage {
 		boolean flag = getverifyCodeSameAsLast().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep("Checkmark icon displayed for document");
+		softAssertion.assertAll();
+	}
+
+
+
+	/**
+	 * @author Indium-Baskar date: 06/12/2021 Modified date:N/A
+	 * @Description: This method used to validate Code same as icon and coding stamp should apply 
+	 * 
+	 */
+
+	public void validateCodeSameAsIconAndApplyStamp(String stamp,String comment) {
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 2; i++) {
+			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(i));
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		clickCodeSameAs();
+		editCodingForm(comment);
+		codingStampButton();
+		popUpAction(stamp, Input.stampSelection);
+		lastAppliedStamp(Input.stampSelection);
+		driver.waitForPageToBeReady();
+		getverifyCodeSameAsLast().WaitUntilPresent().ScrollTo();
+		boolean flag=getverifyCodeSameAsLast().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Checkmark icon displayed for stamp applied document");
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 06/12/2021 Modified date:N/A
+	 * @Description: This method used to validate Code same as icon and edit and complete
+	 */
+
+	public void validateCodeSameAsIconAndEdit(String comment) {
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 2; i++) {
+			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(i));
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		clickCodeSameAs();
+		editCodingForm(comment);
+		completeButton();
+		driver.waitForPageToBeReady();
+		getverifyCodeSameAsLast().WaitUntilPresent().ScrollTo();
+		boolean flag=getverifyCodeSameAsLast().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Checkmark icon displayed for document");
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+
+	public int verifyCommentAndMetadataUsingComplete(String addComment, String commentText, String metadata,
+			String metadataText) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCodingFormHelpText(addComment));
+		getCodingFormHelpText(addComment).SendKeys(commentText);
+		base.waitForElement(getReadOnlyTextBox(metadata));
+		getReadOnlyTextBox(metadata).SendKeys(metadataText);
+		completeButton();
+		driver.waitForPageToBeReady();
+		clickCodeSameAsLast();
+		base.waitForElementCollection(getCheckMarkIcon());
+		int size=getCheckMarkIcon().size();
+		return size;
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//   Reusable method for alert
+   public void refreshAndAlert() {
+		driver.getWebDriver().navigate().refresh();
+		driver.switchTo().alert().accept();
+	   
+   }
+   
+   /**
+	 * @author Indium-Baskar
+	 */
+//	Reusable Method For ViewDocument in analytical panel
+	public void viewInDocumentAnalyticalPanel() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+		base.waitForElement(getViewDocumentNearDupe());
+		getViewDocumentNearDupe().waitAndClick(10);
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//	Reusable Method For Click GearIcon To Open Analytical panel
+//	Analytical child window panel to open
+	public void clickGearIconOpenAnalyticalPanel() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_EditMode());
+		getDocView_EditMode().waitAndClick(5);
+		getDocView_HdrAnalytics().WaitUntilPresent().ScrollTo();
+		base.waitForElement(getDocView_HdrAnalytics());
+		getDocView_HdrAnalytics().waitAndClick(5);
+		base.stepInfo("Analytical panel child window opened");
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 * @throws InterruptedException 
+	 */
+	
+	public void completedDocsSavingstap(String stamp,String comment,int count) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		base.stepInfo("performing action in parent window for minidoclist document");
+		String prnDoc=getVerifyPrincipalDocument().getText();
+		editCodingForm(comment);
+		completeButton();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDociD(prnDoc));
+		getDociD(prnDoc).waitAndClick(5);
+		codingStampButton();
+		popUpAction(stamp, Input.stampSelection);
+		lastAppliedStamp(Input.stampSelection);
+		base.stepInfo("performing action in child window for minidoclist document");
+		clickGearIconOpenCodingFormChildWindow();
+		switchToNewWindow(2);
+		lastAppliedStamp(Input.stampSelection);
+		driver.close();
+		switchToNewWindow(1);
+		driver.waitForPageToBeReady();
+		refreshAndAlert();
+		base.stepInfo("performing action in parent window for analytical document");
+		List<String> docId = analyticalDocsSelection();
+		String docIdText=docId.get(count);
+		getAnalyCheckBox(docIdText).WaitUntilPresent().ScrollTo();
+		base.waitForElement(getAnalyCheckBox(docIdText));
+		getAnalyCheckBox(docIdText).waitAndClick(10);
+		viewInDocumentAnalyticalPanel();
+		driver.scrollPageToTop();
+		lastAppliedStamp(Input.stampSelection);
+		base.stepInfo("performing action in child window for analytical document");
+		clickGearIconOpenCodingFormChildWindow();
+		switchToNewWindow(2);
+		lastAppliedStamp(Input.stampSelection);
+		driver.close();
+		switchToNewWindow(1);
+		boolean flag=getverifyCodeSameAsLast().isDisplayed();
+		softAssertion.assertTrue(flag);
 		softAssertion.assertAll();
 	}
 
