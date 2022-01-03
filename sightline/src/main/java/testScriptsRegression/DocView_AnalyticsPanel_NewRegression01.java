@@ -1182,6 +1182,293 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 03/1/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify user can select a set of documents in the conceptually
+	 * similar documents panel in doc view and view them in doc list.'RPMXCON-50860 Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	public void verifyViewInDocListInSetOfDocsInConceptualTab()
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50860");
+		baseClass.stepInfo(
+				"To verify user can select a set of documents in the conceptually similar documents panel in doc view and view them in doc list.");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.getConceptDocument();
+		sessionSearch.bulkAssignConceptualDocuments();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Conceptual ViewIn DocList without Select Docs
+		driver.waitForPageToBeReady();
+		docView.performConceptualSelectSetOfDocsActionViewInDocList();
+
+		// logout
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// NearDupe ViewIn DocList without Select Docs
+		driver.waitForPageToBeReady();
+		docView.performConceptualSelectSetOfDocsActionViewInDocList();
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 03/1/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify user can select single document in the conceptually
+	 * similar documents panel in doc view and view in doc list.'RPMXCON-50861
+	 * Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	public void verifyViewInDocListInSelectSignleDocInConceptualTab()
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50861");
+		baseClass.stepInfo(
+				"To verify user can select single document in the conceptually similar documents panel in doc view and view in doc list.");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.getConceptDocument();
+		sessionSearch.bulkAssignConceptualDocuments();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Conceptual ViewIn DocList without Select Docs
+		driver.waitForPageToBeReady();
+		docView.performViewInDocListConceputualSignledocs();
+
+		// logout
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// NearDupe ViewIn DocList without Select Docs
+		driver.waitForPageToBeReady();
+		docView.performViewInDocListConceputualSignledocs();
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 03/1/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify user can select a set of documents in the conceptually
+	 * similar documents panel in doc view and view them in doc list after
+	 * impersonation.'RPMXCON-50862' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	public void verifyViewInDocListInAnalyticalPanelConceptualTab() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50862");
+		baseClass.stepInfo(
+				"To verify user can select a set of documents in the conceptually similar documents panel in doc view and view them in doc list after impersonation.");
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+
+		// login as SA
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
+
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Step 1: Impersonate SA to RMU, search docs and Search for docs");
+		baseClass.impersonateSAtoRMU();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.getConceptDocument();
+		sessionSearch.bulkAssignConceptualDocuments();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 2: Create new assignment and distribute docs to reviewer");
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentspage.add3ReviewerAndDistribute();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
+		docView.performConceptualSelectSetOfDocsActionViewInDocList();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Step 1: Impersonate PAU to RMU, select assignment and go to Docview");
+		baseClass.impersonatePAtoRMU();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
+		docView.performConceptualSelectSetOfDocsActionViewInDocList();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Step 1: Impersonate PAU to Reviewer,select assignment and go to Docview");
+		baseClass.impersonatePAtoReviewer();
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
+		docView.performConceptualSelectSetOfDocsActionViewInDocList();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Step 1: Impersonate RMU to Reviewer,select assignment and go to Docview");
+		baseClass.impersonateRMUtoReviewer();
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
+		docView.performConceptualSelectSetOfDocsActionViewInDocList();
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 03/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify that if user navigates to doc view from the Save
+	 * search, then he can view the documents in the doc list from Doc View->Family
+	 * Member.'RPMXCON-50864' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	public void verifyDocViewFromSaveSearchDocViewThreadMap() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50864");
+		baseClass.stepInfo(
+				"To verify that if user navigates to doc view from the Save search, then he can view the documents in the doc list from Doc View->Family Member.");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		String BasicSearchName = "Savebtn" + Utility.dynamicNameAppender();
+
+		// Basic Search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(BasicSearchName);
+		savedSearch.savedSearchToDocView(BasicSearchName);
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.theardMapViewId);
+
+		// familyMember tab View in DocList
+		driver.waitForPageToBeReady();
+		docView.performViewInDocListInFamilyMemberdocs();
+
+		// logout
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Basic Search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(BasicSearchName);
+		savedSearch.savedSearchToDocView(BasicSearchName);
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.theardMapViewId);
+
+        // familyMember tab View in DocList
+		driver.waitForPageToBeReady();
+		docView.performViewInDocListInFamilyMemberdocs();
+
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
