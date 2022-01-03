@@ -1241,11 +1241,11 @@ public class TallyPage {
 	 * @author Jayanthi.ganesan
 	 * @return 
 	 */
-	public List verifyTallyChart() {
+	public List<String> verifyTallyChart() {
 			base.waitForElement(getTallyChartRectbar());
 			base.waitTillElemetToBeClickable(getTallyChartRectbar());
 			getTallyChartRectbar().Displayed();
-			List metaData = new ArrayList();
+			List<String> metaData = new ArrayList<String>();
 				if (getTallyChartRectbar().Displayed()) {
 					base.passedStep("Tally chart  displayed successfully");
 					metaData=base.availableListofElements(getTallyChartMetaData());
