@@ -4391,6 +4391,17 @@ public class CodingForm {
 		getCF_FieldLogicAction(i).selectFromDropdown().selectByVisibleText(rule);
 
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void addLogicOptionWithIndexWithoutIncreace(int i, int indexNum, String Condition, String rule) {
+		base.waitForElement(getCF_AddLogicButton(i));
+		getCF_AddLogicButton(i).waitAndClick(5);
+		getCF_Object1(i).selectFromDropdown().selectByIndex(indexNum);
+		getCF_FieldLogicCondition(i).selectFromDropdown().selectByVisibleText(Condition);
+		getCF_FieldLogicAction(i).selectFromDropdown().selectByVisibleText(rule);
+
+	}
 
 	/**
 	 * @author Aathith.Senthilkumar
