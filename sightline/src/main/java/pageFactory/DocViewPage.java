@@ -17435,6 +17435,8 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Coded as per the coding form for the previous document");// updated verification
 		softAssertion.assertTrue(getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled());
 		if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled()) {
 			base.stepInfo("coded as per the previous document..");
@@ -18360,7 +18362,8 @@ public class DocViewPage {
 
 	/**
 	 * @Author Vijaya.Rani Created on 3/1/2022
-	 * @Description perform Conceptual Select Multiple Docs Action ViewInDocList. id-50860
+	 * @Description perform Conceptual Select Multiple Docs Action ViewInDocList.
+	 *              id-50860
 	 * 
 	 */
 	public void performConceptualSelectSetOfDocsActionViewInDocList() {
@@ -18396,15 +18399,15 @@ public class DocViewPage {
 		}
 
 	}
-	
+
 	/**
 	 * @Author Vijaya.Rani Created on 03/01/2022
-	 * @Description To perform ViewInDocList Conceputual Signle docs in the DocView Test Case
-	 *              id: RPMXCON-50861 
+	 * @Description To perform ViewInDocList Conceputual Signle docs in the DocView
+	 *              Test Case id: RPMXCON-50861
 	 *
 	 */
-	public void performViewInDocListConceputualSignledocs () throws InterruptedException {
-		
+	public void performViewInDocListConceputualSignledocs() throws InterruptedException {
+
 		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
@@ -18416,7 +18419,7 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_Analytics_Conceptual_FirstDoc());
 		getDocView_Analytics_Conceptual_FirstDoc().waitAndClick(10);
-		
+
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
 
@@ -18434,15 +18437,15 @@ public class DocViewPage {
 		}
 
 	}
-	
+
 	/**
 	 * @Author Vijaya.Rani Created on 03/01/2022
-	 * @Description To perform ViewInDocList Family Member docs in the DocView Test Case
-	 *              id: RPMXCON-50864 
+	 * @Description To perform ViewInDocList Family Member docs in the DocView Test
+	 *              Case id: RPMXCON-50864
 	 *
 	 */
-	public void performViewInDocListInFamilyMemberdocs () throws InterruptedException {
-		
+	public void performViewInDocListInFamilyMemberdocs() throws InterruptedException {
+
 		base.waitForElement(getDocView_Analytics_FamilyTab());
 		getDocView_Analytics_FamilyTab().waitAndClick(10);
 
@@ -18455,7 +18458,7 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
-		
+
 		base.waitForElement(getViewInDocListAnalyticalDropDown());
 		getViewInDocListAnalyticalDropDown().waitAndClick(5);
 
@@ -18469,5 +18472,21 @@ public class DocViewPage {
 			base.failedStep("Selected document is not display in Doc List");
 		}
 
+	}
+
+	/**
+	 * @author Raghuram.A Date: 1/3/21 Modified date:N/A Modified by: N/A
+	 * @param comment
+	 */
+	public void validateCodeSameAsLatAction(String comment) {
+		editCodingForm(comment);
+		completeButton();
+		driver.waitForPageToBeReady();
+		clickCodeSameAsLast();
+		getverifyCodeSameAsLast().WaitUntilPresent().ScrollTo();
+		boolean flag = getverifyCodeSameAsLast().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Checkmark icon displayed for document");
+		softAssertion.assertAll();
 	}
 }
