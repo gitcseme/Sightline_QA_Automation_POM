@@ -1545,9 +1545,10 @@ public class Production_Page_Regression {
 		baseClass.stepInfo("Navigating to Production Home page and creating new production set");
 		ProductionPage page = new ProductionPage(driver);
 		productionname = " p" + Utility.dynamicNameAppender();
-		page.CreateProductionSets(productionSet);
 		page.selectingDefaultSecurityGroup();
+		page.CreateProductionSets(productionSet);
 		page.navigateToProductionPageByNewProductionSet(productionSet);
+		driver.waitForPageToBeReady();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.navigateToNextSection();
@@ -1569,7 +1570,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:12/30/21 TESTCASE No:RPMXCON-48322
 	 * @Description:To verify that "Generate Load File" is enabled by default for TIFF components.
 	 */ 
-	@Test(enabled = true, groups = { " regression" }, priority = 29)
+	@Test(enabled = false, groups = { " regression" }, priority = 29)
 	public void verifyGenerateLoadFileForTIFF() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48322- Production Sprint 09");
@@ -1603,7 +1604,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:12/30/21 TESTCASE No:RPMXCON-48323
 	 * @Description:To verify that "Generate Load File" is enabled by default for PDF components.
 	 */ 
-	@Test(enabled = true, groups = { " regression" }, priority = 30)
+	@Test(enabled = false, groups = { " regression" }, priority = 30)
 	public void verifyGenerateLoadFileForPDF() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48323- Production Sprint 09");
@@ -1632,6 +1633,150 @@ public class Production_Page_Regression {
 		}
 		
 	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-47821
+	 * @Description:To verify Production Generation for NATIVE/PDF/TIFF/Text
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	public void verifyProductionWithPriviledgedDocuments() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47821- Production Sprint 09");
+		baseClass.stepInfo("To verify Production Generation for NATIVE/PDF/TIFF/Text");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.searchString5);
+		sessionSearch.ViewInDocList();
+		
+		DocListPage docPage=new DocListPage(driver);
+		docPage.Selectpagelength("50");
+		docPage.documentSelection(17);
+		driver.scrollPageToTop();
+		docPage.bulkTagExistingFromDoclist(tagname);
+		
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSection(tagname, Input.tagNamePrev);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+	
+		baseClass.passedStep("verified Production Generation for NATIVE/PDF/TIFF/Text");
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:01/03/22 TESTCASE No:RPMXCON-48532
+	 * @Description:To verify that confirmation message is displays if Blank Page Removal option is enable.
+	 */ 
+	@Test(enabled = true, groups = { " regression" }, priority = 32)
+	public void verifyConfirmationMessageWithBlankPageEnabled() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48532- Production Sprint 09");
+		baseClass.stepInfo("To verify that confirmation message is displays if Blank Page Removal option is enable.");
+		UtilityLog.info(Input.prodPath);
+		String expected="Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
+
+		baseClass.stepInfo("Navigating to Production Home page and creating new production set");
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.getTIFFChkBox().waitAndClick(5);
+		page.getTIFFTab().waitAndClick(5);
+		driver.scrollPageToTop();
+		page.getBlankPageRemovalToggle().waitAndClick(5);
+		String actual=page.getBlankPageRemovalToggleConfirmationMessage().getText();
+		softAssertion = new SoftAssert();
+		softAssertion.assertEquals(actual, expected);
+		softAssertion.assertAll();
+		baseClass.passedStep("verified that confirmation message is displays if Blank Page Removal option is enabled");
+		
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:01/03/22 TESTCASE No:RPMXCON-48531
+	 * @Description:To verify that if Blank Page Removal toggle is ON then it should produced Tiff without blank pages
+	 */ 
+	@Test(enabled = true, groups = { " regression" }, priority = 33)
+	public void generateProductionWithBlankPageEnabled() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48531- Production Sprint 09");
+		baseClass.stepInfo("To verify that if Blank Page Removal toggle is ON then it should produced Tiff without blank pages");
+		UtilityLog.info(Input.prodPath);
+		
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername,"Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch("ID00001312");
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTiffSectionDisablePrivilegedDocs();
+		driver.scrollPageToTop();
+		page.getBlankPageRemovalToggle().waitAndClick(5);
+		page.continueButtonInBlankPageRemovalToggle().waitAndClick(5);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+	}
+	
+	
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
