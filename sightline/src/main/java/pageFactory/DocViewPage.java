@@ -2470,6 +2470,19 @@ public class DocViewPage {
 		return driver
 				.FindElementByXPath("(//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//p)[last()]");
 	}
+	
+	//Added by Vijaya.Rani
+	public Element getDocView_Analytics_ConceptualFolderAction() {
+		return driver.FindElementById("liConceptualBulkFolder");
+	}
+
+	public Element getDocView_Analytics_ThreadFirstDocId() {
+		return driver.FindElementByXPath("//tr[@id='threadedDocumentIdRow']//th[3]");
+	}
+	
+	public Element getDocView_Analytics_ThreadChildDocId() {
+		return driver.FindElementByXPath("//tr[@id='threadedDocumentIdRow']//th[4]");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -18840,5 +18853,71 @@ public class DocViewPage {
 
 		}
 		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Vijaya.rani 04/01/22 NA Modified date: NA Modified by:NA
+	 * @description To Perform ThreadMap View Document
+	 */
+	public void performThreadMapViewDocument() {
+
+		driver.waitForPageToBeReady();
+		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+		driver.waitForPageToBeReady();
+		Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
+		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+
+		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+
+		for (int i = 2; i <= 2; i++) {
+			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
+			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
+		}
+		
+		base.waitForElement(getDocView_Analytics_ThreadFirstDocId());
+		String docId1=getDocView_Analytics_ThreadChildDocId().getText();
+		
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+
+		base.waitForElement(getDocView_Analytics_Thread_ViewDocument());
+		getDocView_Analytics_Thread_ViewDocument().waitAndClick(10);
+		
+		base.waitForElement(getDocView_CurrentDocId());
+		String docId2=getDocView_CurrentDocId().getText();
+		
+		softAssertion.assertEquals(docId1, docId2);
+		base.passedStep("Selected document is display in Doc View");
+	}
+
+	/**
+	 * @author Vijaya.rani 04/01/22 NA Modified date: NA Modified by:NA
+	 * @description To Perform ThreadMap View Document
+	 */
+	public void performThreadMapViewDocumentInChildWindow() {
+
+		driver.waitForPageToBeReady();
+		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+		driver.waitForPageToBeReady();
+		Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
+		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+
+		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+
+		for (int i = 3; i <= 3; i++) {
+			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
+			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
+		}
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+
+		base.waitForElement(getDocView_Analytics_Thread_ViewDocument());
+		getDocView_Analytics_Thread_ViewDocument().waitAndClick(10);
+		
+		
 	}
 }
