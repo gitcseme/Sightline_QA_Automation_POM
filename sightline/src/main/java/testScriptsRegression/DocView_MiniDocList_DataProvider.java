@@ -3,7 +3,9 @@ package testScriptsRegression;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.testng.ITestResult;
@@ -49,17 +51,16 @@ public class DocView_MiniDocList_DataProvider {
 	SavedSearch savedSearch;
 	CodingForm codingForm;
 	DocListPage docListPage;
-	
-	String assignmentNameToChoose;
 
+	String assignmentNameToChoose;
 
 	@BeforeClass(alwaysRun = true)
 	private void TestStart() throws Exception, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-	// Open browser
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+		// Open browser
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -68,10 +69,10 @@ public class DocView_MiniDocList_DataProvider {
 		assignmentPage = new AssignmentsPage(driver);
 		docViewPage = new DocViewPage(driver);
 		reusableDocViewPage = new ReusableDocViewPage(driver);
-		savedSearch=new SavedSearch(driver);
-		codingForm=new CodingForm(driver);
-		docListPage=new DocListPage(driver);
-		softAssertion=new SoftAssert();
+		savedSearch = new SavedSearch(driver);
+		codingForm = new CodingForm(driver);
+		docListPage = new DocListPage(driver);
+		softAssertion = new SoftAssert();
 
 	}
 
@@ -80,7 +81,7 @@ public class DocView_MiniDocList_DataProvider {
 		System.out.println("Executing method : " + testMethod.getName());
 		UtilityLog.info("Executing method : " + testMethod.getName());
 	}
-	
+
 	/**
 	 * Author : Raghuram A date: 8/18/21 NA Modified date: NA Modified by: N/A
 	 * Description : DataProvider for Different User Login
@@ -91,17 +92,16 @@ public class DocView_MiniDocList_DataProvider {
 				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
 	}
+
 	@DataProvider(name = "userDetailss")
 	public Object[][] userLoginSaPaRmu() {
-		return new Object[][] { 
-			{ "rmu", Input.rmu1userName, Input.rmu1password,"rev" },
-				{ "sa", Input.sa1userName, Input.sa1password,"rmu" },
-				{  "sa", Input.sa1userName, Input.sa1password,"rev"  }, 
-				{  "pa", Input.pa1userName, Input.pa1password,"rmu"  } ,
-				{  "pa", Input.pa1userName, Input.pa1password,"rev"  }
-				};
+		return new Object[][] { { "rmu", Input.rmu1userName, Input.rmu1password, "rev" },
+				{ "sa", Input.sa1userName, Input.sa1password, "rmu" },
+				{ "sa", Input.sa1userName, Input.sa1password, "rev" },
+				{ "pa", Input.pa1userName, Input.pa1password, "rmu" },
+				{ "pa", Input.pa1userName, Input.pa1password, "rev" } };
 	}
-	
+
 	@DataProvider(name = "twoLogins")
 	public Object[][] userRmuRev() {
 		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
@@ -152,9 +152,8 @@ public class DocView_MiniDocList_DataProvider {
 		baseClass.stepInfo("Step 5 : Verifying that no duplication of selected fields listed");
 		// main method for RPMXCON-51890
 		miniDocListpage.verifyDuplicatefieldsInBothtabs();
-		
-		loginPage.logout();
 
+		loginPage.logout();
 
 	}
 
@@ -164,7 +163,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * is clicked multiple times then repetitive 'Selected Fields' should not be
 	 * displayed on Manual Sort order tab Id:RPMXCON-51890 Sprint : 1
 	 */
-	
+
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 2)
 	public void repeatativeFieldsonManualSortTab(String fullName, String userName, String password) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51890");
@@ -216,18 +215,17 @@ public class DocView_MiniDocList_DataProvider {
 		// Close mini doclist popup
 		baseClass.waitForElement(miniDocListpage.getMiniDocListcloseButton());
 		miniDocListpage.getMiniDocListcloseButton().Click();
-		
-		 loginPage.logout();
+
+		loginPage.logout();
 
 	}
-
 
 	/**
 	 * @Author : Baskar date: 08/09/2021 Modified date: NA Modified by: Baskar
 	 * @Description : Verify the default columns from mini doc list of doc view
 	 */
 
-    @Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
 	public void verifyDefaultHeaderValue(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51429");
@@ -243,35 +241,34 @@ public class DocView_MiniDocList_DataProvider {
 
 //		verify header value
 		reusableDocViewPage.defaultHeaderValue();
-		
-        loginPage.logout();
+
+		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
 
 	}
 
-    
-    /**
+	/**
 	 * @Author : Baskar date: 08/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify that if user navigates to doc view from the Basic search, 
-	 *                then user can select 4 webfields from preselected list to display in the 
-	 *                panel of mini doc list in manual mode
+	 * @Description : To verify that if user navigates to doc view from the Basic
+	 *              search, then user can select 4 webfields from preselected list
+	 *              to display in the panel of mini doc list in manual mode
 	 */
-    @DataProvider(name = "userDetailTwoLogin")
+	@DataProvider(name = "userDetailTwoLogin")
 	public Object[][] userDetailTwoLogin() {
-		return new Object[][] {
-				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
 	}
-	
-	@Test(enabled = true,dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 4)
-	public void basicSearchToDocViewToSelect4WebFields(String fullName, String userName, String password) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 4)
+	public void basicSearchToDocViewToSelect4WebFields(String fullName, String userName, String password)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50881");
-		
+
 //	     login as @user		
 		loginPage.loginToSightLine(userName, password);
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
-		
+
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
@@ -282,15 +279,17 @@ public class DocView_MiniDocList_DataProvider {
 
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 07/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify after impersonation user is allowed to select up to 4 webfields
-	 *                from a preselected list to display in the panel of mini doc list in the manual mode
+	 * @Description : To verify after impersonation user is allowed to select up to
+	 *              4 webfields from a preselected list to display in the panel of
+	 *              mini doc list in the manual mode
 	 */
-	
-	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 5)
-	public void verifyAfterImpersonateToSelect4WebFieldsManualMode(String roll,String userName, String password,String impersonate) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 5)
+	public void verifyAfterImpersonateToSelect4WebFieldsManualMode(String roll, String userName, String password,
+			String impersonate) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50880");
 		String assignmentNameToManual = null;
 		// Login as Reviewer Manager
@@ -306,30 +305,30 @@ public class DocView_MiniDocList_DataProvider {
 		}
 		switch (impersonate) {
 		case "rmu":
-			if (roll.equalsIgnoreCase("sa")&& impersonate.equalsIgnoreCase("rmu")) {
+			if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonateSAtoRMU();
 			}
 			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonatePAtoRMU();
-			} 
-				
+			}
+
 		case "rev":
-			if (roll.equalsIgnoreCase("sa")&& impersonate.equalsIgnoreCase("rev")) {
+			if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonateSAtoReviewer();
 			}
-			if (roll.equalsIgnoreCase("pa")&& impersonate.equalsIgnoreCase("rev")) {
+			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonatePAtoReviewer();
-			} 
+			}
 			if (roll.equalsIgnoreCase("rmu")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonateRMUtoReviewer();
 			}
 		}
-		
+
 		if (roll.equalsIgnoreCase("rmu")) {
 			assignmentPage.SelectAssignmentByReviewer(assignmentNameToManual);
 			baseClass.stepInfo("User on the doc view after selecting the assignment");
@@ -349,28 +348,27 @@ public class DocView_MiniDocList_DataProvider {
 
 		driver.waitForPageToBeReady();
 		loginPage.logout();
-	
 
 	}
-	
-	
+
 	/**
 	 * @Author : Baskar date: 08/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify that if user navigates to doc view from the Saved search, 
-	 *                then user can select 4 webfields from preselected list to display in 
-	 *                the panel of mini doc list in manual mode
+	 * @Description : To verify that if user navigates to doc view from the Saved
+	 *              search, then user can select 4 webfields from preselected list
+	 *              to display in the panel of mini doc list in manual mode
 	 */
-	
-	@Test(enabled = true,dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 6)
-	public void savedSearchToDocViewToSelect4WebFields(String fullName, String userName, String password) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 6)
+	public void savedSearchToDocViewToSelect4WebFields(String fullName, String userName, String password)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50882");
-		String savedSearchs = "AsavedToDocview" +Utility.dynamicNameAppender();
+		String savedSearchs = "AsavedToDocview" + Utility.dynamicNameAppender();
 
 //	     login as @user		
 		loginPage.loginToSightLine(userName, password);
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
-		
+
 		// Saved search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(savedSearchs);
@@ -383,42 +381,43 @@ public class DocView_MiniDocList_DataProvider {
 
 		loginPage.logout();
 	}
-	
 
 	/**
 	 * @Author : Baskar date: 13/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Configure Mini DocList modal window should be launched on click 
-	 *                of the small gear icon in the Mini DocList panel outside of an assignment
+	 * @Description : Configure Mini DocList modal window should be launched on
+	 *              click of the small gear icon in the Mini DocList panel outside
+	 *              of an assignment
 	 */
-	
+
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 7)
 	public void repeatativeFieldsCheckonOptimizedSortTa(String fullName, String userName, String password)
 			throws InterruptedException, Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51336");
-		baseClass.stepInfo(
-				"Verify on gear icon to open configure mini doc list popup window");
+		baseClass.stepInfo("Verify on gear icon to open configure mini doc list popup window");
 
 		// Login as a Admin
 		loginPage.loginToSightLine(userName, password);
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
-        
+
 //		Session search to docview
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
-		
+
 		miniDocListpage.configureMiniDocListPopupOpen();
-		
+
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 13/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify user can select 'Remove Code Same' from mini doc list child window
+	 * @Description : Verify user can select 'Remove Code Same' from mini doc list
+	 *              child window
 	 */
-	
-	@Test(enabled = true,dataProvider = "userDetailTwoLogin",groups = { "regression" }, priority = 8)
-	public void removeCodeSameAsFromChildWindow(String fullName, String userName, String password) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 8)
+	public void removeCodeSameAsFromChildWindow(String fullName, String userName, String password)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51231");
 		String Asssignment = "AssignmentRemove" + Utility.dynamicNameAppender();
 		System.out.println(Asssignment);
@@ -436,50 +435,50 @@ public class DocView_MiniDocList_DataProvider {
 
 		loginPage.logout();
 	}
-	
-	
+
 	/**
 	 * @Author : Baskar date: 13/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify user after impersonation should able to 'Remove Code same 
-	 *                as this' on document selection from mini doc list
+	 * @Description : To verify user after impersonation should able to 'Remove Code
+	 *              same as this' on document selection from mini doc list
 	 */
-	
-	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 9)
-	public void removeCodeSameAsAfterImpersonate(String roll,String userName, String password,String impersonate) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 9)
+	public void removeCodeSameAsAfterImpersonate(String roll, String userName, String password, String impersonate)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51228");
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(userName, password);
 		switch (impersonate) {
 		case "rmu":
-			if (roll.equalsIgnoreCase("sa")&& impersonate.equalsIgnoreCase("rmu")) {
+			if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonateSAtoRMU();
 			}
 			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonatePAtoRMU();
-			} 
-				
+			}
+
 		case "rev":
-			if (roll.equalsIgnoreCase("sa")&& impersonate.equalsIgnoreCase("rev")) {
+			if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonateSAtoReviewer();
 			}
-			if (roll.equalsIgnoreCase("pa")&& impersonate.equalsIgnoreCase("rev")) {
+			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonatePAtoReviewer();
-			} 
+			}
 			if (roll.equalsIgnoreCase("rmu")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonateRMUtoReviewer();
 			}
 		}
-		
+
 		if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")
 				|| roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")
 				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")
-				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")||roll.equalsIgnoreCase("rmu")) {
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu") || roll.equalsIgnoreCase("rmu")) {
 			driver.waitForPageToBeReady();
 			sessionSearch.basicContentSearch(Input.searchString2);
 			sessionSearch.ViewInDocView();
@@ -490,18 +489,19 @@ public class DocView_MiniDocList_DataProvider {
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-	
-	
+
 	/**
 	 * @Author : Baskar date: 07/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify after impersonation user is allowed to select up to 4 webfields 
-	 *                from a preselected list to display in mini doc list- optimized mode
+	 * @Description : To verify after impersonation user is allowed to select up to
+	 *              4 webfields from a preselected list to display in mini doc list-
+	 *              optimized mode
 	 */
-	
-	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 10)
-	public void verifyAfterImpersonateToSelect4WebFields(String roll,String userName, String password,String impersonate) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 10)
+	public void verifyAfterImpersonateToSelect4WebFields(String roll, String userName, String password,
+			String impersonate) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50887");
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(userName, password);
 
@@ -515,30 +515,30 @@ public class DocView_MiniDocList_DataProvider {
 		}
 		switch (impersonate) {
 		case "rmu":
-			if (roll.equalsIgnoreCase("sa")&& impersonate.equalsIgnoreCase("rmu")) {
+			if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonateSAtoRMU();
 			}
 			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonatePAtoRMU();
-			} 
-				
+			}
+
 		case "rev":
-			if (roll.equalsIgnoreCase("sa")&& impersonate.equalsIgnoreCase("rev")) {
+			if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonateSAtoReviewer();
 			}
-			if (roll.equalsIgnoreCase("pa")&& impersonate.equalsIgnoreCase("rev")) {
+			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonatePAtoReviewer();
-			} 
+			}
 			if (roll.equalsIgnoreCase("rmu")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonateRMUtoReviewer();
 			}
 		}
-		
+
 		if (roll.equalsIgnoreCase("rmu")) {
 			assignmentPage.SelectAssignmentByReviewer(assignmentNameToChoose);
 			baseClass.stepInfo("User on the doc view after selecting the assignment");
@@ -559,26 +559,27 @@ public class DocView_MiniDocList_DataProvider {
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 22/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify the 'Selected Fields' for 'Family Relationship' field from 
-	 *                Optimized Sort Order of Configure mini doc list pop up
+	 * @Description : Verify the 'Selected Fields' for 'Family Relationship' field
+	 *              from Optimized Sort Order of Configure mini doc list pop up
 	 */
-	
-	@Test(enabled = true,dataProvider="userDetails",groups = { "regression" }, priority = 11)
-	public void verifySelectdFieldsToRemove(String fullName, String userName, String password) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 11)
+	public void verifySelectdFieldsToRemove(String fullName, String userName, String password)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51653");
 
 		// Login as a Admin
 		loginPage.loginToSightLine(userName, password);
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
-		
+
 //		Go to docview via session search
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-		
+
 		miniDocListpage.removingFieldsInPopUpWindow();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
@@ -586,50 +587,51 @@ public class DocView_MiniDocList_DataProvider {
 
 	/**
 	 * @Author : Baskar date: 22/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify that when switch from Optimized to Custom, the display fields 
-	 *                set in the Optimized Sort are displayed for custom sort from mini doc 
-	 *                list child window
+	 * @Description : Verify that when switch from Optimized to Custom, the display
+	 *              fields set in the Optimized Sort are displayed for custom sort
+	 *              from mini doc list child window
 	 */
-	
-	@Test(enabled = true,dataProvider="userDetails",groups = { "regression" }, priority = 12)
-	public void verifySelectedFieldInChildWindow(String fullName, String userName, String password) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 12)
+	public void verifySelectedFieldInChildWindow(String fullName, String userName, String password)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51742");
 
 		// Login as a Admin
 		loginPage.loginToSightLine(userName, password);
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
-		
+
 //		Go to docview via session search
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-		
+
 		miniDocListpage.selectedFieldInChildWindow();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 22/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify that when switched from custom to optimized sort, then 
-	 *                optimized sort should display the default fields of same sort order
+	 * @Description : Verify that when switched from custom to optimized sort, then
+	 *              optimized sort should display the default fields of same sort
+	 *              order
 	 */
-	
+
 	@DataProvider(name = "revImpersoante")
 	public Object[][] userLoginPaRmuRev() {
-		return new Object[][] { 
-			{ "rmu",Input.rmu1userName, Input.rmu1password,"rev" }
-				};
+		return new Object[][] { { "rmu", Input.rmu1userName, Input.rmu1password, "rev" } };
 	}
-	
-	@Test(enabled = true,dataProvider="revImpersoante",groups = { "regression" }, priority = 13)
-	public void verifySwitchedFromCustomToOptimizedSortRemoval(String roll, String userName, String password,String impersonate) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "revImpersoante", groups = { "regression" }, priority = 13)
+	public void verifySwitchedFromCustomToOptimizedSortRemoval(String roll, String userName, String password,
+			String impersonate) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51738");
 
 		// Login as a Admin
 		loginPage.loginToSightLine(userName, password);
 		driver.waitForPageToBeReady();
-		
+
 		if (roll.equalsIgnoreCase("rmu")) {
 			// search to Assignment creation
 			sessionSearch.basicContentSearch(Input.searchString1);
@@ -640,7 +642,7 @@ public class DocView_MiniDocList_DataProvider {
 		}
 		switch (impersonate) {
 		case "rev":
-			if (roll.equalsIgnoreCase("rmu")&& impersonate.equalsIgnoreCase("rev")) {
+			if (roll.equalsIgnoreCase("rmu") && impersonate.equalsIgnoreCase("rev")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonateRMUtoReviewer();
 			}
@@ -655,21 +657,23 @@ public class DocView_MiniDocList_DataProvider {
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 22/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify that when switch from Optimized to Custom, the display fields set 
-	 *                in the Optimized Sort are displayed for custom sort in context of an assignment
+	 * @Description : Verify that when switch from Optimized to Custom, the display
+	 *              fields set in the Optimized Sort are displayed for custom sort
+	 *              in context of an assignment
 	 */
-	
-	@Test(enabled = true,dataProvider="revImpersoante",groups = { "regression" }, priority = 14)
-	public void verifySwitchedFromCustomToOptimizedSort(String roll, String userName, String password,String impersonate) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "revImpersoante", groups = { "regression" }, priority = 14)
+	public void verifySwitchedFromCustomToOptimizedSort(String roll, String userName, String password,
+			String impersonate) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51737");
 
 		// Login as a Admin
 		loginPage.loginToSightLine(userName, password);
 		driver.waitForPageToBeReady();
-		
+
 		if (roll.equalsIgnoreCase("rmu")) {
 			// search to Assignment creation
 			sessionSearch.basicContentSearch(Input.searchString2);
@@ -680,7 +684,7 @@ public class DocView_MiniDocList_DataProvider {
 		}
 		switch (impersonate) {
 		case "rev":
-			if (roll.equalsIgnoreCase("rmu")&& impersonate.equalsIgnoreCase("rev")) {
+			if (roll.equalsIgnoreCase("rmu") && impersonate.equalsIgnoreCase("rev")) {
 				driver.waitForPageToBeReady();
 				baseClass.impersonateRMUtoReviewer();
 			}
@@ -695,110 +699,115 @@ public class DocView_MiniDocList_DataProvider {
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 22/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify that when switch from Optimized to Custom, the display fields 
-	 *                set in the Optimized Sort are displayed for custom sort
+	 * @Description : Verify that when switch from Optimized to Custom, the display
+	 *              fields set in the Optimized Sort are displayed for custom sort
 	 */
-	
-	@Test(enabled = true,dataProvider="userDetails",groups = { "regression" }, priority = 15)
-	public void verifySwitchedFromOptimizedSortToCustom(String fullName, String userName, String password) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 15)
+	public void verifySwitchedFromOptimizedSortToCustom(String fullName, String userName, String password)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51736");
 
 		// Login as a Admin
 		loginPage.loginToSightLine(userName, password);
 		driver.waitForPageToBeReady();
-		
+
 //      Go to docview via session search
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-		
+
 		miniDocListpage.OptimizedSortToCustomDefaultDisplay();
-		
+
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 22/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify that when user opens Configure Mini DocList modal window, 
-	 *                whatever columns are presently presented in Mini DocList will be 
-	 *                presented in the field selection tab
+	 * @Description : Verify that when user opens Configure Mini DocList modal
+	 *              window, whatever columns are presently presented in Mini DocList
+	 *              will be presented in the field selection tab
 	 */
-	
-	@Test(enabled = true,dataProvider="userDetails",groups = { "regression" }, priority = 16)
-	public void verifyDefaultValueInOptimizedSort(String fullName, String userName, String password) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 16)
+	public void verifyDefaultValueInOptimizedSort(String fullName, String userName, String password)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51739");
 
 		// Login as a Admin
 		loginPage.loginToSightLine(userName, password);
 		driver.waitForPageToBeReady();
-		
+
 //      Go to docview via session search
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-		
+
 		miniDocListpage.verifyDefaultValueInOptimizedSort();
-		
+
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 22/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Veirfy that whatever the current sort order is in Mini DocList will be 
-	 *                presented in the Sort Order tab for selected manual sort order
+	 * @Description : Veirfy that whatever the current sort order is in Mini DocList
+	 *              will be presented in the Sort Order tab for selected manual sort
+	 *              order
 	 */
-	
-    @Test(enabled = true,dataProvider="userDetails",groups = { "regression" }, priority = 17)
-	public void verifyCurrentSortOrderInMiniDocList(String fullName, String userName, String password) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 17)
+	public void verifyCurrentSortOrderInMiniDocList(String fullName, String userName, String password)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51740");
 
 		// Login as a Admin
 		loginPage.loginToSightLine(userName, password);
 		driver.waitForPageToBeReady();
-		
+
 //      Go to docview via session search
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-		
+
 		miniDocListpage.currentSortOrderShouldBeDisplayed();
-		
+
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 22/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify that when the user changes the fields for selection in the 
-	 *                column presentation, and/or modifies the sort order, the app honors t
-	 *                hose new selections
+	 * @Description : Verify that when the user changes the fields for selection in
+	 *              the column presentation, and/or modifies the sort order, the app
+	 *              honors t hose new selections
 	 */
-	
-	@Test(enabled = true,dataProvider="userDetails",groups = { "regression" }, priority = 18)
-	public void verifyChangesColumnPresentation(String fullName, String userName, String password) throws InterruptedException {
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 18)
+	public void verifyChangesColumnPresentation(String fullName, String userName, String password)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51741");
 
 		// Login as a Admin
 		loginPage.loginToSightLine(userName, password);
 		driver.waitForPageToBeReady();
-		
+
 //      Go to docview via session search
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-		
+
 		miniDocListpage.currentSortOrderShouldBeDisplayed();
 		driver.waitForPageToBeReady();
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		
+
 		sessionSearch.ViewInDocView();
 		miniDocListpage.againDocviewToViewNewChanges();
-		
+
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 15/11/2021 Modified date: NA Modified by: Baskar
 	 * @Description : Verify that document should be loaded successfully when
@@ -854,7 +863,6 @@ public class DocView_MiniDocList_DataProvider {
 
 	}
 
-	
 	/**
 	 * @Author : Baskar date: 17/11/2021 Modified date: NA Modified by: Baskar
 	 * @Description : To verify user can view main document in default view panel
@@ -890,7 +898,6 @@ public class DocView_MiniDocList_DataProvider {
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-
 
 	/**
 	 * @Author : Baskar date: 17/11/2021 Modified date: NA Modified by: Baskar
@@ -952,17 +959,17 @@ public class DocView_MiniDocList_DataProvider {
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 07/10/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify after impersonation user is allowed to alter the sort 
-	 *                sequence on the mini doc list in the manual mode when 
-	 *                redirects from Manage Assignment page
+	 * @Description : To verify after impersonation user is allowed to alter the
+	 *              sort sequence on the mini doc list in the manual mode when
+	 *              redirects from Manage Assignment page
 	 */
 
 	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 25)
-	public void afterImpSortSequenceFromAssignment(String roll, String userName, String password,
-			String impersonate) throws InterruptedException {
+	public void afterImpSortSequenceFromAssignment(String roll, String userName, String password, String impersonate)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50892");
 		String assignmentNameToManual = null;
 		// Login as Reviewer Manager
@@ -1022,18 +1029,18 @@ public class DocView_MiniDocList_DataProvider {
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 17/11/2021 Modified date: NA Modified by: Baskar
-	 * @Description : To verify sort sequence from mini doc list when user redirects from doc list page
+	 * @Description : To verify sort sequence from mini doc list when user redirects
+	 *              from doc list page
 	 */
 
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
 	public void verifySortSequenceDocListToDocView(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50895");
-		baseClass.stepInfo("To verify sort sequence from mini doc list when user "
-				+ "redirects from doc list page");
+		baseClass.stepInfo("To verify sort sequence from mini doc list when user " + "redirects from doc list page");
 
 //	    login as @user		
 		loginPage.loginToSightLine(userName, password);
@@ -1043,25 +1050,25 @@ public class DocView_MiniDocList_DataProvider {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocList();
 		baseClass.stepInfo("User navigated to docview page from doclist page");
-		
+
 //		Selecting document in doclist page
 		docListPage.selectAllDocumentsInCurrentPageOnly();
-		LinkedList<String>docListtext=docListPage.VerifyDocsInAscendingorder();
+		LinkedList<String> docListtext = docListPage.VerifyDocsInAscendingorder();
 		docListPage.docListToDocView();
-		LinkedList<String>miniDocListtext=reusableDocViewPage.miniDocListSortSequence();
-		softAssertion.assertEquals(docListtext,miniDocListtext);
+		LinkedList<String> miniDocListtext = reusableDocViewPage.miniDocListSortSequence();
+		softAssertion.assertEquals(docListtext, miniDocListtext);
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 25/11/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify scrolling from mini doc list child window when document is 
-	 *                selected from mini doc list after scrolling down with less 
-	 *                number of documents
+	 * @Description : Verify scrolling from mini doc list child window when document
+	 *              is selected from mini doc list after scrolling down with less
+	 *              number of documents
 	 */
 
-    @Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
 	public void scrollDownWithLessDocument(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51610");
@@ -1079,15 +1086,16 @@ public class DocView_MiniDocList_DataProvider {
 
 //		Scroll down with less number of document
 		docViewPage.verifyScrollingDocumentLess();
-		
+
 		driver.waitForPageToBeReady();
-        loginPage.logout();
+		loginPage.logout();
 	}
-    
-    /**
+
+	/**
 	 * @Author : Baskar date: 25/11/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Verify that document should be loaded successfully when document 
-	 *                viewed from mini doc list from Text tab of previous document
+	 * @Description : Verify that document should be loaded successfully when
+	 *              document viewed from mini doc list from Text tab of previous
+	 *              document
 	 */
 
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
@@ -1109,17 +1117,18 @@ public class DocView_MiniDocList_DataProvider {
 		loginPage.logout();
 
 	}
-	
-	
+
 	/**
-	 * Author : Mohan date: 17/12/21 NA Modified date: NA Modified by:NA
-	 * Description : Verify that EmailAuthorNameAndAddress field should be displayed on the metadata panel of doc view
-	 * Test CaseId: 'RPMXCON-51523' Sprint : 8
-	 * @throws InterruptedException 
+	 * Author : Mohan date: 17/12/21 NA Modified date: NA Modified by:NA Description
+	 * : Verify that EmailAuthorNameAndAddress field should be displayed on the
+	 * metadata panel of doc view Test CaseId: 'RPMXCON-51523' Sprint : 8
+	 * 
+	 * @throws InterruptedException
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
-	public void verifyEmailAuthorNameAndAddressField(String fullName, String userName, String password) throws InterruptedException {
-		
+	public void verifyEmailAuthorNameAndAddressField(String fullName, String userName, String password)
+			throws InterruptedException {
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51523");
 
 		baseClass.stepInfo(
@@ -1129,55 +1138,57 @@ public class DocView_MiniDocList_DataProvider {
 		loginPage.loginToSightLine(userName, password);
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
-		
+
 		sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
 		softAssertion = new SoftAssert();
-		
 
 		baseClass.stepInfo("Step 2: Search for documents and go to doc view");
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewThreadedDocsInDocViews();
-		
+
 		baseClass.stepInfo("Step 3: Check the metadata panel for the EmailAuthorNameAndAddress field");
-		
+
 		driver.scrollingToElementofAPage(docViewPage.getDocView_MetaDataPanel_EmailAuthorNameAndAddress());
 		softAssertion.assertTrue(docViewPage.getDocView_MetaDataPanel_EmailAuthorNameAndAddress().isDisplayed());
 		softAssertion.assertAll();
-		baseClass.passedStep("EmailAuthorNameAndAddress field is displayed on metadata panel and field is a concatenation of EmailAuthorName and EmailAddress fields.");
-		
-		baseClass.stepInfo("Step 4: Click 'Browse All Metadata' button from metadata panel and check for the  EmailAuthorNameAndAddress field  from the pop up");
-		
+		baseClass.passedStep(
+				"EmailAuthorNameAndAddress field is displayed on metadata panel and field is a concatenation of EmailAuthorName and EmailAddress fields.");
+
+		baseClass.stepInfo(
+				"Step 4: Click 'Browse All Metadata' button from metadata panel and check for the  EmailAuthorNameAndAddress field  from the pop up");
+
 		driver.waitForPageToBeReady();
 		driver.scrollingToElementofAPage(docViewPage.getDocView_MetaDataPanel_BrowseAllMetaDataPanel());
 		baseClass.waitForElement(docViewPage.getDocView_MetaDataPanel_BrowseAllMetaDataPanel());
 		docViewPage.getDocView_MetaDataPanel_BrowseAllMetaDataPanel().waitAndClick(3);
-		
+
 		driver.waitForPageToBeReady();
-		softAssertion.assertTrue(docViewPage.getDocView_MetaDataPanel_BrowseAllMetaDataPanel_PopupField().isDisplayed());
+		softAssertion
+				.assertTrue(docViewPage.getDocView_MetaDataPanel_BrowseAllMetaDataPanel_PopupField().isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("All Meta Data Panel opened successfully");
-		
+
 		docViewPage.verifyEmailAuthorNameAndAddressFieldInMetaDataPanel();
-		
-		//logout
+
+		// logout
 		loginPage.logout();
-		
-		
-		
-		
+
 	}
-	
+
 	/**
-	 * Author : Mohan date: 17/12/21 NA Modified date: NA Modified by:NA
-	 * Description : Verify on click of 'Save Configuration' mini doc list should be displayed with the selected webfields for Set Document Sorting
-	 * Test CaseId: 'RPMXCON-51335' Sprint : 8
-	 * @throws InterruptedException 
+	 * Author : Mohan date: 17/12/21 NA Modified date: NA Modified by:NA Description
+	 * : Verify on click of 'Save Configuration' mini doc list should be displayed
+	 * with the selected webfields for Set Document Sorting Test CaseId:
+	 * 'RPMXCON-51335' Sprint : 8
+	 * 
+	 * @throws InterruptedException
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 30)
-	public void verifyMiniDoclistWebFieldAfterChangingThem(String fullName, String userName, String password) throws InterruptedException {
-		
+	public void verifyMiniDoclistWebFieldAfterChangingThem(String fullName, String userName, String password)
+			throws InterruptedException {
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51335");
 
 		baseClass.stepInfo(
@@ -1187,35 +1198,147 @@ public class DocView_MiniDocList_DataProvider {
 		loginPage.loginToSightLine(userName, password);
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
-		
+
 		sessionSearch = new SessionSearch(driver);
 		softAssertion = new SoftAssert();
 		MiniDocListPage miniDocListPage = new MiniDocListPage(driver);
-		String fieldName="SourceDocID";
-		
+		String fieldName = "SourceDocID";
 
 		baseClass.stepInfo("Step 2: Search for documents and go to doc view");
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-		
-		baseClass.stepInfo("Step 3: Drag the fields from available fields to selected fields and click 'Save Configuration'");
+
+		baseClass.stepInfo(
+				"Step 3: Drag the fields from available fields to selected fields and click 'Save Configuration'");
 		miniDocListPage.verifyDefaultValueInOptimizedSort();
 		miniDocListPage.selectSourceDocIdInAvailableField();
-		
+
 		driver.waitForPageToBeReady();
 		driver.scrollingToElementofAPage(miniDocListPage.getDocView_MiniDoclist_Header_Webfields(fieldName));
 		softAssertion.assertTrue(miniDocListPage.getDocView_MiniDoclist_Header_Webfields(fieldName).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("Mini doc list is displayed with the selected fields for Set Document Sorting");
-		
-		loginPage.logout();
-		
-		
-	}
-	
 
-    @AfterMethod(alwaysRun = true)
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A Date: 1/4/21 Modified date:N/A Modified by: N/A
+	 *         Description : Verify application loads the Doc ID when clicking the
+	 *         document from the history which is present in the mini doc
+	 *         list-RPMXCON-51297 Sprint 09
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 31)
+	public void verifyDocIdInDocVIewPanel(String fullName, String userName, String password)
+			throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		List<String> docIDlist = new ArrayList<>();
+		int docLimit = 3;
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51297 - DocView/MiniDocList Sprint 09");
+		baseClass.stepInfo(
+				"Verify application loads the Doc ID when clicking the document from the history which is present in the mini doc list");
+
+		// Login As user
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + fullName + "'");
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		baseClass.stepInfo("Select Docview At Action");
+		sessionSearch.ViewInDocView();
+
+		// Main method
+		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
+		int sizeofList = miniDocListpage.getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		docIDlist = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
+
+		// validate checkmark icon and code same as last button
+		miniDocListpage.actionOnDocsFromHistoryDropDown(docLimit, sizeofList, docIDlist, true, "", true, false, false, null);
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A Date: 1/4/21 Modified date:N/A Modified by: N/A
+	 *         Description : In DocView's Mini DocList panel, the prior document
+	 *         viewed history dropdown should work on click of "clock
+	 *         icon"-RPMXCON-51295 Sprint 09
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 32)
+	public void verifypriorDocumentViewedHistory(String fullName, String userName, String password)
+			throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		List<String> docIDlist = new ArrayList<>();
+		int docLimit = 3;
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51295 - DocView/MiniDocList Sprint 09");
+		baseClass.stepInfo(
+				"In DocView's Mini DocList panel, the prior document viewed history dropdown should work on click of \"clock icon\"");
+
+		// Login As User
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + fullName + "'");
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		baseClass.stepInfo("Select Docview At Action");
+		sessionSearch.ViewInDocView();
+
+		// Main method
+		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
+		int sizeofList = miniDocListpage.getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		docIDlist = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
+
+		// validate checkmark icon and code same as last button
+		miniDocListpage.actionOnDocsFromHistoryDropDown(docLimit, sizeofList, docIDlist, true, "", false, true, false, null);
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author jeevitha
+	 * @Description : Verify the 'Available Fields' for 'Family Relationship' field
+	 *              from Manual Sort Order > Pick Column Display and Set Document
+	 *              Sorting tab of configure mini doc list pop up [RPMXCON-51654]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 33)
+	public void verifyAvailableFields(String fullName, String username, String password) throws InterruptedException {
+		String fieldValue = "FamilyRelationship";
+
+		// Login as a User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51654");
+		baseClass.stepInfo(
+				"Verify the 'Available Fields' for 'Family Relationship' field from Manual Sort Order > Pick Column Display and Set Document Sorting tab of configure mini doc list pop up");
+
+		// basic search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		miniDocListpage.clickManualSortButton();
+
+		// verify fields in manual sort available Tab
+		miniDocListpage.verifyWhetherFieldAvailableInTab(fieldValue, true);
+		miniDocListpage.getDocview_MiniDoc_GearIconCancelBtn().waitAndClick(10);
+		loginPage.logout();
+
+	}
+
+	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
@@ -1238,7 +1361,7 @@ public class DocView_MiniDocList_DataProvider {
 		} finally {
 			loginPage.clearBrowserCache();
 		}
-		
+
 	}
 
 }
