@@ -6479,7 +6479,118 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.fillingGeneratePageWithContinueGenerationPopup();
 
 		}
+		/**
+		 * @author Brundha Test case id-RPMXCON-48375
+		 * @Description To verify that If user select PrivTag and if non-audio document is associated to that tag then Native should not produced
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 80)
+		public void verifyNativeNotProduced() throws Exception {
+			
+			UtilityLog.info(Input.prodPath);
+			;
+			base.stepInfo("RPMXCON-48375 -Production Sprint 09");
+			base.stepInfo("To verify that If user select PrivTag and if non-audio document is associated to that tag then Native should not produced");
 
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String productionname1 = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkTagExisting(tagname);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.selectPrivDocsInTiffSection(tagname);
+			page.fillingTextSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			
+			page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname1);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.fillingPDFSection(tagname, Input.searchString4);
+			page.fillingTextSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname1);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+
+		}
+		
+		
+		/**
+		 * @author Brundha Test case id-RPMXCON-48534
+		 * @Description To verify that if user click on Yes button on confirmation message, Tiff/PDF should produced with blank pages
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 81)
+		public void verifyTiffWithBlankPagesAfterGeneration() throws Exception {
+			
+			UtilityLog.info(Input.prodPath);
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			base.stepInfo("RPMXCON-48534 -Production Sprint 09");
+			base.stepInfo("To verify that if user click on Yes button on confirmation message, Tiff/PDF should produced with blank pages");
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+			
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.selectBlankRemovalInTiffSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+		}
+		
+		
 
 	@AfterMethod(alwaysRun = true)
 	public void close() {
