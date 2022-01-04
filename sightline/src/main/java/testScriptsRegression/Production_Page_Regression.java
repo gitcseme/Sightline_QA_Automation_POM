@@ -1607,6 +1607,7 @@ public class Production_Page_Regression {
 	public void verifyGenerateLoadFileForPDF() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48323- Production Sprint 09");
+		baseClass.stepInfo("To verify that \"Generate Load File\" is enabled by default for PDF components.");
 		UtilityLog.info(Input.prodPath);
 		boolean flag;
 		
