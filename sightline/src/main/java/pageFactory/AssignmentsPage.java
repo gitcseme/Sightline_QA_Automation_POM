@@ -30,7 +30,7 @@ public class AssignmentsPage {
 	BaseClass bc;
 	SoftAssert assertion;
 	SessionSearch search;
-	LoginPage lp; 
+	LoginPage lp;
 
 	public Element getAssignmentActionDropdown() {
 		return driver.FindElementByXPath("//*[@id='ulActions']/../button[@class='btn btn-defualt dropdown-toggle']");
@@ -5840,7 +5840,7 @@ public class AssignmentsPage {
 				getSelectAssignment(assignmentName).waitAndClick(3);
 				;
 				driver.scrollPageToTop();
-				getAssignmentActionDropdown().waitAndClick(3);
+				getAssignmentActionDropdown().waitAndClick(5);
 				bc.stepInfo("Expected assignment found in the page " + i);
 				break;
 			} else {
@@ -5849,11 +5849,9 @@ public class AssignmentsPage {
 				bc.stepInfo("Expected assignment not found in the page " + i);
 			}
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAssignmentAction_EditAssignment().Visible();
-			}
-		}), Input.wait30);
+		bc.waitForElement(getAssignmentAction_EditAssignment());
+		bc.waitTime(2);
+		getAssignmentAction_EditAssignment().isElementAvailable(10);
 		getAssignmentAction_EditAssignment().waitAndClick(17);
 		add2ReviewerAndDistribute();
 		assertion.assertAll();
@@ -8451,9 +8449,9 @@ public class AssignmentsPage {
      	System.out.println(colourGreen);
         assertion.assertEquals(colourGreen, "#A9C981");
         assertion.assertAll();
-    }
+    } 
 	
-	 
+	
     /**
 	 * @author gopinath.srinivasan
 	 * @Description : Method for creating new new bulk assignment with enabling persistant hit check box,
