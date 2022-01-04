@@ -75,6 +75,16 @@ public class ManageAssignment {
 		return driver.FindElementByXPath(
 				"//input[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i");
 	}
+	
+	//Added by Gopinath - 03/01/2022
+	public Element getPrintToogle() {
+		return driver
+				.FindElementByXPath("//input[@id='AdditionalPreferences_IsAllowPDFPrinting']/following-sibling::i");
+	}
+	public Element getNativeDownloadToogle() {
+		return driver
+				.FindElementByXPath("//input[@id='AdditionalPreferences_IsAllowNativeDownloads']/following-sibling::i");
+	}
 
 	public ManageAssignment(Driver driver) {
 
@@ -497,6 +507,116 @@ public class ManageAssignment {
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while navigating to assignments page is failed" + e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath Method to enable or disable print button..
+	 * @param flag - (flag is boolean value that weather folder need to disable or
+	 *             not.)
+	 */
+	public void disablePrintButton(boolean flag) {
+		try {
+			driver.waitForPageToBeReady();
+			getPrintToogle().isElementAvailable(15);
+			base.waitForElement(getPrintToogle());
+			String value = getPrintToogle().GetAttribute("class").toLowerCase().trim();
+			
+			if (value.contains("true") && flag == true) {
+				getPrintToogle().isDisplayed();
+				getPrintToogle().Click();
+				base.passedStep("Allow reviewers to print docs to PDF toogle is disabled successfully in Edit Assignment page");
+			} else if (flag == false && !(value.contains("true"))) {
+				getPrintToogle().isDisplayed();
+				getPrintToogle().Click();
+				base.passedStep("Allow reviewers to print docs to PDFl toogle is enabled successfully in Edit Assignment page");
+			} else if (flag == true) {
+				base.passedStep("Allow reviewers to print docs to PDF toogle is already disabled in Edit Assignment page");
+			} else if (flag == false) {
+				base.passedStep("Allow reviewers to print docs to PDF toogle is already enabled in Edit Assignment page");
+			}
+
+			driver.scrollPageToTop();
+			getSaveButton().isElementAvailable(15);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSaveButton().isDisplayed() && getSaveButton().Enabled();
+				}
+			}), Input.wait90);
+			getSaveButton().isDisplayed();
+			getSaveButton().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return base.getSuccessMsg().isDisplayed() && base.getSuccessMsg().Enabled();
+				}
+			}), Input.wait90);
+			Assert.assertEquals("Success message is not displayed", true,
+					base.getSuccessMsg().getWebElement().isDisplayed());
+			if (base.getSuccessMsg().getWebElement().isDisplayed()) {
+				base.passedStep("Success message is displayed successfully");
+			}
+			driver.scrollPageToTop();
+
+		} catch (Exception e) {
+			UtilityLog.info("Display folder is enabling failed");
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	/**
+	 * @author Gopinath Method to enable or disable download button..
+	 * @param flag - (flag is boolean value that weather folder need to disable or
+	 *             not.)
+	 */
+	public void disableNativeDownloadButton(boolean flag) {
+		try {
+			driver.waitForPageToBeReady();
+			getNativeDownloadToogle().isElementAvailable(15);
+			base.waitForElement(getNativeDownloadToogle());
+			String value = getNativeDownloadToogle().GetAttribute("class").toLowerCase().trim();
+			
+			if (value.contains("true") && flag == true) {
+				getNativeDownloadToogle().isDisplayed();
+				getNativeDownloadToogle().Click();
+				base.passedStep("Allow reviewers to download natives toogle is disabled successfully in Edit Assignment page");
+			} else if (flag == false && !(value.contains("true"))) {
+				getNativeDownloadToogle().isDisplayed();
+				getNativeDownloadToogle().Click();
+				base.passedStep("Allow reviewers to download natives toogle is enabled successfully in Edit Assignment page");
+			} else if (flag == true) {
+				base.passedStep("Allow reviewers to download natives toogle is already disabled in Edit Assignment page");
+			} else if (flag == false) {
+				base.passedStep("Allow reviewers to download natives toogle is already enabled in Edit Assignment page");
+			}
+
+			driver.scrollPageToTop();
+			getSaveButton().isElementAvailable(15);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSaveButton().isDisplayed() && getSaveButton().Enabled();
+				}
+			}), Input.wait90);
+			getSaveButton().isDisplayed();
+			getSaveButton().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return base.getSuccessMsg().isDisplayed() && base.getSuccessMsg().Enabled();
+				}
+			}), Input.wait90);
+			Assert.assertEquals("Success message is not displayed", true,
+					base.getSuccessMsg().getWebElement().isDisplayed());
+			if (base.getSuccessMsg().getWebElement().isDisplayed()) {
+				base.passedStep("Success message is displayed successfully");
+			}
+			driver.scrollPageToTop();
+
+		} catch (Exception e) {
+			UtilityLog.info("Display folder is enabling failed");
+			e.printStackTrace();
 		}
 	}
 

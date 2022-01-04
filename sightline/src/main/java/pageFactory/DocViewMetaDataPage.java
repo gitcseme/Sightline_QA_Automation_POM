@@ -517,6 +517,14 @@ public class DocViewMetaDataPage {
 			return driver.FindElementByXPath("(//div[@id='rightPalette_MetaData']//div)[1]");
 		}
 		
+		//Added by Gopinath - 14/Dec/2021
+		public Element getDownloadOption() {
+			return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[1]//td[2]");
+		}
+		public Element getDownloadButton() {
+			return driver.FindElementByXPath("//li[@id='liDocumentTypeDropDown']");
+		}
+		
 	public DocViewMetaDataPage(Driver driver) {
 
 		this.driver = driver;
@@ -2669,6 +2677,56 @@ public class DocViewMetaDataPage {
 		}catch(Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while verify folder tab does not have any folders except default all folders."+e.getMessage() );
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method to print document and verify weather document is
+	 *              downloded.
+	 */
+	public void verifyDocumenetPrintOnDocView() {
+		try {
+			base.waitForElement(getDocView_Print());
+			base.waitTillElemetToBeClickable(getDocView_Print());
+			getDocView_Print().Click();
+			base.waitForElement(base.getSuccessMsg());
+			base.getSuccessMsg().isElementAvailable(10);
+			Assert.assertEquals("Success message is not displayed", true,
+					base.getSuccessMsg().getWebElement().isDisplayed());
+			if (base.getSuccessMsg().getWebElement().isDisplayed()) {
+				base.passedStep("Success message is displayed successfully");
+			}
+
+			driver.getWebDriver().get(Input.url + "Background/BackgroundTask");
+			if(getDownloadOption().getText().trim().equalsIgnoreCase("Document Print")){
+				base.passedStep("Downloading document started succuessfully");
+			}else {
+				base.failedStep("Downloading document is failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while printing documents and downloading documents" + e.getMessage());
+
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method to verify download button is not displayed.
+	 */
+	public void verifyingDownloadButtonIsNotDisplayed() {
+		try {
+			driver.waitForPageToBeReady();
+			if(getDownloadButton().isElementAvailable(1)){
+				base.passedStep("Download button is not displayed successfully");
+			}else {
+				base.failedStep("Download button is displayed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying download button is not displayed." + e.getMessage());
+
 		}
 	}
 }

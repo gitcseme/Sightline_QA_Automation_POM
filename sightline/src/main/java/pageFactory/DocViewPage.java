@@ -2447,9 +2447,7 @@ public class DocViewPage {
 		public ElementCollection getPersistantNames() {
 			return driver.FindElementsByXPath("//div[@id='divPersistentSearch']//p//span");
 		}	
-		
 
-	
 
 	// Added By Vijaya.Rani
 	public Element getDocView_Analytics_Conceptual_Docs(int rowno) {
@@ -17884,6 +17882,7 @@ public class DocViewPage {
 				if (getTermInHitPanels(i).getText().contains(searchValue)) {
 					System.out.println("Found " + searchValue);
 					base.passedStep(searchValue + " term is present in persistent hit panel.");
+					break;
 				} else if (i == numOfPanels) {
 					base.failedStep(searchValue + " term is not present in persistent hit panel.");
 				}
@@ -18719,6 +18718,90 @@ public class DocViewPage {
 		boolean flag=getverifyCodeSameAsLast().isDisplayed();
 		softAssertion.assertTrue(flag);
 		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Gopinath
+	 * Description: this method will check the search terms are displayed on persistent hit panel without opeartor
+	 * @param searchString1
+	 * @param searchString2
+	 * @param operator
+	 */
+	public void persistenHitWithSearchStringWithOutOperator(String searchString1,String searchString2,String operator) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getPersistantHitEyeIcon());
+			getPersistantHitEyeIcon().waitAndClick(5);
+			base.waitForElementCollection(getHitPanels());
+			int numOfPanels = getHitPanels().size();
+			boolean string1flag = false;
+			boolean string2flag = false;
+			List<String> list = new ArrayList<>();
+			list.add(searchString1);
+			list.add(searchString2);
+			for (int i = 0; i <= 1; i++) {
+				String string = list.get(i);
+				System.out.println(string);
+				for (int j = 2; j <= numOfPanels; j++) {
+	
+					if (getTermInHitPanels(j).getText().contains(string)
+							&& !getTermInHitPanels(j).getText().contains(operator)) {
+						String hitCount = getTermInHitPanels(j).getText();
+	
+						System.out.println("Search hit terms" + " '" + string + "'"
+								+ " is displayed on persistent hits panel without operator and the hit count of " + string + " is"
+								+ hitCount.replace(string, ""));
+						base.passedStep("Search hit terms" + " '" + string + "'"
+								+ " is displayed on persistent hits panel without operator and the hit count of " + string + " is"
+								+ hitCount.replace(string, ""));
+	
+						if (string.equals(searchString1)) {
+							string1flag=true;
+	
+						}else {
+							string2flag=true;
+						}
+	
+						break;
+						
+					}
+	
+				}
+			}
+			if (string1flag == false) {
+				System.out.println("Search hit term"+searchString1 +" is   not displayed on persistent hits panel");
+				base.failedStep("Search hit term"+searchString1 +" is not displayed on persistent hits panel");
+			}
+			if (string2flag == false) {
+				System.out.println("Search hit term"+searchString2 +" is   not displayed on persistent hits panel");
+				base.failedStep("Search hit term"+searchString2 +" is not displayed on persistent hits panel");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while checking the search terms are displayed on persistent hit panel without opeartor" + e.getMessage());
+
+		}
+		
+	}
+	
+	/**
+	 * @author Gopinath.
+	 * @description : This method to verify image tab in doc view.
+	 */
+	public void verifyImageTabIsNotDisplayed() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getselectDocInImageTab());
+			if (getselectDocInImageTab().isElementAvailable(5) && getselectDocInImageTab().Enabled()) {
+				base.passedStep("Image tab is displayed in docview panel after allow the native download");
+			} else {
+				base.failedStep("Image tab is not Displayed on docview panel");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while image tab on docview" + e.getMessage());
+
+		}
 	}
 
 }

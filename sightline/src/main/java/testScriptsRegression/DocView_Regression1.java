@@ -2849,7 +2849,7 @@ public class DocView_Regression1 {
 		 * @Description : To Verify that persistent hits should be highligted when documents are assigned to existing assignment from Saved Search > Doc List              
 		 * @throws InterruptedException 
 		 */
-		@Test
+		@Test(groups = { "regression" }, priority = 33)
 		public void verifyPersistentHItAfterAssignedToExistingAssignment() throws InterruptedException {
 			String BasicSearchName = Input.randomText + Utility.dynamicNameAppender();
 			String AssignName = Input.randomText + Utility.dynamicNameAppender();
@@ -2898,7 +2898,183 @@ public class DocView_Regression1 {
 			docView.persistenHitWithSearchString(Input.searchString2);
 			
 		}
+		
+		
+		/**
+		 * @author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
+		 * @Testcase_id : 51117 -Verify user can download the redacted document when 'Allow reviewers to print docs to PDF' is on at an assigment level.
+		 * @Description : Verify user can download the redacted document when 'Allow reviewers to print docs to PDF' is on at an assigment level.
+		 */
+		@Test(groups = { "regression" }, priority = 34)
+		public void verifyDownloadDocumentByAllowingToPrintDocumentsAsPDF() throws InterruptedException {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51117 spint 09");
+			ManageAssignment mngAssign = new ManageAssignment(driver);
+			AssignmentsPage assgnPage = new AssignmentsPage(driver);
+			DocViewMetaDataPage metaData = new DocViewMetaDataPage(driver);
+			SessionSearch search = new SessionSearch(driver);
+			final String assignStamp = Input.randomText + Utility.dynamicNameAppender();
 
+			baseClass.stepInfo("#### Verify user can download the redacted document when 'Allow reviewers to print docs to PDF' is on at an assigment level. ####");
+
+			baseClass.stepInfo("Basic Search");
+			search.basicContentSearch(Input.searchString1);
+			
+			baseClass.stepInfo("Bulk Assign");
+			search.bulkAssign();
+			
+			baseClass.stepInfo("Assignment Creation");
+			assgnPage.assignmentCreation(assignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Toggle Coding Stamp Enabled");
+			assgnPage.toggleCodingStampEnabled();
+			
+			baseClass.stepInfo("Disable print button toogle");
+			mngAssign.disablePrintButton(false);
+			
+			baseClass.stepInfo("Assignment Distributing To Reviewer");
+			assgnPage.assignmentDistributingToReviewer();
+
+			loginPage.logout();
+			baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			baseClass.stepInfo("Selecting the assignment");
+			assgnPage.SelectAssignmentByReviewer(assignStamp);
+		
+			docView = new DocViewPage(driver);
+			
+			baseClass.stepInfo("Click on persistant hit eye icon.");
+			metaData.verifyDocumenetPrintOnDocView();
+			
+			baseClass.stepInfo("Navigate To Assignments Page");
+			assgnPage.navigateToAssignmentsPage();
+			
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+			
+			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+			assgnPage.deleteAssignment(assignStamp);
+			
+		}
+		
+
+		/**
+		 * Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+		 * TestCase id :  51116 - Verify user can not download the native files when 'Allow reviewers to download natives' is off at an assigment level.
+		 * Description : Verify user can not download the native files when 'Allow reviewers to download natives' is off at an assigment level
+		 */
+		@Test(alwaysRun = true,groups={"regression"},priority = 35)
+		public void verifyNativeDownloadButtonDiabledWhenToogleOFF() throws Exception {		
+			baseClass=new BaseClass(driver);
+			String assignmentName = Input.randomText + Utility.dynamicNameAppender();
+			baseClass.stepInfo("Test case Id: RPMXCON-51116 sprint 09");
+			utility = new Utility(driver);
+			docViewMetaDataPage = new DocViewMetaDataPage(driver);
+			baseClass.stepInfo("#### Verify user can not download the native files when 'Allow reviewers to download natives' is off at an assigment level ####");
+			
+			ManageAssignment mngAssign = new ManageAssignment(driver);
+			docView = new DocViewPage(driver);
+			agnmt = new AssignmentsPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(Input.searchText);
+			
+			baseClass.stepInfo("Bulk Assign");
+			sessionSearch.bulkAssign();
+			
+			baseClass.stepInfo("Assignment Creation");
+			agnmt.assignmentCreation(assignmentName, Input.codingFormName);
+			
+			baseClass.stepInfo("Toggle Coding Stamp Enabled");
+			agnmt.toggleCodingStampEnabled();
+			
+			baseClass.stepInfo("Disable native download toogle");
+			mngAssign.disableNativeDownloadButton(true);
+		
+			baseClass.stepInfo("Select assignment to view in Doc view");
+			agnmt.selectAssignmentToViewinDocview(assignmentName);
+			
+			baseClass.stepInfo("Verify download button is not displayed.");
+			docViewMetaDataPage.verifyingDownloadButtonIsNotDisplayed();
+			
+			baseClass.stepInfo("Navigate To Assignments Page");
+			agnmt.navigateToAssignmentsPage();
+			
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+			
+			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+			agnmt.deleteAssignment(assignmentName);
+			
+		}
+		
+		
+		/**
+		 * @author Gopinath
+		 * @TestCase Id:51309 Verify persistent Hit panel of DocView should present only content terms,
+		 *                   not operators when navigating from advance search
+		 * @throws InterruptedException 
+		 */
+		@Test(alwaysRun = true,groups={"regression"},priority = 36)
+		public void verifysearchTermsDisplayOnPHPanelWithoutOperator() throws InterruptedException {
+			String operator="OR";
+			baseClass=new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51309");
+			baseClass.stepInfo("#### Verify persistent Hit panel of DocView should present only content terms, not operators when navigating from advance searchVerify persistent Hit panel of DocView should present only content terms, not operators when navigating from advance search ####");
+			
+			docView = new DocViewPage(driver);
+			SessionSearch session = new SessionSearch(driver);
+			
+			baseClass.stepInfo(" Advanced search with operator");
+			session.advancedContentSearchWithOperator(Input.searchString1,operator,Input.testData1);
+			
+			baseClass.stepInfo("Navigating to  DocView page");
+			session.ViewInDocView();
+			
+			baseClass.stepInfo("verifying search terms displayed on persistaent hit panel without operator or not");
+			docView.persistenHitWithSearchStringWithOutOperator(Input.searchString1, Input.testData1,operator);
+			
+		}
+		
+		/**
+		 * @author Gopinath
+		 * TestCase Id:51120 Verify user can see the tiff images when 'Allow Production / Images view'.
+		 * Description :To Verify user can see the tiff images when 'Allow Production / Images View' is on at an assigment level                  
+		 */
+		@Test(alwaysRun = true,groups={"regression"},priority = 36)
+		public void verifyImageTabIsDisplayedAOnDocViewPanel() {
+			
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51120");
+			String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
+
+			baseClass.stepInfo("#### Verify user can see the tiff images when 'Allow Production / Images View' is on at an assigment level####");
+					
+			DocViewPage docView = new DocViewPage(driver);
+			AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			baseClass.stepInfo("searching document for assignmnet creation");
+			sessionSearch.basicContentSearch(Input.searchString2);
+
+			baseClass.stepInfo("performing bulkAssign");
+			sessionSearch.bulkAssign();
+
+			baseClass.stepInfo("Creating assignment");
+			assignmentPage.createAssignmentWithNativeDownload(AssignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Select document to view in doc view");
+			assignmentPage.selectAssignmentToViewinDocview(AssignStamp);
+			
+			baseClass.stepInfo("Verify image tab in doc view.");
+			docView.verifyImageTabIsNotDisplayed();
+		}
+		
 		@AfterMethod(alwaysRun = true)
 		public void close() {
 			try {
