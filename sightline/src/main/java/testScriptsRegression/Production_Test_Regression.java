@@ -75,7 +75,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56052
 	 * @Description: To Verify that after Archiving is completed it should displays 'Creating Archive Complete' status on Production Grid View
 	 */
-	//@Test(groups = { "regression" }, priority = 1)
+	@Test(groups = { "regression" }, priority = 1)
 	public void archivingStatusVerifyOnGridView() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-56052 -Production Sprint 06");
@@ -1714,6 +1714,131 @@ public class Production_Test_Regression {
 					tagsAndFolderPage = new TagsAndFoldersPage(driver);
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-55981
+					 * @Description: Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Generation tab
+					 */
+					@Test(groups = { "regression" }, priority = 27)
+					public void verifyLstGenExportinFilesStatusOnGen() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-55981 -Production Sprint 09");
+					
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkTagExisting(tagname);
+					sessionSearch.bulkFolderExisting(foldername);
+					
+
+					//Verify archive status on Gen page
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSection();
+					page.fillingTIFFSection(tagname);
+					page.fillingTextSection();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.clickOnGenerateButton();
+					
+					page.verifyProductionStatusInGenPage("Load File Generation In Progress");
+					page.verifyProductionStatusInGenPage("Exporting Files");
+					base.passedStep("Verified that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Generation tab");
+					
+					//delete tags and folders
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-55980
+					 * @Description: Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Progress bar Tile View.
+					 */
+					@Test(groups = { "regression" }, priority = 28)
+					public void verifyLstGenExportinFilesStatusOnTileView() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-55980 -Production Sprint 09");
+					
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkTagExisting(tagname);
+					sessionSearch.bulkFolderExisting(foldername);
+
+					//Verify archive status on Gen page
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSection();
+					page.fillingTIFFSection(tagname);
+					page.fillingTextSection();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.clickOnGenerateButton();
+					
+					// Go To Production Home Page
+					this.driver.getWebDriver().get(Input.url + "Production/Home");
+					driver.Navigate().refresh();
+					//verification
+					page.verifyProductionStatusInHomePage("Generating Load File", productionname);
+					page.verifyProductionStatusInHomePage("Exporting Files", productionname);
+					base.passedStep("Verified that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Progress bar Tile View");
+					
+					//delete tags and folders
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					
 				}
 	
 	

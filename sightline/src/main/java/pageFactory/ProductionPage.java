@@ -15179,5 +15179,74 @@ public class ProductionPage {
 			getOkBtn().Click();
 
 	}		
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void fillingTIFFSection(String tagname) throws InterruptedException {
+
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+
+			driver.scrollingToBottomofAPage();
+
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().waitAndClick(10);
+
+			base.waitForElement(getTIFF_EnterBranding());
+			new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
+			getTIFF_EnterBranding().SendKeys(searchString4);
+
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().isDisplayed();
+
+			base.waitForElement(getPriveldge_SelectTagButton());
+			getPriveldge_SelectTagButton().waitAndClick(5);
+
+			driver.waitForPageToBeReady();
+
+			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+
+			base.waitForElement(getPriveldge_TagTree(tagname));
+			Thread.sleep(5000);
+			getPriveldge_TagTree(tagname).waitAndClick(20);
+
+			base.waitForElement(getPriveldge_TagTree_SelectButton());
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getPriveldge_TextArea());
+			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+			getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+			driver.scrollingToBottomofAPage();
+			base.stepInfo("TIFF section is filled");
+		} catch (InterruptedException e) {
+
+			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+
+			base.waitForElement(getPriveldge_TagTree(tagname));
+			Thread.sleep(5000);
+			getPriveldge_TagTree(tagname).waitAndClick(20);
+
+			base.waitForElement(getPriveldge_TagTree_SelectButton());
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getPriveldge_TextArea());
+			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+			getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+			driver.scrollingToBottomofAPage();
+		}
+	}
 	
 }
