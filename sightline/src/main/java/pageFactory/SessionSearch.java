@@ -9106,5 +9106,77 @@ public class SessionSearch {
 			int pureHit = Integer.parseInt(getPureHitsCount().getText());
 			base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
 		}
+		
+		
+		
+		/**
+		 * @author Gopinath
+		 * Description: advanced search with any one of the operator
+		 * @param SearchString(Input search string 1)
+		 * @param operator
+		 * @param searchString2(Input search string 2)
+		 * @return purehit  of search
+		 */
+		public int advancedContentSearchWithOperator(String SearchString,String operator,String searchString2) {
+			// To make sure we are in basic search page
+					driver.getWebDriver().get(Input.url + "Search/Searches");
+					driver.WaitUntil((new Callable<Boolean>() {
+						public Boolean call() {
+							return getAdvancedSearchLink().Visible();
+						}
+					}), Input.wait30);
+					getAdvancedSearchLink().Click();
+
+					driver.WaitUntil((new Callable<Boolean>() {
+						public Boolean call() {
+							return getContentAndMetaDatabtn().Visible();
+						}
+					}), Input.wait30);
+					getContentAndMetaDatabtn().Click();
+					// Enter seatch string
+					driver.WaitUntil((new Callable<Boolean>() {
+						public Boolean call() {
+							return getAdvancedContentSearchInput().Visible();
+						}
+					}), Input.wait30);
+					getAdvancedContentSearchInput().SendKeys(SearchString);
+					
+					selectOperator(operator);
+					base.waitForElement(getAdvancedContentSearchInputCurrent());
+					try {
+					getAdvancedContentSearchInputCurrent().SendKeys(searchString2);
+					}catch(Exception e)
+					 {
+						base.waitTime(5);
+						getAdvancedContentSearchInputCurrent().SendKeys(searchString2);
+					}
+
+					// Click on Search button
+					getQuerySearchButton().Click();
+
+					// look for warnings, in case of proximity search
+					try {
+						if (getTallyContinue().isElementAvailable(2)) {
+							getTallyContinue().waitAndClick(10);
+						}
+						base.waitTime(2);
+					} catch (Exception e) {
+
+					}
+
+					// verify counts for all the tiles
+					driver.WaitUntil((new Callable<Boolean>() {
+						public Boolean call() {
+							return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+						}
+					}), Input.wait90);
+
+					int pureHit = Integer.parseInt(getPureHitsCount().getText());
+					Reporter.log("Serach is done for '" + SearchString + "' and PureHit is : " + pureHit, true);
+					UtilityLog.info("Serach is done for " + SearchString + " and PureHit is : " + pureHit);
+
+					return pureHit;
+		}
+	     
 
 	}

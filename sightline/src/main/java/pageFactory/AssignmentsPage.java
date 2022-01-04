@@ -1286,6 +1286,12 @@ public class AssignmentsPage {
 	    public Element getNonPrivilegeRadio() {return driver.FindElementByXPath("//input[@id='9_radio']//parent::label//span");}
 	    public Element getDocument_CommentsTextBox() {return driver.FindElementByXPath("//textarea[@id='1_textarea']");}
 		
+	    
+	    //Added by gopinath
+	    public Element getAssign_DownloadNativesToggleON() {
+			 return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowNativeDownloads']/following-sibling::i[@class='true']");
+	    }
+
 		
 		//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i
 	public AssignmentsPage(Driver driver) {
@@ -1532,6 +1538,8 @@ public class AssignmentsPage {
 				return getAssignmentAction_EditAssignment().Visible();
 			}
 		}), Input.wait60);
+		bc.waitTime(2);
+		getAssignmentAction_EditAssignment().isElementAvailable(10);
 		getAssignmentAction_EditAssignment().waitAndClick(3);
 
 	}
@@ -5230,7 +5238,7 @@ public class AssignmentsPage {
 			}), Input.wait30);
 			int count = ((getAssgnPaginationCount().size()) - 2);
 			for (int i = 0; i < count; i++) {
-				driver.waitForPageToBeReady();
+				//driver.waitForPageToBeReady();
 				Boolean status = getSelectAssignment(assignmentName).isDisplayed();
 				if (status == true) {
 					getSelectAssignment(assignmentName).ScrollTo();
@@ -8560,5 +8568,80 @@ public class AssignmentsPage {
 			bc.failedStep("Exception occured while creating new new bulk assignment with enabling persistant hit check box"+e.getLocalizedMessage());
 		}
 	
+	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * Description : this methoad create an assignment from bulk assign and allow native download if not selected
+	 * @param assignmentName : assignmentName is name of assignment need to create.
+	 * @param codingForm : codingForm is String value that name of coding form.
+	 */
+	public void createAssignmentWithNativeDownload(String assignmentName,String codingForm) {
+		try {
+			bc.waitForElement(getAssgn_NewAssignmnet());
+			bc.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
+			getAssgn_NewAssignmnet().waitAndClick(5);
+			bc.waitForElement(getbulkassgnpopup());
+			assertion.assertTrue(getbulkassgnpopup().Displayed());
+			try {
+				bc.waitForElement(getContinueBulkAssign());
+				bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+				getContinueBulkAssign().waitAndClick(30);
+			} catch (Exception e) {
+				bc.waitForElement(getContinueBulkAssign());
+				bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+				getContinueBulkAssign().waitAndClick(30);
+			}
+			bc.waitForElement(getAssgn_TotalCount());
+			bc.waitForElement(getFinalizeButton());
+			bc.waitTillElemetToBeClickable(getFinalizeButton());
+			getFinalizeButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			try {
+				bc.waitForElement(getAssignmentName());
+				getAssignmentName().SendKeys(assignmentName);
+			} catch (Exception e) {
+				bc.waitForElement(getAssignmentName());
+				getAssignmentName().Clear();
+				getAssignmentName().SendKeys(assignmentName);
+			}
+			getParentAssignmentGroupName().Displayed();
+			bc.waitForElement(getSelectedClassification());
+			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+			bc.waitForElement(getAssignmentCodingFormDropDown());
+			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+			driver.scrollingToBottomofAPage();
+			getAssgn_DownloadNativesToggle().ScrollTo();
+			if(getAssign_DownloadNativesToggleON().isElementAvailable(5)==false) {
+				getAssgn_DownloadNativesToggle().waitAndClick(5);
+			}
+			bc.waitForElement(getAssign_DownloadNativesToggleON());
+			if(getAssign_DownloadNativesToggleON().isElementAvailable(5)==false) {
+				bc.failedStep("unable to turn on native download button");
+			}
+			driver.scrollPageToTop();
+			getAssignmentSaveButton().isElementAvailable(10);
+			bc.waitForElement(getAssignmentSaveButton());
+			bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
+			getAssignmentSaveButton().waitAndClick(5);
+			if (getAssignmentErrorText().isElementAvailable(1)) {
+			try {
+				if (getAssignmentErrorText().isDisplayed()) {
+					driver.waitForPageToBeReady();
+					bc.waitForElement(getAssignmentName());
+					getAssignmentName().SendKeys(assignmentName);
+					bc.waitForElement(getAssignmentSaveButton());
+					getAssignmentSaveButton().waitAndClick(5);
+				}
+			} catch (org.openqa.selenium.NoSuchElementException e) {
+				e.printStackTrace();
+			}}
+			System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
+			UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
+		}catch(Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while creating an assignment from bulk assign and allow native download if not selected"+e.getLocalizedMessage());
+		}
 	}
   }
