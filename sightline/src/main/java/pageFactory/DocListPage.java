@@ -218,6 +218,14 @@ public class DocListPage {
 	}
 
 	// added by sowndariya
+	public Element getSelectExistingTag(String tagname) {
+		return driver.FindElementByXPath(
+				"//div[@id='divBulkTagJSTree']//a[text()='" + tagname + "']");
+	}
+	public Element getExistingTagOption() {
+		return driver.FindElementByXPath("//a[@id='tabExiting']");
+	}
+	
 	public Element getDocList_Checkbox() {
 		return driver.FindElementByXPath("//input[@id='chkDoc_1192']//following-sibling::i");
 	}
@@ -1654,6 +1662,61 @@ public class DocListPage {
 		// clicking yes popup
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().Click();
+	}
+	
+	/**
+	 * @Author:Indium-Sowndarya 
+	 * @param tagname
+	 */
+	public void bulkTagExistingFromDoclist(final String tagname) throws AWTException, InterruptedException {
+
+		// System.out.println("Pure hit block already moved to action panel");
+		UtilityLog.info("Pure hit block already moved to action panel");
+		Reporter.log("Pure hit block already moved to action panel", true);
+
+		getBulkActionButton().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkFolderAction().Visible();
+			}
+		}), Input.wait60);
+
+		getBulkTagAction().waitAndClick(10);
+
+		getTagUntagDocumentsDialogBox().waitAndClick(10);
+		System.out.println("Tag and Untag Popup is displayed");
+
+//		Actions actions = new Actions(driver.getWebDriver());
+		driver.Manage().window().fullscreen();
+		base.waitTime(2);
+		System.out.println(tagname);
+		getExistingTagOption().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectExistingTag(tagname));
+		getSelectExistingTag(tagname).waitAndClick(10);
+		System.out.println("Clicked tagname");
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		base.waitForElement(getContinueButton());
+		getContinueButton().Click();
+		getFinalizeButton().waitAndClick(10);
+		driver.Manage().window().maximize();
+		base.waitForElement(getPopUpOkBtn());
+		getPopUpOkBtn().Click();
+		base.VerifySuccessMessage("Records saved successfully");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		// System.out.println("Bulk folder is done, folder is : "+folderName);
+		UtilityLog.info("Bulk folder is done, folder is : " + tagname);
+		Reporter.log("Bulk folder is done, folder is : " + tagname, true);
+		// Since page is freezing after bulk actiononly in automation, lets reload page
+		// to avoid it..
+		driver.getWebDriver().navigate().refresh();
 	}
 
 	/**

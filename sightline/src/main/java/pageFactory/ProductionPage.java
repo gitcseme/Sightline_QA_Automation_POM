@@ -845,6 +845,18 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element continueButtonInBlankPageRemovalToggle() {
+		return driver.FindElementByXPath("//button[contains(text(),' Continue')]");
+	}
+	
+	public Element getBlankPageRemovalToggleConfirmationMessage() {
+		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p");
+	}
+	
+	public Element getBlankPageRemovalToggle() {
+		return driver.FindElementByXPath("//input[@id='chkTIFFBlankPageRemove']//parent::label//i");
+	}
+	
 	public Element getGenerateLoadFile_TIFF() {
 		return driver.FindElementByXPath("//input[@id='chkTIFFProduceLoadFile']");
 	}
