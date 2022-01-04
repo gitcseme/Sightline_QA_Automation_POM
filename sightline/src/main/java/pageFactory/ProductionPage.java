@@ -845,6 +845,18 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element continueButtonInBlankPageRemovalToggle() {
+		return driver.FindElementByXPath("//button[contains(text(),' Continue')]");
+	}
+	
+	public Element getBlankPageRemovalToggleConfirmationMessage() {
+		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p");
+	}
+	
+	public Element getBlankPageRemovalToggle() {
+		return driver.FindElementByXPath("//input[@id='chkTIFFBlankPageRemove']//parent::label//i");
+	}
+	
 	public Element getGenerateLoadFile_TIFF() {
 		return driver.FindElementByXPath("//input[@id='chkTIFFProduceLoadFile']");
 	}
@@ -2161,7 +2173,15 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//*[@id='rbdSinglePageType']/../i");
 	}
 	
+	public Element getBlankPageRemovalToggle() {
+		return driver.FindElementByXPath("//label[text()='Blank Page Removal:']/..//i");}
 	
+	public Element blankPageRemovalMessage() {
+		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']/p");}
+	
+	
+	public Element getContinueBtn() {
+		return driver.FindElementById("bot1-Msg1");}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -15249,4 +15269,37 @@ public class ProductionPage {
 		}
 	}
 	
+
+	 * @Author Brundha
+	 * Description:Method to select blank page removal toggle
+	 */
+	public void selectBlankRemovalInTiffSection() {
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().waitAndClick(5);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+		driver.scrollPageToTop();
+		base.waitForElement(getBlankPageRemovalToggle());
+		getBlankPageRemovalToggle().Click();
+		
+
+		driver.waitForPageToBeReady();
+		String ExpectedText=blankPageRemovalMessage().getText();
+		String ActualText="Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
+		
+		if(ActualText.equals(ExpectedText)) {
+			base.passedStep(""+ExpectedText+"Message is displayed as expected");}
+		else {
+			base.failedStep(""+ExpectedText+"Message not displayed as expected");}
+		base.waitForElement(getContinueBtn());
+		getContinueBtn().Click();
+		
+		
+	}
 }

@@ -2438,26 +2438,38 @@ public class DocViewPage {
 	}
 
 	// added sakthivel
+	public Element getVerifyNearDuppin() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//i[@class='fa fa-link']");
+	}
 
-		public Element getVerifyNearDuppin() {
-			return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//i[@class='fa fa-link']");
-		}
-		
-	//Added by Gopinath - 03/01/2022
-		public ElementCollection getPersistantNames() {
-			return driver.FindElementsByXPath("//div[@id='divPersistentSearch']//p//span");
-		}	
-
+	// Added by Gopinath - 03/01/2022
+	public ElementCollection getPersistantNames() {
+		return driver.FindElementsByXPath("//div[@id='divPersistentSearch']//p//span");
+	}
 
 	// Added By Vijaya.Rani
 	public Element getDocView_Analytics_Conceptual_Docs(int rowno) {
 		return driver
 				.FindElementByXPath("//table[@id='dtDocumentConceptuallySimilar']//tbody/tr[" + rowno + "]//label");
 	}
+
 	public ElementCollection getCheckMarkIcon() {
 		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']");
 	}
 
+	// Added by Jeevitha
+	public Element getNavigateNoBtn_cc() {
+		return driver.FindElementByXPath("(//div[@class='ui-dialog-buttonset']//button[@id='btnNo'])[last()]");
+	}
+
+	public Element getNavigateYesBtn_cc() {
+		return driver.FindElementByXPath("(//div[@class='ui-dialog-buttonset']//button[@id='btnYes'])[last()]");
+	}
+
+	public Element getNavigationPopUpMsg_cc() {
+		return driver
+				.FindElementByXPath("(//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//p)[last()]");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -5027,7 +5039,7 @@ public class DocViewPage {
 	public void docViewAnalyticsPanelThread(String textValue) {
 
 		try {
-			
+
 			driver.waitForPageToBeReady();
 			driver.WaitUntil(new Callable<Boolean>() {
 				public Boolean call() {
@@ -5046,7 +5058,7 @@ public class DocViewPage {
 			getDocView_ChildWindowPopOut().Click();
 			driver.waitForPageToBeReady();
 			base.waitTime(2);
-			
+
 			Set<String> allWindowsId1 = driver.WindowHandles();
 			for (String eachId : allWindowsId1) {
 				if (!parentWindowID.equals(eachId)) {
@@ -6931,8 +6943,6 @@ public class DocViewPage {
 	public void selectDocAndVerifyInMetaData(String text) {
 
 		try {
-
-			
 			driver.waitForPageToBeReady();
 			base.waitForElement(getDocView_MiniDoc_Selectdoc(1));
 			getDocView_MiniDoc_Selectdoc(1).ScrollTo();
@@ -7023,14 +7033,13 @@ public class DocViewPage {
 			base.waitForElement(getDocView_Analytics_ThreadMap_EmailDocs(21));
 			getDocView_Analytics_ThreadMap_EmailDocs(21).ScrollTo();
 			getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(5);
-				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
-				base.passedStep(
-						"Document is selected with the checked checkbox and horizontal scroll bar is continue to be at the same position that it was when the document was selected.");
-				getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(7);
-				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
-				base.stepInfo(
-						"Document is unchecked after moving scroll bar to right then horizontal scroll bar is at same position it was when document was unchecked.");
-			
+			softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
+			base.passedStep(
+					"Document is selected with the checked checkbox and horizontal scroll bar is continue to be at the same position that it was when the document was selected.");
+			getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(7);
+			softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
+			base.stepInfo(
+					"Document is unchecked after moving scroll bar to right then horizontal scroll bar is at same position it was when document was unchecked.");
 
 		} catch (Exception e) {
 
@@ -7079,7 +7088,7 @@ public class DocViewPage {
 			softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
 			base.stepInfo(
 					"Document is unchecked after moving scroll bar to right then horizontal scroll bar is at same position it was when document was unchecked.");
-			
+
 			driver.getWebDriver().close();
 			driver.switchTo().window(parentWindowID);
 
@@ -10102,9 +10111,9 @@ public class DocViewPage {
 		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
 		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
-		base.waitForElement(getCodeCompleteIconThreadTab());
+		// base.waitForElement(getCodeCompleteIconThreadTab());
 
-		for (int i = 2; i <= 2; i++) {
+		for (int i = 3; i <= 3; i++) {
 			try {
 				base.waitForElement(geDocView_ThreadMap_ArrowDownIcon(i));
 				if (geDocView_ThreadMap_ArrowDownIcon(i).getWebElement().isDisplayed())
@@ -12620,7 +12629,7 @@ public class DocViewPage {
 		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
 		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
-		base.waitForElement(getCodeCompleteIconThreadTab());
+//		base.waitForElement(getCodeCompleteIconThreadTab());
 
 		try {
 			driver.waitForPageToBeReady();
@@ -16654,7 +16663,7 @@ public class DocViewPage {
 		base.waitForElement(getDocView_Analytics_FamilyTab());
 		getDocView_Analytics_FamilyTab().waitAndClick(10);
 
-		String text1 = getDocView_CurrentDocId().getText();
+//		String text1 = getDocView_CurrentDocId().getText();
 
 		base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(1));
 		driver.getPageSource();
@@ -16669,10 +16678,10 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 
-		String text2 = getDocView_CurrentDocId().getText();
+//		String text2 = getDocView_CurrentDocId().getText();
 
-		softAssertion.assertNotEquals(text1, text2);
-		softAssertion.assertAll();
+//		softAssertion.assertNotEquals(text1, text2);
+//		softAssertion.assertAll();
 		base.passedStep("Family Member Doc is viewed in DocView");
 
 	}
@@ -18374,10 +18383,9 @@ public class DocViewPage {
 		softAssertion.assertAll();
 	}
 
-	
 	/**
-	 * @author Gopinath
-	 * Description: Method for verifying the search string is displayed on persistent hit panal or not with its count
+	 * @author Gopinath Description: Method for verifying the search string is
+	 *         displayed on persistent hit panal or not with its count
 	 * @param SearchString : SearchString is String value that search term.
 	 */
 	public void persistenHitWithSearchString(String SearchString) {
@@ -18410,12 +18418,11 @@ public class DocViewPage {
 		}
 
 	}
-	
-	
+
 	/**
-	 * @author Gopinath
-	 * Description: Method for verify persistant hits on docview.
-	 * @param keywords : keywords is list of String values that keywords to display in persistant.
+	 * @author Gopinath Description: Method for verify persistant hits on docview.
+	 * @param keywords : keywords is list of String values that keywords to display
+	 *                 in persistant.
 	 */
 	public void verifyPersistantHitsWithDocView(List<String> keywords) {
 		List<String> persisatantNames = new ArrayList<String>();
@@ -18423,22 +18430,20 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getPersistantHitEyeIcon());
 			List<WebElement> persistantNames = getPersistantNames().FindWebElements();
-			for(WebElement persistantName :persistantNames ) {
+			for (WebElement persistantName : persistantNames) {
 				persisatantNames.add(persistantName.getAttribute("data-custom-id").trim());
 			}
-			base.passedStep("Persistant hits are : "+persisatantNames);
-			if(persisatantNames.containsAll(keywords)) {
+			base.passedStep("Persistant hits are : " + persisatantNames);
+			if (persisatantNames.containsAll(keywords)) {
 				base.passedStep("All keywords are displayed in persistant hit panel");
-			}else {
+			} else {
 				base.failedStep("All keywords are not displayed in persistant hit panel");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while getting persistant hits in doc view"+e.getLocalizedMessage());
+			base.failedStep("Exception occured while getting persistant hits in doc view" + e.getLocalizedMessage());
 		}
 	}
-		
-
 
 	/**
 	 * @Author Vijaya.Rani Created on 3/1/2022
@@ -18570,15 +18575,14 @@ public class DocViewPage {
 		softAssertion.assertAll();
 	}
 
-
-
 	/**
 	 * @author Indium-Baskar date: 06/12/2021 Modified date:N/A
-	 * @Description: This method used to validate Code same as icon and coding stamp should apply 
+	 * @Description: This method used to validate Code same as icon and coding stamp
+	 *               should apply
 	 * 
 	 */
 
-	public void validateCodeSameAsIconAndApplyStamp(String stamp,String comment) {
+	public void validateCodeSameAsIconAndApplyStamp(String stamp, String comment) {
 		driver.waitForPageToBeReady();
 		for (int i = 1; i <= 2; i++) {
 			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(i));
@@ -18591,15 +18595,16 @@ public class DocViewPage {
 		lastAppliedStamp(Input.stampSelection);
 		driver.waitForPageToBeReady();
 		getverifyCodeSameAsLast().WaitUntilPresent().ScrollTo();
-		boolean flag=getverifyCodeSameAsLast().isDisplayed();
+		boolean flag = getverifyCodeSameAsLast().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep("Checkmark icon displayed for stamp applied document");
 		softAssertion.assertAll();
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 06/12/2021 Modified date:N/A
-	 * @Description: This method used to validate Code same as icon and edit and complete
+	 * @Description: This method used to validate Code same as icon and edit and
+	 *               complete
 	 */
 
 	public void validateCodeSameAsIconAndEdit(String comment) {
@@ -18613,12 +18618,12 @@ public class DocViewPage {
 		completeButton();
 		driver.waitForPageToBeReady();
 		getverifyCodeSameAsLast().WaitUntilPresent().ScrollTo();
-		boolean flag=getverifyCodeSameAsLast().isDisplayed();
+		boolean flag = getverifyCodeSameAsLast().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep("Checkmark icon displayed for document");
 		softAssertion.assertAll();
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -18634,21 +18639,21 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		clickCodeSameAsLast();
 		base.waitForElementCollection(getCheckMarkIcon());
-		int size=getCheckMarkIcon().size();
+		int size = getCheckMarkIcon().size();
 		return size;
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
 //   Reusable method for alert
-   public void refreshAndAlert() {
+	public void refreshAndAlert() {
 		driver.getWebDriver().navigate().refresh();
 		driver.switchTo().alert().accept();
-	   
-   }
-   
-   /**
+
+	}
+
+	/**
 	 * @author Indium-Baskar
 	 */
 //	Reusable Method For ViewDocument in analytical panel
@@ -18659,7 +18664,7 @@ public class DocViewPage {
 		base.waitForElement(getViewDocumentNearDupe());
 		getViewDocumentNearDupe().waitAndClick(10);
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -18674,16 +18679,16 @@ public class DocViewPage {
 		getDocView_HdrAnalytics().waitAndClick(5);
 		base.stepInfo("Analytical panel child window opened");
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 */
-	
-	public void completedDocsSavingstap(String stamp,String comment,int count) throws InterruptedException {
+
+	public void completedDocsSavingstap(String stamp, String comment, int count) throws InterruptedException {
 		driver.waitForPageToBeReady();
 		base.stepInfo("performing action in parent window for minidoclist document");
-		String prnDoc=getVerifyPrincipalDocument().getText();
+		String prnDoc = getVerifyPrincipalDocument().getText();
 		editCodingForm(comment);
 		completeButton();
 		driver.waitForPageToBeReady();
@@ -18702,7 +18707,7 @@ public class DocViewPage {
 		refreshAndAlert();
 		base.stepInfo("performing action in parent window for analytical document");
 		List<String> docId = analyticalDocsSelection();
-		String docIdText=docId.get(count);
+		String docIdText = docId.get(count);
 		getAnalyCheckBox(docIdText).WaitUntilPresent().ScrollTo();
 		base.waitForElement(getAnalyCheckBox(docIdText));
 		getAnalyCheckBox(docIdText).waitAndClick(10);
@@ -18715,19 +18720,20 @@ public class DocViewPage {
 		lastAppliedStamp(Input.stampSelection);
 		driver.close();
 		switchToNewWindow(1);
-		boolean flag=getverifyCodeSameAsLast().isDisplayed();
+		boolean flag = getverifyCodeSameAsLast().isDisplayed();
 		softAssertion.assertTrue(flag);
 		softAssertion.assertAll();
 	}
-	
+
 	/**
-	 * @author Gopinath
-	 * Description: this method will check the search terms are displayed on persistent hit panel without opeartor
+	 * @author Gopinath Description: this method will check the search terms are
+	 *         displayed on persistent hit panel without opeartor
 	 * @param searchString1
 	 * @param searchString2
 	 * @param operator
 	 */
-	public void persistenHitWithSearchStringWithOutOperator(String searchString1,String searchString2,String operator) {
+	public void persistenHitWithSearchStringWithOutOperator(String searchString1, String searchString2,
+			String operator) {
 		try {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getPersistantHitEyeIcon());
@@ -18743,47 +18749,49 @@ public class DocViewPage {
 				String string = list.get(i);
 				System.out.println(string);
 				for (int j = 2; j <= numOfPanels; j++) {
-	
+
 					if (getTermInHitPanels(j).getText().contains(string)
 							&& !getTermInHitPanels(j).getText().contains(operator)) {
 						String hitCount = getTermInHitPanels(j).getText();
-	
+
 						System.out.println("Search hit terms" + " '" + string + "'"
-								+ " is displayed on persistent hits panel without operator and the hit count of " + string + " is"
-								+ hitCount.replace(string, ""));
+								+ " is displayed on persistent hits panel without operator and the hit count of "
+								+ string + " is" + hitCount.replace(string, ""));
 						base.passedStep("Search hit terms" + " '" + string + "'"
-								+ " is displayed on persistent hits panel without operator and the hit count of " + string + " is"
-								+ hitCount.replace(string, ""));
-	
+								+ " is displayed on persistent hits panel without operator and the hit count of "
+								+ string + " is" + hitCount.replace(string, ""));
+
 						if (string.equals(searchString1)) {
-							string1flag=true;
-	
-						}else {
-							string2flag=true;
+							string1flag = true;
+
+						} else {
+							string2flag = true;
 						}
-	
+
 						break;
-						
+
 					}
-	
+
 				}
 			}
 			if (string1flag == false) {
-				System.out.println("Search hit term"+searchString1 +" is   not displayed on persistent hits panel");
-				base.failedStep("Search hit term"+searchString1 +" is not displayed on persistent hits panel");
+				System.out.println("Search hit term" + searchString1 + " is   not displayed on persistent hits panel");
+				base.failedStep("Search hit term" + searchString1 + " is not displayed on persistent hits panel");
 			}
 			if (string2flag == false) {
-				System.out.println("Search hit term"+searchString2 +" is   not displayed on persistent hits panel");
-				base.failedStep("Search hit term"+searchString2 +" is not displayed on persistent hits panel");
+				System.out.println("Search hit term" + searchString2 + " is   not displayed on persistent hits panel");
+				base.failedStep("Search hit term" + searchString2 + " is not displayed on persistent hits panel");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occcured while checking the search terms are displayed on persistent hit panel without opeartor" + e.getMessage());
+			base.failedStep(
+					"Exception occcured while checking the search terms are displayed on persistent hit panel without opeartor"
+							+ e.getMessage());
 
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author Gopinath.
 	 * @description : This method to verify image tab in doc view.
@@ -18797,11 +18805,40 @@ public class DocViewPage {
 			} else {
 				base.failedStep("Image tab is not Displayed on docview panel");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occcured while image tab on docview" + e.getMessage());
 
 		}
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @param select
+	 * @param changeRole
+	 */
+	public void verifyConfirmNavigationPopup(boolean select, boolean changeRole) {
+		driver.waitForPageToBeReady();
+		String actualMsg = getNavigationPopUpMsg_cc().getText();
+		String expectedMsg = "This action will not save your edits, please save your changes before navigating away from Doc View. Do you want to still navigate away without saving your changes ?";
+		softAssertion.assertEquals(actualMsg, expectedMsg);
+		base.stepInfo(actualMsg);
+
+		if (select) {
+			getNavigateYesBtn_cc().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			String currentUrl = driver.getWebDriver().getCurrentUrl();
+			softAssertion.assertNotEquals(Input.url + "DocumentViewer/DocView", currentUrl);
+			base.stepInfo("User Redirected To : " + currentUrl);
+
+		} else {
+			getNavigateNoBtn_cc().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			String currentUrl = driver.getWebDriver().getCurrentUrl();
+			softAssertion.assertEquals(Input.url + "DocumentViewer/DocView", currentUrl);
+			base.stepInfo("User is On Same Page : " + currentUrl);
+
+		}
+		softAssertion.assertAll();
+	}
 }

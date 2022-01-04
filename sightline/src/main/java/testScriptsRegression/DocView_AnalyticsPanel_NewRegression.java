@@ -1101,7 +1101,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyCheckMarkIconDisplayedTheConceptuallySimilar() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51059");
@@ -2032,7 +2032,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	// //@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyCompleteLastDocsAndCodeSameAsActionConceptual() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51071");
@@ -2143,7 +2143,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	// //@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyCompleteLastDocsAndCodeSameAsActionFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51070");
@@ -2247,6 +2247,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		loginPage.logout();
 	}
 
+	
 	/**
 	 * Author : Vijaya.Rani date: 24/12/21 NA Modified date: NA Modified by:NA
 	 * Description :Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
@@ -2259,7 +2260,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	//@Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifyCompleteLastDocsAndCodeSameAsActionNearDupe() throws InterruptedException {
 
-		baseClass.stepInfo("Test case Id: RPMXCON-51070");
+		baseClass.stepInfo("Test case Id: RPMXCON-51072");
 		baseClass.stepInfo(
 				"Verify when RMU/Reviewer clicks Complete Same as Last Doc, when preceding document is completed by selecting 'Code same as this' action from analytics panel > NearDupe");
 
@@ -2297,7 +2298,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.nearDupeBulkAssign);
+		docView.selectDocIdInMiniDocList(Input.NewDocId);
 
 		// select docs from NearDupe and action as code same as
 		docView.performCodeSameForNearDupeDocuments();
@@ -2307,7 +2308,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.nearDupeBulkAssignId);
+		docView.selectDocIdInMiniDocList(Input.NewDocId);
 
 		// select docs from family member and action as code same as
 		docView.performCodeSameAsForNearDupeDocumentsThirdDocs();
@@ -2424,7 +2425,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 32)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyDocViewFromSaveSearchDocViewThreadMap() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50875");
@@ -2489,7 +2490,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 33)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
 	public void verifyDocChilsWindowThenSameDocWillDisplayInDocView(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -2563,7 +2564,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		try {
 			loginPage.quitBrowser();
 		} finally {
-			loginPage.clearBrowserCache();
+			//loginPage.clearBrowserCache();
 		}
 
 	}
