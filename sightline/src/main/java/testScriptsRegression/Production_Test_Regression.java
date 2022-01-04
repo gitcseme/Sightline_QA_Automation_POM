@@ -1724,6 +1724,7 @@ public class Production_Test_Regression {
 					public void verifyLstGenExportinFilesStatusOnGen() throws Exception {
 					UtilityLog.info(Input.prodPath);
 					base.stepInfo("RPMXCON-55981 -Production Sprint 09");
+					base.stepInfo("Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Generation tab");
 					
 					String testData1 = Input.testData1;
 					foldername = "FolderProd" + Utility.dynamicNameAppender();
@@ -1785,6 +1786,7 @@ public class Production_Test_Regression {
 					public void verifyLstGenExportinFilesStatusOnTileView() throws Exception {
 					UtilityLog.info(Input.prodPath);
 					base.stepInfo("RPMXCON-55980 -Production Sprint 09");
+					base.stepInfo("Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Progress bar Tile View");
 					
 					String testData1 = Input.testData1;
 					foldername = "FolderProd" + Utility.dynamicNameAppender();
