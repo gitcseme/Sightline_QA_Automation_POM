@@ -65,7 +65,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description : To Verify that when the thread map toggle is enabled, the
 	 *              length of the email thread should not be a constraint and with
 	 *              email threads such as the above (23 mails and 140 participants)
-	 *              from Analytics panel child window 'RPMXCON-51846'
+	 *              from Analytics panel child window 'RPMXCON-51846//'
 	 * 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 1)
@@ -211,7 +211,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description Verify the horizontal scroll bar should not reset when document
 	 *              is selected from thread map on moving to right from Analytics
 	 *              panel parent window on click of the link to load more data
-	 *              'RPMXCON-51723'
+	 *              'RPMXCON-51723//'
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyHorizontalScrollBarInAnalyticsPanel() throws InterruptedException {
@@ -281,7 +281,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * 
 	 * @Author Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description To Verify that Thread Map tab should be displayed when
-	 *              navigating to doc view outside of assignment 'RPMXCON-51847'
+	 *              navigating to doc view outside of assignment 'RPMXCON-51847//'
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyDocumentFromAnalyticsPanelWithThreadMap()
@@ -318,7 +318,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :To Verify that when the threadmap toggle is enabled, the length
 	 *              of the email thread should not be a constraint and with email
 	 *              threads such as the above (23 mails and 140 participants) from
-	 *              Analytics panel 'RPMXCON-51845'
+	 *              Analytics panel 'RPMXCON-51845//'
 	 * 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 6)
@@ -363,7 +363,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To Verify that when the threadmap toggle is disabled, the
 	 *              application should not try to pull the thread information on doc
-	 *              view'RPMXCON-51843'
+	 *              view'RPMXCON-51843//'
 	 * 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 7)
@@ -415,7 +415,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To Verify that when the threadmap toggle is disabled, the
 	 *              application should not try to pull the thread information on doc
-	 *              view from Analytics panel child window'RPMXCON-51844'
+	 *              view from Analytics panel child window'RPMXCON-51844//'
 	 * 
      */
 
@@ -512,7 +512,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws Exception
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify documents folder action is done successfully from
-	 *              analytics panel.'RPMXCON-51733'
+	 *              analytics panel.'RPMXCON-51733//'
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyDocFolderAction() throws Exception {
@@ -549,7 +549,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * 
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify Thread Map tab when no documents/thread to
-	 *              display.'RPMXCON-50952'
+	 *              display.'RPMXCON-50952//'
 	 * @throws InterruptedException
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 11)
@@ -615,7 +615,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * 
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify 'View All' should be displayed on Thread Map tab
-	 *              when more than 20 documents exists.'RPMXCON-50953'
+	 *              when more than 20 documents exists.'RPMXCON-50953//'
 	 * @throws InterruptedException
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 12)
@@ -980,7 +980,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * 
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description :Verify that thread map presents only emails when threaded
-	 *              document contains non email attachment'RPMXCON-51508'
+	 *              document contains non email attachment'RPMXCON-51508//'
 	 * @throws InterruptedException
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 17)
@@ -1044,7 +1044,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description :Verify the horizontal scroll bar should not reset when document
 	 *              is selected from thread map on moving to right after changing
-	 *              the Analytics panel position'RPMXCON-51721'
+	 *              the Analytics panel position'RPMXCON-51721//'
 	 * @throws InterruptedException
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 18)
@@ -1119,7 +1119,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description :Verify the horizontal scroll bar should not reset when document
 	 *              is selected from thread map on moving to right from child window
-	 *              after changing the Analytics panel position'RPMXCON-51722'
+	 *              after changing the Analytics panel position'RPMXCON-51722//'
 	 * @throws InterruptedException
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 19)
@@ -1194,7 +1194,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description :Verify the horizontal scroll bar should not reset when document
 	 *              is selected from thread map on moving to right from Analytics
-	 *              panel parent window'RPMXCON-51719'
+	 *              panel parent window'RPMXCON-51719//'
 	 * @throws InterruptedException
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 20)
@@ -1263,7 +1263,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              panel child window'RPMXCON-51720'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyThreadedDocumentsWithChildWindow() throws InterruptedException {
 
 
@@ -1329,7 +1329,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :Verify warning message should be displayed when completed
 	 *              documents are selected for code same action from Analytics
 	 *              panel'RPMXCON-51411'
-	 * @throws InterruptedException
+	 * @throws InterruptedException [Near dupe issue]
 	 */
 	//@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyWarningMessageCodeAsSameInAnalyticsPanel() throws InterruptedException {
@@ -1383,12 +1383,18 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :Verify warning message should be displayed when completed
 	 *              documents are selected for code same action from Analytics panel
 	 *              child window'RPMXCON-51412'
-	 * @throws InterruptedException
+	 * @throws InterruptedException [near dupe]
 	 */
 	//@Test(enabled = true, groups = { "regression" }, priority = 23)
 
 	public void verifyWarningMessageCodeAsSameInAnalyticsPanelWithChildWindow() throws InterruptedException {
 
+		loginPage = new LoginPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		docViewAnalytics = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-51412");
 		String assignmentName = "assignmentA1" + Utility.dynamicNameAppender();
 		// Login RMU
@@ -1436,9 +1442,15 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              displayed in Analytical and Meta data Panel.'RPMXCON-50960'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyMetaDataPanelIsDisplayed() throws InterruptedException {
 
+		loginPage = new LoginPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		docViewAnalytics = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-50960");
 
 		// Login As PA
@@ -1454,6 +1466,7 @@ public class DocView_AnalyticsPanel_Regression {
 		// Verify Meta Data Panel is displayed in DocView
 		baseClass.stepInfo("To verify MetaData Panel in DocView");
 		docViewAnalytics.verifyMetaDataPanelInDocView();
+		driver.waitForPageToBeReady();
 
 		// Logout PA
 		loginPage.logout();
@@ -1471,6 +1484,7 @@ public class DocView_AnalyticsPanel_Regression {
 		// Verify Meta Data Panel is displayed in DocView
 		baseClass.stepInfo("To verify MetaData Panel in DocView");
 		docViewAnalytics.verifyMetaDataPanelInDocView();
+		driver.waitForPageToBeReady();
 
 		// Logout RMU
 		loginPage.logout();
@@ -1498,7 +1512,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              coding form child window'RPMXCON-51385'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyCodeAsSameConceptuallySimilarChildWindow() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -1517,8 +1531,8 @@ public class DocView_AnalyticsPanel_Regression {
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
-		String documnetToBeSelected = "Conceptually";
-		String documentToBeSelectedForReviewer = Input.conceptualDocumentReviewer;
+		String documnetToBeSelected = Input.NewDocId;
+		String documentToBeSelectedForReviewer = Input.conceptualDocument;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.getConceptDocument();
@@ -1551,8 +1565,7 @@ public class DocView_AnalyticsPanel_Regression {
 		}
 
 		// Select DocId In MiniDocList
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanelForChildWindow(documnetToBeSelected,
-				parentWindowID);
+		docViewAnalytics.selectDocIdInMiniDocList(documnetToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -1774,8 +1787,15 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              child window'RPMXCON-51383'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyCodeAsSameWithCodingFormChildWindow() throws InterruptedException {
+		
+		loginPage = new LoginPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		docViewAnalytics = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-51383");
 		baseClass.stepInfo(
 				"Verify when Code same action selected from Analytics Panel > Conceptually Similar and Save/Complete clicked from coding form child window");
@@ -1785,9 +1805,11 @@ public class DocView_AnalyticsPanel_Regression {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = "Conceptually";
-		String documentToBeSelectedForReviewer = Input.conceptualDocumentReviewer;
-
+		
+		String documnetToBeSelected = Input.NewDocId;
+		String documentToBeSelectedForReviewer = Input.conceptualDocument;
+		
+		
 		// Basic Search
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.getConceptDocument();
@@ -1807,7 +1829,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// Select Docid from MiniDocList
 		driver.waitForPageToBeReady();
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(documnetToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Perform Code Same for Conceptual Docs
@@ -1823,7 +1845,7 @@ public class DocView_AnalyticsPanel_Regression {
 		baseClass.stepInfo("Pop-out Coding form and Docs are completed successfully");
 
 		// Select docs Form MiniDocsList
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(documnetToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Verify CheckMark is present
@@ -1880,6 +1902,12 @@ public class DocView_AnalyticsPanel_Regression {
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyCodeAsSameConceptuallySimilarParentWindow() throws InterruptedException {
+		
+		loginPage = new LoginPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		docViewAnalytics = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51382");
 		baseClass.stepInfo(
@@ -1890,8 +1918,8 @@ public class DocView_AnalyticsPanel_Regression {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.conceptualDocs1;
-		String documentToBeSelectedForReviewer = Input.conceptualDocumentReviewer;
+		String documentToBeSelected = Input.NewDocId;
+		String documentToBeSelectedForReviewer = Input.conceptualDocument;
 
 		// Basic Search
 
@@ -1912,7 +1940,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.selectAssignmentfromDashborad(assname);
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Perform Code Same for Conceptual Docs
@@ -1928,7 +1956,7 @@ public class DocView_AnalyticsPanel_Regression {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select docs Form MiniDocsList
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Verify CheckMark is present
@@ -2137,7 +2165,7 @@ public class DocView_AnalyticsPanel_Regression {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-51428");
 
-		String docId = "ThreadMap";
+		String docId = Input.threadDocWithToolTip;
 
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -2151,7 +2179,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// select Docs from MiniDocList
 		driver.waitForPageToBeReady();
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docId);
+		docViewAnalytics.selectDocIdInMiniDocList(docId);
 
 		// verify Error Msg when multi docs are selected from Thread map tab
 		docViewAnalytics.verifyErrorMsgOnMultiSelectedDocsInThreadMap();
@@ -2172,7 +2200,7 @@ public class DocView_AnalyticsPanel_Regression {
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
 
 		// select Docs from MiniDocList
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docId);
+		docViewAnalytics.selectDocIdInMiniDocList(docId);
 
 		// verify Error Msg when multi docs are selected from Thread map tab
 		docViewAnalytics.verifyErrorMsgOnMultiSelectedDocsInThreadMap();
@@ -2192,7 +2220,7 @@ public class DocView_AnalyticsPanel_Regression {
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
 
 		// select Docs from MiniDocList
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docId);
+		docViewAnalytics.selectDocIdInMiniDocList(docId);
 
 		// verify Error Msg when multi docs are selected from Thread map tab
 		docViewAnalytics.verifyErrorMsgOnMultiSelectedDocsInThreadMap();
@@ -2589,7 +2617,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              assignment'RPMXCON-51455'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 39)
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyCompleteIconOnShouldNotDisplayOnThreadMapTabChildWindow() throws InterruptedException {
 
 
@@ -2707,7 +2735,7 @@ public class DocView_AnalyticsPanel_Regression {
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Purehits are added to shopping cart and viewed in DocView successfully");
 
-		String selectDocsMiniDocList = "FamilyMember";
+		String selectDocsMiniDocList = Input.familyDocumentForReviewer;
 
 		// Select Family Member Analytics Panel
 		baseClass.waitForElement(docViewAnalytics.getDocView_Analytics_FamilyTab());
@@ -2719,7 +2747,7 @@ public class DocView_AnalyticsPanel_Regression {
 		// navigate to other docs in MiniDocList
 		baseClass.stepInfo("Navigates to other document from Mini doc list.");
 		driver.waitForPageToBeReady();
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(selectDocsMiniDocList);
+		docViewAnalytics.selectDocIdInMiniDocList(selectDocsMiniDocList);
 
 		// verify Family member tab
 		docViewAnalytics.verifyFamilyMemberRemainsSameNavigatedAlso();
@@ -2768,10 +2796,10 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
 
 		driver.scrollPageToTop();
-		selectDocsMiniDocList = "Conceptually";
+		selectDocsMiniDocList = Input.familyDocumentForReviewer;
 		// Navigate to other docs in MiniDoclist
 		baseClass.stepInfo("Navigates to other document from Mini doc list.");
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(selectDocsMiniDocList);
+		docViewAnalytics.selectDocIdInMiniDocList(selectDocsMiniDocList);
 
 		// verify the tab which is to remains in the same position
 		docViewAnalytics.verifyConceputalTabRemainsSameNavigatedAlso();
@@ -2803,7 +2831,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// Navigate to other docs in MiniDoclist
 		baseClass.stepInfo("Navigates to other document from Mini doc list.");
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(selectDocsMiniDocList);
+		docViewAnalytics.selectDocIdInMiniDocList(selectDocsMiniDocList);
 
 		// verify the tab which is to remains in the same position
 		docViewAnalytics.verifyConceputalTabRemainsSameNavigatedAlso();
@@ -2835,7 +2863,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// Navigate to other docs in MiniDoclist
 		baseClass.stepInfo("Navigates to other document from Mini doc list.");
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(selectDocsMiniDocList);
+		docViewAnalytics.selectDocIdInMiniDocList(selectDocsMiniDocList);
 
 		// verify the tab which is to remains in the same position
 		docViewAnalytics.verifyConceputalTabRemainsSameNavigatedAlso();
@@ -3089,7 +3117,7 @@ public class DocView_AnalyticsPanel_Regression {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = "ThreadMap";
+		String documentToBeSelected = Input.conceptualDocs1;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignThreadedDocs();
@@ -3113,7 +3141,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.scrollPageToTop();
@@ -3144,7 +3172,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(Input.newNearDupeDocId);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.scrollPageToTop();
@@ -3153,7 +3181,7 @@ public class DocView_AnalyticsPanel_Regression {
 		baseClass.stepInfo("Docs are completed successfully");
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(Input.newNearDupeDocId);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.waitForPageToBeReady();

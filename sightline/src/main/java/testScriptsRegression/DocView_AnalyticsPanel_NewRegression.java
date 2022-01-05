@@ -1115,7 +1115,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo("Logged in as User: " + Input.rmu1FullName);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = "Conceptually";
+		String documentToBeSelected = Input.conceptualDoc;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
@@ -1139,7 +1139,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// Select Docid from MiniDocList
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docView.selectDocIdInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// perform code same as NearDupe Documents
@@ -1153,7 +1153,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// verify Near Dupe Check Mark
 		softAssertion = new SoftAssert();
-		softAssertion.assertTrue(docView.getDocView_ConceptuallySimilarCheckMark().isElementPresent());
+		Boolean actualFlag = docView.getDocView_ConceptuallySimilarCheckMark().isElementAvailable(5);
+		softAssertion.assertTrue(actualFlag);
 
 		baseClass.passedStep("check Mark Icon Is Displayed In ConceptuallySimilar Tab");
 		loginPage.logout();
@@ -1169,6 +1170,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
+		docView.selectDocIdInMiniDocList(Input.nearDupeDocId);
 		// perform code same as NearDupe Documents
 		docView.selectDocsFromConceptualTabAndActionCodeSame();
 
@@ -1180,9 +1182,12 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// verify Near Dupe Check Mark
 		softAssertion = new SoftAssert();
-		softAssertion.assertTrue(docView.getDocView_ConceptuallySimilarCheckMark().isElementPresent());
+		docView.selectDocIdInMiniDocList(Input.nearDupeDocId);
+		actualFlag = docView.getDocView_ConceptuallySimilarCheckMark().isElementAvailable(5);
+		softAssertion.assertTrue(actualFlag);
 
 		baseClass.passedStep("check Mark Icon Is Displayed In ConceptuallySimilar Tab");
+		softAssertion.assertAll();
 		loginPage.logout();
 
 	}
@@ -2047,7 +2052,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = "Conceptually";
+		String documentToBeSelected = Input.conceptualDoc;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
@@ -2074,7 +2079,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// Select Docid from MiniDocList
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docView.selectDocIdInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// perform code same as Conceptual Documents
@@ -2111,7 +2116,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// Select Docid from MiniDocList
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docView.selectDocIdInMiniDocList(Input.nearDupeDocId);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// perform code same as Conceptual Documents
@@ -2143,7 +2148,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	//@Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyCompleteLastDocsAndCodeSameAsActionFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51070");
@@ -2158,7 +2163,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = "FamilyMember";
+		String documentToBeSelected = Input.familyDocument;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
@@ -2184,7 +2189,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// Select Docid from MiniDocList
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docView.selectDocIdInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// select docs from family member and action as code same as
@@ -2221,7 +2226,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// Select Docid from MiniDocList
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docView.selectDocIdInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// select docs from family member and action as code same as
