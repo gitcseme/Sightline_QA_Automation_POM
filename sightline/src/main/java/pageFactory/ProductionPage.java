@@ -4180,36 +4180,20 @@ public class ProductionPage {
 	 */
 	public void fillingDATSection() {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDATChkBox().Enabled();
-			}
-		}), Input.wait30);
-		getDATChkBox().Click();
+		base.waitForElement(getDATChkBox());
+		getDATChkBox().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDATTab().Visible() && getDATTab().Enabled();
-			}
-		}), Input.wait30);
-		getDATTab().Click();
+		base.waitForElement(getDATTab());
+		getDATTab().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDAT_FieldClassification1().Visible() && getDAT_FieldClassification1().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getDAT_FieldClassification1());
 		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.bates);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDAT_SourceField1().Visible() && getDAT_SourceField1().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getDAT_SourceField1());
 		getDAT_SourceField1().selectFromDropdown().selectByVisibleText(Input.batesNumber);
 
 		base.waitForElement(getDAT_DATField1());
-		getDAT_DATField1().waitAndClick(10);
+		base.waitTime(2);
 		getDAT_DATField1().SendKeys("B" + Utility.dynamicNameAppender());
 		base.stepInfo("Dat section is filled");
 	}
@@ -5294,32 +5278,29 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
 
+		driver.scrollingToBottomofAPage();
+
 		base.waitForElement(getClkCheckBox_defaultRedactionTag());
-		getClkCheckBox_defaultRedactionTag().isDisplayed();
 		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
 
 		base.waitForElement(getClkLink_selectingRedactionTags());
-		getClkLink_selectingRedactionTags().isDisplayed();
 		getClkLink_selectingRedactionTags().waitAndClick(10);
 
 		base.waitForElement(getClkBtn_selectingRedactionTags());
-		getClkBtn_selectingRedactionTags().isDisplayed();
 		getClkBtn_selectingRedactionTags().waitAndClick(10);
 
 		base.waitForElement(getClkCheckBox_selectingRedactionTags());
-		getClkCheckBox_selectingRedactionTags().isDisplayed();
 		driver.waitForPageToBeReady();
 		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
 
 		base.waitForElement(getClk_selectBtn());
-		getClk_selectBtn().isDisplayed();
 		getClk_selectBtn().waitAndClick(10);
 
 		base.waitForElement(gettextRedactionPlaceHolder());
-		gettextRedactionPlaceHolder().isDisplayed();
 		gettextRedactionPlaceHolder().waitAndClick(10);
 		gettextRedactionPlaceHolder().SendKeys(searchString4);
 	}
+
 
 	/**
 	 * Author Indium Sowndarya.Velraj
@@ -5554,78 +5535,41 @@ public class ProductionPage {
 	 */
 	public void fillingNumberingAndSortingPage(String prefixId, String suffixId) throws InterruptedException {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getBeginningBates().Enabled() && getBeginningBates().isDisplayed();
-			}
-		}), Input.wait30);
-
+		base.waitForElement(getBeginningBates());
 		driver.waitForPageToBeReady();
-		num = getRandomNumber(2);
-		System.out.println(num);
-		getBeginningBates().SendKeys(num);
-//		getBeginningBates().SendKeys(getRandomNumber(2));
-//
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return gettxtBeginningBatesIDPrefix().Enabled();
-			}
-		}), Input.wait30);
+		getBeginningBates().waitAndClick(10);
+		num=getRandomNumber(2);
+		System.out.println("Beginning Bates="+num);
+		getBeginningBates().SendKeys(getRandomNumber(2));
+		
+		base.waitForElement(gettxtBeginningBatesIDPrefix());
 		gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return gettxtBeginningBatesIDSuffix().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(gettxtBeginningBatesIDSuffix());
 		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return gettxtBeginningBatesIDMinNumLength().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
+		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
 		num1 = getRandomNumber(1);
-		System.out.println(num1);
-		gettxtBeginningBatesIDMinNumLength().SendKeys(num1);
-//		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+		System.out.println("Beginning BatesID Min Num Length="+num1);
+		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
 
 		driver.scrollingToBottomofAPage();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getlstSortingMetaData().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getlstSortingMetaData());
 		getlstSortingMetaData().selectFromDropdown().selectByVisibleText("DocID");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getlstSortingOrder().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getlstSortingOrder());
 		getlstSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getlstSortingMetaData().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getlstSubSortingMetaData());
 		getlstSubSortingMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getlstSubSortingOrder().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getlstSubSortingOrder());
 		getlstSubSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getKeepFamiliesTogether().Visible();
-			}
-		}), Input.wait30);
-		getKeepFamiliesTogether().Click();
+		base.waitForElement(getKeepFamiliesTogether());
+		getKeepFamiliesTogether().waitAndClick(10);
 		driver.scrollPageToTop();
 		base.stepInfo("Numbering and sorting section is filled");
 
@@ -8995,28 +8939,30 @@ public class ProductionPage {
 		base.clickButton(getCalculatedCheckBoxSelection(fieldValue));
 		base.clickButton(getAddSelected());
 	}
-
 	/**
-	 * @Author @author Indium-Baskar Date:31/8/2021 Modified date:N/A
-	 * @Description : Click preview tab button in summary and preview tab
-	 */
-//	Reusable method for clicking the preview button and visibility of element presence
+	* @Author @author Indium-Baskar Date:31/8/2021 Modified date:N/A
+	* @Description : Click preview tab button in summary and preview tab
+	*/
+	// Reusable method for clicking the preview button and visibility of element presence
 	public void viewingPreviewButtonInSummaryTab() throws InterruptedException {
-		try {
-			base.waitForElement(getbtnPreview());
-			if (getbtnPreview().Enabled() && getbtnPreview().isDisplayed()) {
-				softAssertion.assertEquals(getbtnPreview().isDisplayed().booleanValue(), true);
-				getbtnPreview().waitAndClick(10);
-				base.passedStep("clicking preview button and verifying the standard pdf format");
-			} else {
-				base.stepInfo("Preview button is not displayed in summary and preview tab");
-			}
-			driver.waitForPageToBeReady();
-		} catch (org.openqa.selenium.NoSuchElementException e) {
-			base.passedStep("Preview button is not displayed in summary and preview tab");
-			e.printStackTrace();
-		}
+	if (getbtnPreview().isElementAvailable(5)) {
+	try {
+	base.waitForElement(getbtnPreview());
+	if (getbtnPreview().Enabled() && getbtnPreview().isDisplayed()) {
+	softAssertion.assertEquals(getbtnPreview().isDisplayed().booleanValue(), true);
+	getbtnPreview().waitAndClick(10);
+	base.passedStep("clicking preview button and verifying the standard pdf format");
+	} else {
+	base.stepInfo("Preview button is not displayed in summary and preview tab");
 	}
+	driver.waitForPageToBeReady();
+	} catch (Exception e) {
+	e.printStackTrace();
+	}
+	} else {
+	base.passedStep("Preview button is not displayed in summary and preview tab");
+
+	}}
 
 	/**
 	 * @Author @author Indium-Baskar Date:1/9/2021 Modified date:N/A

@@ -461,6 +461,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public void CreateFolder(String strFolder, String securityGroup) throws InterruptedException {
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFoldersTab().Enabled();
@@ -709,6 +710,7 @@ public class TagsAndFoldersPage {
 	 */
 	public void DeleteFolderWithSecurityGroup(final String strFolder, String securityGroup) {
 
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		base.waitForElement(getFoldersTab());
 		getFoldersTab().waitAndClick(5);
 
@@ -734,12 +736,25 @@ public class TagsAndFoldersPage {
 			base.getYesBtn().waitAndClick(5);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			base.waitForElement(getFolderName(strFolder));
+			getFolderName(strFolder).waitAndClick(5);
+
+			driver.scrollPageToTop();
+
+			base.waitForElement(getFolderActionDropDownArrow());
+			getFolderActionDropDownArrow().waitAndClick(5);
+
+			base.waitForElement(getDeleteFolder());
+			getDeleteFolder().waitAndClick(5);
+
+			base.waitForElement(base.getYesBtn());
+			base.getYesBtn().waitAndClick(5);
 		}
 
 		base.VerifySuccessMessage("Folder deleted successfully");
 		base.CloseSuccessMsgpopup();
-		Reporter.log(strFolder + " Folder delete Successful", true);
+		Reporter.log(strFolder + " Folder delete Successfully", true);
 		UtilityLog.info("Folder deleted Successfully");
 	}
 
@@ -1619,7 +1634,7 @@ public class TagsAndFoldersPage {
 
 			getSecurityGroupTag().selectFromDropdown().selectByVisibleText("Default Security Group");
 			base.waitForElement(getAddTagTable());
-			getAddTagTable().Click();
+			getAddTagTable().waitAndClick(5);
 			driver.scrollPageToTop();
 			base.waitForElement(getAllTagRoot());
 			Thread.sleep(1000);
