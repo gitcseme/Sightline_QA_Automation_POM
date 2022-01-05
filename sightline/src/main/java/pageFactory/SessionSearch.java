@@ -46,7 +46,7 @@ public class SessionSearch {
 	public Element getEnterSearchString() {
 		return driver.FindElementByXPath(".//*[@id='xEdit']/li/input");
 	}
- 
+
 	public Element getSearchButton() {
 		return driver.FindElementById("btnBasicSearch");
 	}
@@ -1379,8 +1379,11 @@ public class SessionSearch {
 	public Element getSearchButtonSec() {
 		return driver.FindElementByXPath("(//a[@id='btnBasicSearch'])[last()]");
 	}
+
 	public Element getSearchName() {
-		return driver.FindElementByXPath("//div[@id='Basic']//span[@class='font-lg']");}
+		return driver.FindElementByXPath("//div[@id='Basic']//span[@class='font-lg']");
+	}
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -7874,9 +7877,9 @@ public class SessionSearch {
 	 */
 	public void bulkAssignConceptualDocuments() {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		try {
+		if (getConceptPureHitsCount().isElementAvailable(5)) {
 			getConceptPureHitsCount().Click();
-		} catch (Exception e) {
+		} else {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 		}
@@ -8916,6 +8919,7 @@ public class SessionSearch {
 				"Search is done for " + projectFieldINT + " with value " + metadataText + " purehit is : " + pureHit);
 		return pureHit;
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param SearchString
@@ -8923,261 +8927,256 @@ public class SessionSearch {
 	 * @return
 	 * @throws InterruptedException
 	 */
-		public String  advancedSearch_CombinedResults( String SearchString, Element element)
-				throws InterruptedException {
+	public String advancedSearch_CombinedResults(String SearchString, Element element) throws InterruptedException {
 
-			// To make sure we are in basic search page
-			driver.getWebDriver().get(Input.url + "Search/Searches");
-			SoftAssert softAssertion = new SoftAssert();
-			base.waitForElement(getAdvancedSearchLink());
-			getAdvancedSearchLink().Click();
-			base.stepInfo("Navigated to advanced search page successfuly");
-			try {
-				base.waitForElement(element);
-				element.waitAndClick(10);
-				base.passedStep("Advanced search option is selected");
-			} catch (Exception e) {
-				base.failedStep("Advanced search option is not selected");
-				softAssertion.fail();
-			}
-			base.waitForElement(getContentAndMetaDatabtn());	
-			getContentAndMetaDatabtn().Click();
-			base.waitForElement(getAdvancedContentSearchInput());
-			getAdvancedContentSearchInput().SendKeys(SearchString);
-			base.waitForElement(getQuerySearchButton());
-			// Click on Search button
-			getQuerySearchButton().Click();
-
-			// look for warnings, in case of proximity search
-			try {
-				if (getTallyContinue().isElementAvailable(2)) {
-					getTallyContinue().waitAndClick(10);
-				}
-			} catch (Exception e) {
-
-			}
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getCombinedSearchResults().getText().matches("-?\\d+(\\.\\d+)?");
-				}
-			}), Input.wait90);
-			String combinedSearchResults = getCombinedSearchResults().getText();
-			softAssertion.assertNotNull(combinedSearchResults, "Search is done and no combined search hits returned");
-			base.stepInfo("The combined search results are " + combinedSearchResults);
-			return combinedSearchResults;
+		// To make sure we are in basic search page
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		SoftAssert softAssertion = new SoftAssert();
+		base.waitForElement(getAdvancedSearchLink());
+		getAdvancedSearchLink().Click();
+		base.stepInfo("Navigated to advanced search page successfuly");
+		try {
+			base.waitForElement(element);
+			element.waitAndClick(10);
+			base.passedStep("Advanced search option is selected");
+		} catch (Exception e) {
+			base.failedStep("Advanced search option is not selected");
+			softAssertion.fail();
 		}
+		base.waitForElement(getContentAndMetaDatabtn());
+		getContentAndMetaDatabtn().Click();
+		base.waitForElement(getAdvancedContentSearchInput());
+		getAdvancedContentSearchInput().SendKeys(SearchString);
+		base.waitForElement(getQuerySearchButton());
+		// Click on Search button
+		getQuerySearchButton().Click();
 
-		/**
-		 * @author Jayanthi.ganesan
-		 * @param metaDataField
-		 * @param val1
-		 */
-		public void advMetaDataSearchQueryInsert(String metaDataField, String val1) {
-			driver.getWebDriver().get(Input.url + "Search/Searches");
-			base.waitForElement(getAdvancedSearchLink());
-			getAdvancedSearchLink().Click();
-			base.waitForElement(getContentAndMetaDatabtn());
-			getContentAndMetaDatabtn().Click();
-			base.waitForElement(getAdvanceSearch_MetadataBtn());
-			getAdvanceSearch_MetadataBtn().Click();
-			getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
-			getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
-			base.waitForElement(getMetaDataInserQuery());
-			getMetaDataInserQuery().Click();
-		}
-
-		/**
-		 * @author Jayanthi.ganesan
-		 * @param SearchString
-		 * @return
-		 */
-		public String advContentSearchWithoutURL(String SearchString) {
-			base.waitForElement(getAdvancedContentSearchInputCurrent());
-			getAdvancedContentSearchInputCurrent().SendKeys(SearchString);
-			base.waitForElement(getQuerySearchButton());
-			getQuerySearchButton().Click();
-
-			// look for warnings, in case of proximity search
-			try {
-				if (getTallyContinue().isElementAvailable(2)) {
-					getTallyContinue().waitAndClick(10);
-				}
-			} catch (Exception e) {
-
+		// look for warnings, in case of proximity search
+		try {
+			if (getTallyContinue().isElementAvailable(2)) {
+				getTallyContinue().waitAndClick(10);
 			}
-			// verify counts for all the tiles
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
-				}
-			}), Input.wait90);
+		} catch (Exception e) {
 
-			String pureHit = getPureHitsCount().getText();
-			UtilityLog.info("Search is done purehit is : " + pureHit);
-			return pureHit;
 		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCombinedSearchResults().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+		String combinedSearchResults = getCombinedSearchResults().getText();
+		softAssertion.assertNotNull(combinedSearchResults, "Search is done and no combined search hits returned");
+		base.stepInfo("The combined search results are " + combinedSearchResults);
+		return combinedSearchResults;
+	}
+
 	/**
-	 * @author Jayanthi.ganesan	
+	 * @author Jayanthi.ganesan
+	 * @param metaDataField
+	 * @param val1
+	 */
+	public void advMetaDataSearchQueryInsert(String metaDataField, String val1) {
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		base.waitForElement(getAdvancedSearchLink());
+		getAdvancedSearchLink().Click();
+		base.waitForElement(getContentAndMetaDatabtn());
+		getContentAndMetaDatabtn().Click();
+		base.waitForElement(getAdvanceSearch_MetadataBtn());
+		getAdvanceSearch_MetadataBtn().Click();
+		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().Click();
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param SearchString
+	 * @return
+	 */
+	public String advContentSearchWithoutURL(String SearchString) {
+		base.waitForElement(getAdvancedContentSearchInputCurrent());
+		getAdvancedContentSearchInputCurrent().SendKeys(SearchString);
+		base.waitForElement(getQuerySearchButton());
+		getQuerySearchButton().Click();
+
+		// look for warnings, in case of proximity search
+		try {
+			if (getTallyContinue().isElementAvailable(2)) {
+				getTallyContinue().waitAndClick(10);
+			}
+		} catch (Exception e) {
+
+		}
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+
+		String pureHit = getPureHitsCount().getText();
+		UtilityLog.info("Search is done purehit is : " + pureHit);
+		return pureHit;
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
 	 * @param folderName
 	 * @throws InterruptedException
 	 */
-		
-		public void bulkFolderWithOutHitADD(String folderName) throws InterruptedException {
-			base.waitForElement( getBulkActionButton());		
-			getBulkActionButton().waitAndClick(5);
-			base.waitForElement( getBulkFolderAction());
-			getBulkFolderAction().waitAndClick(5);
-			base.waitForElement( getBulkNewTab());
-			getBulkNewTab().waitAndClick(20);
-			base.waitForElement(getEnterFolderName());
-			getEnterFolderName().SendKeys(folderName);
-			base.waitForElement( getFolderAllRoot());			
-	    	getFolderAllRoot().Click();
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
-				}
-			}), Input.wait60);
-			getContinueButton().Click();
+	public void bulkFolderWithOutHitADD(String folderName) throws InterruptedException {
+		base.waitForElement(getBulkActionButton());
+		getBulkActionButton().waitAndClick(5);
+		base.waitForElement(getBulkFolderAction());
+		getBulkFolderAction().waitAndClick(5);
+		base.waitForElement(getBulkNewTab());
+		getBulkNewTab().waitAndClick(20);
+		base.waitForElement(getEnterFolderName());
+		getEnterFolderName().SendKeys(folderName);
+		base.waitForElement(getFolderAllRoot());
+		getFolderAllRoot().Click();
 
-			final BaseClass bc = new BaseClass(driver);
-			final int Bgcount = bc.initialBgCount();
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
-				}
-			}), Input.wait60);
-			getFinalizeButton().Click();
-
-			base.VerifySuccessMessage("Records saved successfully");
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return bc.initialBgCount() == Bgcount + 1;
-				}
-			}), Input.wait60);
-			UtilityLog.info("Bulk folder is done, folder is : " + folderName);
-			Reporter.log("Bulk folder is done, folder is : " + folderName, true);
-			driver.getWebDriver().navigate().refresh();
-		}
-		
-		/**
-		 * @Author Gopinath
-		 * @Description: To Create Metadata advanced search.
-		 */
-		public void metaDataSearchInAdvancedSearch(String metaDataField, String val1) {
-
-			// To make sure we are in basic search page
-			driver.getWebDriver().get(Input.url + "Search/Searches");
-			base.waitForElement(getAdvancedSearchLink());
-			getAdvancedSearchLink().waitAndClick(3);
-			base.waitForElement(getContentAndMetaDatabtn());
-			getContentAndMetaDatabtn().waitAndClick(3);
-			// Enter search string
-			base.waitForElement(getAdvanceSearch_MetadataBtn());
-			getAdvanceSearch_MetadataBtn().waitAndClick(3);
-			base.waitForElement(getSelectMetaData());
-			// getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
-			base.waitForElement(getSelectMetaData());
-			getSelectMetaData().waitAndClick(3);
-			base.waitForElement(SelectFromDropDown(metaDataField));
-			SelectFromDropDown(metaDataField).waitAndClick(10);
-			base.waitForElement(getMetaDataSearchText1());
-			getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
-			base.waitForElement(getMetaDataInserQuery());
-			getMetaDataInserQuery().waitAndClick(3);
-			// Click on Search button
-			base.waitForElement(getQuerySearchButton());
-			getQuerySearchButton().waitAndClick(3);
-			if (getTallyContinue().isElementAvailable(3)) {
-				getTallyContinue().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
-			// two handle twosearch strings
+		}), Input.wait60);
+		getContinueButton().Click();
 
-			base.waitForElement(getPureHitsCount());
-			// verify counts for all the tiles
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
-				}
-			}), Input.wait90);
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
 
-			int pureHit = Integer.parseInt(getPureHitsCount().getText());
-			base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
-		}
-		
-		
-		
-		/**
-		 * @author Gopinath
-		 * Description: advanced search with any one of the operator
-		 * @param SearchString(Input search string 1)
-		 * @param operator
-		 * @param searchString2(Input search string 2)
-		 * @return purehit  of search
-		 */
-		public int advancedContentSearchWithOperator(String SearchString,String operator,String searchString2) {
-			// To make sure we are in basic search page
-					driver.getWebDriver().get(Input.url + "Search/Searches");
-					driver.WaitUntil((new Callable<Boolean>() {
-						public Boolean call() {
-							return getAdvancedSearchLink().Visible();
-						}
-					}), Input.wait30);
-					getAdvancedSearchLink().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getFinalizeButton().Click();
 
-					driver.WaitUntil((new Callable<Boolean>() {
-						public Boolean call() {
-							return getContentAndMetaDatabtn().Visible();
-						}
-					}), Input.wait30);
-					getContentAndMetaDatabtn().Click();
-					// Enter seatch string
-					driver.WaitUntil((new Callable<Boolean>() {
-						public Boolean call() {
-							return getAdvancedContentSearchInput().Visible();
-						}
-					}), Input.wait30);
-					getAdvancedContentSearchInput().SendKeys(SearchString);
-					
-					selectOperator(operator);
-					base.waitForElement(getAdvancedContentSearchInputCurrent());
-					try {
-					getAdvancedContentSearchInputCurrent().SendKeys(searchString2);
-					}catch(Exception e)
-					 {
-						base.waitTime(5);
-						getAdvancedContentSearchInputCurrent().SendKeys(searchString2);
-					}
+		base.VerifySuccessMessage("Records saved successfully");
 
-					// Click on Search button
-					getQuerySearchButton().Click();
-
-					// look for warnings, in case of proximity search
-					try {
-						if (getTallyContinue().isElementAvailable(2)) {
-							getTallyContinue().waitAndClick(10);
-						}
-						base.waitTime(2);
-					} catch (Exception e) {
-
-					}
-
-					// verify counts for all the tiles
-					driver.WaitUntil((new Callable<Boolean>() {
-						public Boolean call() {
-							return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
-						}
-					}), Input.wait90);
-
-					int pureHit = Integer.parseInt(getPureHitsCount().getText());
-					Reporter.log("Serach is done for '" + SearchString + "' and PureHit is : " + pureHit, true);
-					UtilityLog.info("Serach is done for " + SearchString + " and PureHit is : " + pureHit);
-
-					return pureHit;
-		}
-	     
-
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		UtilityLog.info("Bulk folder is done, folder is : " + folderName);
+		Reporter.log("Bulk folder is done, folder is : " + folderName, true);
+		driver.getWebDriver().navigate().refresh();
 	}
+
+	/**
+	 * @Author Gopinath
+	 * @Description: To Create Metadata advanced search.
+	 */
+	public void metaDataSearchInAdvancedSearch(String metaDataField, String val1) {
+
+		// To make sure we are in basic search page
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		base.waitForElement(getAdvancedSearchLink());
+		getAdvancedSearchLink().waitAndClick(3);
+		base.waitForElement(getContentAndMetaDatabtn());
+		getContentAndMetaDatabtn().waitAndClick(3);
+		// Enter search string
+		base.waitForElement(getAdvanceSearch_MetadataBtn());
+		getAdvanceSearch_MetadataBtn().waitAndClick(3);
+		base.waitForElement(getSelectMetaData());
+		// getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+		base.waitForElement(getSelectMetaData());
+		getSelectMetaData().waitAndClick(3);
+		base.waitForElement(SelectFromDropDown(metaDataField));
+		SelectFromDropDown(metaDataField).waitAndClick(10);
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(3);
+		// Click on Search button
+		base.waitForElement(getQuerySearchButton());
+		getQuerySearchButton().waitAndClick(3);
+		if (getTallyContinue().isElementAvailable(3)) {
+			getTallyContinue().waitAndClick(5);
+		}
+		// two handle twosearch strings
+
+		base.waitForElement(getPureHitsCount());
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+
+		int pureHit = Integer.parseInt(getPureHitsCount().getText());
+		base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
+	}
+
+	/**
+	 * @author Gopinath Description: advanced search with any one of the operator
+	 * @param SearchString(Input  search string 1)
+	 * @param operator
+	 * @param searchString2(Input search string 2)
+	 * @return purehit of search
+	 */
+	public int advancedContentSearchWithOperator(String SearchString, String operator, String searchString2) {
+		// To make sure we are in basic search page
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAdvancedSearchLink().Visible();
+			}
+		}), Input.wait30);
+		getAdvancedSearchLink().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContentAndMetaDatabtn().Visible();
+			}
+		}), Input.wait30);
+		getContentAndMetaDatabtn().Click();
+		// Enter seatch string
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAdvancedContentSearchInput().Visible();
+			}
+		}), Input.wait30);
+		getAdvancedContentSearchInput().SendKeys(SearchString);
+
+		selectOperator(operator);
+		base.waitForElement(getAdvancedContentSearchInputCurrent());
+		try {
+			getAdvancedContentSearchInputCurrent().SendKeys(searchString2);
+		} catch (Exception e) {
+			base.waitTime(5);
+			getAdvancedContentSearchInputCurrent().SendKeys(searchString2);
+		}
+
+		// Click on Search button
+		getQuerySearchButton().Click();
+
+		// look for warnings, in case of proximity search
+		try {
+			if (getTallyContinue().isElementAvailable(2)) {
+				getTallyContinue().waitAndClick(10);
+			}
+			base.waitTime(2);
+		} catch (Exception e) {
+
+		}
+
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+
+		int pureHit = Integer.parseInt(getPureHitsCount().getText());
+		Reporter.log("Serach is done for '" + SearchString + "' and PureHit is : " + pureHit, true);
+		UtilityLog.info("Serach is done for " + SearchString + " and PureHit is : " + pureHit);
+
+		return pureHit;
+	}
+
+}
