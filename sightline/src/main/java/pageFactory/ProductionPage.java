@@ -15300,4 +15300,41 @@ public class ProductionPage {
 		
 		
 	}
+	/**
+	 * @Author Brundha
+	 * Description:Method to select redaction tag
+	 */
+	public void burnRedactionWithRedactionTagInTiffSection(String tagname) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		
+		
+	    driver.waitForPageToBeReady();
+	    base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().waitAndClick(10);
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_RedactionTag(tagname));
+		getClkCheckBox_RedactionTag(tagname).ScrollTo();
+		getClkCheckBox_RedactionTag(tagname).waitAndClick(10);
+	}
 }

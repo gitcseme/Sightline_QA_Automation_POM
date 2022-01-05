@@ -6590,7 +6590,112 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.fillingGeneratePageWithContinueGenerationPopup();
 		}
 		
+		/**
+		 * @author Brundha Test case id-RPMXCON-48304
+		 * @Description To verify the value of BeginningAttachBates should be displayed Beginning bates of the parent of the family on Production
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 82)
+		public void BeginningAttachBatesInDatAndGenerateProduction() throws Exception {
+
+			UtilityLog.info(Input.prodPath);
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			base.stepInfo("RPMXCON-48304 -Production Sprint 09");
+			base.stepInfo("To verify the value of BeginningAttachBates should be displayed Beginning bates of the parent of the family on Production");
 		
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+			String BatesNumber="B"+Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateFolder(foldername,"Default Security Group");
+			
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.addDATFieldAtSecondRow("Bates","BeginingAttachBates",BatesNumber);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			
+			
+		}
+		
+		
+		/**
+		 * @author Brundha Test case id-RPMXCON-48318
+		 * @Description To verify that Production should be generated successfully if there is one single non-redacted area.	  
+		 */
+		@Test(groups = { "regression" }, priority = 83)
+		public void verifyProductionGeneratedwithNonRedactedArea() throws Exception {
+			
+			UtilityLog.info(Input.prodPath);
+			
+			base.stepInfo("RPMXCON-48318 -Production Sprint 09");
+			base.stepInfo("To verify that Production should be generated successfully if there is one single non-redacted area.");
+
+			String redactiontag="Redaction"+Utility.dynamicNameAppender();
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+			
+			RedactionPage redactionpage = new RedactionPage(driver);
+			redactionpage.selectDefaultSecurityGroup();
+			driver.waitForPageToBeReady();
+			
+			redactionpage.manageRedactionTagsPage(redactiontag);
+			System.out.println("First Redaction Tag is created" + redactiontag);
+			
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.audioSearch("morning","North American English");
+			sessionSearch.bulkFolderExisting(foldername);
+			driver.waitForPageToBeReady();
+			sessionSearch.ViewInDocView();
+
+			docView = new DocViewPage(driver);
+			docView.navigateToDocViewPageURL();
+
+			DocViewRedactions redact=new DocViewRedactions(driver);
+			redact.addAudioRedaction(Input.startTime ,Input.endTime,redactiontag);
+			
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			
+			ProductionPage page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.burnRedactionWithRedactionTagInTiffSection(redactiontag);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+		}
 
 	@AfterMethod(alwaysRun = true)
 	public void close() {
