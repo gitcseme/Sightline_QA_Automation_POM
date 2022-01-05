@@ -2173,8 +2173,6 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//*[@id='rbdSinglePageType']/../i");
 	}
 	
-	public Element getBlankPageRemovalToggle() {
-		return driver.FindElementByXPath("//label[text()='Blank Page Removal:']/..//i");}
 	
 	public Element blankPageRemovalMessage() {
 		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']/p");}
@@ -15269,7 +15267,7 @@ public class ProductionPage {
 		}
 	}
 	
-
+/**
 	 * @Author Brundha
 	 * Description:Method to select blank page removal toggle
 	 */
