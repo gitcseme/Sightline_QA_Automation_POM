@@ -1379,7 +1379,8 @@ public class SessionSearch {
 	public Element getSearchButtonSec() {
 		return driver.FindElementByXPath("(//a[@id='btnBasicSearch'])[last()]");
 	}
-
+	public Element getSearchName() {
+		return driver.FindElementByXPath("//div[@id='Basic']//span[@class='font-lg']");}
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");

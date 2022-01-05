@@ -49,8 +49,8 @@ public class AdvancedSearch_Regression2 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		Input in = new Input();
-		in.loadEnvConfig();
+	//	Input in = new Input();
+	//	in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -788,6 +788,42 @@ public class AdvancedSearch_Regression2 {
 		}
 		softAssertion.assertAll();
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(groups = { "regression" }, priority = 18,enabled=false)
+	public void verifytruncate_500chars() throws InterruptedException {
+		String expectedSearchName="Abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijkl"
+				+ "mnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnop...";
+		baseClass.stepInfo("Saved Search Name with < 500 chars is truncating on edit search page");
+		baseClass.stepInfo("Test case Id: RPMXCON-57377");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		String savedSearchName = "Abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk"
+				+ "lmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghij"
+				+ "klmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghi"
+				+ "jklmnopqrstuvwxyzabcdefghijklmnopqabcdefghijklmnopqrstuvwxyzabcdefghijklmnopq"
+				+ "rstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnop"
+				+ "qrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmno"
+				+ "pqrstuvwxyzabcdefghijklmnopqrstuvwxyzabc500"+Utility.dynamicNameAppender();
+		search.basicContentSearch(Input.TallySearch);
+		search.saveSearch(savedSearchName);
+		baseClass.stepInfo("Created a saved search with 499 chars  " + savedSearchName);
+		savedSearch.savedSearch_Searchandclick(savedSearchName);		
+		if (savedSearch.getSearchName(savedSearchName).isElementPresent()) {
+			baseClass.stepInfo("Saved search name query is displayed as expected in saved saerch page");
+			softAssertion.assertEquals(savedSearch.getSearchName(savedSearchName).getText(),savedSearchName);
+			savedSearch.getSavedSearchEditButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+		} else {
+			baseClass.failedStep("Saved search query is not displayed as expected in saved search page.");
+		}
+			softAssertion.assertEquals(search.getSearchName().getText().trim(),"SS: "+expectedSearchName);
+			softAssertion.assertAll();
+			baseClass.passedStep("Saved search query is displayed as expected in saved saerch page and search screen.");
+			baseClass.passedStep("Sucessfully verified whether Saved Search Name with < 500 chars is truncating on edit search page");
+		//savedSearch.SaveSearchDelete(savedSearchName);
+	}
 
 	@DataProvider(name = "AudioSearchwithUsers")
 	public Object[][] AudioSearchwithUsers() {
@@ -829,7 +865,7 @@ public class AdvancedSearch_Regression2 {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			LoginPage.clearBrowserCache();
+		//	LoginPage.clearBrowserCache();
 
 		} catch (Exception e) {
 			System.out.println("Sessions already closed");
