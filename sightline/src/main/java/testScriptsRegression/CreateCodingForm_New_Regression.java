@@ -3864,6 +3864,160 @@ public class CreateCodingForm_New_Regression {
 		// logout
 		loginPage.logout();
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			RPMXCON-51187
+	 * @Description : Verify on click of 'Save' button coding form should be validated as per the default selected action for the coding form outside of an assignment
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 61)
+	public void verifyDefaultCodingforminDocView() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51187");
+	    baseClass.stepInfo("Verify on click of 'Save' button coding form should be validated as per the default selected action for the coding form outside of an assignment");
+	    String cfName = "CF"+Utility.dynamicNameAppender();
+		
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+       
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	driver.waitForPageToBeReady();
+	 	codingForm.addNewCodingFormButton();
+	 	codingForm.firstCheckBox("tag");
+	 	codingForm.firstCheckBox("comment");
+	 	codingForm.firstCheckBox("metadata");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.passingCodingFormName(cfName);
+	 	codingForm.selectDefaultActions(1, Input.required);
+	 	codingForm.saveCodingForm();
+	 	baseClass.stepInfo("default coding form should be created");
+		
+		// Assign to security group
+		codingForm.assignCodingFormToSG(cfName);
+		baseClass.stepInfo("Coding form assigned to security group");
+		
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocViews();
+		baseClass.stepInfo("Search with text input for docs completed");
+		
+		//docView
+		docViewPage.getAddComment1().Clear();
+		docViewPage.getSaveDoc().waitAndClick(10);
+		docViewPage.errorMessage();
+		baseClass.CloseSuccessMsgpopup();
+		docViewPage.getAddComment1().SendKeys("Document commemnt added");
+		docViewPage.getSaveDoc().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocViews();
+		baseClass.stepInfo("Search with text input for docs completed");		
+
+		// Edit coding Form and complete Action
+		docViewPage.getAddComment1().Clear();
+		docViewPage.getSaveDoc().waitAndClick(10);
+		docViewPage.errorMessage();
+		baseClass.CloseSuccessMsgpopup();
+		docViewPage.getAddComment1().SendKeys("Document commemnt added");
+		docViewPage.getSaveDoc().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.passedStep("Verified on click of 'Save' button coding form should be validated as per the default selected action for the coding form outside of an assignment");
+		
+		// logout
+		loginPage.logout();
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			RPMXCON-51188
+	 * @Description : Verify on click of 'Complete' button coding form should be validated as per the default selected action for the coding form
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 62)
+	public void verifyDefaultCodingformAssignmentDocView() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51188");
+	    baseClass.stepInfo("Verify on click of 'Complete' button coding form should be validated as per the default selected action for the coding form");
+	    String cfName = "CF"+Utility.dynamicNameAppender();
+		String assignName ="Assignment"+Utility.dynamicNameAppender();
+	    
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+       
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	driver.waitForPageToBeReady();
+	 	codingForm.addNewCodingFormButton();
+	 	codingForm.firstCheckBox("tag");
+	 	codingForm.firstCheckBox("comment");
+	 	codingForm.firstCheckBox("metadata");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.passingCodingFormName(cfName);
+	 	codingForm.selectDefaultActions(1, Input.required);
+	 	codingForm.saveCodingForm();
+	 	baseClass.stepInfo("default coding form should be created");
+		
+		// Assign to security group
+		codingForm.assignCodingFormToSG(cfName);
+		baseClass.stepInfo("Coding form assigned to security group");
+		
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		baseClass.stepInfo("Search with text input for docs completed");
+
+		// Creating Assignment from Basic search
+		assignmentPage = new AssignmentsPage(driver);
+		assignmentPage.assignmentCreation(assignName, cfName);
+		assignmentPage.toggleCodingStampEnabled();
+		baseClass.stepInfo("Doc is Assigned from basic Search and Assignment '" + assignName + "' is created Successfully");
+		assignmentPage.add2ReviewerAndDistribute();
+		baseClass.impersonateRMUtoReviewer();
+		driver.waitForPageToBeReady();
+		
+		//assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		
+		// Edit coding Form and complete Action
+		driver.waitForPageToBeReady();
+		docViewPage.getAddComment1().Clear();
+		docViewPage.getCompleteDocBtn().waitAndClick(10);
+		docViewPage.errorMessage();		
+		baseClass.CloseSuccessMsgpopup();
+		docViewPage.getAddComment1().SendKeys("Document commemnt added");
+		docViewPage.getCompleteDocBtn().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Document completed successfully");
+		
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		
+		//assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		
+		// Edit coding Form and complete Action
+		driver.waitForPageToBeReady();
+		docViewPage.getAddComment1().Clear();
+		docViewPage.getCompleteDocBtn().waitAndClick(10);
+		docViewPage.errorMessage();		
+		baseClass.CloseSuccessMsgpopup();
+		docViewPage.getAddComment1().SendKeys("Document commemnt added");
+		docViewPage.getCompleteDocBtn().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Document completed successfully");
+		
+		
+		baseClass.passedStep("Verified on click of 'Complete' button coding form should be validated as per the default selected action for the coding form");
+		
+		// logout
+		loginPage.logout();
+	}
 
 
 		
