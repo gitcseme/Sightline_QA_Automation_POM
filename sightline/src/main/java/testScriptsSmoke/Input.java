@@ -177,6 +177,7 @@ public class Input {
 	public static String theardMapViewId;
 	public static String nearDupeViewDocId;
 	public static String threadMapNewId;
+	public static String conceptualDocId1;
 
 	// DocView codingform Baskar Indium
 
@@ -610,6 +611,7 @@ public class Input {
 		nearDupeBulkAssignReviewId = testData.getNearDupeBulkAssignReviewId();
 		theardMapViewId = testData.getTheardMapViewId();
 		threadMapNewId=testData.getThreadMapNewId();
+		conceptualDocId1=testData.getConceptualDocId1();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
