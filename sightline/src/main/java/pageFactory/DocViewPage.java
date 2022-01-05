@@ -8125,7 +8125,7 @@ public class DocViewPage {
 				return geDocView_Concept_CodeSameAsIcon().Displayed();
 			}
 		}), Input.wait30);
-		softAssertion.assertEquals(geDocView_Concept_CodeSameAsIcon().Displayed().booleanValue(), true);
+		softAssertion.assertEquals(geDocView_Concept_CodeSameAsIcon().isDisplayed().booleanValue(), true);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -8134,6 +8134,8 @@ public class DocViewPage {
 		}), Input.wait30);
 
 		codeSameDocumentid = getConceptDocumentWhichHasCodeSameIcon().getText();
+
+		softAssertion.assertAll();
 
 	}
 
