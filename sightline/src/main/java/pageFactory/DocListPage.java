@@ -1634,10 +1634,10 @@ public class DocListPage {
 	public void selectChildDocumentAndSave(String documentID) {
 
 		base.waitForElement(getDocListDocCheckbox(documentID));
-		getDocListDocCheckbox(documentID).Click();
+		getDocListDocCheckbox(documentID).waitAndClick(10);
 
-		base.waitForElement(getMessageBoxYesBtn());
-		getMessageBoxYesBtn().Click();
+		getMessageBoxYesBtn().isElementAvailable(8);
+		getMessageBoxYesBtn().waitAndClick(10);
 	}
 
 	/**
