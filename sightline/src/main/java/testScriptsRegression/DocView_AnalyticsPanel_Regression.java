@@ -2631,7 +2631,7 @@ public class DocView_AnalyticsPanel_Regression {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String selectDocsMiniDocList = Input.familyDocumentForReviewer;
+		String selectDocsMiniDocList = Input.conceptualDocs1;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignThreadedDocs();
