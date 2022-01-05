@@ -1465,6 +1465,11 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	
+	public Element getDocView_Analytics_FamilyMember_Text(int rowno) {
+		return driver
+				.FindElementByXPath("//*[@id='analyticsResize']//*[@id='dtDocumentFamilyMembers']//td[" + rowno + "]");
+	}
 	public Element getDocView_Navigate_ButtonText() {
 		return driver.FindElementByXPath("//p[contains(text(),'This action will not save')]");
 	}
@@ -7634,27 +7639,23 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
 			driver.waitForPageToBeReady();
-			Point p = getDocView_Analytics_NearDupeTab().getWebElement().getLocation();
+			Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
-			base.waitForElement(getDocView_Analytics_NearDupeTab());
-			getDocView_Analytics_NearDupeTab().waitAndClick(5);
+			base.waitForElement(getDocView_Analytics_FamilyTab());
+			getDocView_Analytics_FamilyTab().waitAndClick(5);
 
-			for (int i = 2; i <= 2; i++) {
-				base.waitForElement(getDocView_Analytics_NearDupe_Text(i));
-				String text = getDocView_Analytics_NearDupe_Text(i).getText();
-				System.out.println(text);
+			base.waitForElement(getDocView_Analytics_FamilyMember_Text(2));
+			String text = getDocView_Analytics_FamilyMember_Text(2).getText();
+			System.out.println(text);
 
-			}
-			for (int i = 1; i <= 1; i++) {
-				base.waitForElement(getDocView_Analytics_NearDupe_Doc(i));
-				getDocView_Analytics_NearDupe_Doc(i).waitAndClick(5);
-			}
+			base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(1));
+			getDocView_Analytics_FamilyMember_DocCheckBox(1).waitAndClick(10);
 
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
 			getDocView_ChildWindow_ActionButton().waitAndClick(5);
 
-			base.waitForElement(getDocView_NearDupeCodeSameAs());
-			getDocView_NearDupeCodeSameAs().waitAndClick(5);
+			base.waitForElement(getDocView_FamilyCodeSameAs());
+			getDocView_FamilyCodeSameAs().waitAndClick(5);
 
 			base.VerifyWarningMessage(
 					"Cannot perform Code Same As action, as the selected documents include one or more completed documents");
@@ -7702,11 +7703,12 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			Point p = getDocView_Analytics_NearDupeTab().getWebElement().getLocation();
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+			String parentWindowID = driver.getWebDriver().getWindowHandle();
 			getDocView_HdrAnalytics().ScrollTo();
 			base.waitForElement(getDocView_HdrAnalytics());
 			getDocView_HdrAnalytics().waitAndClick(10);
 
-			String parentWindowID = driver.getWebDriver().getWindowHandle();
+			
 
 			Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
 			for (String eachId : allWindowsId) {
@@ -7714,26 +7716,20 @@ public class DocViewPage {
 					driver.switchTo().window(eachId);
 				}
 			}
-			base.waitForElement(getDocView_Analytics_NearDupeTab());
-			getDocView_Analytics_NearDupeTab().waitAndClick(7);
-			for (int i = 2; i <= 2; i++) {
-				driver.waitForPageToBeReady();
-				base.waitForElement(getDocView_Analytics_NearDupe_Text(i));
-				String text = getDocView_Analytics_NearDupe_Text(i).getText();
-				System.out.println(text);
+			base.waitForElement(getDocView_Analytics_FamilyTab());
+			getDocView_Analytics_FamilyTab().waitAndClick(5);
+			base.waitForElement(getDocView_Analytics_FamilyMember_Text(2));
+			String text = getDocView_Analytics_FamilyMember_Text(2).getText();
+			System.out.println(text);
 
-			}
-
-			for (int i = 1; i <= 1; i++) {
-				base.waitForElement(getDocView_Analytics_NearDupe_Doc(i));
-				getDocView_Analytics_NearDupe_Doc(i).waitAndClick(5);
-			}
+			base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(1));
+			getDocView_Analytics_FamilyMember_DocCheckBox(1).waitAndClick(10);
 
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
 			getDocView_ChildWindow_ActionButton().waitAndClick(5);
 
-			base.waitForElement(getDocView_NearDupeCodeSameAs());
-			getDocView_NearDupeCodeSameAs().waitAndClick(5);
+			base.waitForElement(getDocView_FamilyCodeSameAs());
+			getDocView_FamilyCodeSameAs().waitAndClick(5);
 
 			driver.switchTo().window(parentWindowID);
 
@@ -7750,6 +7746,7 @@ public class DocViewPage {
 
 	}
 
+
 	/**
 	 * @Author Mohan Created on 15/09/2021
 	 * @Description To verify Meta data panel is displayed in the DocView Test Case
@@ -7760,17 +7757,17 @@ public class DocViewPage {
 
 		try {
 
-			for (int i = 3; i <= 3; i++) {
-				driver.waitForPageToBeReady();
-				base.waitForElement(getDocView_MiniDoc_Selectdoc(i));
-				getDocView_MiniDoc_Selectdoc(i).ScrollTo();
-				getDocView_MiniDoc_Selectdoc(i).waitAndClick(10);
-			}
+			
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_MiniDoc_Selectdoc(3));
+			getDocView_MiniDoc_Selectdoc(3).ScrollTo();
+			getDocView_MiniDoc_Selectdoc(3).waitAndClick(10);
+			
 
 			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
 			try {
-				getDocView_MetaDataIcon().getWebElement().isDisplayed();
+				getDocView_MetaDataIcon().isElementAvailable(5);
 			} catch (Exception e) {
 				driver.scrollingToBottomofAPage();
 			}
@@ -7778,17 +7775,10 @@ public class DocViewPage {
 			base.waitForElement(getDocView_MetaDataIcon());
 			getDocView_MetaDataIcon().waitAndClick(10);
 
-			driver.waitForPageToBeReady();
-			driver.scrollPageToTop();
-			try {
-				getDocView_MetaDataTotalFields().getWebElement().isDisplayed();
-
-			} catch (Exception e) {
-				driver.scrollingToBottomofAPage();
-			}
-			Thread.sleep(5000);
+			
 			base.waitForElement(getDocView_MetaDataTotalFields());
-			softAssertion.assertTrue(getDocView_MetaDataTotalFields().Displayed());
+			softAssertion.assertTrue(getDocView_MetaDataTotalFields().isElementAvailable(5));
+			softAssertion.assertAll();
 			base.passedStep("Details in Analytical and MetaData panel is displayed for selected document successfully");
 
 		} catch (Exception e) {
@@ -8115,7 +8105,7 @@ public class DocViewPage {
 		getDocView_Analytics_Conceptual_FirstDoc().waitAndClick(15);
 
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
-
+		base.waitForElement(getDocView_Analytics_Concept_Similar_CodeSameAs());
 		getDocView_Analytics_Concept_Similar_CodeSameAs().waitAndClick(15);
 
 		driver.switchTo().window(windowId);
@@ -8135,7 +8125,7 @@ public class DocViewPage {
 				return geDocView_Concept_CodeSameAsIcon().Displayed();
 			}
 		}), Input.wait30);
-		softAssertion.assertEquals(geDocView_Concept_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+		softAssertion.assertEquals(geDocView_Concept_CodeSameAsIcon().Displayed().booleanValue(), true);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -8145,7 +8135,6 @@ public class DocViewPage {
 
 		codeSameDocumentid = getConceptDocumentWhichHasCodeSameIcon().getText();
 
-		softAssertion.assertAll();
 	}
 
 	/**
