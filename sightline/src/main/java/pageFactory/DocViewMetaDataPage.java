@@ -525,6 +525,7 @@ public class DocViewMetaDataPage {
 			return driver.FindElementByXPath("//li[@id='liDocumentTypeDropDown']");
 		}
 		
+		
 	public DocViewMetaDataPage(Driver driver) {
 
 		this.driver = driver;
@@ -2726,6 +2727,46 @@ public class DocViewMetaDataPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occcured while verifying download button is not displayed." + e.getMessage());
+
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method to verify remark button is not displayed.
+	 */
+	public void verifyingRemarkButtonIsNotDisplayed() {
+		try {
+			driver.waitForPageToBeReady();
+			getNonAudioRemarkBtn().isElementAvailable(2);
+			if(getNonAudioRemarkBtn().Enabled()){
+				base.passedStep("Remark button is not displayed successfully");
+			}else {
+				base.failedStep("Remark button is displayed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying remark button is not displayed." + e.getMessage());
+
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method to verify remark button is displayed.
+	 */
+	public void verifyingRemarkButtonIsDisplayed() {
+		try {
+			driver.waitForPageToBeReady();
+			getNonAudioRemarkBtn().isElementAvailable(15);
+			if(getNonAudioRemarkBtn().isDisplayed()){
+				base.passedStep("Remark button is displayed successfully");
+			}else {
+				base.failedStep("Remark button is not displayed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying remark button is displayed." + e.getMessage());
 
 		}
 	}

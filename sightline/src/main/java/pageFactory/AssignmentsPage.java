@@ -1287,11 +1287,16 @@ public class AssignmentsPage {
 	    public Element getDocument_CommentsTextBox() {return driver.FindElementByXPath("//textarea[@id='1_textarea']");}
 		
 	    
-	    //Added by gopinath
+	    //Added by gopinath - 05/01/2022
 	    public Element getAssign_DownloadNativesToggleON() {
 			 return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowNativeDownloads']/following-sibling::i[@class='true']");
 	    }
-
+	    public Element getAssign_ViewImagesToggle() {
+			return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowProductionView']/following-sibling::i");
+		}
+		public Element getAssign_ViewImagesToggleOn() {
+			return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowProductionView']/following-sibling::i[@class='true']");
+		}
 		
 		//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i
 	public AssignmentsPage(Driver driver) {
@@ -8640,6 +8645,80 @@ public class AssignmentsPage {
 		}catch(Exception e) {
 			e.printStackTrace();
 			bc.failedStep("Exception occured while creating an assignment from bulk assign and allow native download if not selected"+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * Description : thsi methoad will create an assignment by disabling production/images toggle
+	 * @param assignmentName
+	 * @param codingForm
+	 */
+	public void createAssignmentWithImagesViewDisabled(String assignmentName,String codingForm) {
+		try {
+			bc.waitForElement(getAssgn_NewAssignmnet());
+			bc.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
+			getAssgn_NewAssignmnet().waitAndClick(5);
+			bc.waitForElement(getbulkassgnpopup());
+			assertion.assertTrue(getbulkassgnpopup().Displayed());
+			try {
+				bc.waitForElement(getContinueBulkAssign());
+				bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+				getContinueBulkAssign().waitAndClick(30);
+			} catch (Exception e) {
+				bc.waitForElement(getContinueBulkAssign());
+				bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+				getContinueBulkAssign().waitAndClick(30);
+			}
+			bc.waitForElement(getAssgn_TotalCount());
+			bc.waitForElement(getFinalizeButton());
+			bc.waitTillElemetToBeClickable(getFinalizeButton());
+			getFinalizeButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
+			getAssign_ViewImagesToggle().ScrollTo();
+			bc.waitTime(3);
+			if(getAssign_ViewImagesToggleOn().isElementAvailable(5)) {
+				getAssign_ViewImagesToggle().waitAndClick(5);
+			}
+			if(getAssign_ViewImagesToggleOn().isElementAvailable(5)==true) {
+				bc.failedStep("unable to turn on Productions/images button");
+			}
+			driver.scrollPageToTop();
+			try {
+				bc.waitForElement(getAssignmentName());
+				getAssignmentName().SendKeys(assignmentName);
+			} catch (Exception e) {
+				bc.waitForElement(getAssignmentName());
+				getAssignmentName().Clear();
+				getAssignmentName().SendKeys(assignmentName);
+			}
+			getParentAssignmentGroupName().Displayed();
+			bc.waitForElement(getSelectedClassification());
+			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+			bc.waitForElement(getAssignmentCodingFormDropDown());
+			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+			
+			bc.waitForElement(getAssignmentSaveButton());
+			bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
+			getAssignmentSaveButton().waitAndClick(5);
+			if (getAssignmentErrorText().isElementAvailable(1)) {
+			try {
+				if (getAssignmentErrorText().isDisplayed()) {
+					driver.waitForPageToBeReady();
+					bc.waitForElement(getAssignmentName());
+					getAssignmentName().SendKeys(assignmentName);
+					bc.waitForElement(getAssignmentSaveButton());
+					getAssignmentSaveButton().waitAndClick(5);
+				}
+			} catch (org.openqa.selenium.NoSuchElementException e) {
+				e.printStackTrace();
+			}}
+			System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
+			UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
+		}catch(Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while creating an assignment by disabling production/images toggle"+e.getLocalizedMessage());
 		}
 	}
   }

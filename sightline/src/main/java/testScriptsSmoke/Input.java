@@ -448,6 +448,9 @@ public class Input {
 	public static String TallySearch;
 	public static String TallyCN;
 	
+	//Added by Gopinath - 05/01/2021
+	public static String downloadDocID;
+	public static String translationDocId;
 
 	@BeforeSuite(alwaysRun = true)
 
@@ -897,6 +900,10 @@ public class Input {
 		
          TallySearch=testData.getTallySearch();
 		 TallyCN=testData.getTallyCN();
+		 
+		 //Added by Gopinath 05/01/2021
+		 downloadDocID = testData.getDownloadDocID();
+		 translationDocId = testData.getTranslationDocId();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

@@ -370,4 +370,8 @@
 		<conceptualDoc>ID00000001</conceptualDoc>
 		<TallySearch>null</TallySearch>
 		<TallyCN>auto</TallyCN>
+		
+		<!-- Added by Gopinath Created date - 05/01/2022 -->
+		<downloadDocID>ID00001069</downloadDocID>
+		<translationDocId>STC4_00000001</translationDocId>
 </TestData>
