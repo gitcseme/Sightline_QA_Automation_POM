@@ -10134,7 +10134,7 @@ public class DocViewPage {
 		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
 		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
-		base.waitForElement(getCodeCompleteIconThreadTab());
+//		base.waitForElement(getCodeCompleteIconThreadTab());
 
 		for (int i = 2; i <= 2; i++) {
 			try {
