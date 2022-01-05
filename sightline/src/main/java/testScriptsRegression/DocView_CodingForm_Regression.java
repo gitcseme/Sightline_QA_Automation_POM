@@ -7558,7 +7558,7 @@ public class DocView_CodingForm_Regression {
 	 *                by applying coding stamp after code same as this action
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 171)
+	@Test(enabled = false, groups = { "regression" }, priority = 171)
 	public void validateCheckMarkIconForCodingStamp() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -7607,7 +7607,7 @@ public class DocView_CodingForm_Regression {
 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 172)
+	@Test(enabled = false, groups = { "regression" }, priority = 172)
 	public void validateCheckMarkIconForComplete() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -7647,6 +7647,144 @@ public class DocView_CodingForm_Regression {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author : Baskar date:05/01/22Modified date: NA Modified by: Baskar
+	 * @Description : To verify that once document is completed, 
+	 *                coding stamp and code same as last button should not be clickable.
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 173)
+	public void validateCodeSameAsLastShouldDisable() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion =new SoftAssert();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-51184");
+		baseClass.stepInfo("To verify that once document is completed, coding stamp "
+				+ "and code same as last button should not be clickable.");
+		String assignName = "Assignment" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validate code same as last button should not clickable
+		String prnDoc=docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.editCodingForm(comment);
+		docViewPage.completeButton();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDociD(prnDoc));
+		docViewPage.getDociD(prnDoc).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		boolean flag=docViewPage.getCodeSamelastDisable().GetAttribute("class").contains("completed-overlay");
+        softAssertion.assertTrue(flag);
+		softAssertion.assertAll();
+		baseClass.passedStep("For completed docs code same as Last button is disabled");
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date:05/01/21 Modified date: NA Modified by: Baskar
+	 * @Description : [TC reference RPMXCON-51215] Verify on click of 'Save and Next' button 
+	 *                coding form should be validated as per the customized coding form using 
+	 *                all objects along with all condition and Radio Item in context of security group
+	 */
+	
+	@Test(enabled = true,groups = { "regression" }, priority = 174)
+	public void validateUsingAllObjectRadioItem() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-52093");
+	    baseClass.stepInfo("[TC reference RPMXCON-51215] Verify on click of 'Save and Next' "
+	    		+ "button coding form should be validated as per the customized "
+	    		+ "coding form using all objects along with all condition and Radio Item in context of security group");
+	   
+	    codingForm = new CodingForm(driver);
+	    sessionSearch = new SessionSearch(driver);
+		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
+		docViewPage = new DocViewPage(driver);
+		softAssertion=new SoftAssert();
+		
+	    String cfName = "CF"+Utility.dynamicNameAppender();
+	    String tagName = "tag"+Utility.dynamicNameAppender();
+		
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
+	 	
+	 	 // create tag
+		tagsAndFoldersPage.CreateTag(tagName,"Default Security Group");
+		
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	driver.waitForPageToBeReady();
+	 	codingForm.addNewCodingFormButton();
+	 	baseClass.waitForElement(codingForm.getCodingForm_Tag(tagName));
+	 	codingForm.getCodingForm_Tag(tagName).waitAndClick(10);
+	 	codingForm.firstCheckBox(Input.comments);
+	 	codingForm.firstCheckBox(Input.metaData);
+	 	codingForm.specialObjectsBox("staticText");
+	 	codingForm.specialObjectsBox("radio");
+	 	codingForm.specialObjectsBox("check");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.getCF_TagTypes(0).selectFromDropdown().selectByVisibleText("Radio Item");
+	 	driver.waitForPageToBeReady();
+	 	codingForm.getCF_RadioGroup(0).selectFromDropdown().selectByIndex(1);
+	 	codingForm.selectDefaultActions(1, Input.hidden);
+	 	codingForm.selectDefaultActions(2, Input.notSelectable);
+	 	codingForm.selectDefaultActions(4, Input.optional);
+	 	codingForm.getCodingForm_ErrorMsg(4).SendKeys(Input.errorMsg);
+	 	codingForm.getCodingForm_HelpMsg(4).SendKeys(Input.helpText);
+	 	codingForm.selectDefaultActions(5, Input.required);
+	 	driver.waitForPageToBeReady();
+	 	driver.scrollPageToTop();
+	 	codingForm.addLogicOptionWithIndex(1, 1, Input.select, Input.thisHidden);
+	 	codingForm.addLogicOptionWithIndex(2, 1, Input.notSelect, Input.thisReadOnly);
+	 	codingForm.addLogicOptionWithIndexWithoutIncreace(4, 1, Input.select, Input.thisOptional);
+	 	codingForm.addLogicOptionWithIndexWithoutIncreace(5, 1, Input.notSelect, Input.thisRequired);
+	 	codingForm.passingCodingFormName(cfName);
+	 	codingForm.saveCodingForm();
+	 	baseClass.stepInfo("Coding form created all object along with radio item");
+		
+		// Assign to security group
+		codingForm.assignCodingFormToSG(cfName);
+		baseClass.stepInfo("Coding form assigned to security group");
+		
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("user landed on the docview page");
+
+		boolean falg=docViewPage.selectCodingFormCheckBoxes(tagName).Selected();
+		softAssertion.assertFalse(falg);
+		docViewPage.codingFormSaveAndNext();
+		docViewPage.errorMessage();
+		softAssertion.assertAll();
+		baseClass.passedStep("Error message validation displayed for required Radio tag using Save and Next");
+		
+		// logout
+		loginPage.logout();
+	}
+	
 	
 	
 	@DataProvider(name = "paToRmuRev")

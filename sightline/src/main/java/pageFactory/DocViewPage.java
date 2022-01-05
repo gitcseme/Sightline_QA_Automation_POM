@@ -2483,7 +2483,12 @@ public class DocViewPage {
 	public Element getDocView_Analytics_ThreadChildDocId() {
 		return driver.FindElementByXPath("//tr[@id='threadedDocumentIdRow']//th[4]");
 	}
-
+	public Element SelectCodingFormCheckBoxes(String value) {
+		return driver.FindElementByXPath("//span[text()='" + value + "']/ancestor::div/label");
+	}
+	public Element getCodeSamelastDisable() {
+		return driver.FindElementByXPath("//ul[@id='lastCode']//li//img[@class='completed-overlay']");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
