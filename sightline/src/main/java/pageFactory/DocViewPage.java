@@ -2495,7 +2495,31 @@ public class DocViewPage {
 	public Element getDOcViewDoc_DownloadOption(String TypeOfDownloadOption) {
 			return driver.FindElementByXPath("//ul[@id='documentTypeDropDown']/li/a[contains(text(),'"+TypeOfDownloadOption+"')]");
 		}
+  
+	//Added by Vijaya.Rani
+	public Element getDocView_Analytics_ConceptualFolderAction() {
+		return driver.FindElementById("liConceptualBulkFolder");
+	}
 
+	public Element getDocView_Analytics_ThreadFirstDocId() {
+		return driver.FindElementByXPath("//tr[@id='threadedDocumentIdRow']//th[3]");
+	}
+	
+	public Element getDocView_Analytics_ThreadChildDocId() {
+		return driver.FindElementByXPath("//tr[@id='threadedDocumentIdRow']//th[4]");
+	}
+	
+	public Element SelectCodingFormCheckBoxes(String value) {
+		return driver.FindElementByXPath("//span[text()='" + value + "']/ancestor::div/label");
+	}
+	
+	public Element getCodeSamelastDisable() {
+		return driver.FindElementByXPath("//ul[@id='lastCode']//li//img[@class='completed-overlay']");
+	}
+	
+	public Element getDocView_MiniDocListDocs(int rowno) {
+		return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[" + rowno + "]/td[1]/label/i ");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -19041,4 +19065,253 @@ public class DocViewPage {
 		}
 	}
 	
+	/**
+	 * @author Vijaya.rani 04/01/22 NA Modified date: NA Modified by:NA
+	 * @description To Perform ThreadMap View Document
+	 */
+	public void performThreadMapViewDocument() {
+
+		driver.waitForPageToBeReady();
+		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+		driver.waitForPageToBeReady();
+		Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
+		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+
+		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+
+		for (int i = 2; i <= 2; i++) {
+			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
+			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
+		}
+		
+		base.waitForElement(getDocView_Analytics_ThreadFirstDocId());
+		String docId1=getDocView_Analytics_ThreadChildDocId().getText();
+		
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+
+		base.waitForElement(getDocView_Analytics_Thread_ViewDocument());
+		getDocView_Analytics_Thread_ViewDocument().waitAndClick(10);
+		
+		base.waitForElement(getDocView_CurrentDocId());
+		String docId2=getDocView_CurrentDocId().getText();
+		
+		softAssertion.assertEquals(docId1, docId2);
+		base.passedStep("Selected document is display in Doc View");
+	}
+
+	/**
+	 * @author Vijaya.rani 04/01/22 NA Modified date: NA Modified by:NA
+	 * @description To Perform ThreadMap View Document
+	 */
+	public void performThreadMapViewDocumentInChildWindow() {
+
+		driver.waitForPageToBeReady();
+		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+		driver.waitForPageToBeReady();
+		Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
+		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+
+		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+
+		for (int i = 3; i <= 3; i++) {
+			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
+			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
+		}
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+
+		base.waitForElement(getDocView_Analytics_Thread_ViewDocument());
+		getDocView_Analytics_Thread_ViewDocument().waitAndClick(10);
+		
+		
+	}
+	
+	/**
+	 * @author Vijaya.Rani date: 05/01/2022 Modified date: Modified by:
+	 * 
+	 * @Description:Doc view mini doc list code same as to
+	 */
+
+	public void docViewMiniDocListCodeSameAs() throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		getDocView_MiniDocList().Visible();
+
+		for (int i = 1; i <= 5; i++) {
+			base.waitForElement(getDocView_MiniDocListDocs(i));
+			getDocView_MiniDocListDocs(i).waitAndClick(5);
+		}
+		base.waitForElement(getDocView_Mini_ActionButton());
+		base.waitTillElemetToBeClickable(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeAsSameAction());
+		getDocView__ChildWindow_Mini_CodeAsSameAction().waitAndClick(5);
+
+		base.VerifySuccessMessage("Code same performed successfully.");
+
+		// edit Coding Form
+		editCodingFormSave();
+		base.passedStep("Selected Docs CodeSame And Save Successfully");
+		
+		base.passedStep("Chain link  is Not displayed after performing code same as action And Save");
+		
+	}
+	
+	/**
+	 * @author Vijaya.Rani date: 05/01/2022 Modified date: Modified by:
+	 * @throws AWTException 
+	 * 
+	 * @Description:Doc view mini doc list code same as to
+	 */
+
+	public void docViewMiniDocListCodeSameAsAndComplete(String colourName, String colour) throws InterruptedException, AWTException {
+
+		driver.waitForPageToBeReady();
+		getDocView_MiniDocList().Visible();
+
+		for (int i = 1; i <= 2; i++) {
+			base.waitForElement(getDocView_MiniDocListDocs(i));
+			getDocView_MiniDocListDocs(i).waitAndClick(5);
+		}
+		base.waitForElement(getDocView_Mini_ActionButton());
+		base.waitTillElemetToBeClickable(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeAsSameAction());
+		getDocView__ChildWindow_Mini_CodeAsSameAction().waitAndClick(5);
+
+		base.VerifySuccessMessage("Code same performed successfully.");
+		editCodingFormComplete();
+		
+		base.waitForElement(getDocView_CurrentDocId());
+		String docId = getDocView_CurrentDocId().getText();
+		System.out.println(docId);
+		base.stepInfo("Next document of the main viewing document from the mini doc list is viewed in doc view panel"+ docId);
+		
+		driver.waitForPageToBeReady();
+		getDocView_MiniDocList().Visible();
+
+		for (int i = 3; i <= 3; i++) {
+			base.waitForElement(getDocView_Select_MiniDocList_Docs(i));
+			getDocView_Select_MiniDocList_Docs(i).waitAndClick(5);
+		}
+		base.waitForElement(getCodeSameAsLast());
+		base.waitTillElemetToBeClickable(getCodeSameAsLast());
+		getCodeSameAsLast().waitAndClick(5);
+		
+		base.VerifySuccessMessage("Coded as per the coding form for the previous document");
+		
+		driver.waitForPageToBeReady();
+		getDocView_MiniDocList().Visible();
+
+		for (int i = 4; i <= 5; i++) {
+			base.waitForElement(getDocView_MiniDocListDocs(i));
+			getDocView_MiniDocListDocs(i).waitAndClick(5);
+		}
+		base.waitForElement(getDocView_Mini_ActionButton());
+		base.waitTillElemetToBeClickable(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeAsSameAction());
+		getDocView__ChildWindow_Mini_CodeAsSameAction().waitAndClick(5);
+
+		base.VerifySuccessMessage("Code same performed successfully.");
+		
+	    stampColourSelection(colourName, colour);
+	    base.waitForElement(getStampBlueColour());
+		base.waitTillElemetToBeClickable(getStampBlueColour());
+		getStampBlueColour().waitAndClick(5);
+	    
+		editCodingFormComplete();
+		
+		base.waitForElement(getDocView_CurrentDocId());
+		String docId1 = getDocView_CurrentDocId().getText();
+		System.out.println(docId1);
+		base.stepInfo("Next document of the main viewing document from the mini doc list is viewed in doc view panel"+ docId1);
+		
+		base.waitForElement(getCodeSameAsLast());
+		base.waitTillElemetToBeClickable(getCodeSameAsLast());
+		getCodeSameAsLast().waitAndClick(5);
+		base.passedStep("Document is completed same as the preceding document Successfully");
+
+	}
+
+	/**
+	 * @author Vijaya.Rani date: 05/01/2022 Modified date: Modified by:
+	 * @throws AWTException 
+	 * 
+	 * @Description:Doc view mini doc list code same as to
+	 */
+
+	public void docViewMiniDocListCodeSameAsAndCompleteForReviewer() throws InterruptedException, AWTException {
+
+		driver.waitForPageToBeReady();
+		getDocView_MiniDocList().Visible();
+
+		for (int i = 1; i <= 2; i++) {
+			base.waitForElement(getDocView_MiniDocListDocs(i));
+			getDocView_MiniDocListDocs(i).waitAndClick(5);
+		}
+		base.waitForElement(getDocView_Mini_ActionButton());
+		base.waitTillElemetToBeClickable(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeAsSameAction());
+		getDocView__ChildWindow_Mini_CodeAsSameAction().waitAndClick(5);
+
+		base.VerifySuccessMessage("Code same performed successfully.");
+		editCodingFormComplete();
+		
+		base.waitForElement(getDocView_CurrentDocId());
+		String docId = getDocView_CurrentDocId().getText();
+		System.out.println(docId);
+		base.stepInfo("Next document of the main viewing document from the mini doc list is viewed in doc view panel"+ docId);
+		
+		driver.waitForPageToBeReady();
+		getDocView_MiniDocList().Visible();
+
+		for (int i = 3; i <= 3; i++) {
+			base.waitForElement(getDocView_Select_MiniDocList_Docs(i));
+			getDocView_Select_MiniDocList_Docs(i).waitAndClick(5);
+		}
+		base.waitForElement(getCodeSameAsLast());
+		base.waitTillElemetToBeClickable(getCodeSameAsLast());
+		getCodeSameAsLast().waitAndClick(5);
+		
+		base.VerifySuccessMessage("Coded as per the coding form for the previous document");
+		
+		driver.waitForPageToBeReady();
+		getDocView_MiniDocList().Visible();
+
+		for (int i = 4; i <= 5; i++) {
+			base.waitForElement(getDocView_MiniDocListDocs(i));
+			getDocView_MiniDocListDocs(i).waitAndClick(5);
+		}
+		base.waitForElement(getDocView_Mini_ActionButton());
+		base.waitTillElemetToBeClickable(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeAsSameAction());
+		getDocView__ChildWindow_Mini_CodeAsSameAction().waitAndClick(5);
+
+		base.VerifySuccessMessage("Code same performed successfully.");
+		
+	    base.waitForElement(getStampBlueColour());
+		base.waitTillElemetToBeClickable(getStampBlueColour());
+		getStampBlueColour().waitAndClick(5);
+	    
+		editCodingFormComplete();
+		
+		base.waitForElement(getDocView_CurrentDocId());
+		String docId1 = getDocView_CurrentDocId().getText();
+		System.out.println(docId1);
+		base.stepInfo("Next document of the main viewing document from the mini doc list is viewed in doc view panel"+ docId1);
+		
+		base.waitForElement(getCodeSameAsLast());
+		base.waitTillElemetToBeClickable(getCodeSameAsLast());
+		getCodeSameAsLast().waitAndClick(5);
+		base.passedStep("Document is completed same as the preceding document Successfully");
+
+	}
 }

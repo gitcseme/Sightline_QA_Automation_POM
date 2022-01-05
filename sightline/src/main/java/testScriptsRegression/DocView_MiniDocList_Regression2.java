@@ -547,6 +547,117 @@ public class DocView_MiniDocList_Regression2 {
 			}
 	}
 		
+	/**
+	 * Author : Vijaya.Rani date: 05/01/22 NA Modified date: NA Modified by:NA
+	 * Description: To verify that user can select multiple documents from the 'Mini
+	 * Doc List' and marked it as 'Code Same as' and then save.'RPMXCON-50945'
+	 * Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	public void verifySelectmultipleDocsMiniDocListCodeSameAndSave() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50945");
+		baseClass.stepInfo(
+				"To verify that user can select multiple documents from the 'Mini Doc List' and marked it as 'Code Same as' and then save.");
+		docViewPage = new DocViewPage(driver);
+
+		// Login as a Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Basic Search is done successfully");
+		miniDocListpage.viewInDocView();
+
+		docViewPage.docViewMiniDocListCodeSameAs();
+
+		loginPage.logout();
+
+		// Login as a Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Basic Search is done successfully");
+		miniDocListpage.viewInDocView();
+
+		docViewPage.docViewMiniDocListCodeSameAs();
+
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 05/01/22 NA Modified date: NA Modified by:NA
+	 * Description:Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
+	 * preceding document is completed by selecting 'Code same as this' action from
+	 * mini doc list.'RPMXCON-51069' Sprint : 9
+	 * 
+	 * @param fieldValue
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	public void verifyCodeSameAsThisInPrecedingDocMiniDocList() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51069");
+		baseClass.stepInfo(
+				"Verify when RMU/Reviewer clicks Complete Same as Last Doc, when preceding document is completed by selecting 'Code same as this' action from mini doc list.");
+
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		reusableDocViewPage = new ReusableDocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String colour = "BLUE";
+		String colourName = "colourName" + Utility.dynamicNameAppender();
+
+		// Login as a Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		docViewPage.docViewMiniDocListCodeSameAsAndComplete(colourName, colour);
+
+		loginPage.logout();
+
+		// Login as a Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		docViewPage.docViewMiniDocListCodeSameAsAndCompleteForReviewer();
+
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
