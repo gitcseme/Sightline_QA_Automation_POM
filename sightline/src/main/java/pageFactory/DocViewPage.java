@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Robot;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,9 +14,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -2470,6 +2473,28 @@ public class DocViewPage {
 		return driver
 				.FindElementByXPath("(//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//p)[last()]");
 	}
+	
+	//Added by Gopinath - 04/01/2022
+	public ElementCollection getTranslationDropdownOptions() {
+		return driver.FindElementsByXPath("//ul[@id='Tra-dropDown']//a");
+	}
+	public Element getTranslationDropdown() {
+		return driver.FindElementByXPath("//ul[@id='Tra-dropDown']");
+	}
+	public ElementCollection getHighlightedKeywords() {
+		return driver.FindElementsByCssSelector("rect[style*='fill'][style*='rgb(0, 255, 255)']");
+	}
+	public Element getDocView_MiniDoc_SelectDOcId(String DocId) {
+		return driver.FindElementByXPath(".//*[@id='SearchDataTable']/tbody/tr/td[text()='"+DocId+"']/..");
+	}
+
+	public Element getDocViewDonload_Icon() {
+			return driver.FindElementByXPath("(//ul[@class='nav navbar-nav col-md-12']//li[@id='liDocumentTypeDropDown'])[1]/a/span");
+		}
+	
+	public Element getDOcViewDoc_DownloadOption(String TypeOfDownloadOption) {
+			return driver.FindElementByXPath("//ul[@id='documentTypeDropDown']/li/a[contains(text(),'"+TypeOfDownloadOption+"')]");
+		}
 
 	public DocViewPage(Driver driver) {
 
@@ -18841,4 +18866,179 @@ public class DocViewPage {
 		}
 		softAssertion.assertAll();
 	}
+	
+	
+	/**
+	 * @author Gopinath.
+	 * @description : This method to click on translation from translations drop down
+	 */
+	public void clickOnTranslationFromTranslationsDropdown() {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getTranslationDropdown().isElementAvailable(10);
+			if(getTranslationDropdown().isDisplayed()) {
+				base.passedStep("Translation drop down is displayed successfully");
+			}else {
+				base.failedMessage("Translation drop down is not displayed");
+			}
+			List<WebElement> options = getTranslationDropdownOptions().FindWebElements();
+			options.get(0).click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while click on translation from translations drop down" + e.getMessage());
+
+		}
+	}
+	
+	/**
+	 * @author Gopinath.
+	 * @description : This method to click on translation tab.
+	 */
+	public void clickOnTranslationTab() {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getDocView_TranslationTab().isElementAvailable(10);
+			if(getDocView_TranslationTab().isDisplayed()) {
+				base.passedStep("Translation tab is displayed successfully");
+			}else {
+				base.failedMessage("Translation tab is not displayed");
+			}
+			getDocView_TranslationTab().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while click on translation tab." + e.getMessage());
+
+		}
+	}
+	
+	/**
+	 * @author Gopinath.
+	 * @description : This method to verify keyword highlighted on doc view.
+	 */
+	public void verifyKeywordHighlightedOnDocView() {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			List<WebElement> keyword = getHighlightedKeywords().FindWebElements();
+			System.out.println(keyword.get(0).getCssValue("fill"));
+			String color = keyword.get(0).getCssValue("fill");
+			String hex = org.openqa.selenium.support.Color.fromString(color).asHex();
+			if(keyword.get(0).isDisplayed() &&(hex.contentEquals("#00ffff"))) {
+				base.passedStep("Keyword highlighted on doc view successfully");
+				base.passedStep("Keyword highlighted on doc view with expected colour");
+			}else {
+				base.failedStep("Keyword not highlighted on doc view ");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while click on translation tab." + e.getMessage());
+
+		}
+	}
+	
+	/**
+	 * @author Gopinath.
+	 * @description : This method to complete document.
+	 */
+	public void completeDocument() {
+		try {
+			driver.scrollPageToTop();
+			getCompleteDocBtn().isElementAvailable(15);
+			getCompleteDocBtn().waitAndClick(20);
+			base.VerifySuccessMessage("Document completed successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while completing document." + e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath.
+	 * @description : This method to verify image tab is not displayed.
+	 */
+	public void verifyImageTabIsNotDisplyed() {
+		try {
+			driver.waitForPageToBeReady();
+			if (!getselectDocInImageTab().isDisplayed()){
+				base.passedStep("Image tab is not Displayed on docview panel");
+				
+			} else {
+				base.failedStep("Image tab is displayed in docview panel after disable productions/images toggle button while creating assignment");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verify image tab is not displayed." + e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * Description this method will select the document from mini doc list and download in all formats
+	 *               and verify files are downloaded or not
+	 * @param DocId
+	 */
+	public void selectDocAndDownloadAllFormats(String DocId) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_MiniDoc_SelectDOcId(DocId));
+			getDocView_MiniDoc_SelectDOcId(DocId).waitAndClick(5);
+	
+			base.waitForElement(getDocViewSelectedDocId());
+			if (!getDocViewSelectedDocId().getText().trim().equals(DocId)) {
+				base.failedStep("selected document not found");
+			}
+	
+			Map<String, String> formatAndfileNames = new HashMap<String, String>();
+			formatAndfileNames.put("Native 1", "tif");
+			formatAndfileNames.put("PDF 1", "pdf");
+			formatAndfileNames.put("TIFF 1", "tmp");
+			formatAndfileNames.put("Txt 1", "txt");
+			Set<String> forMatKey = formatAndfileNames.keySet();
+			base.waitForElement(getDocViewDonload_Icon());
+			if (getDocViewDonload_Icon().isDisplayed()) {
+				base.passedStep("Download button is displayed");
+			} else {
+				base.failedStep("Donload button is not displyed");
+			}
+			for (String Option : forMatKey) {
+				base.waitTime(5);
+				base.waitForElement(getDocViewDonload_Icon());
+				getDocViewDonload_Icon().waitAndClick(5);
+				base.waitTime(5);
+				base.waitForElement(getDOcViewDoc_DownloadOption(Option));
+				Actions ac = new Actions(driver.getWebDriver());
+				ac.moveToElement(getDOcViewDoc_DownloadOption(Option).getWebElement()).click().perform();
+	
+			}
+			File file = new File("C:\\BatchPrintFiles\\downloads");
+			File[] listoffiles = file.listFiles();
+			for (String key : forMatKey) {
+				String fileName = formatAndfileNames.get(key);
+				boolean flag = false;
+	
+				for (File eachfile : listoffiles) {
+	
+					if (eachfile.getName().contains(fileName)) {
+						System.out.println(key + " is downloaded for selected document");
+						base.stepInfo(key + " is downloaded for selected document");
+						eachfile.delete();
+						flag = true;
+						break;
+					}
+	
+				}
+				if (flag == false) {
+					System.out.println("unable to download" + key + " for selected document");
+					base.stepInfo("failed : unable to download" + key + " for selected document");
+				}
+	
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while elect the document from mini doc list and download in all formats"+e.getLocalizedMessage());
+		}
+	}
+	
 }

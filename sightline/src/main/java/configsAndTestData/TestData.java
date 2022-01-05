@@ -362,4 +362,8 @@ public class TestData {
 		//Added by jayanthi
 		public String TallySearch;
 		public String TallyCN;
+
+		//Added by Gopinath - 05/01/2021
+		public String downloadDocID;
+		public String translationDocId;
 }
