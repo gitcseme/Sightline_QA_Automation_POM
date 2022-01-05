@@ -260,7 +260,6 @@ public class DocView_Sprint2_Regression {
 //	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
 
 	public void verifyBullhornNotifications() throws Exception {
-
 // Selecting Document from Session search
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -275,7 +274,8 @@ public class DocView_Sprint2_Regression {
 				return docViewRedact.printIcon().Visible() && docViewRedact.printIcon().Enabled();
 			}
 		}), Input.wait30);
-		docViewRedact.printIcon().waitAndClick(20);
+		baseClass.waitTillElemetToBeClickable(docViewRedact.printIcon());
+		docViewRedact.printIcon().waitAndClick(30);
 
 		baseClass.VerifySuccessMessage(
 				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
@@ -297,7 +297,7 @@ public class DocView_Sprint2_Regression {
 		Thread.sleep(4000);
 // Thread sleep has been added to validate the next page url with expected
 		String urlBackground = driver.getUrl();
-		assertEquals(urlBackground, "https://sightlinept.consilio.com/Background/BackgroundTask");
+		assertEquals(urlBackground, "https://sightlineuat.consiliotest.com/Background/BackgroundTask");
 		baseClass.passedStep("Navigated to document download page");
 
 	}
@@ -356,8 +356,7 @@ public class DocView_Sprint2_Regression {
 	 * for 52194, Delete the performed text redaction
 	 */
 
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
-
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
 	public void textRedactionAsRMU() throws Exception {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -378,14 +377,13 @@ public class DocView_Sprint2_Regression {
 		actions.click();
 		actions.build().perform();
 		baseClass.stepInfo("Navigated to Next Redaction Successfully");
-//		if (docViewRedact.deleteClick().Displayed() && docViewRedact.deleteClick().Displayed() ) 		
-		try {
+		if (docViewRedact.deleteClick().isDisplayed()) {	
 			actions.moveToElement(docViewRedact.deleteClick().getWebElement());
 			actions.click();
 			actions.build().perform();
 			baseClass
 					.passedStep("Text redaction has been performed by RMU user and Redaction Tag Deleted successfully");
-		} catch (Exception e) {
+		} else{
 			baseClass.passedStep("Text redaction has been performed by RMU user");
 		}
 	}
@@ -887,7 +885,7 @@ else {
 	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 51626
 	 * Verifying Remarks and colour highliting as RMU DocView- sprint 3
 	 */
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
 	public void VerifySavedTextRemark() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -904,7 +902,7 @@ else {
 		Thread.sleep(4000);
 //Thread sleep added for the page to adjust resolution		
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
-				.moveByOffset(20, 10).release().build().perform();
+				.moveByOffset(30, 20).release().build().perform();
 		baseClass.stepInfo("text for remarks has been selected");
 		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
 		actions.click().build().perform();
@@ -1159,9 +1157,10 @@ else {
 			actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 50, 40).click();
 			actions.build().perform();
 			baseClass.stepInfo("The drawn redaction has been selected");
+			docViewRedact.clickingRemarksIcon();
 			actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
 			actions.click().build().perform();
-			if(docViewRedact.addRemarksTextArea().Enabled()) {
+			if(docViewRedact.addRemarksTextArea().Enabled() == true) {
 			actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
 			actions.click();
 			actions.sendKeys("Remark by RMU");
@@ -1179,7 +1178,7 @@ else {
 	 * Verifying doc is highlighted using this page and highlight is deleted
 	 * successfully while refreshing page DocView- sprint 4
 	 */
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 28)
 	public void verifyHighlitingInDocView() throws Exception {
 		Robot robot = new Robot();
 		Actions actions = new Actions(driver.getWebDriver());
@@ -1195,6 +1194,7 @@ else {
 		robot.keyPress(KeyEvent.VK_F5);
 		robot.keyRelease(KeyEvent.VK_F5);
 		driver.waitForPageToBeReady();
+		Thread.sleep(2000);
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).click();
 		actions.build().perform();
 		if (docViewRedact.highliteDeleteBtn().Displayed() && docViewRedact.highliteDeleteBtn().Enabled()) {
@@ -1210,10 +1210,10 @@ else {
 		driver.waitForPageToBeReady();
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).click();
 		actions.build().perform();
-		try {
+		if(docViewRedact.highliteDeleteBtn().isElementAvailable(5) == false) {
 			docViewRedact.highliteDeleteBtn().Click();
 			baseClass.failedStep("the highlite has not been deleted after refresh");
-		} catch (Exception e) {
+		} else{
 			baseClass.passedStep("The highlite is not present on the page after deleting and refreshing");
 
 		}
@@ -1225,9 +1225,8 @@ else {
 	 * Verifying remarks alone is deleted when remarks associated with Rectangular
 	 * Redaction DocView/Redactions- sprint 4
 	 */
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 29)
 	public void textRemarksWithTextInRectangleRedaction() throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52213");
@@ -1237,11 +1236,11 @@ else {
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Documents viewd in DocView");
-		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 80);
+		docViewRedact.redactRectangleUsingOffset(0, 0, 50, 40);
 		docViewRedact.selectingRedactionTag("Default Redaction Tag");
 		baseClass.stepInfo("Rectangle redaction drawn in selected document without text and redaction Tag selected");
 		docViewRedact.clickingRemarksIcon();
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 50, 40).click();
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 25, 20).click();
 		actions.build().perform();
 		baseClass.stepInfo("The drawn redaction has been selected");
 		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
@@ -1252,7 +1251,7 @@ else {
 		actions.build().perform();
 		actions.moveToElement(docViewRedact.saveRemarksBtn().getWebElement());
 		actions.click().build().perform();
-		wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.deleteRemarksBtn().getWebElement()));
+		baseClass.waitTillElemetToBeClickable(docViewRedact.deleteRemarksBtn());
 		docViewRedact.deleteRemarksBtn().Click();
 		docViewRedact.confirmDeleteRemarksBtn().Click();
 		baseClass.passedStep("Verified Remarks and delete using RMU without deleting the Rectangular redaction");
@@ -1301,7 +1300,7 @@ else {
 	 * Id:RPMXCON-51008 Verify thumbnails in Doc View From assignments page
 	 */
 
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
 	public void checkingThumbnailsIconFromAssignment() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -1314,7 +1313,7 @@ else {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.docIdThumbnails);
 		sessionSearch.bulkAssign();
-		assignmentspage.createAssignmentNew(assignmentName, Input.codeFormName);
+		assignmentspage.assignmentCreation(assignmentName, Input.codingFormName);		
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.clickingThumbnailIcon();
@@ -1595,8 +1594,7 @@ else {
 		baseClass.stepInfo("The Progress bar is Changed Successfully");
 
 		}
-
-
+	
 	
 
 	@AfterMethod(alwaysRun = true)
