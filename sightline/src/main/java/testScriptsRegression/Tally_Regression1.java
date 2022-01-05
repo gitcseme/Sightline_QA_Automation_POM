@@ -32,6 +32,7 @@ public class Tally_Regression1 {
 	SessionSearch search;
 	BaseClass bc;
 	String hitsCountPA;
+	int hitsCount;
 	List<String> exp1 =Arrays.asList("2", "Gavin","Jaydeep","Owen","P Allen","Sai","Tyler","ViKas Mestry");
     List<String> exp2=Arrays.asList("Document", "Microsoft Word Document", "MS Excel Worksheet/Template (OLE)", "MS Outlook Message");
 	List<String> exp3=Arrays.asList("","gouri.dhavalikar@symphonyteleca.com", "Jaydeep Gatlewar", "Jaydeep Gatlewar@symphonyteleca.com","Sai Theodare", "Sai.Theodare@symphonyteleca.com","ViKas Mestry","Vikas.Mestry@symphonyteleca.com","Vishal.Parikh@symphonyteleca.com");
@@ -39,7 +40,7 @@ public class Tally_Regression1 {
 	String SearchName="Tally"+Utility.dynamicNameAppender();
 	String  assgnName="Tally"+Utility.dynamicNameAppender();
 	String  folderName="Tally"+Utility.dynamicNameAppender();
-	String securityGrpName="Tally"+Utility.dynamicNameAppender(); 
+	String securityGrpName="Tally1287760";      //"Tally"+Utility.dynamicNameAppender(); 
 	String projectName=Input.projectName;
 	String[] sourceName_RMU = { assgnName, folderName,SearchName,"Default Security Group"};
 	String[] sourceName_PA = {"Regression_AllDataset_Consilio1", folderName,SearchName,"Default Security Group" };
@@ -48,8 +49,8 @@ public class Tally_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -76,6 +77,7 @@ public class Tally_Regression1 {
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		securityPage.AddSecurityGroup(securityGrpName);
 		ss.basicContentSearch(Input.TallySearch);
+		hitsCount=Integer.parseInt(ss.verifyPureHitsCount());
 		ss.bulkRelease(securityGrpName);
 		bc.stepInfo("Created a security group" + securityGrpName + "Bulk Realese is done");
 		lp.logout();
@@ -325,7 +327,50 @@ public class Tally_Regression1 {
 								+ "fields for Searches if Tally by metadata is " + metadata[i]);
 			}
 		}
-		//
+
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+		@Test( groups = { "regression" }, priority = 8)
+		public void verifyTallyDocsCount_SG() throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56205");
+			bc.stepInfo("To Verify Admin/RMU will have a report in Tally with document counts by"
+					+ " metadata fields for security groups.");
+			String[] metadata = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" };
+			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+			bc.stepInfo("Logged in as PA");
+			SoftAssert softAssertion = new SoftAssert();
+			TallyPage tp = new TallyPage(driver);
+			tp.navigateTo_Tallypage();
+			tp.SelectSource_SecurityGroup(securityGrpName);
+			for (int i = 0; i < metadata.length; i++) {
+				bc.stepInfo("**To Verify Tally Report if Tally By MetaData as-" + metadata[i] + "**");
+				tp.selectTallyByMetaDataField(metadata[i]);
+				tp.validateMetaDataFieldName(metadata[i]);
+				if (i == 0) {
+					softAssertion.assertEquals(exp1, tp.verifyTallyChart());
+					softAssertion.assertEquals(hitsCount, tp.verifyDocCountBarChart());
+				}
+				if (i == 1) {
+					softAssertion.assertEquals(exp2, tp.verifyTallyChart());
+					softAssertion.assertEquals(hitsCount, tp.verifyDocCountBarChart());
+				}
+				if (i == 2) {
+					softAssertion.assertEquals(exp3, tp.verifyTallyChart());
+					softAssertion.assertEquals(hitsCount, tp.verifyDocCountBarChart());
+				}
+				if (i == 3) {
+					softAssertion.assertEquals(exp4, tp.verifyTallyChart());
+					softAssertion.assertEquals(hitsCount, tp.verifyDocCountBarChart());
+				}
+				softAssertion.assertAll();
+				bc.passedStep(
+						"Verified whether user will have a report in Tally with document counts by metadata "
+								+ "fields for Searches if Tally by metadata is " + metadata[i]);
+			}
+		}
+
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
