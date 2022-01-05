@@ -844,7 +844,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	//@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyViewInDocsFromNearDupeWithOutSelectDocs()
 			throws ParseException, InterruptedException, IOException {
 
@@ -916,7 +916,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	//@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyViewAllInDocListInNearDupe() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50873");
@@ -990,7 +990,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	//@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyViewInDocListFromThreadMapTab() throws ParseException, InterruptedException, IOException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50874");
@@ -1045,7 +1045,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	//@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyViewAllInDocListInAnalyticalThreadMap() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50871");
@@ -1119,7 +1119,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	//@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyViewInDocListSelectSingleDocInNearDupe()
 			throws ParseException, InterruptedException, IOException {
 
@@ -1469,6 +1469,69 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		docView.performViewInDocListInFamilyMemberdocs();
 
 	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 04/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that on selecting View Document action from thread map tab document should be displayed on 
+	 * doc view panel.'RPMXCON-48737' Sprint : 9
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 23)
+	public void verifyViewDocumentActionInThreadMap(String fullName, String userName,
+			String password) throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48737");
+		baseClass.stepInfo(
+				"Verify that on selecting View Document action from thread map tab document should be displayed on doc view panel");
+
+		// Login as a Admin
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+		
+		docView.selectDocIdInMiniDocList(Input.threadMapNewId);
+		
+		//Threadmap View Document
+		docView.performThreadMapViewDocument();
+		
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		// view docs DocView
+		docView.performThreadMapViewDocumentInChildWindow();
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docId2=docView.getDocView_CurrentDocId().getText();
+		
+		baseClass.passedStep("Selected document is display in Doc View");
+
+		loginPage.logout();
+		
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);

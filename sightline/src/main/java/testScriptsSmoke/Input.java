@@ -176,6 +176,7 @@ public class Input {
 	public static String nearDupeBulkAssignReviewId;
 	public static String theardMapViewId;
 	public static String nearDupeViewDocId;
+	public static String threadMapNewId;
 
 	// DocView codingform Baskar Indium
 
@@ -447,6 +448,9 @@ public class Input {
 	public static String TallySearch;
 	public static String TallyCN;
 	
+	//Added by Gopinath - 05/01/2021
+	public static String downloadDocID;
+	public static String translationDocId;
 
 	@BeforeSuite(alwaysRun = true)
 
@@ -605,6 +609,7 @@ public class Input {
 		nearDupeBlukAssignReviewer = testData.getNearDupeBulkAssignReviewer();
 		nearDupeBulkAssignReviewId = testData.getNearDupeBulkAssignReviewId();
 		theardMapViewId = testData.getTheardMapViewId();
+		threadMapNewId=testData.getThreadMapNewId();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
@@ -895,6 +900,10 @@ public class Input {
 		
          TallySearch=testData.getTallySearch();
 		 TallyCN=testData.getTallyCN();
+		 
+		 //Added by Gopinath 05/01/2021
+		 downloadDocID = testData.getDownloadDocID();
+		 translationDocId = testData.getTranslationDocId();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

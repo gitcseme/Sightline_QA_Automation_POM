@@ -845,6 +845,18 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element continueButtonInBlankPageRemovalToggle() {
+		return driver.FindElementByXPath("//button[contains(text(),' Continue')]");
+	}
+	
+	public Element getBlankPageRemovalToggleConfirmationMessage() {
+		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p");
+	}
+	
+	public Element getBlankPageRemovalToggle() {
+		return driver.FindElementByXPath("//input[@id='chkTIFFBlankPageRemove']//parent::label//i");
+	}
+	
 	public Element getGenerateLoadFile_TIFF() {
 		return driver.FindElementByXPath("//input[@id='chkTIFFProduceLoadFile']");
 	}
@@ -2162,6 +2174,12 @@ public class ProductionPage {
 	}
 	
 	
+	public Element blankPageRemovalMessage() {
+		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']/p");}
+	
+	
+	public Element getContinueBtn() {
+		return driver.FindElementById("bot1-Msg1");}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -15179,5 +15197,144 @@ public class ProductionPage {
 			getOkBtn().Click();
 
 	}		
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void fillingTIFFSection(String tagname) throws InterruptedException {
+
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+
+			driver.scrollingToBottomofAPage();
+
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().waitAndClick(10);
+
+			base.waitForElement(getTIFF_EnterBranding());
+			new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
+			getTIFF_EnterBranding().SendKeys(searchString4);
+
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().isDisplayed();
+
+			base.waitForElement(getPriveldge_SelectTagButton());
+			getPriveldge_SelectTagButton().waitAndClick(5);
+
+			driver.waitForPageToBeReady();
+
+			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+
+			base.waitForElement(getPriveldge_TagTree(tagname));
+			Thread.sleep(5000);
+			getPriveldge_TagTree(tagname).waitAndClick(20);
+
+			base.waitForElement(getPriveldge_TagTree_SelectButton());
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getPriveldge_TextArea());
+			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+			getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+			driver.scrollingToBottomofAPage();
+			base.stepInfo("TIFF section is filled");
+		} catch (InterruptedException e) {
+
+			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+
+			base.waitForElement(getPriveldge_TagTree(tagname));
+			Thread.sleep(5000);
+			getPriveldge_TagTree(tagname).waitAndClick(20);
+
+			base.waitForElement(getPriveldge_TagTree_SelectButton());
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getPriveldge_TextArea());
+			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+			getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+			driver.scrollingToBottomofAPage();
+		}
+	}
 	
+/**
+	 * @Author Brundha
+	 * Description:Method to select blank page removal toggle
+	 */
+	public void selectBlankRemovalInTiffSection() {
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().waitAndClick(5);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+		driver.scrollPageToTop();
+		base.waitForElement(getBlankPageRemovalToggle());
+		getBlankPageRemovalToggle().Click();
+		
+
+		driver.waitForPageToBeReady();
+		String ExpectedText=blankPageRemovalMessage().getText();
+		String ActualText="Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
+		
+		if(ActualText.equals(ExpectedText)) {
+			base.passedStep(""+ExpectedText+"Message is displayed as expected");}
+		else {
+			base.failedStep(""+ExpectedText+"Message not displayed as expected");}
+		base.waitForElement(getContinueBtn());
+		getContinueBtn().Click();
+		
+		
+	}
+	/**
+	 * @Author Brundha
+	 * Description:Method to select redaction tag
+	 */
+	public void burnRedactionWithRedactionTagInTiffSection(String tagname) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		
+		
+	    driver.waitForPageToBeReady();
+	    base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().waitAndClick(10);
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_RedactionTag(tagname));
+		getClkCheckBox_RedactionTag(tagname).ScrollTo();
+		getClkCheckBox_RedactionTag(tagname).waitAndClick(10);
+	}
 }

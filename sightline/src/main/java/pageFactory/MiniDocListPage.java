@@ -76,15 +76,15 @@ public class MiniDocListPage {
 	List<String> selectedFieldsSetDocumentSorting;
 	List<String> originalOrderedList;
 	List<String> afterSortList;
-	
-	//Added  by Gopinath 28/12/2021
+
+	// Added by Gopinath 28/12/2021
 	public Element getCursorNextDocumentId() {
 		return driver.FindElementByXPath("(//i[@class='fa fa-arrow-right']//../../following-sibling::tr)[1]//td[2]");
 	}
+
 	public Element getCurrentDocumentId() {
 		return driver.FindElementByXPath("//i[@class='fa fa-arrow-right']//..//..//td[2]");
 	}
-
 
 	public MiniDocListPage(Driver driver) {
 		this.driver = driver;
@@ -332,8 +332,9 @@ public class MiniDocListPage {
 	}
 
 	public Element getDocView_MiniDoclist_Header_Webfields(String fieldName) {
-        return driver.FindElementByXPath("//*[@class='dataTables_scrollHeadInner']//th[text()='"+fieldName+"']");
-    }
+		return driver.FindElementByXPath("//*[@class='dataTables_scrollHeadInner']//th[text()='" + fieldName + "']");
+	}
+
 //	Added by baskar
 	public Element getValueToRemoveFromSelectedWebFields(String fieldValue) {
 		return driver.FindElementByXPath(
@@ -448,22 +449,30 @@ public class MiniDocListPage {
 		return driver.FindElementByXPath("//*[@id='SearchDataTable_wrapper']//tr//th[text()='DocID']");
 	}
 
-	
-	//added by sowndarya.velraj
+	// added by sowndarya.velraj
 	public Element getDocumentCountFromDocView() {
 		return driver.FindElementById("totalRecords");
 	}
-	
-	//Added by Vijaya.Rani
+
+	// Added by Vijaya.Rani
 	public Element getDocview_GearEmailAddress() {
 		return driver.FindElementByXPath("//li[text()='EmailAuthorAddress']");
 	}
-	
+
 	public Element getDocview_GearEmailAuthorName() {
 		return driver.FindElementByXPath("//li[text()='EmailAuthorName']");
 	}
-	
-	
+
+	// Added by Raghuram
+	public Element getHistoryDocId(String docId) {
+		return driver.FindElementByXPath("//*[@id='ulDocViewHistory']/li/a[text()='" + docId + " ']");
+	}
+
+	// Added By Jeevitha
+	public ElementCollection getAvailableSetDocumentField() {
+		return driver.FindElementsByXPath("//ul[@id='sortable1DocumentSort']//li");
+	}
+
 	/**
 	 * @author Indium Raghuram ] Description : To get the list of elements
 	 *         (GenericMethod) Date:8/15/21 Modified date: N/A Modified by: N/A
@@ -3404,38 +3413,41 @@ public class MiniDocListPage {
 
 		baseClass.stepInfo("The  DocID in ascending order is Present");
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani 17/12/21 NA Modified date: NA Modified by:Steffy
 	 * @description perform Review Mode GearIcon Chec kEmailAuthorAndAddress
 	 */
 	public void performReviewModeGearIconCheckEmailAuthorAndAddress() {
-		
+
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getChildWindowGearIcons());
 		getChildWindowGearIcons().waitAndClick(10);
 		baseClass.stepInfo("Successflly open gear review mode popup window");
-		
+
 		baseClass.waitForElement(getDocview_GearEmailAddress());
 		softAssertion.assertTrue(getDocview_GearEmailAddress().isElementPresent());
 		baseClass.passedStep("EmailAddress field is displayed");
-		
+
 		baseClass.waitForElement(getDocview_GearEmailAuthorName());
 		softAssertion.assertTrue(getDocview_GearEmailAuthorName().isElementPresent());
 		baseClass.passedStep("EmailAuthorName field is displayed");
-		
+
 		baseClass.passedStep("EmailAuthorNameAndAddress field is not displayed on configure mini doc list");
-		
+
 	}
-	
+
 	/**
 	 * @author Gopinath
-	 * @Description : this method used for verifying cursor navigated to child window clicking on saved stamp.
-	 * @param textBox : textBox is String value that text value ned to enter in comment box.
-	 * @param colour : colour is String value that colour stamp to select.
+	 * @Description : this method used for verifying cursor navigated to child
+	 *              window clicking on saved stamp.
+	 * @param textBox : textBox is String value that text value ned to enter in
+	 *                comment box.
+	 * @param colour  : colour is String value that colour stamp to select.
 	 */
 
-	public void verifyCursorNavigatedToChildWindowClickingOnSavedStamp(String textBox,String colour) throws InterruptedException {
+	public void verifyCursorNavigatedToChildWindowClickingOnSavedStamp(String textBox, String colour)
+			throws InterruptedException {
 		try {
 			driver.waitForPageToBeReady();
 			reusableDocViewPage.clickGearIconOpenMiniDocList();
@@ -3449,19 +3461,112 @@ public class MiniDocListPage {
 			reusableDocViewPage.lastAppliedStamp(colour);
 			reusableDocViewPage.switchTochildWindow();
 			String currentDocId = getCurrentDocumentId().getText().trim();
-			
-			if(currentDocId.contentEquals(nextDocId)) {
+
+			if (currentDocId.contentEquals(nextDocId)) {
 				baseClass.passedStep("Cursor navigated to next document successfully by clicking on saved stamp");
-			}else {
+			} else {
 				baseClass.failedStep("Cursor not navigated to next document successfully by clicking on saved stamp");
 			}
 			reusableDocViewPage.childWindowToParentWindowSwitching(miniDocListPrent);
 			DocViewPage dovView = new DocViewPage(driver);
 			dovView.getDocView_SaveWidgetButton().waitAndClick(10);
 			driver.Navigate().refresh();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			baseClass.failedStep("Exception occured whileverifying cursor navigated to child window clicking on saved stamp. "+e.getLocalizedMessage());
+			baseClass.failedStep(
+					"Exception occured whileverifying cursor navigated to child window clicking on saved stamp. "
+							+ e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * @author Raghuram.A Date: 1/3/21 Modified date:N/A Modified by: N/A
+	 * @Description : 
+	 * 
+	 */
+
+	public void actionOnDocsFromHistoryDropDown(int limit, int sizeofList, List<String> docIDlist,
+			Boolean iterateMethod, String additonal1, Boolean docViewPanelCheck, Boolean historyListCheck,
+			Boolean checkBox, Boolean additional2) throws InterruptedException {
+
+		List<String> selectedDocList = new ArrayList<>();
+		List<String> historyDocList = new ArrayList<>();
+		String docName = null;
+
+		if (iterateMethod) {
+			for (int i = 1; i <= limit; i++) {
+				getClickDocviewID(i).waitAndClick(5);
+				driver.waitForPageToBeReady();
+				docName = getClickDocviewID(i).getText();
+				selectedDocList.add(docName);
+			}
+		}
+		if (docViewPanelCheck) {
+			for (String docNames : selectedDocList) {
+				getDocView_HistoryButton().waitAndClick(5);
+				baseClass.stepInfo("Selected DocId : " + docNames);
+				driver.waitForPageToBeReady();
+				getHistoryDocId(docNames).waitAndClick(2);
+				driver.waitForPageToBeReady();
+				baseClass.waitTime(2);
+				String currentDocID = getMainWindowActiveDocID().getText();
+				baseClass.stepInfo("DocView panel DocId : " + currentDocID);
+
+				baseClass.textCompareEquals(docNames, currentDocID,
+						"Selected document from history drop down are loaded and displayed in docview panel",
+						"document not displayed in docview panel");
+				driver.waitForPageToBeReady();
+
+			}
+		}
+		if (historyListCheck) {
+			getDocView_HistoryButton().waitAndClick(5);
+			baseClass.waitForElementCollection(getHistoryDropDown());
+			historyDocList = baseClass.availableListofElements(getHistoryDropDown());
+			baseClass.stepInfo("Selected DocList" + selectedDocList.toString());
+			Collections.sort(selectedDocList);
+			baseClass.stepInfo("History DocList" + selectedDocList.toString());
+			Collections.sort(historyDocList);
+
+			baseClass.listCompareEquals(selectedDocList, historyDocList,
+					"Prior viewed document ID displayed in history drop down",
+					"All Prior viewed document ID not displayed in history drop down");
+		}
+
+		if (checkBox) {
+			for (int i = 1; i <= limit; i++) {
+				baseClass.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(i));
+				getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+			}
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @param fieldValue
+	 * @param SetDocumentSorting
+	 */
+	public void verifyWhetherFieldAvailableInTab(String fieldValue, boolean SetDocumentSorting) {
+		driver.waitForPageToBeReady();
+
+		ElementCollection pickColumnafterSelectedfieldList = getAvailablePickColumnDisplayFields();
+		afterActionselectedFieldsList = availableListofElements(pickColumnafterSelectedfieldList);
+		for (String element : afterActionselectedFieldsList) {
+			if (element.equals(fieldValue)) {
+				baseClass.passedStep(fieldValue + " : Is Displayed in Available fields of Pick Column Display");
+
+			}
+		}
+		if (SetDocumentSorting) {
+			getSetDocumentSortingTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			ElementCollection SetDocumentSortingList = getAvailableSetDocumentField();
+			afterActionselectedFieldsList = availableListofElements(SetDocumentSortingList);
+			for (String element : afterActionselectedFieldsList) {
+				if (element.equals(fieldValue)) {
+					baseClass.passedStep(fieldValue + " : Is Displayed in Available fields of Set Document Sorting");
+				}
+			}
 		}
 	}
 }

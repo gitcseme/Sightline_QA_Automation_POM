@@ -84,6 +84,7 @@ public class TestData {
 	public String nearDupeBulkAssignReviewId;
 	public String theardMapViewId;
 	public String nearDupeViewDocId;
+	public String threadMapNewId;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;
@@ -362,4 +363,8 @@ public class TestData {
 		//Added by jayanthi
 		public String TallySearch;
 		public String TallyCN;
+
+		//Added by Gopinath - 05/01/2021
+		public String downloadDocID;
+		public String translationDocId;
 }

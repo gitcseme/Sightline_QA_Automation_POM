@@ -3075,6 +3075,321 @@ public class DocView_Regression1 {
 			docView.verifyImageTabIsNotDisplayed();
 		}
 		
+		
+
+		/**
+		 * @author Gopinath
+		 * TestCase Id:51091-Verify on selection of the version Project Admin/RMU/Reviewer will see the translated document.
+		 * Description : Verify on selection of the version Project Admin/RMU/Reviewer will see the translated document.                
+		 * @throws InterruptedException 
+		 */
+		@Test(alwaysRun = true,groups={"regression"},priority = 37)
+		public void verifyTranslationTabOnDocView() throws InterruptedException {
+			
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51091 of Sprint 09");
+
+			baseClass.stepInfo("#### Verify on selection of the version Project Admin/RMU/Reviewer will see the translated document ####");
+					
+			DocViewPage docView = new DocViewPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			baseClass.stepInfo("searching document for assignmnet creation");
+			sessionSearch.basicContentSearch(Input.translationDocId);
+
+			baseClass.stepInfo("View searched for audio docs in Doc view");
+			sessionSearch.ViewInDocView();
+			
+			baseClass.stepInfo("Click On Translation Tab");
+			docView.clickOnTranslationTab();
+			
+			baseClass.stepInfo("Click On Translation From Translations Dropdown");
+			docView.clickOnTranslationFromTranslationsDropdown();
+			
+		}
+		
+		/**
+		 * @author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
+		 * @Testcase_id : 51033 -Verify user can see the keywords highlighted in doc view based on the assigned keyword group and color to the assignment.
+		 * @Description : Verify user can see the keywords highlighted in doc view based on the assigned keyword group and color to the assignment.
+		 */
+		@Test(groups = { "regression" }, priority = 38)
+		public void verifyKeywordHighlightedOnDocview() throws InterruptedException {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51033 spint 09");
+			AssignmentsPage assgnPage = new AssignmentsPage(driver);
+			SessionSearch search = new SessionSearch(driver);
+			final String assignStamp = Input.randomText + Utility.dynamicNameAppender();
+			String keywordname = Input.randomText +Utility.dynamicNameAppender();
+			String keyword = Input.randomText +Utility.dynamicNameAppender();
+
+			baseClass.stepInfo("#### Verify user can see the keywords highlighted in doc view based on the assigned keyword group and color to the assignment ####");
+
+			KeywordPage keywordPage = new KeywordPage(driver);
+			
+			baseClass.stepInfo("Navigate to keyword page");
+			keywordPage.navigateToKeywordPage();
+		
+			baseClass.stepInfo("Add keyword");
+			keywordPage.AddKeyword(keywordname, keyword);
+			
+			baseClass.stepInfo("Get All Keywords in keywords lsit table");
+			keywordPage.getAllKeywords();
+			
+			baseClass.stepInfo("Basic Search");
+			search.basicContentSearch(Input.searchString1);
+			
+			baseClass.stepInfo("Bulk Assign");
+			search.bulkAssign();
+			
+			baseClass.stepInfo("Assignment Creation");
+			assgnPage.assignmentCreation(assignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Assignment Distributing To Reviewer");
+			assgnPage.assignmentDistributingToReviewer();
+
+			loginPage.logout();
+			baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			baseClass.stepInfo("Selecting the assignment");
+			assgnPage.SelectAssignmentByReviewer(assignStamp);
+		
+			docView = new DocViewPage(driver);
+			
+			baseClass.stepInfo("Persistent Hit With search string");
+			docView.persistenHitWithSearchString(keyword);
+			
+			baseClass.stepInfo("Verify keyword highlighted on doc view.");
+			docView.verifyKeywordHighlightedOnDocView();
+			
+			loginPage.logout();
+			
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			
+			baseClass.stepInfo("Navigate To Assignments Page");
+			assgnPage.navigateToAssignmentsPage();
+			
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+			
+			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+			assgnPage.deleteAssignment(assignStamp);
+			
+			baseClass.stepInfo("Navigate to keyword page");
+			keywordPage.navigateToKeywordPage();
+			
+			baseClass.stepInfo("Delete keyword");
+			keywordPage.deleteKeywordByName(keyword);
+			
+		}
+		
+		/**
+		 * @author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
+		 * @Testcase_id : 51023 - To verify that remarks can add/edit/delete if document is marked as Completed.
+		 * @Description : To verify that remarks can add/edit/delete if document is marked as Completed.
+		 */
+		@Test(groups = { "regression" }, priority = 39)
+		public void verifyRemarkOperationsOfCompletedDocumentOnDocview() throws InterruptedException {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51023 spint 09");
+			AssignmentsPage assgnPage = new AssignmentsPage(driver);
+			SessionSearch search = new SessionSearch(driver);
+			final String assignStamp = Input.randomText + Utility.dynamicNameAppender();
+			String remark = Input.randomText + Utility.dynamicNameAppender();
+
+			baseClass.stepInfo("#### To verify that remarks can add/edit/delete if document is marked as Completed. ####");
+			
+			baseClass.stepInfo("Basic Search");
+			search.basicContentSearch(Input.searchString1);
+			
+			baseClass.stepInfo("Bulk Assign");
+			search.bulkAssign();
+			
+			baseClass.stepInfo("Assignment Creation");
+			assgnPage.assignmentCreation(assignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Assignment Distributing To Reviewer");
+			assgnPage.assignmentDistributingToReviewer();
+
+			loginPage.logout();
+			baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			baseClass.stepInfo("Selecting the assignment");
+			assgnPage.SelectAssignmentByReviewer(assignStamp);
+		
+			docView = new DocViewPage(driver);
+			
+			baseClass.stepInfo("Complete non audio document");
+			docView.completeDocument();
+			
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+		
+			baseClass.stepInfo("Add Remark To Non Audio Document");
+			docView.addRemarkToNonAudioDocument(30, 45,remark);
+			
+			baseClass.stepInfo("Verify Remark Is Added");
+			docView.verifyRemarkIsAdded(remark);
+			
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+			
+			baseClass.stepInfo("Delete remark");
+			docView.deleteReamark(remark);
+			
+			loginPage.logout();
+			
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			
+			baseClass.stepInfo("Navigate To Assignments Page");
+			assgnPage.navigateToAssignmentsPage();
+			
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+			
+			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+			assgnPage.deleteAssignment(assignStamp);
+			
+		}
+		
+
+		/**
+		 * Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+		 * TestCase id :  51022 - To verify that if Reviewer Remark is off at Assignment level then it should not displayed if user naivgates from Assignment-Doc View..
+		 * Description : To verify that if Reviewer Remark is off at Assignment level then it should not displayed if user naivgates from Assignment-Doc View.
+		 */
+		@Test(alwaysRun = true,groups={"regression"},priority = 40)
+		public void verifyReviewerRemarkOffAtAssignmentLevel() throws Exception {		
+			baseClass=new BaseClass(driver);
+			String assignmentName = Input.randomText + Utility.dynamicNameAppender();
+			baseClass.stepInfo("Test case Id: RPMXCON-51022 sprint 09");
+			utility = new Utility(driver);
+			docViewMetaDataPage = new DocViewMetaDataPage(driver);
+			baseClass.stepInfo("#### To verify that if Reviewer Remark is off at Assignment level then it should not displayed if user naivgates from Assignment-Doc View. ####");
+			
+			ManageAssignment mngAssign = new ManageAssignment(driver);
+			docView = new DocViewPage(driver);
+			agnmt = new AssignmentsPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(Input.searchText);
+			
+			baseClass.stepInfo("Bulk Assign");
+			sessionSearch.bulkAssign();
+			
+			baseClass.stepInfo("Assignment Creation");
+			agnmt.assignmentCreation(assignmentName, Input.codingFormName);
+			
+			baseClass.stepInfo("Toggle Coding Stamp Enabled");
+			agnmt.toggleCodingStampEnabled();
+			
+			baseClass.stepInfo("Disable native download toogle");
+			mngAssign.disableReviewerRemarks(true);
+		
+			baseClass.stepInfo("Select assignment to view in Doc view");
+			agnmt.selectAssignmentToViewinDocview(assignmentName);
+			
+			baseClass.stepInfo("Verify download button is not displayed.");
+			docViewMetaDataPage.verifyingRemarkButtonIsNotDisplayed();
+			
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(Input.searchText);
+			
+			baseClass.stepInfo("View in Doc view");
+			sessionSearch.ViewInDocView();
+			
+			baseClass.stepInfo("Verify Remark Button Is Displayed");
+			docViewMetaDataPage.verifyingRemarkButtonIsDisplayed();
+			
+			baseClass.stepInfo("Navigate To Assignments Page");
+			agnmt.navigateToAssignmentsPage();
+			
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+			
+			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+			agnmt.deleteAssignment(assignmentName);
+			
+		}
+		
+		/**
+		 * @author Gopinath
+		 * TestCase Id:51119:Verify user can not see the tiff images when 'Allow Production / Images View' is off at an assigment level.
+		 * Description :Verify user can not see the tiff images when 'Allow Production / Images View' is off at an assigment level
+		 */
+		@Test(alwaysRun = true,groups={"regression"},priority = 41)
+		public void verifyImageTabIsDisplayedAOnDocViewPanelByDisableImagesToggle() {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51119");
+			String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
+
+			baseClass.stepInfo("#### Verify user can not see the tiff images when 'Allow Production / Images View' is off at an assigment level####");
+					
+			AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			baseClass.stepInfo("searching document for assignmnet creation");
+			sessionSearch.basicContentSearch(Input.searchString2);
+
+			baseClass.stepInfo("performing bulkAssign");
+			sessionSearch.bulkAssign();
+
+			baseClass.stepInfo("Creating assignment by Disable production/images toggle ");
+			assignmentPage.createAssignmentWithImagesViewDisabled(AssignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Select document to view in doc view");
+			assignmentPage.selectAssignmentToViewinDocview(AssignStamp);
+		}
+		
+		
+		/**
+		 * @author Gopinath
+		 * TestCase Id:51118 Verify user can download the native files when 
+		 *                   'Allow reviewers to download natives' is on at an assigment level
+		 * Description: To Verify user can download the native files when 'Allow reviewers to 
+		 *                  download natives' is on at an assigment level                  
+		 * @throws InterruptedException 
+		 */
+		@Test(alwaysRun = true,groups={"regression"},priority = 42)
+		public void verifyUserDownloadNativefiles() throws InterruptedException {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51120");
+			String AssignName = Input.randomText + Utility.dynamicNameAppender();
+
+			baseClass.stepInfo("####Verify user can download the native files when 'Allow reviewers to download natives' is on at an assigment level####");
+					
+			AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			DocViewPage docview= new DocViewPage(driver);
+
+			baseClass.stepInfo("searching document for assignmnet creation");
+			sessionSearch.basicContentSearch(Input.downloadDocID);
+
+			baseClass.stepInfo("performing bulkAssign");
+			sessionSearch.bulkAssign();
+
+			baseClass.stepInfo("Creating assignment");
+			assignmentPage.createAssignmentWithNativeDownload(AssignName, Input.codingFormName);
+			
+			baseClass.stepInfo("View In Doc View");
+			sessionSearch.ViewInDocView();
+			
+			baseClass.stepInfo("Select document to view in doc view");
+			assignmentPage.selectAssignmentToViewinDocview(AssignName);
+			
+			baseClass.stepInfo("Select Doc And Download All Formats");
+			docview.selectDocAndDownloadAllFormats(Input.downloadDocID);
+
+		}
 		@AfterMethod(alwaysRun = true)
 		public void close() {
 			try {

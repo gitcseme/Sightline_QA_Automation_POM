@@ -14,10 +14,13 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ReviewerProductivityReportPage;
-
+import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -26,7 +29,9 @@ public class ReviewerProductiviytReport_Regression {
 	LoginPage lp;
 	BaseClass bc;
 	ReviewerProductivityReportPage reviewerProdReport;
-
+	DocViewPage docViewPage;
+	SoftAssert	softAssertion;
+	String assignmentName2 = "RevProd" + Utility.dynamicNameAppender();
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
@@ -68,10 +73,56 @@ public class ReviewerProductiviytReport_Regression {
 		bc.stepInfo("Logged in as -" + role);
 		ReviewerProductivityReportPage rp = new ReviewerProductivityReportPage(driver);
 		rp.navigateTOReviewerPodReportPage();
-		rp.generateReport();
+		rp.generateReport(null);
 		rp.verifyColumnDisplay(rp.getTableHeader("Distributed Docs Completed by This Reviewer"),"Distributed Docs Completed by This Reviewer");
 	}
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
+	public void verifyTotalDocsCount(String username, String password, String role)
+			throws InterruptedException, AWTException {
+		LoginPage lp = new LoginPage(driver);
+	lp.loginToSightLine(username, password);
+	UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+	bc.stepInfo("Test case Id:RPMXCON-48734");
+	bc.stepInfo("Verify the 'Total Docs Completed by This Reviewer' in the 'Reviewer Productivity Report'");
+	AssignmentsPage agnmt = new AssignmentsPage(driver);
+	if(role=="RMU") {
+	SessionSearch sessionsearch = new SessionSearch(driver);	
+	sessionsearch.basicContentSearch(Input.testData1);
+	sessionsearch.verifyPureHitsCount();
+	sessionsearch.bulkAssign();
+	bc.stepInfo("Search with text input for docs completed");
+	// Creating Assignment from Basic search
+	agnmt.assignmentCreation(assignmentName2, Input.codeFormName);
+	bc.stepInfo("Doc is Assigned from basic Search and Assignment '" + assignmentName2 + "' is created Successfully");
+	agnmt.editAssignmentUsingPaginationConcept(assignmentName2);
+	driver.waitForPageToBeReady();
+	bc.stepInfo(assignmentName2 + " assignment opened in edit mode");
+	agnmt.addReviewerAndDistributeDocs();
+	lp.logout();
+	lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+	bc.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
 
+	// Assignment Selection
+	agnmt.SelectAssignmentByReviewer(assignmentName2);
+	bc.stepInfo("User on the doc view after selecting the assignment");
+	driver.waitForPageToBeReady();
+	 DocViewPage docViewPage= new DocViewPage(driver);
+	docViewPage.editingCodingFormWithCompleteButton();
+	driver.waitForPageToBeReady();
+	bc.stepInfo("Document completed successfully");
+	lp.logout();
+	lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);	
+	}
+	ReviewerProductivityReportPage rp = new ReviewerProductivityReportPage(driver);
+	rp.navigateTOReviewerPodReportPage();
+	rp.generateReport(assignmentName2);
+	softAssertion = new SoftAssert();
+	
+	//checking the total docs count value in reviwer productivity page
+	softAssertion.assertEquals(Input.pageCount,rp.verifyColumnValueDisplay(rp.getTableHeaders(),"TOTAL DOCS COMPLETED BY THIS REVIEWER"));
+	softAssertion.assertAll();
+	bc.passedStep("Sucessfully verified  the 'Total Docs Completed by This Reviewer' in the 'Reviewer Productivity Report'.");
+	}
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
