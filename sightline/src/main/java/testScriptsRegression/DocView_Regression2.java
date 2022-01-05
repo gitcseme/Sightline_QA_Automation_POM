@@ -847,6 +847,81 @@ public class DocView_Regression2 {
 	    }    
 	    
 	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50849
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true,dataProvider = "userDetails2", alwaysRun = true , groups = { "regression" }, priority = 20)
+	public void verifyAllObjectsDocView(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-50849");
+		baseClass.stepInfo("To verify that when user navigates to doc view from the Basic search view, then all the objects on doc view are displayed.");
+		loginPage.loginToSightLine(userName, password);
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		sessionSearch.basicContentSearch(Input.searchString1);
+	    sessionSearch.ViewInDocView();
+	    docViewRedact = new DocViewRedactions(driver);
+	    driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.HighliteIcon().Visible() && docViewRedact.HighliteIcon().Enabled();
+			}
+		}), Input.wait30);
+	    baseClass.waitTillElemetToBeClickable(docViewRedact.HighliteIcon());
+	    docViewRedact.HighliteIcon().waitAndFind(30);
+	    if(docViewRedact.HighliteIcon().isDisplayed()) {
+	    	baseClass.passedStep("Highlite icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Highlite Icon not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.redactionIcon().isDisplayed()) {
+	    	baseClass.passedStep("Redaction icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Redaction Icon not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.getSearchIcon().isDisplayed()) {
+	    	baseClass.passedStep("Search icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Search Icon not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.forwardNextDocBtn().isDisplayed()) {
+	    	baseClass.passedStep("doc navigation forward icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("doc navigation forwaard not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.backwardPriviousDocBtn().isDisplayed()) {
+	    	baseClass.passedStep("Doc Navigation backward visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Doc Navigation Backward not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.docViewNextPage().isDisplayed()) {
+	    	baseClass.passedStep("page Navigation forward visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Doc Navigation Backward not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.docViewPreviousPage().isDisplayed()) {
+	    	baseClass.passedStep("page Navigation backward visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Doc Navigation Backward not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.pageNumberTextBox().isDisplayed()) {
+	    	baseClass.passedStep("page Number box visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("page number box not visible in DocView");
+	    }
+	    
+	}
+
 
 
 	@AfterMethod(alwaysRun = true)
