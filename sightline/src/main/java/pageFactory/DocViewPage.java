@@ -19326,4 +19326,25 @@ public class DocViewPage {
 		base.passedStep("Document is completed same as the preceding document Successfully");
 
 	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @return
+	 */
+	public String performNextFuncn() {
+		driver.waitForPageToBeReady();
+		getDocView_CurrentDocId().isElementAvailable(10);
+		String docID1 = getDocView_CurrentDocId().getText().trim();
+		base.stepInfo(docID1 +" : is the current document displayed before clicking NEXT Btn");
+		getDocView_Next().isElementAvailable(10);
+		getDocView_Next().Click();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		getDocView_CurrentDocId().isElementAvailable(10);
+		String docID2 = getDocView_CurrentDocId().getText().trim();
+		base.stepInfo(docID2 +" : is the current document displayed after clicking NEXT Btn");
+		driver.waitForPageToBeReady();
+		base.textCompareNotEquals(docID1, docID2, "PASS", "Fail");
+		return docID2;
+	}
 }
