@@ -93,7 +93,7 @@ public class TallyPage {
 	}
 
 	public Element getTally_submetadataselect() {
-		return driver.FindElementById("submetadataselect");
+		return driver.FindElementByXPath("//select[@id='submetadataselect']");
 	}
 
 	public Element getTally_SubTally_Action_ViewButton() {
@@ -385,6 +385,14 @@ public class TallyPage {
 	public ElementCollection getUniqueDocs_Subtally() {
 		return driver
 				.FindElementsByXPath("//table[@class='table table-striped dataGrid']/tbody/tr/td[@class='rowtotal']");
+	}
+
+	public ElementCollection getMetadataList_SubtallyTable() {
+		return driver.FindElementsByXPath("//table//tbody//td[@class='text-left rowlead formatDate']");
+	}
+
+	public ElementCollection getSubtallyTable() {
+		return driver.FindElementsByXPath("//table[@class='table table-striped dataGrid']");
 	}
 
 	public ElementCollection getSubtallyTableheader() {
@@ -1191,6 +1199,17 @@ public class TallyPage {
 		getTally_subMetadata().Click();
 		base.waitForElement(getTally_submetadataselect());
 		getTally_submetadataselect().selectFromDropdown().selectByVisibleText(subtallyBy);
+		base.waitForElement(getTally_subMetadata());
+		String actualFieldName = getSubTallyField().getText();
+		System.out.println(actualFieldName);
+		System.out.println("subMetadata :" + subtallyBy);
+		if (actualFieldName.equals("subMetadata :" + subtallyBy)) {
+			base.passedStep("Expected Sub MetaData Field Name " + subtallyBy
+					+ " Displayed in sub Tally By  sub MetaData Button.");
+		} else {
+			base.failedStep("Expected SubMetaData Field Name is not Displayed");
+		}
+
 		base.waitForElement(getTally_btnSubTallyApply());
 		getTally_btnSubTallyApply().Click();
 	}
@@ -1372,7 +1391,6 @@ public class TallyPage {
 		}
 	}
 
-
 	/**
 	 * @author Jayanthi.ganesan
 	 * @return
@@ -1410,7 +1428,53 @@ public class TallyPage {
 			}
 		}
 		System.out.println("List sum up" + sum);
-		base.stepInfo("Count of docs reflected in tally by report"+sum.toString());
+		base.stepInfo("Count of docs reflected in tally by report" + sum.toString());
+		return sum;
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @return
+	 */
+	public int verifyDocCountSubTally(int purehit) {
+		List<String> metadata_subtally = new ArrayList<>();
+		metadata_subtally = base.availableListofElements(getMetadataList_SubtallyTable());
+		List<String> metadata_tally = new ArrayList<>();
+		metadata_tally = base.availableListofElements(getTallyChartMetaData());
+		if (metadata_subtally.containsAll(metadata_tally)) {
+			base.passedStep("Metadata list displayed in subtally report table is as expected");
+
+		} else {
+			base.failedStep("Metadata list displayed in subtally report table is not as expected");
+		}
+		Integer sum = 0;
+		if (getSubtallyTable().isElementAvailable(10)) {
+			List<WebElement> elementList = null;
+			List<Integer> docCount = new ArrayList<>();
+			elementList = getUniqueDocs_Subtally().FindWebElements();
+			for (WebElement webElementNames : elementList) {
+				String elementName = webElementNames.getText();
+				docCount.add(Integer.parseInt(elementName));
+			}
+			System.out.println(docCount);
+			if (docCount == null || docCount.size() < 1) {
+				System.out.println("List size is zero");
+			} else {
+				for (int i : docCount) {
+					sum = sum + i;
+				}
+			}
+			base.stepInfo("Total Count of Unique docs reflected in sub tally Table" + sum.toString());
+			if (sum == purehit) {
+				base.passedStep(
+						"Total count of unique docs was as expected which is same as number of docs selected for tally by");
+			} else {
+				base.failedStep("Total count of unique docs was not as expected ");
+
+			}
+		} else {
+			base.failedStep("sub tally report not displayed.");
+		}
 		return sum;
 	}
 }
