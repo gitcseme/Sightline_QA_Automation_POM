@@ -1478,7 +1478,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 23)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 22)
 	public void verifyViewDocumentActionInThreadMap(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -1531,6 +1531,141 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		
 	}
 	
+	/**
+	 * Author : Vijaya.Rani date: 06/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify that after impersonating user can view the document in
+	 * the doc list from Doc View->Family Member.'RPMXCON-50863' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	public void verifyViewInDocListInAnalyticalPanelFamilyMember() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50863");
+		baseClass.stepInfo(
+				"To verify that after impersonating user can view the document in the doc list from Doc View->Family Member.");
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+
+		// login as SA
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
+
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Step 1: Impersonate SA to RMU, search docs and Search for docs");
+		baseClass.impersonateSAtoRMU();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignFamilyMemberDocuments();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 2: Create new assignment and distribute docs to reviewer");
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentspage.add3ReviewerAndDistribute();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
+		docView.performViewInDocListInFamilyMemberdocs();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Step 1: Impersonate PAU to RMU, select assignment and go to Docview");
+		baseClass.impersonatePAtoRMU();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
+		docView.performViewInDocListInFamilyMemberdocs();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Step 1: Impersonate PAU to Reviewer,select assignment and go to Docview");
+		baseClass.impersonatePAtoReviewer();
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
+		docView.performViewInDocListInFamilyMemberdocs();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Step 1: Impersonate RMU to Reviewer,select assignment and go to Docview");
+		baseClass.impersonateRMUtoReviewer();
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
+		docView.performViewInDocListInFamilyMemberdocs();
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 29/12/21 NA Modified date: NA Modified by:NA
+	 * Description :Verify on click of 'View All Documents' all the documents should
+	 * be displayed on Analytics panel > family member child window.'RPMXCON-48732'
+	 * Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 24)
+	public void verifyViewAllDocumentsInFamilyMember(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48732");
+		baseClass.stepInfo(
+				"Verify on click of 'View All Documents' all the documents should be displayed on Analytics panel > family member child window.");
+
+		loginPage = new LoginPage(driver);
+
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Step 2 : Search for Docs and go to Docview");
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.familyDocument);
+
+		// FamilyMember tab View All Documents
+		driver.waitForPageToBeReady();
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		// view docs DocView
+		docView.performFamilyMemberViewAllDocumentInChildWindow();
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		// logout
+		loginPage.logout();
+
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {

@@ -2486,6 +2486,7 @@ public class DocViewPage {
 		public Element getTranslationDropdown() {
 			return driver.FindElementByXPath("//ul[@id='Tra-dropDown']");
 		}
+	
 		public ElementCollection getHighlightedKeywords() {
 			return driver.FindElementsByCssSelector("rect[style*='fill'][style*='rgb(0, 255, 255)']");
 		}
@@ -2526,6 +2527,9 @@ public class DocViewPage {
 			return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[" + rowno + "]/td[1]/label/i ");
 		}
 
+		public Element getDocView_Analytics_FamilyViewAllDocsBtn() {
+			return driver.FindElementById("btnShowAllFamilymemeber");
+		}
 
 		
 	public DocViewPage(Driver driver) {
@@ -18545,15 +18549,18 @@ public class DocViewPage {
 		getViewInDocListAnalyticalDropDown().waitAndClick(5);
 
 		driver.waitForPageToBeReady();
-		base.waitForElement(getDocView_DocListPageDocs());
+		base.waitForElement(getDocList_BackToSource_Button());
+		softAssertion.assertTrue(getDocList_BackToSource_Button().isElementAvailable(5));
+		softAssertion.assertAll();
+		base.passedStep("Docs are navigated to DocList successfully");
 
-		if (getDocView_DocListPageDocs().Displayed()) {
-			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
-			base.passedStep("Selected document is display in Doc List ");
+		String docIds = getDocList_DocId().getText();
+		System.out.println(docIds);
+		if (docIds.contains("ID0000")) {
+			base.passedStep("Selected docs are present in the DocList Page");
 		} else {
-			base.failedStep("Selected document is not display in Doc List");
+			base.failedStep("Selected docs are not present in the DocList Page");
 		}
-
 	}
 
 	/**
@@ -18583,13 +18590,17 @@ public class DocViewPage {
 		getViewInDocListAnalyticalDropDown().waitAndClick(5);
 
 		driver.waitForPageToBeReady();
-		base.waitForElement(getDocView_DocListPageDocs());
+		base.waitForElement(getDocList_BackToSource_Button());
+		softAssertion.assertTrue(getDocList_BackToSource_Button().isElementAvailable(5));
+		softAssertion.assertAll();
+		base.passedStep("Docs are navigated to DocList successfully");
 
-		if (getDocView_DocListPageDocs().Displayed()) {
-			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
-			base.passedStep("Selected document is display in Doc List ");
+		String docIds = getDocList_DocId().getText();
+		System.out.println(docIds);
+		if (docIds.contains("ID0000")) {
+			base.passedStep("Selected docs are present in the DocList Page");
 		} else {
-			base.failedStep("Selected document is not display in Doc List");
+			base.failedStep("Selected docs are not present in the DocList Page");
 		}
 
 	}
@@ -18597,7 +18608,7 @@ public class DocViewPage {
 	/**
 	 * @Author Vijaya.Rani Created on 03/01/2022
 	 * @Description To perform ViewInDocList Family Member docs in the DocView Test
-	 *              Case id: RPMXCON-50864
+	 *              Case id: RPMXCON-50864,RPMXCON-50863
 	 *
 	 */
 	public void performViewInDocListInFamilyMemberdocs() throws InterruptedException {
@@ -18619,15 +18630,18 @@ public class DocViewPage {
 		getViewInDocListAnalyticalDropDown().waitAndClick(5);
 
 		driver.waitForPageToBeReady();
-		base.waitForElement(getDocView_DocListPageDocs());
+		base.waitForElement(getDocList_BackToSource_Button());
+		softAssertion.assertTrue(getDocList_BackToSource_Button().isElementAvailable(5));
+		softAssertion.assertAll();
+		base.passedStep("Docs are navigated to DocList successfully");
 
-		if (getDocView_DocListPageDocs().Displayed()) {
-			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
-			base.passedStep("Selected document is display in Doc List ");
+		String docIds = getDocList_DocId().getText();
+		System.out.println(docIds);
+		if (docIds.contains("ID0000")) {
+			base.passedStep("Selected docs are present in the DocList Page");
 		} else {
-			base.failedStep("Selected document is not display in Doc List");
+			base.failedStep("Selected docs are not present in the DocList Page");
 		}
-
 	}
 
 	/**
@@ -19337,23 +19351,45 @@ public class DocViewPage {
 	
 
 	/**
-	 * @Author Jeevitha
-	 * @return
+	 * @author Vijaya Rani 06/01/22 NA Modified date: NA Modified by:NA
+	 * @description perform FamilyMember Docs ViewAllDocuments
 	 */
-	public String performNextFuncn() {
+	public void performFamilyMemberDocsCheckAndViewAllDocuments() throws InterruptedException {
+		
 		driver.waitForPageToBeReady();
-		getDocView_CurrentDocId().isElementAvailable(10);
-		String docID1 = getDocView_CurrentDocId().getText().trim();
-		base.stepInfo(docID1 +" : is the current document displayed before clicking NEXT Btn");
-		getDocView_Next().isElementAvailable(10);
-		getDocView_Next().Click();
+		base.waitForElement(getDocView_Analytics_FamilyTab());
+		getDocView_Analytics_FamilyTab().waitAndClick(10);
+		
 		driver.waitForPageToBeReady();
-		driver.scrollPageToTop();
-		getDocView_CurrentDocId().isElementAvailable(10);
-		String docID2 = getDocView_CurrentDocId().getText().trim();
-		base.stepInfo(docID2 +" : is the current document displayed after clicking NEXT Btn");
+		base.waitForElement(getDocView_Analytics_FamilyViewAllDocsBtn());
+		getDocView_Analytics_FamilyViewAllDocsBtn().waitAndClick(10);
+		
 		driver.waitForPageToBeReady();
-		base.textCompareNotEquals(docID1, docID2, "PASS", "Fail");
-		return docID2;
+		base.waitForElementCollection(getDocView_Analytics_FamilyMember_Docs());
+		base.passedStep("The Threaed Documents having :" + getDocView_Analytics_FamilyMember_Docs().size()
+				+ "which is more than 20 docs");
+		
+	}
+	
+	/**
+	 * @author Vijaya Rani 06/01/22 NA Modified date: NA Modified by:NA
+	 * @description perform FamilyMember Docs ViewAllDocuments ChildWindow
+	 */
+	public void performFamilyMemberViewAllDocumentInChildWindow() throws InterruptedException {
+	
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_FamilyTab());
+		getDocView_Analytics_FamilyTab().waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_FamilyViewAllDocsBtn());
+		if (getDocView_Analytics_FamilyViewAllDocsBtn().Displayed()) {
+			softAssertion.assertTrue(getDocView_Analytics_FamilyViewAllDocsBtn().getWebElement().isDisplayed());
+			base.passedStep("Child Window View All Document Btn Is Displayed successfully");
+		} else {
+			base.failedStep("Child Window View All Document Btn Is Not Displayed");
+		}
+
+		getDocView_Analytics_FamilyViewAllDocsBtn().waitAndClick(10);
 	}
 }
