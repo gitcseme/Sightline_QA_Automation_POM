@@ -2,6 +2,7 @@ package pageFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -260,7 +261,7 @@ public class TallyPage {
 	public Element getTally_Searches() {
 		return driver.FindElementByXPath("//strong[text()='Searches']/parent::a//span[@class='fa fa-plus']");
 	}
-	
+
 	public Element getTally_SelectSearches(String searchName) {
 		return driver.FindElementByXPath(
 				"//a[@class='jstree-anchor' and text()='" + searchName + "']//i[@class='jstree-icon jstree-checkbox']");
@@ -269,7 +270,7 @@ public class TallyPage {
 	public Element getTally_SearchSaveSelections() {
 		return driver.FindElementByXPath("//button[@id='search']");
 	}
-	
+
 	public Element getTallyBulkReleaseAction() {
 		return driver.FindElementByXPath(
 				"//button[@id='tallyactionbtn']/following-sibling::ul//li//a[contains(.,'Bulk Release')]");
@@ -286,74 +287,115 @@ public class TallyPage {
 	public Element getTotalSelectedDocs() {
 		return driver.FindElementByXPath("//span[@id='spanTotal']");
 	}
+
 	public Element getTallyViewBtn() {
-		return driver.FindElementByXPath("//button[@id='tallyactionbtn']/following-sibling::ul[@class='dropdown-menu action-dd']//li//a[text()='View']");
+		return driver.FindElementByXPath(
+				"//button[@id='tallyactionbtn']/following-sibling::ul[@class='dropdown-menu action-dd']//li//a[text()='View']");
 	}
+
 	public Element getTallyViewinDocViewBtn() {
 		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[@id='idViewInDocview']");
 	}
+
 	public Element getSubTallyBulkReleaseAction() {
-		return driver.FindElementByXPath("//button[@id='subtallyactionbtn']/following-sibling::ul//li//a[contains(.,'Bulk Release')]");
+		return driver.FindElementByXPath(
+				"//button[@id='subtallyactionbtn']/following-sibling::ul//li//a[contains(.,'Bulk Release')]");
 	}
+
 	public Element getTally_SecurityGroupCheckBox(String checkBoxName) {
-		return driver.FindElementByXPath("//*[@class='checkbox']//span[text()='"+checkBoxName+"']");
+		return driver.FindElementByXPath("//*[@class='checkbox']//span[text()='" + checkBoxName + "']");
 	}
+
 	public Element getTally_SearchesCheckBox(String checkBoxName) {
-		return driver.FindElementByXPath("//*[@id='divSearchGroupTree']//*[text()='"+checkBoxName+"']");
+		return driver.FindElementByXPath("//*[@id='divSearchGroupTree']//*[text()='" + checkBoxName + "']");
 	}
+
 	public Element getTally_AssignmentsCheckBox(String checkBoxName) {
-		return driver.FindElementByXPath("//*[@id='divAssignmentGroupTree']//*[text()='"+checkBoxName+"']");
+		return driver.FindElementByXPath("//*[@id='divAssignmentGroupTree']//*[text()='" + checkBoxName + "']");
 	}
+
 	public Element getTally_FoldersCheckBox(String checkBoxName) {
-		return driver.FindElementByXPath("//*[@id='divFolderGroupTree']//*[text()='"+checkBoxName+"']");
-	}	
+		return driver.FindElementByXPath("//*[@id='divFolderGroupTree']//*[text()='" + checkBoxName + "']");
+	}
+
 	public Element getTally_PrjCheckBox(String checkBoxName) {
-		return driver.FindElementByXPath("//span[text()='"+checkBoxName+"']/parent::label/i");}
+		return driver.FindElementByXPath("//span[text()='" + checkBoxName + "']/parent::label/i");
+	}
+
 	public Element getTally_ClickMetaSourceButton() {
 		return driver.FindElementByXPath("//*[@id='select-source1']");
 	}
+
 	public Element getTally_ClickMetaSourceDropDown() {
 		return driver.FindElementByXPath("//*[@id='metadataselect']");
 	}
+
 	public Element getTally_SelectMetaSourceDropDown(String options) {
-		return driver.FindElementByXPath("//*[@id='metadataselect']/option[text()='"+options+"']");
+		return driver.FindElementByXPath("//*[@id='metadataselect']/option[text()='" + options + "']");
 	}
+
 	public Element getTally_assignSaveSelections() {
 		return driver.FindElementByXPath("//button[@id='assignment']");
 	}
+
 	public Element getTally_SGSaveSelections() {
 		return driver.FindElementByXPath("//button[@id='secgroup']");
 	}
+
 	public Element getTally_foldersSaveSelections() {
 		return driver.FindElementByXPath("//button[@id='folder']");
 	}
+
 	public Element getTally_PrjSaveSelections() {
 		return driver.FindElementByXPath("//button[@id='project']");
 	}
-	
+
 	public Element getTally_Assignments() {
 		return driver.FindElementByXPath("//strong[text()=' Assignments']/parent::a//span[@class='fa fa-plus']");
 	}
+
 	public Element getTally_Folders() {
 		return driver.FindElementByXPath("//strong[text()='Folders']/parent::a//span[@class='fa fa-plus']");
 	}
+
 	public Element getTally_Projects() {
 		return driver.FindElementByXPath("//strong[text()='Projects']/parent::a//span[@class='fa fa-plus']");
 	}
+
 	public Element getTally_SecurityGroup() {
 		return driver.FindElementByXPath("//strong[text()='Security Groups']/parent::a//span[@class='fa fa-plus']");
 	}
+
 	public ElementCollection getTallyChartMetaData() {
 		return driver.FindElementsByCssSelector("div[id='tallyChart'] > svg > g:nth-child(2) > text");
 	}
+
 	public Element getTally_SelectedSource() {
 		return driver.FindElementByXPath("//ul[@id='bitlist-sources']/li");
 	}
+
+	public ElementCollection getDocs_Xaxis() {
+		return driver.FindElementsByCssSelector("#tallyChart > svg > g:nth-child(1)>text");
+	}
+
+	public ElementCollection getrectValues() {
+		return driver.FindElementsByCssSelector("#tallyChart > svg > g:nth-child(3)>rect");
+	}
+
+	public ElementCollection getUniqueDocs_Subtally() {
+		return driver
+				.FindElementsByXPath("//table[@class='table table-striped dataGrid']/tbody/tr/td[@class='rowtotal']");
+	}
+
+	public ElementCollection getSubtallyTableheader() {
+		return driver.FindElementsByXPath("//table[@class='table table-striped dataGrid']/thead/tr/th");
+	}
+
 	public TallyPage(Driver driver) {
 
 		this.driver = driver;
 		dp = new DocListPage(driver);
-	//	this.driver.getWebDriver().get(Input.url + "Report/Tally");
+		// this.driver.getWebDriver().get(Input.url + "Report/Tally");
 
 		base = new BaseClass(driver);
 
@@ -425,7 +467,7 @@ public class TallyPage {
 
 		getTally_btnTallyAll().ScrollTo();
 		getTally_btnTallyAll().waitAndClick(30);
-        driver.scrollingToElementofAPage(getTally_tallyactionbtn());
+		driver.scrollingToElementofAPage(getTally_tallyactionbtn());
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_tallyactionbtn().Visible();
@@ -1080,9 +1122,10 @@ public class TallyPage {
 		}
 
 	}
-/**
- * @author Jayanthi.ganesan
- */
+
+	/**
+	 * @author Jayanthi.ganesan
+	 */
 	public void navigateTo_Tallypage() {
 		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		base.waitForElement(getTallyReport());
@@ -1090,11 +1133,12 @@ public class TallyPage {
 		base.stepInfo("Navigating to tally page");
 		driver.waitForPageToBeReady();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
 	public void SelectSource_SavedSearch(String saveSearch) {
-		base.stepInfo("**selecting source as search--"+saveSearch+"**");
+		base.stepInfo("**selecting source as search--" + saveSearch + "**");
 		base.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().Click();
 		base.waitForElement(getTally_Searches());
@@ -1107,17 +1151,17 @@ public class TallyPage {
 		base.waitForElement(getTally_SearchSaveSelections());
 		base.waitTime(2);
 		getTally_SearchSaveSelections().Click();
-		base.stepInfo("Selected "+saveSearch+" as source to generate tally report");
+		base.stepInfo("Selected " + saveSearch + " as source to generate tally report");
 	}
+
 	/**
-	  * @author Jayanthi.ganesan
-	  */
-	public String bulkRelease(String SG,boolean subtally) {
-		if(subtally) {
+	 * @author Jayanthi.ganesan
+	 */
+	public String bulkRelease(String SG, boolean subtally) {
+		if (subtally) {
 			base.waitForElement(getSubTallyBulkReleaseAction());
 			getSubTallyBulkReleaseAction().Click();
-		}
-		else {
+		} else {
 			base.waitForElement(getTallyBulkReleaseAction());
 			getTallyBulkReleaseAction().Click();
 		}
@@ -1129,10 +1173,11 @@ public class TallyPage {
 		base.waitForElement(getFinalizeButton());
 		getFinalizeButton().waitAndClick(20);
 		base.VerifySuccessMessageB("Records saved successfully");
-		base.stepInfo("performing bulk release for "+SG+" docs count is " + TotalDocs);
+		base.stepInfo("performing bulk release for " + SG + " docs count is " + TotalDocs);
 		return TotalDocs;
 
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param subtallyBy
@@ -1142,13 +1187,14 @@ public class TallyPage {
 		base.waitForElement(getSubTallyField());
 		base.waitTillElemetToBeClickable(getSubTallyField());
 		getSubTallyField().Click();
-		base.waitForElement( getTally_subMetadata());
+		base.waitForElement(getTally_subMetadata());
 		getTally_subMetadata().Click();
 		base.waitForElement(getTally_submetadataselect());
 		getTally_submetadataselect().selectFromDropdown().selectByVisibleText(subtallyBy);
-		base.waitForElement(getTally_btnSubTallyApply());			
+		base.waitForElement(getTally_btnSubTallyApply());
 		getTally_btnSubTallyApply().Click();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
@@ -1159,12 +1205,13 @@ public class TallyPage {
 		getTallyViewinDocViewBtn().waitAndClick(30);
 		base.stepInfo("Navigating from Tally page to view in doc view page.");
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
 
 	public void SelectSource_Assignment(String assignmentName) {
-		base.stepInfo("**Selecting source as Assignment --"+assignmentName+"**");
+		base.stepInfo("**Selecting source as Assignment --" + assignmentName + "**");
 		base.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().Click();
 		base.waitForElement(getTally_Assignments());
@@ -1179,11 +1226,12 @@ public class TallyPage {
 		base.waitTime(2);
 		getTally_assignSaveSelections().waitAndClick(15);
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
 	public void SelectSource_Folder(String folderName) {
-		base.stepInfo("**Selecting source as Folder--"+folderName+"**");
+		base.stepInfo("**Selecting source as Folder--" + folderName + "**");
 		base.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().Click();
 		base.waitForElement(getTally_Folders());
@@ -1198,11 +1246,12 @@ public class TallyPage {
 		base.waitForElement(getTally_foldersSaveSelections());
 		getTally_foldersSaveSelections().Click();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
 	public void SelectSource_SecurityGroup(String securityGroup) {
-		base.stepInfo("**Selecting source as security group --"+securityGroup+"**");
+		base.stepInfo("**Selecting source as security group --" + securityGroup + "**");
 		base.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().Click();
 		base.waitForElement(getTally_SecurityGroup());
@@ -1216,6 +1265,7 @@ public class TallyPage {
 		getTally_SGSaveSelections().ScrollTo();
 		getTally_SGSaveSelections().Click();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
@@ -1224,11 +1274,10 @@ public class TallyPage {
 			base.waitForElement(getTally_SelectaTallyFieldtoruntallyon());
 			base.waitTillElemetToBeClickable(getTally_SelectaTallyFieldtoruntallyon());
 			String actualFieldName = getTally_SelectaTallyFieldtoruntallyon().getText();
-			if(actualFieldName.equals("Metadata :"+expectedFieldName)) {
-				base.passedStep("Expected MetaData Field Name "+expectedFieldName+" Displayed in Tally By  MetaData Button.");
-			}
-			else 
-			{
+			if (actualFieldName.equals("Metadata :" + expectedFieldName)) {
+				base.passedStep("Expected MetaData Field Name " + expectedFieldName
+						+ " Displayed in Tally By  MetaData Button.");
+			} else {
 				base.failedStep("Expected MetaData Field Name is not Displayed");
 			}
 		} catch (Exception e) {
@@ -1236,33 +1285,33 @@ public class TallyPage {
 			base.failedStep("Exception occcured while validating tally by meta data field" + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Jayanthi.ganesan
-	 * @return 
+	 * @return
 	 */
 	public List<String> verifyTallyChart() {
-			base.waitForElement(getTallyChartRectbar());
-			base.waitTillElemetToBeClickable(getTallyChartRectbar());
-			getTallyChartRectbar().Displayed();
-			List<String> metaData = new ArrayList<String>();
-				if (getTallyChartRectbar().Displayed()) {
-					base.passedStep("Tally chart  displayed successfully");
-					metaData=base.availableListofElements(getTallyChartMetaData());
-					System.out.println(metaData);
-				}
-				else {
-					base.failedStep("Tally chart  not displayed");
-				}
-			
-return metaData;
+		base.waitForElement(getTallyChartRectbar());
+		base.waitTillElemetToBeClickable(getTallyChartRectbar());
+		getTallyChartRectbar().Displayed();
+		List<String> metaData = new ArrayList<String>();
+		if (getTallyChartRectbar().Displayed()) {
+			base.passedStep("Tally chart  displayed successfully");
+			metaData = base.availableListofElements(getTallyChartMetaData());
+			System.out.println(metaData);
+		} else {
+			base.failedStep("Tally chart  not displayed");
+		}
+
+		return metaData;
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param prjName
 	 */
 	public void selectSource_Project(String prjName) {
-		base.stepInfo("**Selecting source as project --"+prjName+"**");
+		base.stepInfo("**Selecting source as project --" + prjName + "**");
 		base.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().Click();
 		base.waitForElement(getTally_Projects());
@@ -1277,47 +1326,91 @@ return metaData;
 		base.waitTime(2);
 		getTally_PrjSaveSelections().waitAndClick(15);
 	}
-/**
- * @author Jayanthi.ganesan
- * @param i
- * @param name
- */
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param i
+	 * @param name
+	 */
 	public void selectSources_PA(int i, String name) {
-		if(i==0)
+		if (i == 0)
 			selectSource_Project(name);
-		if(i==1)		
+		if (i == 1)
 			SelectSource_Folder(name);
-		if(i==2)
+		if (i == 2)
 			SelectSource_SavedSearch(name);
-		if(i==3)
+		if (i == 3)
 			SelectSource_SecurityGroup(name);
-		
+
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param i
 	 * @param name
 	 */
 	public void selectSources_RMU(int i, String name) {
-		if(i==0)
+		if (i == 0)
 			SelectSource_Assignment(name);
-		if(i==1)
+		if (i == 1)
 			SelectSource_Folder(name);
-		if(i==2)
+		if (i == 2)
 			SelectSource_SavedSearch(name);
-		if(i==3)
+		if (i == 3)
 			SelectSource_SecurityGroup(name);
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
 	public void verifySourceSelected() {
-		if(getTally_SelectedSource().isElementAvailable(3)) {
+		if (getTally_SelectedSource().isElementAvailable(3)) {
 			base.passedStep("Source Selected get reflected.");
-			String sourceName=getTally_SelectedSource().getText();
-		}
-		else {
+			String sourceName = getTally_SelectedSource().getText();
+		} else {
 			base.failedStep("Source Selected Not reflected.");
 		}
+	}
+
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @return
+	 */
+	public int verifyDocCountBarChart() {
+		HashMap<String, String> DocCount_BarData = new HashMap<String, String>();
+		List<WebElement> elementList = null;
+		elementList = getDocs_Xaxis().FindWebElements();
+		for (WebElement webElementNames : elementList) {
+			String elementName = webElementNames.getText();
+			String width = webElementNames.getAttribute("x");
+			DocCount_BarData.put(width, elementName);
+		}
+		System.out.println(DocCount_BarData);
+		List<String> elementNames = new ArrayList<>();
+		List<WebElement> elementList1 = null;
+		elementList1 = getrectValues().FindWebElements();
+		for (WebElement webElementNames : elementList1) {
+			String width = webElementNames.getAttribute("width");
+			elementNames.add(width);
+		}
+		System.out.println(elementNames);
+		List<Integer> docCount = new ArrayList<>();
+		for (String ele : elementNames) {
+			String temp = DocCount_BarData.get(ele);
+			docCount.add(Integer.parseInt(temp));
+		}
+		System.out.println("From hashmap doc count extracted are" + docCount);
+		Integer sum = 0;
+		if (docCount == null || docCount.size() < 1) {
+			System.out.println("List size is zero");
+		} else {
+			for (int i : docCount) {
+				sum = sum + i;
+			}
+		}
+		System.out.println("List sum up" + sum);
+		base.stepInfo("Count of docs reflected in tally by report"+sum.toString());
+		return sum;
 	}
 }
