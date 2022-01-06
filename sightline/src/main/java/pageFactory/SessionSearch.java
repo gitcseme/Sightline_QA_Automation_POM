@@ -1383,7 +1383,10 @@ public class SessionSearch {
 	public Element getSearchName() {
 		return driver.FindElementByXPath("//div[@id='Basic']//span[@class='font-lg']");
 	}
-
+	public Element getExclamationTile(String tileName) {
+		return driver.FindElementByXPath("//a[@data-original-title='"+tileName+"']//i[@class='fa fa-exclamation-triangle'"
+				+ " and contains((@style), 'display: none')] ");
+	}
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -9171,5 +9174,28 @@ public class SessionSearch {
 
 		return pureHit;
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param SearchString
+	 * @param language
+	 */
+	public void verifyaudioSearchWarning(String SearchString, String language) {
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		getAdvancedSearchLink().waitAndClick(20);
+		base.waitForElement(getAs_Audio());
+		getAs_Audio().ScrollTo();
+		getAs_Audio().waitAndClick(10);
+		base.waitForElement(getAs_AudioLanguage());
+		getAs_AudioLanguage().selectFromDropdown().selectByVisibleText(language);
+		base.stepInfo("Selected Language as " + language);
+		driver.waitForPageToBeReady();
+		// Enter search string
+		base.waitForElement(getAs_AudioText());
+		getAs_AudioText().SendKeys(SearchString);
+		base.stepInfo("Entered a text in search text box" + SearchString);
+		base.waitForElement(getQuerySearchButton());
+		getQuerySearchButton().Click();
+		
+}
 
 }

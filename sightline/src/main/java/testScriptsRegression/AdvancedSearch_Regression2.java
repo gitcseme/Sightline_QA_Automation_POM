@@ -1,4 +1,4 @@
-package testScriptsRegression;
+ package testScriptsRegression;
 
 import java.awt.AWTException;
 import java.io.IOException;
@@ -824,6 +824,34 @@ public class AdvancedSearch_Regression2 {
 			baseClass.passedStep("Sucessfully verified whether Saved Search Name with < 500 chars is truncating on edit search page");
 		//savedSearch.SaveSearchDelete(savedSearchName);
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	@Test(dataProvider = "Users", groups = { "regression" }, priority = 19,enabled=false)
+	public void audioSearch_warningTile(String username, String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-47151");
+		baseClass.stepInfo("Verify that warning should be displayed for search results when audio docs searched with German/Japanese characters and"
+				+ " selected language is other than German/Japanese");
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged in as "+username);
+		search.verifyaudioSearchWarning("grün",Input.language);
+		baseClass.waitTime(3);
+		baseClass.stepInfo("Entered a german text and selected language as "+Input.language);
+		driver.getWebDriver().navigate().refresh();
+		String eleValue[]= {"Docs That Met Your Criteria","Threaded Documents","Near Duplicates","Family Members"};
+		driver.scrollingToBottomofAPage();
+		for(int i=0;i<eleValue.length;i++) {
+			if(search.getExclamationTile(eleValue[i]).isElementAvailable(0)) {
+				baseClass.failedStep("Warning Tile icon is not displayed as expected ");
+			}
+			else {
+				baseClass.passedStep("Warning Tile icon is displayed as expected ");
+				baseClass.passedStep("Sucessfully Verified that whther warning should be displayed for search results when audio docs searched with German/Japanese "
+						+ "characters and selected language is other than German/Japanese");
+				
+			}
+		}
+			}
 
 	@DataProvider(name = "AudioSearchwithUsers")
 	public Object[][] AudioSearchwithUsers() {
