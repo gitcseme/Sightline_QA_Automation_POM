@@ -1275,7 +1275,7 @@ public class DocView_Redactions_Regression {
 	 * DocView as RMU and REV
 	 * 
 	 */
-//	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 34)
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 34)
 	public void verifyPersistentHitNavigation2() throws Exception {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1288,9 +1288,10 @@ public class DocView_Redactions_Regression {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.docIdKeyWordTest);
 		sessionsearch.bulkAssign();
-		assignmentspage.createAssignmentNew(assignmentName, Input.codeFormName);
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentspage.assignmentDistributingToReviewer();
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
-
+	
 // Checking persistent hits and keywords in DocView		
 		docViewRedact.checkingPersistentHitPanel();
 		baseClass.waitForElement(docViewRedact.get_textHighlightedColor());
@@ -1345,7 +1346,7 @@ public class DocView_Redactions_Regression {
 	 * from persistent hit panel from basic search
 	 */
 
-//	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 33)
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 33)
 	public void verifyPersistentHitNavigation() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51445");
@@ -1409,7 +1410,7 @@ public class DocView_Redactions_Regression {
 	 * Id:RPMXCON-47723 From Audio search go to DocView Create Redaction in Audio
 	 * Docs
 	 */
-//	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 35)
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 35)
 	public void verifyRedactionInAudioDocs() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-47723");

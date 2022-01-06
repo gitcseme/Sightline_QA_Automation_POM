@@ -4371,38 +4371,31 @@ public class SessionSearch {
 	}
 
 	/**
-	 * @Author Jeevitha
-	 * 
-	 */
+	* @Author Jeevitha
+	* #Stabilized
+	*/
 	public String checkBatchRedactionCount() {
-		DocViewPage docviewpage = new DocViewPage(driver);
-		try {
-			docviewpage.getDocumentId2().waitAndClick(20);
-		} catch (Exception e) {
+	DocViewPage docviewpage = new DocViewPage(driver);
+	driver.WaitUntil((new Callable<Boolean>() {
+	public Boolean call() {
+	return getRedactBtn().Visible();
+	}
+	}), Input.wait30);
+	getRedactBtn().waitAndClick(10);
 
-		}
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getRedactBtn().Visible();
-			}
-		}), Input.wait30);
-		getRedactBtn().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getBatchRedactionCount().Visible();
-			}
-		}), Input.wait30);
-		System.out.println(getBatchRedactionCount().getText());
-		System.out.println(getSearchElementCount().getText());
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTrashCanIcon().Visible();
-			}
-		}), Input.wait30);
-		return getBatchRedactionCount().getText();
+	driver.WaitUntil((new Callable<Boolean>() {
+	public Boolean call() {
+	return getBatchRedactionCount().Visible();
+	}
+	}), Input.wait30);
+	System.out.println(getBatchRedactionCount().getText());
+	System.out.println(getSearchElementCount().getText());
+	driver.WaitUntil((new Callable<Boolean>() {
+	public Boolean call() {
+	return getTrashCanIcon().Visible();
+	}
+	}), Input.wait30);
+	return getBatchRedactionCount().getText();
 
 	}
 
