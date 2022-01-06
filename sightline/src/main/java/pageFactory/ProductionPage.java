@@ -1326,7 +1326,7 @@ public class ProductionPage {
 
 	public Element getClkCheckBox_defaultRedactionTag() {
 		return driver.FindElementByXPath(
-				"(//ul[@class='jstree-children']//a[@data-content='Default Redaction Tag'])[3]");
+				"(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])[1]");
 	}
 
 	public Element getClkLink_selectingRedactionTags() {
@@ -4892,7 +4892,8 @@ public class ProductionPage {
 		getClkBtn_selectingRedactionTags().waitAndClick(10);
 
 		base.waitForElement(getClkCheckBox_selectingRedactionTags());
-		getClkCheckBox_selectingRedactionTags().Click();
+		getClkCheckBox_selectingRedactionTags().isDisplayed();
+		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
 
 		base.waitForElement(getRedactionWithoutRedactionTagsCheckbox());
 		getRedactionWithoutRedactionTagsCheckbox().Click();
@@ -4905,7 +4906,6 @@ public class ProductionPage {
 		Thread.sleep(1000);
 		getRedactedTagTextArea().SendKeys("Updated Redaction Tag");
 	}
-
 	/**
 	 * @Author Indium-Sowndarya.Velraj
 	 */
@@ -5537,17 +5537,19 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @Author Indium-Sowndarya.Velraj
+	 * @Author Indium-Sowndarya.Velraj.Modified on 01/06/22
+	 * @param beginningBates added  as a argument to avoid production failure in batch run
 	 */
-	public void fillingNumberingAndSortingPage(String prefixId, String suffixId) throws InterruptedException {
+	public void fillingNumberingAndSortingPage(String prefixId, String suffixId,String beginningBates) throws InterruptedException {
 
 		base.waitForElement(getBeginningBates());
 		driver.waitForPageToBeReady();
 		getBeginningBates().waitAndClick(10);
-		num=getRandomNumber(2);
-		System.out.println("Beginning Bates="+num);
-		getBeginningBates().SendKeys(getRandomNumber(2));
-		
+		getBeginningBates().SendKeys(beginningBates);
+		num = getRandomNumber(2);
+//		System.out.println("Beginning Bates=" + num);
+//		getBeginningBates().SendKeys(getRandomNumber(2));
+
 		base.waitForElement(gettxtBeginningBatesIDPrefix());
 		gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
 
@@ -5557,7 +5559,7 @@ public class ProductionPage {
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
 		num1 = getRandomNumber(1);
-		System.out.println("Beginning BatesID Min Num Length="+num1);
+		System.out.println("Beginning BatesID Min Num Length=" + num1);
 		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
 
 		driver.scrollingToBottomofAPage();
@@ -6263,14 +6265,16 @@ public class ProductionPage {
 		base.stepInfo("Navigate to next page");
 	}
 
+
 	/**
 	 * @throws InterruptedException
-	 * @Author Indium-Sowndarya.Velraj
+	 * @Author Indium-Sowndarya.Velraj.Modified on 01/06/22
+	 * @param beginningBates added  as a argument to avoid production failure in batch run
 	 */
 	public void InsertingDataFromNumberingToGenerateWithContinuePopup(String prefixID, String suffixID,
-			String foldername, String productionname) throws InterruptedException {
+			String foldername, String productionname,String beginningBates) throws InterruptedException {
 
-		fillingNumberingAndSortingPage(prefixID, suffixID);
+		fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		navigateToNextSection();
 		fillingDocumentSelectionPage(foldername);
 		navigateToNextSection();
@@ -6959,60 +6963,29 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @Author Indium-Sowndarya.Velraj
+	 * @Author Indium-Sowndarya.Velraj.Modified on 01/06/22
 	 */
 	public void prodGenerationInProgressStatus() throws InterruptedException {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Enabled();
-			}
-		}), Input.wait30);
-		getFilterByButton().waitAndClick(5);
-		base.stepInfo("Filtering the failed production");
+		base.stepInfo("Filtering IN progress status production");
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByDRAFT().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByDRAFT());
 		getFilterByDRAFT().waitAndClick(5);
 		base.stepInfo("Removing filter by draft");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByFAILED().Enabled();
-			}
-		}), Input.wait30);
-		getFilterByFAILED().waitAndClick(5);
+		base.waitForElement(getFilterByFAILED());
+		getFilterByFAILED().waitAndClick(10);
 		base.stepInfo("Removing filter by failed");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterDropDown().Enabled();
-			}
-		}), Input.wait30);
-		getFilterDropDown().waitAndClick(5);
-
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return gettxtPostGenCompleted().Enabled();
-				}
-			}), Input.wait30);
-			base.stepInfo("In Progress production displays");
-
-			String InProgressMsg = gettxtProdGenerationFailed().getText();
-			base.passedStep("verifing the In Progress status :" + InProgressMsg);
-			Assert.assertTrue(true, InProgressMsg);
-		} catch (Exception e) {
-			base.passedStep("No InProgress production occurs");
-		}
+		base.waitForElement(getFilterDropDown());
+		getFilterDropDown().waitAndClick(10);
 
 	}
 
 	/**
-	 * @Author Indium-Sowndarya.Velraj
+	 * @Author Indium-Sowndarya.Velraj.Modified on 01/06/22
 	 */
 	public void prodReservingBatesRangeFailedProduction() throws InterruptedException {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -7312,11 +7285,12 @@ public class ProductionPage {
 	/**
 	 * @throws InterruptedException
 	 * @Author Indium-Sowndarya.Velraj
+	 * @param beginningBates added  as a argument to avoid production failure in batch run
 	 */
 	public void InsertingDataFromNumberingToGenerate(String prefixID, String suffixID, String foldername,
-			String productionname) throws InterruptedException {
+			String productionname,String beginningBates ) throws InterruptedException {
 
-		fillingNumberingAndSortingPage(prefixID, suffixID);
+		fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		navigateToNextSection();
 		fillingDocumentSelectionPage(foldername);
 		navigateToNextSection();
@@ -8447,19 +8421,15 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @Author Indium-Sowndarya.Velraj
+	 * @Author Indium-Sowndarya.Velraj.Modified on 01/06/22
 	 */
 	public void DraftAssertionInGeneratePage() throws InterruptedException {
 
 		SoftAssert softAssertion = new SoftAssert();
 		String expectedText = "Draft";
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
-			}
-		}), Input.wait30);
-		getbtnProductionGenerate().Click();
+		base.waitForElement(getbtnProductionGenerate());
+		getbtnProductionGenerate().waitAndClick(10);
 
 		Reporter.log("Wait for generate to complete", true);
 		System.out.println("Wait for generate to complete");
@@ -8477,7 +8447,6 @@ public class ProductionPage {
 		base.passedStep("Draft Displayed successfully");
 
 	}
-
 	/**
 	 * @Author Indium-Sowndarya.Velraj
 	 */
@@ -11123,7 +11092,6 @@ public class ProductionPage {
 	 * @Author Indium-Sowndarya.Velraj
 	 */
 	public void AssertionUnCommitInQCPage() throws InterruptedException {
-
 		SoftAssert softAssertion = new SoftAssert();
 		String expectedText = "Success";
 
@@ -11132,7 +11100,13 @@ public class ProductionPage {
 				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
 			}
 		}), Input.wait30);
-		getbtnProductionGenerate().Click();
+		getbtnProductionGenerate().waitAndClick(10);
+
+		getbtnContinueGeneration().isElementAvailable(150);
+		if (getbtnContinueGeneration().isDisplayed()) {
+			base.waitForElement(getbtnContinueGeneration());
+			getbtnContinueGeneration().waitAndClick(10);
+		}
 
 		Reporter.log("Wait for generate to complete", true);
 		System.out.println("Wait for generate to complete");
@@ -11148,33 +11122,21 @@ public class ProductionPage {
 
 		softAssertion.assertTrue(actualText.contains(expectedText));
 		base.passedStep("Documents Generated successfully");
+//		try {
+		// commiting the production
+		base.waitForElement(getConfirmProductionCommit());
+		getConfirmProductionCommit().waitAndClick(5);
+		base.waitTime(5);
+		driver.Navigate().refresh();
 
-		try {
-			// commiting the production
-			base.waitForElement(getConfirmProductionCommit());
-			getConfirmProductionCommit().waitAndClick(5);
-			Thread.sleep(5000);
-			driver.Navigate().refresh();
+		// uncommit
+		base.waitForElement(getConfirmProductionUnCommit());
+		getConfirmProductionUnCommit().waitAndClick(5);
+		base.waitTime(5);
 
-			// uncommit
-			base.waitForElement(getConfirmProductionUnCommit());
-			getConfirmProductionUnCommit().waitAndClick(5);
-			Thread.sleep(5000);
-
-			// Go back to Quality check page
-			base.waitForElement(getBackButton());
-			getBackButton().waitAndClick(5);
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.waitTillElemetToBeClickable(getConfirmProductionUnCommit());
-			getConfirmProductionUnCommit().waitAndClick(5);
-			Thread.sleep(5000);
-
-			// Go back to Quality check page
-			base.waitForElement(getBackButton());
-			getBackButton().waitAndClick(5);
-		}
-
+		// Go back to Quality check page
+		base.waitForElement(getBackButton());
+		getBackButton().waitAndClick(5);
 	}
 
 	/**
