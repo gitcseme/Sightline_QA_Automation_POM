@@ -6413,6 +6413,7 @@ public class DocViewPage {
 					getDocView_DocId(docId).waitAndClick(15);
 					softAssertion.assertTrue(getDocView_DocId(docId).isDisplayed());
 					base.passedStep("Doc is selected from MiniDoclist successfully");
+					softAssertion.assertAll();
 					break;
 
 				} catch (Exception e) {
@@ -15464,7 +15465,8 @@ public class DocViewPage {
 		getDocView_Analytics_FamilyTab().waitAndClick(10);
 
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
-		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+		driver.getPageSource();
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
 		base.waitForElement(getDocView_FamilyCodeSameAs());
 
 		softAssertion.assertFalse(getDocView_FamilyCodeSameAs().getWebElement().isSelected());
@@ -15474,6 +15476,8 @@ public class DocViewPage {
 		} else {
 			base.passedStep("Code same as last not clcikable in Analytical Panel");
 		}
+		
+		softAssertion.assertAll();
 
 	}
 
@@ -15834,8 +15838,6 @@ public class DocViewPage {
 		softAssertion.assertNotEquals(currentDocId1, currentDocId2);
 		base.passedStep(
 				"Next document of the main viewing document from the mini doc list is viewed in doc view panel successfully");
-		softAssertion.assertAll();
-
 		driver.waitForPageToBeReady();
 		base.waitForElement(getLastCodeSameAsIcon());
 		getLastCodeSameAsIcon().waitAndClick(10);
@@ -15849,6 +15851,8 @@ public class DocViewPage {
 		} else {
 			base.passedStep("The two MiniDocs Documents comments are Not Same");
 		}
+		
+		softAssertion.assertAll();
 
 	}
 
@@ -15869,11 +15873,13 @@ public class DocViewPage {
 		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
 		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
 
+		driver.getPageSource();
 		base.waitForElement(getDocView_Analytics_Conceptual_ThirdDoc());
-		getDocView_Analytics_Conceptual_ThirdDoc().waitAndClick(10);
+		getDocView_Analytics_Conceptual_ThirdDoc().waitAndClick(15);
+		driver.getPageSource();
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
-
+		driver.getPageSource();
 		base.waitForElement(getDocView_Analytics_Concept_Similar_CodeSameAs());
 		getDocView_Analytics_Concept_Similar_CodeSameAs().waitAndClick(10);
 		base.VerifySuccessMessage("Code same performed successfully.");
@@ -15883,7 +15889,7 @@ public class DocViewPage {
 				return geDocView_ConceptuallySimilar_CodeSameAsIcon().Displayed();
 			}
 		}), Input.wait30);
-		softAssertion.assertEquals(geDocView_ConceptuallySimilar_CodeSameAsIcon().Displayed().booleanValue(), true,
+		softAssertion.assertEquals(geDocView_ConceptuallySimilar_CodeSameAsIcon().isDisplayed(), true,
 				"1");
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -15894,7 +15900,9 @@ public class DocViewPage {
 
 		codeSameDocumentid = getConceptDocumentWhichHasCodeSameIcon().getText();
 
-		softAssertion.assertEquals(getCodeSameIconMiniDocList().Displayed().booleanValue(), true, "2");
+		softAssertion.assertEquals(getCodeSameIconMiniDocList().isDisplayed(), true, "2");
+		
+		softAssertion.assertAll();
 
 	}
 
@@ -19327,6 +19335,7 @@ public class DocViewPage {
 
 	}
 	
+
 	/**
 	 * @Author Jeevitha
 	 * @return

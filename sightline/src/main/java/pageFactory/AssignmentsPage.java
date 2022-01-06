@@ -6039,12 +6039,13 @@ public class AssignmentsPage {
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFamilyDocumentsIncludeToggleButton().Visible()
-						&& getFamilyDocumentsIncludeToggleButton().isDisplayed();
-			}
-		}), Input.wait60);
+//		driver.WaitUntil((new Callable<Boolean>() {
+//			public Boolean call() {
+//				return getFamilyDocumentsIncludeToggleButton().Visible()
+//						&& getFamilyDocumentsIncludeToggleButton().isDisplayed();
+//			}
+//		}), Input.wait60);
+		bc.waitForElement(getFamilyDocumentsIncludeToggleButton());
 
 		getFamilyDocumentsIncludeToggleButton().Click();
 

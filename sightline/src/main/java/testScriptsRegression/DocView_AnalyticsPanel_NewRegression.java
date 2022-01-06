@@ -15,9 +15,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import com.mysql.cj.xdevapi.SessionFactory;
-
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
@@ -522,8 +519,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 		docView = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected =Input.newNearDupeDocId;
-		String revDocToBeSelected =Input.conceptualDocs1;
+		String docsToBeSelected =Input.conceptualDocs1;
+		String revDocToBeSelected =Input.newNearDupeDocId;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		// Basic Search and select the pure hit count
@@ -1001,10 +998,10 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description : Verify check mark icon should be displayed when document is
 	 * completed after selecting 'Code same as this' action' from Analytics Panel >
 	 * Near Dupe.'RPMXCON-51058' Sprint : 7
-	 * 
+	 *  [Near dupe]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	//@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyCheckMarkIconDisplayedTheNearDupe() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51058");
@@ -1199,7 +1196,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16) 
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16) 
 	public void verifyUserCanSelectRemoveCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1342,7 +1339,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
 	public void verifyUserEditCodingFormMainDocAndActionCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51222");
@@ -1787,7 +1784,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 24)
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 24)
 	public void verifyEditsCodingFormSelectActionCodeSameAsFromFamilyMember(String fullName, String userName,
 			String password) throws InterruptedException {
 
