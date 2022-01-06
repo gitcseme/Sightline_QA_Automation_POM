@@ -1463,8 +1463,22 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@id='001']//i[contains(@class,'addTile')]");
 
 	}
+	
+	public Element getCfCheckBox() {
+		return driver.FindElementByXPath("//*[@id='divParentCodingForm']//div[@class='check-group']//label");
+
+	}
+	
+	public Element getStaticText() {
+		return driver.FindElementByXPath("//span[text()='Static Text']");
+	}
 
 	// Added by Mohan
+	public Element getDocView_Analytics_FamilyViewAllDocsBtn() {
+		return driver
+				.FindElementById("btnShowAllFamilymemeber");
+	}
+	
 	
 	public Element getDocView_Analytics_FamilyMember_Text(int rowno) {
 		return driver
@@ -2486,7 +2500,6 @@ public class DocViewPage {
 		public Element getTranslationDropdown() {
 			return driver.FindElementByXPath("//ul[@id='Tra-dropDown']");
 		}
-	
 		public ElementCollection getHighlightedKeywords() {
 			return driver.FindElementsByCssSelector("rect[style*='fill'][style*='rgb(0, 255, 255)']");
 		}
@@ -2527,31 +2540,7 @@ public class DocViewPage {
 			return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[" + rowno + "]/td[1]/label/i ");
 		}
 
-		public Element getDocView_Analytics_FamilyViewAllDocsBtn() {
-			return driver.FindElementById("btnShowAllFamilymemeber");
-		}
-		// Added by sakthivel
-		public Element getCfCheckBox() {
-			return driver.FindElementByXPath("//*[@id='divParentCodingForm']//div[@class='check-group']//label");
 
-		}
-
-		public Element getCfText() {
-			return driver.FindElementByXPath("//label//h4[@id='lblCodingFormName']");
-
-		}
-
-		public Element getHelpText() {
-			return driver.FindElementByXPath("//span[text()='Help Text']");
-		}
-
-		public Element getStaticText() {
-			return driver.FindElementByXPath("//span[text()='Static Text']");
-		}
-
-		public Element getAttachCountText() {
-			return driver.FindElementByXPath("//span[text()='AttachCount']");
-		}
 		
 	public DocViewPage(Driver driver) {
 
@@ -6268,8 +6257,9 @@ public class DocViewPage {
 		try {
 
 			base.waitForElement(geDocView_NearDupe_CodeSameAsIcon());
-			softAssertion.assertEquals(geDocView_NearDupe_CodeSameAsIcon().Displayed().booleanValue(), true);
-			System.err.println("Link" + geDocView_NearDupe_CodeSameAsIcon().Displayed().booleanValue());
+			softAssertion.assertEquals(geDocView_NearDupe_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+			softAssertion.assertAll();
+			System.err.println("Link" + geDocView_NearDupe_CodeSameAsIcon().isDisplayed().booleanValue());
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Code Same As icon is not displayed");
@@ -6334,7 +6324,8 @@ public class DocViewPage {
 		getDocView_ChildWindow_ActionButton().Click();
 
 		base.waitForElement(getViewInDocListAnalyticalDropDown());
-		softAssertion.assertFalse(getViewInDocListAnalyticalDropDown().Displayed());
+		softAssertion.assertTrue(getViewInDocListAnalyticalDropDown().isDisplayed());
+		softAssertion.assertAll();
 		base.passedStep(
 				"To verify 'View in doc list' action when no document in Threaded Map panel has been verified successfully");
 
@@ -6437,8 +6428,8 @@ public class DocViewPage {
 					base.waitForElement(getDocView_DocId(docId));
 					getDocView_DocId(docId).waitAndClick(15);
 					softAssertion.assertTrue(getDocView_DocId(docId).isDisplayed());
-					base.passedStep("Doc is selected from MiniDoclist successfully");
 					softAssertion.assertAll();
+					base.passedStep("Doc is selected from MiniDoclist successfully");
 					break;
 
 				} catch (Exception e) {
@@ -6694,39 +6685,48 @@ public class DocViewPage {
 	/**
 	 * @author jeevitha Description: Verifies Redaction Panel Modified by-jayanthi
 	 *         17/11/21
-	 *         #stabilized
 	 */
 	public void verifyRedactionPanel() {
+
 		this.driver.getWebDriver().get(Input.url + "DocumentViewer/DocView");
-		driver.WaitUntil((new Callable<Boolean>() {
-		public Boolean call() {
-		return getDocView_RedactIcon().Visible();
+		try {
+			base.waitForElement(getDocumentId2());
+			getDocumentId2().waitAndClick(20);
+		} catch (Exception e) {
+
 		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_RedactIcon().Visible();
+			}
 		}), Input.wait60);
 		getDocView_RedactIcon().waitAndClick(10);
 		driver.WaitUntil((new Callable<Boolean>() {
-		public Boolean call() {
-		return getDocView_AllRedaction().Visible();
-		}
+			public Boolean call() {
+				return getDocView_AllRedaction().Visible();
+			}
 		}), Input.wait60);
+
 		System.out.println(getDocView_AllRedaction().getWebElement().getText() + " : "
-		+ getDocView_AllRedactionCount().getWebElement().getText());
+				+ getDocView_AllRedactionCount().getWebElement().getText());
 		UtilityLog.info(getDocView_AllRedaction().getWebElement().getText() + " : "
-		+ getDocView_AllRedactionCount().getWebElement().getText());
+				+ getDocView_AllRedactionCount().getWebElement().getText());
 		softAssertion.assertEquals(getDocView_AllRedaction().Displayed().booleanValue(), true);
 		base.ValidateElementCollection_Presence(getDocView_BatchRedaction(),
-		"Batch Redaction menu displayed in redaction panel");
+				"Batch Redaction menu displayed in redaction panel");
 		base.ValidateElement_Presence(getDocView_AllRedactionCount(), "All redaction count");
 		base.ValidateElement_Presence(getDocView_BatchRedactionCount(), "Batch Redaction count");
 		softAssertion.assertAll();
 		base.passedStep("All Redactions menu is displayedin redaction panel");
 		List<WebElement> batchRedaction = getDocView_BatchRedaction().FindWebElements();
 		for (int k = 0; k < batchRedaction.size(); k++) {
-		System.out.print(batchRedaction.get(k).getText());
+			System.out.print(batchRedaction.get(k).getText());
 		}
 		System.out.print(" : " + getDocView_BatchRedactionCount().getWebElement().getText());
 		UtilityLog.info("Count : " + getDocView_BatchRedactionCount().getWebElement().getText());
-		}
+
+	}
 
 	/**
 	 * @author Indium-Baskar date: 14/09/2021 Modified date: NA
@@ -6789,7 +6789,8 @@ public class DocViewPage {
 			getDocView_Analytics_liDocumentThreadMap().Click();
 
 			base.waitForElement(getDocView_Analytics_NoQuery());
-			softAssertion.assertTrue(getDocView_Analytics_NoQuery().Displayed());
+			softAssertion.assertTrue(getDocView_Analytics_NoQuery().isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep("Message is displayed as 'Your query returned no data' successfully");
 
 		} catch (Exception e) {
@@ -6824,7 +6825,8 @@ public class DocViewPage {
 			getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 			base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
 
-			softAssertion.assertTrue(getDocView_Analytics_liDocumentThreadMap().Displayed());
+			softAssertion.assertTrue(getDocView_Analytics_liDocumentThreadMap().isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep(
 					"Default 20 documents are displayed on thread map analytics panel.  Link to 'View All' documents is enabled successfully");
 
@@ -6832,7 +6834,8 @@ public class DocViewPage {
 			base.waitForElement(getDocView_Analytics_ThreadMap20PlusDocs());
 			driver.waitForPageToBeReady();
 			getDocView_Analytics_ThreadMap20PlusDocs().waitAndClick(5);
-			softAssertion.assertTrue(getDocView_Analytics_ThreadMap20PlusDocs().Displayed());
+			softAssertion.assertTrue(getDocView_Analytics_ThreadMap20PlusDocs().isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep("All threaded documents is load in the thread map tab/panel successfully");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -6862,7 +6865,8 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			for (int i = 2; i <= 2; i++) {
 				getDocView_Analytics_ThreadMap_DocId(i).ScrollTo();
-				softAssertion.assertTrue(getDocView_Analytics_ThreadMap_DocId(i).Displayed());
+				softAssertion.assertTrue(getDocView_Analytics_ThreadMap_DocId(i).isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep("Threaded documents for the selected document is displayed successfully");
 			}
 		} catch (Exception e) {
@@ -6889,7 +6893,8 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			for (int i = 2; i <= 2; i++) {
 				getDocView_Analytics_ThreadMap_DocId(i).ScrollTo();
-				softAssertion.assertTrue(getDocView_Analytics_ThreadMap_DocId(i).Displayed());
+				softAssertion.assertTrue(getDocView_Analytics_ThreadMap_DocId(i).isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep("Threaded documents for the selected document is displayed successfully");
 			}
 		} catch (Exception e) {
@@ -6950,14 +6955,16 @@ public class DocViewPage {
 			getDocView_ChildWindow_ActionButton().waitAndClick(5);
 
 			base.waitForElement(getAnalyticalDropDown());
-			softAssertion.assertTrue(getAnalyticalDropDown().Displayed());
+			softAssertion.assertTrue(getAnalyticalDropDown().isDisplayed());
+			softAssertion.assertAll();
 			getAnalyticalDropDown().waitAndClick(5);
 			base.stepInfo("'View Document' action is displayed on thread map successfully");
 
 			driver.scrollPageToTop();
 
 			base.waitForElement(getDocView_CurrentDocId());
-			softAssertion.assertTrue(getDocView_CurrentDocId().Displayed());
+			softAssertion.assertTrue(getDocView_CurrentDocId().isDisplayed());
+			softAssertion.assertAll();
 			base.stepInfo(
 					"On selecting document and view document action from thread map is displayed in doc view panel with complete DocID successfully");
 			base.passedStep("Both the DocIds are verified successfully");
@@ -7000,7 +7007,8 @@ public class DocViewPage {
 			js.executeScript("window.scroll(" + p1.getX() + "," + (p1.getY() - 400) + ");");
 //			getDocView_Analytics_NearDupeTab().ScrollTo();
 			getDocView_Analytics_NearDupeTab().waitAndClick(10);
-			softAssertion.assertTrue(getDocView_Analytics_NearDupeTab().Displayed());
+			softAssertion.assertTrue(getDocView_Analytics_NearDupeTab().isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep(
 					"Navigates to other  document from Mini doc list and verify analytics panel is done Successfully");
 		} catch (Exception e) {
@@ -7040,7 +7048,8 @@ public class DocViewPage {
 			getDocView_Analytics_liDocumentThreadMap().Click();
 
 			base.waitForElement(getDocView_Analytics_NoQuery());
-			softAssertion.assertTrue(getDocView_Analytics_NoQuery().Displayed());
+			softAssertion.assertTrue(getDocView_Analytics_NoQuery().isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep("Message is displayed as 'Your query returned no data' successfully");
 
 		} catch (Exception e) {
@@ -7079,7 +7088,8 @@ public class DocViewPage {
 			act.release(source);
 			act.build().perform();
 
-			softAssertion.assertTrue(getDocView_Analytics_liDocumentThreadMap().Displayed());
+			softAssertion.assertTrue(getDocView_Analytics_liDocumentThreadMap().isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep("Drag and place the analytics panel is done successfully");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -7107,11 +7117,13 @@ public class DocViewPage {
 			base.waitForElement(getDocView_Analytics_ThreadMap_EmailDocs(21));
 			getDocView_Analytics_ThreadMap_EmailDocs(21).ScrollTo();
 			getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(5);
-				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
+				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep(
 						"Document is selected with the checked checkbox and horizontal scroll bar is continue to be at the same position that it was when the document was selected.");
 				getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(7);
-				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
+				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).isDisplayed());
+				softAssertion.assertAll();
 				base.stepInfo(
 						"Document is unchecked after moving scroll bar to right then horizontal scroll bar is at same position it was when document was unchecked.");
 			
@@ -7158,11 +7170,13 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			getDocView_Analytics_ThreadMap_EmailDocs(21).ScrollTo();
 			getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(10);
-			softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
+			softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep(
 					"Document is selected with the checked checkbox and horizontal scroll bar is continue to be at the same position that it was when the document was selected.");
 			getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(5);
-			softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
+			softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).isDisplayed());
+			softAssertion.assertAll();
 			base.stepInfo(
 					"Document is unchecked after moving scroll bar to right then horizontal scroll bar is at same position it was when document was unchecked.");
 			
@@ -7214,20 +7228,21 @@ public class DocViewPage {
 				}
 			}
 
-			String analyticsWindowID = driver.getWebDriver().getWindowHandle();
 
-			for (int j = 11; j <= 11; j++) {
+		
 				driver.waitForPageToBeReady();
-				getDocView_Analytics_ThreadMap_EmailDocs(j).ScrollTo();
-				getDocView_Analytics_ThreadMap_EmailDocs(j).waitAndClick(10);
-				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
+				getDocView_Analytics_ThreadMap_EmailDocs(21).ScrollTo();
+				getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(10);
+				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep(
 						"Document is selected with the checked checkbox and horizontal scroll bar is continue to be at the same position that it was when the document was selected.");
-				getDocView_Analytics_ThreadMap_EmailDocs(j).waitAndClick(5);
-				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).Displayed());
+				getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(5);
+				softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).isDisplayed());
+				softAssertion.assertAll();
 				base.stepInfo(
 						"Document is unchecked after moving scroll bar to right then horizontal scroll bar is at same position it was when document was unchecked.");
-			}
+		
 
 			driver.switchTo().window(parentWindowID);
 
@@ -7861,17 +7876,14 @@ public class DocViewPage {
 	 */
 	public void verifyWhetherCodeSameIconIsDisplayedInOtherTabs() throws InterruptedException {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocView_Analytics_liDocumentThreadMap().Displayed();
-			}
-		}), Input.wait30);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 		driver.waitForPageToBeReady();
 
 		try {
 			if (getCodeSameIconThreadTab().isDisplayed())
-				softAssertion.assertEquals(getCodeSameIconThreadTab().Displayed().booleanValue(), true, "3");
+				softAssertion.assertEquals(getCodeSameIconThreadTab().isDisplayed().booleanValue(), true, "3");
 		} catch (Exception e) {
 			base.stepInfo("Selected Document is not available under Thread tab");
 		}
@@ -7885,7 +7897,7 @@ public class DocViewPage {
 
 		try {
 			if (getCodeSameIconFamilyTab().isDisplayed())
-				softAssertion.assertEquals(getCodeSameIconFamilyTab().Displayed().booleanValue(), true, "4");
+				softAssertion.assertEquals(getCodeSameIconFamilyTab().isDisplayed().booleanValue(), true, "4");
 		} catch (Exception e) {
 			base.stepInfo("Selected Document is not available under Family tab");
 		}
@@ -7899,20 +7911,16 @@ public class DocViewPage {
 
 		try {
 			if (getCodeSameIconNearDupeTab().isDisplayed())
-				softAssertion.assertEquals(getCodeSameIconNearDupeTab().Displayed().booleanValue(), true, "5");
+				softAssertion.assertEquals(getCodeSameIconNearDupeTab().isDisplayed().booleanValue(), true, "5");
 		} catch (Exception e) {
 			base.stepInfo("Selected Document is not available under Near Dupe tab");
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocView_Analytics_liDocumentConceptualSimilarab().Displayed();
-			}
-		}), Input.wait60);
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
 		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		try {
 			if (getCodeSameIconConceptTab().isDisplayed())
-				softAssertion.assertEquals(getCodeSameIconConceptTab().Displayed().booleanValue(), true, "6");
+				softAssertion.assertEquals(getCodeSameIconConceptTab().isDisplayed().booleanValue(), true, "6");
 		} catch (Exception e) {
 			base.stepInfo("Selected Document is not available under Conceptual tabss");
 		}
@@ -7933,7 +7941,7 @@ public class DocViewPage {
 
 		try {
 			if (getCodeCompleteIconThreadTab().isDisplayed())
-				softAssertion.assertEquals(getCodeCompleteIconThreadTab().Displayed().booleanValue(), true, "7");
+				softAssertion.assertEquals(getCodeCompleteIconThreadTab().isDisplayed().booleanValue(), true, "7");
 		} catch (Exception e) {
 			base.stepInfo("Selected Document is not available under Thread tabs");
 		}
@@ -7947,7 +7955,7 @@ public class DocViewPage {
 
 		try {
 			if (getCodeCompleteIconFamilyTab().isDisplayed())
-				softAssertion.assertEquals(getCodeCompleteIconFamilyTab().Displayed().booleanValue(), true, "8");
+				softAssertion.assertEquals(getCodeCompleteIconFamilyTab().isDisplayed().booleanValue(), true, "8");
 		} catch (Exception e) {
 			base.stepInfo("Selected Document is not available under Family tabss");
 		}
@@ -7961,22 +7969,17 @@ public class DocViewPage {
 
 		try {
 			if (getCodeCompleteIconNearDupeTab().isDisplayed())
-				softAssertion.assertEquals(getCodeCompleteIconNearDupeTab().Displayed().booleanValue(), true, "9");
+				softAssertion.assertEquals(getCodeCompleteIconNearDupeTab().isDisplayed().booleanValue(), true, "9");
 		} catch (Exception e) {
 			base.stepInfo("Selected Document is not available under Near Dupe tabss");
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocView_Analytics_liDocumentConceptualSimilarab().Displayed();
-			}
-		}), Input.wait30);
-
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
 		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		getDocView_Analytics_liDocumentConceptualSimilarab().ScrollTo();
 		try {
 			if (getCodeCompleteIconConceptTab().isDisplayed())
-				softAssertion.assertEquals(getCodeCompleteIconConceptTab().Displayed().booleanValue(), true, "10");
+				softAssertion.assertEquals(getCodeCompleteIconConceptTab().isDisplayed().booleanValue(), true, "10");
 		} catch (Exception e) {
 			base.stepInfo("Selected Document is not available under Conceptual tabss");
 		}
@@ -8090,11 +8093,7 @@ public class DocViewPage {
 			}, Input.wait120);
 			getGearIcon().Click();
 
-			driver.WaitUntil(new Callable<Boolean>() {
-				public Boolean call() {
-					return getDocView_MiniDocListPopOut().Visible() && getDocView_MiniDocListPopOut().Enabled();
-				}
-			}, Input.wait30);
+			base.waitForElement(getDocView_MiniDocListPopOut());
 			getDocView_MiniDocListPopOut().Click();
 
 		} catch (Exception e) {
@@ -8534,7 +8533,8 @@ public class DocViewPage {
 			getDocView_MiniDoclist_SourceDocIdText(sourceId).ScrollTo();
 			String sourceDocId = getDocView_MiniDoclist_SourceDocIdText(sourceId).getText();
 			softAssertion.assertEquals(sourceId, sourceDocId);
-			softAssertion.assertTrue(getDocView_DocId(docId).Displayed());
+			softAssertion.assertTrue(getDocView_DocId(docId).isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep("Doc is viewed in the MiniDoclist successfully");
 
 		} catch (Exception e) {
@@ -8551,7 +8551,8 @@ public class DocViewPage {
 	 * 
 	 */
 	public void performCodeSameForNearDupeDocuments() throws InterruptedException {
-
+		
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
 
@@ -8665,6 +8666,7 @@ public class DocViewPage {
 	 */
 	public void performCodeSameForNearDupeDocumentsForReviewer(String windowId) throws InterruptedException {
 
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
 
@@ -8695,11 +8697,11 @@ public class DocViewPage {
 				return geDocView_NearDupe_CodeSameAsIcon().Displayed();
 			}
 		}), Input.wait30);
-		softAssertion.assertEquals(geDocView_NearDupe_CodeSameAsIcon().Displayed().booleanValue(), true);
+		softAssertion.assertEquals(geDocView_NearDupe_CodeSameAsIcon().isDisplayed().booleanValue(), true);
 
 		base.waitForElement(getNearDocumentWhichHasCodeSameIcon());
 		codeSameDocumentid = getNearDocumentWhichHasCodeSameIcon().getText();
-
+		softAssertion.assertAll();
 	}
 
 	/**
@@ -8713,8 +8715,9 @@ public class DocViewPage {
 			getCompleteDocBtn().waitAndClick(10);
 
 			base.waitForElement(getverifyCodeSameAsLast());
-			if (getverifyCodeSameAsLast().Displayed()) {
-				softAssertion.assertTrue(getverifyCodeSameAsLast().getWebElement().isDisplayed());
+			if (getverifyCodeSameAsLast().isDisplayed()) {
+				softAssertion.assertTrue(getverifyCodeSameAsLast().isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep("CheckMark is displayed successfully");
 			} else {
 				base.failedStep("CheckMark is not displayed");
@@ -8737,8 +8740,9 @@ public class DocViewPage {
 			getCodeSameAsLast().waitAndClick(10);
 
 			base.waitForElement(getverifyCodeSameAsLast());
-			if (getverifyCodeSameAsLast().Displayed()) {
-				softAssertion.assertTrue(getverifyCodeSameAsLast().getWebElement().isDisplayed());
+			if (getverifyCodeSameAsLast().isDisplayed()) {
+				softAssertion.assertTrue(getverifyCodeSameAsLast().isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep("CheckMark is displayed successfully");
 			} else {
 				base.failedStep("CheckMark is not displayed");
@@ -8761,7 +8765,8 @@ public class DocViewPage {
 			getDocView_MiniDoc_Selectdoc(i).ScrollTo();
 			getDocView_MiniDoc_Selectdoc(i).waitAndClick(10);
 
-			softAssertion.assertTrue(getDocView_MiniDoc_Selectdoc(i).Displayed());
+			softAssertion.assertTrue(getDocView_MiniDoc_Selectdoc(i).isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep("Doc is selected from MiniDoclist successfully");
 		}
 	}
@@ -8781,8 +8786,9 @@ public class DocViewPage {
 			getStampBlueColour().waitAndClick(10);
 
 			base.waitForElement(getverifyCodeSameAsLast());
-			if (getverifyCodeSameAsLast().Displayed()) {
-				softAssertion.assertTrue(getverifyCodeSameAsLast().getWebElement().isDisplayed());
+			if (getverifyCodeSameAsLast().isDisplayed()) {
+				softAssertion.assertTrue(getverifyCodeSameAsLast().isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep("CheckMark is displayed successfully");
 			} else {
 				base.failedStep("CheckMark is not displayed");
@@ -9063,7 +9069,8 @@ public class DocViewPage {
 			getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
 			base.waitForElement(getDocView_DocumentThreadMap());
-			softAssertion.assertTrue(getDocView_DocumentThreadMap().Displayed());
+			softAssertion.assertTrue(getDocView_DocumentThreadMap().isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep("Thread map does not have any mails from the same dataset");
 
 		} catch (Exception e) {
@@ -9138,16 +9145,16 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			getDocView_PrincipalDocIdE1(docId1).ScrollTo();
 			base.waitForElement(getDocView_PrincipalDocIdE1(docId1));
-			softAssertion.assertTrue(getDocView_PrincipalDocIdE1(docId1).Displayed());
+			softAssertion.assertTrue(getDocView_PrincipalDocIdE1(docId1).isDisplayed());
 
 			getDocView_PrincipalDocIdE1(docId2).ScrollTo();
 			base.waitForElement(getDocView_PrincipalDocIdE1(docId2));
-			softAssertion.assertTrue(getDocView_PrincipalDocIdE1(docId2).Displayed());
+			softAssertion.assertTrue(getDocView_PrincipalDocIdE1(docId2).isDisplayed());
 
 			getDocView_PrincipalDocIdE1(docId3).ScrollTo();
 			base.waitForElement(getDocView_PrincipalDocIdE1(docId3));
-			softAssertion.assertTrue(getDocView_PrincipalDocIdE1(docId1).Displayed());
-
+			softAssertion.assertTrue(getDocView_PrincipalDocIdE1(docId1).isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep("E1,E2 and E3 docs are present in ThreadMap tab successfully");
 
 		} catch (Exception e) {
@@ -9451,9 +9458,9 @@ public class DocViewPage {
 			// verify Code Same as Link
 			base.waitForElement(geDocView_Threaded_CodeSameAsIcon());
 			softAssertion.assertTrue(geDocView_Threaded_CodeSameAsIcon().isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep(
 					"Code same icon is displayed for the selected documents and documents from thread map are unchecked successfull");
-			softAssertion.assertAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Code Same As Icon is not displayed");
@@ -9483,7 +9490,8 @@ public class DocViewPage {
 
 			try {
 				base.waitForElement(getDocView_Analytics_Thread_Folder());
-				softAssertion.assertTrue(getDocView_Analytics_Thread_Folder().getWebElement().isEnabled());
+				softAssertion.assertTrue(getDocView_Analytics_Thread_Folder().Enabled());
+				softAssertion.assertAll();
 				base.passedStep("Folder action is disable when document is not selected from thread map");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -9563,7 +9571,7 @@ public class DocViewPage {
 			e.printStackTrace();
 			base.failedStep("View Dcolist action is not disable when document is not selected from thread map");
 		}
-
+		softAssertion.assertAll();
 		base.passedStep("All actions are disable as per the test case and are verified successfully");
 	}
 
@@ -9593,9 +9601,9 @@ public class DocViewPage {
 
 		for (int i = 1; i <= 1; i++) {
 			base.waitForElement(geDocView_ThreadMap_CodeSameAsIcon(i));
-			softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIcon(i).Displayed().booleanValue(), true);
+			softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIcon(i).isDisplayed().booleanValue(), true);
 			try {
-				if (geDocView_ThreadMap_CodeSameAsIcon(i).Displayed()) {
+				if (geDocView_ThreadMap_CodeSameAsIcon(i).isDisplayed()) {
 					base.passedStep("CodeAsSame icon is displayed for the selected docs ");
 				}
 			} catch (Exception e) {
@@ -9624,24 +9632,24 @@ public class DocViewPage {
 		base.waitForElement(getDocView_FamilyMember_DocIdColumn());
 		try {
 			base.stepInfo("Verify whether the DOC Id column is getting displayed in Family Members TAB Column");
-			if (getDocView_FamilyMember_DocIdColumn().Displayed()) {
-				softAssertion.assertEquals(getDocView_FamilyMember_DocIdColumn().Displayed().booleanValue(), true);
+			if (getDocView_FamilyMember_DocIdColumn().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_FamilyMember_DocIdColumn().isDisplayed().booleanValue(), true);
 				base.passedStep("DOC ID column is displayed in Family Members TAB Column");
 			}
 			base.stepInfo("Verify whether the File Name column is getting displayed in Family Members TAB Column");
-			if (getDocView_Family_Member_FileNameColumn().Displayed()) {
-				softAssertion.assertEquals(getDocView_Family_Member_FileNameColumn().Displayed().booleanValue(), true);
+			if (getDocView_Family_Member_FileNameColumn().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_Family_Member_FileNameColumn().isDisplayed().booleanValue(), true);
 				base.passedStep("File Name column is displayed in Family Members TAB Column");
 			}
 			base.stepInfo("Verify whether the Check Box is getting displayed in Family Members TAB Column");
-			if (getDocView_Family_Member_CheckBoxColumn().Displayed()) {
-				softAssertion.assertEquals(getDocView_Family_Member_CheckBoxColumn().Displayed().booleanValue(), true);
+			if (getDocView_Family_Member_CheckBoxColumn().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_Family_Member_CheckBoxColumn().isDisplayed().booleanValue(), true);
 				base.passedStep("Check box column is displayed in Family Members TAB Column");
 			}
 			base.stepInfo(
 					"Verify whether the Code Same/Code Complete icon column is getting displayed in Family Members TAB Column");
-			if (getDocView_Family_Member_CodeSameIconColumns().Displayed()) {
-				softAssertion.assertEquals(getDocView_Family_Member_CodeSameIconColumns().Displayed().booleanValue(),
+			if (getDocView_Family_Member_CodeSameIconColumns().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_Family_Member_CodeSameIconColumns().isDisplayed().booleanValue(),
 						true);
 				base.passedStep("Code Same Icon column is displayed in Family Members TAB Column");
 			}
@@ -9667,45 +9675,45 @@ public class DocViewPage {
 		base.waitForElement(getDocView_NearDupe_DocIdColumn());
 		try {
 			base.stepInfo("Verify whether the DOC Id column is getting displayed in Near Dupe TAB Column");
-			if (getDocView_NearDupe_DocIdColumn().Displayed()) {
-				softAssertion.assertEquals(getDocView_NearDupe_DocIdColumn().Displayed().booleanValue(), true);
+			if (getDocView_NearDupe_DocIdColumn().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_NearDupe_DocIdColumn().isDisplayed().booleanValue(), true);
 				base.passedStep("DOC ID column is displayed in Near Dupe TAB Column");
 			}
 			base.stepInfo("Verify whether the File Name column is getting displayed in Near Dupe TAB Column");
-			if (getDocView_NearDupe_FileNameColumn().Displayed()) {
-				softAssertion.assertEquals(getDocView_NearDupe_FileNameColumn().Displayed().booleanValue(), true);
+			if (getDocView_NearDupe_FileNameColumn().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_NearDupe_FileNameColumn().isDisplayed().booleanValue(), true);
 				base.passedStep("File Name column is displayed in Near dupe TAB Column");
 			}
 			base.stepInfo("Verify whether the PERCENTAGE is getting displayed in Near dupe TAB Column");
-			if (getDocView_NearDupe_PercentageColumn().Displayed()) {
-				softAssertion.assertEquals(getDocView_NearDupe_PercentageColumn().Displayed().booleanValue(), true);
+			if (getDocView_NearDupe_PercentageColumn().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_NearDupe_PercentageColumn().isDisplayed().booleanValue(), true);
 				base.passedStep("PERCENTAGE column is displayed in Near dupe TAB Column");
 			}
 			base.stepInfo("Verify whether the PERCENTAGE SYMBOL is not getting displayed in Near dupe TAB Column");
-			if (getDocView_NearDupe_PercentageColumn().Displayed()) {
+			if (getDocView_NearDupe_PercentageColumn().isDisplayed()) {
 				softAssertion.assertEquals(getDocView_NearDupe_PercentageColumn().getText().contains("%"), false);
 				base.passedStep("PERCENTAGE symbol is not displayed in Near dupe TAB Column");
 			}
 			base.stepInfo("Verify whether the Check Box is getting displayed in Near dupe TAB Column");
-			if (getDocView_NearDupe_CheckBoxColumn().Displayed()) {
-				softAssertion.assertEquals(getDocView_NearDupe_CheckBoxColumn().Displayed().booleanValue(), true);
+			if (getDocView_NearDupe_CheckBoxColumn().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_NearDupe_CheckBoxColumn().isDisplayed().booleanValue(), true);
 				base.passedStep("Check box column is displayed in Near dupe TAB Column");
 			}
 			base.stepInfo(
 					"Verify whether the Code Same/Code Complete icon column is getting displayed in Near dupe TAB Column");
-			if (getDocView_NearDupe_CodeSameIconColumns().Displayed()) {
-				softAssertion.assertEquals(getDocView_NearDupe_CodeSameIconColumns().Displayed().booleanValue(), true);
+			if (getDocView_NearDupe_CodeSameIconColumns().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_NearDupe_CodeSameIconColumns().isDisplayed().booleanValue(), true);
 				base.passedStep("Code Same Icon column is displayed in Near dupe TAB Column");
 			}
 			base.stepInfo("Verify whether Near Dupe icon is getting displayed");
-			if (getDocView_NearDupeIcon().Displayed()) {
-				softAssertion.assertEquals(getDocView_NearDupeIcon().Displayed().booleanValue(), true);
+			if (getDocView_NearDupeIcon().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_NearDupeIcon().isDisplayed().booleanValue(), true);
 				base.passedStep("Near dupe Icon column is displayed in Near dupe TAB Column");
 			}
 			base.stepInfo("Verify whether Near Dupe % icon is displayed in near native viewer");
-			if (getDocView_NearDupe_PercentageIconInNearDupeNativeViewer().Displayed()) {
+			if (getDocView_NearDupe_PercentageIconInNearDupeNativeViewer().isDisplayed()) {
 				softAssertion.assertEquals(
-						getDocView_NearDupe_PercentageIconInNearDupeNativeViewer().Displayed().booleanValue(), true);
+						getDocView_NearDupe_PercentageIconInNearDupeNativeViewer().isDisplayed().booleanValue(), true);
 				base.passedStep("Near dupe % Icon column is displayed");
 			}
 		} catch (Exception e) {
@@ -9730,30 +9738,30 @@ public class DocViewPage {
 		base.waitForElement(getDocView_Conceptual_DocIdColumn());
 		try {
 			base.stepInfo("Verify whether the DOC Id column is getting displayed in Conceptual TAB Column");
-			if (getDocView_Conceptual_DocIdColumn().Displayed()) {
-				softAssertion.assertEquals(getDocView_Conceptual_DocIdColumn().Displayed().booleanValue(), true);
+			if (getDocView_Conceptual_DocIdColumn().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_Conceptual_DocIdColumn().isDisplayed().booleanValue(), true);
 				base.passedStep("DOC ID column is displayed in Conceptual TAB Column");
 			}
 			base.stepInfo("Verify whether the File Name column is getting displayed in Conceptual TAB Column");
-			if (getDocView_Conceptual_FileNameColumn().Displayed()) {
-				softAssertion.assertEquals(getDocView_Conceptual_FileNameColumn().Displayed().booleanValue(), true);
+			if (getDocView_Conceptual_FileNameColumn().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_Conceptual_FileNameColumn().isDisplayed().booleanValue(), true);
 				base.passedStep("File Name column is displayed in Conceptual TAB Column");
 			}
 			base.stepInfo("Verify whether the PERCENTAGE SYMBOL is not getting displayed in Conceptual TAB Column");
-			if (getDocView_Conceptual_FileNameColumn().Displayed()) {
+			if (getDocView_Conceptual_FileNameColumn().isDisplayed()) {
 				softAssertion.assertEquals(getDocView_Conceptual_DocIdColumn().getText().contains("%"), false);
 				softAssertion.assertEquals(getDocView_Conceptual_FileNameColumn().getText().contains("%"), false);
 				base.passedStep("PERCENTAGE symbol is not displayed in Conceptual TAB Column");
 			}
 			base.stepInfo("Verify whether the Check Box is getting displayed in Conceptual TAB Column");
-			if (getDocView_Conceptual_CheckBoxColumn().Displayed()) {
-				softAssertion.assertEquals(getDocView_Conceptual_CheckBoxColumn().Displayed().booleanValue(), true);
+			if (getDocView_Conceptual_CheckBoxColumn().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_Conceptual_CheckBoxColumn().isDisplayed().booleanValue(), true);
 				base.passedStep("Check box column is displayed in Conceptual TAB Column");
 			}
 			base.stepInfo(
 					"Verify whether the Code Same/Code Complete icon column is getting displayed in Conceptual TAB Column");
-			if (getDocView_Conceptual_CodeSameIconColumns().Displayed()) {
-				softAssertion.assertEquals(getDocView_Conceptual_CodeSameIconColumns().Displayed().booleanValue(),
+			if (getDocView_Conceptual_CodeSameIconColumns().isDisplayed()) {
+				softAssertion.assertEquals(getDocView_Conceptual_CodeSameIconColumns().isDisplayed().booleanValue(),
 						true);
 				base.passedStep("Code Same Icon column is displayed in Conceptual TAB Column");
 			}
@@ -9792,7 +9800,7 @@ public class DocViewPage {
 		getDocView_Analytics_Thread_Folder().waitAndClick(10);
 
 		driver.waitForPageToBeReady();
-		softAssertion.assertTrue(getDocView_AnalyticsNewFolderThreadMap().Displayed());
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderThreadMap().isDisplayed());
 		base.passedStep("Folder pop up is opened successfully");
 
 		base.waitForElement(getDocView_AnalyticsNewFolderThreadMap());
@@ -9808,9 +9816,9 @@ public class DocViewPage {
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
 
 		base.waitForElement(getTotalSelectedDocuments());
-		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().Displayed());
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().isDisplayed());
 		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
-
+		softAssertion.assertAll();
 		base.passedStep("Selected folder is applied to the selected documents successfully");
 
 	}
@@ -9847,10 +9855,10 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		for (int i = 3; i <= 3; i++) {
 			base.waitForElement(geDocView_ThreadMap_CodeSameAsIconForReviewer(i));
-			softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIconForReviewer(i).Displayed().booleanValue(),
+			softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIconForReviewer(i).isDisplayed().booleanValue(),
 					true);
 			try {
-				if (geDocView_ThreadMap_CodeSameAsIconForReviewer(i).Displayed()) {
+				if (geDocView_ThreadMap_CodeSameAsIconForReviewer(i).isDisplayed()) {
 					base.passedStep("CodeAsSame icon is displayed for the selected docs ");
 				}
 			} catch (Exception e) {
@@ -9975,9 +9983,9 @@ public class DocViewPage {
 
 		for (int i = 1; i <= 1; i++) {
 			base.waitForElement(geDocView_ThreadMap_CodeSameAsIcon(i));
-			softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIcon(i).Displayed().booleanValue(), true);
+			softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIcon(i).isDisplayed().booleanValue(), true);
 			try {
-				if (geDocView_ThreadMap_CodeSameAsIcon(i).Displayed()) {
+				if (geDocView_ThreadMap_CodeSameAsIcon(i).isDisplayed()) {
 					base.passedStep("CodeAsSame icon is displayed for the selected docs ");
 				}
 			} catch (Exception e) {
@@ -9989,6 +9997,7 @@ public class DocViewPage {
 
 		base.waitForElement(getThreadedDocumentWhichHasCodeSameIcon());
 		codeSameDocumentid = getThreadedDocumentWhichHasCodeSameIcon().getText();
+		softAssertion.assertAll();
 
 	}
 
@@ -10032,10 +10041,10 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		for (int i = 3; i <= 3; i++) {
 			base.waitForElement(geDocView_ThreadMap_CodeSameAsIconForReviewer(i));
-			softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIconForReviewer(i).Displayed().booleanValue(),
+			softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIconForReviewer(i).isDisplayed().booleanValue(),
 					true);
 			try {
-				if (geDocView_ThreadMap_CodeSameAsIconForReviewer(i).Displayed()) {
+				if (geDocView_ThreadMap_CodeSameAsIconForReviewer(i).isDisplayed()) {
 					base.passedStep("CodeAsSame icon is displayed for the selected docs ");
 				}
 			} catch (Exception e) {
@@ -10075,9 +10084,10 @@ public class DocViewPage {
 
 		for (int i = 1; i <= 1; i++) {
 			base.waitForElement(geDocView_FamilyMembers_CodeSameAsIcon(i));
-			softAssertion.assertEquals(geDocView_FamilyMembers_CodeSameAsIcon(i).Displayed().booleanValue(), true);
+			softAssertion.assertEquals(geDocView_FamilyMembers_CodeSameAsIcon(i).isDisplayed().booleanValue(), true);
+			softAssertion.assertAll();
 			try {
-				if (geDocView_FamilyMembers_CodeSameAsIcon(i).Displayed()) {
+				if (geDocView_FamilyMembers_CodeSameAsIcon(i).isDisplayed()) {
 					base.passedStep("CodeAsSame icon is displayed for the selected docs ");
 				}
 			} catch (Exception e) {
@@ -10122,9 +10132,9 @@ public class DocViewPage {
 	public void selectCompleteButton() {
 
 		try {
-			if (getCompleteDocBtn().Displayed()) {
+			driver.waitForPageToBeReady();
+			if (getCompleteDocBtn().isDisplayed()) {
 				base.waitForElement(getCompleteDocBtn());
-				softAssertion.assertTrue(getCompleteDocBtn().Displayed());
 				getCompleteDocBtn().waitAndClick(10);
 
 				driver.waitForPageToBeReady();
@@ -10156,7 +10166,8 @@ public class DocViewPage {
 		for (int i = 2; i <= 2; i++) {
 			try {
 				if (geDocView_ThreadMap_CheckMarkIcon(i).getWebElement().isDisplayed())
-					softAssertion.assertEquals(geDocView_ThreadMap_CheckMarkIcon(i).Displayed().booleanValue(), true);
+					softAssertion.assertEquals(geDocView_ThreadMap_CheckMarkIcon(i).isDisplayed().booleanValue(), true);
+					softAssertion.assertAll();
 				base.passedStep("Completed CheckMark is displayed under thread map tab Successfully");
 			} catch (Exception e) {
 				base.failedStep("Complete checkmark Icon is not displayed under thread map tab");
@@ -10183,8 +10194,9 @@ public class DocViewPage {
 		for (int i = 3; i <= 3; i++) {
 			try {
 				base.waitForElement(geDocView_ThreadMap_ArrowDownIcon(i));
-				if (geDocView_ThreadMap_ArrowDownIcon(i).getWebElement().isDisplayed())
-					softAssertion.assertEquals(geDocView_ThreadMap_ArrowDownIcon(i).Displayed().booleanValue(), true);
+				if (geDocView_ThreadMap_ArrowDownIcon(i).isDisplayed())
+					softAssertion.assertEquals(geDocView_ThreadMap_ArrowDownIcon(i).isDisplayed().booleanValue(), true);
+					softAssertion.assertAll();
 				base.passedStep("Arrow Down Icon is displayed under thread map tab Successfully");
 			} catch (Exception e) {
 				base.failedStep("Arrow Down Icon is not displayed under thread map tab");
@@ -10292,9 +10304,9 @@ public class DocViewPage {
 
 		for (int i = 2; i <= 2; i++) {
 			base.waitForElement(geDocView_FamilyMembers_CodeSameAsIcon(i));
-			softAssertion.assertEquals(geDocView_FamilyMembers_CodeSameAsIcon(i).Displayed().booleanValue(), true);
+			softAssertion.assertEquals(geDocView_FamilyMembers_CodeSameAsIcon(i).isDisplayed().booleanValue(), true);
 			try {
-				if (geDocView_FamilyMembers_CodeSameAsIcon(i).Displayed()) {
+				if (geDocView_FamilyMembers_CodeSameAsIcon(i).isDisplayed()) {
 					base.passedStep("CodeAsSame icon is displayed for the selected docs ");
 				}
 			} catch (Exception e) {
@@ -10372,7 +10384,7 @@ public class DocViewPage {
 
 			getDocument_CommentsTextBox().SendKeys("Editing and click complete button");
 
-			if (!getCodeSameAsLast().getWebElement().isDisplayed()) {
+			if (!getCodeSameAsLast().isDisplayed()) {
 				driver.scrollPageToTop();
 				base.waitForElement(getCodeSameAsLast());
 				getCodeSameAsLast().waitAndClick(15);
@@ -10411,9 +10423,10 @@ public class DocViewPage {
 
 		try {
 			driver.waitForPageToBeReady();
-			if (getverifyCodeSameAsLast().getWebElement().isDisplayed()) {
+			if (getverifyCodeSameAsLast().isDisplayed()) {
 				base.waitForElement(getverifyCodeSameAsLast());
 				softAssertion.assertTrue(getverifyCodeSameAsLast().isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep("CheckMark verified successfully");
 			} else
 				base.failedStep("Checkmark is not verified");
@@ -10436,7 +10449,8 @@ public class DocViewPage {
 			if (getDocView_Analytics_FamilyTab().getWebElement().isDisplayed()) {
 //				getDocView_FamilyMember_NoQuery().ScrollTo();
 				base.waitForElement(getDocView_FamilyMember_NoQuery());
-				softAssertion.assertTrue(getDocView_FamilyMember_NoQuery().Displayed());
+				softAssertion.assertTrue(getDocView_FamilyMember_NoQuery().isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep(
 						"After docs selected in MiniDoclist it remains in the same 'Family Member'Tab successfully");
 			}
@@ -10460,6 +10474,7 @@ public class DocViewPage {
 //				getDocView_Conceptual_DocIdColumn().ScrollTo();
 				base.waitForElement(getDocView_Conceptual_DocIdColumn());
 				softAssertion.assertTrue(getDocView_Conceptual_DocIdColumn().isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep(
 						"After docs selected in MiniDoclist it remains in the same 'Conceptual Similar'Tab successfully");
 				softAssertion.assertAll();
@@ -10480,10 +10495,11 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 
 		try {
-			if (getDocView_Analytics_liDocumentThreadMap().getWebElement().isDisplayed()) {
+			if (getDocView_Analytics_liDocumentThreadMap().isDisplayed()) {
 //				getDocView_Analytics_NoQuery().ScrollTo();
 				base.waitForElement(getDocView_Analytics_NoQuery());
-				softAssertion.assertTrue(getDocView_Analytics_NoQuery().Displayed());
+				softAssertion.assertTrue(getDocView_Analytics_NoQuery().isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep(
 						"After docs selected in MiniDoclist it remains in the same 'Thread Map'Tab successfully");
 			}
@@ -10615,7 +10631,7 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			selectDocIdInMiniDocList(miniDocId);
 			try {
-				if (geDocView_MiniDocList_ArrowDownIcon().Displayed()) {
+				if (geDocView_MiniDocList_ArrowDownIcon().isDisplayed()) {
 					base.passedStep("ArrowDown icon is displayed for the selected docs ");
 				}
 			} catch (Exception e) {
@@ -10666,7 +10682,7 @@ public class DocViewPage {
 		getDocView_Mini_ActionButton().waitAndClick(10);
 
 		try {
-			if (!getDocView__ChildWindow_Mini_RemoveCodeSameAs().getWebElement().isDisplayed()) {
+			if (!getDocView__ChildWindow_Mini_RemoveCodeSameAs().isDisplayed()) {
 				base.passedStep("Remove Code Same as is not displayed in Mini DocList under action tab");
 			}
 		} catch (Exception e) {
@@ -10685,7 +10701,7 @@ public class DocViewPage {
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
 
 		try {
-			if (!getDocView_Analytics_Thread_RemoveCodeSameAs().getWebElement().isDisplayed()) {
+			if (!getDocView_Analytics_Thread_RemoveCodeSameAs().isDisplayed()) {
 				base.passedStep("Remove Code Same as is not displayed in Analytics panel Threadmap under action tab");
 			}
 		} catch (Exception e) {
@@ -10694,7 +10710,7 @@ public class DocViewPage {
 
 		getDocView_Analytics_FamilyTab().waitAndClick(10);
 		try {
-			if (!getDocView_FamilyRemoveCodeSameAs().getWebElement().isDisplayed()) {
+			if (!getDocView_FamilyRemoveCodeSameAs().isDisplayed()) {
 				base.passedStep(
 						"Remove Code Same as is not displayed in Analytics panel Family Member under action tab");
 			}
@@ -10706,7 +10722,7 @@ public class DocViewPage {
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
 		try {
-			if (!getDocView_Analytics_NearDupe_RemoveCodeSameAs().getWebElement().isDisplayed()) {
+			if (!getDocView_Analytics_NearDupe_RemoveCodeSameAs().isDisplayed()) {
 				base.passedStep("Remove Code Same as is not displayed in Analytics panel Near Dupe under action tab");
 			}
 		} catch (Exception e) {
@@ -10717,7 +10733,7 @@ public class DocViewPage {
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
 		try {
-			if (!getDocView_Analytics_Concept_RemoveCodeSameAs().getWebElement().isDisplayed()) {
+			if (!getDocView_Analytics_Concept_RemoveCodeSameAs().isDisplayed()) {
 				base.passedStep("Remove Code Same as is not displayed in Analytics panel Concept under action tab");
 			}
 		} catch (Exception e) {
@@ -10794,11 +10810,12 @@ public class DocViewPage {
 		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 
 		try {
-			if (getDocView_Analytics_liDocumentThreadMap().getWebElement().isDisplayed()) {
+			if (getDocView_Analytics_liDocumentThreadMap().isDisplayed()) {
 				driver.waitForPageToBeReady();
 				getDocView_Analytics_ThreadMap_TableFirstName().ScrollTo();
 				base.waitForElement(getDocView_Analytics_ThreadMap_TableFirstName());
-				softAssertion.assertTrue(getDocView_Analytics_ThreadMap_TableFirstName().Displayed());
+				softAssertion.assertTrue(getDocView_Analytics_ThreadMap_TableFirstName().isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep(
 						"After docs selected in MiniDoclist it remains in the same 'Thread Map'Tab successfully");
 			}
@@ -10821,7 +10838,8 @@ public class DocViewPage {
 			if (getDocView_Analytics_FamilyTab().getWebElement().isDisplayed()) {
 				// getDocView_FamilyMember_DocIdColumn().ScrollTo();
 				base.waitForElement(getDocView_FamilyMember_DocIdColumn());
-				softAssertion.assertTrue(getDocView_FamilyMember_DocIdColumn().Displayed());
+				softAssertion.assertTrue(getDocView_FamilyMember_DocIdColumn().isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep(
 						"After docs selected in MiniDoclist it remains in the same 'Family Member'Tab successfully");
 			}
@@ -11042,6 +11060,7 @@ public class DocViewPage {
 			if (geDocView_MiniDocList_ArrowDownIcon().isDisplayed()) {
 				base.waitForElement(geDocView_MiniDocList_ArrowDownIcon());
 				softAssertion.assertTrue(geDocView_MiniDocList_ArrowDownIcon().isDisplayed());
+				softAssertion.assertAll();
 				base.passedStep(
 						"Document selected to view are loaded in doc view and selected from mini doc list successfully");
 			} else
@@ -11250,7 +11269,7 @@ public class DocViewPage {
 			try {
 				base.waitForElement(getDocView_Analytics_NearDupe_OriginalView_ZoomIn());
 				base.waitTillElemetToBeClickable(getDocView_Analytics_NearDupe_OriginalView_ZoomIn());
-				softAssertion.assertEquals(getDocView_Analytics_NearDupe_OriginalView_ZoomIn().Enabled().booleanValue(),
+				softAssertion.assertEquals(getDocView_Analytics_NearDupe_OriginalView_ZoomIn().isDisplayed().booleanValue(),
 						true);
 				getDocView_Analytics_NearDupe_OriginalView_ZoomIn().waitAndClick(7);
 				base.passedStep("Zoom-in button is clicked successs");
@@ -11258,7 +11277,8 @@ public class DocViewPage {
 				base.waitForElement(getDocView_Analytics_NearDupe_OriginalView_ZoomOut());
 				base.waitTillElemetToBeClickable(getDocView_Analytics_NearDupe_OriginalView_ZoomOut());
 				softAssertion.assertEquals(
-						getDocView_Analytics_NearDupe_OriginalView_ZoomOut().Enabled().booleanValue(), true);
+						getDocView_Analytics_NearDupe_OriginalView_ZoomOut().isDisplayed().booleanValue(), true);
+				softAssertion.assertAll();
 				getDocView_Analytics_NearDupe_OriginalView_ZoomOut().waitAndClick(7);
 				base.passedStep("Zoom-out button is clicked successs");
 
@@ -11307,6 +11327,7 @@ public class DocViewPage {
 					softAssertion.assertEquals(
 							getDocView_Analytics_FamilyMember_CodeSameLink().isElementAvailable(5).booleanValue(),
 							true);
+					softAssertion.assertAll();
 					base.passedStep(
 							"Code same icon is displayed for the selected documents and documents from Family Member are unchecked successfull");
 				} else
@@ -11808,7 +11829,7 @@ public class DocViewPage {
 
 	}
 
-	/*
+	/**
 	 * @author Steffy
 	 * 
 	 * @Description -- Method to verify whether the keywords along with counts are
@@ -11817,7 +11838,7 @@ public class DocViewPage {
 	 */
 	public void verifyKeywordsAreDisplayed(String[] keywords) throws Exception {
 		try {
-			if (getHitPanel().Displayed()) {
+			if (getHitPanel().isDisplayed()) {
 				base.passedStep("Persistent hit panels are displayed");
 				List<String> keywordsText = base.getAvailableListofElements(getHitPanelCollection());
 				List<String> actualKeywords = Arrays.asList(keywords);
@@ -11856,7 +11877,6 @@ public class DocViewPage {
 	 * @description: To verify the given tag coding form name in docview page
 	 */
 	public void verifyCodingFormTagNameInDocviewPg(int objectNo, String expectedObjectName) {
-		SoftAssert softAssertion = new SoftAssert();
 		try {
 			base.waitForElement(getCodingFormTaglabel(objectNo));
 			String actualObjectName = getCodingFormTaglabel(objectNo).getText();
@@ -12002,7 +12022,8 @@ public class DocViewPage {
 	 * @description: To verify tags of coding form name in docview page
 	 */
 	public void verifyTagsAreDisabled(int objectNo) {
-		if (getCodingFormTag(objectNo).isElementAvailable(5) == true) {
+		base.waitForElement(getCodingFormTag(objectNo));
+		if (getCodingFormTag(objectNo).isElementPresent() == true) {
 			base.passedStep("The added tags are checked and disabled");
 		} else {
 			base.failedStep("The added tags are not checked and disabled");
@@ -12701,7 +12722,7 @@ public class DocViewPage {
 		try {
 			driver.waitForPageToBeReady();
 			geDocView_ThreadMap_CheckMarkIcon(rowNo).ScrollTo();
-			if (geDocView_ThreadMap_CheckMarkIcon(rowNo).isElementPresent())
+			if (geDocView_ThreadMap_CheckMarkIcon(rowNo).isDisplayed())
 				base.passedStep("Completed CheckMark is displayed under thread map tab Successfully");
 		} catch (Exception e) {
 			base.failedStep("Complete checkmark Icon is not displayed under thread map tab");
@@ -12721,7 +12742,7 @@ public class DocViewPage {
 				JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
 				jse.executeScript("document.querySelector('.dataTables_scrollBody').scrollBy(0,4000)");
 				if (loadingFlag)
-					softAssertion.assertEquals(getDocumetListLoading().Displayed(), true);
+					softAssertion.assertEquals(getDocumetListLoading().isDisplayed(), true);
 				driver.waitForPageToBeReady();
 			} else {
 				UtilityLog.info("Scroll is not required, Document is displayed");
@@ -12860,7 +12881,7 @@ public class DocViewPage {
 	 */
 	public void selectDocsFromMiniDocsListAndCheckTheThreadedDocuments() throws InterruptedException {
 		driver.waitForPageToBeReady();
-		getDocView_Analytics_LoadMoreButton().Displayed();
+		getDocView_Analytics_LoadMoreButton().isDisplayed();
 		base.passedStep("LeadMoreButton is Displayed Successfully");
 		base.waitForElementCollection(getDocView_Analytics_ThreadedDocs());
 
@@ -13031,7 +13052,7 @@ public class DocViewPage {
 			base.VerifySuccessMessage("Code same performed successfully.");
 
 			try {
-				if (geDocView_MiniList_CodeSameAsIcon().Displayed()) {
+				if (geDocView_MiniList_CodeSameAsIcon().isDisplayed()) {
 					base.passedStep("CodeSameAs icon is displayed for the selected docs ");
 				}
 			} catch (Exception e) {
@@ -13053,7 +13074,7 @@ public class DocViewPage {
 
 		driver.waitForPageToBeReady();
 		base.waitTime(3);
-		if (getDocView_Analytics_LoadMoreButton().Displayed()) {
+		if (getDocView_Analytics_LoadMoreButton().isDisplayed()) {
 			base.failedStep("Load more link is visible");
 
 		} else {
@@ -14625,7 +14646,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Performing action from parent window");
 		base.waitForElement(groupelementCheckBox());
-		groupelementCheckBox().waitAndClick(5);
+		groupelementCheckBox().Click();
 		getSaveAndNextButton().waitAndClick(5);
 
 		boolean flag = getCodingFormValidErrorMeta().Displayed();
@@ -14782,7 +14803,6 @@ public class DocViewPage {
 	 * @Description: Validation of non-date format using save
 	 */
 	public void nonDateFormatValidationUsingSave(String projectFieldName) throws InterruptedException, AWTException {
-		SoftAssert softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
 		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
 //		base.waitForElement(getReadOnlyTextBox(projectFieldName));
@@ -15011,7 +15031,6 @@ public class DocViewPage {
 	 * @Description: Validation of Required comment without passing value
 	 */
 	public void validateErrorMsgRequiredComment() {
-		SoftAssert softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Performing action from parent window");
 		base.waitForElement(getDocView_CodingFormComments());
@@ -15483,19 +15502,16 @@ public class DocViewPage {
 		getDocView_Analytics_FamilyTab().waitAndClick(10);
 
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
-		driver.getPageSource();
-		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
 		base.waitForElement(getDocView_FamilyCodeSameAs());
 
-		softAssertion.assertFalse(getDocView_FamilyCodeSameAs().getWebElement().isSelected());
-		if (getDocView_FamilyCodeSameAs().getWebElement().isSelected()) {
+		softAssertion.assertFalse(getDocView_FamilyCodeSameAs().isDisplayed());
+		if (getDocView_FamilyCodeSameAs().isDisplayed()) {
 
 			base.failedStep("Code same as last clickable in Analytical Panel");
 		} else {
 			base.passedStep("Code same as last not clcikable in Analytical Panel");
 		}
-		
-		softAssertion.assertAll();
 
 	}
 
@@ -15856,6 +15872,8 @@ public class DocViewPage {
 		softAssertion.assertNotEquals(currentDocId1, currentDocId2);
 		base.passedStep(
 				"Next document of the main viewing document from the mini doc list is viewed in doc view panel successfully");
+		softAssertion.assertAll();
+
 		driver.waitForPageToBeReady();
 		base.waitForElement(getLastCodeSameAsIcon());
 		getLastCodeSameAsIcon().waitAndClick(10);
@@ -15869,8 +15887,6 @@ public class DocViewPage {
 		} else {
 			base.passedStep("The two MiniDocs Documents comments are Not Same");
 		}
-		
-		softAssertion.assertAll();
 
 	}
 
@@ -15891,13 +15907,11 @@ public class DocViewPage {
 		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
 		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
 
-		driver.getPageSource();
 		base.waitForElement(getDocView_Analytics_Conceptual_ThirdDoc());
-		getDocView_Analytics_Conceptual_ThirdDoc().waitAndClick(15);
-		driver.getPageSource();
+		getDocView_Analytics_Conceptual_ThirdDoc().waitAndClick(10);
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
-		driver.getPageSource();
+
 		base.waitForElement(getDocView_Analytics_Concept_Similar_CodeSameAs());
 		getDocView_Analytics_Concept_Similar_CodeSameAs().waitAndClick(10);
 		base.VerifySuccessMessage("Code same performed successfully.");
@@ -15907,7 +15921,7 @@ public class DocViewPage {
 				return geDocView_ConceptuallySimilar_CodeSameAsIcon().Displayed();
 			}
 		}), Input.wait30);
-		softAssertion.assertEquals(geDocView_ConceptuallySimilar_CodeSameAsIcon().isDisplayed(), true,
+		softAssertion.assertEquals(geDocView_ConceptuallySimilar_CodeSameAsIcon().isDisplayed().booleanValue(), true,
 				"1");
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -15918,9 +15932,7 @@ public class DocViewPage {
 
 		codeSameDocumentid = getConceptDocumentWhichHasCodeSameIcon().getText();
 
-		softAssertion.assertEquals(getCodeSameIconMiniDocList().isDisplayed(), true, "2");
-		
-		softAssertion.assertAll();
+		softAssertion.assertEquals(getCodeSameIconMiniDocList().isDisplayed().booleanValue(), true, "2");
 
 	}
 
@@ -15991,9 +16003,9 @@ public class DocViewPage {
 
 		for (int i = 1; i <= 1; i++) {
 			base.waitForElement(geDocView_FamilyMembers_CodeSameAsIcon(i));
-			softAssertion.assertEquals(geDocView_FamilyMembers_CodeSameAsIcon(i).Displayed().booleanValue(), true);
+			softAssertion.assertEquals(geDocView_FamilyMembers_CodeSameAsIcon(i).isDisplayed().booleanValue(), true);
 			try {
-				if (geDocView_FamilyMembers_CodeSameAsIcon(i).Displayed()) {
+				if (geDocView_FamilyMembers_CodeSameAsIcon(i).isDisplayed()) {
 					base.passedStep("CodeAsSame icon is displayed for the selected docs ");
 				}
 			} catch (Exception e) {
@@ -16282,7 +16294,7 @@ public class DocViewPage {
 			try {
 				if (getDocView_Analytics_FamilyMember_CodeSameLink().getWebElement().isDisplayed())
 					softAssertion.assertEquals(
-							getDocView_Analytics_FamilyMember_CodeSameLink().Displayed().booleanValue(), true);
+							getDocView_Analytics_FamilyMember_CodeSameLink().isDisplayed().booleanValue(), true);
 				base.passedStep(
 						"Code same icon is displayed for the selected documents and documents from Family Member are unchecked successfull");
 			} catch (Exception e) {
@@ -16622,6 +16634,7 @@ public class DocViewPage {
 		boolean flag3 = getDocView_MetaDataPopOut().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep("MetaData Child window displayed for parent window");
+		softAssertion.assertAll();
 
 	}
 
@@ -16637,8 +16650,8 @@ public class DocViewPage {
 		try {
 
 			base.waitForElement(getverifyCodeSameAsLast());
-			if (getverifyCodeSameAsLast().Displayed()) {
-				softAssertion.assertTrue(getverifyCodeSameAsLast().getWebElement().isDisplayed());
+			if (getverifyCodeSameAsLast().isDisplayed()) {
+				softAssertion.assertTrue(getverifyCodeSameAsLast().isDisplayed());
 				base.passedStep("CheckMark is displayed successfully");
 			} else {
 				base.failedStep("CheckMark is not displayed");
@@ -16880,7 +16893,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocViewPageTitle());
 
-		if (getDocViewPageTitle().Displayed()) {
+		if (getDocViewPageTitle().isDisplayed()) {
 			softAssertion.assertTrue(getDocViewPageTitle().getWebElement().isDisplayed());
 			base.passedStep("Selected document is display in Conceptual View In Doc List page open successfully");
 		} else {
@@ -16913,8 +16926,8 @@ public class DocViewPage {
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_DocListPageDocs());
-		if (getDocView_DocListPageDocs().Displayed()) {
-			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
+		if (getDocView_DocListPageDocs().isDisplayed()) {
+			softAssertion.assertTrue(getDocView_DocListPageDocs().isDisplayed());
 			base.passedStep("Selected document is display in Doc List ");
 		} else {
 			base.failedStep("Selected document is not display in Doc List");
@@ -16923,7 +16936,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocViewPageTitle());
 
-		if (getDocViewPageTitle().Displayed()) {
+		if (getDocViewPageTitle().isDisplayed()) {
 			softAssertion.assertTrue(getDocViewPageTitle().getWebElement().isDisplayed());
 			base.passedStep("Selected document is display in ThreadMap View In Doc List page open successfully");
 		} else {
@@ -18073,8 +18086,8 @@ public class DocViewPage {
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_DocListPageDocs());
-		if (getDocView_DocListPageDocs().Displayed()) {
-			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
+		if (getDocView_DocListPageDocs().isDisplayed()) {
+			softAssertion.assertTrue(getDocView_DocListPageDocs().isDisplayed());
 			base.passedStep("Selected document is display in Doc List ");
 		} else {
 			base.failedStep("Selected document is not display in Doc List");
@@ -18204,7 +18217,7 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @author Indium-Sakthivel date: Modified:Sakthivel date:03/01/2022
+	 * @author Indium-Sakthivel date: 29/12/2021 Modified date:N/A
 	 * @Description: View the document which is not part of mini doc list from
 	 *               Analytics panel.
 	 */
@@ -18214,21 +18227,21 @@ public class DocViewPage {
 		Set<String> duplicates = new HashSet<String>();
 		List<String> listOFData2 = new ArrayList<>();
 		ElementCollection element2 = getMiniDocListDocIdText();
-		listOFData2 = availableListofElements(element2);
+		listOFData2 = reusableDocView.availableListofElements(element2);
 		for (String minidoclist : listOFData2) {
 			duplicates.add(minidoclist);
 		}
 		System.out.println(listOFData2);
-		switchToNewWindow(1);
-		clickGearIconOpenAnalyticalPanel();
-		String parentWindow = switchTochildWindow();
+		reusableDocView.switchToNewWindow(1);
+		reusableDocView.clickGearIconOpenAnalyticalPanel();
+		String parentWindow = reusableDocView.switchTochildWindow();
 		Thread.sleep(Input.wait30);
 		getDocView_Analytics_NearDupeTab().WaitUntilPresent().ScrollTo();
 		getDocView_Analytics_NearDupeTab().waitAndClick(5);
 		Thread.sleep(Input.wait30);
 		List<String> listOFData3 = new ArrayList<>();
 		ElementCollection element3 = getAnalyticalPanelDocIdText();
-		listOFData3 = availableListofElements(element3);
+		listOFData3 = reusableDocView.availableListofElements(element3);
 		System.out.println(listOFData3);
 		for (String analytical : listOFData3) {
 			if (duplicates.add(analytical)) {
@@ -18251,6 +18264,11 @@ public class DocViewPage {
 		String actual = getDocView_CurrentDocId().getText();
 		softAssertion.assertEquals(expect, actual);
 		base.stepInfo(" selected document successfully displayed in parent window");
+		reusableDocView.closeWindow(1);
+		reusableDocView.switchToNewWindow(1);
+		driver.Navigate().refresh();
+		driver.switchTo().alert().accept();
+		driver.waitForPageToBeReady();
 	}
 
 	/**
@@ -18558,18 +18576,15 @@ public class DocViewPage {
 		getViewInDocListAnalyticalDropDown().waitAndClick(5);
 
 		driver.waitForPageToBeReady();
-		base.waitForElement(getDocList_BackToSource_Button());
-		softAssertion.assertTrue(getDocList_BackToSource_Button().isElementAvailable(5));
-		softAssertion.assertAll();
-		base.passedStep("Docs are navigated to DocList successfully");
+		base.waitForElement(getDocView_DocListPageDocs());
 
-		String docIds = getDocList_DocId().getText();
-		System.out.println(docIds);
-		if (docIds.contains("ID0000")) {
-			base.passedStep("Selected docs are present in the DocList Page");
+		if (getDocView_DocListPageDocs().isDisplayed()) {
+			softAssertion.assertTrue(getDocView_DocListPageDocs().isDisplayed());
+			base.passedStep("Selected document is display in Doc List ");
 		} else {
-			base.failedStep("Selected docs are not present in the DocList Page");
+			base.failedStep("Selected document is not display in Doc List");
 		}
+
 	}
 
 	/**
@@ -18599,17 +18614,13 @@ public class DocViewPage {
 		getViewInDocListAnalyticalDropDown().waitAndClick(5);
 
 		driver.waitForPageToBeReady();
-		base.waitForElement(getDocList_BackToSource_Button());
-		softAssertion.assertTrue(getDocList_BackToSource_Button().isElementAvailable(5));
-		softAssertion.assertAll();
-		base.passedStep("Docs are navigated to DocList successfully");
+		base.waitForElement(getDocView_DocListPageDocs());
 
-		String docIds = getDocList_DocId().getText();
-		System.out.println(docIds);
-		if (docIds.contains("ID0000")) {
-			base.passedStep("Selected docs are present in the DocList Page");
+		if (getDocView_DocListPageDocs().Displayed()) {
+			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
+			base.passedStep("Selected document is display in Doc List ");
 		} else {
-			base.failedStep("Selected docs are not present in the DocList Page");
+			base.failedStep("Selected document is not display in Doc List");
 		}
 
 	}
@@ -18617,7 +18628,7 @@ public class DocViewPage {
 	/**
 	 * @Author Vijaya.Rani Created on 03/01/2022
 	 * @Description To perform ViewInDocList Family Member docs in the DocView Test
-	 *              Case id: RPMXCON-50864,RPMXCON-50863
+	 *              Case id: RPMXCON-50864
 	 *
 	 */
 	public void performViewInDocListInFamilyMemberdocs() throws InterruptedException {
@@ -18639,18 +18650,15 @@ public class DocViewPage {
 		getViewInDocListAnalyticalDropDown().waitAndClick(5);
 
 		driver.waitForPageToBeReady();
-		base.waitForElement(getDocList_BackToSource_Button());
-		softAssertion.assertTrue(getDocList_BackToSource_Button().isElementAvailable(5));
-		softAssertion.assertAll();
-		base.passedStep("Docs are navigated to DocList successfully");
+		base.waitForElement(getDocView_DocListPageDocs());
 
-		String docIds = getDocList_DocId().getText();
-		System.out.println(docIds);
-		if (docIds.contains("ID0000")) {
-			base.passedStep("Selected docs are present in the DocList Page");
+		if (getDocView_DocListPageDocs().Displayed()) {
+			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
+			base.passedStep("Selected document is display in Doc List ");
 		} else {
-			base.failedStep("Selected docs are not present in the DocList Page");
+			base.failedStep("Selected document is not display in Doc List");
 		}
+
 	}
 
 	/**
@@ -19358,7 +19366,7 @@ public class DocViewPage {
 
 	}
 	
-
+	
 	/**
 	 * @author Vijaya Rani 06/01/22 NA Modified date: NA Modified by:NA
 	 * @description perform FamilyMember Docs ViewAllDocuments
@@ -19463,5 +19471,5 @@ public class DocViewPage {
 	base.textCompareNotEquals(docID1, docID2, "PASS", "Fail");
 	return docID2;
 	}
-}
 
+}
