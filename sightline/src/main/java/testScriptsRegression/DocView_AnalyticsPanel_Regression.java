@@ -326,12 +326,15 @@ public class DocView_AnalyticsPanel_Regression {
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51845");
 		String assignmentName = "assignmentB1" + Utility.dynamicNameAppender();
-		String textValue = Input.TextEmpty;
-
+		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("User successfully Logged into slightline webpage as Review Manager Admin with "
 				+ Input.rmu1userName + "");
 
+		docViewAnalytics = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
 		sessionSearch.basicContentSearch(Input.ThreadQuery);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignDocstoNewAssgnEnableAnalyticalPanel(assignmentName, Input.codeFormName,
@@ -341,8 +344,13 @@ public class DocView_AnalyticsPanel_Regression {
 		assignmentPage.selectAssignmentToViewinDocviewThreadMap(assignmentName);
 		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
 
-		docViewAnalytics.docViewAnalyticsPanelThread(textValue);
-		baseClass.stepInfo("Thread Map toggled is Enable and viewed from Analytic Child window successfully");
+		docViewAnalytics.popOutAnalyticsPanel();
+		if (docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().getWebElement().isDisplayed()) {
+			baseClass.passedStep("Thread Map toggled is Enable and viewed from Analytic Child window successfully");
+		}else {
+			baseClass.failedStep("Thread Map toggled is Enable and viewed from Analytic Child window successfully");
+		}
+		
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -350,10 +358,13 @@ public class DocView_AnalyticsPanel_Regression {
 
 		docViewAnalytics.selectAssignmentfromDashborad(assignmentName);
 		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
-		docViewAnalytics.docViewAnalyticsPanelThread(textValue);
-		baseClass.stepInfo("Doc is Viewed in the DocView Analytics Panel Child window successfully");
-		String text = docViewAnalytics.getDocView_DocumentThreadMap().getText();
-		softAssertion.assertEquals(text, textValue);
+		docViewAnalytics.popOutAnalyticsPanel();
+		if (docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().getWebElement().isDisplayed()) {
+			baseClass.passedStep("Thread Map toggled is Enable and viewed from Analytic Child window successfully");
+		}else {
+			baseClass.failedStep("Thread Map toggled is Enable and viewed from Analytic Child window successfully");
+		}
+		
 		baseClass.passedStep(
 				"To Verify that when the threadmap toggle is enabled, the length of the email thread should not be a constraint and with email threads such as the above (23 mails and 140 participants) from Analytics panel is succesfully verifed");
 
