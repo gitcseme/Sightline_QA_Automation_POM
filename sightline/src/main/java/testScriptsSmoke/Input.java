@@ -906,6 +906,8 @@ public class Input {
 		 //Added by Gopinath 05/01/2021
 		 downloadDocID = testData.getDownloadDocID();
 		 translationDocId = testData.getTranslationDocId();
+		 
+		 conceptualSearchString1 = testData.getConceptualSearchString1();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

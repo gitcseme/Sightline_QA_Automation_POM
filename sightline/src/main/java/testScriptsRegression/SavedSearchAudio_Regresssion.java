@@ -75,8 +75,8 @@ public class SavedSearchAudio_Regresssion {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -98,6 +98,7 @@ public class SavedSearchAudio_Regresssion {
 	 *         with security group.(RPMXCON-57421) schedule Save search
 	 * @throws InterruptedException
 	 * @throws ParseException
+	 * @Stabilization - done
 	 */
 	@Test(groups = { "regression" }, priority = 1)
 	public void searchAudioAndSharePA() throws InterruptedException, ParseException {
@@ -106,7 +107,7 @@ public class SavedSearchAudio_Regresssion {
 		base.stepInfo("RPMXCON-57419,RPMXCON-57420,RPMXCON-57421  SavedSearch ");
 
 		session.AudioAndNonAudioSearch(Input.audioSearchString1, "North American English");
-		session.saveSearch(searchName);
+		session.saveSearchadvanced(searchName);
 
 //		Create security group
 		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
@@ -136,6 +137,7 @@ public class SavedSearchAudio_Regresssion {
 	/**
 	 * @author Jeevitha Description : Search Audio File And Shares With Default
 	 *         Security group. and schedule the save search(RPMXCON-57420)
+	 * @Stabilization - done - session.saveSearchadvanced(searchName);
 	 */
 	@Test(groups = { "regression" }, priority = 2)
 	public void searchAudioAndShareToDefaultsgRmu() throws InterruptedException, ParseException {
@@ -147,7 +149,7 @@ public class SavedSearchAudio_Regresssion {
 
 		// Search audio file and save the file
 		session.AudioAndNonAudioSearch(Input.audioSearchString1, "North American English");
-		session.saveSearch(searchName);
+		session.saveSearchadvanced(searchName);
 		saveSearch = new SavedSearch(driver);
 
 		// Shared with Default Security group
@@ -167,6 +169,7 @@ public class SavedSearchAudio_Regresssion {
 	/**
 	 * @author Jeevitha Description : Search Audio File And Shares With Default
 	 *         Security group. and schedule the save search(RPMXCON-57420)
+	 * @Stabilization - done - session.saveSearchadvanced(searchName);
 	 */
 	@Test(groups = { "regression" }, priority = 3)
 	public void searchAudioAndShareToDefaultsgRev() throws InterruptedException, ParseException {
@@ -178,7 +181,7 @@ public class SavedSearchAudio_Regresssion {
 
 		// search audio file and save
 		session.AudioAndNonAudioSearch(Input.audioSearchString1, "North American English");
-		session.saveSearch(searchName);
+		session.saveSearchadvanced(searchName);
 		saveSearch = new SavedSearch(driver);
 
 		// Shared with Default Security group
@@ -273,6 +276,7 @@ public class SavedSearchAudio_Regresssion {
 	 *         Report against My saved searches in PAU role
 	 * @param testMethod
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void customDataReportAgainstPA() throws InterruptedException {
@@ -289,6 +293,10 @@ public class SavedSearchAudio_Regresssion {
 		base.stepInfo("Loggedin As PA");
 		String newNodeFromPA = saveSearch.createSearchGroupAndReturn(searchName, "PA");
 		int purehit = session.basicContentSearch(Input.searchString1);
+
+		// Get Count
+		session.searchSavedSearchResult(Input.mySavedSearch);
+		int aggregateHitCount = session.saveAndReturnPureHitCount();
 
 		// Impersonate As RMU via PA and create new searchgroup
 		base.impersonatePAtoRMU();
@@ -322,7 +330,7 @@ public class SavedSearchAudio_Regresssion {
 		base.stepInfo("Impersonated As RMU");
 
 		report.VerificationAndreportGenerator(newNodeFromPA, newNodeFromRMU, newNodeFromRev, folderName, searchName,
-				searchName1, purehit);
+				searchName1, aggregateHitCount);
 
 		login.logout();
 	}
@@ -464,6 +472,7 @@ public class SavedSearchAudio_Regresssion {
 	 *                              role, create Searchgroups and Searches, and then
 	 *                              runs the Review Results Report against My saved
 	 *                              searches in PAU role RPMXCON-57413
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void reviewResultReport() throws InterruptedException {
@@ -540,7 +549,7 @@ public class SavedSearchAudio_Regresssion {
 	 *                              runs Production against My saved searches in PAU
 	 *                              role successfully RPMXCON-57416
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = false, groups = { "regression" }, priority = 9)
 	public void productionManagementReport() throws InterruptedException {
 		String searchGroup = "Group2" + Utility.dynamicNameAppender();
 		String saveSearch1 = "search2" + Utility.dynamicNameAppender();
@@ -687,9 +696,8 @@ public class SavedSearchAudio_Regresssion {
 		session.saveSearchInNode(saveSearch2);
 
 		// impersonate As RMU
-		driver.Manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-		base.waitForElement(base.getSignoutMenu());
-		base.impersonateReviewertoRMU();
+		driver.waitForPageToBeReady();
+		base.rolesToImp("REV", "RMU");
 
 		// To Select & check mySavedSearch and savedNodeSearch
 		BatchPrintPage batch = new BatchPrintPage(driver);
@@ -715,6 +723,11 @@ public class SavedSearchAudio_Regresssion {
 
 	}
 
+	/**
+	 * Date: 9/13/21 Modified date:1/5/2022 Modified by: Description : Schedule
+	 * saved searches(with audio and non-audio docs) under <My Saved Search> and
+	 * verify documents - RPMXCON-57418 Sprint 03
+	 */
 	@Test(groups = { "regression" }, priority = 11)
 	public void searchAndShareAsPa() throws InterruptedException, ParseException {
 		// Login as a PA
@@ -725,7 +738,7 @@ public class SavedSearchAudio_Regresssion {
 		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
 		String newNode = saveSearch.getSavedSearchNewNode().getText();
 		session.AudioAndNonAudioSearch(Input.audioSearchString1, "North American English");
-		session.saveSearchInNode(searchName);
+		session.saveAdvanceSearchInNode(searchName, newNode);
 
 		// Shared with Security group
 		saveSearch.shareSavedSearchFromNode(searchName, "Default");
@@ -752,6 +765,14 @@ public class SavedSearchAudio_Regresssion {
 		login.logout();
 	}
 
+	/**
+	 * Date: 9/13/21 Modified date:1/5/2022 Modified by: Description : SA/DA/PA
+	 * impersonate down as RMU/RU role, create Searchgroups and Searches, and then
+	 * runs the Document Audit Report against My saved searches in PAU role -
+	 * RPMXCON-57410 Sprint 03
+	 * 
+	 * @Stabilzation - done
+	 */
 	@Test(groups = { "regression" }, priority = 12)
 	public void documentAuditReport() throws InterruptedException {
 		String searchGroup = "Group1" + Utility.dynamicNameAppender();
@@ -809,16 +830,17 @@ public class SavedSearchAudio_Regresssion {
 		Thread.sleep(3000);
 		base.impersonateSAtoPA();
 
-		try {
-			documentAuditReport.verifySource(saveSearch1, saveSearch2);
-		} catch (Exception e) {
-			System.out.println("RMU and REV nodes not present in PA as Expected");
-		}
+		documentAuditReport.verifySource(saveSearch1, saveSearch2);
 
 		documentAuditReport.verifySource(newNodePA, saveSearch2);
 		login.logout();
 	}
 
+	/**
+	 * Date: 9/13/21 Modified date:1/5/2022 Modified by: Description : For RMU -
+	 * Validate modifying searches/groups from the shared with <Security Group Name>
+	 * by any other PAU user - RPMXCON-49885 Sprint 03
+	 */
 	@Test(groups = { "regression" }, priority = 13)
 	public void verifySharedNode() throws InterruptedException {
 		String SearchNamePA = "Search1" + Utility.dynamicNameAppender();
@@ -831,27 +853,20 @@ public class SavedSearchAudio_Regresssion {
 		String newNodePA = saveSearch.getSavedSearchNewNode().getText();
 		System.out.println(newNodePA);
 		saveSearch.shareSavedNodePA(newNodePA);
-		boolean flag = saveSearch.verifySharedNode(newNodePA);
-		softAssertion.assertEquals(flag, true);
-		System.out.println(flag + "Search group is Present");
+		saveSearch.verifySharedNode(Input.shareSearchDefaultSG, newNodePA, "", false, "", false);
 
 		// impersonate As RMU
 		base.impersonatePAtoRMU();
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		flag = saveSearch.verifySharedNode(newNodePA);
-		softAssertion.assertEquals(flag, true);
-		System.out.println(flag + "Search group present");
+		saveSearch.verifySharedNode(Input.shareSearchDefaultSG, newNodePA, "", false, "", false);
 		saveSearch.deleteSharedNode(newNodePA);
 
 		// impersonate As RMU
-		Thread.sleep(2000);
+		driver.waitForPageToBeReady();
 		base.impersonateSAtoPA();
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		flag = saveSearch.verifySharedNode(newNodePA);
-		softAssertion.assertEquals(flag, false);
-		System.out.println(flag + "search group is deleted Successfully");
-		softAssertion.assertAll();
+		saveSearch.verifySharedNode(Input.shareSearchDefaultSG, newNodePA, "", false, "", false);
 		login.logout();
 	}
 
@@ -861,6 +876,7 @@ public class SavedSearchAudio_Regresssion {
 	 *         selected any saved search query from saved search page and apply edit
 	 *         on that, and will modify the search query and execute the same after
 	 *         modification - RPMXCON-47381 Sprint 03
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void checkBackButton() throws InterruptedException {
@@ -917,7 +933,6 @@ public class SavedSearchAudio_Regresssion {
 		login.logout();
 	}
 
-	
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
