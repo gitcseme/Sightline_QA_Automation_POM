@@ -2172,6 +2172,12 @@ public class ProductionPage {
 	public Element getTiffSinglePage() {
 		return driver.FindElementByXPath("//*[@id='rbdSinglePageType']/../i");
 	}
+	public Element getSaveButton() {
+		return driver.FindElementByXPath("//*[text()='Save']");
+	}
+	public Element getProductionCreatedTimeInGridView(String production) {
+		return driver.FindElementByXPath("//*[text()='"+production+"']/../td[9]");
+	}
 	
 	
 	public Element blankPageRemovalMessage() {
