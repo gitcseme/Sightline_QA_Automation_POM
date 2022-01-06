@@ -40,7 +40,7 @@ public class Tally_Regression1 {
 	String SearchName="Tally"+Utility.dynamicNameAppender();
 	String  assgnName="Tally"+Utility.dynamicNameAppender();
 	String  folderName="Tally"+Utility.dynamicNameAppender();
-	String securityGrpName="Tally1287760";      //"Tally"+Utility.dynamicNameAppender(); 
+	String securityGrpName="Tally"+Utility.dynamicNameAppender(); 
 	String projectName=Input.projectName;
 	String[] sourceName_RMU = { assgnName, folderName,SearchName,"Default Security Group"};
 	String[] sourceName_PA = {"Regression_AllDataset_Consilio1", folderName,SearchName,"Default Security Group" };
@@ -338,12 +338,13 @@ public class Tally_Regression1 {
 			bc.stepInfo("To Verify Admin/RMU will have a report in Tally with document counts by"
 					+ " metadata fields for security groups.");
 			String[] metadata = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" };
+			String[] list = { "exp1", "exp2", "exp3", "exp4" };
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 			bc.stepInfo("Logged in as PA");
 			SoftAssert softAssertion = new SoftAssert();
 			TallyPage tp = new TallyPage(driver);
 			tp.navigateTo_Tallypage();
-			tp.SelectSource_SecurityGroup(securityGrpName);
+			tp.SelectSource_SavedSearch("abctally");
 			for (int i = 0; i < metadata.length; i++) {
 				bc.stepInfo("**To Verify Tally Report if Tally By MetaData as-" + metadata[i] + "**");
 				tp.selectTallyByMetaDataField(metadata[i]);
@@ -369,6 +370,44 @@ public class Tally_Regression1 {
 						"Verified whether user will have a report in Tally with document counts by metadata "
 								+ "fields for Searches if Tally by metadata is " + metadata[i]);
 			}
+		}
+		
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+		@Test(groups = { "regression" }, priority = 9)
+		public void verifySubTally_Assignments() throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56218");
+			bc.stepInfo("To Verify RMU will have a report in SubTally with document counts by metadata fields for assignment groups.");
+			String[][] subTally = { { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" },
+					{ "EmailAuthorName", "CustodianName", "DocFileType", "EmailAuthorAddress" },
+					{ "DocFileType", "EmailAuthorName", "EmailAuthorAddress", "CustodianName" },
+					{ "EmailAuthorAddress", "CustodianName", "DocFileType", "EmailAuthorName" } };
+			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			bc.stepInfo("Logged in as RMU");
+			TallyPage tp = new TallyPage(driver);
+			SoftAssert softAssertion = new SoftAssert();
+			for (int i = 0; i < subTally.length; i++) {
+				tp.navigateTo_Tallypage();
+				tp.SelectSource_Assignment(assgnName);
+				String metadataTally = subTally[i][0];
+				tp.selectTallyByMetaDataField(metadataTally);
+				tp.validateMetaDataFieldName(metadataTally);
+				tp.verifyTallyChart();
+				softAssertion.assertEquals(hitsCount, tp.verifyDocCountBarChart());
+				tp.tallyActions();
+				bc.waitTime(2);
+				tp.getTally_actionSubTally().Click();
+				for (int j = 1; j < subTally[i].length; j++) {
+					bc.stepInfo("**To Verify Sub Tally Report Table  if Tally By Metadata as " + metadataTally
+							+ " and Sub Tally By subMetaData as-" + subTally[i][j] + "**");
+					tp.selectMetaData_SubTally(subTally[i][j]);
+					tp.verifyDocCountSubTally(hitsCount);
+				}
+				bc.selectproject();
+			}
+			softAssertion.assertAll();
 		}
 
 	@BeforeMethod
