@@ -3481,7 +3481,7 @@ public class MiniDocListPage {
 
 	/**
 	 * @author Raghuram.A Date: 1/3/21 Modified date:N/A Modified by: N/A
-	 * @Description : 
+	 * @Description :
 	 * 
 	 */
 
@@ -3568,5 +3568,25 @@ public class MiniDocListPage {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @param name
+	 */
+	public void verifySelectedDocHighlight(String name) {
+
+		String bgColor = getCheckSelectedBgColor(name).GetCssValue("background-color");
+
+		bgColor = rgbTohexaConvertor(bgColor);
+         System.out.println(bgColor);
+		if (bgColor.equals("#3E65AC")) {
+			System.out.println("Document is Highlighted : "+bgColor);
+			baseClass.passedStep("Document is Highlighted : "+bgColor);
+		} else {
+			System.out.println("Document is Not highlighted");
+			baseClass.failedStep("Document is Not highlighted");
+		}
+
 	}
 }
