@@ -5286,7 +5286,7 @@ public class AssignmentsPage {
 		assertion.assertTrue(getbulkassgnpopup().isDisplayed());
 		bc.waitForElement(getContinueBulkAssign());
 		bc.waitTillElemetToBeClickable(getContinueBulkAssign());
-		getContinueBulkAssign().waitAndClick(10);
+		getContinueBulkAssign().waitAndClick(20);
 		bc.waitForElement(getAssgn_TotalCount());
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getFinalizeButton());
@@ -5299,7 +5299,7 @@ public class AssignmentsPage {
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
 		bc.waitForElement(getAssignmentCodingFormDropDown());
 		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
+		//getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
 		driver.scrollingToBottomofAPage();
 		bc.waitForElement(getAssgn_SaveWithoutCompleteingToggle());
 		bc.waitTillElemetToBeClickable(getAssgn_SaveWithoutCompleteingToggle());
@@ -8492,12 +8492,12 @@ public class AssignmentsPage {
 				bc.waitForElement(getContinueBulkAssign());
 				getContinueBulkAssign().isElementAvailable(15);
 				bc.waitTillElemetToBeClickable(getContinueBulkAssign());
-				getContinueBulkAssign().waitAndClick(10);
+				getContinueBulkAssign().waitAndClick(20);
 			} catch (Exception e) {
 				bc.waitForElement(getContinueBulkAssign());
 				getContinueBulkAssign().isElementAvailable(15);
 				bc.waitTillElemetToBeClickable(getContinueBulkAssign());
-				getContinueBulkAssign().waitAndClick(10);
+				getContinueBulkAssign().waitAndClick(20);
 			}
 			bc.waitForElement(getAssgn_TotalCount());
 			getAssgn_TotalCount().isElementAvailable(10);
