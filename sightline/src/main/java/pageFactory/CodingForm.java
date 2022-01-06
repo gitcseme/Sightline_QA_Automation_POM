@@ -3282,7 +3282,7 @@ public class CodingForm {
 	 * @Description : this method used for to fill the help and error messages
 	 */
 	public void enterErrorAndHelpMsg(int objectNo, String errorTestingEnabled, String helpMsg, String errorMsg) {
-		if (getCodingForm_getAllObjects().isElementPresent() == true) {
+		if (getCodingForm_getAllObjects().isElementAvailable(5) == true) {
 			for (int i = 1; i <= getCodingForm_getAllObjects().size(); i++) {
 				base.waitTillElemetToBeClickable(getCodingForm_getExtendObject());
 				getCodingForm_getExtendObject().waitAndClick(10);
@@ -3301,7 +3301,7 @@ public class CodingForm {
 	 * @Description : this method used for to return cf objects name
 	 */
 	public String getCFObjectsLabel(int objectNo) {
-		base.waitForElement(getCodingForm_StaticText(objectNo));
+		driver.waitForPageToBeReady();
 		String label = getCodingForm_StaticText(objectNo).GetAttribute("value");
 		return label;
 	}

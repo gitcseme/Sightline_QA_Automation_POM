@@ -11844,6 +11844,7 @@ public class DocViewPage {
 	 * @description: To verify the given tag coding form name in docview page
 	 */
 	public void verifyCodingFormTagNameInDocviewPg(int objectNo, String expectedObjectName) {
+		SoftAssert softAssertion = new SoftAssert();
 		try {
 			base.waitForElement(getCodingFormTaglabel(objectNo));
 			String actualObjectName = getCodingFormTaglabel(objectNo).getText();
@@ -11989,8 +11990,7 @@ public class DocViewPage {
 	 * @description: To verify tags of coding form name in docview page
 	 */
 	public void verifyTagsAreDisabled(int objectNo) {
-		base.waitForElement(getCodingFormTag(objectNo));
-		if (getCodingFormTag(objectNo).isElementPresent() == true) {
+		if (getCodingFormTag(objectNo).isElementAvailable(5) == true) {
 			base.passedStep("The added tags are checked and disabled");
 		} else {
 			base.failedStep("The added tags are not checked and disabled");
@@ -14613,7 +14613,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Performing action from parent window");
 		base.waitForElement(groupelementCheckBox());
-		groupelementCheckBox().Click();
+		groupelementCheckBox().waitAndClick(5);
 		getSaveAndNextButton().waitAndClick(5);
 
 		boolean flag = getCodingFormValidErrorMeta().Displayed();
@@ -14770,6 +14770,7 @@ public class DocViewPage {
 	 * @Description: Validation of non-date format using save
 	 */
 	public void nonDateFormatValidationUsingSave(String projectFieldName) throws InterruptedException, AWTException {
+		SoftAssert softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
 		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
 //		base.waitForElement(getReadOnlyTextBox(projectFieldName));
@@ -14998,6 +14999,7 @@ public class DocViewPage {
 	 * @Description: Validation of Required comment without passing value
 	 */
 	public void validateErrorMsgRequiredComment() {
+		SoftAssert softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Performing action from parent window");
 		base.waitForElement(getDocView_CodingFormComments());

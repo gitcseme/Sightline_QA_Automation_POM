@@ -120,7 +120,7 @@ public class CreateCodingForm_New_Regression {
 
 		// Search for non-audio documents
 		baseClass.stepInfo("Searching non-audio documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.searchStringStar);
+		sessionSearch.advancedNewContentSearch1(Input.searchStringStar);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -170,7 +170,7 @@ public class CreateCodingForm_New_Regression {
 
 		// Search for non-audio documents
 		baseClass.stepInfo("Searching non-audio documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.searchStringStar);
+		sessionSearch.advancedNewContentSearch1(Input.searchStringStar);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -223,7 +223,7 @@ public class CreateCodingForm_New_Regression {
 
 		// Search for non-audio documents
 		baseClass.stepInfo("Searching non-audio documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.searchStringStar);
+		sessionSearch.advancedNewContentSearch1(Input.searchStringStar);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -279,7 +279,7 @@ public class CreateCodingForm_New_Regression {
 
 		// Search for non-audio documents
 		baseClass.stepInfo("Searching non-audio documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.searchStringStar);
+		sessionSearch.advancedNewContentSearch1(Input.searchStringStar);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -336,7 +336,7 @@ public class CreateCodingForm_New_Regression {
 
 		// Search for non-audio documents
 		baseClass.stepInfo("Searching non-audio documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.searchStringStar);
+		sessionSearch.advancedNewContentSearch1(Input.searchStringStar);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -2494,14 +2494,14 @@ public class CreateCodingForm_New_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching non-audio documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.searchStringStar);
+		sessionSearch.advancedNewContentSearch1(Input.searchStringStar);
 		sessionSearch.ViewInDocView();
 		
 		// verify warning message
 		docViewPage.warningMessageStaticUsingSave();
 		
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-		codingForm.DeleteCodingform(cfName);
+		codingForm.deleteCodingForm(cfName,cfName);
 		codingForm.assignCodingFormToSG("Default Project Coding Form");
 		
 		driver.waitForPageToBeReady();
@@ -2652,7 +2652,7 @@ public class CreateCodingForm_New_Regression {
 		String fieldText="Stamp"+Utility.dynamicNameAppender();
 
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		
 		// create new coding form
@@ -2673,7 +2673,7 @@ public class CreateCodingForm_New_Regression {
 		
 		baseClass.passedStep("Verified on click of 'Save and Next' button coding form should be validated as per the customized coding form for comment element in context of security group ");
 		
-		codingForm.assignCodingFormToSGAlert("Default Project Coding Form");
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
 		driver.waitForPageToBeReady();
 		codingForm.deleteCodingForm(cfName,cfName);
 		
@@ -2696,7 +2696,7 @@ public class CreateCodingForm_New_Regression {
 		String fieldText="Stamp"+Utility.dynamicNameAppender();
 
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		
 		// create new coding form
@@ -2716,7 +2716,7 @@ public class CreateCodingForm_New_Regression {
 		docViewPage.openChildWindowInMeta();
 		
 		baseClass.passedStep("Verified on click of 'Save and Next' button coding form should be validated as per the customized coding form for editable metadata fields in context of security group");		
-		codingForm.assignCodingFormToSGAlert("Default Project Coding Form");
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
 		driver.waitForPageToBeReady();
 		codingForm.deleteCodingForm(cfName,cfName);
 		
@@ -2757,7 +2757,7 @@ public class CreateCodingForm_New_Regression {
 		codingForm.ViewCFinDocViewThrSearch(cfName);
 		docViewPage.verifyPanels();
 		
-		codingForm.assignCodingFormToSGAlert("Default Project Coding Form");
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
 		driver.waitForPageToBeReady();
 		codingForm.deleteCodingForm(cfName,cfName);
 		
@@ -2775,8 +2775,8 @@ public class CreateCodingForm_New_Regression {
 	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using check groupthe customized coding form using radio group");
 	    String cfName = "CFTagCheckGrp"+Utility.dynamicNameAppender();
 	    // login as RMU
-	 	loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
        
 	 	// create new coding form
 	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -2814,8 +2814,8 @@ public class CreateCodingForm_New_Regression {
 	    baseClass.stepInfo(" Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form using Tags and Check group combined with Check Item in context of security group");
 	    String cfName = "CFTagRadioGrp"+Utility.dynamicNameAppender();
 	    // login as RMU
-	 	loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
        
 	 	// create new coding form
 	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -2854,8 +2854,8 @@ public class CreateCodingForm_New_Regression {
 	    String cfName = "CFTagRadioGrp"+Utility.dynamicNameAppender();
 	    String tagName="cftag"+Utility.dynamicNameAppender();
 	    // login as RMU
-	 	loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 	 	//create tag
 	 	tagsAndFoldersPage.CreateTag(tagName, Input.securityGroup);
 	 	// create new coding form
@@ -3042,7 +3042,7 @@ public class CreateCodingForm_New_Regression {
 		
 		docViewPage.validateErrorMsgRequiredComment();
 		
-		codingForm.assignCodingFormToSGAlert("Default Project Coding Form");
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
 		driver.waitForPageToBeReady();
 		codingForm.deleteCodingForm(cfName,cfName);
 		
@@ -3060,8 +3060,8 @@ public class CreateCodingForm_New_Regression {
 	    baseClass.stepInfo(" Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form using Tag objects along with \"Selected\" condition in context of security group");
 	    String cfName = "CFTag"+Utility.dynamicNameAppender();
 	    // login as RMU
-	 	loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
        
 	 	// create new coding form
 	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -3098,8 +3098,8 @@ public class CreateCodingForm_New_Regression {
 	    baseClass.stepInfo(" Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form using Comments objects along with \"Not Selected\" condition in context of security group");
 	    String cfName = "CFComment"+Utility.dynamicNameAppender();
 	    // login as RMU
-	 	loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
        
 	 	// create new coding form
 	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -3168,7 +3168,7 @@ public class CreateCodingForm_New_Regression {
 		docViewPage.noDefaultCodingForm();
 		softAssertion.assertAll();
 		
-		codingForm.assignCodingFormToSG("Default Project Coding Form");
+		codingForm.assignCodingFormToSGAlert("Default Project Coding Form");
 		
 		// logout
 		loginPage.logout();
@@ -4044,7 +4044,7 @@ public class CreateCodingForm_New_Regression {
 		try {
 			loginPage.quitBrowser();
 		} finally {
-			loginPage.clearBrowserCache();
+			//loginPage.clearBrowserCache();
 		}
 	}
 
