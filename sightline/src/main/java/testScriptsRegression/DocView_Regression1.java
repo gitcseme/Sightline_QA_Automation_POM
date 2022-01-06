@@ -3390,6 +3390,76 @@ public class DocView_Regression1 {
 			docview.selectDocAndDownloadAllFormats(Input.downloadDocID);
 
 		}
+		
+		
+		
+		
+		/**
+		 * Author : Brundha Created date: NA Modified date: NA Modified by:NA TestCase
+		 * id :RPMXCON- 51435 Description: Verify that if the document TIFF is being
+		 * presented, the "T" icon with the accompanying mouse over tool tip must appear
+		 * 
+		 */
+		@Test(alwaysRun = true, groups = { "regression" }, priority = 43)
+
+		public void verifyTIconAndToolTipInDocView() throws Exception {
+
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("RPMXCON-51435 docview-sprint:9");
+			baseClass.stepInfo(
+					"#### Verify that if the document TIFF is being presented, the 'T' icon with the accompanying mouse over tool tip must appear ####");
+			
+			
+			String ExpectedText = "TIFF file variant of the document being displayed";
+			String DocId = "ID00001075";
+			
+			baseClass.stepInfo("Basic meta data search");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(DocId);
+
+			baseClass.stepInfo("Navigating to docview page");
+			sessionSearch.ViewInDocView();
+
+			DocViewPage docView = new DocViewPage(driver);
+			docView.navigateToDocViewPageURL();
+
+			baseClass.stepInfo("Verify Native Document Tooltip");
+			docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
+
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+			sessionSearch = new SessionSearch(driver);
+
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(DocId);
+
+			baseClass.stepInfo("Navigating to docview page");
+			sessionSearch.ViewInDocView();
+
+			docView = new DocViewPage(driver);
+			docView.navigateToDocViewPageURL();
+
+			baseClass.stepInfo("Verify Native Document Tooltip");
+			docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
+			loginPage.logout();
+
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+			sessionSearch = new SessionSearch(driver);
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(DocId);
+
+			baseClass.stepInfo("Navigating to docview page");
+			sessionSearch.ViewInDocView();
+
+			docView = new DocViewPage(driver);
+			docView.navigateToDocViewPageURL();
+
+			baseClass.stepInfo("Verify Native Document Tooltip");
+			docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
+
+		}
 		@AfterMethod(alwaysRun = true)
 		public void close() {
 			try {

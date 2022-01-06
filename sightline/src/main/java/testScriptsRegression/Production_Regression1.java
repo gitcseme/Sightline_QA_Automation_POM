@@ -6675,6 +6675,8 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			docView.navigateToDocViewPageURL();
 
 			DocViewRedactions redact=new DocViewRedactions(driver);
+			redact.deleteAllAppliedRedactions();
+			redact.clickOnAddRedactionForAudioDocument();
 			redact.addAudioRedaction(Input.startTime ,Input.endTime,redactiontag);
 			
 			loginPage.logout();
@@ -6696,7 +6698,74 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.fillingSummaryAndPreview();
 			page.fillingGeneratePageWithContinueGenerationPopup();
 		}
+		/**
+		 * @author Brundha Test case id-RPMXCON-48381
+		 * @Description To verify that if Redacted document is selected and Tiff/PDF sections are not selected then Native should be generated
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 84)
+		public void verifyNativeProducedAtGeneration() throws Exception {
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-48381 -Production Sprint 09");
+	        base.stepInfo("To verify that if Redacted document is selected and Tiff/PDF sections are not selected then Native should be generated");
+	        
+			foldername = "RedactFolderProd" + Utility.dynamicNameAppender();
+			String Redactiontag;
+			Redactiontag = "FirstRedactionTag" + Utility.dynamicNameAppender();
+			RedactionPage redactionpage = new RedactionPage(driver);
+			redactionpage.selectDefaultSecurityGroup();
+			driver.waitForPageToBeReady();
+			
+			redactionpage.manageRedactionTagsPage(Redactiontag);
+			System.out.println("First Redaction Tag is created" + Redactiontag);
 
+			
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			DocExplorerPage docExp=new DocExplorerPage(driver);
+			docExp.documentSelectionIteration();
+			docExp.docExpViewInDocView();
+
+			DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+			//doc1
+			docViewRedactions.selectDoc1();
+
+			driver.waitForPageToBeReady();
+			docViewRedactions.redactRectangleUsingOffset(10,10,100,100);
+			driver.waitForPageToBeReady();
+			docViewRedactions.selectingRedactionTag2(Redactiontag);
+
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			// Pre-requisites
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			//Adding folder to bulkfolder
+			DocExplorerPage docExplorer=new DocExplorerPage(driver);
+			docExplorer.documentSelectionIteration();
+			docExplorer.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+		}
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {
