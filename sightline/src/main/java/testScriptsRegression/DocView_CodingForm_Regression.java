@@ -7949,8 +7949,8 @@ public class DocView_CodingForm_Regression {
 		driver.waitForPageToBeReady();
 
 		// verify tag names
-		baseClass.waitForElement(docViewPage.getAttachCountText());
-		String getVerifyAttachCount = docViewPage.getAttachCountText().getText();
+		baseClass.waitForElement(docViewPage.getAttachCountTextBox());
+		String getVerifyAttachCount = docViewPage.getAttachCountTextBox().getText();
 		softAssertion.assertEquals(getTagLabelCf, getVerifyAttachCount);
 		System.out.println(getVerifyAttachCount);
 		baseClass.stepInfo("saved codingform Object AttachCount is verify successfully");
@@ -8000,8 +8000,8 @@ public class DocView_CodingForm_Regression {
 		driver.waitForPageToBeReady();
 
 		// verify tag names
-		baseClass.waitForElement(docViewPage.getAttachCountText());
-		String getVerifyAttachCounts = docViewPage.getAttachCountText().getText();
+		baseClass.waitForElement(docViewPage.getAttachCountTextBox());
+		String getVerifyAttachCounts = docViewPage.getAttachCountTextBox().getText();
 		softAssertion.assertEquals(getTagLabelCf, getVerifyAttachCounts);
 		System.out.println(getVerifyAttachCount);
 		baseClass.stepInfo("saved codingform Object AttachCount is verify successfully");
