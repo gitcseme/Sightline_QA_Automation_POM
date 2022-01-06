@@ -6694,48 +6694,39 @@ public class DocViewPage {
 	/**
 	 * @author jeevitha Description: Verifies Redaction Panel Modified by-jayanthi
 	 *         17/11/21
+	 *         #stabilized
 	 */
 	public void verifyRedactionPanel() {
-
 		this.driver.getWebDriver().get(Input.url + "DocumentViewer/DocView");
-		try {
-			base.waitForElement(getDocumentId2());
-			getDocumentId2().waitAndClick(20);
-		} catch (Exception e) {
-
-		}
-
 		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocView_RedactIcon().Visible();
-			}
+		public Boolean call() {
+		return getDocView_RedactIcon().Visible();
+		}
 		}), Input.wait60);
 		getDocView_RedactIcon().waitAndClick(10);
 		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocView_AllRedaction().Visible();
-			}
+		public Boolean call() {
+		return getDocView_AllRedaction().Visible();
+		}
 		}), Input.wait60);
-
 		System.out.println(getDocView_AllRedaction().getWebElement().getText() + " : "
-				+ getDocView_AllRedactionCount().getWebElement().getText());
+		+ getDocView_AllRedactionCount().getWebElement().getText());
 		UtilityLog.info(getDocView_AllRedaction().getWebElement().getText() + " : "
-				+ getDocView_AllRedactionCount().getWebElement().getText());
+		+ getDocView_AllRedactionCount().getWebElement().getText());
 		softAssertion.assertEquals(getDocView_AllRedaction().Displayed().booleanValue(), true);
 		base.ValidateElementCollection_Presence(getDocView_BatchRedaction(),
-				"Batch Redaction menu displayed in redaction panel");
+		"Batch Redaction menu displayed in redaction panel");
 		base.ValidateElement_Presence(getDocView_AllRedactionCount(), "All redaction count");
 		base.ValidateElement_Presence(getDocView_BatchRedactionCount(), "Batch Redaction count");
 		softAssertion.assertAll();
 		base.passedStep("All Redactions menu is displayedin redaction panel");
 		List<WebElement> batchRedaction = getDocView_BatchRedaction().FindWebElements();
 		for (int k = 0; k < batchRedaction.size(); k++) {
-			System.out.print(batchRedaction.get(k).getText());
+		System.out.print(batchRedaction.get(k).getText());
 		}
 		System.out.print(" : " + getDocView_BatchRedactionCount().getWebElement().getText());
 		UtilityLog.info("Count : " + getDocView_BatchRedactionCount().getWebElement().getText());
-
-	}
+		}
 
 	/**
 	 * @author Indium-Baskar date: 14/09/2021 Modified date: NA
@@ -19450,6 +19441,27 @@ public class DocViewPage {
 		switchToNewWindow(1);
 		base.VerifySuccessMessage("Document saved successfully");
 		driver.waitForPageToBeReady();
+	}
+	
+	/**
+	* @Author Jeevitha
+	* @return
+	*/
+	public String performNextFuncn() {
+	driver.waitForPageToBeReady();
+	getDocView_CurrentDocId().isElementAvailable(10);
+	String docID1 = getDocView_CurrentDocId().getText().trim();
+	base.stepInfo(docID1 + " : is the current document displayed before clicking NEXT Btn");
+	getDocView_Next().isElementAvailable(10);
+	getDocView_Next().Click();
+	driver.waitForPageToBeReady();
+	driver.scrollPageToTop();
+	getDocView_CurrentDocId().isElementAvailable(10);
+	String docID2 = getDocView_CurrentDocId().getText().trim();
+	base.stepInfo(docID2 + " : is the current document displayed after clicking NEXT Btn");
+	driver.waitForPageToBeReady();
+	base.textCompareNotEquals(docID1, docID2, "PASS", "Fail");
+	return docID2;
 	}
 }
 
