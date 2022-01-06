@@ -2530,7 +2530,28 @@ public class DocViewPage {
 		public Element getDocView_Analytics_FamilyViewAllDocsBtn() {
 			return driver.FindElementById("btnShowAllFamilymemeber");
 		}
+		// Added by sakthivel
+		public Element getCfCheckBox() {
+			return driver.FindElementByXPath("//*[@id='divParentCodingForm']//div[@class='check-group']//label");
 
+		}
+
+		public Element getCfText() {
+			return driver.FindElementByXPath("//label//h4[@id='lblCodingFormName']");
+
+		}
+
+		public Element getHelpText() {
+			return driver.FindElementByXPath("//span[text()='Help Text']");
+		}
+
+		public Element getStaticText() {
+			return driver.FindElementByXPath("//span[text()='Static Text']");
+		}
+
+		public Element getAttachCountText() {
+			return driver.FindElementByXPath("//span[text()='AttachCount']");
+		}
 		
 	public DocViewPage(Driver driver) {
 
@@ -18192,7 +18213,7 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @author Indium-Sakthivel date: 29/12/2021 Modified date:N/A
+	 * @author Indium-Sakthivel date: Modified:Sakthivel date:03/01/2022
 	 * @Description: View the document which is not part of mini doc list from
 	 *               Analytics panel.
 	 */
@@ -18202,21 +18223,21 @@ public class DocViewPage {
 		Set<String> duplicates = new HashSet<String>();
 		List<String> listOFData2 = new ArrayList<>();
 		ElementCollection element2 = getMiniDocListDocIdText();
-		listOFData2 = reusableDocView.availableListofElements(element2);
+		listOFData2 = availableListofElements(element2);
 		for (String minidoclist : listOFData2) {
 			duplicates.add(minidoclist);
 		}
 		System.out.println(listOFData2);
-		reusableDocView.switchToNewWindow(1);
-		reusableDocView.clickGearIconOpenAnalyticalPanel();
-		String parentWindow = reusableDocView.switchTochildWindow();
+		switchToNewWindow(1);
+		clickGearIconOpenAnalyticalPanel();
+		String parentWindow = switchTochildWindow();
 		Thread.sleep(Input.wait30);
 		getDocView_Analytics_NearDupeTab().WaitUntilPresent().ScrollTo();
 		getDocView_Analytics_NearDupeTab().waitAndClick(5);
 		Thread.sleep(Input.wait30);
 		List<String> listOFData3 = new ArrayList<>();
 		ElementCollection element3 = getAnalyticalPanelDocIdText();
-		listOFData3 = reusableDocView.availableListofElements(element3);
+		listOFData3 = availableListofElements(element3);
 		System.out.println(listOFData3);
 		for (String analytical : listOFData3) {
 			if (duplicates.add(analytical)) {
@@ -18239,11 +18260,6 @@ public class DocViewPage {
 		String actual = getDocView_CurrentDocId().getText();
 		softAssertion.assertEquals(expect, actual);
 		base.stepInfo(" selected document successfully displayed in parent window");
-		reusableDocView.closeWindow(1);
-		reusableDocView.switchToNewWindow(1);
-		driver.Navigate().refresh();
-		driver.switchTo().alert().accept();
-		driver.waitForPageToBeReady();
 	}
 
 	/**
@@ -19394,4 +19410,46 @@ public class DocViewPage {
 
 		getDocView_Analytics_FamilyViewAllDocsBtn().waitAndClick(10);
 	}
+	/**
+	 * @author Sakthivel date:03/01/2022 Modified date:NA
+	 * @Description :this method is verify CodingForm Saved object Tag names
+	 */
+	public void verifyCfAttachCountInDocView() {
+		try {
+			base.waitForElement(getAttachCountTextBox());
+			Boolean actualObjectName = getAttachCountTextBox().Visible() && getAttachCountTextBox().Enabled();
+			System.out.println("actual: " + actualObjectName);
+			softAssertion.assertEquals(true, actualObjectName);
+			base.passedStep("Object added in the coding form is displayed in docview page as expected");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Failed to verify coding form name in docview page");
+		}
+	}
+	/**
+	 * @author Indium-Sakthivel date: 03/01/2022 Modified date:N/A
+	 * @Description: Reusable this method is used for click StamplastIcon and
+	 *               SavedBtn in ChildWindow.
+	 */
+	public void editCfSavedStampBtnSavedChildWindow(String lastIcon) {
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		base.waitForElement(getCodingStampLastIcon(lastIcon));
+		getCodingStampLastIcon(lastIcon).WaitUntilPresent().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		String getAttribute = getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
+		driver.waitForPageToBeReady();
+		softAssertion.assertEquals("Review", getAttribute);
+		if (getAttribute.equals("Review")) {
+			base.passedStep("Expected Message -StamplastIcon is Clicked scuessfully..");
+		} else {
+			base.failedStep("Expected Message - StamplastIcon is not Clicked scuessfully..");
+		}
+		base.waitForElement(getCodingFormSaveButton());
+		getCodingFormSaveButton().waitAndClick(5);
+		switchToNewWindow(1);
+		base.VerifySuccessMessage("Document saved successfully");
+		driver.waitForPageToBeReady();
+	}
 }
+

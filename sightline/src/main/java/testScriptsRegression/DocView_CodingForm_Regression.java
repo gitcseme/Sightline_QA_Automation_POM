@@ -6920,7 +6920,7 @@ public class DocView_CodingForm_Regression {
 	 *               not part of mini doc list is viewed from analytics panel
 	 */
 	@Test(enabled = false, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 160)
-	public void verifySavedStampDocNotPartInDocList(String fullName, String userName, String password)
+	public void verifySavedStampDocNotPartInDocListAnalyticsPanel(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -7784,6 +7784,267 @@ public class DocView_CodingForm_Regression {
 		// logout
 		loginPage.logout();
 	}
+	/**
+	 * @Author : Sakthivel date:30/12/2021 Modified date:NA
+	 * @Description :Verify when user clicks saved stamp when document not part of
+	 *              mini doc list is viewed from analytics panel
+	 */
+	@Test(enabled = false, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 175)
+	public void verifySavedStampDocNotPartInDocList(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		String filedText = "Stamp" + Utility.dynamicNameAppender();
+
+		// Login As RMU
+		String rmu = "RMU";
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Test case Id: RPMXCON- 52112");
+		baseClass.stepInfo("Verify when user clicks saved stamp when document"
+				+ "not part of mini doc list is viewed from analytics panel");
+
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+
+		// DocViewCodingform edit and and stamp saved
+		driver.waitForPageToBeReady();
+		docViewPage.editCodingFormAndSaveWithStamp(filedText, Input.stampColour);
+		baseClass.stepInfo("Editing coding form and saving with a stamp colour has been done");
+		docViewPage.verifyNotPartofDocViewAnalyticalPanelNearDupeTab();
+
+		// DocViewCodingform saved stamplastIcon click and saved doc
+		docViewPage.getCodingFormStampClickAndSave(Input.stampColour);
+		docViewPage.deleteStampColour(Input.stampColour);
+		loginPage.logout();
+		softAssertion.assertAll();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+	}
+	/**
+	 * @Author : Sakthivel date:03/01/2022 Modified date:NA
+	 * @Description :Verify when user clicks saved stamp from coding form child
+	 *              window when document not part of mini doc list is viewed from
+	 *              analytics panel child window.
+	 */
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 176)
+	public void verifyCfSavedStampDocNotPartInChildWindow(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();		
+
+		// Login As RMU
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON- 52154");
+		baseClass.stepInfo("Verify when user clicks saved stamp from coding form child window when document"
+				+ "not part of mini doc list is viewed from analytics panel child window");
+
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString2);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+
+		// To view the NearDupe Doc in the DocView
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+
+		// Doc view coding form stamp selection
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		docViewPage.docViewCodingFormPanelStampSelectionWithoutSave(Input.stampColour);
+
+		// CodingForm child window will open
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		docViewPage.verifyNotPartofDocViewAnalyticalPanelNearDupeTab();
+		docViewPage.closeWindow(2);
+		docViewPage.switchToNewWindow(2);
+
+		// click StamplastIcon and SavedBtn in ChildWindow.
+		docViewPage.editCfSavedStampBtnSavedChildWindow(Input.stampColour);
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docViewPage.deleteStampColour(Input.stampColour);
+
+		// Logout
+		loginPage.logout();
+		softAssertion.assertAll();
+	}
+	/**
+	 * @Author : Sakthivel date:03/01/2022 Modified date:NA
+	 * @Description :To verify that tag should be read only when the dependent tag
+	 *              is selected/unselected.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 177)
+	public void verifyCfDependentTagSelectOrNot() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		codingForm = new CodingForm(driver);
+		String codingfrom = "CF" + Utility.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Test case Id: RPMXCON- 51185");
+		baseClass.stepInfo("To verify that tag should be read only when the dependent tag is selected/unselected");
+
+		// creating CodingForm Tags.
+		codingForm.createTagsSavedInCf(codingfrom);
+		codingForm.verifyCfTagDependentSelctedOrNot();
+
+		// Logout as Reviewer manager
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+	}
+	/**
+	 * @author Sakthivel RPMXCON-51186 date:03/01/2022 Modified date:NA
+	 * @Description :Verify on click of 'Save' button coding form should be
+	 *              validated when coding form customized for all objects along with
+	 *              all condition and Check Item.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	public void verifySaveBtnValidateCfCheckItem() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51186");
+		baseClass.stepInfo("Verify on click of 'Save' button coding form should be validated when coding form"
+				+ "customized for all objects along with all condition and Check Item");
+		String cfName = "CF" + Utility.dynamicNameAppender();
+		String assignName = "CFAssignment" + Utility.dynamicNameAppender();
+		assignmentPage = new AssignmentsPage(driver);
+	    sessionSearch = new SessionSearch(driver);
+		codingForm = new CodingForm(driver);
+		docViewPage = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
+
+		// create new coding form
+		codingForm.verifyCodingFormObjectSaved(cfName);
+		codingForm.passingCodingFormName(cfName);
+		String getTagLabelCf = codingForm.getCodingForm_StaticText(2).GetAttribute("value");
+		System.out.println(getTagLabelCf);
+		String getVerifyStaticTextcf = codingForm.getCodingForm_StaticText(3).GetAttribute("value");
+		System.out.println(getVerifyStaticTextcf);
+		codingForm.saveCodingForm();
+		baseClass.stepInfo("Coding form created all object along with check item");
+
+		// Assign to security group
+		codingForm.assignCodingFormToSG(cfName);
+		baseClass.stepInfo("Coding form assigned to security group");
+
+		// session search in assignment
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		baseClass.stepInfo("Search with text input for docs completed");
+
+		// Creating Assignment from Basic search
+		assignmentPage.assignmentCreation(assignName, cfName);
+		assignmentPage.toggleCodingStampEnabled();
+		baseClass.stepInfo(
+				"Doc is Assigned from basic Search and Assignment '" + assignName + "' is created Successfully");
+		assignmentPage.add2ReviewerAndDistribute();
+		assignmentPage.selectAssignmentToViewinDocviewThreadMap(assignName);
+		driver.waitForPageToBeReady();
+
+		// verify tag names
+		baseClass.waitForElement(docViewPage.getAttachCountText());
+		String getVerifyAttachCount = docViewPage.getAttachCountText().getText();
+		softAssertion.assertEquals(getTagLabelCf, getVerifyAttachCount);
+		System.out.println(getVerifyAttachCount);
+		baseClass.stepInfo("saved codingform Object AttachCount is verify successfully");
+
+		baseClass.waitForElement(docViewPage.getStaticText());
+		String getVerifyStaticText = docViewPage.getStaticText().getText();
+		softAssertion.assertEquals(getVerifyStaticTextcf, getVerifyStaticText);
+		System.out.println(getVerifyStaticText);
+		baseClass.stepInfo("saved codingform Object staticText is verify successfully");
+
+		// verify DocView CodingForm saved object
+		if (docViewPage.getAddComment1().Visible()) {
+			baseClass.failedStep("verify coding form saved comment name in docview page is displayed ");
+		} else {
+			baseClass.passedStep("verify coding form saved comment name in docview page is not displayed ");
+		}
+		docViewPage.verifyCfAttachCountInDocView();
+		docViewPage.verifyCodingFormName(cfName);
+		docViewPage.validateRadioOrCheckGroupInDocviewPg("check-group");
+
+		// validate Coding Form saved object is failed
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getCfCheckBox());
+		docViewPage.getCfCheckBox().waitAndClick(10);
+		docViewPage.getSaveDoc().waitAndClick(10);
+		docViewPage.errorMessage();
+		baseClass.CloseSuccessMsgpopup();
+
+		// validate Coding Form saved object is passed
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getCfCheckBox());
+		docViewPage.getCfCheckBox().waitAndClick(10);
+		docViewPage.getSaveDoc().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		softAssertion.assertAll();
+
+		// Logout as Reviewer manager
+		loginPage.logout();
+
+		// Login As reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Select the Assignment from dashboard
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		driver.waitForPageToBeReady();
+
+		// verify tag names
+		baseClass.waitForElement(docViewPage.getAttachCountText());
+		String getVerifyAttachCounts = docViewPage.getAttachCountText().getText();
+		softAssertion.assertEquals(getTagLabelCf, getVerifyAttachCounts);
+		System.out.println(getVerifyAttachCount);
+		baseClass.stepInfo("saved codingform Object AttachCount is verify successfully");
+
+		baseClass.waitForElement(docViewPage.getStaticText());
+		String getVerifyStaticTexts = docViewPage.getStaticText().getText();
+		softAssertion.assertEquals(getVerifyStaticTextcf, getVerifyStaticTexts);
+		System.out.println(getVerifyStaticText);
+		baseClass.stepInfo("saved codingform Object staticText is verify successfully");
+
+		// verify DocView CodingForm saved object
+		if (docViewPage.getAddComment1().Visible()) {
+			baseClass.failedStep("verify coding form saved comment name in docview page is displayed ");
+		} else {
+			baseClass.passedStep("verify coding form saved comment name in docview page is not displayed ");
+		}
+		docViewPage.verifyCfAttachCountInDocView();
+		docViewPage.verifyCodingFormName(cfName);
+		docViewPage.validateRadioOrCheckGroupInDocviewPg("check-group");
+
+		// validate Coding Form saved object is failed
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getCfCheckBox());
+		docViewPage.getCfCheckBox().waitAndClick(10);
+		docViewPage.getSaveDoc().waitAndClick(10);
+		docViewPage.errorMessage();
+		baseClass.CloseSuccessMsgpopup();
+
+		// validate Coding Form saved object is passed
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getCfCheckBox());
+		docViewPage.getCfCheckBox().waitAndClick(10);
+		docViewPage.getSaveDoc().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		softAssertion.assertAll();
+
+		// logout as reviewer
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout as Reviewer'" + Input.rev1userName + "'");
+		baseClass.passedStep("Verify on click of 'Save' button coding form should be validated when coding form+"
+				+ "customized for all objects along with all condition and Check Item");
+	}
+
 	
 	
 	
