@@ -2429,6 +2429,7 @@ public class SessionSearch {
 
 	/**
 	 * @modifiedOn : 1/5/2022 (getRemovePureHit().isElementAvailable(3))
+	 * @modifiedOn : 1/7/2022 getPureHitAddButton().Click(); to getPureHitAddButton().waitAndClick(10);
 	 * @param tagName
 	 * @throws InterruptedException
 	 */
@@ -2439,7 +2440,7 @@ public class SessionSearch {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 		} else if (getPureHitAddButton().isElementAvailable(2)) {
-			getPureHitAddButton().Click();
+			getPureHitAddButton().waitAndClick(10);
 		}
 
 		getBulkActionButton().Click();
