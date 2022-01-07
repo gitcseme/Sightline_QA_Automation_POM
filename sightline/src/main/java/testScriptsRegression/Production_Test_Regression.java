@@ -86,7 +86,6 @@ public class Production_Test_Regression {
 	String testData1 = Input.testData1;
 	foldername = "FolderProd" + Utility.dynamicNameAppender();
 	tagname = "Tag" + Utility.dynamicNameAppender();
-	
 
 	// Pre-requisites
 	// create tag and folder
@@ -102,12 +101,13 @@ public class Production_Test_Regression {
 
 	//Verify archive status on Grid view
 	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
 	productionname = "p" + Utility.dynamicNameAppender();
 	page.selectingDefaultSecurityGroup();
 	page.addANewProduction(productionname);
 	page.fillingDATSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -164,12 +164,13 @@ public class Production_Test_Regression {
 
 			//Verify Reserving Bates Range status on Tile view
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			productionname = "p" + Utility.dynamicNameAppender();
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -221,12 +222,13 @@ public class Production_Test_Regression {
 
 			//Verify Pre-gen checks is in progress status on Tile view
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			productionname = "p" + Utility.dynamicNameAppender();
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -258,7 +260,7 @@ public class Production_Test_Regression {
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -352,13 +354,14 @@ public class Production_Test_Regression {
 
 	//Verify pdf with burn redaction
 	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
 	productionname = "p" + Utility.dynamicNameAppender();
 	page.selectingDefaultSecurityGroup();
 	page.addANewProduction(productionname);
 	page.fillingDATSection();
 	page.fillingPDFForRedaction1();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -404,6 +407,7 @@ public class Production_Test_Regression {
 
 		//Verify pdf with burn redaction
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -412,7 +416,7 @@ public class Production_Test_Regression {
 		page.fillingTIFFWithMultiPage(tagname);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -459,12 +463,13 @@ public class Production_Test_Regression {
 		//Verify
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTIFFSection(tagname,tagNameTechnical);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -511,12 +516,13 @@ public class Production_Test_Regression {
 		//Verify
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingPDFSection(tagname,tagNameTechnical);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -562,7 +568,7 @@ public class Production_Test_Regression {
 		page.addANewProduction(productionname); 
 		page.fillingDATSection(); 
 		page.navigateToNextSection();
-		// page.fillingNumberingAndSortingPage(prefixID, suffixID); 
+		// page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates); 
 		page.navigateToNextSection(); 
 		page.fillingDocumentSelectionPage(foldername); 
 		page.navigateToNextSection(); 
@@ -689,11 +695,12 @@ public class Production_Test_Regression {
 	//Verify archive status on Grid view
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -754,13 +761,14 @@ public class Production_Test_Regression {
 	//document 
 	ProductionPage page = new ProductionPage(driver);
 	productionname = "p" + Utility.dynamicNameAppender();
+	String beginningBates = page.getRandomNumber(2);
 	page.addANewProduction(productionname);
 	page.fillingDATSection();
 	page.fillingNativeSection();
 	page.fillingTIFFSection(tagname1,tagname2);
 	page.fillingTextSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPageWithTag(tagname1,tagname2);
 	page.navigateToNextSection();
@@ -809,11 +817,12 @@ public class Production_Test_Regression {
 	//Verify archive status on Gen page
 	ProductionPage page = new ProductionPage(driver);
 	productionname = "p" + Utility.dynamicNameAppender();
+	String beginningBates = page.getRandomNumber(2);
 	page.selectingDefaultSecurityGroup();
 	page.addANewProduction(productionname);
 	page.fillingDATSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -865,11 +874,12 @@ public class Production_Test_Regression {
 	//Verify archive status on Gen page
 	ProductionPage page = new ProductionPage(driver);
 	productionname = "p" + Utility.dynamicNameAppender();
+	String beginningBates = page.getRandomNumber(2);
 	page.selectingDefaultSecurityGroup();
 	page.addANewProduction(productionname);
 	page.fillingDATSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -898,7 +908,7 @@ public class Production_Test_Regression {
 	page.addANewProduction(productionname);
 	page.fillingDATSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -955,11 +965,12 @@ public class Production_Test_Regression {
 	//Verify archive status on Gen page
 	ProductionPage page = new ProductionPage(driver);
 	productionname = "p" + Utility.dynamicNameAppender();
+	String beginningBates = page.getRandomNumber(2);
 	page.selectingDefaultSecurityGroup();
 	page.addANewProduction(productionname);
 	page.fillingDATSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -989,7 +1000,7 @@ public class Production_Test_Regression {
 	page.addANewProduction(productionname);
 	page.fillingDATSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -1046,11 +1057,12 @@ public class Production_Test_Regression {
 	//Verify archive status on Gen page
 	ProductionPage page = new ProductionPage(driver);
 	productionname = "p" + Utility.dynamicNameAppender();
+	String beginningBates = page.getRandomNumber(2);
 	page.selectingDefaultSecurityGroup();
 	page.addANewProduction(productionname);
 	page.fillingDATSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -1102,11 +1114,12 @@ public class Production_Test_Regression {
 	//Verify archive status on Gen page
 	ProductionPage page = new ProductionPage(driver);
 	productionname = "p" + Utility.dynamicNameAppender();
+	String beginningBates = page.getRandomNumber(2);
 	page.selectingDefaultSecurityGroup();
 	page.addANewProduction(productionname);
 	page.fillingDATSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -1153,11 +1166,12 @@ public class Production_Test_Regression {
 	//Verify archive status on Gen page
 	ProductionPage page = new ProductionPage(driver);
 	productionname = "p" + Utility.dynamicNameAppender();
+	String beginningBates = page.getRandomNumber(2);
 	page.selectingDefaultSecurityGroup();
 	page.addANewProduction(productionname);
 	page.fillingDATSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -1286,12 +1300,13 @@ public class Production_Test_Regression {
 		//Verify 
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTIFFSection(tagname,tagNameTechnical);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1410,13 +1425,14 @@ public class Production_Test_Regression {
 				//Verify 
 				ProductionPage page = new ProductionPage(driver);
 				productionname = "p" + Utility.dynamicNameAppender();
+				String beginningBates = page.getRandomNumber(2);
 				page.selectingDefaultSecurityGroup();
 				page.addANewProduction(productionname);
 				page.fillingDATSection();
 				page.fillingPDFSectionWithMultiBranding(tagname);
 				base.stepInfo("Added a multi line branding to all six  locations");
 				page.navigateToNextSection();
-				page.fillingNumberingAndSortingPage(prefixID, suffixID);
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 				page.navigateToNextSection();
 				page.fillingDocumentSelectionPage(foldername);
 				page.navigateToNextSection();
@@ -1486,6 +1502,7 @@ public class Production_Test_Regression {
 					//Verify 
 					ProductionPage page = new ProductionPage(driver);
 					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
 					page.selectingDefaultSecurityGroup();
 					page.addANewProduction(productionname);
 					page.fillingDATSection();
@@ -1497,7 +1514,7 @@ public class Production_Test_Regression {
 					page.getDoNotProduceFullContentTiff().waitAndClick(10);
 					base.stepInfo("Enabled 'Do not produce full content TIFF / PDFs or placeholder TIFF / PDFs for Natively Produced Docs' toggle ON");
 					page.navigateToNextSection();
-					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 					page.navigateToNextSection();
 					page.fillingDocumentSelectionPage(foldername);
 					page.navigateToNextSection();
@@ -1521,7 +1538,7 @@ public class Production_Test_Regression {
 					page.getDoNotProduceFullContentTiff().waitAndClick(10);
 					base.stepInfo("Enabled 'Do not produce full content TIFF / PDFs or placeholder TIFF / PDFs for Natively Produced Docs' toggle ON");
 					page.navigateToNextSection();
-					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 					page.navigateToNextSection();
 					page.fillingDocumentSelectionPage(foldername);
 					page.navigateToNextSection();
@@ -1569,12 +1586,13 @@ public class Production_Test_Regression {
 				//Verify 
 				ProductionPage page = new ProductionPage(driver);
 				productionname = "p" + Utility.dynamicNameAppender();
+				String beginningBates = page.getRandomNumber(2);
 				page.selectingDefaultSecurityGroup();
 				page.addANewProduction(productionname);
 				page.fillingDATSection();
 				page.fillingPDFSectionwithBurnRedaction(tagname);
 				page.navigateToNextSection();
-				page.fillingNumberingAndSortingPage(prefixID, suffixID);
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 				page.navigateToNextSection();
 				page.fillingDocumentSelectionPage(foldername);
 				page.navigateToNextSection();
@@ -1623,12 +1641,13 @@ public class Production_Test_Regression {
 					//Verify 
 					ProductionPage page = new ProductionPage(driver);
 					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
 					page.selectingDefaultSecurityGroup();
 					page.addANewProduction(productionname);
 					page.fillingDATSection();
 					page.fillingTiffSectionDisablePrivilegedDocs();
 					page.navigateToNextSection();
-					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 					page.navigateToNextSection();
 					page.fillingDocumentSelectionPage(foldername);
 					page.navigateToNextSection();
@@ -1646,7 +1665,7 @@ public class Production_Test_Regression {
 					page.fillingDATSection();
 					page.fillingPDFSectionDisablePrivilegedDocs();
 					page.navigateToNextSection();
-					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 					page.navigateToNextSection();
 					page.fillingDocumentSelectionPage(foldername);
 					page.navigateToNextSection();
@@ -1698,6 +1717,7 @@ public class Production_Test_Regression {
 					//Verify archive status on Gen page
 					ProductionPage page = new ProductionPage(driver);
 					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
 					page.selectingDefaultSecurityGroup();
 					page.addANewProduction(productionname);
 					page.fillingDATSection();
@@ -1705,7 +1725,7 @@ public class Production_Test_Regression {
 					page.fillingTIFFSection(tagname);
 					page.fillingTextSection();
 					page.navigateToNextSection();
-					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 					page.navigateToNextSection();
 					page.fillingDocumentSelectionPage(foldername);
 					page.navigateToNextSection();
@@ -1758,6 +1778,7 @@ public class Production_Test_Regression {
 					//Verify archive status on Gen page
 					ProductionPage page = new ProductionPage(driver);
 					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
 					page.selectingDefaultSecurityGroup();
 					page.addANewProduction(productionname);
 					page.fillingDATSection();
@@ -1765,7 +1786,7 @@ public class Production_Test_Regression {
 					page.fillingTIFFSection(tagname);
 					page.fillingTextSection();
 					page.navigateToNextSection();
-					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 					page.navigateToNextSection();
 					page.fillingDocumentSelectionPage(foldername);
 					page.navigateToNextSection();
@@ -1865,11 +1886,12 @@ public class Production_Test_Regression {
 					//Verify archive status on Gen page
 					ProductionPage page = new ProductionPage(driver);
 					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
 					page.selectingDefaultSecurityGroup();
 					page.addANewProduction(productionname);
 					page.fillingDATSection();
 					page.navigateToNextSection();
-					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 					page.navigateToNextSection();
 					page.fillingDocumentSelectionPage(foldername);
 					page.navigateToNextSection();
@@ -1893,6 +1915,126 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-48344
+					 * @Description: To verify that Tiff/PDF should generate with Priv placeholdering even though 'Tech Issue Doc' placeholdering, Burn redactions and File group/tag based placeholdering is exists.
+					 */
+				@Test(groups = { "regression" }, priority = 31)
+					public void verifyGenWithPrivplcholderTechIssueRedactionTag() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-48344 -Production Sprint 09");
+					base.stepInfo("To verify that Tiff/PDF should generate with Priv placeholdering even though 'Tech Issue Doc' placeholdering, Burn redactions and File group/tag based placeholdering is exists.");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					String tagname1 = "Tag" + Utility.dynamicNameAppender();
+					
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+					tagsAndFolderPage.CreateTagwithClassification(tagname1, Input.technicalIssue);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkTagExisting(tagname);
+					driver.waitForPageToBeReady();
+					sessionSearch.bulkFolderExisting(foldername);
+					sessionSearch.bulkTagExisting(tagname1);
+					
+					
+					//prod tiff
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingTIFFSection(tagname);
+					page.selectTechIssueDoc(tagname1);
+					page.fillingNativeDocsPlaceholder(tagname);
+					page.selectBurnReduction();
+					driver.scrollPageToTop();
+					page.navigateToNextSection();
+					page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname,beginningBates);
+					
+					
+					//Verify archive status on Gen page
+					page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingPDFSection(tagname);
+					page.selectTechIssueDoc(tagname1);
+					page.fillingNativeDocsPlaceholder(tagname);
+					page.selectBurnReduction();
+					driver.scrollPageToTop();
+					page.navigateToNextSection();
+					page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname,beginningBates);
+					base.passedStep("verified that Tiff/PDF should generate with Priv placeholdering even though 'Tech Issue Doc' placeholdering, Burn redactions and File group/tag based placeholdering is exists.");
+					
+					//delete tags and folders
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-48533
+					 * @Description: To verify that if Blank Page Removal toggle is OFF then it should produced the PDF with blank pages
+					 */
+					@Test(groups = { "regression" }, priority = 31)
+					public void verifyBlankRemovalToggleWithpdfGen() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-48533 -Production Sprint 09");
+					base.stepInfo("To verify that if Blank Page Removal toggle is OFF then it should produced the PDF with blank pages");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkTagExisting(tagname);
+					sessionSearch.bulkFolderExisting(foldername);
+					
+					//Verify archive status on Gen page
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingPDFSection(tagname);
+					page.banlkPageRemovalToggleOffCheck();
+					page.navigateToNextSection();
+					page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname,beginningBates);
+					
+					base.passedStep("verified that if Blank Page Removal toggle is OFF then it should produced the PDF with blank pages");
+					
+					//delete tags and folders
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 				}
 	
 	

@@ -2159,7 +2159,6 @@ public class ProductionPage {
 	public Element getSelectTagBtnInPrivGaurd() {
 		return driver.FindElementByXPath("//*[@id='btnGuardSelectPrevTags']");
 	}
-	
 	public Element getPrivPlaceholderTextboInPrivGaurd() {
 		return driver.FindElementByXPath("//*[@class='redactor-editor']");
 	}
@@ -2177,6 +2176,9 @@ public class ProductionPage {
 	}
 	public Element getProductionCreatedTimeInGridView(String production) {
 		return driver.FindElementByXPath("//*[text()='"+production+"']/../td[9]");
+	}
+	public Element getClkCheckBox_1stdefaultRedactionTag() {
+		return driver.FindElementByXPath("(//ul[@class='jstree-children']//a[text()='Default Redaction Tag'])[1]");
 	}
 	
 	
@@ -15087,6 +15089,7 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getNativeDocsPlaceholder());
 		getNativeDocsPlaceholder().SendKeys(Input.technicalIssue);
+		base.stepInfo("Native placeholder is filled");
 	}
 	
 
@@ -15286,5 +15289,150 @@ public class ProductionPage {
 		}else {
 		base.passedStep(""+TextNotExpected+" is not displayed as expected");}
 		
+	}
+	public void selectTechIssueDoc(String Tag) {
+		base.waitForElement(getTechissue_toggle());
+		getTechissue_toggle().Click();
+		base.waitForElement(getTechissue_SelectTagButton());
+		getTechissue_SelectTagButton().Click();
+		base.waitForElement(getTechIssueCheckbox(Tag));
+		getTechIssueCheckbox(Tag).Click();
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().Click();
+		base.waitForElement(getTechissue_TextArea());
+		getTechissue_TextArea().SendKeys(tagNameTechnical);
+		base.stepInfo("TechIssue Enabled With techissue doc is selected");
+	}
+	public void selectBurnReduction() {
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_1stdefaultRedactionTag());
+		getClkCheckBox_1stdefaultRedactionTag().isDisplayed();
+		getClkCheckBox_1stdefaultRedactionTag().waitAndClick(10);
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_selectingRedactionTags());
+		getClkCheckBox_selectingRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().isDisplayed();
+		getClk_selectBtn().waitAndClick(10);
+
+		base.waitForElement(gettextRedactionPlaceHolder());
+		gettextRedactionPlaceHolder().isDisplayed();
+		gettextRedactionPlaceHolder().waitAndClick(10);
+		gettextRedactionPlaceHolder().SendKeys(searchString4);
+		base.stepInfo("Burn redaction PDF section is filled successfully");
+		base.stepInfo("Burn Reduction Enabled with default redaction tag is selected");
+	}
+	public void fillingPDFSection(String tagname) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getPDFChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFTab().Enabled();
+			}
+		}), Input.wait30);
+		getPDFTab().Click();
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFGenerateRadioButton().Enabled();
+			}
+		}), Input.wait30);
+		getPDFGenerateRadioButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled();
+			}
+		}), Input.wait30);
+		getTIFF_CenterHeaderBranding().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnterBranding().Enabled();
+			}
+		}), Input.wait30);
+
+		new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
+		driver.waitForPageToBeReady();
+		getTIFF_EnterBranding().SendKeys(searchString4);
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnableforPrivilegedDocs().Enabled();
+			}
+		}), Input.wait30);
+		getPriveldge_SelectTagButton().Click();
+
+		base.waitForElement(getPriveldge_TagTree(tagname));
+		Thread.sleep(3000);
+		getPriveldge_TagTree(tagname).waitAndClick(10);
+
+		getPriveldge_TagTree_SelectButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPriveldge_TextArea().Enabled();
+			}
+		}), Input.wait30);
+		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+
+		getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("PDF section is filled");
+
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void banlkPageRemovalToggleOffCheck() {
+		try {
+			driver.waitForPageToBeReady();		
+			driver.scrollPageToTop();
+			String color = getBlankPageRemovalToggle().GetCssValue("background-color");
+			System.out.println(color);
+			String ExpectedColor = Color.fromString(color).asHex();
+			System.out.println(ExpectedColor);
+			String ActualColor="#e54036";
+			if(ActualColor.equals(ExpectedColor)) {
+				base.passedStep("Blank page removal toggle is off");
+			}else {
+				base.failedStep("blank page removal toggle off verifaction failed");
+				}
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while verifying Blank page removal toggle" + e.getMessage());
+			e.printStackTrace();
+		}
+
+
 	}
 }
