@@ -2632,6 +2632,10 @@ public class SessionSearch {
 		UtilityLog.info("Navigated to doclist, to view docslist");
 
 	}
+	/**
+	* @Stabilization Done
+	* @throws InterruptedException
+	*/
 
 	public void ViewInDocView() throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -2654,6 +2658,7 @@ public class SessionSearch {
 		Thread.sleep(2000); // App Synch
 
 		getDocViewAction().waitAndClick(10);
+		base.waitTime(3); // added for stabilization
 
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");
