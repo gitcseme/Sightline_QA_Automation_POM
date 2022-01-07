@@ -1871,6 +1871,7 @@ public class SavedSearch {
 			}
 		}), Input.wait60);
 		getSavedSearchNewGroupButton().Click();
+		driver.waitForPageToBeReady();
 
 		base.VerifySuccessMessage("Save search tree node successfully created.");
 	}
@@ -2011,9 +2012,9 @@ public class SavedSearch {
 		getShareSerachBtn().waitAndClick(5);
 		driver.waitForPageToBeReady();
 
-		getShare_PA().waitAndClick(10);
-
+		getShare_SecurityGroup(securitygroupname).waitAndClick(10);
 		getShareSaveBtnNew().waitAndClick(10);
+		driver.waitForPageToBeReady();
 
 		base.VerifySuccessMessage("Share saved search operation successfully done.");
 		base.CloseSuccessMsgpopup();
@@ -2040,7 +2041,7 @@ public class SavedSearch {
 		driver.waitForPageToBeReady();
 
 		// click on share with project admin tab
-		getSavedSearchGroupName("Project Admin").waitAndClick(10);
+		getSavedSearchGroupName(securitygroupname).waitAndClick(10);
 		driver.waitForPageToBeReady();
 		getSavedSearch_ApplyFilterButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -2292,27 +2293,18 @@ public class SavedSearch {
 	/**
 	 * @author Jeevitha
 	 * @param nodeName
-	 * @return
+	 * @return Stabilization changes implemented
 	 */
 	public boolean verifySharedNode(String nodeName) {
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getCollapsedSharedWithDefaultSecurityGroup().isDisplayed();
-				}
-			}), Input.wait60);
-			getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSharedGroupName(nodeName).isDisplayed();
-				}
-			}), Input.wait60);
+		getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		if (getSharedGroupName(nodeName).isElementAvailable(5)) {
 			getSharedGroupName(nodeName).waitAndClick(10);
-		} catch (Exception e) {
+			return true;
+		} else {
 			return false;
 		}
-		return true;
+
 	}
 
 	/**
@@ -4212,6 +4204,7 @@ public class SavedSearch {
 	/**
 	 * @author Mohan Date: 10/20/21 Modified date:7/10/21 Modified by: N/A
 	 *         Description Description: verifySharedNode
+	 * @Stabilization - done
 	 */
 	public void verifySearchAndSearchId(String SGtoShare, String searchID, Boolean verifySearch, String searchName,
 			Boolean compareSearchID) throws InterruptedException {
@@ -4222,14 +4215,18 @@ public class SavedSearch {
 		if (verifySearch) {
 			try {
 				savedSearch_SearchandSelect(searchName, "No");
-				base.waitForElement(getSelectSearchWithID(searchName));
-				searchIDtoCompare = getSelectSearchWithID(searchName).getText();
-				System.out.println(searchIDtoCompare);
-				base.stepInfo("Search ID after Shared : " + searchIDtoCompare);
+				if (getSelectSearchWithID(searchName).isElementAvailable(3)) {
+					searchIDtoCompare = getSelectSearchWithID(searchName).getText();
+					System.out.println(searchIDtoCompare);
+					base.stepInfo("Search ID after Shared : " + searchIDtoCompare);
 
-				softAssertion.assertTrue(getSearchName(searchName).Displayed());
-				System.out.println(searchName + " : is Present");
-				base.stepInfo(searchName + " : is Present");
+					softAssertion.assertTrue(getSearchName(searchName).Displayed());
+					System.out.println(searchName + " : is Present");
+					base.stepInfo(searchName + " : is Present");
+				} else {
+					System.out.println(searchName + " : is not Present");
+					base.stepInfo(searchName + " : is not Present");
+				}
 
 			} catch (Exception e) {
 				System.out.println(searchName + " : is not Present");
@@ -5324,7 +5321,7 @@ public class SavedSearch {
 			// create new searchGroup and Save Search
 			String newNode = createSearchGroupAndReturn(SearchName, username, "Yes");
 			pureHits = search.AudioAndNonAudioSearch(Input.audioSearch, Input.audioLanguage);
-			search.saveSearchInNewNode(SearchName, newNode);
+			search.saveAdvanceSearchInNode(SearchName, newNode);
 			base.stepInfo("--- Share Saved Search with Security group ---");
 			shareSavedSearchFromNode(SearchName, shareTo);
 
@@ -5333,7 +5330,7 @@ public class SavedSearch {
 
 			// Save Search within MySearch
 			pureHits = search.AudioAndNonAudioSearch(Input.audioSearch, Input.audioLanguage);
-			search.saveSearch(SearchName);
+			search.saveAdvancedSearchQuery(SearchName);
 			base.stepInfo("--- Share Saved Search with Security group ---");
 			shareSavedSearchRMU(SearchName, shareTo);
 		}
@@ -5356,7 +5353,7 @@ public class SavedSearch {
 			// create new searchGroup and Save Search
 			String newNode = createSearchGroupAndReturn(SearchName, username, "Yes");
 			pureHits = search.AudioAndNonAudioSearch(Input.audioSearch, Input.audioLanguage);
-			search.saveSearchInNewNode(SearchName, newNode);
+			search.saveAdvanceSearchInNode(SearchName, newNode);
 			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 			driver.waitForPageToBeReady();
 			selectNode1(newNode);
@@ -5366,7 +5363,7 @@ public class SavedSearch {
 
 			// Save Search within MySearch
 			pureHits = search.AudioAndNonAudioSearch(Input.audioSearch, Input.audioLanguage);
-			search.saveSearch(SearchName);
+			search.saveAdvancedSearchQuery(SearchName);
 			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 			driver.waitForPageToBeReady();
 		}
@@ -6116,7 +6113,7 @@ public class SavedSearch {
 		base.stepInfo("Input String : " + Input.audioSearch);
 		base.stepInfo("Input Language : " + Input.audioLanguage);
 		int audiopureHit = search.audioSearch(Input.audioSearch, Input.audioLanguage);
-		search.saveSearchInNewNode(audioSearch, null);
+		search.saveAdvanceSearchInNode(audioSearch, null);
 		String currentSG2 = base.getsgNames().getText();
 		base.stepInfo("SG Selected : " + currentSG2);
 		base.stepInfo("pureHit Count : " + audiopureHit);

@@ -80,8 +80,17 @@ public class SavedSearchRegression_New_Set_02 {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-		// Input in = new Input();
-		// in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
+	}
+
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result, Method testMethod)
+			throws IOException, ParseException, InterruptedException {
+		Reporter.setCurrentTestResult(result);
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
 
 		// Open browser
 		driver = new Driver();
@@ -98,7 +107,6 @@ public class SavedSearchRegression_New_Set_02 {
 		tallyPage = new TallyPage(driver);
 		schedulePage = new SchedulesPage(driver);
 		userManagemetPage = new UserManagement(driver);
-
 	}
 
 	/**
@@ -291,8 +299,9 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         : RMU/RU re-executing searches shared to Security group and verify
 	 *         documents (RPMXCON-57380) Sprint 05
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
-	@Test(enabled = false, dataProvider = "SavedSearchwithRMUandREVwithSave", groups = { "regression" }, priority = 1)
+	@Test(enabled = true, dataProvider = "SavedSearchwithRMUandREVwithSave", groups = { "regression" }, priority = 1)
 	public void metaDataCombinationSharedSGExecution(String username, String password, String fullName, String saveFlow)
 			throws InterruptedException, ParseException {
 
@@ -329,8 +338,9 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         : RMU/RU re-executing searches saved under My Saved Searches and
 	 *         verify documents (RPMXCON-57379) Sprint 05
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
-	@Test(enabled = false, dataProvider = "SavedSearchwithRMUandREVwithSave", groups = { "regression" }, priority = 2)
+	@Test(enabled = true, dataProvider = "SavedSearchwithRMUandREVwithSave", groups = { "regression" }, priority = 2)
 	public void metaDataCombinationMYSSnode(String username, String password, String fullName, String saveFlow)
 			throws InterruptedException, ParseException {
 
@@ -413,8 +423,9 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         : RMU/RU re-executing searches shared to Security group and verify
 	 *         documents (RPMXCON-57383) Sprint 05
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
-	@Test(enabled = false, dataProvider = "SavedSearchwithRMUandREVandPAwithSave", groups = {
+	@Test(enabled = true, dataProvider = "SavedSearchwithRMUandREVandPAwithSave", groups = {
 			"regression" }, priority = 4)
 	public void metaDataCombinationSharedSGExecutionwithAllRoles(String username, String password, String fullName,
 			String saveFlow) throws InterruptedException, ParseException {
@@ -453,8 +464,9 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         Verify that correct number of documents appears when user Selects
 	 *         "Tally" action from Advanced Search Screen(RPMXCON-47957) Sprint 05
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void TallyResult() throws InterruptedException {
 
 		base.stepInfo("Test case Id: RPMXCON-47957 - Saved Search Sprint 05");
@@ -582,7 +594,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 * searches(with audio and non-audio docs) under <Shared with Project
 	 * Administrator> and verify documents ( RPMXCON-57400 Sprint 05 )
 	 */
-	@Test(enabled = false, dataProvider = "SavedSearchwithOnlyPAschedule", groups = { "regression" }, priority = 7)
+	@Test(enabled = true, dataProvider = "SavedSearchwithOnlyPAschedule", groups = { "regression" }, priority = 7)
 	public void scheduleSearchAudioandNonAudio(String username, String password, String fullName, String saveFlow)
 			throws InterruptedException, ParseException {
 
@@ -609,13 +621,9 @@ public class SavedSearchRegression_New_Set_02 {
 		// Get the count of total no.of document list
 		finalCountresult = saveSearch.launchDocListViaSSandReturnDocCount();
 
-		if (Integer.parseInt(exeDocCount) == finalCountresult) {
-			softAssertion.assertEquals(Integer.parseInt(exeDocCount), finalCountresult);
-			base.passedStep(
-					"Shows all documents that are in the aggregate results set of all child search groups and searches");
-		} else {
-			base.failedStep("Count Mismatches");
-		}
+		base.digitCompareEquals(Integer.parseInt(exeDocCount), finalCountresult,
+				"Shows all documents that are in the aggregate results set of all child search groups and searches",
+				"Count Mismatches");
 
 		login.logout();
 
@@ -627,7 +635,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 * searches(with audio and non-audio docs) under <Shared folders> and verify
 	 * documents ( RPMXCON-57399 Sprint 05 )
 	 */
-	@Test(enabled = false, dataProvider = "SavedSearchwithOnlyPAschedule", groups = { "regression" }, priority = 8)
+	@Test(enabled = true, dataProvider = "SavedSearchwithOnlyPAschedule", groups = { "regression" }, priority = 8)
 	public void scheduleSearchAudioandNonAudioSG(String username, String password, String fullName, String saveFlow)
 			throws InterruptedException, ParseException {
 
@@ -654,13 +662,9 @@ public class SavedSearchRegression_New_Set_02 {
 		// Get the count of total no.of document list
 		finalCountresult = saveSearch.launchDocListViaSSandReturnDocCount();
 
-		if (Integer.parseInt(exeDocCount) == finalCountresult) {
-			softAssertion.assertEquals(Integer.parseInt(exeDocCount), finalCountresult);
-			base.passedStep(
-					"Shows all documents that are in the aggregate results set of all child search groups and searches");
-		} else {
-			base.failedStep("Count Mismatches");
-		}
+		base.digitCompareEquals(Integer.parseInt(exeDocCount), finalCountresult,
+				"Shows all documents that are in the aggregate results set of all child search groups and searches",
+				"Count Mismatches");
 
 		login.logout();
 
@@ -673,7 +677,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 * non-audio docs) under <My Saved Search> and verify documents ( RPMXCON-57401
 	 * Sprint 05 )
 	 */
-	@Test(enabled = false, dataProvider = "SavedSearchwithOnlyPAschedule", groups = { "regression" }, priority = 9)
+	@Test(enabled = true, dataProvider = "SavedSearchwithOnlyPAschedule", groups = { "regression" }, priority = 9)
 	public void scheduleSearchAudioandNonAudioSave(String username, String password, String fullName, String saveFlow)
 			throws InterruptedException, ParseException {
 
@@ -699,13 +703,9 @@ public class SavedSearchRegression_New_Set_02 {
 		// Get the count of total no.of document list
 		finalCountresult = saveSearch.launchDocListViaSSandReturnDocCount();
 
-		if (Integer.parseInt(exeDocCount) == finalCountresult) {
-			softAssertion.assertEquals(Integer.parseInt(exeDocCount), finalCountresult);
-			base.passedStep(
-					"Shows all documents that are in the aggregate results set of all child search groups and searches");
-		} else {
-			base.failedStep("Count Mismatches");
-		}
+		base.digitCompareEquals(Integer.parseInt(exeDocCount), finalCountresult,
+				"Shows all documents that are in the aggregate results set of all child search groups and searches",
+				"Count Mismatches");
 
 		login.logout();
 
@@ -752,8 +752,9 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         <Shared with SecurityGroupName>directly, re-execute saved search and
 	 *         verify documents (RPMXCON-57385) Sprint 06
 	 * @throws InterruptedException
+	 * @Stablization - done
 	 */
-	@Test(enabled = false, dataProvider = "SAwithAllroles", groups = { "regression" }, priority = 11)
+	@Test(enabled = true, dataProvider = "SAwithAllroles", groups = { "regression" }, priority = 11)
 	public void metaDataCombinationSharedSGExecutionwithSAimpAllRoles(String username, String password, String userRole,
 			String saveFlow, String impToRole) throws InterruptedException, ParseException {
 
@@ -965,7 +966,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         search RPMXCON-47383
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 16)
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void editSearchQuery() throws InterruptedException {
 		String savedName = "SaveSearch" + Utility.dynamicNameAppender();
 		String modifiedSearch = "modifiedSaveSearch" + Utility.dynamicNameAppender();
@@ -1010,8 +1011,9 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         Description : Validate saving edited search (executed or draft) under
 	 *         My Searches or Shared Searches RPMXCON-49859
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 17)
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void editSavedSearchInShareWithPa() throws Exception {
 		String savedName = "Search_" + Utility.dynamicNameAppender();
 		String savedName_1 = "SSearch_" + Utility.dynamicNameAppender();
@@ -1058,6 +1060,7 @@ public class SavedSearchRegression_New_Set_02 {
 		saveSearch.verifySavedSearchPage();
 		saveSearch.verifySearchAndSearchId(Input.shareSearchPA, SearchID, true, savedName, true);
 		base.stepInfo("Different PAU user : overwritten search and the changes reflects to all associated PAU users");
+		driver.waitForPageToBeReady();
 
 		login.logout();
 
@@ -1348,7 +1351,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, dataProvider = "PAandRMU", groups = { "regression" }, priority = 22)
+	@Test(enabled = true, dataProvider = "PAandRMU", groups = { "regression" }, priority = 22)
 	public void manageScheduleCheck(String userName, String password, String fullName)
 			throws InterruptedException, ParseException {
 		String searchName = "SS" + Utility.dynamicNameAppender();
@@ -1942,8 +1945,9 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         the context of specific Security Group-RPMXCON-49841 Sprint 07
 	 * @throws InterruptedException
 	 * @throws ParseException
+	 * @Stabilization - done
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 33)
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void PAUrunsRMUSearchValidation() throws InterruptedException, ParseException {
 
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
@@ -1987,7 +1991,7 @@ public class SavedSearchRegression_New_Set_02 {
 		base.stepInfo(
 				"2. RMU (with security group SG)Saved Metadata Search and Shared with specific Security group in Saved Search Screen.");
 		int advpureHit = session.advancedMetaDataSearch("CustodianName", null, Input.metaDataCN, null);
-		session.saveSearchInNewNode(metaDataSearch, null);
+		session.saveAdvanceSearchInNode(metaDataSearch, null);
 
 		// Share Searches - Navigate to Saved Search
 		saveSearch.navigateToSavedSearchPage();
@@ -2028,8 +2032,9 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         of Results" column on "Saved Search Screen"-RPMXCON-49837 Sprint 07
 	 * @throws InterruptedException
 	 * @throws ParseException
+	 * @Stabilization - done
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void PAUrunsRMUConceptualSearchValidation() throws InterruptedException, ParseException {
 
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
@@ -2062,7 +2067,7 @@ public class SavedSearchRegression_New_Set_02 {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		driver.waitForPageToBeReady();
 		int conceptualPureHit = session.conceptualSearch(Input.conceptualSearchString1, "");
-		session.saveSearchInNewNode(conceptualSearch, null);
+		session.saveAdvanceSearchInNode(conceptualSearch, null);
 
 		// Share Searches - Navigate to Saved Search
 		saveSearch.navigateToSavedSearchPage();
@@ -2209,6 +2214,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         Results" column on "Saved Search Screen"-RPMXCON-49840 Sprint 07
 	 * @throws InterruptedException
 	 * @throws ParseException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 36)
 	public void PAUrunsRMUAudioSearchValidation() throws InterruptedException, ParseException {
@@ -2236,7 +2242,7 @@ public class SavedSearchRegression_New_Set_02 {
 
 		// Release doc to SG
 		session.audioSearch(Input.searchString1, Input.audioLanguage);
-		session.saveSearchInNewNode(searchName, null);
+		session.saveAdvanceSearchInNode(searchName, null);
 		saveSearch.savedSearch_Searchandclick(searchName);
 		saveSearch.preRequestCreation(searchName, securitygroupname);
 
@@ -2250,15 +2256,6 @@ public class SavedSearchRegression_New_Set_02 {
 
 	}
 
-	@BeforeMethod(alwaysRun = true)
-	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
-		Reporter.setCurrentTestResult(result);
-		System.out.println("------------------------------------------");
-		System.out.println("Executing method :  " + testMethod.getName());
-		UtilityLog.logBefore(testMethod.getName());
-		miniDocListpage = new MiniDocListPage(driver);
-	}
-
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
@@ -2266,25 +2263,24 @@ public class SavedSearchRegression_New_Set_02 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				login.logout();
-			} catch (Exception e) {
-//						 TODO: handle exception
-			}
+			System.out.println("Executed :" + result.getMethod().getMethodName());
+		}
+		try {
+			base.clearAllCookies();
+			login.quitBrowser();
+		} catch (Exception e) {
+			login.quitBrowser();
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-
+		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");
 		try {
-			driver.scrollPageToTop();
-
-			login.closeBrowser();
-		} finally {
-			login.clearBrowserCache();
-//			LoginPage.clearBrowserCache();
+			login.quitBrowser();
+		} catch (Exception e) {
+			login.quitBrowser();
 		}
 	}
 

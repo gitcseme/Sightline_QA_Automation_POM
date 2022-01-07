@@ -365,8 +365,9 @@ public class ReportsPage {
 			Thread.sleep(5000);
 			getChooseWorkProduct(folderName).waitAndClick(4);
 
-			driver.scrollingToBottomofAPage();
+			// driver.scrollingToBottomofAPage();
 			base.waitForElement(getAddToSelectedBtn());
+			driver.scrollingToElementofAPage(getAddToSelectedBtn());
 			getAddToSelectedBtn().waitAndClick(3);
 
 			driver.scrollPageToTop();
@@ -440,11 +441,10 @@ public class ReportsPage {
 	 * @throws InterruptedException
 	 */
 	public boolean checkdata(String nodeName) {
-		try {
-			getNode(nodeName).Visible();
+		if (getNode(nodeName).isElementAvailable(3)) {
 			System.out.println("Element Present");
 			return true;
-		} catch (Exception e) {
+		} else {
 			System.out.println("Element Not present");
 			return false;
 		}
@@ -561,6 +561,9 @@ public class ReportsPage {
 		// impersonate As RMU via PA
 		driver.waitForPageToBeReady();
 		base.impersonateSAtoPA();
+		// Get initial notification count
+		int Bgcount = base.initialBgCount();
+		System.out.println("Initial bg count : " + Bgcount);
 
 		// Report Page
 		new ReportsPage(driver);
@@ -572,7 +575,7 @@ public class ReportsPage {
 		driver.waitForPageToBeReady();
 
 		// Download report
-		downLoadReport();
+		downLoadReport(Bgcount);
 		base.stepInfo("File Downloaded");
 
 		File ab = new File(Input.fileDownloadLocation);
@@ -584,6 +587,8 @@ public class ReportsPage {
 		String fileName = a.getName();
 
 		int countToCompare = fileVerification(testPath, fileName);
+		System.out.println(countToCompare);
+		System.err.println(pureHit);
 		if (countToCompare == pureHit) {
 			System.out.println("Pass");
 			base.passedStep("Purehit and File count matches");
