@@ -364,7 +364,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              analytics panel child window RPMXCON-51711
 	 * 
 	 */
-	//@Test(priority = 4, enabled = true, groups = { "regression" })
+	// @Test(priority = 4, enabled = true, groups = { "regression" })
 	public void verifyApplyCodingNearDupeDocIdIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51711");
@@ -535,7 +535,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              from analytics panel parent window 'RPMXCON-51712'
 	 * 
 	 */
-	//@Test(priority = 6, enabled = true, groups = { "regression" })
+	// @Test(priority = 6, enabled = true, groups = { "regression" })
 	public void verifyDocCompletedAndIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51712");
@@ -626,7 +626,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              saved 'RPMXCON-51708'
 	 * 
 	 */
-	//@Test(priority = 7, enabled = true, groups = { "regression" })
+	// @Test(priority = 7, enabled = true, groups = { "regression" })
 	public void verifyNearDupeDocIsSaved() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51708");
 		baseClass.stepInfo(
@@ -641,12 +641,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion = new SoftAssert();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
-		
-
 		// Basic Search and select the pure hit count
 		sessionSearch.basicContentSearch(searchString);
 		docViewPage.selectNearDupePureHit();
-		//docViewPage.selectThreadMapPureHit();
+		// docViewPage.selectThreadMapPureHit();
 		baseClass.stepInfo("Searching documents based on search string and added to shopping cart successfuly");
 
 		// View NearDupe Doc in DocView
@@ -656,7 +654,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// select doc from MiniDoclist
-		//docViewPage.selectDocIdInMiniDocList(docId);
+		// docViewPage.selectDocIdInMiniDocList(docId);
 		driver.waitForPageToBeReady();
 		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docId);
 
@@ -703,7 +701,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// Basic Search and select the pure hit count
 		sessionSearch.basicContentSearch(searchString);
 		docViewPage.selectNearDupePureHit();
-		//docViewPage.selectThreadMapPureHit();
+		// docViewPage.selectThreadMapPureHit();
 		baseClass.stepInfo("Searching documents based on search string and added to shopping cart successfuly");
 
 		// View NearDupe Doc in DocView
@@ -711,7 +709,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Selected docs is viewed in the Docview successfully");
 
 		// select doc from MiniDoclist
-		//docViewPage.selectDocIdInMiniDocList(docId);
+		// docViewPage.selectDocIdInMiniDocList(docId);
 		driver.waitForPageToBeReady();
 		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docId);
 
@@ -757,7 +755,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form child window 'RPMXCON-51381'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyCodeAsSameNearDupeSimilarChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -776,7 +774,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String documentToBeSelected = Input.nearDupeCompletedDocId;
-		String revDocsToBeSelected = Input.nearDupeDocumentForReviewer;
+		String revDocsToBeSelected = Input.nearDupeDocId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
@@ -839,19 +837,17 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
 
-		try {
-			if (docViewPage.getDocView_MiniDocListExpand().getWebElement().isDisplayed()) {
-				docViewPage.getDocView_MiniDocListExpand().ScrollTo();
-				baseClass.waitForElement(docViewPage.getDocView_MiniDocListExpand());
-				docViewPage.getDocView_MiniDocListExpand().waitAndClick(10);
-			}
-		} catch (Exception e) {
-			System.out.println("MiniDoclist Expand is performed successfully");
+		if (docViewPage.getDocView_MiniDocListExpand().isDisplayed()) {
+			docViewPage.getDocView_MiniDocListExpand().ScrollTo();
+			baseClass.waitForElement(docViewPage.getDocView_MiniDocListExpand());
+			docViewPage.getDocView_MiniDocListExpand().waitAndClick(10);
 		}
 
-		baseClass.waitForElement(docViewPage.getCodeSameIconMiniDocList());
-		softAssertion.assertEquals(docViewPage.getCodeSameIconMiniDocList().Displayed().booleanValue(), true,
-				"Scenario 1");
+		if (docViewPage.getCodeSameIconMiniDocList().isDisplayed()) {
+			baseClass.waitForElement(docViewPage.getCodeSameIconMiniDocList());
+			softAssertion.assertEquals(docViewPage.getCodeSameIconMiniDocList().isDisplayed().booleanValue(), true,
+					"Scenario 1");
+		}
 
 		driver.scrollPageToTop();
 		docViewPage.getSaveIcon().Click();
@@ -863,14 +859,19 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select docs from MiniDocList
 		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
-		softAssertion.assertEquals(docViewPage.getCodeCompleteIconMiniDocList().Displayed().booleanValue(), true,
-				"Scenario 2");
+
+		if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
+			baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
+			softAssertion.assertEquals(docViewPage.getCodeCompleteIconMiniDocList().isDisplayed().booleanValue(), true,
+					"Scenario 2");
+		}
+
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Expand Analytics Panel
 
 		try {
-			if (docViewPage.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewPage.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewPage.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewPage.getDocView_AnalyticalPanelExpand());
 				docViewPage.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -938,7 +939,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.switchTo().window(parentWindowID);
 
 		try {
-			if (docViewPage.getDocView_MiniDocListExpand().getWebElement().isDisplayed()) {
+			if (docViewPage.getDocView_MiniDocListExpand().isDisplayed()) {
 				docViewPage.getDocView_MiniDocListExpand().ScrollTo();
 				baseClass.waitForElement(docViewPage.getDocView_MiniDocListExpand());
 				docViewPage.getDocView_MiniDocListExpand().waitAndClick(10);
@@ -948,9 +949,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		try {
-			if (docViewPage.getCodeSameIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewPage.getCodeSameIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeSameIconMiniDocList());
-				softAssertion.assertEquals(docViewPage.getCodeSameIconMiniDocList().Displayed().booleanValue(), true);
+				softAssertion.assertEquals(docViewPage.getCodeSameIconMiniDocList().isDisplayed().booleanValue(), true);
 			}
 		} catch (Exception e) {
 			baseClass.stepInfo("Selected Document is not available in mini doclist");
@@ -965,11 +966,11 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.scrollPageToTop();
 
 		// Select docs from miniDoclist
-		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(revDocsToBeSelected);
 		try {
-			if (docViewPage.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
-				softAssertion.assertEquals(docViewPage.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
+				softAssertion.assertEquals(docViewPage.getCodeCompleteIconMiniDocList().isDisplayed().booleanValue(),
 						true);
 			}
 		} catch (Exception e) {
@@ -979,7 +980,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Expand Analytics Panel
 		try {
-			if (docViewPage.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewPage.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewPage.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewPage.getDocView_AnalyticalPanelExpand());
 				docViewPage.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -1006,9 +1007,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              window'RPMXCON-51379'
 	 * @throws InterruptedException
 	 */
-	
-	//Doc issue
-	//@Test(enabled = true, groups = { "regression" }, priority = 9)
+
+	// Doc issue
+	 @Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyCodeAsSameWithCodingFormChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1026,8 +1027,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeDocumentForReviewer;
-		String revDocToBeSelected = Input.newNearDupeDocId;
+		String documentToBeSelected = Input.nearDupeCompletedDocId;
+		String revDocsToBeSelected = Input.nearDupeDocId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
@@ -1049,7 +1050,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Perform Code Same for Conceptual Docs
-		docViewAnalytics.performCodeSameForNearDupeDocuments();
+		docViewAnalytics.performCodeSameForNearDupeDocuments(1);
 		baseClass.stepInfo("CodeAsSame is performed for the selected docs successfully");
 
 		// verify Code As Same Icon Displayed
@@ -1079,11 +1080,11 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Perform Code Same for Conceptual Docs
-		docViewAnalytics.performCodeSameForNearDupeDocuments();
+		docViewAnalytics.performCodeSameForNearDupeDocuments(3);
 		baseClass.stepInfo("CodeAsSame is performed for the selected docs successfully");
 
 		// verify Code As Same Icon Displayed
@@ -1095,7 +1096,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Pop-out Coding form and Docs are completed successfully");
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Verify CheckMark is present
@@ -1116,7 +1117,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form parent window'RPMXCON-51380'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyCodeAsSameNearDupeSimilarParentWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1134,8 +1135,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeDocumentForReviewer;
-		String revDocToBeSelected = Input.newNearDupeDocId;
+		String documentToBeSelected = Input.nearDupeCompletedDocId;
+		String revDocsToBeSelected = Input.nearDupeDocId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
@@ -1189,7 +1190,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Expand Analytics Panel
 		try {
-			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewAnalytics.getDocView_AnalyticalPanelExpand());
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -1213,7 +1214,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		parentWindowID = driver.getWebDriver().getWindowHandle();
@@ -1229,7 +1230,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Perform Code Same for Conceptual Docs
-		docViewAnalytics.performCodeSameForNearDupeDocuments(parentWindowID);
+		docViewAnalytics.performCodeSameForNearDupeDocumentsForReviewer(parentWindowID);
 		baseClass.stepInfo("CodeAsSame is performed for the selected docs successfully");
 
 		// verify Code As Same Icon Displayed
@@ -1244,12 +1245,12 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Expand Analytics Panel
 		try {
-			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewAnalytics.getDocView_AnalyticalPanelExpand());
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -1378,7 +1379,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 12)
+	// @Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyDocsCompletedApplyingStampAndCodeSameAsLast() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1447,7 +1448,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// complete the docs
 		docViewPage.completeDocsAndVerifyCheckMark();
 
-
 		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
 
 		// Open Near Dupe Comparison window and click Apply coding button
@@ -1478,7 +1478,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 13)
+	// @Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyDocsInAnalyticsPanelChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1554,8 +1554,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
-		
-
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// popout Analytics panel
@@ -1589,7 +1587,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.passedStep(
 				"To Verify when document is completed when 'Apply Coding to this Near Dupe' is clicked from near dupe comparison window opened from analytics panel child window are successfully verified");
 
-		
 	}
 
 	/**
@@ -1602,7 +1599,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 14)
+	// @Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyDocsByApplyingStampAnalyticsPanelChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1687,8 +1684,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
-		
-
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// popout Analytics panel
@@ -1735,7 +1730,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 15)
+	// @Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyPageNavigationInNearDupeDocumentInComparisonWindow() throws InterruptedException {
 		baseClass.stepInfo("Test Case Id: RPMXCON-51702");
 		String searchString = Input.searchString1;
@@ -1838,7 +1833,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              document selected for code same on thread map'RPMXCON-51361'
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	//@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyCodeAsSameThreadMapDocuments() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1902,7 +1897,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Analytics Panel'RPMXCON-51288'
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	//@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyColumsInFamilyMemBerTabAnalyticalPanel() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -1961,19 +1956,21 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Analytics Panel'RPMXCON-51289'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 18)
+   // @Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyColumsInNearDupeTabAnalyticalPanel() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeDocumentForReviewer;
-		String revDocToBeSelected = Input.newNearDupeDocId;
+		String documentToBeSelected = Input.nearDupeCompletedDocId;
+		String revDocsToBeSelected = Input.nearDupeDocId;
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-51289");
 		baseClass.stepInfo("Verify default columns viewable in the Near Dupe Tab of the Analytics Panel");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -2013,7 +2010,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		baseClass.stepInfo("Selecting Documents which has near dupe documents");
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
 
 		baseClass.stepInfo("Verify columns in Near Dupe tab in Analytical columns");
 		docViewAnalytics.verifyNearDupeTabColumns();
@@ -2027,13 +2024,12 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Analytics Panel'RPMXCON-51290'
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	//@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyColumsInConceptualTabAnalyticalPanel() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String documentToBeSelected = Input.conceptualDocument;
-		
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
@@ -2114,8 +2110,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.threadDocumentForReviewer;
-		String revDocsToBeSeletced=Input.nearDupeDocument;
+		String documentToBeSelected = Input.threadDocWithToolTip;
+		String revDocsToBeSeletced = Input.newNearDupeDocId;
 
 		baseClass
 				.stepInfo("Searching threaded documents based on search string and added to shopping cart successfuly");
@@ -2204,7 +2200,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form parent window'RPMXCON-51372'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 21)
+    //@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyCodeAsSameThreadDocumentsParentWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2223,8 +2219,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String documentToBeSelected = Input.conceptualDocs1;
-		String revDocsToBeSeletced=Input.newNearDupeDocId;
-		
+		String revDocsToBeSeletced = Input.newNearDupeDocId;
 
 		baseClass
 				.stepInfo("Searching threaded documents based on search string and added to shopping cart successfuly");
@@ -2271,7 +2266,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Expand Analytics Panel
 		try {
-			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewAnalytics.getDocView_AnalyticalPanelExpand());
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -2290,7 +2285,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Expand Analytics Panel
 		try {
-			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewAnalytics.getDocView_AnalyticalPanelExpand());
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -2350,7 +2345,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Expand Analytics Panel
 		try {
-			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewAnalytics.getDocView_AnalyticalPanelExpand());
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -2394,7 +2389,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String documentToBeSelected = Input.conceptualDocs1;
-		String revDocsToBeSeletced=Input.newNearDupeDocId;
+		String revDocsToBeSeletced = Input.newNearDupeDocId;
 
 		baseClass
 				.stepInfo("Searching threaded documents based on search string and added to shopping cart successfuly");
@@ -2459,7 +2454,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.switchTo().window(parentWindowID);
 
 		try {
-			if (docViewPage.getDocView_MiniDocListExpand().getWebElement().isDisplayed()) {
+			if (docViewPage.getDocView_MiniDocListExpand().isDisplayed()) {
 				docViewPage.getDocView_MiniDocListExpand().ScrollTo();
 				baseClass.waitForElement(docViewPage.getDocView_MiniDocListExpand());
 				docViewPage.getDocView_MiniDocListExpand().waitAndClick(10);
@@ -2469,9 +2464,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		try {
-			if (docViewPage.getCodeSameIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewPage.getCodeSameIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeSameIconMiniDocList());
-				softAssertion.assertEquals(docViewPage.getCodeSameIconMiniDocList().Displayed().booleanValue(), true);
+				softAssertion.assertEquals(docViewPage.getCodeSameIconMiniDocList().isDisplayed().booleanValue(), true);
 			}
 		} catch (Exception e) {
 			baseClass.stepInfo("Selected Document is not available in mini doclist");
@@ -2490,9 +2485,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		try {
-			if (docViewPage.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
-				softAssertion.assertEquals(docViewPage.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
+				softAssertion.assertEquals(docViewPage.getCodeCompleteIconMiniDocList().isDisplayed().booleanValue(),
 						true);
 			}
 		} catch (Exception e) {
@@ -2502,7 +2497,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// Expand Analytics Panel
 
 		try {
-			if (docViewPage.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewPage.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewPage.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewPage.getDocView_AnalyticalPanelExpand());
 				docViewPage.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -2570,7 +2565,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.switchTo().window(parentWindowID);
 
 		try {
-			if (docViewPage.getDocView_MiniDocListExpand().getWebElement().isDisplayed()) {
+			if (docViewPage.getDocView_MiniDocListExpand().isDisplayed()) {
 				docViewPage.getDocView_MiniDocListExpand().ScrollTo();
 				baseClass.waitForElement(docViewPage.getDocView_MiniDocListExpand());
 				docViewPage.getDocView_MiniDocListExpand().waitAndClick(10);
@@ -2590,9 +2585,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// Select docs from miniDoclist
 		docViewPage.selectDocIdInMiniDocList(revDocsToBeSeletced);
 		try {
-			if (docViewPage.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
-				softAssertion.assertEquals(docViewPage.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
+				softAssertion.assertEquals(docViewPage.getCodeCompleteIconMiniDocList().isDisplayed().booleanValue(),
 						true);
 			}
 		} catch (Exception e) {
@@ -2602,7 +2597,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Expand Analytics Panel
 		try {
-			if (docViewPage.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewPage.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewPage.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewPage.getDocView_AnalyticalPanelExpand());
 				docViewPage.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -2627,7 +2622,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              window'RPMXCON-51374'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyCodeAsSameFamilyMemberParentWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -2732,7 +2727,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              window'RPMXCON-51375'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyCodeSameFamilyMemberCodingFormChildWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -2789,7 +2784,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		try {
-			if (docViewAnalytics.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewAnalytics.getCodeCompleteIconMiniDocList());
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -2801,7 +2796,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// Expand Analytics Panel
 
 		try {
-			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewAnalytics.getDocView_AnalyticalPanelExpand());
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -2846,7 +2841,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		try {
-			if (docViewAnalytics.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewAnalytics.getCodeCompleteIconMiniDocList());
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -2858,7 +2853,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// Expand Analytics Panel
 
 		try {
-			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewAnalytics.getDocView_AnalyticalPanelExpand());
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -2882,13 +2877,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form parent window'RPMXCON-51376'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyCodeAsSameFamilyMemberChildWindowCodingFormParentWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.familyDocumentForReviewer;
-		String revDocsToBeSelected = Input.familyDocument;
+		String documentToBeSelected = Input.familyDocument;
+		String revDocsToBeSelected = Input.familyDocumentForReviewer;
 		softAssertion = new SoftAssert();
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
@@ -2961,7 +2956,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.switchTo().window(parentWindowID);
 
 		try {
-			if (docViewAnalytics.getDocView_MiniDocListExpand().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getDocView_MiniDocListExpand().isDisplayed()) {
 				docViewAnalytics.getDocView_MiniDocListExpand().ScrollTo();
 				baseClass.waitForElement(docViewAnalytics.getDocView_MiniDocListExpand());
 				docViewAnalytics.getDocView_MiniDocListExpand().waitAndClick(10);
@@ -2971,7 +2966,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		try {
-			if (docViewAnalytics.getCodeSameIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeSameIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewAnalytics.getCodeSameIconMiniDocList());
 				softAssertion.assertEquals(docViewAnalytics.getCodeSameIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -2992,7 +2987,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Expand Analytics Panel
 		try {
-			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewAnalytics.getDocView_AnalyticalPanelExpand());
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -3060,7 +3055,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.switchTo().window(parentWindowID);
 
 		try {
-			if (docViewAnalytics.getDocView_MiniDocListExpand().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getDocView_MiniDocListExpand().isDisplayed()) {
 				docViewAnalytics.getDocView_MiniDocListExpand().ScrollTo();
 				baseClass.waitForElement(docViewAnalytics.getDocView_MiniDocListExpand());
 				docViewAnalytics.getDocView_MiniDocListExpand().waitAndClick(10);
@@ -3070,7 +3065,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		try {
-			if (docViewAnalytics.getCodeSameIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeSameIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewAnalytics.getCodeSameIconMiniDocList());
 				softAssertion.assertEquals(docViewAnalytics.getCodeSameIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -3091,7 +3086,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Expand Analytics Panel
 		try {
-			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewAnalytics.getDocView_AnalyticalPanelExpand());
 				docViewAnalytics.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -3114,7 +3109,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              window'RPMXCON-51378'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyCodeAsSameWithCodingFormParentWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3132,8 +3127,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeDocumentForReviewer;
-		String revDocToBeSelected = Input.newNearDupeDocId;
+		String documentToBeSelected = Input.nearDupeDocId1;
+		String revDocsToBeSelected = Input.nearDupeDocId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
@@ -3155,7 +3150,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Perform Code Same for Conceptual Docs
-		docViewAnalytics.performCodeSameForNearDupeDocuments();
+		docViewAnalytics.performCodeSameForNearDupeDocuments(1);
 		baseClass.stepInfo("CodeAsSame is performed for the selected docs successfully");
 
 		// verify Code As Same Icon Displayed
@@ -3185,11 +3180,11 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Perform Code Same for Conceptual Docs
-		docViewAnalytics.performCodeSameForNearDupeDocuments();
+		docViewAnalytics.performCodeSameForNearDupeDocuments(1);
 		baseClass.stepInfo("CodeAsSame is performed for the selected docs successfully");
 
 		// verify Code As Same Icon Displayed
@@ -3201,7 +3196,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Coding form is edited and Docs are completed successfully");
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Verify CheckMark is present
@@ -3222,7 +3217,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form child window 'RPMXCON-51377'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyCodeAsSameFamilyMemberSimilarChildWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -3305,7 +3300,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.switchTo().window(parentWindowID);
 
 		try {
-			if (docViewPage.getDocView_MiniDocListExpand().getWebElement().isDisplayed()) {
+			if (docViewPage.getDocView_MiniDocListExpand().isDisplayed()) {
 				docViewPage.getDocView_MiniDocListExpand().ScrollTo();
 				baseClass.waitForElement(docViewPage.getDocView_MiniDocListExpand());
 				docViewPage.getDocView_MiniDocListExpand().waitAndClick(10);
@@ -3330,7 +3325,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
 		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
 		try {
-			if (docViewPage.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
 				softAssertion.assertEquals(docViewPage.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -3342,7 +3337,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// Expand Analytics Panel
 
 		try {
-			if (docViewPage.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewPage.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewPage.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewPage.getDocView_AnalyticalPanelExpand());
 				docViewPage.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -3410,7 +3405,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.switchTo().window(parentWindowID);
 
 		try {
-			if (docViewPage.getDocView_MiniDocListExpand().getWebElement().isDisplayed()) {
+			if (docViewPage.getDocView_MiniDocListExpand().isDisplayed()) {
 				docViewPage.getDocView_MiniDocListExpand().ScrollTo();
 				baseClass.waitForElement(docViewPage.getDocView_MiniDocListExpand());
 				docViewPage.getDocView_MiniDocListExpand().waitAndClick(10);
@@ -3420,7 +3415,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		try {
-			if (docViewPage.getCodeSameIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewPage.getCodeSameIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeSameIconMiniDocList());
 				softAssertion.assertEquals(docViewPage.getCodeSameIconMiniDocList().Displayed().booleanValue(), true);
 			}
@@ -3440,7 +3435,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
 		docViewPage.selectDocIdInMiniDocList(revDocsToBeSelected);
 		try {
-			if (docViewPage.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
 				softAssertion.assertEquals(docViewPage.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -3451,7 +3446,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Expand Analytics Panel
 		try {
-			if (docViewPage.getDocView_AnalyticalPanelExpand().getWebElement().isDisplayed()) {
+			if (docViewPage.getDocView_AnalyticalPanelExpand().isDisplayed()) {
 				docViewPage.getDocView_AnalyticalPanelExpand().ScrollTo();
 				baseClass.waitForElement(docViewPage.getDocView_AnalyticalPanelExpand());
 				docViewPage.getDocView_AnalyticalPanelExpand().waitAndClick(10);
@@ -3475,7 +3470,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              documents on thread map tab'RPMXCON-51362'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyCodeCompleteThreadMapDocuments() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3587,8 +3582,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected =Input.nearDupeDocumentForReviewer;
-		String docId = Input.nearDupeDocId;
+		String documentToBeSelected = Input.nearDupeDocId1;
+		String revDocsToBeSelected = Input.nearDupeDocId;
 
 		// Search the doc and bulk Assign the particular docs
 		sessionSearch.basicContentSearch(searchString);
@@ -3625,12 +3620,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Select DocId In MiniDocList
+		driver.waitForPageToBeReady();
 		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
 
-		driver.waitForPageToBeReady();
+		
 		// popout Analytics Panel
 		docViewPage.popOutAnalyticsPanelForNearDupe();
 
@@ -3654,7 +3650,14 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewPage.verifyChainLinkAfterCoding();
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
-
+		
+		
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		
+		baseClass.waitForElement(docViewPage.getDocView_MiniDocList_SecDoc());
+		docViewPage.getDocView_MiniDocList_SecDoc().waitAndClick(5);
+		
 		docViewPage.popOutCodingFormChildWindowForNearDupe();
 		// verify Completed checkmark
 		docViewPage.verifyCheckMark();
@@ -3672,7 +3675,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
 
-		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(revDocsToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		docViewPage.selectCompleteButton();
@@ -3689,7 +3692,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Select DocId In MiniDocList
-		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(revDocsToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -3708,9 +3711,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		String analyticsWindowID1 = driver.getWebDriver().getWindowHandle();
 		// Open Comparison Window in NearDupes Tab
-		docViewPage.openNearDupeComparisonWindowForDocumentWhichHasMorePages(docId);
+		docViewPage.openNearDupeComparisonWindowForDocumentWhichHasMorePages(revDocsToBeSelected);
 		// Click Apply Coding Button
 		docViewPage.clickApplyCodingBtn();
+		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID1);
 
 		baseClass.VerifySuccessMessage("Code same performed successfully.");
@@ -3735,7 +3739,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              selected must remain.b'RPMXCON-51419'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 30)
+	@Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifySelectedTabStilRemainInAnalyticalPanelAfterCompletingNearDupeDoc() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3745,8 +3749,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion = new SoftAssert();
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeDocumentForReviewer;
-		String revDocToBeSelected = Input.newNearDupeDocId;
+		String documentToBeSelected =Input.nearDupeDocId1;
+		String revDocsToBeSelected = Input.nearDupeDocId;
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 
@@ -3783,6 +3787,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
 		DocViewPage.codeSameDocumentid = documentToBeSelected;
 
+		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return docViewAnalytics.getDocView_Analytics_NearDupeTab().Displayed();
@@ -3798,7 +3803,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on mini doc list");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewAnalytics.getCodeCompleteIconMiniDocList());
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -3810,7 +3815,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on near dupe tab");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconNearDupeTab().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconNearDupeTab().isDisplayed()) {
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconNearDupeTab().Displayed().booleanValue(),
 						true);
 				baseClass.passedStep("Code complete checkmark icon is displayed on near dupe tab");
@@ -3855,9 +3860,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
-		DocViewPage.codeSameDocumentid = revDocToBeSelected;
+		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		DocViewPage.codeSameDocumentid = revDocsToBeSelected;
 
+		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return docViewAnalytics.getDocView_Analytics_NearDupeTab().Displayed();
@@ -3873,7 +3879,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on mini doc list");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewAnalytics.getCodeCompleteIconMiniDocList());
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -3885,7 +3891,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on near dupe tab");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconNearDupeTab().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconNearDupeTab().isDisplayed()) {
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconNearDupeTab().Displayed().booleanValue(),
 						true);
 				baseClass.passedStep("Code complete checkmark icon is displayed on near dupe tab");
@@ -3923,7 +3929,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              previously selected must remain..b'RPMXCON-51420'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 31)
+	@Test(enabled = true, groups = { "regression" }, priority = 31)
 	public void verifySelectedTabStilRemainInAnalyticalPanelAfterCompletingCoceptualDoc() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3985,7 +3991,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on mini doc list");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewAnalytics.getCodeCompleteIconMiniDocList());
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -3997,7 +4003,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on conceptual tab");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconConceptTab().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconConceptTab().isDisplayed()) {
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconConceptTab().Displayed().booleanValue(),
 						true);
 				baseClass.passedStep("Code complete checkmark icon is displayed on conceptual tab");
@@ -4060,7 +4066,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on mini doc list");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewAnalytics.getCodeCompleteIconMiniDocList());
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -4072,7 +4078,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on conceptual tab");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconConceptTab().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconConceptTab().isDisplayed()) {
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconConceptTab().Displayed().booleanValue(),
 						true);
 				baseClass.passedStep("Code complete checkmark icon is displayed on conceptual tab");
@@ -4083,8 +4089,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the next document from mini doc list is loaded or not");
 		System.err.println(docViewAnalytics.getDocView_NumTextBox().GetAttribute("value"));
-		if (docViewAnalytics.getDocView_NumTextBox().GetAttribute("value").equals("30")) {
-			softAssertion.assertEquals(docViewAnalytics.getDocView_NumTextBox().GetAttribute("value"), "30");
+		if (docViewAnalytics.getDocView_NumTextBox().GetAttribute("value").equals("2")) {
+			softAssertion.assertEquals(docViewAnalytics.getDocView_NumTextBox().GetAttribute("value"), "2");
 			baseClass.passedStep("The next document from mini doc list is loaded successfully");
 		} else {
 			baseClass.failedStep("Next document is not loaded");
@@ -4110,7 +4116,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Panel Tab previously selected must remain.b'RPMXCON-51423'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 32)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifySelectedTabStilRemainInAnalyticalPanelChildWindowAfterCompletingNearDupeDoc()
 			throws InterruptedException {
 
@@ -4121,8 +4127,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion = new SoftAssert();
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeDocumentForReviewer;
-		String revDocsToBeSelected = Input.newNearDupeDocId;
+		String documentToBeSelected = Input.nearDupeDocId1;
+		String revDocsToBeSelected = Input.nearDupeDocId;
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 
@@ -4188,7 +4194,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on mini doc list");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewAnalytics.getCodeCompleteIconMiniDocList());
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -4207,7 +4213,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on near dupe tab");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconNearDupeTab().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconNearDupeTab().isDisplayed()) {
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconNearDupeTab().Displayed().booleanValue(),
 						true);
 				baseClass.passedStep("Code complete checkmark icon is displayed on near dupe tab");
@@ -4295,7 +4301,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on mini doc list");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewAnalytics.getCodeCompleteIconMiniDocList());
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -4314,7 +4320,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on near dupe tab");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconNearDupeTab().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconNearDupeTab().isDisplayed()) {
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconNearDupeTab().Displayed().booleanValue(),
 						true);
 				baseClass.passedStep("Code complete checkmark icon is displayed on near dupe tab");
@@ -4365,7 +4371,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              remain.'RPMXCON-51424'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 33)
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifySelectedTabStilRemainInAnalyticalPanelChildWindowAfterCompletingCoceptualDoc()
 			throws InterruptedException {
 
@@ -4445,7 +4451,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Verify completed check mark on mini doc list");
 		try {
 			driver.scrollingToElementofAPage(docViewAnalytics.getCodeCompleteIconMiniDocList());
-			if (docViewAnalytics.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewAnalytics.getCodeCompleteIconMiniDocList());
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -4465,7 +4471,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Verify completed check mark on conceptual tab");
 		try {
 			driver.scrollingToElementofAPage(docViewAnalytics.getCodeCompleteIconConceptTab());
-			if (docViewAnalytics.getCodeCompleteIconConceptTab().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconConceptTab().isDisplayed()) {
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconConceptTab().Displayed().booleanValue(),
 						true);
 				baseClass.passedStep("Code complete checkmark icon is displayed on conceptual tab");
@@ -4556,7 +4562,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on mini doc list");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconMiniDocList().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewAnalytics.getCodeCompleteIconMiniDocList());
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconMiniDocList().Displayed().booleanValue(),
 						true);
@@ -4575,7 +4581,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on conceptual tab");
 		try {
-			if (docViewAnalytics.getCodeCompleteIconConceptTab().getWebElement().isDisplayed()) {
+			if (docViewAnalytics.getCodeCompleteIconConceptTab().isDisplayed()) {
 				softAssertion.assertEquals(docViewAnalytics.getCodeCompleteIconConceptTab().Displayed().booleanValue(),
 						true);
 				baseClass.passedStep("Code complete checkmark icon is displayed on conceptual tab");
@@ -4588,8 +4594,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the next document from mini doc list is loaded or not");
 		System.err.println(docViewAnalytics.getDocView_NumTextBox().GetAttribute("value"));
-		if (docViewAnalytics.getDocView_NumTextBox().GetAttribute("value").equals("30")) {
-			softAssertion.assertEquals(docViewAnalytics.getDocView_NumTextBox().GetAttribute("value"), "30");
+		if (docViewAnalytics.getDocView_NumTextBox().GetAttribute("value").equals("2")) {
+			softAssertion.assertEquals(docViewAnalytics.getDocView_NumTextBox().GetAttribute("value"), "2");
 			baseClass.passedStep("The next document from mini doc list is loaded successfully");
 		} else {
 			baseClass.failedStep("Next document is not loaded");

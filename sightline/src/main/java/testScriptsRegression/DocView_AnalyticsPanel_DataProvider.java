@@ -865,7 +865,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.performCodeSameForNearDupeDocuments();
+		docViewPage.performCodeSameForNearDupeDocuments(1);
 		
 		
 		// Edit Coding Stamp and Apply Coding Stamp
@@ -892,7 +892,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.performCodeSameForNearDupeDocuments();
+		docViewPage.performCodeSameForNearDupeDocuments(1);
 
 		// Edit Coding Stamp and Apply Coding Stamp
 		docViewPage.editCodingFormComplete();

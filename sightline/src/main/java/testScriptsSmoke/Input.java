@@ -146,7 +146,6 @@ public class Input {
 	public static String threadDocId;
 	public static String principalDocId;
 	public static String familyDocumentForReviewer;
-
 	public static String principalDocId1;
 	public static String principalDocId2;
 	public static String principalDocId3;
@@ -178,6 +177,7 @@ public class Input {
 	public static String nearDupeViewDocId;
 	public static String threadMapNewId;
 	public static String conceptualDocId1;
+	public static String nearDupeDocId1;
 
 	// DocView codingform Baskar Indium
 
@@ -597,7 +597,6 @@ public class Input {
 		threadDocumentForReviewer = testData.getThreadDocumentForReviewer();
 		newNearDupeDocId = testData.getNewNearDupeDocId();
 		nearDupeViewDocId=testData.getNearDupeViewDocId();
-
 		nearDupeCompletedDocId = testData.getNearDupeCompletedDocId();
 		nearDupeDocId = testData.getNearDupeDocId();
 		nearDupeCompletedDocIdReviewer = testData.getNearDupeCompletedDocIdReviewer();
@@ -612,6 +611,9 @@ public class Input {
 		theardMapViewId = testData.getTheardMapViewId();
 		threadMapNewId=testData.getThreadMapNewId();
 		conceptualDocId1=testData.getConceptualDocId1();
+		nearDupeDocId1 = testData.getNearDupeDocId1();
+		
+		
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
