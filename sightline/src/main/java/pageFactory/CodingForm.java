@@ -3595,7 +3595,7 @@ public class CodingForm {
 		driver.waitForPageToBeReady();
 		getCodingForm_SelectRemoveLink(rowNo).ScrollTo();
 		base.waitForElement(getCodingForm_SelectRemoveLink(rowNo));
-		getCodingForm_SelectRemoveLink(rowNo).waitAndClick(rowNo);
+		getCodingForm_SelectRemoveLink(rowNo).waitAndClick(5);
 		base.waitForElement(getCodingForm_SGValidation_ButtonYes());
 		getCodingForm_SGValidation_ButtonYes().waitAndClick(10);
 
