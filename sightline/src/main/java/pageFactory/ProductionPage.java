@@ -2186,6 +2186,15 @@ public class ProductionPage {
 	
 	public Element getContinueBtn() {
 		return driver.FindElementById("bot1-Msg1");}
+	
+	public Element getFirstToggle() {
+		return driver.FindElementByXPath("(//a//..//a[@class='dropdown-toggle'])[1]");}
+	
+	
+	
+	public ElementCollection getFirstDropdownInCompletedProduction() {
+		return driver.FindElementsByXPath("(//a/following-sibling::dl)[1]//dt");}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -15250,5 +15259,32 @@ public class ProductionPage {
 		base.waitForElement(getClkCheckBox_RedactionTag(tagname));
 		getClkCheckBox_RedactionTag(tagname).ScrollTo();
 		getClkCheckBox_RedactionTag(tagname).waitAndClick(10);
+	}
+	
+	
+	
+	/**
+	 * @Author Brundha
+	 * Description:Method to verify specific dropdown value
+	 */
+	public void verifyDropDownValueInCompletedProduction(String TextNotExpected) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getFirstToggle());
+		getFirstToggle().waitAndClick(10);
+		
+		List<WebElement> DropDown = getFirstDropdownInCompletedProduction().FindWebElements();
+		int j;
+		List<String> GetTextFromDrop = new ArrayList<String>();
+		for (j = 0; j < DropDown.size(); j++) {
+			driver.waitForPageToBeReady();
+			GetTextFromDrop.add(DropDown.get(j).getText());
+		}
+		System.out.println("Dropdon values:" + GetTextFromDrop);
+
+		if(GetTextFromDrop.contains(TextNotExpected)) {
+			base.failedStep(""+TextNotExpected+" is displayed ");
+		}else {
+		base.passedStep(""+TextNotExpected+" is not displayed as expected");}
+		
 	}
 }
