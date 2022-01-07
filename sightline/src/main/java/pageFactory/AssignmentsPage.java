@@ -1298,6 +1298,15 @@ public class AssignmentsPage {
 			return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowProductionView']/following-sibling::i[@class='true']");
 		}
 		
+		//Added by Gopinath - 07/01/2022
+		public Element getAssign_AllowUserToSaveToggle() {
+			return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i");
+		}
+
+		public Element getAssign_AllowUserToSaveToggleON() {
+			return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i[@class='false true']");
+		}
+		
 		//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i
 	public AssignmentsPage(Driver driver) {
 
@@ -8713,5 +8722,78 @@ public class AssignmentsPage {
 			e.printStackTrace();
 			bc.failedStep("Exception occured while creating an assignment by disabling production/images toggle"+e.getLocalizedMessage());
 		}
+	}
+	
+	
+	
+	/**
+	 * @author Gopinath
+	 * Description : this mehtod will create new assignment with allow user to save without complete
+	 * @param assignmentName
+	 * @param codingForm
+	 */
+	public void createAssignmentWithAllowUserToSave(String assignmentName,String codingForm) {
+		bc.waitForElement(getAssgn_NewAssignmnet());
+		bc.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
+		getAssgn_NewAssignmnet().waitAndClick(5);
+		bc.waitForElement(getbulkassgnpopup());
+		assertion.assertTrue(getbulkassgnpopup().Displayed());
+		try {
+			bc.waitForElement(getContinueBulkAssign());
+			bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+			getContinueBulkAssign().waitAndClick(30);
+		} catch (Exception e) {
+			bc.waitForElement(getContinueBulkAssign());
+			bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+			getContinueBulkAssign().waitAndClick(30);
+		}
+		bc.waitForElement(getAssgn_TotalCount());
+		bc.waitForElement(getFinalizeButton());
+		bc.waitTillElemetToBeClickable(getFinalizeButton());
+		getFinalizeButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getAssign_AllowUserToSaveToggle().ScrollTo();
+		bc.waitTime(3);
+		bc.waitForElement(getAssign_AllowUserToSaveToggle());
+		getAssign_AllowUserToSaveToggle().waitAndClick(5);
+		
+		if(!getAssign_AllowUserToSaveToggle().isElementAvailable(5)) {
+			getAssign_ViewImagesToggle().waitAndClick(5);
+		}
+		if(!getAssign_ViewImagesToggleOn().isElementAvailable(5)) {
+			bc.failedStep("unable to turn on Allow users to Save without completing");
+		}
+		driver.scrollPageToTop();
+		try {
+			bc.waitForElement(getAssignmentName());
+			getAssignmentName().SendKeys(assignmentName);
+		} catch (Exception e) {
+			bc.waitForElement(getAssignmentName());
+			getAssignmentName().Clear();
+			getAssignmentName().SendKeys(assignmentName);
+		}
+		getParentAssignmentGroupName().Displayed();
+		bc.waitForElement(getSelectedClassification());
+		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+		bc.waitForElement(getAssignmentCodingFormDropDown());
+		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+		
+		bc.waitForElement(getAssignmentSaveButton());
+		bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(5);
+		if (getAssignmentErrorText().isElementAvailable(1)) {
+		try {
+			if (getAssignmentErrorText().isDisplayed()) {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getAssignmentName());
+				getAssignmentName().SendKeys(assignmentName);
+				bc.waitForElement(getAssignmentSaveButton());
+				getAssignmentSaveButton().waitAndClick(5);
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			e.printStackTrace();
+		}}
+		System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
+		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
 	}
   }

@@ -2546,6 +2546,11 @@ public class DocViewPage {
 			return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[" + rowno + "]/td[1]/label/i ");
 		}
 
+		//Added by Gopinath - 07/01/2021
+		public Element getDocView_Analytics_FamilyMember_DocCheckBoxByid(String DocId ) {
+			return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//tr/td[text()='"+DocId+"']/../td/label/input/following-sibling::i");
+		}
+
 
 		
 	public DocViewPage(Driver driver) {
@@ -19444,6 +19449,129 @@ public class DocViewPage {
 	driver.waitForPageToBeReady();
 	base.textCompareNotEquals(docID1, docID2, "PASS", "Fail");
 	return docID2;
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method for adding remark to current selected document and add 1000 charcters remark.
+	 * @param remark : remark is String value that any remark value need to enter in
+	 *               edit box.
+	 */
+	public void addRemarkToNonAudioDocument1000Characters(int off1, int off2) {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getNonAudioRemarkBtn().isElementAvailable(10);
+				}
+			}), Input.wait60);
+			getNonAudioRemarkBtn().waitAndClick(9);
+
+			if (getDocView_Remark_DeleteIcon().isElementAvailable(2)) {
+				getDocView_Remark_DeleteIcon().waitAndClick(10);
+				base.getPopupYesBtn().waitAndClick(5);
+			} else {
+				System.out.println("Remark not present");
+			}
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectRemarkDocArea().isElementAvailable(10);
+				}
+			}), Input.wait30);
+			Thread.sleep(Input.wait30 / 10);
+			System.out.println(off1 + "...." + off2);
+			Actions actions = new Actions(driver.getWebDriver());
+			driver.waitForPageToBeReady();
+			WebElement text = getSelectedAreaElement().getWebElement();
+			actions.moveToElement(text, off1, off2).clickAndHold().moveByOffset(200, 220).release().perform();
+			driver.scrollPageToTop();
+			getAddRemarkbtn().getWebElement().click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getRemarkTextArea().isElementAvailable(10);
+				}
+			}), Input.wait30);
+			for(int i=0;i<=1000;i++) {
+				getRemarkTextArea().getWebElement().sendKeys("a");
+			}
+			getSaveRemark().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while adding remark to current selected document" + e.getMessage());
+		}
+
+	}
+	
+	/**
+	 * @author Gopinath
+	 * Description : this method will select the document from family members on analytics panal
+	 *                 and perform Code same As and vefify coding form saved or not by entering text in comment box
+	 * @param rowNo  (row number for select the document from  mini doc list
+	 * @param DocId (DocId for select the document to perform code same as from family member
+	 * @param input (input text to enter text in comment text field for code same as verification
+	 */
+	public void performFamilyMemeberDocCodeSameAs(int rowNo,String DocId,String input) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getClickDocviewID(rowNo));
+		getClickDocviewID(rowNo).waitAndClick(3);
+		//driver.scrollToElementOfPage(getDocView_Analytics_FamilyTab());
+		base.waitForElement(getDocView_Analytics_FamilyTab());
+		base.waitTillElemetToBeClickable(getDocView_Analytics_FamilyTab());
+		base.waitTime(5);
+		getDocView_Analytics_FamilyTab().waitAndClick(3);
+		base.waitTime(5);
+		base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBoxByid(DocId));
+		getDocView_Analytics_FamilyMember_DocCheckBoxByid(DocId).waitAndClick(5);
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(3);
+		base.waitForElement(getDocView_FamilyCodeSameAs());
+		getDocView_FamilyCodeSameAs().waitAndClick(5);
+		base.VerifySuccessMessage("Code same performed successfully.");
+		base.waitForElement(geDocView_FamilyMem_CodeSameAsIcon());
+		if(geDocView_FamilyMem_CodeSameAsIcon().isElementAvailable(5)) {
+			base.passedStep("Code same as performed for select family memeber document");
+			driver.scrollPageToTop();
+			base.waitForElement(geDocView_MiniList_CodeSameAsIcon());
+			if(geDocView_MiniList_CodeSameAsIcon().isElementAvailable(5)) {
+				base.passedStep("Code sameAs Performed for selected family member document in miniDoc list");
+				
+			}else {
+				base.failedStep("Code sameAs was not Performed for selected family member document in miniDoc list");
+			}
+				
+			
+		}else {
+			base.failedStep("unable to perform Code same as  for select family memeber document");
+			
+		}
+		base.waitForElement(getClickDocviewID(rowNo));
+		getClickDocviewID(rowNo).Click();
+		driver.scrollPageToTop();
+		getDocument_CommentsTextBox().ScrollTo();
+		base.waitForElement(getDocument_CommentsTextBox());
+		getDocument_CommentsTextBox().Clear();
+		base.waitTime(5);
+		getDocument_CommentsTextBox().SendKeys(input);
+		
+		driver.scrollPageToTop();
+		base.waitForElement(getCodingFormSaveBtn());
+		base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
+		getCodingFormSaveBtn().waitAndClick(5);
+		base.waitForElement(getDocView_MiniDoc_SelectDOcId(DocId));
+		getDocView_MiniDoc_SelectDOcId(DocId).waitAndClick(5);
+		driver.scrollPageToTop();
+		getDocument_CommentsTextBox().ScrollTo();
+		base.waitForElement(getDocument_CommentsTextBox());
+		String savedtext = getDocument_CommentsTextBox().getText();
+		System.out.println(savedtext);
+		if(input.equals(savedtext)) {
+			System.out.println("pass");
+			base.passedStep("Coding form of the main selected document is saved for the selected document from family members");
+		}
+		else {
+			base.failedStep("Coding form  the main selected document is not saved for the selected documents from family members");
+		}
+		
+		
 	}
 
 }
