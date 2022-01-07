@@ -1605,7 +1605,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	}
 
 	/**
-	 * Author : Vijaya.Rani date: 29/12/21 NA Modified date: NA Modified by:NA
+	 * Author : Vijaya.Rani date: 06/01/22 NA Modified date: NA Modified by:NA
 	 * Description :Verify on click of 'View All Documents' all the documents should
 	 * be displayed on Analytics panel > family member child window.'RPMXCON-48732'
 	 * Sprint : 9
@@ -1665,6 +1665,98 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		// logout
 		loginPage.logout();
 
+	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 07/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify that user can view the documents in the doc list from
+	 * from Doc View->Conceptual Similar tab.'RPMXCON-50865' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 25)
+	public void verifyViewInDocListConceptualSimilarTab(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50865");
+		baseClass.stepInfo(
+				"To verify that user can view the documents in the doc list from from Doc View->Conceptual Similar tab.");
+
+		loginPage = new LoginPage(driver);
+
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Step 2 : Search for Docs and go to Docview");
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.familyDocument);
+
+		// FamilyMember tab View All Documents
+		driver.waitForPageToBeReady();
+		docView.performConceptualSelectSetOfDocsActionViewInDocList();
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 07/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify that if user navigates to doc view from the Save
+	 * search, then he can view the documents in the doc list from Doc View->Family
+	 * Member.'RPMXCON-50866' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
+	public void verifySaveSearchViewInDocListConceptualTab(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50866");
+		baseClass.stepInfo(
+				"To verify that user can view the documents in the doc list from from Doc View->Conceptual Similar tab.");
+
+		loginPage = new LoginPage(driver);
+
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		String BasicSearchName = "Savebtn" + Utility.dynamicNameAppender();
+
+		// Basic Search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(BasicSearchName);
+		savedSearch.savedSearchToDocView(BasicSearchName);
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.MiniDocId);
+
+		// FamilyMember tab View All Documents
+		driver.waitForPageToBeReady();
+		docView.performConceptualSelectSetOfDocsActionViewInDocList();
+
+		// logout
+		loginPage.logout();
 	}
 	
 	@AfterMethod(alwaysRun = true)
