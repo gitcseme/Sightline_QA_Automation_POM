@@ -105,6 +105,7 @@ public class ProductionPage_Regression {
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -117,7 +118,7 @@ public class ProductionPage_Regression {
 		page.fillingTextSection();
 		page.navigateToNextSection();
 		baseClass.passedStep("Production components completed and navigated to numbering and sorting page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -164,13 +165,13 @@ public class ProductionPage_Regression {
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
-
 		page.fillingDATSection();
 		page.afterCompletingNavigatingToNextPage();
 		baseClass.passedStep("Production components completed and navigated to numbering and sorting page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.afterCompletingNavigatingToNextPage();
 		page.fillingDocumentSelectionPage(foldername);
 		page.afterCompletingNavigatingToNextPage();
@@ -213,6 +214,7 @@ public class ProductionPage_Regression {
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -220,7 +222,7 @@ public class ProductionPage_Regression {
 		page.advancedProductionComponentsMP3();
 		page.afterCompletingNavigatingToNextPage();
 		baseClass.passedStep("Production components completed and navigated to numbering and sorting page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.afterCompletingNavigatingToNextPage();
 		page.fillingDocumentSelectionPage(foldername);
 		page.afterCompletingNavigatingToNextPage();
@@ -263,6 +265,7 @@ public class ProductionPage_Regression {
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -273,7 +276,7 @@ public class ProductionPage_Regression {
 		page.selectFormatInTextFile();
 		page.afterCompletingNavigatingToNextPage();
 		baseClass.passedStep("Production components completed and navigated to numbering and sorting page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.afterCompletingNavigatingToNextPage();
 		page.fillingDocumentSelectionPage(foldername);
 		page.afterCompletingNavigatingToNextPage();
@@ -353,13 +356,15 @@ public class ProductionPage_Regression {
 
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingPDFSectionwithNativelyPlaceholder(tagname);
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep(
 				"Verified that Production is generated with 'Natively Produced Documents' Placeholder for the problem document");
 
@@ -402,13 +407,15 @@ public class ProductionPage_Regression {
 
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep(
 				"Verified that Production generate successfully for redacted document if user select TIFF Or PDF with Naitvely Placeholder and Redaction is not enabled.");
 
@@ -451,6 +458,7 @@ public class ProductionPage_Regression {
 
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -458,7 +466,7 @@ public class ProductionPage_Regression {
 		page.fillingTIFFSectionwithFontColour(tagname, "Black with white font");
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -506,6 +514,7 @@ public class ProductionPage_Regression {
 
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -513,7 +522,7 @@ public class ProductionPage_Regression {
 		page.fillingTIFFWithDisablePrivilegdedDocs();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingSelectDocumentUsingTags(tagname);
 		page.navigateToNextSection();
@@ -564,6 +573,7 @@ public class ProductionPage_Regression {
 
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -571,7 +581,8 @@ public class ProductionPage_Regression {
 		page.fillingTIFFWithBurnRedactionAndSelectingOneTag();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep(
 				"Verified that updated redaction text is displays on generated Tiff/PDF for orphan redactions document");
 
@@ -612,6 +623,7 @@ public class ProductionPage_Regression {
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -620,7 +632,7 @@ public class ProductionPage_Regression {
 		page.fillingTIFFSection(tagname, Input.tagNamePrev);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -673,6 +685,7 @@ public class ProductionPage_Regression {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 
@@ -684,7 +697,7 @@ public class ProductionPage_Regression {
 		page.fillingTIFFSectionwithFontColour(tagname, "Black with white font");
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -719,8 +732,6 @@ public class ProductionPage_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-		String tagNamePrev = Input.tagNamePrev;
-		String testData1 = Input.testData1;
 
 		// Pre-requisites
 		// create folder and tag
@@ -730,21 +741,23 @@ public class ProductionPage_Regression {
 
 		// search for folder
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// create production and pass production name as load files name
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingTIFFSection(tagname, tagNamePrev);
+		page.fillingTIFFSection(tagname, Input.tagNamePrev);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep("passed ProductionName As LoadFiles Name.");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -784,13 +797,15 @@ public class ProductionPage_Regression {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTIFFSection(tagname, Input.tagNamePrev);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep("Verify that configuration format should applied for OCRed text files");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -831,6 +846,7 @@ public class ProductionPage_Regression {
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -839,7 +855,7 @@ public class ProductionPage_Regression {
 		page.fillingTIFFSection(tagname, Input.tagNamePrev);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -970,7 +986,7 @@ public class ProductionPage_Regression {
 		sessionSearch.bulkFolderExisting(foldername);
 
 		ProductionPage page = new ProductionPage(driver);
-
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -978,15 +994,8 @@ public class ProductionPage_Regression {
 		page.fillingTIFFFSectionWithRedactionTags(Redactiontag1);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
-		page.navigateToNextSection();
-		page.fillingDocumentSelectionPage(foldername);
-		page.navigateToNextSection();
-		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
-		page.navigateToNextSection();
-		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep("production is generated successfully when redaction tag is selected in burn redaction");
 
 		// To delete tag and folder created
@@ -1053,10 +1062,8 @@ public class ProductionPage_Regression {
 	public void verificationOnNumberingAndSortingPage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49242- Production Sprint 05");
-
 		UtilityLog.info(Input.prodPath);
 
-		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		// Pre-requisites
@@ -1067,10 +1074,11 @@ public class ProductionPage_Regression {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -1079,16 +1087,8 @@ public class ProductionPage_Regression {
 		page.fillingTIFFWithSelectingBrandingSelectionTags(tagname);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
-		page.reFillingTheNumberingAndSortingPage(prefixID, suffixID);
-		page.navigateToNextSection();
-		page.fillingDocumentSelectionPage(foldername);
-		page.navigateToNextSection();
-		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
-		page.navigateToNextSection();
-		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 
 		// To delete tag and folder created
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1111,13 +1111,10 @@ public class ProductionPage_Regression {
 	public void verifyNativeSectionDisplayForDocumentsFromExport() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56150- Production Sprint 06");
-
 		UtilityLog.info(Input.prodPath);
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-		String tagNameTechnical = Input.tagNameTechnical;
-		String testData1 = Input.testData1;
 
 		// Pre-requisites
 		// create folder and tag
@@ -1127,7 +1124,7 @@ public class ProductionPage_Regression {
 
 		sessionSearch = new SessionSearch(driver);
 		// testData string contains redacted documents as per Pre-requisites
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// create export with native which displays message about priviledged and
@@ -1139,7 +1136,7 @@ public class ProductionPage_Regression {
 		page.addANewExport(exportname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingTIFFSection(tagname, tagNameTechnical);
+		page.fillingTIFFSection(tagname, Input.tagNameTechnical);
 		page.navigateToNextSection();
 		page.fillingExportNumberingAndSortingPage(prefixID, suffixID);
 		page.navigateToNextSection();
@@ -1170,12 +1167,10 @@ public class ProductionPage_Regression {
 	public void verifyProductionWithPDFRedaction() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49969- Production Sprint 06");
-
 		UtilityLog.info(Input.prodPath);
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
 
 		// Pre-requisites
 		// create folder and tag
@@ -1185,18 +1180,20 @@ public class ProductionPage_Regression {
 
 		sessionSearch = new SessionSearch(driver);
 		// testData string contains redacted documents as per Pre-requisites
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// create Production
 		productionname = "P" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingPDFForRedaction();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep("Verified that Production should generate only PDF with Redaction text");
 
 		// To delete tag and folder
@@ -1239,13 +1236,15 @@ public class ProductionPage_Regression {
 		// create Production
 		productionname = "P" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTiffSectionTechIssueWithEnteringText(Input.searchString4, tagname);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep(
 				"verify that when text is exported for Exception file then it should export the text with the Placeholder");
 
@@ -1289,6 +1288,7 @@ public class ProductionPage_Regression {
 		// create Production
 		productionname = "P" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -1296,7 +1296,8 @@ public class ProductionPage_Regression {
 		page.fillingTIFFSection(tagname, Input.tagNameTechnical);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep(
 				"Verified that Production should generated successfully and PDF/TIFF should produced with Comments/Signature");
 
@@ -1338,6 +1339,7 @@ public class ProductionPage_Regression {
 
 		// verify that pdf is genarated
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -1346,7 +1348,7 @@ public class ProductionPage_Regression {
 		page.fillingPDFSection(tagname, Input.tagNameTechnical);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1394,6 +1396,7 @@ public class ProductionPage_Regression {
 
 		// verify that pdf is genarated
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -1401,7 +1404,7 @@ public class ProductionPage_Regression {
 		page.fillingNativeSection();
 		page.fillingTIFFSectionwithBurnRedaction(tagname);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1445,7 +1448,7 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.audioSearch("Morning", "International English");
+		sessionSearch.audioSearch("Morning", "North American English");
 		sessionSearch.bulkFolderExisting(foldername);
 
 		sessionSearch.ViewInDocView();
@@ -1454,13 +1457,15 @@ public class ProductionPage_Regression {
 		docViewPage.addAudioRedaction();
 
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.advancedProductionComponentsMP3WithBurnReductionTag();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep("verified Audio files by  redacting them in beginning,middle and end");
 
 		// To delete tag and folder
@@ -1519,6 +1524,7 @@ public class ProductionPage_Regression {
 		baseClass.stepInfo("RPMXCON_48495 Production- Sprint 06");
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
@@ -1530,7 +1536,7 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
 
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.audioSearch("Morning", "International English");
+		sessionSearch.audioSearch("Morning", "North American English");
 		sessionSearch.bulkFolderExisting(foldername);
 
 		sessionSearch.ViewInDocView();
@@ -1539,6 +1545,7 @@ public class ProductionPage_Regression {
 		docViewPage.addAudioRedaction();
 
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -1547,7 +1554,8 @@ public class ProductionPage_Regression {
 		page.fillingTIFFSection(tagname, Input.tagNameTechnical);
 		page.fillingMP3();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep(
 				"verified  annotation layer option is selected and audio document is redacted then native should not produced");
 
@@ -1589,13 +1597,15 @@ public class ProductionPage_Regression {
 
 		// verify
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTIFFSectionwithFontColour(tagname, "White with black font");
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1635,6 +1645,7 @@ public class ProductionPage_Regression {
 
 		// verify pdf genarate with DAT NATIVE PDF and TIFF
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -1644,7 +1655,8 @@ public class ProductionPage_Regression {
 		page.burnRedactionToggleDisableCheck();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep("verify pdf in DAT NATIVE PDF and TIFF file");
 
 		// To delete tag and folder
@@ -1685,6 +1697,7 @@ public class ProductionPage_Regression {
 
 		// document with multibranding
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -1692,7 +1705,7 @@ public class ProductionPage_Regression {
 		page.specifyBrandingInTiffSection(tagname1, tagname2, "Testing");
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPageWithTag(tagname1, tagname2);
 		page.navigateToNextSection();

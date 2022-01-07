@@ -264,13 +264,14 @@ public class ProductionNew_Regression {
 
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFSection(tagname, tagNameTechnical);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -380,6 +381,7 @@ public class ProductionNew_Regression {
 
 	// create production and verify preview tab button should display
 	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
 	productionname = "p" + Utility.dynamicNameAppender();
 	page.getDefaultSecurityGroup();
 	page.addANewProduction(productionname);
@@ -391,7 +393,7 @@ public class ProductionNew_Regression {
 	page.availableFieldSelection("BatesNumber");
 	page.fillingTextSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -506,6 +508,7 @@ public class ProductionNew_Regression {
             //remaining
             
             ProductionPage page = new ProductionPage(driver);
+            String beginningBates = page.getRandomNumber(2);
                productionname = "p" + Utility.dynamicNameAppender();
                page.selectingDefaultSecurityGroup();
                page.addANewProduction(productionname);
@@ -514,7 +517,7 @@ public class ProductionNew_Regression {
                page.fillingTiffSectionBySelectingTwoRedactedTags(Redactiontag1, Redactiontag2);
                page.fillingTextSection();
                page.navigateToNextSection();
-               page.fillingNumberingAndSortingPage(prefixID, suffixID);
+               page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
                page.navigateToNextSection();
                page.fillingDocumentSelectionPage(foldername);
                page.navigateToNextSection();
@@ -678,12 +681,13 @@ public class ProductionNew_Regression {
 
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -769,6 +773,7 @@ public class ProductionNew_Regression {
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -777,7 +782,7 @@ public class ProductionNew_Regression {
 		page.fillingPDFSection(tagname, tagNamePrev);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -834,12 +839,13 @@ public class ProductionNew_Regression {
 
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTIFFSection(tagname, tagNameTechnical);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPageExcludingFamilies(foldername);
 		page.navigateToNextSection();
@@ -940,6 +946,7 @@ public class ProductionNew_Regression {
 
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -947,7 +954,7 @@ public class ProductionNew_Regression {
 		page.fillingTIFFWithRedactionAndSelectingDoubleTags();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingSelectDocumentUsingTags(tagname);
 		page.navigateToNextSection();
@@ -995,6 +1002,7 @@ public class ProductionNew_Regression {
 
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -1002,7 +1010,7 @@ public class ProductionNew_Regression {
 		page.fillingTIFFWithRedactionAndSelectingDoubleTags();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingSelectDocumentUsingTags(tagname);
 		page.navigateToNextSection();
@@ -1046,6 +1054,7 @@ public class ProductionNew_Regression {
 		sessionSearch.bulkFolderExisting(foldername);
 		//create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -1054,7 +1063,7 @@ public class ProductionNew_Regression {
 		page.fillingPDFForRedaction();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1101,6 +1110,7 @@ public class ProductionNew_Regression {
 		sessionSearch.bulkFolderExisting(foldername);
 		//create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -1109,7 +1119,7 @@ public class ProductionNew_Regression {
 		page.fillingTIFFSectionwithFontColour(tagname,"Black with white font");
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1151,13 +1161,14 @@ public class ProductionNew_Regression {
 		sessionSearch.bulkFolderExisting(foldername);
 		//create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTIFFSection(tagname, tagNameTechnical);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1199,6 +1210,7 @@ public class ProductionNew_Regression {
 		sessionSearch.bulkFolderExisting(foldername);
 		//create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -1213,7 +1225,7 @@ public class ProductionNew_Regression {
 		driver.scrollingToBottomofAPage();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1255,6 +1267,7 @@ public class ProductionNew_Regression {
 		sessionSearch.bulkFolderExisting(foldername);
 		//create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -1274,7 +1287,7 @@ public class ProductionNew_Regression {
 		driver.scrollingToBottomofAPage();
 		base.clickButton(page.getAdvancedTabInMP3());
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1329,6 +1342,7 @@ public class ProductionNew_Regression {
 		
 		//create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -1337,7 +1351,7 @@ public class ProductionNew_Regression {
 		page.fillingTIFFSection(tagname, tagNameTechnical);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();

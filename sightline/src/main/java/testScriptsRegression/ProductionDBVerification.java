@@ -71,7 +71,6 @@ public class ProductionDBVerification {
 		base.stepInfo("RPMXCON-56070 -Production Sprint 06");
 		
 		String testData1 = Input.testData1;
-		String tagNameTechnical = Input.tagNameTechnical;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		
@@ -90,6 +89,7 @@ public class ProductionDBVerification {
 
 		//Verify pdf with burn redaction
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -99,7 +99,7 @@ public class ProductionDBVerification {
 		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -131,7 +131,6 @@ public class ProductionDBVerification {
 		base.stepInfo("RPMXCON-56076 -Production Sprint 06");
 		
 		String testData1 = Input.testData1;
-		String tagNameTechnical = Input.tagNameTechnical;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		
@@ -150,6 +149,7 @@ public class ProductionDBVerification {
 
 		//Verify 
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -159,7 +159,7 @@ public class ProductionDBVerification {
 		page.fillingPDFSectionwithNativelyPlaceholder(tagname);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -208,6 +208,7 @@ public class ProductionDBVerification {
 
 		//Verify 
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -216,7 +217,7 @@ public class ProductionDBVerification {
 		page.fillingTIFFSection(tagname,tagNameTechnical);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
