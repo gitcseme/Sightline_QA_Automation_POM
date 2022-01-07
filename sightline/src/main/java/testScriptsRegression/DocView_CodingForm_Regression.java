@@ -74,6 +74,7 @@ public class DocView_CodingForm_Regression {
 	String roll="rmu";
 	String stampOverWrite="The Stamp you selected is already in use. Do you want to overwrite this Stamp with the new selections?";
 	String date = "Date" + Utility.dynamicNameAppender();
+	String cfNameEdit = "CF" + Utility.dynamicNameAppender();
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -208,7 +209,7 @@ public class DocView_CodingForm_Regression {
 	 * context of assignment RPMXCON-52162 DocView/Coding Forms Sprint 01
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void clickCodeSameAsLastAndCodeingStampSaved() throws AWTException, InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52162");
 		// Login as Reviewer Manager
@@ -250,7 +251,7 @@ public class DocView_CodingForm_Regression {
 	 * 01
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 4)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyUserClickCodeSameAsLastAfterSaving() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52157");
 		// Login as Reviewer
@@ -268,70 +269,14 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
 	}
-
-	/**
-	 * Author : Baskar date: NA Modified date:NA Modified by: Baskar TODO:BUG IN
-	 * APPLICATION. EXPECT FAILURE ON THIS TEST CASE Description :Coding form child
-	 * window: Verify when user clicks 'code same as last' after saving the document
-	 * in context of assignment RPMXCON-52159 DocView/Coding Forms Sprint 01
-	 */
-
-	@Test(enabled = false, groups = { "regression" }, priority = 8)
-	public void codingFormChildWindowCodeSameAsLast() throws AWTException, InterruptedException {
-		baseClass.stepInfo("Test case Id: RPMXCON-52159");
-		// Login as Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.failedStep("Expected failure case RPMXCON-52159");
-		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
-
-		// Assignment Selection
-		assignmentPage.SelectAssignmentByReviewer(assignmentCreationOn);
-		baseClass.stepInfo("User on the doc view after selecting the assignment");
-
-		// child window code as last
-		docViewPage.codingFormChildWindowCodeAsLast();
-
-		// logout
-		loginPage.logout();
-		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
-
-	}
-
-	/**
-	 * Author : Baskar date: NA Modified date: NA Modified by: Baskar TODO:BUG IN
-	 * APPLICATION. EXPECT FAILURE ON THIS TEST CASE Description :Coding form child
-	 * window: Verify when user clicks 'code same as last' after saving the document
-	 * on applying the stamp in context of assignment RPMXCON-52160
-	 * DocView/CodingForms Sprint 01
-	 */
-
-	@Test(enabled = false, groups = { "regression" }, priority = 9)
-	public void codingFormAssignmentLevelCodingStampOFF() throws InterruptedException, AWTException {
-		baseClass.stepInfo("Test case Id: RPMXCON-52160");
-		// Login as Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.failedStep("Expected failure case RPMXCON-52160");
-		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
-
-		// Assignment Selection in Reviewer Login
-		assignmentPage.SelectAssignmentByReviewer(assignmentCreationStampOff);
-		baseClass.stepInfo("User on the doc view after selecting the assignment");
-		docViewPage.docViewCodingFormPanelStampSelection(Input.stampSelection);
-		docViewPage.codingFormChildWindowCodeAsLast();
-
-		// logout
-		loginPage.logout();
-		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
-
-	}
-
+	
 	/**
 	 * Author : Baskar date: NA Modified date: 24/8/2021 Modified by: Baskar
 	 * Description:Coding form child window: Verify reviewer clicks code same as
 	 * last on navigating to doc view from dashboard assignment assignment
 	 * RPMXCON-52158 DocView/Coding Forms Sprint 01
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void codeSameAsLastShouldNotClickableOnChildWindow() throws AWTException, InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52158");
 		// Login as Reviewer
@@ -350,7 +295,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfullyy logout Reviewer '" + Input.rev1userName + "'");
 
 	}
-
+	
 	/**
 	 * Author : Baskar date: NA Modified date: 24/8/2021 Modified by: Baskar
 	 * Description:Verify when user clicks code same as last on selecting the code
@@ -429,6 +374,66 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 	}
 
+
+	/**
+	 * Author : Baskar date: NA Modified date:NA Modified by: Baskar TODO:BUG IN
+	 * APPLICATION. EXPECT FAILURE ON THIS TEST CASE Description :Coding form child
+	 * window: Verify when user clicks 'code same as last' after saving the document
+	 * in context of assignment RPMXCON-52159 DocView/Coding Forms Sprint 01
+	 */
+
+	@Test(enabled = false, groups = { "regression" }, priority = 8)
+	public void codingFormChildWindowCodeSameAsLast() throws AWTException, InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52159");
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.failedStep("Expected failure case RPMXCON-52159");
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assignmentCreationOn);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// child window code as last
+		docViewPage.codingFormChildWindowCodeAsLast();
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date: NA Modified by: Baskar TODO:BUG IN
+	 * APPLICATION. EXPECT FAILURE ON THIS TEST CASE Description :Coding form child
+	 * window: Verify when user clicks 'code same as last' after saving the document
+	 * on applying the stamp in context of assignment RPMXCON-52160
+	 * DocView/CodingForms Sprint 01
+	 */
+
+	@Test(enabled = false, groups = { "regression" }, priority = 9)
+	public void codingFormAssignmentLevelCodingStampOFF() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52160");
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.failedStep("Expected failure case RPMXCON-52160");
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Assignment Selection in Reviewer Login
+		assignmentPage.SelectAssignmentByReviewer(assignmentCreationStampOff);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		docViewPage.docViewCodingFormPanelStampSelection(Input.stampSelection);
+		docViewPage.codingFormChildWindowCodeAsLast();
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+	}
+
+	
+
+	
 	/**
 	 * Author : Baskar date: NA Modified date: NA Modified by: Baskar
 	 * Description:Coding Form Child window: Verify that user can save the coding
@@ -669,8 +674,9 @@ public class DocView_CodingForm_Regression {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentWithSaveButtonForRmu(AssignStamp, Input.codingFormName);
-		assignmentPage.assgnViewInAllDocView();
-
+		baseClass.waitForElement(assignmentPage.getAssignmentAction_ViewinDocView());
+		assignmentPage.getAssignmentAction_ViewinDocView().waitAndClick(5);
+		baseClass.stepInfo("Assignment selected and viewAllDocs in docview");
 		docViewPage.loadingDisplayLastDocumentBtnClick();
 
 		loginPage.logout();
@@ -699,7 +705,9 @@ public class DocView_CodingForm_Regression {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentWithSaveButtonForRmu(creatingAssgn, Input.codingFormName);
-		assignmentPage.assgnViewInAllDocView();
+		baseClass.waitForElement(assignmentPage.getAssignmentAction_ViewinDocView());
+		assignmentPage.getAssignmentAction_ViewinDocView().waitAndClick(5);
+		baseClass.stepInfo("Assignment selected and viewAllDocs in docview");
 
 		docViewPage.codeSameAsMiniDocList(assgnColour, Input.stampSelection, Input.stampSelection,
 				Input.stampSelection);
@@ -1084,7 +1092,9 @@ public class DocView_CodingForm_Regression {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewNearDupeDocumentsToBulkAssign();
 		assignmentPage.assignmentWithSaveButtonForRmu(creatingAssgn, Input.codingFormName);
-		assignmentPage.assgnViewInAllDocView();
+		baseClass.waitForElement(assignmentPage.getAssignmentAction_ViewinDocView());
+		assignmentPage.getAssignmentAction_ViewinDocView().waitAndClick(5);
+		baseClass.stepInfo("Assignment selected and viewAllDocs in docview");
 
 		docViewPage.codeSameAsSaveAndNext();
 
@@ -7785,50 +7795,12 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 	}
 	/**
-	 * @Author : Sakthivel date:30/12/2021 Modified date:NA
-	 * @Description :Verify when user clicks saved stamp when document not part of
-	 *              mini doc list is viewed from analytics panel
-	 */
-	@Test(enabled = false, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 175)
-	public void verifySavedStampDocNotPartInDocListAnalytical(String fullName, String userName, String password)
-			throws InterruptedException, AWTException {
-		docViewPage = new DocViewPage(driver);
-		sessionSearch = new SessionSearch(driver);
-		softAssertion = new SoftAssert();
-		String filedText = "Stamp" + Utility.dynamicNameAppender();
-
-		// Login As RMU
-		String rmu = "RMU";
-		loginPage.loginToSightLine(userName, password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-		baseClass.stepInfo("Test case Id: RPMXCON- 52112");
-		baseClass.stepInfo("Verify when user clicks saved stamp when document"
-				+ "not part of mini doc list is viewed from analytics panel");
-
-		// Session search to doc view Coding Form
-		sessionSearch.basicContentSearch(Input.searchString2);
-		sessionSearch.ViewNearDupeDocumentsInDocView();
-
-		// DocViewCodingform edit and and stamp saved
-		driver.waitForPageToBeReady();
-		docViewPage.editCodingFormAndSaveWithStamp(filedText, Input.stampColour);
-		baseClass.stepInfo("Editing coding form and saving with a stamp colour has been done");
-		docViewPage.verifyNotPartofDocViewAnalyticalPanelNearDupeTab();
-
-		// DocViewCodingform saved stamplastIcon click and saved doc
-		docViewPage.getCodingFormStampClickAndSave(Input.stampColour);
-		docViewPage.deleteStampColour(Input.stampColour);
-		loginPage.logout();
-		softAssertion.assertAll();
-		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
-	}
-	/**
 	 * @Author : Sakthivel date:03/01/2022 Modified date:NA
 	 * @Description :Verify when user clicks saved stamp from coding form child
 	 *              window when document not part of mini doc list is viewed from
 	 *              analytics panel child window.
 	 */
-	@Test(enabled = false, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 176)
+	@Test(enabled = false, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 175)
 	public void verifyCfSavedStampDocNotPartInChildWindow(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -7876,7 +7848,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description :To verify that tag should be read only when the dependent tag
 	 *              is selected/unselected.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 177)
+	@Test(enabled = false, groups = { "regression" }, priority = 176)
 	public void verifyCfDependentTagSelectOrNot() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -7903,7 +7875,7 @@ public class DocView_CodingForm_Regression {
 	 *              validated when coding form customized for all objects along with
 	 *              all condition and Check Item.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 3)
+	@Test(enabled = false, groups = { "regression" }, priority = 177)
 	public void verifySaveBtnValidateCfCheckItem() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51186");
 		baseClass.stepInfo("Verify on click of 'Save' button coding form should be validated when coding form"
@@ -8043,6 +8015,129 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully logout as Reviewer'" + Input.rev1userName + "'");
 		baseClass.passedStep("Verify on click of 'Save' button coding form should be validated when coding form+"
 				+ "customized for all objects along with all condition and Check Item");
+	}
+	
+	/**
+	 * @Author : Baskar date:07/01/22 Modified date: NA Modified by: Baskar
+	 * @Description : Verify on edit of the coding form objects, updated objects
+	 *              should be displayed on doc view
+	 */
+
+	@Test(enabled = true, dataProvider = "rmuRevLoginRole", groups = { "regression" }, priority = 178)
+	public void afterEditCodingFormObjectShouldDisplay(String roll, String userName, String password)
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51189");
+		baseClass.stepInfo(
+				"Verify on edit of the coding form objects, " + "updated objects should be displayed on doc view");
+
+		codingForm = new CodingForm(driver);
+		sessionSearch = new SessionSearch(driver);
+		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
+		docViewPage = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		String nameRmu1 = "rmu1";
+		String nameRmu2 = "rmu2";
+		String nameRev1 = "rev1";
+		String nameRev2 = "rev2";
+		String comment = "comment" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
+
+		if (roll == nameRmu1) {
+			// Creating Coding Form
+			codingForm.commentRequired(cfNameEdit);
+			// Assign to security group
+			codingForm.assignCodingFormToSG(cfNameEdit);
+			System.out.println(cfNameEdit);
+			baseClass.stepInfo("Coding form assigned to security group");
+		}
+		if (roll == nameRmu1 || roll == nameRev1) {
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.ViewInDocView();
+			baseClass.stepInfo("user landed on the docview page");
+
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(docViewPage.getDocument_CommentsTextBox());
+			docViewPage.getDocument_CommentsTextBox().SendKeys(comment);
+			docViewPage.codingFormSaveButton();
+			baseClass.VerifySuccessMessage("Document saved successfully");
+		}
+		if (roll == nameRmu2) {
+			codingForm.editCodingForm(cfNameEdit);
+			baseClass.stepInfo("Editing the coding form object and back to docview page");
+			codingForm.specialObjectsBox("staticText");
+			codingForm.addcodingFormAddButton();
+			baseClass.waitForElement(codingForm.getSaveCFBtn());
+			codingForm.getSaveCFBtn().waitAndClick(5);
+			baseClass.waitForElement(codingForm.getCodingForm_Validation_ButtonYes());
+			codingForm.getCodingForm_Validation_ButtonYes().waitAndClick(5);
+			baseClass.VerifySuccessMessage("Coding Form updated successfully");
+			baseClass.CloseSuccessMsgpopup();
+		}
+		if (roll == nameRmu2 || roll == nameRev2) {
+			// Session search to docview to validate updated object in coding form
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.ViewInDocView();
+			boolean flag = docViewPage.getVerifyStaticText("Static Text").isDisplayed();
+			softAssertion.assertTrue(flag);
+			baseClass.passedStep("After editing coding form updated object displayed in docview page" + roll + "");
+		}
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 07/01/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify after impersonation on click of 'Save' button coding 
+	 *              form should be validated outside of an assignment context
+	 */
+
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 179)
+	public void validateCodingFormAfterImpersonateSecurity(String roll, String userName, String password,String impersonate) throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		codingForm=new CodingForm(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51192");
+		baseClass.stepInfo("Verify after impersonation on click of 'Save' "
+				+ "button coding form should be validated outside of an assignment context");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String cfName = "cf" + Utility.dynamicNameAppender();
+
+		// Login As
+		loginPage.loginToSightLine(userName, password);
+
+		if (roll.equalsIgnoreCase("rmu")) {
+			// Creating Coding Form
+			codingForm.commentRequired(cfName);
+			baseClass.stepInfo("Coding form created as per default selection");
+			// Assign to security group
+			codingForm.assignCodingFormToSG(cfName);
+			driver.waitForPageToBeReady();
+			baseClass.stepInfo("Coding form assigned to security group");
+			
+		}
+		baseClass.credentialsToImpersonateAsRMUREV(roll, impersonate);
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		docViewPage.getDocument_CommentsTextBox().Clear();
+		docViewPage.codingFormSaveButton();
+		docViewPage.errorMessage();
+		baseClass.waitForElement(docViewPage.getDocument_CommentsTextBox());
+		docViewPage.getDocument_CommentsTextBox().SendKeys(comment);
+		docViewPage.codingFormSaveButton();
+		driver.waitForPageToBeReady();
+		baseClass.passedStep("Coding form validated as per customized field"+roll+"");
+
+		driver.waitForPageToBeReady();
+		loginPage.logout();
 	}
 
 	

@@ -5304,9 +5304,9 @@ public class AssignmentsPage {
 		bc.waitForElement(getAssgn_SaveWithoutCompleteingToggle());
 		bc.waitTillElemetToBeClickable(getAssgn_SaveWithoutCompleteingToggle());
 		getAssgn_SaveWithoutCompleteingToggle().waitAndClick(5);
-		bc.waitForElement(getAssgn_AnalyticsPanelToggle());
-		bc.waitTillElemetToBeClickable(getAssgn_AnalyticsPanelToggle());
-		getAssgn_AnalyticsPanelToggle().waitAndClick(5);
+//		bc.waitForElement(getAssgn_AnalyticsPanelToggle());
+//		bc.waitTillElemetToBeClickable(getAssgn_AnalyticsPanelToggle());
+//		getAssgn_AnalyticsPanelToggle().waitAndClick(5);
 		driver.scrollPageToTop();
 		bc.waitForElement(getAssignmentSaveButton());
 		bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
@@ -5331,15 +5331,7 @@ public class AssignmentsPage {
 		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
-		bc.waitForElement(getAssgn_Pagination());
-		String nextbutton = getAssgn_Pagination().GetAttribute("class");
-		while (!nextbutton.equals("paginate_button next disabled")) {
-			getAssgn_Pagination().waitAndClick(5);
-			nextbutton = getAssgn_Pagination().GetAttribute("class");
-			bc.waitForElement(getSelectAssignment(assignmentName));
-			getSelectAssignment(assignmentName).waitAndClick(5);
-			break;
-		}
+		assignmentPagination(assignmentName);
 		driver.scrollPageToTop();
 	}
 
