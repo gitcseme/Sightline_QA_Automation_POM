@@ -1041,7 +1041,7 @@ public class BatchRedactionRegression {
 		base.stepInfo(batch.getBatchRedactionStatus(search).getText());
 
 		// verify History status
-		batch.verifyHistoryStatus(search);
+		batch.verifyBatchHistoryStatus(search);
 
 		batch.verifyRollback(search, "No");
 		batch.verifyRollback(search, "Yes");
@@ -1055,7 +1055,7 @@ public class BatchRedactionRegression {
 
 		session.ViewInDocView();
 
-		driver.scrollingToBottomofAPage();
+		driver.scrollingToElementofAPage(docviewMetadata.getHistoryTag());
 		String rowValue = docviewMetadata.verifyBrowseAllHistory();
 		System.out.println("History Details After Rollback" + rowValue);
 		base.stepInfo("History Details After Rollback " + rowValue);
@@ -1118,7 +1118,8 @@ public class BatchRedactionRegression {
 		base.stepInfo("Clicked Yes Button");
 
 		// verify History status
-		batch.verifyHistoryStatus2(search, purehit);
+		batch.verifyBatchHistoryStatus(search);
+		
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		session.ViewInDocView();
 		session.checkBatchRedactionCount();
@@ -1162,7 +1163,6 @@ public class BatchRedactionRegression {
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		base.waitForElement(page.getDATRedactionsCBox());
@@ -1170,7 +1170,7 @@ public class BatchRedactionRegression {
 		page.fillingNativeSection();
 		page.fillingTIFFWithBurnRedaction(redactionStyle, "layer", null);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(PrefixID, SuffixID, beginningBates);
+//		page.fillingNumberingAndSortingPage(PrefixID, SuffixID);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1192,7 +1192,6 @@ public class BatchRedactionRegression {
 	 */
 //	@Test(dataProvider = "Users", groups = { "regression" }, priority = 24)
 	public void verifyRedactionStyle(String username, String password) throws InterruptedException {
-		
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String PrefixID = "A_" + Utility.dynamicNameAppender();
 		;
@@ -1218,13 +1217,12 @@ public class BatchRedactionRegression {
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFWithBurnRedaction(redactionStyle, "layer", null);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(PrefixID, SuffixID, beginningBates);
+//		page.fillingNumberingAndSortingPage(PrefixID, SuffixID);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1270,13 +1268,12 @@ public class BatchRedactionRegression {
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFWithBurnRedaction(null, "Tags", Input.defaultRedactionTag);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(PrefixID, SuffixID, beginningBates);
+//		page.fillingNumberingAndSortingPage(PrefixID, SuffixID);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1341,7 +1338,7 @@ public class BatchRedactionRegression {
 		login.logout();
 
 		// login as RMU
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		batch.verifyBatchReductionMenuFlow(assignName);
 
 		login.logout();
@@ -1378,7 +1375,6 @@ public class BatchRedactionRegression {
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
 
 		// generate TIFF file
 		page.addANewProduction(productionname);
@@ -1386,7 +1382,7 @@ public class BatchRedactionRegression {
 		page.fillingNativeSection();
 		page.fillingTIFFWithBurnRedaction(null, "Tag", Input.defaultRedactionTag);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(PrefixID, SuffixID, beginningBates);
+//		page.fillingNumberingAndSortingPage(PrefixID, SuffixID);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1600,7 +1596,7 @@ public class BatchRedactionRegression {
 
 		Assert.assertNotEquals(batchId1, batchId2);
 		Assert.assertEquals(RedactionTag1, RedactionTag2);
-		
+
 		// Delete Search
 		saveSearch.deleteSearch(search, Input.mySavedSearch, "Yes");
 		login.logout();
@@ -1624,6 +1620,7 @@ public class BatchRedactionRegression {
 
 		// Select Different Annotation Layer
 		security = new SecurityGroupsPage(driver);
+		security.navigateToSecurityGropusPageURL();
 		security.AddSecurityGroup(securityGroup);
 		driver.Navigate().refresh();
 		security.selectSecurityGroup(securityGroup);
@@ -1722,6 +1719,7 @@ public class BatchRedactionRegression {
 
 		// Select Different Annotation Layer
 		security = new SecurityGroupsPage(driver);
+		security.navigateToSecurityGropusPageURL();
 		security.AddSecurityGroup(securityGroup);
 		driver.Navigate().refresh();
 		security.selectSecurityGroup(securityGroup);
@@ -1813,6 +1811,7 @@ public class BatchRedactionRegression {
 
 		// Select Different Annotation Layer
 		security = new SecurityGroupsPage(driver);
+		security.navigateToSecurityGropusPageURL();
 		security.AddSecurityGroup(securityGroup);
 		driver.Navigate().refresh();
 		security.selectSecurityGroup(securityGroup);
@@ -1820,7 +1819,7 @@ public class BatchRedactionRegression {
 		annotation = new AnnotationLayer(driver);
 		annotation.AddAnnotation(layer);
 
-		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		security.navigateToSecurityGropusPageURL();
 		driver.Navigate().refresh();
 		security.selectSecurityGroup(securityGroup);
 		security.assignAnnotationToSG(layer);
@@ -1857,6 +1856,9 @@ public class BatchRedactionRegression {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		session.ViewInDocView();
 		docview.verifyRedactionPanel();
+
+		// delete search
+		saveSearch.deleteSearch(search, Input.mySavedSearch, "Yes");
 		login.logout();
 
 		// Login as a Second user
@@ -1890,11 +1892,15 @@ public class BatchRedactionRegression {
 		session.ViewInDocView();
 		docview.verifyRedactionPanel();
 
+		// delete search
+		saveSearch.deleteSearch(search, Input.mySavedSearch, "Yes");
+
 		// Delete SG
 		base.impersonateSAtoPA();
 		security.deleteSecurityGroups(securityGroup);
 		login.logout();
 	}
+
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
