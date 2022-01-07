@@ -7227,5 +7227,26 @@ public class SavedSearch {
 		return listOfNodesToVerify;
 
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param searchName
+	 * @throws InterruptedException
+	 */
+	public void savedSearchToTally_sharedToSG(String searchName) throws InterruptedException {
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		driver.waitForPageToBeReady();
+	getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
+	
+	savedSearch_SearchandSelect(searchName, "Yes");
+	 base.waitForElement(getSavedSearchToTally());
+		
+	getSavedSearchToTally().Click();
 
+	base.waitForElement(getSelectedSourceConcept());
+		
+	softAssertion.assertEquals(getSelectedSourceConcept().getText().toString(),
+			"Search: Selected Documents from SavedSearch: " + searchName + "");
+	
+	softAssertion.assertAll();
+	}
 }

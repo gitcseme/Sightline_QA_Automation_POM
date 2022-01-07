@@ -390,7 +390,7 @@ public class Tally_Regression1 {
 			SoftAssert softAssertion = new SoftAssert();
 			for (int i = 0; i < subTally.length; i++) {
 				tp.navigateTo_Tallypage();
-				tp.SelectSource_Assignment(assgnName);
+				tp.SelectSource_Assignment("subtally");
 				String metadataTally = subTally[i][0];
 				tp.selectTallyByMetaDataField(metadataTally);
 				tp.validateMetaDataFieldName(metadataTally);
@@ -409,6 +409,86 @@ public class Tally_Regression1 {
 			}
 			softAssertion.assertAll();
 		}
+
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+
+		@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 10)
+		public void verifySubTally_Searches(String username, String password, String role) throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-48703");
+			bc.stepInfo("To Verify Admin/RMU will have a report in SubTally with document counts by metadata fields for searches.");
+			String[][] subTally = { { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" },
+					{ "EmailAuthorName", "CustodianName", "DocFileType", "EmailAuthorAddress" },
+					{ "DocFileType", "EmailAuthorName", "EmailAuthorAddress", "CustodianName" },
+					{ "EmailAuthorAddress", "CustodianName", "DocFileType", "EmailAuthorName" } };
+			lp.loginToSightLine(username, password);
+			bc.stepInfo("Logged in as "+role);
+			TallyPage tp = new TallyPage(driver);
+			SoftAssert softAssertion = new SoftAssert();
+			for (int i = 0; i < subTally.length; i++) {
+				tp.navigateTo_Tallypage();
+				tp.SelectSource_SavedSearch(SearchName);
+				String metadataTally = subTally[i][0];
+				tp.selectTallyByMetaDataField(metadataTally);
+				tp.validateMetaDataFieldName(metadataTally);
+				tp.verifyTallyChart();
+				softAssertion.assertEquals(hitsCountPA, Integer.toString(tp.verifyDocCountBarChart()));
+				tp.tallyActions();
+				bc.waitTime(2);
+				tp.getTally_actionSubTally().Click();
+				for (int j = 1; j < subTally[i].length; j++) {
+					bc.stepInfo("**To Verify Sub Tally Report Table for searches-- if Tally By Metadata as " + metadataTally
+							+ " and Sub Tally By subMetaData as-" + subTally[i][j] + "**");
+					tp.selectMetaData_SubTally(subTally[i][j]);
+					tp.verifyDocCountSubTally(hitsCount);
+				}
+				bc.selectproject();
+			}
+			softAssertion.assertAll();
+		}
+
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+
+		@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 12)
+		public void verifySubTally_SavedSearchToTally(String username, String password, String role) throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56227");
+			bc.stepInfo("To Verify Admin/RMU will be able to go to Tally from Saved Search");
+			String[][] subTally = { { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" },
+					{ "EmailAuthorName", "CustodianName", "DocFileType", "EmailAuthorAddress" },
+					{ "DocFileType", "EmailAuthorName", "EmailAuthorAddress", "CustodianName" },
+					{ "EmailAuthorAddress", "CustodianName", "DocFileType", "EmailAuthorName" } };
+			lp.loginToSightLine(username, password);
+			bc.stepInfo("Logged in as "+role);
+			TallyPage tp = new TallyPage(driver);
+			SoftAssert softAssertion = new SoftAssert();
+			SavedSearch savedSearch=new SavedSearch(driver);
+			for (int i = 0; i < subTally.length; i++) {
+				savedSearch.savedSearchToTally_sharedToSG(SearchName);
+				String metadataTally = subTally[i][0];
+				tp.selectTallyByMetaDataField(metadataTally);
+				tp.validateMetaDataFieldName(metadataTally);
+				tp.verifyTallyChart();
+				softAssertion.assertEquals(hitsCountPA, Integer.toString(tp.verifyDocCountBarChart()));
+				tp.tallyActions();
+				bc.waitTime(2);
+				tp.getTally_actionSubTally().Click();
+				for (int j = 1; j < subTally[i].length; j++) {
+					bc.stepInfo("**To Verify Sub Tally Report Table from saved search-- if Tally By Metadata as " + metadataTally
+							+ " and Sub Tally By subMetaData as-" + subTally[i][j] + "**");
+					tp.selectMetaData_SubTally(subTally[i][j]);
+					tp.verifyDocCountSubTally(hitsCount);
+				}
+				bc.selectproject();
+			}
+			softAssertion.assertAll();
+		}
+
+
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
