@@ -1044,7 +1044,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// perform code same as NearDupe Documents
-		docView.performCodeSameForNearDupeDocuments();
+		docView.performCodeSameForNearDupeDocuments(1);
 
 		// Edit coding Form and complete Action
 		docView.editCodingFormComplete();
@@ -1076,7 +1076,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// perform code same as NearDupe Documents
-		docView.performCodeSameForNearDupeDocuments();
+		docView.performCodeSameForNearDupeDocuments(1);
 
 		// Edit coding Form and complete Action
 		docView.editCodingFormComplete();
@@ -1194,7 +1194,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 1/12/21 NA Modified date: NA Modified by:NA
 	 * Description :Verify user can select 'Remove Code Same' from analytics panel
 	 * child window'RPMXCON-51232' Sprint : 7
-	 * @Stabilization - not done
+	 * @Stabilization - not done [Actually done but coding form issue]
 	 * @throws Exception
 	 */
 	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16) 
@@ -1337,7 +1337,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              after saving selects action 'Code same as this' from family
 	 *              members on same documents then selects 'Remove code same as
 	 *              this' RPMXCON-51222
-	 * @Stabilization - not done
+	 * @Stabilization - not done [Actually done but coding form issue]
 	 */
 	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
 	public void verifyUserEditCodingFormMainDocAndActionCodeSameAs(String fullName, String userName, String password)
@@ -1782,7 +1782,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description :To verify when user edits the coding form of main document and
 	 * after saving selects action 'Code same as this' from family members on same
 	 * documents.'RPMXCON-50909' Sprint : 8
-	 * @Stabilization - not done
+	 * @Stabilization - not done [Actually done but coding form issue]
 	 * @throws Exception
 	 */
 	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 24)
@@ -2306,7 +2306,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		docView.selectDocIdInMiniDocList(Input.NewDocId);
 
 		// select docs from NearDupe and action as code same as
-		docView.performCodeSameForNearDupeDocuments();
+		docView.performCodeSameForNearDupeDocuments(1);
 
 		// Edit coding Form and complete Action
 		docView.editDefaultCodingFormCompleteBtn();
@@ -2346,7 +2346,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		docView.selectDocIdInMiniDocList(Input.nearDupeBlukAssignReviewer);
 
 		// select docs from NearDupe and action as code same as
-		docView.performCodeSameForNearDupeDocuments();
+		docView.performCodeSameForNearDupeDocuments(1);
 
 		// Edit coding Form and complete Action
 		docView.editDefaultCodingFormCompleteBtn();
