@@ -92,18 +92,18 @@ public class DocView_CodingForm_Regression {
 		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
-//		softAssertion = new SoftAssert();
-//		codingForm = new CodingForm(driver);
-//		savedSearch = new SavedSearch(driver);
-//		projectPage = new ProjectPage(driver);
-//		securityGroupPage = new SecurityGroupsPage(driver);
-//		docViewPage = new DocViewPage(driver);
-//		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+		savedSearch = new SavedSearch(driver);
+		projectPage = new ProjectPage(driver);
+		securityGroupPage = new SecurityGroupsPage(driver);
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
 		loginPage = new LoginPage(driver);
-//		sessionSearch = new SessionSearch(driver);
-//		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
-//		keywordPage = new KeywordPage(driver);
-//		reusableDocView=new ReusableDocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
+		keywordPage = new KeywordPage(driver);
+		reusableDocView=new ReusableDocViewPage(driver);
 		
 	}
 
@@ -161,7 +161,7 @@ public class DocView_CodingForm_Regression {
 	 * doc view when created with NVARCHAR datatype in context of security group
 	 * RPMXCON-52173 DocView/Coding Forms Sprint 01
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyThatCustomMetaDataFieldValueWithNVARCHARDatatype() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52173");
 		UtilityLog.info("Started Execution for prerequisite");
@@ -661,7 +661,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description : Verify that after loading additional documents in mini doc
 	 *              list 'Code same as last' should be working
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 17)
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void afterLoadingDisplayLastDocumentShouldClick() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52135");
 		String AssignStamp = "Loading" + Utility.dynamicNameAppender();
@@ -691,7 +691,7 @@ public class DocView_CodingForm_Regression {
 	 *              context of a security group
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 18)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void codeSameAsLastMiniDocList() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52130");
 		String creatingAssgn = "Assign" + Utility.dynamicNameAppender();
@@ -1078,7 +1078,7 @@ public class DocView_CodingForm_Regression {
 	 *              context of a security group
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 30)
+	@Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void codeSameAsSaveAndNext() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52107");
 		String creatingAssgn = "Assign" + Utility.dynamicNameAppender();
@@ -1236,7 +1236,7 @@ public class DocView_CodingForm_Regression {
 				{ "pa", Input.pa1userName, Input.pa1password, "rev" } };
 	}
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 34)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 34)
 	public void afterImpersonationUserEditCodingForm(String roll, String userName, String password, String impersonate)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52097");
@@ -1287,7 +1287,7 @@ public class DocView_CodingForm_Regression {
 	 *              the saved stamp in context of security group
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 36)
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
 	public void clickSaveAndNextAfterSavedStamp() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52095");
 		baseClass.stepInfo("Verify when clicking the 'Save and Next' button after "
@@ -8023,7 +8023,7 @@ public class DocView_CodingForm_Regression {
 	 *              should be displayed on doc view
 	 */
 
-	@Test(enabled = true, dataProvider = "rmuRevLoginRole", groups = { "regression" }, priority = 178)
+	@Test(enabled = false, dataProvider = "rmuRevLoginRole", groups = { "regression" }, priority = 178)
 	public void afterEditCodingFormObjectShouldDisplay(String roll, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51189");
@@ -8096,7 +8096,7 @@ public class DocView_CodingForm_Regression {
 	 *              form should be validated outside of an assignment context
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 179)
+	@Test(enabled = false, dataProvider = "userDetailss", groups = { "regression" }, priority = 179)
 	public void validateCodingFormAfterImpersonateSecurity(String roll, String userName, String password,String impersonate) throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		codingForm=new CodingForm(driver);
