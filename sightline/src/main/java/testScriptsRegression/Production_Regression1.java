@@ -6802,7 +6802,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		 * @Description Verify Remove documents option is not getting displayed in Production.
 		 * 
 		 */
-		@Test(groups = { "regression" }, priority = 2)
+		@Test(groups = { "regression" }, priority = 85)
 		public void verifyRemoveDocumentOptionNotDisplay() throws Exception {
 			loginPage.logout();
 			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -6824,7 +6824,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		 * @Description Verify Add documents option is not getting displayed in Production.
 		 * 
 		 */
-		@Test(groups = { "regression" }, priority = 2)
+		@Test(groups = { "regression" }, priority = 86)
 		public void verifyAddDocumentOptionNotDisplay() throws Exception {
 			loginPage.logout();
 			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -6842,7 +6842,85 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 	        
 		}
 		
+		/**
+		 * @author Brundha Test case id-RPMXCON-49058
+		 * @Description In Productions, text was produced with redaction burned, when Burn Redactions option was disabled-2
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 2)
+		public void productionWithBurnedRedaction() throws Exception {
+			
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-49058 -Production Sprint 09");
+	        base.stepInfo("In Productions, text was produced with redaction burned, when Burn Redactions option was disabled-2");
+	        
+	        tagname="Tag"+Utility.dynamicNameAppender();
+			foldername = "RedactFolderProd" + Utility.dynamicNameAppender();
+			String Redactiontag;
+			Redactiontag = "FirstRedactionTag" + Utility.dynamicNameAppender();
+			String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+			RedactionPage redactionpage = new RedactionPage(driver);
+			redactionpage.selectDefaultSecurityGroup();
+			driver.waitForPageToBeReady();
+			
+			redactionpage.manageRedactionTagsPage(Redactiontag);
+			System.out.println("First Redaction Tag is created" + Redactiontag);
+			driver.waitForPageToBeReady();
+			redactionpage.manageRedactionTagsPage(Redactiontag1);
+
+			
+			
+			DocExplorerPage docExp=new DocExplorerPage(driver);
+			docExp.documentSelectionIteration();
+			docExp.docExpViewInDocView();
+
+			DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+			//doc1
+			docViewRedactions.selectDoc1();
+
+			driver.waitForPageToBeReady();
+			docViewRedactions.redactRectangleUsingOffset(10,10,100,100);
+			driver.waitForPageToBeReady();
+			docViewRedactions.selectingRedactionTag2(Redactiontag);
 		
+			docViewRedactions.nextDocViewBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10,10,100,100);
+			driver.waitForPageToBeReady();
+			docViewRedactions.selectingRedactionTag2(Redactiontag1);
+			
+
+			
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+			//Adding folder to bulkfolder
+			DocExplorerPage docExplorer=new DocExplorerPage(driver);
+			docExplorer.documentSelectionIteration();
+			docExplorer.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.selectPrivDocsInTiffSection(tagname);
+			page.fillingTextSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+		}
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {
