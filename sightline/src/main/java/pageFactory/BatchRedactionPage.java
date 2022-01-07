@@ -869,28 +869,33 @@ public class BatchRedactionPage {
 		base.waitForElement(getInProgressStatus(ssName));
 		System.out.println("New row added in the batch redaction history : Status In-Progress");
 		base.stepInfo("New row added in the batch redaction history : Status In-Progress");
-
+		waitUntilStatusUpdate(ssName);
 		verifyHIstoryStatuswithColorCode(ssName);
 	}
 
 	/**
 	 * @author Raghuram.A date: 9/09/21 Modified date:21/9/2021 Modified by:
 	 *         Jeevitha Description :verify HIstory Status with Color Code
+	 *         Stabilized
 	 */
 	public void verifyHIstoryStatuswithColorCode(String ssName) {
 		try {
-			base.waitForElement(getColorStatusMsg(ssName));
-			System.out.println(getColorStatusMsg(ssName).getText());
-			base.stepInfo(getColorStatusMsg(ssName).getText());
 
-			String color = getColorStatusMsg(ssName).GetCssValue("color");
-			color = base.rgbTohexaConvertor(color);
+			String color = null;
+//			base.waitForElement(getColorStatusMsg(ssName));
+			if (getColorStatusMsg(ssName).isDisplayed()) {
+				color = getColorStatusMsg(ssName).GetCssValue("color");
+				color = base.rgbTohexaConvertor(color);
+			}
 			if (color.equals(Input.completedWithErrColorCodeBR)) {
 				System.out.println(getColorStatusMsg(ssName).getText() + " [Yellow color] " + color);
 				base.stepInfo(getColorStatusMsg(ssName).getText() + "  [Yellow color] " + color);
 			} else if (color.equals(Input.colorCodeOfRed)) {
 				System.out.println(getColorStatusMsg(ssName).getText() + " [RED color] " + color);
 				base.stepInfo(getColorStatusMsg(ssName).getText() + " [RED color] " + color);
+			} else if (getSuccessStatus(ssName).isDisplayed()) {
+				System.out.println(getSuccessStatus(ssName).getText());
+				base.passedStep(getSuccessStatus(ssName).getText());
 			} else {
 				System.out.println("Color Code Doesn't Match");
 				base.stepInfo("Color Code Doesn't Match");
@@ -1044,12 +1049,11 @@ public class BatchRedactionPage {
 		base.stepInfo("Progress Completed");
 
 		// verify View report
-		try {
-			base.waitForElement(getViewReportForSavedSearch(searchname));
+		if (getViewReportForSavedSearch(searchname).isElementAvailable(20)) {
 			getViewReportForSavedSearch(searchname).waitAndClick(10);
 			System.out.println("Clicked on View Report");
 			base.stepInfo("Clicked on View Report");
-		} catch (Exception e) {
+		} else {
 			driver.Navigate().refresh();
 			base.waitForElement(getMySavedSearchDropDown());
 			getMySavedSearchDropDown().waitAndClick(20);
@@ -1575,11 +1579,11 @@ public class BatchRedactionPage {
 		if (getPopupMessage().isElementPresent()) {
 			String text = getPopupMessage().getText();
 			System.out.println(text);
-			if(text.contains(Expected)) {
+			if (text.contains(Expected)) {
 				base.passedStep(text);
-				}else {
+			} else {
 				base.failedMessage("Expected Msg doesnt match");
-				}
+			}
 		}
 
 		// verify Font-Size of PopUp
@@ -1602,7 +1606,6 @@ public class BatchRedactionPage {
 			base.stepInfo("Clicked " + value + " Button");
 		}
 	}
-
 
 	/**
 	 * @author jeevitha Description : Verify Pre Redaction Report Link and download
@@ -1792,8 +1795,6 @@ public class BatchRedactionPage {
 
 		base.VerifySuccessMessage("User profile was successfully modified");
 	}
-
-
 
 	/**
 	 * @author Jayanthi.ganesan
