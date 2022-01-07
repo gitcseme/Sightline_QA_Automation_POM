@@ -399,6 +399,7 @@ public class Production_Regression1 {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Select default security group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -421,7 +422,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -482,6 +483,7 @@ public class Production_Regression1 {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Select default security group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -498,7 +500,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -558,6 +560,7 @@ public class Production_Regression1 {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Select default security group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -580,7 +583,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -639,6 +642,7 @@ public class Production_Regression1 {
 		// create production and fill dat field and verify specify controls
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Select default security group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -661,7 +665,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -727,6 +731,8 @@ public class Production_Regression1 {
 		// create production and fill dat field and verify specify controls
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		
 		base.stepInfo("Select default security group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -746,7 +752,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -816,6 +822,7 @@ public class Production_Regression1 {
 		// create production and fill dat field and verify specify controls
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Select default security group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -835,7 +842,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -918,6 +925,7 @@ public class Production_Regression1 {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		String productionname = Input.randomText + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 		
@@ -943,7 +951,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -1018,6 +1026,7 @@ public class Production_Regression1 {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		String productionname = Input.randomText + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 		
@@ -1043,7 +1052,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("ReFilling The Numbering And Sorting Page");
 		page.reFillingTheNumberingAndSortingPage(prefixID, suffixID);
@@ -1110,7 +1119,7 @@ public class Production_Regression1 {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting default security group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -1133,7 +1142,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -1195,7 +1204,7 @@ public class Production_Regression1 {
 			sessionSearch.bulkFolderExisting(foldername);
 			
 			ProductionPage page = new ProductionPage(driver);
-			
+			String beginningBates = page.getRandomNumber(2);
 			base.stepInfo("Selecting Default SecurityGroup");
 			page.selectingDefaultSecurityGroup();
 			
@@ -1222,7 +1231,7 @@ public class Production_Regression1 {
 			page.navigateToNextSection();
 			
 			base.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			base.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
@@ -1289,7 +1298,7 @@ public class Production_Regression1 {
 		sessionSearch.bulkTagExisting(tagname);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Add new production");
 		page.addANewProduction(productionname);
 		
@@ -1303,7 +1312,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -1363,7 +1372,7 @@ public class Production_Regression1 {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting default security group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -1383,7 +1392,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Filling Sorting Secion");
 		page.fillingSortingSecion();
@@ -1448,7 +1457,7 @@ public class Production_Regression1 {
 		
 		sessionSearch.bulkFolderExisting(foldername);
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting Default Security Group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -1465,7 +1474,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -1530,7 +1539,7 @@ public class Production_Regression1 {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting default security group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -1553,7 +1562,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -1604,6 +1613,7 @@ public class Production_Regression1 {
 		base.stepInfo("Test case Id: RPMXCON-49237 -Production Sprint 05");
 		base.stepInfo("#### Verify that link should be available on Numbering and Sorting tab ####");
 		ProductionPage page = new ProductionPage(driver);
+	
 		String productionname = Input.randomText + Utility.dynamicNameAppender();
 		
 		base.stepInfo("Selecting default security group");
@@ -1661,7 +1671,7 @@ public class Production_Regression1 {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Add New Production");
 		page.addANewProduction(productionname);
 		
@@ -1681,7 +1691,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -1757,7 +1767,7 @@ public class Production_Regression1 {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Add New Production");
 		page.addANewProduction(productionname);
 		
@@ -1777,7 +1787,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -1839,6 +1849,7 @@ public void verifyDownloadProductionUsingSharableLink() throws Exception {
 	System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 	
 	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
 	base.stepInfo("Select default security group");
 	page.selectingDefaultSecurityGroup();
 	
@@ -1852,7 +1863,7 @@ public void verifyDownloadProductionUsingSharableLink() throws Exception {
 	page.navigateToNextSection();
 	
 	base.stepInfo("Filling Numbering And Sorting Page");
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	
 	base.stepInfo("Navigate To Next Section");
 	page.navigateToNextSection();
@@ -1914,7 +1925,7 @@ public void modifyingTheDocumentSelectionTabAndGenerateTheProduction () throws E
 	
 	sessionSearch.bulkFolderExisting(foldername);
 	ProductionPage page = new ProductionPage(driver);
-	
+	String beginningBates = page.getRandomNumber(2);
 	base.stepInfo("Selecting Default Security Group");
 	page.selectingDefaultSecurityGroup();
 	
@@ -1937,7 +1948,7 @@ public void modifyingTheDocumentSelectionTabAndGenerateTheProduction () throws E
 	page.navigateToNextSection();
 	
 	base.stepInfo("Filling Numbering And Sorting Page");
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	
 	base.stepInfo("Navigate To Next Section");
 	page.navigateToNextSection();
@@ -2010,7 +2021,7 @@ public void productionGeneratedSuccessfullyAfterUnCommit() throws Exception {
 	sessionSearch.bulkFolderExisting(foldername);
 	
 	ProductionPage page = new ProductionPage(driver);
-	
+	String beginningBates = page.getRandomNumber(2);
 	base.stepInfo("Add New Production");
 	page.addANewProduction(productionname);
 	
@@ -2030,7 +2041,7 @@ public void productionGeneratedSuccessfullyAfterUnCommit() throws Exception {
 	page.navigateToNextSection();
 	
 	base.stepInfo("Filling Numbering And Sorting Page");
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	
 	base.stepInfo("Navigate To Next Section");
 	page.navigateToNextSection();
@@ -2091,7 +2102,7 @@ public void TiffWithPrivPlaceholderAndGenerateProduction () throws Exception {
 	sessionSearch.bulkFolderExisting(foldername);
 	
 	ProductionPage page = new ProductionPage(driver);
-	
+	String beginningBates = page.getRandomNumber(2);
 	base.stepInfo("Add New Production");
 	page.addANewProduction(productionname);
 	
@@ -2111,7 +2122,7 @@ public void TiffWithPrivPlaceholderAndGenerateProduction () throws Exception {
 	page.navigateToNextSection();
 	
 	base.stepInfo("Filling Numbering And Sorting Page");
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	
 	base.stepInfo("Navigate To Next Section");
 	page.navigateToNextSection();
@@ -2179,7 +2190,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 	
 	// create production with DAT and PDF
 	ProductionPage page = new ProductionPage(driver);
-	
+	String beginningBates = page.getRandomNumber(2);
 	base.stepInfo("Add New Production");
 	page.addANewProduction(productionname);
 	
@@ -2193,7 +2204,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 	page.navigateToNextSection();
 	
 	base.stepInfo("Filling Numbering And Sorting Page");
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	
 	base.stepInfo("Navigate To Next Section");
 	page.navigateToNextSection();
@@ -2248,7 +2259,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 
         System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
         ProductionPage page = new ProductionPage(driver);
-
+       
         base.stepInfo("Selecting Default Security Group");
         page.selectingDefaultSecurityGroup();
 
@@ -2318,7 +2329,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
          // create production with DAT and PDF
 
          ProductionPage page = new ProductionPage(driver);
-
+         String beginningBates = page.getRandomNumber(2);
          base.stepInfo("Add New Production");
          page.addANewProduction(productionname);
 
@@ -2335,7 +2346,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
          page.navigateToNextSection();
 
          base.stepInfo("Filling Numbering And Sorting Page");
-         page.fillingNumberingAndSortingPage(prefixID, suffixID);
+         page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 
          base.stepInfo("Naviagte to next Section");
          page.navigateToNextSection();
@@ -2398,7 +2409,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Add New Production");
 		page.addANewProduction(productionname);
 		
@@ -2412,7 +2423,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -2562,7 +2573,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting Default Security Group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -2585,7 +2596,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -2647,7 +2658,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting Default Security Group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -2670,7 +2681,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -2733,7 +2744,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting Default Security Group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -2756,7 +2767,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -2818,7 +2829,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
             sessionSearch.bulkFolderExisting(foldername);
 
             ProductionPage page = new ProductionPage(driver);
-
+            String beginningBates = page.getRandomNumber(2);
             base.stepInfo("Add New Production");
             page.addANewProduction(productionname);
 
@@ -2838,7 +2849,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
             page.navigateToNextSection();
 
             base.stepInfo("Filling Numbering And Sorting Page");
-            page.fillingNumberingAndSortingPage(prefixID, suffixID);
+            page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 
             base.stepInfo("Navigate To Next Section");
             page.navigateToNextSection();
@@ -2910,7 +2921,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  	    sessionSearch.bulkFolderExisting(foldername);
  	    
  	    ProductionPage page = new ProductionPage(driver);
- 	    
+ 	   String beginningBates = page.getRandomNumber(2);
  	    base.stepInfo("Add New Production");
  	    page.addANewProduction(productionname);
  	    
@@ -2921,7 +2932,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  	    page.navigateToNextSection();
  	    
  	    base.stepInfo("Filling Numbering And Sorting Page");
- 	    page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 	    page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  	    
  	    base.stepInfo("Navigate To Next Section");
  	    page.navigateToNextSection();
@@ -2997,7 +3008,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting Default Security Group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -3014,7 +3025,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -3076,7 +3087,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting Default Security Group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -3095,7 +3106,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -3161,7 +3172,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
  		
@@ -3181,7 +3192,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		page.navigateToNextSection();
  		
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -3295,7 +3306,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
  		
@@ -3315,7 +3326,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		page.navigateToNextSection();
  		
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -3381,7 +3392,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting Default Security Group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -3395,7 +3406,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.fillingDATSectionWithDiffDATField();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -3464,7 +3475,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting Default Security Group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -3490,7 +3501,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -3574,7 +3585,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		
 		productionname = Input.randomText + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Base Info Load Template");
 		page.baseInfoLoadTemplate(productionname,Templatename);
 		
@@ -3585,7 +3596,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -3670,7 +3681,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page1.navigateToNextSection();
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Select Saved Template And Manage Template");
 		page.selectSavedTemplateAndManageTemplate(productionname,Templatename);
 		
@@ -3699,7 +3710,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -3757,7 +3768,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page1.fillingPDFSectionBranding();
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Filling PDF Section Branding");
 		page.selectSavedTemplateAndManageTemplate(productionname,Templatename);
 		
@@ -3791,7 +3802,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -3944,7 +3955,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		String productionname = Input.randomText + Utility.dynamicNameAppender();
 		
 		base.stepInfo("Selecting Default Security Group");
@@ -3969,7 +3980,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -4033,7 +4044,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting Default Security Group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -4056,7 +4067,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -4118,7 +4129,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Add New Production");
 		page.addANewProduction(productionname);
 		
@@ -4141,7 +4152,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -4225,7 +4236,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		docPage.bulkTagExisting(tagName2);
 		
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting Default Security Group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -4254,7 +4265,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -4345,7 +4356,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
  		
@@ -4374,7 +4385,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		page.navigateToNextSection();
  		
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -4442,7 +4453,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
  		
@@ -4471,7 +4482,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		page.navigateToNextSection();
  		
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -4540,7 +4551,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
  		
@@ -4566,7 +4577,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		page.navigateToNextSection();
  		
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -4634,7 +4645,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);	
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
  		
@@ -4657,7 +4668,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		page.navigateToNextSection();
  		
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -4724,7 +4735,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
  		
@@ -4744,7 +4755,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		page.navigateToNextSection();
  		
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -4853,7 +4864,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		
 
 		ProductionPage page = new ProductionPage(driver);
-		
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Add New Production");
 		page.addANewProduction(productionname);
 		
@@ -4872,7 +4883,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		base.stepInfo("Navigate To Next Section");
  		
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -4941,7 +4952,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);
  		base.stepInfo("Navigate to production page");
  		page.navigateToProductionPage();
  		
@@ -4958,7 +4969,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		page.navigateToNextSection();
  		
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -5032,7 +5043,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);
  		base.stepInfo("Navigate to production page");
  		page.navigateToProductionPage();
  		
@@ -5049,7 +5060,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		page.navigateToNextSection();
  		
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -5114,7 +5125,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
  		
@@ -5139,7 +5150,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		String prefixID =  Utility.randomCharacterAppender(50);
      	String suffixID =Input.randomText + Utility.dynamicNameAppender();
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -5209,7 +5220,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
  		
@@ -5235,7 +5246,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		String suffixID =Utility.randomCharacterAppender(50);
      
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -5302,7 +5313,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
  		
@@ -5328,7 +5339,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		String suffixID =Utility.randomCharacterAppender(10);
      
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -5370,7 +5381,6 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		
  		String foldername = Input.randomText + Utility.dynamicNameAppender();
  		String foldername1 = Input.randomText + Utility.dynamicNameAppender();
- 		String tagname = Input.randomText + Utility.dynamicNameAppender();
  		String productionname = Input.randomText+ Utility.dynamicNameAppender();
  		String testData1 = Input.testData1;
  		String prefixID = Utility.randomCharacterAppender(25);
@@ -5394,7 +5404,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
- 		
+ 		String beginningBates = page.getRandomNumber(2);
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
  		String productionname1 = Input.randomText+ Utility.dynamicNameAppender();
@@ -5418,7 +5428,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  	
  		
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -5457,6 +5467,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 	     
      
         ProductionPage Page = new ProductionPage(driver);
+      
         String Templatename= Input.randomText + Utility.dynamicNameAppender();
         
         Page.addProductionFilter();
@@ -5551,12 +5562,13 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 
 	//Verify archive status on Grid view
 	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
 	productionname = "p" + Utility.dynamicNameAppender();
 	page.selectingDefaultSecurityGroup();
 	page.addANewProduction(productionname);
 	page.fillingDATSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -5604,6 +5616,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 
 	//Verify archive status on Grid view
 	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
 	productionname = "p" + Utility.dynamicNameAppender();
 	page.selectingDefaultSecurityGroup();
 	page.addANewProduction(productionname);
@@ -5613,7 +5626,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 	page.fillingPrivledgedDocForPDFSection(tagname,tagNamePrev);
 	page.fillingTextSection();
 	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 	page.navigateToNextSection();
 	page.fillingDocumentSelectionPage(foldername);
 	page.navigateToNextSection();
@@ -5674,12 +5687,13 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 
 		
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 
@@ -5719,12 +5733,13 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		 sessionSearch.bulkFolderExisting(foldername);
          
          ProductionPage page = new ProductionPage(driver);
+         String beginningBates = page.getRandomNumber(2);
  		 productionname = "p" + Utility.dynamicNameAppender();
  		 page.selectingDefaultSecurityGroup();
  		 page.addANewProduction(productionname);
  		 page.fillingDATSection();
  		 page.navigateToNextSection();
- 		 page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		 page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		 page.navigateToNextSection();
 		 page.fillingDocumentSelectionPage(foldername);
 		 page.navigateToNextSection();
@@ -5876,12 +5891,13 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
  		 sessionSearch.bulkFolderExisting(foldername);
          
          ProductionPage page = new ProductionPage(driver);
+         String beginningBates = page.getRandomNumber(2);
  		 productionname = "p" + Utility.dynamicNameAppender();
  		 page.selectingDefaultSecurityGroup();
  		 page.addANewProduction(productionname);
  		 page.fillingDATSection();
  		 page.navigateToNextSection();
- 		 page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		 page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		 page.navigateToNextSection();
 		 page.fillingDocumentSelectionPage(foldername);
 		 page.navigateToNextSection();
@@ -5918,11 +5934,12 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		sessionSearch.bulkTagExisting(tagname);
 		
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
@@ -5960,12 +5977,13 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			sessionSearch.bulkTagExisting(tagname);
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
 			page.SelectMP3FileAndVerifyLstFile();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionWithTag(tagname);
 			page.navigateToNextSection();
@@ -6006,6 +6024,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			sessionSearch.bulkFolderExisting(foldername);
 
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
@@ -6015,7 +6034,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.getMP3CheckBox().waitAndClick(10);
 			page.fillingTextSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6055,6 +6074,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			sessionSearch.bulkFolderExisting(foldername);
 
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
@@ -6064,7 +6084,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.getMP3CheckBox().waitAndClick(10);
 			page.fillingTextSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6124,6 +6144,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			sessionSearch.basicContentSearch(Input.testData1);
 			sessionSearch.bulkFolderExisting(foldername);
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
@@ -6133,7 +6154,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.getClk_burnReductiontoggle().waitAndClick(5);
 			page.burnRedactionWithRedactionTag(Redactiontag1);
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6153,7 +6174,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.getClk_burnReductiontoggle().waitAndClick(5);
 			page.burnRedactionWithRedactionTag(Redactiontag1);
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6191,7 +6212,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			sessionSearch.bulkFolderExisting(foldername);
 
 			ProductionPage page = new ProductionPage(driver);
-			
+			String beginningBates = page.getRandomNumber(2);
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname1);
 			page.fillingDATSection();
@@ -6203,7 +6224,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.availableFieldSelection("BatesNumber");
 			page.fillingTextSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6227,7 +6248,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.availableFieldSelection("BatesNumber");
 			page.fillingTextSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6295,6 +6316,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			productionname = "p" + Utility.dynamicNameAppender();
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
@@ -6303,7 +6325,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.fillingTextSection();
 			page.fillingTIFFSectionwithBurnRedactionSelectRedactTag(Redactiontag1);
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6367,6 +6389,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			sessionSearch.bulkFolderExisting(foldername);
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			productionname = "p" + Utility.dynamicNameAppender();
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
@@ -6375,7 +6398,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.fillingTextSection();
 			page.fillingTIFFSectionwithBurnRedactionSelectRedactTag(Redactiontag1);
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6415,6 +6438,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			sessionSearch.bulkFolderExisting(foldername);
 
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
@@ -6422,7 +6446,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.selectPrivDocsInTiffSection(tagname);
 			page.fillingTextSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6463,12 +6487,13 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			sessionSearch.bulkFolderExisting(foldername);
 
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
 			page.fillingNativeSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6509,6 +6534,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			sessionSearch.bulkFolderExisting(foldername);
 
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
@@ -6516,7 +6542,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.selectPrivDocsInTiffSection(tagname);
 			page.fillingTextSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6534,7 +6560,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.fillingPDFSection(tagname, Input.searchString4);
 			page.fillingTextSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6574,12 +6600,13 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			sessionSearch.bulkFolderExisting(foldername);
 
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
 			page.selectBlankRemovalInTiffSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6618,12 +6645,13 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			sessionSearch.bulkFolderExisting(foldername);
 
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
 			page.addDATFieldAtSecondRow("Bates","BeginingAttachBates",BatesNumber);
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6683,12 +6711,13 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
 			page.burnRedactionWithRedactionTagInTiffSection(redactiontag);
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6750,13 +6779,14 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			docExplorer.bulkFolderExisting(foldername);
 
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			productionname = "p" + Utility.dynamicNameAppender();
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
 			page.fillingDATSection();
 			page.fillingNativeSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -6766,6 +6796,53 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.fillingSummaryAndPreview();
 			page.fillingGeneratePageWithContinueGenerationPopup();
 		}
+		
+		/**
+		 * @author Brundha Test case id-RPMXCON-49055
+		 * @Description Verify Remove documents option is not getting displayed in Production.
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 2)
+		public void verifyRemoveDocumentOptionNotDisplay() throws Exception {
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-49055-Production Sprint 09");
+	        base.stepInfo("Verify Remove documents option is not getting displayed in Production.");
+	        
+	        ProductionPage page = new ProductionPage(driver);
+	        
+	        base.stepInfo("Applying production filter");
+	        page.addProductionFilter();
+	        
+	        base.stepInfo("Verifying the dropdown option in the completed production");
+	        page.verifyDropDownValueInCompletedProduction("Remove");
+		}
+		
+		/**
+		 * @author Brundha Test case id-RPMXCON-49053
+		 * @Description Verify Add documents option is not getting displayed in Production.
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 2)
+		public void verifyAddDocumentOptionNotDisplay() throws Exception {
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-49053-Production Sprint 09");
+	        base.stepInfo("Verify Add documents option is not getting displayed in Production.");
+	        
+	        ProductionPage page = new ProductionPage(driver);
+	        
+	        base.stepInfo("Applying production filter");
+	        page.addProductionFilter();
+	        
+	        base.stepInfo("Verifying the dropdown option in the completed production");
+	        page.verifyDropDownValueInCompletedProduction("Add");
+	        
+		}
+		
+		
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {
