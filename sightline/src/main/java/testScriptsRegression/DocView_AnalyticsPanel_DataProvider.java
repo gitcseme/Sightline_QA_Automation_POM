@@ -104,6 +104,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @Author : Mohan date: 21/10/2021 Modified date: NA Modified by: Mohan
 	 * @Description : To verify user after impersonation should able to 'Remove Code same as this' 
 	 * 				  on document selection from Thread Map panel. 'RPMXCON-51229'
+	 * @Stabilization - done
 	 */
 	
 	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 1)
@@ -161,6 +162,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @Author : Mohan date: 21/10/2021 Modified date: NA Modified by: Mohan
 	 * @Description : To verify user after impersonation should able to 'Remove Code same as this' 
 	 * 				  on document selection from Conceptual panel 'RPMXCON-51230'
+	 *  @Stabilization - done
 	 */
 	
 	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 2)
@@ -221,6 +223,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : To verify that user has selected any tab from Analytics Panel 
 	 * and selected document from doc history, previously selected Analytics Panel Tab must remain.'RPMXCON-51426' Sprint : 5
 	 * @throws InterruptedException 
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
 	public void verifyAnalyticsTabAfterSelectingDocsFromHistoryIconInMiniDoclist(String fullName, String userName, String password) throws InterruptedException {
@@ -274,6 +277,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * and selected document from the same document to view which exists in mini doc list, 
 	 * then previously selected Analytics Panel Tab must remain.'RPMXCON-51427' Sprint : 5
 	 * @throws InterruptedException 
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 4)
 	public void verifyAnalyticsTabAfterSelectingDocsFromAnalyticsPanel(String fullName, String userName, String password) throws InterruptedException {
@@ -325,6 +329,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : Verify that PCC-Fitcontent/Reset Zoom icon should be 
 	 * functional from 'Original' and 'Near Dupe' document panel of near dupe comparison'RPMXCON-51704' Sprint : 5
 	 * @throws InterruptedException 
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 5)
 	public void verifyResetZoomIconInNearDupeComparisonWindow(String fullName, String userName, String password) throws InterruptedException {
@@ -382,6 +387,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : Verify that Zoom-in, Zoom-out should work from the 
 	 * Original document panel of near dupe comparison window'RPMXCON-51705' Sprint : 5
 	 * @throws InterruptedException 
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 6)
 	public void verifyZoomInZoomOutIconInNearDupeComparisonWindow(String fullName, String userName, String password) throws InterruptedException {
@@ -431,6 +437,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @Author : Mohan date: 09/11/2021 Modified date: NA Modified by: Mohan
 	 * @Description : To verify user after impersonation should able to 'Remove Code same as this' 
 	 * on document selection from Family Members panel 'RPMXCON-51221'
+	 *  @Stabilization - done
 	 */
 	
 	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 7)
@@ -495,6 +502,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : To verify user can select Multiple documents in Analytics panel > Conceptual 
 	 * and Select Action as 'Remove Code Same as this''RPMXCON-51219' Sprint : 6
 	 * @throws InterruptedException 
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true,  groups = { "regression" }, priority = 8)
 	public void verifyMultiDocsInConceptAndActionAsRemoveCodeAsSame() throws InterruptedException {
@@ -582,6 +590,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : To verify user can assign documents to selected folder 
 	 * from Dockout screen->Analytics-Family Members.'RPMXCON-51128' Sprint : 6
 	 * @throws Exception 
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true, dataProvider = "specificUsers", groups = { "regression" }, priority = 9)
 	public void verifyFolderActionInAnalyticsFamilyMemberTab(String fullName, String userName, String password) throws Exception {
@@ -647,6 +656,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : To verify user can select Multiple documents in Family Members->Analytic Panel 
 	 * from dockout screens and Select Action as 'Code Same as'.'RPMXCON-51126' Sprint : 6
 	 * @throws Exception 
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
 	public void verifyCodeSameAsActionInAnalyticsFamilyMemberTabAndSaveCodingForm(String fullName, String userName, String password) throws Exception {
@@ -708,6 +718,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description :Verify check mark icon should be displayed when coding stamp 
 	 * applied after selecting 'Code same as this' action' from Analytics Panel > Family Member'RPMXCON-51060' Sprint : 6
 	 * @throws InterruptedException 
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true,  groups = { "regression" }, priority = 11)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForFamilyMember() throws InterruptedException {
@@ -803,7 +814,8 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Author : Mohan date: 11/09/21 NA Modified date: NA Modified by:NA
 	 * Description :Verify check mark icon should be displayed when coding stamp 
 	 * applied after selecting 'Code same as this' action' from Analytics Panel > Near Dupe'RPMXCON-51061' Sprint : 6
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
+	 * @Stabilization - done 
 	 */
 	@Test(enabled = true,  groups = { "regression" }, priority = 12)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForNearDupe() throws InterruptedException {
@@ -897,6 +909,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @Author : Mohan date: 24/10/2021 Modified date: NA Modified by: Mohan
 	 * @Description : TTo verify Sys Admin/Project Admin/RMU after impersonating-
 	 *  Threaded Map tab when no documents to display. 'RPMXCON-50903'
+	 *  @Stabilization - done
 	 */
 	
 	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 13)
@@ -954,7 +967,8 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Author : Mohan date: 24/12/21 NA Modified date: NA Modified by:NA
 	 * Description : Verify that Near dupe window to see the differences should open,
 	 *  on click of the icon from Analytics Panel > Near Dupe child window'RPMXCON-51709' Sprint : 9
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
+	 * @Stabilization - not done 
 	 */ 
 	//@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 14) // Doc are need to be ingested
 	public void verifyNearDupeWindowToSeeDifferenceInTheDocs(String fullName, String userName, String password) throws InterruptedException {

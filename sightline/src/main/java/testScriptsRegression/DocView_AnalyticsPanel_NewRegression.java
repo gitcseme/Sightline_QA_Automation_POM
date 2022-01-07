@@ -99,6 +99,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * map'RPMXCON-51358' Sprint : 6
 	 * Stabilized
 	 * @throws InterruptedException
+	 * 
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 1)
 	public void verifyToolTipDocsTextInThreadMapTab(String fullName, String userName, String password)
@@ -321,7 +322,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Description : To verify when user select action as 'Remove code same' for
 	 *              documents which are not marked as code same as this from
 	 *              conceptual RPMXCON-51225
-	 * stab
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 5)
 	public void verifyConceputallyTabWhenUserSelectsDocsWhicAreNotMarkedAsCodeSameAs(String fullName, String userName,
@@ -368,7 +369,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Description : To verify user can select Multiple documents in Analytics
 	 *              panel > Family Members and Select Action as 'Remove Code Same as
 	 *              this' RPMXCON-51216
-	 * stab
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyWhenUserSelectsMulitiDocsAndPerformRemoveCodeSameAs() throws InterruptedException, IOException {
@@ -451,7 +452,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Description : To verify when user select action as 'Remove code same' for
 	 *              documents which are not marked as code same as this from family
 	 *              member RPMXCON-51224
-	 * 
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" },priority = 7)
 	public void verifyFamilyMemberTabWhenUserSelectsDocsWhicAreNotMarkedAsCodeSameAs(String fullName, String userName,
@@ -498,7 +499,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Description : To verify user can select Multiple documents in Analytics
 	 *              panel > Thread map and Select Action as 'Remove Code Same as
 	 *              this' RPMXCON-51218
-	 * 
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyWhenUserSelectsThreadMapMulitiDocsAndPerformRemoveCodeSameAs()
@@ -677,7 +678,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 26/11/21 NA Modified date: NA Modified by:NA
 	 * Description : Verify Zoom in/ Zoom out is working from near dupe child
 	 * window.'RPMXCON-51256' Sprint : 6
-	 * 
+	 * @Stabilization - done
 	 * @throws Exception
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression"}, priority = 10)
@@ -731,7 +732,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Description : Verify that on navigating to thread map tab from Near Dupe tab
 	 *              link to view more data should not be displayed RPMXCON-51571
 	 * 
-	 * 
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression"}, priority = 11)
 	public void verifyWhenNavigatingFromThreadMapToNearDupeTabLoadMoreDocsLinkToBeNotDisplayed(String fullName,
@@ -823,8 +824,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Description : Verify that on navigating to thread map tab from Conceptual
 	 *              Similar tab link to view more data should not be displayed
 	 *              RPMXCON-51572
-	 * 
-	 * 
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression"}, priority = 12)
 	public void verifyWhenNavigatingFromThreadMapToConceptualTabLoadMoreDocsLinkToBeNotDisplayed(String fullName,
@@ -914,7 +914,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 29/11/21 NA Modified date: NA Modified by:NA
 	 * Description : Verify that on navigating to thread map tab from Family member
 	 * tab link to view more data should not be displayed.'RPMXCON-51570' Sprint : 7
-	 * 
+	 * @Stabilization - done
 	 * @throws Exception
 	 */
 	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression"}, priority = 13)
@@ -1000,6 +1000,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Near Dupe.'RPMXCON-51058' Sprint : 7
 	 *  [Near dupe]
 	 * @throws Exception
+	 * @Stabilization - not done
 	 */
 	//@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyCheckMarkIconDisplayedTheNearDupe() throws InterruptedException {
@@ -1095,7 +1096,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description : Verify check mark icon should be displayed when document is
 	 * completed after selecting 'Code same as this' action' from Analytics Panel >
 	 * Conceptual'RPMXCON-51059' Sprint : 7
-	 * 
+	 * @Stabilization - done
 	 * @throws Exception
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 15)
@@ -1193,7 +1194,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 1/12/21 NA Modified date: NA Modified by:NA
 	 * Description :Verify user can select 'Remove Code Same' from analytics panel
 	 * child window'RPMXCON-51232' Sprint : 7
-	 * 
+	 * @Stabilization - not done
 	 * @throws Exception
 	 */
 	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16) 
@@ -1336,8 +1337,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              after saving selects action 'Code same as this' from family
 	 *              members on same documents then selects 'Remove code same as
 	 *              this' RPMXCON-51222
-	 * 
-	 * 
+	 * @Stabilization - not done
 	 */
 	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
 	public void verifyUserEditCodingFormMainDocAndActionCodeSameAs(String fullName, String userName, String password)
@@ -1393,10 +1393,10 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Mohan date: 03/12/2021 Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51028 To verify that after impersonation user can see remarks for
 	 * selected document
+	 * @Stabilization - done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 18) // chk with
-	// mohan
+	@Test(enabled = true, groups = { "regression" }, priority = 18) 
 	public void verifyRemarksForSelectedDocsAfterImpersonating() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1470,6 +1470,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Mohan date: 13/12/2021 Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-50973 To verify that action should be disable 'View Document'
 	 * without selecting document.
+	 * @Stabilization - done
 	 */
 
 	@Test(enabled = true, groups = { "regression" }, priority = 19)
@@ -1503,9 +1504,9 @@ public class DocView_AnalyticsPanel_NewRegression {
 	/**
 	 * Author : Mohan date: 13/12/2021 Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51364
-	 * 
 	 * @description: To Verify coding form, metadata from parent and child window
 	 *               when document is viewed from analytics panel
+	 * @Stabilization - done
 	 */
 
 	@Test(enabled = true, groups = { "regression" }, priority = 20)
@@ -1635,7 +1636,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 13/12/21 NA Modified date: NA Modified by:NA
 	 * Description :To verify that Project Admin cannot view the action 'Code Same
 	 * as This' in Analytics panel.'RPMXCON-50941' Sprint : 8
-	 * 
+	 * @Stabilization - done
 	 * @throws Exception
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 21)
@@ -1691,7 +1692,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 13/12/21 NA Modified date: NA Modified by:NA
 	 * Description :To verify 'Code same as this' action without selecting document
 	 * from family member should be disable.'RPMXCON-50910' Sprint : 8
-	 * 
+	 * @Stabilization - done
 	 * @throws Exception
 	 */
 	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 22)
@@ -1781,7 +1782,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description :To verify when user edits the coding form of main document and
 	 * after saving selects action 'Code same as this' from family members on same
 	 * documents.'RPMXCON-50909' Sprint : 8
-	 * 
+	 * @Stabilization - not done
 	 * @throws Exception
 	 */
 	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 24)
@@ -1830,6 +1831,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              viewer should be displayed in ''Compare Similar Documents',if
 	 *              clicks on the icon in Analytical Panel->Near Dupes.
 	 *              RPMXCON-50956
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 25)
 	public void verifyCompareSimilarDocumentIsDisplayedOnceTheIconIsClicked(String roll, String userName,
@@ -1905,6 +1907,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @description: Verify check mark icon should be displayed when coding stamp
 	 *               applied after selecting 'Code same as this' action' from
 	 *               Analytics Panel > Conceptual RPMXCON-51062
+	 * @Stabilization - done
 	 */
 
 	@Test(enabled = true, groups = { "regression" }, priority = 26)
@@ -2030,7 +2033,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description :Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
 	 * preceding document is completed by selecting 'Code same as this' action from
 	 * analytics panel > conceptual.'RPMXCON-51071' Sprint : 8
-	 * 
+	 * @Stabilization - done
 	 * @throws AWTException
 	 * @throws Exception
 	 */
@@ -2141,7 +2144,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description :Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
 	 * preceding document is completed by selecting 'Code same as this' action from
 	 * analytics panel > family member.'RPMXCON-51070' Sprint : 8
-	 * 
+	 * @Stabilization - not done
 	 * @throws AWTException
 	 * @throws Exception
 	 */
@@ -2255,7 +2258,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description :Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
 	 * preceding document is completed by selecting 'Code same as this' action from
 	 * analytics panel > Near Dupe.'RPMXCON-51072' Sprint : 8
-	 * 
+	 * @Stabilization - not done
 	 * @throws AWTException
 	 * @throws Exception
 	 */
@@ -2375,7 +2378,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description :To verify that user can view documents in ''Compare Similar
 	 * Documents',if clicks on the icon in Analytical Panel->Near
 	 * Dupes..'RPMXCON-50900' Sprint : 9
-	 * 
+	 * @Stabilization - done
 	 * @throws AWTException
 	 * @throws Exception
 	 */
@@ -2423,7 +2426,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description :To verify that if user navigates to doc view from the Save
 	 * search, then he can view the documents in the doc list from Doc View->Thread
 	 * Map..'RPMXCON-50875' Sprint : 9
-	 * 
+	 * @Stabilization - done
 	 * @throws AWTException
 	 * @throws Exception
 	 */
@@ -2488,11 +2491,11 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 24/12/21 NA Modified date: NA Modified by:NA
 	 * Description :To verify that if user select any document on Child Window then
 	 * same document will displayed on Doc View page.'RPMXCON-50947' Sprint : 9
-	 * 
+	 * @Stabilization - done
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 33)
 	public void verifyDocChilsWindowThenSameDocWillDisplayInDocView(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
