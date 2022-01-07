@@ -142,7 +142,7 @@ public class CreateCodingForm_New_Regression {
 	 *                objects in context of security group
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 02)
+	@Test(enabled = false, groups = { "regression" }, priority = 02)
 	public void  createCodingFormWithMetaData() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52085");
 		String codingfrom = "CF" + Utility.dynamicNameAppender();
@@ -301,7 +301,7 @@ public class CreateCodingForm_New_Regression {
 	 *                form using multiple comments elements
 	 */
 	
-	@Test(enabled = true, groups = { "regression" }, priority = 05)
+	@Test(enabled = false, groups = { "regression" }, priority = 05)
 	public void  createCodingFormWithCommentError() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52071");
 		String tag="tag";
@@ -861,7 +861,7 @@ public class CreateCodingForm_New_Regression {
 	 *               be retained on click of saved stamp in context of security group
 	 */
 	
-//	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(enabled = false, groups = { "regression" }, priority = 14)
 	public void verifyThatCustomMetaDataFieldValueDatatypeOnSavedStamp() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-52183");
 	    String codingfrom = "CFINT"+Utility.dynamicNameAppender();
@@ -1002,7 +1002,7 @@ public class CreateCodingForm_New_Regression {
 	 *               retained on click of saved stamp in context of assignment
 	 */
 	
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = false, groups = { "regression" }, priority = 16)
 	public void verifyThatCustomMetaDataFieldValueWithINTDatatypeAssgn() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-52185");
 	    String codingForms = "CFINT"+Utility.dynamicNameAppender();
@@ -2321,7 +2321,7 @@ public class CreateCodingForm_New_Regression {
 	 *              search
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	@Test(enabled = false, groups = { "regression" }, priority = 35)
 	public void differentCodingStampShouldDisplayToSGAndAssgn() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51004");
 		baseClass.stepInfo("Verify coding form for a document in an assignment after applying "
@@ -2808,7 +2808,7 @@ public class CreateCodingForm_New_Regression {
 	 * 			RPMXCON-52087
 	 * @Description : To  Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form using Tags and Check group combined with Check Item in context of security group.
 	 */
-	@Test(groups = { "regression" }, priority = 45)
+	@Test(enabled=false,groups = { "regression" }, priority = 45)
 	public void verifyCustomizedCodingFormUsingTagAndCheckGroupInDocView() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-52087");
 	    baseClass.stepInfo(" Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form using Tags and Check group combined with Check Item in context of security group");
@@ -3054,7 +3054,7 @@ public class CreateCodingForm_New_Regression {
 	 * 			RPMXCON-52089
 	 * @Description : To  Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form using Tag objects along with "Selected" condition in context of security group.
 	 */
-	@Test(groups = { "regression" }, priority = 48)
+	@Test(enabled=false,groups = { "regression" }, priority = 48)
 	public void verifyCodingFormWithNotSelectableAndOption() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-52089");
 	    baseClass.stepInfo(" Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form using Tag objects along with \"Selected\" condition in context of security group");
