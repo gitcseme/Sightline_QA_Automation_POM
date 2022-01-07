@@ -66,7 +66,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              length of the email thread should not be a constraint and with
 	 *              email threads such as the above (23 mails and 140 participants)
 	 *              from Analytics panel child window 'RPMXCON-51846'
-	 * 
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyDocumentFromAnalyticsPanelWithEmailThreadMap()
@@ -115,6 +115,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description To Verify that when document is viewed from analytics panel when
 	 *              hits panel is open then enable/disable should be retained
 	 *              'RPMXCON-51753'
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyDocumentFromAnalyticsPanel() throws ParseException, InterruptedException, IOException {
@@ -159,6 +160,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              be retained
 	 * //@TestCase 'RPMXCON-51754' Document is viewed from 'analytics panel' when hits
 	 *           panel is open with pop-out child window
+	 *  @Stabilization - done         
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyDocumentFromAnalyticsPanelWithChildWindow()
@@ -212,6 +214,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              is selected from thread map on moving to right from Analytics
 	 *              panel parent window on click of the link to load more data
 	 *              'RPMXCON-51723'
+	 *   @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyHorizontalScrollBarInAnalyticsPanel() throws InterruptedException {
@@ -282,6 +285,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Author Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description To Verify that Thread Map tab should be displayed when
 	 *              navigating to doc view outside of assignment 'RPMXCON-51847'
+	 *  @Stabilization - done             
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyDocumentFromAnalyticsPanelWithThreadMap()
@@ -319,6 +323,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              of the email thread should not be a constraint and with email
 	 *              threads such as the above (23 mails and 140 participants) from
 	 *              Analytics panel 'RPMXCON-51845'
+	 *  @Stabilization - done
 	 * 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 6)
@@ -375,7 +380,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description : To Verify that when the threadmap toggle is disabled, the
 	 *              application should not try to pull the thread information on doc
 	 *              view'RPMXCON-51843'
-	 * 
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyAnalyticsPanelWithEmailThreadMapDisabled()
@@ -427,7 +432,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description : To Verify that when the threadmap toggle is disabled, the
 	 *              application should not try to pull the thread information on doc
 	 *              view from Analytics panel child window'RPMXCON-51844'
-	 * 
+	 *  @Stabilization - done
      */
 
 	@Test(enabled = true, groups = { "regression" }, priority = 8)
@@ -480,6 +485,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description : To Verify code same icon should not display for the documents
 	 *              selected for folder action from mini doc list after selecting
 	 *              folder action from analytics panel.'RPMXCON-51735 '
+	 *   @Stabilization - done            
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyCodeAsSameFromFamilyMembersAnalyticsPanel() throws Exception {
@@ -524,6 +530,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify documents folder action is done successfully from
 	 *              analytics panel.'RPMXCON-51733'
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyDocFolderAction() throws Exception {
@@ -562,6 +569,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description : To verify Thread Map tab when no documents/thread to
 	 *              display.'RPMXCON-50952'
 	 * @throws InterruptedException
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyThreadMapTabWithNoDocs() throws InterruptedException {
@@ -628,6 +636,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description : To verify 'View All' should be displayed on Thread Map tab
 	 *              when more than 20 documents exists.'RPMXCON-50953'
 	 * @throws InterruptedException
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyViewAllThreadMapTabWith20Docs() throws InterruptedException {
@@ -692,6 +701,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description : To verify user should be able to view threaded documents when
 	 *              redirects from saved search page.'RPMXCON-50954'
 	 * @throws InterruptedException
+	 *  @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyThreadedDocsFromSavedSearch() throws InterruptedException {
@@ -769,6 +779,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description : To verify user should be able to view threaded documents when
 	 *              redirects from doc list page.'RPMXCON-50955'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyThreadedDocRedirectFromDocList() throws InterruptedException {
@@ -844,6 +855,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description : Verify option to view document from thread map tab of
 	 *              analytics panel.'RPMXCON-51413'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyOptionToViewDocInThreadMapTab() throws InterruptedException {
@@ -919,6 +931,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              tab and navigates to another document, the Analytics Panel Tab
 	 *              previously selected must remain..'RPMXCON-51414'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyAnalyticsPanelTabDOcsSelectsFromMiniDocList() throws InterruptedException {
@@ -993,6 +1006,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :Verify that thread map presents only emails when threaded
 	 *              document contains non email attachment'RPMXCON-51508'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyThreadedDocsContainsNonEmailAttachment() throws InterruptedException {
@@ -1057,6 +1071,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              is selected from thread map on moving to right after changing
 	 *              the Analytics panel position'RPMXCON-51721'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyHorizontalscrollTabAndChangingTheAnalyticsPosition() throws InterruptedException {
@@ -1132,6 +1147,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              is selected from thread map on moving to right from child window
 	 *              after changing the Analytics panel position'RPMXCON-51722'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyHorizontalscrollTabAndChangingTheAnalyticsPositionWithChildWindow() throws InterruptedException {
@@ -1207,6 +1223,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              is selected from thread map on moving to right from Analytics
 	 *              panel parent window'RPMXCON-51719'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyThreadedDocuments() throws InterruptedException {
@@ -1273,6 +1290,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              is selected from thread map on moving to right from Analytics
 	 *              panel child window'RPMXCON-51720'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyThreadedDocumentsWithChildWindow() throws InterruptedException {
@@ -1342,6 +1360,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              documents are selected for code same action from Analytics
 	 *              panel'RPMXCON-51411'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyWarningMessageCodeAsSameInAnalyticsPanel() throws InterruptedException {
@@ -1396,6 +1415,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              documents are selected for code same action from Analytics panel
 	 *              child window'RPMXCON-51412'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 23)
 
@@ -1452,6 +1472,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :To verify that user can select any document and details is
 	 *              displayed in Analytical and Meta data Panel.'RPMXCON-50960'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyMetaDataPanelIsDisplayed() throws InterruptedException {
@@ -1519,6 +1540,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              Conceptually Similar child window and Save/Complete clicked from
 	 *              coding form child window'RPMXCON-51385'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyCodeAsSameConceptuallySimilarChildWindow() throws InterruptedException {
@@ -1795,6 +1817,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              Conceptually Similar and Save/Complete clicked from coding form
 	 *              child window'RPMXCON-51383'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyCodeAsSameWithCodingFormChildWindow() throws InterruptedException {
@@ -1905,6 +1928,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              Conceptually Similar and Save/Complete clicked from coding form
 	 *              parent window'RPMXCON-51382'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyCodeAsSameConceptuallySimilarParentWindow() throws InterruptedException {
@@ -2016,6 +2040,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :Verify that on thread map tab when the principal document is
 	 *              F2, the thread map should not present any emails.'RPMXCON-51522'
 	 * @throws InterruptedException
+	 * @Stabilization - not done
 	 */
 	//@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyThreadMapTabWithPrincipalDocs() throws InterruptedException {
@@ -2060,6 +2085,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :Verify that on thread map tab when the principal document is
 	 *              E2, the thread map presents E1, E2, E3'RPMXCON-51518'
 	 * @throws InterruptedException
+	 * @Stabilization - not done
 	 */
 	//@Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyThreadMapPrincipalDocsE2() throws InterruptedException {
@@ -2106,6 +2132,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :Verify that on thread map tab when the principal document is
 	 *              E3, the thread map presents E1, E2, E3'RPMXCON-51519'
 	 * @throws InterruptedException
+	 * @Stabilization - not done
 	 */
 	//@Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifyThreadMapPrincipalDocsE3() throws InterruptedException {
@@ -2161,6 +2188,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :Verify when 'View Document' action is selected from thread map
 	 *              when multiple documents are selected'RPMXCON-51428'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 31)
 	public void verifyViewDocumentInThreadMapMutiDocsAreSelected() throws InterruptedException {
@@ -2243,6 +2271,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              Panel and Select Action as 'Code Same as this' and code same
 	 *              icon should be displayed'RPMXCON-51239'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyMutiDocsSelectedAndCodeAsSame() throws InterruptedException {
@@ -2291,6 +2320,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :Verify when user select 'Folder' action from thread map without
 	 *              selecting document'RPMXCON-51241'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifyFolderActionWithoutSelectingThreadDocsAndActionAsFolder() throws InterruptedException {
@@ -2338,6 +2368,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :Verify when no document to display on thread map all actions
 	 *              should be disable'RPMXCON-51242'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyWhenNoDocsAreThereInThreadMapAndAllActionShouldBeDisabled() throws InterruptedException {
@@ -2384,6 +2415,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :Verify user select multiple documents in Thread Map->Analytic
 	 *              Panel and Select Action as 'Folder''RPMXCON-51240'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void verifyMultiDocsInThreadMapTabAndSelectActionAsFolder() throws InterruptedException {
@@ -2432,6 +2464,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              thread map and Save/Complete clicked from coding form parent
 	 *              window'RPMXCON-51370'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 36)
 	public void verifyCodeAsSameWithCodingFormThreadMapParentWindow() throws InterruptedException {
@@ -2518,6 +2551,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              thread map tab when RMU redirect to doc view from manage
 	 *              assignment'RPMXCON-51453'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 37)
 	public void verifyCompleteIconOnThreadMapTab() throws InterruptedException {
@@ -2580,6 +2614,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description :Verify that for uncompleted documents on thread map tab
 	 *              completed icon should not be displayed'RPMXCON-51454'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 38)
 	public void verifyUncompleteIconOnThreadMapTab() throws InterruptedException {
@@ -2623,6 +2658,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              map tab of analytics panel child window which are completed from
 	 *              assignment'RPMXCON-51455'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyCompleteIconOnShouldNotDisplayOnThreadMapTabChildWindow() throws InterruptedException {
@@ -2716,6 +2752,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              Member tab and navigates to another document, the Analytics
 	 *              Panel Tab previously selected must remain.'RPMXCON-51286'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void verifyNavigateToOherDocsAnalyticsPanelRemainsSame() throws InterruptedException {
@@ -2770,6 +2807,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              Conceptual tab and navigates to another document, the Analytics
 	 *              Panel Tab previously selected must remain.'RPMXCON-51415'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 41)
 	public void verifyNavigateToOherDocsConceptualTabAnalyticsPanelRemainsSame() throws InterruptedException {
@@ -2886,6 +2924,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              Map tab and navigates to another document, the Analytics Panel
 	 *              Tab previously selected must remain.'RPMXCON-51416'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 42)
 	public void verifyNavigateToOherDocsThreadMapTabAnalyticsPanelRemainsSame() throws InterruptedException {
@@ -3002,6 +3041,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              documents which are not marked as code same as this from thread
 	 *              map'RPMXCON-51226'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 43)
 	public void verifyWarningMessageWhenRemoveCodeAsSameActionIsPerformed() throws InterruptedException {
@@ -3068,6 +3108,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              not be displayed in mini doc list, analytics
 	 *              panel'RPMXCON-51227'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 44)
 	public void verifyRemoveCodeAsSameShouldNotbeDispalyedInMiniDocLitAndAnalyticsPanel() throws InterruptedException {
@@ -3106,6 +3147,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              Map tab and completed document, the Analytics Panel Tab
 	 *              previously selected must remain.'RPMXCON-51417'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 45)
 	public void verifyPositionOfThreadMapTabNavigatedToOtherDocs() throws InterruptedException {
@@ -3206,6 +3248,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              Member tab and completed document, the Analytics Panel Tab
 	 *              previously selected must remain.'RPMXCON-51418'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 46)
 	public void verifyPositionOfFamilyMemberTabNavigatedToOtherDocs() throws InterruptedException {
@@ -3293,6 +3336,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              Map tab from child window and completed document, the Analytics
 	 *              Panel Tab previously selected must remain.'RPMXCON-51421'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 47)
 	public void verifyPositionOfThreadMapTabNavigatedToOtherDocsChildWindow() throws InterruptedException {
@@ -3437,6 +3481,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              Analytics Panel Tab previously selected must
 	 *              remain.'RPMXCON-51422'
 	 * @throws InterruptedException
+	 * @Stabilization - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 48)
 	public void verifyPositionOfFamilyMemberTabNavigatedToOtherDocsChildWindow() throws InterruptedException {
