@@ -85,12 +85,9 @@ public class DocView_ProductionFlow_Regression {
 
 	@Test(groups = { "regression" }, priority = 1)
 	public void verifyProductionForHighlitedDoc() throws Exception {
-
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52207");
+		String beginningBates = page.getRandomNumber(2);
 		folder = "Highlited_" + Utility.dynamicNameAppender();
 		tag = "Tag" + Utility.dynamicNameAppender();
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -109,7 +106,7 @@ public class DocView_ProductionFlow_Regression {
 		page.fillingTextSection();
 		page.fillingNativeSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(folder);
 		page.navigateToNextSection();
@@ -129,11 +126,9 @@ public class DocView_ProductionFlow_Regression {
 	
 	@Test(enabled=false, groups = { "regression" }, priority = 2)
 	public void verifyProductionForTiffDoc() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52208");
+		String beginningBates = page.getRandomNumber(2);
 		baseClass.stepInfo("Verify that Producing a TIFF with text highlighting working properly and not eliminate any text characters in the produced document.");
 		folder = "Highlited_" + Utility.dynamicNameAppender();
 		tag = "Tag" + Utility.dynamicNameAppender();
@@ -153,7 +148,7 @@ public class DocView_ProductionFlow_Regression {
 		page.fillingTextSection();
 		page.fillingNativeSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(folder);
 		page.navigateToNextSection();

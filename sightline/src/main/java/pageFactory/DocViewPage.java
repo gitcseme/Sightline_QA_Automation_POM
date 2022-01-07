@@ -6689,13 +6689,12 @@ public class DocViewPage {
 	public void verifyRedactionPanel() {
 
 		this.driver.getWebDriver().get(Input.url + "DocumentViewer/DocView");
-		try {
-			base.waitForElement(getDocumentId2());
-			getDocumentId2().waitAndClick(20);
-		} catch (Exception e) {
-
-		}
-
+//		try {
+//			base.waitForElement(getDocumentId2());
+//			getDocumentId2().waitAndClick(20);
+//		} catch (Exception e) {
+//
+//		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDocView_RedactIcon().Visible();

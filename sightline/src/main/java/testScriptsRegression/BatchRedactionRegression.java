@@ -63,13 +63,19 @@ public class BatchRedactionRegression {
 	String tagname;
 
 	@BeforeClass(alwaysRun = true)
-	public void preCondition() throws ParseException, InterruptedException, IOException {
+
+	private void TestStart() throws Exception, InterruptedException, IOException {
+
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		Input in = new Input();
 		in.loadEnvConfig();
+	}
 
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method : " + testMethod.getName());
 		// Open browser
 		driver = new Driver();
 		base = new BaseClass(driver);
@@ -1156,6 +1162,7 @@ public class BatchRedactionRegression {
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		base.waitForElement(page.getDATRedactionsCBox());
@@ -1163,7 +1170,7 @@ public class BatchRedactionRegression {
 		page.fillingNativeSection();
 		page.fillingTIFFWithBurnRedaction(redactionStyle, "layer", null);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(PrefixID, SuffixID);
+		page.fillingNumberingAndSortingPage(PrefixID, SuffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1185,6 +1192,7 @@ public class BatchRedactionRegression {
 	 */
 //	@Test(dataProvider = "Users", groups = { "regression" }, priority = 24)
 	public void verifyRedactionStyle(String username, String password) throws InterruptedException {
+		
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String PrefixID = "A_" + Utility.dynamicNameAppender();
 		;
@@ -1210,12 +1218,13 @@ public class BatchRedactionRegression {
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFWithBurnRedaction(redactionStyle, "layer", null);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(PrefixID, SuffixID);
+		page.fillingNumberingAndSortingPage(PrefixID, SuffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1261,12 +1270,13 @@ public class BatchRedactionRegression {
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFWithBurnRedaction(null, "Tags", Input.defaultRedactionTag);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(PrefixID, SuffixID);
+		page.fillingNumberingAndSortingPage(PrefixID, SuffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1368,6 +1378,7 @@ public class BatchRedactionRegression {
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 
 		// generate TIFF file
 		page.addANewProduction(productionname);
@@ -1375,7 +1386,7 @@ public class BatchRedactionRegression {
 		page.fillingNativeSection();
 		page.fillingTIFFWithBurnRedaction(null, "Tag", Input.defaultRedactionTag);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(PrefixID, SuffixID);
+		page.fillingNumberingAndSortingPage(PrefixID, SuffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1891,25 +1902,16 @@ public class BatchRedactionRegression {
 		return users;
 	}
 
-	@BeforeMethod(alwaysRun = true)
-	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
-		Reporter.setCurrentTestResult(result);
-		System.out.println("------------------------------------------");
-		System.out.println("Executing method :  " + testMethod.getName());
-		UtilityLog.logBefore(testMethod.getName());
-	}
 
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+		base = new BaseClass(driver);
 		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			login.logout();
-
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
+	login.quitBrowser();
 	}
 
 	@AfterClass(alwaysRun = true)
