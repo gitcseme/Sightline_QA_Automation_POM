@@ -15435,4 +15435,96 @@ public class ProductionPage {
 
 
 	}
+	/**
+	 * @Author Brundha
+	 * Description:Method to select generate radio button
+	 */
+	public void selectGenerateOption(boolean Value ) {
+
+	base.waitForElement(getTIFFChkBox());
+	getTIFFChkBox().Click();
+	driver.scrollingToBottomofAPage();
+	base.waitForElement(getTIFFTab());
+	getTIFFTab().Click();
+
+	if(Value) {
+		driver.scrollPageToTop();
+	getPDFGenerateRadioButton().Enabled();
+	getPDFGenerateRadioButton().waitAndClick(10);
+	}
+	base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+	getTIFF_EnableforPrivilegedDocs().Enabled();
+	getTIFF_EnableforPrivilegedDocs().Click();
+	}
+	/**
+	 * @Author Brundha
+	 * Description:Method to verify placeholder text in burn redaction
+	 */
+	public void verifyPlaceholderTextInBurnRedaction(String Tag) {
+		
+	getClk_burnReductiontoggle().ScrollTo();
+    getClk_burnReductiontoggle().Click();
+	base.waitForElement(getClkLink_selectingRedactionTags());
+	getClkLink_selectingRedactionTags().waitAndClick(5);
+	base.waitForElement(getClkBtn_selectingRedactionTags());
+	getClkBtn_selectingRedactionTags().Click();
+	driver.waitForPageToBeReady();
+	base.waitForElement(BurnRedactionCheckBox(Tag));
+	BurnRedactionCheckBox(Tag).waitAndClick(5);
+	base.waitForElement(getClk_selectBtn());
+	getClk_selectBtn().waitAndClick(5);
+	driver.waitForPageToBeReady();
+	base.waitForElement(gettextRedactionPlaceHolder());
+	String actualtext="REDACTED";
+	String RedactionText=gettextRedactionPlaceHolder().getText();
+	if(RedactionText.equals(actualtext)) {
+		base.passedStep("Placeholder text '"+RedactionText+"' is displayed as expected");
+	}else {
+		base.failedStep("Placeholder text '"+RedactionText+"' is not displayed as expected");
+	}
+
+	}
+
+	/**
+	 * @Author Brundha
+	 * Description:Method to verify text in text section
+	 */
+	public void verifyTextInTextSection() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTextChkBox().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextTab().Enabled();
+			}
+		}), Input.wait30);
+		getTextTab().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextcomponent_text().isDisplayed();
+			}
+		}), Input.wait30);
+		getTextcomponent_text().isElementAvailable(15);
+		base.waitTime(3);
+		String exptext = getTextcomponent_text().getText();
+		System.out.println(exptext);
+		UtilityLog.info(exptext);
+		if(exptext.equals(
+				"Redacted documents are automatically OCRed"
+						+ " to export the text. Original extracted text is exported for natively "
+						+ "produced documents (file based placeholdering). "
+						+ "For exception and privileged placeholdered docs, " + "the placeholder text is exported."
+						+ " The configured format is applicable only to OCRed text and production generated text"
+						+ ", and not to ingested text.")){
+			base.passedStep(""+exptext+" is displayed as expected");
+		}else {
+			base.failedStep(""+exptext+" is not displayed as expected");
+		}
+		
+	}
 }
