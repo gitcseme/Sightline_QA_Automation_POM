@@ -108,6 +108,7 @@ public class Export_Regression {
 		sessionSearch.bulkTagExisting(tagname1);
  		
  		ProductionPage page = new ProductionPage(driver);
+ 		String beginningBates = page.getRandomNumber(2);
  		
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
@@ -128,7 +129,7 @@ public class Export_Regression {
  		page.navigateToNextSection();
  	
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -416,6 +417,7 @@ public class Export_Regression {
  		sessionSearch.bulkFolderExisting(foldername);
  		
  		ProductionPage page = new ProductionPage(driver);
+ 		String beginningBates = page.getRandomNumber(2);
  		
  		base.stepInfo("Selecting Default Security Group");
  		page.selectingDefaultSecurityGroup();
@@ -430,7 +432,7 @@ public class Export_Regression {
  		page.navigateToNextSection();
  	
  		base.stepInfo("Filling Numbering And Sorting Page");
- 		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+ 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
  		
  		base.stepInfo("Navigate To Next Section");
  		page.navigateToNextSection();
@@ -523,6 +525,7 @@ public class Export_Regression {
 		// create production and fill dat field and verify specify controls
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Select default security group");
 		page.selectingDefaultSecurityGroup();
 		
@@ -544,7 +547,7 @@ public class Export_Regression {
 		page.navigateToNextSection();
 		
 		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
