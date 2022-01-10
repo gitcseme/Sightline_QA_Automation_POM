@@ -598,11 +598,12 @@ public class SavedSearchAudio_Regresssion {
 
 		// To Select & check mySavedSearch and savedNodeSearch
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocuSelectionPage(saveSearch1, saveSearch2);
 		page.navigateToNextSection();
@@ -624,7 +625,7 @@ public class SavedSearchAudio_Regresssion {
 		page.fillingDATSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocuSelectionPage(searchGroup, saveSearch2);
 		System.out.println("Search groups and search Of RMU is not available");
@@ -641,7 +642,7 @@ public class SavedSearchAudio_Regresssion {
 		page.fillingDATSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocuSelectionPage(saveSearch2, SearchNodeNamePA);
 		page.navigateToNextSection();

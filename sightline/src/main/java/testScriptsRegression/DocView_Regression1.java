@@ -727,6 +727,7 @@ public class DocView_Regression1 {
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			
 			baseClass.stepInfo("Select default security group");
 			page.selectingDefaultSecurityGroup();
@@ -753,7 +754,7 @@ public class DocView_Regression1 {
 			page.navigateToNextSection();
 			
 			baseClass.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			baseClass.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
@@ -844,6 +845,7 @@ public class DocView_Regression1 {
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			
 			baseClass.stepInfo("Select default security group");
 			page.selectingDefaultSecurityGroup();
@@ -870,7 +872,7 @@ public class DocView_Regression1 {
 			page.navigateToNextSection();
 			
 			baseClass.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			baseClass.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
@@ -1216,6 +1218,7 @@ public class DocView_Regression1 {
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			
 			baseClass.stepInfo("Select default security group");
 			page.selectingDefaultSecurityGroup();
@@ -1242,7 +1245,7 @@ public class DocView_Regression1 {
 			page.navigateToNextSection();
 			
 			baseClass.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			baseClass.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
@@ -1333,6 +1336,7 @@ public class DocView_Regression1 {
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			
 			baseClass.stepInfo("Select default security group");
 			page.selectingDefaultSecurityGroup();
@@ -1359,7 +1363,7 @@ public class DocView_Regression1 {
 			page.navigateToNextSection();
 			
 			baseClass.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			baseClass.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
@@ -1423,6 +1427,7 @@ public class DocView_Regression1 {
 
 				// create production with DAT,Native,PDF& ingested Text
 				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
 				productionname = "p" + Utility.dynamicNameAppender();
 				page.selectingDefaultSecurityGroup();
 				page.addANewProduction(productionname);
@@ -1433,7 +1438,7 @@ public class DocView_Regression1 {
 				page.burnRedactionWithRedactionTag(Redactiontag1);
 				page.fillingTextSection();
 				page.navigateToNextSection();
-				page.fillingNumberingAndSortingPage(prefixID, suffixID);
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 				page.navigateToNextSection();
 				page.fillingDocumentSelectionPage(foldername);
 				page.navigateToNextSection();
@@ -1497,6 +1502,7 @@ public class DocView_Regression1 {
 			
 			// create production with DAT,Native,PDF& ingested Text
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			productionname = "p" + Utility.dynamicNameAppender();
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
@@ -1507,7 +1513,7 @@ public class DocView_Regression1 {
 			page.burnRedactionWithRedactionTag(Redactiontag1);
 			page.fillingTextSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -1589,6 +1595,7 @@ public class DocView_Regression1 {
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			
 			baseClass.stepInfo("Select default security group");
 			page.selectingDefaultSecurityGroup();
@@ -1605,6 +1612,7 @@ public class DocView_Regression1 {
 			baseClass.stepInfo("Filling Native Section");
 			page.fillingNativeSection();
 			
+			
 			baseClass.stepInfo("Filling PDF Section with Burn Redaction");
 			page.fillingPDFSectionwithBurnRedaction(redactiontag1);
 			
@@ -1615,7 +1623,7 @@ public class DocView_Regression1 {
 			page.navigateToNextSection();
 			
 			baseClass.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			baseClass.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
@@ -1706,6 +1714,7 @@ public class DocView_Regression1 {
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			
 			baseClass.stepInfo("Select default security group");
 			page.selectingDefaultSecurityGroup();
@@ -1732,7 +1741,7 @@ public class DocView_Regression1 {
 			page.navigateToNextSection();
 			
 			baseClass.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			baseClass.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
