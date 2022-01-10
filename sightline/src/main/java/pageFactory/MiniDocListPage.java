@@ -475,7 +475,7 @@ public class MiniDocListPage {
 	public Element miniDocListDisplay() {
 		return driver.FindElementByXPath("//div[@id='divMiniDocList']//div[@class='dataTables_scroll']");
 	}
-
+	public Element getDocView__ChildWindow_Mini_RemoveCodeSameAs() {return driver.FindElementById("liRemoveCodeSameAsMiniDocList");}
 	/**
 	 * @author Indium Raghuram ] Description : To get the list of elements
 	 *         (GenericMethod) Date:8/15/21 Modified date: N/A Modified by: N/A
