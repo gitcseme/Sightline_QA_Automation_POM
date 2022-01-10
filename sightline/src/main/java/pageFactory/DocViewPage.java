@@ -19575,8 +19575,28 @@ public class DocViewPage {
 		else {
 			base.failedStep("Coding form  the main selected document is not saved for the selected documents from family members");
 		}
-		
-		
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+
+	public void verifyCommentAndMetadataUsingSavedStamp(String addComment, String commentText, String metadata,
+			String metadataText,String stamp) {
+		driver.waitForPageToBeReady();
+		String prnDoc = getVerifyPrincipalDocument().getText();
+		base.waitForElement(getCodingFormHelpText(addComment));
+		getCodingFormHelpText(addComment).SendKeys(commentText);
+		base.waitForElement(getReadOnlyTextBox(metadata));
+		getReadOnlyTextBox(metadata).SendKeys(metadataText);
+		codingStampButton();
+		popUpAction(stamp, Input.stampSelection);
+		softAssertion.assertTrue(true, "Coding stamp saved successfully");
+		lastAppliedStamp(Input.stampSelection);
+		codingFormSaveButton();
+		base.VerifySuccessMessage("Document saved successfully");
+		driver.waitForPageToBeReady();
+		softAssertion.assertAll();
 	}
 	/**
 	 * @author Iyappan.Kasinathan
