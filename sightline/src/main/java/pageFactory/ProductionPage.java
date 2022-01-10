@@ -2184,6 +2184,9 @@ public class ProductionPage {
 	public Element getClkCheckBox_1stdefaultRedactionTag() {
 		return driver.FindElementByXPath("(//ul[@class='jstree-children']//a[text()='Default Redaction Tag'])[1]");
 	}
+	public Element text(String text) {
+		return driver.FindElementByXPath("//*[contains(text(),"+text+")]");
+	}
 	
 	
 	public Element blankPageRemovalMessage() {
@@ -15494,5 +15497,17 @@ public class ProductionPage {
 			base.failedStep(""+exptext+" is not displayed as expected");
 		}
 		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void visibleCheck(String text) {
+		if(text("text").isDisplayed()) {
+			base.passedStep(text+"is visibled");
+			System.out.println(text+"is visible");
+		}else {
+			base.failedStep(text+"is not visible");
+			System.out.println(text+"is not visible");
+		}
 	}
 }
