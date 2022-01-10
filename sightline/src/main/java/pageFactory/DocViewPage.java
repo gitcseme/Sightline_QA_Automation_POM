@@ -19578,5 +19578,34 @@ public class DocViewPage {
 		
 		
 	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 */
+	public void verifyMinidocListAndCodingFormInChildWindow() {
+		driver.waitForPageToBeReady();
+		reusableDocView.clickGearIconOpenCodingFormChildWindow();
+		base.waitForElement(getDocView_HdrMinDoc());
+		getDocView_HdrMinDoc().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		reusableDocView.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		reusableDocView.scrollingDocumentInMiniDocList();
+		reusableDocView.selectLastDocInMiniDocList();
+		base.stepInfo("Last document is selected in child minidoc list window");
+		reusableDocView.switchToNewWindow(3);
+		base.waitForElement(getResponsiveCheked());
+		getResponsiveCheked().waitAndClick(5);
+		base.waitForElement(getNonPrivilegeRadio());
+		getNonPrivilegeRadio().waitAndClick(5);
+		base.waitForElement(getDocument_CommentsTextBox());
+		getDocument_CommentsTextBox().SendKeys("Edited and save with save button");
+		base.waitForElement(getSaveAndNextButton());
+		getSaveAndNextButton().waitAndClick(5);
+		base.passedStep("Coding form saved successfully in child window");
+		reusableDocView.switchToNewWindow(2);		
+		reusableDocView.closeWindow(2);
+		reusableDocView.closeWindow(1);
+		reusableDocView.switchToNewWindow(1);
+	}
 
 }

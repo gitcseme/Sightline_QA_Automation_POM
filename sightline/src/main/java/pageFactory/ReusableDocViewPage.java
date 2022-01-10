@@ -135,6 +135,9 @@ public class ReusableDocViewPage {
 	}
 	public Element getAlreadySelectedError() {return driver.FindElementByXPath("//p[text()='Please enter the details.']");}
 	public Element getUnCompleteButton() {return driver.FindElementByXPath("//button[@id='btnDocumentUnComplete']");}
+	public Element getDocView_CurrentDocId() {
+		return driver.FindElementById("activeDocumentId");
+	}
 	
 	public ReusableDocViewPage(Driver driver) {
 
@@ -1528,5 +1531,35 @@ public class ReusableDocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocument_CommentsTextBox());
 		getDocument_CommentsTextBox().Clear();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 */
+	public void selectLastDocInMiniDocList() {
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocumetCountMiniDocList());
+		int miniDocListCount = getDocumetCountMiniDocList().WaitUntilPresent().size();
+		getDocView_MiniDocListIds(miniDocListCount).waitAndClick(5);
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 */
+	public void verifyNavigationOfDocAfterUnCompleteTheDoc() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_CurrentDocId());
+		String currentDocId=getDocView_CurrentDocId().getText();		
+		completeButton();
+		base.waitForElement(getMiniDocClick(currentDocId));
+		getMiniDocClick(currentDocId).waitAndClick(10);
+		getUnCompleteButton().waitAndClick(10);
+		if(getUnCompleteBtnNotPresent().isElementAvailable(5)) {
+			base.passedStep("Document uncompleted successfully");
+		}else {
+			base.failedStep("Document not uncompleted successfully");
+		}
+		softAssertion.assertEquals(currentDocId, getDocView_CurrentDocId().getText());
+		softAssertion.assertAll();
+		base.passedStep("After uncompleting the document it doesn't automatically move to next document");
+		
 	}
 }
