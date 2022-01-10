@@ -55,6 +55,7 @@ public class Production_Page_Regression {
 	String batesNumber;
 	String productionSet;
 	String templateName;
+	String exportname;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -86,7 +87,7 @@ public class Production_Page_Regression {
 	 *                     change on Production progress status bar on Tile View
 	 */
 
-	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 1)
+	@Test(enabled = false, dataProvider = "Users", groups = { "regression" }, priority = 1)
 	public void verifyStatusAfterRegeneratingProductionInHomePage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55991- Production Sprint 06");
@@ -117,7 +118,7 @@ public class Production_Page_Regression {
 		page.fillingNativeSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -198,7 +199,7 @@ public class Production_Page_Regression {
 		page.fillingTIFFSection(tagname, Input.tagNamePrev);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -259,7 +260,8 @@ public class Production_Page_Regression {
 		page.fillingDATSection();
 		page.fillingTiffSectionTechIssueWithEnteringText(tagname, Input.tagNamePrev);
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep("Generated TIFF with Tech Issue Placeholder by selecting only DAT");
 
 		// Delete Tag and folder
@@ -305,7 +307,8 @@ public class Production_Page_Regression {
 		page.fillingDATSection();
 		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		baseClass.passedStep("Generated Production with DAT and Natively Produced Documents Placholder");
 
 		// Delete Tag and folder
@@ -645,7 +648,7 @@ public class Production_Page_Regression {
 		page.fillingNativeSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -706,7 +709,7 @@ public class Production_Page_Regression {
 		page.fillingNativeSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -773,7 +776,7 @@ public class Production_Page_Regression {
 		page.fillingNativeSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -835,7 +838,7 @@ public class Production_Page_Regression {
 		page.fillingNativeSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -899,7 +902,7 @@ public class Production_Page_Regression {
 		page.fillingNativeSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -964,7 +967,7 @@ public class Production_Page_Regression {
 		page.fillingNativeSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1028,7 +1031,7 @@ public class Production_Page_Regression {
 		page.fillingNativeSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1095,7 +1098,7 @@ public class Production_Page_Regression {
 		page.fillingNativeSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1148,7 +1151,7 @@ public class Production_Page_Regression {
 		page.fillingTiffSectionBranding();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1196,7 +1199,8 @@ public class Production_Page_Regression {
 		page.addANewProduction(productionname);
 		page.fillingDATWithMultipleDropDown();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, tagname,beginningBates);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, tagname,
+				beginningBates);
 
 	}
 
@@ -1237,7 +1241,8 @@ public class Production_Page_Regression {
 		page.fillingNativeSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, tagname,beginningBates);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, tagname,
+				beginningBates);
 
 	}
 
@@ -1278,7 +1283,7 @@ public class Production_Page_Regression {
 		page.fillingTiffSectionBranding();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1326,7 +1331,7 @@ public class Production_Page_Regression {
 		page.fillingTiffSectionBranding();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1373,7 +1378,8 @@ public class Production_Page_Regression {
 		page.fillingDATSection();
 		page.fillingTIFFSectionwithBurnRedaction(tag);
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		// To delete tag and folder
@@ -1419,7 +1425,7 @@ public class Production_Page_Regression {
 		page.fillingTiffSectionBranding();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1485,7 +1491,8 @@ public class Production_Page_Regression {
 		page.fillingNativeSection();
 		page.fillingPDFWithRedactedDocumentsInAnnotationLayer();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 
 		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
@@ -1530,7 +1537,8 @@ public class Production_Page_Regression {
 //		page.fillingTheTIFFSection();
 		page.fillingMP3();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 
 		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
@@ -1542,7 +1550,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:12/28/21 TESTCASE No:RPMXCON-47844
 	 * @Description:To Verify the Create/Display of Template with newly created
 	 *                 Project and Production Set.
-	 */ 
+	 */
 	@Test(enabled = false, groups = { " regression" }, priority = 28)
 	public void createTemplateWithNewProductionSet() throws Exception {
 
@@ -1550,14 +1558,14 @@ public class Production_Page_Regression {
 		UtilityLog.info(Input.prodPath);
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-		templateName="templateName" + Utility.dynamicNameAppender();
+		templateName = "templateName" + Utility.dynamicNameAppender();
 		productionSet = "productionSet" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		
+
 		baseClass.stepInfo("Searching for a content and performing bulk folder action");
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
@@ -1574,31 +1582,33 @@ public class Production_Page_Regression {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
-		
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
+
 		driver.getWebDriver().get(Input.url + "Production/Home");
 		page.selectingDefaultSecurityGroup();
 		page.navigateToProductionPageByNewProductionSet(productionSet);
 		page.prodGenerationInCompletedStatus(productionname);
 		page.saveProductionAsTemplateAndVerifyInManageTemplateTab(productionname, templateName);
-		
+
 		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:12/30/21 TESTCASE No:RPMXCON-48322
-	 * @Description:To verify that "Generate Load File" is enabled by default for TIFF components.
-	 */ 
+	 * @Description:To verify that "Generate Load File" is enabled by default for
+	 *                 TIFF components.
+	 */
 	@Test(enabled = false, groups = { " regression" }, priority = 29)
 	public void verifyGenerateLoadFileForTIFF() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48322- Production Sprint 09");
 		UtilityLog.info(Input.prodPath);
 		boolean flag;
-		
+
 		baseClass.stepInfo("Navigating to Production Home page and creating new production set");
 		ProductionPage page = new ProductionPage(driver);
 		productionname = " p" + Utility.dynamicNameAppender();
@@ -1619,20 +1629,21 @@ public class Production_Page_Regression {
 			Assert.assertTrue(true);
 			baseClass.passedStep("Generate Load File is  enabled by default  for TIFF components.");
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:12/30/21 TESTCASE No:RPMXCON-48323
-	 * @Description:To verify that "Generate Load File" is enabled by default for PDF components.
-	 */ 
+	 * @Description:To verify that "Generate Load File" is enabled by default for
+	 *                 PDF components.
+	 */
 	@Test(enabled = false, groups = { " regression" }, priority = 30)
 	public void verifyGenerateLoadFileForPDF() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48323- Production Sprint 09");
 		UtilityLog.info(Input.prodPath);
 		boolean flag;
-		
+
 		baseClass.stepInfo("Navigating to Production Home page and creating new production set");
 		ProductionPage page = new ProductionPage(driver);
 		productionname = " p" + Utility.dynamicNameAppender();
@@ -1653,16 +1664,16 @@ public class Production_Page_Regression {
 			Assert.assertTrue(true);
 			baseClass.passedStep("Generate Load File is  enabled by default  for PDF components.");
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-47821
 	 * @Description:To verify Production Generation for NATIVE/PDF/TIFF/Text
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	@Test(enabled = false, groups = { "regression" }, priority = 31)
 	public void verifyProductionWithPriviledgedDocuments() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47821- Production Sprint 09");
@@ -1677,19 +1688,19 @@ public class Production_Page_Regression {
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
-		
+
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.searchString5);
 		sessionSearch.ViewInDocList();
-		
-		DocListPage docPage=new DocListPage(driver);
+
+		DocListPage docPage = new DocListPage(driver);
 		docPage.Selectpagelength("50");
 		docPage.documentSelection(17);
 		driver.scrollPageToTop();
 		docPage.bulkTagExistingFromDoclist(tagname);
-		
+
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
@@ -1701,7 +1712,7 @@ public class Production_Page_Regression {
 		page.fillingTIFFSection(tagname, Input.tagNamePrev);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
@@ -1715,21 +1726,22 @@ public class Production_Page_Regression {
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
-	
+
 		baseClass.passedStep("verified Production Generation for NATIVE/PDF/TIFF/Text");
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:01/03/22 TESTCASE No:RPMXCON-48532
-	 * @Description:To verify that confirmation message is displays if Blank Page Removal option is enable.
-	 */ 
-	@Test(enabled = true, groups = { " regression" }, priority = 32)
+	 * @Description:To verify that confirmation message is displays if Blank Page
+	 *                 Removal option is enable.
+	 */
+	@Test(enabled = false, groups = { " regression" }, priority = 32)
 	public void verifyConfirmationMessageWithBlankPageEnabled() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48532- Production Sprint 09");
 		baseClass.stepInfo("To verify that confirmation message is displays if Blank Page Removal option is enable.");
 		UtilityLog.info(Input.prodPath);
-		String expected="Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
+		String expected = "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
 
 		baseClass.stepInfo("Navigating to Production Home page and creating new production set");
 		ProductionPage page = new ProductionPage(driver);
@@ -1740,25 +1752,27 @@ public class Production_Page_Regression {
 		page.getTIFFTab().waitAndClick(5);
 		driver.scrollPageToTop();
 		page.getBlankPageRemovalToggle().waitAndClick(5);
-		String actual=page.getBlankPageRemovalToggleConfirmationMessage().getText();
+		String actual = page.getBlankPageRemovalToggleConfirmationMessage().getText();
 		softAssertion = new SoftAssert();
 		softAssertion.assertEquals(actual, expected);
 		softAssertion.assertAll();
 		baseClass.passedStep("verified that confirmation message is displays if Blank Page Removal option is enabled");
-		
+
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:01/03/22 TESTCASE No:RPMXCON-48531
-	 * @Description:To verify that if Blank Page Removal toggle is ON then it should produced Tiff without blank pages
-	 */ 
-	@Test(enabled = true, groups = { " regression" }, priority = 33)
+	 * @Description:To verify that if Blank Page Removal toggle is ON then it should
+	 *                 produced Tiff without blank pages
+	 */
+	@Test(enabled = false, groups = { " regression" }, priority = 33)
 	public void generateProductionWithBlankPageEnabled() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48531- Production Sprint 09");
-		baseClass.stepInfo("To verify that if Blank Page Removal toggle is ON then it should produced Tiff without blank pages");
+		baseClass.stepInfo(
+				"To verify that if Blank Page Removal toggle is ON then it should produced Tiff without blank pages");
 		UtilityLog.info(Input.prodPath);
-		
+
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -1766,7 +1780,7 @@ public class Production_Page_Regression {
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateFolder(foldername,"Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
 
 		// search for folder
@@ -1789,7 +1803,7 @@ public class Production_Page_Regression {
 		page.continueButtonInBlankPageRemovalToggle().waitAndClick(5);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -1799,7 +1813,112 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:01/10/22 TESTCASE No:RPMXCON-58562
+	 * @Description:Verify the name of load files should be used the name of the
+	 *                     Export
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 34)
+	public void verifySameNameForLoadFilesAndExportName() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-58562- Production Sprint 10");
+		baseClass.stepInfo("Verify the name of load files should be used the name of the Export");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+
+		// search for the created folder and check the pure hit count
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create export with TIFF
+		exportname = "E" + Utility.dynamicNameAppender();
+		ProductionPage page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.selectExportSetFromDropDown();
+		page.addANewExport(exportname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTiffSectionDisablePrivilegedDocs();
+		page.navigateToNextSection();
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingExportLocationPage(exportname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		baseClass.passedStep("Verified the name of load files should be used the name of the  Export");
+
+		// To delete tags and folders
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:01/10/22 TESTCASE No:RPMXCON-55927
+	 * @Description:Verify 'Placeholders' section in Tiff/PDF components
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 35)
+	public void verifyPlaceholdersInTIFF() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-55927- Production Sprint 10");
+		baseClass.stepInfo("Verify 'Placeholders' section in Tiff/PDF components");
+		UtilityLog.info(Input.prodPath);
+		
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		baseClass.waitForElement(page.getTIFFChkBox());
+		page.getTIFFChkBox().waitAndClick(5);
+		driver.scrollingToBottomofAPage();
+		baseClass.waitForElement(page.getTIFFTab());
+		page.getTIFFTab().waitAndClick(5);
+		driver.scrollingToElementofAPage(page.getPriveldge_TextArea());
+		baseClass.waitForElement(page.getPriveldge_TextArea());
+		
+		if(page.getPriveldge_TextArea().isDisplayed()) {
+		baseClass.passedStep("Verified 'Placeholders' section in Tiff/PDF components");
+		}
+	}
 	
+	
+	/**
+	 * @author Sowndarya.Velraj created on:01/10/22 TESTCASE No:RPMXCON-55925
+	 * @Description:Verify Native section in Production Components section
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 36)
+	public void verifyNativeSectionComponent() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-55925- Production Sprint 10");
+		baseClass.stepInfo("Verify Native section in Production Components section");
+		UtilityLog.info(Input.prodPath);
+		
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingNativeSection();
+		if(page.nativeSectionBlueText().isDisplayed()) {
+			baseClass.passedStep("Verified Native section in Production Components section");	
+		}
+		
+	}
 	
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
