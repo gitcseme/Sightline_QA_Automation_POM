@@ -518,8 +518,8 @@ public class DocView_AnalyticsPanel_DataProvider {
 		
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.MetaDataId;
-		String revDocToBeSelected = Input.conceptualDocumentReviewer;
+		String documentToBeSelected = Input.conceptualDocumentReviewer;
+		String revDocToBeSelected = Input.MetaDataId;
 
 		// Login as a Admin
 		loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
@@ -738,8 +738,8 @@ public class DocView_AnalyticsPanel_DataProvider {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String colour = "BLUE";
 		String colourName = "colourName" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.threadDocId;
-		String revDocToBeSelected= Input.familyDocument;
+		String documentToBeSelected = Input.familyDocument;
+		String revDocToBeSelected= Input.threadDocId;
 
 		// Login as a Admin
 		loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);

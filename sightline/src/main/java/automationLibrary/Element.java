@@ -720,8 +720,7 @@ public class Element {
 	public Boolean isDisplayed() {
 		try {
 			element = driver.getWebDriver().findElement(by);
-			element.isDisplayed();
-			return true;
+			return element.isDisplayed();
 		} catch (Exception E) {
 			return false;
 		}

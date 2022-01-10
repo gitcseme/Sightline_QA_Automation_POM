@@ -1474,7 +1474,6 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
-	
 	public Element getDocView_ImageTab_LastPageButton() {
 		return driver.FindElementById("lastPage_divDocViewerImage");
 	}
@@ -1482,7 +1481,6 @@ public class DocViewPage {
 	public Element getDocView_ImageNumBox() {
 		return driver.FindElementById("PageNumber_divDocViewerImage");
 	}
-		
 	
 	public Element getDocView_MiniDocList_SecDoc() {
 		return driver.FindElementByXPath("//*[@id='SearchDataTable']//tr[2]");
@@ -9921,6 +9919,7 @@ public class DocViewPage {
 		base.waitForElement(getDocView_Analytics_Thread_ViewDocument());
 		getDocView_Analytics_Thread_ViewDocument().waitAndClick(10);
 		
+		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		base.waitForElement(getResponsiveCheked());
 		getResponsiveCheked().Click();
@@ -15488,14 +15487,14 @@ public class DocViewPage {
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
 		base.waitForElement(getDocView_FamilyCodeSameAs());
 
-		softAssertion.assertFalse(getDocView_FamilyCodeSameAs().isDisplayed());
-		if (getDocView_FamilyCodeSameAs().isDisplayed()) {
-
+		softAssertion.assertEquals(getDocView_FamilyCodeSameAs().GetAttribute("class").contains("disabled"),true);
+		if (!getDocView_FamilyCodeSameAs().GetAttribute("class").contains("disabled")) {
 			base.failedStep("Code same as last clickable in Analytical Panel");
 		} else {
 			base.passedStep("Code same as last not clcikable in Analytical Panel");
 		}
 
+		softAssertion.assertAll();
 	}
 
 	/**
@@ -15889,9 +15888,10 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
 		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
-
+		driver.getPageSource();
 		base.waitForElement(getDocView_Analytics_Conceptual_ThirdDoc());
 		getDocView_Analytics_Conceptual_ThirdDoc().waitAndClick(10);
+		driver.getPageSource();
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
 
@@ -19583,8 +19583,11 @@ public class DocViewPage {
 		else {
 			base.failedStep("Coding form  the main selected document is not saved for the selected documents from family members");
 		}
+		
+		
 	}
-	
+
+
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -19635,5 +19638,4 @@ public class DocViewPage {
 		reusableDocView.closeWindow(1);
 		reusableDocView.switchToNewWindow(1);
 	}
-
 }
