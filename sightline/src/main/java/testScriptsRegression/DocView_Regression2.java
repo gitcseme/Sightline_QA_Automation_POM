@@ -922,6 +922,135 @@ public class DocView_Regression2 {
 	    
 	}
 
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51254
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
+	public void verifyTraverseForwardOnHitsAfterImpersonation() throws Exception {
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+		String assignmentName2 = "AAassignment2" + Utility.dynamicNameAppender();
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Test case Id: RPMXCON-51254");
+		baseClass.stepInfo("Verify user after impersonation can go to next/prvious highlight in doc view when there are multiple hits for each term in context of an assignment");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.bulkAssign();
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		baseClass.stepInfo(
+				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.persistantHitToggle());
+		docViewRedact.persistantHitToggle().waitAndClick(3);
+		baseClass.waitTillElemetToBeClickable(docViewRedact.nextKeywordTest());
+		docViewRedact.nextKeywordTest().waitAndClick(3);
+		String getAttribute = docViewRedact.nextKeywordTest().GetAttribute("position");
+		System.out.println(getAttribute);
+		if(getAttribute.equalsIgnoreCase("1")) {
+			baseClass.passedStep("Sucsessfully moved forward on hits");
+		} else {
+			baseClass.failedStep("moving forward on hits unsuccessful");
+		}
+		loginPage.logout();
+		
+// 	checking hits as PA to RMU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoRMU();
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.bulkAssign();
+		assignmentspage.assignmentCreation(assignmentName2, Input.codeFormName);
+		baseClass.stepInfo(
+				"Doc is Assigned from basic Search and Assignment '" + assignmentName2 + "' is created Successfully");
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName2);
+		baseClass.stepInfo("Assignment '" + assignmentName2 + "' is successfully viewed on DocView");
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.persistantHitToggle());
+		docViewRedact.persistantHitToggle().waitAndClick(3);
+		baseClass.waitTillElemetToBeClickable(docViewRedact.nextKeywordTest());
+		docViewRedact.nextKeywordTest().waitAndClick(3);
+		String getAttribute2 = docViewRedact.nextKeywordTest().GetAttribute("position");
+		System.out.println(getAttribute2);
+		if(getAttribute2.equalsIgnoreCase("1")) {
+			baseClass.passedStep("Sucsessfully moved forward on hits");
+		} else {
+			baseClass.failedStep("moving forward on hits unsuccessful");
+		}	
+		
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51079
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true,dataProvider = "userDetails2", alwaysRun = true , groups = { "regression" }, priority = 22)
+	public void verifyAnnotationDelete(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		baseClass.stepInfo("Test case id : RPMXCON-51079");
+		baseClass.stepInfo("Verify that by default, the document is simply shows the search icon [magnifying]");
+		loginPage.loginToSightLine(userName, password);
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		sessionSearch.basicContentSearch(Input.testTenthDocId);
+	    sessionSearch.ViewInDocView();
+	    docViewRedact = new DocViewRedactions(driver);
+	    docViewRedact.clickingRedactionIcon();
+	    docViewRedact.thisPageRedaction().waitAndClick(3);
+	    docViewRedact.selectingRectangleRedactionTag();
+	    Thread.sleep(3000);
+	    actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), -10, -10);
+	    actions.click();
+		actions.build().perform();
+		if (docViewRedact.deleteRedactioBtn().Displayed()) {
+			docViewRedact.deleteRedactioBtn().waitAndClick(5);
+			baseClass.VerifySuccessMessage("Redaction Removed successfully.");
+			baseClass.passedStep("The applied annotation has been successfully removed");
+		} else {
+			baseClass.failedStep("The applied annotation was not removed");
+		}
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51057
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 23)
+	public void verifyRedactionOnImpersonationRMUtoREV() throws Exception {
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51057");
+		baseClass.stepInfo("Verify user after impersonation can view highlighting and can annotate in a document");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		sessionSearch.basicContentSearch(Input.randomText);
+		sessionSearch.bulkAssign();
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentspage.addReviewerAndDistributeDocsT(assignmentName);
+		baseClass.impersonateRMUtoReviewer();
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.clickingRedactionIcon();
+		docViewRedact.thisPageRedaction().waitAndClick(3);
+	    docViewRedact.selectingRectangleRedactionTag();
+	    baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
+		
+	    
+	}
 
 
 	@AfterMethod(alwaysRun = true)

@@ -6847,7 +6847,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		 * @Description In Productions, text was produced with redaction burned, when Burn Redactions option was disabled-2
 		 * 
 		 */
-		@Test(groups = { "regression" }, priority = 2)
+		@Test(groups = { "regression" }, priority = 87)
 		public void productionWithBurnedRedaction() throws Exception {
 			
 			UtilityLog.info(Input.prodPath);
@@ -6921,6 +6921,77 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.fillingSummaryAndPreview();
 			page.fillingGeneratePageWithContinueGenerationPopup();
 		}
+		
+		/**
+		 * @author Brundha Test case id-RPMXCON-55944
+		 * @Description Verify that REDACTED text should displayd by default if user selects the Redaction Tag in TIFF
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 88)
+		public void  verifyPlaceholderInTIFFBurnRedaction() throws Exception {
+			
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-55944 -Production Sprint 10");
+	        base.stepInfo("Verify that REDACTED text should displayd by default if user selects the Redaction Tag in TIFF");
+	        
+			
+			String productionname = "p" + Utility.dynamicNameAppender();
+			
+	 		ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			
+			page.selectGenerateOption(false);
+	        page.verifyPlaceholderTextInBurnRedaction(Input.defaultRedactionTag);
+		}
+		
+		
+		/**
+		 * @author Brundha Test case id-RPMXCON-55945
+		 * @Description Verify that REDACTED text should displayd by default if user selects the Redaction Tag in PDF
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 89)
+		public void  verifyPlaceholderInPDFBurnRedaction() throws Exception {
+			
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-55945 -Production Sprint 10");
+	        base.stepInfo("Verify that REDACTED text should displayd by default if user selects the Redaction Tag in PDF");
+	        
+			
+			String productionname = "p" + Utility.dynamicNameAppender();
+			
+	 		ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			
+			page.selectGenerateOption(true);
+	        page.verifyPlaceholderTextInBurnRedaction(Input.defaultRedactionTag);
+		}
+		/**
+		 * @author Brundha Test case id-RPMXCON-55926
+		 * @Description Verify changes in Text component section
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 90)
+		public void  verifyTextInTextSection() throws Exception {
+			
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-55926 -Production Sprint 10");
+	        base.stepInfo("Verify changes in Text component section");
+	        
+			
+			String productionname = "p" + Utility.dynamicNameAppender();
+			
+	 		ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+	        page.verifyTextInTextSection();
+		}
+		
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {

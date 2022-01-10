@@ -8242,10 +8242,74 @@ public class DocView_CodingForm_Regression {
 
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description:Verify after impersonation on click of 'Save' button coding form should be validated outside of an assignment context
+	 */
+
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 180)
+	public void validateSaveAndNextActionInLastDocOfMiniDocList(String fullname,String username, String password) throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		codingForm=new CodingForm(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		reusableDocView=new ReusableDocViewPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52115");
+		baseClass.stepInfo("Verify when user clicks 'Save and Next' when vieweing the last document of mini doc list");
+
+		// Login As
+		loginPage.loginToSightLine(username, password);
+		// Session search to doc view Coding Form
+		//sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		sessionSearch.ViewInDocView();
+		reusableDocView.selectLastDocInMiniDocList();
+		baseClass.stepInfo("Last document is selected in parent minidoc list window");
+		reusableDocView.editingCodingFormWithSaveAndNextButton();
+		baseClass.passedStep("Coding form saved successfully in parent window");
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		docViewPage.verifyMinidocListAndCodingFormInChildWindow();
+		baseClass.stepInfo("Excepted Message:Document completed successfully");		
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Iyappan.Kasinathan 
+	 * Description: When the user clicks "uncomplete" on a completed record, the application 
+	 *             should not automatically jog forward to the next record.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 181)
+	public void verifyDocsNotAutomaticallyMoveNextAfterUncompleteAction() throws InterruptedException, AWTException {		
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		reusableDocView=new ReusableDocViewPage(driver);
+		String assignmentName = "assignment"+Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case Id: RPMXCON-51284");
+		baseClass.stepInfo("When the user clicks \"uncomplete\" on a completed record, the application should not automatically jog forward to the next record.");
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Search to Assignment Creation stamp level off
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout Reviewer Manager
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+
 
 		// Login As Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+
 
 		// selecting the assignment
 		assignmentPage.SelectAssignmentByReviewer(assignName);
@@ -8260,6 +8324,20 @@ public class DocView_CodingForm_Regression {
 		
 		// logout
 		loginPage.logout();
+
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// Coding Stamp Selection And code Same As Verify
+		reusableDocView.verifyNavigationOfDocAfterUnCompleteTheDoc();
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
+		loginPage.logout();
+
 	}
 
 	
