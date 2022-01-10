@@ -178,6 +178,7 @@ public class Input {
 	public static String threadMapNewId;
 	public static String conceptualDocId1;
 	public static String nearDupeDocId1;
+	public static String nearDupeImageDoc;
 
 	// DocView codingform Baskar Indium
 
@@ -612,6 +613,7 @@ public class Input {
 		threadMapNewId=testData.getThreadMapNewId();
 		conceptualDocId1=testData.getConceptualDocId1();
 		nearDupeDocId1 = testData.getNearDupeDocId1();
+		nearDupeImageDoc=testData.getNearDupeImageDoc();
 		
 		
 

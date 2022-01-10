@@ -24,6 +24,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
@@ -1594,6 +1595,366 @@ else {
 		baseClass.stepInfo("The Progress bar is Changed Successfully");
 
 		}
+	
+	
+
+	/**
+	 * Author : Mohan date: 10/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify the Images tab retain on document navigation when 'Show Default Tab' toggle is OFF at assignment level.'RPMXCON-51925' Sprint : 9
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
+	public void verifyImageTabRetainOnDocsNavigation() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51925");
+		baseClass.stepInfo(
+				"Verify the Images tab retain on document navigation when 'Show Default Tab' toggle is OFF at assignment level");
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("Step 2: Assignment should be created with  'Show Default Tab' toggle as OFF");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignNearDupeDocuments();
+		
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.toggleDisableShowDefaultViewTab();
+		assignmentsPage.add2ReviewerAndDistribute();
+		
+		baseClass.stepInfo("Step 3: Go to doc view in context of an assignment");
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		
+		baseClass.stepInfo("Step 4: Go to Images tab");
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		
+		baseClass.stepInfo("Step 5: Click on the document navigation options");
+		driver.waitForPageToBeReady();
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocId1);
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(3);
+		
+		
+		baseClass.waitForElement(docViewPage.getDocView_ImageTab_LastPageButton());
+		docViewPage.getDocView_ImageTab_LastPageButton().waitAndClick(5);
+		
+		if (docViewPage.getDocView_ImagesTab().isDisplayed()) {
+			baseClass.passedStep("Image/production document for the navigated document is loaded on the Images tab and Images/production tab is retained as per the navigation");
+			
+		}else {
+			baseClass.failedStep("Image tab is not retained");
+		}
+		
+		// logout
+		loginPage.logout();
+
+		// login Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 4: Go to Images tab");
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		
+		baseClass.stepInfo("Step 5: Click on the document navigation options");
+		driver.waitForPageToBeReady();
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeImageDoc);
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(3);
+		
+		
+		baseClass.waitForElement(docViewPage.getDocView_ImageTab_LastPageButton());
+		docViewPage.getDocView_ImageTab_LastPageButton().waitAndClick(5);
+		
+		if (docViewPage.getDocView_ImagesTab().isDisplayed()) {
+			baseClass.passedStep("Image/production document for the navigated document is loaded on the Images tab and Images/production tab is retained as per the navigation");
+			
+		}else {
+			baseClass.failedStep("Image tab is not retained");
+		}
+	}
+	
+	/**
+	 * Author : Mohan date: 10/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that when user in on Images tab and completes the document then should be on Images tab for next navigated document.'RPMXCON-51914' Sprint : 9
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
+	public void verifyImageTabOnCompleteDocsShouldNavigateToNextDocs() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51914");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and completes the document then should be on Images tab for next navigated document");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.add2ReviewerAndDistribute();
+		baseClass.impersonateRMUtoReviewer();
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		
+		baseClass.stepInfo("Step 3: Click the Images tab of the document and complete the document");
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String docId1 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId1);
+		
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		docViewPage.getCompleteDocBtn().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String docId2 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId2);
+		
+		softAssertion.assertNotEquals(docId1, docId2);
+		softAssertion.assertAll();
+		baseClass.passedStep("The next document from mini doc list is loaded successfully");
+		
+		// logout
+		loginPage.logout();
+
+		// login Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		baseClass.stepInfo("Step 3: Click the Images tab of the document and complete the document");
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String docId3 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId3);
+		
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		docViewPage.getCompleteDocBtn().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String docId4 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId4);
+		
+		softAssertion.assertNotEquals(docId3, docId4);
+		softAssertion.assertAll();
+		baseClass.passedStep("The next document from mini doc list is loaded successfully");
+		
+		
+		
+	}
+	
+	/**
+	 * Author : Mohan date: 10/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that when user in on Images tab and completes the document on applying stamp then should be on Images tab for next navigated document.'RPMXCON-51915' Sprint : 9
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
+	public void verifyImageTabOnCompleteDocsAndApplyCodingStampShouldNavigateToNextDocs() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51915");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and completes the document on applying stamp then should be on Images tab for next navigated document");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String colour = "BLUE";
+		
+		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.add2ReviewerAndDistribute();
+		baseClass.impersonateRMUtoReviewer();
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		
+		baseClass.stepInfo("Step 3: Click the Images tab of the document and complete the document");
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String docId1 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId1);
+		
+		
+		ReusableDocViewPage reusableDocViewPage = new ReusableDocViewPage(driver);
+		reusableDocViewPage.stampColourSelection(assname, colour);
+		
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		docViewPage.getCompleteDocBtn().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String docId2 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId2);
+		
+		softAssertion.assertNotEquals(docId1, docId2);
+		softAssertion.assertAll();
+		baseClass.passedStep("The next document from mini doc list is loaded successfully");
+		
+		// logout
+		loginPage.logout();
+
+		// login Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		baseClass.stepInfo("Step 3: Click the Images tab of the document and complete the document");
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String docId3 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId3);
+		
+		reusableDocViewPage.stampColourSelection(assname, colour);
+		
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		docViewPage.getCompleteDocBtn().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String docId4 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId4);
+		
+		softAssertion.assertNotEquals(docId3, docId4);
+		softAssertion.assertAll();
+		baseClass.passedStep("The next document from mini doc list is loaded successfully");
+		
+		
+		
+	}
+	/**
+	 * Author : Mohan date: 10/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that when user in on Images tab and completes the document same as last then should be on Images tab for next navigated document.'RPMXCON-51916' Sprint : 9
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	public void verifyImageTabOnCompleteDocsAndCodeSameAsLastShouldNavigateToNextDocs() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51916");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and completes the document same as last then should be on Images tab for next navigated document");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.add2ReviewerAndDistribute();
+		baseClass.impersonateRMUtoReviewer();
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		
+		baseClass.stepInfo("Step 3: Click the Images tab of the document and complete the document");
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(1);
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String docId1 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId1);
+		
+		
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		docViewPage.getCompleteDocBtn().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getLastCodeIconWhitePencil());
+		docViewPage.getLastCodeIconWhitePencil().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String docId2 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId2);
+		
+		softAssertion.assertNotEquals(docId1, docId2);
+		softAssertion.assertAll();
+		baseClass.passedStep("The next document from mini doc list is loaded successfully");
+		
+		// logout
+		loginPage.logout();
+
+		// login Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		baseClass.stepInfo("Step 3: Click the Images tab of the document and complete the document");
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String docId3 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId3);
+		
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		docViewPage.getCompleteDocBtn().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getLastCodeIconWhitePencil());
+		docViewPage.getLastCodeIconWhitePencil().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String docId4 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId4);
+		
+		softAssertion.assertNotEquals(docId3, docId4);
+		softAssertion.assertAll();
+		baseClass.passedStep("The next document from mini doc list is loaded successfully");
+		
+		
+		
+	}
 	
 	
 
