@@ -18060,12 +18060,17 @@ public class DocViewPage {
 		getDocView_NearViewInDoclist().waitAndClick(5);
 
 		driver.waitForPageToBeReady();
-		base.waitForElement(getDocView_DocListPageDocs());
-		if (getDocView_DocListPageDocs().isDisplayed()) {
-			softAssertion.assertTrue(getDocView_DocListPageDocs().isDisplayed());
-			base.passedStep("Selected document is display in Doc List ");
+		base.waitForElement(getDocList_BackToSource_Button());
+		softAssertion.assertTrue(getDocList_BackToSource_Button().isElementAvailable(5));
+		softAssertion.assertAll();
+		base.passedStep("Docs are navigated to DocList successfully");
+
+		String docIds = getDocList_DocId().getText();
+		System.out.println(docIds);
+		if (docIds.contains("ID0000")) {
+			base.passedStep("Selected docs are present in the DocList Page");
 		} else {
-			base.failedStep("Selected document is not display in Doc List");
+			base.failedStep("Selected docs are not present in the DocList Page");
 		}
 	} 
 	
