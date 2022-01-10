@@ -2247,6 +2247,49 @@ public class DocView_MiniDocList_Regression {
 
 	}
 
+	/**
+	 * @author Jayanthi A Date: 1/10/21 Modified date:N/A Modified by: N/A
+	 *         Description :RPMXCON-51244 Sprint 10
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = false, groups = { "regression" }, priority = 58)
+	public void VerifyRemoveCodeSameDisplay_ForPA() throws InterruptedException {
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51244 - DocView/MiniDocList Sprint 10");
+		baseClass.stepInfo("Verify for Project Admin 'Remove Code Same' should not be displayed in "
+				+ "mini doc list child window");
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Admin " + Input.pa1userName + "'");
+
+		// searching document and view in doc view
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigating to doc view page in context of search.");
+		driver.waitForPageToBeReady();
+		
+		//switching to child window-Mini doc list
+		reusableDocViewPage.clickGearIconOpenMiniDocList();
+		String miniDocListPrent = reusableDocViewPage.switchTochildWindow();
+		baseClass.stepInfo("Mini DocList child window opened.");
+		baseClass.waitForElement(reusableDocViewPage.getDocView_Mini_ActionButton());
+		reusableDocViewPage.getDocView_Mini_ActionButton().waitAndClick(5);
+		
+		//validation for the test case
+		boolean status=miniDocListpage.getDocView__ChildWindow_Mini_RemoveCodeSameAs().Displayed();
+		//switching from child to parent window.
+		reusableDocViewPage.childWindowToParentWindowSwitching(miniDocListPrent);
+		if(status) {
+		    baseClass.failedStep("'Remove Code Same' is   displayed in mini doc list child window for"
+		    		+ " Project Admin user which is not expected.");
+		}else {
+			baseClass.passedStep("'Remove Code Same' is not  displayed in mini doc list child window for Project Admin user. ");
+		}
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
