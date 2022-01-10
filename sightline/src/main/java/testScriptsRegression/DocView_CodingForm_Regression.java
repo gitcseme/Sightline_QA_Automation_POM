@@ -8139,6 +8139,128 @@ public class DocView_CodingForm_Regression {
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
+	/**
+	 * Author : Baskar date: NA Modified date:10/01/2022 Modified by: Baskar
+	 * Description : Verify comment and metadata indexing when clicked saved 
+	 *               stamp for the document in security group context
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 182)
+	public void validateCommentAndMetadataPureHitCountSavedStamp() throws InterruptedException, AWTException {
+		projectPage = new ProjectPage(driver);
+		securityGroupPage = new SecurityGroupsPage(driver);
+		commentsPage = new CommentsPage(driver);
+		docViewPage = new DocViewPage(driver);
+		codingForm = new CodingForm(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52114");
+		baseClass.stepInfo("Verify comment and metadata indexing when clicked "
+				+ "saved stamp for the document in security group context");
+		UtilityLog.info("Started Execution for prerequisite");
+		String addComment = "addomment" + Utility.dynamicNameAppender();
+		String cfName = "coding" + Utility.dynamicNameAppender();
+		String commentText = "ct" + Utility.dynamicNameAppender();
+		String metadataText = "mt" + Utility.dynamicNameAppender();
+		String stamp = "stampName" + Utility.dynamicNameAppender();
+
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+
+		// Custom Field created with INT DataType
+		projectPage.addCustomFieldProjectDataType(projectFieldINT, "NVARCHAR");
+		baseClass.stepInfo("Custom meta data field created with INT datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(projectFieldINT);
+		baseClass.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		commentsPage.AddComments(addComment);
+
+		// Creating Coding Form
+		codingForm.createCommentAndMetadata(projectFieldINT, addComment, cfName);
+		baseClass.stepInfo("Project field added to coding form in Doc view");
+		codingForm.assignCodingFormToSG(cfName);
+
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+		// verify the coding form panel
+		docViewPage.verifyCommentAndMetadataUsingSavedStamp(addComment, commentText, projectFieldINT, metadataText,stamp);
+		baseClass.stepInfo("Checking index of comment and metadata for saved document");
+		int pureHitCount=sessionSearch.metadataAndCommentSearch(projectFieldINT, metadataText, addComment, commentText);
+
+		codingForm.assignCodingFormByCondition(Input.codingFormName);
+		codingForm.deleteCodingForm(cfName, cfName);
+
+		softAssertion.assertEquals(1, pureHitCount);
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+
+	}
+	
+	/**
+	 * @Author : Baskar date:10/01/2022 Modified date: NA Modified by: Baskar
+	 * @Description : The Code Same As Last icon should be unclickable if the 
+	 *                user has not yet completed a document in the context of the assignment
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 183)
+	public void validateLastDocsShouldNotClickable() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion =new SoftAssert();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-51245");
+		baseClass.stepInfo("The Code Same As Last icon should be unclickable if the user "
+				+ "has not yet completed a document in the context of the assignment");
+		String assignName = "Assignment" + Utility.dynamicNameAppender();
+		
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validate code same as last button should not clickable Without completing docs
+		driver.waitForPageToBeReady();
+		boolean flag=docViewPage.getCodeSameAsLast().Selected();
+        softAssertion.assertFalse(flag);
+		softAssertion.assertAll();
+		baseClass.passedStep("Code same as Last button is disabled");
+		
+		// logout
+		loginPage.logout();
+	}
 
 	
 	
