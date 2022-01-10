@@ -845,6 +845,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element nativeSectionBlueText() {
+		return driver.FindElementByXPath("//div[@id='NativeContainer']//strong[contains(text(),'To produce specific')]");
+	}
+	
 	public Element continueButtonInBlankPageRemovalToggle() {
 		return driver.FindElementByXPath("//button[contains(text(),' Continue')]");
 	}
@@ -4577,7 +4581,6 @@ public class ProductionPage {
 	 */
 	public void fillingTIFFSection(String tagname, String tagnametech) throws InterruptedException {
 
-		try {
 			base.waitForElement(getTIFFChkBox());
 			getTIFFChkBox().waitAndClick(5);
 
@@ -4600,14 +4603,12 @@ public class ProductionPage {
 			getTIFF_EnableforPrivilegedDocs().isDisplayed();
 
 			base.waitForElement(getPriveldge_SelectTagButton());
-			getPriveldge_SelectTagButton().waitAndClick(5);
+			getPriveldge_SelectTagButton().waitAndClick(10);
 
 			driver.waitForPageToBeReady();
 
 			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
-
 			base.waitForElement(getPriveldge_TagTree(tagname));
-			Thread.sleep(5000);
 			getPriveldge_TagTree(tagname).waitAndClick(20);
 
 			base.waitForElement(getPriveldge_TagTree_SelectButton());
@@ -4621,25 +4622,7 @@ public class ProductionPage {
 
 			driver.scrollingToBottomofAPage();
 			base.stepInfo("TIFF section is filled");
-		} catch (InterruptedException e) {
-
-			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
-
-			base.waitForElement(getPriveldge_TagTree(tagname));
-			Thread.sleep(5000);
-			getPriveldge_TagTree(tagname).waitAndClick(20);
-
-			base.waitForElement(getPriveldge_TagTree_SelectButton());
-			getPriveldge_TagTree_SelectButton().waitAndClick(10);
-
-			driver.waitForPageToBeReady();
-
-			base.waitForElement(getPriveldge_TextArea());
-			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
-			getPriveldge_TextArea().SendKeys(tagNameTechnical);
-
-			driver.scrollingToBottomofAPage();
-		}
+		
 	}
 
 	/**
@@ -5599,31 +5582,16 @@ public class ProductionPage {
 	 */
 	public void fillingExportNumberingAndSortingPage(String prefixId, String suffixId) throws InterruptedException {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getBeginningBates().Enabled() && getBeginningBates().isDisplayed();
-			}
-		}), Input.wait30);
-
-		driver.waitForPageToBeReady();
+		base.waitForElement(getBeginningSubBatesNumber());
 		getBeginningSubBatesNumber().SendKeys(getRandomNumber(2));
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getExportPrefixId().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getExportPrefixId());
 		getExportPrefixId().SendKeys(prefixId);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getExportSuffixId().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getExportSuffixId());
 		getExportSuffixId().SendKeys(suffixId);
 
 		base.stepInfo("Export Numbering and sorting section is filled");
-
 	}
 
 	/**
