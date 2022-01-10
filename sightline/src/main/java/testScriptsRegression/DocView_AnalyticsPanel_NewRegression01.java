@@ -1759,6 +1759,93 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author : Vijaya.Rani date: 10/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify that if user navigates to doc view from the saved
+	 * search, then user can view the documents in the doc list from Doc View->Near
+	 * Dupe panel.'RPMXCON-50877' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
+	public void verifySaveSearchViewInDocListNearDupeTab(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50877");
+		baseClass.stepInfo(
+				"To verify that if user navigates to doc view from the saved search, then user can view the documents in the doc list from Doc View->Near Dupe panel.");
+
+		loginPage = new LoginPage(driver);
+
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		String BasicSearchName = "Savebtn" + Utility.dynamicNameAppender();
+
+		// Basic Search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(BasicSearchName);
+		savedSearch.savedSearchToDocView(BasicSearchName);
+
+		// FamilyMember tab View All Documents
+		driver.waitForPageToBeReady();
+		docView.performNearDupeSelectDocsActionViewInDocList();
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 10/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify that if user navigates to doc view from the Basic
+	 * search, then user can view the documents in the doc list from Doc View->Near
+	 * Dupe panel.'RPMXCON-50876' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
+	public void verifyViewInDocListNearDupeTab(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50876");
+		baseClass.stepInfo(
+				"To verify that if user navigates to doc view from the saved search, then user can view the documents in the doc list from Doc View->Near Dupe panel.");
+
+		loginPage = new LoginPage(driver);
+
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+
+		// Basic Search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
+		
+		// FamilyMember tab View All Documents
+		driver.waitForPageToBeReady();
+		docView.performNearDupeSelectDocsActionViewInDocList();
+
+		// logout
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
