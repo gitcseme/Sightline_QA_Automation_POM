@@ -350,7 +350,8 @@ public class DocView_AnalyticsPanel_Regression {
 		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
 
 		docViewAnalytics.popOutAnalyticsPanel();
-		if (docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().getWebElement().isDisplayed()) {
+		driver.waitForPageToBeReady();
+		if (docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().isDisplayed()) {
 			baseClass.passedStep("Thread Map toggled is Enable and viewed from Analytic Child window successfully");
 		}else {
 			baseClass.failedStep("Thread Map toggled is Enable and viewed from Analytic Child window successfully");
@@ -364,7 +365,8 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.selectAssignmentfromDashborad(assignmentName);
 		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
 		docViewAnalytics.popOutAnalyticsPanel();
-		if (docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().getWebElement().isDisplayed()) {
+		driver.waitForPageToBeReady();
+		if (docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().isDisplayed()) {
 			baseClass.passedStep("Thread Map toggled is Enable and viewed from Analytic Child window successfully");
 		}else {
 			baseClass.failedStep("Thread Map toggled is Enable and viewed from Analytic Child window successfully");
@@ -855,9 +857,9 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @Description : Verify option to view document from thread map tab of
 	 *              analytics panel.'RPMXCON-51413'
 	 * @throws InterruptedException
-	 * @Stabilization - done
+	 * @Stabilization - not done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	//@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyOptionToViewDocInThreadMapTab() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
@@ -1360,9 +1362,9 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              documents are selected for code same action from Analytics
 	 *              panel'RPMXCON-51411'
 	 * @throws InterruptedException
-	 * @Stabilization - done
+	 * @Stabilization - not done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	//@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyWarningMessageCodeAsSameInAnalyticsPanel() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -1415,9 +1417,9 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              documents are selected for code same action from Analytics panel
 	 *              child window'RPMXCON-51412'
 	 * @throws InterruptedException
-	 * @Stabilization - done
+	 * @Stabilization - not done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	//@Test(enabled = true, groups = { "regression" }, priority = 23)
 
 	public void verifyWarningMessageCodeAsSameInAnalyticsPanelWithChildWindow() throws InterruptedException {
 

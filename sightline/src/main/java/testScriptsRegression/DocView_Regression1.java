@@ -727,6 +727,7 @@ public class DocView_Regression1 {
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			
 			baseClass.stepInfo("Select default security group");
 			page.selectingDefaultSecurityGroup();
@@ -753,7 +754,7 @@ public class DocView_Regression1 {
 			page.navigateToNextSection();
 			
 			baseClass.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			baseClass.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
@@ -844,6 +845,7 @@ public class DocView_Regression1 {
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			
 			baseClass.stepInfo("Select default security group");
 			page.selectingDefaultSecurityGroup();
@@ -870,7 +872,7 @@ public class DocView_Regression1 {
 			page.navigateToNextSection();
 			
 			baseClass.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			baseClass.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
@@ -1216,6 +1218,7 @@ public class DocView_Regression1 {
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			
 			baseClass.stepInfo("Select default security group");
 			page.selectingDefaultSecurityGroup();
@@ -1242,7 +1245,7 @@ public class DocView_Regression1 {
 			page.navigateToNextSection();
 			
 			baseClass.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			baseClass.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
@@ -1333,6 +1336,7 @@ public class DocView_Regression1 {
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			
 			baseClass.stepInfo("Select default security group");
 			page.selectingDefaultSecurityGroup();
@@ -1359,7 +1363,7 @@ public class DocView_Regression1 {
 			page.navigateToNextSection();
 			
 			baseClass.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			baseClass.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
@@ -1423,6 +1427,7 @@ public class DocView_Regression1 {
 
 				// create production with DAT,Native,PDF& ingested Text
 				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
 				productionname = "p" + Utility.dynamicNameAppender();
 				page.selectingDefaultSecurityGroup();
 				page.addANewProduction(productionname);
@@ -1433,7 +1438,7 @@ public class DocView_Regression1 {
 				page.burnRedactionWithRedactionTag(Redactiontag1);
 				page.fillingTextSection();
 				page.navigateToNextSection();
-				page.fillingNumberingAndSortingPage(prefixID, suffixID);
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 				page.navigateToNextSection();
 				page.fillingDocumentSelectionPage(foldername);
 				page.navigateToNextSection();
@@ -1497,6 +1502,7 @@ public class DocView_Regression1 {
 			
 			// create production with DAT,Native,PDF& ingested Text
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			productionname = "p" + Utility.dynamicNameAppender();
 			page.selectingDefaultSecurityGroup();
 			page.addANewProduction(productionname);
@@ -1507,7 +1513,7 @@ public class DocView_Regression1 {
 			page.burnRedactionWithRedactionTag(Redactiontag1);
 			page.fillingTextSection();
 			page.navigateToNextSection();
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			page.navigateToNextSection();
 			page.fillingDocumentSelectionPage(foldername);
 			page.navigateToNextSection();
@@ -1589,6 +1595,7 @@ public class DocView_Regression1 {
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			
 			baseClass.stepInfo("Select default security group");
 			page.selectingDefaultSecurityGroup();
@@ -1605,6 +1612,7 @@ public class DocView_Regression1 {
 			baseClass.stepInfo("Filling Native Section");
 			page.fillingNativeSection();
 			
+			
 			baseClass.stepInfo("Filling PDF Section with Burn Redaction");
 			page.fillingPDFSectionwithBurnRedaction(redactiontag1);
 			
@@ -1615,7 +1623,7 @@ public class DocView_Regression1 {
 			page.navigateToNextSection();
 			
 			baseClass.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			baseClass.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
@@ -1706,6 +1714,7 @@ public class DocView_Regression1 {
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 			
 			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
 			
 			baseClass.stepInfo("Select default security group");
 			page.selectingDefaultSecurityGroup();
@@ -1732,7 +1741,7 @@ public class DocView_Regression1 {
 			page.navigateToNextSection();
 			
 			baseClass.stepInfo("Filling Numbering And Sorting Page");
-			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 			
 			baseClass.stepInfo("Navigate To Next Section");
 			page.navigateToNextSection();
@@ -3458,7 +3467,161 @@ public class DocView_Regression1 {
 
 			baseClass.stepInfo("Verify Native Document Tooltip");
 			docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
+		}
+		
+		/**
+		 * @author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
+		 * @Testcase_id : 51020 - To verify that Remark can be update and deleted by other reviewers in same security group.
+		 * @Description : To verify that Remark can be update and deleted by other reviewers in same security group.
+		 */
+		@Test(groups = { "regression" }, priority = 44)
+		public void verifyRemarkOperationsOfDocumentOnDocview() throws InterruptedException {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51020 spint 09");
+			AssignmentsPage assgnPage = new AssignmentsPage(driver);
+			SessionSearch search = new SessionSearch(driver);
+			final String assignStamp = Input.randomText + Utility.dynamicNameAppender();
+			String editRemark = Input.randomText + Utility.dynamicNameAppender();
+			String remark = Input.randomText + Utility.dynamicNameAppender();
 
+			baseClass.stepInfo("#### To verify that Remark can be update and deleted by other reviewers in same security group. ####");
+			
+			baseClass.stepInfo("Basic Search");
+			search.basicContentSearch(Input.searchString1);
+			
+			baseClass.stepInfo("Bulk Assign");
+			search.bulkAssign();
+			
+			baseClass.stepInfo("Assignment Creation");
+			assgnPage.assignmentCreation(assignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Assignment Distributing To Reviewer");
+			assgnPage.assignmentDistributingToReviewer();
+
+			loginPage.logout();
+			baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			baseClass.stepInfo("Selecting the assignment");
+			assgnPage.SelectAssignmentByReviewer(assignStamp);
+		
+			docView = new DocViewPage(driver);
+		
+			baseClass.stepInfo("Add Remark To Non Audio Document");
+			docView.addRemarkToNonAudioDocument(30, 45,remark);
+			
+			baseClass.stepInfo("Verify Remark Is Added");
+			docView.verifyRemarkIsAdded(remark);
+		
+			baseClass.stepInfo("Edit Remark");
+			docView.editRemark(editRemark);
+			
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+			
+			baseClass.stepInfo("Delete remark");
+			docView.deleteReamark(remark);
+			
+			loginPage.logout();
+			
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			
+			baseClass.stepInfo("Navigate To Assignments Page");
+			assgnPage.navigateToAssignmentsPage();
+			
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+			
+			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+			assgnPage.deleteAssignment(assignStamp);
+			
+		}
+	
+		/**
+		 * @author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
+		 * @Testcase_id : 51017 - To verify that user can add remarks upto 1000 characters..
+		 * @Description : To verify that user can add remarks upto 1000 characters.
+		 */
+		@Test(groups = { "regression" }, priority = 45)
+		public void verifyRemarkOfDocumentOnDocview1000Characters() throws InterruptedException {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51017 spint 09");
+			final String assignStamp = Input.randomText + Utility.dynamicNameAppender();
+
+			baseClass.stepInfo("#### To verify that user can add remarks upto 1000 characters. ####");
+			
+			agnmt = new AssignmentsPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(Input.searchText);
+			
+			baseClass.stepInfo("Bulk assign with new assignment");
+			sessionSearch.bulkAssignWithNewAssignment();
+		
+			baseClass.stepInfo("Create assignment by bulk assign operationfrom Session search");
+			agnmt.createAssignmentByBulkAssignOperation(assignStamp, Input.codeFormName);
+			
+			baseClass.stepInfo("Select assignment to view in Doc view");
+			agnmt.selectAssignmentToViewinDocview(assignStamp);
+		
+			docView = new DocViewPage(driver);
+		
+			baseClass.stepInfo("Add Remark To Non Audio Document by 1000 characters");
+			docView.addRemarkToNonAudioDocument1000Characters(30, 45);
+			
+		}
+		
+		/**
+		 * @author Gopinath
+		 * TestCase Id:50906  verify user can select same document and view the rules on work product.
+		 * Description:  To verify user can select same document and view the rules on work product.
+		 * @throws InterruptedException 
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 46)
+		public void verifyFamilyDocCodingFormAfterperformCodeSameAs() throws InterruptedException {
+				int rowno=1;
+				String DOcId="ID00001135";
+				String InputText="Perform code sameAs";
+				baseClass.stepInfo("Test case Id: RPMXCON-50906");
+				String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
+				
+				baseClass.stepInfo("####To verify user can select same document and view the rules on work product.####");
+				AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				// searching document for assignmnet creation
+				baseClass.stepInfo("searching document for assignmnet creation");
+				sessionSearch.basicContentSearch(DOcId);
+				
+				baseClass.stepInfo("performing bulkAssign");
+				sessionSearch.bulkAssign();
+				
+				baseClass.stepInfo("Create assignment With allow user to save with out complete option");
+				assignmentPage.createAssignmentWithAllowUserToSave(AssignStamp, Input.codingFormName);
+				
+				baseClass.stepInfo("editiing assignment");
+				assignmentPage.editAssignment(AssignStamp);
+				
+				baseClass.stepInfo("Reviewers added and distributed to Reviewer");
+				assignmentPage.assignmentDistributingToReviewer();
+
+				loginPage.logout();
+				baseClass.stepInfo("Successfully logout RMU '" + Input.rmu1userName+ "'");
+
+				// Login As Reviewer
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+				
+				// selecting the assignment
+				baseClass.stepInfo("Assignment selecting for view in dovcview");
+				assignmentPage.SelectAssignmentByReviewer(AssignStamp);
+				
+				baseClass.stepInfo("Performing Code sameAs for family members document");
+				docView.performFamilyMemeberDocCodeSameAs(rowno,DOcId,InputText);
 		}
 		@AfterMethod(alwaysRun = true)
 		public void close() {

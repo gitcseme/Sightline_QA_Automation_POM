@@ -1474,6 +1474,12 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	
+	
+	public Element getDocView_MiniDocList_SecDoc() {
+		return driver.FindElementByXPath("//*[@id='SearchDataTable']//tr[2]");
+	}
+	
 	public Element getDocView_Analytics_FamilyViewAllDocsBtn() {
 		return driver
 				.FindElementById("btnShowAllFamilymemeber");
@@ -2538,6 +2544,11 @@ public class DocViewPage {
 		
 		public Element getDocView_MiniDocListDocs(int rowno) {
 			return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[" + rowno + "]/td[1]/label/i ");
+		}
+
+		//Added by Gopinath - 07/01/2021
+		public Element getDocView_Analytics_FamilyMember_DocCheckBoxByid(String DocId ) {
+			return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//tr/td[text()='"+DocId+"']/../td/label/input/following-sibling::i");
 		}
 
 
@@ -8544,41 +8555,33 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @Author Mohan Created on 30/09/2021
-	 * @Description To perform CodeSame near dupe docs in the DocView Test Case id:
-	 *              RPMXCON-51382 and 51379
-	 * 
-	 */
-	public void performCodeSameForNearDupeDocuments() throws InterruptedException {
-		
-		driver.waitForPageToBeReady();
-		base.waitForElement(getDocView_Analytics_NearDupeTab());
-		getDocView_Analytics_NearDupeTab().waitAndClick(10);
-
-		for (int i = 1; i <= 1; i++) {
-			base.waitForElement(getDocView_Analytics_NearDupe_Doc(i));
-			getDocView_Analytics_NearDupe_Doc(i).waitAndClick(5);
-		}
-
-		base.waitForElement(getDocView_ChildWindow_ActionButton());
-		getDocView_ChildWindow_ActionButton().waitAndClick(15);
-
-		base.waitForElement(getCodeSameAsNearDupe());
-		getCodeSameAsNearDupe().waitAndClick(15);
-
-		base.VerifySuccessMessage("Code same performed successfully.");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return geDocView_NearDupe_CodeSameAsIcon().Displayed();
-			}
-		}), Input.wait30);
-		softAssertion.assertEquals(geDocView_NearDupe_CodeSameAsIcon().isDisplayed().booleanValue(), true);
-
-		base.waitForElement(getNearDocumentWhichHasCodeSameIcon());
-		codeSameDocumentid = getNearDocumentWhichHasCodeSameIcon().getText();
-		softAssertion.assertAll();
-	}
+     * @Author Mohan Created on 30/09/2021
+     * @Description To perform CodeSame near dupe docs in the DocView Test Case id:
+     *              RPMXCON-51382 and 51379
+     * 
+     */
+    public void performCodeSameForNearDupeDocuments(int i) throws InterruptedException {
+        driver.waitForPageToBeReady();
+        driver.getPageSource();
+        base.waitForElement(getDocView_Analytics_NearDupeTab());
+        getDocView_Analytics_NearDupeTab().waitAndClick(10);
+        base.waitForElement(getDocView_Analytics_NearDupe_Doc(i));
+        getDocView_Analytics_NearDupe_Doc(i).waitAndClick(5);
+        base.waitForElement(getDocView_ChildWindow_ActionButton());
+        getDocView_ChildWindow_ActionButton().waitAndClick(15);
+        base.waitForElement(getCodeSameAsNearDupe());
+        getCodeSameAsNearDupe().waitAndClick(15);
+        base.VerifySuccessMessage("Code same performed successfully.");
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return geDocView_NearDupe_CodeSameAsIcon().Displayed();
+            }
+        }), Input.wait30);
+        softAssertion.assertEquals(geDocView_NearDupe_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+        base.waitForElement(getNearDocumentWhichHasCodeSameIcon());
+        codeSameDocumentid = getNearDocumentWhichHasCodeSameIcon().getText();
+        softAssertion.assertAll();
+    }
 
 	/**
 	 * @Author Mohan Created on 30/09/2021
@@ -8659,49 +8662,37 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @Author Mohan Created on 30/09/2021
-	 * @Description To perform CodeSame in Near Dupe tab in the DocView for
-	 *              Reviewer. Test Case id: RPMXCON- 51381
-	 */
-	public void performCodeSameForNearDupeDocumentsForReviewer(String windowId) throws InterruptedException {
-
-		driver.waitForPageToBeReady();
-		base.waitForElement(getDocView_Analytics_NearDupeTab());
-		getDocView_Analytics_NearDupeTab().waitAndClick(10);
-
-		getDocView_Analytics_NearDupeTab().ScrollTo();
-
-		for (int i = 2; i <= 2; i++) {
-			base.waitForElement(getDocView_Analytics_NearDupe_Doc(i));
-			getDocView_Analytics_NearDupe_Doc(i).waitAndClick(5);
-		}
-
-		getDocView_ChildWindow_ActionButton().waitAndClick(15);
-
-		getCodeSameAsNearDupe().waitAndClick(15);
-
-		driver.switchTo().window(windowId);
-
-		base.VerifySuccessMessage("Code same performed successfully.");
-
-		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
-		for (String eachId : allWindowsId) {
-			if (!windowId.equals(eachId)) {
-				driver.switchTo().window(eachId);
-			}
-		}
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return geDocView_NearDupe_CodeSameAsIcon().Displayed();
-			}
-		}), Input.wait30);
-		softAssertion.assertEquals(geDocView_NearDupe_CodeSameAsIcon().isDisplayed().booleanValue(), true);
-
-		base.waitForElement(getNearDocumentWhichHasCodeSameIcon());
-		codeSameDocumentid = getNearDocumentWhichHasCodeSameIcon().getText();
-		softAssertion.assertAll();
-	}
+     * @Author Mohan Created on 30/09/2021
+     * @Description To perform CodeSame in Near Dupe tab in the DocView for
+     *              Reviewer. Test Case id: RPMXCON- 51381
+     */
+    public void performCodeSameForNearDupeDocumentsForReviewer(String windowId) throws InterruptedException {
+        driver.waitForPageToBeReady();
+        base.waitForElement(getDocView_Analytics_NearDupeTab());
+        getDocView_Analytics_NearDupeTab().waitAndClick(10);
+        getDocView_Analytics_NearDupeTab().ScrollTo();
+        base.waitForElement(getDocView_Analytics_NearDupe_Doc(3));
+        getDocView_Analytics_NearDupe_Doc(3).waitAndClick(5);
+        getDocView_ChildWindow_ActionButton().waitAndClick(15);
+        getCodeSameAsNearDupe().waitAndClick(15);
+        driver.switchTo().window(windowId);
+        base.VerifySuccessMessage("Code same performed successfully.");
+        Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+        for (String eachId : allWindowsId) {
+            if (!windowId.equals(eachId)) {
+                driver.switchTo().window(eachId);
+            }
+        }
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return geDocView_NearDupe_CodeSameAsIcon().Displayed();
+            }
+        }), Input.wait30);
+        softAssertion.assertEquals(geDocView_NearDupe_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+        base.waitForElement(getNearDocumentWhichHasCodeSameIcon());
+        codeSameDocumentid = getNearDocumentWhichHasCodeSameIcon().getText();
+        softAssertion.assertAll();
+    }
 
 	/**
 	 * @author Mohan 01/10/21 NA Modified date: NA Modified by:NA
@@ -9823,55 +9814,42 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @Author Mohan Created on 07/10/2021
-	 * @Description To perform CodeSame for threaded documents in the DocView Test
-	 *              Case id: RPMXCON-51370 & RPMXCON - 51371
-	 * 
-	 */
-	public void performCodeSameForThreadedDocumentsForReviewer() throws InterruptedException {
+     * @Author Mohan Created on 07/10/2021
+     * @Description To perform CodeSame for threaded documents in the DocView Test
+     *              Case id: RPMXCON-51370 & RPMXCON - 51371
+     * 
+     */
+    public void performCodeSameForThreadedDocumentsForReviewer() throws InterruptedException {
+        driver.waitForPageToBeReady();
+        JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+        driver.waitForPageToBeReady();
+        Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
+        je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+        getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+        getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+        base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(4));
+        getDocView_Analytics_ThreadMap_DocCheckBox(4).waitAndClick(10);
+        base.waitForElement(getDocView_ChildWindow_ActionButton());
+        getDocView_ChildWindow_ActionButton().waitAndClick(15);
+        base.waitForElement(getDocView_Analytics_Thread_CodeSameAs());
+        getDocView_Analytics_Thread_CodeSameAs().waitAndClick(15);
+        base.VerifySuccessMessage("Code same performed successfully.");
+        driver.waitForPageToBeReady();
+        base.waitForElement(geDocView_ThreadMap_CodeSameAsIconForReviewer(4));
+        softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIconForReviewer(4).isDisplayed().booleanValue(), true);
+        try {
+            if (geDocView_ThreadMap_CodeSameAsIconForReviewer(4).isDisplayed()) {
+                base.passedStep("CodeAsSame icon is displayed for the selected docs ");
+            }
+        } catch (Exception e) {
+            base.failedStep("CodeAsSame icon is not displayed for the selected docs");
+            UtilityLog.info("Verification failed due to " + e.getMessage());
+        }
+        codeSameDocumentid = getThreadedDocumentWhichHasCodeSameIcon().getText();
+        softAssertion.assertAll();
+    }
 
-		driver.waitForPageToBeReady();
-		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
-		driver.waitForPageToBeReady();
-		Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
-		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
-		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
-		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
-
-		for (int i = 3; i <= 3; i++) {
-			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
-			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
-		}
-
-		base.waitForElement(getDocView_ChildWindow_ActionButton());
-		getDocView_ChildWindow_ActionButton().waitAndClick(15);
-
-		base.waitForElement(getDocView_Analytics_Thread_CodeSameAs());
-		getDocView_Analytics_Thread_CodeSameAs().waitAndClick(15);
-
-		base.VerifySuccessMessage("Code same performed successfully.");
-
-		driver.waitForPageToBeReady();
-		for (int i = 3; i <= 3; i++) {
-			base.waitForElement(geDocView_ThreadMap_CodeSameAsIconForReviewer(i));
-			softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIconForReviewer(i).isDisplayed().booleanValue(),
-					true);
-			try {
-				if (geDocView_ThreadMap_CodeSameAsIconForReviewer(i).isDisplayed()) {
-					base.passedStep("CodeAsSame icon is displayed for the selected docs ");
-				}
-			} catch (Exception e) {
-				base.failedStep("CodeAsSame icon is not displayed for the selected docs");
-				UtilityLog.info("Verification failed due to " + e.getMessage());
-			}
-
-		}
-		codeSameDocumentid = getThreadedDocumentWhichHasCodeSameIcon().getText();
-
-		softAssertion.assertAll();
-	}
-
-	/**
+    /**
 	 * @author Mohan 08/10/21 NA Modified date: NA Modified by:NA
 	 * @description To edit coding form and complete
 	 */
@@ -9891,6 +9869,12 @@ public class DocViewPage {
 		base.waitForElement(getDocView_Analytics_Thread_ViewDocument());
 		getDocView_Analytics_Thread_ViewDocument().waitAndClick(10);
 
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getResponsiveCheked());
+		getResponsiveCheked().Click();
+		base.waitForElement(getNonPrivilegeRadio());
+		getNonPrivilegeRadio().Click();
 		base.waitForElement(getDocument_CommentsTextBox());
 		getDocument_CommentsTextBox().SendKeys("Editing and click complete button");
 
@@ -9928,7 +9912,12 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_Analytics_Thread_ViewDocument());
 		getDocView_Analytics_Thread_ViewDocument().waitAndClick(10);
-
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getResponsiveCheked());
+		getResponsiveCheked().Click();
+		base.waitForElement(getNonPrivilegeRadio());
+		getNonPrivilegeRadio().Click();
 		base.waitForElement(getDocument_CommentsTextBox());
 		getDocument_CommentsTextBox().SendKeys("Editing and click complete button");
 
@@ -10001,60 +9990,45 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @Author Steffy Created on 10/10/2021
-	 * @Description To perform CodeSame in Thread tab in the DocView for Reviewer.
-	 *              Test Case id: RPMXCON- 51372
-	 */
-	public void performCodeSameForThreadDocumentsForReviewer(String windowId) throws InterruptedException {
-
-		driver.waitForPageToBeReady();
-		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
-		driver.waitForPageToBeReady();
-		Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
-		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
-		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
-		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
-
-		for (int i = 3; i <= 3; i++) {
-			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
-			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
-		}
-
-		base.waitForElement(getDocView_ChildWindow_ActionButton());
-		getDocView_ChildWindow_ActionButton().waitAndClick(15);
-
-		base.waitForElement(getDocView_Analytics_Thread_CodeSameAs());
-		getDocView_Analytics_Thread_CodeSameAs().waitAndClick(15);
-
-		driver.switchTo().window(windowId);
-
-		base.VerifySuccessMessage("Code same performed successfully.");
-
-		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
-		for (String eachId : allWindowsId) {
-			if (!windowId.equals(eachId)) {
-				driver.switchTo().window(eachId);
-			}
-		}
-
-		driver.waitForPageToBeReady();
-		for (int i = 3; i <= 3; i++) {
-			base.waitForElement(geDocView_ThreadMap_CodeSameAsIconForReviewer(i));
-			softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIconForReviewer(i).isDisplayed().booleanValue(),
-					true);
-			try {
-				if (geDocView_ThreadMap_CodeSameAsIconForReviewer(i).isDisplayed()) {
-					base.passedStep("CodeAsSame icon is displayed for the selected docs ");
-				}
-			} catch (Exception e) {
-				base.failedStep("CodeAsSame icon is not displayed for the selected docs");
-				UtilityLog.info("Verification failed due to " + e.getMessage());
-			}
-
-		}
-		codeSameDocumentid = getThreadedDocumentWhichHasCodeSameIcon().getText();
-
-	}
+     * @Author Steffy Created on 10/10/2021
+     * @Description To perform CodeSame in Thread tab in the DocView for Reviewer.
+     *              Test Case id: RPMXCON- 51372
+     */
+    public void performCodeSameForThreadDocumentsForReviewer(String windowId) throws InterruptedException {
+        driver.waitForPageToBeReady();
+        JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+        driver.waitForPageToBeReady();
+        Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
+        je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+        getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+        getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+        base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(4));
+        getDocView_Analytics_ThreadMap_DocCheckBox(4).waitAndClick(10);
+        base.waitForElement(getDocView_ChildWindow_ActionButton());
+        getDocView_ChildWindow_ActionButton().waitAndClick(15);
+        base.waitForElement(getDocView_Analytics_Thread_CodeSameAs());
+        getDocView_Analytics_Thread_CodeSameAs().waitAndClick(15);
+        driver.switchTo().window(windowId);
+        base.VerifySuccessMessage("Code same performed successfully.");
+        Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+        for (String eachId : allWindowsId) {
+            if (!windowId.equals(eachId)) {
+                driver.switchTo().window(eachId);
+            }
+        }
+        driver.waitForPageToBeReady();
+        base.waitForElement(geDocView_ThreadMap_CodeSameAsIconForReviewer(4));
+        softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIconForReviewer(4).isDisplayed().booleanValue(), true);
+        try {
+            if (geDocView_ThreadMap_CodeSameAsIconForReviewer(4).isDisplayed()) {
+                base.passedStep("CodeAsSame icon is displayed for the selected docs ");
+            }
+        } catch (Exception e) {
+            base.failedStep("CodeAsSame icon is not displayed for the selected docs");
+            UtilityLog.info("Verification failed due to " + e.getMessage());
+        }
+        codeSameDocumentid = getThreadedDocumentWhichHasCodeSameIcon().getText();
+    }
 
 	/**
 	 * @Author Steffy Created on 09/10/2021
@@ -10064,6 +10038,7 @@ public class DocViewPage {
 	 */
 	public void performCodeSameForFamilyMembersDocuments() throws InterruptedException {
 
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_FamilyTab());
 		getDocView_Analytics_FamilyTab().waitAndClick(10);
 
@@ -12021,8 +11996,9 @@ public class DocViewPage {
 	 * @description: To verify tags of coding form name in docview page
 	 */
 	public void verifyTagsAreDisabled(int objectNo) {
-		base.waitForElement(getCodingFormTag(objectNo));
-		if (getCodingFormTag(objectNo).isElementPresent() == true) {
+		//base.waitForElement(getCodingFormTag(objectNo));
+		driver.waitForPageToBeReady();
+		if (getCodingFormTag(objectNo).isElementAvailable(5) == true) {
 			base.passedStep("The added tags are checked and disabled");
 		} else {
 			base.failedStep("The added tags are not checked and disabled");
@@ -14645,7 +14621,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Performing action from parent window");
 		base.waitForElement(groupelementCheckBox());
-		groupelementCheckBox().Click();
+		groupelementCheckBox().waitAndClick(5);
 		getSaveAndNextButton().waitAndClick(5);
 
 		boolean flag = getCodingFormValidErrorMeta().Displayed();
@@ -19473,6 +19449,129 @@ public class DocViewPage {
 	driver.waitForPageToBeReady();
 	base.textCompareNotEquals(docID1, docID2, "PASS", "Fail");
 	return docID2;
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method for adding remark to current selected document and add 1000 charcters remark.
+	 * @param remark : remark is String value that any remark value need to enter in
+	 *               edit box.
+	 */
+	public void addRemarkToNonAudioDocument1000Characters(int off1, int off2) {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getNonAudioRemarkBtn().isElementAvailable(10);
+				}
+			}), Input.wait60);
+			getNonAudioRemarkBtn().waitAndClick(9);
+
+			if (getDocView_Remark_DeleteIcon().isElementAvailable(2)) {
+				getDocView_Remark_DeleteIcon().waitAndClick(10);
+				base.getPopupYesBtn().waitAndClick(5);
+			} else {
+				System.out.println("Remark not present");
+			}
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectRemarkDocArea().isElementAvailable(10);
+				}
+			}), Input.wait30);
+			Thread.sleep(Input.wait30 / 10);
+			System.out.println(off1 + "...." + off2);
+			Actions actions = new Actions(driver.getWebDriver());
+			driver.waitForPageToBeReady();
+			WebElement text = getSelectedAreaElement().getWebElement();
+			actions.moveToElement(text, off1, off2).clickAndHold().moveByOffset(200, 220).release().perform();
+			driver.scrollPageToTop();
+			getAddRemarkbtn().getWebElement().click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getRemarkTextArea().isElementAvailable(10);
+				}
+			}), Input.wait30);
+			for(int i=0;i<=1000;i++) {
+				getRemarkTextArea().getWebElement().sendKeys("a");
+			}
+			getSaveRemark().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while adding remark to current selected document" + e.getMessage());
+		}
+
+	}
+	
+	/**
+	 * @author Gopinath
+	 * Description : this method will select the document from family members on analytics panal
+	 *                 and perform Code same As and vefify coding form saved or not by entering text in comment box
+	 * @param rowNo  (row number for select the document from  mini doc list
+	 * @param DocId (DocId for select the document to perform code same as from family member
+	 * @param input (input text to enter text in comment text field for code same as verification
+	 */
+	public void performFamilyMemeberDocCodeSameAs(int rowNo,String DocId,String input) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getClickDocviewID(rowNo));
+		getClickDocviewID(rowNo).waitAndClick(3);
+		//driver.scrollToElementOfPage(getDocView_Analytics_FamilyTab());
+		base.waitForElement(getDocView_Analytics_FamilyTab());
+		base.waitTillElemetToBeClickable(getDocView_Analytics_FamilyTab());
+		base.waitTime(5);
+		getDocView_Analytics_FamilyTab().waitAndClick(3);
+		base.waitTime(5);
+		base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBoxByid(DocId));
+		getDocView_Analytics_FamilyMember_DocCheckBoxByid(DocId).waitAndClick(5);
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(3);
+		base.waitForElement(getDocView_FamilyCodeSameAs());
+		getDocView_FamilyCodeSameAs().waitAndClick(5);
+		base.VerifySuccessMessage("Code same performed successfully.");
+		base.waitForElement(geDocView_FamilyMem_CodeSameAsIcon());
+		if(geDocView_FamilyMem_CodeSameAsIcon().isElementAvailable(5)) {
+			base.passedStep("Code same as performed for select family memeber document");
+			driver.scrollPageToTop();
+			base.waitForElement(geDocView_MiniList_CodeSameAsIcon());
+			if(geDocView_MiniList_CodeSameAsIcon().isElementAvailable(5)) {
+				base.passedStep("Code sameAs Performed for selected family member document in miniDoc list");
+				
+			}else {
+				base.failedStep("Code sameAs was not Performed for selected family member document in miniDoc list");
+			}
+				
+			
+		}else {
+			base.failedStep("unable to perform Code same as  for select family memeber document");
+			
+		}
+		base.waitForElement(getClickDocviewID(rowNo));
+		getClickDocviewID(rowNo).Click();
+		driver.scrollPageToTop();
+		getDocument_CommentsTextBox().ScrollTo();
+		base.waitForElement(getDocument_CommentsTextBox());
+		getDocument_CommentsTextBox().Clear();
+		base.waitTime(5);
+		getDocument_CommentsTextBox().SendKeys(input);
+		
+		driver.scrollPageToTop();
+		base.waitForElement(getCodingFormSaveBtn());
+		base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
+		getCodingFormSaveBtn().waitAndClick(5);
+		base.waitForElement(getDocView_MiniDoc_SelectDOcId(DocId));
+		getDocView_MiniDoc_SelectDOcId(DocId).waitAndClick(5);
+		driver.scrollPageToTop();
+		getDocument_CommentsTextBox().ScrollTo();
+		base.waitForElement(getDocument_CommentsTextBox());
+		String savedtext = getDocument_CommentsTextBox().getText();
+		System.out.println(savedtext);
+		if(input.equals(savedtext)) {
+			System.out.println("pass");
+			base.passedStep("Coding form of the main selected document is saved for the selected document from family members");
+		}
+		else {
+			base.failedStep("Coding form  the main selected document is not saved for the selected documents from family members");
+		}
+		
+		
 	}
 
 }
