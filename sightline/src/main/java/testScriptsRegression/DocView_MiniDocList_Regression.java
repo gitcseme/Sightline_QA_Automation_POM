@@ -2159,6 +2159,93 @@ public class DocView_MiniDocList_Regression {
 		assignmentPage.deleteAssgnmntUsingPagination(assignName);
 
 	}
+	/**
+	 * @author Jayanthi A Date: 1/10/21 Modified date:N/A Modified by: N/A
+	 *         Description :To verify that user can view the 'Mini Doc List' on Doc View, 
+	 *         if preferences set as 'Enabled' from the assignment. -RPMXCON-50851 Sprint 10
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = false, groups = { "regression" }, priority = 56)
+	public void verifyMiniDocListDisplay() throws InterruptedException {
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50851 - DocView/MiniDocList Sprint 10");
+		baseClass.stepInfo("To verify that user can view the 'Mini Doc List' on Doc View, if"
+				+ " preferences set as 'Enabled' from the assignment.");
+		String assignName = "Assignment" + Utility.dynamicNameAppender();
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.FinalizeAssignmentAfterBulkAssign();
+		assignmentPage.createAssignment_fromAssignUnassignPopup(assignName, Input.codeFormName);
+		
+		//checking for Display Mini DocList toggle disabled state and enabling if required
+		assignmentPage.toggleEnable_Disable(assignmentPage.getDispalyMinidocListToggle(), true,"'Display Mini DocList'");
+		baseClass.stepInfo("Created a assignment " + assignName);
+		
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.viewSelectedAssgnUsingPagination(assignName);
+		assignmentPage.Checkclickedstatus(assignName);
+		assignmentPage.assgnViewInAllDocView();
+		driver.waitForPageToBeReady();
+		if(miniDocListpage.miniDocListDisplay().isElementAvailable(2)) {
+			baseClass.passedStep("Mini doc list displayed if 'Display Mini DocList' toggle under preferences set as 'Enabled' from the assignment.");
+			
+		}else {
+			baseClass.failedStep("Mini doc list not displayed if toggle is enabled");
+		}
+		assignmentPage.deleteAssgnmntUsingPagination(assignName);
+
+	}
+	/**
+	 * @author Jayanthi A Date: 1/10/21 Modified date:N/A Modified by: N/A
+	 *         Description :To verify that user can not view the 'Display Mini DocList' tab on Doc View, 
+	 *         if preferences set as 'Disabled' from the assignment. -RPMXCON-50852 Sprint 10
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = false, groups = { "regression" }, priority = 57)
+	public void verifyMiniDocListDisplay_Disabled() throws InterruptedException {
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50852 - DocView/MiniDocList Sprint 10");
+		baseClass.stepInfo("To verify that user can not view the 'Display Mini DocList' tab on Doc View, "
+				+ "if preferences set as 'Disabled' from the assignment.");
+		String assignName = "Assignment" + Utility.dynamicNameAppender();
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// searching document and assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.FinalizeAssignmentAfterBulkAssign();
+		assignmentPage.createAssignment_fromAssignUnassignPopup(assignName, Input.codeFormName);
+		
+		//checking for Display Mini DocList toggle enabled  state and disabling if required as per test case.
+		assignmentPage.toggleEnable_Disable(assignmentPage.getDispalyMinidocListToggle(), false,"'Display Mini DocList'");
+		baseClass.stepInfo("Created a assignment " + assignName);
+		
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.viewSelectedAssgnUsingPagination(assignName);
+		assignmentPage.Checkclickedstatus(assignName);
+		assignmentPage.assgnViewInAllDocView();
+		driver.waitForPageToBeReady();
+		if(miniDocListpage.miniDocListDisplay().isElementAvailable(2)) {
+			baseClass.passedStep("Mini doc list not displayed if 'Display Mini DocList' toggle under preferences "
+					+ "set as 'Disabled' from the assignment.");
+	
+		}else {
+			baseClass.failedStep("Mini doc list displayed if toggle is disabled which is not expected");
+		}
+		assignmentPage.deleteAssgnmntUsingPagination(assignName);
+
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

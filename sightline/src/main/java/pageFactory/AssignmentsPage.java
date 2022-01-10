@@ -1297,6 +1297,9 @@ public class AssignmentsPage {
 		public Element getAssign_ViewImagesToggleOn() {
 			return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowProductionView']/following-sibling::i[@class='true']");
 		}
+		public Element getDispalyMinidocListToggle() {
+			return driver.FindElementByXPath("//input[@name='AdditionalPreferences.IsShowMiniDocList']/parent::label/i");
+		}
 		
 		//Added by Gopinath - 07/01/2022
 		public Element getAssign_AllowUserToSaveToggle() {
@@ -8723,6 +8726,46 @@ public class AssignmentsPage {
 			bc.failedStep("Exception occured while creating an assignment by disabling production/images toggle"+e.getLocalizedMessage());
 		}
 	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param ele
+	 * @param EnableorDisable
+	 *        boolean value should be true if we want to enable the toggle and false if we want to disable
+	 */
+	public void toggleEnable_Disable(Element ele,boolean EnableorDisable,String name) {
+		boolean status=false;
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(ele);
+		if (ele.GetAttribute("class").contentEquals("true")) {
+			status=true;
+		} else {
+			bc.stepInfo(name+" Toggle is not enabled.");
+		}
+		if(EnableorDisable) {
+			if(status) {
+				bc.stepInfo(name+" Toggle is already enabled .");
+			}
+			else {
+				ele.waitAndClick(5);
+				bc.stepInfo(name+" Toggle is  enabled now .");
+			}
+			
+		}else {
+			if(status) {
+				ele.waitAndClick(5);
+				bc.stepInfo(name+" Toggle is  enabled so disabled the toggle now .");
+			}
+			else {
+				bc.stepInfo(name+" Toggle is  disabled already.");
+			}		
+		}
+		driver.scrollPageToTop();
+		bc.waitForElement(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(5);	}	
+		
+
 	
 	
 	
@@ -8796,4 +8839,5 @@ public class AssignmentsPage {
 		System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
 		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
 	}
+
   }

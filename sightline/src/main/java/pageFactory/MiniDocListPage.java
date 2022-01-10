@@ -76,7 +76,7 @@ public class MiniDocListPage {
 	List<String> selectedFieldsSetDocumentSorting;
 	List<String> originalOrderedList;
 	List<String> afterSortList;
-
+	
 	// Added by Gopinath 28/12/2021
 	public Element getCursorNextDocumentId() {
 		return driver.FindElementByXPath("(//i[@class='fa fa-arrow-right']//../../following-sibling::tr)[1]//td[2]");
@@ -471,6 +471,9 @@ public class MiniDocListPage {
 	// Added By Jeevitha
 	public ElementCollection getAvailableSetDocumentField() {
 		return driver.FindElementsByXPath("//ul[@id='sortable1DocumentSort']//li");
+	}//Added by jayanthi
+	public Element miniDocListDisplay() {
+		return driver.FindElementByXPath("//div[@id='divMiniDocList']//div[@class='dataTables_scroll']");
 	}
 
 	/**
