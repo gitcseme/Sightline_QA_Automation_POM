@@ -1475,6 +1475,14 @@ public class DocViewPage {
 
 	// Added by Mohan
 	
+	public Element getDocView_ImageTab_LastPageButton() {
+		return driver.FindElementById("lastPage_divDocViewerImage");
+	}
+	
+	public Element getDocView_ImageNumBox() {
+		return driver.FindElementById("PageNumber_divDocViewerImage");
+	}
+		
 	
 	public Element getDocView_MiniDocList_SecDoc() {
 		return driver.FindElementByXPath("//*[@id='SearchDataTable']//tr[2]");

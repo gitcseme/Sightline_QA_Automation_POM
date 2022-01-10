@@ -1029,6 +1029,10 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//*[@id='my-table']//label//i");
 	}
 	
+	public Element getAssgn_ShowDefaultViewTabToggleButton() {
+		return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsShowDefaultViewTab']/following-sibling::i");
+	}
+	
 	
 	// Added by Raghuram
 	public Element getSortByMetaDataType() {
@@ -8839,5 +8843,27 @@ public class AssignmentsPage {
 		System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
 		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
 	}
+	
+	 /**
+     * @author Indium-Mohan date: 20/12/2021 Modified date: NA Description: Toggle
+     *         Disable Show Default View Tab
+     */
+ 
+    public void toggleDisableShowDefaultViewTab() {
+        // permissions
+        // Toggle disable for DisableCodeOutsideReviewersBatch
+        driver.waitForPageToBeReady();
+        driver.scrollingToBottomofAPage();
+        String analyticalPanelFlag = getAssgn_ShowDefaultViewTabToggleButton().GetAttribute("class");
+ 
+        if (analyticalPanelFlag.contains("true")) {
+        	getAssgn_ShowDefaultViewTabToggleButton().Click();
+        }
+
+        driver.scrollPageToTop();
+        bc.waitForElement(getAssignmentSaveButton());
+        getAssignmentSaveButton().waitAndClick(5);
+        bc.CloseSuccessMsgpopup();
+    }
 
   }
