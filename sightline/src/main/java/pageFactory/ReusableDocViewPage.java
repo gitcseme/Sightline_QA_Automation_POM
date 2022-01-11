@@ -1562,4 +1562,21 @@ public class ReusableDocViewPage {
 		base.passedStep("After uncompleting the document it doesn't automatically move to next document");
 		
 	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 */
+	public void clickCodeSameAsLastAndVerifyNavigatedToNextDoc() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_CurrentDocId());
+		String currentDocId=getDocView_CurrentDocId().getText();
+		base.waitForElement(getCodeSameAsLast());
+		getCodeSameAsLast().waitAndClick(10);
+		base.stepInfo("Code same as last icon clicked");
+		driver.waitForPageToBeReady();
+		String docId = getDocView_CurrentDocId().getText();
+		softAssertion.assertNotEquals(currentDocId, docId);
+		softAssertion.assertAll();
+		base.passedStep("Cursor has moved to the next document in mini doc list..");
+		
+	}
 }

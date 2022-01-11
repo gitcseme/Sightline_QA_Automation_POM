@@ -8318,6 +8318,218 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
 
 	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description :Verify on click of 'Save and Next' button coding form should be validated as per the customized
+	 *               coding form using multiple tags elements in context of security group
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 184)
+	public void verifyCustomizedCodingFormUsingDisabledMultipleTags() throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		codingForm=new CodingForm(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		reusableDocView=new ReusableDocViewPage(driver);
+	    baseClass.stepInfo("Test case Id: RPMXCON-52070");
+	    baseClass.stepInfo("Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form using multiple tags elements in context of security group");
+	    String codingform = "CFTags"+Utility.dynamicNameAppender();	
+	    String defaultAction="Make It Required";
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	codingForm.createCodingFormUsingTwoObjects(codingform, null, null, null, "tag");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.selectDefaultActions(0,defaultAction);
+	 	codingForm.enterErrorAndHelpMsg(0,"Yes","Help for testing","Error for testing");
+	 	String expectedFirstObjectName = codingForm.getCFObjectsLabel(0);
+	 	System.out.println(expectedFirstObjectName);
+	 	codingForm.selectDefaultActions(1,defaultAction);
+	 	codingForm.enterErrorAndHelpMsg(1,"Yes","Help for testing","Error for testing");
+	 	String expectedSecondObjectName = codingForm.getCFObjectsLabel(1);
+	 	System.out.println(expectedSecondObjectName);
+	 	codingForm.saveCodingForm();
+	 	codingForm.assignCodingFormToSG(codingform);
+	 	//create assignment
+	 	sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		sessionSearch.advancedNewContentSearch1(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getSaveAndNextButton());
+		docViewPage.getSaveAndNextButton().waitAndClick(5);
+		docViewPage.verifyCodingFormName(codingform);
+		//verify tags are disbled
+		docViewPage.verifyTagsAreDisabled(0);
+		docViewPage.verifyTagsAreDisabled(1);
+		baseClass.stepInfo("Tags are selected and disabled in parent window");
+		//verify tag names
+		docViewPage.verifyCodingFormTagNameInDocviewPg(0,expectedFirstObjectName);
+		docViewPage.verifyCodingFormTagNameInDocviewPg(1,expectedSecondObjectName);	
+		reusableDocView.clickGearIconOpenCodingFormChildWindow();
+	 	String parentId = reusableDocView.switchTochildWindow();
+	 	docViewPage.verifyTagsAreDisabled(0);
+		docViewPage.verifyTagsAreDisabled(1);
+	 	baseClass.stepInfo("Tags are selected and disabled in child window");
+	 	reusableDocView.childWindowToParentWindowSwitching(parentId);
+	 	driver.Navigate().refresh();
+	 	driver.switchTo().alert().accept();
+		codingForm.assignCodingFormToSG(Input.codingFormName);
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.deleteCodingForm(codingform,codingform);	
+		codingForm.verifyCodingFormIsDeleted(codingform);
+		loginPage.logout();
+	}
+	/** Author : Iyappan.Kasinathan 
+	 *  Description: To verify that if document marked as un-completed, then user can edit the coding form.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 185)
+	public void verifyUncompletedDocCfBeEdited() throws InterruptedException, AWTException {		
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		reusableDocView=new ReusableDocViewPage(driver);
+		String assignmentName = "assignment"+Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case Id: RPMXCON-48709");
+		baseClass.stepInfo("To verify that if document marked as un-completed, then user can edit the coding form.");
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Search to Assignment Creation stamp level off
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.add2ReviewerAndDistribute();
+		baseClass.impersonateRMUtoReviewer();
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		// Validation
+		reusableDocView.verifyNavigationOfDocAfterUnCompleteTheDoc();
+		reusableDocView.editingCodingFormWithSaveButton();
+        baseClass.passedStep("Coding form is updated and saved sucessfully as Reviewer manager");
+		// logout Reviewer Manager
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		// Validation
+		reusableDocView.verifyNavigationOfDocAfterUnCompleteTheDoc();
+		reusableDocView.editingCodingFormWithSaveButton();
+		baseClass.passedStep("Coding form is updated and saved sucessfully as Reviewer");
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description:Verify that code same as last should be displayed in context of security group
+	 */
+
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 186)
+	public void verifyCodeSameAsLAstIconDisplayed(String fullname,String username, String password) throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52115");
+		baseClass.stepInfo("Verify that code same as last should be displayed in context of security group");
+		// Login As
+		loginPage.loginToSightLine(username, password);
+		// Session search to doc view Coding Form
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		if(docViewPage.getCodeSameAsLast().isDisplayed()) {
+			baseClass.passedStep("Code same as last icon is displayed");
+		}else {
+			baseClass.failedStep("Code same as last icon is not displayed");
+		}
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description: Verify when SA/DA/PA user after impersonation clicks 'code same as last' after saving the document on applying the stamp
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 187)
+	public void verifyCodeSameAsLastAfterSavingDocOnApplyingStamp() throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52144");
+		baseClass.stepInfo("Verify when SA/DA/PA user after impersonation clicks 'code same as last' after saving the document on applying the stamp");
+		// Login As
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("Impersonated as RMU");
+		// Session search to doc view Coding Form
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		reusableDocView.stampColourSelection(Input.searchString1,Input.stampColour);
+		reusableDocView.getDocView_MiniDocListIds(2).waitAndClick(10);
+		reusableDocView.lastAppliedStamp(Input.stampColour);
+		baseClass.stepInfo("Stamp is applied on the doc");
+		baseClass.waitForElement(docViewPage.getSaveAndNextButton());
+		docViewPage.getSaveAndNextButton().waitAndClick(5);
+		reusableDocView.clickCodeSameAsLastAndVerifyNavigatedToNextDoc();
+		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
+		reusableDocView.getDocView_MiniDocListIds(5).waitAndClick(10);
+	    baseClass.stepInfo("Moved to other document in mini doclist successfully");
+		reusableDocView.clickCodeSameAsLastAndVerifyNavigatedToNextDoc();		
+		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
+		reusableDocView.deleteStampColour(Input.stampColour);
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description: Verify when SA/DA/PA user after impersonation clicks 'code same as last' after saving the document
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 188)
+	public void verifyCodeSameAsLastAfterSavingDoc() throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52143");
+		baseClass.stepInfo("Verify when SA/DA/PA user after impersonation clicks 'code same as last' after saving the document");
+		// Login As
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("Impersonated as RMU");
+		// Session search to doc view Coding Form
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		reusableDocView.editingCodingFormWithSaveAndNextButton();
+		reusableDocView.clickCodeSameAsLastAndVerifyNavigatedToNextDoc();
+		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
+		reusableDocView.clickCodeSameAsLastAndVerifyNavigatedToNextDoc();
+		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
+		reusableDocView.getDocView_MiniDocListIds(2).waitAndClick(10);
+		String Actual = reusableDocView.getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");		
+		softAssertion.assertEquals("Edited and save with save button", Actual);
+		softAssertion.assertAll();
+		baseClass.passedStep("Coding form is displayed as expected");
+		loginPage.logout();
+	}
 
 	
 	
