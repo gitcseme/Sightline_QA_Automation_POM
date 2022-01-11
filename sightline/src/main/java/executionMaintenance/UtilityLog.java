@@ -1,6 +1,5 @@
 package executionMaintenance;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,18 +8,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Reporter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 
 
 public class UtilityLog {
 	WebDriver driver;
-	 static Logger log = Logger.getLogger("devpinoyLogger");
+	 static Logger log = LogManager.getLogger("devpinoyLogger");
 	public UtilityLog(WebDriver driver){
 
         this.driver = driver;
