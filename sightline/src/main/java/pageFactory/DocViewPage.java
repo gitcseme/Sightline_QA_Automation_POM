@@ -53,6 +53,7 @@ public class DocViewPage {
 	List<String> completedDoc = new ArrayList<>();
 	List<String> stampList = new ArrayList<>();
 	List<String> completeStampList = new ArrayList<>();
+	
 
 	public Element getDocView_info() {
 		return driver.FindElementById("totalRecords");

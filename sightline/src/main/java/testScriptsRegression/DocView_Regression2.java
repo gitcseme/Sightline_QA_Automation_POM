@@ -1048,7 +1048,6 @@ public class DocView_Regression2 {
 		docViewRedact.thisPageRedaction().waitAndClick(3);
 	    docViewRedact.selectingRectangleRedactionTag();
 	    baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
-		
 	    
 	}
 	
