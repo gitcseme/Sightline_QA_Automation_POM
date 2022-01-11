@@ -2263,6 +2263,368 @@ else {
 		
 	}
 	
+	/**
+	 * Author : Mohan date: 11/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify all hits of the document should be highlighted without 
+	 * clicking the eye icon when user redirects to doc view from saved search.'RPMXCON-51325' Sprint : 10
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
+	public void verifyHitsOfDocsHighlightedWithoutClickingEyeIcon() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51325");
+		baseClass.stepInfo(
+				"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from saved search");
+		sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
+		
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic/advance search and save the search result and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch.savedSearchToDocView(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the Docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		String hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+		
+		if ( docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+			
+		}else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+		
+		loginPage.logout();
+		
+		// login Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+		
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic/advance search and save the search result and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch.savedSearchToDocView(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the Docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		 color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		 hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+		
+		if ( docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+			
+		}else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+		
+		loginPage.logout();
+		
+		// login PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic/advance search and save the search result and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch.savedSearchToDocView(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the Docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+		
+		if ( docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+			
+		}else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+		
+		
+	}
+	
+	/**
+	 * Author : Mohan date: 11/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify all hits of the document should be highlighted without 
+	 * clicking the eye icon when user redirects to doc view from basic search.'RPMXCON-51323' Sprint : 10
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
+	public void verifyHitsOfDocsWithoutSaveQueryHighlightedWithoutClickingEyeIcon() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51323");
+		baseClass.stepInfo(
+				"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from basic search");
+		sessionSearch = new SessionSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		String hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+		
+		if ( docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+			
+		}else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+		
+		loginPage.logout();
+		
+		// login Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+		
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		 color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		 hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+		
+		if ( docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+			
+		}else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+		
+		loginPage.logout();
+		
+		// login PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+		
+		if ( docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+			
+		}else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+		
+		
+	}
+	
+	/**
+	 * Author : Mohan date: 11/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify after impersonation all hits of the document should be highlighted 
+	 * without clicking the eye icon when user redirects to doc view from basic search.'RPMXCON-51326' Sprint : 10
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 47)
+	public void verifyAfterImpersonationHitsOfDocsWithoutSaveQueryHighlightedWithoutClickingEyeIcon() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51326");
+		baseClass.stepInfo(
+				"Verify after impersonation all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from basic search");
+		sessionSearch = new SessionSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		
+		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		String hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+		
+		if ( docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+			
+		}else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+		
+		loginPage.logout();
+		
+		// login Reviewer
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
+		baseClass.impersonatePAtoRMU();
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		 color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		 hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+		
+		if ( docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+			
+		}else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+		
+		loginPage.logout();
+		
+		// login PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
+		baseClass.impersonatePAtoReviewer();
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+		
+		if ( docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+			
+		}else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+		
+		loginPage.logout();
+		
+		
+		// login PA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		baseClass.impersonateSAtoRMU();
+
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+
+		if (docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+
+		} else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+		
+		loginPage.logout();
+		
+		
+		// login PA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating SA to Reviewer");
+		baseClass.impersonateSAtoReviewer();
+
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+
+		if (docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+
+		} else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+		
+		
+	}
+	
 	
 
 	@AfterMethod(alwaysRun = true)
