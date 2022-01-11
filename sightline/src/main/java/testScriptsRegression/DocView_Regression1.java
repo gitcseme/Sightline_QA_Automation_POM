@@ -3632,7 +3632,7 @@ public class DocView_Regression1 {
 		 */
 
 		@Test(enabled = true, groups = { "regression" }, priority = 47)
-		public void verifyImageTabIsRetainedByPerformingStampComplete() throws InterruptedException {
+		public void verifyNavigatingDocumenInMiniDocListtByCompleting() throws InterruptedException {
 			baseClass.stepInfo("Test case Id: RPMXCON-51929 Sprint 10");
 			baseClass.stepInfo("#### Verify that when completing the documents same as last the entry for the navigated document in mini-DocList must always present fully ####");
 			String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
