@@ -11779,6 +11779,92 @@ public class DocViewPage {
 		}
 
 	}
+	
+	
+	/**
+	 * @throws InterruptedException 
+	 * @Author Arunkumar 
+	 * @Description Verify after impersonation when Persistent Hit panel, Reviewer Remarks panel, Redactios menu, Highlights menu is selected
+	 *  Test Case id:RPMXCON-51353
+	 */
+	public void statusCheckAfterImpersonation() throws InterruptedException
+	{
+		sp.basicContentSearch(Input.searchString1);
+		sp.ViewInDocView();
+		
+		// Redaction status check
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getDocView_RedactIcon().Visible() && getDocView_RedactIcon().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getDocView_RedactIcon());
+		getDocView_RedactIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		getDocView_Next().Click();
+		driver.waitForPageToBeReady(); 
+		if(getDocView_Redact_Rectangle().isElementAvailable(1)) {
+			base.passedStep("Redaction menu remains displayed after moving to the next document");
+		}
+		else {
+			base.failedStep("Redaction menu not displayed after moving to the next document");
+		}
+		
+		// Highlights Menu Status Check
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getDocView_AnnotateIcon().Visible() && getDocView_AnnotateIcon().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getDocView_AnnotateIcon());
+		getDocView_AnnotateIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		getDocView_Next().Click();
+		driver.waitForPageToBeReady();
+		if(getDocView_Annotate_Rectangle().isElementAvailable(1)) {
+			base.passedStep("Highlight menu remains displayed after moving to the next document");
+		}
+		else {
+			base.failedStep("Highlight menu not displayed after moving to the next document");
+		}
+		//persistent Highlighting menu status check
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getPersistantHitEyeIcon().Visible() && getPersistantHitEyeIcon().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+		getPersistantHitEyeIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		getDocView_Next().Click();
+		driver.waitForPageToBeReady();
+		
+		if(getPersistentPanel().isDisplayed()) {
+			base.passedStep("Persistent Highlighting menu remains displayed after moving to the next document");
+		}
+		else {
+			base.failedStep("Persistent Highlighting menu not displayed after moving to the next document");
+		}
+		
+		//Reviewer remarks status check
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getDocView_AddRemarkIcon().Visible() && getDocView_AddRemarkIcon().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getDocView_AddRemarkIcon());
+		getDocView_AddRemarkIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		getDocView_Next().Click();
+		driver.waitForPageToBeReady();
+		if(getAddRemarkbtn().isElementAvailable(1)) {
+			base.passedStep("Reviewer remarks menu remains displayed after moving to the next document");
+		}
+		else {
+			base.failedStep("Reviewer remarks menu not displayed after moving to the next document");
+		}
+		
+	}
 
 	/**
 	 * @author Mohan.Venugopal Created on : 11/11/2021 Modified By: NA Modified On:

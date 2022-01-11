@@ -1051,6 +1051,122 @@ public class DocView_Regression2 {
 		
 	    
 	}
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51927
+	 * Description :Verify that when performing doc-to-doc navigation the entry for the same document in mini-DocList
+	 *  must always present fully in the visible area of the mini-DocList (to the user).
+	 * @throws InterruptedException 
+	 * 
+	 */
+	@Test(enabled = true,dataProvider = "userDetails", groups = {"regression" },priority = 24)
+	public void verifyDocumentPresentAfterDocToDocNavigation(String fullName, String userName, String password) throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51927");
+		baseClass.stepInfo("Verify the document in minidoclist after performing doc-to-doc navigation");
+		
+		// Login to the application
+		loginPage.loginToSightLine(userName, password);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		
+		// Performing basic search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		
+		// Adding search results and view in docview
+		sessionSearch.ViewInDocView();
+		
+		// Performing doc-to-doc navigation
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docView.getDocView_Last().Visible() && docView.getDocView_Last().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_Last());
+		docView.getDocView_Last().waitAndClick(30);
+		
+		driver.waitForPageToBeReady();
+		// getting the first available docid
+		String selectedId = docView.getDocView_SelectedDocID().getText();
+				
+		// getting doc id in minidoclist
+		
+		String activeDocumentId = docViewRedact.activeDocId().getText();
+		//Verifying the Docids
+		if (selectedId.equalsIgnoreCase(activeDocumentId)) {
+			baseClass.passedStep("Presently Viewed Document is present in visible area of the mini-doclist");
+		}
+		else {
+			baseClass.failedStep("Presently Viewed Document is not present in visible area of the mini-doclist");
+			}
+				
+	}
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51353
+	 * Description :Verify after impersonation when Persistent Hit panel, Reviewer Remarks panel, Redactios menu, Highlights menu is selected
+	 * @throws InterruptedException 
+	 * 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 26)
+	public void verifyMenuStatusAfterMovingToNextDoc() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51353");
+		baseClass.stepInfo("Verify when Persistent Hit panel, Reviewer Remarks panel, Redactios menu, Highlights menu is selected after moving to next document");
+		
+		// Login to the application
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		
+		//Impersonate from SA to RMU and verifying status
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Impersonated from SA to RMU");
+		docView.statusCheckAfterImpersonation();
+		
+		//Login back to the application as SA
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+				
+		//Impersonate from SA to Reviewer and verifying status
+		baseClass.impersonateSAtoReviewer();
+		baseClass.stepInfo("Impersonated from SA to Reviewer");
+		docView.statusCheckAfterImpersonation();
+		
+		//Login back to the application as PA
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		//Impersonate from PA to RMU and verifying status
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("Impersonated from PA to RMU");
+		docView.statusCheckAfterImpersonation();
+		
+		//Login back to the application as PA
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		//Impersonate from PA to Reviewer and verifying status
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("Impersonated from PA to Reviewer");
+		docView.statusCheckAfterImpersonation();
+		
+		//Login back to the application as RMU
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		//Impersonate from RMU to Reviewer and verifying status
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Impersonated from RMU to Reviewer");
+		docView.statusCheckAfterImpersonation();
+	}
+	
+	
+	
+	
+	
 
 
 	@AfterMethod(alwaysRun = true)
