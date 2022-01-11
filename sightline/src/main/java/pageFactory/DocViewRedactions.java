@@ -1117,6 +1117,12 @@ public class DocViewRedactions {
 			
 			public Element imagesTabZoomFitToScreen() {
 				return driver.FindElementById("fitContent_divDocViewerImage");}
+			
+  // Added by krishna
+			
+			public Element historyDropDownDocSelect(String DocId) {
+				return driver.FindElementById("History_" + DocId + "");
+			}
 
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;

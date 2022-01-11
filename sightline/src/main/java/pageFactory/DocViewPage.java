@@ -19759,6 +19759,7 @@ public class DocViewPage {
 			base.failedStep("Exception occured while verifing first document of mini doc list is fully visible on doc view  by navigating from doc list." + e.getMessage());
 		}
 		return firstDocId;
+	}
 
 	
 	/**
