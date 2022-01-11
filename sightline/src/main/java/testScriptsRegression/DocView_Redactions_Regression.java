@@ -14,6 +14,8 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
@@ -3489,6 +3491,1326 @@ public class DocView_Redactions_Regression {
 			baseClass.failedStep(
 					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
 		}
+
+		softAssertion.assertAll();
+
+	}
+	
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51936 Verify that when performing doc-to-doc navigation after
+	 * navigating to document on entering the document number the same document in
+	 * mini-DocList must always present fully in the visible area of the
+	 * mini-DocList
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 55)
+	public void verifyDocInMiniDocListAfterPerformDocNavigation() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51936");
+		baseClass.stepInfo(
+				"Verify that when performing doc-to-doc navigation after navigating to document on entering the document number the same document in mini-DocList must always present fully in the visible area of the mini-DocList");
+
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.ViewInDocViews();
+
+		baseClass.waitForElement(docView.getDocumetId());
+		docView.searchDocumentBasedOnId(13);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		String miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.verifyThatIsLastDoc();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.getWebDriver().navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		docView.enterDocumentNumberTillLoading();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		driver.waitForPageToBeReady();
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+		System.err.println(miniDocListId);
+		System.err.println(docViewId);
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.verifyThatIsLastDoc();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.ViewInDocViews();
+
+		baseClass.waitForElement(docView.getDocumetId());
+		docView.searchDocumentBasedOnId(13);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.verifyThatIsLastDoc();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.getWebDriver().navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		docView.enterDocumentNumberTillLoading();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		driver.waitForPageToBeReady();
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+		System.err.println(miniDocListId);
+		System.err.println(docViewId);
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.verifyThatIsLastDoc();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		loginPage.logout();
+
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.ViewInDocViews();
+
+		baseClass.waitForElement(docView.getDocumetId());
+		docView.searchDocumentBasedOnId(13);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.verifyThatIsLastDoc();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.getWebDriver().navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		docView.enterDocumentNumberTillLoading();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		driver.waitForPageToBeReady();
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+		System.err.println(miniDocListId);
+		System.err.println(docViewId);
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.verifyThatIsLastDoc();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		softAssertion.assertAll();
+
+	}
+
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51937 Verify that when performing doc-to-doc navigation after
+	 * navigating to document on entering the document number the same document in
+	 * mini-DocList child window must present fully in the visible area of the
+	 * mini-DocList child window
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 56)
+	public void verifyDocInMiniDocListChildWindowsAfterPerformNavigation() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51937");
+		baseClass.stepInfo(
+				"Verify that when performing doc-to-doc navigation after navigating to document on entering the document number the same document in mini-DocList child window must present fully in the visible area of the mini-DocList child window");
+
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.ViewInDocViews();
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		baseClass.waitForElement(docView.getDocumetId());
+		docView.searchDocumentBasedOnId(13);
+
+		// Popout MiniDocList
+		docView.popOutMiniDocList();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docViewId = docView.getDocView_CurrentDocId().getText();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		String miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		driver.getWebDriver().navigate().refresh();
+		try {
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			System.out.println("Alert data: " + alertText);
+			UtilityLog.info("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+			// e.printStackTrace();
+		}
+
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		docView.enterDocumentNumberTillLoading();
+		driver.waitForPageToBeReady();
+
+		// Popout MiniDocList
+		docView.popOutMiniDocList();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		driver.waitForPageToBeReady();
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+		System.err.println(miniDocListId);
+		System.err.println(docViewId);
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.getWebDriver().close();
+
+		driver.switchTo().window(parentWindowID);
+
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.ViewInDocViews();
+		driver.waitForPageToBeReady();
+
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		baseClass.waitForElement(docView.getDocumetId());
+		docView.searchDocumentBasedOnId(13);
+
+		// Popout MiniDocList
+		docView.popOutMiniDocList();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		driver.getWebDriver().navigate().refresh();
+		try {
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			System.out.println("Alert data: " + alertText);
+			UtilityLog.info("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+			// e.printStackTrace();
+		}
+
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		docView.enterDocumentNumberTillLoading();
+		driver.waitForPageToBeReady();
+
+		// Popout MiniDocList
+		docView.popOutMiniDocList();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		driver.waitForPageToBeReady();
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+		System.err.println(miniDocListId);
+		System.err.println(docViewId);
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.getWebDriver().close();
+
+		driver.switchTo().window(parentWindowID);
+
+		loginPage.logout();
+
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.ViewInDocViews();
+
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		baseClass.waitForElement(docView.getDocumetId());
+		docView.searchDocumentBasedOnId(13);
+
+		// Popout MiniDocList
+		docView.popOutMiniDocList();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		driver.getWebDriver().navigate().refresh();
+		try {
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			System.out.println("Alert data: " + alertText);
+			UtilityLog.info("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+			// e.printStackTrace();
+		}
+
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		docView.enterDocumentNumberTillLoading();
+		driver.waitForPageToBeReady();
+
+		// Popout MiniDocList
+		docView.popOutMiniDocList();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		driver.waitForPageToBeReady();
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+		System.err.println(miniDocListId);
+		System.err.println(docViewId);
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.getWebDriver().close();
+
+		driver.switchTo().window(parentWindowID);
 
 		softAssertion.assertAll();
 
