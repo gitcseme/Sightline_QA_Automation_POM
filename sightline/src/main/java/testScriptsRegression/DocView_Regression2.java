@@ -1048,7 +1048,70 @@ public class DocView_Regression2 {
 		docViewRedact.thisPageRedaction().waitAndClick(3);
 	    docViewRedact.selectingRectangleRedactionTag();
 	    baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
-		
+	    
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51912
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true,dataProvider = "userDetails", alwaysRun = true , groups = { "regression" }, priority = 24)
+	public void verifyImagesTabRetainedFromHistoryDropdown(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51912");
+		baseClass.stepInfo("Verify that when user in on Images tab and completes the document then should be on Images tab for next navigated document");
+		loginPage.loginToSightLine(userName, password);
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		sessionSearch.basicContentSearch(Input.searchString1);
+	    sessionSearch.ViewInDocView();
+	    docViewRedact = new DocViewRedactions(driver);
+	    docViewRedact.clickingImagesTab();
+	    docViewRedact.miniDoclistTable(4);
+	    driver.scrollPageToTop();
+	    baseClass.waitTillElemetToBeClickable(docViewRedact.historyDrowDownBtn());
+	    docViewRedact.historyDrowDownBtn().waitAndClick(3);
+	    docViewRedact.historyDropDownDocSelect(Input.testSecondDocId).waitAndClick(3);
+	    String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
+		System.out.println(status);
+		if(status.equalsIgnoreCase("true")) {
+			baseClass.passedStep("The images tab is retained when document selected from history DropDown");
+		}
+		else {
+			baseClass.failedStep("The images tab is NOT retained");
+		}
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51348
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true,dataProvider = "userDetails2", alwaysRun = true , groups = { "regression" }, priority = 25)
+	public void verifyRemarksPanelRetainedOnDocNavigation(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51348");
+		baseClass.stepInfo("Verify when Reviewer Remarks panel is selected from doc view and navigates to another document from mini doc list child window the selected panels/menus previously selected should remain.");
+		loginPage.loginToSightLine(userName, password);
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		sessionSearch.basicContentSearch(Input.searchString1);
+	    sessionSearch.ViewInDocView();
+	    docViewRedact = new DocViewRedactions(driver);
+	    docViewRedact.clickingRemarksIcon();
+	    ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
+		reusabledocviewpage.clickGearIconOpenMiniDocList();
+		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
+		if (docViewRedact.addRemarksBtn().isDisplayed()) {
+			assertTrue(true);
+			baseClass.passedStep(
+					"The remarks panel is visible for non audio documents After navigating from child window is retained");
+		} else {
+			assertTrue(false);
+		}
 	    
 	}
 	
