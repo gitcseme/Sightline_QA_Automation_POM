@@ -1121,6 +1121,17 @@ public class DocListPage {
 	public Element getSelectAssignmentExisting(String assignmentName) {
 		return driver.FindElementByXPath("//*[@id='jstreeComplete']//a[contains(.,'" + assignmentName + "')]");
 	}
+	
+	//Added by Gopinath- 11/01/2022
+	public Element getFilterHeaderCollapsedIcon() {
+		return driver.FindElementByXPath("//i[@id='collapseDown1']");
+	}
+	public Element getFilterDocHeaderCollapsed() {
+		return driver.FindElementByXPath("//a[@id='lnk_collapsID' and @class='collapsed']");
+	}
+	public Element getFilterHeaderExpandIcon() {
+		return driver.FindElementByXPath("//a[@id='lnk_collapsID']");
+	}
 
 	public DocListPage(Driver driver) {
 
@@ -4161,6 +4172,37 @@ public class DocListPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Failed to perfrom bulk assign operation" + e.getMessage());
+		}
+
+	}
+	
+	/**
+	 * @author Gopinath,Modified by: Gopinath,Modified date :: NA
+	 * @Description :Method for verifying doclist headers expand collapse.
+	 */
+	public void verifyDocListHeadersExpandCollapse() throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getFilterHeaderCollapsedIcon());
+			getFilterHeaderCollapsedIcon().waitAndClick(5);
+			base.waitForElement(getFilterDocHeaderCollapsed());
+			if(getFilterDocHeaderCollapsed().isElementAvailable(5)) {
+				base.waitForElement(getFilterHeaderExpandIcon());
+				if(getFilterHeaderExpandIcon().isElementAvailable(5)) {
+					System.out.println("The user is able to click on the icon and the header is collapse (be hidden) and the expand icon is present on the top right");
+					base.passedStep("The user is able to click on the icon and the header is collapse (be hidden) and the expand icon is present on the top right");
+				}else {
+					System.out.println("failed to collapsed the  header");
+					base.failedStep("failed to collapsed the  header");
+				}
+				
+			}else {
+				System.out.println("the header expandan/collapsed icon not visible");
+				base.failedStep("the header expandan/collapsed icon not visible");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying doclist headers expand collapse." + e.getMessage());
 		}
 
 	}

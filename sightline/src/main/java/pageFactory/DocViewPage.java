@@ -2563,6 +2563,13 @@ public class DocViewPage {
 		}
 
 
+		//Added by gopinath - 11/01/2022
+		public Element getDocViewPageVersion() {
+			return driver.FindElementByXPath("//div[@class='version']");
+		}
+		public Element getMiniDocListTable() {
+			return driver.FindElementById("SearchDataTable_wrapper");
+			}
 		
 	public DocViewPage(Driver driver) {
 
@@ -19644,6 +19651,115 @@ public class DocViewPage {
 		reusableDocView.switchToNewWindow(1);
 	}
 	
+
+	/**
+	 * @author Gopinath
+	 * @Description : Method for verifing image tab is enabled.
+	 */
+	public void verifyImageTabEnabled() {
+		try {
+			driver.scrollPageToTop();
+			getDocView_ImagesTab().isElementAvailable(10);
+			if(getDocView_ImagesTab().GetAttribute("class").contains("active")) {
+				base.passedStep("Image tab is enabled");
+			}else {
+				base.failedStep("Image tab is not enabled");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifing image tab is enabled." + e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method for verifing page version is displayed at left bottom.
+	 */
+	public void verifyPageVersionDisplayed() {
+		try {
+			base.waitForElement(getDocViewPageVersion());
+			if(getDocViewPageVersion().isElementAvailable(5)&& getDocViewPageVersion().getWebElement().isDisplayed()) {
+				System.out.println("version is show on the left column/header.");
+				base.passedStep("version is show on the left column/header.");
+			}else {
+				System.out.println("version is not show on the left column/header.");
+				base.failedStep("version is not show on the left column/header.");
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifing page version is displayed at left bottom." + e.getMessage());
+		}
+	}
+
+	
+	   /**
+ 	*@author Gopinath
+ 	*@description : Method to verify naviagted to doc view.
+ 	*/
+ 	public void verifyDocViewPageNaviagted() {
+ 		try {
+ 			getMiniDocListTable().isElementAvailable(10);
+ 			if(getMiniDocListTable().isDisplayed()) {
+ 				base.passedStep("Navigated to doc view successfully");
+ 			}else {
+ 				base.failedStep("Navigating to doc view is failed");
+ 			}
+ 		}catch(Exception e) {
+ 			e.printStackTrace();
+ 			base.failedStep("Exception occcured while erify naviagted to doc view."+e.getMessage());
+ 			
+ 		}
+ 	}
+ 	
+ 	/**
+	 * @author Gopinath
+	 * @Description : Method for verifing first document of mini doc list is fully visible on doc view.
+	 */
+	public String verifyFirstDocumentofMiniDocListIsFullyVisible() {
+		String firstDocId = null;
+		try {
+			driver.scrollPageToTop();;
+			getDocViewTest_1stElement().isElementAvailable(15);
+			firstDocId =  getDocViewTest_1stElement().getText().trim();
+			driver.scrollPageToTop();
+			String currentDocId = getDocView_CurrentDocId().getText().trim();
+			if(firstDocId.equalsIgnoreCase(currentDocId)) {
+				base.passedStep("First document in mini doc list is displayed on doc view successfully");
+ 			}else {
+ 				base.failedStep("First document in mini doc list is  not displayed on doc view successfully");
+ 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifing first document of mini doc list is fully visible on doc view." + e.getMessage());
+		}
+		return firstDocId;
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method for verifing first document of mini doc list is fully visible on doc view  by navigating from doc list.
+	 */
+	public String verifyFirstDocumentofMiniDocListIsFullyVisibleFromDocList(String docId) {
+		String firstDocId = null;
+		try {
+			driver.scrollPageToTop();
+			getDocViewTest_1stElement().isElementAvailable(15);
+			firstDocId =  getDocViewTest_1stElement().getText().trim();
+			driver.scrollPageToTop();
+			String currentDocId = getDocView_CurrentDocId().getText().trim();
+			if(firstDocId.equalsIgnoreCase(currentDocId) && firstDocId.equalsIgnoreCase(docId)) {
+				base.passedStep("First document in mini doc list is displayed on doc view successfully by navigating from doc list");
+ 			}else {
+ 				base.failedStep("First document in mini doc list is  not displayed on doc view successfully by navigating from doc list");
+ 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifing first document of mini doc list is fully visible on doc view  by navigating from doc list." + e.getMessage());
+		}
+		return firstDocId;
+
 	
 	/**
 	 * @author Mohan.Venugopal Created Date: 11/1/2022
@@ -19687,5 +19803,6 @@ public class DocViewPage {
 				
 			}
 			softAssertion.assertAll();
+
 	}
 }
