@@ -27,6 +27,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -2563,14 +2564,14 @@ public class DocViewPage {
 			return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//tr/td[text()='"+DocId+"']/../td/label/input/following-sibling::i");
 		}
 
-
+		
 		//Added by gopinath - 11/01/2022
 		public Element getDocViewPageVersion() {
 			return driver.FindElementByXPath("//div[@class='version']");
 		}
 		public Element getMiniDocListTable() {
-			return driver.FindElementById("SearchDataTable_wrapper");
-			}
+		   return driver.FindElementById("SearchDataTable_wrapper");
+		   }
 		
 	public DocViewPage(Driver driver) {
 
@@ -5718,8 +5719,9 @@ public class DocViewPage {
 				return getDocView_MiniDocListIds(id).Visible();
 			}
 		}), Input.wait60);
-		softAssertion.assertTrue(getDocView_MiniDocListIds(id).Displayed());
-
+		base.waitForElement(getDocView_MiniDocListIds(id));
+		softAssertion.assertTrue(getDocView_MiniDocListIds(id).isDisplayed());
+		softAssertion.assertAll();
 	}
 
 	/**
@@ -16569,15 +16571,18 @@ public class DocViewPage {
 	 * @author Aathith.Senthilkumar
 	 */
 	public void verifyThatIsLastDoc() {
+		driver.waitForPageToBeReady();
 		String expectText = getlastDocinMiniDocView().getText().trim();
 		System.out.println(expectText);
 		getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		String actualText = getDocView_CurrentDocId().getText().trim();
 		System.out.println(actualText);
 		if (expectText.equalsIgnoreCase(actualText)) {
 			softAssertion.assertEquals(actualText, expectText);
 			System.out.println("assert are equal");
-			base.stepInfo("last document navigation navigate successfully");
+			base.stepInfo("last document navigation navigated successfully");
+			softAssertion.assertAll();
 		} else {
 			System.out.println("assert are not equal");
 			base.stepInfo("last doc navigation failed");
@@ -19652,6 +19657,7 @@ public class DocViewPage {
 		reusableDocView.switchToNewWindow(1);
 	}
 	
+	
 
 	/**
 	 * @author Gopinath
@@ -19760,6 +19766,7 @@ public class DocViewPage {
 			base.failedStep("Exception occured while verifing first document of mini doc list is fully visible on doc view  by navigating from doc list." + e.getMessage());
 		}
 		return firstDocId;
+
 	}
 
 	
