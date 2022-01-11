@@ -1474,6 +1474,11 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	
+	public Element getDocView_SearchTextBox_HitCount() {
+		return driver.FindElementByXPath("//span[@class='count']");
+	}
+	
 	public Element getDocView_ImageTab_LastPageButton() {
 		return driver.FindElementById("lastPage_divDocViewerImage");
 	}
@@ -19637,5 +19642,50 @@ public class DocViewPage {
 		reusableDocView.closeWindow(2);
 		reusableDocView.closeWindow(1);
 		reusableDocView.switchToNewWindow(1);
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal Created Date: 11/1/2022
+	 * @description To select docs from threadMap tab and view in DocView
+	 */
+	public void selectDocsFromThreadMapAndViewInDocView(int i) {
+		
+		driver.waitForPageToBeReady();
+		
+		driver.waitForPageToBeReady();
+		String docId1 = getDocView_CurrentDocId().getText();
+		System.out.println(docId1);
+		
+		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(3);
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
+		getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
+		
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+
+		base.waitForElement(getDocView_Analytics_Thread_ViewDocument());
+		getDocView_Analytics_Thread_ViewDocument().waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		
+		String docId2 =getDocView_CurrentDocId().getText();
+		System.out.println(docId2);
+		
+		
+			
+			try {
+				softAssertion.assertNotEquals(docId1, docId2);
+				base.passedStep("The document from threadmap tab is loaded successfully");
+			} catch (Exception e) {
+				e.printStackTrace();
+				base.passedStep("Selected document to view from ThreadMap tab is loaded and it is a part of mini doc list");
+				
+			}
+			softAssertion.assertAll();
 	}
 }
