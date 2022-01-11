@@ -1957,6 +1957,313 @@ else {
 	}
 	
 	
+	/**
+	 * Author : Mohan date: 11/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that all relevant hits should be displayed on persistent hits panel when navigated to doc view 
+	 * with saved search and keyword highlighting.'RPMXCON-48783' Sprint : 10
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	public void verifyAllRelevantHitTermsOnDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48783");
+		baseClass.stepInfo(
+				"Verify that all relevant hits should be displayed on persistent hits panel when navigated to doc view with saved search and keyword highlighting");
+		sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
+		
+		
+		baseClass.stepInfo("Step 2: Keywords should be added  Documents searched with the terms should be saved");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+
+		// Saved Search to DocView
+		baseClass.stepInfo("Step 3: Select the saved search and action to go to doc view");
+		savedSearch.savedSearchToDocView(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the Docview successfully");
+		
+		baseClass.stepInfo("Step 4: Click the eye icon to open the persistent hit panel");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getPersistantHitEyeIcon());
+		docViewPage.getPersistantHitEyeIcon().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(docViewPage.getPersistentPanel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Persistent hits panel is opened and all search hit terms saved for the search and keywords are displayed on the panel with the count");
+		
+		
+		
+	}
+	
+	
+	/**
+	 * Author : Mohan date: 10/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that when user in on Images tab and view document from analytics panel then should be on Images tab of the viewed document.'RPMXCON-51917' Sprint : 9
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 42)
+	public void verifyImageTabOnViewDocsFromAnalyticsPanel() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51917");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and view document from analytics panel then should be on Images tab of the viewed document");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Step 2: Search for documents and go to doc view OR Go to doc view in context of an assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+		
+		
+		baseClass.stepInfo("Step 3:Click the Images tab of the document");
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(1);
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		docViewPage.selectDocsFromThreadMapAndViewInDocView(2);
+		
+		if (docViewPage.getDocView_ImagesTab().isDisplayed()) {
+			baseClass.passedStep("Images tab is load with respective documents Image/production doc successfully");
+			
+		}else {
+			baseClass.failedStep("Image Tab is not loaded with respective docs");
+		}
+		
+		driver.waitForPageToBeReady();
+		docViewPage.selectDocsFromThreadMapAndViewInDocView(3);
+	
+		if (docViewPage.getDocView_ImagesTab().isDisplayed()) {
+			baseClass.passedStep("Images tab is load with respective documents Image/production doc successfully");
+			
+		}else {
+			baseClass.failedStep("Image Tab is not loaded with respective docs");
+		}
+		
+		loginPage.logout();
+
+		// login Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo("Step 2: Search for documents and go to doc view OR Go to doc view in context of an assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+		
+		
+		baseClass.stepInfo("Step 3:Click the Images tab of the document");
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(1);
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		docViewPage.selectDocsFromThreadMapAndViewInDocView(2);
+		
+		if (docViewPage.getDocView_ImagesTab().isDisplayed()) {
+			baseClass.passedStep("Images tab is load with respective documents Image/production doc successfully");
+			
+		}else {
+			baseClass.failedStep("Image Tab is not loaded with respective docs");
+		}
+		
+		driver.waitForPageToBeReady();
+		docViewPage.selectDocsFromThreadMapAndViewInDocView(3);
+	
+		if (docViewPage.getDocView_ImagesTab().isDisplayed()) {
+			baseClass.passedStep("Images tab is load with respective documents Image/production doc successfully");
+			
+		}else {
+			baseClass.failedStep("Image Tab is not loaded with respective docs");
+		}
+	}
+	
+	
+	/**
+	 * Author : Mohan date: 10/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that completed icon should not be displayed on thread map outside of an assignment which are completed from assignment.'RPMXCON-51452' Sprint : 10
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 43)
+	public void verifyCompleteIconOnThreadMapOutsideOfAnAssignment() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51452");
+		baseClass.stepInfo(
+				"Verify that completed icon should not be displayed on thread map outside of an assignment which are completed from assignment");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignThreadedDocs();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.add2ReviewerAndDistribute();
+		baseClass.impersonateRMUtoReviewer();
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		
+		baseClass.stepInfo("Step 2: Complete the document which are present on thread map tab");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+		String docId1 = docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId1);
+		
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		docViewPage.getCompleteDocBtn().waitAndClick(5);
+		docViewPage.verifyCheckMark();
+		
+		sessionSearch.basicSearchWithMetaDataQuery(docId1);
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+		sessionSearch.ViewInDocView();
+		
+		// verify completed checkmark should not display
+		docViewPage.verifyUncompleteCheckMarkForThreadMapTabDocs();
+		baseClass.passedStep("Complete icon is not displayed for the documents on thread map which are completed in context of an assignment");
+		
+		
+		
+	}
+	
+	/**
+	 * Author : Mohan date: 10/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that the user can enter text (including long text) and search for the text.'RPMXCON-51559' Sprint : 10
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 44)
+	public void verifyUserCanEnterTextAndSearchText() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51559");
+		baseClass.stepInfo(
+				"Verify that the user can enter text (including long text) and search for the text");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		
+		baseClass.stepInfo("Step 2: Search for non-audio documents, drag the result to shopping card and select action as 'View in DocView'");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+		
+		
+		baseClass.stepInfo("Step 3: Click on the magnifying icon from default view of doc view");
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(1);
+		baseClass.waitForElement(docViewRedact.getMagnifyingIcon());
+		docViewRedact.getMagnifyingIcon().waitAndClick(5);
+		
+		
+		baseClass.stepInfo("Step 3: Verify when user enter the text to search");
+		baseClass.waitForElement(docViewRedact.getInputSearchBox());
+		docViewRedact.getInputSearchBox().Click();
+		docViewRedact.getInputSearchBox().SendKeys("do");
+		docViewRedact.getInputSearchBox().Enter();
+		
+		baseClass.waitTime(2);
+		String hitCount = docViewPage.getDocView_SearchTextBox_HitCount().getText();
+		System.out.println("The hit count is:"+hitCount);
+		
+		if (docViewPage.getDocView_SearchTextBox_HitCount().isDisplayed()) {
+			baseClass.passedStep("The user can view and enter the longer text successfully");
+			
+		}else {
+			baseClass.failedStep("The user is not able to view and enter the longer text");
+		}
+		
+		loginPage.logout();
+		
+		
+		// login Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+		
+		baseClass.stepInfo("Step 2: Search for non-audio documents, drag the result to shopping card and select action as 'View in DocView'");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+		
+		
+		baseClass.stepInfo("Step 3: Click on the magnifying icon from default view of doc view");
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(1);
+		baseClass.waitForElement(docViewRedact.getMagnifyingIcon());
+		docViewRedact.getMagnifyingIcon().waitAndClick(5);
+		
+		
+		baseClass.stepInfo("Step 3: Verify when user enter the text to search");
+		baseClass.waitForElement(docViewRedact.getInputSearchBox());
+		docViewRedact.getInputSearchBox().Click();
+		docViewRedact.getInputSearchBox().SendKeys("do");
+		docViewRedact.getInputSearchBox().Enter();
+		
+		baseClass.waitTime(2);
+		hitCount = docViewPage.getDocView_SearchTextBox_HitCount().getText();
+		System.out.println("The hit count is:"+hitCount);
+		
+		if (docViewPage.getDocView_SearchTextBox_HitCount().isDisplayed()) {
+			baseClass.passedStep("The user can view and enter the longer text successfully");
+			
+		}else {
+			baseClass.failedStep("The user is not able to view and enter the longer text");
+		}
+		
+		loginPage.logout();
+
+		// login PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"Step 2: Search for non-audio documents, drag the result to shopping card and select action as 'View in DocView'");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+
+		baseClass.stepInfo("Step 3: Click on the magnifying icon from default view of doc view");
+
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(1);
+		baseClass.waitForElement(docViewRedact.getMagnifyingIcon());
+		docViewRedact.getMagnifyingIcon().waitAndClick(5);
+
+		baseClass.stepInfo("Step 3: Verify when user enter the text to search");
+		baseClass.waitForElement(docViewRedact.getInputSearchBox());
+		docViewRedact.getInputSearchBox().Click();
+		docViewRedact.getInputSearchBox().SendKeys("do");
+		docViewRedact.getInputSearchBox().Enter();
+
+		baseClass.waitTime(2);
+		hitCount = docViewPage.getDocView_SearchTextBox_HitCount().getText();
+		System.out.println("The hit count is:" + hitCount);
+
+		if (docViewPage.getDocView_SearchTextBox_HitCount().isDisplayed()) {
+			baseClass.passedStep("The user can view and enter the longer text successfully");
+
+		} else {
+			baseClass.failedStep("The user is not able to view and enter the longer text");
+		}
+		
+	}
+	
+	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

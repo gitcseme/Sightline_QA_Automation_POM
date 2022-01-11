@@ -2162,6 +2162,191 @@ public class Production_Test_Regression {
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-56019
+					 * @Description: Verify that after Reserving Bates Range completed it should displays 'Reserving Bates Range Completed' status on Progress bar in Tile View on Production Home page
+					 */
+					@Test(groups = { "regression" }, priority = 35)
+					public void verifiyBateRangeCompletedOnTileView() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-56019 -Production Sprint 10");
+					base.stepInfo("Verify that after Reserving Bates Range completed it should displays 'Reserving Bates Range Completed' status on Progress bar in Tile View on Production Home page");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					TempName ="Templete" + Utility.dynamicNameAppender();
+					
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					//tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					//sessionSearch.bulkTagExisting(tagname);
+					sessionSearch.bulkFolderExisting(foldername);
+					
+					//Verify archive status on Gen page
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPageAndPassingText(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.getbtnProductionGenerate().waitAndClick(10);
+					
+					this.driver.getWebDriver().get(Input.url + "Production/Home");
+					driver.Navigate().refresh();
+					//verification
+					page.verifyProductionStatusInHomePage("Reserving Bates Range Complete", productionname);
+					base.passedStep("Verified that after Reserving Bates Range completed it should displays 'Reserving Bates Range Completed' status on Progress bar in Tile View on Production Home page");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-56022
+					 * @Description: Verify that once LST generation is started it should displays ' Generating Load Files' status on Production Tile View
+					 */
+					@Test(groups = { "regression" }, priority = 36)
+					public void verifiyLSTGenOnTileView() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-56022 -Production Sprint 10");
+					base.stepInfo("Verify that once LST generation is started it should displays ' Generating Load Files' status on Production Tile View");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					TempName ="Templete" + Utility.dynamicNameAppender();
+					
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkTagExisting(tagname);
+					sessionSearch.bulkFolderExisting(foldername);
+					
+					//Verify archive status on Gen page
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSection();
+					page.fillingTIFFSection(tagname);
+					page.fillingTextSection();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPageAndPassingText(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.getbtnProductionGenerate().waitAndClick(10);
+					
+					this.driver.getWebDriver().get(Input.url + "Production/Home");
+					driver.Navigate().refresh();
+					//verification
+					page.verifyProductionStatusInHomePage("Generating Load Files", productionname);
+					base.passedStep("Verify that once LST generation is started it should displays ' Generating Load Files' status on Production Tile View");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-56045
+					 * @Description: Verify that once LST generation is started it should displays ' Generating Load Files' status on Production Grid View
+					 */
+					@Test(groups = { "regression" }, priority = 37)
+					public void verifiyGenarationloadFilesOnGridView() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-56045 -Production Sprint 10");
+					base.stepInfo("Verify that once LST generation is started it should displays ' Generating Load Files' status on Production Grid View");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					TempName ="Templete" + Utility.dynamicNameAppender();
+					
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkTagExisting(tagname);
+					sessionSearch.bulkFolderExisting(foldername);
+					
+					//Verify archive status on Gen page
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSection();
+					page.fillingTIFFSection(tagname);
+					page.fillingTextSection();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPageAndPassingText(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.getbtnProductionGenerate().waitAndClick(10);
+					
+					this.driver.getWebDriver().get(Input.url + "Production/Home");
+					driver.Navigate().refresh();
+					driver.waitForPageToBeReady();
+					page.getGridView().waitAndClick(10);
+					driver.waitForPageToBeReady();
+					page.verifyProductionStatusInHomePageGridView("Generating Load Files", productionname);
+					base.passedStep("Verified that once LST generation is started it should displays ' Generating Load Files' status on Production Grid View");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
 	
 	
 	@AfterMethod(alwaysRun = true)
