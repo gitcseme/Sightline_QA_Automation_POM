@@ -54,7 +54,6 @@ public class DocViewPage {
 	List<String> completedDoc = new ArrayList<>();
 	List<String> stampList = new ArrayList<>();
 	List<String> completeStampList = new ArrayList<>();
-	
 
 	public Element getDocView_info() {
 		return driver.FindElementById("totalRecords");
@@ -4826,21 +4825,21 @@ public class DocViewPage {
 		base.waitForElement(getCodeSameAsLast());
 		base.waitTillElemetToBeClickable(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(5);
-		softAssertion.assertTrue(getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled());
-		if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled()) {
+		softAssertion.assertTrue(getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled());
+		if (getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled()) {
 			base.stepInfo("coded as per the previous document..");
 			base.passedStep("Cursor has moved to the next document in mini doc list..");
 		} else {
 			base.failedStep("Failed to move next document in mini doc list..");
 		}
-//		driver.waitForPageToBeReady();
+//		driver.waitForPageToBeReady();completeDocsWithCodeSameAsLastAndVerifyCheckMark
 		base.waitForElement(getCodeSameAsLast());
 		base.waitTillElemetToBeClickable(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(10);
 		base.stepInfo("Again click code same as last");
 		base.CloseSuccessMsgpopup();
-		softAssertion.assertTrue(getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled());
-		if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled()) {
+		softAssertion.assertTrue(getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled());
+		if (getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled()) {
 			base.stepInfo("coded as per the previous document..");
 			base.passedStep("Cursor has moved to the next document in mini doc list..");
 		} else {
@@ -4863,6 +4862,7 @@ public class DocViewPage {
 		} catch (org.openqa.selenium.StaleElementReferenceException e) {
 			e.printStackTrace();
 		}
+		softAssertion.assertAll();
 	}
 
 	/**
@@ -11780,7 +11780,8 @@ public class DocViewPage {
 		}
 
 	}
-	
+
+
 	
 	/**
 	 * @throws InterruptedException 
@@ -19852,7 +19853,7 @@ public class DocViewPage {
 			base.failedStep("Exception occured while verifing first document of mini doc list is fully visible on doc view  by navigating from doc list." + e.getMessage());
 		}
 		return firstDocId;
-
+		
 	}
 
 	
@@ -19899,5 +19900,23 @@ public class DocViewPage {
 			}
 			softAssertion.assertAll();
 
+	}
+	
+	/**
+	 * @author Iyappan.Kasinathan
+	 */
+	public void clickCodeSameAsLastAndVerifyNavigatedToNextDoc() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_CurrentDocId());
+		String currentDocId=getDocView_CurrentDocId().getText();
+		base.waitForElement(getCodeSameAsLast());
+		getCodeSameAsLast().waitAndClick(10);
+		base.stepInfo("Code same as last icon clicked");
+		driver.waitForPageToBeReady();
+		String docId = getDocView_CurrentDocId().getText();
+		softAssertion.assertNotEquals(currentDocId, docId);
+		softAssertion.assertAll();
+		base.passedStep("Cursor has moved to the next document in mini doc list..");
+		
 	}
 }
