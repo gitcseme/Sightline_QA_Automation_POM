@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 
-import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -22,6 +21,8 @@ import pageFactory.LoginPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TS_003_AdvancedSearchBulkActions {
 	Driver driver;
@@ -50,7 +51,7 @@ public class TS_003_AdvancedSearchBulkActions {
 		UtilityLog.info("Started Execution for prerequisite");
 		
 		//Open browser
-		log = Logger.getLogger("devpinoyLogger");
+		log = LogManager.getLogger("devpinoyLogger");
 
 		//Input in = new Input();
 		//in.loadEnvConfig();
