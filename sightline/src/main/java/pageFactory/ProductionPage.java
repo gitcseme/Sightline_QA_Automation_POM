@@ -2204,6 +2204,10 @@ public class ProductionPage {
 	public ElementCollection getFirstDropdownInCompletedProduction() {
 		return driver.FindElementsByXPath("(//a/following-sibling::dl)[1]//dt");}
 	
+	public Element getTIFF_RightEnterBranding() {
+		return driver.FindElementByXPath(
+				".//*[@id='divRightHeaderBranding']//div[@class='redactor-editor redactor-placeholder']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -15510,4 +15514,41 @@ public class ProductionPage {
 			System.out.println(text+"is not visible");
 		}
 	}
+	
+	
+	/**
+	 * @Author Brundha
+	 * Description:Method to select branding
+	 */
+	public void selectBrandingInTiffAndPdfSection(String Tag) {
+		
+		
+		driver.scrollPageToTop();
+		base.waitForElement(getRightHeaderBranding());
+		getRightHeaderBranding().Click();
+
+		getTIFF_RightEnterBranding().Click();
+		getTIFF_RightEnterBranding().SendKeys(Input.searchString4);
+
+		getSpecifyBrandingBySelectingTagLink().ScrollTo();
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(getSpecifyBrandingBySelectingTagLink());
+		getSpecifyBrandingBySelectingTagLink().waitAndClick(10);
+		base.waitTillElemetToBeClickable(getbtnSelectTags());
+		getbtnSelectTags().waitAndClick(5);
+		base.waitForElement(getChkBoxSelect(Tag));
+		getChkBoxSelect(Tag).ScrollTo();
+		base.waitTillElemetToBeClickable(getChkBoxSelect(Tag));
+		getChkBoxSelect(Tag).waitAndClick(5);
+
+		base.waitForElement(getbtnSelect());
+		getbtnSelect().Click();
+
+		base.waitForElement(getBrandingBySelectingTagPlaceholder());
+		getBrandingBySelectingTagPlaceholder().SendKeys(Input.tagNameTechnical);
+		
+	}
+
+
+
 }
