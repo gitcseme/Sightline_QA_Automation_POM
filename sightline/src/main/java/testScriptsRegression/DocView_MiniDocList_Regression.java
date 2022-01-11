@@ -2252,7 +2252,7 @@ public class DocView_MiniDocList_Regression {
 	 *         Description :RPMXCON-51244 Sprint 10
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 58)
+	@Test(enabled = true, groups = { "regression" }, priority = 58)
 	public void VerifyRemoveCodeSameDisplay_ForPA() throws InterruptedException {
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -2289,7 +2289,103 @@ public class DocView_MiniDocList_Regression {
 			baseClass.passedStep("'Remove Code Same' is not  displayed in mini doc list child window for Project Admin user. ");
 		}
 	}
+	
+	/**
+	 * @Author : Jayanthi 
+	 * @Description : To verify user is allowed to select up to 4 webfields from a preselected list to display in the panel of
+	 *                mini doclist in the manual mode[RPMXCON-15074, RPMXCON-13255]
+	 */
 
+	@Test(enabled = true, groups = { "regression" }, priority = 59)
+	public void DocViewToSelect4WebFields()
+			throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48702");
+		baseClass.stepInfo("To verify user is allowed to select up to 4 webfields from a preselected "
+				+ "list to display in the panel of mini doclist in the manual mode[RPMXCON-15074, RPMXCON-13255]");
+		String assignName = "Assgn" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
+		UtilityLog.info("Logged in as RMU User");
+		
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+		assignmentPage.addReviewerAndDistributeDocs();
+		baseClass.stepInfo("Created a assignment " + assignName);
+		
+       //Navigating to Doc view Page in context of manage assignment
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.viewSelectedAssgnUsingPagination(assignName);
+		assignmentPage.Checkclickedstatus(assignName);
+		assignmentPage.assgnViewInAllDocView();
+		driver.waitForPageToBeReady();
+		
+		//Validation part
+		miniDocListpage.fromSavedSearchToSelectWebField();
+		loginPage.logout();
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer " + Input.rev1userName + "'");
+
+		docViewPage.selectAssignmentfromDashborad(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		//Validation part
+		miniDocListpage.fromSavedSearchToSelectWebField();
+	}
+	
+	@Test(alwaysRun = true,groups={"regression"},priority = 60)
+	public void verifyDocIDSortOrder() throws Exception {
+		
+		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
+		String sortBy = "DocID";
+				
+		baseClass.stepInfo("Test case Id: RPMXCON-48803");
+		baseClass.stepInfo("Verify that in DocView: Assignment data Should be Dispalyed by Original sorting then by DocID in the Mini Doc List");
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+		
+		// assignment Creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName,"Default Project Coding Form");
+		assignmentPage.Assgnwithdocumentsequence(sortBy,Input.sortType);
+		assignmentPage.assignmentDistributingToReviewerManager();
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+		
+		// impersonate from RMU to Rev
+		baseClass.impersonateRMUtoReviewer();
+				
+		// Selecting the assignment  and validating the sort order in mini doc list
+		miniDocListpage.verifyOriginalSortOrderInChildWindow(assignmentName);
+		
+		loginPage.logout();
+	}
+	
+	@Test(alwaysRun = true,groups={"regression"},priority = 60)
+	public void verifyCompletedIcon_PA() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-51026");
+		baseClass.stepInfo("To verify that Project admin cannot view the completed icon on mini doc list");
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Admin " + Input.pa1userName + "'");
+
+		// searching document and view in doc view
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigating to doc view page in context of search.");
+		driver.waitForPageToBeReady();
+		if(reusableDocViewPage.getverifyCodeSameAsLast().isDisplayed()) {
+			baseClass.failedStep("Project admin viewed Completed icon in mini doc list.");
+		}else {
+			baseClass.passedStep("Project admin is not able to view the completed icon on mini doc list.");
+		}
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
