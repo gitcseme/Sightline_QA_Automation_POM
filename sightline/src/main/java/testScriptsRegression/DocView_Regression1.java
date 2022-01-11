@@ -19,6 +19,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
@@ -3623,6 +3624,201 @@ public class DocView_Regression1 {
 				baseClass.stepInfo("Performing Code sameAs for family members document");
 				docView.performFamilyMemeberDocCodeSameAs(rowno,DOcId,InputText);
 		}
+		
+		/**
+		 * @Author : Gopinath
+		 * @Testcase_Id : RPMXCON-51929 : Verify that when completing the documents same as last the entry for the navigated document in mini-DocList must always present fully.
+		 * @Description : Verify that when completing the documents same as last the entry for the navigated document in mini-DocList must always present fully.
+		 */
+
+		@Test(enabled = true, groups = { "regression" }, priority = 47)
+		public void verifyImageTabIsRetainedByPerformingStampComplete() throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-51929 Sprint 10");
+			baseClass.stepInfo("#### Verify that when completing the documents same as last the entry for the navigated document in mini-DocList must always present fully ####");
+			String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
+			String assgnColour = Input.randomText  + Utility.dynamicNameAppender();
+			AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			// searching document for assignmnet creation
+			
+			baseClass.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(Input.searchString2);
+			
+			baseClass.stepInfo("Bulk Assign");
+			sessionSearch.bulkAssign();
+			
+			baseClass.stepInfo("Assignment Creation");
+			assignmentPage.assignmentCreation(AssignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Toggle Coding Stamp Enabled");
+			assignmentPage.toggleCodingStampEnabled();
+			
+			baseClass.stepInfo("Assignment Distributing To Reviewer");
+			assignmentPage.assignmentDistributingToReviewer();
+
+			loginPage.logout();
+			baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			baseClass.stepInfo("Selecting the assignment");
+			assignmentPage.SelectAssignmentByReviewer(AssignStamp);
+		
+			docView = new DocViewPage(driver);
+			
+			baseClass.stepInfo("Navigate To Doc View Page URL");
+			docView.navigateToDocViewPageURL();
+			
+			baseClass.stepInfo("Coding Stamp For Saved Document");
+			docView.codingStampForSavedDocument(assgnColour, Input.stampSelection);
+			
+			loginPage.logout();
+			
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			
+			baseClass.stepInfo("Navigate To Assignments Page");
+			assignmentPage.navigateToAssignmentsPage();
+			
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+			
+			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+			assignmentPage.deleteAssignment(AssignStamp);
+			
+		}
+		
+		
+		/**
+		 * @author Gopinath
+		 * TestCase Id:51898 Verify when user clicks the icon to expand/collapse
+		 * Description : To Verify when user clicks the icon to expand/collapse
+		 * @throws InterruptedException 
+		 */
+		@Test(enabled = true, groups = { "regression" }, priority = 48)
+		public void verifyDocListHeader() throws InterruptedException {
+			
+			baseClass=new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51898 Sprint 10");
+			baseClass.stepInfo("#### Verify when user clicks the icon to expand/collapse ####");
+			
+			docView = new DocViewPage(driver);
+			SessionSearch session = new SessionSearch(driver);
+			
+			DocListPage docList = new DocListPage(driver);
+			
+			session.basicContentSearch(Input.searchString1);
+			baseClass.stepInfo("Basic Basic content search completed");
+			
+			baseClass.stepInfo("View serached dos in DocList");
+			session.ViewInDocList();
+			
+			baseClass.stepInfo("Verify doclist headers expand collapse.");
+			docList.verifyDocListHeadersExpandCollapse();
+		
+		}
+		
+		/**
+		 * @author Gopinath
+		 * TestCase Id :51896 Verify that footer should be removed from doc view and version is show on the left column/header
+		 * Description : TO Verify that footer should be removed from doc view and version is show on the left column/header
+		 * @throws InterruptedException 
+		 */
+		@Test(enabled = true, groups = { "regression" }, priority = 49)
+		public void verifyDOcViewPageVersionFooterRemved() throws InterruptedException {
+			baseClass=new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51896 sprint 10");
+			baseClass.stepInfo("#### Verify that footer should be removed from doc view and version is show on the left column/header ####");
+			
+			docView = new DocViewPage(driver);
+			SessionSearch session = new SessionSearch(driver);
+			DocViewPage docView = new DocViewPage(driver);
+			
+			baseClass.stepInfo("Basic  content search ");
+			session.basicContentSearch(Input.searchString1);
+			
+			baseClass.stepInfo("View serached dos in DOcview");
+			session.ViewInDocView();
+			
+			baseClass.stepInfo("Verify Page Version Displayed");
+			docView.verifyPageVersionDisplayed();
+		}
+		
+		
+		 /**
+		 * Author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
+		 * Testcase id : 51864-Verify that DocView should render the doc when the file name has / or \ anywhere in the file name.
+		 * Description : Verify that DocView should render the doc when the file name has / or \ anywhere in the file name
+		 */		
+		 @Test(enabled = true, groups = { "regression" }, priority = 49)
+		 public void verifyNavigatedToDocViewBySpecailCharInFileName(){
+			baseClass=new BaseClass(driver);
+		    baseClass.stepInfo("Test case Id: RPMXCON-51864- DocExplorer Sprint 10");
+			baseClass.stepInfo("#### Verify that DocView should render the doc when the file name has / or \\ anywhere in the file name ####");	
+			
+			DocExplorerPage docExplorer=new DocExplorerPage(driver);
+			docView = new DocViewPage(driver);
+			
+			baseClass.stepInfo("Navigate To Doc Explorer Page");
+			docExplorer.navigateToDocExplorerPage();
+			
+			baseClass.stepInfo("Enter file name in file name filter.");
+			docExplorer.enterFileNameInFileNameFilter("/");
+			
+			baseClass.stepInfo("Selecting the document in docExplorer page");
+			docExplorer.selectDocument(3);
+			
+			baseClass.stepInfo("View document in doc view on doc explorer");
+			docExplorer.docExpViewInDocView();
+			
+			baseClass.stepInfo("Verify naviagted to doc view");
+			docView.verifyDocViewPageNaviagted();
+		
+		 }
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id :51860 When a user tries to navigate to DocView with some documents, the first document must present completely in mini doc list, default view.
+			 * Description : When a user tries to navigate to DocView with some documents, the first document must present completely in mini doc list, default view.
+			 * @throws InterruptedException 
+			 */
+			@Test(enabled = true, groups = { "regression" }, priority = 51)
+			public void verifyFirstDocumentFullyVisibleByDefault() throws InterruptedException {
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51860 sprint 10");
+				baseClass.stepInfo("#### When a user tries to navigate to DocView with some documents, the first document must present completely in mini doc list, default view ####");
+				
+				DocListPage docList = new DocListPage(driver);
+				docView = new DocViewPage(driver);
+				
+				SessionSearch session = new SessionSearch(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				
+				baseClass.stepInfo("Basic  content search ");
+				session.basicContentSearch(Input.searchString1);
+				
+				baseClass.stepInfo("View serached dos in DOcview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Verify first document of mini doc list is fully visible on doc view.");
+				String firstDocument = docView.verifyFirstDocumentofMiniDocListIsFullyVisible();
+				
+				baseClass.stepInfo("navigate to session search page");
+				session.navigateToSessionSearchPageURL();
+				
+				baseClass.stepInfo("View in doc list");
+				session.ViewInDocList();
+				
+				docList.selectAllDocumentsInCurrentPageOnly();
+				
+				baseClass.stepInfo("Doc List To Doc View");
+				docList.docListToDocView();
+				
+				baseClass.stepInfo("Verify first document of mini doc list is fully visible on doc view by navigating from doc list.");
+				docView.verifyFirstDocumentofMiniDocListIsFullyVisibleFromDocList(firstDocument);
+				
+			}
 		@AfterMethod(alwaysRun = true)
 		public void close() {
 			try {

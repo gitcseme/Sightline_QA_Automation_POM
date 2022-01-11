@@ -1416,4 +1416,19 @@ public class DocExplorerPage {
          			
          		}
          	}
+         	
+         	/**     
+             * @author Gopinath
+             * @Description : Method for entering file name in file name filter.
+             */         
+         	public void enterFileNameInFileNameFilter(String fileName) {
+         		try {
+         			getEmailSubjectTextField().isElementAvailable(15);
+         			getEmailSubjectTextField().SendKeys(fileName);
+         			getEmailSubjectTextField().getWebElement().sendKeys(Keys.ENTER);
+         		}catch(Exception e) {
+         			e.printStackTrace();
+            		bc.failedStep("Exception occured while entering file name in file name filter."+e.getMessage());
+            	}
+         	}
  }
