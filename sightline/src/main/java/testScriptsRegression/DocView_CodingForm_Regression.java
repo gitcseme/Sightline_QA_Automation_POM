@@ -75,6 +75,11 @@ public class DocView_CodingForm_Regression {
 	String stampOverWrite="The Stamp you selected is already in use. Do you want to overwrite this Stamp with the new selections?";
 	String date = "Date" + Utility.dynamicNameAppender();
 	String cfNameEdit = "CF" + Utility.dynamicNameAppender();
+	String assignOne = "Assignment" + Utility.dynamicNameAppender();
+	String assignTwo = "Assignment" + Utility.dynamicNameAppender();
+	String assignThree = "Assignment" + Utility.dynamicNameAppender();
+	String assignFour = "Assignment" + Utility.dynamicNameAppender();
+	String assignFive = "Assignment" + Utility.dynamicNameAppender();
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -8317,6 +8322,24 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
 
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validate code same as last button should not clickable Without completing docs
+		driver.waitForPageToBeReady();
+		boolean flag=docViewPage.getCodeSameAsLast().Selected();
+        softAssertion.assertFalse(flag);
+		softAssertion.assertAll();
+		baseClass.passedStep("Code same as Last button is disabled");
+		
+		// logout
+		loginPage.logout();
+
 	}
 	/**
 	 * @Author : Iyappan.Kasinathan 
@@ -8531,6 +8554,265 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 	}
 
+
+	/**
+	 * @Author : Baskar date:11/01/22 Modified date: NA Modified by: Baskar
+	 * @Description : Verify on saving of the stamp coding form should not clear for the document
+	 */
+	@Test(enabled = true,dataProvider = "rmuRevLogin", groups = { "regression" }, priority =191)
+	public void validateAfterSavingStampObjectNotClear (String fullName,String userName,String password) throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48731");
+		baseClass.stepInfo("Verify on saving of the stamp coding form should not clear for the document");
+		
+		sessionSearch=new SessionSearch(driver);
+		assignmentPage=new AssignmentsPage(driver);
+		docViewPage=new DocViewPage(driver);
+		
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String stamp = "stampName" + Utility.dynamicNameAppender();
+		String rmu="RMU";
+
+		loginPage.loginToSightLine(userName,password);
+
+		if (fullName.contains(rmu)) {
+//			 searching document for assignment creation
+			sessionSearch.basicContentSearch(Input.searchString2);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assignFive, Input.codingFormName);
+			assignmentPage.toggleCodingStampEnabled();
+			assignmentPage.add2ReviewerAndDistribute();
+			baseClass.impersonateRMUtoReviewer();
+			System.out.println(assignFive);
+		}
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignFive);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		
+		// validation object should not clear
+		docViewPage.objectShouldNotClearWhileSavingStamp(comment, stamp);
+		
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 11/01/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify that for RMU/Reviewer coding stamps option should be 
+	 *              displayed outside the context of an assignment
+	 */
+	@Test(enabled = true, dataProvider = "rmuRevLogin",groups = { "regression" }, priority = 192)
+	public void ValidateCodingStampOption(String fullName,String userName,String password) throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48800");
+		baseClass.stepInfo("Verify that for RMU/Reviewer coding stamps "
+				+ "option should be displayed outside the context of an assignment");
+		sessionSearch=new SessionSearch(driver);
+		docViewPage=new DocViewPage(driver);
+		
+		// Login As 
+		loginPage.loginToSightLine(userName,password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+		
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+		
+		docViewPage.verifyCodingStampDisplay();
+		
+		// logout
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @Author : Baskar date:11/01/22 Modified date: NA Modified by: Baskar
+	 * @Description : Verify that on click of the coding stamp non-audio document 
+	 *                should be completed which is viewed after the audio document.
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority =193)
+	public void validateSavedStampFromNonAudio () throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51888");
+		baseClass.stepInfo("Verify that on click of the coding stamp non-audio document "
+				+ "should be completed which is viewed after the audio document.");
+		
+		sessionSearch=new SessionSearch(driver);
+		assignmentPage=new AssignmentsPage(driver);
+		docViewPage=new DocViewPage(driver);
+		
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String stamp = "stampName" + Utility.dynamicNameAppender();
+		String rmu="rmu";
+        // login as rmu
+		loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
+
+		if (roll.contains(rmu)) {
+//			 searching document for assignment creation
+			sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+			docViewPage.selectPureHit();
+			baseClass.stepInfo("Searching Content documents based on search string");
+			sessionSearch.advancedNewContentSearch1(Input.testData1);
+			baseClass.waitForElement(sessionSearch.getPureHitAddBtn());
+			sessionSearch.getPureHitAddBtn().waitAndClick(5);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assignFour, Input.codingFormName);
+			assignmentPage.toggleCodingStampEnabled();
+			assignmentPage.assignmentDistributingToReviewer();
+			System.out.println(assignFour);
+		}
+		loginPage.logout();
+		// login as rev
+		loginPage.loginToSightLine(Input.rev1userName,Input.rev1password);
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignFour);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		
+		// validating saved stamp from non-audio
+		docViewPage.verifyNonAudioDocs(comment, stamp);
+		
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 11/01/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify user can delete the stamp from edit coding stamp pop up
+	 */
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 194)
+	public void validateDeletionOfStampFromUser(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48730");
+		baseClass.stepInfo("Verify user can delete the stamp from edit coding stamp pop up");
+		sessionSearch=new SessionSearch(driver);
+		assignmentPage=new AssignmentsPage(driver);
+		docViewPage=new DocViewPage(driver);
+		
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String stamp = "stampName" + Utility.dynamicNameAppender();
+		String rmu="RMU";
+
+		loginPage.loginToSightLine(userName,password);
+
+		if (fullName.contains(rmu)) {
+//			 searching document for assignment creation
+			sessionSearch.basicContentSearch(Input.searchString2);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assignThree, Input.codingFormName);
+			assignmentPage.toggleCodingStampEnabled();
+			assignmentPage.add2ReviewerAndDistribute();
+			baseClass.impersonateRMUtoReviewer();
+			System.out.println(assignThree);
+		}
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignThree);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// Click on saved stamp to delete
+		docViewPage.deleteSavedStampFromAssign(comment, stamp);
+
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 11/02/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Verify user can edit the coding stamp with the different color
+	 */
+	@Test(enabled = true,dataProvider = "rmuRevLogin",groups = { "regression" }, priority = 195)
+	public void validateNotYetAssignedColourUser(String fullName, String userName, String password)throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion=new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-48729");
+		baseClass.stepInfo("Verify user can edit the coding stamp with the different color");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+		String reStamp = "stamp" + Utility.dynamicNameAppender();
+		String rmu="RMU";
+		
+		loginPage.loginToSightLine(userName,password);
+
+		if (fullName.contains(rmu)) {
+//			 searching document for assignment creation
+			sessionSearch.basicContentSearch(Input.searchString2);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assignOne, Input.codingFormName);
+			assignmentPage.toggleCodingStampEnabled();
+			assignmentPage.add2ReviewerAndDistribute();
+			baseClass.impersonateRMUtoReviewer();
+			System.out.println(assignOne);
+		}
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignOne);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		baseClass.VerifySuccessMessage("Coding Stamp saved successfully");
+		docViewPage.pencilGearicon(Input.stampSelection);
+		baseClass.waitForElement(docViewPage.getDrp_CodingEditStampColour());
+		docViewPage.getDrp_CodingEditStampColour().waitAndClick(5);
+		boolean flag=docViewPage.getStampPopUpDrpDwnColur(Input.stampSelection).isDisplayed();
+		softAssertion.assertTrue(flag);
+		docViewPage.getEditAssignedColour(Input.stampColour).waitAndClick(5);
+        docViewPage.getCodingEditStampTextBox().SendKeys(reStamp);
+        baseClass.waitForElement(docViewPage.getCodingStampSaveBtn());
+        docViewPage.getCodingStampSaveBtn().waitAndClick(5);
+        baseClass.VerifySuccessMessage("Coding stamp updated successfully");
+        docViewPage.verifyingComments(comment);
+       
+		// logout
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * @Author : Baskar date: 11/02/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Verify when RMU/Reviewer clicks Code this document the same as the last coded document, 
+	 *              when immediately preceding document is completed by applying coding stamp
+	 */
+	@Test(enabled = true,dataProvider = "rmuRevLogin",groups = { "regression" }, priority = 196)
+	public void validateSavedStampAfterClickSameAsLast(String fullName, String userName, String password)throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion=new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-48708");
+		baseClass.stepInfo("Verify when RMU/Reviewer clicks Code this document the same as the last coded document,"
+				+ " when immediately preceding document is completed by applying coding stamp");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+		String rmu="RMU";
+		
+		loginPage.loginToSightLine(userName,password);
+
+		if (fullName.contains(rmu)) {
+//			 searching document for assignment creation
+			sessionSearch.basicContentSearch(Input.searchString2);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assignTwo, Input.codingFormName);
+			assignmentPage.toggleCodingStampEnabled();
+			assignmentPage.add2ReviewerAndDistribute();
+			baseClass.impersonateRMUtoReviewer();
+			System.out.println(assignTwo);
+		}
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignTwo);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		docViewPage.verifySavedStampAfterSameAsLast(comment, fieldText);
+       
+		// logout
+		loginPage.logout();
+		
+	}
 	
 	
 	
