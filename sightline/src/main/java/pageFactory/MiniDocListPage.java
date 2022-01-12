@@ -472,6 +472,7 @@ public class MiniDocListPage {
 		return driver.FindElementByXPath("//div[@id='divMiniDocList']//div[@class='dataTables_scroll']");
 	}
 	public Element getDocView__ChildWindow_Mini_RemoveCodeSameAs() {return driver.FindElementById("liRemoveCodeSameAsMiniDocList");}
+	
 	public Element getSelectedOptimizedSortRadioButton() {
 		return driver.FindElementByXPath("//input[@id='rbOptimized']");
 	}

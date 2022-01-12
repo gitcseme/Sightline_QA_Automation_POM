@@ -1448,7 +1448,6 @@ public class DocView_MiniDocList_DataProvider {
 		baseClass.stepInfo("User navigated to docview page from SavedSearch page");
 		miniDocListpage.verifyOptimizedSortIsSelected();   //validation part
 	}
-
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);

@@ -27,6 +27,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -2562,14 +2563,18 @@ public class DocViewPage {
 			return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//tr/td[text()='"+DocId+"']/../td/label/input/following-sibling::i");
 		}
 
-
+		
 		//Added by gopinath - 11/01/2022
 		public Element getDocViewPageVersion() {
 			return driver.FindElementByXPath("//div[@class='version']");
 		}
 		public Element getMiniDocListTable() {
-			return driver.FindElementById("SearchDataTable_wrapper");
-			}
+		   return driver.FindElementById("SearchDataTable_wrapper");
+		   }
+		public Element getStampPopUpDrpDwnColur(String colour) {
+			return driver.FindElementByXPath("//dl[@id='ddlEditStamps']//ul//li[@id='"+colour+"']//a//i//..//span['Assigned']");
+		}
+
 		
 	public DocViewPage(Driver driver) {
 
@@ -4824,21 +4829,21 @@ public class DocViewPage {
 		base.waitForElement(getCodeSameAsLast());
 		base.waitTillElemetToBeClickable(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(5);
-		softAssertion.assertTrue(getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled());
-		if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled()) {
+		softAssertion.assertTrue(getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled());
+		if (getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled()) {
 			base.stepInfo("coded as per the previous document..");
 			base.passedStep("Cursor has moved to the next document in mini doc list..");
 		} else {
 			base.failedStep("Failed to move next document in mini doc list..");
 		}
-//		driver.waitForPageToBeReady();
+//		driver.waitForPageToBeReady();completeDocsWithCodeSameAsLastAndVerifyCheckMark
 		base.waitForElement(getCodeSameAsLast());
 		base.waitTillElemetToBeClickable(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(10);
 		base.stepInfo("Again click code same as last");
 		base.CloseSuccessMsgpopup();
-		softAssertion.assertTrue(getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled());
-		if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled()) {
+		softAssertion.assertTrue(getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled());
+		if (getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled()) {
 			base.stepInfo("coded as per the previous document..");
 			base.passedStep("Cursor has moved to the next document in mini doc list..");
 		} else {
@@ -4861,6 +4866,7 @@ public class DocViewPage {
 		} catch (org.openqa.selenium.StaleElementReferenceException e) {
 			e.printStackTrace();
 		}
+		softAssertion.assertAll();
 	}
 
 	/**
@@ -5717,8 +5723,9 @@ public class DocViewPage {
 				return getDocView_MiniDocListIds(id).Visible();
 			}
 		}), Input.wait60);
-		softAssertion.assertTrue(getDocView_MiniDocListIds(id).Displayed());
-
+		base.waitForElement(getDocView_MiniDocListIds(id));
+		softAssertion.assertTrue(getDocView_MiniDocListIds(id).isDisplayed());
+		softAssertion.assertAll();
 	}
 
 	/**
@@ -11778,6 +11785,93 @@ public class DocViewPage {
 
 	}
 
+
+	
+	/**
+	 * @throws InterruptedException 
+	 * @Author Arunkumar 
+	 * @Description Verify after impersonation when Persistent Hit panel, Reviewer Remarks panel, Redactios menu, Highlights menu is selected
+	 *  Test Case id:RPMXCON-51353
+	 */
+	public void statusCheckAfterImpersonation() throws InterruptedException
+	{
+		sp.basicContentSearch(Input.searchString1);
+		sp.ViewInDocView();
+		
+		// Redaction status check
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getDocView_RedactIcon().Visible() && getDocView_RedactIcon().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getDocView_RedactIcon());
+		getDocView_RedactIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		getDocView_Next().Click();
+		driver.waitForPageToBeReady(); 
+		if(getDocView_Redact_Rectangle().isElementAvailable(1)) {
+			base.passedStep("Redaction menu remains displayed after moving to the next document");
+		}
+		else {
+			base.failedStep("Redaction menu not displayed after moving to the next document");
+		}
+		
+		// Highlights Menu Status Check
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getDocView_AnnotateIcon().Visible() && getDocView_AnnotateIcon().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getDocView_AnnotateIcon());
+		getDocView_AnnotateIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		getDocView_Next().Click();
+		driver.waitForPageToBeReady();
+		if(getDocView_Annotate_Rectangle().isElementAvailable(1)) {
+			base.passedStep("Highlight menu remains displayed after moving to the next document");
+		}
+		else {
+			base.failedStep("Highlight menu not displayed after moving to the next document");
+		}
+		//persistent Highlighting menu status check
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getPersistantHitEyeIcon().Visible() && getPersistantHitEyeIcon().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+		getPersistantHitEyeIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		getDocView_Next().Click();
+		driver.waitForPageToBeReady();
+		
+		if(getPersistentPanel().isDisplayed()) {
+			base.passedStep("Persistent Highlighting menu remains displayed after moving to the next document");
+		}
+		else {
+			base.failedStep("Persistent Highlighting menu not displayed after moving to the next document");
+		}
+		
+		//Reviewer remarks status check
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getDocView_AddRemarkIcon().Visible() && getDocView_AddRemarkIcon().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getDocView_AddRemarkIcon());
+		getDocView_AddRemarkIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		getDocView_Next().Click();
+		driver.waitForPageToBeReady();
+		if(getAddRemarkbtn().isElementAvailable(1)) {
+			base.passedStep("Reviewer remarks menu remains displayed after moving to the next document");
+		}
+		else {
+			base.failedStep("Reviewer remarks menu not displayed after moving to the next document");
+		}
+		
+	}
+
 	/**
 	 * @author Mohan.Venugopal Created on : 11/11/2021 Modified By: NA Modified On:
 	 *         NA
@@ -16568,15 +16662,18 @@ public class DocViewPage {
 	 * @author Aathith.Senthilkumar
 	 */
 	public void verifyThatIsLastDoc() {
+		driver.waitForPageToBeReady();
 		String expectText = getlastDocinMiniDocView().getText().trim();
 		System.out.println(expectText);
 		getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		String actualText = getDocView_CurrentDocId().getText().trim();
 		System.out.println(actualText);
 		if (expectText.equalsIgnoreCase(actualText)) {
 			softAssertion.assertEquals(actualText, expectText);
 			System.out.println("assert are equal");
-			base.stepInfo("last document navigation navigate successfully");
+			base.stepInfo("last document navigation navigated successfully");
+			softAssertion.assertAll();
 		} else {
 			System.out.println("assert are not equal");
 			base.stepInfo("last doc navigation failed");
@@ -19651,6 +19748,7 @@ public class DocViewPage {
 		reusableDocView.switchToNewWindow(1);
 	}
 	
+	
 
 	/**
 	 * @author Gopinath
@@ -19759,7 +19857,9 @@ public class DocViewPage {
 			base.failedStep("Exception occured while verifing first document of mini doc list is fully visible on doc view  by navigating from doc list." + e.getMessage());
 		}
 		return firstDocId;
+		
 	}
+
 	
 	/**
 	 * @author Mohan.Venugopal Created Date: 11/1/2022
@@ -19791,9 +19891,6 @@ public class DocViewPage {
 		
 		String docId2 =getDocView_CurrentDocId().getText();
 		System.out.println(docId2);
-		
-		
-			
 			try {
 				softAssertion.assertNotEquals(docId1, docId2);
 				base.passedStep("The document from threadmap tab is loaded successfully");
@@ -19803,7 +19900,129 @@ public class DocViewPage {
 				
 			}
 			softAssertion.assertAll();
+	}
+	
 
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void objectShouldNotClearWhileSavingStamp(String comment,String stampName) {
+		driver.waitForPageToBeReady();
+		editCodingForm(comment);
+		codingStampButton();
+		popUpAction(stampName, Input.stampSelection);
+		softAssertion.assertTrue(true, "Coding stamp saved successfully");
+		verifyComments(comment);
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 30/11/2021 Modified date:N/A
+	 * @Description: This method used to verify saved stamp for non-audio docs
+	 * 
+	 */
+
+	public void verifyNonAudioDocs(String comment,String stamp) {
+		driver.waitForPageToBeReady();
+		base.stepInfo("Performing action in Child window");
+		String prnDoc=getVerifyPrincipalDocument().getText();
+		editCodingForm(comment);
+		codingStampButton();
+		popUpAction(stamp, Input.stampSelection);
+		softAssertion.assertTrue(true, "Coding stamp saved successfully");
+		base.stepInfo("Validation for audio document");
+		for (int i = 20; i <= 20; i++) {
+			getClickDocviewID(i).waitAndClick(5);
+			driver.waitForPageToBeReady();
+		}
+		boolean flag=getDocView_IconPlay().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.stepInfo("Validating after view audio document and clicking non-audio docs");
+		getDociD(prnDoc).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		boolean flagTwo=getDocView_IconPlay().isDisplayed();
+		softAssertion.assertFalse(flagTwo);
+		// Applying saved stamp
+		lastAppliedStamp(Input.stampSelection);
+		// Open minidoclist child window
+		clickGearIconOpenMiniDocList();
+		String parent = switchTochildWindow();
+		driver.waitForPageToBeReady();
+		for (int i = 20; i <= 20; i++) {
+			getClickDocviewID(i).waitAndClick(5);
+			driver.waitForPageToBeReady();
+		}
+		switchToNewWindow(1);
+		boolean flagThree=getDocView_IconPlay().isDisplayed();
+		softAssertion.assertTrue(flagThree);
+		switchToNewWindow(2);
+		getClickDocviewID(2).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		childWindowToParentWindowSwitching(parent);
+		boolean flagFour=getDocView_IconPlay().isDisplayed();
+		softAssertion.assertFalse(flagFour);
+		lastAppliedStamp(Input.stampSelection);
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void deleteSavedStampFromAssign(String comment, String fieldText) {
+		driver.waitForPageToBeReady();
+		editCodingForm(comment);
+		stampColourSelection(fieldText, Input.stampSelection);
+		driver.waitForPageToBeReady();
+		pencilGearicon(Input.stampSelection);
+		if (getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()) {
+			base.passedStep("Coding stamp applied colour displayed in popup");
+		} else {
+			base.failedStep("Coding stamp applied colour not displayed in popup");
+		}
+		base.waitForElement(getDeletePopUpAssignedColour());
+		getDeletePopUpAssignedColour().waitAndClick(5);
+		base.VerifySuccessMessage("Coding stamp deleted successfully");
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void verifySavedStampAfterSameAsLast(String comment,String fieldText) {
+		editCodingForm(comment);
+		codingStampButton();
+		popUpAction(fieldText, Input.stampSelection);
+		base.VerifySuccessMessage("Coding Stamp saved successfully");
+		lastAppliedStamp(Input.stampSelection);
+		String prnDoc=getVerifyPrincipalDocument().getText();
+		boolean flag=getverifyCodeSameAsLast().Displayed();
+		softAssertion.assertTrue(flag);
+		clickCodeSameAsLast();
+		base.stepInfo("Check mark icon displayed for the completed docs");
+		String secDoc=getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnDoc, secDoc);
+		base.passedStep("Cursor navigated to next docs in minidoclist");
+		getDociD(prnDoc).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		verifyingComments(comment);
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Iyappan.Kasinathan
+	 */
+	public void clickCodeSameAsLastAndVerifyNavigatedToNextDoc() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_CurrentDocId());
+		String currentDocId=getDocView_CurrentDocId().getText();
+		base.waitForElement(getCodeSameAsLast());
+		getCodeSameAsLast().waitAndClick(10);
+		base.stepInfo("Code same as last icon clicked");
+		driver.waitForPageToBeReady();
+		String docId = getDocView_CurrentDocId().getText();
+		softAssertion.assertNotEquals(currentDocId, docId);
+		softAssertion.assertAll();
+		base.passedStep("Cursor has moved to the next document in mini doc list..");
+		
 	}
 	
 public void ComparingSelectedFieldsWithMiniDocListHeaderValue(List<String>selectedFields,List<String>MiniDocListHeaders) {
@@ -19842,4 +20061,5 @@ public List<String> CollectingSelectedFiledsFromConfigMiniDocList(){
 		
 		return selectedFields;
 	}
+	
 }
