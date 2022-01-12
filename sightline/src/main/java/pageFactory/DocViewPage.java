@@ -20024,4 +20024,42 @@ public class DocViewPage {
 		base.passedStep("Cursor has moved to the next document in mini doc list..");
 		
 	}
+	
+public void ComparingSelectedFieldsWithMiniDocListHeaderValue(List<String>selectedFields,List<String>MiniDocListHeaders) {
+		
+		System.out.println(MiniDocListHeaders.remove(""));
+		
+		for(int i=0;i<selectedFields.size();i++) {
+			
+			if(selectedFields.get(i).equalsIgnoreCase(MiniDocListHeaders.get(i))){
+				
+				System.out.println("Selected Field '"+selectedFields.get(i)+"' is Displayed in MiniDocList '"+MiniDocListHeaders.get(i)+"'");
+				base.stepInfo("Selected Field '"+selectedFields.get(i)+"' is Displayed in MiniDocList '"+MiniDocListHeaders.get(i)+"'");
+			}else {
+				System.out.println("Selected Field doesn't match with the MiniDocList Header");
+				base.stepInfo("Selected Field doesn't match with the MiniDocList Header");
+			}
+		}
+	}
+	
+/**
+ * @author Jayanthi.ganesan
+ * @return
+ */
+	
+public List<String> CollectingSelectedFiledsFromConfigMiniDocList(){
+		driver.waitForPageToBeReady();
+		base.waitForElement(getReviewGearIcon());
+		getReviewGearIcon().waitAndClick(5);
+		base.waitForElement(getShowCompletedDocsToggle());
+		getShowCompletedDocsToggle().waitAndClick(5);
+		
+		List<String> selectedFields = availableListofElements(getDocView_Config_Selectedfield());
+		
+		base.waitForElement(getMiniDocListConfirmationButton("Save"));
+		getMiniDocListConfirmationButton("Save").waitAndClick(5);
+		
+		return selectedFields;
+	}
+	
 }
