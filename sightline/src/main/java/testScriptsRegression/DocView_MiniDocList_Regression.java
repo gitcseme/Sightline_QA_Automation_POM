@@ -2365,7 +2365,7 @@ public class DocView_MiniDocList_Regression {
 		loginPage.logout();
 	}
 	
-	@Test(alwaysRun = true,groups={"regression"},priority = 60)
+	@Test(alwaysRun = true,groups={"regression"},priority = 61)
 	public void verifyCompletedIcon_PA() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51026");
 		baseClass.stepInfo("To verify that Project admin cannot view the completed icon on mini doc list");
@@ -2384,6 +2384,70 @@ public class DocView_MiniDocList_Regression {
 		}else {
 			baseClass.passedStep("Project admin is not able to view the completed icon on mini doc list.");
 		}
+	}
+	
+	@Test(alwaysRun = true, groups = { "regression" }, priority =62)
+	public void verifyUserAbleToConfigMiniDocList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50889");
+		baseClass.stepInfo("To Verify User Shall able to Configure the Mini DocList to Show Completed Documents");
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// creating the Assignment and distributing to users
+		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.add2ReviewerAndDistribute();
+
+		baseClass.impersonateRMUtoReviewer();
+		// validation for RMU user
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+		reusableDocViewPage.editTextBoxInCodingFormWithCompleteButton("Completing and editing");
+		// Collecting selected Fields
+		List<String> selectedFields = docViewPage.CollectingSelectedFiledsFromConfigMiniDocList();
+		driver.Navigate().refresh();
+		if (reusableDocViewPage.getverifyCodeSameAsLast().isDisplayed()) {
+			baseClass.passedStep(
+					"Viewed Completed documents in mini doc list after configuring the mini doc lsit by enabling the 'show completed docs' Toggle.");
+		} else {
+			baseClass.failedStep("Not able to view the completed docs after configuring the mini doc list.");
+		}
+		// Collecting MiniDocList Header
+		List<String> miniDocListHeaders = docViewPage.availableListofElements(docViewPage.getMiniDocListHeaderValue());
+
+		// Comparing selected Fields and MiniDocList Header
+		docViewPage.ComparingSelectedFieldsWithMiniDocListHeaderValue(selectedFields, miniDocListHeaders);
+
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rev1userName);
+		// Validation part for Reviwer user
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+		reusableDocViewPage.editTextBoxInCodingFormWithCompleteButton("Completing and editing");
+		driver.Navigate().refresh();
+		// Collecting selected Fields
+		List<String> selectedFields_1 = docViewPage.CollectingSelectedFiledsFromConfigMiniDocList();
+		if (reusableDocViewPage.getverifyCodeSameAsLast().isDisplayed()) {
+			baseClass.passedStep(
+					"Viewed Completed documents in mini doc list after configuring the mini doc lsit by enabling the 'show completed docs' Toggle.");
+		} else {
+			baseClass.failedStep("Not able to view the completed docs after configuring the mini doc list");
+		}
+		// Collecting MiniDocList Header
+		List<String> miniDocListHeaders_1 = docViewPage
+				.availableListofElements(docViewPage.getMiniDocListHeaderValue());
+
+		// Comparing selected Fields and MiniDocList Header
+		docViewPage.ComparingSelectedFieldsWithMiniDocListHeaderValue(selectedFields_1, miniDocListHeaders_1);
+
 	}
 	
 	@AfterMethod(alwaysRun = true)
