@@ -162,6 +162,7 @@
 	<iconColor>#E64634</iconColor>
 		<testSecondDocId>ID00000104</testSecondDocId>
 	<testTenthDocId>ID00000667</testTenthDocId>
+	<docNearDupeDocId>ID00001329</docNearDupeDocId>
 
 
 	<!-- Baskar Indium Audio Search to DocView MiniList - modify on 9/01/21 -->

@@ -4976,6 +4976,7 @@ public class DocView_Redactions_Regression {
 
 	}
 
+
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 58)
 	public void verifyHighlightedKeywordsForDocsAreDisplayedSearchWithAdvancedSearch() throws Exception {
 		baseClass = new BaseClass(driver);
@@ -5086,6 +5087,204 @@ public class DocView_Redactions_Regression {
 		sessionSearch.viewInDocView_redactions();
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
+
+
+	/**
+	 * Author : Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51851 Verify that persistent hits panel should not retain
+	 * previously viewed hits for the document on completing the document after
+	 * applying the coding stamp.
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 58)
+	public void verifyPersistentHitsCompletingDocumentsAfterCodingStamp() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		SoftAssert softAssert = new SoftAssert();
+		DocViewPage docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51851");
+		baseClass.stepInfo(
+				"Verify that persistent hits panel should not retain previously viewed hits for the document on completing the document after applying the coding stamp");
+
+		String codingForm = Input.codeFormName;
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String filedText = "Stamp" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Search the non audio documents and Create new assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+
+		// Share Search via Saved Search
+		savedSearch.shareSavedSearchRMU(searchName, Input.securityGroup);
+		baseClass.stepInfo("Sharing the saved search with security group");
+
+		savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
+
+		// Logout as ReviewManager
+		loginPage.logout();
+
+		baseClass.stepInfo(
+				"Logging in to reviewer account to verify whether reviewer can view docs in doc view from assignment");
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Verify whether the user is in doc view in context of an assignment");
+
+		// Verify AssignmentName is Displayed
+		baseClass.waitForElement(assignmentsPage.getAssignmentNameInDocView());
+		if (assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue()) {
+			baseClass.passedStep("User is in doc view in context of an assignment");
+			softAssert.assertEquals(assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("User is in doc view in context of an assignment is not assigned");
+		}
+
+		// verify PeristantHitEyeIcon is Displayed
+		baseClass.stepInfo("Verify whether the panels are displayed in doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().Click();
+		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
+		if (docView.getHitPanel().isDisplayed()) {
+			baseClass.passedStep("Persistent hit panels are displayed");
+			softAssert.assertEquals(docView.getHitPanel().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Persistent hit panels are not displayed");
+		}
+
+		baseClass.waitForElement(docView.getHitPanelCount());
+		String beforeComplete = docView.getHitPanelCount().getText();
+		System.out.println(beforeComplete);
+		docView.editCodingFormAndSaveWithStamp(filedText, Input.stampColour);
+		String getAttribute = docView.getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
+		docView.lastAppliedStamp(Input.stampColour);
+		softAssert.assertEquals("Saving with Stamp", getAttribute);
+		if (getAttribute.equals("Saving with Stamp")) {
+			baseClass.passedStep("Expected Message -StamplastIcon is clicked scuessfully..");
+		} else {
+			baseClass.failedStep("Expected Message - StamplastIcon is not clicked");
+		}
+		baseClass.waitForElement(docView.getCompleteDocBtn());
+		docView.getCompleteDocBtn().waitAndClick(10);
+		baseClass.stepInfo("Document completed successfully");
+		baseClass.waitForElement(docView.getHitPanelCount());
+		String afterComplete = docView.getHitPanelCount().WaitUntilPresent().getText();
+		System.out.println(afterComplete);
+		baseClass.stepInfo("persistent hits panel is not retain previously viewed hits");
+
+		softAssert.assertNotEquals(beforeComplete, afterComplete);
+		softAssert.assertAll();
+	}
+
+	/**
+	 * Author : Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51854 Verify that persistent hits panel should not retain
+	 * previously viewed hits for the document on completing the document same as
+	 * last from coding form child window.
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 59)
+	public void verifyPersistentHitsCompletingDocumentsCodeSameAsLastChildWindow() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		SoftAssert softAssert = new SoftAssert();
+		DocViewPage docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51854");
+		baseClass.stepInfo(
+				"Verify that persistent hits panel should not retain previously viewed hits for the document on completing the document same as last from coding form child window");
+		String codingForm = Input.codeFormName;
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String filedText = "Stamp" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Search the non audio documents and Create new assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+
+		// Share Search via Saved Search
+		savedSearch.shareSavedSearchRMU(searchName, Input.securityGroup);
+		baseClass.stepInfo("Sharing the saved search with security group");
+		savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
+
+		// Logout as ReviewManager
+		loginPage.logout();
+		baseClass.stepInfo(
+				"Logging in to reviewer account to verify whether reviewer can view docs in doc view from assignment");
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Verify whether the user is in doc view in context of an assignment");
+
+		// Verify AssignmentName is Displayed
+		baseClass.waitForElement(assignmentsPage.getAssignmentNameInDocView());
+		if (assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue()) {
+			baseClass.passedStep("User is in doc view in context of an assignment");
+			softAssert.assertEquals(assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("User is in doc view in context of an assignment is not assigned");
+		}
+
+		// verify PeristantHitEyeIcon is Displayed
+		baseClass.stepInfo("Verify whether the panels are displayed in doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().Click();
+		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
+		if (docView.getHitPanel().isDisplayed()) {
+			baseClass.passedStep("Persistent hit panels are displayed");
+			softAssert.assertEquals(docView.getHitPanel().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Persistent hit panels are not displayed");
+		}
+
+		// verify Edit and complete CodingForm childWindow and LastDocument
+		baseClass.waitForElement(docView.getHitPanelCount());
+		String beforeComplete = docView.getHitPanelCount().getText();
+		System.out.println(beforeComplete);
+		driver.WaitUntil(new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getGearIcon().Visible() && docView.getGearIcon().Enabled();
+			}
+		}, Input.wait30);
+		docView.getGearIcon().waitAndClick(10);
+		docView.getDocument_CommentsTextBox().waitAndClick(5);
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		driver.scrollPageToTop();
+		driver.WaitUntil(new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getDocView_CodingFormPopOut().Visible()
+						&& docView.getDocView_CodingFormPopOut().Enabled();
+			}
+		}, Input.wait30);
+		docView.getDocView_CodingFormPopOut().waitAndClick(5);
+		docView.switchToNewWindow(2);
+		docView.editCodingFormCompleteChildWindow();
+		docView.switchToNewWindow(2);
+		softAssert.assertTrue(docView.getCodeSameAsLast().Displayed() && docView.getCodeSameAsLast().Enabled());
+		if (docView.getCodeSameAsLast().Displayed() && docView.getCodeSameAsLast().Enabled()) {
+			baseClass.passedStep("document same as last from coding form child window");
+		} else {
+			baseClass.failedStep("document same as last from is not Enabled");
+		}
+		driver.waitForPageToBeReady();
+		docView.closeWindow(1);
+		docView.switchToNewWindow(1);
+		baseClass.waitForElement(docView.getHitPanelCount());
+		String afterComplete = docView.getHitPanelCount().WaitUntilPresent().getText();
+		System.out.println(afterComplete);
+		baseClass.stepInfo("persistent hits panel is not retain previously viewed hits");
+
+		softAssert.assertNotEquals(beforeComplete, afterComplete);
+		softAssert.assertAll();
 
 	}
 

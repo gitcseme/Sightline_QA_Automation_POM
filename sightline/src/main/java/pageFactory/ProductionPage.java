@@ -2191,6 +2191,9 @@ public class ProductionPage {
 	public Element text(String text) {
 		return driver.FindElementByXPath("//*[contains(text(),"+text+")]");
 	}
+	public Element getRegenarateLinkBtn() {
+		return driver.FindElementByXPath("//button[@class='btn btn-primary btn-sm']");
+	}
 	
 	
 	public Element blankPageRemovalMessage() {
@@ -15511,11 +15514,11 @@ public class ProductionPage {
 	 */
 	public void visibleCheck(String text) {
 		if(text("text").isDisplayed()) {
-			base.passedStep(text+"is visibled");
-			System.out.println(text+"is visible");
+			base.passedStep(text+" is visibled");
+			System.out.println(text+" is visible");
 		}else {
-			base.failedStep(text+"is not visible");
-			System.out.println(text+"is not visible");
+			base.failedStep(text+" is not visible");
+			System.out.println(text+" is not visible");
 		}
 	}
 	
@@ -15595,6 +15598,37 @@ public class ProductionPage {
 			base.failedStep(
 					"Exception occcured while verifying download production using sharable link." + e.getMessage());
 		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public String getCopySharableLink() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getQC_Download());
+		String name = getProduction().getText().trim();
+		base.waitTillElemetToBeClickable(getQC_Download());
+		getQC_Download().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectSharableLinks());
+		getSelectSharableLinks().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getAllFilesLink());
+		getAllFilesLink().ScrollTo();
+		String sharableLink = getAllFilesLink().GetAttribute("value").trim();
+		return sharableLink;
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public String openNewTab(String sharableLink) {
+		String parentWindow =driver.getWebDriver().getWindowHandle();
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("window.open()");
+		ArrayList<String> tabs = new ArrayList<String>(driver.getWebDriver().getWindowHandles());
+		driver.getWebDriver().switchTo().window(tabs.get(1));
+		driver.waitForPageToBeReady();
+		driver.getWebDriver().get(sharableLink);
+		
+		return parentWindow;
 	}
 
 }

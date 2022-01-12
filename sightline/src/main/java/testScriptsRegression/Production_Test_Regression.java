@@ -78,7 +78,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56052
 	 * @Description: To Verify that after Archiving is completed it should displays 'Creating Archive Complete' status on Production Grid View
 	 */
-	//@Test(groups = { "regression" }, priority = 1)
+	@Test(groups = { "regression" }, priority = 1)
 	public void archivingStatusVerifyOnGridView() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-56052 -Production Sprint 06");
@@ -140,7 +140,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-55975
 	 * @Description: To Verify that after Pregen check completed it should displays 'Reserving Bates Range' status on Progress bar in Tile View on Production Home page
 	 */
-	//@Test(groups = { "regression" }, priority = 2)
+	@Test(groups = { "regression" }, priority = 2)
 	public void reservingBateRangeStatusVerifyOnTileView() throws Exception {
 			UtilityLog.info(Input.prodPath);
 			base.stepInfo("RPMXCON-55975 -Production Sprint 06");
@@ -198,7 +198,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-55973
 	 * @Description: To Verify that after Pre-gen checks is in progress, it will displays status on Production Progress bar Tile View
 	 */
-	//@Test(groups = { "regression" }, priority = 3)
+	@Test(groups = { "regression" }, priority = 3)
 	public void preGenChecksStatusVerifyOnTileView() throws Exception {
 			UtilityLog.info(Input.prodPath);
 			base.stepInfo("RPMXCON-55973 -Production Sprint 06");
@@ -289,7 +289,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56136
 	 * @Description: To Verify that for the saved template under Translations component- File Type Options should be disabled.
 	 */
-	//@Test(groups = { "regression" }, priority =4)
+	@Test(groups = { "regression" }, priority =4)
 	public void verifyTranslationComponentDisableAtMangeTemp() throws Exception{
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON_56136 Production- Sprint 06");
@@ -330,7 +330,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56091
 	 * @Description: To Verify that PDF should generate with Burned Redaction if Only Burn Redaction is enabled.
 	 */
-	//@Test(groups = { "regression" }, priority = 5)
+	@Test(groups = { "regression" }, priority = 5)
 	public void getPdfWithBurnRedactionTag() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-56091 -Production Sprint 06");
@@ -383,7 +383,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56073
 	 * @Description: To Verify that Production should export Text files for Document level successfully.
 	 */
-	//@Test(groups = { "regression" }, priority = 6)
+	@Test(groups = { "regression" }, priority = 6)
 	public void getExortTextforDocument() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56073 -Production Sprint 06");
@@ -437,7 +437,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56083
 	 * @Description: To Verify that Production should generate successfully by selecting only DAT and 'Generate TIFF' option.
 	 */
-	//@Test(groups = { "regression" }, priority = 7)
+	@Test(groups = { "regression" }, priority = 7)
 	public void getProductionPageWithDatTiff() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56083 -Production Sprint 06");
@@ -490,7 +490,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56086
 	 * @Description: To Verify that Production should generate successfully by selecting only DAT and 'Generate PDF' option with Priv Placholder.
 	 */
-	//@Test(groups = { "regression" }, priority = 8)
+	@Test(groups = { "regression" }, priority = 8)
 	public void getProductionPageWithDatPdf() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56086 -Production Sprint 06");
@@ -543,7 +543,7 @@ public class Production_Test_Regression {
 	 * 			RPMXCON-56151
 	 * @Description:To Verify that Regenerate button Popup should close on clicking on Cancel button.
 	 */
-	//@Test(groups = { "regression" }, priority = 9)
+	@Test(groups = { "regression" }, priority = 9)
 	public void regeneratePopUpClickCancel() throws InterruptedException { 
 		UtilityLog.info(Input.prodPath); base.stepInfo("RPMXCON-56151 -Production Sprint 07"); 
 		String testData1 = Input.testData1; 
@@ -592,7 +592,7 @@ public class Production_Test_Regression {
 	 * 			RPMXCON-56109
 	 * @Description:To Verify the error message for MP3 component when 'Disable generate load File. 
 	 */
-	//@Test(groups = { "regression" }, priority = 10)
+	@Test(groups = { "regression" }, priority = 10)
 	public void getMp3DisableGenarateLoadFile() throws InterruptedException { 
 		UtilityLog.info(Input.prodPath); base.stepInfo("RPMXCON-56109 -Production Sprint 07"); 
 
@@ -620,7 +620,7 @@ public class Production_Test_Regression {
 	 * 			RPMXCON-56101
 	 * @Description:To Verify the error message for TIFF/PDF component when 'Enabled privileg doc without tag or text'. 
 	 */
-	//@Test(groups = { "regression" }, priority = 11)
+	@Test(groups = { "regression" }, priority = 11)
 	public void verifyErrormsgTiffPdf() throws InterruptedException { 
 		UtilityLog.info(Input.prodPath); base.stepInfo("RPMXCON-56101 -Production Sprint 07"); 
 
@@ -663,7 +663,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56041
 	 * @Description: To Verify that after Reserving Bates Range completed it should displays 'Reserving Bates Range Complete' status on Grid View on Production Home page.
 	 */
-	//@Test(groups = { "regression" }, priority = 12)
+	@Test(groups = { "regression" }, priority = 12)
 	public void verifyBatesRangecompletedOnGridView() throws Exception {
 		loginPage.logout();
 		
@@ -733,7 +733,7 @@ public class Production_Test_Regression {
 	 * 			RPMXCONO-47175
 	 * @Description To Verify that produced PDF/TIFF files should not be split when 'Split Sub Folders' is ON with split count as 1000 and selected documents <= 1000. 
 	 */
-	////@Test(groups = { "regression" }, priority = 14)
+	//@Test(groups = { "regression" }, priority = 14)
 	public void genaratetDocumentswithMultipleBrandingTags() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-47175 -Production Sprint 7");
@@ -792,7 +792,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56034
 	 * @Description: To Verify that after Archiving is completed it should displays 'Creating Archive Complete' status on Production Generation page.
 	 */
-	//@Test(groups = { "regression" }, priority = 13)
+	@Test(groups = { "regression" }, priority = 13)
 	public void createArchivingStatusVerifyOnGenPage() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-56034 -Production Sprint 07");
@@ -849,7 +849,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56035
 	 * @Description: To Verify that Production status displays as Draft on Production Grid View.
 	 */
-	//@Test(groups = { "regression" }, priority = 14)
+	@Test(groups = { "regression" }, priority = 14)
 	public void verifyDraftStatusOnGridView() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-56035 -Production Sprint 07");
@@ -939,7 +939,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56036
 	 * @Description: To Verify that after Pre-gen checks is in progress, it will displays status on Production Grid view.
 	 */
-	//@Test(groups = { "regression" }, priority = 15)
+	@Test(groups = { "regression" }, priority = 15)
 	public void verifyPreGenStatusOnGridView() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-56036 -Production Sprint 07");
@@ -1032,7 +1032,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56029
 	 * @Description: To Verify that after destination copy is completed it should displays 'Exporting Files' status on Production Progress bar Tile View.
 	 */
-	//@Test(groups = { "regression" }, priority = 16)
+	@Test(groups = { "regression" }, priority = 16)
 	public void verifyExportinFilesStatusOnTileView() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-56029 -Production Sprint 07");
@@ -1089,7 +1089,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56030
 	 * @Description: To Verify that after destination copy is completed it should displays 'Exporting Files' status on Production Generate tab.
 	 */
-	//@Test(groups = { "regression" }, priority = 17)
+	@Test(groups = { "regression" }, priority = 17)
 	public void verifyExportinFilesStatusOnGen() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-56030 -Production Sprint 07");
@@ -1142,7 +1142,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-56048
 	 * @Description: Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Grid View.
 	 */
-	//@Test(groups = { "regression" }, priority = 18)
+	@Test(groups = { "regression" }, priority = 18)
 	public void verifyExportinFilesStatusOnGridView() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-56048 -Production Sprint 08");
@@ -1201,7 +1201,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-50017
 	 * @Description: Verify if currently 'AllProductionBatesRanges' is searchable, then we should leave the field to be searchable..
 	 */
-	//@Test(groups = { "regression" }, priority = 19)
+	@Test(groups = { "regression" }, priority = 19)
 	public void verifyAllProductionBatesRangesSearchable() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-50017 -Production Sprint 09");
@@ -1236,7 +1236,7 @@ public class Production_Test_Regression {
 	 *         No:RPMXCON-50018
 	 * @Description: Verify if in existing project, 'AllProductionBatesRange' field is searchable and if  this field has been edited and is make it non-searchable, then this field cannot make as searchable again
 	 */
-	//@Test(groups = { "regression" }, priority = 20)
+	@Test(groups = { "regression" }, priority = 20)
 	public void verifyAllProductionBatesRangesNotSearchable() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-50018 -Production Sprint 09");
@@ -1274,7 +1274,7 @@ public class Production_Test_Regression {
 	 * @Description In production, Preview should displays correctly
 	 * 
 	 */
-		//@Test(groups = { "regression" }, priority = 21)
+		@Test(groups = { "regression" }, priority = 21)
 		public void verifyPreviewInProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49099 -Production Sprint 09");
@@ -1329,7 +1329,7 @@ public class Production_Test_Regression {
 		 * @Description To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields are exported properly in the correct format in the Production, DAT.
 		 * 
 		 */
-			//@Test(groups = { "regression" }, priority = 22)
+			@Test(groups = { "regression" }, priority = 22)
 			public void verifyDatFieldsAreExport() throws Exception {
 			UtilityLog.info(Input.prodPath);
 			base.stepInfo("RPMXCON-49104 -Production Sprint 09");
@@ -1399,7 +1399,7 @@ public class Production_Test_Regression {
 			 * @Description Verify that branding text should be wrapped when Branding text to all the six locations exceeds the space while production for a PDF file.
 			 * 
 			 */
-				//@Test(groups = { "regression" }, priority = 23)
+				@Test(groups = { "regression" }, priority = 23)
 				public void verifyBrandingTextToSixLocation() throws Exception {
 				UtilityLog.info(Input.prodPath);
 				base.stepInfo("RPMXCON-48978 -Production Sprint 09");
@@ -1455,7 +1455,7 @@ public class Production_Test_Regression {
 				 * @Description To verify that if "Do Not Produce TIFFs/PDFs for Natively Produced Docs" is enabled , then TIFFs with redaction should be produced. It should not export Natives
 				 * 
 				 */
-			//@Test(groups = { "regression" }, priority = 24)
+			@Test(groups = { "regression" }, priority = 24)
 			public void verifyDoNotProduceTiffToggleOn() throws Exception {
 					loginPage.logout();
 					loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -1560,7 +1560,7 @@ public class Production_Test_Regression {
 			 * @Description To verify that Production should generate successfully for PDF docs.
 			 * 
 			 */
-				//@Test(groups = { "regression" }, priority = 25)
+				@Test(groups = { "regression" }, priority = 25)
 				public void verifyProdGenSuccesInPdfDoc() throws Exception {
 				UtilityLog.info(Input.prodPath);
 				base.stepInfo("RPMXCON-48454 -Production Sprint 09");
@@ -1615,7 +1615,7 @@ public class Production_Test_Regression {
 				 * @Description To Verify Enabling Placeholder for Privilege Doc at PrivGuard.
 				 * 
 				 */
-					//@Test(groups = { "regression" }, priority = 26)
+					@Test(groups = { "regression" }, priority = 26)
 					public void verifiyEnablePlaceholderAtPrivDoc() throws Exception {
 					UtilityLog.info(Input.prodPath);
 					base.stepInfo("RPMXCON-48279 -Production Sprint 09");
@@ -1687,7 +1687,7 @@ public class Production_Test_Regression {
 					 *         No:RPMXCON-55981
 					 * @Description: Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Generation tab
 					 */
-					//@Test(groups = { "regression" }, priority = 27)
+					@Test(groups = { "regression" }, priority = 27)
 					public void verifyLstGenExportinFilesStatusOnGen() throws Exception {
 					UtilityLog.info(Input.prodPath);
 					base.stepInfo("RPMXCON-55981 -Production Sprint 09");
@@ -1750,7 +1750,7 @@ public class Production_Test_Regression {
 					 *         No:RPMXCON-55980
 					 * @Description: Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Progress bar Tile View.
 					 */
-					//@Test(groups = { "regression" }, priority = 28)
+					@Test(groups = { "regression" }, priority = 28)
 					public void verifyLstGenExportinFilesStatusOnTileView() throws Exception {
 					UtilityLog.info(Input.prodPath);
 					base.stepInfo("RPMXCON-55980 -Production Sprint 09");
@@ -1816,7 +1816,7 @@ public class Production_Test_Regression {
 					 *         No:RPMXCON-49040
 					 * @Description: To verify that 'Production Creation Date' should displayed when it saved first time.
 					 */
-					//@Test(groups = { "regression" }, priority = 29)
+					@Test(groups = { "regression" }, priority = 29)
 					public void verifyProductionCreationDate() throws Exception {
 					UtilityLog.info(Input.prodPath);
 					base.stepInfo("RPMXCON-49040 -Production Sprint 09");
@@ -1859,7 +1859,7 @@ public class Production_Test_Regression {
 					 *         No:RPMXCON-48569
 					 * @Description: To verify that 'Bates Range' should be blank before pre-gen check completed.
 					 */
-					//@Test(groups = { "regression" }, priority = 30)
+					@Test(groups = { "regression" }, priority = 30)
 					public void verifyBateRangeBlankGenPage() throws Exception {
 					UtilityLog.info(Input.prodPath);
 					base.stepInfo("RPMXCON-48569 -Production Sprint 09");
@@ -2347,6 +2347,146 @@ public class Production_Test_Regression {
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-56012
+					 * @Description: Verify that if Production is regeneate then previous sharable link should not be usabel
+					 */
+					@Test(groups = { "regression" }, priority = 38)
+					public void verifyRegenarateSharable() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-56012 -Production Sprint 10");
+					base.stepInfo("Verify that if Production is regeneate then previous sharable link should not be usabel");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					TempName ="Templete" + Utility.dynamicNameAppender();
+					
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkTagExisting(tagname);
+					sessionSearch.bulkFolderExisting(foldername);
+					
+					//Verify archive status on Gen page
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPageAndPassingText(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+					String link=page.getCopySharableLink();
+					
+					this.driver.getWebDriver().get(Input.url + "Production/Home");
+					driver.Navigate().refresh();
+					page.getGearIconForProdName(productionname).waitAndClick(10);
+					page.getOpenWizard().waitAndClick(10);
+					page.getBackButton().waitAndClick(10);
+					page.getBackButton().waitAndClick(10);
+					page.getBackButton().waitAndClick(10);
+					page.getMarkInCompleteBtn().waitAndClick(10);
+					page.fillingProductionLocationPageAndPassingText(TempName);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+					page.openNewTab(link);
+					page.visibleCheck("LINK EXPIRED");
+					base.passedStep("Verified that if Production is regeneate then previous sharable link should not be usabel");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-56006
+					 * @Description: Verify that  after the regenerate the new links, previous links and password will no longer work,
+					 */
+					@Test(groups = { "regression" }, priority = 39)
+					public void verifyRegenareOldLinkNoLongerWork() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-56006 -Production Sprint 10");
+					base.stepInfo("Verify that  after the regenerate the new links, previous links and password will no longer work");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					TempName ="Templete" + Utility.dynamicNameAppender();
+					
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkTagExisting(tagname);
+					sessionSearch.bulkFolderExisting(foldername);
+					
+					//Verify archive status on Gen page
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPageAndPassingText(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+					page.verifyDownloadProductionUsingSharableLink();
+					String link=page.getCopySharableLink();
+					
+					String parentWindow=page.openNewTab(link);
+					page.visibleCheck("Download Production Archive File");
+					base.passedStep("this Link should accessible to the user");
+					driver.close();
+					driver.getWebDriver().switchTo().window(parentWindow);
+					
+					page.getRegenarateLinkBtn().waitAndClick(10);
+					base.stepInfo("new link should be generated");
+					
+					String parentWindow1=page.openNewTab(link);
+					page.visibleCheck("LINK EXPIRED");
+					base.passedStep("Old link Expired");
+					driver.close();
+					driver.getWebDriver().switchTo().window(parentWindow1);
+					
+					base.passedStep("Verified that  after the regenerate the new links, previous links and password will no longer work");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
 	
 	
 	@AfterMethod(alwaysRun = true)
@@ -2359,10 +2499,8 @@ public class Production_Test_Regression {
 		}
 		try {
 			loginPage.logout();
-			loginPage.quitBrowser();
 		} catch (Exception e) {
-			loginPage.quitBrowser();
-			LoginPage.clearBrowserCache();
+			loginPage.logout();
 		}
 	}
 	
@@ -2372,9 +2510,9 @@ public class Production_Test_Regression {
 	public void close() {
 		System.out.println("******TEST CASES FOR PRODUCTION EXECUTED******");
 		try {
-			loginPage.clearBrowserCache();
+			loginPage.quitBrowser();
 		} catch (Exception e) {
-			// no session avilable
+			loginPage.quitBrowser();
 
 		}
 	}
