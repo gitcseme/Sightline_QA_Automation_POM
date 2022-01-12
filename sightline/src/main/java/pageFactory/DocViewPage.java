@@ -20103,42 +20103,61 @@ public class DocViewPage {
 		base.passedStep("DocView Reviewer Page Is Displayed");
 
 	}
-	
-public void ComparingSelectedFieldsWithMiniDocListHeaderValue(List<String>selectedFields,List<String>MiniDocListHeaders) {
-		
+
+	public void ComparingSelectedFieldsWithMiniDocListHeaderValue(List<String> selectedFields,
+			List<String> MiniDocListHeaders) {
+
 		System.out.println(MiniDocListHeaders.remove(""));
-		
-		for(int i=0;i<selectedFields.size();i++) {
-			
-			if(selectedFields.get(i).equalsIgnoreCase(MiniDocListHeaders.get(i))){
-				
-				System.out.println("Selected Field '"+selectedFields.get(i)+"' is Displayed in MiniDocList '"+MiniDocListHeaders.get(i)+"'");
-				base.stepInfo("Selected Field '"+selectedFields.get(i)+"' is Displayed in MiniDocList '"+MiniDocListHeaders.get(i)+"'");
-			}else {
+
+		for (int i = 0; i < selectedFields.size(); i++) {
+
+			if (selectedFields.get(i).equalsIgnoreCase(MiniDocListHeaders.get(i))) {
+
+				System.out.println("Selected Field '" + selectedFields.get(i) + "' is Displayed in MiniDocList '"
+						+ MiniDocListHeaders.get(i) + "'");
+				base.stepInfo("Selected Field '" + selectedFields.get(i) + "' is Displayed in MiniDocList '"
+						+ MiniDocListHeaders.get(i) + "'");
+			} else {
 				System.out.println("Selected Field doesn't match with the MiniDocList Header");
 				base.stepInfo("Selected Field doesn't match with the MiniDocList Header");
 			}
 		}
 	}
-	
-/**
- * @author Jayanthi.ganesan
- * @return
- */
-	
-public List<String> CollectingSelectedFiledsFromConfigMiniDocList(){
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @return
+	 */
+
+	public List<String> CollectingSelectedFiledsFromConfigMiniDocList() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getReviewGearIcon());
 		getReviewGearIcon().waitAndClick(5);
 		base.waitForElement(getShowCompletedDocsToggle());
 		getShowCompletedDocsToggle().waitAndClick(5);
-		
+
 		List<String> selectedFields = availableListofElements(getDocView_Config_Selectedfield());
-		
+
 		base.waitForElement(getMiniDocListConfirmationButton("Save"));
 		getMiniDocListConfirmationButton("Save").waitAndClick(5);
-		
+
 		return selectedFields;
 	}
-	
+
+	/**
+	 * @author steffy.d Method is to verify review mode text in docview page
+	 */
+	public void verifyReviewModeText() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_ReviewModeText());
+		String actualText = getDocView_ReviewModeText().getText();
+		if (actualText.contains("You are reviewing docs in Optimized Sort mode")) {
+			base.passedStep("Review mode text is displayed as expected");
+		} else if (actualText.contains("You are reviewing docs in Manual Sort mode")) {
+			base.passedStep("Review mode text is displayed as expected");
+		} else {
+			base.failedStep("Review mode text is not displayed as expected");
+		}
+	}
+
 }
