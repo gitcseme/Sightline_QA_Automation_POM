@@ -2629,7 +2629,7 @@ public class SessionSearch {
 			} catch (Exception e) {
 			}
 		}
-		System.out.println("Navigated to doclist, to view docslist");
+		base.stepInfo("Navigated to doclist, to view docslist");
 		UtilityLog.info("Navigated to doclist, to view docslist");
 
 	}
@@ -3122,6 +3122,7 @@ public class SessionSearch {
 		getMetaDataInserQuery().waitAndClick(20);
 
 		driver.scrollPageToTop();
+		base.stepInfo("Assignment is selected in work product - advanced search");
 
 	}
 
@@ -3141,6 +3142,7 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getWorkproductBtn().Click();
+		base.stepInfo("Switched to Advanced search - Work product");
 
 	}
 
@@ -3160,7 +3162,7 @@ public class SessionSearch {
 		}), Input.wait90);
 		getPureHitsCount().waitAndClick(20);
 		int pureHit = Integer.parseInt(getPureHitsCount().getText());
-		System.out.println("Search is done and PureHit is : " + pureHit);
+		base.stepInfo("Search is done and PureHit is : " + pureHit);
 		UtilityLog.info("Search is done and PureHit is : " + pureHit);
 		return pureHit;
 	}
@@ -4099,6 +4101,7 @@ public class SessionSearch {
 			getDocViewActionDL().Click();
 		}
 		UtilityLog.info("Navigated to docView to view docs");
+		base.stepInfo("Navigated to docView to view docs");
 	}
 
 	/**

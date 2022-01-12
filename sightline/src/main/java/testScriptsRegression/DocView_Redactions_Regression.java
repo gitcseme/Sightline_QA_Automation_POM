@@ -38,6 +38,7 @@ import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
@@ -4975,6 +4976,119 @@ public class DocView_Redactions_Regression {
 
 	}
 
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 58)
+	public void verifyHighlightedKeywordsForDocsAreDisplayedSearchWithAdvancedSearch() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		loginPage = new LoginPage(driver);
+
+		baseClass.stepInfo("Test case id : RPMXCON-51405");
+		baseClass.stepInfo(
+				"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from Advanced Search > doc list to doc view");
+
+		String codingForm = Input.codeFormName;
+		baseClass.stepInfo("Create new assignment");
+		assignmentsPage.createAssignment(assignmentName, codingForm);
+		sessionSearch.basicMetaDataSearch("DocID", null, Input.MiniDocId, null);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignDocstoExisting(assignmentName);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.selectAssignmentInWPS(assignmentName);
+		sessionSearch.serarchWP();
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.getSavedSearchBtn1().Click();
+		sessionSearch.selectSavedsearchesInTree("My Saved Search");
+		baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
+		sessionSearch.getMetaDataInserQuery().waitAndClick(5);
+		sessionSearch.serarchWP();
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.getSavedSearchBtn1().Click();
+		sessionSearch.selectSavedsearchesInTree("Shared With Project Administrator");
+		baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
+		sessionSearch.getMetaDataInserQuery().waitAndClick(5);
+		sessionSearch.serarchWP();
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+
+	}
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 59)
+	public void verifyHighlightedKeywordsForDocsAreDisplayedSavedSearch() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		loginPage = new LoginPage(driver);
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case id : RPMXCON-51404");
+		baseClass.stepInfo(
+				"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from Saved Search > doc list");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocList(searchName);
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocList(searchName);
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocList(searchName);
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+
+
 	/**
 	 * Author : Sakthivel date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51851 Verify that persistent hits panel should not retain
@@ -5171,6 +5285,7 @@ public class DocView_Redactions_Regression {
 
 		softAssert.assertNotEquals(beforeComplete, afterComplete);
 		softAssert.assertAll();
+
 	}
 
 	@AfterMethod(alwaysRun = true)

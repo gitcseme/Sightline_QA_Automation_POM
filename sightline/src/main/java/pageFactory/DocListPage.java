@@ -2605,6 +2605,7 @@ public class DocListPage {
 				driver.waitForPageToBeReady();
 				base.waitForElement(getselectDoc(row + 1));
 				getselectDoc(row + 1).waitAndClick(10);
+				base.stepInfo("Document is selected in doc list");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

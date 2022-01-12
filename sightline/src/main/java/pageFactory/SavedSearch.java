@@ -1036,6 +1036,7 @@ public class SavedSearch {
 			System.out.println("Pop up message does not appear");
 			Log.info("Pop up message does not appear");
 		}
+		base.stepInfo("Saved search is opened in doc list");
 	}
 
 	public void savedSearchToDocView(final String searchName) throws InterruptedException {
