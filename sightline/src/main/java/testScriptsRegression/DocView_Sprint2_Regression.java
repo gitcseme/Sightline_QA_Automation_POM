@@ -49,6 +49,9 @@ public class DocView_Sprint2_Regression {
 	Input ip;
 	DocViewPage docView;
 	SessionSearch sessionSearch;
+	SoftAssert softAssertion;
+	
+
 
 	@BeforeClass(alwaysRun = true)
 
@@ -1566,7 +1569,6 @@ else {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected = "ThreadMap";
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		
@@ -2624,7 +2626,138 @@ else {
 		
 		
 	}
-	
+	/**
+	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify after impersonation when Persistent Hit panel, Reviewer
+	 * Remarks panel, Redactios menu, Highlights menu is selected and navigates to
+	 * other doc from mini doc list child window previously selected selected
+	 * panels/menus should remain. 'RPMXCON-51354' Sprint : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 48)
+	public void verifyPersistentHitReviewerRemarksRedactiosHighlightsDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51354");
+		baseClass.stepInfo(
+				"Verify after impersonation when Persistent Hit panel, Reviewer Remarks panel, Redactios menu, Highlights menu is selected and navigates to other doc from mini doc list child window previously selected selected panels/menus should remain.");
+
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonate RMU to Reviewer, search docs and Search for docs");
+		baseClass.impersonateRMUtoReviewer();
+		sessionsearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		// perform DocView page
+		docViewRedact.performDisplayIconReviewerHighlight();
+		loginPage.logout();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Step 1: Impersonate SA to RMU, search docs and Search for docs");
+		baseClass.impersonateSAtoRMU();
+		sessionsearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		// perform DocView page
+		docViewRedact.performDisplayIconReviewerHighlight();
+		loginPage.logout();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Step 1: Impersonate SA to Reviewer, search docs and Search for docs");
+		baseClass.impersonateSAtoReviewer();
+		sessionsearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		// perform DocView page
+		docViewRedact.performDisplayIconReviewerHighlight();
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Step 1: Impersonate PAU to RMU, select assignment and go to Docview");
+		baseClass.impersonatePAtoRMU();
+		sessionsearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		// perform DocView page
+		docViewRedact.performDisplayIconReviewerHighlight();
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Step 1: Impersonate PAU to Reviewer, select assignment and go to Docview");
+		baseClass.impersonatePAtoReviewer();
+		sessionsearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		// perform DocView page
+		docViewRedact.performDisplayIconReviewerHighlight();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify when Persistent Hit panel, Reviewer Remarks panel,
+	 * Redactios menu, Highlights menu is selected and views document from analytics
+	 * panel previously selected panels/menus should remain.. 'RPMXCON-51355' Sprint
+	 * : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 49)
+	public void verifyPersistentHitReviewerRemarksRedactiosHighlightsAanalytics() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51355");
+		baseClass.stepInfo(
+				"Verify when Persistent Hit panel, Reviewer Remarks panel, Redactios menu, Highlights menu is selected and views document from analytics panel previously selected panels/menus should remain.");
+
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		sessionsearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+
+		// perform DocView page
+		docViewRedact.performDisplayIconReviewerHighlight();
+
+		// perform AnalyticalPanel After earlier documents section
+		docView.performDisplayIconReviewerHighlightAnalyticalPanel();
+
+		loginPage.logout();
+
+		// Login as REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
+
+		sessionsearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+
+		// perform DocView page
+		docViewRedact.performDisplayIconReviewerHighlight();
+
+		// perform AnalyticalPanel After earlier documents section
+		docView.performDisplayIconReviewerHighlightAnalyticalPanel();
+
+	}
 	
 
 	@AfterMethod(alwaysRun = true)

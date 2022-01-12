@@ -48,6 +48,7 @@ public class DocViewRedactions {
 	LoginPage loginPage;
 	SoftAssert softAssertion;
 	ProductionPage page;
+	DocViewPage docView;
 	Input in = new Input();
 
 	String namesg1 = "Default_1234" + Utility.dynamicNameAppender();
@@ -1103,25 +1104,58 @@ public class DocViewRedactions {
 	public Element activeDocId() {
 		return driver.FindElementByXPath("//span[@id='activeDocumentId']");
 	}
-	
-	// images tab elements  - Added by krishna
-	
-			public Element imagesTabDropDown() {
-				return driver.FindElementById("AvailableImagesDropDown");}
-			
-			public Element imagesTabZoomOut() {
-				return driver.FindElementById("zoomOut_divDocViewerImage");}
-			
-			public Element imagesTabZoomIn() {
-				return driver.FindElementById("zoomIn_divDocViewerImage");}
-			
-			public Element imagesTabZoomFitToScreen() {
-				return driver.FindElementById("fitContent_divDocViewerImage");}
-			
-  // Added by krishna		
-			public Element historyDropDownDocSelect(String DocId) {
-				return driver.FindElementById("History_" + DocId + "");
-			}
+
+	// images tab elements - Added by krishna
+
+	public Element imagesTabDropDown() {
+		return driver.FindElementById("AvailableImagesDropDown");
+	}
+
+	public Element imagesTabZoomOut() {
+		return driver.FindElementById("zoomOut_divDocViewerImage");
+	}
+
+	public Element imagesTabZoomIn() {
+		return driver.FindElementById("zoomIn_divDocViewerImage");
+	}
+
+	public Element imagesTabZoomFitToScreen() {
+		return driver.FindElementById("fitContent_divDocViewerImage");
+	}
+
+	// Added by krishna
+	public Element historyDropDownDocSelect(String DocId) {
+		return driver.FindElementById("History_" + DocId + "");
+	}
+
+	// Added by Vijaya.Rani
+	public Element docViewEyeSearchTerm() {
+		return driver.FindElementByXPath("//h3[text()='Search Hits:']");
+	}
+
+	public Element docViewEyeIconKeyword() {
+		return driver.FindElementById("PHitCount_Keyword8799652");
+	}
+
+	public Element docViewReviewerPage() {
+		return driver.FindElementById("RemarkPnl");
+	}
+
+	public Element getHitPanleVerify(String panel) {
+		return driver.FindElementById("PHitCount_" + panel + "");
+	}
+
+	public Element getDocView_ToggleButton() {
+		return driver.FindElementById("EnableSearchTerm");
+	}
+
+	public Element getHitPanel() {
+		return driver.FindElementByXPath("//p[contains(@id,'PHitCount')]");
+	}
+
+	public ElementCollection getHitPanelCollection() {
+		return driver.FindElementsByXPath("//p[contains(@id,'PHitCount')]");
+	}
 
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
@@ -1959,7 +1993,9 @@ public class DocViewRedactions {
 
 		set_searchText().getWebElement().sendKeys("S");
 		Thread.sleep(2000); // needed here implicitly
+
 		Robot robot = new Robot();
+
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		Thread.sleep(4000); // needed here implicitly
@@ -1970,7 +2006,7 @@ public class DocViewRedactions {
 
 		if (hex.equalsIgnoreCase(Input.colorCodeHighlight)) // #dc5252
 		{
-			System.out.println("The color for the Highlighted text is verfied- Successfully");
+			System.out.println("The color for the Highlighted texts is verfied- Successfully");
 			base.passedStep("The color for the Highlighted text is verfied- Successfully");
 		} else {
 			System.out.println("The color for the Highlighted text is not-verfied - Failed");
@@ -2526,7 +2562,8 @@ public class DocViewRedactions {
 			base.waitForElement(get_textHighlightedColor());
 			String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
 			String hex = Color.fromString(color).asHex();
-			if (hex.equals(Input.keyWordHexCode))
+			System.err.println(hex);
+			if ((hex.equals(Input.keyWordHexCode)) || hex.equalsIgnoreCase(Input.colorCodeOfRed))
 				base.passedStep("The text for keyword is highlited in the document");
 			else
 				base.failedStep("The text for keyword is highlited in the document");
@@ -3046,21 +3083,85 @@ public class DocViewRedactions {
 		}
 
 	}
-	
+
 	/**
 	 * Method to verify active Doc Id
 	 */
-	
+
 	public void verifyingActiveDocIdInDocView(String Docid) {
 		base = new BaseClass(driver);
 		String text = activeDocId().getText();
 		System.out.println(text);
-		if(text.equalsIgnoreCase(Docid)) {
+		if (text.equalsIgnoreCase(Docid)) {
 			base.passedStep("Active DocId verified");
 		} else {
 			base.failedStep("Active doc id is not as expected");
 		}
-		
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
+	 * Description :perform Display Icon Reviewer Highlight.
+	 *
+	 */
+	public void performDisplayIconReviewerHighlight() throws Exception {
+		base = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		getDocView_MiniDoc_Selectdoc(1).waitAndClick(20);
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return redactionIcon().Visible();
+			}
+		}), Input.wait30);
+		redactionIcon().waitAndClick(30);
+
+		base.stepInfo("Redaction Icon Clicked Successfully");
+
+		softAssertion.assertTrue(multiPageIcon().Displayed());
+		base.passedStep("DocView Redaction Page is Displayed");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getEyeIcon().Visible() && HighliteIcon().Enabled();
+			}
+		}), Input.wait30);
+		getEyeIcon().waitAndClick(30);
+
+		base.stepInfo("docView Eye Icon Clicked Successfully");
+
+		softAssertion.assertTrue(docViewEyeSearchTerm().Displayed());
+		base.passedStep("DocView EyeIcon Search Term Is Displayed");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return remarksIcon().Visible();
+			}
+		}), Input.wait30);
+		remarksIcon().waitAndClick(30);
+
+		base.stepInfo("Reviewer Remark Icon Clicked Successfully");
+
+		softAssertion.assertTrue(docViewReviewerPage().Displayed());
+		base.passedStep("DocView Reviewer Page Is Displayed");
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		docView.popOutMiniDocList();
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		getDocView_MiniDoc_Selectdoc(3).waitAndClick(20);
+		base.passedStep("Mini Doc List Child Window Docs Selected Successfully");
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		softAssertion.assertTrue(docViewReviewerPage().Displayed());
+		base.passedStep("DocView Reviewer Page Is Displayed");
+
 	}
 
 }

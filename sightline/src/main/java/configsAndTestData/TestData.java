@@ -157,6 +157,8 @@ public class TestData {
 	public String iconColor;
 	public String testSecondDocId;
 	public String testTenthDocId;
+	public String docNearDupeDocId;
+
 
 	// Added by Raghuram - Last Modified 12/30/21
 	public String docHighlightColor;
