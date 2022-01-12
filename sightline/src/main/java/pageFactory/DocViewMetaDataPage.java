@@ -525,6 +525,18 @@ public class DocViewMetaDataPage {
 			return driver.FindElementByXPath("//li[@id='liDocumentTypeDropDown']");
 		}
 		
+		//Added by Gopinath - 11/01/2022
+
+		public Element getAddRemarkbtn() {
+			return driver.FindElementById("addRemarks");
+		}
+
+		public Element getRemarkTextArea() {
+			return driver.FindElementById("txt_remark");
+		}
+		public Element getSaveRemark() {
+			return driver.FindElementByXPath("(//span[@id='remarksSaveCancelControls']/i[2])[1]");
+		}
 		
 	public DocViewMetaDataPage(Driver driver) {
 
@@ -2768,6 +2780,77 @@ public class DocViewMetaDataPage {
 			e.printStackTrace();
 			base.failedStep("Exception occcured while verifying remark button is displayed." + e.getMessage());
 
+		}
+	}
+	
+	/**
+	 * @author Gopinath Method for perform remark.
+	 * @param off1 : off1 is integer value that x-ordinate location.
+	 * @param off2 : off2 is integer value that y-ordinate location.
+	 * @param remark : remark is String value that name given to remark.
+	 */
+	public void performRemarkWithSaveOperation(int off1, int off2,String remark) {
+		try {
+			driver.scrollPageToTop();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getNonAudioRemarkBtn().isElementAvailable(10);
+				}
+			}), Input.wait60);
+			getNonAudioRemarkBtn().waitAndClick(9);
+			System.out.println(off1 + "...." + off2);
+			Actions actions = new Actions(driver.getWebDriver());
+			driver.waitForPageToBeReady();
+			WebElement text = currentDocument().getWebElement();
+			actions.moveToElement(text, off1, off2).clickAndHold().moveByOffset(200, 200).release().perform();
+			base.passedStep("Performed remark by rectangle");
+			driver.scrollPageToTop();
+			getAddRemarkbtn().getWebElement().click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getRemarkTextArea().isElementAvailable(10);
+				}
+			}), Input.wait30);
+			getRemarkTextArea().SendKeys(remark);
+			getSaveRemark().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Not able to select redacted area");
+		}
+	}
+	
+	/**
+	 * @author Gopinath Method for perform remark.
+	 * @param off1 : off1 is integer value that x-ordinate location.
+	 * @param off2 : off2 is integer value that y-ordinate location.
+	 * @param remark : remark is String value that name given to remark.
+	 */
+	public void performRemarkWithoutSaveOperation(int off1, int off2,String remark) {
+		try {
+			driver.scrollPageToTop();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getNonAudioRemarkBtn().isElementAvailable(10);
+				}
+			}), Input.wait60);
+			getNonAudioRemarkBtn().waitAndClick(9);
+			System.out.println(off1 + "...." + off2);
+			Actions actions = new Actions(driver.getWebDriver());
+			driver.waitForPageToBeReady();
+			WebElement text = currentDocument().getWebElement();
+			actions.moveToElement(text, off1, off2).clickAndHold().moveByOffset(200, 200).release().perform();
+			base.passedStep("Performed remark by rectangle");
+			driver.scrollPageToTop();
+			getAddRemarkbtn().getWebElement().click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getRemarkTextArea().isElementAvailable(10);
+				}
+			}), Input.wait30);
+			getRemarkTextArea().SendKeys(remark);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Not able to select redacted area");
 		}
 	}
 }
