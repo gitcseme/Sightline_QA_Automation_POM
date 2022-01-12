@@ -1959,7 +1959,9 @@ public class DocViewRedactions {
 
 		set_searchText().getWebElement().sendKeys("S");
 		Thread.sleep(2000); // needed here implicitly
+
 		Robot robot = new Robot();
+
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		Thread.sleep(4000); // needed here implicitly
@@ -1970,7 +1972,7 @@ public class DocViewRedactions {
 
 		if (hex.equalsIgnoreCase(Input.colorCodeHighlight)) // #dc5252
 		{
-			System.out.println("The color for the Highlighted text is verfied- Successfully");
+			System.out.println("The color for the Highlighted texts is verfied- Successfully");
 			base.passedStep("The color for the Highlighted text is verfied- Successfully");
 		} else {
 			System.out.println("The color for the Highlighted text is not-verfied - Failed");
@@ -2526,7 +2528,8 @@ public class DocViewRedactions {
 			base.waitForElement(get_textHighlightedColor());
 			String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
 			String hex = Color.fromString(color).asHex();
-			if (hex.equals(Input.keyWordHexCode))
+			System.err.println(hex);
+			if ((hex.equals(Input.keyWordHexCode)) || hex.equalsIgnoreCase(Input.colorCodeOfRed))
 				base.passedStep("The text for keyword is highlited in the document");
 			else
 				base.failedStep("The text for keyword is highlited in the document");
