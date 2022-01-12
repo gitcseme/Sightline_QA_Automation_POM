@@ -242,7 +242,7 @@ public class BaseClass {
 		Thread.sleep(3000);
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 		getSaveChangeRole().waitAndClick(10);
-		System.out.println("Impersnated from PA to RMU");
+		this.stepInfo("Impersnated from PA to RMU");
 		UtilityLog.info("Impersnated from PA to RMU");
 
 	}
@@ -2210,4 +2210,18 @@ public class BaseClass {
 		return renameString;
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @param ddElement
+	 * @return
+	 */
+	public String getCurrentDropdownValue(Element ddElement) {
+		WebElement dropdown=ddElement.getWebElement();
+		Select select= new Select(dropdown);
+	    WebElement selectedValue =select.getFirstSelectedOption();
+	    String selectedoption = selectedValue.getText();
+	    System.out.println("Selected element from dropdown: "+ selectedoption);
+	    stepInfo("Selected element from dropdown: "+ selectedoption);
+	    return selectedoption;
+	}
 }

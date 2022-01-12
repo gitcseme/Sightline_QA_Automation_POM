@@ -20169,4 +20169,21 @@ public class DocViewPage {
 		base.passedStep("The Terms Count is :" + getDocView_Terms().size());
 
 	}
+/*
+	 * @author steffy.d Method is to verify review mode text in docview page
+	 */
+	public void verifyReviewModeText() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_ReviewModeText());
+		String actualText = getDocView_ReviewModeText().getText();
+		if (actualText.contains("You are reviewing docs in Optimized Sort mode")) {
+			base.passedStep("Review mode text is displayed as expected");
+		} else if (actualText.contains("You are reviewing docs in Manual Sort mode")) {
+			base.passedStep("Review mode text is displayed as expected");
+		} else {
+			base.failedStep("Review mode text is not displayed as expected");
+		}
+	}
+
+
 }

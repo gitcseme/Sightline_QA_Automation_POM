@@ -845,32 +845,43 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element generateLoadFileToggleInTextComponent() {
+		return driver.FindElementByXPath("(//input[@id='chkProduceLoadFile']//parent::label//i)[2]");
+	}
+
+	public Element invalidURLErrorMessageInSharableLinks() {
+		return driver.FindElementByXPath("//p[contains(text(),' kindly contact system administrator.')]");
+	}
+
 	public Element invalidPasswordErrorMessageInSharableLinks() {
 		return driver.FindElementByXPath("//p[contains(text(),'Invalid Password')]");
 	}
-	
+
 	public Element nativeSectionBlueText() {
-		return driver.FindElementByXPath("//div[@id='NativeContainer']//strong[contains(text(),'To produce specific')]");
+		return driver
+				.FindElementByXPath("//div[@id='NativeContainer']//strong[contains(text(),'To produce specific')]");
 	}
-	
+
 	public Element continueButtonInBlankPageRemovalToggle() {
 		return driver.FindElementByXPath("//button[contains(text(),' Continue')]");
 	}
-	
+
 	public Element getBlankPageRemovalToggleConfirmationMessage() {
 		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p");
 	}
-	
+
 	public Element getBlankPageRemovalToggle() {
 		return driver.FindElementByXPath("//input[@id='chkTIFFBlankPageRemove']//parent::label//i");
 	}
-	
+
 	public Element getGenerateLoadFile_TIFF() {
 		return driver.FindElementByXPath("//input[@id='chkTIFFProduceLoadFile']");
 	}
-	public Element getRadioButton_GenerateTIFF() {		
+
+	public Element getRadioButton_GenerateTIFF() {
 		return driver.FindElementByXPath("(//input[@id='CommonTIFFSettings_FileType']//following-sibling::i)[1]");
-			}
+	}
+
 	public Element getProductionNameInManageView(String productionName) {
 		return driver.FindElementByXPath("*//span[contains(text(),'" + productionName + "')]");
 	}
@@ -880,37 +891,40 @@ public class ProductionPage {
 	}
 
 	public Element getProductionFromHomepage(String productionName) {
-		return driver.FindElementByXPath("//div[@id='cardCanvas']//a[contains(text(),'"+ productionName +"')]");
+		return driver.FindElementByXPath("//div[@id='cardCanvas']//a[contains(text(),'" + productionName + "')]");
 	}
 
 	public Element getProductionFromDropDown(String productionset) {
 		return driver
 				.FindElementByXPath("//select[@id='ProductionSets']//option[contains(text(),'" + productionset + "')]");
 	}
+
 	public Element getValueRedactedDocs() {
 		return driver.FindElementByXPath("//label[contains(text(),'Redacted Documents: ')]//following-sibling::label");
 	}
 
 	public Element getValueFirstLastDocs() {
-		return driver.FindElementByXPath("//label[contains(text(),'First and Last Doc IDs: ')]//following-sibling::label");
+		return driver
+				.FindElementByXPath("//label[contains(text(),'First and Last Doc IDs: ')]//following-sibling::label");
 	}
-	
+
 	public Element getValueNumberOfCustodians() {
-		return driver.FindElementByXPath("//label[contains(text(),'Number Of Custodians: ')]//following-sibling::label");
+		return driver
+				.FindElementByXPath("//label[contains(text(),'Number Of Custodians: ')]//following-sibling::label");
 	}
-	
+
 	public Element getAddFieldButtonInDAT() {
 		return driver.FindElementByXPath("//div//button[@class='btn btn-primary btn-add-row datAddNewRow']");
 	}
-	
+
 	public Element getValueTotalPagesCount() {
 		return driver.FindElementByXPath("//label[contains(text(),'Total Pages')]//following-sibling::label");
 	}
-	
+
 	public Element getValueTotalDocuments() {
 		return driver.FindElementByXPath("//label[contains(text(),'Total Documents')]//following-sibling::label");
 	}
-	
+
 	public Element getClkBtnDownloadDATFiles() {
 		return driver.FindElementByXPath("(//span[contains(text(),'Download DAT file')])[1]");
 	}
@@ -1333,8 +1347,8 @@ public class ProductionPage {
 	}
 
 	public Element getClkCheckBox_defaultRedactionTag() {
-		return driver.FindElementByXPath(
-				"(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])[1]");
+		return driver
+				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])[1]");
 	}
 
 	public Element getClkLink_selectingRedactionTags() {
@@ -2096,125 +2110,151 @@ public class ProductionPage {
 	public Element getBatesRange() {
 		return driver.FindElementByXPath("//div//label[text()='Bates Range:']//following-sibling::label");
 	}
+
 	public Element BurnRedactionCheckBox(String tag) {
 		return driver
-				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[contains(text(),'"+ tag +"')]");
+				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[contains(text(),'" + tag + "')]");
 	}
-	
-	
-	//Added by Gopinath -16/12/2021
+
+	// Added by Gopinath -16/12/2021
 	public ElementCollection getSelectProdcutionOptions() {
 		return driver.FindElementsByXPath("//select[@id='ProductionSets']//option");
 	}
+
 	public Element getDATFieldClassification3() {
 		return driver.FindElementById("TY_2");
 	}
-	
-	//Added by gopinath - 17/12/2021
+
+	// Added by gopinath - 17/12/2021
 	public Element getMarkIncompleteButton() {
 		return driver.FindElementByXPath("//a[text()='Mark Incomplete']");
 	}
-	
+
 	public Element getDocumentSelectionLink() {
 		return driver.FindElementById("TotalDocumentsCount");
 	}
-	
+
 	public Element NextBatesNumberPopup() {
 		return driver.FindElementById("hdrNextBatesNo");
 	}
+
 	public Element selectNextBatesNumber() {
 		return driver.FindElementByXPath("(//button[contains(text(),'Select')])[2]");
 	}
+
 	public Element getClickHereLinks() {
-		return driver.FindElementByXPath("//div[@id='divNextBatesNum']//label/a");}
-	
+		return driver.FindElementByXPath("//div[@id='divNextBatesNum']//label/a");
+	}
+
 	public Element getNoOfCustodians() {
-		return driver.FindElementByXPath("//label[contains(text(),'Number Of Custodians')]//following-sibling::label");}
+		return driver.FindElementByXPath("//label[contains(text(),'Number Of Custodians')]//following-sibling::label");
+	}
 
 	public Element getAdvancedInMP3Files() {
-		return driver.FindElementByXPath("//div[@id='MP3FilesContainer']//div[@class='advanced-dd-toggle']");}
+		return driver.FindElementByXPath("//div[@id='MP3FilesContainer']//div[@class='advanced-dd-toggle']");
+	}
 
-	
-	//added by Aathith
+	// added by Aathith
 	public Element getDAT_FieldClassification(int i) {
-		return driver.FindElementById("TY_"+i+"");
+		return driver.FindElementById("TY_" + i + "");
 	}
+
 	public Element getDAT_SourceField(int i) {
-		return driver.FindElementById("SF_"+i+"");
+		return driver.FindElementById("SF_" + i + "");
 	}
+
 	public Element getDAT_DATField(int i) {
-		return driver.FindElementById("DATFL_"+i+"");
+		return driver.FindElementById("DATFL_" + i + "");
 	}
+
 	public Element getLeftFooterBranding() {
 		return driver.FindElementById("LeftFooterBranding");
 	}
+
 	public Element getRightFooterBranding() {
 		return driver.FindElementById("RightFooterBranding");
 	}
+
 	public Element getEnterBranding(int i) {
-		return driver.FindElementByXPath("(//div[@placeholder='Enter default branding for the selected location on the page.'])["+i+"]");
+		return driver.FindElementByXPath(
+				"(//div[@placeholder='Enter default branding for the selected location on the page.'])[" + i + "]");
 	}
+
 	public Element getDoNotProduceFullContentTiff() {
 		return driver.FindElementByXPath("//input[@id='chkShouldSkipTIFFGeneration']//following-sibling::i");
 	}
+
 	public Element getClkCheckBox_RedactionTag(String redactTag) {
-		return driver.FindElementByXPath(
-				"//div[@id='TIFFRedactiontreeFolder']/ul/li/ul/li/a[text()='"+redactTag+"']");
+		return driver
+				.FindElementByXPath("//div[@id='TIFFRedactiontreeFolder']/ul/li/ul/li/a[text()='" + redactTag + "']");
 	}
+
 	public Element getPrivPlaceHolderToggleAtPrivGaurdPage() {
 		return driver.FindElementByXPath("//*[@id='chkIsPrivilegedPlaceholderEnabled']/../i");
 	}
+
 	public Element getSelectTagBtnInPrivGaurd() {
 		return driver.FindElementByXPath("//*[@id='btnGuardSelectPrevTags']");
 	}
+
 	public Element getPrivPlaceholderTextboInPrivGaurd() {
 		return driver.FindElementByXPath("//*[@class='redactor-editor']");
 	}
+
 	public Element getTagInPrivGaurd(String tagname) {
-		return driver.FindElementByXPath("//*[text()='"+tagname+"']");
+		return driver.FindElementByXPath("//*[text()='" + tagname + "']");
 	}
+
 	public Element getSaveButtonINPrivGuard() {
 		return driver.FindElementByXPath("//button[@id='btnSave']");
 	}
+
 	public Element getTiffSinglePage() {
 		return driver.FindElementByXPath("//*[@id='rbdSinglePageType']/../i");
 	}
+
 	public Element getSaveButton() {
 		return driver.FindElementByXPath("//*[text()='Save']");
 	}
+
 	public Element getProductionCreatedTimeInGridView(String production) {
-		return driver.FindElementByXPath("//*[text()='"+production+"']/../td[9]");
+		return driver.FindElementByXPath("//*[text()='" + production + "']/../td[9]");
 	}
+
 	public Element getClkCheckBox_1stdefaultRedactionTag() {
 		return driver.FindElementByXPath("(//ul[@class='jstree-children']//a[text()='Default Redaction Tag'])[1]");
 	}
+
 	public Element text(String text) {
-		return driver.FindElementByXPath("//*[contains(text(),"+text+")]");
+		return driver.FindElementByXPath("//*[contains(text()," + text + ")]");
 	}
+
 	public Element getRegenarateLinkBtn() {
 		return driver.FindElementByXPath("//button[@class='btn btn-primary btn-sm']");
 	}
 	
 	
 	public Element blankPageRemovalMessage() {
-		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']/p");}
-	
-	
+		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']/p");
+	}
+
 	public Element getContinueBtn() {
-		return driver.FindElementById("bot1-Msg1");}
-	
+		return driver.FindElementById("bot1-Msg1");
+	}
+
 	public Element getFirstToggle() {
-		return driver.FindElementByXPath("(//a//..//a[@class='dropdown-toggle'])[1]");}
-	
-	
-	
+		return driver.FindElementByXPath("(//a//..//a[@class='dropdown-toggle'])[1]");
+	}
+
 	public ElementCollection getFirstDropdownInCompletedProduction() {
-		return driver.FindElementsByXPath("(//a/following-sibling::dl)[1]//dt");}
-	
+		return driver.FindElementsByXPath("(//a/following-sibling::dl)[1]//dt");
+	}
+
 	public Element getTIFF_RightEnterBranding() {
 		return driver.FindElementByXPath(
 				".//*[@id='divRightHeaderBranding']//div[@class='redactor-editor redactor-placeholder']");
 	}
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -4595,48 +4635,48 @@ public class ProductionPage {
 	 */
 	public void fillingTIFFSection(String tagname, String tagnametech) throws InterruptedException {
 
-			base.waitForElement(getTIFFChkBox());
-			getTIFFChkBox().waitAndClick(5);
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().waitAndClick(5);
 
-			driver.scrollingToBottomofAPage();
+		driver.scrollingToBottomofAPage();
 
-			base.waitForElement(getTIFFTab());
-			getTIFFTab().Click();
-			driver.scrollPageToTop();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+		driver.scrollPageToTop();
 
-			base.waitForElement(getTIFF_CenterHeaderBranding());
-			getTIFF_CenterHeaderBranding().waitAndClick(10);
+		base.waitForElement(getTIFF_CenterHeaderBranding());
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
 
-			base.waitForElement(getTIFF_EnterBranding());
-			new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
-			getTIFF_EnterBranding().SendKeys(searchString4);
+		base.waitForElement(getTIFF_EnterBranding());
+		new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
+		getTIFF_EnterBranding().SendKeys(searchString4);
 
-			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
 
-			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-			getTIFF_EnableforPrivilegedDocs().isDisplayed();
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().isDisplayed();
 
-			base.waitForElement(getPriveldge_SelectTagButton());
-			getPriveldge_SelectTagButton().waitAndClick(10);
+		base.waitForElement(getPriveldge_SelectTagButton());
+		getPriveldge_SelectTagButton().waitAndClick(10);
 
-			driver.waitForPageToBeReady();
+		driver.waitForPageToBeReady();
 
-			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
-			base.waitForElement(getPriveldge_TagTree(tagname));
-			getPriveldge_TagTree(tagname).waitAndClick(20);
+		driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+		base.waitForElement(getPriveldge_TagTree(tagname));
+		getPriveldge_TagTree(tagname).waitAndClick(20);
 
-			base.waitForElement(getPriveldge_TagTree_SelectButton());
-			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+		base.waitForElement(getPriveldge_TagTree_SelectButton());
+		getPriveldge_TagTree_SelectButton().waitAndClick(10);
 
-			driver.waitForPageToBeReady();
+		driver.waitForPageToBeReady();
 
-			base.waitForElement(getPriveldge_TextArea());
-			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
-			getPriveldge_TextArea().SendKeys(tagNameTechnical);
+		base.waitForElement(getPriveldge_TextArea());
+		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+		getPriveldge_TextArea().SendKeys(tagNameTechnical);
 
-			driver.scrollingToBottomofAPage();
-			base.stepInfo("TIFF section is filled");
-		
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("TIFF section is filled");
+
 	}
 
 	/**
@@ -4914,6 +4954,7 @@ public class ProductionPage {
 		Thread.sleep(1000);
 		getRedactedTagTextArea().SendKeys("Updated Redaction Tag");
 	}
+
 	/**
 	 * @Author Indium-Sowndarya.Velraj
 	 */
@@ -5315,7 +5356,6 @@ public class ProductionPage {
 		gettextRedactionPlaceHolder().SendKeys(searchString4);
 	}
 
-
 	/**
 	 * Author Indium Sowndarya.Velraj
 	 */
@@ -5546,9 +5586,11 @@ public class ProductionPage {
 
 	/**
 	 * @Author Indium-Sowndarya.Velraj.Modified on 01/06/22
-	 * @param beginningBates added  as a argument to avoid production failure in batch run
+	 * @param beginningBates added as a argument to avoid production failure in
+	 *                       batch run
 	 */
-	public void fillingNumberingAndSortingPage(String prefixId, String suffixId,String beginningBates) throws InterruptedException {
+	public void fillingNumberingAndSortingPage(String prefixId, String suffixId, String beginningBates)
+			throws InterruptedException {
 
 		base.waitForElement(getBeginningBates());
 		driver.waitForPageToBeReady();
@@ -5667,11 +5709,11 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 * @Author Indium-Sowndarya.Velraj
 	 */
 	public void fillingDocumentSelectionPage(String foldername) throws InterruptedException {
-		
+
 		base.waitForElement(getFolderRadioButton());
 		getFolderRadioButton().waitAndClick(10);
 
@@ -5682,7 +5724,7 @@ public class ProductionPage {
 			}
 		}), Input.wait120);
 		getSelectFolder(foldername).waitAndClick(10);
-		
+
 		driver.scrollingToBottomofAPage();
 
 		base.waitForElement(getIncludeFamilies());
@@ -5751,7 +5793,7 @@ public class ProductionPage {
 		}), Input.wait30);
 		getbtnProductionGuardMarkComplete().waitAndClick(5);
 
-		if(getOkButton().isElementAvailable(3)) {
+		if (getOkButton().isElementAvailable(3)) {
 			getOkButton().waitAndClick(5);
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -6258,16 +6300,16 @@ public class ProductionPage {
 		base.stepInfo("Navigate to next page");
 	}
 
-
 	/**
 	 * @throws InterruptedException
 	 * @Author Indium-Sowndarya.Velraj.Modified on 01/06/22
-	 * @param beginningBates added  as a argument to avoid production failure in batch run
+	 * @param beginningBates added as a argument to avoid production failure in
+	 *                       batch run
 	 */
 	public void InsertingDataFromNumberingToGenerateWithContinuePopup(String prefixID, String suffixID,
-			String foldername, String productionname,String beginningBates) throws InterruptedException {
+			String foldername, String productionname, String beginningBates) throws InterruptedException {
 
-		fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		navigateToNextSection();
 		fillingDocumentSelectionPage(foldername);
 		navigateToNextSection();
@@ -7278,12 +7320,13 @@ public class ProductionPage {
 	/**
 	 * @throws InterruptedException
 	 * @Author Indium-Sowndarya.Velraj
-	 * @param beginningBates added  as a argument to avoid production failure in batch run
+	 * @param beginningBates added as a argument to avoid production failure in
+	 *                       batch run
 	 */
 	public void InsertingDataFromNumberingToGenerate(String prefixID, String suffixID, String foldername,
-			String productionname,String beginningBates ) throws InterruptedException {
+			String productionname, String beginningBates) throws InterruptedException {
 
-		fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		navigateToNextSection();
 		fillingDocumentSelectionPage(foldername);
 		navigateToNextSection();
@@ -8440,6 +8483,7 @@ public class ProductionPage {
 		base.passedStep("Draft Displayed successfully");
 
 	}
+
 	/**
 	 * @Author Indium-Sowndarya.Velraj
 	 */
@@ -8907,30 +8951,33 @@ public class ProductionPage {
 		base.clickButton(getCalculatedCheckBoxSelection(fieldValue));
 		base.clickButton(getAddSelected());
 	}
-	/**
-	* @Author @author Indium-Baskar Date:31/8/2021 Modified date:N/A
-	* @Description : Click preview tab button in summary and preview tab
-	*/
-	// Reusable method for clicking the preview button and visibility of element presence
-	public void viewingPreviewButtonInSummaryTab() throws InterruptedException {
-	if (getbtnPreview().isElementAvailable(5)) {
-	try {
-	base.waitForElement(getbtnPreview());
-	if (getbtnPreview().Enabled() && getbtnPreview().isDisplayed()) {
-	softAssertion.assertEquals(getbtnPreview().isDisplayed().booleanValue(), true);
-	getbtnPreview().waitAndClick(10);
-	base.passedStep("clicking preview button and verifying the standard pdf format");
-	} else {
-	base.stepInfo("Preview button is not displayed in summary and preview tab");
-	}
-	driver.waitForPageToBeReady();
-	} catch (Exception e) {
-	e.printStackTrace();
-	}
-	} else {
-	base.passedStep("Preview button is not displayed in summary and preview tab");
 
-	}}
+	/**
+	 * @Author @author Indium-Baskar Date:31/8/2021 Modified date:N/A
+	 * @Description : Click preview tab button in summary and preview tab
+	 */
+	// Reusable method for clicking the preview button and visibility of element
+	// presence
+	public void viewingPreviewButtonInSummaryTab() throws InterruptedException {
+		if (getbtnPreview().isElementAvailable(5)) {
+			try {
+				base.waitForElement(getbtnPreview());
+				if (getbtnPreview().Enabled() && getbtnPreview().isDisplayed()) {
+					softAssertion.assertEquals(getbtnPreview().isDisplayed().booleanValue(), true);
+					getbtnPreview().waitAndClick(10);
+					base.passedStep("clicking preview button and verifying the standard pdf format");
+				} else {
+					base.stepInfo("Preview button is not displayed in summary and preview tab");
+				}
+				driver.waitForPageToBeReady();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			base.passedStep("Preview button is not displayed in summary and preview tab");
+
+		}
+	}
 
 	/**
 	 * @Author @author Indium-Baskar Date:1/9/2021 Modified date:N/A
@@ -9118,7 +9165,6 @@ public class ProductionPage {
 		Reporter.log("Expected message - " + ExpectedMsg, true);
 
 	}
-	
 
 	/**
 	 * @author Sowndarya.velraj
@@ -9133,7 +9179,7 @@ public class ProductionPage {
 
 		base.stepInfo("click on gear icon of the current production");
 		driver.waitForPageToBeReady();
-		
+
 		getProdname_Gearicon(productionname).waitAndClick(10);
 
 		base.stepInfo("click on save as Template");
@@ -9151,7 +9197,7 @@ public class ProductionPage {
 		getDeleteBtn(templateName).ScrollTo();
 		getDeleteBtn(templateName).isElementAvailable(5);
 		base.stepInfo("Delete option is displayed");
-		
+
 		getViewBtn(templateName).ScrollTo();
 		getViewBtn(templateName).isElementAvailable(5);
 		base.stepInfo("View option is displayed");
@@ -9174,7 +9220,7 @@ public class ProductionPage {
 		base.stepInfo("Filtering the Completed production");
 
 		base.waitForElement(getFilterByDRAFT());
-		
+
 		getFilterByDRAFT().waitAndClick(10);
 		base.stepInfo("Filtering avoids draft status production");
 
@@ -9194,11 +9240,12 @@ public class ProductionPage {
 		getFilterDropDown().waitAndClick(10);
 
 		driver.waitForPageToBeReady();
-		
+
 		String completedProd = getProductionFromHomepage(productionname).getText();
 		System.out.println("completed production is:" + completedProd);
 		base.passedStep("Filtered out completed status production only");
 	}
+
 	/**
 	 * @author Sowndarya.velraj
 	 * @Description : Method to select the created productionset from the dropdown
@@ -11968,6 +12015,7 @@ public class ProductionPage {
 		}
 		System.out.println("Preparing Data status displayed for " + productionFromHomePage);
 	}
+
 	/**
 	 * Author sowndarya.velraj
 	 * 
@@ -12448,7 +12496,7 @@ public class ProductionPage {
 		// enable burn redaction
 		base.waitForElement(getClk_burnReductiontoggle());
 		getClk_burnReductiontoggle().Click();
-		
+
 		base.waitForElement(getClkLink_selectingRedactionTags());
 		getClkLink_selectingRedactionTags().isDisplayed();
 		getClkLink_selectingRedactionTags().waitAndClick(10);
@@ -12456,11 +12504,11 @@ public class ProductionPage {
 		base.waitForElement(getClkBtn_selectingRedactionTags());
 		getClkBtn_selectingRedactionTags().isDisplayed();
 		getClkBtn_selectingRedactionTags().waitAndClick(10);
-		
+
 		base.waitForElement(getClkCheckBox_defaultRedactionTag());
 		getClkCheckBox_defaultRedactionTag().isDisplayed();
 		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
-		
+
 		base.waitForElement(getClk_selectBtn());
 		getClk_selectBtn().Click();
 
@@ -12468,6 +12516,7 @@ public class ProductionPage {
 		getRedactedTagTextArea().isDisplayed();
 		getRedactedTagTextArea().SendKeys(Input.searchString1);
 	}
+
 	/**
 	 * @author Gopinath
 	 * @description : Method for verifying DAT and Pdf field.
@@ -13744,10 +13793,11 @@ public class ProductionPage {
 		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
 		base.stepInfo("Generate production page is filled");
 	}
+
 	/**
 	 * @author : Brundha
 	 * @Description: Method for adding the saved template in basic info tab.
-	 *              
+	 * 
 	 */
 	public void savedTemplateAndNewProdcution(String Productionname, String Templatename) {
 		try {
@@ -13769,49 +13819,54 @@ public class ProductionPage {
 			base.failedStep("Exception occcured while  filling template" + e.getMessage());
 			e.printStackTrace();
 		}
-		
-		
+
 	}
+
 	/**
 	 * @author : Brundha
-	 * @Description: Method for verifying the text in prefix and suffix in numbering and sorting page
-	 *              
-	 */ 
+	 * @Description: Method for verifying the text in prefix and suffix in numbering
+	 *               and sorting page
+	 * 
+	 */
 	public void verifyingPrefixAndSuffixText(String prefixID, String suffixID) {
-	  try {
-		base.waitForElement(getBeginningBates());
-		  driver.waitForPageToBeReady();
-		  num = getRandomNumber(2);
-		  System.out.println(num);
-		  getBeginningBates().SendKeys(num);
-          driver.waitForPageToBeReady();
-		  base.waitForElement(gettxtBeginningBatesIDPrefix());
-		  driver.waitForPageToBeReady();
-		 String Prefix= gettxtBeginningBatesIDPrefix().getText();
-		 System.out.println(Prefix);
-		 System.out.println(prefixID);
-		 if(Prefix.equals(prefixID)) {
-			 base.passedStep(""+Prefix+" and "+prefixID+"  text is as expected"); }
-		 else {base.failedStep(""+Prefix+" and "+prefixID+"  text is as expected");}
-		 driver.waitForPageToBeReady();
-		 base.waitForElement(gettxtBeginningBatesIDSuffix());
-		 String Suffix= gettxtBeginningBatesIDSuffix().getText();
-		 System.out.println(Suffix);
-		 System.out.println(suffixID);
-		 if(Suffix.equals(prefixID)) {
-			 base.passedStep(""+Suffix+" and "+suffixID+"  text is as expected"); }
-		 else {base.failedStep(""+Suffix+" and "+suffixID+"  text is as expected");}
-	} catch (Exception e) {
-		base.failedStep("Exception occcured while handling numbering and sorting tab" + e.getMessage());
-		e.printStackTrace();
+		try {
+			base.waitForElement(getBeginningBates());
+			driver.waitForPageToBeReady();
+			num = getRandomNumber(2);
+			System.out.println(num);
+			getBeginningBates().SendKeys(num);
+			driver.waitForPageToBeReady();
+			base.waitForElement(gettxtBeginningBatesIDPrefix());
+			driver.waitForPageToBeReady();
+			String Prefix = gettxtBeginningBatesIDPrefix().getText();
+			System.out.println(Prefix);
+			System.out.println(prefixID);
+			if (Prefix.equals(prefixID)) {
+				base.passedStep("" + Prefix + " and " + prefixID + "  text is as expected");
+			} else {
+				base.failedStep("" + Prefix + " and " + prefixID + "  text is as expected");
+			}
+			driver.waitForPageToBeReady();
+			base.waitForElement(gettxtBeginningBatesIDSuffix());
+			String Suffix = gettxtBeginningBatesIDSuffix().getText();
+			System.out.println(Suffix);
+			System.out.println(suffixID);
+			if (Suffix.equals(prefixID)) {
+				base.passedStep("" + Suffix + " and " + suffixID + "  text is as expected");
+			} else {
+				base.failedStep("" + Suffix + " and " + suffixID + "  text is as expected");
+			}
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while handling numbering and sorting tab" + e.getMessage());
+			e.printStackTrace();
+		}
+
 	}
-			
-	}
-	
+
 	/**
 	 * @author : Brundha
 	 * @Description: method for applying completed status in the production filter
-	 *             
+	 * 
 	 */
 	public void addProductionFilter() {
 		try {
@@ -13837,7 +13892,7 @@ public class ProductionPage {
 				}
 			}), Input.wait30);
 			getFilterByFAILED().waitAndClick(10);
-			
+
 			Thread.sleep(2000);
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -13855,64 +13910,64 @@ public class ProductionPage {
 
 	}
 
-
-
 	/**
 	 * @author Brundha
 	 * @description :filling PDF section.
 	 * 
 	 */
 	public void fillingPDFSection() {
-		
-			try {
-				driver.waitForPageToBeReady();
-				base.waitForElement(getTIFFChkBox());
-				base.waitTillElemetToBeClickable(getTIFFChkBox());
-				getTIFFChkBox().Click();
-				driver.scrollingToBottomofAPage();
-				driver.waitForPageToBeReady();
-				base.waitForElement(getTIFFTab());
-				base.waitTillElemetToBeClickable(getTIFFTab());
-				getTIFFTab().Click();
-				driver.waitForPageToBeReady();
-				driver.scrollPageToTop();
-				driver.waitForPageToBeReady();
-				getPDFGenerateRadioButton().ScrollTo();
-				base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
-				getPDFGenerateRadioButton().Click();
-				getTIFF_EnableforPrivilegedDocs().ScrollTo();
-			} catch (Exception e) {
-				base.failedStep("Exception occcured while handling pdf section" + e.getMessage());
-				e.printStackTrace();
-			}
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			base.waitTillElemetToBeClickable(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFTab());
+			base.waitTillElemetToBeClickable(getTIFFTab());
+			getTIFFTab().Click();
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getPDFGenerateRadioButton().ScrollTo();
+			base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+			getPDFGenerateRadioButton().Click();
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while handling pdf section" + e.getMessage());
+			e.printStackTrace();
+		}
 
 	}
+
 	/**
 	 * @author Brundha
 	 * @description :filling burn redaction.
 	 * 
 	 */
 	public void disablePrivDocAndEnableBurnRedaction() {
-			try {
-				base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-				driver.waitForPageToBeReady();
-				getTIFF_EnableforPrivilegedDocs().Click();
-				getClk_burnReductiontoggle().ScrollTo();
-				base.waitTillElemetToBeClickable(getClk_burnReductiontoggle());
-				getClk_burnReductiontoggle().Click();
-				getClkRadioBtn_selectRedactionTags().ScrollTo();
-				driver.waitForPageToBeReady();
-				base.waitForElement(getClkRadioBtn_selectRedactionTags());
-				getClkRadioBtn_selectRedactionTags().waitAndClick(10);
-				base.waitForElement(getClkCheckBox_defaultRedactionTag());
-				getClkCheckBox_defaultRedactionTag().isDisplayed();
-				getClkCheckBox_defaultRedactionTag().waitAndClick(10);
-			} catch (Exception e) {
-				base.failedStep("Exception occcured while handling priv doc" + e.getMessage());
-				e.printStackTrace();
-			}
+		try {
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			driver.waitForPageToBeReady();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			getClk_burnReductiontoggle().ScrollTo();
+			base.waitTillElemetToBeClickable(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+			getClkRadioBtn_selectRedactionTags().ScrollTo();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClkRadioBtn_selectRedactionTags());
+			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+			base.waitForElement(getClkCheckBox_defaultRedactionTag());
+			getClkCheckBox_defaultRedactionTag().isDisplayed();
+			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while handling priv doc" + e.getMessage());
+			e.printStackTrace();
+		}
 
 	}
+
 	/**
 	 * @author Brundha
 	 * @description :method for filling burn redaction with redaction tag.
@@ -13948,29 +14003,33 @@ public class ProductionPage {
 	 * 
 	 */
 	public void verfyingDATCheckBox() {
-		
-       try {
-    	   driver.waitForPageToBeReady();
-		   base.waitForElement(getDATTab());
-		   getDATTab().Click();
-		   base.waitForElement(getDAT_FieldClassification1());
-		   if(getDAT_FieldClassification1().isDisplayed()) {
-			   base.passedStep("DAT checkBox is shown as Expected");}
-		   else {base.failedStep("DAT checkBox is not shown  as Expected");}
-		   driver.waitForPageToBeReady();
-		   base.waitForElement(getDATTab());
-		   getDATTab().Click();
-		   base.waitForElement(getDAT_FieldClassification1());
-		   if(!getDAT_FieldClassification1().isDisplayed()) {
-			   base.passedStep("DAT checkBox is Hid as Expected");}
-		   else {base.failedStep("DAT checkBox is not hid  as Expected");}
-	} catch (Exception e) {
-		base.failedStep("Exception occcured while handling DAT section" + e.getMessage());
-		e.printStackTrace();
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDATTab());
+			getDATTab().Click();
+			base.waitForElement(getDAT_FieldClassification1());
+			if (getDAT_FieldClassification1().isDisplayed()) {
+				base.passedStep("DAT checkBox is shown as Expected");
+			} else {
+				base.failedStep("DAT checkBox is not shown  as Expected");
+			}
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDATTab());
+			getDATTab().Click();
+			base.waitForElement(getDAT_FieldClassification1());
+			if (!getDAT_FieldClassification1().isDisplayed()) {
+				base.passedStep("DAT checkBox is Hid as Expected");
+			} else {
+				base.failedStep("DAT checkBox is not hid  as Expected");
+			}
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while handling DAT section" + e.getMessage());
+			e.printStackTrace();
+		}
+
 	}
 
-		
-	}
 	/**
 	 * @author :Brundha
 	 * @Description: Method for checking status of production from homepage
@@ -13980,23 +14039,22 @@ public class ProductionPage {
 	public void verifyingProductionStatusInHomePage(String statusMsg, String productionname) {
 		String productionFromHomePage = null;
 
-		// Verifying  production status  from home page
+		// Verifying production status from home page
 		for (int i = 0; i < 500; i++) {
 			productionFromHomePage = getProductionFromHomePage(productionname).getText();
 			System.out.println("Preparing Data status displayed for " + productionFromHomePage);
 			if (productionFromHomePage.equals(statusMsg)) {
-				base.passedStep(statusMsg +  "status displayed");
+				base.passedStep(statusMsg + "status displayed");
 				break;
 			} else if (i == 499) {
 				base.failedStep(statusMsg + "status not displayed");
 			} else {
 				driver.waitForPageToBeReady();
-				
+
 				getRefreshButton().waitAndClick(5);
 			}
 		}
 	}
-
 
 	/**
 	 * @author Brundha
@@ -14004,49 +14062,50 @@ public class ProductionPage {
 	 * 
 	 */
 	public void SelectPDFGenerateRadioButton() {
-			try {
-				base.waitForElement(getTIFFChkBox());
-				base.waitTillElemetToBeClickable(getTIFFChkBox());
-				getTIFFChkBox().Click();
-				driver.scrollingToBottomofAPage();
-				base.waitTillElemetToBeClickable(getTIFFTab());
-				getTIFFTab().Click();
-				driver.waitForPageToBeReady();
-				driver.scrollPageToTop();
-				getPDFGenerateRadioButton().ScrollTo();
-				base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
-				getPDFGenerateRadioButton().Click();
-				base.stepInfo("PDF section is filled");
-			} catch (Exception e) {
-				base.failedStep("Exception occcured while filling generate pdf radio button" + e.getMessage());
-				e.printStackTrace();
-			}
+		try {
+			base.waitForElement(getTIFFChkBox());
+			base.waitTillElemetToBeClickable(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitTillElemetToBeClickable(getTIFFTab());
+			getTIFFTab().Click();
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			getPDFGenerateRadioButton().ScrollTo();
+			base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+			getPDFGenerateRadioButton().Click();
+			base.stepInfo("PDF section is filled");
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while filling generate pdf radio button" + e.getMessage());
+			e.printStackTrace();
 		}
-	
+	}
+
 	/**
 	 * @author Brundha
 	 * @description :selecting pdf generate radio button
 	 * 
 	 */
 	public void fillingPrivledgedDocForPDFSection(String tagname, String tagnameprev) {
-			try {
-				
-				getTIFF_EnableforPrivilegedDocs().ScrollTo();
-				base.waitForElement(getPriveldge_SelectTagButton());
-				getPriveldge_SelectTagButton().waitAndClick(10);
-				base.waitTillElemetToBeClickable(getPriveldge_TagTree(tagname));
-				getPriveldge_TagTree(tagname).waitAndClick(10);
-				getPriveldge_TagTree_SelectButton().Click();
-                base.waitForElement(getPriveldge_TextArea());
-				new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
-				getPriveldge_TextArea().SendKeys(tagNameTechnical);
-				driver.scrollingToBottomofAPage();
-				base.stepInfo("PDF section is filled with privileged Doc");
-			} catch (Exception e) {
-				base.failedStep("Exception occcured while filling priv doc in pdf section" + e.getMessage());
-				e.printStackTrace();
-			}
+		try {
+
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			base.waitForElement(getPriveldge_SelectTagButton());
+			getPriveldge_SelectTagButton().waitAndClick(10);
+			base.waitTillElemetToBeClickable(getPriveldge_TagTree(tagname));
+			getPriveldge_TagTree(tagname).waitAndClick(10);
+			getPriveldge_TagTree_SelectButton().Click();
+			base.waitForElement(getPriveldge_TextArea());
+			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+			getPriveldge_TextArea().SendKeys(tagNameTechnical);
+			driver.scrollingToBottomofAPage();
+			base.stepInfo("PDF section is filled with privileged Doc");
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while filling priv doc in pdf section" + e.getMessage());
+			e.printStackTrace();
 		}
+	}
+
 	/**
 	 * @author Brundha
 	 * @description :method for verifying the natively produced docs toggle
@@ -14060,34 +14119,34 @@ public class ProductionPage {
 			driver.scrollingToBottomofAPage();
 			base.waitTillElemetToBeClickable(getTIFFTab());
 			getTIFFTab().Click();
-			driver.waitForPageToBeReady();		
-			String color = driver.FindElement(By.xpath("//input[@id='chkShouldSkipTIFFGeneration']//following-sibling::i")).GetCssValue("background-color");
+			driver.waitForPageToBeReady();
+			String color = driver
+					.FindElement(By.xpath("//input[@id='chkShouldSkipTIFFGeneration']//following-sibling::i"))
+					.GetCssValue("background-color");
 			System.out.println(color);
 			String ExpectedColor = Color.fromString(color).asHex();
 			System.out.println(ExpectedColor);
-			String ActualColor="#e54036";	
-			if(ActualColor.equals(ExpectedColor)) {
+			String ActualColor = "#e54036";
+			if (ActualColor.equals(ExpectedColor)) {
 				base.passedStep("Natively produced docs option is disabled  by default");
-			}else {
+			} else {
 				base.failedStep("Natively produced docs option is not  disabled  by default");
-				}
+			}
 		} catch (Exception e) {
 			base.failedStep("Exception occcured while verifying natively produced docs toggle" + e.getMessage());
 			e.printStackTrace();
 		}
 
-
 	}
 
-	
 	/**
 	 * @author Gopinath
 	 * @description : Method to fill native section with tags.
 	 * @param tag1 : tag1 is String value name of tag.
-	 * @param tag2  : tag2 is String value that name of tag.
+	 * @param tag2 : tag2 is String value that name of tag.
 	 * 
 	 */
-	public void fillingNativeSectionWithTags(String tag1,String tag2) throws InterruptedException {
+	public void fillingNativeSectionWithTags(String tag1, String tag2) throws InterruptedException {
 		try {
 			base.waitForElement(getNativeChkBox());
 			getNativeChkBox().isElementAvailable(10);
@@ -14123,8 +14182,9 @@ public class ProductionPage {
 
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to navigating To Export Page.
-	 * @param exportName : exportName is String value that name of export need to perform export production.
+	 * @Description : Method to navigating To Export Page.
+	 * @param exportName : exportName is String value that name of export need to
+	 *                   perform export production.
 	 */
 	public void navigateToExportPageByNewExportSet(String exportName) {
 		try {
@@ -14141,25 +14201,26 @@ public class ProductionPage {
 			getProdExport_ProductionSets().isElementAvailable(15);
 			List<WebElement> selectProductionOptions = getSelectProdcutionOptions().FindWebElements();
 			for (WebElement option : selectProductionOptions) {
-			    if (option.getText().contains(exportName)) {
-			        option.click();
-			        break;
-			    }
+				if (option.getText().contains(exportName)) {
+					option.click();
+					break;
+				}
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while navigating To Export Page."+e.getMessage() );
+			base.failedStep("Exception occured while navigating To Export Page." + e.getMessage());
 		}
 	}
-	
 
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to enter Basic Details Stage By Selecting Production.
-	 * @param exportName : exportName is String value that name of export need to perform export production.
-	 * @param proudctionName : proudctionName is String value that already completed committed production name.
+	 * @Description : Method to enter Basic Details Stage By Selecting Production.
+	 * @param exportName     : exportName is String value that name of export need
+	 *                       to perform export production.
+	 * @param proudctionName : proudctionName is String value that already completed
+	 *                       committed production name.
 	 */
-	public void enterBasicDetailsStageBySelectingProduction(String exportName,String proudctionName) {
+	public void enterBasicDetailsStageBySelectingProduction(String exportName, String proudctionName) {
 		try {
 			getProdExport_AddaNewExportSet().isElementAvailable(15);
 			getProdExport_AddaNewExportSet().waitAndClick(10);
@@ -14173,46 +14234,50 @@ public class ProductionPage {
 			driver.scrollPageToTop();
 			getBasicInfoMarkComplete().isElementAvailable(15);
 			getBasicInfoMarkComplete().waitAndClick(10);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while entering Basic Details Stage By Selecting Production.."+e.getMessage() );
+			base.failedStep(
+					"Exception occured while entering Basic Details Stage By Selecting Production.." + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to click On Complete And Verify Success Message.
+	 * @Description : Method to click On Complete And Verify Success Message.
 	 */
 	public void clickOnCompleteAndVerifySuccessMessage() throws InterruptedException {
 		try {
-		driver.scrollPageToTop();
-		base.waitForElement(getMarkCompleteLink());
-		getMarkCompleteLink().waitAndClick(10);
+			driver.scrollPageToTop();
+			base.waitForElement(getMarkCompleteLink());
+			getMarkCompleteLink().waitAndClick(10);
 
-		System.out.println("Clicked on Mark Complete Button..");
-		base.VerifySuccessMessage("Mark Complete successful");
-		driver.waitForPageToBeReady();
+			System.out.println("Clicked on Mark Complete Button..");
+			base.VerifySuccessMessage("Mark Complete successful");
+			driver.waitForPageToBeReady();
 
-		base.waitForElement(getNextButton());
-		getNextButton().Enabled();
-		getNextButton().waitAndClick(10);
+			base.waitForElement(getNextButton());
+			getNextButton().Enabled();
+			getNextButton().waitAndClick(10);
 
-		base.stepInfo("Navigate to next page");
-		}catch(Exception e) {
+			base.stepInfo("Navigate to next page");
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured  click On Complete And Verify Success Message..."+e.getMessage() );
-		
+			base.failedStep("Exception occured  click On Complete And Verify Success Message..." + e.getMessage());
+
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to add DAT field at third row.
-	 * @param fieldClassification : fieldClassification is String value that field classification need to select from drop down.
-	 * @param sourceField : sourceField is String value that source field need to select from drop down.
-	 * @param datField : datField is String value need to enter in dat text field.
+	 * @Description : Method to add DAT field at third row.
+	 * @param fieldClassification : fieldClassification is String value that field
+	 *                            classification need to select from drop down.
+	 * @param sourceField         : sourceField is String value that source field
+	 *                            need to select from drop down.
+	 * @param datField            : datField is String value need to enter in dat
+	 *                            text field.
 	 */
-	public void addDATFieldAtThirdRow(String fieldClassification,String sourceField,String datField) {
+	public void addDATFieldAtThirdRow(String fieldClassification, String sourceField, String datField) {
 		try {
 			addNewFieldOnDAT();
 			getDATFieldClassification3().isElementAvailable(10);
@@ -14221,26 +14286,30 @@ public class ProductionPage {
 			getDAT_SourceField3().selectFromDropdown().selectByVisibleText(sourceField);
 			getDAT_DATField3().isElementAvailable(10);
 			getDAT_DATField3().SendKeys(datField);
-		base.stepInfo("Dat section is filled with "+sourceField);
-		}catch(Exception e) {
+			base.stepInfo("Dat section is filled with " + sourceField);
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured add DAT Field At Third Row."+e.getMessage() );
-		
+			base.failedStep("Exception occured add DAT Field At Third Row." + e.getMessage());
+
 		}
 
 	}
-	
+
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to add DAT Field At second Row.
-	 * @param fieldClassification : fieldClassification is String value that field classification need to select from drop down.
-	 * @param sourceField : sourceField is String value that source field need to select from drop down.
-	 * @param datField : datField is String value need to enter in dat text field.
+	 * @Description : Method to add DAT Field At second Row.
+	 * @param fieldClassification : fieldClassification is String value that field
+	 *                            classification need to select from drop down.
+	 * @param sourceField         : sourceField is String value that source field
+	 *                            need to select from drop down.
+	 * @param datField            : datField is String value need to enter in dat
+	 *                            text field.
 	 */
-	public void addDATFieldAtSecondRow(String fieldClassification,String sourceField,String datField) {
+	public void addDATFieldAtSecondRow(String fieldClassification, String sourceField, String datField) {
 		try {
 			addNewFieldOnDAT();
-			driver.waitForPageToBeReady();;
+			driver.waitForPageToBeReady();
+			;
 			getDAT_FieldClassification2().isElementAvailable(10);
 			getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText(fieldClassification);
 			driver.waitForPageToBeReady();
@@ -14249,26 +14318,21 @@ public class ProductionPage {
 			driver.waitForPageToBeReady();
 			getDAT_DATField2().isElementAvailable(10);
 			getDAT_DATField2().SendKeys(datField);
-		base.stepInfo("Dat section is filled with "+sourceField);
-		}catch(Exception e) {
+			base.stepInfo("Dat section is filled with " + sourceField);
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured add DAT Field At second Row."+e.getMessage() );
-		
+			base.failedStep("Exception occured add DAT Field At second Row." + e.getMessage());
+
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to navigating To Export Page by already existing export set.
-	 * @param exportName : exportName is String value that name of export need to perform export production.
+	 * @Description : Method to navigating To Export Page by already existing export
+	 *              set.
+	 * @param exportName : exportName is String value that name of export need to
+	 *                   perform export production.
 	 */
 	public void navigateToExportPageByAlreadyExistingExportSet(String exportName) {
 		try {
@@ -14279,25 +14343,28 @@ public class ProductionPage {
 			getProdExport_ProductionSets().isElementAvailable(15);
 			List<WebElement> selectProductionOptions = getSelectProdcutionOptions().FindWebElements();
 			for (WebElement option : selectProductionOptions) {
-			    if (option.getText().contains(exportName)) {
-			        option.click();
-			        break;
-			    }
+				if (option.getText().contains(exportName)) {
+					option.click();
+					break;
+				}
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while navigating To Export Page by already existing export set."+e.getMessage() );
+			base.failedStep("Exception occured while navigating To Export Page by already existing export set."
+					+ e.getMessage());
 		}
 	}
-	
-	
+
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to verify committed production is added to export production drop down.
-	 * @param exportName : exportName is String value that name of export need to perform export production.
-	 * @param proudctionName : proudctionName is String value that already completed committed production name.
+	 * @Description : Method to verify committed production is added to export
+	 *              production drop down.
+	 * @param exportName     : exportName is String value that name of export need
+	 *                       to perform export production.
+	 * @param proudctionName : proudctionName is String value that already completed
+	 *                       committed production name.
 	 */
-	public void verifyCommittedProdIsAddedToExportProductionDropdown(String exportName,String proudctionName) {
+	public void verifyCommittedProdIsAddedToExportProductionDropdown(String exportName, String proudctionName) {
 		try {
 			getProdExport_AddaNewExportSet().isElementAvailable(15);
 			getProdExport_AddaNewExportSet().waitAndClick(10);
@@ -14307,28 +14374,33 @@ public class ProductionPage {
 			getProdExport_Priorprodtoggle().isElementAvailable(15);
 			getProdExport_Priorprodtoggle().waitAndClick(10);
 			getProdExport_Priorprodtoggle().isElementAvailable(15);
-			List<WebElement>  options = getProdExport_SelectProductionSet().selectFromDropdown().getOptions();
-			
-			for(int i=0;i<options.size(); i++) {
-				if(options.get(i).getText().contains(proudctionName)) {
-					base.passedStep(proudctionName+" is displayed in export production drop down sucessfully");
-				}else if(i==options.size()-1) {
-					base.failedStep(proudctionName+" is not displayed in export production drop down");
+			List<WebElement> options = getProdExport_SelectProductionSet().selectFromDropdown().getOptions();
+
+			for (int i = 0; i < options.size(); i++) {
+				if (options.get(i).getText().contains(proudctionName)) {
+					base.passedStep(proudctionName + " is displayed in export production drop down sucessfully");
+				} else if (i == options.size() - 1) {
+					base.failedStep(proudctionName + " is not displayed in export production drop down");
 				}
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while verifying committed production is added to export production drop down.."+e.getMessage() );
+			base.failedStep(
+					"Exception occured while verifying committed production is added to export production drop down.."
+							+ e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to verify uncommitted production is not added to export production drop down.
-	 * @param exportName : exportName is String value that name of export need to perform export production.
-	 * @param proudctionName : proudctionName is String value that already completed committed production name.
+	 * @Description : Method to verify uncommitted production is not added to export
+	 *              production drop down.
+	 * @param exportName     : exportName is String value that name of export need
+	 *                       to perform export production.
+	 * @param proudctionName : proudctionName is String value that already completed
+	 *                       committed production name.
 	 */
-	public void verifyUnCommittedProdIsNotAddedToExportProdDropdown(String exportName,String proudctionName) {
+	public void verifyUnCommittedProdIsNotAddedToExportProdDropdown(String exportName, String proudctionName) {
 		try {
 			getProdExport_AddaNewExportSet().isElementAvailable(15);
 			getProdExport_AddaNewExportSet().waitAndClick(10);
@@ -14338,47 +14410,49 @@ public class ProductionPage {
 			getProdExport_Priorprodtoggle().isElementAvailable(15);
 			getProdExport_Priorprodtoggle().waitAndClick(10);
 			getProdExport_Priorprodtoggle().isElementAvailable(15);
-			List<WebElement>  options = getProdExport_SelectProductionSet().selectFromDropdown().getOptions();
-			for(int i=0;i<options.size(); i++) {
-				if(options.get(i).getText().contains(proudctionName)) {
-					base.failedStep(proudctionName+" is displayed in export production drop down");
+			List<WebElement> options = getProdExport_SelectProductionSet().selectFromDropdown().getOptions();
+			for (int i = 0; i < options.size(); i++) {
+				if (options.get(i).getText().contains(proudctionName)) {
+					base.failedStep(proudctionName + " is displayed in export production drop down");
 				}
 			}
-			base.passedStep(proudctionName+" is not displayed in export production drop down sucessfully");
-		}catch(Exception e) {
+			base.passedStep(proudctionName + " is not displayed in export production drop down sucessfully");
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while verifying committed production is not added to export production drop down.."+e.getMessage() );
+			base.failedStep(
+					"Exception occured while verifying committed production is not added to export production drop down.."
+							+ e.getMessage());
 		}
 	}
-	
-	
+
 	/**
 	 * @throws InterruptedException
 	 * @Author Gopinath .Modified on 10/28/2021
-	 * @Descrption : method for filling Export Generate Page With Continue Generation Popup.
+	 * @Descrption : method for filling Export Generate Page With Continue
+	 *             Generation Popup.
 	 */
 	public void fillingExportGeneratePageWithContinueGenerationPopup() throws InterruptedException {
 		try {
 			SoftAssert softAssertion = new SoftAssert();
 			String expectedText = "Success";
-	
+
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
 				}
 			}), Input.wait30);
 			getbtnProductionGenerate().waitAndClick(10);
-	
+
 			getbtnContinueGeneration().isElementAvailable(150);
 			if (getbtnContinueGeneration().isDisplayed()) {
 				base.waitForElement(getbtnContinueGeneration());
 				getbtnContinueGeneration().waitAndClick(10);
 			}
-	
+
 			Reporter.log("Wait for generate to complete", true);
 			System.out.println("Wait for generate to complete");
 			UtilityLog.info("Wait for generate to complete");
-	
+
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
@@ -14386,47 +14460,47 @@ public class ProductionPage {
 			}), Input.wait120);
 			String actualText = getStatusSuccessTxt().getText();
 			System.out.println(actualText);
-	
+
 			softAssertion.assertTrue(actualText.contains(expectedText));
 			base.passedStep("Documents Generated successfully");
-	
+
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getCopyPath().isDisplayed();
 				}
 			}), Input.wait60);
 			getCopyPath().waitAndClick(10);
-	
+
 			base.stepInfo("Generate Export page is filled");
-		}catch(Exception e) {
+		} catch (Exception e) {
 			UtilityLog.info(e.getMessage());
 		}
 	}
 
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to verify user not able to select documents.
+	 * @Description : Method to verify user not able to select documents.
 	 */
 	public void verifyUserNotAbleToSelectDocuments() {
 		try {
-			
+
 			getMarkIncompleteButton().isElementAvailable(13);
 			String markCompleteAttr = getMarkIncompleteButton().GetAttribute("disabled").trim();
-			if(markCompleteAttr.equalsIgnoreCase("true")) {
-				base.passedStep("Mark incomplete button is not enabled and not able to add documents");	
-			}else{
+			if (markCompleteAttr.equalsIgnoreCase("true")) {
+				base.passedStep("Mark incomplete button is not enabled and not able to add documents");
+			} else {
 				base.failedStep("Mark incomplete button is enabled and able to add documents");
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("verify user not able to select documents."+e.getMessage() );
+			base.failedStep("verify user not able to select documents." + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Brundha
-	 * @Description  : Method for navigating to doclist page.
+	 * @Description : Method for navigating to doclist page.
 	 */
 	public String navigatingToDocViewPage() {
 		driver.scrollPageToTop();
@@ -14435,135 +14509,159 @@ public class ProductionPage {
 
 		System.out.println("Clicked on Mark Complete Button..");
 		driver.waitForPageToBeReady();
-		String docCount=getDocumentSelectionLink().getText();
+		String docCount = getDocumentSelectionLink().getText();
 		base.waitForElement(getDocumentSelectionLink());
 		getDocumentSelectionLink().Click();
 		return docCount;
-		
+
 	}
 
 	public void verifyNavigationToProductionPage() {
-	if(	getDocumentSelectionLink().isDisplayed()) {
-		base.passedStep("Prodcution page is loaded successfully");
-	}else {
-		base.failedMessage("prodcution page is not loaded");
+		if (getDocumentSelectionLink().isDisplayed()) {
+			base.passedStep("Prodcution page is loaded successfully");
+		} else {
+			base.failedMessage("prodcution page is not loaded");
+		}
+
 	}
-		
-	}
+
 	/**
 	 * @author Brundha
-	 * @Description  :method to  next bates number
+	 * @Description :method to next bates number
 	 */
 	public void SelectNextBatesNumber() {
 		driver.waitForPageToBeReady();
-		String actualText=getBeginningBates().GetAttribute("value");
-		System.out.println("The actual txt"+actualText);
+		String actualText = getBeginningBates().GetAttribute("value");
+		System.out.println("The actual txt" + actualText);
 		base.waitForElement(getClickHereLink());
 		getClickHereLink().Click();
-		if(NextBatesNumberPopup().isDisplayed()) {base.passedStep("Next Bates number popup is opened");}
-		else {base.failedStep("Next bates number popup is not opened");}
+		if (NextBatesNumberPopup().isDisplayed()) {
+			base.passedStep("Next Bates number popup is opened");
+		} else {
+			base.failedStep("Next bates number popup is not opened");
+		}
 		base.waitForElement(getNextBatesNumber());
 		getNextBatesNumber().Click();
-		
-		if(!NextBatesNumberPopup().isDisplayed()) {base.passedStep("Next Bates number popup is closed automatically");}
-		else {base.failedStep("Next bates number is not closed automatically");}
-		
+
+		if (!NextBatesNumberPopup().isDisplayed()) {
+			base.passedStep("Next Bates number popup is closed automatically");
+		} else {
+			base.failedStep("Next bates number is not closed automatically");
+		}
+
 		base.waitForElement(getMarkCompleteLink());
 		getMarkCompleteLink().waitAndClick(10);
-		
+
 		driver.waitForPageToBeReady();
-		if(!getBeginningBates().GetAttribute("value").contains(actualText)) {
-			base.passedStep("values are Auto populated in Numbering and Sorting Tab");}
-		else {base.failedStep("value are not Auto populated in Numbering and Sorting Tab");}
-		
+		if (!getBeginningBates().GetAttribute("value").contains(actualText)) {
+			base.passedStep("values are Auto populated in Numbering and Sorting Tab");
+		} else {
+			base.failedStep("value are not Auto populated in Numbering and Sorting Tab");
+		}
+
 	}
+
 	/**
 	 * @author Brundha
-	 * @Description  : Method for navigating back to numbering and sorting tab
-	 */	
+	 * @Description : Method for navigating back to numbering and sorting tab
+	 */
 	public void navigatingBackToNumberingAndSortingPage() {
-		for(int i=0;i<5;i++) {
+		for (int i = 0; i < 5; i++) {
 			driver.waitForPageToBeReady();
-		base.waitForElement(getBackButton());
-		getBackButton().waitAndClick(5);
+			base.waitForElement(getBackButton());
+			getBackButton().waitAndClick(5);
 		}
-        base.waitTillElemetToBeClickable(getMarkInCompleteBtn());
+		base.waitTillElemetToBeClickable(getMarkInCompleteBtn());
 		getMarkInCompleteBtn().waitAndClick(5);
 
 	}
+
 	/**
 	 * @author Brundha
-	 * @Description  :method to validate clickhere link
+	 * @Description :method to validate clickhere link
 	 */
 	public void verifyClickHereLinkNotAvailableAtMarkComplete() throws InterruptedException {
-		
-		if(getClickHereLink().isDisplayed()) {
+
+		if (getClickHereLink().isDisplayed()) {
 			base.passedStep("ClickHere link is available before Markcomplete");
 			base.waitForElement(getClickHereLink());
 			getClickHereLink().Click();
 			base.waitForElement(getNextBatesNumber());
 			getNextBatesNumber().Click();
-			}
-		else {base.failedStep("ClickHere link is not available before Markcomplete");}
-		
+		} else {
+			base.failedStep("ClickHere link is not available before Markcomplete");
+		}
+
 		base.waitForElement(getMarkCompleteLink());
 		getMarkCompleteLink().waitAndClick(10);
 		driver.waitForPageToBeReady();
-        boolean flag=getClickHereLinks().Displayed()&& getClickHereLinks().Exists();
-		if(!flag) {
+		boolean flag = getClickHereLinks().Displayed() && getClickHereLinks().Exists();
+		if (!flag) {
 			System.out.println("passed");
-			base.passedStep("ClickHere link  is  not available After selecting Markcomplete as expected");}
-		else {
+			base.passedStep("ClickHere link  is  not available After selecting Markcomplete as expected");
+		} else {
 			System.out.println("failed");
-		base.failedStep("ClickHere link is  available After Markcomplete ");}
-		if(!NextBatesNumberPopup().isDisplayed()) {base.passedStep("Next Bates number popup is not displayed after selecting markcomplete");}
-		else {base.failedStep("Next bates number popup is displayed after selecting markcomplete");}
+			base.failedStep("ClickHere link is  available After Markcomplete ");
+		}
+		if (!NextBatesNumberPopup().isDisplayed()) {
+			base.passedStep("Next Bates number popup is not displayed after selecting markcomplete");
+		} else {
+			base.failedStep("Next bates number popup is displayed after selecting markcomplete");
+		}
 	}
-			
-		
+
 	/**
 	 * @author Brundha
-	 * @Description  :method to  refillling a new next bates number
+	 * @Description :method to refillling a new next bates number
 	 */
 	public void enteringNewNextBatesNumber() {
 		driver.waitForPageToBeReady();
-		if(getClickHereLink().isDisplayed()) {base.passedStep("After selecting MarkIncomplete clickhere link is available");}
-		
-		else{base.failedStep("After selecting MarkIncomplete clickhere link is not available");}
-		String actualText=getBeginningBates().GetAttribute("value");
-		System.out.println("The actual txt"+actualText);
+		if (getClickHereLink().isDisplayed()) {
+			base.passedStep("After selecting MarkIncomplete clickhere link is available");
+		}
+
+		else {
+			base.failedStep("After selecting MarkIncomplete clickhere link is not available");
+		}
+		String actualText = getBeginningBates().GetAttribute("value");
+		System.out.println("The actual txt" + actualText);
 		base.waitForElement(getClickHereLink());
 		getClickHereLink().Click();
 		base.waitForElement(selectNextBatesNumber());
 		selectNextBatesNumber().Click();
 		base.waitForElement(getMarkCompleteLink());
 		getMarkCompleteLink().waitAndClick(10);
-		
+
 		driver.waitForPageToBeReady();
-		if(!getBeginningBates().GetAttribute("value").contains(actualText)) {
-			base.passedStep("New Bates Number Values are updated and Auto populated in the Beginning Bates");}
-		else {base.failedStep("New Bates Number Values are not  updated and Auto populated in the Beginning Bates");}
-		
+		if (!getBeginningBates().GetAttribute("value").contains(actualText)) {
+			base.passedStep("New Bates Number Values are updated and Auto populated in the Beginning Bates");
+		} else {
+			base.failedStep("New Bates Number Values are not  updated and Auto populated in the Beginning Bates");
+		}
+
 	}
-		
+
 	/**
 	 * @author Brundha
-	 * @Description  :method to  verify number of custodian
+	 * @Description :method to verify number of custodian
 	 */
 	public void verifyingUniqueCustodianNameInSummaryPreviewTab() {
 		driver.waitForPageToBeReady();
-		String NoOfCustodian=getNoOfCustodians().getText();
-		System.out.println("no of custodian in summary and preview tab:"+NoOfCustodian);
-		
-		int uniqueCustodian=1;
-		if(Integer.valueOf(NoOfCustodian).equals(uniqueCustodian)) {
-			base.passedStep("number of custodians in production is "+NoOfCustodian+" is equal to the "+uniqueCustodian+" unique custodian as expeced");}
-			
+		String NoOfCustodian = getNoOfCustodians().getText();
+		System.out.println("no of custodian in summary and preview tab:" + NoOfCustodian);
+
+		int uniqueCustodian = 1;
+		if (Integer.valueOf(NoOfCustodian).equals(uniqueCustodian)) {
+			base.passedStep("number of custodians in production is " + NoOfCustodian + " is equal to the "
+					+ uniqueCustodian + " unique custodian as expeced");
+		}
+
 		else {
-			base.failedStep("number of custodians in production is "+NoOfCustodian+" is not equal to the "+uniqueCustodian+" unique custodian as expeced");
+			base.failedStep("number of custodians in production is " + NoOfCustodian + " is not equal to the "
+					+ uniqueCustodian + " unique custodian as expeced");
 		}
 	}
-		
+
 	/**
 	 * @author sowndarya.velraj
 	 */
@@ -14588,7 +14686,7 @@ public class ProductionPage {
 
 		base.waitForElement(getAddFieldButtonInDAT());
 		getAddFieldButtonInDAT().Click();
-		
+
 		getDAT_FieldClassification2().ScrollTo();
 //		getDAT_FieldClassification2().waitAndClick(5);
 		getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText("Production");
@@ -14598,12 +14696,12 @@ public class ProductionPage {
 
 		base.waitForElement(getDAT_DATField2());
 		getDAT_DATField2().SendKeys("TIFFPAGECOUNT");
-		
+
 		base.stepInfo("Dat section is filled with TIFFPAGECOUNT");
-		
+
 		base.waitForElement(getAddFieldButtonInDAT());
 		getAddFieldButtonInDAT().Click();
-		
+
 		getDAT_FieldClassification3().ScrollTo();
 		getDAT_FieldClassification3().waitAndClick(5);
 		getDAT_FieldClassification3().selectFromDropdown().selectByVisibleText("Doc Basic");
@@ -14613,14 +14711,15 @@ public class ProductionPage {
 
 		base.waitForElement(getDAT_DATField3());
 		getDAT_DATField3().SendKeys("DOCID");
-		
+
 		base.stepInfo("Dat section is filled with DOCID");
 
-	}	
+	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
-	public void addDatField(int i,String classification,String sourceField) {
+	public void addDatField(int i, String classification, String sourceField) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDAT_FieldClassification(i).Visible() && getDAT_FieldClassification(i).Enabled();
@@ -14642,13 +14741,12 @@ public class ProductionPage {
 		}), Input.wait30);
 		getDAT_DATField(i).waitAndClick(10);
 		getDAT_DATField(i).SendKeys("B" + Utility.dynamicNameAppender());
-		base.stepInfo(i+"th Dat section is filled");
+		base.stepInfo(i + "th Dat section is filled");
 	}
-	
+
 	/**
 	 *
-	 * @Author Brundha
-	 * method for filling document selction page with one tag
+	 * @Author Brundha method for filling document selction page with one tag
 	 */
 	public void fillingDocumentSelectionWithTag(String Tag) {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -14680,30 +14778,34 @@ public class ProductionPage {
 
 	/**
 	 * @throws InterruptedException
-	 * @Author Brundha
-	 * method for filling mp3 file
+	 * @Author Brundha method for filling mp3 file
 	 */
 	public void SelectMP3FileAndVerifyLstFile() {
-		
+
 		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
 		base.waitForElement(getAdvancedProductionComponent());
-		getAdvancedProductionComponent().waitAndClick(10);;
-		getMP3CheckBox().waitAndClick(10);;
-		getMP3CheckBoxToggle().waitAndClick(10);;
+		getAdvancedProductionComponent().waitAndClick(10);
+		;
+		getMP3CheckBox().waitAndClick(10);
+		;
+		getMP3CheckBoxToggle().waitAndClick(10);
+		;
 		driver.waitForPageToBeReady();
 		base.clickButton(getAdvancedInMP3Files());
-		String color = driver.FindElement(By.xpath("//label//input[@id='chkMP3ProduceLoadFile']//following-sibling::i")).GetCssValue("background-color");
+		String color = driver.FindElement(By.xpath("//label//input[@id='chkMP3ProduceLoadFile']//following-sibling::i"))
+				.GetCssValue("background-color");
 		System.out.println(color);
 		String ExpectedColor = Color.fromString(color).asHex();
 		System.out.println(ExpectedColor);
-		String ActualColor="#a9c981";	
-		if(ActualColor.equals(ExpectedColor)) {
+		String ActualColor = "#a9c981";
+		if (ActualColor.equals(ExpectedColor)) {
 			base.passedStep("lst files toggle is enabled by default");
-		}else {
+		} else {
 			base.failedStep("lst files toggle is  not enabled by default");
-			}
-		
+		}
+
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -14719,7 +14821,7 @@ public class ProductionPage {
 
 		base.waitForElement(getPDFGenerateRadioButton());
 		getPDFGenerateRadioButton().Click();
-		
+
 		base.waitForElement(getLeftHeaderBranding());
 		getLeftHeaderBranding().ScrollTo();
 		getLeftHeaderBranding().Click();
@@ -14734,14 +14836,14 @@ public class ProductionPage {
 		new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(5).getWebElement()).click();
 		driver.waitForPageToBeReady();
 		getEnterBranding(5).SendKeys(searchString4);
-		
+
 		base.waitForElement(getRightHeaderBranding());
 		getRightHeaderBranding().Click();
 		base.waitForElement(getEnterBranding(3));
 		new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(3).getWebElement()).click();
 		driver.waitForPageToBeReady();
 		getEnterBranding(3).SendKeys(searchString4);
-		
+
 		base.waitForElement(getLeftFooterBranding());
 		getLeftFooterBranding().ScrollTo();
 		getLeftFooterBranding().Click();
@@ -14749,14 +14851,14 @@ public class ProductionPage {
 		new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(2).getWebElement()).click();
 		driver.waitForPageToBeReady();
 		getEnterBranding(2).SendKeys(searchString4);
-		
+
 		base.waitForElement(getTIFF_CenterFooterBranding());
 		getTIFF_CenterFooterBranding().Click();
 		base.waitForElement(getEnterBranding(6));
 		new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(6).getWebElement()).click();
 		driver.waitForPageToBeReady();
 		getEnterBranding(6).SendKeys(searchString4);
-		
+
 		base.waitForElement(getRightFooterBranding());
 		getRightFooterBranding().Click();
 		base.waitForElement(getEnterBranding(4));
@@ -14784,6 +14886,7 @@ public class ProductionPage {
 		base.stepInfo("PDF section is filled");
 
 	}
+
 	/**
 	 * @Author Aathith
 	 */
@@ -14846,6 +14949,7 @@ public class ProductionPage {
 		gettextRedactionPlaceHolder().waitAndClick(10);
 		gettextRedactionPlaceHolder().SendKeys(searchString4);
 	}
+
 	/**
 	 * @Author Aathith
 	 */
@@ -14923,6 +15027,7 @@ public class ProductionPage {
 		gettextRedactionPlaceHolder().waitAndClick(10);
 		gettextRedactionPlaceHolder().SendKeys(searchString4);
 	}
+
 	/**
 	 * @author Aathith
 	 * @description :filling PDF section diable priv doc.
@@ -14967,6 +15072,7 @@ public class ProductionPage {
 			base.failedStep("Exception occcured while handling pdf section" + e.getMessage());
 		}
 	}
+
 	/**
 	 * @author Aathith
 	 * @description :filling tiff section diable priv doc.
@@ -14986,7 +15092,7 @@ public class ProductionPage {
 			getTIFFTab().Click();
 
 			driver.waitForPageToBeReady();
-			
+
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			getTIFF_EnableforPrivilegedDocs().ScrollTo();
@@ -15003,6 +15109,7 @@ public class ProductionPage {
 			base.failedStep("Exception occcured while handling Tiff section" + e.getMessage());
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param tagname
@@ -15010,28 +15117,28 @@ public class ProductionPage {
 	public void EnablePrivPlaceholderAtPrivGaurdPage(String tagname) {
 		base.waitForElement(getPrivPlaceHolderToggleAtPrivGaurdPage());
 		getPrivPlaceHolderToggleAtPrivGaurdPage().waitAndClick(10);
-		
+
 		base.waitForElement(getSelectTagBtnInPrivGaurd());
 		getSelectTagBtnInPrivGaurd().waitAndClick(10);
-		
-	
+
 		getTagInPrivGaurd(tagname).waitAndClick(10);
-		
+
 		base.waitForElement(getSaveButtonINPrivGuard());
 		getSaveButtonINPrivGuard().waitAndClick(10);
 
 		base.waitForElement(getPrivPlaceholderTextboInPrivGaurd());
 		getPrivPlaceholderTextboInPrivGaurd().waitAndClick(10);
 		getPrivPlaceholderTextboInPrivGaurd().SendKeys(searchString2);
-		
-		Dimension d=driver.Manage().window().getSize();
+
+		Dimension d = driver.Manage().window().getSize();
 		driver.Manage().window().fullscreen();
 		base.waitForElement(getPrivPlaceholderTextboInPrivGaurd());
 		getbtnPopupPreviewMarkComplete().waitAndClick(10);
 		driver.Manage().window().setSize(d);
 		driver.Manage().window().maximize();
-		
+
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -15042,7 +15149,7 @@ public class ProductionPage {
 			}
 		}), Input.wait30);
 		getbtnProductionGuardMarkComplete().waitAndClick(5);
-		
+
 		EnablePrivPlaceholderAtPrivGaurdPage(tagname);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -15053,11 +15160,10 @@ public class ProductionPage {
 		getbtnProductionGuardNext().waitAndClick(5);
 		base.stepInfo("privilage placeholder enabled in Priv Guard Page section is filled");
 	}
-	
-	
+
 	/**
 	 * @author Brundha
-	 * @description :method  for filling native placeholder
+	 * @description :method for filling native placeholder
 	 */
 	public void fillingNativeDocsPlaceholder(String Tag) {
 		base.waitForElement(getTiff_NativeDoc());
@@ -15073,38 +15179,38 @@ public class ProductionPage {
 		getNativeDocsPlaceholder().SendKeys(Input.technicalIssue);
 		base.stepInfo("Native placeholder is filled");
 	}
-	
 
 	/**
 	 * @author Brundha
 	 * @description :method for filling TIFF/PDF Section With branding text.
 	 */
 	public void fillingPDFSectionWithBrandingText() {
-		
-			base.waitForElement(getTIFFChkBox());
-			getTIFFChkBox().Click();
-			driver.scrollingToBottomofAPage();
-			base.waitForElement(getTIFFTab());
-			getTIFFTab().Click();
-			driver.waitForPageToBeReady();
-			driver.scrollPageToTop();
-			base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
-			getPDFGenerateRadioButton().waitAndClick(10);
-			base.waitForElement(getLeftHeaderBranding());
-			getLeftHeaderBranding().waitAndClick(10);
-			getTIFF_EnableforPrivilegedDocs().ScrollTo();
-			// disabling enable for priviledged docs
-			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-			getTIFF_EnableforPrivilegedDocs().Enabled();
-			getTIFF_EnableforPrivilegedDocs().Click();
-			base.waitForElement(getInsertMetadataField());
-			getInsertMetadataField().Click();
-			base.waitForElement(getBatesNumberinTiff());
-			getBatesNumberinTiff().Click();
-			base.waitForElement(getOkBtn());
-			getOkBtn().Click();
 
-	}		
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+		getPDFGenerateRadioButton().waitAndClick(10);
+		base.waitForElement(getLeftHeaderBranding());
+		getLeftHeaderBranding().waitAndClick(10);
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		// disabling enable for priviledged docs
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+		base.waitForElement(getInsertMetadataField());
+		getInsertMetadataField().Click();
+		base.waitForElement(getBatesNumberinTiff());
+		getBatesNumberinTiff().Click();
+		base.waitForElement(getOkBtn());
+		getOkBtn().Click();
+
+	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -15174,10 +15280,9 @@ public class ProductionPage {
 			driver.scrollingToBottomofAPage();
 		}
 	}
-	
-/**
-	 * @Author Brundha
-	 * Description:Method to select blank page removal toggle
+
+	/**
+	 * @Author Brundha Description:Method to select blank page removal toggle
 	 */
 	public void selectBlankRemovalInTiffSection() {
 		base.waitForElement(getTIFFChkBox());
@@ -15193,24 +15298,23 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		base.waitForElement(getBlankPageRemovalToggle());
 		getBlankPageRemovalToggle().Click();
-		
 
 		driver.waitForPageToBeReady();
-		String ExpectedText=blankPageRemovalMessage().getText();
-		String ActualText="Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
-		
-		if(ActualText.equals(ExpectedText)) {
-			base.passedStep(""+ExpectedText+"Message is displayed as expected");}
-		else {
-			base.failedStep(""+ExpectedText+"Message not displayed as expected");}
+		String ExpectedText = blankPageRemovalMessage().getText();
+		String ActualText = "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
+
+		if (ActualText.equals(ExpectedText)) {
+			base.passedStep("" + ExpectedText + "Message is displayed as expected");
+		} else {
+			base.failedStep("" + ExpectedText + "Message not displayed as expected");
+		}
 		base.waitForElement(getContinueBtn());
 		getContinueBtn().Click();
-		
-		
+
 	}
+
 	/**
-	 * @Author Brundha
-	 * Description:Method to select redaction tag
+	 * @Author Brundha Description:Method to select redaction tag
 	 */
 	public void burnRedactionWithRedactionTagInTiffSection(String tagname) throws InterruptedException {
 
@@ -15220,10 +15324,9 @@ public class ProductionPage {
 		base.waitForElement(getTIFFTab());
 		getTIFFTab().Click();
 		getTIFF_EnableforPrivilegedDocs().ScrollTo();
-		
-		
-	    driver.waitForPageToBeReady();
-	    base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
 		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
 		getTIFF_EnableforPrivilegedDocs().Enabled();
 		getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
@@ -15245,18 +15348,15 @@ public class ProductionPage {
 		getClkCheckBox_RedactionTag(tagname).ScrollTo();
 		getClkCheckBox_RedactionTag(tagname).waitAndClick(10);
 	}
-	
-	
-	
+
 	/**
-	 * @Author Brundha
-	 * Description:Method to verify specific dropdown value
+	 * @Author Brundha Description:Method to verify specific dropdown value
 	 */
 	public void verifyDropDownValueInCompletedProduction(String TextNotExpected) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getFirstToggle());
 		getFirstToggle().waitAndClick(10);
-		
+
 		List<WebElement> DropDown = getFirstDropdownInCompletedProduction().FindWebElements();
 		int j;
 		List<String> GetTextFromDrop = new ArrayList<String>();
@@ -15266,12 +15366,14 @@ public class ProductionPage {
 		}
 		System.out.println("Dropdon values:" + GetTextFromDrop);
 
-		if(GetTextFromDrop.contains(TextNotExpected)) {
-			base.failedStep(""+TextNotExpected+" is displayed ");
-		}else {
-		base.passedStep(""+TextNotExpected+" is not displayed as expected");}
-		
+		if (GetTextFromDrop.contains(TextNotExpected)) {
+			base.failedStep("" + TextNotExpected + " is displayed ");
+		} else {
+			base.passedStep("" + TextNotExpected + " is not displayed as expected");
+		}
+
 	}
+
 	public void selectTechIssueDoc(String Tag) {
 		base.waitForElement(getTechissue_toggle());
 		getTechissue_toggle().Click();
@@ -15285,6 +15387,7 @@ public class ProductionPage {
 		getTechissue_TextArea().SendKeys(tagNameTechnical);
 		base.stepInfo("TechIssue Enabled With techissue doc is selected");
 	}
+
 	public void selectBurnReduction() {
 		base.waitForElement(getClk_burnReductiontoggle());
 		getClk_burnReductiontoggle().Click();
@@ -15324,6 +15427,7 @@ public class ProductionPage {
 		base.stepInfo("Burn redaction PDF section is filled successfully");
 		base.stepInfo("Burn Reduction Enabled with default redaction tag is selected");
 	}
+
 	public void fillingPDFSection(String tagname) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -15393,83 +15497,83 @@ public class ProductionPage {
 		base.stepInfo("PDF section is filled");
 
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
 	public void banlkPageRemovalToggleOffCheck() {
 		try {
-			driver.waitForPageToBeReady();		
+			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
 			String color = getBlankPageRemovalToggle().GetCssValue("background-color");
 			System.out.println(color);
 			String ExpectedColor = Color.fromString(color).asHex();
 			System.out.println(ExpectedColor);
-			String ActualColor="#e54036";
-			if(ActualColor.equals(ExpectedColor)) {
+			String ActualColor = "#e54036";
+			if (ActualColor.equals(ExpectedColor)) {
 				base.passedStep("Blank page removal toggle is off");
-			}else {
+			} else {
 				base.failedStep("blank page removal toggle off verifaction failed");
-				}
+			}
 		} catch (Exception e) {
 			base.failedStep("Exception occcured while verifying Blank page removal toggle" + e.getMessage());
 			e.printStackTrace();
 		}
 
-
 	}
+
 	/**
-	 * @Author Brundha
-	 * Description:Method to select generate radio button
+	 * @Author Brundha Description:Method to select generate radio button
 	 */
-	public void selectGenerateOption(boolean Value ) {
+	public void selectGenerateOption(boolean Value) {
 
-	base.waitForElement(getTIFFChkBox());
-	getTIFFChkBox().Click();
-	driver.scrollingToBottomofAPage();
-	base.waitForElement(getTIFFTab());
-	getTIFFTab().Click();
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
 
-	if(Value) {
-		driver.scrollPageToTop();
-	getPDFGenerateRadioButton().Enabled();
-	getPDFGenerateRadioButton().waitAndClick(10);
+		if (Value) {
+			driver.scrollPageToTop();
+			getPDFGenerateRadioButton().Enabled();
+			getPDFGenerateRadioButton().waitAndClick(10);
+		}
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
 	}
-	base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-	getTIFF_EnableforPrivilegedDocs().Enabled();
-	getTIFF_EnableforPrivilegedDocs().Click();
-	}
+
 	/**
-	 * @Author Brundha
-	 * Description:Method to verify placeholder text in burn redaction
+	 * @Author Brundha Description:Method to verify placeholder text in burn
+	 *         redaction
 	 */
 	public void verifyPlaceholderTextInBurnRedaction(String Tag) {
-		
-	getClk_burnReductiontoggle().ScrollTo();
-    getClk_burnReductiontoggle().Click();
-	base.waitForElement(getClkLink_selectingRedactionTags());
-	getClkLink_selectingRedactionTags().waitAndClick(5);
-	base.waitForElement(getClkBtn_selectingRedactionTags());
-	getClkBtn_selectingRedactionTags().Click();
-	driver.waitForPageToBeReady();
-	base.waitForElement(BurnRedactionCheckBox(Tag));
-	BurnRedactionCheckBox(Tag).waitAndClick(5);
-	base.waitForElement(getClk_selectBtn());
-	getClk_selectBtn().waitAndClick(5);
-	driver.waitForPageToBeReady();
-	base.waitForElement(gettextRedactionPlaceHolder());
-	String actualtext="REDACTED";
-	String RedactionText=gettextRedactionPlaceHolder().getText();
-	if(RedactionText.equals(actualtext)) {
-		base.passedStep("Placeholder text '"+RedactionText+"' is displayed as expected");
-	}else {
-		base.failedStep("Placeholder text '"+RedactionText+"' is not displayed as expected");
-	}
+
+		getClk_burnReductiontoggle().ScrollTo();
+		getClk_burnReductiontoggle().Click();
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().waitAndClick(5);
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(BurnRedactionCheckBox(Tag));
+		BurnRedactionCheckBox(Tag).waitAndClick(5);
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(gettextRedactionPlaceHolder());
+		String actualtext = "REDACTED";
+		String RedactionText = gettextRedactionPlaceHolder().getText();
+		if (RedactionText.equals(actualtext)) {
+			base.passedStep("Placeholder text '" + RedactionText + "' is displayed as expected");
+		} else {
+			base.failedStep("Placeholder text '" + RedactionText + "' is not displayed as expected");
+		}
 
 	}
 
 	/**
-	 * @Author Brundha
-	 * Description:Method to verify text in text section
+	 * @Author Brundha Description:Method to verify text in text section
 	 */
 	public void verifyTextInTextSection() {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -15496,23 +15600,29 @@ public class ProductionPage {
 		String exptext = getTextcomponent_text().getText();
 		System.out.println(exptext);
 		UtilityLog.info(exptext);
-		if(exptext.equals(
-				"Redacted documents are automatically OCRed"
-						+ " to export the text. Original extracted text is exported for natively "
-						+ "produced documents (file based placeholdering). "
-						+ "For exception and privileged placeholdered docs, " + "the placeholder text is exported."
-						+ " The configured format is applicable only to OCRed text and production generated text"
-						+ ", and not to ingested text.")){
-			base.passedStep(""+exptext+" is displayed as expected");
-		}else {
-			base.failedStep(""+exptext+" is not displayed as expected");
+		if (exptext.equals("Redacted documents are automatically OCRed"
+				+ " to export the text. Original extracted text is exported for natively "
+				+ "produced documents (file based placeholdering). "
+				+ "For exception and privileged placeholdered docs, " + "the placeholder text is exported."
+				+ " The configured format is applicable only to OCRed text and production generated text"
+				+ ", and not to ingested text.")) {
+			base.passedStep("" + exptext + " is displayed as expected");
+		} else {
+			base.failedStep("" + exptext + " is not displayed as expected");
 		}
-		
+
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
 	public void visibleCheck(String text) {
+		if (text("text").isDisplayed()) {
+			base.passedStep(text + "is visibled");
+			System.out.println(text + "is visible");
+		} else {
+			base.failedStep(text + "is not visible");
+			System.out.println(text + "is not visible");
 		if(text("text").isDisplayed()) {
 			base.passedStep(text+" is visibled");
 			System.out.println(text+" is visible");
@@ -15521,15 +15631,12 @@ public class ProductionPage {
 			System.out.println(text+" is not visible");
 		}
 	}
-	
-	
+
 	/**
-	 * @Author Brundha
-	 * Description:Method to select branding
+	 * @Author Brundha Description:Method to select branding
 	 */
 	public void selectBrandingInTiffAndPdfSection(String Tag) {
-		
-		
+
 		driver.scrollPageToTop();
 		base.waitForElement(getRightHeaderBranding());
 		getRightHeaderBranding().Click();
@@ -15553,12 +15660,13 @@ public class ProductionPage {
 
 		base.waitForElement(getBrandingBySelectingTagPlaceholder());
 		getBrandingBySelectingTagPlaceholder().SendKeys(Input.tagNameTechnical);
-		
+
 	}
 
 	/**
-	 * @author : sowndarya.velraj 
-	 * @Description: Method for verify download production using sharable link with incorrect password
+	 * @author : sowndarya.velraj
+	 * @Description: Method for verify download production using sharable link with
+	 *               incorrect password
 	 */
 	public void verifyDownloadProductionUsingSharableLinkAndCheckErrorMessage() throws InterruptedException {
 		try {
@@ -15587,8 +15695,8 @@ public class ProductionPage {
 			base.waitForElement(getDownloadButton());
 			getDownloadButton().waitAndClick(10);
 			Thread.sleep(Input.wait30 / 10);
-			
-			if(invalidPasswordErrorMessageInSharableLinks().isDisplayed()) {
+
+			if (invalidPasswordErrorMessageInSharableLinks().isDisplayed()) {
 				base.passedStep("Error Message displayed");
 			}
 			driver.close();
@@ -15631,4 +15739,42 @@ public class ProductionPage {
 		return parentWindow;
 	}
 
+	/**
+	 * @author : sowndarya.velraj
+	 * @Description: Method for verify download production using sharable link with
+	 *               incorrect password
+	 */
+	public void verifyDownloadProductionUsingInvalidLink() throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getQC_Download());
+			String name = getProduction().getText().trim();
+			base.waitTillElemetToBeClickable(getQC_Download());
+			getQC_Download().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getSelectSharableLinks());
+			getSelectSharableLinks().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getAllFilesLink());
+			getAllFilesLink().ScrollTo();
+			String sharableLink = "https://sightlineuat.consiliotest.com/prod/NWF5TnJ0aFJoL";
+			String password = getShareLinkPassword().getText().trim();
+			String parentWindow = driver.getWebDriver().getWindowHandle();
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("window.open()");
+			ArrayList<String> tabs = new ArrayList<String>(driver.getWebDriver().getWindowHandles());
+			driver.getWebDriver().switchTo().window(tabs.get(1));
+			driver.waitForPageToBeReady();
+			driver.getWebDriver().get(sharableLink);
+
+			if (invalidURLErrorMessageInSharableLinks().isDisplayed()) {
+				base.passedStep("Error Message displayed");
+			}
+			driver.close();
+			driver.getWebDriver().switchTo().window(parentWindow);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying download production using sharable link." + e.getMessage());
+		}
+	}
 }

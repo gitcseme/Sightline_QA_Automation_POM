@@ -4976,7 +4976,12 @@ public class DocView_Redactions_Regression {
 
 	}
 
-
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51405 Verify all hits of the document should be highlighted
+	 * without clicking the eye icon when user redirects to doc view from Advanced
+	 * Search > doc list to doc view
+	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 58)
 	public void verifyHighlightedKeywordsForDocsAreDisplayedSearchWithAdvancedSearch() throws Exception {
 		baseClass = new BaseClass(driver);
@@ -5041,6 +5046,13 @@ public class DocView_Redactions_Regression {
 
 	}
 
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51404 Verify all hits of the document should be highlighted
+	 * without clicking the eye icon when user redirects to doc view from Saved
+	 * Search > doc list
+	 */
+	
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 59)
 	public void verifyHighlightedKeywordsForDocsAreDisplayedSavedSearch() throws Exception {
 		baseClass = new BaseClass(driver);
@@ -5088,6 +5100,7 @@ public class DocView_Redactions_Regression {
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
 
+	}
 
 	/**
 	 * Author : Sakthivel date: NA Modified date: NA Modified by: NA Test Case
@@ -5285,6 +5298,92 @@ public class DocView_Redactions_Regression {
 
 		softAssert.assertNotEquals(beforeComplete, afterComplete);
 		softAssert.assertAll();
+
+	}
+
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51331 Verify text from review mode outside of an assignment
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 62)
+	public void verifyReviewModeTextOutsideAssignment() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+
+		baseClass.stepInfo("Test case id : RPMXCON-51331");
+		baseClass.stepInfo("Verify text from review mode outside of an assignment");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		docView.verifyReviewModeText();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		docView.verifyReviewModeText();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		docView.verifyReviewModeText();
+
+	}
+
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51332 Verify text from review mode in context of an assignment
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 63)
+	public void verifyReviewModeTextContextOfAssignment() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+
+		baseClass.stepInfo("Test case id : RPMXCON-51332");
+		baseClass.stepInfo("Verify text from review mode in context of an assignment");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentspage.assignmentDistributingToReviewer();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		driver.waitForPageToBeReady();
+		docView.verifyReviewModeText();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		driver.waitForPageToBeReady();
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		docView.verifyReviewModeText();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		driver.waitForPageToBeReady();
+		baseClass.impersonatePAtoRMU();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		docView.verifyReviewModeText();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentspage.deleteAssgnmntUsingPagination(assignmentName);
 
 	}
 
