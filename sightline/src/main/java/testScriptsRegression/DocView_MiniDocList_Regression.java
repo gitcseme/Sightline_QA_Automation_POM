@@ -1,5 +1,8 @@
 package testScriptsRegression;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -2385,7 +2388,135 @@ public class DocView_MiniDocList_Regression {
 			baseClass.passedStep("Project admin is not able to view the completed icon on mini doc list.");
 		}
 	}
-	
+	/**
+	 * @author Sakthivel RPMXCON-51644 date:10/01/2022 Modified date:NA
+	 * @Description :Verify that when mini doclist reloads by adding additional docs
+	 *              then for completed documents checkmark with light blue
+	 *              highlighting should be displayed when show completed docs is ON
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 61)
+	public void verifyDisplayedCompletedMiniDocListDocsCheckmarkandlightBlue()
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51644");
+		baseClass.stepInfo("Verify on click of 'Save' button coding form should be validated when coding form"
+				+ "customized for all objects along with all condition and Check Item");
+		String assignName = "CFAssignment" + Utility.dynamicNameAppender();
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		miniDocListpage = new MiniDocListPage(driver);
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// Logout as Review Manager
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer manager '" + Input.rmu1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// MiniDocList toggle is on
+		miniDocListpage.verifyDocToggleisOn();
+		miniDocListpage.verifyCheckMarkIconandDocHighlight();
+		miniDocListpage.verifyAfterLoadingCheckmarkAndClr();
+
+		// logout as reviewer
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout as Reviewer'" + Input.rev1userName + "'");
+		baseClass.passedStep("Verify on click of 'Save' button coding form should be validated when coding form+"
+				+ "customized for all objects along with all condition and Check Item");
+	}
+
+	/**
+	 * @author Sakthivel RPMXCON-51645 date:10/01/2022 Modified date:NA
+	 * @Description :Verify that when mini doclist reloads by adding additional docs
+	 *              then for completed documents checkmark with light blue
+	 *              highlighting should be displayed when show completed docs is ON.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 62)
+	public void verifyDisplayedMiniDocListDocsCheckmarkandlightBlueInChildWindow()
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51645");
+		baseClass.stepInfo(
+				"Verify that when mini doclist child window reloads by adding additional docs then for completed documents"
+						+ " checkmark with light blue highlighting should be displayed when Show Completed Docs is ON");
+		String assignName = "CFAssignment" + Utility.dynamicNameAppender();
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		miniDocListpage = new MiniDocListPage(driver);
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+		assignmentPage.assignmentDistributingToReviewer();
+
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Review manager '" + Input.rmu1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// Launching Mini doc list Child WIndow
+		miniDocListpage.launchingMindoclistChildWindow();
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(miniDocListpage.getDocView_MiniDoclist_GearIcon());
+		miniDocListpage.getDocView_MiniDoclist_GearIcon().waitAndClick(10);
+		docViewPage.switchToNewWindow(1);
+		baseClass.waitForElement(miniDocListpage.getShowCompleteDocsButton());
+		miniDocListpage.getShowCompleteDocsButton().waitAndClick(10);
+		baseClass.waitForElement(miniDocListpage.getMiniDocListConfirmationButton("Save"));
+		miniDocListpage.getMiniDocListConfirmationButton("Save").Click();
+		baseClass.stepInfo("Doc Toggle is on");
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_ENTER);
+		System.out.println("Handled Alert");
+		driver.getWebDriver().navigate().refresh();
+		try {
+			driver.getWebDriver().switchTo().alert().accept();
+		} catch (Exception e) {
+			System.out.println("No Alerts");
+		}
+
+		// Launching Mini doc list Child WIndow
+		miniDocListpage.launchingMindoclistChildWindow();
+		miniDocListpage.verifyCheckMarkIconandDocHighlightInChildWindow();
+		miniDocListpage.verifyAfterLoadingCheckmarkAndClrInChildWindow();
+		driver.waitForPageToBeReady();
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+
+		// logout as reviewer
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout as Reviewer'" + Input.rev1userName + "'");
+		baseClass.passedStep(
+				"Verify that when mini doclist child window reloads by adding additional docs then for completed documents"
+						+ " checkmark with light blue highlighting should be displayed when Show Completed Docs is ON");
+
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

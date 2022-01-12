@@ -66,7 +66,6 @@ public class DocView_Redactions_Regression {
 	String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 	String keywordsArray[] = { "test", "hi", "Than8617167" };
 	String keywordsArrayPT[] = { "test" };
-	
 
 	@BeforeClass(alwaysRun = true)
 
@@ -98,7 +97,7 @@ public class DocView_Redactions_Regression {
 	 * if Redaction menu is avilable
 	 */
 
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 2)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
 	public void verifyDocViewRedactionPanel() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -176,7 +175,7 @@ public class DocView_Redactions_Regression {
 	 * Click on redaction and multipage tab
 	 */
 
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 1)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
 
 	public void verifyBlankRedactionTag() throws Exception {
 		baseClass = new BaseClass(driver);
@@ -230,7 +229,7 @@ public class DocView_Redactions_Regression {
 	 * Click on redaction and multipage tab
 	 */
 
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 3)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
 	public void saveMultiPageRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -268,7 +267,7 @@ public class DocView_Redactions_Regression {
 	 * DocView from "Actions" Click on redaction and multipage tab Multipage pop up
 	 * enabled
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 4)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
 	public void testShareSteps() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -323,7 +322,7 @@ public class DocView_Redactions_Regression {
 	 * navigation of docs while redacting
 	 */
 
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 5)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 5)
 	public void verifyRedactionPanel() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON 52254");
 		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -403,7 +402,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-51995 & 51996 - sprint 3- DocView Description : Verify redaction for
 	 * page range and all pages in a doc
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 6)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
 	public void RedactPageRange() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -443,7 +442,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-51998 & 51997 - sprint 3- DocView Description : Verify redaction for
 	 * page range and all pages in a doc after impersonating user
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 7)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
 	public void RedactPageRangeImpersonatingUser() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51998, RPMXCON-51997");
@@ -487,7 +486,7 @@ public class DocView_Redactions_Regression {
 	 * DocView
 	 */
 
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 8)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
 	public void verifyRedactionTagBlank() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -526,13 +525,12 @@ public class DocView_Redactions_Regression {
 
 	}
 
-
 	/**
 	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 52189
 	 * Verifying persistent hit for audio docs DocView- sprint 3
 	 */
 
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 12)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void persistentHitAudioDocs() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -562,7 +560,7 @@ public class DocView_Redactions_Regression {
 	 * Id: RPMXCON-51992 DocView and Doc Explorer_Performance_Navigate through
 	 * documents one by one for 15 mins_RMU/Rev
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 13)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 13)
 	public void DocViewAndDocExplorerPerformanceNavigate() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51992");
@@ -577,7 +575,7 @@ public class DocView_Redactions_Regression {
 	 * Id: RPMXCON-51731 Verify that text highlighting should not be present on doc
 	 * view
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 14)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 14)
 	public void VerifyTextHightingNotPresent() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51731");
@@ -597,7 +595,7 @@ public class DocView_Redactions_Regression {
 	 * Id: RPMXCON-51755 Verify that when the toggle is ON will hide the 0 hit terms
 	 * on hits panel
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 15)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void VerifyToggleONhideZeroHits() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51755");
@@ -616,7 +614,7 @@ public class DocView_Redactions_Regression {
 	 * Id: RPMXCON-51756 Verify that when the toggle is OFF will show the 0 hit
 	 * terms on hits panel
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 16)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
 	public void VerifyToggleOFFshowZeroHits() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51756");
@@ -628,7 +626,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		docViewRedact.ToggleOFFshowZeroHits();
-		
+
 	}
 
 	/**
@@ -700,7 +698,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-51558 Verify if X icon is visible after clicking on the
 	 * magnfifying/search icon in docView page
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 18)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
 	public void VerifyMagnifyingIconInDocViewForAllUsers() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -723,7 +721,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-51316 Verify if color changes for any annotation icon when clicked on
 	 * DocView Page
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 19)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void VerifyOnOffColourChangeInDocViewPage() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -753,7 +751,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-50848 Verify if the persistent hit icon is present in DocView from
 	 * Basic Search for non-audio Docs
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 20)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
 	public void verifyPersistantHitIconFromBasicSearch() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -779,7 +777,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-51346 Verify if highlights panel once open is not closed while
 	 * navigating docs from mini doc list
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 21)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
 	public void verifyHighlitesPanelisOpenWhileNavigatingFromMiniDocList() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -804,7 +802,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-51345 Verify that reviewer remarks panel remains selected while
 	 * navigating through docs
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 23)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 23)
 	public void VerifyReviewerRemarksPanel() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -828,7 +826,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-51344 Verify that reviewer Persistent hits panel remains selected
 	 * while navigating through docs
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 24)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 24)
 	public void VerifyReviewerPersistentHitPanel() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -852,7 +850,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-47034 Verify that error message is present when invalid page range is
 	 * given as input for redaction
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 25)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 25)
 	public void VerifyMultiPagePopUpInput() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -885,7 +883,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-47033 Verify the error message present when invalid page range is
 	 * given as input for redaction
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 26)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 26)
 	public void VerifyMultiPagePopUpInputMessage() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -921,7 +919,7 @@ public class DocView_Redactions_Regression {
 	 * uncommon click path (F5) before clicking the 'Save' from Redaction Tag Save
 	 * Confirmation pop up
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 27)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 27)
 	public void VerifyThisPageRedactionAfterRefresh() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -962,7 +960,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-51567 Verify when the user clicks on the X after the text search in a
 	 * document
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 28)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 28)
 	public void verifyTextSearchAfterUserClicksX() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1201,7 +1199,7 @@ public class DocView_Redactions_Regression {
 	 * clicked
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 31)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
 	public void verifyMultiPageRedactionPopup() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-47031");
@@ -1237,7 +1235,7 @@ public class DocView_Redactions_Regression {
 	 * Id:RPMXCON-51746 Verify that on document navigation options when hits panel
 	 * is open then enable/disable should be retained
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 32)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 32)
 	public void verifyPersistentHitPanelIsRetained() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51746");
@@ -1277,7 +1275,7 @@ public class DocView_Redactions_Regression {
 	 * DocView as RMU and REV
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 34)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
 	public void verifyPersistentHitNavigation2() throws Exception {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1293,7 +1291,7 @@ public class DocView_Redactions_Regression {
 		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
 		assignmentspage.assignmentDistributingToReviewer();
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
-	
+
 // Checking persistent hits and keywords in DocView		
 		docViewRedact.checkingPersistentHitPanel();
 		baseClass.waitForElement(docViewRedact.get_textHighlightedColor());
@@ -1348,7 +1346,7 @@ public class DocView_Redactions_Regression {
 	 * from persistent hit panel from basic search
 	 */
 
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 33)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 33)
 	public void verifyPersistentHitNavigation() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51445");
@@ -1412,7 +1410,7 @@ public class DocView_Redactions_Regression {
 	 * Id:RPMXCON-47723 From Audio search go to DocView Create Redaction in Audio
 	 * Docs
 	 */
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 35)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 35)
 	public void verifyRedactionInAudioDocs() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-47723");
@@ -2759,7 +2757,7 @@ public class DocView_Redactions_Regression {
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 48)
 	public void verifyPersistentHitsAfterCompleteDocumentsSavedSearchGroup() throws Exception {
 		baseClass = new BaseClass(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssert = new SoftAssert();
 		DocViewPage docView = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
@@ -2868,7 +2866,7 @@ public class DocView_Redactions_Regression {
 		softAssert.assertAll();
 
 	}
-	
+
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51408 Verify on click of the "eye" icon, terms should be
@@ -2983,7 +2981,7 @@ public class DocView_Redactions_Regression {
 		softAssert.assertNotEquals(beforeComplete, afterComplete);
 		softAssert.assertAll();
 	}
-	
+
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51944 Verify when user enters document number to view when
@@ -3495,7 +3493,7 @@ public class DocView_Redactions_Regression {
 		softAssertion.assertAll();
 
 	}
-	
+
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51936 Verify that when performing doc-to-doc navigation after
@@ -4815,7 +4813,7 @@ public class DocView_Redactions_Regression {
 		softAssertion.assertAll();
 
 	}
-	
+
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51934 Verify that when completing the documents same as last the
@@ -4845,11 +4843,11 @@ public class DocView_Redactions_Regression {
 		docView.popOutMiniDocList();
 
 		driver.switchTo().window(parentWindowID);
-		
+
 		baseClass.waitForElement(docView.getSaveAndNextButton());
 		docView.getSaveAndNextButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		
+
 		docView.clickCodeSameAsLastAndVerifyNavigatedToNextDoc();
 
 		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
@@ -4906,7 +4904,7 @@ public class DocView_Redactions_Regression {
 		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
-		
+
 		sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.ViewInDocViews();
 
@@ -4918,11 +4916,11 @@ public class DocView_Redactions_Regression {
 		docView.popOutMiniDocList();
 
 		driver.switchTo().window(parentWindowID);
-		
+
 		baseClass.waitForElement(docView.getSaveAndNextButton());
 		docView.getSaveAndNextButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		
+
 		docView.clickCodeSameAsLastAndVerifyNavigatedToNextDoc();
 
 		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
@@ -4972,9 +4970,207 @@ public class DocView_Redactions_Regression {
 		driver.getWebDriver().close();
 
 		driver.switchTo().window(parentWindowID);
-		
+
 		softAssertion.assertAll();
-		
+
+	}
+
+	/**
+	 * Author : Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51851 Verify that persistent hits panel should not retain
+	 * previously viewed hits for the document on completing the document after
+	 * applying the coding stamp.
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 58)
+	public void verifyPersistentHitsCompletingDocumentsAfterCodingStamp() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		SoftAssert softAssert = new SoftAssert();
+		DocViewPage docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51851");
+		baseClass.stepInfo(
+				"Verify that persistent hits panel should not retain previously viewed hits for the document on completing the document after applying the coding stamp");
+
+		String codingForm = Input.codeFormName;
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String filedText = "Stamp" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Search the non audio documents and Create new assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+
+		// Share Search via Saved Search
+		savedSearch.shareSavedSearchRMU(searchName, Input.securityGroup);
+		baseClass.stepInfo("Sharing the saved search with security group");
+
+		savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
+
+		// Logout as ReviewManager
+		loginPage.logout();
+
+		baseClass.stepInfo(
+				"Logging in to reviewer account to verify whether reviewer can view docs in doc view from assignment");
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Verify whether the user is in doc view in context of an assignment");
+
+		// Verify AssignmentName is Displayed
+		baseClass.waitForElement(assignmentsPage.getAssignmentNameInDocView());
+		if (assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue()) {
+			baseClass.passedStep("User is in doc view in context of an assignment");
+			softAssert.assertEquals(assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("User is in doc view in context of an assignment is not assigned");
+		}
+
+		// verify PeristantHitEyeIcon is Displayed
+		baseClass.stepInfo("Verify whether the panels are displayed in doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().Click();
+		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
+		if (docView.getHitPanel().isDisplayed()) {
+			baseClass.passedStep("Persistent hit panels are displayed");
+			softAssert.assertEquals(docView.getHitPanel().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Persistent hit panels are not displayed");
+		}
+
+		baseClass.waitForElement(docView.getHitPanelCount());
+		String beforeComplete = docView.getHitPanelCount().getText();
+		System.out.println(beforeComplete);
+		docView.editCodingFormAndSaveWithStamp(filedText, Input.stampColour);
+		String getAttribute = docView.getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
+		docView.lastAppliedStamp(Input.stampColour);
+		softAssert.assertEquals("Saving with Stamp", getAttribute);
+		if (getAttribute.equals("Saving with Stamp")) {
+			baseClass.passedStep("Expected Message -StamplastIcon is clicked scuessfully..");
+		} else {
+			baseClass.failedStep("Expected Message - StamplastIcon is not clicked");
+		}
+		baseClass.waitForElement(docView.getCompleteDocBtn());
+		docView.getCompleteDocBtn().waitAndClick(10);
+		baseClass.stepInfo("Document completed successfully");
+		baseClass.waitForElement(docView.getHitPanelCount());
+		String afterComplete = docView.getHitPanelCount().WaitUntilPresent().getText();
+		System.out.println(afterComplete);
+		baseClass.stepInfo("persistent hits panel is not retain previously viewed hits");
+
+		softAssert.assertNotEquals(beforeComplete, afterComplete);
+		softAssert.assertAll();
+	}
+
+	/**
+	 * Author : Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51854 Verify that persistent hits panel should not retain
+	 * previously viewed hits for the document on completing the document same as
+	 * last from coding form child window.
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 59)
+	public void verifyPersistentHitsCompletingDocumentsCodeSameAsLastChildWindow() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		SoftAssert softAssert = new SoftAssert();
+		DocViewPage docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51854");
+		baseClass.stepInfo(
+				"Verify that persistent hits panel should not retain previously viewed hits for the document on completing the document same as last from coding form child window");
+		String codingForm = Input.codeFormName;
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String filedText = "Stamp" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Search the non audio documents and Create new assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+
+		// Share Search via Saved Search
+		savedSearch.shareSavedSearchRMU(searchName, Input.securityGroup);
+		baseClass.stepInfo("Sharing the saved search with security group");
+		savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
+
+		// Logout as ReviewManager
+		loginPage.logout();
+		baseClass.stepInfo(
+				"Logging in to reviewer account to verify whether reviewer can view docs in doc view from assignment");
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Verify whether the user is in doc view in context of an assignment");
+
+		// Verify AssignmentName is Displayed
+		baseClass.waitForElement(assignmentsPage.getAssignmentNameInDocView());
+		if (assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue()) {
+			baseClass.passedStep("User is in doc view in context of an assignment");
+			softAssert.assertEquals(assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("User is in doc view in context of an assignment is not assigned");
+		}
+
+		// verify PeristantHitEyeIcon is Displayed
+		baseClass.stepInfo("Verify whether the panels are displayed in doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().Click();
+		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
+		if (docView.getHitPanel().isDisplayed()) {
+			baseClass.passedStep("Persistent hit panels are displayed");
+			softAssert.assertEquals(docView.getHitPanel().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Persistent hit panels are not displayed");
+		}
+
+		// verify Edit and complete CodingForm childWindow and LastDocument
+		baseClass.waitForElement(docView.getHitPanelCount());
+		String beforeComplete = docView.getHitPanelCount().getText();
+		System.out.println(beforeComplete);
+		driver.WaitUntil(new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getGearIcon().Visible() && docView.getGearIcon().Enabled();
+			}
+		}, Input.wait30);
+		docView.getGearIcon().waitAndClick(10);
+		docView.getDocument_CommentsTextBox().waitAndClick(5);
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		driver.scrollPageToTop();
+		driver.WaitUntil(new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getDocView_CodingFormPopOut().Visible()
+						&& docView.getDocView_CodingFormPopOut().Enabled();
+			}
+		}, Input.wait30);
+		docView.getDocView_CodingFormPopOut().waitAndClick(5);
+		docView.switchToNewWindow(2);
+		docView.editCodingFormCompleteChildWindow();
+		docView.switchToNewWindow(2);
+		softAssert.assertTrue(docView.getCodeSameAsLast().Displayed() && docView.getCodeSameAsLast().Enabled());
+		if (docView.getCodeSameAsLast().Displayed() && docView.getCodeSameAsLast().Enabled()) {
+			baseClass.passedStep("document same as last from coding form child window");
+		} else {
+			baseClass.failedStep("document same as last from is not Enabled");
+		}
+		driver.waitForPageToBeReady();
+		docView.closeWindow(1);
+		docView.switchToNewWindow(1);
+		baseClass.waitForElement(docView.getHitPanelCount());
+		String afterComplete = docView.getHitPanelCount().WaitUntilPresent().getText();
+		System.out.println(afterComplete);
+		baseClass.stepInfo("persistent hits panel is not retain previously viewed hits");
+
+		softAssert.assertNotEquals(beforeComplete, afterComplete);
+		softAssert.assertAll();
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -4986,7 +5182,7 @@ public class DocView_Redactions_Regression {
 			baseClass.screenShot(result);
 		}
 		try {
-			loginPage.logout();	
+			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
@@ -4997,6 +5193,6 @@ public class DocView_Redactions_Regression {
 
 	public void close() {
 		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
-	
+
 	}
 }

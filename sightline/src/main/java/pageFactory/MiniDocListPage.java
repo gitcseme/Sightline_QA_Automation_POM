@@ -76,7 +76,7 @@ public class MiniDocListPage {
 	List<String> selectedFieldsSetDocumentSorting;
 	List<String> originalOrderedList;
 	List<String> afterSortList;
-	
+
 	// Added by Gopinath 28/12/2021
 	public Element getCursorNextDocumentId() {
 		return driver.FindElementByXPath("(//i[@class='fa fa-arrow-right']//../../following-sibling::tr)[1]//td[2]");
@@ -471,11 +471,16 @@ public class MiniDocListPage {
 	// Added By Jeevitha
 	public ElementCollection getAvailableSetDocumentField() {
 		return driver.FindElementsByXPath("//ul[@id='sortable1DocumentSort']//li");
-	}//Added by jayanthi
+	}// Added by jayanthi
+
 	public Element miniDocListDisplay() {
 		return driver.FindElementByXPath("//div[@id='divMiniDocList']//div[@class='dataTables_scroll']");
 	}
-	public Element getDocView__ChildWindow_Mini_RemoveCodeSameAs() {return driver.FindElementById("liRemoveCodeSameAsMiniDocList");}
+
+	public Element getDocView__ChildWindow_Mini_RemoveCodeSameAs() {
+		return driver.FindElementById("liRemoveCodeSameAsMiniDocList");
+	}
+
 	/**
 	 * @author Indium Raghuram ] Description : To get the list of elements
 	 *         (GenericMethod) Date:8/15/21 Modified date: N/A Modified by: N/A
@@ -3582,13 +3587,224 @@ public class MiniDocListPage {
 		String bgColor = getCheckSelectedBgColor(name).GetCssValue("background-color");
 
 		bgColor = rgbTohexaConvertor(bgColor);
-         System.out.println(bgColor);
+		System.out.println(bgColor);
 		if (bgColor.equals("#3E65AC")) {
-			System.out.println("Document is Highlighted : "+bgColor);
-			baseClass.passedStep("Document is Highlighted : "+bgColor);
+			System.out.println("Document is Highlighted : " + bgColor);
+			baseClass.passedStep("Document is Highlighted : " + bgColor);
 		} else {
 			System.out.println("Document is Not highlighted");
 			baseClass.failedStep("Document is Not highlighted");
+		}
+
+	}
+
+	/**
+	 * @Author Sakthivel Description : MiniDocList toggle is on Date:10/01/22
+	 *         Modified date: N/A Modified by: N/A
+	 */
+	public void verifyDocToggleisOn() {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getDocView_MiniDoclist_GearIcon());
+		getDocView_MiniDoclist_GearIcon().waitAndClick(10);
+		baseClass.waitForElement(getShowCompleteDocsButton());
+		getShowCompleteDocsButton().waitAndClick(10);
+		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
+		getMiniDocListConfirmationButton("Save").Click();
+		System.out.println("Saved Confirmed");
+		baseClass.stepInfo("Doc toggle is on in minidoclist");
+	}
+
+	/**
+	 * @Author Sakthivel Description :Minidoclist DocId checkMark Verification and
+	 *         Selected background highlight verification Date:10/01/22 Modified
+	 *         date: N/A Modified by: N/A
+	 */
+	public void verifyCheckMarkIconandDocHighlight() {
+		// Main method
+		driver.waitForPageToBeReady();
+		int sizeofList = getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		docIDlist = availableListofElements(getListofDocIDinCW());
+		for (int i = 0; i < 1; i++) {
+			String name = docIDlist.get(i);
+			getDociD(name).waitAndClick(5);
+			baseClass.waitForElement(getDocumentCompleteButton());
+			getDocumentCompleteButton().waitAndClick(5);
+			System.out.println("Completed Document ");
+			baseClass.stepInfo("Completed Document ");
+			baseClass.VerifySuccessMessage("Document completed successfully");
+			baseClass.waitForElement(getDocIDCheckedIcon(name));
+			System.out.println(name);
+			docViewPage.getFirstDocIdOnMiniDocList().ScrollTo();
+			System.out.println(name);
+			softAssertion.assertTrue(getDocIDCheckedIcon(name).isElementPresent());
+			if (getDocIDCheckedIcon(name).isElementPresent()) {
+				System.out.println(" Check Marked - Pass");
+				baseClass.passedStep("DocId Check Mark is displayed successfully ");
+			} else {
+				baseClass.failedStep("DocId Check Mark is not displayed");
+			}
+			getCheckSelectedBgColor(name).ScrollTo();
+			String bgColor = getCheckSelectedBgColor(name).GetCssValue("background-color");
+			System.out.println(bgColor);
+			bgColor = rgbTohexaConvertor(bgColor);
+			System.out.println(bgColor);
+			if (bgColor.equals("#D4E6ED")) {
+				System.out.println("document displayed in light blue highlighting");
+				baseClass.passedStep("document displayed in light blue highlighting");
+			} else {
+				System.out.println("Not highlighted");
+				baseClass.failedStep("Not highlighted");
+
+			}
+
+		}
+	}
+
+	/**
+	 * @Author Sakthivel Description :After loading DocId checkmarkVerification and
+	 *         Selected background highlight verification Date:10/01/22 Modified
+	 *         date: N/A Modified by: N/A
+	 */
+	public void verifyAfterLoadingCheckmarkAndClr() {
+		driver.waitForPageToBeReady();
+		docViewPage.scrollingDocumentInMiniDocList();
+		docViewPage.enterDocumentNumberTillLoading();
+		baseClass.waitForElement(docViewPage.getFirstDocIdOnMiniDocList());
+		int sizeofList = getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		baseClass.waitForElementCollection(getListofDocIDinCW());
+		docIDlist = availableListofElements(getListofDocIDinCW());
+		for (int i = 0; i < 1; i++) {
+			String name = docIDlist.get(i);
+			getDociD(name).waitAndClick(5);
+			docViewPage.editCodingFormComplete();
+			System.out.println("Completed Document ");
+			baseClass.stepInfo("Completed Document ");
+			baseClass.stepInfo("Expected message:Document completed successfully");
+			baseClass.waitForElement(getDocIDCheckedIcon(name));
+			System.out.println(name);
+			softAssertion.assertTrue(getDocIDCheckedIcon(name).isElementPresent());
+			baseClass.waitForElement(getDocIDCheckedIcon(name));
+			if (getDocIDCheckedIcon(name).isElementPresent()) {
+				System.out.println("DocId : " + name + " - Check Marked - Pass");
+				baseClass.passedStep("After loading DocId Check Mark is displayed successfully ");
+			} else {
+				baseClass.failedStep("After Loading DocId Check Mark is not displayed");
+			}
+			getCheckSelectedBgColor(name).ScrollTo();
+			String bgColor = getCheckSelectedBgColor(name).GetCssValue("background-color");
+			System.out.println(bgColor);
+			bgColor = rgbTohexaConvertor(bgColor);
+			System.out.println(bgColor);
+			if (bgColor.equals("#D4E6ED")) {
+				System.out.println("document displayed in light blue highlighting");
+				baseClass.passedStep("document displayed in light blue highlighting");
+			} else {
+				System.out.println("Not highlighted");
+				baseClass.failedStep("Not highlighted");
+			}
+
+		}
+
+	}
+
+	/**
+	 * @Author Sakthivel Description : checkmarkVerification and Selected background
+	 *         highlight verification in childwindow Date:10/01/22 Modified date:
+	 *         N/A Modified by: N/A
+	 */
+	public void verifyCheckMarkIconandDocHighlightInChildWindow() {
+		// Main method
+		driver.waitForPageToBeReady();
+		docViewPage.switchToNewWindow(2);
+		int sizeofList = getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		docIDlist = availableListofElements(getListofDocIDinCW());
+		for (int i = 0; i < 1; i++) {
+			String name = docIDlist.get(i);
+			getDociD(name).waitAndClick(5);
+			driver.waitForPageToBeReady();
+			docViewPage.switchToNewWindow(1);
+			baseClass.waitForElement(getDocumentCompleteButton());
+			getDocumentCompleteButton().waitAndClick(5);
+			System.out.println("Completed Document ");
+			baseClass.stepInfo("Expectedmessage: Document saved successfully ");
+			driver.waitForPageToBeReady();
+			docViewPage.switchToNewWindow(2);
+			baseClass.waitForElement(getDocIDCheckedIcon(name));
+			System.out.println(name);
+			docViewPage.getFirstDocIdOnMiniDocList().ScrollTo();
+			System.out.println(name);
+			softAssertion.assertTrue(getDocIDCheckedIcon(name).isElementPresent());
+			if (getDocIDCheckedIcon(name).isElementPresent()) {
+				System.out.println(" Check Marked - Pass");
+				baseClass.passedStep("DocId Check Mark is displayed in child window successfully ");
+			} else {
+				baseClass.failedStep("DocId Check Mark is not displayed");
+			}
+			getCheckSelectedBgColor(name).ScrollTo();
+			String bgColor = getCheckSelectedBgColor(name).GetCssValue("background-color");
+			System.out.println(bgColor);
+			bgColor = rgbTohexaConvertor(bgColor);
+			System.out.println(bgColor);
+			if (bgColor.equals("#D4E6ED")) {
+				System.out.println("document displayed in light blue highlighting");
+				baseClass.passedStep("document displayed in light blue highlighting");
+			} else {
+				System.out.println("Not highlighted");
+				baseClass.failedStep("Not highlighted");
+
+			}
+
+		}
+	}
+
+	/**
+	 * @Author Sakthivel Description :After Minidoclist loading DocId
+	 *         checkmarkVerification and Selected background highlight in child
+	 *         window verification Date:10/01/22 Modified date: N/A Modified by: N/A
+	 */
+	public void verifyAfterLoadingCheckmarkAndClrInChildWindow() {
+		driver.waitForPageToBeReady();
+		docViewPage.scrollingDocumentInMiniDocList();
+		baseClass.waitForElement(docViewPage.getFirstDocIdOnMiniDocList());
+		int sizeofList = getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		docIDlist = availableListofElements(getListofDocIDinCW());
+		for (int i = 0; i < 1; i++) {
+			String name = docIDlist.get(i);
+			getDociD(name).waitAndClick(5);
+			driver.waitForPageToBeReady();
+			docViewPage.switchToNewWindow(1);
+			docViewPage.editCodingFormComplete();
+			System.out.println("Completed Document ");
+			baseClass.stepInfo("Completed Document ");
+			baseClass.stepInfo("Expectedmessage: Document saved successfully ");
+			docViewPage.switchToNewWindow(2);
+			baseClass.waitForElement(getDocIDCheckedIcon(name));
+			System.out.println(name);
+			softAssertion.assertTrue(getDocIDCheckedIcon(name).isElementPresent());
+			if (getDocIDCheckedIcon(name).isElementPresent()) {
+				System.out.println("DocId : " + name + " - Check Marked - Pass");
+				baseClass.passedStep("After loading DocId Check Mark is displayed in child window successfully ");
+			} else {
+				baseClass.failedStep("After Loading DocId Check Mark is not displayed");
+			}
+			getCheckSelectedBgColor(name).ScrollTo();
+			String bgColor = getCheckSelectedBgColor(name).GetCssValue("background-color");
+			System.out.println(bgColor);
+			bgColor = rgbTohexaConvertor(bgColor);
+			System.out.println(bgColor);
+			if (bgColor.equals("#D4E6ED")) {
+				System.out.println("Document displayed in light blue highlighting");
+				baseClass.passedStep("Document displayed in light blue highlighting");
+			} else {
+				System.out.println("Not highlighted");
+				baseClass.failedStep("Not highlighted");
+
+			}
+
 		}
 
 	}
