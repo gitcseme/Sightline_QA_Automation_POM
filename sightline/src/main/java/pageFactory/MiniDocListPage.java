@@ -8,22 +8,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.concurrent.Callable;
 
-import org.apache.http.util.TextUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
-
-import com.sun.tools.sjavac.comp.dependencies.PublicApiCollector;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -476,6 +472,9 @@ public class MiniDocListPage {
 		return driver.FindElementByXPath("//div[@id='divMiniDocList']//div[@class='dataTables_scroll']");
 	}
 	public Element getDocView__ChildWindow_Mini_RemoveCodeSameAs() {return driver.FindElementById("liRemoveCodeSameAsMiniDocList");}
+	public Element getSelectedOptimizedSortRadioButton() {
+		return driver.FindElementByXPath("//input[@id='rbOptimized']");
+	}
 	/**
 	 * @author Indium Raghuram ] Description : To get the list of elements
 	 *         (GenericMethod) Date:8/15/21 Modified date: N/A Modified by: N/A
@@ -3589,6 +3588,25 @@ public class MiniDocListPage {
 		} else {
 			System.out.println("Document is Not highlighted");
 			baseClass.failedStep("Document is Not highlighted");
+		}
+	}
+/**
+ * @author Jayanthi.ganesan
+ */
+	
+	public void verifyOptimizedSortIsSelected() {
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(getGearIcon());
+		getGearIcon().waitAndClick(10);
+		baseClass.waitForElement(getOptimizedSortRadioButton());
+		String value=getSelectedOptimizedSortRadioButton().GetAttribute("checked");
+		System.out.println(value);
+		if(value.equals("true")) {	
+			baseClass.passedStep("Optimized mode from mini doc list is selected by default");
+		}
+		else {
+			baseClass.failedStep("Optimized mode from mini doc list is not selected by default");
 		}
 
 	}

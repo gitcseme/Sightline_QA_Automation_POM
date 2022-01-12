@@ -1,5 +1,6 @@
 package testScriptsRegression;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -23,6 +24,7 @@ import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
@@ -1876,7 +1878,7 @@ public class DocView_MiniDocList_Regression {
 	 *              mini doc list in the manual mode [RPMXCON-50879]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 51)
+	@Test(enabled = false, groups = { "regression" }, priority = 51)
 	public void verifyWarningMsgForManualMode() throws InterruptedException {
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
 
@@ -1941,7 +1943,7 @@ public class DocView_MiniDocList_Regression {
 	 *              mini doc list in the optimizedmode[RPMXCON-50886]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 52)
+	@Test(enabled = false, groups = { "regression" }, priority = 52)
 	public void verifyWarningMsgForOptimizedMode() throws InterruptedException {
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
 
@@ -2005,7 +2007,7 @@ public class DocView_MiniDocList_Regression {
 	 *              [RPMXCON-50899]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 53)
+	@Test(enabled = false, groups = { "regression" }, priority = 53)
 	public void verifyWarningMsgWhenNoDocSelected() throws InterruptedException {
 
 		// Login as a PA
@@ -2035,7 +2037,7 @@ public class DocView_MiniDocList_Regression {
 	 *         Group which are already shared-RPMXCON-48711 Sprint 09
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 54)
+	@Test(enabled = false, groups = { "regression" }, priority = 54)
 	public void validateCheckMarkIconForComplete() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -2097,7 +2099,7 @@ public class DocView_MiniDocList_Regression {
 	 *              from Dov View > mini doc list [RPMXCON-50916]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 55)
+	@Test(enabled = false, groups = { "regression" }, priority = 55)
 	public void verifyNavigationPopup() throws InterruptedException {
 		String assignName = "Assignment" + Utility.dynamicNameAppender();
 		docViewPage = new DocViewPage(driver);
@@ -2252,7 +2254,7 @@ public class DocView_MiniDocList_Regression {
 	 *         Description :RPMXCON-51244 Sprint 10
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 58)
+	@Test(enabled = false, groups = { "regression" }, priority = 58)
 	public void VerifyRemoveCodeSameDisplay_ForPA() throws InterruptedException {
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -2291,6 +2293,7 @@ public class DocView_MiniDocList_Regression {
 	}
 	
 	/**
+	 * @throws AWTException 
 	 * @Author : Jayanthi 
 	 * @Description : To verify user is allowed to select up to 4 webfields from a preselected list to display in the panel of
 	 *                mini doclist in the manual mode[RPMXCON-15074, RPMXCON-13255]
@@ -2298,7 +2301,7 @@ public class DocView_MiniDocList_Regression {
 
 	@Test(enabled = true, groups = { "regression" }, priority = 59)
 	public void DocViewToSelect4WebFields()
-			throws InterruptedException {
+			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48702");
 		baseClass.stepInfo("To verify user is allowed to select up to 4 webfields from a preselected "
 				+ "list to display in the panel of mini doclist in the manual mode[RPMXCON-15074, RPMXCON-13255]");
@@ -2311,10 +2314,11 @@ public class DocView_MiniDocList_Regression {
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+		assignmentPage.Assgnwithdocumentsequence("DocID",Input.sortType);
 		assignmentPage.addReviewerAndDistributeDocs();
 		baseClass.stepInfo("Created a assignment " + assignName);
 		
-       //Navigating to Doc view Page in context of manage assignment
+     /*  //Navigating to Doc view Page in context of manage assignment
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		assignmentPage.viewSelectedAssgnUsingPagination(assignName);
 		assignmentPage.Checkclickedstatus(assignName);
@@ -2322,17 +2326,18 @@ public class DocView_MiniDocList_Regression {
 		driver.waitForPageToBeReady();
 		
 		//Validation part
-		miniDocListpage.fromSavedSearchToSelectWebField();
+		miniDocListpage.fromSavedSearchToSelectWebField();*/
 		loginPage.logout();
 
 		// Login as Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Successfully login as Reviewer " + Input.rev1userName + "'");
+	//	baseClass.stepInfo("Successfully login as Reviewer " + Input.rev1userName + "'");
 
 		docViewPage.selectAssignmentfromDashborad(assignName);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		miniDocListpage.verifyOriginalSortOrderInChildWindow(assignName);
 		//Validation part
-		miniDocListpage.fromSavedSearchToSelectWebField();
+		//miniDocListpage.fromSavedSearchToSelectWebField();
 	}
 	
 	@Test(alwaysRun = true,groups={"regression"},priority = 60)
@@ -2348,23 +2353,37 @@ public class DocView_MiniDocList_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
 		
-		// assignment Creation
+		// assignment Craeation
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(assignmentName,"Default Project Coding Form");
+	//	assignmentPage.assignmentCreation(assignName, Input.codingFormName);
 		assignmentPage.Assgnwithdocumentsequence(sortBy,Input.sortType);
-		assignmentPage.assignmentDistributingToReviewerManager();
-		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+		assignmentPage.addReviewerAndDistributeDocs();
+		baseClass.stepInfo("Created a assignment " + assignmentName);
 		
-		// impersonate from RMU to Rev
-		baseClass.impersonateRMUtoReviewer();
-				
-		// Selecting the assignment  and validating the sort order in mini doc list
-		miniDocListpage.verifyOriginalSortOrderInChildWindow(assignmentName);
+     /*  //Navigating to Doc view Page in context of manage assignment
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.viewSelectedAssgnUsingPagination(assignName);
+		assignmentPage.Checkclickedstatus(assignName);
+		assignmentPage.assgnViewInAllDocView();
+		driver.waitForPageToBeReady();
 		
+		//Validation part
+		miniDocListpage.fromSavedSearchToSelectWebField();*/
 		loginPage.logout();
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+	//	baseClass.stepInfo("Successfully login as Reviewer " + Input.rev1userName + "'");
+
+		//docViewPage.selectAssignmentfromDashborad(assignmentName);
+	//	baseClass.stepInfo("User on the doc view after selecting the assignment");
+		miniDocListpage.verifyOriginalSortOrderInChildWindow(assignmentName);
+		//Validation part
+		//miniDocListpage.fromSavedSearchToSelectWebField();
 	}
-	
+
 	@Test(alwaysRun = true,groups={"regression"},priority = 60)
 	public void verifyCompletedIcon_PA() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51026");
@@ -2386,6 +2405,72 @@ public class DocView_MiniDocList_Regression {
 		}
 	}
 	
+	@Test(alwaysRun = true, groups = { "regression" }, priority =61)
+	public void verifyUserAbleToConfigMiniDocList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50889");
+		baseClass.stepInfo("To Verify User Shall able to Configure the Mini DocList to Show Completed Documents");
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// creating the Assignment and distributing to users
+		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.add2ReviewerAndDistribute();
+
+		baseClass.impersonateRMUtoReviewer();
+		// validation for RMU user
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+		reusableDocViewPage.editTextBoxInCodingFormWithCompleteButton("Completing and editing");
+		// Collecting selected Fields
+		List<String> selectedFields = docViewPage.CollectingSelectedFiledsFromConfigMiniDocList();
+		driver.Navigate().refresh();
+		if (reusableDocViewPage.getverifyCodeSameAsLast().isDisplayed()) {
+			baseClass.passedStep(
+					"Viewed Completed documents in mini doc list after configuring the mini doc lsit by enabling the 'show completed docs' Toggle.");
+		} else {
+			baseClass.failedStep("Not able to view the completed docs after configuring the mini doc list.");
+		}
+		// Collecting MiniDocList Header
+		List<String> miniDocListHeaders = docViewPage.availableListofElements(docViewPage.getMiniDocListHeaderValue());
+
+		// Comparing selected Fields and MiniDocList Header
+		docViewPage.ComparingSelectedFieldsWithMiniDocListHeaderValue(selectedFields, miniDocListHeaders);
+
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rev1userName);
+		// Validation part for Reviwer user
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+		reusableDocViewPage.editTextBoxInCodingFormWithCompleteButton("Completing and editing");
+		driver.Navigate().refresh();
+		// Collecting selected Fields
+		List<String> selectedFields_1 = docViewPage.CollectingSelectedFiledsFromConfigMiniDocList();
+		if (reusableDocViewPage.getverifyCodeSameAsLast().isDisplayed()) {
+			baseClass.passedStep(
+					"Viewed Completed documents in mini doc list after configuring the mini doc lsit by enabling the 'show completed docs' Toggle.");
+		} else {
+			baseClass.failedStep("Not able to view the completed docs after configuring the mini doc list");
+		}
+		// Collecting MiniDocList Header
+		List<String> miniDocListHeaders_1 = docViewPage
+				.availableListofElements(docViewPage.getMiniDocListHeaderValue());
+
+		// Comparing selected Fields and MiniDocList Header
+		docViewPage.ComparingSelectedFieldsWithMiniDocListHeaderValue(selectedFields_1, miniDocListHeaders_1);
+
+	}
+
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
@@ -2399,7 +2484,7 @@ public class DocView_MiniDocList_Regression {
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
-			LoginPage.clearBrowserCache();
+			//LoginPage.clearBrowserCache();
 		}
 	}
 
@@ -2408,7 +2493,7 @@ public class DocView_MiniDocList_Regression {
 	public void close() {
 		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
 		try {
-			loginPage.clearBrowserCache();
+			//loginPage.clearBrowserCache();
 		} catch (Exception e) {
 			// no session avilable
 

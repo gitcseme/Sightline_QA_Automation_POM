@@ -1410,6 +1410,44 @@ public class DocView_MiniDocList_DataProvider {
 		miniDocListpage.verifySelectedDocHighlight(docID);
 
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param fullName
+	 * @param userName
+	 * @param password
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true,dataProvider = "twoLogins", groups = { "regression" }, priority = 57)
+	public void savedSearchAndBasicAndDocListToDocView(String fullName, String userName, String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50888");
+		baseClass.stepInfo("To verify that if user navigates to doc view from the Basic search/Saved search/DocList, "
+				+ "Optimized mode from mini doc list should be selected");
+		String savedSearchs = "AsavedToDocview" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(userName, password);
+		
+		baseClass.stepInfo("Successfully login as '"+fullName);
+		//basic search to doc view 
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(savedSearchs);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("User navigated to docview page from basic search page");
+		miniDocListpage.verifyOptimizedSortIsSelected();  //validation part
+
+		sessionSearch.ViewInDocList();
+		baseClass.stepInfo("User navigated to doclist page from basic search page");
+		DocListPage  docListPage=new DocListPage(driver);
+     //	Selecting document in doclist page and navigate to doc view
+		docListPage.selectAllDocumentsInCurrentPageOnly();
+		docListPage.docListToDocView();
+		baseClass.stepInfo("User navigated to docview page from DocList page");
+		miniDocListpage.verifyOptimizedSortIsSelected();   //validation part
+		
+		savedSearch.savedSearch_Searchandclick(savedSearchs);
+		savedSearch.getToDocView().waitAndClick(5);
+		baseClass.stepInfo("User navigated to docview page from SavedSearch page");
+		miniDocListpage.verifyOptimizedSortIsSelected();   //validation part
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
