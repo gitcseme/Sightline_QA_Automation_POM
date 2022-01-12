@@ -251,6 +251,7 @@ public class Input {
 	public static String docIdThumbnails;
 	public static String testSecondDocId;
 	public static String testTenthDocId;
+	public static String docNearDupeDocId;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -691,6 +692,7 @@ public class Input {
 		docIdThumbnails = testData.getDocIdThumbnails();
 		testSecondDocId = testData.getTestSecondDocId();
 		testTenthDocId = testData.getTestTenthDocId();
+		docNearDupeDocId=testData.getDocNearDupeDocId();
 
 		// Added by Raghuram
 		docHighlightColor = testData.getDocHighlightColor();
