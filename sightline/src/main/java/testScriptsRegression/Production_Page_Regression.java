@@ -1819,7 +1819,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify the name of load files should be used the name of the
 	 *                     Export
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 34)
+	@Test(enabled = false, groups = { " regression" }, priority = 34)
 	public void verifySameNameForLoadFilesAndExportName() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-58562- Production Sprint 10");
@@ -1873,13 +1873,13 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/10/22 TESTCASE No:RPMXCON-55927
 	 * @Description:Verify 'Placeholders' section in Tiff/PDF components
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 35)
+	@Test(enabled = false, groups = { " regression" }, priority = 35)
 	public void verifyPlaceholdersInTIFF() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-55927- Production Sprint 10");
 		baseClass.stepInfo("Verify 'Placeholders' section in Tiff/PDF components");
 		UtilityLog.info(Input.prodPath);
-		
+
 		ProductionPage page = new ProductionPage(driver);
 		productionname = " p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
@@ -1891,41 +1891,40 @@ public class Production_Page_Regression {
 		page.getTIFFTab().waitAndClick(5);
 		driver.scrollingToElementofAPage(page.getPriveldge_TextArea());
 		baseClass.waitForElement(page.getPriveldge_TextArea());
-		
-		if(page.getPriveldge_TextArea().isDisplayed()) {
-		baseClass.passedStep("Verified 'Placeholders' section in Tiff/PDF components");
+
+		if (page.getPriveldge_TextArea().isDisplayed()) {
+			baseClass.passedStep("Verified 'Placeholders' section in Tiff/PDF components");
 		}
 	}
-	
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:01/10/22 TESTCASE No:RPMXCON-55925
 	 * @Description:Verify Native section in Production Components section
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 36)
+	@Test(enabled = false, groups = { " regression" }, priority = 36)
 	public void verifyNativeSectionComponent() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-55925- Production Sprint 10");
 		baseClass.stepInfo("Verify Native section in Production Components section");
 		UtilityLog.info(Input.prodPath);
-		
+
 		ProductionPage page = new ProductionPage(driver);
 		productionname = " p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingNativeSection();
-		if(page.nativeSectionBlueText().isDisplayed()) {
-			baseClass.passedStep("Verified Native section in Production Components section");	
+		if (page.nativeSectionBlueText().isDisplayed()) {
+			baseClass.passedStep("Verified Native section in Production Components section");
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:01/11/22 TESTCASE No:RPMXCON-56008
 	 * @Description:Verify that user can download the production by using the
 	 *                     Shareable link for 'DAT Only'
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 37)
+	@Test(enabled = false, groups = { " regression" }, priority = 37)
 	public void verifySharableLinkForDAT() throws Exception {
 		baseClass.stepInfo("Test case Id RPMXCON-56008- Production Sprint 10");
 		baseClass.stepInfo("Verify that user can download the production by using the Shareable link for 'DAT Only'");
@@ -1965,10 +1964,10 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-		
+
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		driver.Navigate().refresh();
-		
+
 		page.prodGenerationInProgressStatus();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		page.getQC_Download().waitAndClick(10);
@@ -1978,20 +1977,23 @@ public class Production_Page_Regression {
 		System.out.println(name);
 		String downloadsHome = "C:\\BatchPrintFiles\\downloads";
 		page.isFileDownloaded(downloadsHome, name);
-		baseClass.passedStep("Verified that user can download the production by using the Shareable link for 'DAT Only'");
+		baseClass.passedStep(
+				"Verified that user can download the production by using the Shareable link for 'DAT Only'");
 
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:01/11/22 TESTCASE No:RPMXCON-56015
-	 * @Description:Verify that on if user paste the sharable link and gives the correct password then it should download the zip file
+	 * @Description:Verify that on if user paste the sharable link and gives the
+	 *                     correct password then it should download the zip file
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 38)
+	@Test(enabled = false, groups = { " regression" }, priority = 38)
 	public void verifySharableLinkByCorrectPassword() throws Exception {
 		baseClass.stepInfo("Test case Id RPMXCON-56015- Production Sprint 10");
-		baseClass.stepInfo("Verify that on if user paste the sharable link and gives the correct password then it should download the zip file");
+		baseClass.stepInfo(
+				"Verify that on if user paste the sharable link and gives the correct password then it should download the zip file");
 		UtilityLog.info(Input.prodPath);
-		
+
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -2026,26 +2028,27 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-		
+
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		driver.Navigate().refresh();
-		
+
 		page.prodGenerationInProgressStatus();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		page.verifyDownloadProductionUsingSharableLink();
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:01/11/22 TESTCASE No:RPMXCON-56014
-	 * @Description:Verify that error should displays if user paste the shareable link with incorrect password
+	 * @Description:Verify that error should displays if user paste the shareable
+	 *                     link with incorrect password
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 39)
+	@Test(enabled = false, groups = { " regression" }, priority = 39)
 	public void verifyErrorInSharableLinkByIncorrectPassword() throws Exception {
 		baseClass.stepInfo("Test case Id RPMXCON-56014- Production Sprint 10");
-		baseClass.stepInfo("Verify that error should displays if user paste the shareable link with incorrect password");
+		baseClass
+				.stepInfo("Verify that error should displays if user paste the shareable link with incorrect password");
 		UtilityLog.info(Input.prodPath);
-		
-		
+
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -2080,13 +2083,127 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-		
+
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		driver.Navigate().refresh();
 		page.prodGenerationInProgressStatus();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		page.verifyDownloadProductionUsingSharableLinkAndCheckErrorMessage();
 	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:01/12/22 TESTCASE No:RPMXCON-56013
+	 * @Description:Verify that error should be displays if user enters invalid URL
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 40)
+	public void verifyErrorInSharableLinkWithInvalidURL() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-56013- Production Sprint 10");
+		baseClass
+				.stepInfo("Verify that error should displays if user paste the shareable link with incorrect password");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		page.prodGenerationInProgressStatus();
+		page.getProductionFromHomepage(productionname).waitAndClick(10);
+		page.verifyDownloadProductionUsingInvalidLink();
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:01/12/22 TESTCASE No:RPMXCON-48326
+	 * @Description:To verify that production should generate successfully if user
+	 *                 disabled the 'Generate Load File'
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 41)
+	public void verifyToggleOffForGenerateLoadFile() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48326- Production Sprint 10");
+		baseClass.stepInfo(
+				"To verify that production should generate successfully if user disabled the 'Generate Load File'");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSection(tagname);
+		page.getAdvancedTabInTIFF().waitAndClick(10);
+		page.getGenerateLoadFile().waitAndClick(10);
+		page.fillingTextSection();
+		page.getAdvancedTabInText().waitAndClick(10);
+		page.generateLoadFileToggleInTextComponent().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		page.getAdvancedProductionComponent().waitAndClick(10);
+		page.fillingMP3();
+		page.getAdvancedTabInMP3().waitAndClick(10);
+		page.getMp3GenerateLoadFile().waitAndClick(10);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+	}
+
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
