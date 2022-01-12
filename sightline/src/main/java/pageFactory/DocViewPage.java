@@ -2586,6 +2586,11 @@ public class DocViewPage {
 	public Element docViewReviewerPage() {
 		return driver.FindElementById("RemarkPnl");
 	}
+	
+	public ElementCollection getDocView_Terms() {
+		return driver.FindElementsByXPath("//strong//span[text()='Term:']");
+	}
+
 
 	public DocViewPage(Driver driver) {
 
@@ -20145,6 +20150,26 @@ public class DocViewPage {
 	}
 
 	/**
+	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
+	 * Description :perform The Eye Icon HighLighting SearchTerm.
+	 *
+	 */
+	public void verifyPersistentHitPanelAndCount(String panel) throws Exception {
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(getHitPanleVerify(panel));
+		softAssertion.assertTrue(getHitPanleVerify(panel).Displayed());
+		String countPersistentHit = getHitPanleVerify(panel).getText();
+		if (getHitPanleVerify(panel).Displayed()) {
+			base.passedStep("persistent hit panel displayed in docview panel");
+		} else {
+			base.failedStep("Hit panel not displayed");
+		}
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocView_Terms());
+		base.passedStep("The Terms Count is :" + getDocView_Terms().size());
+
+	}
+/*
 	 * @author steffy.d Method is to verify review mode text in docview page
 	 */
 	public void verifyReviewModeText() {
@@ -20159,5 +20184,6 @@ public class DocViewPage {
 			base.failedStep("Review mode text is not displayed as expected");
 		}
 	}
+
 
 }
