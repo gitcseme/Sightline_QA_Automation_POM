@@ -2210,4 +2210,18 @@ public class BaseClass {
 		return renameString;
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @param ddElement
+	 * @return
+	 */
+	public String getCurrentDropdownValue(Element ddElement) {
+		WebElement dropdown=ddElement.getWebElement();
+		Select select= new Select(dropdown);
+	    WebElement selectedValue =select.getFirstSelectedOption();
+	    String selectedoption = selectedValue.getText();
+	    System.out.println("Selected element from dropdown: "+ selectedoption);
+	    stepInfo("Selected element from dropdown: "+ selectedoption);
+	    return selectedoption;
+	}
 }

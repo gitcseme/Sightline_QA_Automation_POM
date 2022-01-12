@@ -13,7 +13,9 @@ import java.util.concurrent.Callable;
 import org.apache.commons.io.FilenameUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -500,12 +502,13 @@ public class BatchRedactionRegression3 {
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
 		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingPDFSectionwithBurnRedaction(tagname);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPageWithTag(tagname, tagname2);
 		page.navigateToNextSection();
@@ -679,14 +682,16 @@ public class BatchRedactionRegression3 {
 		// create export with PDF
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFSectionwithBurnRedaction(Input.defaultRedactionTag);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
-
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.addANewProduction(productionname);
@@ -695,8 +700,8 @@ public class BatchRedactionRegression3 {
 		page.fillingPDFSectionwithBurnRedaction(Input.defaultRedactionTag);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
-
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		login.logout();
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
@@ -708,8 +713,8 @@ public class BatchRedactionRegression3 {
 		page.fillingTIFFSectionwithBurnRedaction(Input.defaultRedactionTag);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
-
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.addANewProduction(productionname);
@@ -718,8 +723,8 @@ public class BatchRedactionRegression3 {
 		page.fillingPDFSectionwithBurnRedaction(Input.defaultRedactionTag);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
-
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 		base.passedStep(
 				"Verified that production should generated with modified Redaction placeholder text for batch redacted documents");
 
@@ -1027,12 +1032,13 @@ public class BatchRedactionRegression3 {
 		// from saved search
 		ProductionPage page = new ProductionPage(driver);
 		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTIFFSectionwithBurnRedaction();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocuSelectionPage("CH 43", null);
 		page.navigateToNextSection();
@@ -1082,7 +1088,7 @@ public class BatchRedactionRegression3 {
 	 *              redacted terms ] [RPMXCON-53401]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = false, groups = { "regression" }, priority = 20)
 	public void verifyingRedactionInDocView() throws Exception {
 
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
@@ -1153,7 +1159,7 @@ public class BatchRedactionRegression3 {
 	 *              [RPMXCON-53398]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = false, groups = { "regression" }, priority = 21)
 	public void verifyingAllRedactionsNavigationOptionInDocView() throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -1307,7 +1313,116 @@ public class BatchRedactionRegression3 {
 
 	}
 
-	
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify when RMU has search group with saved search in draft
+	 *              mode, In Progress status under 'My Saved Search' should not be
+	 *              displayed on batch redaction page[RPMXCON-53368]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	public void verifySavedSearchInDraftMode() throws Exception {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		base.stepInfo("Test case Id:RPMXCON-53368");
+		base.stepInfo(
+				"Verify when RMU has search group with saved search in draft mode, In Progress status under 'My Saved Search' should not be displayed on batch redaction page");
+
+		// Create saved search
+		session.navigateToSessionSearchPageURL();
+		int purehit = session.basicContentSearchWithSaveChanges(Input.testData1, "No", "First");
+		session.saveSearch(searchName);
+
+		batch.loadBatchRedactionPage(searchName);
+		batch.verifyAnalyzeBtn(searchName, null);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that batch redaction should be successful when saved
+	 *              search is with Credit card number [RPMXCON-53379]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	public void performBRWithCreditCardNum() throws Exception {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		String data = " \"##[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{2,4}\"";
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		base.stepInfo("Test case Id:RPMXCON-53379");
+		base.stepInfo("Verify that batch redaction should be successful when saved search is with Credit card number");
+
+		// Search The Query
+		int purehit = session.basicContentSearch(data);
+		session.saveSearchInNewNode(searchName, null);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
+
+		// verify History status
+		batch.verifyBatchHistoryStatus(searchName);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :[Covered localization]Verify when no action on click of 'No'
+	 *              button from belly band message displays on click of 'View and
+	 *              Redact' [RPMXCON-53386]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	public void verifyRedactionTag() throws InterruptedException {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("Test case Id:RPMXCON-53386");
+		base.stepInfo(
+				"[Covered localization]Verify when no action on click of 'No' button from belly band message displays on click of 'View and Redact'");
+
+		// Create saved search
+		session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		// Edit Profile Language to German
+		login.editProfile("German - Germany");
+		base.stepInfo("Successfully selected German Language");
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "No");
+
+		String redactionaTag = base.getCurrentDropdownValue(batch.getRedactionTagDropDown());
+		softAssertion.assertEquals(Input.defaultRedactionTag, redactionaTag);
+
+		// Edit Profile Language to English.
+		batch.getCloseBtn().waitAndClick(5);
+		login.editProfile("English - United States");
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		softAssertion.assertAll();
+		login.logout();
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);

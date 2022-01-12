@@ -306,8 +306,9 @@ public class BatchRedactionPage {
 	}
 
 	// added by jayanthi
+	//modifed by jeevitha
 	public Element getAnalysisReportPopup() {
-		return driver.FindElementByXPath("//div//span[text()='View Analysis Report and Batch Redact']");
+		return driver.FindElementByXPath("//div//span[contains(text(),'View Analysis Report and Batch Redact')]");
 	}
 
 	// Added By Jeevitha
@@ -477,6 +478,11 @@ public class BatchRedactionPage {
 		return driver.FindElementByXPath("//li[@class='paginate_button active']");
 	}
 
+	//Added by jeevitha
+	public Element getCloseBtn() {
+		return driver.FindElementByXPath("//button[text()='Close']");
+	}
+	
 	public BatchRedactionPage(Driver driver) {
 
 		this.driver = driver;
@@ -1575,7 +1581,7 @@ public class BatchRedactionPage {
 		// verify Popup Message
 		String Expected = "Please make sure that redactions are not being applied manually to the same documents while running this Batch Redaction as it can possibly create unexpected or lost redactions.";
 
-		base.waitForElement(getPreRedactReportMessage1());
+		base.waitForElement(getPopupMessage());
 		if (getPopupMessage().isElementPresent()) {
 			String text = getPopupMessage().getText();
 			System.out.println(text);
@@ -1680,7 +1686,7 @@ public class BatchRedactionPage {
 
 		// verify Progress Bar
 		driver.waitForPageToBeReady();
-		base.waitForElement(getProgressPercent());
+//		base.waitForElement(getProgressPercent());
 		if (getProgressPercent().isDisplayed()) {
 			getProgressPercent().isElementAvailable(15);
 			System.out.println("Percentage is : " + getProgressPercent().getText());
@@ -1696,11 +1702,11 @@ public class BatchRedactionPage {
 				base.failedMessage("Color Doesnot Match");
 			}
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getProgressBar().Visible() && getProgressBar().Displayed();
-			}
-		}), Input.wait30);
+//		driver.WaitUntil((new Callable<Boolean>() {
+//			public Boolean call() {
+//				return getProgressBar().Visible() && getProgressBar().Displayed();
+//			}
+//		}), Input.wait30);
 		String bullHornValue2 = getBullHornIcon_CC().getText();
 		int valueAfterAnalysis = Integer.parseInt(bullHornValue2);
 
@@ -2434,4 +2440,22 @@ public class BatchRedactionPage {
 			}
 		}
 	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @param searchname
+	 * @param node
+	 */
+	public void verifyAnalyzeBtn(String searchname, String node) {
+		if (getAnalyzeSearchForSavedSearchResult(searchname).isElementAvailable(3)) {
+			System.out.println("Analyze Search for Redactions button is Displayed for :" + searchname);
+			base.passedStep("Analyze Search for Redactions button is Displayed for :" + searchname);
+		} else if (getNodeAnalyseBtn(node).isElementAvailable(3)) {
+			System.out.println("Analyze Group for Redactions button is Displayed for :" + node);
+			base.passedStep("Analyze Group for Redactions button is Displayed for :" + node);
+		} else {
+			base.stepInfo("Analyze Search/Group for Redactions button is Not Displayed");
+		}
+	}
+
 }
