@@ -48,6 +48,7 @@ public class CreateCodingForm_New_Regression {
 	String intData = "INT" + Utility.dynamicNameAppender();
 	String NVARCHAR = "Nvarchar" + Utility.dynamicNameAppender();
 	String date = "Date" + Utility.dynamicNameAppender();
+	String time = "Time" + Utility.dynamicNameAppender();
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -4019,6 +4020,81 @@ public class CreateCodingForm_New_Regression {
 		loginPage.logout();
 	}
 
+	/**
+	 * @Author : Baskar date: NA Modified date:11/01/2022 Modified by: Baskar 
+	 * @Description :Verify that custom metadata field value should be retained 
+	 *               on doc view when created with TIME datatype in context of security group
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 67)
+	public void verifyThatCustomMetaDataFieldValueWithTIMEDatatype() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-52176");
+	    baseClass.stepInfo("Verify that custom metadata field value should be retained on "
+	    		+ "doc view when created with TIME datatype in context of security group");
+	    securityGroupPage=new SecurityGroupsPage(driver);
+	    codingForm=new CodingForm(driver);
+	    sessionSearch=new SessionSearch(driver);
+	    docViewPage=new DocViewPage(driver);
+	    
+	    String codingfrom = "CFDateTime"+Utility.dynamicNameAppender();
+		UtilityLog.info("Started Execution for prerequisite");
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+	
+		// Custom Field created with DATETIME DataType
+		projectPage.addCustomFieldDataType(time, "Time");
+		baseClass.stepInfo("Custom meta data field created with TIME datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(time);
+		baseClass.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Creating Coding Form
+		codingForm.creatingCodingFormAndAssgnCustomFields(codingfrom, time);
+		baseClass.stepInfo("Project field added to coding form in Doc view");
+		
+		// Assign to security group
+		codingForm.assignCodingFormToSG(codingfrom);
+		baseClass.stepInfo("Coding form assigned to security group");
+		
+		// logout
+		loginPage.logout();
+		
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+		// verify the coding form panel
+		docViewPage.verifyCodingFormDocViewINT(time);
+
+		// logout
+		loginPage.logout();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
+//		Doing cleanup activity done in prerequities
+		codingForm.deleteCodingForm(codingfrom,codingfrom);
+		
+		// logout
+		loginPage.logout();
+		
+	}
 
 		
 

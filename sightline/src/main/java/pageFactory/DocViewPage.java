@@ -2571,6 +2571,10 @@ public class DocViewPage {
 		public Element getMiniDocListTable() {
 		   return driver.FindElementById("SearchDataTable_wrapper");
 		   }
+		public Element getStampPopUpDrpDwnColur(String colour) {
+			return driver.FindElementByXPath("//dl[@id='ddlEditStamps']//ul//li[@id='"+colour+"']//a//i//..//span['Assigned']");
+		}
+
 		
 	public DocViewPage(Driver driver) {
 
@@ -19887,9 +19891,6 @@ public class DocViewPage {
 		
 		String docId2 =getDocView_CurrentDocId().getText();
 		System.out.println(docId2);
-		
-		
-			
 			try {
 				softAssertion.assertNotEquals(docId1, docId2);
 				base.passedStep("The document from threadmap tab is loaded successfully");
@@ -19899,7 +19900,111 @@ public class DocViewPage {
 				
 			}
 			softAssertion.assertAll();
+	}
+	
 
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void objectShouldNotClearWhileSavingStamp(String comment,String stampName) {
+		driver.waitForPageToBeReady();
+		editCodingForm(comment);
+		codingStampButton();
+		popUpAction(stampName, Input.stampSelection);
+		softAssertion.assertTrue(true, "Coding stamp saved successfully");
+		verifyComments(comment);
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 30/11/2021 Modified date:N/A
+	 * @Description: This method used to verify saved stamp for non-audio docs
+	 * 
+	 */
+
+	public void verifyNonAudioDocs(String comment,String stamp) {
+		driver.waitForPageToBeReady();
+		base.stepInfo("Performing action in Child window");
+		String prnDoc=getVerifyPrincipalDocument().getText();
+		editCodingForm(comment);
+		codingStampButton();
+		popUpAction(stamp, Input.stampSelection);
+		softAssertion.assertTrue(true, "Coding stamp saved successfully");
+		base.stepInfo("Validation for audio document");
+		for (int i = 20; i <= 20; i++) {
+			getClickDocviewID(i).waitAndClick(5);
+			driver.waitForPageToBeReady();
+		}
+		boolean flag=getDocView_IconPlay().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.stepInfo("Validating after view audio document and clicking non-audio docs");
+		getDociD(prnDoc).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		boolean flagTwo=getDocView_IconPlay().isDisplayed();
+		softAssertion.assertFalse(flagTwo);
+		// Applying saved stamp
+		lastAppliedStamp(Input.stampSelection);
+		// Open minidoclist child window
+		clickGearIconOpenMiniDocList();
+		String parent = switchTochildWindow();
+		driver.waitForPageToBeReady();
+		for (int i = 20; i <= 20; i++) {
+			getClickDocviewID(i).waitAndClick(5);
+			driver.waitForPageToBeReady();
+		}
+		switchToNewWindow(1);
+		boolean flagThree=getDocView_IconPlay().isDisplayed();
+		softAssertion.assertTrue(flagThree);
+		switchToNewWindow(2);
+		getClickDocviewID(2).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		childWindowToParentWindowSwitching(parent);
+		boolean flagFour=getDocView_IconPlay().isDisplayed();
+		softAssertion.assertFalse(flagFour);
+		lastAppliedStamp(Input.stampSelection);
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void deleteSavedStampFromAssign(String comment, String fieldText) {
+		driver.waitForPageToBeReady();
+		editCodingForm(comment);
+		stampColourSelection(fieldText, Input.stampSelection);
+		driver.waitForPageToBeReady();
+		pencilGearicon(Input.stampSelection);
+		if (getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()) {
+			base.passedStep("Coding stamp applied colour displayed in popup");
+		} else {
+			base.failedStep("Coding stamp applied colour not displayed in popup");
+		}
+		base.waitForElement(getDeletePopUpAssignedColour());
+		getDeletePopUpAssignedColour().waitAndClick(5);
+		base.VerifySuccessMessage("Coding stamp deleted successfully");
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void verifySavedStampAfterSameAsLast(String comment,String fieldText) {
+		editCodingForm(comment);
+		codingStampButton();
+		popUpAction(fieldText, Input.stampSelection);
+		base.VerifySuccessMessage("Coding Stamp saved successfully");
+		lastAppliedStamp(Input.stampSelection);
+		String prnDoc=getVerifyPrincipalDocument().getText();
+		boolean flag=getverifyCodeSameAsLast().Displayed();
+		softAssertion.assertTrue(flag);
+		clickCodeSameAsLast();
+		base.stepInfo("Check mark icon displayed for the completed docs");
+		String secDoc=getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnDoc, secDoc);
+		base.passedStep("Cursor navigated to next docs in minidoclist");
+		getDociD(prnDoc).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		verifyingComments(comment);
+		softAssertion.assertAll();
 	}
 	
 	/**
