@@ -845,6 +845,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element invalidPasswordErrorMessageInSharableLinks() {
+		return driver.FindElementByXPath("//p[contains(text(),'Invalid Password')]");
+	}
+	
 	public Element nativeSectionBlueText() {
 		return driver.FindElementByXPath("//div[@id='NativeContainer']//strong[contains(text(),'To produce specific')]");
 	}
@@ -15549,6 +15553,48 @@ public class ProductionPage {
 		
 	}
 
-
+	/**
+	 * @author : sowndarya.velraj 
+	 * @Description: Method for verify download production using sharable link with incorrect password
+	 */
+	public void verifyDownloadProductionUsingSharableLinkAndCheckErrorMessage() throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getQC_Download());
+			String name = getProduction().getText().trim();
+			base.waitTillElemetToBeClickable(getQC_Download());
+			getQC_Download().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getSelectSharableLinks());
+			getSelectSharableLinks().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getAllFilesLink());
+			getAllFilesLink().ScrollTo();
+			String sharableLink = getAllFilesLink().GetAttribute("value").trim();
+			String password = "consilioxyz@123";
+			String parentWindow = driver.getWebDriver().getWindowHandle();
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("window.open()");
+			ArrayList<String> tabs = new ArrayList<String>(driver.getWebDriver().getWindowHandles());
+			driver.getWebDriver().switchTo().window(tabs.get(1));
+			driver.waitForPageToBeReady();
+			driver.getWebDriver().get(sharableLink);
+			base.waitForElement(getEnterPasswordTextField());
+			getEnterPasswordTextField().SendKeys(password);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDownloadButton());
+			getDownloadButton().waitAndClick(10);
+			Thread.sleep(Input.wait30 / 10);
+			
+			if(invalidPasswordErrorMessageInSharableLinks().isDisplayed()) {
+				base.passedStep("Error Message displayed");
+			}
+			driver.close();
+			driver.getWebDriver().switchTo().window(parentWindow);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying download production using sharable link." + e.getMessage());
+		}
+	}
 
 }

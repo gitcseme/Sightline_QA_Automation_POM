@@ -1920,6 +1920,173 @@ public class Production_Page_Regression {
 		
 	}
 	
+	/**
+	 * @author Sowndarya.Velraj created on:01/11/22 TESTCASE No:RPMXCON-56008
+	 * @Description:Verify that user can download the production by using the
+	 *                     Shareable link for 'DAT Only'
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 37)
+	public void verifySharableLinkForDAT() throws Exception {
+		baseClass.stepInfo("Test case Id RPMXCON-56008- Production Sprint 10");
+		baseClass.stepInfo("Verify that user can download the production by using the Shareable link for 'DAT Only'");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		
+		page.prodGenerationInProgressStatus();
+		page.getProductionFromHomepage(productionname).waitAndClick(10);
+		page.getQC_Download().waitAndClick(10);
+		page.getClkBtnDownloadDATFiles().waitAndClick(10);
+		baseClass.waitTime(3);
+		String name = page.getProduction().getText().trim();
+		System.out.println(name);
+		String downloadsHome = "C:\\BatchPrintFiles\\downloads";
+		page.isFileDownloaded(downloadsHome, name);
+		baseClass.passedStep("Verified that user can download the production by using the Shareable link for 'DAT Only'");
+
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:01/11/22 TESTCASE No:RPMXCON-56015
+	 * @Description:Verify that on if user paste the sharable link and gives the correct password then it should download the zip file
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 38)
+	public void verifySharableLinkByCorrectPassword() throws Exception {
+		baseClass.stepInfo("Test case Id RPMXCON-56015- Production Sprint 10");
+		baseClass.stepInfo("Verify that on if user paste the sharable link and gives the correct password then it should download the zip file");
+		UtilityLog.info(Input.prodPath);
+		
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		
+		page.prodGenerationInProgressStatus();
+		page.getProductionFromHomepage(productionname).waitAndClick(10);
+		page.verifyDownloadProductionUsingSharableLink();
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:01/11/22 TESTCASE No:RPMXCON-56014
+	 * @Description:Verify that error should displays if user paste the shareable link with incorrect password
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 39)
+	public void verifyErrorInSharableLinkByIncorrectPassword() throws Exception {
+		baseClass.stepInfo("Test case Id RPMXCON-56014- Production Sprint 10");
+		baseClass.stepInfo("Verify that error should displays if user paste the shareable link with incorrect password");
+		UtilityLog.info(Input.prodPath);
+		
+		
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		page.prodGenerationInProgressStatus();
+		page.getProductionFromHomepage(productionname).waitAndClick(10);
+		page.verifyDownloadProductionUsingSharableLinkAndCheckErrorMessage();
+	}
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
