@@ -5386,6 +5386,88 @@ public class DocView_Redactions_Regression {
 		assignmentspage.deleteAssgnmntUsingPagination(assignmentName);
 
 	}
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-47026
+	 * Description :Verify the page syntax user should be able to enter against Pages in multi page redactions pop up.
+	 * @throws Exception 
+	 * 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 64)
+	public void VerifyPageSyntaxAgainstMultiPageRedactionsPopup() throws Exception {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		
+		baseClass.stepInfo("Test case id : RPMXCON-47026");
+		baseClass.stepInfo("Verify the page syntax user should be able to enter against Pages in multi page redactions pop up");
+				
+		// Performing basic search
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.searchString1);
+				
+		// Adding search results and view in docview
+		sessionSearch.ViewInDocView();
+		
+		
+		//Verifying multiple multiPage redactions
+		
+		docViewRedact.multipleMultiPageRedactions(Input.pageRange1,Input.pageRange2,Input.pageRange3);
+	}
+	
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-47030
+	 * Description :Verify that all pages other than excluded ones from multi page redaction should be redacted successfully
+	 *  with changed redaction tag from what is presented in pop up.
+	 * @throws Exception 
+	 * 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 65)
+	public void verifyRedactionTagReflectionAfterChanged() throws Exception {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		
+		
+		baseClass.stepInfo("Test case id : RPMXCON-47030");
+		baseClass.stepInfo("Verify all pages other than excluded ones are redacted");
+		
+		// Performing basic search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		
+		// Adding search results and view in docview
+		sessionSearch.ViewInDocView();
+		
+		//Clicking redact icon 
+		driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() throws Exception {
+		return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+		}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		String[] count =docView.getDocView_AllRedactionCount().getText().split("/ ");
+		int beforeRedactedCount = Integer.parseInt(count[1]);
+		
+		//verifying the default selection of redaction tag
+		docViewRedact.verifyDefaultRedactionTagSelectionInMultiPageRedact();
+		
+		//getting one of the available redaction tag
+		List<String>availableTags =  baseClass.availableListofElements(docViewRedact.availableTagsInMultiPageRedact());
+		String redactionTag =availableTags.get(2);
+		
+		//performing multi page redaction exclude
+		docViewRedact.selectingMultiplePagesForRedactionExclude(redactionTag);
+		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange4);
+		
+		//verifying all redaction count status after performing redaction
+		docViewRedact.verifyAllRedactionCountStatusAfterRedaction(beforeRedactedCount);
+	}
+	
+	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
