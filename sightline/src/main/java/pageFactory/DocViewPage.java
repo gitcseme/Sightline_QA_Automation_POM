@@ -2590,6 +2590,10 @@ public class DocViewPage {
 	public ElementCollection getDocView_Terms() {
 		return driver.FindElementsByXPath("//strong//span[text()='Term:']");
 	}
+//Added by Jayanthi
+public ElementCollection getCheckMarkIcons() {
+			return driver.FindElementsByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']");
+		}
 
 
 	public DocViewPage(Driver driver) {
@@ -20184,6 +20188,29 @@ public class DocViewPage {
 			base.failedStep("Review mode text is not displayed as expected");
 		}
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param iterate
+	 */
+	public void CompleteTheDocumentInMiniDocList(int iterate) {
+		List<WebElement> DocumenInMiniDocList = getDocumetCountMiniDocList().FindWebElements();
+
+		for (int i = 0; i < iterate; i++) {
+			driver.waitForPageToBeReady();
+			DocumenInMiniDocList.get(i).click();
+			editCodingFormComplete();
+			getverifyCodeSameAsLast().WaitUntilPresent().ScrollTo();
+			boolean flag = getverifyCodeSameAsLast().isDisplayed();
+			softAssertion.assertTrue(flag);
+			System.out.println("Checkmark icon displayed for document");
+			base.passedStep("Checkmark icon displayed for document");
+		}
+		System.out.println(getCheckMarkIcons().size());
+		softAssertion.assertEquals(iterate, getCheckMarkIcons().size());
+		softAssertion.assertAll();
+		base.passedStep("No of Checkmark icon displayed matches with no of completed document");
+	}
+
 
 
 }

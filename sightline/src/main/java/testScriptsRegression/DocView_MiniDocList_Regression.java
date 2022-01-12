@@ -2581,6 +2581,49 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.ComparingSelectedFieldsWithMiniDocListHeaderValue(selectedFields_1, miniDocListHeaders_1);
 
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws Exception
+	 */
+	@Test(alwaysRun = true,groups={"regression"},priority = 63)
+	public void verifyCheckMarkIconInCompletedDcoumentsInMiniDocList() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-51041");
+		baseClass.stepInfo("Verify check mark icon should be Dispalyed in the mini doc list for Completed document by clicking the Complete button");
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+				
+		// creating And Distributing the Assignment
+		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName,"Default Project Coding Form");
+		assignmentPage.add2ReviewerAndDistribute();
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+		
+		// impersonate as Reviewer
+		driver.waitForPageToBeReady();
+		baseClass.impersonateRMUtoReviewer();
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+		
+		//Completing the Document in MiniDocList-Validation part for RMU user
+		driver.waitForPageToBeReady();
+		docViewPage.CompleteTheDocumentInMiniDocList(3);
+		loginPage.logout();
+		
+		//Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rev1userName);
+		// Validation part for Reviwer user
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+		// Completing the Document in MiniDocList
+		driver.waitForPageToBeReady();
+		docViewPage.CompleteTheDocumentInMiniDocList(3);
+	}	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
