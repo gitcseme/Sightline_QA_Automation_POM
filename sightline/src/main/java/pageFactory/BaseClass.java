@@ -242,7 +242,7 @@ public class BaseClass {
 		Thread.sleep(3000);
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 		getSaveChangeRole().waitAndClick(10);
-		System.out.println("Impersnated from PA to RMU");
+		this.stepInfo("Impersnated from PA to RMU");
 		UtilityLog.info("Impersnated from PA to RMU");
 
 	}
