@@ -34,6 +34,7 @@ import pageFactory.BatchRedactionPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
@@ -50,6 +51,7 @@ public class DocView_Sprint2_Regression {
 	DocViewPage docView;
 	SessionSearch sessionSearch;
 	SoftAssert softAssertion;
+	KeywordPage keywordPage;
 	
 
 
@@ -2759,7 +2761,145 @@ else {
 
 	}
 	
+	/**
+	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify search term, highlighted keywords should be displayed on
+	 * click of the eye icon when redirected to doc view from session search.
+	 * 'RPMXCON-51395' Sprint : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 50)
+	public void verifySearchTermHighlightedInEyeIcon() throws Exception {
 
+		baseClass.stepInfo("Test case Id: RPMXCON-51395");
+		baseClass.stepInfo(
+				"Verify search term, highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search");
+
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		keywordPage = new KeywordPage(driver);
+		String hitTerms = "Test" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		// Add keywords
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		keywordPage.AddKeyword(hitTerms, hitTerms);
+
+		// Go to docview via advanced search
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+
+		docView.getPersistentHit(hitTerms);
+		docView.verifyPersistentHitPanelAndCount(hitTerms);
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+
+		// Go to docview via advanced search
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+
+		docView.getPersistentHit(hitTerms);
+		docView.verifyPersistentHitPanelAndCount(hitTerms);
+		loginPage.logout();
+
+		// Login as REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
+
+		// Go to docview via advanced search
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+
+		docView.getPersistentHit(hitTerms);
+		docView.verifyPersistentHitPanelAndCount(hitTerms);
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify search term, assigned keywords should be highlighted and
+	 * should be displayed on click of the eye icon when redirected to doc view from
+	 * assignment. 'RPMXCON-51397' Sprint : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 51)
+	public void verifyCreateAssignSearchTermHighlightedInEyeIcon() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51397");
+		baseClass.stepInfo(
+				"Verify search term, assigned keywords should be highlighted and should be displayed on click of the eye icon when redirected to doc view from assignment.");
+
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		docView = new DocViewPage(driver);
+		keywordPage = new KeywordPage(driver);
+		String hitTerms = "Test" + Utility.dynamicNameAppender();
+
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+       //Add keywords
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		keywordPage.AddKeyword(hitTerms, hitTerms);
+		
+		sessionsearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// color highlighting
+		softAssertion.assertTrue(docViewRedact.get_textHighlightedColor().Displayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("The color for the Highlighted text is verfied- Successfully");
+
+		docView.getPersistentHit(hitTerms);
+		docView.verifyPersistentHitPanelAndCount(hitTerms);
+		loginPage.logout();
+
+		// Login as REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// color highlighting
+		softAssertion.assertTrue(docViewRedact.get_textHighlightedColor().Displayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("The color for the Highlighted text is verfied- Successfully");
+		
+		docView.getPersistentHit(hitTerms);
+		docView.verifyPersistentHitPanelAndCount(hitTerms);
+
+
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

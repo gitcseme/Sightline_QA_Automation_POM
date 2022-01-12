@@ -2586,6 +2586,11 @@ public class DocViewPage {
 	public Element docViewReviewerPage() {
 		return driver.FindElementById("RemarkPnl");
 	}
+	
+	public ElementCollection getDocView_Terms() {
+		return driver.FindElementsByXPath("//strong//span[text()='Term:']");
+	}
+
 
 	public DocViewPage(Driver driver) {
 
@@ -20103,42 +20108,65 @@ public class DocViewPage {
 		base.passedStep("DocView Reviewer Page Is Displayed");
 
 	}
-	
-public void ComparingSelectedFieldsWithMiniDocListHeaderValue(List<String>selectedFields,List<String>MiniDocListHeaders) {
-		
+
+	public void ComparingSelectedFieldsWithMiniDocListHeaderValue(List<String> selectedFields,
+			List<String> MiniDocListHeaders) {
+
 		System.out.println(MiniDocListHeaders.remove(""));
-		
-		for(int i=0;i<selectedFields.size();i++) {
-			
-			if(selectedFields.get(i).equalsIgnoreCase(MiniDocListHeaders.get(i))){
-				
-				System.out.println("Selected Field '"+selectedFields.get(i)+"' is Displayed in MiniDocList '"+MiniDocListHeaders.get(i)+"'");
-				base.stepInfo("Selected Field '"+selectedFields.get(i)+"' is Displayed in MiniDocList '"+MiniDocListHeaders.get(i)+"'");
-			}else {
+
+		for (int i = 0; i < selectedFields.size(); i++) {
+
+			if (selectedFields.get(i).equalsIgnoreCase(MiniDocListHeaders.get(i))) {
+
+				System.out.println("Selected Field '" + selectedFields.get(i) + "' is Displayed in MiniDocList '"
+						+ MiniDocListHeaders.get(i) + "'");
+				base.stepInfo("Selected Field '" + selectedFields.get(i) + "' is Displayed in MiniDocList '"
+						+ MiniDocListHeaders.get(i) + "'");
+			} else {
 				System.out.println("Selected Field doesn't match with the MiniDocList Header");
 				base.stepInfo("Selected Field doesn't match with the MiniDocList Header");
 			}
 		}
 	}
-	
-/**
- * @author Jayanthi.ganesan
- * @return
- */
-	
-public List<String> CollectingSelectedFiledsFromConfigMiniDocList(){
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @return
+	 */
+
+	public List<String> CollectingSelectedFiledsFromConfigMiniDocList() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getReviewGearIcon());
 		getReviewGearIcon().waitAndClick(5);
 		base.waitForElement(getShowCompletedDocsToggle());
 		getShowCompletedDocsToggle().waitAndClick(5);
-		
+
 		List<String> selectedFields = availableListofElements(getDocView_Config_Selectedfield());
-		
+
 		base.waitForElement(getMiniDocListConfirmationButton("Save"));
 		getMiniDocListConfirmationButton("Save").waitAndClick(5);
-		
+
 		return selectedFields;
 	}
-	
+
+	/**
+	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
+	 * Description :perform The Eye Icon HighLighting SearchTerm.
+	 *
+	 */
+	public void verifyPersistentHitPanelAndCount(String panel) throws Exception {
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(getHitPanleVerify(panel));
+		softAssertion.assertTrue(getHitPanleVerify(panel).Displayed());
+		String countPersistentHit = getHitPanleVerify(panel).getText();
+		if (getHitPanleVerify(panel).Displayed()) {
+			base.passedStep("persistent hit panel displayed in docview panel");
+		} else {
+			base.failedStep("Hit panel not displayed");
+		}
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocView_Terms());
+		base.passedStep("The Terms Count is :" + getDocView_Terms().size());
+
+	}
 }
