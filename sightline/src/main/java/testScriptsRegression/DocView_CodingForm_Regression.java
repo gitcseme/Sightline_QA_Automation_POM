@@ -8559,7 +8559,7 @@ public class DocView_CodingForm_Regression {
 	 * @Author : Baskar date:11/01/22 Modified date: NA Modified by: Baskar
 	 * @Description : Verify on saving of the stamp coding form should not clear for the document
 	 */
-	@Test(enabled = true,dataProvider = "rmuRevLogin", groups = { "regression" }, priority =191)
+	@Test(enabled = true,dataProvider = "rmuRevLogin", groups = { "regression" }, priority =189)
 	public void validateAfterSavingStampObjectNotClear (String fullName,String userName,String password) throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48731");
 		baseClass.stepInfo("Verify on saving of the stamp coding form should not clear for the document");
@@ -8600,7 +8600,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify that for RMU/Reviewer coding stamps option should be 
 	 *              displayed outside the context of an assignment
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin",groups = { "regression" }, priority = 192)
+	@Test(enabled = true, dataProvider = "rmuRevLogin",groups = { "regression" }, priority = 190)
 	public void ValidateCodingStampOption(String fullName,String userName,String password) throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48800");
 		baseClass.stepInfo("Verify that for RMU/Reviewer coding stamps "
@@ -8635,7 +8635,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description : Verify that on click of the coding stamp non-audio document 
 	 *                should be completed which is viewed after the audio document.
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority =193)
+	@Test(enabled = true,groups = { "regression" }, priority =191)
 	public void validateSavedStampFromNonAudio () throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51888");
 		baseClass.stepInfo("Verify that on click of the coding stamp non-audio document "
@@ -8683,7 +8683,7 @@ public class DocView_CodingForm_Regression {
 	 * @Author : Baskar date: 11/01/2022 Modified date: NA Modified by: Baskar
 	 * @Description:Verify user can delete the stamp from edit coding stamp pop up
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 194)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 192)
 	public void validateDeletionOfStampFromUser(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48730");
@@ -8723,7 +8723,7 @@ public class DocView_CodingForm_Regression {
 	 * @Author : Baskar date: 11/02/2021 Modified date: NA Modified by: Baskar
 	 * @Description:Verify user can edit the coding stamp with the different color
 	 */
-	@Test(enabled = true,dataProvider = "rmuRevLogin",groups = { "regression" }, priority = 195)
+	@Test(enabled = true,dataProvider = "rmuRevLogin",groups = { "regression" }, priority = 193)
 	public void validateNotYetAssignedColourUser(String fullName, String userName, String password)throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -8778,7 +8778,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify when RMU/Reviewer clicks Code this document the same as the last coded document, 
 	 *              when immediately preceding document is completed by applying coding stamp
 	 */
-	@Test(enabled = true,dataProvider = "rmuRevLogin",groups = { "regression" }, priority = 196)
+	@Test(enabled = true,dataProvider = "rmuRevLogin",groups = { "regression" }, priority = 194)
 	public void validateSavedStampAfterClickSameAsLast(String fullName, String userName, String password)throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -8812,6 +8812,44 @@ public class DocView_CodingForm_Regression {
 		// logout
 		loginPage.logout();
 		
+	}
+	
+	/**
+	 * @Author : Baskar date:11/02/22 Modified date: NA Modified by: Baskar
+	 * @Description : Verify when user clicks the 'Code same as last' on when navigating 
+	 *                to document on document navigation options [<<, <, >, >>, enter document number]
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 195)
+	public void validateNavigateOptionUsingCodeSameAsLast() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52141");
+		baseClass.stepInfo("Verify when user clicks the 'Code same as last' on when navigating "
+				+ "to document on document navigation options [<<, <, >, >>, enter document number]");
+
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String stamp = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		docViewPage.selectPureHit();
+
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		docViewPage.verifyLastDocsUsingNavigationOption(comment,stamp);
+
+		// logout
+		loginPage.logout();
+
 	}
 	
 	
