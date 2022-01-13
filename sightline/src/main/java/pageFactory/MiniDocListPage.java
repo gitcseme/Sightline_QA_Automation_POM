@@ -476,8 +476,6 @@ public class MiniDocListPage {
 	public Element getDocView__ChildWindow_Mini_RemoveCodeSameAs() {
 		return driver.FindElementById("liRemoveCodeSameAsMiniDocList");
 	}
-
-	public Element getDocView__ChildWindow_Mini_RemoveCodeSameAs() {return driver.FindElementById("liRemoveCodeSameAsMiniDocList");}
 	
 	public Element getSelectedOptimizedSortRadioButton() {
 		return driver.FindElementByXPath("//input[@id='rbOptimized']");

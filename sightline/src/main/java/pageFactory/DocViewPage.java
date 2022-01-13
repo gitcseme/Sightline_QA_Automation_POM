@@ -2595,6 +2595,11 @@ public class DocViewPage {
 	public Element getConfigSvaeButton() {
 		return driver.FindElementByXPath("//button[@class='btn btn-primary']");
 	}
+  
+//Added by Jayanthi
+public ElementCollection getCheckMarkIcons() {
+			return driver.FindElementsByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']");
+		}
 
 	public Element getminiDocListConfigFirstAvaliableField() {
 			return driver.FindElementByXPath("(//div[@class='col-md-6']/ul//li[@class='ui-state-default'])[1]/i");
@@ -20201,7 +20206,7 @@ public class DocViewPage {
 			base.failedStep("Review mode text is not displayed as expected");
 		}
 	}
-	/**
+   /**
 	 * @author Gopinath
 	 * @Description : Method for adding remark is not added to document.
 	 * @param remark : remark is String value that any remark value need to enter in
@@ -20353,13 +20358,35 @@ public class DocViewPage {
 		}
 	}
 	
+  /*
+	 * @author Jayanthi.ganesan
+	 * @param iterate
+	 */
+	public void CompleteTheDocumentInMiniDocList(int iterate) {
+		List<WebElement> DocumenInMiniDocList = getDocumetCountMiniDocList().FindWebElements();
+
+		for (int i = 0; i < iterate; i++) {
+			driver.waitForPageToBeReady();
+			DocumenInMiniDocList.get(i).click();
+			editCodingFormComplete();
+			getverifyCodeSameAsLast().WaitUntilPresent().ScrollTo();
+			boolean flag = getverifyCodeSameAsLast().isDisplayed();
+			softAssertion.assertTrue(flag);
+			System.out.println("Checkmark icon displayed for document");
+			base.passedStep("Checkmark icon displayed for document");
+		}
+		System.out.println(getCheckMarkIcons().size());
+		softAssertion.assertEquals(iterate, getCheckMarkIcons().size());
+		softAssertion.assertAll();
+		base.passedStep("No of Checkmark icon displayed matches with no of completed document");
+	}
+
 	/**
 	 * @author Gopinath
 	 * @Description  : Method to panels in docview are docked.
 	 */
 	public void verifyAllPanelsInDocViewAreDocked() {
 		try {
-
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			if(getDocView_MiniDocListPopOut().isDisplayed()) {

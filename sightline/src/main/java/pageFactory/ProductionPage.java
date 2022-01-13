@@ -2254,7 +2254,8 @@ public class ProductionPage {
 		return driver.FindElementByXPath(
 				".//*[@id='divRightHeaderBranding']//div[@class='redactor-editor redactor-placeholder']");
 	}
-
+	public Element getErrorMsgText() {
+		return driver.FindElementByXPath("//span//h1");}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -15623,12 +15624,6 @@ public class ProductionPage {
 		} else {
 			base.failedStep(text + "is not visible");
 			System.out.println(text + "is not visible");
-		if(text("text").isDisplayed()) {
-			base.passedStep(text+" is visibled");
-			System.out.println(text+" is visible");
-		}else {
-			base.failedStep(text+" is not visible");
-			System.out.println(text+" is not visible");
 		}
 	}
 
@@ -15777,4 +15772,7 @@ public class ProductionPage {
 					"Exception occcured while verifying download production using sharable link." + e.getMessage());
 		}
 	}
+	
+	
+	
 }
