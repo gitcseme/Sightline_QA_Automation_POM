@@ -845,6 +845,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element productionNameInGeneratePage(String productionname) {
+		return driver.FindElementByXPath("//label[contains(text(),'"+productionname+"')]");
+	}
+	
 	public Element generateLoadFileToggleInTextComponent() {
 		return driver.FindElementByXPath("(//input[@id='chkProduceLoadFile']//parent::label//i)[2]");
 	}
