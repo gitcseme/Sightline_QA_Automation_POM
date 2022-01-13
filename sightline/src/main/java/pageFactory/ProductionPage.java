@@ -15783,6 +15783,29 @@ public class ProductionPage {
 		}
 	}
 	
-	
+	/**
+	 * @Author Brundha
+	 * Description:Method to Delete production in draft mode
+	 */
+
+	public void deleteProduction(String productionname) {
+		 base.waitTillElemetToBeClickable(getGearIconForProdName(productionname));
+		 getGearIconForProdName(productionname).Click();
+			
+		if(getTileDelete().isDisplayed()) {
+			base.passedStep("Delete option is displayed for drafted production");
+		 base.waitForElement(getTileDelete());
+		 
+		 getTileDelete().waitAndClick(10);
+		 base.waitForElement(getOkButton());
+		 getOkButton().Click();
+		 base.VerifySuccessMessage("Production deleted successfully");
+		 base.CloseSuccessMsgpopup();
+		}
+		else {
+			base.failedStep("Delete option is not displayed for drafted production");
+		}
+
+	}	
 	
 }

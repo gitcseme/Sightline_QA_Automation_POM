@@ -2613,6 +2613,9 @@ public ElementCollection getCheckMarkIcons() {
 	public ElementCollection geDocView_MiniList_CodeSameAsIcons() {
 		return driver.FindElementsByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-link']");
 	}
+	public Element ProductionNameInImageTab(String ProdName) {
+		return driver.FindElementByXPath("//ul[@id='AvailableImagesDropDown']//a[contains(text(),'"+ProdName+"')]");
+	}
 	public Element getCheckMarkText(String text) {
 		return driver.FindElementByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']//..//..//td[2][text()='"+text+"']");
 	}
@@ -20641,6 +20644,30 @@ public ElementCollection getCheckMarkIcons() {
 		softAssertion.assertTrue(flag);
 		softAssertion.assertAll();
 		base.passedStep("Principal docs completed and check mark displayed ");
+	}
+	/**
+	 * @author Brundha
+	 * @Description : Method for verifying the production name in pdf file 
+	 */
+	public void verifyProductionNameForPDFFileInDocView(String Productionname) {
+		try {
+			driver.waitForPageToBeReady();
+			if(ProductionNameInImageTab(Productionname).isDisplayed()) {
+			base.passedStep("Production name is displayed for the generated PDF file");	
+			
+			ProductionNameInImageTab(Productionname).ScrollTo();
+			ProductionNameInImageTab(Productionname).isElementAvailable(10);
+			ProductionNameInImageTab(Productionname).waitAndClick(10);
+			base.stepInfo("Navigated to DocView And Productioname is selected");
+			}
+			
+			else {
+				base.failedStep("Production name is not displayed for the generated PDF file");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying image tab is enabled." + e.getMessage());
+		}
 	}
 
 }

@@ -7217,7 +7217,103 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			
 		}
 		
+		/**
+		 * @author Brundha Test case id-RPMXCON-47775
+		 * @Description To Verify the availability of 'Delete' Option in drop down action menu For(Draft Mode)
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 95)
+		public void AvailabilityOfDeleteOptionInDraftMode() throws Exception {
+
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-47775 -Production Sprint 09");
+			base.stepInfo("To Verify the availability of 'Delete' Option in drop down action menu For(Draft Mode");
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
 		
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			
+			ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.selectPrivDocsInTiffSection(tagname);
+			page.navigateToNextSection();
+			
+			base.stepInfo_DataBase("Navigating back to Production home page");
+			this.driver.getWebDriver().get(Input.url + "Production/Home");
+			driver.Navigate().refresh();
+			
+			base.stepInfo("Deleting the Drafted production");
+			page.deleteProduction(productionname);
+			
+			
+		}
+
+
+/**
+		 * @author Brundha Test case id-RPMXCON-48271
+		 * @Description To Verify Produced PDFs should be available for being presented
+		 *              in the DocView for the document
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 96)
+		public void PDFDocumentDisplayedInProduction() throws Exception {
+
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-48271 -Production Sprint 09");
+			base.stepInfo(
+					"To Verify Produced PDFs should be available for being presented in the DocView for the document");
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.fillingPDFSection(tagname, Input.searchString4);
+			page.fillingTextSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.viewingPreviewInSummaryTab();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+
+			SessionSearch sessionsearch = new SessionSearch(driver);
+			base.stepInfo("View searched for  docs in Doc view");
+			sessionsearch.ViewInDocView();
+			
+			driver.waitForPageToBeReady();			
+			DocViewPage doc = new DocViewPage(driver);
+			doc.clickOnImageTab();
+			driver.waitForPageToBeReady();
+			doc.verifyProductionNameForPDFFileInDocView(productionname);
+			
+
+		}
 		
 		
 		
