@@ -54,6 +54,7 @@ public class DocView_Sprint2_Regression {
 	SessionSearch sessionSearch;
 	SoftAssert softAssertion;
 	KeywordPage keywordPage;
+	SavedSearch savedSearch;
 	
 
 
@@ -2951,9 +2952,69 @@ else {
 		else{
 			baseClass.failedStep("Application not redirected to the doc view page ");
 		}
-		
-		
-		
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that previously saved Persistent hits should be displayed
+	 * on the doc view when documents are uncompleted from edit assignment.
+	 * 'RPMXCON-51775' Sprint: 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	public void verifyPersistentHitDisplayInUncompleteDocEditAssign() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51355");
+		baseClass.stepInfo(
+				"Verify that previously saved Persistent hits should be displayed on the doc view when documents are uncompleted from edit assignment.");
+
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String BasicSearchName = "Savebtn" + Utility.dynamicNameAppender();
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+	
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		// Basic Search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(BasicSearchName);
+		savedSearch.SaveSearchToBulkAssign(BasicSearchName, assname, codingForm, SessionSearch.pureHit);
+		loginPage.logout();
+
+		// Login as REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		// eye Icon
+		docViewRedact.getDocView_MiniDoc_Selectdoc(1).waitAndClick(20);
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		baseClass.passedStep("EyeIcon Clicked Successfully");
+		// edit coding form
+		docView.editCodingFormComplete();
+		loginPage.logout();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		driver.waitForPageToBeReady();
+		assignmentsPage.VerifyUnCompleteDoc(assname);
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		// eye Icon
+		docViewRedact.getDocView_MiniDoc_Selectdoc(1).waitAndClick(20);
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
 
 	}
 

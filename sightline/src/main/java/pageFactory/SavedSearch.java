@@ -1521,16 +1521,7 @@ public class SavedSearch {
 
 		// SessionSearch search = new SessionSearch(driver);
 		// search.bulkAssign();
-		assgnpage.assignDocstoNewAssgn(assignmentName, codingForm, purehits);
-		assgnpage.SelectAssignmentToViewinDocview(assignmentName);
-		DocViewPage dp = new DocViewPage(driver);
-
-		try {
-			dp.VerifyPersistentHit(Input.searchString1);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		assgnpage.assignDocstoNewAssgnEnableAnalyticalPanel(assignmentName, codingForm, SessionSearch.pureHit);
 	}
 
 	// Below function is to search saved search and delete it
