@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.testng.ITestResult;
@@ -56,17 +57,22 @@ public class Production_Test_Regression {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("Started Execution for prerequisite");
+		Input input = new Input();
+		input.loadEnvConfig();
+		base = new BaseClass(driver);
+		driver = new Driver();
 	}
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
 
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-		in.loadEnvConfig();
-		driver = new Driver();
+		Reporter.setCurrentTestResult(result);
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.info(testMethod.getName());
 		base = new BaseClass(driver);
-		loginPage = new LoginPage(driver);
 
 		// Login as a PA
 		loginPage = new LoginPage(driver);
@@ -2407,15 +2413,17 @@ public class Production_Test_Regression {
 					page.navigateToNextSection();
 					page.fillingSummaryAndPreview();
 					page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-					page.openNewTab(link);
+					String parentWindow=page.openNewTab(link);
 					page.visibleCheck("LINK EXPIRED");
+					driver.close();
+					driver.getWebDriver().switchTo().window(parentWindow);
 					base.passedStep("Verified that if Production is regeneate then previous sharable link should not be usabel");
 					
 					tagsAndFolderPage = new TagsAndFoldersPage(driver);
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
-					}
+					}					
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
 					 *         No:RPMXCON-56006
@@ -2462,7 +2470,6 @@ public class Production_Test_Regression {
 					page.navigateToNextSection();
 					page.fillingSummaryAndPreview();
 					page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-					page.verifyDownloadProductionUsingSharableLink();
 					String link=page.getCopySharableLink();
 					
 					String parentWindow=page.openNewTab(link);
@@ -2487,6 +2494,119 @@ public class Production_Test_Regression {
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-55997
+					 * @Description: Verify that in the Production components page 'Archive File from FTP' component is not available
+					 */
+					@Test(groups = { "regression" }, priority = 40)
+					public void verifyArchiveFileFromFTPNotDisplayed() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-55997 -Production Sprint 10");
+					base.stepInfo("Verify that in the Production components page 'Archive File from FTP' component is not available");
+					String Component ="Archive File from FTP";
+					
+					//Verify
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					driver.waitForPageToBeReady();
+					base.stepInfo("page is in Production Component page");
+					
+					if(page.text(Component).isDisplayed()) {
+						base.failedStep(Component+" is visibled");
+						System.out.println(Component+" is visible");
+					}else {
+						base.passedStep(Component+" is not visible");
+						System.out.println(Component+" is not visible");
+					}
+					base.passedStep("Verified that in the Production components page 'Archive File from FTP' component is not available");
+					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-56005
+					 * @Description: Verify that user can regenerate the Shareable links and reset the expiration time
+					 */
+					@Test(groups = { "regression" }, priority = 41)
+					public void verifySharableLinkExpirationTime() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-56005 -Production Sprint 10");
+					base.stepInfo("Verify that user can regenerate the Shareable links and reset the expiration time");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					TempName ="Templete" + Utility.dynamicNameAppender();
+					
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					//tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					//sessionSearch.bulkTagExisting(tagname);
+					sessionSearch.bulkFolderExisting(foldername);
+					
+					//Verify archive status on Gen page
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPageAndPassingText(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+					page.getQC_Download().waitAndClick(10);
+					page.getSelectSharableLinks().waitAndClick(10);
+					page.getRegenarateLinkBtn().waitAndClick(10);
+					
+					String ExpiryDate =page.getSharableLinkExpiryDate().getText().trim();
+					System.out.println(ExpiryDate);
+					base.stepInfo("Expiry date show in webPage : "+ExpiryDate);
+					
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+					Date date = new Date();
+					String date1= dateFormat.format(date);
+					System.out.println("Current date " +date1);
+					base.stepInfo("Current Date"+date1);
+					
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+					Date date2 = simpleDateFormat.parse(date1);
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(date2);
+					calendar.add(Calendar.DATE, 14); // 14 == duration
+					String TwoWeekAfter = simpleDateFormat.format(calendar.getTime()).trim();
+					System.out.println("Day after 2 Week : "+TwoWeekAfter);
+					base.stepInfo("Day after 2 Week: "+TwoWeekAfter);
+
+					if(ExpiryDate.contains(TwoWeekAfter)) {
+						base.passedStep("Expiry date reset verified");
+						System.out.println("date visible");
+					}else {
+						base.failedStep("date verification failed");
+						System.out.println("date not visible");
+					}
+					base.passedStep("Verified that user can regenerate the Shareable links and reset the expiration time");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					
 	
 	
 	@AfterMethod(alwaysRun = true)
