@@ -3826,4 +3826,36 @@ public class MiniDocListPage {
 		}
 
 	}
+	
+	/**
+	 * @author Steffy
+	 * @Description : this method used to verify Configure minidoc list open should
+	 *              open [Child window Mini Doc list]
+	 */
+
+	public void configureMiniDocListPopupOpen(String parentId) {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getGearIcon());
+		getGearIcon().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		driver.switchTo().window(parentId);
+		baseClass.waitForElement(getConfigureMiniDocTab());
+		String configureMiniDocTab = getConfigureMiniDocTab().getText();
+		softAssertion.assertEquals(configureMiniDocTab, "Configure Mini DocList");
+		baseClass.passedStep("Minidoclist popup opened on clicking  the gear icon");
+		softAssertion.assertAll();
+	}
+
+	
+	/**
+	 * @author Indium-Steffy date: 02/12/2021 This method is to configure the mini
+	 *         doc list to show completed docs
+	 */
+	public void configureMiniDocListToShowCompletedDocs(String parentid) {
+		configureMiniDocListPopupOpen(parentid);
+		baseClass.waitForElement(this.getShowCompletedDocsToggle());
+		this.getShowCompletedDocsToggle().Click();
+		saveConfigureMiniDocList();
+		baseClass.waitTime(3);
+	}
 }
