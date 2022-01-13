@@ -1160,6 +1160,13 @@ public class DocViewRedactions {
 	public ElementCollection getHitPanelCollection() {
 		return driver.FindElementsByXPath("//p[contains(@id,'PHitCount')]");
 	}
+	
+	public Element audioRemarksBtn() {
+		return driver.FindElementById("remarks-btn-audio-view");}
+	
+	public Element addAudioRemarks() {
+		return driver.FindElementById("audAddRemark");}
+	
 
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
@@ -3333,7 +3340,24 @@ public class DocViewRedactions {
 		} else {
 			base.failedStep("Default Redaction Tag not selected by default");
 		}
+		
+		
+	}
+	
+	public void clickingAudioRemarksIcon() throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return audioRemarksBtn().Visible() && audioRemarksBtn().Enabled();
+			}
+		}), Input.wait30);
+		audioRemarksBtn().waitAndClick(30);
 
 	}
+	
+	
+	
+	
+	
 
 }

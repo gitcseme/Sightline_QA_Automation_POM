@@ -32,8 +32,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.joda.time.Seconds;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -2287,6 +2289,21 @@ public class BaseClass {
 		} catch (Exception E) {
 			E.printStackTrace(pw);
 			UtilityLog.info(sw.toString());
+    }
+  }
+  /*
+  * @author steffy.d
+	 * Method is to handle the alert which is getting displayed
+	 */
+
+	public void handleAlert() {
+		try {
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			UtilityLog.info("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+			UtilityLog.info("Alert is not present");
 		}
 	}
 	
