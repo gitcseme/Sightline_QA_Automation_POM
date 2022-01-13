@@ -1167,7 +1167,18 @@ public class DocViewRedactions {
 	public Element addAudioRemarks() {
 		return driver.FindElementById("audAddRemark");}
 	
-
+	public Element getManageTab() {
+		return driver.FindElementByXPath("//a[@name='Manage']");
+	}
+	
+	public Element getAssignDropDown() {
+		return driver.FindElementByXPath("//a[@name='Assignments']");
+	}
+	
+	public Element getDocView_EyePageTrems() {
+		return driver.FindElementById("PHitCount_t");
+	}
+	
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements

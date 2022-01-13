@@ -576,13 +576,10 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath(
 				"//*[@id='divDistributedDocUsers']//div[contains(.,'" + Input.rmu1userName + "')]/div/label");
 	}
-	
-	public Element getSelectUserToRedistributeDocsToReviewer() {
-		return driver.FindElementByXPath(
-				"//*[@id='dt_basic']//tr//td[contains(text(),'Indium ReviewerManager')]");
-	}
 
-	
+	public Element getSelectUserToRedistributeDocsToReviewer() {
+		return driver.FindElementByXPath("//*[@id='dt_basic']//tr//td[contains(text(),'Indium ReviewerManager')]");
+	}
 
 	// added by Jayanthi-Indium--23/8/21
 	public Element getArrowBtn_AssgnGroup(String assgnGroupName) {
@@ -1016,24 +1013,23 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath(
 				"//*[@id='divDistributedDocUsers']//div[contains(.,'" + Input.rmu2userName + "')]/div/label");
 	}
-	
+
 	public Element getManageAssignmnets() {
 		return driver.FindElementByXPath("//h1[text()='Manage Assignments']");
 	}
-	
+
 	public Element getRedistributeYesPopup() {
 		return driver.FindElementByXPath("//*[@class='MessageBoxButtonSection']//button[@id='bot1-Msg1']");
 	}
-	
+
 	public Element getSelectTheReviewersDocCheckbox() {
 		return driver.FindElementByXPath("//*[@id='my-table']//label//i");
 	}
-	
+
 	public Element getAssgn_ShowDefaultViewTabToggleButton() {
 		return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsShowDefaultViewTab']/following-sibling::i");
 	}
-	
-	
+
 	// Added by Raghuram
 	public Element getSortByMetaDataType() {
 		return driver.FindElementByXPath("//select[@id='ddlMetaDataDirection']");
@@ -1261,60 +1257,83 @@ public class AssignmentsPage {
 		return driver
 				.FindElementsByXPath("(//div[@class='col-md-4']//div[@class='smart-form']//label[@class='toggle']/i)");
 	}
-	
-	//Added by Aathith
-		public Element getAllowReviewerCode() {
-			return driver.FindElementByXPath("//input[@id='AdditionalPreferences_IsAllowCodingOutsideReviwerBatch']/../i");
-		}
-		public Element getDocumentCount() {
-			return driver
-					.FindElementByXPath("//input[@id='DrawFromPoolCount']");
-		}
-		public Element getCodingStampToggleForAssgn() {
-			return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowCodingStamps']/following-sibling::i");
-		}
-		
-		public Element getAssignmentAction_CompleteDoc() {
-			return driver.FindElementByXPath("//a[text()='Complete All Documents']"); }
-		
-		public Element getAssgn_ToggleForAllowCodingOutsideReviwerBatch() {
-	        return driver.FindElementByXPath(
-	                "//*[@id='AdditionalPreferences_IsAllowCodingOutsideReviwerBatch']/following-sibling::i");
-	    }
-		
-		public Element getAssgn_ToggleForAllowSaveWithoutCompletion() {
-	        return driver.FindElementByXPath(
-	                "//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i");
-	    }
-		public Element getResponsiveCheked() {return driver.FindElementByXPath("//div[@id='item1']//div[@id='0_radiogroup']//div[1]//div[1]//label[1]//span[1]");}
-	    public Element getNonPrivilegeRadio() {return driver.FindElementByXPath("//input[@id='9_radio']//parent::label//span");}
-	    public Element getDocument_CommentsTextBox() {return driver.FindElementByXPath("//textarea[@id='1_textarea']");}
-		
-	    
-	    //Added by gopinath - 05/01/2022
-	    public Element getAssign_DownloadNativesToggleON() {
-			 return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowNativeDownloads']/following-sibling::i[@class='true']");
-	    }
-	    public Element getAssign_ViewImagesToggle() {
-			return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowProductionView']/following-sibling::i");
-		}
-		public Element getAssign_ViewImagesToggleOn() {
-			return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowProductionView']/following-sibling::i[@class='true']");
-		}
-		public Element getDispalyMinidocListToggle() {
-			return driver.FindElementByXPath("//input[@name='AdditionalPreferences.IsShowMiniDocList']/parent::label/i");
-		}
-		
-		//Added by Gopinath - 07/01/2022
-		public Element getAssign_AllowUserToSaveToggle() {
-			return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i");
-		}
 
-		public Element getAssign_AllowUserToSaveToggleON() {
-			return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i[@class='false true']");
-		}
-		
-		//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i
+	// Added by Aathith
+	public Element getAllowReviewerCode() {
+		return driver.FindElementByXPath("//input[@id='AdditionalPreferences_IsAllowCodingOutsideReviwerBatch']/../i");
+	}
+
+	public Element getDocumentCount() {
+		return driver.FindElementByXPath("//input[@id='DrawFromPoolCount']");
+	}
+
+	public Element getCodingStampToggleForAssgn() {
+		return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowCodingStamps']/following-sibling::i");
+	}
+
+	public Element getAssignmentAction_CompleteDoc() {
+		return driver.FindElementByXPath("//a[text()='Complete All Documents']");
+	}
+
+	public Element getAssgn_ToggleForAllowCodingOutsideReviwerBatch() {
+		return driver.FindElementByXPath(
+				"//*[@id='AdditionalPreferences_IsAllowCodingOutsideReviwerBatch']/following-sibling::i");
+	}
+
+	public Element getAssgn_ToggleForAllowSaveWithoutCompletion() {
+		return driver.FindElementByXPath(
+				"//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i");
+	}
+
+	public Element getResponsiveCheked() {
+		return driver
+				.FindElementByXPath("//div[@id='item1']//div[@id='0_radiogroup']//div[1]//div[1]//label[1]//span[1]");
+	}
+
+	public Element getNonPrivilegeRadio() {
+		return driver.FindElementByXPath("//input[@id='9_radio']//parent::label//span");
+	}
+
+	public Element getDocument_CommentsTextBox() {
+		return driver.FindElementByXPath("//textarea[@id='1_textarea']");
+	}
+
+	// Added by gopinath - 05/01/2022
+	public Element getAssign_DownloadNativesToggleON() {
+		return driver.FindElementByXPath(
+				"//*[@id='AdditionalPreferences_IsAllowNativeDownloads']/following-sibling::i[@class='true']");
+	}
+
+	public Element getAssign_ViewImagesToggle() {
+		return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowProductionView']/following-sibling::i");
+	}
+
+	public Element getAssign_ViewImagesToggleOn() {
+		return driver.FindElementByXPath(
+				"//*[@id='AdditionalPreferences_IsAllowProductionView']/following-sibling::i[@class='true']");
+	}
+
+	public Element getDispalyMinidocListToggle() {
+		return driver.FindElementByXPath("//input[@name='AdditionalPreferences.IsShowMiniDocList']/parent::label/i");
+	}
+
+	// Added by Gopinath - 07/01/2022
+	public Element getAssign_AllowUserToSaveToggle() {
+		return driver.FindElementByXPath(
+				"//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i");
+	}
+
+	public Element getAssign_AllowUserToSaveToggleON() {
+		return driver.FindElementByXPath(
+				"//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i[@class='false true']");
+	}
+
+	// Added by Vijaya.Rani
+	public Element getUnComplePopOutYes() {
+		return driver.FindElementByXPath("//button[text()=' Yes']");
+	}
+
+	// *[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -5163,7 +5182,7 @@ public class AssignmentsPage {
 			driver.waitForPageToBeReady();
 			getParentAssignmentGroupName().isDisplayed();
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-			if(getAssignmentCodingFormDropDown().isElementAvailable(10)) {
+			if (getAssignmentCodingFormDropDown().isElementAvailable(10)) {
 				bc.waitForElement(getAssignmentCodingFormDropDown());
 				getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
 			} else {
@@ -5259,7 +5278,7 @@ public class AssignmentsPage {
 			}), Input.wait30);
 			int count = ((getAssgnPaginationCount().size()) - 2);
 			for (int i = 0; i < count; i++) {
-				//driver.waitForPageToBeReady();
+				// driver.waitForPageToBeReady();
 				Boolean status = getSelectAssignment(assignmentName).isDisplayed();
 				if (status == true) {
 					getSelectAssignment(assignmentName).ScrollTo();
@@ -5315,7 +5334,7 @@ public class AssignmentsPage {
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
 		bc.waitForElement(getAssignmentCodingFormDropDown());
 		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		//getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
+		// getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
 		driver.scrollingToBottomofAPage();
 		bc.waitForElement(getAssgn_SaveWithoutCompleteingToggle());
 		bc.waitTillElemetToBeClickable(getAssgn_SaveWithoutCompleteingToggle());
@@ -5470,7 +5489,7 @@ public class AssignmentsPage {
 	 * @Description : After creating assignment distributing to Two reviewer account
 	 * 
 	 */
-	
+
 	public void assignDocstoNewAssgnEnableAnalyticalPanel(final String assignmentName, String codingForm,
 			int purehits) {
 
@@ -5603,8 +5622,6 @@ public class AssignmentsPage {
 
 	}
 
-
-	
 	/**
 	 * @author Gopinath
 	 * @Description :Method for navigate back.
@@ -7243,7 +7260,7 @@ public class AssignmentsPage {
 		List<String> ActualMetadataList = new ArrayList<String>();
 		bc.waitForElementCollection(getRetainedMetadataListInReviewerPage());
 		ActualMetadataList = bc.availableListofElements(getRetainedMetadataListInReviewerPage());
-		if(ActualMetadataList.size()!=0) {
+		if (ActualMetadataList.size() != 0) {
 			bc.waitForElementCollection(getRetainedMetadataListInReviewerPage());
 			ActualMetadataList = bc.availableListofElements(getRetainedMetadataListInReviewerPage());
 		}
@@ -8358,6 +8375,7 @@ public class AssignmentsPage {
 		bc.stepInfo("Removed all the assigned document from the " + user);
 		bc.passedStep("Documents are completed successfully for the " + user);
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -8377,56 +8395,58 @@ public class AssignmentsPage {
 			driver.waitForPageToBeReady();
 			if (flag) {
 				softAssertion.assertTrue(true);
-				bc.passedStep("Enabled 'Allow reviewers to code docs outside reviewer's batch (but within assignment) '");
+				bc.passedStep(
+						"Enabled 'Allow reviewers to code docs outside reviewer's batch (but within assignment) '");
 
 			}
 		}
 	}
-	
+
 	/**
-     * @author Indium-Mohan date: 20/12/2021 Modified date: NA Description: Toggle
-     *         Disable Code Outside Reviewer's Batch
-     */
- 
-    public void toggleDisableCodeOutsideReviewersBatch() {
-        // permissions
-        // Toggle disable for DisableCodeOutsideReviewersBatch
-        driver.waitForPageToBeReady();
-        driver.scrollingToBottomofAPage();
-        String analyticalPanelFlag = getAssgn_ToggleForAllowCodingOutsideReviwerBatch().GetAttribute("class");
- 
-        if (analyticalPanelFlag.contains("true")) {
-            getAssgn_ToggleForAllowCodingOutsideReviwerBatch().Click();
-        }
+	 * @author Indium-Mohan date: 20/12/2021 Modified date: NA Description: Toggle
+	 *         Disable Code Outside Reviewer's Batch
+	 */
 
-        driver.scrollPageToTop();
-        bc.waitForElement(getAssignmentSaveButton());
-        getAssignmentSaveButton().waitAndClick(5);
-        bc.CloseSuccessMsgpopup();
-    }
-    
-    /**
-     * @author Indium-Mohan date: 20/12/2021 Modified date: NA Description: Toggle
-     *         Disable Code Outside Reviewer's Batch
-     */
- 
-    public void toggleEnableSaveWithoutCompletion() {
-        // permissions
-        // Toggle disable for DisableCodeOutsideReviewersBatch
-        driver.waitForPageToBeReady();
-        driver.scrollingToBottomofAPage();
-        String analyticalPanelFlag = getAssgn_ToggleForAllowSaveWithoutCompletion().GetAttribute("class");
- 
-        if (analyticalPanelFlag.contains("false")) {
-        	getAssgn_ToggleForAllowSaveWithoutCompletion().Click();
-        }
+	public void toggleDisableCodeOutsideReviewersBatch() {
+		// permissions
+		// Toggle disable for DisableCodeOutsideReviewersBatch
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		String analyticalPanelFlag = getAssgn_ToggleForAllowCodingOutsideReviwerBatch().GetAttribute("class");
 
-        driver.scrollPageToTop();
-        bc.waitForElement(getAssignmentSaveButton());
-        getAssignmentSaveButton().waitAndClick(5);
-        bc.CloseSuccessMsgpopup();
-    }
-    public void editCodingForm(String comment) {
+		if (analyticalPanelFlag.contains("true")) {
+			getAssgn_ToggleForAllowCodingOutsideReviwerBatch().Click();
+		}
+
+		driver.scrollPageToTop();
+		bc.waitForElement(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(5);
+		bc.CloseSuccessMsgpopup();
+	}
+
+	/**
+	 * @author Indium-Mohan date: 20/12/2021 Modified date: NA Description: Toggle
+	 *         Disable Code Outside Reviewer's Batch
+	 */
+
+	public void toggleEnableSaveWithoutCompletion() {
+		// permissions
+		// Toggle disable for DisableCodeOutsideReviewersBatch
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		String analyticalPanelFlag = getAssgn_ToggleForAllowSaveWithoutCompletion().GetAttribute("class");
+
+		if (analyticalPanelFlag.contains("false")) {
+			getAssgn_ToggleForAllowSaveWithoutCompletion().Click();
+		}
+
+		driver.scrollPageToTop();
+		bc.waitForElement(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(5);
+		bc.CloseSuccessMsgpopup();
+	}
+
+	public void editCodingForm(String comment) {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getResponsiveCheked());
 		getResponsiveCheked().waitAndClick(5);
@@ -8436,41 +8456,42 @@ public class AssignmentsPage {
 		getDocument_CommentsTextBox().Clear();
 		getDocument_CommentsTextBox().SendKeys(comment);
 	}
-    
-    /**
+
+	/**
 	 * Indium-Baskar
 	 */
 	public void VerifyToggleColour() {
-    	SoftAssert assertion=new SoftAssert();
-    	driver.waitForPageToBeReady();
-    	bc.waitForElement(getAssignmentActionDropdown());
+		SoftAssert assertion = new SoftAssert();
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAssignmentActionDropdown());
 		getAssignmentActionDropdown().waitAndClick(15);
 		bc.waitForElement(getAssignmentAction_NewAssignment());
 		getAssignmentAction_NewAssignment().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		driver.scrollingToBottomofAPage();
-        String flagFalse = getAssgn_CodingStampAplliedToggle().GetAttribute("class");
-        if (flagFalse.contains("false")) {
-        	String colourRed=getAssgn_CodingStampAplliedToggle().GetCssValue("background-color");
-        	colourRed =bc.rgbTohexaConvertor(colourRed);
-        	System.out.println(colourRed);
-        	assertion.assertEquals(colourRed, "#E54036");
-        }
-        getAssgn_CodingStampAplliedToggle().waitAndClick(5);
-        driver.waitForPageToBeReady();
-        String colourGreen=getAssgn_CodingStampAplliedToggle().GetCssValue("background-color");
-       	colourGreen =bc.rgbTohexaConvertor(colourGreen);
-     	System.out.println(colourGreen);
-        assertion.assertEquals(colourGreen, "#A9C981");
-        assertion.assertAll();
-    } 
-	
-	
-    /**
+		String flagFalse = getAssgn_CodingStampAplliedToggle().GetAttribute("class");
+		if (flagFalse.contains("false")) {
+			String colourRed = getAssgn_CodingStampAplliedToggle().GetCssValue("background-color");
+			colourRed = bc.rgbTohexaConvertor(colourRed);
+			System.out.println(colourRed);
+			assertion.assertEquals(colourRed, "#E54036");
+		}
+		getAssgn_CodingStampAplliedToggle().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String colourGreen = getAssgn_CodingStampAplliedToggle().GetCssValue("background-color");
+		colourGreen = bc.rgbTohexaConvertor(colourGreen);
+		System.out.println(colourGreen);
+		assertion.assertEquals(colourGreen, "#A9C981");
+		assertion.assertAll();
+	}
+
+	/**
 	 * @author gopinath.srinivasan
-	 * @Description : Method for creating new new bulk assignment with enabling persistant hit check box,
-	 * @param assignmentName : assignmentName is String value that name of assignment name need to create.
-	 * @param codingForm : codingForm is String value that name of coding form.
+	 * @Description : Method for creating new new bulk assignment with enabling
+	 *              persistant hit check box,
+	 * @param assignmentName : assignmentName is String value that name of
+	 *                       assignment name need to create.
+	 * @param codingForm     : codingForm is String value that name of coding form.
 	 */
 	public void assignmentCreationWithPersistantHitDocList(String assignmentName, String codingForm) {
 		try {
@@ -8575,21 +8596,22 @@ public class AssignmentsPage {
 			bc.waitForElement(getAssignmentAction_EditAssignment());
 			bc.waitTillElemetToBeClickable(getAssignmentAction_EditAssignment());
 			getAssignmentAction_EditAssignment().waitAndClick(5);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			bc.failedStep("Exception occured while creating new new bulk assignment with enabling persistant hit check box"+e.getLocalizedMessage());
+			bc.failedStep(
+					"Exception occured while creating new new bulk assignment with enabling persistant hit check box"
+							+ e.getLocalizedMessage());
 		}
-	
+
 	}
-	
-	
+
 	/**
-	 * @author Gopinath
-	 * Description : this methoad create an assignment from bulk assign and allow native download if not selected
+	 * @author Gopinath Description : this methoad create an assignment from bulk
+	 *         assign and allow native download if not selected
 	 * @param assignmentName : assignmentName is name of assignment need to create.
-	 * @param codingForm : codingForm is String value that name of coding form.
+	 * @param codingForm     : codingForm is String value that name of coding form.
 	 */
-	public void createAssignmentWithNativeDownload(String assignmentName,String codingForm) {
+	public void createAssignmentWithNativeDownload(String assignmentName, String codingForm) {
 		try {
 			bc.waitForElement(getAssgn_NewAssignmnet());
 			bc.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
@@ -8625,11 +8647,11 @@ public class AssignmentsPage {
 			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
 			driver.scrollingToBottomofAPage();
 			getAssgn_DownloadNativesToggle().ScrollTo();
-			if(getAssign_DownloadNativesToggleON().isElementAvailable(5)==false) {
+			if (getAssign_DownloadNativesToggleON().isElementAvailable(5) == false) {
 				getAssgn_DownloadNativesToggle().waitAndClick(5);
 			}
 			bc.waitForElement(getAssign_DownloadNativesToggleON());
-			if(getAssign_DownloadNativesToggleON().isElementAvailable(5)==false) {
+			if (getAssign_DownloadNativesToggleON().isElementAvailable(5) == false) {
 				bc.failedStep("unable to turn on native download button");
 			}
 			driver.scrollPageToTop();
@@ -8638,32 +8660,35 @@ public class AssignmentsPage {
 			bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
 			getAssignmentSaveButton().waitAndClick(5);
 			if (getAssignmentErrorText().isElementAvailable(1)) {
-			try {
-				if (getAssignmentErrorText().isDisplayed()) {
-					driver.waitForPageToBeReady();
-					bc.waitForElement(getAssignmentName());
-					getAssignmentName().SendKeys(assignmentName);
-					bc.waitForElement(getAssignmentSaveButton());
-					getAssignmentSaveButton().waitAndClick(5);
+				try {
+					if (getAssignmentErrorText().isDisplayed()) {
+						driver.waitForPageToBeReady();
+						bc.waitForElement(getAssignmentName());
+						getAssignmentName().SendKeys(assignmentName);
+						bc.waitForElement(getAssignmentSaveButton());
+						getAssignmentSaveButton().waitAndClick(5);
+					}
+				} catch (org.openqa.selenium.NoSuchElementException e) {
+					e.printStackTrace();
 				}
-			} catch (org.openqa.selenium.NoSuchElementException e) {
-				e.printStackTrace();
-			}}
+			}
 			System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
 			UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			bc.failedStep("Exception occured while creating an assignment from bulk assign and allow native download if not selected"+e.getLocalizedMessage());
+			bc.failedStep(
+					"Exception occured while creating an assignment from bulk assign and allow native download if not selected"
+							+ e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
-	 * @author Gopinath
-	 * Description : thsi methoad will create an assignment by disabling production/images toggle
+	 * @author Gopinath Description : thsi methoad will create an assignment by
+	 *         disabling production/images toggle
 	 * @param assignmentName
 	 * @param codingForm
 	 */
-	public void createAssignmentWithImagesViewDisabled(String assignmentName,String codingForm) {
+	public void createAssignmentWithImagesViewDisabled(String assignmentName, String codingForm) {
 		try {
 			bc.waitForElement(getAssgn_NewAssignmnet());
 			bc.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
@@ -8687,10 +8712,10 @@ public class AssignmentsPage {
 			driver.scrollingToBottomofAPage();
 			getAssign_ViewImagesToggle().ScrollTo();
 			bc.waitTime(3);
-			if(getAssign_ViewImagesToggleOn().isElementAvailable(5)) {
+			if (getAssign_ViewImagesToggleOn().isElementAvailable(5)) {
 				getAssign_ViewImagesToggle().waitAndClick(5);
 			}
-			if(getAssign_ViewImagesToggleOn().isElementAvailable(5)==true) {
+			if (getAssign_ViewImagesToggleOn().isElementAvailable(5) == true) {
 				bc.failedStep("unable to turn on Productions/images button");
 			}
 			driver.scrollPageToTop();
@@ -8707,79 +8732,76 @@ public class AssignmentsPage {
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
 			bc.waitForElement(getAssignmentCodingFormDropDown());
 			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-			
+
 			bc.waitForElement(getAssignmentSaveButton());
 			bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
 			getAssignmentSaveButton().waitAndClick(5);
 			if (getAssignmentErrorText().isElementAvailable(1)) {
-			try {
-				if (getAssignmentErrorText().isDisplayed()) {
-					driver.waitForPageToBeReady();
-					bc.waitForElement(getAssignmentName());
-					getAssignmentName().SendKeys(assignmentName);
-					bc.waitForElement(getAssignmentSaveButton());
-					getAssignmentSaveButton().waitAndClick(5);
+				try {
+					if (getAssignmentErrorText().isDisplayed()) {
+						driver.waitForPageToBeReady();
+						bc.waitForElement(getAssignmentName());
+						getAssignmentName().SendKeys(assignmentName);
+						bc.waitForElement(getAssignmentSaveButton());
+						getAssignmentSaveButton().waitAndClick(5);
+					}
+				} catch (org.openqa.selenium.NoSuchElementException e) {
+					e.printStackTrace();
 				}
-			} catch (org.openqa.selenium.NoSuchElementException e) {
-				e.printStackTrace();
-			}}
+			}
 			System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
 			UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			bc.failedStep("Exception occured while creating an assignment by disabling production/images toggle"+e.getLocalizedMessage());
+			bc.failedStep("Exception occured while creating an assignment by disabling production/images toggle"
+					+ e.getLocalizedMessage());
 		}
 	}
 
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param ele
-	 * @param EnableorDisable
-	 *        boolean value should be true if we want to enable the toggle and false if we want to disable
+	 * @param EnableorDisable boolean value should be true if we want to enable the
+	 *                        toggle and false if we want to disable
 	 */
-	public void toggleEnable_Disable(Element ele,boolean EnableorDisable,String name) {
-		boolean status=false;
+	public void toggleEnable_Disable(Element ele, boolean EnableorDisable, String name) {
+		boolean status = false;
 		driver.waitForPageToBeReady();
 		driver.scrollingToBottomofAPage();
 		bc.waitForElement(ele);
 		if (ele.GetAttribute("class").contentEquals("true")) {
-			status=true;
+			status = true;
 		} else {
-			bc.stepInfo(name+" Toggle is not enabled.");
+			bc.stepInfo(name + " Toggle is not enabled.");
 		}
-		if(EnableorDisable) {
-			if(status) {
-				bc.stepInfo(name+" Toggle is already enabled .");
-			}
-			else {
+		if (EnableorDisable) {
+			if (status) {
+				bc.stepInfo(name + " Toggle is already enabled .");
+			} else {
 				ele.waitAndClick(5);
-				bc.stepInfo(name+" Toggle is  enabled now .");
+				bc.stepInfo(name + " Toggle is  enabled now .");
 			}
-			
-		}else {
-			if(status) {
+
+		} else {
+			if (status) {
 				ele.waitAndClick(5);
-				bc.stepInfo(name+" Toggle is  enabled so disabled the toggle now .");
+				bc.stepInfo(name + " Toggle is  enabled so disabled the toggle now .");
+			} else {
+				bc.stepInfo(name + " Toggle is  disabled already.");
 			}
-			else {
-				bc.stepInfo(name+" Toggle is  disabled already.");
-			}		
 		}
 		driver.scrollPageToTop();
 		bc.waitForElement(getAssignmentSaveButton());
-		getAssignmentSaveButton().waitAndClick(5);	}	
-		
+		getAssignmentSaveButton().waitAndClick(5);
+	}
 
-	
-	
-	
 	/**
-	 * @author Gopinath
-	 * Description : this mehtod will create new assignment with allow user to save without complete
+	 * @author Gopinath Description : this mehtod will create new assignment with
+	 *         allow user to save without complete
 	 * @param assignmentName
 	 * @param codingForm
 	 */
-	public void createAssignmentWithAllowUserToSave(String assignmentName,String codingForm) {
+	public void createAssignmentWithAllowUserToSave(String assignmentName, String codingForm) {
 		bc.waitForElement(getAssgn_NewAssignmnet());
 		bc.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
 		getAssgn_NewAssignmnet().waitAndClick(5);
@@ -8803,11 +8825,11 @@ public class AssignmentsPage {
 		bc.waitTime(3);
 		bc.waitForElement(getAssign_AllowUserToSaveToggle());
 		getAssign_AllowUserToSaveToggle().waitAndClick(5);
-		
-		if(!getAssign_AllowUserToSaveToggle().isElementAvailable(5)) {
+
+		if (!getAssign_AllowUserToSaveToggle().isElementAvailable(5)) {
 			getAssign_ViewImagesToggle().waitAndClick(5);
 		}
-		if(!getAssign_ViewImagesToggleOn().isElementAvailable(5)) {
+		if (!getAssign_ViewImagesToggleOn().isElementAvailable(5)) {
 			bc.failedStep("unable to turn on Allow users to Save without completing");
 		}
 		driver.scrollPageToTop();
@@ -8824,49 +8846,50 @@ public class AssignmentsPage {
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
 		bc.waitForElement(getAssignmentCodingFormDropDown());
 		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		
+
 		bc.waitForElement(getAssignmentSaveButton());
 		bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
 		getAssignmentSaveButton().waitAndClick(5);
 		if (getAssignmentErrorText().isElementAvailable(1)) {
-		try {
-			if (getAssignmentErrorText().isDisplayed()) {
-				driver.waitForPageToBeReady();
-				bc.waitForElement(getAssignmentName());
-				getAssignmentName().SendKeys(assignmentName);
-				bc.waitForElement(getAssignmentSaveButton());
-				getAssignmentSaveButton().waitAndClick(5);
+			try {
+				if (getAssignmentErrorText().isDisplayed()) {
+					driver.waitForPageToBeReady();
+					bc.waitForElement(getAssignmentName());
+					getAssignmentName().SendKeys(assignmentName);
+					bc.waitForElement(getAssignmentSaveButton());
+					getAssignmentSaveButton().waitAndClick(5);
+				}
+			} catch (org.openqa.selenium.NoSuchElementException e) {
+				e.printStackTrace();
 			}
-		} catch (org.openqa.selenium.NoSuchElementException e) {
-			e.printStackTrace();
-		}}
+		}
 		System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
 		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
 	}
-	
-	 /**
-     * @author Indium-Mohan date: 20/12/2021 Modified date: NA Description: Toggle
-     *         Disable Show Default View Tab
-     */
- 
-    public void toggleDisableShowDefaultViewTab() {
-        // permissions
-        // Toggle disable for DisableCodeOutsideReviewersBatch
-        driver.waitForPageToBeReady();
-        driver.scrollingToBottomofAPage();
-        String analyticalPanelFlag = getAssgn_ShowDefaultViewTabToggleButton().GetAttribute("class");
- 
-        if (analyticalPanelFlag.contains("true")) {
-        	getAssgn_ShowDefaultViewTabToggleButton().Click();
-        }
 
-        driver.scrollPageToTop();
-        bc.waitForElement(getAssignmentSaveButton());
-        getAssignmentSaveButton().waitAndClick(5);
-        bc.CloseSuccessMsgpopup();
-    }
+	/**
+	 * @author Indium-Mohan date: 20/12/2021 Modified date: NA Description: Toggle
+	 *         Disable Show Default View Tab
+	 */
 
-    /**
+	public void toggleDisableShowDefaultViewTab() {
+		// permissions
+		// Toggle disable for DisableCodeOutsideReviewersBatch
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		String analyticalPanelFlag = getAssgn_ShowDefaultViewTabToggleButton().GetAttribute("class");
+
+		if (analyticalPanelFlag.contains("true")) {
+			getAssgn_ShowDefaultViewTabToggleButton().Click();
+		}
+
+		driver.scrollPageToTop();
+		bc.waitForElement(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(5);
+		bc.CloseSuccessMsgpopup();
+	}
+
+	/**
 	 * @author Gopinath
 	 * @description : Method to verify added keyword is checked.
 	 */
@@ -8891,7 +8914,7 @@ public class AssignmentsPage {
 			getAssgn_Keywordokbutton().isElementAvailable(10);
 			getAssgn_Keywordokbutton().Click();
 			bc.waitTime(1);
-			if(getRedistributeYesPopup().isDisplayed()) {
+			if (getRedistributeYesPopup().isDisplayed()) {
 				getRedistributeYesPopup().Click();
 			}
 			driver.scrollPageToTop();
@@ -8900,4 +8923,68 @@ public class AssignmentsPage {
 		}
 	}
 
-  }
+	/**
+	 * Indium-Vijaya.Rani
+	 */
+	public void VerifyUnCompleteDoc(String assignmentName) {
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		final int Bgcount = bc.initialBgCount();
+		driver.waitForPageToBeReady();
+		docViewRedact.getManageTab().waitAndClick(10);
+		bc.waitForElement(docViewRedact.getAssignDropDown());
+		docViewRedact.getAssignDropDown().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+
+		System.out.println("Docs assigned to  " + assignmentName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumberOfAssignmentsToBeShown().Visible();
+			}
+		}), Input.wait60);
+
+		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+
+		driver.scrollingToBottomofAPage();
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssgnPaginationCount().Visible();
+			}
+		}), Input.wait30);
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			driver.waitForPageToBeReady();
+			Boolean status = getSelectAssignment(assignmentName).isElementAvailable(5);
+			if (status == true) {
+				driver.scrollingToElementofAPage(getSelectAssignment(assignmentName));
+				getSelectAssignment(assignmentName).waitAndClick(3);
+				;
+				driver.scrollPageToTop();
+				getAssignmentActionDropdown().waitAndClick(3);
+				bc.stepInfo("Expected assignment found in the page " + i);
+				break;
+			} else {
+				driver.scrollingToBottomofAPage();
+				getAssgnPaginationNextButton().waitAndClick(3);
+				bc.stepInfo("Expected assignment not found in the page " + i);
+			}
+		}
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAssgn_ManageRev_Action_UnCompleteAllDocs());
+		getAssgn_ManageRev_Action_UnCompleteAllDocs().waitAndClick(10);
+
+		bc.waitForElement(getUnComplePopOutYes());
+		getUnComplePopOutYes().waitAndClick(10);
+		bc.VerifySuccessMessage("All Document successfully un-completed");
+		driver.waitForPageToBeReady();
+
+	}
+}
