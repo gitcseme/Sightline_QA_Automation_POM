@@ -2624,7 +2624,74 @@ public class DocView_MiniDocList_Regression {
 		driver.waitForPageToBeReady();
 		docViewPage.CompleteTheDocumentInMiniDocList(3);
 	}	
-	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws Exception
+	 */
+	@Test(alwaysRun = true,groups={"regression"},priority = 64)
+	public void verifyingWebfieldsInOptimizedSortOrderAndManualSortOrder() throws Exception {
+		
+		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
+		boolean SetDocumentSorting = true;
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48782");
+		baseClass.stepInfo("Verify that when stwitch from optimized to Custom, the displayed fields after adding/removing few webfields set in the optimized sort are displayed for custom sort");
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+		
+		// assignment Craeation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName,"Default Project Coding Form");
+		assignmentPage.add3ReviewerAndDistribute();
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+		
+		// impersonate from RMU to Rev
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Loggedin As RMU and Impersonated as Reviewer ");
+		// Selecting the assignment 
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+		
+		// performing Add and Remove action on Selected Web Fields 
+		driver.waitForPageToBeReady();
+		miniDocListpage.configureMiniDocListPopupOpen();
+		miniDocListpage.methodforPickColumndisplay();
+		
+		miniDocListpage.saveConfigureMiniDocList();
+		
+		// verifying the Selected Web Fields
+		driver.waitForPageToBeReady();
+		miniDocListpage.configureMiniDocListPopupOpen();
+		miniDocListpage.comparingWebfieldsInOptimizedSortOrderAndManualSortOrder(SetDocumentSorting);
+		
+		loginPage.logout();
+		
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Loggedin As : " + Input.pa1FullName);
+		
+		// impersonate from PA to Rev
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("Loggedin As PA and Impersonated as Reviewer ");
+		// Selecting the assignment 
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+				
+		// performing Add and Remove action on Selected Web Fields 
+		driver.waitForPageToBeReady();
+		miniDocListpage.configureMiniDocListPopupOpen();
+		miniDocListpage.methodforPickColumndisplay();
+				
+		miniDocListpage.saveConfigureMiniDocList();
+				
+		// verifying the Selected Web Fields
+		driver.waitForPageToBeReady();
+		miniDocListpage.configureMiniDocListPopupOpen();
+		miniDocListpage.comparingWebfieldsInOptimizedSortOrderAndManualSortOrder(SetDocumentSorting);
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
