@@ -9,6 +9,8 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -2900,6 +2902,61 @@ else {
 
 
 	}
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 52)
+
+	public void VerifyRMUToDocView() throws Exception {
+		String expectedURL=Input.url+"DocumentViewer/DocView";
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		
+		String assignmentName1="assgnment" + Utility.dynamicNameAppender();
+
+		UtilityLog.info("Logged in as RMU User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case Id:RPMXCON-50773");
+		baseClass.stepInfo("To verify RMU can view the Doc View page from Assignment.");
+		
+		sessionsearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		assignmentsPage.assignmentCreation(assignmentName1, Input.codeFormName);
+		assignmentsPage.add2ReviewerAndDistribute();
+		baseClass.stepInfo(assignmentName1+"  Assignment Created and distributed ");
+		//select the Assignment from Manage Assignment 
+		baseClass.stepInfo("Selecting the assignment from Manage Assignments Page. ");
+				this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+				assignmentsPage.viewSelectedAssgnUsingPagination(assignmentName1);
+				assignmentsPage.Checkclickedstatus(assignmentName1);
+				assignmentsPage.assgnViewInAllDocView();
+				System.out.println();
+				driver.waitForPageToBeReady();
+				if(driver.getUrl().equals(expectedURL)) {
+					baseClass.passedStep("Application  redirected to the doc view page which is as expected");
+				}
+				else{
+					baseClass.failedStep("Application not redirected to the doc view page ");
+				}
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+		// Select the Assignment from dashboard
+		baseClass.stepInfo("Selecting the assignment from dashboard after impersonating as Reviewer from RMu user. ");
+		assignmentsPage.SelectAssignmentByReviewer(assignmentName1);
+		driver.waitForPageToBeReady();
+		if(driver.getUrl().equals(expectedURL)) {
+			baseClass.passedStep("Application  redirected to the doc view page which is as expected");
+		}
+		else{
+			baseClass.failedStep("Application not redirected to the doc view page ");
+		}
+		
+		
+		
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
