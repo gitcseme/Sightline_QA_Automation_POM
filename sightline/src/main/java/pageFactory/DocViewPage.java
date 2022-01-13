@@ -20186,8 +20186,7 @@ public ElementCollection getCheckMarkIcons() {
 	public void verifyPersistentHitPanelAndCount(String panel) throws Exception {
 		driver.waitForPageToBeReady();
 		driver.scrollingToElementofAPage(getHitPanleVerify(panel));
-		softAssertion.assertTrue(getHitPanleVerify(panel).Displayed());
-		String countPersistentHit = getHitPanleVerify(panel).getText();
+		softAssertion.assertTrue(getHitPanleVerify(panel).isDisplayed());
 		if (getHitPanleVerify(panel).Displayed()) {
 			base.passedStep("persistent hit panel displayed in docview panel");
 		} else {
@@ -20196,6 +20195,7 @@ public ElementCollection getCheckMarkIcons() {
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getDocView_Terms());
 		base.passedStep("The Terms Count is :" + getDocView_Terms().size());
+		softAssertion.assertAll();
 
 	}
 /*
