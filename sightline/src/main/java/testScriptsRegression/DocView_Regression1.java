@@ -3819,6 +3819,372 @@ public class DocView_Regression1 {
 				docView.verifyFirstDocumentofMiniDocListIsFullyVisibleFromDocList(firstDocument);
 				
 			}
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id :51759 Verify when ad hoc search is performed with search term and phrase with AND/OR operator then hits panel should show both the terms.
+			 * Description : Verify when ad hoc search is performed with search term and phrase with AND/OR operator then hits panel should show both the terms.
+			 * @throws InterruptedException 
+			 */
+			@Test(enabled = true, groups = { "regression" }, priority = 52)
+			public void verifyPersistantHitPanelByTermAndPhraseUsingAndOr() throws InterruptedException {
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51759 sprint 10");
+				baseClass.stepInfo("#### Verify when ad hoc search is performed with search term and phrase with AND/OR operator then hits panel should show both the terms ####");
+				
+				docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				
+				baseClass.stepInfo("Basic  content search by using operator");
+				session.basicContentSearchUsingOperator(Input.searchString1, "OR","\""+Input.thankyouText+"\"");
+				
+				baseClass.stepInfo("View serached dos in DOcview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Click on persistant hit eye icon.");
+				docView.clickOnPersistantHitEyeIcon();
+				
+				baseClass.stepInfo("Verify Persistent Hits Panel Displayed");
+				docView.verifyPersistentHitsPanelDisplayed();
+				
+				baseClass.stepInfo("Click on persistant hit eye icon.");
+				docView.clickOnPersistantHitEyeIcon();
+				
+				baseClass.stepInfo("Get Persistent Hit");
+				docView.getPersistentHit(Input.searchString1);
+				
+				baseClass.stepInfo("Click on persistant hit eye icon.");
+				docView.clickOnPersistantHitEyeIcon();
+				
+				baseClass.stepInfo("Get Persistent Hit");
+				docView.getPersistentHit(Input.thankyouText);
+				
+				loginPage.logout();
+				
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+				
+				baseClass.stepInfo("Basic  content search by using operator");
+				session.basicContentSearchUsingOperator(Input.searchString1, "AND","\""+Input.thankyouText+"\"");
+				
+				baseClass.stepInfo("View serached dos in DOcview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Get Persistent Hit");
+				docView.getPersistentHit(Input.searchString1);
+				
+				baseClass.stepInfo("Click on persistant hit eye icon.");
+				docView.clickOnPersistantHitEyeIcon();
+				
+				baseClass.stepInfo("Get Persistent Hit");
+				docView.getPersistentHit(Input.thankyouText);
+			}
+			
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id :51639 Needs to verify after saving remark create text high light with out saving.
+			 * Description : Needs to verify after saving remark create text high light with out saving.
+			 * @throws InterruptedException 
+			 */
+			@Test(enabled = true, groups = { "regression" }, priority = 53)
+			public void verifyTextHighLightByWithoutSavingRemark() throws InterruptedException {
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51639 sprint 10");
+				baseClass.stepInfo("#### Needs to verify after saving remark create text high light with out saving ####");
+				final String remark = Input.randomText+Utility.dynamicNameAppender();
+				final String remark2 = Input.randomText+Utility.dynamicNameAppender();
+				docView = new DocViewPage(driver);
+				docViewMetaDataPage = new DocViewMetaDataPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				docView = new DocViewPage(driver);
+				
+				baseClass.stepInfo("Basic  content search ");
+				session.basicContentSearch(Input.searchString1);
+				
+				baseClass.stepInfo("View serached dos in DOcview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Perform Remark with save operation");
+				docViewMetaDataPage.performRemarkWithSaveOperation(10, 15,remark);
+				
+				baseClass.stepInfo("Verify Remark Is Added");
+				docView.verifyRemarkIsAdded(remark);
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Perform Remark without save operation");
+				docViewMetaDataPage.performRemarkWithoutSaveOperation(10, 15, remark2);
+				
+				baseClass.stepInfo("Click on remark button");
+				docView.getNonAudioRemarkBtn().Click();
+				
+				baseClass.stepInfo("Delete Remark Is Added");
+				docView.deleteReamark(remark);
+				
+				baseClass.stepInfo("Verify Remark Is Not Added");
+				docView.verifyRemarkIsNotAdded(remark2);
+				
+			}
+			
+			/**
+			 * Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+			 * TestCase id :  51620 - Verify that the undocked windows should be docked to parent window when the user refreshes the DocView page on selecting code same.
+			 * Description : Verify that the undocked windows should be docked to parent window when the user refreshes the DocView page on selecting code same.
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 54)
+			public void verifyUndockedToDockedByRefreshPageOnCodeSameAs() throws Exception {		
+				baseClass=new BaseClass(driver);
+				String assignmentName = Input.randomText+ Utility.dynamicNameAppender();
+				baseClass.stepInfo("Test case Id: RPMXCON-51620 sprint-10");
+				utility = new Utility(driver);
+				docViewMetaDataPage = new DocViewMetaDataPage(driver);
+				baseClass.stepInfo("#### Verify that the undocked windows should be docked to parent window when the user refreshes the DocView page on selecting code same ####");
+				ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+				docView = new DocViewPage(driver);
+				agnmt = new AssignmentsPage(driver);
+				
+				AssignmentsPage assgnPage = new AssignmentsPage(driver);
+				
+				baseClass.stepInfo("Navigate To Assignments Page");
+				assgnPage.navigateToAssignmentsPage();
+				
+				baseClass.stepInfo("Create Assignment");
+				assgnPage.createAssignment(assignmentName, Input.codeFormName);
+				
+				SessionSearch search = new SessionSearch(driver);
+				
+				baseClass.stepInfo("Basic meta data search");
+				search.basicContentSearch(Input.searchText);
+				
+				baseClass.stepInfo("Bulk Assign Existing");
+				search.bulkAssignExisting(assignmentName);
+				
+				baseClass.stepInfo("Created a assignment " + assignmentName);
+				
+				baseClass.stepInfo("Navigate To Assignments Page");
+				assgnPage.navigateToAssignmentsPage();
+				
+				baseClass.stepInfo("Select assignment to view in Doc view");
+				agnmt.selectAssignmentToViewinDocview(assignmentName);
+				
+				baseClass.stepInfo("Popout Mini Doc List Coding form Analtical MetaData Panels");
+				docView.popOutMiniDocListCodingformAnalticalMetaDataPanels();
+				
+				baseClass.stepInfo("Switch To child Window");
+				String parentWindow = reusableDocView.switchTochildWindow();
+				
+				baseClass.stepInfo("Select Docs From Mini Doc List And Code SameAs");
+				docView.selectDocsFromMiniDocListAndCodeSameAs();
+				
+				baseClass.stepInfo("Child Window To Parent Window Switching");
+				reusableDocView.childWindowToParentWindowSwitching(parentWindow);
+			
+				baseClass.stepInfo("Click On Save Widget Button");
+				docView.clickOnSaveWidgetButton();
+				
+				baseClass.stepInfo("Navigate To Session Search Page URL");
+				search.navigateToSessionSearchPageURL();
+				
+				baseClass.stepInfo("Accept Browser Alert");
+				docView.acceptBrowserAlert(false);
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Verify All Panels In DocView Are Docked");
+				docView.verifyAllPanelsInDocViewAreDocked();
+				
+				baseClass.stepInfo("Navigate To Assignments Page");
+				agnmt.navigateToAssignmentsPage();
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+				agnmt.deleteAssignment(assignmentName);
+			}
+			
+			/**
+			 * @author Gopinath
+			 * @TestCase Id : 51554 Verify Persistent Keyword Groups as well as Assignment-based Persisted Search Hits
+			 * @Description : Verify Persistent Keyword Groups as well as Assignment-based Persisted Search Hits       
+			 * @throws InterruptedException 
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 55)
+			public void verifyAssignmentsBasedPersistantHitsByKeywords() throws InterruptedException {
+
+				String AssignName = Input.randomText + Utility.dynamicNameAppender();
+				String keywordname = Input.randomText +Utility.dynamicNameAppender();
+				String keyword = Input.randomText +Utility.dynamicNameAppender();
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51554 sprint 10");
+				baseClass.stepInfo("####Verify Persistent Keyword Groups as well as Assignment-based Persisted Search Hits ####");
+				
+				docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				
+				AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+				
+				KeywordPage keywordPage = new KeywordPage(driver);
+				
+				baseClass.stepInfo("Navigate to keyword page");
+				keywordPage.navigateToKeywordPage();
+			
+				baseClass.stepInfo("Add keyword");
+				keywordPage.AddKeyword(keywordname, keyword);
+
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.searchString1);
+				
+				baseClass.stepInfo("Create bulk assign with new assignment with persistant hit.");
+				session.bulkAssignWithNewAssignmentWithPersistantHit(AssignName, Input.codingFormName);
+				
+				baseClass.stepInfo("Edit assignment");
+				assignmentPage.editAssignment(AssignName);
+				
+				baseClass.stepInfo("Verify added keyword is checked.");
+				assignmentPage.verifyAddedKeywordsChecked();
+				
+				baseClass.stepInfo("Reviews adding and distributing to Reviewer");
+				assignmentPage.assignmentDistributingToReviewer();
+			
+				
+				loginPage.logout();
+				baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+				// Login As Reviewer
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+				
+				// selecting the assignment
+				assignmentPage.SelectAssignmentByReviewer(AssignName);
+				
+				baseClass.stepInfo("Verify persistant hit for searched string");
+				docView.persistenHitWithSearchString(Input.searchString1);
+				
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Persistent Hit With search string");
+				docView.persistenHitWithSearchString(keyword);
+				
+				loginPage.logout();
+				
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				
+				baseClass.stepInfo("Navigate To Assignments Page");
+				assignmentPage.navigateToAssignmentsPage();
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+				assignmentPage.deleteAssignment(AssignName);
+				
+				baseClass.stepInfo("Navigate to keyword page");
+				keywordPage.navigateToKeywordPage();
+				
+				baseClass.stepInfo("Delete keyword");
+				keywordPage.deleteKeywordByName(keyword);
+			}
+			
+			/**
+			 * @author Gopinath
+			 * TestCased Id:51875 Verify that Action > Folder works fine when all records in the reviewers 
+			 *                     batch are in an Uncompleted state, and the user selects only some/select records
+			 *  Description : To Verify that Action > Folder works fine when all records in the reviewers 
+			 *               batch are in an  Uncompleted state, and the user selects only some/select records                   
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 56)
+			public void verifyMiniDocSaveConfig() {
+				baseClass.stepInfo("Test case Id: RPMXCON-51875");
+				String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
+				
+				baseClass.stepInfo("####Verify that Action > Folder works fine when all records in the reviewers batch are in an Uncompleted state, and the user selects only some/select records ####");
+				AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				// searching document for assignmnet creation
+				baseClass.stepInfo("bascic contant search");
+				sessionSearch.basicContentSearch(Input.searchString1);
+				
+				baseClass.stepInfo("performing bulk assign");
+				sessionSearch.bulkAssign();
+				
+				baseClass.stepInfo("creating assignment");
+				assignmentPage.assignmentCreation(AssignStamp, Input.codingFormName);
+				
+				baseClass.stepInfo("edit assignment and distributed to reviewer");
+				assignmentPage.assignmentDistributingToReviewer();
+
+				loginPage.logout();
+				baseClass.stepInfo("Successfully logout RMU '" + Input.rev1userName + "'");
+
+				// Login As Reviewer
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+				
+				// selecting the assignment
+				baseClass.stepInfo("select the assignment and view in docview");
+				assignmentPage.SelectAssignmentByReviewer(AssignStamp);
+				
+				docView.saveConfigFromChildWindow();
+				baseClass.stepInfo("saved the minidoc list config from child window");
+			}
+			
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id:51873  Verify that Action > Code Same As works fine when all records in the reviewer's batch are in an Uncompleted state, and the user selects only some/select records
+			 * Description:To  Verify that Action > Code Same As works fine when all records in the reviewer's batch are in an Uncompleted state, and the user selects only some/select records
+			 * @throws InterruptedException 
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 57)
+			public void verifyCodeSameAsMiniDocListAndChildWindow() throws InterruptedException {
+				baseClass.stepInfo("Test case Id: RPMXCON-51873");
+				int noOfRows=3;
+				String inputText="Vefifying code sameAs";
+				String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
+				baseClass.stepInfo("#### Verify that Action > Code Same As works fine when all records in the reviewer's batch are in an Uncompleted state, and the user selects only some/select records####");
+				AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				DocViewPage docView=new DocViewPage(driver);
+				// searching document for assignmnet creation
+				baseClass.stepInfo("bascic contant search");
+				sessionSearch.basicContentSearch(Input.searchString2);
+				
+				baseClass.stepInfo("performing bulk assign");
+				sessionSearch.bulkAssign();
+				
+				baseClass.stepInfo("Create assignment WIth allow user to save with out complete option");
+				
+				assignmentPage.createAssignmentWithAllowUserToSave(AssignStamp, Input.codingFormName);
+				baseClass.stepInfo("editiing assignment");
+				
+				assignmentPage.editAssignment(AssignStamp);
+				
+				baseClass.stepInfo("Reviewers added and distributed to Reviewer");
+				assignmentPage.assignmentDistributingToReviewer();
+
+				loginPage.logout();
+				baseClass.stepInfo("Successfully logout RUM '" + Input.rev1userName + "'");
+
+				// Login As Reviewer
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+				
+				// selecting the assignment
+				baseClass.stepInfo("select the assignment and view in docview");
+				assignmentPage.SelectAssignmentByReviewer(AssignStamp);
+				
+				baseClass.stepInfo("performing Code sameas for min doc list documents");
+				docView.perfomMiniDocListCodeSameAs(inputText,noOfRows);
+				
+				baseClass.stepInfo("save the configuration");
+				docView.saveConfigFromChildWindow();
+				
+				baseClass.stepInfo("performing code sameAs for min doc list  in child window");
+				docView.performCodeSameAsMiniDocChildWindow();
+			}
 		@AfterMethod(alwaysRun = true)
 		public void close() {
 			try {

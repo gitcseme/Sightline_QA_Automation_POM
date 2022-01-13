@@ -1579,4 +1579,26 @@ public class ReusableDocViewPage {
 		base.passedStep("Cursor has moved to the next document in mini doc list..");
 		
 	}
+	
+	/**
+	 * @author Gopinath
+	 * Description: Reusable method for clicking the checkbox and perform codesameas and verify chain link from child window
+	 * @param parentwindow(for verify success message in parent window
+	 */
+	public void clickCheckBoxDocListActionCodeSameAsOnChildWindow(String parentwindow) {
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocumetCountMiniDocList());
+		for (int i = 1; i <= 3; i++) {
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);;
+		}
+		base.waitForElement(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
+		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
+		driver.switchTo().window(parentwindow);
+		base.VerifySuccessMessage("Code same performed successfully.");
+		switchTochildWindow();
+		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
+		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+	}
 }

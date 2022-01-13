@@ -264,6 +264,13 @@ public class Input {
 	public static String pageRange;
 	public static String fullPageRange;
 	public static String iconColor;
+	
+	//added by arun
+	public static String pageRange1;
+	public static String pageRange2;
+	public static String pageRange3;
+	public static String pageRange4;
+	
 
 	// Added by Raghuram - Modified 12/30/21
 	public static String docHighlightColor;
@@ -694,6 +701,15 @@ public class Input {
 		testTenthDocId = testData.getTestTenthDocId();
 		docNearDupeDocId=testData.getDocNearDupeDocId();
 
+			
+		// Added by Arun
+		pageRange1 = testData.getPageRange1();
+		pageRange2 = testData.getPageRange2();
+		pageRange3 = testData.getPageRange3();
+		pageRange4 = testData.getPageRange4();
+		
+		
+		
 		// Added by Raghuram
 		docHighlightColor = testData.getDocHighlightColor();
 		sortDataBy = testData.getSortDataBy();

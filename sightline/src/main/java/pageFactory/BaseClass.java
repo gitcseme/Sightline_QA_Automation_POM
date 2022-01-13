@@ -32,8 +32,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.joda.time.Seconds;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -190,7 +192,23 @@ public class BaseClass {
 	public ElementCollection getAvailableProjectList() {
 		return driver.FindElementsByXPath("//ul[@id='ddlProject11']//li//a");
 	}
-
+	public Element  SelectSearchOption() {
+		return driver.FindElementById("txtsearchUser");
+	}
+	
+	public Element  getEditButton() {
+		return driver.FindElementByXPath("//a[text()='Edit']");
+	}
+	public Element  getFunctionalityButton() {
+		return driver.FindElementByXPath("//a[contains(text(),'Functionality')] ");
+	}
+	public Element  UnSelectProductionCheckBox() {
+		return driver.FindElementByXPath("//input[@id='UserRights_CanProductions']//following-sibling::i");
+	}
+	public Element  getSaveBtn() {
+		return driver.FindElementById("btnsubmit");
+	}
+	
 	public BaseClass(Driver driver) {
 
 		this.driver = driver;
@@ -2224,4 +2242,48 @@ public class BaseClass {
 	    stepInfo("Selected element from dropdown: "+ selectedoption);
 	    return selectedoption;
 	}
+	
+	/**
+	 * @Author Brundha
+	 * @param username
+	 * @description Method to unselect the checkbox
+	 */
+	public void UnSelectTheProductionChecKboxInUser(String username) {
+		waitForElement(SelectSearchOption());
+		SelectSearchOption().SendKeys(username);
+		
+		SelectSearchOption().Enter();
+		driver.waitForPageToBeReady();
+		
+		waitTillElemetToBeClickable(getEditButton());
+		driver.waitForPageToBeReady();
+		getEditButton().waitAndClick(10);
+		getFunctionalityButton().waitAndClick(20);
+		
+		waitTillElemetToBeClickable(UnSelectProductionCheckBox());
+		driver.waitForPageToBeReady();
+		UnSelectProductionCheckBox().waitAndClick(10);
+		getSaveBtn().waitAndClick(20);
+		VerifySuccessMessage("User profile was successfully modified");
+		CloseSuccessMsgpopup();
+		
+	}
+	
+	/**
+	 * Method is to handle the alert which is getting displayed
+	 */
+
+	public void handleAlert() {
+		try {
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			UtilityLog.info("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+			UtilityLog.info("Alert is not present");
+		}
+	}
+	
+	
+	
 }

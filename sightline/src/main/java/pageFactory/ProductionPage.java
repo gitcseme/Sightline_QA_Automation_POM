@@ -845,6 +845,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element productionNameInGeneratePage(String productionname) {
+		return driver.FindElementByXPath("//label[contains(text(),'"+productionname+"')]");
+	}
+	
 	public Element generateLoadFileToggleInTextComponent() {
 		return driver.FindElementByXPath("(//input[@id='chkProduceLoadFile']//parent::label//i)[2]");
 	}
@@ -2254,7 +2258,14 @@ public class ProductionPage {
 		return driver.FindElementByXPath(
 				".//*[@id='divRightHeaderBranding']//div[@class='redactor-editor redactor-placeholder']");
 	}
-
+	
+	//Add by Aathith
+	public Element getSharableLinkExpiryDate() {
+		return driver.FindElementByXPath("//span[@id='lblShareableLinksExpireDate']");
+	}
+	
+	public Element getErrorMsgText() {
+		return driver.FindElementByXPath("//span//h1");}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -15771,4 +15782,30 @@ public class ProductionPage {
 					"Exception occcured while verifying download production using sharable link." + e.getMessage());
 		}
 	}
+	
+	/**
+	 * @Author Brundha
+	 * Description:Method to Delete production in draft mode
+	 */
+
+	public void deleteProduction(String productionname) {
+		 base.waitTillElemetToBeClickable(getGearIconForProdName(productionname));
+		 getGearIconForProdName(productionname).Click();
+			
+		if(getTileDelete().isDisplayed()) {
+			base.passedStep("Delete option is displayed for drafted production");
+		 base.waitForElement(getTileDelete());
+		 
+		 getTileDelete().waitAndClick(10);
+		 base.waitForElement(getOkButton());
+		 getOkButton().Click();
+		 base.VerifySuccessMessage("Production deleted successfully");
+		 base.CloseSuccessMsgpopup();
+		}
+		else {
+			base.failedStep("Delete option is not displayed for drafted production");
+		}
+
+	}	
+	
 }

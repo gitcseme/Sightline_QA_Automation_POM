@@ -158,6 +158,13 @@ public class TestData {
 	public String testSecondDocId;
 	public String testTenthDocId;
 	public String docNearDupeDocId;
+	
+	
+	//Added by arunkumar
+	public String pageRange1;
+	public String pageRange2;
+	public String pageRange3;
+	public String pageRange4;
 
 
 	// Added by Raghuram - Last Modified 12/30/21

@@ -22,6 +22,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
@@ -2095,7 +2096,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/12/22 TESTCASE No:RPMXCON-56013
 	 * @Description:Verify that error should be displays if user enters invalid URL
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 40)
+	@Test(enabled = false, groups = { " regression" }, priority = 40)
 	public void verifyErrorInSharableLinkWithInvalidURL() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-56013- Production Sprint 10");
@@ -2150,7 +2151,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify that production should generate successfully if user
 	 *                 disabled the 'Generate Load File'
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 41)
+	@Test(enabled = false, groups = { " regression" }, priority = 41)
 	public void verifyToggleOffForGenerateLoadFile() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48326- Production Sprint 10");
@@ -2202,6 +2203,130 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:01/13/22 TESTCASE No:RPMXCON-48186
+	 * @Description:To Verify Generate Section for Production Name and Status.
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 42)
+	public void verifyProductionNameAndStatus() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48186- Production Sprint 10");
+		baseClass.stepInfo("To Verify Generate Section for Production Name and Status.");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		
+		String actual = page.productionNameInGeneratePage(productionname).getText();
+		String expected=productionname;
+		softAssertion = new SoftAssert();
+		softAssertion.assertEquals(actual, expected);
+		softAssertion.assertAll();
+		
+		if(page.getStatusDraftTxt().isDisplayed()) {
+			String draftStatus = page.getStatusDraftTxt().getText();
+			baseClass.passedStep("status enabled as:"+draftStatus);
+		}
+		
+		if(page.getbtnProductionGenerate().isDisplayed()) {
+			baseClass.passedStep("Generate Button is enabled");
+		}
+		
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:01/13/22 TESTCASE No:RPMXCON-48145
+	 * @Description:To Verify Redaction Check box along with Privilege Check box, In Generated DAT of Production.
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 43)
+	public void verifyCheckboxInDAT() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48145- Production Sprint 10");
+		baseClass.stepInfo("To Verify Redaction Check box along with Privilege Check box, In Generated DAT of Production.");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.getRedactDATCheckBox().waitAndClick(10);
+		baseClass.stepInfo("Redaction checbox is selected in DAT component");
+		page.getDATPrivledgedCheckbox().waitAndClick(10);
+		baseClass.stepInfo("Privileged checbox is selected in DAT component");
+		page.fillingNativeSection();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 	}
 
 	@DataProvider(name = "PAandRMU")

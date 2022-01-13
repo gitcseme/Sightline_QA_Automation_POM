@@ -8866,4 +8866,38 @@ public class AssignmentsPage {
         bc.CloseSuccessMsgpopup();
     }
 
+    /**
+	 * @author Gopinath
+	 * @description : Method to verify added keyword is checked.
+	 */
+	public void verifyAddedKeywordsChecked() {
+		try {
+			driver.waitForPageToBeReady();
+			getAssgn_Keywordsbutton().ScrollTo();
+			getAssgn_Keywordsbutton().isElementAvailable(10);
+			getAssgn_Keywordsbutton().waitAndClick(10);
+			bc.waitForElement(getAssgn_Keywordspopup());
+			for (int j = 1; j <= getAllKeywordsList().size(); j++) {
+				try {
+					assertion.assertEquals(getKeywordFromList(j).GetAttribute("checked"), "true");
+					assertion.assertAll();
+				} catch (Exception e) {
+					bc.failedStep("Keyword is not checked");
+				}
+			}
+			bc.passedStep("Keyword is checked");
+			driver.waitForPageToBeReady();
+			getAssgn_Keywordokbutton().ScrollTo();
+			getAssgn_Keywordokbutton().isElementAvailable(10);
+			getAssgn_Keywordokbutton().Click();
+			bc.waitTime(1);
+			if(getRedistributeYesPopup().isDisplayed()) {
+				getRedistributeYesPopup().Click();
+			}
+			driver.scrollPageToTop();
+		} catch (Exception e) {
+			bc.failedStep("Failed to validate keywords in assignment page");
+		}
+	}
+
   }

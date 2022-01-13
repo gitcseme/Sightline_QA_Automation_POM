@@ -42,6 +42,7 @@ import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
 import pageFactory.SavedSearch;
@@ -5052,7 +5053,7 @@ public class DocView_Redactions_Regression {
 	 * without clicking the eye icon when user redirects to doc view from Saved
 	 * Search > doc list
 	 */
-	
+
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 59)
 	public void verifyHighlightedKeywordsForDocsAreDisplayedSavedSearch() throws Exception {
 		baseClass = new BaseClass(driver);
@@ -5385,6 +5386,243 @@ public class DocView_Redactions_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignmentspage.deleteAssgnmntUsingPagination(assignmentName);
 
+	}
+
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-47026 Description :Verify the page syntax user should be able to
+	 * enter against Pages in multi page redactions pop up.
+	 * 
+	 * @throws Exception
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 64)
+	public void VerifyPageSyntaxAgainstMultiPageRedactionsPopup() throws Exception {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+
+		baseClass.stepInfo("Test case id : RPMXCON-47026");
+		baseClass.stepInfo(
+				"Verify the page syntax user should be able to enter against Pages in multi page redactions pop up");
+
+		// Performing basic search
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.searchString1);
+
+		// Adding search results and view in docview
+		sessionSearch.ViewInDocView();
+
+		// Verifying multiple multiPage redactions
+
+		docViewRedact.multipleMultiPageRedactions(Input.pageRange1, Input.pageRange2, Input.pageRange3);
+	}
+
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-47030 Description :Verify that all pages other than excluded ones
+	 * from multi page redaction should be redacted successfully with changed
+	 * redaction tag from what is presented in pop up.
+	 * 
+	 * @throws Exception
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 65)
+	public void verifyRedactionTagReflectionAfterChanged() throws Exception {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case id : RPMXCON-47030");
+		baseClass.stepInfo("Verify all pages other than excluded ones are redacted");
+
+		// Performing basic search
+		sessionSearch.basicContentSearch(Input.searchString1);
+
+		// Adding search results and view in docview
+		sessionSearch.ViewInDocView();
+
+		// Clicking redact icon
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		String[] count = docView.getDocView_AllRedactionCount().getText().split("/ ");
+		int beforeRedactedCount = Integer.parseInt(count[1]);
+
+		// verifying the default selection of redaction tag
+		docViewRedact.verifyDefaultRedactionTagSelectionInMultiPageRedact();
+
+		// getting one of the available redaction tag
+		List<String> availableTags = baseClass.availableListofElements(docViewRedact.availableTagsInMultiPageRedact());
+		String redactionTag = availableTags.get(2);
+
+		// performing multi page redaction exclude
+		docViewRedact.selectingMultiplePagesForRedactionExclude(redactionTag);
+		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange4);
+
+		// verifying all redaction count status after performing redaction
+		docViewRedact.verifyAllRedactionCountStatusAfterRedaction(beforeRedactedCount);
+	}
+
+	/**
+	 * Author : STEFFY date: 13/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that when mini doc list child window is open after
+	 * completing the documents and toggle to show completed documents is OFF/ON.
+	 * 'RPMXCON-51938' Sprint : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 65)
+	public void verifyMiniDocListChildWindow() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51938");
+		baseClass.stepInfo(
+				"Verify that when mini doc list child window is open after completing the documents and toggle to show completed documents is OFF/ON");
+
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		SoftAssert softAssert = new SoftAssert();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		String codingForm = Input.codeFormName;
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Create new assignment");
+		assignmentsPage.createAssignment(assignmentName, codingForm);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		assignmentsPage.assignDocstoExisting(assignmentName);
+		assignmentsPage.editAssignment(assignmentName);
+		baseClass.stepInfo("Distributing docs to RMU");
+		assignmentsPage.add2ReviewerAndDistribute();
+		baseClass.impersonateRMUtoReviewer();
+		assignmentsPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		docView.editCodingFormComplete();
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docViewId = docView.getDocView_CurrentDocId().getText();
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		docView.popOutMiniDocList();
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		String miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssert.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+		new MiniDocListPage(driver).configureMiniDocListToShowCompletedDocs(parentWindowID);
+		baseClass.handleAlert();
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+		docView.popOutMiniDocList();
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssert.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
+		softAssert.assertAll();
+	}
+
+	/**
+	 * Author : STEFFY date: 13/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify search term, assigned keywords should be highlighted and
+	 * should be displayed on click of the eye icon when redirected to doc view from
+	 * assignment when documents are assigned after searching with term.
+	 * 'RPMXCON-51396' Sprint : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 65)
+	public void verifySearchTermHighlightedInEyeIconFromAssignment() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51396");
+		baseClass.stepInfo(
+				"Verify search term, assigned keywords should be highlighted and should be displayed on click of the eye icon when redirected to doc view from assignment when documents are assigned after searching with term");
+
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		KeywordPage keywordPage = new KeywordPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		String hitTerms = "Test" + Utility.dynamicNameAppender();
+		String codingForm = Input.codeFormName;
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		// Add keywords
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		keywordPage.AddKeyword(hitTerms, hitTerms);
+
+		baseClass.stepInfo("Create new assignment");
+		assignmentsPage.createAssignment(assignmentName, codingForm);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		assignmentsPage.assignDocstoExisting(assignmentName);
+		assignmentsPage.editAssignment(assignmentName);
+		baseClass.stepInfo("Distributing docs to RMU");
+		assignmentsPage.assignmentDistributingToReviewerManager();
+		baseClass.impersonateRMUtoReviewer();
+		assignmentsPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.getPersistentHit(hitTerms);
+		docView.verifyPersistentHitPanelAndCount(hitTerms);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
 	}
 
 	@AfterMethod(alwaysRun = true)
