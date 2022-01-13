@@ -1393,6 +1393,56 @@ public class SessionSearch {
 		return driver.FindElementByXPath(
 				"//label[text()='Docs That Met Your Criteria']//..//..//..//i[@title='Remove from Selected Results']");
 	}
+	
+	//Added by Gopinath - 12/01/2022
+	
+	public Element getAssgn_NewAssignmnet() {
+		return driver.FindElementById("tabnewAssignment");
+	}
+	public Element getbulkassgnpopup() {
+		return driver.FindElementByXPath("//*[text()='Assign/Unassign Documents']");
+	}
+	public Element getContinueBulkAssign() {
+		return driver.FindElementByXPath("//*[@id='divBulkAction']//button[contains(.,'Continue')]");
+	}
+
+	public Element getNumberOfAssignmentsToBeShown() {
+		return driver.FindElementByXPath("//*[@id='GridAssignment_length']/label/select");
+	}
+
+	public Element getSelectAssignment(String assignmentName) {
+		return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='" + assignmentName + "']");
+	}
+	public Element getAssignmentActionDropdown() {
+		return driver.FindElementByXPath("//*[@id='ulActions']/../button[@class='btn btn-defualt dropdown-toggle']");
+	}
+	public Element getAssignmentName() {
+		return driver.FindElementById("AssignmentName");
+	}
+	public Element getParentAssignmentGroupName() {
+		return driver.FindElementById("ParentassignmentGroupName");
+	}
+
+	public Element getSelectedClassification() {
+		return driver.FindElementById("SelectedClassification");
+	}
+
+	public Element getAssignmentCodingFormDropDown() {
+		return driver.FindElementById("SelectedCodingForm");
+	}
+
+	public Element getAssignmentSaveButton() {
+		return driver.FindElementByXPath("//input[@value='Save']");
+	}
+	public Element getAssgn_TotalCount() {
+		return driver.FindElementByXPath("//div[@id='divBulkAction']//div//span[@id='spanTotal']");
+	}
+	public Element getAssignmentErrorText() {
+		return driver.FindElementByXPath("//span[@id='AssignmentName-error']");
+	}
+	public Element getPersistantHitCheckBox() {
+		return driver.FindElementByXPath("sdz");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -9277,6 +9327,88 @@ public class SessionSearch {
 		base.VerifySuccessMessage("Saved search saved successfully");
 		Reporter.log("Saved the search with name '" + searchName + "'", true);
 		UtilityLog.info("Saved search with name - " + searchName);
+	}
+	
+	/**
+	 * @author Gopinath modified date-NA
+	 * @throws InterruptedException
+	 * @description Create bulk assign with new assignment with persistant hit.
+	 */
+	public void bulkAssignWithNewAssignmentWithPersistantHit(String assignmentName,String codingForm) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		if(getPureHitAddButton().isDisplayed()) {
+			base.waitForElement(getPureHitAddButton());
+			base.waitTime(2);
+			getPureHitAddButton().Click();
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+		base.waitForElement(getBulkActionButton());
+		getBulkActionButton().Click();
+		base.waitForElement(getBulkAssignAction());
+		getBulkAssignAction().Click();
+		UtilityLog.info("performing bulk assign");
+		driver.waitForPageToBeReady();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getAssgn_NewAssignmnet());
+		getAssgn_NewAssignmnet().isElementAvailable(15);
+		base.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
+		getAssgn_NewAssignmnet().waitAndClick(5);
+		base.waitForElement(getbulkassgnpopup());
+		getbulkassgnpopup().isElementAvailable(10);
+		try {
+			base.waitForElement(getContinueBulkAssign());
+			getContinueBulkAssign().isElementAvailable(15);
+			base.waitTillElemetToBeClickable(getContinueBulkAssign());
+			getContinueBulkAssign().waitAndClick(20);
+		} catch (Exception e) {
+			getPersistantHitCheckBox().isElementAvailable(15);
+			getPersistantHitCheckBox().Click();
+			base.waitForElement(getContinueBulkAssign());
+			getContinueBulkAssign().isElementAvailable(15);
+			base.waitTillElemetToBeClickable(getContinueBulkAssign());
+			getContinueBulkAssign().waitAndClick(20);
+		}
+		base.waitForElement(getAssgn_TotalCount());
+		getAssgn_TotalCount().isElementAvailable(10);
+		base.waitForElement(getFinalizeButton());
+		base.waitTillElemetToBeClickable(getFinalizeButton());
+		getFinalizeButton().isElementAvailable(10);
+		getFinalizeButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		try {
+			base.waitForElement(getAssignmentName());
+			getAssignmentName().isElementAvailable(15);
+			getAssignmentName().SendKeys(assignmentName);
+		} catch (Exception e) {
+			getAssignmentName().isElementAvailable(15);
+			base.waitForElement(getAssignmentName());
+			getAssignmentName().Clear();
+			getAssignmentName().SendKeys(assignmentName);
+		}
+		getParentAssignmentGroupName().isElementAvailable(10);
+		getParentAssignmentGroupName().isDisplayed();
+		base.waitForElement(getSelectedClassification());
+		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+		base.waitForElement(getAssignmentCodingFormDropDown());
+		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+		base.waitForElement(getAssignmentSaveButton());
+		base.waitTillElemetToBeClickable(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(5);
+		try {
+			if (getAssignmentErrorText().isElementAvailable(5)) {
+				driver.waitForPageToBeReady();
+				base.waitForElement(getAssignmentName());
+				getAssignmentName().SendKeys(assignmentName);
+				base.waitForElement(getAssignmentSaveButton());
+				getAssignmentSaveButton().waitAndClick(5);
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
+		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
 	}
 
 }
