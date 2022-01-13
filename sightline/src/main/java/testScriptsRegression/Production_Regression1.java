@@ -7117,6 +7117,111 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.verifyProductionStatusInGenPage("Pre-Generation Checks Completed");
 			page.verifyProductionStatusInGenPage("Reserving Bates Range");
 		}
+		
+		/**
+		 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-55977
+		 * @Description: Verify that it should displays 'Pre-Gen Check - 19999/20000
+		 *               docs' status on Progress bar in Production Tile View
+		 */
+		@Test(groups = { "regression" }, priority = 93)
+		public void preGenChecksStatusVerifyOnTileView() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-55977 -Production Sprint 10");
+			base.stepInfo(
+					"Verify that it should displays 'Pre-Gen Check - 19999/20000 docs' status on Progress bar in Production Tile View");
+			String testData1 = Input.testData1;
+			foldername = "FolderProd" + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			// Verify Pre-gen checks is in progress status on Tile view
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.clickGenarateWithoutWait();
+
+			// Go To Production Home Page
+			this.driver.getWebDriver().get(Input.url + "Production/Home");
+			driver.Navigate().refresh();
+			page.verifyProductionStatusInHomePage("Pre-Gen Checks - 6/6 Docs", productionname);
+
+			// Deleting folder
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		}
+
+		
+		/**
+		 * @author Brundha Test case id-RPMXCON-55954
+		 * @Description Verify that use cannot access the Production deatils by copying the Production URL if user does not have Production rights
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 94)
+		public void verifyingProductionAccess() throws Exception {
+
+			UtilityLog.info(Input.prodPath);
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+			base.stepInfo("RPMXCON-55954 -Production Sprint 10");
+			base.stepInfo("Verify that use cannot access the Production deatils by copying the Production URL if user does not have Production rights");
+					
+	       
+	        base=new BaseClass(driver);
+	        base.UnSelectTheProductionChecKboxInUser(Input.pa1userName);
+	        driver.Navigate().refresh();
+	        base.impersonateSAtoPA();
+			
+	        ProductionPage page = new ProductionPage(driver);
+	        page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+	        driver.waitForPageToBeReady();
+			
+			
+			
+			String currentURL=driver.getWebDriver().getCurrentUrl();
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			
+			driver.Navigate().to(currentURL);
+			driver.waitForPageToBeReady();
+			String ErrorMsg=page.getErrorMsgText().getText();
+			if(ErrorMsg.contains("Error")) { base.passedStep("Error message is displayed as expected"); }
+			else {base.failedStep("Error message is not  displayed as expected");	}
+			driver.Navigate().back();
+			
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+			base=new BaseClass(driver);	
+		    base.UnSelectTheProductionChecKboxInUser(Input.pa1userName);
+			
+			
+		}
+		
+		
+		
+		
+		
+		
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {
