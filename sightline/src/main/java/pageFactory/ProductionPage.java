@@ -15623,12 +15623,6 @@ public class ProductionPage {
 		} else {
 			base.failedStep(text + "is not visible");
 			System.out.println(text + "is not visible");
-		if(text("text").isDisplayed()) {
-			base.passedStep(text+" is visibled");
-			System.out.println(text+" is visible");
-		}else {
-			base.failedStep(text+" is not visible");
-			System.out.println(text+" is not visible");
 		}
 	}
 
