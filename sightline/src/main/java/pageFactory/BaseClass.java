@@ -2267,7 +2267,28 @@ public class BaseClass {
 		
 	}
 	
-	
+	/**
+	 * @Author Jeevitha
+	 * @param sourceString
+	 * @param compreString
+	 * @param passMsg
+	 * @param failMessage
+	 */
+	public void compareTextViaContains(String sourceString, String compreString, String passMsg, String failMessage) {
+		try {
+			System.out.println("Source String  : " + sourceString);
+			System.out.println("Compare String  : " + compreString);
+
+			if (sourceString.contains(compreString)) {
+				passedStep(passMsg);
+			} else {
+				failedStep(sourceString + " : " + failMessage);
+			}
+		} catch (Exception E) {
+			E.printStackTrace(pw);
+			UtilityLog.info(sw.toString());
+		}
+	}
 	
 	
 	

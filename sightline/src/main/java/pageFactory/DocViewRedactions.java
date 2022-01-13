@@ -128,9 +128,8 @@ public class DocViewRedactions {
 	public Element multiPagePopUp() {
 		return driver.FindElementById("multiPageRedactionDiv");
 	}
-	
-	public ElementCollection availableTagsInMultiPageRedact()
-	{
+
+	public ElementCollection availableTagsInMultiPageRedact() {
 		return driver.FindElementsByXPath("//select[@id=\"ddlMultiRedactionTagsForPopup\"]/option");
 	}
 
@@ -2595,7 +2594,7 @@ public class DocViewRedactions {
 
 	/**
 	 * @author Jayanthi.Ganesan
-	 * @modified By : jeevitha @modified date: 29/11/2021
+	 * @modified By : jeevitha @modified date: 13/1/2022
 	 **/
 	public void VerifyDeletePopUp_BatchRedact(boolean deleteRedaction) {
 		base = new BaseClass(driver);
@@ -2613,11 +2612,31 @@ public class DocViewRedactions {
 			base.passedStep("Warnign Message displayed as expected ");
 
 			if (deleteRedaction) {
+				String confirmationYesBtn = session.getYesQueryAlert().getText();
 				getBellyBandMsgHeaderFromDeleteBatchRedact().Displayed();
+				boolean flag = confirmationYesBtn.equals("ja");
+				if (flag) {
+					System.out.println(
+							confirmationYesBtn + " : Belly Band popup warning message is Localized to German language");
+					base.stepInfo(
+							confirmationYesBtn + " : Belly Band popup warning message is Localized to German language");
+				}
 				session.getYesQueryAlert().waitAndClick(10);
-				base.VerifySuccessMessage("Redaction Removed successfully.");
+				if (flag) {
+					base.VerifySuccessMessageInGerman("Redaction Removed successfully.");
+				} else {
+					base.VerifySuccessMessage("Redaction Removed successfully.");
+				}
 
 			} else {
+				String confirmationNoBtn = base.getNOBtn().getText();
+
+				if (confirmationNoBtn.equals("nicht")) {
+					System.out.println(
+							confirmationNoBtn + " : Belly Band popup warning message is Localized to German language");
+					base.stepInfo(
+							confirmationNoBtn + " : Belly Band popup warning message is Localized to German language");
+				}
 				base.getNOBtn().waitAndClick(10);
 				driver.waitForPageToBeReady();
 				softAssertion.assertEquals(getBatchRedactTextInRedactionPanel().Displayed().booleanValue(), true);
@@ -3168,139 +3187,132 @@ public class DocViewRedactions {
 		base.passedStep("DocView Reviewer Page Is Displayed");
 
 	}
-	
+
 	/*
-	 * Arunkumar
-	 * Description: verify all redaction count status after doing redaction
+	 * Arunkumar Description: verify all redaction count status after doing
+	 * redaction
 	 */
-	
-	public void verifyAllRedactionCountStatusAfterRedaction(int beforeRedactedCount)
-	{
+
+	public void verifyAllRedactionCountStatusAfterRedaction(int beforeRedactedCount) {
 		docView = new DocViewPage(driver);
 		driver.waitForPageToBeReady();
 		base.waitTime(2); // app sync
-		String[] firstRedactedCount =docView.getDocView_AllRedactionCount().getText().split("/ ");
+		String[] firstRedactedCount = docView.getDocView_AllRedactionCount().getText().split("/ ");
 		int afterFirstRedactedCount = Integer.parseInt(firstRedactedCount[1]);
-		if(afterFirstRedactedCount>beforeRedactedCount) {
+		if (afterFirstRedactedCount > beforeRedactedCount) {
 			base.passedStep("All redactions count Increased after redaction");
-		}
-		else {
+		} else {
 			base.failedStep("All redactions count not Increased after redaction");
 		}
 	}
-	
-	
+
 	/*
-	 * Arunkumar 
-	 * Description: Method for performing multipage redactions multiple times and also verifying all redaction count after every redaction
-	 * Testcase : RPMXCON-47026
+	 * Arunkumar Description: Method for performing multipage redactions multiple
+	 * times and also verifying all redaction count after every redaction Testcase :
+	 * RPMXCON-47026
 	 */
-	public void multipleMultiPageRedactions(String firstRange,String secondRange,String thirdRange) throws Exception {
+	public void multipleMultiPageRedactions(String firstRange, String secondRange, String thirdRange) throws Exception {
 		docView = new DocViewPage(driver);
 		base = new BaseClass(driver);
-		//Clicking redact icon 
+		// Clicking redact icon
 		driver.WaitUntil((new Callable<Boolean>() {
-		public Boolean call() throws Exception {
-		return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
-		}
+			public Boolean call() throws Exception {
+				return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			}
 		}), Input.wait30);
 		base.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
 		docView.getDocView_RedactIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
-		String[] count =docView.getDocView_AllRedactionCount().getText().split("/ ");
+		String[] count = docView.getDocView_AllRedactionCount().getText().split("/ ");
 		int beforeRedactedCount = Integer.parseInt(count[1]);
-		
-		// first condition open multipage redact popup and enter page range 
+
+		// first condition open multipage redact popup and enter page range
 		driver.WaitUntil((new Callable<Boolean>() {
-		public Boolean call() throws Exception {
-		return multiPageIcon().Visible() && multiPageIcon().Enabled();
-		}
+			public Boolean call() throws Exception {
+				return multiPageIcon().Visible() && multiPageIcon().Enabled();
+			}
 		}), Input.wait30);
 		base.waitTillElemetToBeClickable(multiPageIcon());
 		multiPageIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
 		selectingMultiplePagesForRedaction();
 		enteringPagesInMultipageTextBox(firstRange);
-		base.passedStep("First multipage redaction done for page number :"+ firstRange);
+		base.passedStep("First multipage redaction done for page number :" + firstRange);
 		base.VerifySuccessMessage("Redaction tags saved successfully.");
-		
-		//verifying all redact count status after first redaction
+
+		// verifying all redact count status after first redaction
 		driver.waitForPageToBeReady();
 		base.waitTillElemetToBeClickable(multiPageIcon());
-		String[] firstRedactedCount =docView.getDocView_AllRedactionCount().getText().split("/ ");
+		String[] firstRedactedCount = docView.getDocView_AllRedactionCount().getText().split("/ ");
 		int afterFirstRedactedCount = Integer.parseInt(firstRedactedCount[1]);
-		if(afterFirstRedactedCount>beforeRedactedCount) {
+		if (afterFirstRedactedCount > beforeRedactedCount) {
 			base.passedStep("All redactions count Increased after first redaction");
-		}
-		else {
+		} else {
 			base.failedStep("All redactions count not Increased after first redaction");
 		}
-		
-				
+
 		// second condition open multipage redact popup and enter page range
 		driver.WaitUntil((new Callable<Boolean>() {
-		public Boolean call() throws Exception {
-		return multiPageIcon().Visible() && multiPageIcon().Enabled();
-		}
+			public Boolean call() throws Exception {
+				return multiPageIcon().Visible() && multiPageIcon().Enabled();
+			}
 		}), Input.wait30);
 		base.waitTillElemetToBeClickable(multiPageIcon());
 		multiPageIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
-		selectingMultiplePagesForRedaction();		
+		selectingMultiplePagesForRedaction();
 		enteringPagesInMultipageTextBox(secondRange);
-		base.passedStep("Second multipage redaction done for page number :"+ secondRange);	
+		base.passedStep("Second multipage redaction done for page number :" + secondRange);
 		base.VerifySuccessMessage("Redaction tags saved successfully.");
-		
-		//verifying all redact count status after second redaction
+
+		// verifying all redact count status after second redaction
 		driver.waitForPageToBeReady();
 		base.waitTillElemetToBeClickable(multiPageIcon());
-		String[] secondRedactedCount =docView.getDocView_AllRedactionCount().getText().split("/ ");
+		String[] secondRedactedCount = docView.getDocView_AllRedactionCount().getText().split("/ ");
 		int afterSecondRedactedCount = Integer.parseInt(secondRedactedCount[1]);
-		if(afterSecondRedactedCount>afterFirstRedactedCount) {
+		if (afterSecondRedactedCount > afterFirstRedactedCount) {
 			base.passedStep("All redactions count Increased after second redaction");
-		}
-		else {
+		} else {
 			base.failedStep("All redactions count not Increased after second redaction");
 		}
-		// third condition open multipage redact popup and enter page range 
+		// third condition open multipage redact popup and enter page range
 		driver.WaitUntil((new Callable<Boolean>() {
-		public Boolean call() throws Exception {
-		return multiPageIcon().Visible() && multiPageIcon().Enabled();
-		}
+			public Boolean call() throws Exception {
+				return multiPageIcon().Visible() && multiPageIcon().Enabled();
+			}
 		}), Input.wait30);
 		base.waitTillElemetToBeClickable(multiPageIcon());
 		multiPageIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
-		selectingMultiplePagesForRedaction();		
+		selectingMultiplePagesForRedaction();
 		enteringPagesInMultipageTextBox(thirdRange);
-		base.passedStep("Third multipage redaction done for page number :"+ thirdRange);
+		base.passedStep("Third multipage redaction done for page number :" + thirdRange);
 		base.VerifySuccessMessage("Redaction tags saved successfully.");
-		
-		//verifying all redact count status after third redaction
+
+		// verifying all redact count status after third redaction
 		driver.waitForPageToBeReady();
 		base.waitTime(2); // app sync
-		String[] thirdRedactedCount =docView.getDocView_AllRedactionCount().getText().split("/ ");
+		String[] thirdRedactedCount = docView.getDocView_AllRedactionCount().getText().split("/ ");
 		int afterThirdRedactedCount = Integer.parseInt(thirdRedactedCount[1]);
-		if(afterThirdRedactedCount>afterSecondRedactedCount) {
+		if (afterThirdRedactedCount > afterSecondRedactedCount) {
 			base.passedStep("All redactions count Increased after third redaction");
-		}
-		else {
+		} else {
 			base.failedStep("All redactions count not Increased after third redaction");
 		}
-		
+
 	}
-	
+
 	/*
-	 * Arunkumar
-	 * Description: verify whether default redaction tag selected in multiredact pop-up
+	 * Arunkumar Description: verify whether default redaction tag selected in
+	 * multiredact pop-up
 	 */
 	public void verifyDefaultRedactionTagSelectionInMultiPageRedact() {
 		docView = new DocViewPage(driver);
 		base = new BaseClass(driver);
 		driver.WaitUntil((new Callable<Boolean>() {
-		public Boolean call() throws Exception {
-		return multiPageIcon().Visible() && multiPageIcon().Enabled();
-		}
+			public Boolean call() throws Exception {
+				return multiPageIcon().Visible() && multiPageIcon().Enabled();
+			}
 		}), Input.wait30);
 		base.waitTillElemetToBeClickable(multiPageIcon());
 		multiPageIcon().waitAndClick(30);
@@ -3310,26 +3322,18 @@ public class DocViewRedactions {
 				return redactionTagSelect().Visible() && redactionTagSelect().Enabled();
 			}
 		}), Input.wait30);
-		
+
 		Select multiplepageredaction = new Select(redactionTagSelect().getWebElement());
-		String selectedTag =multiplepageredaction.getFirstSelectedOption().getText();
-		
+		String selectedTag = multiplepageredaction.getFirstSelectedOption().getText();
+
 		System.out.println(selectedTag);
-		
-		
-		if(selectedTag.equalsIgnoreCase("Default Redaction Tag")) {
+
+		if (selectedTag.equalsIgnoreCase("Default Redaction Tag")) {
 			base.passedStep("Default Redaction Tag Selected by default");
-		}
-		else {
+		} else {
 			base.failedStep("Default Redaction Tag not selected by default");
 		}
-		
-		
+
 	}
-	
-	
-	
-	
-	
 
 }
