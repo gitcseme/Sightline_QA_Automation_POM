@@ -38,6 +38,7 @@ import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
+import pageFactory.ManageUsersPage;
 import pageFactory.MiniDocListPage;
 import pageFactory.ProductionPage;
 import pageFactory.RedactionPage;
@@ -508,7 +509,7 @@ public class BatchRedactionRegression3 {
 		page.fillingDATSection();
 		page.fillingPDFSectionwithBurnRedaction(tagname);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPageWithTag(tagname, tagname2);
 		page.navigateToNextSection();
@@ -1038,7 +1039,7 @@ public class BatchRedactionRegression3 {
 		page.fillingDATSection();
 		page.fillingTIFFSectionwithBurnRedaction();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocuSelectionPage("CH 43", null);
 		page.navigateToNextSection();
@@ -1210,7 +1211,7 @@ public class BatchRedactionRegression3 {
 	 *              [RPMXCON-53399]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = false, groups = { "regression" }, priority = 22)
 	public void verifyingBatchRedactionsNavigationOptionInDocView() throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -1265,7 +1266,7 @@ public class BatchRedactionRegression3 {
 	 *              redatcions panel [RPMXCON-53400]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = false, groups = { "regression" }, priority = 23)
 	public void verifyingComponentBatchRedactionsNavigationOptionInDocView() throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -1420,6 +1421,331 @@ public class BatchRedactionRegression3 {
 		// Delete Search
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 		softAssertion.assertAll();
+		login.logout();
+	}
+
+	/** 
+	 * @Author Raghuram
+	 * @Description : Verify that on click of delete icon of batch redaction
+	 *              component belly band message should be displayedon doc view
+	 *              [Covered localization] [RPMXCON-53404]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	public void verifyConfirmationMessagelocalized() throws Exception {
+		String searchName = "Search Name" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+
+		base.stepInfo("Test case Id:RPMXCON-53404");
+		base.stepInfo(
+				"Verify that on click of delete icon of batch redaction component belly band message should be displayedon doc view [Covered localization]");
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Edit Profile Language to English.
+		login.editProfile("English - United States");
+
+		// Create saved search
+		session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
+
+		// verify History status
+		batch.verifyBatchHistoryStatus(searchName);
+
+		// selecting saved search for docView
+		saveSearch.savedSearchToDocView(searchName);
+
+		// chaning the language into German
+		login.editProfile("German - Germany");
+		base.stepInfo("Successfully selected German Language");
+
+		// verifying redaction panel
+		docview.verifyPanel();
+
+		// verifying warning message whether it is Localized to German language
+		docViewRedactions.VerifyDeletePopUp_BatchRedact(false);
+
+		// Edit Profile Language to English.
+		login.editProfile("English - United States");
+
+		// deleting the saved search
+		saveSearch.deleteSearch(searchName, "My Saved Search", "Yes");
+
+		login.logout();
+	}
+
+	/** 
+	 * @Author Raghuram
+	 * @Description : Verify that when navigated to the first redaction should be
+	 *              able to navigate to last redactionon click of '<' from doc view
+	 *              redactions [Cycle from First to Last while toggle between
+	 *              redacted terms ] [RPMXCON-53402]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	public void verifyNavigatingToFirstAndLastRedaction() throws Exception {
+
+		String searchName = "Search Name" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+
+		base.stepInfo("Test case Id:RPMXCON-53402");
+		base.stepInfo(
+				"Verify that when navigated to the first redaction should be able to navigate to last redactionon click of '<' from doc view redactions [Cycle from First to Last while toggle between redacted terms ]");
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Edit Profile Language to English.
+		login.editProfile("English - United States");
+
+		// Create saved search
+		session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
+
+		// verify History status
+		batch.verifyBatchHistoryStatus(searchName);
+
+		// selecting saved search for docView
+		saveSearch.savedSearchToDocView(searchName);
+
+		// verifying redaction panel
+		docview.verifyPanel();
+
+		// All Redactions navigating to First and Last Redaction
+		base.stepInfo("For All Redactions navigating to First and Last Redaction");
+		docview.navigateToRedaction(1, docview.getAllredactionForwardNavigate(), docview.getDocView_AllRedactionCount(),
+				false, true);
+
+		// Batch Redactions navigating to First and Last Redaction
+		base.stepInfo("For Batch Redactions navigating to First and Last Redaction");
+		docview.navigateToRedaction(1, docview.BatchredactionForwardNavigate(),
+				docview.getDocView_BatchRedactionCount(), false, false);
+		docview.navigatePreviousRedact(1, true, false, docview.getDocView_BatchRedactionCount(), null);
+
+		// Batch Redaction Component navigating to First and Last Redaction
+		base.stepInfo("For Batch Redaction Component navigating to First and Last Redaction");
+		docview.navigateToRedaction(1, docview.componentBatchredactionForwardNavigate(),
+				docview.getComponentBatchRedactionsRatioCount(), false, false);
+		docview.navigatePreviousRedact(1, false, true, docview.getComponentBatchRedactionsRatioCount(), "crammer");
+
+		// deleting the saved search
+		saveSearch.deleteSearch(searchName, "My Saved Search", "Yes");
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : [Covered localization] Verify that on click of 'Yes' button
+	 *              from belly band message displays on click of 'Trash' icon, all
+	 *              redactions occurances of the clicked batch redaction component
+	 *              should be deleted from the document from doc view
+	 *              [RPMXCON-53406]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	public void verifyWarningMessageOnClickingTrashIcon() throws Exception {
+
+		String searchName = "Search Name" + Utility.dynamicNameAppender();
+		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+		DocViewPage docview = new DocViewPage(driver);
+
+		base.stepInfo("Test case Id:RPMXCON-53406");
+		base.stepInfo(
+				"[Covered localization] Verify that on click of 'Yes' button from belly band message displays on click of 'Trash' icon, all redactions occurances of the clicked batch redaction component should be deleted from the document from doc view");
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Edit Profile Language to English.
+		login.editProfile("English - United States");
+
+		// Create saved search
+		int purehit = session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
+
+		// verify History status
+		batch.verifyBatchHistoryStatus(searchName);
+
+		// selecting saved search for docView
+		saveSearch.savedSearchToDocView(searchName);
+
+		// chaning the language into German
+		login.editProfile("German - Germany");
+		String expectedMsg = "Profil erfolgreich aktualisiert";
+		base.VerifySuccessMessageInGerman(expectedMsg);
+		base.CloseSuccessMsgpopup();
+
+		// verifying redaction panel
+		docview.verifyPanel();
+
+		// redaction count before Deletion
+		base.stepInfo("Redaction count Before performing Delete Action");
+		docview.getRedactionCount(docview.getDocView_AllRedactionCount(), "All Redactions");
+		docview.getRedactionCount(docview.getDocView_BatchRedactionCount(), "Batch Redactions");
+
+		// verifying warning message and click No button
+		docViewRedactions.VerifyDeletePopUp_BatchRedact(false);
+
+		// verifying warning message and click Yes button
+		driver.waitForPageToBeReady();
+		docViewRedactions.VerifyDeletePopUp_BatchRedact(true);
+
+		// redaction count after Deletion
+		base.stepInfo("updated Redaction Count After performing Delete Action");
+		docview.getRedactionCount(docview.getDocView_AllRedactionCount(), "All Redactions");
+		docview.getRedactionCount(docview.getDocView_BatchRedactionCount(), "Batch Redactions");
+
+		// Edit Profile Language to English.
+		login.editProfile("English - United States");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : Verify that batch redaction should be successful when 'View
+	 *              and Redact Searches' is selected for the search group with saved
+	 *              searches (RPMXCON-53385)
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	public void verifyWhenUserClickAnalyzeGroup() throws InterruptedException, IOException {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+
+		// will login As RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Tescase ID :RPMXCON-53385 Batch Redaction ");
+		base.stepInfo(
+				"Verify that batch redaction should be successful when 'View and Redact Searches' is selected for the search group with saved searches");
+
+		// load the saved search page and click on create new search group
+		String newNode = saveSearch.createSearchGroupAndReturn(searchName, "RMU", "Yes");
+
+		// will load the session search page and search
+		base.selectproject();
+		int purehit = session.basicContentSearch(Input.testData1);
+
+		// will save the query on created node under my saved search
+		session.saveSearchInNewNode(searchName, newNode);
+
+		// Check Analyse btn After search is saved
+		batch.loadBatchRedactionPage(newNode);
+		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false);
+		batch.performViewReportAndApplyRedactions(newNode);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
+
+		// bullhorn value before
+		int bgCountBefore = base.initialBgCount();
+
+		// verify History status
+		batch.verifyBatchHistoryStatus(searchName);
+
+		// bullhorn value after
+		int bgCountAfter = base.initialBgCount();
+
+		softAssertion.assertNotEquals(bgCountBefore, bgCountAfter);
+		base.passedStep("Bull horn icon has New Notification");
+
+		String docCount = batch.getDocCountFromTable(searchName).getText();
+		softAssertion.assertNotEquals(docCount, Input.TextEmpty);
+		base.stepInfo(docCount + " : is The Unique Document Count displayed in history");
+
+		// Delete Created Node
+		saveSearch.deleteNode(Input.mySavedSearch, newNode);
+		softAssertion.assertAll();
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : Verify batch redaction history record when batch redaction
+	 *              fails for search and check for tooltip (RPMXCON-53333)
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	public void verifyFailedStatusToolTip() throws Exception {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String Annotation = "AT" + Utility.dynamicNameAppender();
+
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		AnnotationLayer annotation = new AnnotationLayer(driver);
+		UserManagement users = new UserManagement(driver);
+
+		// will login As RMU
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Tescase ID :RPMXCON-53333 Batch Redaction ");
+		base.stepInfo(
+				"Verify batch redaction history record when batch redaction fails for search and check for tooltip");
+
+		// add SG and assign annotation and redaction tag
+		sgpage.navigateToSecurityGropusPageURL();
+		sgpage.AddSecurityGroup(securityGroup);
+		sgpage.assignRedactionTagtoSG(Input.defaultRedactionTag);
+		annotation.AddAnnotation(Annotation);
+		sgpage.navigateToSecurityGropusPageURL();
+		sgpage.selectSecurityGroup(securityGroup);
+		sgpage.assignAnnotationToSG(Annotation);
+
+		// access to security group to Rmu
+		users.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+
+		// Create saved search
+		session.basicContentSearch(Input.searchString5);
+		session.bulkRelease(securityGroup);
+		login.logout();
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Create saved search
+		base.selectsecuritygroup(securityGroup);
+		int purehit = session.basicContentSearch(Input.searchString5);
+		session.saveSearch(searchName);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
+
+		// delete Annotation
+		annotation.deleteAnnotation(Annotation);
+		batch.loadBatchRedactionPage(searchName);
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+
+		// verify Failed status
+		batch.verifyBatchHistoryStatus(searchName);
+
+		String tooltipMsg = batch.getColorStatusToolTip(searchName).GetAttribute("data-content");
+		String expectedMsg = "Hard failure.  There may be partial redactions.  Please contact your administrator.";
+		base.textCompareEquals(tooltipMsg, expectedMsg, expectedMsg, "Tooltip is not displayed");
+
+		// verify Doc count
+		String docCount = batch.getDocCountFromTable(searchName).getText();
+		base.compareTextViaContains(docCount, "0 /", docCount + " : is the docCount Displayed", "");
+
+		base.selectsecuritygroup(Input.securityGroup);
+		login.logout();
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		sgpage.deleteSecurityGroups(securityGroup);
 		login.logout();
 	}
 
