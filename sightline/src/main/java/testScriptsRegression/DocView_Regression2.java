@@ -1226,7 +1226,72 @@ public class DocView_Regression2 {
 		docView.statusCheckAfterImpersonation();
 	}
 	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51347
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
 	
+	@Test(enabled = true,dataProvider = "userDetails", alwaysRun = true , groups = { "regression" }, priority = 24)
+	public void verifyPersistentPanelRetainedOnDocNavigation(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51347");
+		baseClass.stepInfo("Verify Persistent Hit panel is selected from doc view and navigates to another document from mini doc list child window the selected panels/menus previously selected should remain.");
+		loginPage.loginToSightLine(userName, password);
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		sessionSearch.basicContentSearch(Input.searchString1);
+	    sessionSearch.ViewInDocView();
+	    docViewRedact = new DocViewRedactions(driver);
+	    docViewRedact.checkingPersistentHitPanel();
+	    ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
+		reusabledocviewpage.clickGearIconOpenMiniDocList();
+		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
+		if (docViewRedact.persistantHitToggle().isDisplayed()) {
+			assertTrue(true);
+			baseClass.passedStep(
+					"The persistent hits panel is visible for non audio documents After navigating from child window is retained");
+		} else {
+			assertTrue(false);
+		}
+	    
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51351
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 25)
+		public void verifyRemarksPanelRetained(String fullName, String userName, String password)throws Exception {
+			baseClass = new BaseClass(driver);
+			loginPage.loginToSightLine(userName, password);
+			baseClass.stepInfo("login as" + fullName);
+			DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+			ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-51351");
+			baseClass.stepInfo(
+					"Verify when Reviewer Remarks panel is selected from audio doc view and navigates to another document from mini doc list child window the selected panels/menus previously selected should remain.");
+			SessionSearch sessionsearch = new SessionSearch(driver);
+			sessionsearch.audioSearch("Morning", Input.language);
+			baseClass.stepInfo("Search for audio docs completed");
+			sessionsearch.ViewInDocView();
+			docViewRedact.clickingAudioRemarksIcon();
+			reusabledocviewpage.clickGearIconOpenMiniDocList();
+			docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
+			if (docViewRedact.addAudioRemarks().isDisplayed()) {
+				assertTrue(true);
+				baseClass.passedStep(
+						"The remarks panel is visible for audio documents After navigating from child window");
+			} else {
+				assertTrue(false);
+			}
+
+		}
+
+
 	
 	
 	
