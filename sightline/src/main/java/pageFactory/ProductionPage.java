@@ -845,6 +845,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element productionNameInGeneratePage(String productionname) {
+		return driver.FindElementByXPath("//label[contains(text(),'"+productionname+"')]");
+	}
+	
 	public Element generateLoadFileToggleInTextComponent() {
 		return driver.FindElementByXPath("(//input[@id='chkProduceLoadFile']//parent::label//i)[2]");
 	}
@@ -2254,6 +2258,12 @@ public class ProductionPage {
 		return driver.FindElementByXPath(
 				".//*[@id='divRightHeaderBranding']//div[@class='redactor-editor redactor-placeholder']");
 	}
+	
+	//Add by Aathith
+	public Element getSharableLinkExpiryDate() {
+		return driver.FindElementByXPath("//span[@id='lblShareableLinksExpireDate']");
+	}
+	
 	public Element getErrorMsgText() {
 		return driver.FindElementByXPath("//span//h1");}
 	public ProductionPage(Driver driver) {

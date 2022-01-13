@@ -2616,6 +2616,11 @@ public ElementCollection getCheckMarkIcons() {
 	public Element ProductionNameInImageTab(String ProdName) {
 		return driver.FindElementByXPath("//ul[@id='AvailableImagesDropDown']//a[contains(text(),'"+ProdName+"')]");
 	}
+	public Element getCheckMarkText(String text) {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']//..//..//td[2][text()='"+text+"']");
+	}
+	
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -20549,7 +20554,6 @@ public ElementCollection getCheckMarkIcons() {
 		reusableDocView.clickGearIconOpenMiniDocList();
 		String parentId = reusableDocView.switchTochildWindow();
 		reusableDocView.clickCheckBoxDocListActionCodeSameAsOnChildWindow(parentId);
-		
 		base.waitForElement(getClickDocviewID(5));
 		getClickDocviewID(5).waitAndClick(5);
 		driver.switchTo().window(parentId);
@@ -20573,9 +20577,73 @@ public ElementCollection getCheckMarkIcons() {
 			System.out.println("Coding form  the main selected document is not saved for the selected documents from family members child window");
 			base.failedStep("Coding form  the main selected document is not saved for the selected documents from family members child window");
 		}
-		
-		
-		
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 11/01/2022 Modified date: NA
+	 * @Description : This method used to verify navigation option>> using save and
+	 *              next
+	 */
+	public void verifyLastDocsUsingNavigationOption(String comment,String stamp) {
+		driver.waitForPageToBeReady();
+		base.stepInfo("Performing action in parent window");
+		//coding stamp saving
+		editCodingForm(comment);
+		codingStampButton();
+		popUpAction(stamp, Input.stampSelection);
+		//clicking saved stamp
+		lastAppliedStamp(Input.stampSelection);
+		//validation of saved stamp
+		verifyingComments(comment);
+		codingFormSaveButton();
+		base.VerifySuccessMessage("Document saved successfully");
+		base.CloseSuccessMsgpopup();
+		verifyThatIsLastDoc();
+		getDocView_NumTextBox().SendKeys("3" + Keys.ENTER);
+		driver.waitForPageToBeReady();
+		getClickDocviewID(2).waitAndClick(5);
+		String firstDoc = getVerifyPrincipalDocument().getText();
+		clickCodeSameAsLast();
+		driver.waitForPageToBeReady();
+		String secDoc = getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(firstDoc, secDoc);
+		softAssertion.assertAll();
+		base.passedStep("Cursor navigated to next doc in minidoclist");
+		//Deleting saved stamp(House keeping activity)
+		driver.getWebDriver().navigate().refresh();
+		deleteStampColour(Input.stampSelection);
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 13/01/2022 Modified date:N/A
+	 *         Description:Validation  for audio docs
+	 * 
+	 */
+	public void validationAudioDocsCheckMark(String comment) {
+		driver.waitForPageToBeReady();
+		base.stepInfo("Document completed successfully");
+		String pnDoc=getVerifyPrincipalDocument().getText();
+		// principal docs fro code same as
+		for (int i = 1; i <=2; i++) {
+			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(i));
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).WaitUntilPresent().waitAndClick(5);
+		}
+		base.waitForElement(getDocView_Mini_ActionButton());
+		base.waitTillElemetToBeClickable(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
+		base.waitTillElemetToBeClickable(getDocView__ChildWindow_Mini_CodeSameAs());
+		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
+		// validating chain link
+		softAssertion.assertTrue(geDocView_MiniList_CodeSameAsIcon().Displayed());
+		base.stepInfo("Check mark icon displayed in minidcolist");
+		// eiting coding form
+		editCodingForm(comment);
+		completeButton();
+		boolean flag=getCheckMarkText(pnDoc).Displayed();
+		softAssertion.assertTrue(flag);
+		softAssertion.assertAll();
+		base.passedStep("Principal docs completed and check mark displayed ");
 	}
 	/**
 	 * @author Brundha
