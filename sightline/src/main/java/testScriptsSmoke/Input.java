@@ -270,6 +270,9 @@ public class Input {
 	public static String pageRange2;
 	public static String pageRange3;
 	public static String pageRange4;
+	public static String searchPhraseWithQuote;
+	
+	
 	
 
 	// Added by Raghuram - Modified 12/30/21
@@ -713,6 +716,8 @@ public class Input {
 		pageRange2 = testData.getPageRange2();
 		pageRange3 = testData.getPageRange3();
 		pageRange4 = testData.getPageRange4();
+		searchPhraseWithQuote = testData.getSearchPhraseWithQuote();
+		
 		
 		
 		

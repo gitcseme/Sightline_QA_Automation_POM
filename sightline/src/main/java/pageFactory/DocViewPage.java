@@ -2589,6 +2589,15 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//dl[@id='ddlEditStamps']//ul//li[@id='" + colour + "']//a//i//..//span['Assigned']");
 	}
+	
+////Added By arunkumar
+	public Element audioPersistentForwardNavigate() {
+		return driver.FindElementByXPath("//i[@class='fa fa-chevron-right']");
+	}
+	
+	public Element audioPlayPauseIcon() {
+		return driver.FindElementByXPath("//i[@id='btnPlayPause']");
+	}
 
 	// Added by Vijaya.Rani
 	public Element docViewReviewerPage() {
