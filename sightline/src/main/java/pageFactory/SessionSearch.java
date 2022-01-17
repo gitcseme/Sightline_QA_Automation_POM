@@ -1393,15 +1393,17 @@ public class SessionSearch {
 		return driver.FindElementByXPath(
 				"//label[text()='Docs That Met Your Criteria']//..//..//..//i[@title='Remove from Selected Results']");
 	}
-	
-	//Added by Gopinath - 12/01/2022
-	
+
+	// Added by Gopinath - 12/01/2022
+
 	public Element getAssgn_NewAssignmnet() {
 		return driver.FindElementById("tabnewAssignment");
 	}
+
 	public Element getbulkassgnpopup() {
 		return driver.FindElementByXPath("//*[text()='Assign/Unassign Documents']");
 	}
+
 	public Element getContinueBulkAssign() {
 		return driver.FindElementByXPath("//*[@id='divBulkAction']//button[contains(.,'Continue')]");
 	}
@@ -1413,12 +1415,15 @@ public class SessionSearch {
 	public Element getSelectAssignment(String assignmentName) {
 		return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='" + assignmentName + "']");
 	}
+
 	public Element getAssignmentActionDropdown() {
 		return driver.FindElementByXPath("//*[@id='ulActions']/../button[@class='btn btn-defualt dropdown-toggle']");
 	}
+
 	public Element getAssignmentName() {
 		return driver.FindElementById("AssignmentName");
 	}
+
 	public Element getParentAssignmentGroupName() {
 		return driver.FindElementById("ParentassignmentGroupName");
 	}
@@ -1434,12 +1439,15 @@ public class SessionSearch {
 	public Element getAssignmentSaveButton() {
 		return driver.FindElementByXPath("//input[@value='Save']");
 	}
+
 	public Element getAssgn_TotalCount() {
 		return driver.FindElementByXPath("//div[@id='divBulkAction']//div//span[@id='spanTotal']");
 	}
+
 	public Element getAssignmentErrorText() {
 		return driver.FindElementByXPath("//span[@id='AssignmentName-error']");
 	}
+
 	public Element getPersistantHitCheckBox() {
 		return driver.FindElementByXPath("sdz");
 	}
@@ -2479,7 +2487,8 @@ public class SessionSearch {
 
 	/**
 	 * @modifiedOn : 1/5/2022 (getRemovePureHit().isElementAvailable(3))
-	 * @modifiedOn : 1/7/2022 getPureHitAddButton().Click(); to getPureHitAddButton().waitAndClick(10);
+	 * @modifiedOn : 1/7/2022 getPureHitAddButton().Click(); to
+	 *             getPureHitAddButton().waitAndClick(10);
 	 * @param tagName
 	 * @throws InterruptedException
 	 */
@@ -2683,10 +2692,11 @@ public class SessionSearch {
 		UtilityLog.info("Navigated to doclist, to view docslist");
 
 	}
+
 	/**
-	* @Stabilization Done
-	* @throws InterruptedException
-	*/
+	 * @Stabilization Done
+	 * @throws InterruptedException
+	 */
 
 	public void ViewInDocView() throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -8310,18 +8320,18 @@ public class SessionSearch {
 	 */
 	public void saveSearchAction() {
 		driver.waitForPageToBeReady();
-		try {
-			if (getSaveSearch_Btn().isDisplayed()) {
-				getSaveSearch_Btn().waitAndClick(10);
-				System.out.println("Basic Save");
-			} else if (getSaveSearch_AdvBtn().isDisplayed()) {
-				getSaveSearch_AdvBtn().waitAndClick(10);
-				System.out.println("Advance Save");
-			} else if (GetAdvSaveBtn_New().isDisplayed()) {
-				GetAdvSaveBtn_New().waitAndClick(10);
-				System.out.println("Advance Save");
-			}
-		} catch (Exception e1) {
+		if (getSaveSearch_Btn().isDisplayed()) {
+			getSaveSearch_Btn().waitAndClick(10);
+			System.out.println("Basic Save");
+		} else if (getSaveSearch_Button().isDisplayed()) {
+			getSaveSearch_Button().waitAndClick(10);
+			System.out.println("Basic Save1");
+		} else if (getAdvanceSearch_DraftQuerySave_Button().isDisplayed()) {
+			getAdvanceSearch_DraftQuerySave_Button().waitAndClick(10);
+			System.out.println("Advance Save");
+		} else if (GetAdvSaveBtn_New().isDisplayed()) {
+			GetAdvSaveBtn_New().waitAndClick(10);
+			System.out.println("Advance Save1");
 		}
 	}
 
@@ -9284,12 +9294,12 @@ public class SessionSearch {
 	 */
 	public void saveAdvanceSearchInNode(String searchName, String node) throws InterruptedException {
 		// Click Save Button
-		// saveSearchAction();
-		if (getSaveButton().isElementAvailable(2)) {
-			getSaveButton().waitAndClick(5);
-		} else {
-			getAdvanceSearch_DraftQuerySave_Button().Click();
-		}
+		saveSearchAction();
+//		if (getSaveButton().isElementAvailable(2)) {
+//			getSaveButton().waitAndClick(5);
+//		} else {
+//			getAdvanceSearch_DraftQuerySave_Button().Click();
+//		}
 		// handle pop confirmation for regex and proximity queries
 		try {
 			if (getYesQueryAlert().isElementAvailable(8)) {
@@ -9328,15 +9338,16 @@ public class SessionSearch {
 		Reporter.log("Saved the search with name '" + searchName + "'", true);
 		UtilityLog.info("Saved search with name - " + searchName);
 	}
-	
+
 	/**
 	 * @author Gopinath modified date-NA
 	 * @throws InterruptedException
 	 * @description Create bulk assign with new assignment with persistant hit.
 	 */
-	public void bulkAssignWithNewAssignmentWithPersistantHit(String assignmentName,String codingForm) throws InterruptedException {
+	public void bulkAssignWithNewAssignmentWithPersistantHit(String assignmentName, String codingForm)
+			throws InterruptedException {
 		driver.waitForPageToBeReady();
-		if(getPureHitAddButton().isDisplayed()) {
+		if (getPureHitAddButton().isDisplayed()) {
 			base.waitForElement(getPureHitAddButton());
 			base.waitTime(2);
 			getPureHitAddButton().Click();
