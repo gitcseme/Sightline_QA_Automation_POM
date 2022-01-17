@@ -5939,6 +5939,7 @@ public class AssignmentsPage {
 		}
 
 	}
+	
 
 	/**
 	 * @author Iyappan.Kasinathan date: 10/7/2021 Modified date: NA
@@ -8985,6 +8986,47 @@ public class AssignmentsPage {
 		getUnComplePopOutYes().waitAndClick(10);
 		bc.VerifySuccessMessage("All Document successfully un-completed");
 		driver.waitForPageToBeReady();
+
+	}
+	
+	public Element getSelectDAUserToAssign() {
+		return driver.FindElementByXPath(
+				"//*[@id='divNotAssignedUsers']//div[contains(.,'" + Input.da1userName + "')]/../div/label");
+	}
+	public Element getSelectUserInDistributeTabsDA() {
+		return driver.FindElementByXPath(
+				"//*[@id='divDistributedDocUsers']//div[contains(.,'" + Input.da1userName + "')]/div/label");
+	}
+	/**
+	 * @author Jayanthi 
+	 * @Description: Add 4 reviewers and distributed docs to them(Reviewer/RMU/PA/DA).
+	 */
+	public void add4ReviewerAndDistribute() {
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		bc.waitForElement(getSelectUserToAssig());
+		getSelectUserToAssig().waitAndClick(5);
+		driver.scrollingToElementofAPage(getSelectUserToAssigReviewerManager());
+		getSelectUserToAssigReviewerManager().waitAndClick(5);
+		driver.scrollingToElementofAPage(getSelectUserToAssignPA());
+		getSelectUserToAssignPA().waitAndClick(5);
+		getSelectDAUserToAssign().ScrollTo();
+		getSelectDAUserToAssign().waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Record saved successfully");
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
+		getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
+		getSelectUserInDistributeTabsPA().waitAndClick(5);
+		getSelect2ndUserInDistributeTab().waitAndClick(5);
+		getSelectUserInDistributeTabsDA().waitAndClick(5);
+		bc.CloseSuccessMsgpopup();
+		getDistributeBtn().waitAndClick(3);
+		bc.stepInfo("Documents are distributed to four reviewers successfully");
 
 	}
 }
