@@ -113,6 +113,10 @@ public class DocViewPage {
 		return driver.FindElementByCssSelector("*[title='Play']");
 	}
 
+	public Element getDocView_IconPlaying() {
+		return driver.FindElementByCssSelector("[class*=playing]");
+	}
+
 	public Element getDocView_IconPause() {
 		return driver.FindElementByCssSelector("*[title='Pause']");
 	}
@@ -2586,40 +2590,45 @@ public class DocViewPage {
 	public Element docViewReviewerPage() {
 		return driver.FindElementById("RemarkPnl");
 	}
-	
+
 	public ElementCollection getDocView_Terms() {
 		return driver.FindElementsByXPath("//strong//span[text()='Term:']");
 	}
-	
-	//Added by Gopinath
+
+	// Added by Gopinath
 	public Element getConfigSvaeButton() {
 		return driver.FindElementByXPath("//button[@class='btn btn-primary']");
 	}
-  
+
 //Added by Jayanthi
-public ElementCollection getCheckMarkIcons() {
-			return driver.FindElementsByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']");
-		}
+	public ElementCollection getCheckMarkIcons() {
+		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']");
+	}
 
 	public Element getminiDocListConfigFirstAvaliableField() {
-			return driver.FindElementByXPath("(//div[@class='col-md-6']/ul//li[@class='ui-state-default'])[1]/i");
-		}
+		return driver.FindElementByXPath("(//div[@class='col-md-6']/ul//li[@class='ui-state-default'])[1]/i");
+	}
+
 	public Element getMiniDocConfigSelectedArea() {
-			return driver.FindElementByXPath("(//ul[@id='sortable2PickColumns']/li)[1]");
-		}
+		return driver.FindElementByXPath("(//ul[@id='sortable2PickColumns']/li)[1]");
+	}
+
 	public Element getMiniDocConfigSelectFieldRomoveIcon() {
 		return driver.FindElementByXPath("(//ul[@id='sortable2PickColumns']/li)[1]/i[@class='fa fa-times-circle']");
-		}
+	}
+
 	public ElementCollection geDocView_MiniList_CodeSameAsIcons() {
 		return driver.FindElementsByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-link']");
 	}
+
 	public Element ProductionNameInImageTab(String ProdName) {
-		return driver.FindElementByXPath("//ul[@id='AvailableImagesDropDown']//a[contains(text(),'"+ProdName+"')]");
+		return driver.FindElementByXPath("//ul[@id='AvailableImagesDropDown']//a[contains(text(),'" + ProdName + "')]");
 	}
+
 	public Element getCheckMarkText(String text) {
-		return driver.FindElementByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']//..//..//td[2][text()='"+text+"']");
+		return driver.FindElementByXPath(
+				"//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']//..//..//td[2][text()='" + text + "']");
 	}
-	
 
 	public DocViewPage(Driver driver) {
 
@@ -5800,12 +5809,15 @@ public ElementCollection getCheckMarkIcons() {
 			}
 		}), Input.wait30);
 		getDocView_IconPlay().waitAndClick(30);
+		base.waitForElement(getDocView_IconPlaying());
+		softAssertion.assertTrue(getDocView_IconPlaying().isDisplayed());
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDocView_IconPause().Displayed();
 			}
 		}), Input.wait30);
-
+		softAssertion.assertAll();
+		base.passedStep("Audio play functionality is working properly");
 	}
 
 	/**
@@ -20198,7 +20210,8 @@ public ElementCollection getCheckMarkIcons() {
 		softAssertion.assertAll();
 
 	}
-/*
+
+	/*
 	 * @author steffy.d Method is to verify review mode text in docview page
 	 */
 	public void verifyReviewModeText() {
@@ -20213,7 +20226,8 @@ public ElementCollection getCheckMarkIcons() {
 			base.failedStep("Review mode text is not displayed as expected");
 		}
 	}
-   /**
+
+	/**
 	 * @author Gopinath
 	 * @Description : Method for adding remark is not added to document.
 	 * @param remark : remark is String value that any remark value need to enter in
@@ -20247,10 +20261,11 @@ public ElementCollection getCheckMarkIcons() {
 		}
 
 	}
-	
+
 	/**
 	 * @author Gopinath
-	 * @Description  : Method to popout analytical,mini doclist,codingfrom,metadata pales in the DocView.
+	 * @Description : Method to popout analytical,mini doclist,codingfrom,metadata
+	 *              pales in the DocView.
 	 */
 	public void popOutMiniDocListCodingformAnalticalMetaDataPanels() {
 		try {
@@ -20272,7 +20287,8 @@ public ElementCollection getCheckMarkIcons() {
 			getDocView_ChildWindowPopOut().ScrollTo();
 			if (getDocView_ChildWindowPopOut().isDisplayed()) {
 				base.waitForElement(getDocView_ChildWindowPopOut());
-				getDocView_ChildWindowPopOut().Click();;
+				getDocView_ChildWindowPopOut().Click();
+				;
 				base.passedStep("Analytics Panel child window is popout successfully");
 			}
 			driver.waitForPageToBeReady();
@@ -20289,13 +20305,15 @@ public ElementCollection getCheckMarkIcons() {
 			getDocView_CodingFormPopOut().waitAndClick(5);
 			System.out.println("CodingForm Panel is popout successfully");
 			base.passedStep("CodingForm Panel is popout successfully");
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while popout analytical,mini doclist,codingfrom,metadata pales in the DocView."+e.getLocalizedMessage());
+			base.failedStep(
+					"Exception occured while popout analytical,mini doclist,codingfrom,metadata pales in the DocView."
+							+ e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopianth
 	 * @description to select docs and CodeSameAs
@@ -20338,17 +20356,17 @@ public ElementCollection getCheckMarkIcons() {
 	 */
 	public void acceptBrowserAlert(boolean flag) {
 		try {
-			if(flag) {
+			if (flag) {
 				driver.getWebDriver().switchTo().alert().accept();
-			}else {
+			} else {
 				driver.getWebDriver().switchTo().alert().dismiss();
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while handling alert"+e.getLocalizedMessage());
+			base.failedStep("Exception occured while handling alert" + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopianth
 	 * @description : Method to click On save button widget.
@@ -20359,14 +20377,15 @@ public ElementCollection getCheckMarkIcons() {
 			driver.scrollPageToTop();
 			getDocView_SaveWidgetButton().isElementAvailable(10);
 			getDocView_SaveWidgetButton().Click();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while clicking On save button widget."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while clicking On save button widget." + e.getLocalizedMessage());
 		}
 	}
-	
-  /*
+
+	/*
 	 * @author Jayanthi.ganesan
+	 * 
 	 * @param iterate
 	 */
 	public void CompleteTheDocumentInMiniDocList(int iterate) {
@@ -20390,51 +20409,52 @@ public ElementCollection getCheckMarkIcons() {
 
 	/**
 	 * @author Gopinath
-	 * @Description  : Method to panels in docview are docked.
+	 * @Description : Method to panels in docview are docked.
 	 */
 	public void verifyAllPanelsInDocViewAreDocked() {
 		try {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
-			if(getDocView_MiniDocListPopOut().isDisplayed()) {
+			if (getDocView_MiniDocListPopOut().isDisplayed()) {
 				base.failedStep("Mini doclist is not docked in docview");
-			}else {
+			} else {
 				base.passedStep("Mini doclist is docked successfully in docview");
 			}
-			
-			if(getDocView_MetaDataPopOut().isDisplayed()) {
+
+			if (getDocView_MetaDataPopOut().isDisplayed()) {
 				base.failedStep("Metadata panel is not docked in docview");
-			}else {
+			} else {
 				base.passedStep("Metadata panel is docked successfully in docview");
 			}
 			driver.scrollPageToTop();
-			if(getDocView_CodingFormPopOut().isDisplayed()) {
+			if (getDocView_CodingFormPopOut().isDisplayed()) {
 				base.failedStep("Coding form panel is not docked in docview");
-			}else {
+			} else {
 				base.passedStep("Coding form panel is docked successfully in docview");
 			}
-			
-			if(getDocView_ChildWindowPopOut().isDisplayed()) {
+
+			if (getDocView_ChildWindowPopOut().isDisplayed()) {
 				base.failedStep("Analtical panel is not docked in docview");
-			}else {
+			} else {
 				base.passedStep("Analtical panel is docked successfully in docview");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while panels in docview are docked."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while panels in docview are docked." + e.getLocalizedMessage());
 		}
 	}
+
 	/**
-	 * @author Gopinath
-	 * Description : this method save the doc configuration from mini doc list child window
+	 * @author Gopinath Description : this method save the doc configuration from
+	 *         mini doc list child window
 	 */
 	public void saveConfigFromChildWindow() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getGearIcon());
 		try {
 			if (getGearIcon().Visible() && getGearIcon().Enabled())
-				
-			getGearIcon().waitAndClick(5);
+
+				getGearIcon().waitAndClick(5);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -20449,8 +20469,7 @@ public ElementCollection getCheckMarkIcons() {
 				getClickDocviewID(1).waitAndClick(5);
 				base.waitForElement(getDocView_ConfigMinidoclist());
 				getDocView_ConfigMinidoclist().waitAndClick(10);
-				
-				 
+
 			}
 		}
 		driver.switchTo().window(parentWindowID);
@@ -20459,96 +20478,100 @@ public ElementCollection getCheckMarkIcons() {
 		base.waitForElement(getMiniDocConfigSelectFieldRomoveIcon());
 		getMiniDocConfigSelectFieldRomoveIcon().waitAndClick(5);
 		getMiniDocConfigSelectFieldRomoveIcon().waitAndClick(5);
-		 Actions ac = new Actions(driver.getWebDriver());
-		 for(int i=0;i<2;i++) {
-		base.waitTime(5);
-		ac.dragAndDrop(getminiDocListConfigFirstAvaliableField().getWebElement(), getMiniDocConfigSelectedArea().getWebElement()).build().perform();
-		 }
+		Actions ac = new Actions(driver.getWebDriver());
+		for (int i = 0; i < 2; i++) {
+			base.waitTime(5);
+			ac.dragAndDrop(getminiDocListConfigFirstAvaliableField().getWebElement(),
+					getMiniDocConfigSelectedArea().getWebElement()).build().perform();
+		}
 		getConfigSvaeButton().waitAndClick(5);
 		base.waitTime(5);
-	
+
 		try {
 			Alert al = driver.switchTo().alert();
 			al.accept();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(" not alert ,Saved the configration without any alert");
 			base.stepInfo("not alert ,Saved the configration without any alert");
-			
+
 		}
 		driver.Navigate().refresh();
 	}
-	
+
 	/**
-	 * @author Gopinath
-	 * DEscription htis method will select the document from mini doc list and perform code sameAs and verify performed or not
-	 * @param input (input text for code same as verification to enter in comment text field
+	 * @author Gopinath DEscription htis method will select the document from mini
+	 *         doc list and perform code sameAs and verify performed or not
+	 * @param input    (input text for code same as verification to enter in comment
+	 *                 text field
 	 * @param noOfRows (number or documents to perform code sameAs
 	 */
-	public void perfomMiniDocListCodeSameAs(String input,int noOfRows) {
+	public void perfomMiniDocListCodeSameAs(String input, int noOfRows) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getClickDocviewID(1));
 		getClickDocviewID(1).waitAndClick(3);
-		for(int i=2;i<=noOfRows+1;i++) {
+		for (int i = 2; i <= noOfRows + 1; i++) {
 			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
 			getDocView_MiniDoc_SelectRow(i).waitAndClick(5);
 		}
 		base.waitForElement(getDocView_Mini_ActionButton());
 		base.waitTillElemetToBeClickable(getDocView_Mini_ActionButton());
 		getDocView_Mini_ActionButton().waitAndClick(5);
-		  base.waitForElement(getDocView__ChildWindow_Mini_CodeAsSameAction());
-		  getDocView__ChildWindow_Mini_CodeAsSameAction().waitAndClick(5);
-		  base.VerifySuccessMessage("Code same performed successfully.");
-		  base.waitForElement(geDocView_MiniList_CodeSameAsIcon());
-		  
-			if (geDocView_MiniList_CodeSameAsIcon().isElementAvailable(5)
-					&& geDocView_MiniList_CodeSameAsIcon().getWebElement().isDisplayed()) {
-				int numberofCodesSameAs = geDocView_MiniList_CodeSameAsIcons().size();
-				if (noOfRows == numberofCodesSameAs) {
-					System.out.println("code sameAs performed for selected document in miniDocm list");
-					base.passedStep("code sameAs performed for selected document in miniDocm list");
-				} else {
-					System.out.println("code same as not performed for all the selected documents");
-					base.failedStep("code same as not performed for all the selected documents");
-				}
-			}else {
-				System.out.println("unable to perform code same as for select documents");
-				base.failedStep("unable to perform code same as for select documents");
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeAsSameAction());
+		getDocView__ChildWindow_Mini_CodeAsSameAction().waitAndClick(5);
+		base.VerifySuccessMessage("Code same performed successfully.");
+		base.waitForElement(geDocView_MiniList_CodeSameAsIcon());
+
+		if (geDocView_MiniList_CodeSameAsIcon().isElementAvailable(5)
+				&& geDocView_MiniList_CodeSameAsIcon().getWebElement().isDisplayed()) {
+			int numberofCodesSameAs = geDocView_MiniList_CodeSameAsIcons().size();
+			if (noOfRows == numberofCodesSameAs) {
+				System.out.println("code sameAs performed for selected document in miniDocm list");
+				base.passedStep("code sameAs performed for selected document in miniDocm list");
+			} else {
+				System.out.println("code same as not performed for all the selected documents");
+				base.failedStep("code same as not performed for all the selected documents");
 			}
-			base.waitForElement(getClickDocviewID(1));
-			getClickDocviewID(1).Click();
-			getDocument_CommentsTextBox().ScrollTo();
-			getDocument_CommentsTextBox().isElementAvailable(10);
-			base.waitForElement(getDocument_CommentsTextBox());
-			getDocument_CommentsTextBox().Clear();
-			base.waitTime(5);
-			getDocument_CommentsTextBox().SendKeys(input);
-			
-			driver.scrollPageToTop();
-			base.waitForElement(getCodingFormSaveBtn());
-			base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
-			getCodingFormSaveBtn().waitAndClick(5);
-			base.waitForElement(getClickDocviewID(noOfRows));
-			getClickDocviewID(noOfRows).waitAndClick(5);
-			getDocument_CommentsTextBox().ScrollTo();
-			getDocument_CommentsTextBox().isElementAvailable(10);
-			base.waitForElement(getDocument_CommentsTextBox());
-			String savedtext = getDocument_CommentsTextBox().getText();
-			System.out.println(savedtext);
-			if(input.equals(savedtext)) {
-				System.out.println("Coding form of the main selected document is saved for the selected document from mini doc list");
-				base.passedStep("Coding form of the main selected document is saved for the selected document from mini doc list");
-			}
-			else {
-				base.failedStep("Coding form  the main selected document is not saved for the selected documents from family members");
-			}
-			driver.scrollPageToTop();
-		  
-		
-		
+		} else {
+			System.out.println("unable to perform code same as for select documents");
+			base.failedStep("unable to perform code same as for select documents");
+		}
+		base.waitForElement(getClickDocviewID(1));
+		getClickDocviewID(1).Click();
+		getDocument_CommentsTextBox().ScrollTo();
+		getDocument_CommentsTextBox().isElementAvailable(10);
+		base.waitForElement(getDocument_CommentsTextBox());
+		getDocument_CommentsTextBox().Clear();
+		base.waitTime(5);
+		getDocument_CommentsTextBox().SendKeys(input);
+
+		driver.scrollPageToTop();
+		base.waitForElement(getCodingFormSaveBtn());
+		base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
+		getCodingFormSaveBtn().waitAndClick(5);
+		base.waitForElement(getClickDocviewID(noOfRows));
+		getClickDocviewID(noOfRows).waitAndClick(5);
+		getDocument_CommentsTextBox().ScrollTo();
+		getDocument_CommentsTextBox().isElementAvailable(10);
+		base.waitForElement(getDocument_CommentsTextBox());
+		String savedtext = getDocument_CommentsTextBox().getText();
+		System.out.println(savedtext);
+		if (input.equals(savedtext)) {
+			System.out.println(
+					"Coding form of the main selected document is saved for the selected document from mini doc list");
+			base.passedStep(
+					"Coding form of the main selected document is saved for the selected document from mini doc list");
+		} else {
+			base.failedStep(
+					"Coding form  the main selected document is not saved for the selected documents from family members");
+		}
+		driver.scrollPageToTop();
+
 	}
-/**
-	 * @author Gopinath
-	 * Description this method will select the document from mini doc list child window and perform code same as and verify performed or not
+
+	/**
+	 * @author Gopinath Description this method will select the document from mini
+	 *         doc list child window and perform code same as and verify performed
+	 *         or not
 	 */
 	public void performCodeSameAsMiniDocChildWindow() {
 		reusableDocView.clickGearIconOpenMiniDocList();
@@ -20569,31 +20592,35 @@ public ElementCollection getCheckMarkIcons() {
 		getDocument_CommentsTextBox().isElementAvailable(10);
 		base.waitForElement(getDocument_CommentsTextBox());
 		String codeSameAsDocText = getDocument_CommentsTextBox().getText();
-		if(mainDocText.equals(codeSameAsDocText)) {
-			System.out.println("Coding form of the main selected document is saved for the selected document from mini doc list child window");
-			base.passedStep("Coding form of the main selected document is saved for the selected document from mini doc list child window");
-		}else {
-			
-			System.out.println("Coding form  the main selected document is not saved for the selected documents from family members child window");
-			base.failedStep("Coding form  the main selected document is not saved for the selected documents from family members child window");
+		if (mainDocText.equals(codeSameAsDocText)) {
+			System.out.println(
+					"Coding form of the main selected document is saved for the selected document from mini doc list child window");
+			base.passedStep(
+					"Coding form of the main selected document is saved for the selected document from mini doc list child window");
+		} else {
+
+			System.out.println(
+					"Coding form  the main selected document is not saved for the selected documents from family members child window");
+			base.failedStep(
+					"Coding form  the main selected document is not saved for the selected documents from family members child window");
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 11/01/2022 Modified date: NA
 	 * @Description : This method used to verify navigation option>> using save and
 	 *              next
 	 */
-	public void verifyLastDocsUsingNavigationOption(String comment,String stamp) {
+	public void verifyLastDocsUsingNavigationOption(String comment, String stamp) {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Performing action in parent window");
-		//coding stamp saving
+		// coding stamp saving
 		editCodingForm(comment);
 		codingStampButton();
 		popUpAction(stamp, Input.stampSelection);
-		//clicking saved stamp
+		// clicking saved stamp
 		lastAppliedStamp(Input.stampSelection);
-		//validation of saved stamp
+		// validation of saved stamp
 		verifyingComments(comment);
 		codingFormSaveButton();
 		base.VerifySuccessMessage("Document saved successfully");
@@ -20609,22 +20636,22 @@ public ElementCollection getCheckMarkIcons() {
 		softAssertion.assertNotEquals(firstDoc, secDoc);
 		softAssertion.assertAll();
 		base.passedStep("Cursor navigated to next doc in minidoclist");
-		//Deleting saved stamp(House keeping activity)
+		// Deleting saved stamp(House keeping activity)
 		driver.getWebDriver().navigate().refresh();
 		deleteStampColour(Input.stampSelection);
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 13/01/2022 Modified date:N/A
-	 *         Description:Validation  for audio docs
+	 *         Description:Validation for audio docs
 	 * 
 	 */
 	public void validationAudioDocsCheckMark(String comment) {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Document completed successfully");
-		String pnDoc=getVerifyPrincipalDocument().getText();
+		String pnDoc = getVerifyPrincipalDocument().getText();
 		// principal docs fro code same as
-		for (int i = 1; i <=2; i++) {
+		for (int i = 1; i <= 2; i++) {
 			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(i));
 			getDocView_MiniDoc_ChildWindow_Selectdoc(i).WaitUntilPresent().waitAndClick(5);
 		}
@@ -20640,27 +20667,28 @@ public ElementCollection getCheckMarkIcons() {
 		// eiting coding form
 		editCodingForm(comment);
 		completeButton();
-		boolean flag=getCheckMarkText(pnDoc).Displayed();
+		boolean flag = getCheckMarkText(pnDoc).Displayed();
 		softAssertion.assertTrue(flag);
 		softAssertion.assertAll();
 		base.passedStep("Principal docs completed and check mark displayed ");
 	}
+
 	/**
 	 * @author Brundha
-	 * @Description : Method for verifying the production name in pdf file 
+	 * @Description : Method for verifying the production name in pdf file
 	 */
 	public void verifyProductionNameForPDFFileInDocView(String Productionname) {
 		try {
 			driver.waitForPageToBeReady();
-			if(ProductionNameInImageTab(Productionname).isDisplayed()) {
-			base.passedStep("Production name is displayed for the generated PDF file");	
-			
-			ProductionNameInImageTab(Productionname).ScrollTo();
-			ProductionNameInImageTab(Productionname).isElementAvailable(10);
-			ProductionNameInImageTab(Productionname).waitAndClick(10);
-			base.stepInfo("Navigated to DocView And Productioname is selected");
+			if (ProductionNameInImageTab(Productionname).isDisplayed()) {
+				base.passedStep("Production name is displayed for the generated PDF file");
+
+				ProductionNameInImageTab(Productionname).ScrollTo();
+				ProductionNameInImageTab(Productionname).isElementAvailable(10);
+				ProductionNameInImageTab(Productionname).waitAndClick(10);
+				base.stepInfo("Navigated to DocView And Productioname is selected");
 			}
-			
+
 			else {
 				base.failedStep("Production name is not displayed for the generated PDF file");
 			}

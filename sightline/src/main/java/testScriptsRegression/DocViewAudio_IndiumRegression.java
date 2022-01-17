@@ -33,9 +33,8 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-
 public class DocViewAudio_IndiumRegression {
-	
+
 	Driver driver;
 	LoginPage loginPage;
 	SoftAssert softAssertion;
@@ -46,7 +45,7 @@ public class DocViewAudio_IndiumRegression {
 	KeywordPage keywordPage;
 	DocListPage docListPage;
 	String keywordsArrayPT[] = { "test" };
-	
+
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -54,7 +53,7 @@ public class DocViewAudio_IndiumRegression {
 		Input in = new Input();
 		in.loadEnvConfig();
 	}
-	
+
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) throws ParseException, InterruptedException, IOException {
 		System.out.println("Executing method : " + testMethod.getName());
@@ -70,13 +69,13 @@ public class DocViewAudio_IndiumRegression {
 //		sessionSearch = new SessionSearch(driver);
 //		keywordPage = new KeywordPage(driver);
 //		docListPage=new DocListPage(driver);
-		
+
 	}
-	
-	
+
 	/**
 	 * Author : Baskar date: NA Modified date: 13/01/2022 Modified by: Baskar
-	 * Description:Verify user can select and apply code same as this for the audio files
+	 * Description:Verify user can select and apply code same as this for the audio
+	 * files
 	 */
 
 	@Test(enabled = true, groups = { "regression" }, priority = 01)
@@ -89,11 +88,11 @@ public class DocViewAudio_IndiumRegression {
 
 		String assign = "Assignment" + Utility.dynamicNameAppender();
 		String comment = "comment" + Utility.dynamicNameAppender();
-		
+
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
 		sessionSearch = new SessionSearch(driver);
-		
+
 		// search to Assignment creation
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		sessionSearch.bulkAssign();
@@ -115,15 +114,16 @@ public class DocViewAudio_IndiumRegression {
 		// CodingStamp popup verify
 		docViewPage.validationAudioDocsCheckMark(comment);
 
-		//logout
+		// logout
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date:13/01/22 Modified date: NA Modified by: Baskar
-	 * @Description : Verify that document navigation should work from audio doc view
+	 * @Description : Verify that document navigation should work from audio doc
+	 *              view
 	 */
-	
+
 	@Test(enabled = true, groups = { "regression" }, priority = 02)
 	public void validateLastNavigationOption() throws Exception {
 		docViewPage = new DocViewPage(driver);
@@ -131,16 +131,16 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("Test case Id: RPMXCON-51482");
 		baseClass.stepInfo("Verify that document navigation should work from audio doc view");
 
-		// Login As 
+		// Login As
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		
+
 		// Searching audio document with different term
 		baseClass.stepInfo("Searching Content documents based on search audio string");
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
-        sessionSearch.ViewInDocView();
+		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
-		
+
 		// validation navigation option
 		docViewPage.verifyThatIsLastDoc();
 
@@ -148,7 +148,137 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 
 	}
+
+	/**
+	 * @Author : Steffy date:17/01/22 Modified date: NA Modified by: Steffy
+	 * @Description : RPMXCON-551318 Verify that audio files pause functionality is working properly
+	 *              inside docview screen
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 03)
+	public void validatePauseAudioInsideDocView() throws Exception {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-55318");
+		baseClass.stepInfo("Verify that audio files pause functionality is working properly inside docview screen");
+
+		// Login As
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User is logged in as Review Manager");
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching Content documents based on search audio string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Open the searched documents in doc view");
+
+		docViewPage.playAudioOnly();
+		
+		softAssertion.assertFalse(docViewPage.getDocView_IconPlaying().isDisplayed());
+		baseClass.passedStep("Audio pause functionality is working properly");
+
+		// logout
+		loginPage.logout();
+		
+		// Login As
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User is logged in as PA");
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching Content documents based on search audio string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Open the searched documents in doc view");
+
+		docViewPage.playAudioOnly();
+
+		softAssertion.assertFalse(docViewPage.getDocView_IconPlaying().isDisplayed());
+		baseClass.passedStep("Audio pause functionality is working properly");
+		
+		// logout
+		loginPage.logout();
+		
+		// Login As
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User is logged in as Reviewer");
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching Content documents based on search audio string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Open the searched documents in doc view");
+
+		docViewPage.playAudioOnly();
+
+		softAssertion.assertFalse(docViewPage.getDocView_IconPlaying().isDisplayed());
+		baseClass.passedStep("Audio pause functionality is working properly");
+
+		// logout
+		loginPage.logout();
+
+	}
 	
+	/**
+	 * @Author : Steffy date:17/01/22 Modified date: NA Modified by: Steffy
+	 * @Description : Verify that audio files play functionality is working properly
+	 *              inside docview screen
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 04)
+	public void validatePlayAudioInsideDocView() throws Exception {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51092");
+		baseClass.stepInfo("Verify that audio files play functionality is working properly inside docview screen");
+
+		// Login As
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User is logged in as Review Manager");
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching Content documents based on search audio string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Open the searched documents in doc view");
+
+		docViewPage.playAudioOnly();
+
+		// logout
+		loginPage.logout();
+		
+		// Login As
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User is logged in as PA");
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching Content documents based on search audio string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Open the searched documents in doc view");
+
+		docViewPage.playAudioOnly();
+
+		// logout
+		loginPage.logout();
+		
+		// Login As
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User is logged in as Reviewer");
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching Content documents based on search audio string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Open the searched documents in doc view");
+
+		docViewPage.playAudioOnly();
+
+		// logout
+		loginPage.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
@@ -157,7 +287,7 @@ public class DocViewAudio_IndiumRegression {
 			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
 		try {
-			//loginPage.logout();
+			// loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
@@ -167,12 +297,11 @@ public class DocViewAudio_IndiumRegression {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			//LoginPage.clearBrowserCache();
+			// LoginPage.clearBrowserCache();
 
 		} catch (Exception e) {
 			System.out.println("Sessions already closed");
 		}
 	}
-	
 
 }
