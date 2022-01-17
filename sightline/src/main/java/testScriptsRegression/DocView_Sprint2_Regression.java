@@ -30,6 +30,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.ABMReportPage;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.BatchRedactionPage;
@@ -2963,7 +2964,7 @@ else {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	@Test(enabled = true, groups = { "regression" }, priority = 53)
 	public void verifyPersistentHitDisplayInUncompleteDocEditAssign() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51355");
@@ -3017,7 +3018,48 @@ else {
 		docView.getPersistantHitEyeIcon().waitAndClick(5);
 
 	}
+/**
+ * @author Jayanthi.ganesan
+ * @throws Exception
+ */
+	@Test(enabled = true, groups = { "regression" }, priority = 54)
+	public void verifyDocCount_ABM() throws Exception {
+		String SaveSaerchName = "ABMSaveSearch"+UtilityLog.dynamicNameAppender();
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
 
+		String assignmentName1 ="assgnment" + Utility.dynamicNameAppender();
+
+		UtilityLog.info("Logged in as RMU User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case Id:RPMXCON-51662");
+		baseClass.stepInfo("Validate document count on DocView from ABM report");
+
+		// Basic Search and Bulk Assign
+		sessionsearch.basicContentSearch(Input.testData1);
+		baseClass.stepInfo("Search for text input completed");
+		String Hits = sessionsearch.verifyPureHitsCount();
+		sessionsearch.saveSearch(SaveSaerchName);
+		sessionsearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		assignmentsPage.assignmentCreation(assignmentName1, Input.codeFormName);
+		assignmentsPage.add2ReviewerAndDistribute();
+		baseClass.stepInfo(assignmentName1 + "  Assignment Created and distributed ");
+		ABMReportPage AbmReportPage = new ABMReportPage(driver);
+		String DocCount_ABM = AbmReportPage.generateABM_Report(SaveSaerchName, assignmentName1, true);
+		System.out.println(DocCount_ABM);
+		AbmReportPage.ViewInDocView();
+		driver.waitForPageToBeReady();
+		DocViewPage dc = new DocViewPage(driver);
+		String ActualCount = dc.verifyDocCountDisplayed_DocView();
+		System.out.println(ActualCount);
+		softAssertion.assertEquals(Hits, ActualCount);
+		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName1);
+		softAssertion.assertAll();
+		baseClass.passedStep("Document count  matched with the filtered documents on DocView screen.");
+
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
