@@ -2209,7 +2209,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/13/22 TESTCASE No:RPMXCON-48186
 	 * @Description:To Verify Generate Section for Production Name and Status.
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 42)
+	@Test(enabled = false, groups = { " regression" }, priority = 42)
 	public void verifyProductionNameAndStatus() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48186- Production Sprint 10");
@@ -2276,7 +2276,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/13/22 TESTCASE No:RPMXCON-48145
 	 * @Description:To Verify Redaction Check box along with Privilege Check box, In Generated DAT of Production.
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 43)
+	@Test(enabled = false, groups = { " regression" }, priority = 43)
 	public void verifyCheckboxInDAT() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48145- Production Sprint 10");
@@ -2310,6 +2310,119 @@ public class Production_Page_Regression {
 		page.getDATPrivledgedCheckbox().waitAndClick(10);
 		baseClass.stepInfo("Privileged checbox is selected in DAT component");
 		page.fillingNativeSection();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:01/13/22 TESTCASE No:RPMXCON-47822
+	 * @Description:To verify Redacted Document count should get displayed on Summary & Preview tab
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 44)
+	public void verifyRedactedCountOnSummaryTab() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-47822- Production Sprint 10");
+		baseClass.stepInfo("To verify Redacted Document count should get displayed on Summary & Preview tab");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		String zero="0";
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFWithBurnRedactionAndSelectingOneTag();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		driver.scrollingToBottomofAPage();
+		String redactedCount = page.redactedDocumentsInSummaryPage().getText();
+		System.out.println("Redacted count :"+redactedCount);
+		if(redactedCount!= zero) {
+			baseClass.passedStep("Recated count is not zero as per the pre requisite");
+		}
+		
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:01/13/22 TESTCASE No:RPMXCON-47823
+	 * @Description:To verify Bates Number Generated in Production can be start with {0}.
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 45)
+	public void verifyBatesNumberAsZero() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-47823- Production Sprint 10");
+		baseClass.stepInfo("To verify Bates Number Generated in Production can be start with {0}.");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates ="0";
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFWithBurnRedactionAndSelectingOneTag();
 		page.fillingTextSection();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
