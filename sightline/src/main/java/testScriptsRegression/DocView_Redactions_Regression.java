@@ -5625,6 +5625,42 @@ public class DocView_Redactions_Regression {
 		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
 	}
 
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51398 Verify highlighted keywords should be displayed on click of
+	 * the eye icon when redirected to doc view from session search when documents
+	 * searched with work product
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 58)
+	public void validatePersistentPanelHitCountAgainstDocHighlightedCount() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+
+		baseClass.stepInfo("Test case id : RPMXCON-51398");
+		baseClass.stepInfo(
+				"Verify highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search when documents searched with work product");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.getSavedSearchBtn1().Click();
+		sessionSearch.selectSavedsearchesInTree("My Saved Search");
+		baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
+		sessionSearch.getMetaDataInserQuery().waitAndClick(5);
+		sessionSearch.serarchWP();
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().Click();
+		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(keywordsArrayPT[0]);
+		
+	}
+
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
