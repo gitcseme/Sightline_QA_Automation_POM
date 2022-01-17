@@ -411,133 +411,142 @@ public class DocViewMetaDataPage {
 		return driver.FindElementByXPath("//table[@id='dtDocumentAllHistory']/tbody/tr[" + i + "]/td[1]");
 	}
 
-	
-	//Added by Gopinath - 25/11/2021
-		public Element getGearToggle() {
-			return driver.FindElementByXPath("//a[@id='wEdit']//i");
-		}
-		
-		public Element getDocumentListMaximizeBtn() {
-			return driver.FindElementByXPath("//header[@id='HdrMiniDoc']//div[@class='button-icon jarviswidget-pop-btn']");
-		}
-		
-		public Element getReviewMetaData() {
-			return driver.FindElementByXPath("//span[@class='bold-gray-title']");
-		}
-		
-		public Element getCodingMaximizeBtn() {
-			return driver.FindElementByXPath("//header[@id='HdrCoddingForm']//div[@class='button-icon jarviswidget-pop-btn']");
-		}
-		
-		public Element getCodingNewWindow() {
-			return driver.FindElementById("lblCodingFormName");
-		}
-		
-		
-		public Element getDocumentMetaDataMaximizeBtn() {
-			return driver.FindElementByXPath("//header[@id='HdrMetaData']//div[@class='button-icon jarviswidget-pop-btn']");
-		}
-		
-		public Element getDocumentDataNewWindowTitle() {
-			return driver.FindElementByXPath("//span[@class='text-uppercase tab-text']");
-		}
-		
-		
-		public Element getSaveBtn() {
-			return driver.FindElementByXPath("//a[@id='wSave']/i");
-		}
-		
-		
-		//Added by gopinath - 08/12/2021
-		public Element getNonAudioRemarkBtn() {
-			return driver.FindElementById("remarks-btn");
-		}
-		public Element getSignoutMenu() {
-			return driver.FindElementByXPath("//*[@id='user-selector']");
-		}
-		
-		public Element getAnotherRemarkMessage() {
-			return driver.FindElementByXPath("//div[@id='disableRedactionWarningForRemarks']//span[1]");
-		}
-		
-		//Added by Gopinath - 09/12/2021
-		public Element getFirstRowCheckBoxFamilyMem() {
-			return driver.FindElementByXPath("//table[@id='dtDocumentFamilyMembers']//tr[1]//td[1]//i");
-		}
-		public Element getFamilyMemberTab() {
-			return driver.FindElementById("liDocumentFamilyMember");
-		}
-		public Element getFamilyMemFolderButton() {
-			return driver.FindElementByXPath("//div[@id='hb2']//a[text()='Folder']");
-		}
-		
-		public Element getRowFromMiniDoclist(String docID) {
-			return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr//td[text()='"+docID+"']");
-		}
-		
-		//Added by gopinath - 09/12/2021
-		public Element currentDocument() {
-			return driver.FindElementByXPath("//div[@class='igViewerGraphics']");
-		}
-		public Element HighliteIcon() {
-			return driver.FindElementByXPath("//li[@id='yellow-tab']");
-		}
-		public ElementCollection getAppliedAnnotation() {
-			return driver.FindElementsByCssSelector("rect[data-pcc-mark*='mark'][style*='255']");
-		}
-		public Element getRectangleButton() {
-			return driver.FindElementById("highlightRectangle_divDocViewer");
-		}
-		
-		//Added by gopinath - 10/Dec/2021
-		public ElementCollection getDocumentsToSelect() {
-			return driver.FindElementsByXPath("//table[@id='SearchDataTable']//tr//td[1]//i[contains(@style,'top')]");
-		}
-		
-		public Element getProjectFieldInMetaData(String projectField) {
-			return driver.FindElementByXPath("//table[@id='MetaDataDT']//td[text()='"+projectField+"']");
-		}
-		
-		public Element getAllFolders() {
-			return driver.FindElementByXPath("//div[@id='LavelOneDocumentFolders']//a[text()='All Folders']");
-		}
-		
-		
-		//Added by Gopinath-10/12/2021
-		public Element getAllFieldNameColumn() {
-			return driver.FindElementByXPath("//div[@id='MetaDataDT_wrapper']//th[text()='Field Name']");
-		}
-		
-		public Element getAllFieldValueColumn() {
-			return driver.FindElementByXPath("//div[@id='MetaDataDT_wrapper']//th[text()='Field Value']");
-		}
-		
-		//Added by Gopinath - 14/Dec/2021
-		public Element getMetaDataPanel() {
-			return driver.FindElementByXPath("(//div[@id='rightPalette_MetaData']//div)[1]");
-		}
-		
-		//Added by Gopinath - 14/Dec/2021
-		public Element getDownloadOption() {
-			return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[1]//td[2]");
-		}
-		public Element getDownloadButton() {
-			return driver.FindElementByXPath("//li[@id='liDocumentTypeDropDown']");
-		}
-		
-		//Added by Gopinath - 11/01/2022
+	// Added by Gopinath - 25/11/2021
+	public Element getGearToggle() {
+		return driver.FindElementByXPath("//a[@id='wEdit']//i");
+	}
 
-		public Element getAddRemarkbtn() {
-			return driver.FindElementById("addRemarks");
-		}
+	public Element getDocumentListMaximizeBtn() {
+		return driver.FindElementByXPath("//header[@id='HdrMiniDoc']//div[@class='button-icon jarviswidget-pop-btn']");
+	}
 
-		public Element getRemarkTextArea() {
-			return driver.FindElementById("txt_remark");
-		}
-		public Element getSaveRemark() {
-			return driver.FindElementByXPath("(//span[@id='remarksSaveCancelControls']/i[2])[1]");
-		}
-		
+	public Element getReviewMetaData() {
+		return driver.FindElementByXPath("//span[@class='bold-gray-title']");
+	}
+
+	public Element getCodingMaximizeBtn() {
+		return driver
+				.FindElementByXPath("//header[@id='HdrCoddingForm']//div[@class='button-icon jarviswidget-pop-btn']");
+	}
+
+	public Element getCodingNewWindow() {
+		return driver.FindElementById("lblCodingFormName");
+	}
+
+	public Element getDocumentMetaDataMaximizeBtn() {
+		return driver.FindElementByXPath("//header[@id='HdrMetaData']//div[@class='button-icon jarviswidget-pop-btn']");
+	}
+
+	public Element getDocumentDataNewWindowTitle() {
+		return driver.FindElementByXPath("//span[@class='text-uppercase tab-text']");
+	}
+
+	public Element getSaveBtn() {
+		return driver.FindElementByXPath("//a[@id='wSave']/i");
+	}
+
+	// Added by gopinath - 08/12/2021
+	public Element getNonAudioRemarkBtn() {
+		return driver.FindElementById("remarks-btn");
+	}
+
+	public Element getSignoutMenu() {
+		return driver.FindElementByXPath("//*[@id='user-selector']");
+	}
+
+	public Element getAnotherRemarkMessage() {
+		return driver.FindElementByXPath("//div[@id='disableRedactionWarningForRemarks']//span[1]");
+	}
+
+	// Added by Gopinath - 09/12/2021
+	public Element getFirstRowCheckBoxFamilyMem() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentFamilyMembers']//tr[1]//td[1]//i");
+	}
+
+	public Element getFamilyMemberTab() {
+		return driver.FindElementById("liDocumentFamilyMember");
+	}
+
+	public Element getFamilyMemFolderButton() {
+		return driver.FindElementByXPath("//div[@id='hb2']//a[text()='Folder']");
+	}
+
+	public Element getRowFromMiniDoclist(String docID) {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr//td[text()='" + docID + "']");
+	}
+
+	// Added by gopinath - 09/12/2021
+	public Element currentDocument() {
+		return driver.FindElementByXPath("//div[@class='igViewerGraphics']");
+	}
+
+	public Element HighliteIcon() {
+		return driver.FindElementByXPath("//li[@id='yellow-tab']");
+	}
+
+	public ElementCollection getAppliedAnnotation() {
+		return driver.FindElementsByCssSelector("rect[data-pcc-mark*='mark'][style*='255']");
+	}
+
+	public Element getRectangleButton() {
+		return driver.FindElementById("highlightRectangle_divDocViewer");
+	}
+
+	// Added by gopinath - 10/Dec/2021
+	public ElementCollection getDocumentsToSelect() {
+		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//tr//td[1]//i[contains(@style,'top')]");
+	}
+
+	public Element getProjectFieldInMetaData(String projectField) {
+		return driver.FindElementByXPath("//table[@id='MetaDataDT']//td[text()='" + projectField + "']");
+	}
+
+	public Element getAllFolders() {
+		return driver.FindElementByXPath("//div[@id='LavelOneDocumentFolders']//a[text()='All Folders']");
+	}
+
+	// Added by Gopinath-10/12/2021
+	public Element getAllFieldNameColumn() {
+		return driver.FindElementByXPath("//div[@id='MetaDataDT_wrapper']//th[text()='Field Name']");
+	}
+
+	public Element getAllFieldValueColumn() {
+		return driver.FindElementByXPath("//div[@id='MetaDataDT_wrapper']//th[text()='Field Value']");
+	}
+
+	// Added by Gopinath - 14/Dec/2021
+	public Element getMetaDataPanel() {
+		return driver.FindElementByXPath("(//div[@id='rightPalette_MetaData']//div)[1]");
+	}
+
+	// Added by Gopinath - 14/Dec/2021
+	public Element getDownloadOption() {
+		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[1]//td[2]");
+	}
+
+	public Element getDownloadButton() {
+		return driver.FindElementByXPath("//li[@id='liDocumentTypeDropDown']");
+	}
+
+	// Added by Gopinath - 11/01/2022
+
+	public Element getAddRemarkbtn() {
+		return driver.FindElementById("addRemarks");
+	}
+
+	public Element getRemarkTextArea() {
+		return driver.FindElementById("txt_remark");
+	}
+
+	public Element getSaveRemark() {
+		return driver.FindElementByXPath("(//span[@id='remarksSaveCancelControls']/i[2])[1]");
+	}
+
+	public Element getParentDocID(String docID) {
+		return driver.FindElementByXPath(
+				"//table[@id='MetaDataDT']//td[text()='ParentDocID']//..//td[text()='" + docID + "']");
+	}
+
 	public DocViewMetaDataPage(Driver driver) {
 
 		this.driver = driver;
@@ -554,13 +563,13 @@ public class DocViewMetaDataPage {
 		try {
 			driver.waitForPageToBeReady();
 			driver.scrollingToBottomofAPage();
-			
+
 			JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
 			driver.waitForPageToBeReady();
 			getTab(tabName).ScrollTo();
 			Point p = getTab(tabName).getWebElement().getLocation();
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
-			Thread.sleep(Input.wait30/15);
+			Thread.sleep(Input.wait30 / 15);
 			getTab(tabName).ScrollTo();
 			driver.scrollingToElementofAPage(getTab(tabName));
 			getTab(tabName).isElementAvailable(15);
@@ -583,7 +592,7 @@ public class DocViewMetaDataPage {
 			driver.waitForPageToBeReady();
 			Point p = getTabById(tabId).getWebElement().getLocation();
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
-			Thread.sleep(Input.wait30/10);
+			Thread.sleep(Input.wait30 / 10);
 			getTabById(tabId).isElementAvailable(15);
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -644,7 +653,7 @@ public class DocViewMetaDataPage {
 					return getHistoryTabPaginate().Enabled();
 				}
 			}), Input.wait90);
-			Thread.sleep(Input.wait30/10);
+			Thread.sleep(Input.wait30 / 10);
 			if (getHistoryTabPaginate().getWebElement().isDisplayed()) {
 				base.passedStep("Pagination is displayed in history pop up successfully");
 
@@ -790,11 +799,11 @@ public class DocViewMetaDataPage {
 	 */
 	public void selectValueFromDropDown(Element dropDownButtonElement, Element dropDownValueElement) {
 		try {
-			Thread.sleep(Input.wait30/10);
+			Thread.sleep(Input.wait30 / 10);
 			dropDownButtonElement.isElementAvailable(15);
 			base.waitForElement(dropDownButtonElement);
 			dropDownButtonElement.waitAndClick(15);
-			Thread.sleep(Input.wait30/15);
+			Thread.sleep(Input.wait30 / 15);
 			dropDownValueElement.isElementAvailable(15);
 			base.waitForElement(dropDownValueElement);
 			dropDownValueElement.waitAndClick(15);
@@ -811,7 +820,7 @@ public class DocViewMetaDataPage {
 		try {
 			driver.scrollPageToTop();
 			getChkIncludeFamilyMemeber().ScrollTo();
-			Thread.sleep(Input.wait30/10);
+			Thread.sleep(Input.wait30 / 10);
 			getChkIncludeFamilyMemeber().isElementAvailable(15);
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -1196,14 +1205,14 @@ public class DocViewMetaDataPage {
 			actions.moveToElement(getHistoryTab().getWebElement()).click().perform();
 
 			for (int count = 0; count < 2; count++) {
-				Thread.sleep(Input.wait30/10);
+				Thread.sleep(Input.wait30 / 10);
 				getTimeStamp().isElementAvailable(15);
 				base.waitForElement(getTimeStamp());
 				getTimeStamp().waitAndClick(15);
 			}
 			getActionByRowInHistory(2).isElementAvailable(15);
 			actions.moveToElement(getActionByRowInHistory(2).getWebElement()).build().perform();
-			Thread.sleep(Input.wait30/10);
+			Thread.sleep(Input.wait30 / 10);
 
 			taggedReductionValue = getActionByRowInHistory(2).getText().toLowerCase().trim();
 			getActionByRowInHistory(1).isElementAvailable(15);
@@ -1311,13 +1320,13 @@ public class DocViewMetaDataPage {
 			getHistoryTab().isElementAvailable(15);
 			getHistoryTab().waitAndClick(15);
 			for (int count = 0; count < 2; count++) {
-				Thread.sleep(Input.wait30/10);
+				Thread.sleep(Input.wait30 / 10);
 				getTimeStamp().isElementAvailable(15);
 				base.waitForElement(getTimeStamp());
 				getTimeStamp().waitAndClick(15);
 			}
 			getActionByRowInHistory(1).isElementAvailable(15);
-			Thread.sleep(Input.wait30/10);
+			Thread.sleep(Input.wait30 / 10);
 			reviewedActionRow = getActionByRowInHistory(1).getText().toLowerCase().trim();
 
 			if (reviewedActionRow.equalsIgnoreCase("Viewed")) {
@@ -1515,7 +1524,7 @@ public class DocViewMetaDataPage {
 		try {
 			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
-			Thread.sleep(Input.wait30/15);
+			Thread.sleep(Input.wait30 / 15);
 			getTotalPageCountSelectedDoc().isElementAvailable(15);
 			base.waitForElement(getTotalPageCountSelectedDoc());
 			List<WebElement> elemts = driver.getWebDriver()
@@ -1525,7 +1534,7 @@ public class DocViewMetaDataPage {
 				elemts.get(count).click();
 				driver.waitForPageToBeReady();
 				getTotalPageCountSelectedDoc().isElementAvailable(15);
-				Thread.sleep(Input.wait30/15);
+				Thread.sleep(Input.wait30 / 15);
 				base.waitForElement(getTotalPageCountSelectedDoc());
 				String[] pages = getTotalPageCountSelectedDoc().getText().split("of", 2);
 				String[] pagesNum = pages[1].split("pages", 2);
@@ -1598,7 +1607,7 @@ public class DocViewMetaDataPage {
 			driver.scrollPageToTop();
 			selectPaginatedDocAndPerformPagination();
 			driver.waitForPageToBeReady();
-			Thread.sleep(Input.wait30/10);
+			Thread.sleep(Input.wait30 / 10);
 			driver.scrollingToBottomofAPage();
 			JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
 			driver.waitForPageToBeReady();
@@ -1691,7 +1700,7 @@ public class DocViewMetaDataPage {
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
 			base.waitForElement(getMetaDataTab());
 			getMetaDataTab().isElementAvailable(15);
-			Thread.sleep(Input.wait30/10);
+			Thread.sleep(Input.wait30 / 10);
 			getMetaDataTab().waitAndClick(15);
 			getBrowseAllMetaDataButton().isElementAvailable(15);
 			base.waitForElement(getBrowseAllMetaDataButton());
@@ -1760,7 +1769,7 @@ public class DocViewMetaDataPage {
 	public void selectSecurityGroup(String securityGroup) {
 		try {
 			getSecurityGroupDropDownButton().isElementAvailable(15);
-			 getSecurityGroup(securityGroup).isElementAvailable(15);
+			getSecurityGroup(securityGroup).isElementAvailable(15);
 			selectValueFromDropDown(getSecurityGroupDropDownButton(), getSecurityGroup(securityGroup));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1795,7 +1804,7 @@ public class DocViewMetaDataPage {
 				try {
 					getbackgroundDownLoadLink().isElementAvailable(10);
 					base.waitForElement(getbackgroundDownLoadLink());
-					Thread.sleep(Input.wait30/10);
+					Thread.sleep(Input.wait30 / 10);
 					status = getBatchPrintStatus().getText();
 					if (getbackgroundDownLoadLink().Displayed() && getbackgroundDownLoadLink().Enabled()
 							&& status.equalsIgnoreCase("COMPLETED"))
@@ -2030,24 +2039,26 @@ public class DocViewMetaDataPage {
 	 */
 	public void saveCompleteEditedCodingFormAndVerifyNavigatedToNextDoc() {
 		try {
-			 driver.waitForPageToBeReady();
-  		   driver.scrollPageToTop();
-  		   base.waitForElement(getSaveAndNextLink());
-  		   getSaveAndNextLink().isElementAvailable(15);
-  		   getPresentDocumentSelectedID().isElementAvailable(15);
-  		   String presentDocID1 = getPresentDocumentSelectedID().getText().trim();
-  		   String nextDocIDToPresentDoc = getNextDocumentIdToSelectedDoc().getText().trim();
-  		   getSaveAndNextLink().Click();
-  		   base.VerifySuccessMessage("Document saved successfully");
-  		   driver.waitForPageToBeReady();
-  		   driver.scrollPageToTop();
-  		   getPresentDocumentSelectedID().isElementAvailable(15);
-  		   String presentDocID2 = getPresentDocumentSelectedID().getText().trim();
-  		   if(nextDocIDToPresentDoc.contentEquals(presentDocID2) && !(presentDocID1.contentEquals(presentDocID2))) {
-  			   base.passedStep("Navigated to next document of Id :: "+presentDocID2+" from present document of ID :: "+presentDocID1+" successfully");
-  		   }else {
-  			   base.failedStep("Navigating to next document of Id :: "+presentDocID2+" from present document of ID :: "+presentDocID1+" is failed");
-  		   }
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			base.waitForElement(getSaveAndNextLink());
+			getSaveAndNextLink().isElementAvailable(15);
+			getPresentDocumentSelectedID().isElementAvailable(15);
+			String presentDocID1 = getPresentDocumentSelectedID().getText().trim();
+			String nextDocIDToPresentDoc = getNextDocumentIdToSelectedDoc().getText().trim();
+			getSaveAndNextLink().Click();
+			base.VerifySuccessMessage("Document saved successfully");
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			getPresentDocumentSelectedID().isElementAvailable(15);
+			String presentDocID2 = getPresentDocumentSelectedID().getText().trim();
+			if (nextDocIDToPresentDoc.contentEquals(presentDocID2) && !(presentDocID1.contentEquals(presentDocID2))) {
+				base.passedStep("Navigated to next document of Id :: " + presentDocID2
+						+ " from present document of ID :: " + presentDocID1 + " successfully");
+			} else {
+				base.failedStep("Navigating to next document of Id :: " + presentDocID2
+						+ " from present document of ID :: " + presentDocID1 + " is failed");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep(
@@ -2138,7 +2149,7 @@ public class DocViewMetaDataPage {
 		}
 		getCloseButtonInAllActivities().waitAndClick(10);
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : Method to print document and verify weather document is
@@ -2166,9 +2177,7 @@ public class DocViewMetaDataPage {
 
 		}
 	}
-	
-	
-	
+
 	/**
 	 * @author Gopinath srinivasan
 	 * @Description : Method for verifying the new gear windows opened on doc view.
@@ -2184,86 +2193,87 @@ public class DocViewMetaDataPage {
 			base.waitForElement(getDocumentListMaximizeBtn());
 			getDocumentListMaximizeBtn().Click();
 			driver.waitForPageToBeReady();
-			Set<String> handle=driver.WindowHandles();
+			Set<String> handle = driver.WindowHandles();
 			driver.waitForPageToBeReady();
-			Iterator<String>it=handle.iterator();
-			String parentwindow=it.next();
-			String childwindow=it.next();
+			Iterator<String> it = handle.iterator();
+			String parentwindow = it.next();
+			String childwindow = it.next();
 			driver.switchTo().window(childwindow);
 			driver.waitForPageToBeReady();
 			getReviewMetaData().isElementAvailable(15);
-			String Title=getReviewMetaData().getText();
+			String Title = getReviewMetaData().getText();
 			System.out.println(Title);
 			softAssert.assertEquals("REVIEW MODE", Title);
-			
-			System.out.println("child window popup title:"+driver.getTitle());
-	  
+
+			System.out.println("child window popup title:" + driver.getTitle());
+
 			driver.close();
 			driver.getWebDriver().switchTo().window(parentwindow);
 			getCodingMaximizeBtn().isElementAvailable(15);
 			base.waitForElement(getCodingMaximizeBtn());
 			getCodingMaximizeBtn().Click();
 
-
 			driver.waitForPageToBeReady();
-			Set<String> handles=driver.WindowHandles();
+			Set<String> handles = driver.WindowHandles();
 			driver.waitForPageToBeReady();
-			Iterator<String>iterating=handles.iterator();
-			String parentWindow2=iterating.next();
-			String childwindow2=iterating.next();
-			driver.switchTo().window(childwindow2); 
+			Iterator<String> iterating = handles.iterator();
+			String parentWindow2 = iterating.next();
+			String childwindow2 = iterating.next();
+			driver.switchTo().window(childwindow2);
 			getCodingNewWindow().isElementAvailable(15);
-			String title=getCodingNewWindow().getText();
+			String title = getCodingNewWindow().getText();
 			System.out.println(title);
 			softAssert.assertEquals("Default Project Coding Form", title);
 			driver.waitForPageToBeReady();
-			System.out.println("child window popup title:"+driver.getTitle());
-			
+			System.out.println("child window popup title:" + driver.getTitle());
+
 			driver.close();
 			driver.getWebDriver().switchTo().window(parentWindow2);
-			
+
 			driver.waitForPageToBeReady();
 			driver.scrollingToBottomofAPage();
 			getDocumentMetaDataMaximizeBtn().ScrollTo();
 			getDocumentMetaDataMaximizeBtn().isElementAvailable(15);
 			base.waitForElement(getDocumentMetaDataMaximizeBtn());
 			getDocumentMetaDataMaximizeBtn().Click();
-			//String parentWindow3 = driver.getWebDriver().getWindowHandle();
-			
+			// String parentWindow3 = driver.getWebDriver().getWindowHandle();
+
 			driver.waitForPageToBeReady();
-			Set<String> Windowhandling=driver.WindowHandles();
+			Set<String> Windowhandling = driver.WindowHandles();
 			driver.waitForPageToBeReady();
-			Iterator<String>iterate=Windowhandling.iterator();
-			String parentWindow3=iterate.next();
-			String childwindow3=iterate.next();
+			Iterator<String> iterate = Windowhandling.iterator();
+			String parentWindow3 = iterate.next();
+			String childwindow3 = iterate.next();
 			driver.switchTo().window(childwindow3);
 			driver.waitForPageToBeReady();
 			getDocumentDataNewWindowTitle().isElementAvailable(15);
-			String newwindow=getDocumentDataNewWindowTitle().getText();
+			String newwindow = getDocumentDataNewWindowTitle().getText();
 			softAssert.assertEquals("metadata", newwindow);
-			System.out.println("child window popup title:"+driver.getTitle());
+			System.out.println("child window popup title:" + driver.getTitle());
 			driver.close();
 			driver.getWebDriver().switchTo().window(parentWindow3);
 			getSaveBtn().isElementAvailable(15);
 			base.waitForElement(getSaveBtn());
 			getSaveBtn().Click();
 			driver.waitForPageToBeReady();
-			
+
 			driver.Navigate().refresh();
-	  if(getCodingNewWindow().Displayed()) { 
-			  base.passedStep("The Parent window is displayed");
-	  }else {base.failedStep("the parent window is not displayed as expected");}
-			
-	  if(getGearToggle().Displayed()) {
-			  base.passedStep("Gear toggle in the Parent window is displayed");
-	  }else {
-		  base.failedStep("Gear Toggle in the parent window is not displayed as expected");
-	  }
-	} catch (Exception e) {
-		e.printStackTrace();
+			if (getCodingNewWindow().Displayed()) {
+				base.passedStep("The Parent window is displayed");
+			} else {
+				base.failedStep("the parent window is not displayed as expected");
+			}
+
+			if (getGearToggle().Displayed()) {
+				base.passedStep("Gear toggle in the Parent window is displayed");
+			} else {
+				base.failedStep("Gear Toggle in the parent window is not displayed as expected");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-}
-	
+
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
 	 * @Description: Method to save complete edited coding form and verify user
@@ -2301,33 +2311,32 @@ public class DocViewMetaDataPage {
 							+ e.getMessage());
 		}
 	}
-	
-	
+
 	/**
-	* @author Gopianth
-	* @Description : This method used for open duplicate tab of already opened tab.
-	
-	*/
+	 * @author Gopianth
+	 * @Description : This method used for open duplicate tab of already opened tab.
+	 * 
+	 */
 	public void openDuplicateTabOfAlreadyOpenedTab() {
 		try {
-			Robot robot=new Robot();
-	        robot.keyPress(KeyEvent.VK_ALT);
-	        driver.waitForPageToBeReady();
-	        robot.keyPress(KeyEvent.VK_D);
-	        robot.keyRelease(KeyEvent.VK_ALT);
-	        robot.keyRelease(KeyEvent.VK_D); 
-	        robot.keyPress(KeyEvent.VK_ALT);
-	        driver.waitForPageToBeReady();
-	        robot.keyPress(KeyEvent.VK_ENTER);
-	        robot.keyRelease(KeyEvent.VK_ALT);
-	        robot.keyRelease(KeyEvent.VK_ENTER);
-		
-	    }catch(Exception e) {
-	    	e.printStackTrace();
-	    	base.failedStep("Exception while opening duplicate tab of already opened tab."+e.getMessage());
-	    }
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_ALT);
+			driver.waitForPageToBeReady();
+			robot.keyPress(KeyEvent.VK_D);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_D);
+			robot.keyPress(KeyEvent.VK_ALT);
+			driver.waitForPageToBeReady();
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception while opening duplicate tab of already opened tab." + e.getMessage());
+		}
 	}
-	
+
 	/**
 	 * @author Gopinath.
 	 * @Descrption : Method For clicking remark button on doc view.
@@ -2340,17 +2349,19 @@ public class DocViewMetaDataPage {
 				}
 			}), Input.wait60);
 			getNonAudioRemarkBtn().waitAndClick(9);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception while clicking remark button on doc view." + e.getMessage());
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author Gopinath.
-	 * @Descrption : Method For verifying another user applied remark message is displayed or not.
-	 * @param expectedMessage : expectedMessage is string value that expected message need get by performing remarks or redactions.
+	 * @Descrption : Method For verifying another user applied remark message is
+	 *             displayed or not.
+	 * @param expectedMessage : expectedMessage is string value that expected
+	 *                        message need get by performing remarks or redactions.
 	 */
 	public void verifyAnotherUserAppliedRemarkMsgDisplayed(String expectedMessage) {
 		try {
@@ -2358,26 +2369,27 @@ public class DocViewMetaDataPage {
 			getAnotherRemarkMessage().isElementAvailable(15);
 			base.waitForElement(getAnotherRemarkMessage());
 			String actualMessage = getAnotherRemarkMessage().getText().trim();
-			if(actualMessage.equalsIgnoreCase(expectedMessage)) {
-				base.passedStep(actualMessage+" -- message successfully displayed");
-			}else {
-				base.failedStep(actualMessage+" -- messgae is not displayed");
+			if (actualMessage.equalsIgnoreCase(expectedMessage)) {
+				base.passedStep(actualMessage + " -- message successfully displayed");
+			} else {
+				base.failedStep(actualMessage + " -- messgae is not displayed");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception while verifying another user applied remark message is displayed or not." + e.getMessage());
+			base.failedStep("Exception while verifying another user applied remark message is displayed or not."
+					+ e.getMessage());
 		}
-		
+
 	}
-	
-	
+
 	/**
-	 * @author Gopinath 
+	 * @author Gopinath
 	 * @Description : Method to select Doc from family member tab And Create Folder
 	 * @param folderName - (folderName is string value that name of folder.)
-	 * @param docId  - (docId is string value that document id having family members).
+	 * @param docId      - (docId is string value that document id having family
+	 *                   members).
 	 */
-	public void selectDocFromFamilyMembersAndCreateFolder(String docId,String folderName) {
+	public void selectDocFromFamilyMembersAndCreateFolder(String docId, String folderName) {
 		try {
 			boolean flag = false;
 			driver.scrollPageToTop();
@@ -2386,7 +2398,7 @@ public class DocViewMetaDataPage {
 			driver.waitForPageToBeReady();
 			getRowFromMiniDoclist(docId).waitAndClick(8);
 			driver.scrollPageToTop();
-			//needed sleep due to scroll to element
+			// needed sleep due to scroll to element
 			Thread.sleep(Input.wait3);
 			getFamilyMemberTab().ScrollTo();
 			getFamilyMemberTab().isElementAvailable(10);
@@ -2464,7 +2476,7 @@ public class DocViewMetaDataPage {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath Method for perform annotation by rectangle.
 	 * @param off1 : off1 is integer value that x-ordinate location.
@@ -2491,7 +2503,7 @@ public class DocViewMetaDataPage {
 			System.out.println("Not able to select redacted area");
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath Method for move annotation.
 	 */
@@ -2507,8 +2519,10 @@ public class DocViewMetaDataPage {
 			System.out.println("Not able to select redacted area");
 		}
 	}
+
 	/**
-	 * @author Gopinath Method for verifying folder tab is displayed with expand/collapse hirercy.
+	 * @author Gopinath Method for verifying folder tab is displayed with
+	 *         expand/collapse hirercy.
 	 */
 	public void verifyFoldertabDisplayedWithExpandCollapse() {
 		try {
@@ -2520,11 +2534,11 @@ public class DocViewMetaDataPage {
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
 			getFolderButton().isElementAvailable(15);
 			getFolderButton().Click();
-			if(getFolderButton().Displayed()) {
+			if (getFolderButton().Displayed()) {
 				base.passedStep("Folder tab is displayed successfully");
 			}
 			getExpandFolderTree().isElementAvailable(15);
-			if(getExpandFolderTree().Displayed()) {
+			if (getExpandFolderTree().Displayed()) {
 				base.passedStep("Expand and collapse folder hirearcy is displayed successfully");
 			}
 			getExpandFolderTree().Click();
@@ -2533,12 +2547,12 @@ public class DocViewMetaDataPage {
 			System.out.println("Not able to select redacted area");
 		}
 	}
-	
 
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
 	 * @Description Method to select documents from mini doc list in doc view.
-	 * @param numberOfDocuments : numberOfDocuments is integer value that count that number of documents.
+	 * @param numberOfDocuments : numberOfDocuments is integer value that count that
+	 *                          number of documents.
 	 */
 	public void selectDocumentsFromMiniDocListFromDocView(int numberOfDocuments) {
 		try {
@@ -2551,51 +2565,55 @@ public class DocViewMetaDataPage {
 				try {
 					driver.waitForPageToBeReady();
 					elemts.get(count).click();
-				}catch(Exception e) {
+				} catch (Exception e) {
 					driver.waitForPageToBeReady();
 					continue;
 				}
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting documents from mini doc list in doc view."+e.getMessage() );
+			base.failedStep(
+					"Exception occured while selecting documents from mini doc list in doc view." + e.getMessage());
 		}
 	}
-	
-	
+
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to verify Inactive Project Field Not Displayed In MetadataTab.
-	 * @param projectFiledName : projectFiledName is string value that name of project field.
+	 * @Description : Method to verify Inactive Project Field Not Displayed In
+	 *              MetadataTab.
+	 * @param projectFiledName : projectFiledName is string value that name of
+	 *                         project field.
 	 */
 	public void verifyInactiveProjectFieldNotDisplayedInMetadataTab(String projectFiledName) {
 		try {
-			
+
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
 			try {
 				boolean flag = getProjectFieldInMetaData(projectFiledName).isDisplayed();
-				if(flag)
+				if (flag)
 					base.failedStep("Inactive Project Field Displayed In MetadataTab");
 				else
 					base.passedStep("Inactive Project Field is not displayed dn MetadataTab successfully");
-			}catch(Exception e) {
+			} catch (Exception e) {
 				base.passedStep("Inactive Project Field is not displayed dn MetadataTab successfully");
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting documents from mini doc list in doc view."+e.getMessage() );
+			base.failedStep(
+					"Exception occured while selecting documents from mini doc list in doc view." + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to verify folder tab does not have any folders except default all folders.
+	 * @Description : Method to verify folder tab does not have any folders except
+	 *              default all folders.
 	 */
 	public void verifyFolderTabNotContainsFolders() {
 		try {
-			
+
 			JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
 			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
@@ -2606,34 +2624,37 @@ public class DocViewMetaDataPage {
 			getFolderButton().Click();
 			driver.waitForPageToBeReady();
 			getAllFolders().isElementAvailable(10);
-			if(getAllFolders().Displayed()) {
+			if (getAllFolders().Displayed()) {
 				base.passedStep("By default 'AllFolders' displayed successfuly.");
-			}else {
+			} else {
 				base.failedStep("By default 'AllFolders' displayed successfuly.");
 			}
-			
+
 			try {
 				boolean flag = getExpandFolderTree().isDisplayed();
-				if(flag)
+				if (flag)
 					base.stepInfo("Folders are present in folder tab in doc view");
 				else
 					base.passedStep("Folders are not present in folder tab in doc view");
-			}catch(Exception e) {
+			} catch (Exception e) {
 				base.passedStep("Folders are not present in folder tab in doc view");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while verify folder tab does not have any folders except default all folders."+e.getMessage() );
+			base.failedStep(
+					"Exception occured while verify folder tab does not have any folders except default all folders."
+							+ e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to verify folder tab contains folders and expand collapse button is displayed.
+	 * @Description : Method to verify folder tab contains folders and expand
+	 *              collapse button is displayed.
 	 */
 	public void verifyFolderTabContainsFolders() {
 		try {
-			
+
 			JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
 			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
@@ -2644,31 +2665,33 @@ public class DocViewMetaDataPage {
 			getFolderButton().Click();
 			driver.waitForPageToBeReady();
 			getAllFolders().isElementAvailable(10);
-			if(getAllFolders().Displayed()) {
+			if (getAllFolders().Displayed()) {
 				base.passedStep("By default 'AllFolders' displayed successfuly.");
-			}else {
+			} else {
 				base.failedStep("By default 'AllFolders' displayed successfuly.");
 			}
 			getExpandFolderTree().isElementAvailable(10);
 			boolean flag = getExpandFolderTree().isDisplayed();
-			if(flag)
+			if (flag)
 				base.passedStep("Folders and expand collapse button are present in folder tab in doc view");
 			else
 				base.passedStep("Folders and expand collapse button are present in folder tab in doc view");
-		
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while verify folder tab does not have any folders except default all folders."+e.getMessage() );
+			base.failedStep(
+					"Exception occured while verify folder tab does not have any folders except default all folders."
+							+ e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath Modified By - Gopinath Modified Date - NA
-	 * @Description  : Method to verify meta data columns are displayed.
+	 * @Description : Method to verify meta data columns are displayed.
 	 */
 	public void verifyMetaDataColumns() {
 		try {
-			
+
 			JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
 			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
@@ -2677,22 +2700,24 @@ public class DocViewMetaDataPage {
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 200) + ");");
 			getMetaDataTab().isElementAvailable(10);
 			getAllFieldNameColumn().isElementAvailable(10);
-			if(getAllFieldNameColumn().Displayed()) {
+			if (getAllFieldNameColumn().Displayed()) {
 				base.passedStep("Field name column is displayed");
-			}else {
+			} else {
 				base.failedStep("Field name column is not displayed");
 			}
-			if(getAllFieldValueColumn().Displayed()) {
+			if (getAllFieldValueColumn().Displayed()) {
 				base.passedStep("Field value column is displayed");
-			}else {
+			} else {
 				base.failedStep("Field value column is not displayed");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while verify folder tab does not have any folders except default all folders."+e.getMessage() );
+			base.failedStep(
+					"Exception occured while verify folder tab does not have any folders except default all folders."
+							+ e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : Method to print document and verify weather document is
@@ -2712,9 +2737,9 @@ public class DocViewMetaDataPage {
 			}
 
 			driver.getWebDriver().get(Input.url + "Background/BackgroundTask");
-			if(getDownloadOption().getText().trim().equalsIgnoreCase("Document Print")){
+			if (getDownloadOption().getText().trim().equalsIgnoreCase("Document Print")) {
 				base.passedStep("Downloading document started succuessfully");
-			}else {
+			} else {
 				base.failedStep("Downloading document is failed");
 			}
 		} catch (Exception e) {
@@ -2723,7 +2748,7 @@ public class DocViewMetaDataPage {
 
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : Method to verify download button is not displayed.
@@ -2731,9 +2756,9 @@ public class DocViewMetaDataPage {
 	public void verifyingDownloadButtonIsNotDisplayed() {
 		try {
 			driver.waitForPageToBeReady();
-			if(getDownloadButton().isElementAvailable(1)){
+			if (getDownloadButton().isElementAvailable(1)) {
 				base.passedStep("Download button is not displayed successfully");
-			}else {
+			} else {
 				base.failedStep("Download button is displayed");
 			}
 		} catch (Exception e) {
@@ -2742,7 +2767,7 @@ public class DocViewMetaDataPage {
 
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : Method to verify remark button is not displayed.
@@ -2751,9 +2776,9 @@ public class DocViewMetaDataPage {
 		try {
 			driver.waitForPageToBeReady();
 			getNonAudioRemarkBtn().isElementAvailable(2);
-			if(getNonAudioRemarkBtn().Enabled()){
+			if (getNonAudioRemarkBtn().Enabled()) {
 				base.passedStep("Remark button is not displayed successfully");
-			}else {
+			} else {
 				base.failedStep("Remark button is displayed");
 			}
 		} catch (Exception e) {
@@ -2762,7 +2787,7 @@ public class DocViewMetaDataPage {
 
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : Method to verify remark button is displayed.
@@ -2771,9 +2796,9 @@ public class DocViewMetaDataPage {
 		try {
 			driver.waitForPageToBeReady();
 			getNonAudioRemarkBtn().isElementAvailable(15);
-			if(getNonAudioRemarkBtn().isDisplayed()){
+			if (getNonAudioRemarkBtn().isDisplayed()) {
 				base.passedStep("Remark button is displayed successfully");
-			}else {
+			} else {
 				base.failedStep("Remark button is not displayed");
 			}
 		} catch (Exception e) {
@@ -2782,14 +2807,14 @@ public class DocViewMetaDataPage {
 
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath Method for perform remark.
-	 * @param off1 : off1 is integer value that x-ordinate location.
-	 * @param off2 : off2 is integer value that y-ordinate location.
+	 * @param off1   : off1 is integer value that x-ordinate location.
+	 * @param off2   : off2 is integer value that y-ordinate location.
 	 * @param remark : remark is String value that name given to remark.
 	 */
-	public void performRemarkWithSaveOperation(int off1, int off2,String remark) {
+	public void performRemarkWithSaveOperation(int off1, int off2, String remark) {
 		try {
 			driver.scrollPageToTop();
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -2818,14 +2843,14 @@ public class DocViewMetaDataPage {
 			System.out.println("Not able to select redacted area");
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath Method for perform remark.
-	 * @param off1 : off1 is integer value that x-ordinate location.
-	 * @param off2 : off2 is integer value that y-ordinate location.
+	 * @param off1   : off1 is integer value that x-ordinate location.
+	 * @param off2   : off2 is integer value that y-ordinate location.
 	 * @param remark : remark is String value that name given to remark.
 	 */
-	public void performRemarkWithoutSaveOperation(int off1, int off2,String remark) {
+	public void performRemarkWithoutSaveOperation(int off1, int off2, String remark) {
 		try {
 			driver.scrollPageToTop();
 			driver.WaitUntil((new Callable<Boolean>() {

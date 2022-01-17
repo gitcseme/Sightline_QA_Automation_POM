@@ -24,6 +24,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -306,7 +307,7 @@ public class BatchRedactionPage {
 	}
 
 	// added by jayanthi
-	//modifed by jeevitha
+	// modifed by jeevitha
 	public Element getAnalysisReportPopup() {
 		return driver.FindElementByXPath("//div//span[contains(text(),'View Analysis Report and Batch Redact')]");
 	}
@@ -478,11 +479,29 @@ public class BatchRedactionPage {
 		return driver.FindElementByXPath("//li[@class='paginate_button active']");
 	}
 
-	//Added by jeevitha
+	// Added by jeevitha
 	public Element getCloseBtn() {
 		return driver.FindElementByXPath("//button[text()='Close']");
 	}
-	
+
+	public Element getColorStatusToolTip(String SearchName) {
+		return driver.FindElementByXPath("//table[@id='BatchRedactionsDataTable']//tbody//tr//td[text()='" + SearchName
+				+ "']//following::td[3]//p//a");
+	}
+
+	// Added by Raghuram
+	public Element getOptionDropdown(String type) {
+		return driver.FindElementByXPath("//div[text()='" + type + "']//..//..//i[@class='jstree-icon jstree-ocl']");
+	}
+
+	public ElementCollection getListofDatas(String name) {
+		return driver.FindElementsByXPath("//div[text()='" + name + "']//..//..//li//a[@class='jstree-anchor']");
+	}
+
+	public Element getFileDownloadwithSpecificID(String id) {
+		return driver.FindElementByXPath("//a[contains(text(),'Your Batch Redaction report (ID " + id + "')]");
+	}
+
 	public BatchRedactionPage(Driver driver) {
 
 		this.driver = driver;
@@ -1396,8 +1415,8 @@ public class BatchRedactionPage {
 	 */
 	public void loadBatchRedactionPage(String searchname) {
 		this.driver.getWebDriver().get(Input.url + "BatchRedaction/BatchRedaction");
-		base.waitForElement(getMySavedSearchDropDown());
-		getMySavedSearchDropDown().waitAndClick(5);
+		base.waitForElement(getOptionDropdown(Input.mySavedSearch));
+		getOptionDropdown(Input.mySavedSearch).waitAndClick(5);
 	}
 
 	/*
@@ -2440,7 +2459,7 @@ public class BatchRedactionPage {
 			}
 		}
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @param searchname
@@ -2456,6 +2475,237 @@ public class BatchRedactionPage {
 		} else {
 			base.stepInfo("Analyze Search/Group for Redactions button is Not Displayed");
 		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param limit
+	 * @throws InterruptedException
+	 */
+	public void verifyScrollBar(int limit) throws InterruptedException {
+		Boolean checkedLargerLimit = false;
+		int listSize = 0;
+		loadBatchRedactionPage(null);
+		driver.waitForPageToBeReady();
+
+		// getOptionDropdown(Input.mySavedSearch).waitAndClick(3);
+		listSize = getListofDatas(Input.mySavedSearch).size();
+
+		if (listSize >= limit) {
+			System.out.println("Flow 1");
+			int updatedlistSize = 0;
+			boolean flag = batchRedactopnSrollCheck();
+			softassert.assertTrue(flag);
+
+			if (flag) {
+				base.stepInfo("Initial List Size : " + listSize);
+				base.passedStep("Scrolling displayed when list size is : " + listSize);
+			} else {
+				base.stepInfo("Initial List Size : " + listSize);
+				base.failedMessage("No Scroll Bar available");
+			}
+
+			SavedSearch savesearch = new SavedSearch(driver);
+			savesearch.deleteSearches(Input.mySavedSearch, listSize, limit);
+
+			this.driver.getWebDriver().get(Input.url + "BatchRedaction/BatchRedaction");
+			driver.waitForPageToBeReady();
+
+			if (getOptionDropdown(Input.mySavedSearch).isElementAvailable(4)) {
+
+				getOptionDropdown(Input.mySavedSearch).waitAndClick(3);
+				updatedlistSize = getListofDatas(Input.mySavedSearch).size();
+				System.out.println(updatedlistSize + "after deletion");
+			}
+
+			if (updatedlistSize < limit) {
+
+				flag = batchRedactopnSrollCheck();
+				softassert.assertFalse(flag);
+
+				if (flag) {
+					base.stepInfo(updatedlistSize + ": Updated List Size");
+					base.failedMessage("Scrolling displayed when " + updatedlistSize + " are available");
+				} else {
+					base.stepInfo(updatedlistSize + ": updatedlistSize List Size");
+					base.passedStep("No Scroll Bar available when list size is : " + updatedlistSize);
+				}
+
+			}
+
+		}
+
+		if (listSize <= limit) {
+			System.out.println("Flow 2");
+			int updatedlistSize = 0;
+			boolean flag = batchRedactopnSrollCheck();
+			softassert.assertFalse(flag);
+
+			if (flag) {
+				base.stepInfo("Initial List Size : " + listSize);
+				base.failedMessage("Scrolling displayed when " + listSize + " are available");
+			} else {
+				base.stepInfo("Initial List Size : " + listSize);
+				base.passedStep("No Scroll Bar available when list size is : " + listSize);
+			}
+
+			SessionSearch ss = new SessionSearch(driver);
+			ss.basicContentSearch(Input.testData1);
+			for (int i = listSize; i <= limit; i++) {
+				String searchName = "SearchName_" + Utility.dynamicNameAppender();
+				ss.saveSearch(searchName);
+			}
+
+			this.driver.getWebDriver().get(Input.url + "BatchRedaction/BatchRedaction");
+			driver.waitForPageToBeReady();
+
+			if (getOptionDropdown(Input.mySavedSearch).isElementAvailable(4)) {
+				getOptionDropdown(Input.mySavedSearch).waitAndClick(3);
+				updatedlistSize = getListofDatas(Input.mySavedSearch).size();
+			}
+
+			if (updatedlistSize > limit) {
+
+				flag = batchRedactopnSrollCheck();
+				softassert.assertTrue(flag);
+
+				if (flag) {
+					base.stepInfo(updatedlistSize + ": List Size");
+					base.passedStep("Scrolling displayed when " + updatedlistSize + " are available");
+				} else {
+					base.stepInfo(updatedlistSize + ": List Size");
+					base.failedMessage("No Scroll Bar available when list size is : " + updatedlistSize);
+				}
+
+			}
+
+		}
+
+		softassert.assertAll();
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @return
+	 */
+	public boolean batchRedactopnSrollCheck() {
+		driver.waitForPageToBeReady();
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		boolean flag = (boolean) jse.executeScript("return document.querySelector('.tree-wrapper').scrollHeight>"
+				+ "document.querySelector('.tree-wrapper').clientHeight;");
+		System.out.println(flag);
+
+		return flag;
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @return
+	 */
+	public void verifyRedactionConfirmationMessage(String action) {
+
+		driver.waitForPageToBeReady();
+		softassert.assertTrue(getPopupMessage().isDisplayed());
+		if (action.equalsIgnoreCase("Yes")) {
+			boolean flag = getPopupYesBtn().getText().equals("Ja");
+			if (flag) {
+				System.out.println("Redaction Confirmation message is Localized to German Language");
+				base.stepInfo("Redaction Confirmation message is Localized to German Language");
+				getPopupYesBtn().waitAndClick(5);
+				base.stepInfo("Clicked Yes button");
+			} else {
+				getPopupYesBtn().waitAndClick(5);
+				base.stepInfo("Clicked Yes button");
+			}
+
+			if (flag) {
+				System.out.println("Success Message is Localized to' German Language'");
+				base.stepInfo("Success Message is Localized to' German Language'");
+				base.VerifySuccessMessageInGerman(
+						"DE: Your request to batch redact has been added to the background. Once it is complete, the \"bullhorn\" icon in the upper right hand corner will turn red to notify you of the results of your request.");
+			} else {
+				base.VerifySuccessMessage(
+						"Your request to batch redact has been added to the background. Once it is complete, the \"bullhorn\" icon in the upper right hand corner will turn red to notify you of the results of your request.");
+			}
+		} else if (action.equalsIgnoreCase("No")) {
+
+			if (getPopupNoBtn().getText().equals("Nein")) {
+				System.out.println("Redaction Confirmation message is Localized to German Language");
+				base.stepInfo("Redaction Confirmation message is Localized to German Language");
+				getPopupNoBtn().waitAndClick(5);
+				base.stepInfo("Clicked No button");
+			} else {
+				getPopupNoBtn().waitAndClick(5);
+				base.stepInfo("Clicked No button");
+			}
+		}
+
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @return
+	 */
+	public void VerifyBGMessageForBatchRedactionReportDownload(String ssName, int bgCount) throws InterruptedException {
+
+		String batchId = getBatchId(ssName).getText();
+		System.out.println(batchId.length());
+		int index = 4;
+		String batchID = batchId.substring(index);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.initialBgCount() == bgCount + 1;
+			}
+		}), Input.wait60);
+		base.waitForElement(getBullHornIcon());
+		getBullHornIcon().waitAndClick(10);
+
+		// checkAndValidateBgTask(valueBforeAnalysis, true);
+		base.waitForElement(getFileDownloadwithSpecificID(batchID));
+		String popUpMsg = getFileDownloadwithSpecificID(batchID).getText();
+		String expectedMsg;
+		if (popUpMsg.contains("DE:")) {
+			System.out.println("Batch Readction Report Message in Background Tasks is Localized to German Language");
+			base.stepInfo("Batch Readction Report Message in Background Tasks is Localized to German Language");
+			expectedMsg = "DE: Your Batch Redaction report (ID " + batchID
+					+ ") has been completed. Click here to download the report";
+		} else {
+			expectedMsg = "Your Batch Redaction report (ID " + batchID
+					+ ") has been completed. Click here to download the report";
+		}
+		base.stepInfo(popUpMsg);
+		softassert.assertEquals(popUpMsg, expectedMsg);
+		getFileDownloadwithSpecificID(batchID).waitAndClick(20);
+		getBullHornIcon().waitAndClick(20);
+		softassert.assertAll();
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @return
+	 */
+	public String verifyBatchRedactionFileDownload_Dynamic() throws InterruptedException {
+
+		// Download report
+		driver.waitForPageToBeReady();
+		base.stepInfo("File Downloaded");
+
+		File ab = new File(Input.fileDownloadLocation);
+		String testPath = ab.toString() + "\\";
+
+		// base.csvReader();
+		report = new ReportsPage(driver);
+		File a = report.getLatestFilefromDir(testPath);
+		System.out.println(a.getName());
+		base.stepInfo(a.getName());
+
+		String fileName = a.getName();
+
+		fileName = testPath + fileName;
+		System.out.println(fileName);
+		base.stepInfo(fileName);
+		return fileName;
 	}
 
 }

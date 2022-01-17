@@ -25,6 +25,7 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
 import pageFactory.DocListPage;
+import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
@@ -1410,6 +1411,7 @@ public class DocView_MiniDocList_DataProvider {
 		miniDocListpage.verifySelectedDocHighlight(docID);
 
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param fullName
@@ -1417,37 +1419,99 @@ public class DocView_MiniDocList_DataProvider {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true,dataProvider = "twoLogins", groups = { "regression" }, priority = 57)
-	public void savedSearchAndBasicAndDocListToDocView(String fullName, String userName, String password) throws InterruptedException {
+	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 57)
+	public void savedSearchAndBasicAndDocListToDocView(String fullName, String userName, String password)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50888");
 		baseClass.stepInfo("To verify that if user navigates to doc view from the Basic search/Saved search/DocList, "
 				+ "Optimized mode from mini doc list should be selected");
 		String savedSearchs = "AsavedToDocview" + Utility.dynamicNameAppender();
 
 		loginPage.loginToSightLine(userName, password);
-		
-		baseClass.stepInfo("Successfully login as '"+fullName);
-		//basic search to doc view 
+
+		baseClass.stepInfo("Successfully login as '" + fullName);
+		// basic search to doc view
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(savedSearchs);
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("User navigated to docview page from basic search page");
-		miniDocListpage.verifyOptimizedSortIsSelected();  //validation part
+		miniDocListpage.verifyOptimizedSortIsSelected(); // validation part
 
 		sessionSearch.ViewInDocList();
 		baseClass.stepInfo("User navigated to doclist page from basic search page");
-		DocListPage  docListPage=new DocListPage(driver);
-     //	Selecting document in doclist page and navigate to doc view
+		DocListPage docListPage = new DocListPage(driver);
+		// Selecting document in doclist page and navigate to doc view
 		docListPage.selectAllDocumentsInCurrentPageOnly();
 		docListPage.docListToDocView();
 		baseClass.stepInfo("User navigated to docview page from DocList page");
-		miniDocListpage.verifyOptimizedSortIsSelected();   //validation part
-		
+		miniDocListpage.verifyOptimizedSortIsSelected(); // validation part
+
 		savedSearch.savedSearch_Searchandclick(savedSearchs);
 		savedSearch.getToDocView().waitAndClick(5);
 		baseClass.stepInfo("User navigated to docview page from SavedSearch page");
-		miniDocListpage.verifyOptimizedSortIsSelected();   //validation part
+		miniDocListpage.verifyOptimizedSortIsSelected(); // validation part
 	}
+
+	/**
+	 * Author : Raghuram A date: 01/17/21 Modified date:N/A Modified by: N/A
+	 * Description : To verify that selected document with details is displayed on
+	 * parent window.
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 58)
+	public void verifySelectedDocsInParentWindow(String fullName, String userName, String password) throws Exception {
+
+		DocViewMetaDataPage dovViewMeteData = new DocViewMetaDataPage(driver);
+
+		List<String> headerList1 = new ArrayList<>();
+		List<String> headerList2 = new ArrayList<>();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50897");
+		baseClass.stepInfo("To verify that selected document with details is displayed on parent window.");
+
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Logged in as : " + fullName);
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docViewPage.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		headerList1 = docViewPage.listOfAvailableDatasToCheck(headerList1, headerList2, false);
+
+		// Launching Child Window
+		miniDocListpage.launchingMindoclistChildWindow();
+
+		// Main method
+		String childWindoSelectedDocId = miniDocListpage.selectDocFromChildWindow();
+		driver.waitForPageToBeReady();
+		String currentDOcID = miniDocListpage.getMainWindowActiveDocID().getText();
+		System.out.println("main Window doc id : " + currentDOcID);
+
+		baseClass.textCompareEquals(currentDOcID, childWindoSelectedDocId,
+				"On changing the document from child window, parent window displays the selected document in document view panel",
+				"Document Id Mimatches");
+
+		driver.waitForPageToBeReady();
+		//driver.scrollingToBottomofAPage();
+		baseClass.ValidateElement_Presence(dovViewMeteData.getParentDocID(currentDOcID),
+				"ParentDocID : " + currentDOcID);
+
+		//driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docViewPage.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		docViewPage.listOfAvailableDatasToCheck(headerList2, headerList1, true);
+		
+		loginPage.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
