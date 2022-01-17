@@ -846,9 +846,9 @@ public class ProductionPage {
 
 	// added by sowndariya
 	public Element productionNameInGeneratePage(String productionname) {
-		return driver.FindElementByXPath("//label[contains(text(),'"+productionname+"')]");
+		return driver.FindElementByXPath("//label[contains(text(),'" + productionname + "')]");
 	}
-	
+
 	public Element generateLoadFileToggleInTextComponent() {
 		return driver.FindElementByXPath("(//input[@id='chkProduceLoadFile']//parent::label//i)[2]");
 	}
@@ -1620,6 +1620,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndarya.Velraj
+	public Element redactedDocumentsInSummaryPage() {
+		return driver.FindElementByXPath("//label[contains(text(),'Redacted Documents:')]//following-sibling::label");
+	}
+
 	public Element getbtnMP3BurnRedaction() {
 		return driver.FindElementByXPath("(//input[@id='chkMP3BurnRedactions']//following::i)[1]");
 	}
@@ -1697,6 +1701,10 @@ public class ProductionPage {
 	}
 
 	// Added By Jeevitha
+	public Element getRedactionBtn() {
+		return driver.FindElementByXPath("//button[text()='Redactions']");
+	}
+
 	public Element getProdExport_SelectValueFromDD(String Export) {
 		return driver.FindElementByXPath("//select[@id='ProductionSets']//option[contains(text(),'" + Export + "')]");
 	}
@@ -2236,8 +2244,7 @@ public class ProductionPage {
 	public Element getRegenarateLinkBtn() {
 		return driver.FindElementByXPath("//button[@class='btn btn-primary btn-sm']");
 	}
-	
-	
+
 	public Element blankPageRemovalMessage() {
 		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']/p");
 	}
@@ -2258,17 +2265,20 @@ public class ProductionPage {
 		return driver.FindElementByXPath(
 				".//*[@id='divRightHeaderBranding']//div[@class='redactor-editor redactor-placeholder']");
 	}
-	
-	//Add by Aathith
+
+	// Add by Aathith
 	public Element getSharableLinkExpiryDate() {
 		return driver.FindElementByXPath("//span[@id='lblShareableLinksExpireDate']");
 	}
+
 	public Element getSecurityGroup(String securityGroup) {
-		return driver.FindElementByXPath("//select[@id='SecurityGrpList']//option[text()='"+securityGroup+"']");
+		return driver.FindElementByXPath("//select[@id='SecurityGrpList']//option[text()='" + securityGroup + "']");
 	}
-	
+
 	public Element getErrorMsgText() {
-		return driver.FindElementByXPath("//span//h1");}
+		return driver.FindElementByXPath("//span//h1");
+	}
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -8446,27 +8456,41 @@ public class ProductionPage {
 	 * @Author Indium-Sowndarya.Velraj.Modified on 10/27/2021
 	 * @param Fills Priviledge Documents by selecting a tag and passing that query
 	 *              to find the matching documents.
+	 * @Modified by Jeevitha 17/1/2022
 	 */
-	public void priviledgeDocCheck(String tagname) throws InterruptedException {
+	public void priviledgeDocCheck(boolean Tag, String tagname) throws InterruptedException {
 		base.waitForElement(getAddRuleBtn());
 		getAddRuleBtn().Click();
 
-		base.waitForElement(getTagsBtn());
-		getTagsBtn().Click();
+		if (Tag) {
+			base.waitForElement(getTagsBtn());
+			getTagsBtn().Click();
 
-		base.hitTabKey(1);
-		base.waitForElement(getTagsHeader());
-		getTagsHeader().Click();
+			base.hitTabKey(1);
+			base.waitForElement(getTagsHeader());
+			getTagsHeader().Click();
+			base.stepInfo("Tag Button is clicked from Priv Guard Page");
+			base.waitForElement(getPrivGuardAllTags());
 
-		base.waitForElement(getPrivGuardAllTags());
-		selectPrivGuardTag(tagname).Click();
+		} else {
+			base.waitForElement(getTagsBtn());
+			getRedactionBtn().waitAndClick(10);
+			base.stepInfo("Redaction Button is clicked from Priv Guard Page");
+
+			base.hitTabKey(1);
+
+		}
+
+		base.waitForElement(selectPrivGuardTag(tagname));
+		selectPrivGuardTag(tagname).waitAndClick(10);
+		base.stepInfo(tagname + " : Is Selected");
 
 		base.waitForElement(getInsertQueryBtn());
 		getInsertQueryBtn().Click();
 
 		base.waitForElement(getCheckForMatchingDocuments());
 		getCheckForMatchingDocuments().Enabled();
-
+		getCheckForMatchingDocuments().waitAndClick(10);
 		driver.scrollPageToTop();
 	}
 
@@ -14515,17 +14539,24 @@ public class ProductionPage {
 	/**
 	 * @author Brundha
 	 * @Description : Method for navigating to doclist page.
+	 * @Modified by Jeevitha 17/1/2022
 	 */
 	public String navigatingToDocViewPage() {
 		driver.scrollPageToTop();
 		base.waitForElement(getMarkCompleteLink());
 		getMarkCompleteLink().waitAndClick(10);
-
+		if (getOkButton().isElementAvailable(3)) {
+			getOkButton().waitAndClick(5);
+		} else {
+			System.out.println("No Warning PopUp Displayed");
+		}
 		System.out.println("Clicked on Mark Complete Button..");
 		driver.waitForPageToBeReady();
 		String docCount = getDocumentSelectionLink().getText();
 		base.waitForElement(getDocumentSelectionLink());
 		getDocumentSelectionLink().Click();
+		base.stepInfo("Document Count is : " + docCount);
+		driver.waitForPageToBeReady();
 		return docCount;
 
 	}
@@ -14776,7 +14807,8 @@ public class ProductionPage {
 			}
 		}), Input.wait30);
 		getSelectFolder(Tag).waitAndClick(10);
-
+        base.passedStep(Tag+" : Tag Is Selected");
+        
 		driver.scrollingToBottomofAPage();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -15715,6 +15747,7 @@ public class ProductionPage {
 					"Exception occcured while verifying download production using sharable link." + e.getMessage());
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -15733,17 +15766,18 @@ public class ProductionPage {
 		String sharableLink = getAllFilesLink().GetAttribute("value").trim();
 		return sharableLink;
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
 	public String openNewTab(String sharableLink) {
-		String parentWindow =driver.getWebDriver().getWindowHandle();
+		String parentWindow = driver.getWebDriver().getWindowHandle();
 		((JavascriptExecutor) driver.getWebDriver()).executeScript("window.open()");
 		ArrayList<String> tabs = new ArrayList<String>(driver.getWebDriver().getWindowHandles());
 		driver.getWebDriver().switchTo().window(tabs.get(1));
 		driver.waitForPageToBeReady();
 		driver.getWebDriver().get(sharableLink);
-		
+
 		return parentWindow;
 	}
 
@@ -15785,31 +15819,30 @@ public class ProductionPage {
 					"Exception occcured while verifying download production using sharable link." + e.getMessage());
 		}
 	}
-	
+
 	/**
-	 * @Author Brundha
-	 * Description:Method to Delete production in draft mode
+	 * @Author Brundha Description:Method to Delete production in draft mode
 	 */
 
 	public void deleteProduction(String productionname) {
-		 base.waitTillElemetToBeClickable(getGearIconForProdName(productionname));
-		 getGearIconForProdName(productionname).Click();
-			
-		if(getTileDelete().isDisplayed()) {
+		base.waitTillElemetToBeClickable(getGearIconForProdName(productionname));
+		getGearIconForProdName(productionname).Click();
+
+		if (getTileDelete().isDisplayed()) {
 			base.passedStep("Delete option is displayed for drafted production");
-		 base.waitForElement(getTileDelete());
-		 
-		 getTileDelete().waitAndClick(10);
-		 base.waitForElement(getOkButton());
-		 getOkButton().Click();
-		 base.VerifySuccessMessage("Production deleted successfully");
-		 base.CloseSuccessMsgpopup();
-		}
-		else {
+			base.waitForElement(getTileDelete());
+
+			getTileDelete().waitAndClick(10);
+			base.waitForElement(getOkButton());
+			getOkButton().Click();
+			base.VerifySuccessMessage("Production deleted successfully");
+			base.CloseSuccessMsgpopup();
+		} else {
 			base.failedStep("Delete option is not displayed for drafted production");
 		}
 
-	}	
+	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -15820,5 +15853,4 @@ public class ProductionPage {
 		getSecurityGroup(securityGroup).waitAndClick(10);
 
 	}
-	
 }
