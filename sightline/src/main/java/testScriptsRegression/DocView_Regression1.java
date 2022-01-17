@@ -4185,6 +4185,131 @@ public class DocView_Regression1 {
 				baseClass.stepInfo("performing code sameAs for min doc list  in child window");
 				docView.performCodeSameAsMiniDocChildWindow();
 			}
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id :51483 Verify that only text highlighter should not delete selected to add remarks.
+			 * Description : Verify that only text highlighter should not delete selected to add remarks
+			 * @throws InterruptedException 
+			 */
+			@Test(enabled = true, groups = { "regression" }, priority = 58)
+			public void verifyAlreadyRemarkedTextHighlighted() throws InterruptedException {
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51483 sprint 10");
+				baseClass.stepInfo("#### Verify that only text highlighter should not delete selected to add remarks ####");
+				final String remark = Input.randomText+Utility.dynamicNameAppender();
+				docView = new DocViewPage(driver);
+				docViewMetaDataPage = new DocViewMetaDataPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				docView = new DocViewPage(driver);
+				
+				baseClass.stepInfo("Basic  content search ");
+				session.basicContentSearch(Input.searchString1);
+				
+				baseClass.stepInfo("View serached dos in DOcview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Perform Remark with save operation");
+				docViewMetaDataPage.performRemarkWithSaveOperation(10, 15,remark);
+				
+				baseClass.stepInfo("Verify Remark Is Added");
+				docView.verifyRemarkIsAdded(remark);
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Clicking on text highlighted and verify remark is not added that not editable and clickable in doc view panel.");
+				docView.verifyAlreadyRemarkedTextHighlightedNotRemarkAgain();
+				
+			}
+			
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id :51459 Verify that document should be loaded in DocView in 3 to 4 seconds.
+			 * Description : Verify that document should be loaded in DocView in 3 to 4 seconds.
+			 * @throws InterruptedException 
+			 */
+			@Test(enabled = true, groups = { "regression" }, priority = 59)
+			public void verifyDocumentLoadedinDocViewIn3to4Seconds() throws InterruptedException {
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51459 sprint 10");
+				baseClass.stepInfo("#### Verify that document should be loaded in DocView in 3 to 4 seconds. ####");
+				docView = new DocViewPage(driver);
+				docViewMetaDataPage = new DocViewMetaDataPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				docView = new DocViewPage(driver);
+				
+				baseClass.stepInfo("Basic  content search ");
+				session.basicContentSearch(Input.searchString1);
+				
+				baseClass.stepInfo("View serached dos in Docview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Verify document in docview loaded in 4 sec");
+				docView.verifyDocumentLoadedWithIn4Seconds();
+				
+			}
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id:51103 Verify user should able to download the associated files by selecting the option 
+			 *                  from the drop down selection Txt, Native from default view
+			 * Description :To Verify user should able to download the associated files by selecting the option 
+			 *                    from the drop down selection Txt, Native from default view                 
+			 * @throws InterruptedException 
+			 */
+			@Test(enabled = true, groups = { "regression" }, priority = 60)
+			public void verifydownloadDoc() throws InterruptedException {
+				String docId=Input.downloadDocID;
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51103");
+				baseClass.stepInfo("#### Verify user should able to download the associated files by selecting the option from the drop down selection Txt, Native from default view####");
+				
+				docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				
+				baseClass.stepInfo("Basic  content search ");
+				session.basicContentSearch(Input.searchString1);
+				
+				baseClass.stepInfo("View serached dos in DOcview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Downloading and verifying Native and text format for select document");
+				docView.downloadNativerAndTextFormat(docId,Input.fileDownloadLocation);
+				
+			}
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id:51084 Verify the document number from document navigation on navigating to documents
+			 * Description:To Verify the document number from document navigation on navigating to documents
+			 * @throws InterruptedException 
+			 */
+			@Test(enabled = true, groups = { "regression" }, priority = 61)
+			public void verifyDocNavigationafterClicOnNextAndPrevButton() throws InterruptedException {
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51084");
+				baseClass.stepInfo("#### Verify the document number from document navigation on navigating to documents####");
+				
+				docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				
+				baseClass.stepInfo("Basic  content search ");
+				session.basicContentSearch(Input.searchString1);
+				
+				baseClass.stepInfo("View serached dos in DOcview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("click on next navigation button and verifying navigation");
+				docView.performNextNavigation(2);
+				
+				baseClass.stepInfo("click on previous navigation button and verifying navigation");
+				docView.performPrevNavigation(2);
+			}
+			
 		@AfterMethod(alwaysRun = true)
 		public void close() {
 			try {

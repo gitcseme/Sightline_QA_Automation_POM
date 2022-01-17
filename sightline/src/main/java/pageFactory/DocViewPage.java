@@ -23,6 +23,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -31,6 +33,8 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
@@ -2629,6 +2633,27 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']//..//..//td[2][text()='" + text + "']");
 	}
+	
+	//Added by Gopinath  - 17/01/2022
+	public ElementCollection getRemarkHighlightedText() {
+		return driver.FindElementsByCssSelector("g[data-pcc-mark*='highlighttext'] rect");
+	}
+	public Element selectContentOfRemarkErrorMsg() {
+		return driver.FindElementByXPath("//p[text()='Please select content from a document to place remark on']");
+	}
+	public Element documentOnDocView() {
+		return driver.FindElementByXPath("//div[@class='igViewerGraphics']");
+	}
+	public Element getSelectedDocIdMiniDocList() {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']/tbody/tr/td/label/following-sibling::i[@class='fa fa-arrow-right']/../following-sibling::td[1]");
+	}
+	public Element getDefaultTextViewSelected() {
+		return driver.FindElementByXPath("//li[@id='liDocumentDefaultView' and @class='ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active']");
+	}
+	//verfifying the docid on docview panal by passing required docid
+		public Element getDocViewPanelDocId(String docId) {
+			return driver.FindElementByXPath("//span[@id='activeDocumentId' and text()='"+docId+"']");
+		}
 
 	public DocViewPage(Driver driver) {
 
@@ -20696,6 +20721,281 @@ public class DocViewPage {
 			e.printStackTrace();
 			base.failedStep("Exception occured while verifying image tab is enabled." + e.getMessage());
 		}
+	}
+
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method for clicking on text highlighted and verify remark is not added that not editable and clickable in doc view panel.
+	 */
+	public void verifyAlreadyRemarkedTextHighlightedNotRemarkAgain() {
+		try {
+			driver.waitForPageToBeReady();
+			List<WebElement> remarkHighlighterText =   getRemarkHighlightedText().FindWebElements();
+			
+			 try
+			    {
+			        WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 2);
+			        wait.until(ExpectedConditions.elementToBeClickable(remarkHighlighterText.get(0)));
+			        remarkHighlighterText.get(0).click();
+			        base.failedStep("Already remarked selected highlighted text is clickable and editable");
+			    }
+			    catch (Exception e)
+			    {
+			    	base.passedStep("Already remarked selected highlighted text is not clickable and editable");
+			    }
+			getNonAudioRemarkBtn().Click();
+			getAddRemarkbtn().Click();
+			selectContentOfRemarkErrorMsg().isElementAvailable(15);
+			if(selectContentOfRemarkErrorMsg().isDisplayed()) {
+				base.passedStep("Already selected text that remarked highlighted text is not able to add remark again successfully");
+			}else {
+				base.failedStep("Already selected text that remarked highlighted text is able to add remark again");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while clicking on text highlighted and verify remark is not added that not editable and clickable in doc view panel." + e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method for verifying document in docview loaded in 4 sec
+	 */
+	public void verifyDocumentLoadedWithIn4Seconds() {
+		try {
+			driver.waitForPageToBeReady();;
+			getDocView_Next().isElementAvailable(10);
+			getDocView_Next().Click();
+			long start = System.currentTimeMillis();
+			for(int i=0;i<500;i++) {
+				if(documentOnDocView().getWebElement().isDisplayed()&&documentOnDocView().getWebElement().isEnabled()) {
+					break;
+				}
+			}
+			long finish = System.currentTimeMillis();
+			long totalTime = finish - start; 
+			long timeSeconds = TimeUnit.MILLISECONDS.toSeconds(totalTime);
+			if(timeSeconds<=4) {
+				base.passedStep("Document in docview loaded in 4 sec successfuly");
+			}else {
+				base.failedStep("Failed to load document in docview in 4 seconds is failed");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying document in docview loaded in 4 sec" + e.getMessage());
+			
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * Description: this method will select the doc from mini docList and download Native and txt from default view
+	 * @param docIdOrRoNum(Docid id or row number to select the doc from mini doc list
+	 */
+	public void downloadNativerAndTextFormat(String docIdOrRoNum,String downloadPath) {
+		selectDocToViewInDocViewPanal(docIdOrRoNum);
+
+		base.waitForElement(getDefaultTextViewSelected());
+
+		if (getDefaultTextViewSelected().isElementAvailable(5)) {
+			base.passedStep("document loaded in default textView");
+		} else {
+			base.failedStep("unable to load document in default textview");
+		}
+		downloadSelectedFormaats(downloadPath,"native", "txt", null, null);
+	}
+
+
+	/**
+	 * @author Gopinath
+	 * Description: this method will select the document from mini doc list with docId or row number to load on docview panal
+	 * @param DocIdOrRwNo(docid or row number in string format)
+	 */
+	public void selectDocToViewInDocViewPanal(String DocIdOrRwNo) {
+		driver.waitForPageToBeReady();
+
+		try {
+			base.waitForElement(getClickDocviewID(Integer.parseInt(DocIdOrRwNo)));
+			getClickDocviewID(Integer.parseInt(DocIdOrRwNo)).waitAndClick(3);
+
+		} catch (Exception e) {
+			base.waitForElement(getDocView_MiniDoc_SelectDOcId(DocIdOrRwNo));
+			getDocView_MiniDoc_SelectDOcId(DocIdOrRwNo).waitAndClick(5);
+
+		}
+
+		base.waitForElement(getSelectedDocIdMiniDocList());
+
+		base.waitForElement(getDocViewSelectedDocId());
+		if (getDocViewSelectedDocId().getText().trim().equals(getSelectedDocIdMiniDocList().getText().trim())) {
+			base.passedStep("selected document loaded in docview panal");
+		} else {
+			base.failedStep("selected document not loaded in docview panal");
+		}
+
+	}
+
+
+
+	/**
+	 * @author Gopinath
+	 * Description: this method will download the required file format for selected document and verify downloaded or not from downloadedpath 
+	 */
+	public void downloadSelectedFormaats(String downloadPpath,String downloadFormat1, String downloadFormat2, String downloadFormat3,
+			String downloadFormat4) {
+
+		List<String> list = new ArrayList<String>();
+		list.add(downloadFormat1);
+		list.add(downloadFormat2);
+		list.add(downloadFormat3);
+		list.add(downloadFormat4);
+
+		Map<String, String> formatAndfileNames = new HashMap<String, String>();
+		formatAndfileNames.put("Native 1", "tif");
+		formatAndfileNames.put("PDF 1", "pdf");
+		formatAndfileNames.put("TIFF 1", "tmp");
+		formatAndfileNames.put("Txt 1", "txt");
+		Set<String> forMatKey = formatAndfileNames.keySet();
+		base.waitForElement(getDocViewDonload_Icon());
+		if (getDocViewDonload_Icon().isDisplayed()) {
+			base.passedStep("Download button is displayed");
+		} else {
+			base.failedStep("Donload button is not displyed");
+		}
+
+		for (String Selectedoption : list) {
+			if(Selectedoption!=null) {
+				
+
+				for (String DownloadOption : forMatKey) {
+
+					if (DownloadOption.toLowerCase().contains(Selectedoption.toLowerCase())) {
+						base.waitTime(5);
+						base.waitForElement(getDocViewDonload_Icon());
+						getDocViewDonload_Icon().waitAndClick(5);
+						base.waitTime(5);
+						base.waitForElement(getDOcViewDoc_DownloadOption(DownloadOption));
+						Actions ac = new Actions(driver.getWebDriver());
+						ac.moveToElement(getDOcViewDoc_DownloadOption(DownloadOption).getWebElement()).click().perform();
+								
+
+						base.waitTime(5);
+						File file = new File(downloadPpath);
+						File[] listoffiles = file.listFiles();
+						if (listoffiles != null) {
+							String fileName = formatAndfileNames.get(DownloadOption);
+							boolean flag = false;
+							for (File eachfile : listoffiles) {
+
+								if (eachfile.getName().contains(fileName)) {
+									System.out.println(DownloadOption + " is downloaded for selected document");
+									base.passedStep(DownloadOption + " is downloaded for selected document");
+									eachfile.delete();
+									flag = true;
+									break;
+								}
+
+							}
+							if (flag == false) {
+								System.out.println("unable to download" + DownloadOption + " for selected document");
+								base.failedStep(
+										"failed : unable to download" + DownloadOption + " for selected document");
+							}
+
+						} else {
+							System.out.println("No files are downloaded");
+							base.failedStep("no files are downloaded");
+
+						}
+						break;
+
+						
+					}
+
+				}
+			}
+		}
+
+
+	}
+	
+	/**
+	 * @author Gopinath
+	 * Description methoad to get the rows and its doc ids from mini doc list 
+	 * @param noOfDocs
+	 * @return doclist(return list of doc with its row numbers by key and value pair
+	 */
+	public Map<Integer,String> getRowAndMiniDOcIds(int noOfDocs) {
+		driver.waitForPageToBeReady();
+		Map<Integer,String> doclist=new HashMap<>();
+		for(int i=1;i<=noOfDocs+1;i++) {
+		base.waitForElement(getClickDocviewID(i));
+		getClickDocviewID(i).waitAndClick(5);
+		System.out.println(getClickDocviewID(i).getText());
+		doclist.put(i, getClickDocviewID(i).getText());
+		
+		}
+		return doclist;
+	}
+	/**
+	 * @author Gopinath
+	 * Description :this method will perform the next navigation and for set of docs and verify scrolled to next document in mindoclist or not 
+	 * @param noOfDocs
+	 */
+	public void performNextNavigation(int noOfDocs) {
+		Map<Integer,String> doclist = getRowAndMiniDOcIds(noOfDocs);
+		
+		base.waitForElement(getClickDocviewID(1));
+		getClickDocviewID(1).waitAndClick(5);
+		Set<Integer> docrow = doclist.keySet();
+		for(int i:docrow) {
+			int row = i+1;
+			if(row<=docrow.size()) {
+				String mindListdocId = doclist.get(row);
+				base.waitForElement(getDocView_Next());
+				base.waitTime(2);
+				getDocView_Next().waitAndClick(5);
+				if(getDocViewPanelDocId(mindListdocId).isElementAvailable(5) && getSelectedDocIdMiniDocList().getText().equals(mindListdocId)) {
+					System.out.println("after click on next navigation button miniDOclist Scrolled from "+(row-1)+" Document to "+row+" Document and Loaded on docview panal");
+					base.passedStep("after click on next navigation button miniDOclist Scrolled to "+row+" Document");;
+				}else {
+					base.failedStep("unable to navigate to "+" Document after click on next nevigation button");
+				}
+				
+				
+			}
+			
+			
+		}
+	}
+	/**
+	 * @author Gopinath
+	 * Description this method will perform the next navigation  for set of docs and verify scrolled to next document in mindoclist or not
+	 * @param noOfDocs
+	 */
+	public void performPrevNavigation(int noOfDocs) {
+		Map<Integer, String> doclist = getRowAndMiniDOcIds(noOfDocs);
+
+		
+		Set<Integer> docrow = doclist.keySet();
+		int numofdoc = docrow.size();
+		base.waitForElement(getClickDocviewID(numofdoc));
+		getClickDocviewID(numofdoc).waitAndClick(5);
+		for(int i=(numofdoc-1);i>=1;i--) {
+			String mindListdocId = doclist.get(i);
+			base.waitForElement(getDocView_Previous());
+			base.waitTime(2);
+			getDocView_Previous().waitAndClick(5);
+			if(getDocViewPanelDocId(mindListdocId).isElementAvailable(5) && getSelectedDocIdMiniDocList().getText().equals(mindListdocId)) {
+				System.out.println("after click on previous navigation button miniDOclist Scrolled from "+(i+1)+" Document to "+i+" Document and Loaded on docview panal");
+				base.passedStep("after click on previous navigation button miniDOclist Scrolled from "+(i+1)+" Document to "+i+" Document");;
+			}else {
+				System.out.println("unable to navigate to "+" Document after click on next nevigation button");
+				base.failedStep("unable to navigate to "+" Document after click on next nevigation button");
+			}
+		}
+
 	}
 
 }
