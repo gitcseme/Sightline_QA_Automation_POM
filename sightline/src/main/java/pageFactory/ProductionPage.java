@@ -2263,6 +2263,9 @@ public class ProductionPage {
 	public Element getSharableLinkExpiryDate() {
 		return driver.FindElementByXPath("//span[@id='lblShareableLinksExpireDate']");
 	}
+	public Element getSecurityGroup(String securityGroup) {
+		return driver.FindElementByXPath("//select[@id='SecurityGrpList']//option[text()='"+securityGroup+"']");
+	}
 	
 	public Element getErrorMsgText() {
 		return driver.FindElementByXPath("//span//h1");}
@@ -15807,5 +15810,15 @@ public class ProductionPage {
 		}
 
 	}	
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void selectingSecurityGroup(String securityGroup) {
+		base.waitForElement(getSecurityGroupDropDown());
+		getSecurityGroupDropDown().waitAndClick(10);
+		base.waitForElement(getSecurityGroup(securityGroup));
+		getSecurityGroup(securityGroup).waitAndClick(10);
+
+	}
 	
 }
