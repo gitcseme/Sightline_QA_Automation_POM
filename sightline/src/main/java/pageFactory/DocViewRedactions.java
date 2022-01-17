@@ -2,6 +2,7 @@ package pageFactory;
 
 import static org.testng.Assert.assertTrue;
 
+import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -1177,6 +1178,15 @@ public class DocViewRedactions {
 	
 	public Element getDocView_EyePageTrems() {
 		return driver.FindElementById("PHitCount_t");
+	}
+	
+	public Element getDocHighlightedCount(String term) {
+		return driver.FindElementByXPath("//a[@class='up']//following-sibling::span[@data-custom-id='" + term + "']");
+	}
+
+	public Element getDocPersistentPanelCount(String term) {
+		return driver.FindElementByXPath(
+				"//p[contains(@id,'PHitCount')]//following-sibling::span[@data-custom-id='" + term + "']");
 	}
 	
 	public DocViewRedactions(Driver driver) {
@@ -3366,8 +3376,36 @@ public class DocViewRedactions {
 
 	}
 	
+	/*
+	 * @author Steffy
+	 * Method to validate persistent hit panel against doc highlighted count
+	 */
 	
-	
+	public void validatePersistentPanelHitCountAgainstDocHighlightedCount(String term) {
+		Robot robot;
+		try {
+			robot = new Robot();
+			base = new BaseClass(driver);
+			base.waitForElement(getSearchIcon());
+			getSearchIcon().Click();
+			base.waitForElement(getInputSearchBox());
+			getInputSearchBox().SendKeys(term);
+
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+		base.waitForElement(persistantHitToggle());
+		persistantHitToggle().waitAndClick(10);
+		base.stepInfo("Get the persistent hit count from document");
+		String docCount = getDocHighlightedCount(term).getText();
+		base.stepInfo("Get the persistent hit count from panel");
+		String panelCount = getDocHighlightedCount(term).getText();
+		softAssertion.assertTrue(docCount.equals(panelCount));
+		softAssertion.assertAll();
+		base.passedStep("Keyword highlighted count in document is same as persistent hit panel count");
+	}
 	
 	
 

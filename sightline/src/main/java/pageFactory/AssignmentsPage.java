@@ -9028,5 +9028,25 @@ public class AssignmentsPage {
 		getDistributeBtn().waitAndClick(3);
 		bc.stepInfo("Documents are distributed to four reviewers successfully");
 
+  }
+	/**
+	 * @author Steffy
+	 * @description this method will the unassigned docs to the specific user.
+	 * @param user
+	 */
+	public void UnassignedDocs(String user) {
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		getAssgn_ManageRev_selectReviewer(user).waitAndClick(20);
+		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
+		getAssgn_ManageRev_Action().waitAndClick(10);
+		bc.waitForElement(getAssgn_ManageRev_Action_Unassignuser());
+		getAssgn_ManageRev_Action_Unassignuser().waitAndClick(10);
+		bc.waitForElement(bc.getYesBtn());
+		bc.getYesBtn().waitAndClick(10);
+		bc.VerifySuccessMessage("User successfully unassigned from the Assignment");
+		bc.stepInfo("Removed all the assigned document from the " + user);
+		bc.passedStep("User successfully unassigned from the Assignment" + user);
+		bc.CloseSuccessMsgpopup();
 	}
 }

@@ -45,6 +45,7 @@
 	<pageRange2>3</pageRange2>
 	<pageRange3>1,2,8,10,11,12,13</pageRange3>
 	<pageRange4>2-13</pageRange4>
+	<searchPhraseWithQuote>"is required"</searchPhraseWithQuote>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>

@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -277,6 +278,115 @@ public class DocViewAudio_IndiumRegression {
 		// logout
 		loginPage.logout();
 
+	}
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51502 Description : To verify that Persistent hits are working for audio files if user redirect to doc view from Doc list
+	 * @throws InterruptedException 
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 05)
+	public void verifyPersistentHitsForAudioFiles() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		docListPage = new DocListPage(driver);
+		baseClass.stepInfo("Test case id :RPMXCON-51502");
+		baseClass.stepInfo("verify that Persistent hits are working for audio files if user redirect to doc view from Doc list");
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		// Performing advanced search
+		sessionSearch.advancedContentSearch(Input.testData1);
+		
+		//view in doclist
+		sessionSearch.ViewInDocList();
+		
+		//Select all docs and view as docview
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docListPage.getSelectAll().Visible() && docListPage.getSelectAll().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docListPage.getSelectAll());
+		docListPage.getSelectAll().waitAndClick(30);
+		docListPage.getPopUpOkBtn().Click();
+		
+		docListPage.docListToDocView();
+		baseClass.passedStep("Selected all documents and perform action view in docview");
+		
+		// click eye icon and verify the availability of search term
+		String searchTerm = docViewPage.getPersistentHit(Input.testData1);
+		
+		int searchTermPanelCount = docViewPage.getHitPanelCollection().size();
+		
+		if(searchTerm.contains(Input.testData1) && searchTermPanelCount>0) {
+			baseClass.passedStep("Search term displayed");
+			
+		}
+		else {
+			baseClass.failedStep("Search term not displayed");
+		}		
+	}
+	
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-46926 Description : Verify Persistent hits navigation should work when audio documents searched with the phrase with quotes
+	 * @throws InterruptedException 
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 06)
+	public void verifyPersistentHitNavigation() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case id :RPMXCON-46926");
+		baseClass.stepInfo("Verify Persistent hits navigation should work when audio documents searched with the phrase with quotes");
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		// Performing advanced search with audio
+		sessionSearch.verifyaudioSearchWarning(Input.searchPhraseWithQuote,Input.language);
+		
+		
+		//view in docview
+    	sessionSearch.ViewInDocView();
+
+    	
+    	// click eye icon and click on navigation in panel
+        
+        String availableSearchTerm = docViewPage.getAudioPersistentHit(Input.searchPhraseWithQuote);
+		
+		if(availableSearchTerm.contains(Input.searchPhraseWithQuote)) {
+			baseClass.passedStep("persistent panel opened and searched phrase displayed");
+			
+		}		
+		driver.scrollingToElementofAPage(docViewPage.audioPersistentForwardNavigate());
+		driver.WaitUntil((new Callable<Boolean>() {
+	    public Boolean call() throws Exception {
+	    	return docViewPage.audioPersistentForwardNavigate().Visible() && docViewPage.audioPersistentForwardNavigate().Enabled();
+	    	}
+	    }), Input.wait30);
+	    baseClass.waitTillElemetToBeClickable(docViewPage.audioPersistentForwardNavigate());
+	    docViewPage.audioPersistentForwardNavigate().waitAndClick(10);
+	    
+        	
+        String audioPlayerStatus = docViewPage.audioPlayPauseIcon().GetAttribute("title");
+        
+        if(audioPlayerStatus.equalsIgnoreCase("pause")) {
+        	baseClass.passedStep("Persistent hit navigation works when searched with Phrase and quote");
+        	
+        }
+        else {
+        	baseClass.failedMessage("persistent hit navigation not worked when searched with phrase and quote");
+        	
+        }
+  
 	}
 
 	@AfterMethod(alwaysRun = true)
