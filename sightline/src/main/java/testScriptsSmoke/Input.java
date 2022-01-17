@@ -420,6 +420,9 @@ public class Input {
 	public static String thisRequired;
 	public static String select;
 	public static String notSelect;
+	public static String securityGroup_sg47;
+	public static String regressionConsilio;
+	public static String regressionConsilio1;
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
@@ -665,6 +668,9 @@ public class Input {
 		thisRequired = testData.getThisRequired();
 		select = testData.getSelect();
 		notSelect = testData.getNotSelect();
+		securityGroup_sg47 = testData.getSecurityGroup_sg47();
+		regressionConsilio = testData.getRegressionConsilio();
+		regressionConsilio1 = testData.getRegressionConsilio1();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.

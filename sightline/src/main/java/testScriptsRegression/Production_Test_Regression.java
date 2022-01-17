@@ -2606,6 +2606,79 @@ public class Production_Test_Regression {
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 					}
+					/**
+					 * @author Aathith 
+					 * Test case id-RPMXCON-55949
+					 * @Description Verify that use cannot access the Production deatils by copying the Production URL if user does not have Production rights
+					 * 
+					 */
+					@Test(groups = { "regression" }, priority = 42)
+					public void verifyingProductionAccessPAtoRMU() throws Exception {
+
+						UtilityLog.info(Input.prodPath);
+
+						base.stepInfo("RPMXCON-55949 -Production Sprint 10");
+						base.stepInfo("Verify that RMU cannot access the Production by copying the Production URL if user is not part of that security group");
+						
+				        ProductionPage page = new ProductionPage(driver);
+				        productionname = "p" + Utility.dynamicNameAppender();
+				        page.selectingSecurityGroup(Input.securityGroup_sg47);
+						page.addANewProduction(productionname);
+						page.fillingDATSection();
+				        driver.waitForPageToBeReady();
+						
+						String currentURL=driver.getWebDriver().getCurrentUrl();
+						loginPage.logout();
+						loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+						base.stepInfo("Logined as RMU");
+						
+						driver.Navigate().to(currentURL);
+						driver.waitForPageToBeReady();
+						String ErrorMsg=page.getErrorMsgText().getText();
+						if(ErrorMsg.contains("Error")) { base.passedStep("Error message is displayed as expected"); }
+						else {base.failedStep("Error message is not  displayed as expected");	}
+						driver.Navigate().back();
+						
+						base.passedStep("Verified that RMU cannot access the Production by copying the Production URL if user is not part of that security group");
+						
+					}
+					/**
+					 * @author Aathith 
+					 * Test case id-RPMXCON-55950
+					 * @Description Verify that RMU cannot access the Production if he is not part of that Project
+					 * 
+					 */
+					@Test(groups = { "regression" }, priority = 43)
+					public void verifyingProductionAccessPAtoRMUdiffProject() throws Exception {
+						
+						UtilityLog.info(Input.prodPath);
+						
+						base.stepInfo("RPMXCON-55950 -Production Sprint 10");
+						base.stepInfo("Verify that RMU cannot access the Production if he is not part of that Project");
+						
+				        ProductionPage page = new ProductionPage(driver);
+				        productionname = "p" + Utility.dynamicNameAppender();
+				        page.selectingSecurityGroup(Input.securityGroup_sg47);
+						page.addANewProduction(productionname);
+						page.fillingDATSection();
+				        driver.waitForPageToBeReady();
+						
+						String currentURL=driver.getWebDriver().getCurrentUrl();
+						loginPage.logout();
+						loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+						base.switchProject(Input.regressionConsilio1);
+						base.stepInfo("Logined as RMU");
+						
+						driver.Navigate().to(currentURL);
+						driver.waitForPageToBeReady();
+						String ErrorMsg=page.getErrorMsgText().getText();
+						if(ErrorMsg.contains("Error")) { base.passedStep("Error message is displayed as expected"); }
+						else {base.failedStep("Error message is not  displayed as expected");	}
+						driver.Navigate().back();
+						
+						base.passedStep("Verified that RMU cannot access the Production if he is not part of that Project");
+						
+					}
 					
 	
 	

@@ -339,6 +339,9 @@ public class TestData {
 		public String thisRequired;
 		public String select;
 		public String notSelect;
+		public String securityGroup_sg47;
+		public String regressionConsilio;
+		public String regressionConsilio1;
 	
 		//Added by Gopinath - 30/11/2021
 		public String postGenQcChecks;
