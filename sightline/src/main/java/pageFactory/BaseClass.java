@@ -212,7 +212,13 @@ public class BaseClass {
 	public Element getSaveBtn() {
 		return driver.FindElementById("btnsubmit");
 	}
-
+	public Element  selectSecurityGroup() {
+		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='SG1134047']");
+	}
+	
+	public Element  selectDefaultSecurityGroup() {
+		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='Default Security Group']");
+	}
 	public BaseClass(Driver driver) {
 
 		this.driver = driver;
@@ -2327,5 +2333,45 @@ public class BaseClass {
 		}
 		softAssertion.assertAll();
 	}
+	public void SelectSecurityGrp(String username) {
+		waitForElement(SelectSearchOption());
+		SelectSearchOption().SendKeys(username);
+		SelectSearchOption().Enter();
+		driver.waitForPageToBeReady();
+		waitTillElemetToBeClickable(getEditButton());
+		getEditButton().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		selectSecurityGroup().ScrollTo();
+		selectSecurityGroup().isDisplayed();
+	    waitTillElemetToBeClickable(selectSecurityGroup());
+		selectSecurityGroup().waitAndClick(10);
+		getSaveBtn().waitAndClick(5);
+		VerifySuccessMessage("User profile was successfully modified");
+		CloseSuccessMsgpopup();
+		
+		
+		
+}
+	
+	public void SelectDefaultSecurityGrp(String username) {
+		waitForElement(SelectSearchOption());
+		SelectSearchOption().SendKeys(username);
+		SelectSearchOption().Enter();
+		waitTillElemetToBeClickable(getEditButton());
+		getEditButton().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		selectDefaultSecurityGroup().ScrollTo();
+		driver.waitForPageToBeReady();
+		selectDefaultSecurityGroup().waitAndClick(5);
+		selectDefaultSecurityGroup().waitAndClick(5);
+		getSaveBtn().waitAndClick(10);
+		VerifySuccessMessage("User profile was successfully modified");
+		CloseSuccessMsgpopup();
+		
+		
+		
+}
+
+
 
 }
