@@ -146,7 +146,7 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -248,7 +248,7 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -325,7 +325,7 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -408,7 +408,7 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -505,7 +505,7 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -607,7 +607,7 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -700,7 +700,7 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -783,7 +783,7 @@ public class DocView_Regression3 {
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
 		driver.waitForPageToBeReady();
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -885,7 +885,7 @@ public class DocView_Regression3 {
 		sessionsearch.bulkRelease(namesg3);
 		driver.waitForPageToBeReady();
 
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -992,7 +992,7 @@ public class DocView_Regression3 {
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
 		driver.waitForPageToBeReady();
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -1093,7 +1093,7 @@ public class DocView_Regression3 {
 		driver.waitForPageToBeReady();
 
 
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		
@@ -1183,7 +1183,7 @@ public class DocView_Regression3 {
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
 		driver.waitForPageToBeReady();
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		
@@ -1271,7 +1271,7 @@ public class DocView_Regression3 {
 		sessionsearch.bulkRelease(namesg3);
 		driver.waitForPageToBeReady();
 
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		
@@ -1357,7 +1357,7 @@ public class DocView_Regression3 {
 		sessionsearch.bulkRelease(namesg3);
 		driver.waitForPageToBeReady();
 
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3,Input.rmu2userName);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		
@@ -1400,21 +1400,120 @@ public class DocView_Regression3 {
 		LoginPage.clearBrowserCache();
 	}
 	
+	/**
+	 * Author : Steffy Created date: NA Modified date: NA Modified by:NA TestCase id
+	 * : 48251 - Same doc in different security groups: Verify without shared
+	 * annotation layer and shared redaction tags, no redaction info (coordinates,
+	 * tags and history) shown in the doc in 2nd sec group
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
+	public void verifyRedactionInfoAcrossSecurityGroups() throws Exception {
+		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		String AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
+		namesg2 = Input.randomText + Utility.dynamicNameAppender();
+		namesg3 = Input.randomText + Utility.dynamicNameAppender();
+		docExp = new DocExplorerPage(driver);
+		baseClass = new BaseClass(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48251");
+		utility = new Utility(driver);
+		loginPage = new LoginPage(driver);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa2userName);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		baseClass.stepInfo(
+				"Same doc in different security groups: Verify without shared annotation layer and shared redaction tags, no redaction info (coordinates, tags and history) shown in the doc in 2nd sec group");
+
+		// creating two new security groups and adding annotation layer
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityGroupsPage.AddSecurityGroup(namesg2);
+		baseClass.CloseSuccessMsgpopup();
+		driver.scrollPageToTop();
+		securityGroupsPage.AddSecurityGroup(namesg3);
+
+		// Creating annotation layer and assigning to newly created SGs
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew1);
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+		securityGroupsPage.selectSecurityGroup(namesg3);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew1);
+		baseClass.CloseSuccessMsgpopup();
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+		baseClass.CloseSuccessMsgpopup();
+		securityGroupsPage.selectSecurityGroup(namesg3);
+		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+		baseClass.CloseSuccessMsgpopup();
+
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkRelease(namesg2);
+		sessionsearch.bulkRelease(namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu1userName);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rev1userName);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Perform Redaction in SG1
+		docViewRedact.selectsecuritygroup(namesg2);
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		docViewRedact.clickingRedactionIcon();
+		driver.waitForPageToBeReady();
+		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		docViewRedact.selectsecuritygroup(namesg3);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		docViewRedact.verifyWhetherThisPageRedactionIsSaved(false);
+		loginPage.logout();
+		
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
+
+		AnnotationLayer annotation = new AnnotationLayer(driver);
+		annotation.deleteAnnotation(AnnotationLayerNew);
+		annotation.deleteAnnotation(AnnotationLayerNew1);
+		loginPage.logout();
+	}
+
+
 	@AfterMethod(alwaysRun = true)
 	public void close() throws ParseException, InterruptedException, IOException {
 		try {
 			Input in = new Input();
 			in.loadEnvConfig();
-			baseClass=new BaseClass(driver);
+			baseClass = new BaseClass(driver);
 			driver = new Driver();
 			driver.Navigate().refresh();
 			driver.scrollPageToTop();
 			loginPage = new LoginPage(driver);
-			loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 			baseClass.stepInfo("Select security group for RMU");
 			docViewRedact.selectsecuritygroup("Default Security Group");
 			baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			baseClass.stepInfo("Select security group for REVIEWER");
+			docViewRedact.selectsecuritygroup("Default Security Group");
+			baseClass.stepInfo("Reviewer Assigned to Default Security Group");
 			loginPage.logout();
 			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			securityGroupsPage = new SecurityGroupsPage(driver);
@@ -1427,8 +1526,7 @@ public class DocView_Regression3 {
 			loginPage.quitBrowser();
 			LoginPage.clearBrowserCache();
 		}
-	
-		
+
 	}
 	
      @AfterMethod(alwaysRun = true)
