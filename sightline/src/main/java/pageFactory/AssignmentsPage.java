@@ -1332,8 +1332,16 @@ public class AssignmentsPage {
 	public Element getUnComplePopOutYes() {
 		return driver.FindElementByXPath("//button[text()=' Yes']");
 	}
+	
+	public Element getSelectUserToAssignDA() {
+		return driver.FindElementByXPath(
+				"//*[@id='divNotAssignedUsers']//div[contains(.,'" + Input.da1userName + "')]/../div/label");
+	}
+	public Element getSelectUserInDistributeDA() {
+		return driver.FindElementByXPath(
+				"//*[@id='divDistributedDocUsers']//div[contains(.,'" + Input.da1userName + "')]/div/label");
+	}
 
-	// *[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -9049,4 +9057,33 @@ public class AssignmentsPage {
 		bc.passedStep("User successfully unassigned from the Assignment" + user);
 		bc.CloseSuccessMsgpopup();
 	}
+	
+	 /**
+		 * @author Indium-Baskar date: 10/7/2021 Modified date: NA
+		 * @Description: Add three reviewers and distributed docs to them
+		 */
+		public void addReviewerAndDistributeDaPa() {
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			bc.waitForElement(getAddReviewersBtn());
+			getAddReviewersBtn().waitAndClick(10);
+			bc.waitForElement(getSelectUserToAssig());
+			getSelectUserToAssig().waitAndClick(5);
+			driver.scrollingToElementofAPage(getSelectUserToAssignDA());
+			getSelectUserToAssignDA().waitAndClick(5);
+			driver.scrollingToElementofAPage(getSelectUserToAssignPA());
+			getSelectUserToAssignPA().waitAndClick(5);
+			bc.waitForElement(getAdduserBtn());
+			getAdduserBtn().waitAndClick(5);
+			bc.VerifySuccessMessage("Record saved successfully");
+			bc.waitForElement(getDistributeTab());
+			getDistributeTab().waitAndClick(5);
+			bc.waitForElement(getSelectUserInDistributeDA());
+			getSelectUserInDistributeDA().waitAndClick(5);
+			getSelectUserInDistributeTabsPA().waitAndClick(5);
+			bc.CloseSuccessMsgpopup();
+			getDistributeBtn().waitAndClick(3);
+			bc.stepInfo("Documents are distributed to three reviewers successfully");
+
+		}
 }
