@@ -13,6 +13,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -23,6 +24,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
@@ -1292,11 +1294,53 @@ public class DocView_Regression2 {
 		}
 
 
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51859
+	 * Description :Doc View: When users locale is German then on navigating to Doc View should not display warning message.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 26)
+	public void verifyWarningMessageDisplay() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case id :RPMXCON-51859");
+		baseClass.stepInfo("When users locale is German then on navigating to Doc View should not display warning message");
+		
+		// Login to the application
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		
+		//Changing local to german as pre-requisite
+		loginPage.editProfile("German - Germany");
+		baseClass.stepInfo("Successfully selected German Language");
+		
+		// Performing basic search
+		sessionSearch.basicContentSearch(Input.testData1);
+		
+		// Adding search results and view in docview
+		sessionSearch.ViewInDocViewGerman();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Navigated to DocView");
+		
+		//verifying whether warning message displayed		
+		if(baseClass.getSuccessMsgHeader().isDisplayed()) {
+			String warningMessage = baseClass.getSuccessMsgHeader().getText().toString();
+			baseClass.stepInfo(warningMessage);
+			baseClass.failedStep("Warning Message Displayed");
+		}
+		else {
+			baseClass.passedStep("Warning Message Not Displayed");
+		}
+		
+		//setting back to default locale
+		loginPage.editProfile("English - United States");
+	}
 	
 	
 	
-
-
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
