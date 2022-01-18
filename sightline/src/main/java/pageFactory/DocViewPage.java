@@ -2654,6 +2654,19 @@ public class DocViewPage {
 		public Element getDocViewPanelDocId(String docId) {
 			return driver.FindElementByXPath("//span[@id='activeDocumentId' and text()='"+docId+"']");
 		}
+		
+	//Added by Gopinath - 17/01/2022
+	public Element getDocumentByid(String docId) {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr//td[text()='"+docId+"']");
+	}
+	public Element getDefaultTabIcon() {
+		return driver.FindElementByXPath("//a[@id='aliDocumentDefaultView']//i");
+	}
+	
+	//Added by gopinath - 18/01/2022
+	public Element getDocViewDownload_SelectionOptions() {
+		return driver.FindElementByXPath("//ul[@id='documentTypeDropDown']/li[4]");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -20997,5 +21010,177 @@ public class DocViewPage {
 		}
 
 	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : verify document icon Not Clickable.
+	 */
+	public void verifyDocumentIconIsNotClickable(String iconDocumentId) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTillElemetToBeClickable(getDocumentByid(iconDocumentId));
+			base.waitTime(2);
+			getDocumentByid(iconDocumentId).Click();
+			driver.scrollPageToTop();
+			getDefaultTabIcon().isElementAvailable(10);
+			driver.waitForPageToBeReady();
+			String iconSymbol = getDefaultTabIcon().getText().trim();
+			System.out.println("Icon dispayed :: "+iconSymbol);
+		 try
+		    {
+			 	if(getDefaultTabIcon().isDisplayed()) {
+			 		base.passedStep("'"+iconSymbol+"' - icon contained symbol is displayed on default tab");
+			 	}else {
+			 		base.failedStep("'"+iconSymbol+"' - icon contained symbol is not displayed on default tab");
+			 	}
+		        WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 2);
+		        wait.until(ExpectedConditions.elementToBeClickable(getDefaultTabIcon().getWebElement()));
+		        getDefaultTabIcon().getWebElement().click();
+		        boolean flag =  getDefaultTabIcon().getWebElement().isSelected();
+		        if(flag) {
+		        	base.failedStep("'"+iconSymbol+"' - icon contained symbol on default tab is clickable");
+		        }else {
+		        	base.passedStep("'"+iconSymbol+"' - icon contained symbol on default tab is not clickable as expected");
+			    }
+		    }
+		    catch (Exception e)
+		    {
+		    	base.passedStep("'"+iconSymbol+"' - icon contained symbol on default tab is not clickable as expected");
+		    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying document icon Not Clickable." + e.getMessage());
+		}
+	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * @Description : verify document icon on default tab is not displayed.
+	 */
+	public void verifyDocumentIconIsNotDisplayedOnDefaultTab(String iconDocumentId,String iconSymbol) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTillElemetToBeClickable(getDocumentByid(iconDocumentId));
+			base.waitTime(1);
+			getDocumentByid(iconDocumentId).Click();
+			driver.scrollPageToTop();
+		 	if(getDefaultTabIcon().isDisplayed()) {
+		 		base.failedStep("'"+iconSymbol+"' - icon contained symbol is displayed on default tab");
+		 	}else {
+		 		base.passedStep("'"+iconSymbol+"' - icon contained symbol is not displayed on default tab");
+		 	}
+		       
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying document icon on default tab is not displayed." + e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method to verify download selection displayed.
+	 */
+	public void verifyDownloadSelectionDisplayed() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_IconDownload());
+			getDocView_IconDownload().waitAndClick(5);
+			base.waitForElement(getDocViewDownload_SelectionOptions());
+			if(getDocViewDownload_SelectionOptions().isElementAvailable(5)) {
+				System.out.println("download selection is displayed to download native,txt,tiff file for selected document");
+				base.passedStep("download selection is displayed to download native,txt,tiff file for selected document");
+				
+			}else {
+				 System.out.println("download selecttion is displayed to download native,txt,tiff file for selected document");
+				base.failedStep("download selection is not displayed to download native,txt,tiff file for selected document");
+			}
+		       
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying download selection displayed.." + e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description: this method will download the required file format for selected document and verify downloaded or not from downloadedpath 
+	 * @param downloadPpath
+	 * @param downloadFormat1(if want to download one or two give the name and  give remaining as null)
+	 * @param downloadFormat2
+	 * 
+	 */
+	public void downloadSelectedFormats(String downloadPpath,String downloadFormat1, String downloadFormat2) {
 
+		List<String> list = new ArrayList<String>();
+		list.add(downloadFormat1);
+		list.add(downloadFormat2);
+		
+
+		Map<String, String> formatAndfileNames = new HashMap<String, String>();
+		formatAndfileNames.put("TIFF 1", "tif");
+		formatAndfileNames.put("TRANSLATION 1", "txt");
+		Set<String> forMatKey = formatAndfileNames.keySet();
+		base.waitForElement(getDocViewDonload_Icon());
+		if (getDocViewDonload_Icon().isDisplayed()) {
+			base.passedStep("Download button is displayed");
+		} else {
+			base.failedStep("Donload button is not displyed");
+		}
+
+		for (String Selectedoption : list) {
+			if(Selectedoption!=null) {
+				
+
+				for (String DownloadOption : forMatKey) {
+
+					if (DownloadOption.toLowerCase().contains(Selectedoption.toLowerCase())) {
+						base.waitTime(5);
+						base.waitForElement(getDocViewDonload_Icon());
+						getDocViewDonload_Icon().waitAndClick(5);
+						base.waitTime(5);
+						base.waitForElement(getDOcViewDoc_DownloadOption(DownloadOption));
+						Actions ac = new Actions(driver.getWebDriver());
+						ac.moveToElement(getDOcViewDoc_DownloadOption(DownloadOption).getWebElement()).click().perform();
+								
+
+						base.waitTime(5);
+						File file = new File(downloadPpath);
+						File[] listoffiles = file.listFiles();
+						if (listoffiles != null) {
+							String fileName = formatAndfileNames.get(DownloadOption);
+							boolean flag = false;
+							for (File eachfile : listoffiles) {
+
+								if (eachfile.getName().contains(fileName)) {
+									System.out.println(DownloadOption + " is downloaded for selected document");
+									base.passedStep(DownloadOption + " is downloaded for selected document");
+									eachfile.delete();
+									flag = true;
+									break;
+								}
+
+							}
+							if (flag == false) {
+								System.out.println("unable to download" + DownloadOption + " for selected document");
+								base.failedStep(
+										"failed : unable to download" + DownloadOption + " for selected document");
+							}
+
+						} else {
+							System.out.println("No files are downloaded");
+							base.failedStep("no files are downloaded");
+
+						}
+						break;
+
+						
+					}
+
+				}
+			}
+		}
+
+
+	}
 }
