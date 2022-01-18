@@ -558,7 +558,7 @@ public class SecurityGroupsPage {
 			bc.waitForElement(getSelectSecurityGroup());
 			bc.waitTillElemetToBeClickable(getSelectSecurityGroup());
 			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
-
+			bc.stepInfo("Selected "+securityGroupName+" from available SG's");
 		} catch (Exception e) {
 			e.printStackTrace();
 			bc.failedStep("Exception occcured while selecting security group" + e.getMessage());
@@ -655,7 +655,7 @@ public class SecurityGroupsPage {
 			Assert.assertEquals("Success message is not displayed", true,
 					bc.getSuccessMsg().getWebElement().isDisplayed());
 			if (bc.getSuccessMsg().getWebElement().isDisplayed()) {
-				bc.passedStep("Success message is displayed successfully");
+				bc.passedStep("Success message is displayed successfully for this reduction "+reductionTag);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

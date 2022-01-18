@@ -1609,7 +1609,7 @@ public class DocViewPage {
 	public Element selectedRedactionTag() {
 		return driver.FindElementByXPath("//select[@id='ddlRedactionTags']/option[@selected]");
 	}
-	
+
 	public Element getDocView_AllRedaction() {
 		return driver.FindElementByXPath("//div[@class='unselectable h6']");
 	}
@@ -2680,23 +2680,26 @@ public class DocViewPage {
 		return driver
 				.FindElementsByXPath("//table[@id='dtDocumentConceptuallySimilar']//tr//td[contains(text(),'ID')]");
 	}
+
 	public Element getViewCodingCloseButton() {
-		return driver.FindElementByXPath("//div[@id='viewCodingStamp']//following::div[@class='ui-dialog-buttonset']//button[text()='Close']");
+		return driver.FindElementByXPath(
+				"//div[@id='viewCodingStamp']//following::div[@class='ui-dialog-buttonset']//button[text()='Close']");
 	}
+
 		
 	//Added by Gopinath - 17/01/2022
 	public Element getDocumentByid(String docId) {
-		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr//td[text()='"+docId+"']");
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr//td[text()='" + docId + "']");
 	}
+
 	public Element getDefaultTabIcon() {
 		return driver.FindElementByXPath("//a[@id='aliDocumentDefaultView']//i");
 	}
-	
-	//Added by gopinath - 18/01/2022
+
+	// Added by gopinath - 18/01/2022
 	public Element getDocViewDownload_SelectionOptions() {
 		return driver.FindElementByXPath("//ul[@id='documentTypeDropDown']/li[4]");
 	}
-
 
 	public DocViewPage(Driver driver) {
 
@@ -21046,7 +21049,7 @@ public class DocViewPage {
 		}
 
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : verify document icon Not Clickable.
@@ -21061,58 +21064,57 @@ public class DocViewPage {
 			getDefaultTabIcon().isElementAvailable(10);
 			driver.waitForPageToBeReady();
 			String iconSymbol = getDefaultTabIcon().getText().trim();
-			System.out.println("Icon dispayed :: "+iconSymbol);
-		 try
-		    {
-			 	if(getDefaultTabIcon().isDisplayed()) {
-			 		base.passedStep("'"+iconSymbol+"' - icon contained symbol is displayed on default tab");
-			 	}else {
-			 		base.failedStep("'"+iconSymbol+"' - icon contained symbol is not displayed on default tab");
-			 	}
-		        WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 2);
-		        wait.until(ExpectedConditions.elementToBeClickable(getDefaultTabIcon().getWebElement()));
-		        getDefaultTabIcon().getWebElement().click();
-		        boolean flag =  getDefaultTabIcon().getWebElement().isSelected();
-		        if(flag) {
-		        	base.failedStep("'"+iconSymbol+"' - icon contained symbol on default tab is clickable");
-		        }else {
-		        	base.passedStep("'"+iconSymbol+"' - icon contained symbol on default tab is not clickable as expected");
-			    }
-		    }
-		    catch (Exception e)
-		    {
-		    	base.passedStep("'"+iconSymbol+"' - icon contained symbol on default tab is not clickable as expected");
-		    }
+			System.out.println("Icon dispayed :: " + iconSymbol);
+			try {
+				if (getDefaultTabIcon().isDisplayed()) {
+					base.passedStep("'" + iconSymbol + "' - icon contained symbol is displayed on default tab");
+				} else {
+					base.failedStep("'" + iconSymbol + "' - icon contained symbol is not displayed on default tab");
+				}
+				WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 2);
+				wait.until(ExpectedConditions.elementToBeClickable(getDefaultTabIcon().getWebElement()));
+				getDefaultTabIcon().getWebElement().click();
+				boolean flag = getDefaultTabIcon().getWebElement().isSelected();
+				if (flag) {
+					base.failedStep("'" + iconSymbol + "' - icon contained symbol on default tab is clickable");
+				} else {
+					base.passedStep(
+							"'" + iconSymbol + "' - icon contained symbol on default tab is not clickable as expected");
+				}
+			} catch (Exception e) {
+				base.passedStep(
+						"'" + iconSymbol + "' - icon contained symbol on default tab is not clickable as expected");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while verifying document icon Not Clickable." + e.getMessage());
 		}
 	}
-	
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : verify document icon on default tab is not displayed.
 	 */
-	public void verifyDocumentIconIsNotDisplayedOnDefaultTab(String iconDocumentId,String iconSymbol) {
+	public void verifyDocumentIconIsNotDisplayedOnDefaultTab(String iconDocumentId, String iconSymbol) {
 		try {
 			driver.waitForPageToBeReady();
 			base.waitTillElemetToBeClickable(getDocumentByid(iconDocumentId));
 			base.waitTime(1);
 			getDocumentByid(iconDocumentId).Click();
 			driver.scrollPageToTop();
-		 	if(getDefaultTabIcon().isDisplayed()) {
-		 		base.failedStep("'"+iconSymbol+"' - icon contained symbol is displayed on default tab");
-		 	}else {
-		 		base.passedStep("'"+iconSymbol+"' - icon contained symbol is not displayed on default tab");
-		 	}
-		       
+			if (getDefaultTabIcon().isDisplayed()) {
+				base.failedStep("'" + iconSymbol + "' - icon contained symbol is displayed on default tab");
+			} else {
+				base.passedStep("'" + iconSymbol + "' - icon contained symbol is not displayed on default tab");
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while verifying document icon on default tab is not displayed." + e.getMessage());
+			base.failedStep("Exception occured while verifying document icon on default tab is not displayed."
+					+ e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : Method to verify download selection displayed.
@@ -21123,35 +21125,40 @@ public class DocViewPage {
 			base.waitForElement(getDocView_IconDownload());
 			getDocView_IconDownload().waitAndClick(5);
 			base.waitForElement(getDocViewDownload_SelectionOptions());
-			if(getDocViewDownload_SelectionOptions().isElementAvailable(5)) {
-				System.out.println("download selection is displayed to download native,txt,tiff file for selected document");
-				base.passedStep("download selection is displayed to download native,txt,tiff file for selected document");
-				
-			}else {
-				 System.out.println("download selecttion is displayed to download native,txt,tiff file for selected document");
-				base.failedStep("download selection is not displayed to download native,txt,tiff file for selected document");
+			if (getDocViewDownload_SelectionOptions().isElementAvailable(5)) {
+				System.out.println(
+						"download selection is displayed to download native,txt,tiff file for selected document");
+				base.passedStep(
+						"download selection is displayed to download native,txt,tiff file for selected document");
+
+			} else {
+				System.out.println(
+						"download selecttion is displayed to download native,txt,tiff file for selected document");
+				base.failedStep(
+						"download selection is not displayed to download native,txt,tiff file for selected document");
 			}
-		       
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while verifying download selection displayed.." + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
-	 * @Description: this method will download the required file format for selected document and verify downloaded or not from downloadedpath 
+	 * @Description: this method will download the required file format for selected
+	 *               document and verify downloaded or not from downloadedpath
 	 * @param downloadPpath
-	 * @param downloadFormat1(if want to download one or two give the name and  give remaining as null)
+	 * @param downloadFormat1(if want to download one or two give the name and give
+	 *                           remaining as null)
 	 * @param downloadFormat2
 	 * 
 	 */
-	public void downloadSelectedFormats(String downloadPpath,String downloadFormat1, String downloadFormat2) {
+	public void downloadSelectedFormats(String downloadPpath, String downloadFormat1, String downloadFormat2) {
 
 		List<String> list = new ArrayList<String>();
 		list.add(downloadFormat1);
 		list.add(downloadFormat2);
-		
 
 		Map<String, String> formatAndfileNames = new HashMap<String, String>();
 		formatAndfileNames.put("TIFF 1", "tif");
@@ -21165,8 +21172,7 @@ public class DocViewPage {
 		}
 
 		for (String Selectedoption : list) {
-			if(Selectedoption!=null) {
-				
+			if (Selectedoption != null) {
 
 				for (String DownloadOption : forMatKey) {
 
@@ -21177,8 +21183,8 @@ public class DocViewPage {
 						base.waitTime(5);
 						base.waitForElement(getDOcViewDoc_DownloadOption(DownloadOption));
 						Actions ac = new Actions(driver.getWebDriver());
-						ac.moveToElement(getDOcViewDoc_DownloadOption(DownloadOption).getWebElement()).click().perform();
-								
+						ac.moveToElement(getDOcViewDoc_DownloadOption(DownloadOption).getWebElement()).click()
+								.perform();
 
 						base.waitTime(5);
 						File file = new File(downloadPpath);
@@ -21210,14 +21216,12 @@ public class DocViewPage {
 						}
 						break;
 
-						
 					}
 
 				}
 			}
 		}
 	}
-
 
 
 	/**
@@ -21240,7 +21244,7 @@ public class DocViewPage {
 		}
 		return dataList1;
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @param redactionCount
@@ -21278,10 +21282,11 @@ public class DocViewPage {
 			base.stepInfo(tagName + " : Redaction tag is Not Displayed");
 		}
 		return flag;
-  }
-  
-/*
+	}
+
+	/*
 	 * @author Indium-Baskar date: 18/01/2022 Modified date:N/A
+	 * 
 	 * @Description: This method used to verify comment without save and Next
 	 * 
 	 */
@@ -21304,10 +21309,11 @@ public class DocViewPage {
 		}
 		driver.waitForPageToBeReady();
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 18/01/2022 Modified date:N/A
-	 * @Description: This method used to validate save and next button for audio & non-audio docs
+	 * @Description: This method used to validate save and next button for audio &
+	 *               non-audio docs
 	 * 
 	 */
 
@@ -21355,14 +21361,13 @@ public class DocViewPage {
 		System.out.println("Document Viewing Panel Shows the Default View of Document Selected From MiniDoc List");
 		base.stepInfo("Document Viewing Panel Shows the Default View of Document Selected From MiniDoc List");
 	}
-	
-	
+
 	/**
 	 * @author Mohan.Venugopal Created Date: 18/1/2022
 	 * @description To verify highlightining text without clicking the eyeIcon
 	 */
 	public String getPersistentHitWithoutClickingEyeIcon(String searchString) throws InterruptedException {
-		
+
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -21371,7 +21376,6 @@ public class DocViewPage {
 		}), Input.wait60);
 		Thread.sleep(3000);
 
-		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getHitPanels().Visible();
@@ -21391,9 +21395,8 @@ public class DocViewPage {
 			}
 
 		}
-		 softAssertion.assertTrue(flag);
-		 driver.getWebDriver().navigate().refresh();
+		softAssertion.assertTrue(flag);
+		driver.getWebDriver().navigate().refresh();
 		return Phit;
 	}
 }
-

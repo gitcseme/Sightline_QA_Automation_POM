@@ -1161,25 +1161,27 @@ public class DocViewRedactions {
 	public ElementCollection getHitPanelCollection() {
 		return driver.FindElementsByXPath("//p[contains(@id,'PHitCount')]");
 	}
-	
+
 	public Element audioRemarksBtn() {
-		return driver.FindElementById("remarks-btn-audio-view");}
-	
+		return driver.FindElementById("remarks-btn-audio-view");
+	}
+
 	public Element addAudioRemarks() {
-		return driver.FindElementById("audAddRemark");}
-	
+		return driver.FindElementById("audAddRemark");
+	}
+
 	public Element getManageTab() {
 		return driver.FindElementByXPath("//a[@name='Manage']");
 	}
-	
+
 	public Element getAssignDropDown() {
 		return driver.FindElementByXPath("//a[@name='Assignments']");
 	}
-	
+
 	public Element getDocView_EyePageTrems() {
 		return driver.FindElementById("PHitCount_t");
 	}
-	
+
 	public Element getDocHighlightedCount(String term) {
 		return driver.FindElementByXPath("//a[@class='up']//following-sibling::span[@data-custom-id='" + term + "']");
 	}
@@ -1188,6 +1190,7 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath(
 				"//p[contains(@id,'PHitCount')]//following-sibling::span[@data-custom-id='" + term + "']");
 	}
+
 	
 	// added by krishna
 	
@@ -1198,6 +1201,7 @@ public class DocViewRedactions {
 	
 	public Element get_PrintIcon() {
 		return driver.FindElementById("print_divDocViewer");}
+	
 	
 	
 	public DocViewRedactions(Driver driver) {
@@ -2416,7 +2420,7 @@ public class DocViewRedactions {
 	 * times to make the method robust
 	 */
 
-	public void assignAccesstoSGs(String securityGroup1, String securityGroup2) throws Exception {
+	public void assignAccesstoSGs(String securityGroup1, String securityGroup2, String user) throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
@@ -2424,7 +2428,7 @@ public class DocViewRedactions {
 		driver.waitForPageToBeReady();
 		actions.moveToElement(userTextInput().getWebElement());
 		actions.click();
-		actions.sendKeys(Input.rmu2userName);
+		actions.sendKeys(user);
 		actions.build().perform();
 		actions.moveToElement(userFiletersBtn().getWebElement());
 		actions.click().build().perform();
@@ -2446,6 +2450,47 @@ public class DocViewRedactions {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		Thread.sleep(3000);
+		base.passedStep(
+				"Given access for these SG's " + securityGroup1 + " " + securityGroup2 + "  for this user" + user);
+	}
+	
+	/*
+	 * Steffy 18/01/2022 Method for assigning access to RMU user for newly
+	 * created SGs From PA user provide access to SGs for RMU-- Needed few wait
+	 * times to make the method robust
+	 */
+
+	public void assignAccesstoSGs(String securityGroup1, String user) throws Exception {
+		Actions actions = new Actions(driver.getWebDriver());
+		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		base = new BaseClass(driver);
+		driver.waitForPageToBeReady();
+		actions.moveToElement(userTextInput().getWebElement());
+		actions.click();
+		actions.sendKeys(user);
+		actions.build().perform();
+		actions.moveToElement(userFiletersBtn().getWebElement());
+		actions.click().build().perform();
+		Thread.sleep(Input.wait3);
+		driver.waitForPageToBeReady();
+		wait.until(ExpectedConditions.elementToBeClickable(userEditBtn().getWebElement()));
+		actions.moveToElement(userEditBtn().getWebElement());
+		actions.click();
+		actions.build().perform();
+		Thread.sleep(Input.wait3);
+		driver.scrollingToBottomofAPage();
+		Select selectSG = new Select(userSelectSecurityGroup().getWebElement());
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		selectSG.selectByVisibleText(securityGroup1);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+		Thread.sleep(2000); // needed for selecting 2 SGs simultaniously
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+		Thread.sleep(3000);
+		base.passedStep(
+				"Given access for these SG's " + securityGroup1 + "  for this user" + user);
 	}
 
 	/*
@@ -2530,12 +2575,12 @@ public class DocViewRedactions {
 				Element element = getRedactionPopup();
 				try {
 					if (!element.Stale()) {
-						base.failedStep("Redaction is saved");
+						base.failedStep("Redaction is saved and it is displayed");
 					} else {
-						base.passedStep("Redaction is not saved");
+						base.passedStep("Redaction is not saved and it is not displayed");
 					}
 				} catch (Exception e) {
-					base.passedStep("Redaction is not saved");
+					base.passedStep("Redaction is not saved and it is not displayed");
 
 				}
 			}
@@ -3372,10 +3417,9 @@ public class DocViewRedactions {
 		} else {
 			base.failedStep("Default Redaction Tag not selected by default");
 		}
-		
-		
+
 	}
-	
+
 	public void clickingAudioRemarksIcon() throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3386,12 +3430,12 @@ public class DocViewRedactions {
 		audioRemarksBtn().waitAndClick(30);
 
 	}
-	
+
 	/*
-	 * @author Steffy
-	 * Method to validate persistent hit panel against doc highlighted count
+	 * @author Steffy Method to validate persistent hit panel against doc
+	 * highlighted count
 	 */
-	
+
 	public void validatePersistentPanelHitCountAgainstDocHighlightedCount(String term) {
 		Robot robot;
 		try {
@@ -3418,6 +3462,7 @@ public class DocViewRedactions {
 		base.passedStep("Keyword highlighted count in document is same as persistent hit panel count");
 	}
 	
+
 	// Added by krishna - disabling print toggle for assignment after going into edit
 	
 	public void DisablePrintToggleinAssignment() {
@@ -3436,6 +3481,5 @@ public class DocViewRedactions {
 		base.VerifySuccessMessage("Assignment updated successfully");
 	}
 
-	
 
 }
