@@ -1189,6 +1189,17 @@ public class DocViewRedactions {
 				"//p[contains(@id,'PHitCount')]//following-sibling::span[@data-custom-id='" + term + "']");
 	}
 	
+	// added by krishna
+	
+	public Element getAssgn_PrintPdfToggle() {
+		return driver.FindElementByXPath(
+				"//*[@id='AdditionalPreferences_IsAllowPDFPrinting']/following-sibling::i");
+	}
+	
+	public Element get_PrintIcon() {
+		return driver.FindElementById("print_divDocViewer");}
+	
+	
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements
@@ -3407,6 +3418,24 @@ public class DocViewRedactions {
 		base.passedStep("Keyword highlighted count in document is same as persistent hit panel count");
 	}
 	
+	// Added by krishna - disabling print toggle for assignment after going into edit
+	
+	public void DisablePrintToggleinAssignment() {
+		base = new BaseClass(driver);
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		base.waitTillElemetToBeClickable(getAssgn_PrintPdfToggle());
+		String analyticalPanelFlag = getAssgn_PrintPdfToggle().GetAttribute("class");
+		if (!analyticalPanelFlag.contains("false")) {
+			getAssgn_PrintPdfToggle().waitAndClick(10);
+		}
+
+		driver.scrollPageToTop();
+		base.waitForElement(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(5);
+		base.VerifySuccessMessage("Assignment updated successfully");
+	}
+
 	
 
 }
