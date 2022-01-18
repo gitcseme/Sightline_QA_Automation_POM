@@ -2680,6 +2680,9 @@ public class DocViewPage {
 		return driver
 				.FindElementsByXPath("//table[@id='dtDocumentConceptuallySimilar']//tr//td[contains(text(),'ID')]");
 	}
+	public Element getViewCodingCloseButton() {
+		return driver.FindElementByXPath("//div[@id='viewCodingStamp']//following::div[@class='ui-dialog-buttonset']//button[text()='Close']");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -21088,6 +21091,55 @@ public class DocViewPage {
 			base.stepInfo(tagName + " : Redaction tag is Not Displayed");
 		}
 		return flag;
+  }
+  
+/*
+	 * @author Indium-Baskar date: 18/01/2022 Modified date:N/A
+	 * @Description: This method used to verify comment without save and Next
+	 * 
+	 */
+	public void validateWithoutEditUsingSaveAndNext() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_CodingFormComments());
+		getDocView_CodingFormComments().Clear();
+		codingFormSaveAndNext();
+		if (getCodingFormValidErrorMeta().isElementAvailable(2)) {
+			try {
+				if (getCodingFormValidErrorMeta().isDisplayed()) {
+					base.stepInfo("Coding form validation error message displayed");
+					base.passedStep("Application not allowed to save without passing required field");
+				} else {
+					base.failedStep("Error message not displayed");
+				}
+			} catch (Exception e) {
+				base.failedStep("Error message not displayed");
+			}
+		}
+		driver.waitForPageToBeReady();
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 18/01/2022 Modified date:N/A
+	 * @Description: This method used to validate save and next button for audio & non-audio docs
+	 * 
+	 */
+
+	public void verifyAfterImpersoanteAudioNonAudioDocs() {
+		driver.waitForPageToBeReady();
+		base.stepInfo("Performing action in Parent window");
+		base.stepInfo("Validation for audio document");
+		validateWithoutEditUsingSaveAndNext();
+		base.stepInfo("Validation for non-audio document");
+		for (int i = 20; i <= 20; i++) {
+			getClickDocviewID(i).waitAndClick(5);
+			driver.waitForPageToBeReady();
+		}
+		clickGearIconOpenCodingFormChildWindow();
+		base.stepInfo("Performing action in Child window");
+		String parent = switchTochildWindow();
+		switchToNewWindow(2);
+		validateWithoutEditUsingSaveAndNext();
+		childWindowToParentWindowSwitching(parent);
 	}
 
 	/*

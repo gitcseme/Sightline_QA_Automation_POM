@@ -1451,6 +1451,10 @@ public class SessionSearch {
 	public Element getPersistantHitCheckBox() {
 		return driver.FindElementByXPath("sdz");
 	}
+	
+	public Element getDocViewActionGerman() {
+		return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[contains(.,'Dokumentviewer')]");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -2719,6 +2723,37 @@ public class SessionSearch {
 		Thread.sleep(2000); // App Synch
 
 		getDocViewAction().waitAndClick(10);
+		base.waitTime(3); // added for stabilization
+
+		System.out.println("Navigated to docView to view docs");
+		UtilityLog.info("Navigated to docView to view docs");
+
+	}
+	
+	/**
+	*  modified the same available method for german locale
+	* @throws InterruptedException
+	*/
+	public void ViewInDocViewGerman() throws InterruptedException {
+
+		if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(5);
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkActionButton().Visible();
+			}
+		}), Input.wait30);
+		Thread.sleep(2000); // App synch
+		getBulkActionButton().waitAndClick(5);
+		Thread.sleep(2000); // App Synch
+
+		getDocViewActionGerman().waitAndClick(10);
 		base.waitTime(3); // added for stabilization
 
 		System.out.println("Navigated to docView to view docs");

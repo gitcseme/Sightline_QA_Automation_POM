@@ -80,6 +80,7 @@ public class DocView_CodingForm_Regression {
 	String assignThree = "Assignment" + Utility.dynamicNameAppender();
 	String assignFour = "Assignment" + Utility.dynamicNameAppender();
 	String assignFive = "Assignment" + Utility.dynamicNameAppender();
+	String assign = "Assignment" + Utility.dynamicNameAppender();
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -8852,6 +8853,116 @@ public class DocView_CodingForm_Regression {
 
 	}
 	
+	/**
+	 * @Author : Baskar date:18/01/22 Modified date: NA Modified by: Baskar
+	 * @Description : Verify after impersonation on click of 'Save' button coding 
+	 *                form should be validated in context of an assignment
+	 */
+	@Test(enabled = true,dataProvider = "rmuDauSauLogin", groups = { "regression" }, priority = 196)
+	public void validateAfterImpersonateCodingForm(String fullName, String userName, String password,String impersonate) throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		codingForm=new CodingForm(driver);
+		assignmentPage=new AssignmentsPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-51191");
+		baseClass.stepInfo("Verify after impersonation on click of 'Save' "
+				+ "button coding form should be validated in context of an assignment");
+
+		String cf = "cfName" + Utility.dynamicNameAppender();
+		String rmu="RMU";
+		
+		loginPage.loginToSightLine(userName, password);
+		// Login As 
+		if (fullName.contains(rmu)) {
+//			 searching document for assignment creation
+			codingForm.commentRequired(cf);
+			sessionSearch.basicContentSearch(Input.searchString2);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assign,cf);
+			System.out.println(assign);
+			assignmentPage.toggleCodingStampEnabled();
+			assignmentPage.addReviewerAndDistributeDaPa();
+		}
+		if (fullName.equalsIgnoreCase("pa")||fullName.equalsIgnoreCase("sa")||fullName.equalsIgnoreCase("RMU")) {
+			baseClass.credentialsToImpersonateAsRMUREV(fullName, impersonate);
+			docViewPage.selectAssignmentfromDashborad(assign);
+			docViewPage.validateWithoutEditUsingSave();
+		}
+
+		// logout
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @Author : Baskar date: 18/01/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Coding Form Child Window: Verify coding form objects should be 
+	 *              displayed on edit coding stamp in context of security group
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 197)
+	public void validateFromSGCodingStampViewCoding() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion=new SoftAssert();
+		codingForm=new CodingForm(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52053");
+		baseClass.stepInfo("Coding Form Child Window: Verify coding form objects should be "
+				+ "displayed on edit coding stamp in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
+		
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+		
+		// stamp saving as Prerequisites
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		// opening child window(Coding form)
+		baseClass.stepInfo("performing action in coding form child window");
+	    docViewPage.clickGearIconOpenCodingFormChildWindow();
+	    docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		docViewPage.pencilGearIconCF(Input.stampSelection);
+		docViewPage.closeWindow(1);
+		 docViewPage.switchToNewWindow(1);
+		driver.waitForPageToBeReady();
+		if (docViewPage.getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()) {
+			baseClass.passedStep("Coding stamp applied colour displayed in popup");
+		} else {
+			baseClass.failedStep("Coding stamp applied colour not displayed in popup");
+		}
+		docViewPage.clickViewCodingButton();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
+		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
+		String actual = docViewPage.getDocumentsCommentViewCoding().GetAttribute("value");
+		softAssertion.assertEquals(comment, actual);
+		baseClass.stepInfo("verify viewcodingstamp popup saved value is successfully displayed ");
+		docViewPage.getViewCodingCloseButton().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getDeletePopUpAssignedColour());
+		docViewPage.getDeletePopUpAssignedColour().waitAndClick(10);
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
 	
 	
 	@DataProvider(name = "paToRmuRev")
@@ -8881,6 +8992,14 @@ public class DocView_CodingForm_Regression {
 		return new Object[][] { 
 				{  "sa", Input.sa1userName, Input.sa1password,"rmu"} ,
 				{  "sa", Input.sa1userName, Input.sa1password,"rev"  }
+				};
+	}
+	@DataProvider(name = "rmuDauSauLogin")
+	public Object[][] userRmuDaSa() {
+		return new Object[][] { 
+				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password,"null"},
+				{ "sa", Input.da1userName, Input.da1password,"rmu" } ,
+				{ "pa",Input.pa1userName, Input.pa1password,"rmu"}
 				};
 	}
 

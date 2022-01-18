@@ -21,6 +21,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
+import pageFactory.MiniDocListPage;
 import pageFactory.ProductionPage;
 import pageFactory.ProjectFieldsPage;
 import pageFactory.RedactionPage;
@@ -7226,7 +7227,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		public void AvailabilityOfDeleteOptionInDraftMode() throws Exception {
 
 			UtilityLog.info(Input.prodPath);
-			base.stepInfo("RPMXCON-47775 -Production Sprint 09");
+			base.stepInfo("RPMXCON-47775 -Production Sprint 10");
 			base.stepInfo("To Verify the availability of 'Delete' Option in drop down action menu For(Draft Mode");
 			String productionname = "p" + Utility.dynamicNameAppender();
 			String tagname = "Tag" + Utility.dynamicNameAppender();
@@ -7263,7 +7264,7 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		public void PDFDocumentDisplayedInProduction() throws Exception {
 
 			UtilityLog.info(Input.prodPath);
-			base.stepInfo("RPMXCON-48271 -Production Sprint 09");
+			base.stepInfo("RPMXCON-48271 -Production Sprint 10");
 			base.stepInfo(
 					"To Verify Produced PDFs should be available for being presented in the DocView for the document");
 
@@ -7314,7 +7315,170 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			
 
 		}
-		
+		/**
+		 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-47749
+		 * @Description:Admin able to view production guard information on the self production wizard
+		 */
+	    @Test(groups = { "regression" }, priority = 97)
+		public void verifyProductionGuardInformation() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			base.stepInfo("RPMXCON-47749 -Production Sprint 10");
+
+			base.stepInfo("Admin able to view production guard information on the self production wizard");
+			String testData1 = Input.testData1;
+			String tagname = Input.randomText + Utility.dynamicNameAppender();
+
+			// Pre-requisites
+			// create folder
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			
+
+			// search for folder
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch = new SessionSearch(driver);
+		   int	purehit=sessionSearch.basicContentSearch(testData1);
+			sessionSearch.bulkTagExisting(tagname);
+
+			ProductionPage page = new ProductionPage(driver);
+			productionname = "p" + Utility.dynamicNameAppender();
+			String beginningBates = page.getRandomNumber(2);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.getTIFFChkBox().waitAndClick(10);
+			driver.scrollingToBottomofAPage();
+			
+			page.getTIFFTab().waitAndClick(10);
+			
+			page.fillingPrivledgedDocForPDFSection(tagname,  Input.tagNamePrev);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionWithTag(tagname);
+			page.navigateToNextSection();
+			
+			
+		   page.AddRuleAndRemoveRule(tagname);
+			
+			base.waitTillElemetToBeClickable(page.getRemoveLink());
+			page. getRemoveLink().Click();
+			   
+			 if(page.getTags().isDisplayed()) {
+				   base.failedStep("rules popup screen is displayed");
+			   }else {base.passedStep("Rules popup screen is not displayed as expected");}
+			   
+			 page.AddRuleAndRemoveRule(tagname);
+			String Doc=page.getDocumentSelectionLink().getText();
+			base.stepInfo("Navigating to Docview page");
+			
+			base.digitCompareEquals(purehit, Integer.parseInt(Doc),
+					"Priv guard and purehit Documents count are equal",
+					"Priv guard and purehit Documents count are not  equal");
+			
+			
+			page.getDocView().waitAndClick(10);
+		    driver.waitForPageToBeReady();
+		    driver.scrollPageToTop();
+		   
+			MiniDocListPage	miniDocListPage = new MiniDocListPage(driver);
+			base.waitTillElemetToBeClickable(miniDocListPage.getDocumentCountFromDocView());
+			 driver.waitForPageToBeReady();
+			if(miniDocListPage.getDocumentCountFromDocView().Displayed()) {
+			String sizeofList = miniDocListPage. getDocumentCountFromDocView().getWebElement().getText();
+			driver.waitForPageToBeReady();
+			System.out.println("Doc view"+sizeofList);
+			
+			String[] doccount = sizeofList.split(" ");
+			String Document = doccount[1];
+			System.out.println("doclist page document count is"+Document);
+
+			base.digitCompareEquals(Integer.parseInt(Doc), Integer.parseInt(Document),
+					"Document count is equal as expected",
+					"Count Mismatches with the Documents");
+			}
+			for(int i=0;i<2;i++) {
+				driver.Navigate().back();
+			}
+			for(int i=0;i<3;i++) {
+			driver.waitForPageToBeReady();
+			page.getNextButton().waitAndClick(10);
+			}
+			String docCount = page.VerifyingDocListCountWithPrivGaurdCount();
+
+			DocListPage doc = new DocListPage(driver);
+			
+			base.stepInfo("Navigated  to doclist page and verifying the DocCount");
+			String DocumentCount = doc.verifyingDocCount();
+			
+			base.textCompareEquals(docCount, DocumentCount, "The document count is equal as expected",
+					"The document count is not equal as expected");
+          
+				
+	    }	
+			/**
+			 * @author Brundha Test case id-RPMXCON-55955
+			 * @Description Verify that RMU can access the Production by copying the Production URL if user is part of that security group/Project
+			 * 
+			 */
+			@Test(groups = { "regression" }, priority = 98)
+			public void verifyingProductionPageAccessUsingSecurityGroup() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+				base.stepInfo("RPMXCON-55955 -Production Sprint 10");
+				base.stepInfo("Verify that RMU can access the Production by copying the Production URL if user is part of that security group/Project");
+				
+				base = new BaseClass(driver);
+				base.SelectSecurityGrp(Input.rmu1userName);
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				productionname = "p" + Utility.dynamicNameAppender();
+				String productionname1 = "p" + Utility.dynamicNameAppender();
+				
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page = new ProductionPage(driver);
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+				
+				driver.waitForPageToBeReady();
+				String currentURL=driver.getWebDriver().getCurrentUrl();
+				
+				
+				this.driver.getWebDriver().get(Input.url + "Production/Home");
+				driver.Navigate().refresh();
+				
+				
+				page = new ProductionPage(driver);
+				page.addANewProduction(productionname1);
+				page.fillingDATSection();
+				
+				driver.Navigate().to(currentURL);
+				driver.waitForPageToBeReady();
+				if(page.getBeginningBates().isDisplayed()) {
+					base.passedStep("Navigated to the previous  production URL as expected");
+				}else {
+					base.failedStep(" Not Navigated to the previous production URL as expected");
+				}
+				
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+				base = new BaseClass(driver);
+				base.SelectDefaultSecurityGrp(Input.rmu1userName);
+				loginPage.logout();
+				
+				
+				
+			}	
+				
 		
 		
 		

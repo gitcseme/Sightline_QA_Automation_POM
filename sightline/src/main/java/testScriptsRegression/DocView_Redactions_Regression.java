@@ -5833,6 +5833,78 @@ public class DocView_Redactions_Regression {
 		softAssert.assertAll();
 	}
 
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-49990 Description :Verify that when two different users applies redaction to same document 
+	 * then default selection of redaction tag should be as per users session.
+	 * @throws Exception 
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 66)
+	public void verifyRedactionTagSelectionAfterChangingUser() throws Exception {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case id : RPMXCON-49990");
+		baseClass.stepInfo("Verify default selection of redaction tag for same document with different users");
+
+		// Login as RMU and Performing basic search
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		// Adding search results and view in docview
+		sessionSearch.ViewInDocView();
+
+		// Clicking redact icon
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+
+		// verifying the default selection of redaction tag
+		docViewRedact.verifyDefaultRedactionTagSelectionInMultiPageRedact();
+
+		// getting one of the available redaction tag
+		List<String> availableTags = baseClass.availableListofElements(docViewRedact.availableTagsInMultiPageRedact());
+		String redactionTag = availableTags.get(2);
+
+		// performing multi page redaction include with different tag
+		docViewRedact.selectingMultiplePagesForRedactionInclude(redactionTag);
+		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
+		
+		baseClass.passedStep("Redaction done for Tag Name : " + redactionTag);
+		
+		//Logout and login as different user Reviewer
+		loginPage.logout();
+		baseClass.passedStep("Logged out as RMU");
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.passedStep("Logged in as other user- Reviewer");
+		
+		// Adding search results and perform action view in docview
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+
+		// Clicking redact icon
+		driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() throws Exception {
+		return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+
+		// verifying the default selection of redaction tag
+		docViewRedact.verifyDefaultRedactionTagSelectionInMultiPageRedact();
+
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
