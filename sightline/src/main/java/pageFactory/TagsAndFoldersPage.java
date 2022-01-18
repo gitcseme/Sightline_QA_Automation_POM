@@ -347,6 +347,63 @@ public class TagsAndFoldersPage {
 		return driver.FindElementByXPath("//a[@id='aReleaseTag']");
 	}
 
+	public Element getNewTagGroupAction() {
+		return driver.FindElementByXPath("//a[@id='aAddTagGroup']");
+	}
+
+	public Element getNewTagGroupPopup() {
+		return driver.FindElementByXPath("//span[text()='Add Tag Group']");
+	}
+
+	public Element getEditTagGroupPopup() {
+		return driver.FindElementByXPath("//span[text()='Edit Tag Group']");
+	}
+
+	public Element getNewTagGroupInputTextBox() {
+		return driver.FindElementByXPath("//input[@id='txtTagGroupName']");
+	}
+
+	public Element getNewTagGroupSaveBtn() {
+		return driver.FindElementByXPath("//button[@id='btnAddTagGroup']");
+	}
+
+	public Element getUpdateTagGroupSaveBtn() {
+		return driver.FindElementByXPath("//button[@id='btnUpdateTagGroup']");
+	}
+
+	public Element getNewFOlderGroupAction() {
+		return driver.FindElementByXPath("//a[@id='aAddFolderGroup']");
+	}
+
+	public Element getNewFolderGroupInputTextBox() {
+		return driver.FindElementByXPath("//input[@id='txtFolderGroupName']");
+	}
+
+	public Element getNewFolderGroupSaveBtn() {
+		return driver.FindElementByXPath("//button[@id='btnAddFolderGroup']");
+	}
+
+	public Element getNewFolderGroupPopup() {
+		return driver.FindElementByXPath("//span[text()='New Folder Group']");
+	}
+
+	public Element getEditFolderGroup() {
+		return driver.FindElementByXPath("//a[@id='aEditFolderFolderGroup']");
+	}
+
+	public Element getEditFolderGroupPopup() {
+		return driver.FindElementByXPath("//span[text()='Edit Folder Group']");
+	}
+
+	public Element getUpdateFolderGroupSaveBtn() {
+		return driver.FindElementByXPath("//button[@id='btnUpdateFolderGroup']");
+	}
+
+	// a[@class='jstree-anchor tag-groups' and text()='Check']
+	// getTagNameDataCon
+
+	////
+
 	public Element getBulkRelDefaultSecurityGroup_CheckBox(String SG) {
 		return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='" + SG + "']/../div[1]/label/i");
 	}
@@ -831,8 +888,9 @@ public class TagsAndFoldersPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		base.VerifySuccessMessage("Tag deleted successfully");
-		base.CloseSuccessMsgpopup();
+		// driver.waitForPageToBeReady();
+		// base.VerifySuccessMessage("Tag deleted successfully");
+		// base.CloseSuccessMsgpopup();
 
 		Reporter.log(strtag + "tag delete Successful", true);
 		UtilityLog.info("Tag deleted Successfully");
@@ -1922,16 +1980,19 @@ public class TagsAndFoldersPage {
 	 * @author Raghuram.A
 	 */
 	public void selectActionArrow(String actionType) {
-		try {
-			driver.scrollPageToTop();
-			new Actions(driver.getWebDriver()).moveToElement(rightarrow().getWebElement()).click();
-			rightarrow().waitAndClick(10);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		driver.scrollPageToTop();
+		base.waitTime(2); // to handle abnormal waits
+		driver.waitForPageToBeReady();
+		rightarrow().waitAndClick(10);
+		base.waitTime(2);
+		driver.waitForPageToBeReady();
 
 		if (actionType.equalsIgnoreCase("Bulk release")) {
 			getBulkReleaseAction().waitAndClick(5);
+		} else if (actionType.equalsIgnoreCase("New Tag Group")) {
+			getNewTagGroupAction().waitAndClick(5);
+		} else if (actionType.equalsIgnoreCase("Edit")) {
+			getEditClick().waitAndClick(5);
 		}
 	}
 
@@ -2090,6 +2151,217 @@ public class TagsAndFoldersPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("The Count of Document is Not As Expected" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Raghuram.A date: 01/18/21 NA Modified date: N/A Modified by:
+	 */
+	public void createTagGroup(String securityGroup, String tagGroupName, String verifyNotification,
+			Boolean additionalValue) {
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		driver.waitForPageToBeReady();
+
+		getTagsTab().waitAndClick(10);
+		// Select root all
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAllTagRoot().Visible();
+			}
+		}), Input.wait30);
+		getAllTagRoot().waitAndClick(10);
+
+		selectActionArrow("New Tag Group");
+
+		if (getNewTagGroupPopup().isElementAvailable(2)) {
+			System.out.println("Create new tag group pop-up opened");
+
+			getNewTagGroupInputTextBox().SendKeys(tagGroupName);
+			getNewTagGroupSaveBtn().waitAndClick(3);
+
+			if (verifyNotification.equalsIgnoreCase("Success")) {
+				base.VerifySuccessMessage("Tag group added successfully");
+			}
+		}
+
+		driver.waitForPageToBeReady();
+		if (getTagNameDataCon(tagGroupName).isElementAvailable(5)) {
+			System.out.println("Created Tag Group : " + tagGroupName + " is available");
+			base.stepInfo("Created Tag Group : " + tagGroupName + " is available");
+		}
+
+	}
+
+	/**
+	 * @author Raghuram.A date: 01/18/21 NA Modified date: N/A Modified by:
+	 */
+	public void editTagGroup(String securityGroup, String selectTagName, String retagGroupName,
+			String verifyNotification, Boolean additionalValue) {
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		driver.waitForPageToBeReady();
+
+		getTagsTab().waitAndClick(10);
+		// Select root all
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAllTagRoot().Visible();
+			}
+		}), Input.wait30);
+		getAllTagRoot().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		if (getTagNameDataCon(selectTagName).isElementAvailable(5)) {
+			base.stepInfo("Created Tag Group : " + selectTagName + " is available");
+		}
+
+		getTagNameDataCon(selectTagName).waitAndClick(5);
+		selectActionArrow("Edit");
+
+		if (getEditTagGroupPopup().isElementAvailable(4)) {
+			System.out.println("Edit Popup opened");
+
+			getNewTagGroupInputTextBox().SendKeys(retagGroupName);
+			getUpdateTagGroupSaveBtn().waitAndClick(3);
+
+			if (verifyNotification.equalsIgnoreCase("Success")) {
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage("Tag group updated successfully");
+			}
+			base.stepInfo("TagGroup name updated successfully : " + retagGroupName);
+			System.out.println("TagGroup name updated successfully : " + retagGroupName);
+		}
+
+	}
+
+	/**
+	 * @author Raghuram.A date: 01/18/21 NA Modified date: N/A Modified by:
+	 */
+	public void deleteAllTagsGroups(String tagName, String verifyNotification) {
+		base.waitForElement(getTagsTab());
+		getTagsTab().waitAndClick(5);
+		List<String> elementNames = new ArrayList<>();
+		elementNames = base.availableListofElements(getAllTagsOrFolder(tagName));
+		System.out.println(elementNames.size());
+		System.out.println(elementNames);
+		for (int i = 1; i <= elementNames.size(); i++) {
+			driver.scrollingToElementofAPage(getTagOrFolder(tagName));
+			base.waitTillElemetToBeClickable(getTagOrFolder(tagName));
+			getTagOrFolder(tagName).waitAndClick(5);
+			System.out.println(getTagOrFolder(tagName).GetAttribute("class"));
+			if (getTagOrFolder(tagName).GetAttribute("class").contains("jstree-clicked")) {
+				driver.scrollPageToTop();
+				base.waitForElement(getTagActionDropDownArrow());
+				getTagActionDropDownArrow().waitAndClick(5);
+				base.waitForElement(getDeleteTag());
+				getDeleteTag().waitAndClick(10);
+				base.getYesBtn().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				if (verifyNotification.equalsIgnoreCase("Success")) {
+					base.VerifySuccessMessage("Tag group deleted successfully");
+					base.CloseSuccessMsgpopup();
+				}
+			}
+		}
+	}
+
+	/**
+	 * @author Raghuram.A date: 01/18/21 NA Modified date: N/A Modified by:
+	 */
+	public void createFolderGroup(String securityGroup, String folderGroupName, String verifyNotification,
+			Boolean additionalValue) {
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		driver.waitForPageToBeReady();
+
+		getFoldersTab().waitAndClick(10);
+		// Select root all
+		getAllFolderRoot().waitAndClick(10);
+
+		getFolderActionDropDownArrow().waitAndClick(10);
+		base.waitTime(3); // To handle abnormal loading
+		driver.waitForPageToBeReady();
+		getNewFOlderGroupAction().waitAndClick(5);
+
+		if (getNewFolderGroupPopup().isElementAvailable(2)) {
+			System.out.println("Create new tag group pop-up opened");
+
+			getNewFolderGroupInputTextBox().SendKeys(folderGroupName);
+			getNewFolderGroupSaveBtn().waitAndClick(3);
+
+			if (verifyNotification.equalsIgnoreCase("Success")) {
+				base.VerifySuccessMessage("Folder group added successfully");
+			}
+		}
+
+		driver.waitForPageToBeReady();
+		if (getTagNameDataCon(folderGroupName).isElementAvailable(5)) {
+			System.out.println("Created Folder Group : " + folderGroupName + " is available");
+			base.stepInfo("Created Folder Group : " + folderGroupName + " is available");
+		}
+
+	}
+
+	/**
+	 * @author Raghuram.A date: 01/18/21 NA Modified date: N/A Modified by:
+	 */
+	public void editFolderGroup(String securityGroup, String selectFolderName, String reFolderGroupName,
+			String verifyNotification, Boolean additionalValue) {
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		driver.waitForPageToBeReady();
+
+		getFoldersTab().waitAndClick(10);
+		// Select root all
+		getAllFolderRoot().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		if (getTagNameDataCon(selectFolderName).isElementAvailable(5)) {
+			base.stepInfo("Created Folder Group : " + selectFolderName + " is available");
+		}
+
+		getTagNameDataCon(selectFolderName).waitAndClick(5);
+		getFolderActionDropDownArrow().waitAndClick(10);
+		base.waitTime(3);
+		driver.waitForPageToBeReady();
+		getEditFolderGroup().waitAndClick(5);
+
+		if (getEditFolderGroupPopup().isElementAvailable(4)) {
+			System.out.println("Edit Popup opened");
+
+			getNewFolderGroupInputTextBox().SendKeys(reFolderGroupName);
+			getUpdateFolderGroupSaveBtn().waitAndClick(3);
+
+			if (verifyNotification.equalsIgnoreCase("Success")) {
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage("Folder group updated successfully");
+			}
+			base.stepInfo("Folder name updated successfully : " + reFolderGroupName);
+			System.out.println("Folder name updated successfully : " + reFolderGroupName);
+		}
+
+	}
+
+	/**
+	 * @author Raghuram.A date: 01/18/21 NA Modified date: N/A Modified by:
+	 */
+	public void deleteAllFolderGroup(String folderName, String verifyNotification) {
+		base.waitForElement(getFoldersTab());
+		getFoldersTab().waitAndClick(5);
+		for (int i = 1; i <= getAllTagsOrFolder(folderName).size(); i++) {
+			base.waitTillElemetToBeClickable(getTagOrFolder(folderName));
+			getTagOrFolder(folderName).waitAndClick(5);
+			if (getTagOrFolder(folderName).GetAttribute("class").contains("jstree-clicked")) {
+				driver.scrollPageToTop();
+				base.waitForElement(getFolderActionDropDownArrow());
+				getFolderActionDropDownArrow().waitAndClick(5);
+				base.waitForElement(getDeleteFolder());
+				getDeleteFolder().waitAndClick(5);
+				base.waitForElement(base.getYesBtn());
+				base.getYesBtn().waitAndClick(5);
+				driver.waitForPageToBeReady();
+				if (verifyNotification.equalsIgnoreCase("Success")) {
+					base.VerifySuccessMessage("Folder group deleted successfully");
+					base.CloseSuccessMsgpopup();
+				}
+			}
 		}
 	}
 
