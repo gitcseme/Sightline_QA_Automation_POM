@@ -1833,6 +1833,85 @@ public class BatchRedactionRegression3 {
 		login.logout();
 	}
 
+	/**
+	 * @author Jeevitha
+	 * @Description :Verify that when redaction occurance is present on same page
+	 *              more than once then on rollback orphanredaction tag should not
+	 *              be created(RPMXCON-53510)
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
+	public void verifyOrphanRedactioTagAfterRollBack() throws Exception {
+		String searchName = "Search Name" + Utility.dynamicNameAppender();
+		String tagName = "Tag Name" + Utility.dynamicNameAppender();
+		String componentBR = "Component Batch Redaction";
+		DocViewPage docview = new DocViewPage(driver);
+		RedactionPage redact = new RedactionPage(driver);
+
+		base.stepInfo("Test case Id:RPMXCON-53510");
+		base.stepInfo(
+				"Verify that when redaction occurance is present on same page more than once then on rollback orphanredaction tag should not be created");
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// creating the redaction tag
+		redact.AddRedaction(tagName, "RMU");
+
+		// Create saved search
+		int purehit = session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(tagName, "Yes");
+
+		// verify History status
+		batch.verifyBatchHistoryStatus(searchName);
+
+		// selecting the Configured Saved search
+		saveSearch.savedSearchToDocView(searchName);
+
+		// verifying redaction panel
+		docview.verifyPanel();
+
+		// getting the total count of redaction
+		int redactionCount = docview.getRedactionCount(docview.getComponentBatchRedactionsRatioCount(),
+				"Component Batch Redaction");
+
+		// verifying the presence of redaction tag
+		docview.verifyPresenceOfOrphanRedactionTag(redactionCount, tagName,
+				docview.componentBatchredactionForwardNavigate());
+
+		// Rollbacking the select savedSearch
+		batch.loadBatchRedactionPage(searchName);
+		driver.scrollingToBottomofAPage();
+		batch.verifyRollback(searchName, "Yes");
+
+		// selecting the rollBacked Saved search
+		saveSearch.savedSearchToDocView(searchName);
+
+		// verifying redaction panel
+		docview.verifyPanel();
+
+		// getting the total count of redaction after rollback
+		int redactionCount1 = docview.getRedactionCount(docview.getComponentBatchRedactionsRatioCount(), componentBR);
+
+		// verifying the presence of redaction tag after rollBack
+		docview.verifyPresenceOfOrphanRedactionTag(redactionCount1, tagName,
+				docview.componentBatchredactionForwardNavigate());
+
+		// delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		// delete Redaction tag
+		redact.DeleteRedaction(tagName);
+
+		login.logout();
+
+	}
+	
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
