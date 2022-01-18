@@ -30,9 +30,11 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.ABMReportPage;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.BatchRedactionPage;
+import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
@@ -2963,7 +2965,7 @@ else {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	@Test(enabled = true, groups = { "regression" }, priority = 53)
 	public void verifyPersistentHitDisplayInUncompleteDocEditAssign() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51355");
@@ -3017,7 +3019,517 @@ else {
 		docView.getPersistantHitEyeIcon().waitAndClick(5);
 
 	}
+/**
+ * @author Jayanthi.ganesan
+ * @throws Exception
+ */
+	@Test(enabled = true, groups = { "regression" }, priority = 54)
+	public void verifyDocCount_ABM() throws Exception {
+		String SaveSaerchName = "ABMSaveSearch"+UtilityLog.dynamicNameAppender();
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
 
+		String assignmentName1 ="assgnment" + Utility.dynamicNameAppender();
+
+		UtilityLog.info("Logged in as RMU User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case Id:RPMXCON-51662");
+		baseClass.stepInfo("Validate document count on DocView from ABM report");
+
+		// Basic Search and Bulk Assign
+		sessionsearch.basicContentSearch(Input.testData1);
+		baseClass.stepInfo("Search for text input completed");
+		String Hits = sessionsearch.verifyPureHitsCount();
+		sessionsearch.saveSearch(SaveSaerchName);
+		sessionsearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		assignmentsPage.assignmentCreation(assignmentName1, Input.codeFormName);
+		assignmentsPage.add2ReviewerAndDistribute();
+		baseClass.stepInfo(assignmentName1 + "  Assignment Created and distributed ");
+		ABMReportPage AbmReportPage = new ABMReportPage(driver);
+		String DocCount_ABM = AbmReportPage.generateABM_Report(SaveSaerchName, assignmentName1, true);
+		System.out.println(DocCount_ABM);
+		AbmReportPage.ViewInDocView();
+		driver.waitForPageToBeReady();
+		DocViewPage dc = new DocViewPage(driver);
+		String ActualCount = dc.verifyDocCountDisplayed_DocView();
+		System.out.println(ActualCount);
+		softAssertion.assertEquals(Hits, ActualCount);
+		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName1);
+		softAssertion.assertAll();
+		baseClass.passedStep("Document count  matched with the filtered documents on DocView screen.");
+
+	}
+	
+	/**
+	 * Author : Mohan date: 12/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify after impersonation all hits of the document should be highlighted 
+	 * without clicking the eye icon when user redirects to doc view from advance search.'RPMXCON-51327' Sprint : 10
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 55)
+	public void verifyAfterImpersonationHitsOfDocsWithoutSaveQueryHighlightedWithoutClickingEyeIconFromAdvanceSearch() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51327");
+		baseClass.stepInfo(
+				"Verify after impersonation all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from advance search");
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		loginPage.logout();
+		
+		// login Reviewer
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
+		baseClass.impersonatePAtoRMU();
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		loginPage.logout();
+		
+		// login PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
+		baseClass.impersonatePAtoReviewer();
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		loginPage.logout();
+		
+		
+		// login SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		baseClass.impersonateSAtoRMU();
+
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		loginPage.logout();
+		
+		
+		// login SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating SA to Reviewer");
+		baseClass.impersonateSAtoReviewer();
+
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		
+		loginPage.logout();
+		
+		// login SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating SA to PA");
+		baseClass.impersonateSAtoPA();
+
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		
+	}
+	
+	/**
+	 * Author : Mohan date: 11/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify after impersonation all hits of the document should be
+	 *  highlighted without clicking the eye icon when user redirects to doc view from saved search.'RPMXCON-51328' Sprint : 10
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 56)
+	public void verifyAfterImpersonateHitsOfDocsHighlightedWithoutClickingEyeIcon() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51328");
+		baseClass.stepInfo(
+				"Verify after impersonation all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from saved search");
+		sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		docView = new DocViewPage(driver);
+		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic/advance search and save the search result and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch.savedSearchToDocView(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the Docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		loginPage.logout();
+		
+		// login SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+		
+		baseClass.stepInfo("Step 1: Impersonating SA to PA");
+		baseClass.impersonateSAtoPA();
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic/advance search and save the search result and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch.savedSearchToDocView(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the Docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		loginPage.logout();
+		
+		// login SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		baseClass.impersonateSAtoRMU();
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic/advance search and save the search result and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch.savedSearchToDocView(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the Docview successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		loginPage.logout();
+		
+		// login SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating SA to Reviewer");
+		baseClass.impersonateSAtoReviewer();
+
+		baseClass.stepInfo(
+				"Step 2: Search the documents with search term from basic/advance search and save the search result and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch.savedSearchToDocView(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the Docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		loginPage.logout();
+		
+		// login PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
+		baseClass.impersonatePAtoRMU();
+
+		baseClass.stepInfo(
+				"Step 2: Search the documents with search term from basic/advance search and save the search result and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch.savedSearchToDocView(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the Docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		loginPage.logout();
+		
+		// login PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
+		baseClass.impersonatePAtoReviewer();
+
+		baseClass.stepInfo(
+				"Step 2: Search the documents with search term from basic/advance search and save the search result and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch.savedSearchToDocView(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the Docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		
+		
+		
+		
+	}
+	
+	
+	/**
+	 * Author : Mohan date: 11/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify all hits of the document should be highlighted without 
+	 * clicking the eye icon when user redirects to doc view from Basic Search > doc list.'RPMXCON-51329' Sprint : 10
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 57)
+	public void verifyHitsOfDocsHighlightedWithoutClickingEyeIconBasicSearchDocList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51329");
+		baseClass.stepInfo(
+				"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from saved search");
+		sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		DocListPage docListPage = new DocListPage(driver);
+		docView = new DocViewPage(driver);
+		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
+		
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc list  Go to doc view from doc list");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		docListPage.selectingAllDocuments();
+		docListPage.docListToDocView();
+		baseClass.stepInfo("Basic Search is done and navigated to DocView successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("is");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		baseClass.selectproject();
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		docListPage.selectingAllDocuments();
+		docListPage.docListToDocView();
+		baseClass.stepInfo("Basic Search is done and navigated to DocView successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("is");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		
+		baseClass.selectproject();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		driver.waitForPageToBeReady();
+		savedSearch.savedSearchToDocList(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the DocList successfully");
+		driver.waitForPageToBeReady();
+		docListPage.selectingAllDocuments();
+		docListPage.docListToDocView();
+		baseClass.stepInfo("Basic Search is done and navigated to DocView successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("is");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		loginPage.logout();
+		
+		
+		// Login as REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
+		
+
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc list  Go to doc view from doc list");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		docListPage.selectingAllDocuments();
+		docListPage.docListToDocView();
+		baseClass.stepInfo("Basic Search is done and navigated to DocView successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		baseClass.selectproject();
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		docListPage.selectingAllDocuments();
+		docListPage.docListToDocView();
+		baseClass.stepInfo("Basic Search is done and navigated to DocView successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		
+		baseClass.selectproject();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch.savedSearchToDocList(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the DocList successfully");
+		driver.waitForPageToBeReady();
+		docListPage.selectingAllDocuments();
+		docListPage.docListToDocView();
+		baseClass.stepInfo("Basic Search is done and navigated to DocView successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("test");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		
+		loginPage.logout();
+		
+		// login PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc list  Go to doc view from doc list");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		docListPage.selectingAllDocuments();
+		docListPage.docListToDocView();
+		baseClass.stepInfo("Basic Search is done and navigated to DocView successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("is");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		baseClass.selectproject();
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		docListPage.selectingAllDocuments();
+		docListPage.docListToDocView();
+		baseClass.stepInfo("Basic Search is done and navigated to DocView successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("is");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		
+		
+		baseClass.selectproject();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch.savedSearchToDocList(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the DocList successfully");
+		driver.waitForPageToBeReady();
+		docListPage.selectingAllDocuments();
+		docListPage.docListToDocView();
+		baseClass.stepInfo("Basic Search is done and navigated to DocView successfully");
+		
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHitWithoutClickingEyeIcon("is");
+		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+
+		
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

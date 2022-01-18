@@ -159,13 +159,13 @@ public class TestData {
 	public String testTenthDocId;
 	public String docNearDupeDocId;
 	
-	
 	//Added by arunkumar
 	public String pageRange1;
 	public String pageRange2;
 	public String pageRange3;
 	public String pageRange4;
-
+	public String searchPhraseWithQuote;
+	
 
 	// Added by Raghuram - Last Modified 12/30/21
 	public String docHighlightColor;

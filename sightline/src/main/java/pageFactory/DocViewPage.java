@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1605,6 +1606,10 @@ public class DocViewPage {
 	}
 
 	// Added by Jeevitha
+	public Element selectedRedactionTag() {
+		return driver.FindElementByXPath("//select[@id='ddlRedactionTags']/option[@selected]");
+	}
+	
 	public Element getDocView_AllRedaction() {
 		return driver.FindElementByXPath("//div[@class='unselectable h6']");
 	}
@@ -2590,6 +2595,15 @@ public class DocViewPage {
 				"//dl[@id='ddlEditStamps']//ul//li[@id='" + colour + "']//a//i//..//span['Assigned']");
 	}
 
+////Added By arunkumar
+	public Element audioPersistentForwardNavigate() {
+		return driver.FindElementByXPath("//i[@class='fa fa-chevron-right']");
+	}
+
+	public Element audioPlayPauseIcon() {
+		return driver.FindElementByXPath("//i[@id='btnPlayPause']");
+	}
+
 	// Added by Vijaya.Rani
 	public Element docViewReviewerPage() {
 		return driver.FindElementById("RemarkPnl");
@@ -2633,22 +2647,41 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']//..//..//td[2][text()='" + text + "']");
 	}
-	
-	//Added by Gopinath  - 17/01/2022
+
+	// Added by Gopinath - 17/01/2022
 	public ElementCollection getRemarkHighlightedText() {
 		return driver.FindElementsByCssSelector("g[data-pcc-mark*='highlighttext'] rect");
 	}
+
 	public Element selectContentOfRemarkErrorMsg() {
 		return driver.FindElementByXPath("//p[text()='Please select content from a document to place remark on']");
 	}
+
 	public Element documentOnDocView() {
 		return driver.FindElementByXPath("//div[@class='igViewerGraphics']");
 	}
+
 	public Element getSelectedDocIdMiniDocList() {
-		return driver.FindElementByXPath("//table[@id='SearchDataTable']/tbody/tr/td/label/following-sibling::i[@class='fa fa-arrow-right']/../following-sibling::td[1]");
+		return driver.FindElementByXPath(
+				"//table[@id='SearchDataTable']/tbody/tr/td/label/following-sibling::i[@class='fa fa-arrow-right']/../following-sibling::td[1]");
 	}
+
 	public Element getDefaultTextViewSelected() {
-		return driver.FindElementByXPath("//li[@id='liDocumentDefaultView' and @class='ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active']");
+		return driver.FindElementByXPath(
+				"//li[@id='liDocumentDefaultView' and @class='ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active']");
+	}
+
+	// verfifying the docid on docview panal by passing required docid
+	public Element getDocViewPanelDocId(String docId) {
+		return driver.FindElementByXPath("//span[@id='activeDocumentId' and text()='" + docId + "']");
+	}
+
+	public ElementCollection getdtDocumentConceptuallySimilar() {
+		return driver
+				.FindElementsByXPath("//table[@id='dtDocumentConceptuallySimilar']//tr//td[contains(text(),'ID')]");
+	}
+	public Element getViewCodingCloseButton() {
+		return driver.FindElementByXPath("//div[@id='viewCodingStamp']//following::div[@class='ui-dialog-buttonset']//button[text()='Close']");
 	}
 	//verfifying the docid on docview panal by passing required docid
 		public Element getDocViewPanelDocId(String docId) {
@@ -2667,6 +2700,7 @@ public class DocViewPage {
 	public Element getDocViewDownload_SelectionOptions() {
 		return driver.FindElementByXPath("//ul[@id='documentTypeDropDown']/li[4]");
 	}
+
 
 	public DocViewPage(Driver driver) {
 
@@ -20736,77 +20770,80 @@ public class DocViewPage {
 		}
 	}
 
-	
 	/**
 	 * @author Gopinath
-	 * @Description : Method for clicking on text highlighted and verify remark is not added that not editable and clickable in doc view panel.
+	 * @Description : Method for clicking on text highlighted and verify remark is
+	 *              not added that not editable and clickable in doc view panel.
 	 */
 	public void verifyAlreadyRemarkedTextHighlightedNotRemarkAgain() {
 		try {
 			driver.waitForPageToBeReady();
-			List<WebElement> remarkHighlighterText =   getRemarkHighlightedText().FindWebElements();
-			
-			 try
-			    {
-			        WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 2);
-			        wait.until(ExpectedConditions.elementToBeClickable(remarkHighlighterText.get(0)));
-			        remarkHighlighterText.get(0).click();
-			        base.failedStep("Already remarked selected highlighted text is clickable and editable");
-			    }
-			    catch (Exception e)
-			    {
-			    	base.passedStep("Already remarked selected highlighted text is not clickable and editable");
-			    }
+			List<WebElement> remarkHighlighterText = getRemarkHighlightedText().FindWebElements();
+
+			try {
+				WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 2);
+				wait.until(ExpectedConditions.elementToBeClickable(remarkHighlighterText.get(0)));
+				remarkHighlighterText.get(0).click();
+				base.failedStep("Already remarked selected highlighted text is clickable and editable");
+			} catch (Exception e) {
+				base.passedStep("Already remarked selected highlighted text is not clickable and editable");
+			}
 			getNonAudioRemarkBtn().Click();
 			getAddRemarkbtn().Click();
 			selectContentOfRemarkErrorMsg().isElementAvailable(15);
-			if(selectContentOfRemarkErrorMsg().isDisplayed()) {
-				base.passedStep("Already selected text that remarked highlighted text is not able to add remark again successfully");
-			}else {
+			if (selectContentOfRemarkErrorMsg().isDisplayed()) {
+				base.passedStep(
+						"Already selected text that remarked highlighted text is not able to add remark again successfully");
+			} else {
 				base.failedStep("Already selected text that remarked highlighted text is able to add remark again");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while clicking on text highlighted and verify remark is not added that not editable and clickable in doc view panel." + e.getMessage());
+			base.failedStep(
+					"Exception occured while clicking on text highlighted and verify remark is not added that not editable and clickable in doc view panel."
+							+ e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : Method for verifying document in docview loaded in 4 sec
 	 */
 	public void verifyDocumentLoadedWithIn4Seconds() {
 		try {
-			driver.waitForPageToBeReady();;
+			driver.waitForPageToBeReady();
+			;
 			getDocView_Next().isElementAvailable(10);
 			getDocView_Next().Click();
 			long start = System.currentTimeMillis();
-			for(int i=0;i<500;i++) {
-				if(documentOnDocView().getWebElement().isDisplayed()&&documentOnDocView().getWebElement().isEnabled()) {
+			for (int i = 0; i < 500; i++) {
+				if (documentOnDocView().getWebElement().isDisplayed()
+						&& documentOnDocView().getWebElement().isEnabled()) {
 					break;
 				}
 			}
 			long finish = System.currentTimeMillis();
-			long totalTime = finish - start; 
+			long totalTime = finish - start;
 			long timeSeconds = TimeUnit.MILLISECONDS.toSeconds(totalTime);
-			if(timeSeconds<=4) {
+			if (timeSeconds <= 4) {
 				base.passedStep("Document in docview loaded in 4 sec successfuly");
-			}else {
+			} else {
 				base.failedStep("Failed to load document in docview in 4 seconds is failed");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while verifying document in docview loaded in 4 sec" + e.getMessage());
-			
+
 		}
 	}
-	
+
 	/**
-	 * @author Gopinath
-	 * Description: this method will select the doc from mini docList and download Native and txt from default view
-	 * @param docIdOrRoNum(Docid id or row number to select the doc from mini doc list
+	 * @author Gopinath Description: this method will select the doc from mini
+	 *         docList and download Native and txt from default view
+	 * @param docIdOrRoNum(Docid id or row number to select the doc from mini doc
+	 *                           list
 	 */
-	public void downloadNativerAndTextFormat(String docIdOrRoNum,String downloadPath) {
+	public void downloadNativerAndTextFormat(String docIdOrRoNum, String downloadPath) {
 		selectDocToViewInDocViewPanal(docIdOrRoNum);
 
 		base.waitForElement(getDefaultTextViewSelected());
@@ -20816,13 +20853,12 @@ public class DocViewPage {
 		} else {
 			base.failedStep("unable to load document in default textview");
 		}
-		downloadSelectedFormaats(downloadPath,"native", "txt", null, null);
+		downloadSelectedFormaats(downloadPath, "native", "txt", null, null);
 	}
 
-
 	/**
-	 * @author Gopinath
-	 * Description: this method will select the document from mini doc list with docId or row number to load on docview panal
+	 * @author Gopinath Description: this method will select the document from mini
+	 *         doc list with docId or row number to load on docview panal
 	 * @param DocIdOrRwNo(docid or row number in string format)
 	 */
 	public void selectDocToViewInDocViewPanal(String DocIdOrRwNo) {
@@ -20849,14 +20885,13 @@ public class DocViewPage {
 
 	}
 
-
-
 	/**
-	 * @author Gopinath
-	 * Description: this method will download the required file format for selected document and verify downloaded or not from downloadedpath 
+	 * @author Gopinath Description: this method will download the required file
+	 *         format for selected document and verify downloaded or not from
+	 *         downloadedpath
 	 */
-	public void downloadSelectedFormaats(String downloadPpath,String downloadFormat1, String downloadFormat2, String downloadFormat3,
-			String downloadFormat4) {
+	public void downloadSelectedFormaats(String downloadPpath, String downloadFormat1, String downloadFormat2,
+			String downloadFormat3, String downloadFormat4) {
 
 		List<String> list = new ArrayList<String>();
 		list.add(downloadFormat1);
@@ -20878,8 +20913,7 @@ public class DocViewPage {
 		}
 
 		for (String Selectedoption : list) {
-			if(Selectedoption!=null) {
-				
+			if (Selectedoption != null) {
 
 				for (String DownloadOption : forMatKey) {
 
@@ -20890,8 +20924,8 @@ public class DocViewPage {
 						base.waitTime(5);
 						base.waitForElement(getDOcViewDoc_DownloadOption(DownloadOption));
 						Actions ac = new Actions(driver.getWebDriver());
-						ac.moveToElement(getDOcViewDoc_DownloadOption(DownloadOption).getWebElement()).click().perform();
-								
+						ac.moveToElement(getDOcViewDoc_DownloadOption(DownloadOption).getWebElement()).click()
+								.perform();
 
 						base.waitTime(5);
 						File file = new File(downloadPpath);
@@ -20923,89 +20957,95 @@ public class DocViewPage {
 						}
 						break;
 
-						
 					}
 
 				}
 			}
 		}
 
-
 	}
-	
+
 	/**
-	 * @author Gopinath
-	 * Description methoad to get the rows and its doc ids from mini doc list 
+	 * @author Gopinath Description methoad to get the rows and its doc ids from
+	 *         mini doc list
 	 * @param noOfDocs
 	 * @return doclist(return list of doc with its row numbers by key and value pair
 	 */
-	public Map<Integer,String> getRowAndMiniDOcIds(int noOfDocs) {
+	public Map<Integer, String> getRowAndMiniDOcIds(int noOfDocs) {
 		driver.waitForPageToBeReady();
-		Map<Integer,String> doclist=new HashMap<>();
-		for(int i=1;i<=noOfDocs+1;i++) {
-		base.waitForElement(getClickDocviewID(i));
-		getClickDocviewID(i).waitAndClick(5);
-		System.out.println(getClickDocviewID(i).getText());
-		doclist.put(i, getClickDocviewID(i).getText());
-		
+		Map<Integer, String> doclist = new HashMap<>();
+		for (int i = 1; i <= noOfDocs + 1; i++) {
+			base.waitForElement(getClickDocviewID(i));
+			getClickDocviewID(i).waitAndClick(5);
+			System.out.println(getClickDocviewID(i).getText());
+			doclist.put(i, getClickDocviewID(i).getText());
+
 		}
 		return doclist;
 	}
+
 	/**
-	 * @author Gopinath
-	 * Description :this method will perform the next navigation and for set of docs and verify scrolled to next document in mindoclist or not 
+	 * @author Gopinath Description :this method will perform the next navigation
+	 *         and for set of docs and verify scrolled to next document in
+	 *         mindoclist or not
 	 * @param noOfDocs
 	 */
 	public void performNextNavigation(int noOfDocs) {
-		Map<Integer,String> doclist = getRowAndMiniDOcIds(noOfDocs);
-		
+		Map<Integer, String> doclist = getRowAndMiniDOcIds(noOfDocs);
+
 		base.waitForElement(getClickDocviewID(1));
 		getClickDocviewID(1).waitAndClick(5);
 		Set<Integer> docrow = doclist.keySet();
-		for(int i:docrow) {
-			int row = i+1;
-			if(row<=docrow.size()) {
+		for (int i : docrow) {
+			int row = i + 1;
+			if (row <= docrow.size()) {
 				String mindListdocId = doclist.get(row);
 				base.waitForElement(getDocView_Next());
 				base.waitTime(2);
 				getDocView_Next().waitAndClick(5);
-				if(getDocViewPanelDocId(mindListdocId).isElementAvailable(5) && getSelectedDocIdMiniDocList().getText().equals(mindListdocId)) {
-					System.out.println("after click on next navigation button miniDOclist Scrolled from "+(row-1)+" Document to "+row+" Document and Loaded on docview panal");
-					base.passedStep("after click on next navigation button miniDOclist Scrolled to "+row+" Document");;
-				}else {
-					base.failedStep("unable to navigate to "+" Document after click on next nevigation button");
+				if (getDocViewPanelDocId(mindListdocId).isElementAvailable(5)
+						&& getSelectedDocIdMiniDocList().getText().equals(mindListdocId)) {
+					System.out.println("after click on next navigation button miniDOclist Scrolled from " + (row - 1)
+							+ " Document to " + row + " Document and Loaded on docview panal");
+					base.passedStep(
+							"after click on next navigation button miniDOclist Scrolled to " + row + " Document");
+					;
+				} else {
+					base.failedStep("unable to navigate to " + " Document after click on next nevigation button");
 				}
-				
-				
+
 			}
-			
-			
+
 		}
 	}
+
 	/**
-	 * @author Gopinath
-	 * Description this method will perform the next navigation  for set of docs and verify scrolled to next document in mindoclist or not
+	 * @author Gopinath Description this method will perform the next navigation for
+	 *         set of docs and verify scrolled to next document in mindoclist or not
 	 * @param noOfDocs
 	 */
 	public void performPrevNavigation(int noOfDocs) {
 		Map<Integer, String> doclist = getRowAndMiniDOcIds(noOfDocs);
 
-		
 		Set<Integer> docrow = doclist.keySet();
 		int numofdoc = docrow.size();
 		base.waitForElement(getClickDocviewID(numofdoc));
 		getClickDocviewID(numofdoc).waitAndClick(5);
-		for(int i=(numofdoc-1);i>=1;i--) {
+		for (int i = (numofdoc - 1); i >= 1; i--) {
 			String mindListdocId = doclist.get(i);
 			base.waitForElement(getDocView_Previous());
 			base.waitTime(2);
 			getDocView_Previous().waitAndClick(5);
-			if(getDocViewPanelDocId(mindListdocId).isElementAvailable(5) && getSelectedDocIdMiniDocList().getText().equals(mindListdocId)) {
-				System.out.println("after click on previous navigation button miniDOclist Scrolled from "+(i+1)+" Document to "+i+" Document and Loaded on docview panal");
-				base.passedStep("after click on previous navigation button miniDOclist Scrolled from "+(i+1)+" Document to "+i+" Document");;
-			}else {
-				System.out.println("unable to navigate to "+" Document after click on next nevigation button");
-				base.failedStep("unable to navigate to "+" Document after click on next nevigation button");
+			if (getDocViewPanelDocId(mindListdocId).isElementAvailable(5)
+					&& getSelectedDocIdMiniDocList().getText().equals(mindListdocId)) {
+				System.out.println("after click on previous navigation button miniDOclist Scrolled from " + (i + 1)
+						+ " Document to " + i + " Document and Loaded on docview panal");
+				base.passedStep("after click on previous navigation button miniDOclist Scrolled from " + (i + 1)
+						+ " Document to " + i + " Document");
+				;
+			} else {
+				System.out.println("unable to navigate to " + " Document after click on next nevigation button");
+				base.failedStep("unable to navigate to " + " Document after click on next nevigation button");
 			}
 		}
 
@@ -21182,5 +21222,181 @@ public class DocViewPage {
 		}
 
 
+
+	/**
+	 * @author Raghuram.A
+	 * @param headerList1
+	 */
+	public List<String> listOfAvailableDatasToCheck(List<String> dataList1, List<String> dataList2, Boolean compare) {
+		driver.waitForPageToBeReady();
+		ElementCollection headerListElementsBefore = getdtDocumentConceptuallySimilar();
+		dataList1 = base.availableListofElements(headerListElementsBefore);
+		if (dataList1.size() == 0) {
+			base.failedMessage("Empty data");
+		} else {
+			Collections.sort(dataList1);
+			System.out.println(dataList1.toString());
+			if (compare) {
+				base.listCompareNotEquals(dataList1, dataList2,
+						"analytics panel documents are as per clicked document.  ", "analytics panel Failed ");
+			}
+		}
+		return dataList1;
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @param redactionCount
+	 * @param tagName
+	 * @param navigationElement
+	 * @return
+	 */
+	public boolean verifyPresenceOfOrphanRedactionTag(int redactionCount, String tagName, Element navigationElement) {
+		String actualtagName = "";
+		boolean flag = false;
+		for (int i = 1; i <= redactionCount; i++) {
+			base.waitForElement(navigationElement);
+			navigationElement.waitAndClick(10);
+			driver.waitForPageToBeReady();
+
+			if (selectedRedactionTag().isDisplayed()) {
+				actualtagName = selectedRedactionTag().getText();
+
+				if (actualtagName.equals(tagName)) {
+					flag = true;
+					break;
+				}
+			}
+
+			if (!actualtagName.equals(tagName)) {
+				flag = false;
+			}
+		}
+
+		if (flag) {
+			System.out.println(tagName + " : Redaction tag is Displayed");
+			base.stepInfo(tagName + " : Redaction tag is Displayed");
+		} else {
+			System.out.println(tagName + " : Redaction tag is Not Displayed");
+			base.stepInfo(tagName + " : Redaction tag is Not Displayed");
+		}
+		return flag;
+  }
+  
+/*
+	 * @author Indium-Baskar date: 18/01/2022 Modified date:N/A
+	 * @Description: This method used to verify comment without save and Next
+	 * 
+	 */
+	public void validateWithoutEditUsingSaveAndNext() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_CodingFormComments());
+		getDocView_CodingFormComments().Clear();
+		codingFormSaveAndNext();
+		if (getCodingFormValidErrorMeta().isElementAvailable(2)) {
+			try {
+				if (getCodingFormValidErrorMeta().isDisplayed()) {
+					base.stepInfo("Coding form validation error message displayed");
+					base.passedStep("Application not allowed to save without passing required field");
+				} else {
+					base.failedStep("Error message not displayed");
+				}
+			} catch (Exception e) {
+				base.failedStep("Error message not displayed");
+			}
+		}
+		driver.waitForPageToBeReady();
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 18/01/2022 Modified date:N/A
+	 * @Description: This method used to validate save and next button for audio & non-audio docs
+	 * 
+	 */
+
+	public void verifyAfterImpersoanteAudioNonAudioDocs() {
+		driver.waitForPageToBeReady();
+		base.stepInfo("Performing action in Parent window");
+		base.stepInfo("Validation for audio document");
+		validateWithoutEditUsingSaveAndNext();
+		base.stepInfo("Validation for non-audio document");
+		for (int i = 20; i <= 20; i++) {
+			getClickDocviewID(i).waitAndClick(5);
+			driver.waitForPageToBeReady();
+		}
+		clickGearIconOpenCodingFormChildWindow();
+		base.stepInfo("Performing action in Child window");
+		String parent = switchTochildWindow();
+		switchToNewWindow(2);
+		validateWithoutEditUsingSaveAndNext();
+		childWindowToParentWindowSwitching(parent);
+	}
+
+	/*
+	 * @Author Jeevitha
+	 */
+	public void verifyingTheDocSelectedInMiniDocListAndDocInDocumentViewingPanel() {
+
+		String selectedDocID = getSelectedDocIdInMiniDocList().getText();
+		String DocIDInDocumentViewingPanel = getDocView_CurrentDocId().getText();
+		List<String> DocIDInMiniDocList = base.availableListofElements(getMiniDocListDocIdText());
+		for (int i = 0; i < DocIDInMiniDocList.size(); i++) {
+			int Doc_no = 1;
+			if (selectedDocID.equals(DocIDInMiniDocList.get(i))) {
+				if (Doc_no == 1) {
+					System.out.println("By Default the Fist Document in the MiniDoc List is Selected");
+					base.stepInfo("By Default the Fist Document in the MiniDoc List is Selected");
+				} else {
+					System.out.println("Number : " + Doc_no + " Document is Selected in the MiniDoc List");
+					base.stepInfo("Number : " + Doc_no + " Document is Selected in the MiniDoc List");
+				}
+				break;
+			}
+			Doc_no++;
+		}
+		softAssertion.assertEquals(selectedDocID, DocIDInDocumentViewingPanel);
+		System.out.println("Document Viewing Panel Shows the Default View of Document Selected From MiniDoc List");
+		base.stepInfo("Document Viewing Panel Shows the Default View of Document Selected From MiniDoc List");
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal Created Date: 18/1/2022
+	 * @description To verify highlightining text without clicking the eyeIcon
+	 */
+	public String getPersistentHitWithoutClickingEyeIcon(String searchString) throws InterruptedException {
+		
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPersistantHitEyeIcon().Visible();
+			}
+		}), Input.wait60);
+		Thread.sleep(3000);
+
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getHitPanels().Visible();
+			}
+		}), Input.wait30);
+
+		int numOfPanels = getHitPanels().size();
+		String Phit = "NULL";
+		System.out.println("numOfPanels" + (numOfPanels - 1));
+		Boolean flag = false;
+		for (int i = 2; i <= numOfPanels; i++) {
+			if (getTermInHitPanels(i).getText().contains(searchString)) {
+				System.out.println("Found " + searchString);
+				flag = true;
+				Phit = getTermInHitPanels(i).getText();
+				break;
+			}
+
+		}
+		 softAssertion.assertTrue(flag);
+		 driver.getWebDriver().navigate().refresh();
+		return Phit;
 	}
 }
+

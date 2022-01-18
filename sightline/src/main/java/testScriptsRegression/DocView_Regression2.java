@@ -13,6 +13,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -23,6 +25,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
@@ -1292,11 +1295,132 @@ public class DocView_Regression2 {
 		}
 
 
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51859
+	 * Description :Doc View: When users locale is German then on navigating to Doc View should not display warning message.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 26)
+	public void verifyWarningMessageDisplay() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case id :RPMXCON-51859");
+		baseClass.stepInfo("When users locale is German then on navigating to Doc View should not display warning message");
+		
+		// Login to the application
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		
+		//Changing local to german as pre-requisite
+		loginPage.editProfile("German - Germany");
+		baseClass.stepInfo("Successfully selected German Language");
+		
+		// Performing basic search
+		sessionSearch.basicContentSearch(Input.testData1);
+		
+		// Adding search results and view in docview
+		sessionSearch.ViewInDocViewGerman();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Navigated to DocView");
+		
+		//verifying whether warning message displayed		
+		if(baseClass.getSuccessMsgHeader().isDisplayed()) {
+			String warningMessage = baseClass.getSuccessMsgHeader().getText().toString();
+			baseClass.stepInfo(warningMessage);
+			baseClass.failedStep("Warning Message Displayed");
+		}
+		else {
+			baseClass.passedStep("Warning Message Not Displayed");
+		}
+		
+		//setting back to default locale
+		loginPage.editProfile("English - United States");
+	}
 	
 	
-	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51115
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 24)
+	public void verifyPrintIconAfterDisablingToggle() throws Exception {
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51115");
+		baseClass.stepInfo("Verify user after impersonation can go to next/prvious highlight in doc view when there are multiple hits for each term in context of an assignment");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.bulkAssign();
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		baseClass.stepInfo(
+				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
+		docViewRedact.DisablePrintToggleinAssignment();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);	
+		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
+		if (docViewRedact.get_PrintIcon().isDisplayed()) {
+			assertTrue(true);
+			baseClass.passedStep("The print Icon is not present in DoocView as expected");
+		} else {
+			assertTrue(false);
+			baseClass.failedStep("The print Icon is present in DoocView - failed");
+		}
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		if (docViewRedact.get_PrintIcon().isDisplayed()) {
+			assertTrue(true);
+			baseClass.passedStep("The print Icon is not present in DoocView as expected");
+		} else {
+			assertTrue(false);
+			baseClass.failedStep("The print Icon is present in DoocView - failed");
+		}
+		
 
+	}
 
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-48810
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =15)
+	public void verifyTextRedactionFunctionDocView(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-48811");
+		baseClass.stepInfo("Verify that \"Text Redaction\" functionality is working proper on DocView Screen.");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("login as" + fullName);
+		sessionsearch.basicContentSearch(Input.duplicateDocId);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		docViewRedact.redactTextUsingOffset();
+		baseClass.stepInfo("Text Redaction applied");
+		docViewRedact.selectingRectangleRedactionTag();
+		baseClass.stepInfo("Default Redaction tag selected successfully");
+		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag saved successfully");
+		baseClass.waitForElement(docViewRedact.btnTypeOfRedaction("Text Redaction"));
+		String color = docViewRedact.btnTypeOfRedaction("Text Redaction").getWebElement().getCssValue("color");
+		String hex = Color.fromString(color).asHex();
+		System.out.println(hex);
+		if (hex.equalsIgnoreCase(Input.iconColor)) {
+			baseClass.passedStep("The icon turned to red colour as expected- Successfully");
+		} else {
+			baseClass.failedStep("The icon NOT turned to red colour as expected");
+		}
+	}
+
+	
+	
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

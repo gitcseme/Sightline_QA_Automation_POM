@@ -67,8 +67,8 @@ public class Assignment_Regression3 {
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		softAssertion = new SoftAssert();
@@ -541,6 +541,55 @@ public class Assignment_Regression3 {
 			baseClass.stepInfo(e.getMessage());
 			baseClass.failedStep("Exception occured");
 		}
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * 
+	 * @description:
+	 */
+
+	@Test(groups = { "regression" }, priority = 12)
+	public void verifyDrawPoolToggle() throws InterruptedException {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		
+			baseClass.stepInfo("Test case Id:RPMXCON-54497");
+			baseClass.stepInfo("Disable the \"Draw from Pool\" field settings in the Assignment");
+			String assignmentName ="AR3Assignment" + Utility.dynamicNameAppender();
+			AssignmentsPage agnmt = new AssignmentsPage(driver);
+			DocExpPage = new DocExplorerPage(driver);
+			softAssertion = new SoftAssert();
+			search = new SessionSearch(driver);
+			search.basicContentSearch(Input.searchString2);
+			search.bulkAssign();
+			agnmt.assignmentCreation(assignmentName,Input.codeFormName);
+			baseClass.waitForElement(agnmt.getAssgnGrp_Create_DrawPooltoggle());
+			agnmt.getAssgnGrp_Create_DrawPooltoggle().Click();
+			driver.scrollPageToTop();
+			baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+			agnmt.getAssignmentSaveButton().waitAndClick(5);
+			agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+			agnmt.getEmailThreadsTogetherBtnDisabled().ScrollTo();
+			softAssertion.assertEquals(agnmt.getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"), "false");
+			baseClass.ValidateElement_Presence(agnmt.getEmailThreadsTogetherBtnDisabled(), "Disabled Email Threads Toggle Button ");
+			baseClass.ValidateElement_Presence(agnmt.getKeepFamiliesBtnDisabled(), "Disabled KeepFamilies Toggle Button ");
+			baseClass.passedStep("Sucessfully Verified the Disable the \"Draw from Pool\" field settings in the Assignment");
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+			baseClass.stepInfo("Logged Out and Logged in again as same RMU User to "
+					+ "check whether the updated setting are reflected or not");
+			agnmt.getEmailThreadsTogetherBtnDisabled().ScrollTo();
+			softAssertion.assertEquals(agnmt.getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"), "false");
+			baseClass.ValidateElement_Presence(agnmt.getEmailThreadsTogetherBtnDisabled(), "Disabled Email Threads Toggle Button ");
+			baseClass.ValidateElement_Presence(agnmt.getKeepFamiliesBtnDisabled(), "Disabled KeepFamilies Toggle Button ");
+			softAssertion.assertAll();
+			baseClass.passedStep("Sucessfully Verified the Disable the \"Draw from Pool\" field settings in the Assignment is reflected or not by logging out and loggin as same user.");
+			
 	}
 
 	@AfterMethod(alwaysRun = true)

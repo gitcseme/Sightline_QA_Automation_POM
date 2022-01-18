@@ -468,7 +468,16 @@ public class MiniDocListPage {
 	public ElementCollection getAvailableSetDocumentField() {
 		return driver.FindElementsByXPath("//ul[@id='sortable1DocumentSort']//li");
 	}// Added by jayanthi
+	public Element getDocView_CodingFromName() {
+		return driver.FindElementById("lblCodingFormName");
+	}
 
+	public Element getSelectAssignmentFromDashborad(String assignmentName) {
+		return driver.FindElementByXPath(
+				"//*[@id='dt_basic']//following-sibling::tbody//following-sibling::tr//strong[text()='" + assignmentName
+						+ "']");}
+	public Element getDashboardButton() {
+		return driver.FindElementByXPath("//label[text()='Dashboard']");}
 	public Element miniDocListDisplay() {
 		return driver.FindElementByXPath("//div[@id='divMiniDocList']//div[@class='dataTables_scroll']");
 	}
@@ -476,10 +485,11 @@ public class MiniDocListPage {
 	public Element getDocView__ChildWindow_Mini_RemoveCodeSameAs() {
 		return driver.FindElementById("liRemoveCodeSameAsMiniDocList");
 	}
-	
+
 	public Element getSelectedOptimizedSortRadioButton() {
 		return driver.FindElementByXPath("//input[@id='rbOptimized']");
 	}
+
 	/**
 	 * @author Indium Raghuram ] Description : To get the list of elements
 	 *         (GenericMethod) Date:8/15/21 Modified date: N/A Modified by: N/A
@@ -3595,22 +3605,22 @@ public class MiniDocListPage {
 			baseClass.failedStep("Document is Not highlighted");
 		}
 	}
-/**
- * @author Jayanthi.ganesan
- */
-	
+
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+
 	public void verifyOptimizedSortIsSelected() {
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		baseClass.waitForElement(getGearIcon());
 		getGearIcon().waitAndClick(10);
 		baseClass.waitForElement(getOptimizedSortRadioButton());
-		String value=getSelectedOptimizedSortRadioButton().GetAttribute("checked");
+		String value = getSelectedOptimizedSortRadioButton().GetAttribute("checked");
 		System.out.println(value);
-		if(value.equals("true")) {	
+		if (value.equals("true")) {
 			baseClass.passedStep("Optimized mode from mini doc list is selected by default");
-		}
-		else {
+		} else {
 			baseClass.failedStep("Optimized mode from mini doc list is not selected by default");
 		}
 
@@ -3826,65 +3836,68 @@ public class MiniDocListPage {
 		}
 
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param SetDocumentSorting
 	 * @return
 	 */
 	public List<String> comparingWebfieldsInOptimizedSortOrderAndManualSortOrder(boolean SetDocumentSorting) {
-		
-		ElementCollection pickColumnSelectedListAssignment = getSelectedFieldsAvailablePickColumnDisplay();
-		pickColumnDisplaySelectedLists =availableListofElements(pickColumnSelectedListAssignment);
-		    
-			driver.waitForPageToBeReady();
-			baseClass.waitForElement(getManualSortRadioButton());
-			getManualSortRadioButton().Click();
-			System.out.println("Selected Web fields in Optimized sort Order are Displayed Below");
-			baseClass.stepInfo("Selected Web fields in Optimized sort Order are Displayed Below");
-			for (String a : pickColumnDisplaySelectedLists) {
-				System.out.println(a);
-				baseClass.stepInfo(a);
-			}
 
+		ElementCollection pickColumnSelectedListAssignment = getSelectedFieldsAvailablePickColumnDisplay();
+		pickColumnDisplaySelectedLists = availableListofElements(pickColumnSelectedListAssignment);
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getManualSortRadioButton());
+		getManualSortRadioButton().Click();
+		System.out.println("Selected Web fields in Optimized sort Order are Displayed Below");
+		baseClass.stepInfo("Selected Web fields in Optimized sort Order are Displayed Below");
+		for (String a : pickColumnDisplaySelectedLists) {
+			System.out.println(a);
+			baseClass.stepInfo(a);
+		}
+
+		driver.waitForPageToBeReady();
+		ElementCollection pickColumnSelectedListAssignmentTwo = getSelectedFieldsAvailablePickColumnDisplay();
+		pickColumnDisplaySelectedListAssignmentTwo = availableListofElements(pickColumnSelectedListAssignmentTwo);
+		System.out.println("Selected Web fields in Manual sort Order are Displayed Below");
+		baseClass.stepInfo("Selected Web fields in Manual sort Order are Displayed Below");
+		for (String a : pickColumnDisplaySelectedListAssignmentTwo) {
+			System.out.println(a);
+			baseClass.stepInfo(a);
+		}
+		if (pickColumnDisplaySelectedLists.equals(pickColumnDisplaySelectedListAssignmentTwo)) {
+			System.out.println("Web Fields present in the Optimized sort Order and Manual sort Order are Same");
+			baseClass.passedStep("Web Fields present in the Optimized sort Order and Manual sort Order are Same");
+		} else {
+			System.out.println("Web Fields present in the Optimized sort Order and Manual sort Order are Different");
+			baseClass.failedStep("Web Fields present in the Optimized sort Order and Manual sort Order are Different");
+		}
+		if (SetDocumentSorting) {
+			getSetDocumentSortingTab().waitAndClick(10);
 			driver.waitForPageToBeReady();
-			ElementCollection pickColumnSelectedListAssignmentTwo = getSelectedFieldsAvailablePickColumnDisplay();
-			pickColumnDisplaySelectedListAssignmentTwo = availableListofElements(pickColumnSelectedListAssignmentTwo);
-			System.out.println("Selected Web fields in Manual sort Order are Displayed Below");
-			baseClass.stepInfo("Selected Web fields in Manual sort Order are Displayed Below");
-			for (String a : pickColumnDisplaySelectedListAssignmentTwo) {
+			ElementCollection setDocumentColumnListA = getFieldsAvailableSetDocumetSorting();
+			setDocumentSortingList = availableListofElements(setDocumentColumnListA);
+			System.out.println("Selected Web fields in Set Document Sorting are Displayed Below");
+			baseClass.stepInfo("Selected Web fields in Set Document Sorting are Displayed Below");
+			for (String a : setDocumentSortingList) {
 				System.out.println(a);
 				baseClass.stepInfo(a);
 			}
-			if(pickColumnDisplaySelectedLists.equals(pickColumnDisplaySelectedListAssignmentTwo)) {			
-				System.out.println("Web Fields present in the Optimized sort Order and Manual sort Order are Same");
-				baseClass.passedStep("Web Fields present in the Optimized sort Order and Manual sort Order are Same");
-			}else {
-				System.out.println("Web Fields present in the Optimized sort Order and Manual sort Order are Different");
-				baseClass.failedStep("Web Fields present in the Optimized sort Order and Manual sort Order are Different");
-			}		
-			if (SetDocumentSorting) {
-				getSetDocumentSortingTab().waitAndClick(10);
-				driver.waitForPageToBeReady();
-				ElementCollection setDocumentColumnListA = getFieldsAvailableSetDocumetSorting();
-				setDocumentSortingList = availableListofElements(setDocumentColumnListA);
-				System.out.println("Selected Web fields in Set Document Sorting are Displayed Below");
-				baseClass.stepInfo("Selected Web fields in Set Document Sorting are Displayed Below");
-				for (String a : setDocumentSortingList) {
-					System.out.println(a);
-					baseClass.stepInfo(a);
-				}			
-				if(pickColumnDisplaySelectedLists.equals(setDocumentSortingList)) {
-					System.out.println("Web Fields present in the Optimized sort Order and Set Document Sorting are Same");
-					baseClass.passedStep("Web Fields present in the Optimized sort Order and Set Document Sorting are Same");
-				}else {
-					System.out.println("Web Fields present in the Optimized sort Order and Set Document Sorting are Different");
-					baseClass.passedStep("Web Fields present in the Optimized sort Order and Set Document Sorting are Different");
-				}
+			if (pickColumnDisplaySelectedLists.equals(setDocumentSortingList)) {
+				System.out.println("Web Fields present in the Optimized sort Order and Set Document Sorting are Same");
+				baseClass
+						.passedStep("Web Fields present in the Optimized sort Order and Set Document Sorting are Same");
+			} else {
+				System.out.println(
+						"Web Fields present in the Optimized sort Order and Set Document Sorting are Different");
+				baseClass.passedStep(
+						"Web Fields present in the Optimized sort Order and Set Document Sorting are Different");
 			}
-				return pickColumnDisplaySelectedLists;
+		}
+		return pickColumnDisplaySelectedLists;
 	}
-	
-	
+
 	/**
 	 * @author Steffy
 	 * @Description : this method used to verify Configure minidoc list open should
@@ -3904,7 +3917,6 @@ public class MiniDocListPage {
 		softAssertion.assertAll();
 	}
 
-	
 	/**
 	 * @author Indium-Steffy date: 02/12/2021 This method is to configure the mini
 	 *         doc list to show completed docs
@@ -3916,4 +3928,173 @@ public class MiniDocListPage {
 		saveConfigureMiniDocList();
 		baseClass.waitTime(3);
 	}
+
+	/**
+	 * @author Raghuram.A
+	 * @throws AWTException
+	 * @throws InterruptedException
+	 */
+	public String selectDocFromChildWindow() throws AWTException, InterruptedException {
+		Robot robot = new Robot();
+		String parentid = childWindowTransfer();
+
+		driver.waitForPageToBeReady();
+		List<String> idList = availableListofElements(getChildWindowDocIDList());
+		int listSize = idList.size();
+		int numberToChoose = randNumber(listSize);
+
+		String currentDoc = idList.get(numberToChoose);
+		System.out.println("Childwindow selected doc id : " + currentDoc);
+		baseClass.stepInfo("Childwindow selected doc id : " + currentDoc);
+		baseClass.waitForElement(getChildWindowGearIcons());
+		baseClass.waitForElement(getChildWindowDocIDList(currentDoc));
+		getChildWindowDocIDList(currentDoc).Click();
+		// Closes child window
+		childWIndowCloseHandles(parentid);
+		driver.waitForPageToBeReady();
+
+		return currentDoc;
+
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * 
+	 */
+	public void verifyDefaultWebfieldsInManualSortOrder() {
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		// default list to be displayed in configure opo up selected fields
+		pickColumnDisplaySelectedLists = baseClass.availableListofElements(getMiniDocListHeaderValue());
+		baseClass.waitForElement(getGearIcon());
+		getGearIcon().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getManualSortRadioButton());
+		getManualSortRadioButton().Click();
+		driver.waitForPageToBeReady();
+		ElementCollection pickColumnSelectedListAssignmentTwo = getSelectedFieldsAvailablePickColumnDisplay();
+		pickColumnDisplaySelectedListAssignmentTwo = availableListofElements(pickColumnSelectedListAssignmentTwo);
+		baseClass.stepInfo("Deafult Selected Web fields in Manual sort Order are Displayed Below");
+		for (String a : pickColumnDisplaySelectedListAssignmentTwo) {
+			baseClass.stepInfo(a);
+		}
+		if (pickColumnDisplaySelectedLists.equals(pickColumnDisplaySelectedListAssignmentTwo)) {
+			baseClass.passedStep("Default Web Fields present Manual sort Order are as exepected");
+		} else {
+			baseClass.failedStep("Default Web Fields present in the  Manual sort Order are Different");
+		}
+		getSetDocumentSortingTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		ElementCollection setDocumentColumnListA = getFieldsAvailableSetDocumetSorting();
+		setDocumentSortingList = availableListofElements(setDocumentColumnListA);
+		baseClass.stepInfo("Default Selected Web fields in Set Document Sorting are Displayed Below");
+		for (String a : setDocumentSortingList) {
+			baseClass.stepInfo(a);
+		}
+
+		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
+		getMiniDocListConfirmationButton("Save").Click();
+
+		if (pickColumnDisplaySelectedListAssignmentTwo.equals(setDocumentSortingList)) {
+			baseClass.passedStep("Default Web Fields present in  Set Document Sorting are Same");
+		} else {
+			baseClass.failedStep("Default Web Fields present in the  Set Document Sorting are Different");
+		}
+
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param assignname
+	 * @throws InterruptedException
+	 */
+	public void verifyManualModeSortingConfigure(String assignname) throws InterruptedException {
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getGearIcon());
+		getGearIcon().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getManualSortRadioButton());
+		getManualSortRadioButton().Click();
+		// Pick Column Display
+		afterActionselectedFieldsPickColumnDisplayFirstAssignment = methodforPickColumndisplay();
+
+		// Set Document Sort
+		afterActionselectedFieldsSetDocumentFirstAssignment = methodforSetDocumetSort();
+
+		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
+		getMiniDocListConfirmationButton("Save").Click();
+		System.out.println("Saved Confirmed");
+
+		childWindowHeaderFields = baseClass.availableListofElements(getMiniDocListHeaderValue());
+		childWindowHeaderFields.removeAll(Arrays.asList(null, ""));
+		System.out.println("---------childWindowHeaderFields Listed Below-------------");
+		for (String childHeaders : childWindowHeaderFields) {
+			System.out.println(childHeaders);
+		}
+
+		String headerfieldtoCompare = childWindowHeaderFields.toString().toLowerCase();
+		String PickcolumnfieldtoCompare = afterActionselectedFieldsPickColumnDisplayFirstAssignment.toString()
+				.toLowerCase();
+
+		softAssertion.assertEquals(headerfieldtoCompare, PickcolumnfieldtoCompare);
+
+		if (PickcolumnfieldtoCompare.equals(headerfieldtoCompare)) {
+			baseClass.passedStep("Pick Column Display  Changes reflected in  mini doc list  headers");
+		} else {
+			baseClass.stepInfo("Changes didn't reflect in  mini doc list  headers");
+		}
+		baseClass.waitForElement(getGearIcon());
+		getGearIcon().waitAndClick(10);
+		ElementCollection pickColumnSelectedListAssignmentTwo = getSelectedFieldsAvailablePickColumnDisplay();
+		pickColumnDisplaySelectedListAssignmentTwo = availableListofElements(pickColumnSelectedListAssignmentTwo);
+		getSetDocumentSortingTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		ElementCollection setDocumentColumnListA = getFieldsAvailableSetDocumetSorting();
+		setDocumentSortingList = availableListofElements(setDocumentColumnListA);
+		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
+		getMiniDocListConfirmationButton("Save").Click();
+		System.out.println("Saved Confirmed");
+
+		if (pickColumnDisplaySelectedListAssignmentTwo.equals(setDocumentSortingList)) {
+			baseClass.failedStep(
+					"pick column display and set document sorting web fields are  same not having thier own changes .");
+		} else {
+			baseClass.passedStep(
+					"pick column display and set document sorting web fields are not same each is having thier own changes  only.");
+		}
+
+		LoginPage lp = new LoginPage(driver);
+		lp.logout();
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.waitForElement(getDashboardButton());
+		getDashboardButton().waitAndClick(5);
+
+		baseClass.waitForElement(getSelectAssignmentFromDashborad(assignname));
+		getSelectAssignmentFromDashborad(assignname).waitAndClick(10);
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getGearIcon());
+		getGearIcon().waitAndClick(10);
+
+		selectedFieldsSecondAssignment = docviewMinlistComparisionMethodTwo();
+		baseClass.waitForElement(getMiniDocListcloseButton());
+		getMiniDocListcloseButton().Click();
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertNotEquals(afterActionselectedFieldsPickColumnDisplayFirstAssignment,
+				selectedFieldsSecondAssignment);
+
+		if (afterActionselectedFieldsPickColumnDisplayFirstAssignment.equals(selectedFieldsSecondAssignment)) {
+			baseClass.failedStep("Changes made for RMU user for same assignment impact the"
+					+ " other user who are all assigned to same assignment.");
+		} else {
+			baseClass.passedStep("Changes made for RMU user for same assignment doesnt impact the"
+					+ " other user who are all assigned to same assignment.");
+		}
+	}
+
 }
+
+

@@ -2679,6 +2679,104 @@ public class Production_Test_Regression {
 						base.passedStep("Verified that RMU cannot access the Production if he is not part of that Project");
 						
 					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-56033
+					 * @Description: Verify that after Archiving is completed it should displays 'Creating Archive Complete' status on Production Progress bar Tile View
+					 */
+					@Test(groups = { "regression" }, priority = 44)
+					public void verifiyCreateArchiCompleteOnTileView() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-56033 -Production Sprint 10");
+					base.stepInfo("Verify that after Archiving is completed it should displays 'Creating Archive Complete' status on Production Progress bar Tile View");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					TempName ="Templete" + Utility.dynamicNameAppender();
+					
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkTagExisting(tagname);
+					sessionSearch.bulkFolderExisting(foldername);
+					
+					//Verify archive status on Gen page
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					String beginningBates = page.getRandomNumber(2);
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSection();
+					page.fillingTIFFSection(tagname);
+					page.fillingTextSection();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPageAndPassingText(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.getbtnProductionGenerate().waitAndClick(10);
+					
+					this.driver.getWebDriver().get(Input.url + "Production/Home");
+					driver.Navigate().refresh();
+					//verification
+					page.verifyProductionStatusInHomePage("Creating Archive Complete", productionname);
+					base.passedStep("Verify that after Archiving is completed it should displays 'Creating Archive Complete' status on Production Progress bar Tile View");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith 
+					 * Test case id-RPMXCON-55951
+					 * @Description Verify that PAU cannot access the Production if he is not part of that Project
+					 * 
+					 */
+					@Test(groups = { "regression" }, priority = 45)
+					public void verifyingProductionAccessPAtoPAdiffProject() throws Exception {
+						
+						UtilityLog.info(Input.prodPath);
+						
+						base.stepInfo("RPMXCON-55951 -Production Sprint 10");
+						base.stepInfo("Verify that PAU cannot access the Production if he is not part of that Project");
+						
+				        ProductionPage page = new ProductionPage(driver);
+				        productionname = "p" + Utility.dynamicNameAppender();
+				        page.selectingSecurityGroup(Input.securityGroup_sg47);
+						page.addANewProduction(productionname);
+						page.fillingDATSection();
+				        driver.waitForPageToBeReady();
+						
+						String currentURL=driver.getWebDriver().getCurrentUrl();
+						loginPage.logout();
+						loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+						base.switchProject(Input.regressionConsilio1);
+						base.stepInfo("Logined as another PA");
+						
+						driver.Navigate().to(currentURL);
+						driver.waitForPageToBeReady();
+						String ErrorMsg=page.getErrorMsgText().getText();
+						if(ErrorMsg.contains("Error")) { base.passedStep("Error message is displayed as expected"); }
+						else {base.failedStep("Error message is not  displayed as expected");	}
+						driver.Navigate().back();
+						
+						base.passedStep("Verify that PAU cannot access the Production if he is not part of that Project");
+						
+					}
 					
 	
 	

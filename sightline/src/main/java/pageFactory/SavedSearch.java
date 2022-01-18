@@ -7219,6 +7219,7 @@ public class SavedSearch {
 		return listOfNodesToVerify;
 
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param searchName
@@ -7227,18 +7228,41 @@ public class SavedSearch {
 	public void savedSearchToTally_sharedToSG(String searchName) throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-	getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
-	
-	savedSearch_SearchandSelect(searchName, "Yes");
-	 base.waitForElement(getSavedSearchToTally());
-		
-	getSavedSearchToTally().Click();
+		getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 
-	base.waitForElement(getSelectedSourceConcept());
-		
-	softAssertion.assertEquals(getSelectedSourceConcept().getText().toString(),
-			"Search: Selected Documents from SavedSearch: " + searchName + "");
-	
-	softAssertion.assertAll();
+		savedSearch_SearchandSelect(searchName, "Yes");
+		base.waitForElement(getSavedSearchToTally());
+
+		getSavedSearchToTally().Click();
+
+		base.waitForElement(getSelectedSourceConcept());
+
+		softAssertion.assertEquals(getSelectedSourceConcept().getText().toString(),
+				"Search: Selected Documents from SavedSearch: " + searchName + "");
+
+		softAssertion.assertAll();
+	}
+
+	/**
+	 * @author Raghuram.A Created on 12/30/2021 Modified date:N/A Modified by:N/A
+	 * @Description : Delete multiple searches
+	 * @param groupName
+	 * @param listSize
+	 * @param limitValue
+	 * @throws InterruptedException
+	 */
+	public void deleteSearches(String groupName, int listSize, int limitValue) throws InterruptedException {
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		getSavedSearchGroupName(groupName).waitAndClick(10);
+
+		for (int i = listSize; i >= limitValue; i--) {
+			if (getsearch().isElementAvailable(2)) {
+				getsearch().waitAndClick(20);
+				deleteFunctionality();
+			} else {
+				System.out.println("Searches are deleted completly");
+				break;
+			}
+		}
 	}
 }

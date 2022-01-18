@@ -192,23 +192,33 @@ public class BaseClass {
 	public ElementCollection getAvailableProjectList() {
 		return driver.FindElementsByXPath("//ul[@id='ddlProject11']//li//a");
 	}
-	public Element  SelectSearchOption() {
+
+	public Element SelectSearchOption() {
 		return driver.FindElementById("txtsearchUser");
 	}
-	
-	public Element  getEditButton() {
+
+	public Element getEditButton() {
 		return driver.FindElementByXPath("//a[text()='Edit']");
 	}
-	public Element  getFunctionalityButton() {
+
+	public Element getFunctionalityButton() {
 		return driver.FindElementByXPath("//a[contains(text(),'Functionality')] ");
 	}
-	public Element  UnSelectProductionCheckBox() {
+
+	public Element UnSelectProductionCheckBox() {
 		return driver.FindElementByXPath("//input[@id='UserRights_CanProductions']//following-sibling::i");
 	}
-	public Element  getSaveBtn() {
+
+	public Element getSaveBtn() {
 		return driver.FindElementById("btnsubmit");
 	}
+	public Element  selectSecurityGroup() {
+		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='SG1134047']");
+	}
 	
+	public Element  selectDefaultSecurityGroup() {
+		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='Default Security Group']");
+	}
 	public BaseClass(Driver driver) {
 
 		this.driver = driver;
@@ -2234,15 +2244,15 @@ public class BaseClass {
 	 * @return
 	 */
 	public String getCurrentDropdownValue(Element ddElement) {
-		WebElement dropdown=ddElement.getWebElement();
-		Select select= new Select(dropdown);
-	    WebElement selectedValue =select.getFirstSelectedOption();
-	    String selectedoption = selectedValue.getText();
-	    System.out.println("Selected element from dropdown: "+ selectedoption);
-	    stepInfo("Selected element from dropdown: "+ selectedoption);
-	    return selectedoption;
+		WebElement dropdown = ddElement.getWebElement();
+		Select select = new Select(dropdown);
+		WebElement selectedValue = select.getFirstSelectedOption();
+		String selectedoption = selectedValue.getText();
+		System.out.println("Selected element from dropdown: " + selectedoption);
+		stepInfo("Selected element from dropdown: " + selectedoption);
+		return selectedoption;
 	}
-	
+
 	/**
 	 * @Author Brundha
 	 * @param username
@@ -2251,24 +2261,24 @@ public class BaseClass {
 	public void UnSelectTheProductionChecKboxInUser(String username) {
 		waitForElement(SelectSearchOption());
 		SelectSearchOption().SendKeys(username);
-		
+
 		SelectSearchOption().Enter();
 		driver.waitForPageToBeReady();
-		
+
 		waitTillElemetToBeClickable(getEditButton());
 		driver.waitForPageToBeReady();
 		getEditButton().waitAndClick(10);
 		getFunctionalityButton().waitAndClick(20);
-		
+
 		waitTillElemetToBeClickable(UnSelectProductionCheckBox());
 		driver.waitForPageToBeReady();
 		UnSelectProductionCheckBox().waitAndClick(10);
 		getSaveBtn().waitAndClick(20);
 		VerifySuccessMessage("User profile was successfully modified");
 		CloseSuccessMsgpopup();
-		
+
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @param sourceString
@@ -2289,11 +2299,10 @@ public class BaseClass {
 		} catch (Exception E) {
 			E.printStackTrace(pw);
 			UtilityLog.info(sw.toString());
-    }
-  }
-  /*
-  * @author steffy.d
-	 * Method is to handle the alert which is getting displayed
+		}
+	}
+	/*
+	 * @author steffy.d Method is to handle the alert which is getting displayed
 	 */
 
 	public void handleAlert() {
@@ -2306,7 +2315,63 @@ public class BaseClass {
 			UtilityLog.info("Alert is not present");
 		}
 	}
+
+	/**
+	 * @author Raghuram A Date: 12/29/21 Modified date:N/A Modified by: Description
+	 *         : listCompareEquals with Pass and Fail Message
+	 */
+	public void listCompareNotEquals(List<String> sourceList, List<String> compreList, String passMsg,
+			String failMessage) {
+		System.out.println("Source String  : " + sourceList);
+		System.out.println("Compare String  : " + compreList);
+
+		softAssertion.assertNotEquals(sourceList, compreList);
+		if (sourceList.equals(compreList)) {
+			failedStep(failMessage);
+		} else if (!sourceList.equals(compreList)) {
+			passedStep(passMsg);
+		}
+		softAssertion.assertAll();
+	}
+	public void SelectSecurityGrp(String username) {
+		waitForElement(SelectSearchOption());
+		SelectSearchOption().SendKeys(username);
+		SelectSearchOption().Enter();
+		driver.waitForPageToBeReady();
+		waitTillElemetToBeClickable(getEditButton());
+		getEditButton().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		selectSecurityGroup().ScrollTo();
+		selectSecurityGroup().isDisplayed();
+	    waitTillElemetToBeClickable(selectSecurityGroup());
+		selectSecurityGroup().waitAndClick(10);
+		getSaveBtn().waitAndClick(5);
+		VerifySuccessMessage("User profile was successfully modified");
+		CloseSuccessMsgpopup();
+		
+		
+		
+}
 	
-	
-	
+	public void SelectDefaultSecurityGrp(String username) {
+		waitForElement(SelectSearchOption());
+		SelectSearchOption().SendKeys(username);
+		SelectSearchOption().Enter();
+		waitTillElemetToBeClickable(getEditButton());
+		getEditButton().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		selectDefaultSecurityGroup().ScrollTo();
+		driver.waitForPageToBeReady();
+		selectDefaultSecurityGroup().waitAndClick(5);
+		selectDefaultSecurityGroup().waitAndClick(5);
+		getSaveBtn().waitAndClick(10);
+		VerifySuccessMessage("User profile was successfully modified");
+		CloseSuccessMsgpopup();
+		
+		
+		
+}
+
+
+
 }

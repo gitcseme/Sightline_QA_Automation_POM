@@ -2278,7 +2278,36 @@ public class ProductionPage {
 	public Element getErrorMsgText() {
 		return driver.FindElementByXPath("//span//h1");
 	}
+	public Element getDocList() {
+		return driver.FindElementById("btnGoToDocList");}
+	
+	public Element getDocView() {
+		return driver.FindElementById("btnGoToDocView");}
+	
+	public Element getTags() {
+		return driver.FindElementById("tagsHelper");}
+	
+	public Element getAddRule() {
+		return driver.FindElementById("contentmetadata");}
+	
+	public Element getRedactions() {
+		return driver.FindElementById("redactionsHelper");}
+	
+	public Element getOperator() {
+		return driver.FindElementByXPath("//button[@class='btn btn-default dropdown-toggle insertOpHelper']");}
+	
+	public Element getTagsCheckbox(String Tag) {
+		return driver.FindElementByXPath("//div[@id='JSTree']/ul/li/ul/li/a[text()='"+Tag+"']");}
+	
+	public Element getRemoveLink() {
+		return driver.FindElementByXPath("//a[text()='Remove']");}
+	public Element getInsertQueryBtnInPrivGaurd() {
+		return driver.FindElementByXPath("//a[@id='insertQueryBtn']");
+	}
 
+	public Element getDocumentMatchesButton() {
+		return driver.FindElementById("btnDocumentMatch");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -15853,4 +15882,42 @@ public class ProductionPage {
 		getSecurityGroup(securityGroup).waitAndClick(10);
 
 	}
+	
+	/**
+	 * @author Brundha
+	 * @Description  : Method for add rules in priv guard and remove the rules
+	 */
+	public void  AddRuleAndRemoveRule(String Tag) {
+		base.waitForElement(getAddRule());
+		getAddRule().waitAndClick(10);
+	   driver.waitForPageToBeReady();
+	   getTags().isDisplayed();
+	   getTags().waitAndClick(10);
+	   base.waitForElement( getTagsCheckbox(Tag));
+	   getTagsCheckbox(Tag).Click();
+	   base.waitForElement(getInsertQueryBtnInPrivGaurd());
+	   getInsertQueryBtnInPrivGaurd().Click();
+	   driver.waitForPageToBeReady();
+	   getDocumentMatchesButton().waitAndClick(10);
+	   
+	}
+
+	/**
+	 * @author Brundha
+	 * @Description  : Method for navigating to doclist page.
+	 */
+	public String VerifyingDocListCountWithPrivGaurdCount() {
+
+
+		System.out.println("Clicked on Mark Complete Button..");
+		driver.waitForPageToBeReady();
+		String docCount=getDocumentSelectionLink().getText();
+		base.waitForElement(getDocList());
+		getDocList().waitAndClick(10);
+		return docCount;
+		
+	}
+	
+	
+	
 }

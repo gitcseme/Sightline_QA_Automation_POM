@@ -20,6 +20,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
+import pageFactory.ABMReportPage;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CommunicationExplorerPage;
@@ -28,6 +30,7 @@ import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.RedactionPage;
 import pageFactory.ReportsPage;
+import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagCountbyTagReport;
@@ -453,6 +456,63 @@ public class Reports_Regression1 {
 		driver.waitForPageToBeReady();
 		tagCounts.ValidateResetFunctionality();
 		softAssertion.assertAll();			
+	}
+
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void verifyDocCount_ABM() throws Exception {
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		String SaveSaerchName ="ABMSaveSearch" + UtilityLog.dynamicNameAppender();
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		DocViewPage docViewPage = new DocViewPage(driver);
+		ReusableDocViewPage reusableDocViewPage = new ReusableDocViewPage(driver);
+		String assignmentName1 = "assgnment" + Utility.dynamicNameAppender();
+
+		UtilityLog.info("Logged in as RMU User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case Id:RPMXCON-48789");
+		baseClass.stepInfo("Validate data on Advanced batch management report when Domain and Project"
+				+ " Admin associated to Assignments of a project");
+
+		// Basic Search and Bulk Assign
+		sessionsearch.basicContentSearch(Input.testData1);
+		baseClass.stepInfo("Search for text input completed");
+		String Hits = sessionsearch.verifyPureHitsCount();
+		sessionsearch.saveSearch(SaveSaerchName);
+		sessionsearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		assignmentsPage.assignmentCreation(assignmentName1, Input.codeFormName);
+		assignmentsPage.add4ReviewerAndDistribute();
+		baseClass.stepInfo(assignmentName1 + "  Assignment Created and distributed to DA/PA/RMU/Rev");
+		baseClass.impersonateRMUtoReviewer();
+		docViewPage.selectAssignmentfromDashborad(assignmentName1);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully fro RMU User.");
+		reusableDocViewPage.editTextBoxInCodingFormWithCompleteButton("Completing and editing");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoReviewer();
+		docViewPage.selectAssignmentfromDashborad(assignmentName1);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully for PA user");
+		reusableDocViewPage.editTextBoxInCodingFormWithCompleteButton("Completing and editing");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.impersonateDAtoReviewer();
+		docViewPage.selectAssignmentfromDashborad(assignmentName1);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully for DA user.");
+		reusableDocViewPage.editTextBoxInCodingFormWithCompleteButton("Completing and editing");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		ABMReportPage AbmReportPage = new ABMReportPage(driver);
+		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, false, true);
+		int ToDoDocs = AbmReportPage.validateReport(AbmReportPage.getListToDo_Text(assignmentName1));
+		int completedDocs = AbmReportPage.validateReport(AbmReportPage.getListCompletedDocs_Text(assignmentName1));
+		int ActualTotalDocs = ToDoDocs + completedDocs;
+		softAssertion.assertEquals(Integer.parseInt(Hits), ActualTotalDocs);
+		softAssertion.assertEquals(3, completedDocs);
+		softAssertion.assertAll();
+		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, true, true);
+		baseClass.passedStep("Sucessfully Validated data on Advanced batch management report when Domain and Project Admin associated to Assignments of a project");
 	}
 
 	@DataProvider(name = "Users_PARMU")

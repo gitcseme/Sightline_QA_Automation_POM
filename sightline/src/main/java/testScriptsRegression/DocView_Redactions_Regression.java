@@ -5625,6 +5625,287 @@ public class DocView_Redactions_Regression {
 		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
 	}
 
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51398 Verify highlighted keywords should be displayed on click of
+	 * the eye icon when redirected to doc view from session search when documents
+	 * searched with work product
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 58)
+	public void validatePersistentPanelHitCountAgainstDocHighlightedCount() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+
+		baseClass.stepInfo("Test case id : RPMXCON-51398");
+		baseClass.stepInfo(
+				"Verify highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search when documents searched with work product");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.getSavedSearchBtn1().Click();
+		sessionSearch.selectSavedsearchesInTree("My Saved Search");
+		baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
+		sessionSearch.getMetaDataInserQuery().waitAndClick(5);
+		sessionSearch.serarchWP();
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().Click();
+		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(keywordsArrayPT[0]);
+		
+	}
+	
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51849 Verify that persistent hits panel should not retain
+	 * previously viewed hits for the document on completing the document
+	 */
+
+	@Test(enabled = true, alwaysRun = false, groups = { "regression" }, priority = 1)
+	public void verifyPersistentHitsAfterCompletingDocumentsNotRetain() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		SoftAssert softAssert = new SoftAssert();
+		DocViewPage docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51849");
+		baseClass.stepInfo(
+				"Verify that persistent hits panel should not retain previously viewed hits for the document on completing the document from coding form child window");
+
+		String codingForm = Input.codeFormName;
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Search the non audio documents and Create new assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+
+		// Share Search via Saved Search
+		baseClass.stepInfo("Sharing the saved search with security group");
+		savedSearch.shareSavedSearchRMU(searchName, Input.securityGroup);
+		savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
+
+		// Logout As ReviewManager
+		loginPage.logout();
+		baseClass.stepInfo(
+				"Logging in to reviewer account to verify whether reviewer can view docs in doc view from assignment");
+
+		// Login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Verify whether the user is in doc view in context of an assignment");
+
+		// verify Assignment name
+		baseClass.waitForElement(assignmentsPage.getAssignmentNameInDocView());
+		if (assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue()) {
+			baseClass.passedStep("User is in doc view in context of an assignment");
+			softAssert.assertEquals(assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.stepInfo("User is in doc view in context of an assignment is not assigned");
+		}
+
+		baseClass.stepInfo("Verify whether the panels are displayed in doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
+		if (docView.getHitPanel().isDisplayed()) {
+			baseClass.passedStep("Persistent hit panels are displayed");
+			softAssert.assertEquals(docView.getHitPanel().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Persistent hit panels are not displayed");
+		}
+
+		// verify HitPanetCount is not retained
+		String beforeComplete = docView.getHitPanelCount().getText();
+		System.out.println(beforeComplete);
+		docView.editCodingFormComplete();
+		String afterComplete = docView.getHitPanelCount().getText();
+		System.out.println(afterComplete);
+		baseClass.stepInfo("persistent hits panel is not retain previously viewed hits");
+		softAssert.assertEquals(beforeComplete, afterComplete);
+		softAssert.assertAll();
+	}
+
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51773 Verify that previously saved Persistent hits should be
+	 * displayed on the doc view when same/different reviewer is unassigned from
+	 * assignment and documents are distributed again
+	 */
+
+	@Test(enabled = true, alwaysRun = false, groups = { "regression" }, priority = 2)
+	public void verifySavedPersistedHitsDisplayedDocDistributedAgainInDocView() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssert = new SoftAssert();
+		DocViewPage docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		MiniDocListPage miniDocList = new MiniDocListPage(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51773");
+		baseClass.stepInfo(
+				"Verify that previously saved Persistent hits should be displayed on the doc view when same/different reviewer is unassigned from assignment and documents are distributed again");
+		String codingForm = Input.codeFormName;
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Search the non audio documents and Create new assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+
+		// Share Search via Saved Search
+		SavedSearch savedSearch = new SavedSearch(driver);
+		baseClass.stepInfo("Sharing the saved search with security group");
+		savedSearch.shareSavedSearchRMU(searchName, Input.securityGroup);
+
+		savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
+
+		loginPage.logout();
+
+		baseClass.stepInfo(
+				"Logging in to reviewer account to verify whether reviewer can view docs in doc view from assignment");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the user is in doc view in context of an assignment");
+		baseClass.waitForElement(assignmentsPage.getAssignmentNameInDocView());
+		try {
+			if (assignmentsPage.getAssignmentNameInDocView().Displayed().booleanValue()) {
+				baseClass.passedStep("User is in doc view in context of an assignment");
+				softAssert.assertEquals(assignmentsPage.getAssignmentNameInDocView().Displayed().booleanValue(), true);
+			}
+		} catch (Exception e) {
+			baseClass.failedStep("User is not in doc view in context of an assignment");
+		}
+
+		baseClass.stepInfo("Verify whether the panels are displayed in doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(10);
+		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
+		try {
+			if (docView.getHitPanel().Displayed()) {
+				baseClass.passedStep("Persistent hit panels are displayed");
+				softAssert.assertEquals(docView.getHitPanel().Displayed().booleanValue(), true);
+			}
+		} catch (Exception e) {
+			baseClass.failedStep("Persistent hit panels are not displayed");
+		}
+		loginPage.logout();
+
+		baseClass.stepInfo("Logging in to RMU user to complete docs");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+
+		assignmentsPage.selectAssignmentToView(assname);
+
+		assignmentsPage.assignmentActions("Edit");
+		assignmentsPage.UnassignedDocs(Input.rev1userName);
+		assignmentsPage.addReviewerAndDistributeDocs();
+		assignmentsPage.selectAssignmentToViewinDocviewThreadMap(assname);
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the panels are displayed in doc view even after completing docs");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
+		try {
+			if (docView.getHitPanel().Displayed()) {
+				System.out.println("");
+				baseClass.passedStep("Persistent hit panels are displayed");
+				softAssert.assertEquals(docView.getHitPanel().Displayed().booleanValue(), true);
+			}
+		} catch (Exception e) {
+			baseClass.failedStep("Persistent hit panels are not displayed");
+		}
+		softAssert.assertAll();
+	}
+
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-49990 Description :Verify that when two different users applies redaction to same document 
+	 * then default selection of redaction tag should be as per users session.
+	 * @throws Exception 
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 66)
+	public void verifyRedactionTagSelectionAfterChangingUser() throws Exception {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case id : RPMXCON-49990");
+		baseClass.stepInfo("Verify default selection of redaction tag for same document with different users");
+
+		// Login as RMU and Performing basic search
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		// Adding search results and view in docview
+		sessionSearch.ViewInDocView();
+
+		// Clicking redact icon
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+
+		// verifying the default selection of redaction tag
+		docViewRedact.verifyDefaultRedactionTagSelectionInMultiPageRedact();
+
+		// getting one of the available redaction tag
+		List<String> availableTags = baseClass.availableListofElements(docViewRedact.availableTagsInMultiPageRedact());
+		String redactionTag = availableTags.get(2);
+
+		// performing multi page redaction include with different tag
+		docViewRedact.selectingMultiplePagesForRedactionInclude(redactionTag);
+		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
+		
+		baseClass.passedStep("Redaction done for Tag Name : " + redactionTag);
+		
+		//Logout and login as different user Reviewer
+		loginPage.logout();
+		baseClass.passedStep("Logged out as RMU");
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.passedStep("Logged in as other user- Reviewer");
+		
+		// Adding search results and perform action view in docview
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+
+		// Clicking redact icon
+		driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() throws Exception {
+		return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+
+		// verifying the default selection of redaction tag
+		docViewRedact.verifyDefaultRedactionTagSelectionInMultiPageRedact();
+
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
