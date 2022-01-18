@@ -2683,10 +2683,6 @@ public class DocViewPage {
 	public Element getViewCodingCloseButton() {
 		return driver.FindElementByXPath("//div[@id='viewCodingStamp']//following::div[@class='ui-dialog-buttonset']//button[text()='Close']");
 	}
-	//verfifying the docid on docview panal by passing required docid
-		public Element getDocViewPanelDocId(String docId) {
-			return driver.FindElementByXPath("//span[@id='activeDocumentId' and text()='"+docId+"']");
-		}
 		
 	//Added by Gopinath - 17/01/2022
 	public Element getDocumentByid(String docId) {
@@ -21220,6 +21216,7 @@ public class DocViewPage {
 				}
 			}
 		}
+	}
 
 
 
