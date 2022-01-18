@@ -21168,5 +21168,45 @@ public class DocViewPage {
 		System.out.println("Document Viewing Panel Shows the Default View of Document Selected From MiniDoc List");
 		base.stepInfo("Document Viewing Panel Shows the Default View of Document Selected From MiniDoc List");
 	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal Created Date: 18/1/2022
+	 * @description To verify highlightining text without clicking the eyeIcon
+	 */
+	public String getPersistentHitWithoutClickingEyeIcon(String searchString) throws InterruptedException {
+		
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPersistantHitEyeIcon().Visible();
+			}
+		}), Input.wait60);
+		Thread.sleep(3000);
+
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getHitPanels().Visible();
+			}
+		}), Input.wait30);
+
+		int numOfPanels = getHitPanels().size();
+		String Phit = "NULL";
+		System.out.println("numOfPanels" + (numOfPanels - 1));
+		Boolean flag = false;
+		for (int i = 2; i <= numOfPanels; i++) {
+			if (getTermInHitPanels(i).getText().contains(searchString)) {
+				System.out.println("Found " + searchString);
+				flag = true;
+				Phit = getTermInHitPanels(i).getText();
+				break;
+			}
+
+		}
+		 softAssertion.assertTrue(flag);
+		 driver.getWebDriver().navigate().refresh();
+		return Phit;
+	}
 }
 
