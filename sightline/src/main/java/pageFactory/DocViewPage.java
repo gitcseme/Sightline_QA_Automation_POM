@@ -1606,6 +1606,10 @@ public class DocViewPage {
 	}
 
 	// Added by Jeevitha
+	public Element selectedRedactionTag() {
+		return driver.FindElementByXPath("//select[@id='ddlRedactionTags']/option[@selected]");
+	}
+	
 	public Element getDocView_AllRedaction() {
 		return driver.FindElementByXPath("//div[@class='unselectable h6']");
 	}
@@ -21051,6 +21055,45 @@ public class DocViewPage {
 	}
 	
 	/**
+	 * @Author Jeevitha
+	 * @param redactionCount
+	 * @param tagName
+	 * @param navigationElement
+	 * @return
+	 */
+	public boolean verifyPresenceOfOrphanRedactionTag(int redactionCount, String tagName, Element navigationElement) {
+		String actualtagName = "";
+		boolean flag = false;
+		for (int i = 1; i <= redactionCount; i++) {
+			base.waitForElement(navigationElement);
+			navigationElement.waitAndClick(10);
+			driver.waitForPageToBeReady();
+
+			if (selectedRedactionTag().isDisplayed()) {
+				actualtagName = selectedRedactionTag().getText();
+
+				if (actualtagName.equals(tagName)) {
+					flag = true;
+					break;
+				}
+			}
+
+			if (!actualtagName.equals(tagName)) {
+				flag = false;
+			}
+		}
+
+		if (flag) {
+			System.out.println(tagName + " : Redaction tag is Displayed");
+			base.stepInfo(tagName + " : Redaction tag is Displayed");
+		} else {
+			System.out.println(tagName + " : Redaction tag is Not Displayed");
+			base.stepInfo(tagName + " : Redaction tag is Not Displayed");
+		}
+		return flag;
+  }
+  
+/*
 	 * @author Indium-Baskar date: 18/01/2022 Modified date:N/A
 	 * @Description: This method used to verify comment without save and Next
 	 * 
@@ -21099,4 +21142,31 @@ public class DocViewPage {
 		childWindowToParentWindowSwitching(parent);
 	}
 
+	/*
+	 * @Author Jeevitha
+	 */
+	public void verifyingTheDocSelectedInMiniDocListAndDocInDocumentViewingPanel() {
+
+		String selectedDocID = getSelectedDocIdInMiniDocList().getText();
+		String DocIDInDocumentViewingPanel = getDocView_CurrentDocId().getText();
+		List<String> DocIDInMiniDocList = base.availableListofElements(getMiniDocListDocIdText());
+		for (int i = 0; i < DocIDInMiniDocList.size(); i++) {
+			int Doc_no = 1;
+			if (selectedDocID.equals(DocIDInMiniDocList.get(i))) {
+				if (Doc_no == 1) {
+					System.out.println("By Default the Fist Document in the MiniDoc List is Selected");
+					base.stepInfo("By Default the Fist Document in the MiniDoc List is Selected");
+				} else {
+					System.out.println("Number : " + Doc_no + " Document is Selected in the MiniDoc List");
+					base.stepInfo("Number : " + Doc_no + " Document is Selected in the MiniDoc List");
+				}
+				break;
+			}
+			Doc_no++;
+		}
+		softAssertion.assertEquals(selectedDocID, DocIDInDocumentViewingPanel);
+		System.out.println("Document Viewing Panel Shows the Default View of Document Selected From MiniDoc List");
+		base.stepInfo("Document Viewing Panel Shows the Default View of Document Selected From MiniDoc List");
+	}
 }
+

@@ -114,7 +114,6 @@ public class DocView_MiniDocList_Regression2 {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-
 		sessionSearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Basic Search is done successfully");
 
@@ -144,7 +143,6 @@ public class DocView_MiniDocList_Regression2 {
 
 	}
 
-	
 	/**
 	 * Author : Vijaya.Rani date: 16/12/21 NA Modified date: NA Modified by:NA
 	 * Description :Verify sorting from mini doc list when redirected to doc view
@@ -203,7 +201,7 @@ public class DocView_MiniDocList_Regression2 {
 		baseClass.stepInfo("Doc are viewed in Docview successfully");
 
 		miniDocListpage.performSortDocIdMiniDocList();
-		
+
 	}
 
 	/**
@@ -266,11 +264,12 @@ public class DocView_MiniDocList_Regression2 {
 		miniDocListpage.selectSourceDocIdInAvailableField();
 
 	}
-	
+
 	/**
 	 * Author : Vijaya.Rani date: 17/12/21 NA Modified date: NA Modified by:NA
-	 * Description Verify that EmailAuthorNameAndAddress field should not be displayed on the configure
-	 *  mini doc list optimized sort tab.'RPMXCON-51524' Sprint : 8
+	 * Description Verify that EmailAuthorNameAndAddress field should not be
+	 * displayed on the configure mini doc list optimized sort tab.'RPMXCON-51524'
+	 * Sprint : 8
 	 * 
 	 * @throws AWTException
 	 * @throws Exception
@@ -290,7 +289,7 @@ public class DocView_MiniDocList_Regression2 {
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		miniDocListpage.viewInDocView();
-		
+
 		miniDocListpage.performReviewModeGearIconCheckEmailAuthorAndAddress();
 		loginPage.logout();
 
@@ -324,7 +323,7 @@ public class DocView_MiniDocList_Regression2 {
 		baseClass.stepInfo("Doc are viewed in Docview successfully");
 
 		miniDocListpage.performReviewModeGearIconCheckEmailAuthorAndAddress();
-		
+
 	}
 
 	/**
@@ -384,14 +383,12 @@ public class DocView_MiniDocList_Regression2 {
 		baseClass.waitForElement(docViewPage.get1stDocinMiniDoc_ChildDocs());
 		docViewPage.get1stDocinMiniDoc_ChildDocs().waitAndClick(10);
 
-		
 		driver.switchTo().window(parentWindowID);
 
 		docViewPage.editCodingFormComplete();
 
 		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
 
-		
 		Set<String> allWindowsId1 = driver.getWebDriver().getWindowHandles();
 		for (String eachId : allWindowsId1) {
 			if (!parentWindowID.equals(eachId)) {
@@ -404,14 +401,12 @@ public class DocView_MiniDocList_Regression2 {
 		driver.waitForPageToBeReady();
 		docViewPage.verifyCheckMarkIconFromMiniDocListChildWindow();
 
-	
 		driver.switchTo().window(parentWindowID);
 
 		docViewPage.editCodingFormComplete();
 
 		String parentWindowID2 = driver.getWebDriver().getWindowHandle();
 
-	
 		Set<String> allWindowsId2 = driver.getWebDriver().getWindowHandles();
 		for (String eachId : allWindowsId1) {
 			if (!parentWindowID.equals(eachId)) {
@@ -426,7 +421,6 @@ public class DocView_MiniDocList_Regression2 {
 
 		// Click Gear Icon Check Child windoe Symbol
 		docViewPage.performGearIconChildWindowSymbol();
-		loginPage.logout();
 
 	}
 
@@ -486,7 +480,6 @@ public class DocView_MiniDocList_Regression2 {
 
 		}
 
-		loginPage.logout();
 	}
 
 	/**
@@ -532,21 +525,23 @@ public class DocView_MiniDocList_Regression2 {
 
 		// Select Docs and complete
 		docViewPage.verifyPrincipalDocNotHide();
-		
+
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
-		 
+
 		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
 		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
-			if (docViewPage.getVerifyPrincipalDocument().Displayed()) {
-				softAssertion.assertTrue(docViewPage.getVerifyPrincipalDocument().getWebElement().isDisplayed());
-				baseClass.passedStep(" Mini doc list Completed  Principal document is displayed under the header successfully");
-			} else {
-				baseClass.failedStep("Mini doc list Completed  Principal document is not displayed under the header successfully");
-				
-			}
+		if (docViewPage.getVerifyPrincipalDocument().Displayed()) {
+			softAssertion.assertTrue(docViewPage.getVerifyPrincipalDocument().getWebElement().isDisplayed());
+			baseClass.passedStep(
+					" Mini doc list Completed  Principal document is displayed under the header successfully");
+		} else {
+			baseClass.failedStep(
+					"Mini doc list Completed  Principal document is not displayed under the header successfully");
+
+		}
 	}
-		
+
 	/**
 	 * Author : Vijaya.Rani date: 05/01/22 NA Modified date: NA Modified by:NA
 	 * Description: To verify that user can select multiple documents from the 'Mini
@@ -590,7 +585,6 @@ public class DocView_MiniDocList_Regression2 {
 
 		docViewPage.docViewMiniDocListCodeSameAs();
 
-		loginPage.logout();
 	}
 
 	/**
@@ -656,9 +650,79 @@ public class DocView_MiniDocList_Regression2 {
 
 		docViewPage.docViewMiniDocListCodeSameAsAndCompleteForReviewer();
 
-		loginPage.logout();
 	}
-	
+
+	/**
+	 * @Jeevitha
+	 * @description : To verify Mini DocList Panel from doc view page for
+	 *              RMU/Reviewer when redirects from dashboard-assignment page [RPMXCON-48691]
+	 * @throws Exception
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
+	public void verifyMiniDocListPanelAndDocViewPanel() throws Exception {
+
+		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48691");
+		baseClass.stepInfo(
+				"To verify Mini DocList Panel from doc view page for RMU/Reviewer when redirects from dashboard-assignment page");
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// assignment Creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, "Default Project Coding Form");
+		assignmentPage.add2ReviewerAndDistribute();
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+
+		// impersonate from RMU to Rev
+		baseClass.impersonateRMUtoReviewer();
+
+		// selecting the assignment
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+
+		// verifying the Document Showed in Document Viewing Panel and Selected Document
+		// in MiniDoc List
+		docViewPage.verifyingTheDocSelectedInMiniDocListAndDocInDocumentViewingPanel();
+		String lastDocIdBefore = docViewPage.getlastDocinMiniDocView().getText().trim();
+		baseClass.stepInfo(lastDocIdBefore + " : Last Doc Id before Scrolling");
+
+		// Scrolling the MiniDoc List
+		docViewPage.scrollingDocumentInMiniDocList();
+		String lastDocIdAfter = docViewPage.getlastDocinMiniDocView().getText().trim();
+		baseClass.stepInfo(lastDocIdAfter + " : Last Doc Id after Scrolling");
+
+		softAssertion.assertNotEquals(lastDocIdBefore, lastDocIdAfter);
+
+		loginPage.logout();
+
+		// login As reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rev1FullName);
+
+		// selecting the assignment
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+
+		// verifying the Document Showed in Document Viewing Panel and Selected Document
+		// in MiniDoc List
+		docViewPage.verifyingTheDocSelectedInMiniDocListAndDocInDocumentViewingPanel();
+		String lastDocIdBFRev = docViewPage.getlastDocinMiniDocView().getText().trim();
+		baseClass.stepInfo(lastDocIdAfter + " : Last Doc Id after Scrolling");
+
+		// Scrolling the MiniDoc List
+		docViewPage.scrollingDocumentInMiniDocList();
+		String lastDocIdAFRev = docViewPage.getlastDocinMiniDocView().getText().trim();
+		baseClass.stepInfo(lastDocIdAfter + " : Last Doc Id after Scrolling");
+
+		softAssertion.assertNotEquals(lastDocIdBFRev, lastDocIdAFRev);
+		softAssertion.assertAll();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

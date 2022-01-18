@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
@@ -35,8 +36,8 @@ public class BasicSearch_Regression1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+		// Input in = new Input();
+		// in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -47,8 +48,8 @@ public class BasicSearch_Regression1 {
 		System.out.println("Executing method : " + testMethod.getName());
 		// Open browser
 		softAssertion = new SoftAssert();
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		ss = new SessionSearch(driver);
@@ -241,7 +242,7 @@ public class BasicSearch_Regression1 {
 		return new Object[][] { { "DocFileName", "tes", "\"Testing Special characater\"", "46984" },
 				{ "CustodianName", "P A", "\"P Allen\"", "46985" }, { "CustodianName", "andr", "Andrew", "46992" },
 				{ "EmailToAddresses", "sat", "Satish.Pawal@Consilio.com", "46988" },
-				
+
 		};
 	}
 
@@ -302,9 +303,10 @@ public class BasicSearch_Regression1 {
 	}
 
 	/**
-	 * @author Jeevitha
-	 * Description: Verify that correct result appears when User configured Expanded query format and having 'White Space' & character.
-	 * (RPMXCON-57446,57445,57443,57442,57441,57440,57439,57438,57437,57436,57433,57430,57429,57427,57426)
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *         (RPMXCON-57446,57445,57443,57442,57441,57440,57439,57438,57437,57436,57433,57430,57429,57427,57426)
 	 * @param data
 	 * @param TC_ID
 	 * @throws ParseException
@@ -340,10 +342,10 @@ public class BasicSearch_Regression1 {
 	}
 
 	/**
-	 * @author Jeevitha
-	 * Description: Verify that in "compound query (workproduct and content/metadata) " metadata session search, when auto-suggest value is selected
-	 *             (presence of a space in Multiple words) then corresponding value gets wrapped in double quotes.
-	 *             (RPMXCON-46993)
+	 * @author Jeevitha Description: Verify that in "compound query (workproduct and
+	 *         content/metadata) " metadata session search, when auto-suggest value
+	 *         is selected (presence of a space in Multiple words) then
+	 *         corresponding value gets wrapped in double quotes. (RPMXCON-46993)
 	 * @throws InterruptedException
 	 */
 	@Test(groups = { "regression" }, priority = 7)
@@ -354,7 +356,7 @@ public class BasicSearch_Regression1 {
 		String metaDataFileName = "\"TEST MAIL\"";
 		String expectedFileDisplayInQuerySelection = "\"TEST MAIL\"";
 		String expectedFileDisplay = " DocFileName: (\"TEST MAIL\") ";
-		
+
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		bc.stepInfo("RPMXCON-46993  Basic Search");
@@ -365,43 +367,75 @@ public class BasicSearch_Regression1 {
 
 		bc.selectproject();
 		this.driver.getWebDriver().get(Input.url + "Search/Searches");
-		sessionSearchPage.validateAutosuggestSearchResult_AS(metaDataFileName, metadataFieldLabel, Value, expectedFileDisplay,
-				expectedFileDisplayInQuerySelection,false);
+		sessionSearchPage.validateAutosuggestSearchResult_AS(metaDataFileName, metadataFieldLabel, Value,
+				expectedFileDisplay, expectedFileDisplayInQuerySelection, false);
 		sessionSearchPage.advancedSearchWorkProduct(tag);
-		
+
 		// condition
 		bc.waitForElement(sessionSearchPage.getAs_SelectOperation(1));
 		sessionSearchPage.getAs_SelectOperation(1).selectFromDropdown().selectByVisibleText("OR");
 		int pureHit4 = sessionSearchPage.saveAndReturnPureHitCount();
-		System.out.println("Document count of Compound Query is: "+pureHit4);
-		bc.stepInfo("Document count of Compound Query is: "+pureHit4);
+		System.out.println("Document count of Compound Query is: " + pureHit4);
+		bc.stepInfo("Document count of Compound Query is: " + pureHit4);
 
 		lp.logout();
 	}
-	
+
 	/**
-	 * @author Jeevitha
-	 * Description : Verify that in "EmailToAddress" metadata session search, when auto-suggest value is selected (presence of a space in Multiple words) then corresponding value gets wrapped in double quotes.
+	 * @author Jeevitha Description : Verify that in "EmailToAddress" metadata
+	 *         session search, when auto-suggest value is selected (presence of a
+	 *         space in Multiple words) then corresponding value gets wrapped in
+	 *         double quotes.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled=false, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyMetadataAutoSuggest() throws InterruptedException {
-		String expectedFileName="\"Scott Tholan\"";
-		String metaDataField="EmailToAddresses";
-		String value="sco";
+		String expectedFileName = "\"Scott Tholan\"";
+		String metaDataField = "EmailToAddresses";
+		String value = "sco";
 
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc.stepInfo("RPMXCON- 46991   Basic Search");
-		bc.stepInfo("Verify that in \"EmailToAddress\" metadata session search, when auto-suggest value is selected (presence of a space in Multiple words) then corresponding value gets wrapped in double quotes.");
+		bc.stepInfo(
+				"Verify that in \"EmailToAddress\" metadata session search, when auto-suggest value is selected (presence of a space in Multiple words) then corresponding value gets wrapped in double quotes.");
 
 		SessionSearch sessionSearchPage = new SessionSearch(driver);
 		sessionSearchPage.validateAutosuggestSearchResult_BS(expectedFileName, metaDataField, value);
 		lp.logout();
 
 	}
-	
-	
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify the basic search for Threaded Documents[RPMXCON-47288]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	public void verifyThreadedDocs() throws InterruptedException {
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("RPMXCON- 47288   Basic Search Sprint-10");
+		bc.stepInfo("Verify the basic search for Threaded Documents");
+
+		// search with Metadata & Operator and verify purehit
+		ss.navigateToSessionSearchPageURL();
+		ss.basicMetaDataDraftSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+		ss.selectOperatorInBasicSearch("OR");
+		int pureHit = ss.basicContentSearchWithSaveChanges(Input.searchString1, "Yes", "Third");
+		bc.stepInfo("Search Term Is : " + Input.metaDataName + " : " + Input.metaDataCustodianNameInput + " OR "
+				+ Input.searchString1);
+		softAssertion.assertNotEquals(pureHit, Input.TextEmpty);
+
+		// verify Threaded document count
+		String threadedCount = ss.verifyThreadedCount();
+		bc.stepInfo("Threaded Document Count is: " + threadedCount);
+		softAssertion.assertNotEquals(threadedCount, Input.TextEmpty);
+
+		softAssertion.assertAll();
+		lp.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
