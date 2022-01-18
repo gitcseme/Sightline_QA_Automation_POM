@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -1547,57 +1548,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 	}
 
-	/**
-	 * @author Sowndarya.Velraj created on:12/28/21 TESTCASE No:RPMXCON-47844
-	 * @Description:To Verify the Create/Display of Template with newly created
-	 *                 Project and Production Set.
-	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 28)
-	public void createTemplateWithNewProductionSet() throws Exception {
-
-		baseClass.stepInfo("Test case Id RPMXCON-47844- Production Sprint 08");
-		UtilityLog.info(Input.prodPath);
-
-		foldername = "FolderProd" + Utility.dynamicNameAppender();
-		templateName = "templateName" + Utility.dynamicNameAppender();
-		productionSet = "productionSet" + Utility.dynamicNameAppender();
-
-		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
-		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-
-		baseClass.stepInfo("Searching for a content and performing bulk folder action");
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkFolderExisting(foldername);
-
-		baseClass.stepInfo("Navigating to Production Home page and creating new production set");
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		productionname = " p" + Utility.dynamicNameAppender();
-		page.selectingDefaultSecurityGroup();
-		page.CreateProductionSets(productionSet);
-		page.navigateToProductionPageByNewProductionSet(productionSet);
-		driver.waitForPageToBeReady();
-		page.addANewProduction(productionname);
-		page.fillingDATSection();
-		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
-				beginningBates);
-
-		driver.getWebDriver().get(Input.url + "Production/Home");
-		page.selectingDefaultSecurityGroup();
-		page.navigateToProductionPageByNewProductionSet(productionSet);
-		page.prodGenerationInCompletedStatus(productionname);
-		page.saveProductionAsTemplateAndVerifyInManageTemplateTab(productionname, templateName);
-
-		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-	}
-
+	
 	/**
 	 * @author Sowndarya.Velraj created on:12/30/21 TESTCASE No:RPMXCON-48322
 	 * @Description:To verify that "Generate Load File" is enabled by default for
@@ -2441,7 +2392,103 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:12/28/21 TESTCASE No:RPMXCON-47844
+	 * @Description:To Verify the Create/Display of Template with newly created
+	 *                 Project and Production Set.
+	 */
+	@Test(enabled = false, groups = { " regression" }, priority = 28)
+	public void createTemplateWithNewProductionSet() throws Exception {
 
+		baseClass.stepInfo("Test case Id RPMXCON-47844- Production Sprint 10");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		templateName = "templateName" + Utility.dynamicNameAppender();
+		productionSet = "productionSet" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		baseClass.stepInfo("Searching for a content and performing bulk folder action");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		baseClass.stepInfo("Navigating to Production Home page and creating new production set");
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.CreateProductionSets(productionSet);
+		page.navigateToProductionPageByNewProductionSet(productionSet);
+		driver.waitForPageToBeReady();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
+
+		driver.getWebDriver().get(Input.url + "Production/Home");
+		page.selectingDefaultSecurityGroup();
+		page.navigateToProductionPageByNewProductionSet(productionSet);
+		page.prodGenerationInCompletedStatus(productionname);
+		page.saveProductionAsTemplateAndVerifyInManageTemplateTab(productionname, templateName);
+
+		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+	}
+
+
+	/**
+	 * @author Sowndarya.Velraj created on:01/13/22 TESTCASE No:RPMXCON-47845
+	 * @Description:To Verify the View of the Custom Template
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 46)
+	public void verifyCustomTemplate() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-47845- Production Sprint 10");
+		baseClass.stepInfo("To Verify the View of the Custom Template");
+		UtilityLog.info(Input.prodPath);
+
+		templateName = "templateName" + Utility.dynamicNameAppender();
+		productionSet = "productionSet" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("Navigating to Production Home page and creating new production set");
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.CreateProductionSets(productionSet);
+		page.navigateToProductionPageByNewProductionSet(productionSet);
+		driver.waitForPageToBeReady();
+		page.addANewProduction(productionname);
+		driver.waitForPageToBeReady();
+		driver.getWebDriver().get(Input.url + "Production/Home");
+		page.selectingDefaultSecurityGroup();
+		page.navigateToProductionPageByNewProductionSet(productionSet);
+		driver.waitForPageToBeReady();
+		page.getProductionFromHomepage(productionname).isDisplayed();
+		baseClass.stepInfo("click on arrow icon of the current production");
+		page.arrowSymbolInHomePage().ScrollTo();
+//		page.arrowSymbolInHomePage().waitAndClick(10);
+		new Actions(driver.getWebDriver()).moveToElement(page.arrowSymbolInHomePage().getWebElement()).click();
+		baseClass.stepInfo("click on save as Template");
+		page.getprod_Action_SaveTemplate().waitAndClick(10);
+
+		baseClass.waitForElement(page.getprod_Templatetext());
+		page.getprod_Templatetext().waitAndClick(10);
+		page.getprod_Templatetext().SendKeys(templateName);
+
+		page.getProdExport_SaveButton().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Production Saved as a Custom Template.");
+
+		
+	}
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
