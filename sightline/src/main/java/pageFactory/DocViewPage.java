@@ -2686,7 +2686,8 @@ public class DocViewPage {
 				"//div[@id='viewCodingStamp']//following::div[@class='ui-dialog-buttonset']//button[text()='Close']");
 	}
 
-	// Added by Gopinath - 17/01/2022
+		
+	//Added by Gopinath - 17/01/2022
 	public Element getDocumentByid(String docId) {
 		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr//td[text()='" + docId + "']");
 	}
@@ -21221,6 +21222,7 @@ public class DocViewPage {
 			}
 		}
 	}
+
 
 	/**
 	 * @author Raghuram.A
