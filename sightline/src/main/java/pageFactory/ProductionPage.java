@@ -845,6 +845,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element arrowSymbolInHomePage() {
+		return driver.FindElementByXPath("//b[@class='caret']]");
+	}
+	
 	public Element productionNameInGeneratePage(String productionname) {
 		return driver.FindElementByXPath("//label[contains(text(),'" + productionname + "')]");
 	}
