@@ -4310,6 +4310,238 @@ public class DocView_Regression1 {
 				docView.performPrevNavigation(2);
 			}
 			
+			/**
+			 * @author Gopinath
+			 * TestCase Id :51440 Verify that icon to indicate N/P/T/X should not be clickable from doc view panel.
+			 * Description : Verify that icon to indicate N/P/T/X should not be clickable from doc view panel.
+			 * @throws InterruptedException 
+			 */
+			@Test(enabled = true, groups = { "regression" }, priority = 62)
+			public void verifyiconIndicateAndItsNotClickable() throws InterruptedException {
+				baseClass=new BaseClass(driver);
+				String nativeDocId = "ID00001351";
+				String textDocId = "ID00000102";
+				String tiffDocId = "ID00001012";
+				String pdfDocId = "ID00001464";
+				String nativeToolTip ="Native file variant of the document being displayed";
+				String textToolTip = "Text file variant of the document being displayed";
+				String tiffToolTip = "TIFF file variant of the document being displayed";
+				String pdfToolTip =  "PDF file variant of the document being displayed";
+				baseClass.stepInfo("Test case Id: RPMXCON-51440 sprint 10");
+				baseClass.stepInfo("#### Verify that icon to indicate N/P/T/X should not be clickable from doc view panel ####");
+				docView = new DocViewPage(driver);
+				docViewMetaDataPage = new DocViewMetaDataPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				docView = new DocViewPage(driver);
+				
+				baseClass.stepInfo("Basic  content search ");
+				session.basicContentSearch(Input.searchString1);
+				
+				baseClass.stepInfo("View serached dos in Docview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Verify native file document default tab contains tool tip");
+				docView.verifyingToolTipPopupMessage(nativeDocId, nativeToolTip);
+				
+				baseClass.stepInfo("Verify text file document default tab contains tool tip");
+				docView.verifyingToolTipPopupMessage(textDocId, textToolTip);
+				
+				baseClass.stepInfo("Verify Tiff file document default tab contains tool tip");
+				docView.verifyingToolTipPopupMessage(tiffDocId,tiffToolTip);
+				
+				baseClass.stepInfo("Verify PDF file document default tab contains tool tip");
+				docView.verifyingToolTipPopupMessage(pdfDocId, pdfToolTip);
+				
+				baseClass.stepInfo("Navigate to session search page");
+				session.navigateToSessionSearchPageURL();
+				
+				baseClass.stepInfo("Navigate to doc view page");
+				docView.navigateToDocViewPageURL();
+				
+				baseClass.stepInfo("Verify native document icon on default tab is not clickable");
+				docView.verifyDocumentIconIsNotClickable(nativeDocId);
+				
+				baseClass.stepInfo("Verify text document icon on default tab is not clickable");
+				docView.verifyDocumentIconIsNotClickable(textDocId);
+				
+				baseClass.stepInfo("Verify tiff document icon on default tab is not clickable");
+				docView.verifyDocumentIconIsNotClickable(tiffDocId);
+				
+				baseClass.stepInfo("Verify pdf document icon on default tab is not clickable");
+				docView.verifyDocumentIconIsNotClickable(pdfDocId);
+			}
+			
+			
+			
+			/**
+			 * @author Gopinath
+			 * @throws InterruptedException 
+			 * @TestCased Id:51439 Verify that N/P/T/X should not be displayed when default view tab is off at an assignment level in context of an assignment.
+			 * @Description : Verify that N/P/T/X should not be displayed when default view tab is off at an assignment level in context of an assignment                   
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 63)
+			public void verifyNPTXIconsOnDefaultTabByOpertionsOnAssignment() throws InterruptedException {
+				baseClass.stepInfo("Test case Id: RPMXCON-51439 Sprint 10");
+				String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
+				String nativeDocId = "ID00001351";
+				String textDocId = "ID00000102";
+				String tiffDocId = "ID00001012";
+				String pdfDocId = "ID00001475";
+				baseClass.stepInfo("#### Verify that N/P/T/X should not be displayed when default view tab is off at an assignment level in context of an assignment. ####");
+				AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+				ManageAssignment mngAssign = new ManageAssignment(driver);
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				
+				// searching document for assignmnet creation
+				baseClass.stepInfo("basic contant search");
+				sessionSearch.basicContentSearch(Input.searchString1);
+				
+				baseClass.stepInfo("performing bulk assign");
+				sessionSearch.bulkAssign();
+				
+				baseClass.stepInfo("creating assignment");
+				assignmentPage.assignmentCreation(AssignStamp, Input.codingFormName);
+				
+				baseClass.stepInfo("Disable show default view tab toogle");
+				mngAssign.disableDefaultTabToogle(false);
+				
+				baseClass.stepInfo("edit assignment and distributed to reviewer");
+				assignmentPage.assignmentDistributingToReviewer();
+				
+				baseClass.stepInfo("Select assignment to view in Doc view");
+				assignmentPage.selectAssignmentToViewinDocview(AssignStamp);
+				
+				baseClass.stepInfo("Verify native document icon on default tab is displayed");
+				docView.verifyDocumentIconIsNotClickable(nativeDocId);
+				
+				baseClass.stepInfo("Verify text document icon on default tab is displayed");
+				docView.verifyDocumentIconIsNotClickable(textDocId);
+				
+				baseClass.stepInfo("Verify tiff document icon on default tab is displayed");
+				docView.verifyDocumentIconIsNotClickable(tiffDocId);
+				
+				baseClass.stepInfo("Verify pdf document icon on default tab is displayed");
+				docView.verifyDocumentIconIsNotClickable(pdfDocId);
+				
+				baseClass.stepInfo("Navigate to assignment page");
+				assignmentPage.navigateToAssignmentsPage();
+				
+				baseClass.stepInfo("Edit assignment by assignment name");
+				assignmentPage.editAssignmentUsingPaginationConcept(AssignStamp);
+				
+				baseClass.stepInfo("Disable show default view tab toogle");
+				mngAssign.disableDefaultTabToogle(true);
+				
+				baseClass.stepInfo("Select assignment to view in Doc view");
+				assignmentPage.selectAssignmentToViewinDocview(AssignStamp);
+				
+				baseClass.stepInfo("Verify Native Document Icon Is Not Displayed On Default Tab");
+				docView.verifyDocumentIconIsNotDisplayedOnDefaultTab(nativeDocId,"N");
+				
+				baseClass.stepInfo("Verify Text Document Icon Is Not Displayed On Default Tab");
+				docView.verifyDocumentIconIsNotDisplayedOnDefaultTab(textDocId,"X");
+				
+				baseClass.stepInfo("Verify Tiff Document Icon Is Not Displayed On Default Tab");
+				docView.verifyDocumentIconIsNotDisplayedOnDefaultTab(tiffDocId,"T");
+				
+				baseClass.stepInfo("Verify Pdf Document Icon Is Not Displayed On Default Tab");
+				docView.verifyDocumentIconIsNotDisplayedOnDefaultTab(pdfDocId,"P");
+				
+				loginPage.logout();
+				baseClass.stepInfo("Successfully logout RMU '" + Input.rev1userName + "'");
+
+				// Login As Reviewer
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+				
+				// selecting the assignment
+				baseClass.stepInfo("select the assignment and view in docview");
+				assignmentPage.SelectAssignmentByReviewer(AssignStamp);
+				
+				baseClass.stepInfo("Verify Native Document Icon Is Not Displayed On Default Tab");
+				docView.verifyDocumentIconIsNotDisplayedOnDefaultTab(nativeDocId,"N");
+				
+				baseClass.stepInfo("Verify Text Document Icon Is Not Displayed On Default Tab");
+				docView.verifyDocumentIconIsNotDisplayedOnDefaultTab(textDocId,"X");
+				
+				baseClass.stepInfo("Verify Tiff Document Icon Is Not Displayed On Default Tab");
+				docView.verifyDocumentIconIsNotDisplayedOnDefaultTab(tiffDocId,"T");
+				
+				baseClass.stepInfo("Verify Pdf Document Icon Is Not Displayed On Default Tab");
+				docView.verifyDocumentIconIsNotDisplayedOnDefaultTab(pdfDocId,"P");
+				
+			}
+			/**
+			 * @author Gopinath
+			 * TestCase Id:51101 Verify user should able to download the associated files by selecting the option from the drop down selection Txt, Native
+			 * Description:To Verify user should able to download the associated files by selecting the option from the drop down selection Txt, Native
+			 * @throws InterruptedException 
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 64)
+			public void verifyAssociatedFileNativeDownloadOption() throws InterruptedException {
+					String docId1="ID00001069";
+					baseClass=new BaseClass(driver);
+					baseClass.stepInfo("Test case Id: RPMXCON-51101");
+					baseClass.stepInfo("#### Verify user should able to download the associated files by selecting the option from the drop down selection Txt, Native####");
+					
+					docView = new DocViewPage(driver);
+					SessionSearch session = new SessionSearch(driver);
+					DocViewPage docView = new DocViewPage(driver);
+					
+					baseClass.stepInfo("Basic  content search for 1st document ");
+					session.basicContentSearch(docId1);
+					
+					baseClass.stepInfo("View serached dos in Docview");
+					session.ViewInDocView();
+					
+					baseClass.stepInfo("select document to download Native");
+					docView.selectDocToViewInDocViewPanal(docId1);
+		
+					baseClass.stepInfo("Verify download selection displayed.");
+					docView.verifyDownloadSelectionDisplayed();
+					
+					baseClass.stepInfo("Downloading native 1 form selected document");
+					docView.downloadSelectedFormaats(Input.fileDownloadLocation,"native",null,  null ,null);
+			}
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id:51100 Verify user should be able to click the download icon when associated files are ingested
+			 * Description:To Verify user should be able to click the download icon when associated files are ingested
+			 * @throws InterruptedException 
+			 */
+			@Test
+			public void verifyAssociatedFileDownloadOptions() throws InterruptedException {
+				String docId1="ID00001069";
+				String docId2="ID00001004";//id to download translation 1
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51100");
+				baseClass.stepInfo("#### Verify user should able to download the associated files by selecting the option from the drop down selection Txt, Native from default view####");
+				
+				docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				
+				baseClass.stepInfo("Basic  content search for 1st document ");
+				session.basicContentSearch(docId1);
+				
+				baseClass.stepInfo("Basic  content search for 2st document ");
+				session.multipleBasicContentSearch(docId2);
+				
+				baseClass.stepInfo("View serached dos in DOcview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("select document to download Native,tiff,txt");
+				docView.selectDocToViewInDocViewPanal(docId1);
+				
+				docView.downloadSelectedFormaats(Input.fileDownloadLocation,"txt",  "native",null,null);
+				
+				baseClass.stepInfo("select document to download translation 1 ");
+				docView.selectDocToViewInDocViewPanal(docId2);
+				docView.downloadSelectedFormats(Input.fileDownloadLocation,"tiff","translation");
+				
+			}
+			
 		@AfterMethod(alwaysRun = true)
 		public void close() {
 			try {
