@@ -3510,6 +3510,99 @@ public class DocViewRedactions {
 		getAssignmentSaveButton().waitAndClick(5);
 		base.VerifySuccessMessage("Assignment updated successfully");
 	}
+	
+	// added by Sai krishna
+	public void verifyViewDocAnalyticalPanelIsNotPartInMiniDocList() {
+		docView = new DocViewPage(driver);
+		base = new BaseClass(driver);
+		driver.waitForPageToBeReady();
+		docView.scrollingDocumentInMiniDocList();
+		driver.waitForPageToBeReady();
+		getDocView_MiniDoc_Selectdoc(116).ScrollTo();
+		getDocView_MiniDoc_Selectdoc(116).WaitUntilPresent().Click();
+		base.waitForElement(docView.getDocView_CurrentDocId());
+		softAssertion.assertTrue(docView.getDocView_CurrentDocId().isDisplayed());
+		base.passedStep("Selected DocId is successfully Displayed");
+		base.waitForElement(docView.getDocView_ImagesTab());
+		docView.getDocView_ImagesTab().waitAndClick(5);
+		base.stepInfo("Image tab loaded");
+		if (docView.getDocView_ImagesTab().isDisplayed()) {
+			base.passedStep("Imagetab is displayed successfully");
+		} else {
+			base.failedStep("Image tab is not retained");
+		}
+		docView.popOutAnalyticsPanel();
+		driver.waitForPageToBeReady();
+		docView.switchToNewWindow(2);
+		base.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().Click();
+		base.waitForElement(docView.getDocumentConceptuallySimilar(1));
+		docView.getDocumentConceptuallySimilar(1).waitAndClick(5);
+		base.stepInfo("Doc is selected which is not present in minidoclist");
+		base.waitForElement(docView.getDocView_ChildWindow_ActionButton());
+		docView.getDocView_ChildWindow_ActionButton().waitAndClick(10);
+		base.waitForElement(docView.getDocView_Analytics_Concept_ViewDocument());
+		docView.getDocView_Analytics_Concept_ViewDocument().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		docView.closeWindow(1);
+		docView.switchToNewWindow(1);
+		driver.scrollPageToTop();
+		base.waitForElement(docView.getDocView_CurrentDocId());
+		softAssertion.assertTrue(docView.getDocView_CurrentDocId().isDisplayed());
+		base.passedStep("After Selected analytical panel DocId is successfully Displayed");
+		if (docView.getDocView_ImagesTab().isDisplayed()) {
+			base.passedStep("After selected analytical panel docId on image tab is displayed successfully");
+		} else {
+			base.failedStep("Image tab is not displayed");
+
+		}
+	}
+	
+	public void verifyViewDocAnalyticalPanelPartInMiniDocList() {
+		driver.waitForPageToBeReady();
+		docView = new DocViewPage(driver);
+		base = new BaseClass(driver);
+		getDocView_MiniDoc_Selectdoc(1).waitAndClick(10);
+		base.waitForElement(docView.getDocView_CurrentDocId());
+		softAssertion.assertTrue(docView.getDocView_CurrentDocId().isDisplayed());
+		base.passedStep("Selected DocId is successfully Displayed");
+		base.waitForElement(docView.getDocView_ImagesTab());
+		docView.getDocView_ImagesTab().waitAndClick(5);
+		base.stepInfo("Image tab loaded");
+		if (docView.getDocView_ImagesTab().isDisplayed()) {
+			base.passedStep("Imagetab is displayed successfully");
+		} else {
+			base.failedStep("Image tab is not retained");
+
+		}
+		docView.popOutAnalyticsPanel();
+		driver.waitForPageToBeReady();
+		docView.switchToNewWindow(2);
+		base.waitForElement(docView.getDocView_Analytics_NearDupeTab());
+		docView.getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		base.waitForElement(docView.getDocView_NearDupe_Selectdoc());
+		docView.getDocView_NearDupe_Selectdoc().waitAndClick(10);
+		base.stepInfo("Doc is selected which is present in minidoclist");
+		docView.viewInDocumentAnalyticalPanel();
+		driver.waitForPageToBeReady();
+		docView.closeWindow(1);
+		docView.switchToNewWindow(1);
+		driver.scrollPageToTop();
+		if (docView.geDocView_MiniDocList_ArrowDownIcon().isDisplayed()) {
+			base.passedStep("ArrowDown icon is displayed for the selected docs ");
+		} else {
+			base.failedStep("ArrownDown icon is not displayed for the selected docs");
+		}
+		base.waitForElement(docView.getDocView_CurrentDocId());
+		softAssertion.assertTrue(docView.getDocView_CurrentDocId().isDisplayed());
+		base.passedStep("After Selected analytical panel DocId is successfully Displayed");
+		if (docView.getDocView_ImagesTab().isDisplayed()) {
+			base.passedStep("After selected analytical panel docId on image tab is displayed successfully");
+		} else {
+			base.failedStep("Image tab is not displayed");
+
+		}
+	}
 
 
 }

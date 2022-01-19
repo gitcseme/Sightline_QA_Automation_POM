@@ -6266,6 +6266,87 @@ public class DocView_Redactions_Regression {
 		
 	}
 
+	/**
+	 * Author : Sai Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-51923 Verify that when user in on Images tab and view document from
+	 * analytics panel child window then should be on Images tab of the viewed
+	 * document
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
+	public void verifyImageTabViewDocAnalyticalPanelChildWindow() throws Exception {
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+
+		// Login As RMU
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Test case Id: RPMXCON- 51923");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and view document from analytics panel child window then should be on Images tab of the viewed document");
+
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+
+		// Method for viewing doc view images.
+		docViewRedact.verifyViewDocAnalyticalPanelIsNotPartInMiniDocList();
+		driver.getWebDriver().navigate().refresh();
+		try {
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			System.out.println("Alert data: " + alertText);
+			UtilityLog.info("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+
+		}
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyViewDocAnalyticalPanelPartInMiniDocList();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in Reviewer account");
+		SessionSearch sessionsearch1 = new SessionSearch(driver);
+		sessionsearch1.basicContentSearch(Input.searchString1);
+		sessionsearch1.ViewInDocView();
+
+		// Method for viewing doc view images.
+		docViewRedact.verifyViewDocAnalyticalPanelIsNotPartInMiniDocList();
+		driver.getWebDriver().navigate().refresh();
+		try {
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			System.out.println("Alert data: " + alertText);
+			UtilityLog.info("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+
+		}
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyViewDocAnalyticalPanelPartInMiniDocList();
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in Pa account");
+		SessionSearch sessionsearch11 = new SessionSearch(driver);
+		sessionsearch11.basicContentSearch(Input.searchString1);
+		sessionsearch11.ViewInDocView();
+
+		// Method for viewing doc view images.
+		docViewRedact.verifyViewDocAnalyticalPanelIsNotPartInMiniDocList();
+		driver.getWebDriver().navigate().refresh();
+		try {
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			System.out.println("Alert data: " + alertText);
+			UtilityLog.info("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+
+		}
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyViewDocAnalyticalPanelPartInMiniDocList();
+	}
 
 	
 	
