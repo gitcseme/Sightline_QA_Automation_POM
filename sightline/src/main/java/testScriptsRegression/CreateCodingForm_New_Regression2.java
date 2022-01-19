@@ -61,16 +61,16 @@ public class CreateCodingForm_New_Regression2 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-	//	Input in = new Input();
-	 //   in.loadEnvConfig();
+//		Input in = new Input();
+//	    in.loadEnvConfig();
 	}
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -689,6 +689,116 @@ public class CreateCodingForm_New_Regression2 {
 	    softAssertion.assertEquals(value, "true");
 	    baseClass.passedStep("No changes are saved after clicking yes button to navigate some other page");
 	    softAssertion.assertAll();
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description :Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form for tag element
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void verifyCfValidationAfterSaveAndCompleteAction() throws InterruptedException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51194");
+	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form for tag element");
+	    String codingform = "CFTags"+Utility.dynamicNameAppender();
+	    String assgnCoding = "codingAssgn"+Utility.dynamicNameAppender();
+	    String defaultAction="Make It Required";
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	codingForm.createCodingFormUsingTwoObjects(codingform, null, null, null, "tag");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.selectDefaultActions(0,defaultAction);
+	 	codingForm.enterErrorAndHelpMsg(0,"Yes","Help for testing","Error for testing");
+	 	String expectedFirstObjectName = codingForm.getCFObjectsLabel(0);
+	 	System.out.println(expectedFirstObjectName);
+	 	codingForm.saveCodingForm();
+	 	codingForm.assignCodingFormToSG(codingform);
+	 	//create assignment
+	 	sessionSearch.basicContentSearch("null");
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assgnCoding, codingform);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.add2ReviewerAndDistribute();
+		//Impersonate to reviewer
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.viewSelectedAssgnUsingPagination(assgnCoding);
+		assignmentPage.assgnViewInAllDocView();
+		reusableDocView.saveButton();
+		docViewPage.verifyCodingFormName(codingform);
+		//verify tags are disbled
+		docViewPage.verifyTagsAreDisabled(0);
+		//verify tag names
+		docViewPage.verifyCodingFormTagNameInDocviewPg(0,expectedFirstObjectName);		
+		loginPage.logout();
+		//Login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName,Input.rev1password);
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		reusableDocView.completeButton();
+		docViewPage.verifyCodingFormName(codingform);
+		//verify tags are disbled
+		docViewPage.verifyTagsAreDisabled(0);
+		//verify tag names
+		docViewPage.verifyCodingFormTagNameInDocviewPg(0,expectedFirstObjectName);
+		loginPage.logout();
+		//delete assignment and codinform
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
+		codingForm.assignCodingFormToSG(Input.codeFormName);
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.deleteCodingForm(codingform,codingform);	
+		codingForm.verifyCodingFormIsDeleted(codingform);
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description :Verify RMU after impersonating as Reviewer coding form validations should be displayed on click of 'Complete' button
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	public void verifyCfValidationAfterCompleteActionUsingImpersonation() throws InterruptedException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51193");
+	    baseClass.stepInfo("Verify RMU after impersonating as Reviewer coding form validations should be displayed on click of 'Complete' button");
+	    String codingform = "CFTags"+Utility.dynamicNameAppender();
+	    String assgnCoding = "codingAssgn"+Utility.dynamicNameAppender();
+	    String defaultAction="Make It Required";
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	codingForm.createCodingFormUsingTwoObjects(codingform, null, null, null, "tag");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.selectDefaultActions(0,defaultAction);
+	 	codingForm.enterErrorAndHelpMsg(0,"Yes","Help for testing","Error for testing");
+	 	String expectedFirstObjectName = codingForm.getCFObjectsLabel(0);
+	 	System.out.println(expectedFirstObjectName);
+	 	codingForm.saveCodingForm();
+	 	//create assignment
+	 	sessionSearch.basicContentSearch("null");
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assgnCoding, codingform);
+		assignmentPage.add2ReviewerAndDistribute();
+		//Impersonate to reviewer
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Impersonated to reviewer successfully");
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		reusableDocView.completeButton();
+		docViewPage.verifyCodingFormName(codingform);
+		//verify tags are disbled
+		docViewPage.verifyTagsAreDisabled(0);
+		//verify tag names
+		docViewPage.verifyCodingFormTagNameInDocviewPg(0,expectedFirstObjectName);
+		baseClass.passedStep("The validations of codingform objects after the complete action works as expected");
+		loginPage.logout();
+		//delete assignment and codinform
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.deleteCodingForm(codingform,codingform);	
+		codingForm.verifyCodingFormIsDeleted(codingform);
 	}
 	
 	@DataProvider(name = "UsersWithoutPA")
