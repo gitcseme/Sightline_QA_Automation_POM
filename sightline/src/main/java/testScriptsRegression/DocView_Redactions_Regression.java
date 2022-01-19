@@ -5905,6 +5905,252 @@ public class DocView_Redactions_Regression {
 
 	}
 	
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51330 Verify after impersonation all hits of the document should
+	 * be highlighted without clicking the eye icon when user redirects to doc view
+	 * from doc list
+	 */
+
+	@Test(enabled = true, alwaysRun = false, groups = { "regression" }, priority = 67)
+	public void verifyImpersonationHitsOfDocWithoutClickingEyeIconToDocViewFromDocList() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssert = new SoftAssert();
+		DocViewPage docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		baseClass.stepInfo("Test case id : RPMXCON-51330");
+		baseClass.stepInfo(
+				"Verify after impersonation all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from doc list");
+
+		// Login as a RMU
+		driver.waitForPageToBeReady();
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("RMU has been impersonated as REV");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("AdvancedSearch the non audio documents and go to docview");
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("SavedSearch the non audio documents and go to docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocList(searchName);
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA user");
+		baseClass.impersonateSAtoPA();
+		baseClass.stepInfo("SA has been impersonated as PA");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.impersonateSAtoPA();
+		baseClass.stepInfo("AdvancedSearch the non audio documents and go to docview");
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.impersonateSAtoPA();
+		baseClass.stepInfo("SavedSearch the non audio documents and go to docview");
+		driver.waitForPageToBeReady();
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.getSavedSearchBtn1().Click();
+		sessionSearch.selectSavedsearchesInTree("Shared With Project Administrator");
+		baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
+		sessionSearch.getMetaDataInserQuery().waitAndClick(5);
+		sessionSearch.serarchWP();
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("SA has been impersonated as RMU");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("AdvancedSearch the non audio documents and go to docview");
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocList(searchName);
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.impersonateSAtoReviewer();
+		baseClass.stepInfo("SA has been impersonated as REV");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.impersonateSAtoReviewer();
+		baseClass.stepInfo("AdvancedSearch the non audio documents and go to docview");
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
+		
+        //Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("PA has been impersonated as RMU");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("AdvancedSearch the non audio documents and go to docview");
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoRMU();
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
+		
+        //Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("PA has been impersonated as REV");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("AdvancedSearch the non audio documents and go to docview");
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		new DocListPage(driver).documentSelection(1);
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoReviewer();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("SavedSearch on non audio documents and go to docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+	}
+
+
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

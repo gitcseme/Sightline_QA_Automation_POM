@@ -2647,6 +2647,7 @@ public class DocViewRedactions {
 		try {
 			driver.waitForPageToBeReady();
 			base = new BaseClass(driver);
+			base.waitTime(10);
 			base.waitForElement(get_textHighlightedColor());
 			String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
 			String hex = Color.fromString(color).asHex();
