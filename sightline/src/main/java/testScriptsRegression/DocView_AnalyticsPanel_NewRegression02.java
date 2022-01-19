@@ -665,7 +665,102 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		
 	}
 	
-	
+	/**
+	 * Author : Vijaya.Rani date: 19/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify that user can not view the analytics panel on Doc
+	 * View, if preferences set OFF from the assignent. 'RPMXCON-50859' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	public void verifyNotViewAnalyticalPanelDocViewOffFromAssigment() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50859");
+		baseClass.stepInfo(
+				"To verify that user can not view the analytics panel on Doc View, if preferences set OFF from the assignent.");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		docView = new DocViewPage(driver);
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.toggleEnableAnalyticalPanelSaveWithoutCompletion();
+		assignmentsPage.add2ReviewerAndDistribute();
+
+		baseClass.stepInfo("Step 2: Navigating Doc view from Assignment Page");
+		driver.waitForPageToBeReady();
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+
+		if (!docView.getDocView_AnalyticalPanelTab().isDisplayed()) {
+			baseClass.passedStep("User cannot view the AnalyticalPanel On DocView.");
+		} else {
+			baseClass.failedStep("User can view the AnalyticalPanel On DocView.");
+		}
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 19/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify Sys Admin after impersonating to Reviewer should be
+	 * able to see all the family members in the analytics panel of the main
+	 * selected document in the Doc view. 'RPMXCON-50813' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	public void verifyAfterImpersonatingSelectDocInFamilyMember() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50813");
+		baseClass.stepInfo(
+				"To verify Sys Admin after impersonating to Reviewer should be able to see all the family members in the analytics panel of the main selected document in the Doc view.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		// login as SA
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Assisent with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonate SA to Reviewer,select assignment and go to Docview");
+		baseClass.impersonateSAtoReviewer();
+		baseClass.stepInfo("Step 2: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.familyDocument);
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
+		docView.getDocView_Analytics_FamilyTab().waitAndClick(10);
+
+		softAssertion.assertTrue(docView.getDocView_Analytics_FamilyTab().Displayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("AnalyticalPanel Family Member Docs Is Displayed Successfully");
+
+	}
+
 	
 	
 	

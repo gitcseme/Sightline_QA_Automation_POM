@@ -1846,6 +1846,124 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author : Vijaya.Rani date: 18/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify 'View All Documents' button should be displayed on
+	 * Analytics Panel Child Window > Conceptual Similar tab when more than 20
+	 * documents exists.'RPMXCON-51319' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
+	public void verifyViewAllDocumentsDisplayInConceptualTab(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51319");
+		baseClass.stepInfo(
+				"Verify 'View All Documents' button should be displayed on Analytics Panel Child Window > Conceptual Similar tab when more than 20 documents exists.");
+
+		loginPage = new LoginPage(driver);
+
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewConceptualDocsInDocViews();
+
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheConceptualSimilarDocsSize();
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		// view docs DocView
+		docView.selectDocsFromMiniDocsListAndCheckTheConceptualSimilarDocsSize();
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 18/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify 'View All Documents' button should be displayed on
+	 * Analytics Panel Child Window > Family Members tab when more than 20 documents
+	 * exists.'RPMXCON-51317' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 30)
+	public void verifyViewAllDocumentsDisplayInFamilyMemberTab(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51317");
+		baseClass.stepInfo(
+				"Verify 'View All Documents' button should be displayed on Analytics Panel Child Window > Family Members tab when more than 20 documents exists.");
+
+		loginPage = new LoginPage(driver);
+
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.familyDocument);
+
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheFamilyMemberDocsSize();
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		// view docs DocView
+		docView.selectDocsFromMiniDocsListAndCheckTheFamilyMemberDocsSize();
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		loginPage.logout();
+	}
+
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
