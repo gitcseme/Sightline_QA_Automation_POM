@@ -845,6 +845,29 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element closeButtonInTemplate() {
+		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
+	}
+	
+	public Element backButtonInTemplate() {
+		return driver.FindElementByXPath("//div[@class='buttons pull-right']//a[text()='Back']");
+	}
+	
+	public Element nextButtonInTemplate() {
+		return driver.FindElementByXPath("//div[@id='template_productionguard']//a[text()='Next']");
+	}
+	
+	public Element numberingSortingInTemplate() {
+		return driver.FindElementByXPath("//span[contains(text(),'Numbering & Sorting')]");
+	}
+	public Element productionComponentsInTemplate() {
+		return driver.FindElementByXPath("//span[contains(text(),'Production Components')]");
+	}
+	
+	public Element privGuardInTemplate() {
+		return driver.FindElementByXPath("//span[contains(text(),'Priv Guard')]");
+	}
+	
 	public Element arrowSymbolInHomePage() {
 		return driver.FindElementByXPath("//b[@class='caret']]");
 	}
@@ -9242,7 +9265,7 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @author Sowndarya.velraj
+	 * @author Sowndarya.velraj.Modified on 01/19/22
 	 * @Description : Method to save a production as template and verifying it in
 	 *              Manage template tab
 	 * @param productionname : productionname is String value that name of
@@ -9254,9 +9277,10 @@ public class ProductionPage {
 
 		base.stepInfo("click on gear icon of the current production");
 		driver.waitForPageToBeReady();
-
-		getProdname_Gearicon(productionname).waitAndClick(10);
-
+		
+		base.waitForElement(arrowSymbolInHomePage());
+		arrowSymbolInHomePage().waitAndClick(10);
+		
 		base.stepInfo("click on save as Template");
 		getprod_Action_SaveTemplate().waitAndClick(10);
 
@@ -9274,18 +9298,55 @@ public class ProductionPage {
 		base.stepInfo("Delete option is displayed");
 
 		getViewBtn(templateName).ScrollTo();
-		getViewBtn(templateName).isElementAvailable(5);
-		base.stepInfo("View option is displayed");
-		getViewBtn(templateName).waitAndClick(5);
+		base.waitForElement(getViewBtn(templateName));
+		if(getViewBtn(templateName).isElementAvailable(5))
+		{
+			getViewBtn(templateName).waitAndClick(10);
+			base.stepInfo("View option is displayed");
+		}
+		
 		driver.waitForPageToBeReady();
-
+		base.waitTime(2);
 		if (getProductionNameInManageView(templateName).isElementAvailable(5)) {
 			base.passedStep("Production which is saved as template is displayed after selecting view option");
 		}
+		
+		base.waitForElement(privGuardInTemplate());
+		if(privGuardInTemplate().isElementAvailable(5))
+		{
+			base.stepInfo("priv guard option is displayed");
+		}
+		
+		base.waitForElement(productionComponentsInTemplate());
+		if(productionComponentsInTemplate().isElementAvailable(5))
+		{
+			base.stepInfo("production component option is displayed");
+		}
+		
+		base.waitForElement(numberingSortingInTemplate());
+		if(numberingSortingInTemplate().isElementAvailable(5))
+		{
+			base.stepInfo("Numbering and sorting  option is displayed");
+		}
+		
+		base.waitForElement(nextButtonInTemplate());
+		nextButtonInTemplate().waitAndClick(10);
+		base.stepInfo("next button works in template correctly");
+		
+		base.waitForElement(backButtonInTemplate());
+		backButtonInTemplate().waitAndClick(10);
+		base.stepInfo("back button works in template correctly");
+		
+		base.waitForElement(closeButtonInTemplate());
+		if(closeButtonInTemplate().isElementAvailable(5))
+		{
+			base.stepInfo("close button is displayed");
+		}
+		
+		
 	}
-
 	/**
-	 * @Author Indium-Sowndarya.Velraj
+	 * @Author Indium-Sowndarya.Velraj.Modified on 01/19/22
 	 */
 	public void prodGenerationInCompletedStatus(String productionname) throws InterruptedException {
 
@@ -9316,8 +9377,8 @@ public class ProductionPage {
 
 		driver.waitForPageToBeReady();
 
-		String completedProd = getProductionFromHomepage(productionname).getText();
-		System.out.println("completed production is:" + completedProd);
+//		String completedProd = getProductionFromHomepage(productionname).getText();
+//		System.out.println("completed production is:" + completedProd);
 		base.passedStep("Filtered out completed status production only");
 	}
 
