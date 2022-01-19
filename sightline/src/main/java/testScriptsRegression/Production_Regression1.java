@@ -7473,13 +7473,114 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 				loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 				base = new BaseClass(driver);
 				base.SelectDefaultSecurityGrp(Input.rmu1userName);
-				loginPage.logout();
-				
-				
 				
 			}	
 				
-		
+			/**
+			 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-55943
+			 * @Description:Verify that Production should be generated successfully if PDF documents are ICE processed with Upload set
+			 */
+			@Test(groups = { "regression" }, priority = 99)
+			public void generateTheProdcutionForPDFFiles() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-55943 -Production Sprint 10");
+				base.stepInfo(
+						"Verify that Production should be generated successfully if PDF documents are ICE processed with Upload set");
+
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String productionname1 = "p" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateTagwithClassification(tagname,Input.tagNamePrev);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.testData1);
+				//sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.ViewInDocList();
+
+				DocListPage doc = new DocListPage(driver);
+				doc.documentSelection(6);
+				driver.waitForPageToBeReady();
+				doc.documentSelection(3);
+				doc.bulkTagExisting(tagname);
+
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname1);
+				page.fillingDATSection();
+				page.fillingPDFSection(tagname, Input.tagNamePrev);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname1);
+				page.navigateToNextSection();
+				page.viewingPreviewInSummaryTab();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+
+				
+
+			}
+	
+			
+			
+			/**
+			 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-55918
+			 * @Description:To verify that when Tech Issue placeholdering is enabled, the text file should exported with the placeholder text.
+			 */
+			@Test(groups = { "regression" }, priority = 100)
+			public void GenerateTheProductionForTechIssuePlaceHolder() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+				base.stepInfo("RPMXCON-55918-from Production");
+				base.stepInfo(
+						"To verify that when Tech Issue placeholdering is enabled, the text file should exported with the placeholder text.");
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String foldername = "folder" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname,Input.technicalIssue);
+				tagsAndFolderPage.CreateFolder(foldername,"Default Security Group");
+
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkTagExisting(tagname);
+				sessionSearch.bulkFolderExisting(foldername);
+
+
+				
+				ProductionPage page = new ProductionPage(driver);
+				productionname = "p" + Utility.dynamicNameAppender();
+				String beginningBates = page.getRandomNumber(2);
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.selectGenerateOption(false);
+				page.selectTechIssueDoc(tagname);
+				page.fillingTextSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPageAndPassingText(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+			}
+				
 		
 		
 	@AfterMethod(alwaysRun = true)
