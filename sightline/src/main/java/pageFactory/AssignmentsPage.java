@@ -1342,7 +1342,31 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath(
 				"//*[@id='divNotAssignedUsers']//div[contains(.,'" + Input.da1userName + "')]/../div/label");
 	}
+
 	public Element getSelectUserInDistributeDA() {
+		return driver.FindElementByXPath(
+				"//*[@id='divDistributedDocUsers']//div[contains(.,'" + Input.da1userName + "')]/div/label");
+	}
+
+	public Element RMUDashBoardAssgn(String AssgnName) {
+		return driver.FindElementByXPath("//strong[text()='" + AssgnName + "']/parent::a");
+	}
+
+	public Element getRMUDashBoardBtn() {
+		return driver.FindElementByXPath("//a[@title='Dashboard']");
+	}
+
+	public Element getDistributedDocs(String userNAme) {
+		return driver.FindElementByXPath(
+				".//*[@id='dt_basic']//td[contains(.,'" + userNAme + "')]/following-sibling::td[2]");
+	}
+
+	
+	public Element getSelectDAUserToAssign() {
+		return driver.FindElementByXPath(
+				"//*[@id='divNotAssignedUsers']//div[contains(.,'" + Input.da1userName + "')]/../div/label");
+	}
+	public Element getSelectUserInDistributeTabsDA() {
 		return driver.FindElementByXPath(
 				"//*[@id='divDistributedDocUsers']//div[contains(.,'" + Input.da1userName + "')]/div/label");
 	}
@@ -9005,14 +9029,6 @@ public class AssignmentsPage {
 
 	}
 	
-	public Element getSelectDAUserToAssign() {
-		return driver.FindElementByXPath(
-				"//*[@id='divNotAssignedUsers']//div[contains(.,'" + Input.da1userName + "')]/../div/label");
-	}
-	public Element getSelectUserInDistributeTabsDA() {
-		return driver.FindElementByXPath(
-				"//*[@id='divDistributedDocUsers']//div[contains(.,'" + Input.da1userName + "')]/div/label");
-	}
 	/**
 	 * @author Jayanthi 
 	 * @Description: Add 4 reviewers and distributed docs to them(Reviewer/RMU/PA/DA).
@@ -9127,6 +9143,31 @@ public class AssignmentsPage {
 			bc.waitForElement(getAssignmentSaveButton());
 			getAssignmentSaveButton().waitAndClick(5);
 			bc.CloseSuccessMsgpopup();
+		}
+		/**
+		 * @author Jayanthi.ganesan
+		 * @param assginmentName
+		 * @throws InterruptedException
+		 */
+		public void selectAssignmentfromRMUDashborad(String assginmentName) throws InterruptedException {
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			bc.waitForElement(getRMUDashBoardBtn());
+			getRMUDashBoardBtn().waitAndClick(10);
+			bc.waitForElement(RMUDashBoardAssgn(assginmentName));
+			RMUDashBoardAssgn(assginmentName).ScrollTo();
+			RMUDashBoardAssgn(assginmentName).waitAndClick(10);
+		}
+
+		public String getDistibuteDocsCount(String userNAme) {
+			getAssignment_ManageReviewersTab().ScrollTo();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(15);
+			bc.waitTime(1);
+			String actualDocs = getDistributedDocs(userNAme).getText();
+			System.out.println(actualDocs);
+			return actualDocs;
+			
 		}
 	}
 
