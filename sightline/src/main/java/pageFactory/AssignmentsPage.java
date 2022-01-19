@@ -9086,4 +9086,39 @@ public class AssignmentsPage {
 			bc.stepInfo("Documents are distributed to three reviewers successfully");
 
 		}
-}
+		
+		/**
+		 * @author Vijaya.Rani date: 19/01/2022 Modified date: NA Description: Toggle
+		 *         Disable Analytical panel Batch
+		 */
+
+		public void toggleEnableAnalyticalPanelSaveWithoutCompletion() {
+			// permissions
+			// Toggle disable for DisableCodeOutsideReviewersBatch
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
+			String analyticalPanelFlag = getAssgn_ToggleForAllowSaveWithoutCompletion().GetAttribute("class");
+
+			if (analyticalPanelFlag.contains("false")) {
+				getAssgn_ToggleForAllowSaveWithoutCompletion().Click();
+			}
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAssgn_AnalyticsPanelToggle().Visible();
+				}
+			}), Input.wait60);
+
+			String analyticalPanelFlag1 = getAssgn_AnalyticsPanelToggle().GetAttribute("class");
+
+			if (!analyticalPanelFlag1.contains("False")) {
+				getAssgn_AnalyticsPanelToggle().Click();
+			}
+			
+			driver.scrollPageToTop();
+			bc.waitForElement(getAssignmentSaveButton());
+			getAssignmentSaveButton().waitAndClick(5);
+			bc.CloseSuccessMsgpopup();
+		}
+	}
+

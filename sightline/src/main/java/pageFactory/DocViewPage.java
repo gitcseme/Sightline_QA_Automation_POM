@@ -2701,6 +2701,19 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//ul[@id='documentTypeDropDown']/li[4]");
 	}
 
+	//Added by Vijaya.Rani
+	public Element getDocView_Analytics_ConceptViewAllDocsBtn() {
+		return driver.FindElementById("btnShowAllconceptual");
+	}
+	
+	public Element getDocView_AnalyticalPanelTab() {
+		return driver.FindElementByXPath("//ul[@class='nav nav-tabs tab-style clsAnalyticsTabs']");
+	}
+
+	public Element getDocView_AnalyticalPanel_NoData() {
+		return driver.FindElementByXPath("//td[@class='dataTables_empty']");
+	}
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -21440,4 +21453,56 @@ public class DocViewPage {
 		driver.getWebDriver().navigate().refresh();
 		deleteStampColour(Input.stampSelection);
 	}
+	
+	/**
+	 * @author Vijaya.Rani 18/01/22 NA Modified date: NA Modified by:NA
+	 * @description To verify ConceptualSimilar  docs more than 20 Cols/rows
+	 */
+	public void selectDocsFromMiniDocsListAndCheckTheConceptualSimilarDocsSize() throws InterruptedException {
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocView_ConceptualDocs());
+
+		base.passedStep("The Threaed Documents having Columns are :" + getDocView_ConceptualDocs().size()
+				+ "which is more than 20 docs");
+		
+		if(getDocView_Analytics_ConceptViewAllDocsBtn().Displayed()) {
+			softAssertion.assertTrue(getDocView_Analytics_ConceptViewAllDocsBtn().getWebElement().isDisplayed());;
+			base.passedStep("Conceptual Tab View All Documents Btn Is enabled.");
+		}
+		
+		else {
+			base.failedStep("Conceptual Tab View All Documents Btn Is Not enabled.");
+		}
+
+	}
+	
+	/**
+	 * @author Vijaya Rani 18/01/22 NA Modified date: NA Modified by:NA
+	 * @description perform FamilyMember Docs ViewAllDocuments
+	 */
+	public void selectDocsFromMiniDocsListAndCheckTheFamilyMemberDocsSize() throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_FamilyTab());
+		getDocView_Analytics_FamilyTab().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocView_Analytics_FamilyMember_Docs());
+		base.passedStep("The Threaed Documents having :" + getDocView_Analytics_FamilyMember_Docs().size()
+				+ "which is more than 20 docs");
+
+		if(getDocView_Analytics_FamilyViewAllDocsBtn().Displayed()) {
+			softAssertion.assertTrue(getDocView_Analytics_FamilyViewAllDocsBtn().getWebElement().isDisplayed());;
+			base.passedStep("Conceptual Tab View All Documents Btn Is enabled.");
+		}
+		
+		else {
+			base.failedStep("Conceptual Tab View All Documents Btn Is Not enabled.");
+		}
+	}
+	
 }
