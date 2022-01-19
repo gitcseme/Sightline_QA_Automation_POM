@@ -3965,20 +3965,24 @@ public class MiniDocListPage {
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		// default list to be displayed in configure opo up selected fields
-		pickColumnDisplaySelectedLists = baseClass.availableListofElements(getMiniDocListHeaderValue());
+		String headerfieldtoCompare = reusableDocViewPage.defaultHeaderValue().toLowerCase();
 		baseClass.waitForElement(getGearIcon());
 		getGearIcon().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getManualSortRadioButton());
-		getManualSortRadioButton().Click();
+		getManualSortRadioButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		ElementCollection pickColumnSelectedListAssignmentTwo = getSelectedFieldsAvailablePickColumnDisplay();
 		pickColumnDisplaySelectedListAssignmentTwo = availableListofElements(pickColumnSelectedListAssignmentTwo);
-		baseClass.stepInfo("Deafult Selected Web fields in Manual sort Order are Displayed Below");
+		baseClass.stepInfo("Default Selected Web fields in Manual sort Order are Displayed Below");
 		for (String a : pickColumnDisplaySelectedListAssignmentTwo) {
 			baseClass.stepInfo(a);
 		}
-		if (pickColumnDisplaySelectedLists.equals(pickColumnDisplaySelectedListAssignmentTwo)) {
+		pickColumnDisplaySelectedLists.removeAll(Arrays.asList(null, ""));
+		String PickcolumnfieldtoCompare = pickColumnDisplaySelectedListAssignmentTwo.toString().toLowerCase();
+		System.out.println(PickcolumnfieldtoCompare+"Selected we fields.");
+		System.out.println(headerfieldtoCompare+"__header");
+		if (headerfieldtoCompare.equalsIgnoreCase(PickcolumnfieldtoCompare)) {
 			baseClass.passedStep("Default Web Fields present Manual sort Order are as exepected");
 		} else {
 			baseClass.failedStep("Default Web Fields present in the  Manual sort Order are Different");
@@ -4027,14 +4031,8 @@ public class MiniDocListPage {
 		getMiniDocListConfirmationButton("Save").Click();
 		System.out.println("Saved Confirmed");
 
-		childWindowHeaderFields = baseClass.availableListofElements(getMiniDocListHeaderValue());
-		childWindowHeaderFields.removeAll(Arrays.asList(null, ""));
-		System.out.println("---------childWindowHeaderFields Listed Below-------------");
-		for (String childHeaders : childWindowHeaderFields) {
-			System.out.println(childHeaders);
-		}
-
-		String headerfieldtoCompare = childWindowHeaderFields.toString().toLowerCase();
+		
+		String headerfieldtoCompare = reusableDocViewPage.defaultHeaderValue().toLowerCase();
 		String PickcolumnfieldtoCompare = afterActionselectedFieldsPickColumnDisplayFirstAssignment.toString()
 				.toLowerCase();
 
@@ -4043,7 +4041,7 @@ public class MiniDocListPage {
 		if (PickcolumnfieldtoCompare.equals(headerfieldtoCompare)) {
 			baseClass.passedStep("Pick Column Display  Changes reflected in  mini doc list  headers");
 		} else {
-			baseClass.stepInfo("Changes didn't reflect in  mini doc list  headers");
+			baseClass.failedStep("Changes didn't reflect in  mini doc list  headers");
 		}
 		baseClass.waitForElement(getGearIcon());
 		getGearIcon().waitAndClick(10);
