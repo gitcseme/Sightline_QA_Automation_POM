@@ -1606,6 +1606,22 @@ public class DocViewPage {
 	}
 
 	// Added by Jeevitha
+	public Element getAllRedactionNavigationIcon() {
+		return driver.FindElementByXPath("//i[@id='NextAllRedaction']/parent::div");
+	}
+
+	public Element getBatchRedactionNavigationIcon() {
+		return driver.FindElementByXPath("//i[@id='NextAllBatchRedaction']/parent::div");
+	}
+
+	public ElementCollection getComponentBatchRedactionNavigationIcon() {
+		return driver.FindElementsByXPath("//i[@class='fa fa-chevron-right DocViewBatchNext']/parent::div");
+	}
+
+	public ElementCollection getTrashIcon() {
+		return driver.FindElementsByXPath("//i[@class='fa fa-lg fa-trash']");
+	}
+
 	public Element selectedRedactionTag() {
 		return driver.FindElementByXPath("//select[@id='ddlRedactionTags']/option[@selected]");
 	}
@@ -2686,8 +2702,7 @@ public class DocViewPage {
 				"//div[@id='viewCodingStamp']//following::div[@class='ui-dialog-buttonset']//button[text()='Close']");
 	}
 
-		
-	//Added by Gopinath - 17/01/2022
+	// Added by Gopinath - 17/01/2022
 	public Element getDocumentByid(String docId) {
 		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr//td[text()='" + docId + "']");
 	}
@@ -21236,7 +21251,6 @@ public class DocViewPage {
 		}
 	}
 
-
 	/**
 	 * @author Raghuram.A
 	 * @param headerList1
@@ -21412,13 +21426,13 @@ public class DocViewPage {
 		driver.getWebDriver().navigate().refresh();
 		return Phit;
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 19/01/2022 Modified date:N/A
 	 * @Description: This method used to validate saved stamp
 	 * 
 	 */
-	public void metaDataUsingSavedStamp(String comment,String filedText,String projectFieldName) {
+	public void metaDataUsingSavedStamp(String comment, String filedText, String projectFieldName) {
 		driver.waitForPageToBeReady();
 		// Saving the stamp
 		editCodingForm(comment);
@@ -21430,19 +21444,19 @@ public class DocViewPage {
 		lastAppliedStamp(Input.stampSelection);
 		verifyingComments(comment);
 		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
-		boolean flag=getReadOnlyTextBox(projectFieldName).Displayed();
+		boolean flag = getReadOnlyTextBox(projectFieldName).Displayed();
 		driver.scrollPageToTop();
 		codingFormSaveAndNext();
 		base.VerifySuccessMessage("Document saved successfully");
 		base.stepInfo("Coding form values loaded while clicking the saved stamp in parent window ");
 		softAssertion.assertTrue(flag);
 		clickGearIconOpenCodingFormChildWindow();
-		String parent=switchTochildWindow();
+		String parent = switchTochildWindow();
 		base.stepInfo("Performing action in child window");
 		lastAppliedStamp(Input.stampSelection);
 		verifyingComments(comment);
 		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
-		boolean flagOne=getReadOnlyTextBox(projectFieldName).Displayed();
+		boolean flagOne = getReadOnlyTextBox(projectFieldName).Displayed();
 		driver.scrollPageToTop();
 		codingFormSaveAndNext();
 		childWindowToParentWindowSwitching(parent);
@@ -21505,4 +21519,66 @@ public class DocViewPage {
 		}
 	}
 	
+
+
+	/**
+	 * @Author Jeevitha
+	 * @param allRedaction
+	 * @param batchRedaction
+	 * @param componentBatchRedaction
+	 */
+	public void verifyingPositionOfNavigationIconAndTrashIcon(boolean allRedaction, boolean batchRedaction,
+			boolean componentBatchRedaction) {
+
+		driver.waitForPageToBeReady();
+
+		String expectedPostion_01 = "padding: 0px 23px 0px 0px";
+		String expectedPostion_02 = "padding: 0px 10px";
+
+		String type = "";
+		String passMsg = " : Navigation Icon is in it's Default Postion";
+		String failMsg = type + " : Navigation Icon is Shifted from it's Default Postion";
+
+		String actualAllRedaction = getAllRedactionNavigationIcon().GetAttribute("style");
+		String actualBatchRedaction = getBatchRedactionNavigationIcon().GetAttribute("style");
+		List<WebElement> actualComponentBatchRedaction = getComponentBatchRedactionNavigationIcon().FindWebElements();
+		List<WebElement> RedactionTrashIcon = getTrashIcon().FindWebElements();
+
+		if (allRedaction) {
+			type = "ALL Redaction";
+			base.compareTextViaContains(actualAllRedaction, expectedPostion_01, type + passMsg, type + failMsg);
+		}
+
+		if (batchRedaction) {
+			type = "Batch Redaction";
+			base.compareTextViaContains(actualBatchRedaction, expectedPostion_01, type + passMsg, type + failMsg);
+		}
+
+		if (componentBatchRedaction) {
+			for (int i = 0; i < actualComponentBatchRedaction.size(); i++) {
+				type = "Component Redaction";
+				String actualComponentBatchRedaction_01 = actualComponentBatchRedaction.get(i).getAttribute("style");
+				base.compareTextViaContains(actualComponentBatchRedaction_01, expectedPostion_02, type + passMsg,
+						type + failMsg);
+			}
+
+			String expectedVerticalAlign = "-15%";
+			String expectedLineHeight = "12px";
+
+			for (int i = 0; i < RedactionTrashIcon.size(); i++) {
+
+				String actualVerticalAlign = RedactionTrashIcon.get(i).getCssValue("vertical-align");
+				String actualLineHeight = RedactionTrashIcon.get(i).getCssValue("line-height");
+
+				if (actualVerticalAlign.equals(expectedVerticalAlign) && actualLineHeight.equals(expectedLineHeight)) {
+					System.out.println("Delete Icon in Component Batch Redaction is in it's Default Postion");
+					base.stepInfo("Delete Icon in Component Batch Redaction is in it's Default Postion");
+				} else {
+					System.out.println("Delete Icon in Component Batch Redaction is Shifted from it's Default Postion");
+					base.stepInfo("Delete Icon in Component Batch Redaction is Shifted from it's Default Postion");
+				}
+			}
+
+		}
+	}
 }
