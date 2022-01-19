@@ -174,6 +174,11 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@class='jp-duration end']");
 	}
 
+	public ElementCollection getRemarkPanelItems(String text) {
+		return driver.FindElementsByXPath("//div[@id='RemarkPnl']//p[contains(text(),'"+text+"')]");
+	}
+	
+	
 	public Element getDocview_Redactionstags_Value() {
 		return driver.FindElementByXPath("//ul[@class='multiselect-container dropdown-menu']/li[1]//input");
 	}
@@ -17902,17 +17907,17 @@ public class DocViewPage {
 	 */
 	public void verifyRedactionAnnotaionAndRemarkButtonsAreDisabled() {
 		try {
-			if (getNonAudioRemarkBtn().isElementAvailable(1)) {
+			if (getNonAudioRemarkBtn().isDisplayed()) {
 				base.failedStep("Remark button is displayed");
 			} else {
 				base.passedStep("Remark button is not displayed");
 			}
-			if (getDocView_RedactIcon().isElementAvailable(1)) {
+			if (getDocView_RedactIcon().isDisplayed()) {
 				base.failedStep("Redaction button is displayed");
 			} else {
 				base.passedStep("Redaction button is not displayed");
 			}
-			if (getDocView_AnnotateIcon().isElementAvailable(1)) {
+			if (getDocView_AnnotateIcon().isDisplayed()) {
 				base.failedStep("Annotation button is displayed");
 			} else {
 				base.passedStep("Annotation button is not displayed");
@@ -17930,12 +17935,12 @@ public class DocViewPage {
 	 */
 	public void verifyAppliedRedactionAndAnnotationIsNotDisplayed() {
 		try {
-			if (getRedactionApplied().isElementAvailable(1)) {
+			if (getRedactionApplied().isDisplayed()) {
 				base.failedStep("Applied redaction is displayed");
 			} else {
 				base.passedStep("Applied redaction is not displayed");
 			}
-			if (getAnnotationApplied().isElementAvailable(1)) {
+			if (getAnnotationApplied().isDisplayed()) {
 				base.failedStep("Annotation applied is displayed");
 			} else {
 				base.passedStep("Annotation applied is not displayed");
