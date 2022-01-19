@@ -17402,7 +17402,7 @@ public class DocViewPage {
 	public void codingFormSaveAndNext() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getSaveAndNextButton());
-		getSaveAndNextButton().waitAndClick(5);
+		getSaveAndNextButton().waitAndClick(10);
 	}
 
 	/**
@@ -21398,5 +21398,46 @@ public class DocViewPage {
 		softAssertion.assertTrue(flag);
 		driver.getWebDriver().navigate().refresh();
 		return Phit;
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 19/01/2022 Modified date:N/A
+	 * @Description: This method used to validate saved stamp
+	 * 
+	 */
+	public void metaDataUsingSavedStamp(String comment,String filedText,String projectFieldName) {
+		driver.waitForPageToBeReady();
+		// Saving the stamp
+		editCodingForm(comment);
+		codingStampButton();
+		popUpAction(filedText, Input.stampSelection);
+		base.VerifySuccessMessage("Coding Stamp saved successfully");
+		// click on the saved stamp
+		base.stepInfo("Performing action in parent window");
+		lastAppliedStamp(Input.stampSelection);
+		verifyingComments(comment);
+		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
+		boolean flag=getReadOnlyTextBox(projectFieldName).Displayed();
+		driver.scrollPageToTop();
+		codingFormSaveAndNext();
+		base.VerifySuccessMessage("Document saved successfully");
+		base.stepInfo("Coding form values loaded while clicking the saved stamp in parent window ");
+		softAssertion.assertTrue(flag);
+		clickGearIconOpenCodingFormChildWindow();
+		String parent=switchTochildWindow();
+		base.stepInfo("Performing action in child window");
+		lastAppliedStamp(Input.stampSelection);
+		verifyingComments(comment);
+		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
+		boolean flagOne=getReadOnlyTextBox(projectFieldName).Displayed();
+		driver.scrollPageToTop();
+		codingFormSaveAndNext();
+		childWindowToParentWindowSwitching(parent);
+		base.VerifySuccessMessage("Document saved successfully");
+		base.stepInfo("Coding form values loaded while clicking the saved stamp in parent window ");
+		softAssertion.assertTrue(flagOne);
+		softAssertion.assertAll();
+		driver.getWebDriver().navigate().refresh();
+		deleteStampColour(Input.stampSelection);
 	}
 }
