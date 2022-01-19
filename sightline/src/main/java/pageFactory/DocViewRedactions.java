@@ -3420,6 +3420,35 @@ public class DocViewRedactions {
 		}
 
 	}
+	
+	
+	/*
+	 * Arunkumar Description:getting last saved redaction tag selected in
+	 * multiredact pop-up
+	 */
+	public String gettingLastSavedRedactionTagName() throws InterruptedException {
+		docView = new DocViewPage(driver);
+		base = new BaseClass(driver);
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return multiPageIcon().Visible() && multiPageIcon().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(multiPageIcon());
+		multiPageIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return redactionTagSelect().Visible() && redactionTagSelect().Enabled();
+			}
+		}), Input.wait30);
+
+		Select multiplepageredaction = new Select(redactionTagSelect().getWebElement());
+		String selectedTag = multiplepageredaction.getFirstSelectedOption().getText();
+		 
+		return selectedTag;
+	}
 
 	public void clickingAudioRemarksIcon() throws InterruptedException {
 
