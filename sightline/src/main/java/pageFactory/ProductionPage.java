@@ -2308,6 +2308,10 @@ public class ProductionPage {
 	public Element getInsertQueryBtnInPrivGaurd() {
 		return driver.FindElementByXPath("//a[@id='insertQueryBtn']");
 	}
+	//Add by Aathith
+	public Element gettext(String text) {
+		return driver.FindElementByXPath("//*[text()='"+text+"']");
+	}
 
 	public Element getDocumentMatchesButton() {
 		return driver.FindElementById("btnDocumentMatch");
@@ -15697,11 +15701,11 @@ public class ProductionPage {
 	 */
 	public void visibleCheck(String text) {
 		if (text("text").isDisplayed()) {
-			base.passedStep(text + "is visibled");
-			System.out.println(text + "is visible");
+			base.passedStep(text + " is visibled");
+			System.out.println(text + " is visible");
 		} else {
-			base.failedStep(text + "is not visible");
-			System.out.println(text + "is not visible");
+			base.failedStep(text + " is not visible");
+			System.out.println(text + " is not visible");
 		}
 	}
 
@@ -15920,6 +15924,18 @@ public class ProductionPage {
 		getDocList().waitAndClick(10);
 		return docCount;
 		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void nonVisibleCheck(String text) {
+		if(gettext("text").isDisplayed()) {
+			base.failedStep(text+" is visibled");
+			System.out.println(text+" is visible");
+		}else {
+			base.passedStep(text+" is not visible");
+			System.out.println(text+" is not visible");
+		}
 	}
 	
 	

@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -2777,7 +2779,117 @@ public class Production_Test_Regression {
 						base.passedStep("Verify that PAU cannot access the Production if he is not part of that Project");
 						
 					}
-					
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-55994
+					 * @Description: Verify that the text should not go out the progress bar or wrap, even when the user zooms out/in the browser with different screen resolution  on tile view
+					 */
+					@Test(groups = { "regression" }, priority = 46)
+					public void verifyStatusBarTextWithResolutionAndZoomSize() throws Exception {
+						
+						UtilityLog.info(Input.prodPath);
+						
+						base.stepInfo("RPMXCON-55994 -Production Sprint 10");
+						base.stepInfo("Verify that the text should not go out the progress bar or wrap, even when the user zooms out/in the browser with different screen resolution  on tile view");
+						String testData1 = Input.testData1;
+						foldername = "FolderProd" + Utility.dynamicNameAppender();
+						tagname = "Tag" + Utility.dynamicNameAppender();
+						int[][] diemen= {{1024,768},{1280,800},{1440,900},{1600,900},{1280,1024}};
+						double[][] zoom= {{0.75,1.25},{0.75,1},{0.80,1},{0.90,1.25},{0.80,1.25}};
+						
+						// Pre-requisites
+						// create tag and folder
+						TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						//tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+						tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+						
+						// search for folder
+						SessionSearch sessionSearch = new SessionSearch(driver);
+						sessionSearch = new SessionSearch(driver);
+						sessionSearch.basicContentSearch(testData1);
+						//sessionSearch.bulkTagExisting(tagname);
+						sessionSearch.bulkFolderExisting(foldername);
+						
+						//Verify archive status on Gen page
+						ProductionPage page = new ProductionPage(driver);
+						productionname = "p" + Utility.dynamicNameAppender();
+						String beginningBates = page.getRandomNumber(2);
+						page.selectingDefaultSecurityGroup();
+						page.addANewProduction(productionname);
+						page.fillingDATSection();
+						page.navigateToNextSection();
+						page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+						page.navigateToNextSection();
+						page.fillingDocumentSelectionPage(foldername);
+						page.navigateToNextSection();
+						page.fillingPrivGuardPage();
+						page.fillingProductionLocationPageAndPassingText(productionname);
+						page.navigateToNextSection();
+						page.fillingSummaryAndPreview();
+						page.getbtnProductionGenerate().waitAndClick(10);
+						base.stepInfo("Production with different progress status should be available");
+						
+						this.driver.getWebDriver().get(Input.url + "Production/Home");
+						driver.Navigate().refresh();
+						
+						
+						for(int i=0;i<diemen.length;i++)
+						{
+				      
+				        Dimension pram1 = new Dimension(diemen[i][0],diemen[i][1]);
+						driver.Manage().window().setSize(pram1);
+						((JavascriptExecutor) driver.getWebDriver()).executeScript("document.body.style.zoom = 'zoom[i][0]'");
+						
+						driver.Navigate().refresh();
+						if(page.getProductionFromHomePage(productionname).isDisplayed()) {
+							base.passedStep("Status bar text is displayed in : "+diemen[i][0]+"x"+diemen[i][1]+" with zoom size : "+zoom[i][0]);
+							System.out.println("displayed");
+						}else {
+							base.failedStep("Status bar text is not displayed");
+							System.out.println("Not displayed");
+						}
+						((JavascriptExecutor) driver.getWebDriver()).executeScript("document.body.style.zoom = 'zoom[i][1]'");
+						if(page.getProductionFromHomePage(productionname).isDisplayed()) {
+							base.passedStep("Status bar text is displayed in : "+diemen[i][0]+"x"+diemen[i][1]+" with zoom size : "+zoom[i][1]);
+							System.out.println("displayed");
+						}else {
+							base.failedStep("Status bar text is not displayed");
+							System.out.println("Not displayed");
+						}
+						}
+						
+						base.passedStep("Verified that the text should not go out the progress bar or wrap, even when the user zooms out/in the browser with different screen resolution  on tile view");
+						tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+						//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith.Senthilkumar
+					 * 			RPMXCONO-55909
+					 * @Description Verify that the production field PageCount is renamed to TIFFPageCount 
+					 */
+					@Test(groups = { "regression" }, priority = 47)
+					public void verifyProductionFieldRenamed() throws Exception {
+						
+						UtilityLog.info(Input.prodPath);
+						base.stepInfo("Testcase No: RPMXCON-55909");
+						base.stepInfo("Verify that the production field PageCount is renamed to TIFFPageCount");
+						
+						ProductionPage page = new ProductionPage(driver);
+						productionname = "p" + Utility.dynamicNameAppender();
+						page.selectingDefaultSecurityGroup();
+						page.addANewProduction(productionname);
+						page.fillingDATSectionWithBates("Production","TIFFPageCount","TIFFPAGECOUNT");
+						page.nonVisibleCheck("PageCount");
+						page.visibleCheck("TIFFPageCount");
+						base.stepInfo("PageCount was be renamed to TIFFPageCount");
+						
+						base.passedStep("Verified that the production field PageCount is renamed to TIFFPageCount");
+						
+						
+					}
 	
 	
 	@AfterMethod(alwaysRun = true)
