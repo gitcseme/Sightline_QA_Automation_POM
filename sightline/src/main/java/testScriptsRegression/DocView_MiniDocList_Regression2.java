@@ -90,7 +90,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = false, groups = { "regression" }, priority = 1)
 	public void verifyToClickGearIconInMiniDocListPopupClosed() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51333");
@@ -151,7 +151,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = false, groups = { "regression" }, priority = 2)
 	public void verifySortingFromMiniDocListRedirectedToDocView() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51431");
@@ -213,7 +213,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = false, groups = { "regression" }, priority = 3)
 	public void verifyToClickGearIconInMiniListDisplayOptimizedSort() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51334");
@@ -274,7 +274,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = false, groups = { "regression" }, priority = 4)
 	public void verifyEmailAuthorAndAddressNotDisplayInOptimizedSortTab() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51524");
@@ -335,7 +335,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = false, groups = { "regression" }, priority = 5)
 	public void verifyMiniDocListChkCheckMarkAndBlueHighlighting() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51643");
@@ -432,7 +432,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = false, groups = { "regression" }, priority = 6)
 	public void verifySortFromMiniDocListRedirectedToDocViewAnAssignment() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51430");
@@ -490,7 +490,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = false, groups = { "regression" }, priority = 7)
 	public void verifyPrincipalDocsNotHideUnderMiniDocList() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51640");
@@ -551,7 +551,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = false, groups = { "regression" }, priority = 8)
 	public void verifySelectmultipleDocsMiniDocListCodeSameAndSave() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50945");
@@ -598,7 +598,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = false, groups = { "regression" }, priority = 9)
 	public void verifyCodeSameAsThisInPrecedingDocMiniDocList() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51069");
@@ -723,6 +723,79 @@ public class DocView_MiniDocList_Regression2 {
 		softAssertion.assertAll();
 	}
 
+	/**
+	 * Author : Raghuram A date: NA Modified date: 01/18/21 Modified by: Raghuram A Description
+	 * : To verify user is able to alter the sort sequence on the mini doc list in
+	 * the manual mode when redirects from manage Assignment pageTest Case
+	 * Id:RPMXCON-50890 Sprint : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 11)
+	public void verifyUserAbleToAlterSortSequence() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50890 Sprint 10");
+		baseClass.stepInfo(
+				"To verify user is able to alter the sort sequence on the mini doc list in the manual mode when redirects from manage Assignment page");
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// creating the Assignment
+		String assignmentName = miniDocListpage.assignmentCreation();
+
+		// Selecting the assignment
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		driver.waitForPageToBeReady();
+		assignmentPage.selectAssignmentToViewinDocView(assignmentName);
+
+		// sorting the default sequence order of webfields and verifying it
+		miniDocListpage.savedSearchToSortSequence();
+
+		loginPage.logout();
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Selecting the assignment
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		driver.waitForPageToBeReady();
+		assignmentPage.selectAssignmentToViewinDocView(assignmentName);
+
+		// verifying the order of web fields
+		miniDocListpage.verifyDefaultValueInOptimizedSort();
+		baseClass.passedStep("The altered Sort order in previous session is not reflected in this session");
+
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rev1userName);
+
+		// selecting the assignment
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+
+		// sorting the default sequence order of webfields and verifying it
+		miniDocListpage.savedSearchToSortSequence();
+
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rev1userName);
+
+		// selecting the assignment
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+
+		// verifying the order of web fields
+		miniDocListpage.verifyDefaultValueInOptimizedSort();
+		baseClass.passedStep("The altered Sort order in previous session is not reflected in this session");
+
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
