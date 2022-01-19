@@ -1031,6 +1031,11 @@ public class AssignmentsPage {
 	}
 
 	// Added by Raghuram
+	public Element getSelectAssignmentHighlightCheck(String assignmentName) {
+		return driver.FindElementByXPath(
+				"//*[@id='GridAssignment']/tbody//tr[td='" + assignmentName + "' and @class[contains(.,'highlight')]]");
+	}
+	
 	public Element getSortByMetaDataType() {
 		return driver.FindElementByXPath("//select[@id='ddlMetaDataDirection']");
 	}
@@ -6553,8 +6558,9 @@ public class AssignmentsPage {
 		}
 	}
 
+
 	/**
-	 * Author : Raghuram A date: 10/12/21 NA Modified date:N/A Modified by:N/A A
+	 * Author : Raghuram A date: 10/12/21 NA Modified date:19/1/2022 Modified by:Raghuram A
 	 * Description :
 	 */
 	public String selectAssignmentToViewinDocView(String assignmentName) {
@@ -6571,7 +6577,9 @@ public class AssignmentsPage {
 				// Assert.assertEquals(finalCount, compareCount);
 				if (status == true) {
 					driver.scrollingToElementofAPage(getSelectAssignment(assignmentName));
-					getSelectAssignment(assignmentName).waitAndClick(5);
+					if (!getSelectAssignmentHighlightCheck(assignmentName).isElementAvailable(5)) {
+						getSelectAssignment(assignmentName).waitAndClick(5);
+					}
 					compareCount = getSelectAssignmentDocCount(assignmentName).getText();
 					System.out.println(compareCount);
 					driver.scrollPageToTop();
@@ -6596,7 +6604,7 @@ public class AssignmentsPage {
 		}
 		return compareCount;
 	}
-
+	
 	/**
 	 * @author Jayanthi.ganesan Modified date-18/10/21
 	 */

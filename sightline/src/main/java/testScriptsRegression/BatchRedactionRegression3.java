@@ -1911,7 +1911,59 @@ public class BatchRedactionRegression3 {
 		login.logout();
 
 	}
-	
+
+	@DataProvider(name = "multipleSearchTerm")
+	public Object[][] multipleSearchTerm() {
+		Object[][] searchTerm = { { "*@enron.com" }, { "denise" }, { "\"##[1-9]{3}-[1-9]{3}-[1-9]{4}\"" }
+//				{"*@consilio.com"},
+//				{"\"denise legasse\"~2"},
+		};
+		return searchTerm;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that delete and navigation icon should not be shifted
+	 *              when serach term involves email addresses that are wrapped with
+	 *              '<' and '>' [RPMXCON-53513]
+	 * @param searchTerm
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	public void verifyRedactionNavigationIconAndDeleteIcon(String searchTerm) throws Exception {
+		String searchName = "Search Name" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+
+		base.stepInfo("Test case Id:RPMXCON-53513");
+		base.stepInfo(
+				"Verify that delete and navigation icon should not be shifted when serach term involves email addresses that are wrapped with '<' and '>'");
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Create saved search
+		session.basicContentSearch(searchTerm);
+		session.saveSearch(searchName);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
+
+		// verify History status
+		batch.verifyBatchHistoryStatus(searchName);
+
+		// selecting saved search for docView
+		saveSearch.savedSearchToDocView(searchName);
+
+		// verifying redaction panel
+		docview.verifyPanel();
+
+		// verifying the Navigation and Trash Icon
+		docview.verifyingPositionOfNavigationIconAndTrashIcon(true, true, true);
+
+		login.logout();
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
