@@ -8963,7 +8963,110 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author : Baskar date: NA Modified date:19/01/2021 Modified by: Baskar
+	 * Description : Verify that read only custom metadata field value should be 
+	 *               retained on click of saved stamp in context of security group
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 198)
+	public void verifyMeataDataUsingSavedStamp() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52183");
+		baseClass.stepInfo("Verify that read only custom metadata field value should be "
+				+ "retained on click of saved stamp in context of security group");
+		UtilityLog.info("Started Execution for prerequisite");
+		
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+
+		// Custom Field created with INT DataType
+		projectPage.addCustomFieldProjectDataType(projectFieldINT, "INT");
+		baseClass.stepInfo("Custom meta data field created with INT datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(projectFieldINT);
+		baseClass.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Creating Coding Form
+		codingForm.addProjectFieldMetaData(Input.codingFormName, projectFieldINT);
+		baseClass.stepInfo("Project field added to coding form in Doc view");
+		
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.rmu1userName + "'");
+		
+		// login as Rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+		// verify the coding form panel
+		docViewPage.metaDataUsingSavedStamp(comment,fieldText,projectFieldINT);
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+
+	}
 	
+	/**
+	 * @Author : Baskar date:18/01/22 Modified date: NA Modified by: Baskar
+	 * @Description : [TC reference RPMXCON-51191] Verify after impersonation on click of 
+	 *                'Save and Next' button coding form should be validated in context of security group
+	 */
+	@Test(enabled = true,dataProvider = "impersoante", groups = { "regression" }, priority = 199)
+	public void validateAfterImpersonateCodingFormInSG(String roll, String userName, String password, String impersonate) throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		codingForm=new CodingForm(driver);
+		assignmentPage=new AssignmentsPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52075");
+		baseClass.stepInfo("[TC reference RPMXCON-51191] Verify after impersonation on click of "
+				+ "'Save and Next' button coding form should be validated in context of security group");
+
+		String cf = "cfName" + Utility.dynamicNameAppender();
+		String rmu="RMU";
+		
+		loginPage.loginToSightLine(userName, password);
+		// Login As 
+		if (roll.equalsIgnoreCase(rmu)) {
+//			 searching document for assignment creation
+			codingForm.commentRequired(cf);
+			codingForm.assignCodingFormToSG(cf);
+		}
+		if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")
+				|| roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")
+				|| roll.equalsIgnoreCase("da") && impersonate.equalsIgnoreCase("rmu")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("rmu") && impersonate.equalsIgnoreCase("rmu")){
+			baseClass.credentialsToImpersonateAsRMUREV(roll, impersonate);
+			sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+			docViewPage.selectPureHit();
+			sessionSearch.advancedNewContentSearch1(Input.testData1);
+			sessionSearch.ViewInDocViews();
+			docViewPage.verifyAfterImpersoanteAudioNonAudioDocs();	
+		}
+		// logout
+		loginPage.logout();
+
+	}
 	
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {
@@ -9002,7 +9105,16 @@ public class DocView_CodingForm_Regression {
 				{ "pa",Input.pa1userName, Input.pa1password,"rmu"}
 				};
 	}
-
+	@DataProvider(name = "impersoante")
+	public Object[][] userLoginSaPaDaRmu() {
+		return new Object[][] { { "rmu", Input.rmu1userName, Input.rmu1password, "null" },
+			    { "sa", Input.sa1userName, Input.sa1password, "rmu" },
+				{ "sa", Input.sa1userName, Input.sa1password, "rev" },
+				{ "da", Input.da1userName, Input.da1password, "rmu" },
+				{ "da", Input.da1userName, Input.da1password, "rev" },
+				{ "pa", Input.pa1userName, Input.pa1password, "rmu" },
+				{ "pa", Input.pa1userName, Input.pa1password, "rev" } };
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
