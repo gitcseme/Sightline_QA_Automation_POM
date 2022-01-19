@@ -6148,6 +6148,123 @@ public class DocView_Redactions_Regression {
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
 	}
+	
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-46955 Description :Part of 7.1: Verify that when enters only ‘Page Range’ from multi-page redactions pop up then for entered page range redaction should be applied
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 68)
+	public void verifyOnlyPageRangeMultipageRedaction() throws Exception {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case id : RPMXCON-46955");
+		baseClass.stepInfo("Verify docview multipage redaction only entering page range");
+		
+		//Login as RMU and performing basic search
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+		baseClass.passedStep("Navigated to DocView");
+		
+		//clicking docview redact icon
+		driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() throws Exception {
+		return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			}
+			}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		
+		//performing redact by entering only page range
+		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return baseClass.getSuccessMsgHeader().Visible();
+			}
+		}), Input.wait60);
+		baseClass.passedStep("Redaction done for entered page Range :"+Input.pageRange);
+		String successMessage =baseClass.getSuccessMsgHeader().getText().toString();
+		
+		if(successMessage.contains("Success !")) {
+			baseClass.passedStep("Redaction done when entering only page range with default selected redaction tag");
+		}
+		else {
+			baseClass.failedStep("Redaction not done when entering only page range with default selected redaction tag");
+		}
+	
+	}
+	
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-46957 Description :Verify that when applies 'Multi Page' redaction,
+	 *  the redaction popup should automatically select the redaction tag that was last applied across user session(s) 
+	 * @throws Exception 
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 69)
+	public void verifyAutomaticSelectionOfRedactionTag() throws Exception {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case id : RPMXCON-46957");
+		baseClass.stepInfo("Verify automatic selection of redaction tag that last applied across user session");
+		
+		//Pre-requisite - getting the last saved redaction tag name
+		
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() throws Exception {
+		return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			}
+			}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		String lastSavedRedactionTag = docViewRedact.gettingLastSavedRedactionTagName();
+		baseClass.passedStep("Last saved Redaction Tagname :"+ lastSavedRedactionTag);
+		docViewRedact.redactionTagCancleBtn().Click();
+		
+		// Loggedout and login back  as RMU
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
+
+		// Adding search results and view in docview
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+
+		// Clicking redact icon
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+
+		// performing multi page redaction include with pagerange
+		String redactionTagSelected = docViewRedact.gettingLastSavedRedactionTagName();
+		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
+		baseClass.passedStep("Automatically selected redaction tag name :"+ redactionTagSelected);
+		
+		
+		if(lastSavedRedactionTag.equalsIgnoreCase(redactionTagSelected)) {
+			baseClass.passedStep("Redaction tag selected automatically which applied for last redaction as per user session");
+		}
+		else {
+			baseClass.failedStep("Redaction tag selected automatically which is not applied for last redaction as per user session");
+		}
+		
+	}
 
 
 	
