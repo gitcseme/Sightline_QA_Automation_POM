@@ -2744,6 +2744,16 @@ public class DocViewPage {
 	public Element getDocView_AnalyticsExitingFolderName() {
 		return driver.FindElementById("472_anchor");
 	}
+	// Added by Iyappan
+	public Element getRemarksId(String remarksName) {
+		return driver.FindElementByXPath(".//*[@id='newRemarks']//p[text()='"+remarksName+"']");
+	}
+	public Element getDocView_SelectRemarks(String remarksName) {
+		return driver.FindElementByXPath(".//*[@id='newRemarks']//p[text()='"+remarksName+"']/parent::span");
+	}
+	public Element getRemarksInPg(String id) {
+		return driver.FindElementByCssSelector("g[data-pcc-mark='highlighttextannotation-"+id+"']");
+	}
 	
 	public DocViewPage(Driver driver) {
 
