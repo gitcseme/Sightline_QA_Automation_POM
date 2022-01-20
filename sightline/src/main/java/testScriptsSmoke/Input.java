@@ -181,6 +181,7 @@ public class Input {
 	public static String nearDupeImageDoc;
 	public static String analyticsConceptualDocId1;
 	public static String analyticsConceptualDocId2;
+	public static String miniConceptualNoDoc;
 
 	// DocView codingform Baskar Indium
 
@@ -632,6 +633,7 @@ public class Input {
 		nearDupeImageDoc=testData.getNearDupeImageDoc();
 		analyticsConceptualDocId1 = testData.getAnalyticsConceptualDocId1();
 		analyticsConceptualDocId2= testData.getAnalyticsConceptualDocId2();
+		miniConceptualNoDoc=testData.getMiniConceptualNoDoc();
 		
 		
 

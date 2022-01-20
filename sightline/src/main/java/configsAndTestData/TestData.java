@@ -90,6 +90,7 @@ public class TestData {
 	public String nearDupeImageDoc;
 	public String analyticsConceptualDocId1;
 	public String analyticsConceptualDocId2;
+	public String miniConceptualNoDoc;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;

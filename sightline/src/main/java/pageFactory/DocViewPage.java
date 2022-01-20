@@ -2737,6 +2737,14 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//td[@class='dataTables_empty']");
 	}
 
+	public Element getDocView_AnalyticsExitingFolderConceptual() {
+		return driver.FindElementById("tabExiting");
+	}
+
+	public Element getDocView_AnalyticsExitingFolderName() {
+		return driver.FindElementById("472_anchor");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -21646,5 +21654,55 @@ public class DocViewPage {
 		} else {
 			base.failedStep("" + ExpectedText + " is not  as expected");
 		}
+	}
+	
+	/**
+	 * @Author Vijaya.Rani Created on 20/01/2022
+	 * @Description To perform folder Conceputually docs in the DocView Test Case
+	 *              id: RPMXCON-50821
+	 *
+	 */
+	public void performExitingFolderForConceptualDocuments() throws InterruptedException {
+		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		Point p = getDocView_Analytics_liDocumentConceptualSimilarab().getWebElement().getLocation();
+		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
+
+		for (int i = 1; i <= 2; i++) {
+			base.waitForElement(getDocView_Analytics_Conceptual_Docs(i));
+			getDocView_Analytics_Conceptual_Docs(i).waitAndClick(10);
+		}
+		
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+		
+		base.waitForElement(getDocView_Analytics_ConceptualFolderAction());
+		getDocView_Analytics_ConceptualFolderAction().waitAndClick(15);
+		
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
+		base.passedStep("Folder pop up is opened successfully");
+
+		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
+		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsExitingFolderName());
+		getDocView_AnalyticsExitingFolderName().waitAndClick(10);
+		
+		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
+		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
+
+		base.waitForElement(getTotalSelectedDocuments());
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().Displayed());
+		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
+		base.VerifySuccessMessage("Records saved successfully");
+
+		base.passedStep("Selected folder is applied to the selected documents successfully");
+
+	      
 	}
 }
