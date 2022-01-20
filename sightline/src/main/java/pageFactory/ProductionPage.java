@@ -2339,6 +2339,11 @@ public class ProductionPage {
 	public Element getDocumentMatchesButton() {
 		return driver.FindElementById("btnDocumentMatch");
 	}
+	
+	
+	public Element ProductionLocationSplitCount() {
+		return driver.FindElementByXPath("//input[@id='ProductionComponentsFolderDetails_SplitCount']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -15998,6 +16003,27 @@ public class ProductionPage {
 			System.out.println(text+" is not visible");
 		}
 	}
+
+	
+	/**
+	 * @author Brundha
+	 * @Description  : Method to verify volume included toggle is on by default
+	 */
+	public void verifyVolumeIncludedToggleInProductionSelection(){
+		driver.waitForPageToBeReady();
+		String color = driver.FindElement(By.xpath("//input[@id='ProductionOutputLocation_IsVolumeIncluded']/..//i")).GetCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor="#a9c981";	
+		if(ActualColor.equals(ExpectedColor)) {
+			base.passedStep("Volume included  toggle is enabled by default");
+		}else {
+			base.failedStep("Volume included  toggle is  not enabled by default");
+			}
+		
+	}
+
 	/**
 	 * @Author Aathith
 	 */
@@ -16056,5 +16082,6 @@ public class ProductionPage {
 
 	}
 	
+
 	
 }
