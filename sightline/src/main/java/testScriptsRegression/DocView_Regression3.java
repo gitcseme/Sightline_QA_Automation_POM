@@ -1526,7 +1526,7 @@ public class DocView_Regression3 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
-		docViewRedact.verifyWhetherThisPageRedactionIsSaved(false);
+		docViewRedact.verifyWhetherRedactionIsSaved(false);
 		loginPage.logout();
 
 		baseClass.stepInfo("Login with project administrator");
