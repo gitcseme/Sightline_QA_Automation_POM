@@ -1345,7 +1345,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException 
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 27)
 	public void verifyPrintIconAfterDisablingToggle() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -1389,7 +1389,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-48810
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =15)
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =28)
 	public void verifyTextRedactionFunctionDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -1417,7 +1417,77 @@ public class DocView_Regression2 {
 		}
 	}
 
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50774
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
+	public void verifyAssignmentDocs() throws Exception {
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-50774");
+		baseClass.stepInfo("To verify that 'View All Doc in Doc View' option is disabled if assignment is not added in the list");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.bulkAssign();
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		baseClass.stepInfo(
+				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
+		String verifydocsCountInAssgnPage = assignmentspage.verifydocsCountInAssgnPage(assignmentName);
 	
+		if(verifydocsCountInAssgnPage.equalsIgnoreCase("201")) {
+			baseClass.passedStep("The doc count has been verified");
+		} else {
+			baseClass.failedStep("The doc count is not verified");
+		}
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		baseClass.passedStep("Assignment viewed in DocView Successfully");
+		
+		
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50776
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 14)
+	public void verifyAssignmentPageViewInDocView() throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-50776");
+		baseClass.stepInfo("To verify that 'View All Doc in Doc View' option is disabled if assignment is not added in the list");
+		docViewRedact = new DocViewRedactions(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		assignmentspage.navigateToAssignmentsPage();
+		driver.scrollPageToTop();
+		assignmentspage.getAssignmentActionDropdown().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return assignmentspage.getAssignmentAction_ViewinDocView().Visible();
+			}
+		}), Input.wait60);
+		Assert.assertTrue(assignmentspage.getAssgnAction_Export().isDisplayed());
+		String getAttribute = assignmentspage.getAssignmentAction_ViewinDocView().GetAttribute("disabled");
+		System.out.println(getAttribute);
+		if(getAttribute == null) {
+			assignmentspage.getAssignmentAction_ViewinDocView().waitAndClick(3);
+			baseClass.VerifyWarningMessage("Please select at least one assignment from the displayed assignment list");
+			
+		} else {
+			baseClass.passedStep("No assignments pre esist for the SG. The view in doc view Icon is disabled");
+		}	
+	}
+
+
+
+
 	
 	
 	
