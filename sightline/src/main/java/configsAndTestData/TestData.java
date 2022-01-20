@@ -9,9 +9,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Builder(toBuilder = true)
-@NoArgsConstructor
-@AllArgsConstructor
+//@Builder(toBuilder = true)
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class TestData {
 
 	// search
@@ -88,6 +88,8 @@ public class TestData {
 	public String conceptualDocId1;
 	public String nearDupeDocId1;
 	public String nearDupeImageDoc;
+	public String analyticsConceptualDocId1;
+	public String analyticsConceptualDocId2;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;

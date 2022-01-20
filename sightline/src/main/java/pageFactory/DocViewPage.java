@@ -1489,6 +1489,9 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	public Element getDocView_AnalyticsPanel_ConceptualQueryNoData() {
+		return driver.FindElementByXPath("//*[@id='dtDocumentConceptuallySimilar']//td[text()='Your query returned no data']");
+	}
 
 	public Element getDocView_SearchTextBox_HitCount() {
 		return driver.FindElementByXPath("//span[@class='count']");
