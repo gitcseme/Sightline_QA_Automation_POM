@@ -13,6 +13,7 @@ import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
@@ -4542,6 +4543,50 @@ public class DocView_Regression1 {
 				
 			}
 			
+			/**
+			 * @author Gopinath
+			 * TestCase Id:51437 Verify on navigating to other Text, Images or Translations tab and returning to Default tab should show the "N", "P", "T", "X" as per the document
+			 * Description : To Verify on navigating to other Text, Images or Translations tab and returning to Default tab should show the "N", "P", "T", "X" as per the document
+			 * @throws InterruptedException 
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 66)
+			public void verifyDocIconFromDocViewPanal() throws InterruptedException {
+					System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+					UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+					baseClass.stepInfo("Test case id : RPMXCON-51437");
+					baseClass.stepInfo("###Verify on navigating to other Text, Images or Translations tab and returning to Default tab should show the N, P, T, X as per the document###");
+					String N_DocID="ID00001351";
+					String N_DocToolTipMessage="Native file variant of the document being displayed";
+					String X_DocID="ID00000102";
+					String X_DocToolTipMessage= "Text file variant of the document being displayed";
+					String T_DocID="ID00001012";
+					String T_DocToolTipMessage="TIFF file variant of the document being displayed";
+					String P_DocId="ID00001464";
+					String P_DocToolTipMessage="PDF file variant of the document being displayed";
+					SessionSearch session = new SessionSearch(driver);
+					DocViewPage docView = new DocViewPage(driver);
+					
+					
+					baseClass.stepInfo("Step 1: Search for the docs ");
+					session.basicContentSearch(Input.searchString1);
+					
+					baseClass.stepInfo("Step 2:view docS in DocView");
+					session.ViewInDocView();
+					
+					baseClass.stepInfo("Verify T icon and tolltip message for selected document");
+					docView.verifydocIdIconAfterClickOnallTabsOndocviewPanal(T_DocID, T_DocToolTipMessage);
+					
+					baseClass.stepInfo("Verify X icon and tolltip message for selected document");
+					docView.verifydocIdIconAfterClickOnallTabsOndocviewPanal(X_DocID, X_DocToolTipMessage);
+					
+					baseClass.stepInfo("Verifying P icon and tolltip message for selected document");
+					docView.verifydocIdIconAfterClickOnallTabsOndocviewPanal(P_DocId, P_DocToolTipMessage);
+					
+					baseClass.stepInfo("Verifying N icon and tolltip message for selected document");
+					docView.verifydocIdIconAfterClickOnallTabsOndocviewPanal(N_DocID, N_DocToolTipMessage);
+			}
+			 
+		
 		@AfterMethod(alwaysRun = true)
 		public void close() {
 			try {
@@ -4567,5 +4612,6 @@ public class DocView_Regression1 {
 	 	 System.out.println("Executed :" + result.getMethod().getMethodName());
 	 	
 	     }
+	    
      
 }

@@ -103,7 +103,16 @@ public class UserManagement {
 	 	public Element userEditBtn() {return driver.FindElementByXPath("//table[@id='dtUserList']//tr[1]//td[7]//a[text()='Edit']");}
 	 	public Element userSelectSecurityGroup() {return driver.FindElementByXPath("//select[@id='ddlSg']");}
 	    
-	    public UserManagement(Driver driver){
+	 	
+	 	//Added by Gopinath - 19/01/2022
+	 	 public Element getSelectProject(String projectName){ return driver.FindElementByXPath("//*[@tabindex='7']//option[@title='"+projectName+"']"); }
+	 	 public Element getSecurityDropDown(){ return driver.FindElementByXPath("//select[@id='ddlSysAdminSecGroup']"); }
+	 	 public Element getRowByFirstName(int rowNum){ return driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr["+rowNum+"]/td[1]"); }
+	 	 public Element getDeleteButtonByRow(int rowNum){ return driver.FindElementByXPath("//table[@id='dtUserList']//tr["+rowNum+"]/td[8]/a[contains(text(),'Delete')] | //table[@id='dtUserList']//tr["+rowNum+"]/td[9]/a[contains(text(),'Delete')]"); }	   
+	 	 
+	 	 
+	 	 
+	 	 public UserManagement(Driver driver){
 
 	        this.driver = driver;
 	        bc = new BaseClass(driver);
@@ -627,4 +636,77 @@ public void setPassword(String pwd) {
 			robot.keyRelease(KeyEvent.VK_ENTER);
 		}
 	   
+		/**
+		 * @author Gopinath
+		 * @Description : Method for creating new user.
+		 */
+		 public void createNewUser(String firstName, String lastName, String role, String emailId, String domain, String project) {
+				
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getAddUserBtn().Visible() ;}}), Input.wait30);
+			 getAddUserBtn().Click();
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getFirstName().Visible() ;}}), Input.wait30);
+			 getFirstName().SendKeys(firstName);
+			 getLastName().SendKeys(lastName);
+			 getSelectRole().selectFromDropdown().selectByVisibleText(role);
+			 
+			 if(role.equalsIgnoreCase("Domain Administrator")){
+				 getSelectDomain().isElementAvailable(10);
+				 getSelectDomain().selectFromDropdown().selectByIndex(1);
+			 }
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getEmail().Exists() ;}}), Input.wait30);
+			 getEmail().SendKeys(emailId);
+			 getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+			 if(role.equalsIgnoreCase("Project Administrator")||role.equalsIgnoreCase("Review Manager")
+						||role.equalsIgnoreCase("Reviewer")){
+				 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						 getSelectProject().Visible() ;}}), Input.wait30);
+				 getSelectProject().Click();
+				 getSelectProject(project).Click();
+			 }
+			 
+			 if(role.equalsIgnoreCase("Review Manager")
+						||role.equalsIgnoreCase("Reviewer")){
+				 getSecurityDropDown().isElementAvailable(10);
+				 getSecurityDropDown().selectFromDropdown().selectByVisibleText("Default Security Group");
+			 
+			 }
+			 getSave().Click();
+			 bc.VerifySuccessMessage("User profile was successfully created");
+			 
+		}
+		 /**
+		 * @author Gopinath
+		 * @Description : Method for deleting added user.
+		 * @param firstName : firstName is String value that first name of user need to delete.
+		 */
+		 public void deleteAddedUser(String firstName) {
+			 try {
+				 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						 getManageFilterByDate().Visible() ;}}), Input.wait30);
+				 getManageFilterByDate().SendKeys(""+Keys.ENTER);
+				 
+				 getFilerApplyBtn().Click();
+				bc.waitTime(3);
+				 for (int i = 1; i <= getRowsInTable().size(); i++) {
+					 if(getRowByFirstName(i).getText().equals(firstName)){
+						 getDeleteButtonByRow(i).isElementAvailable(10);
+						 driver.waitForPageToBeReady();
+						 getDeleteButtonByRow(i).Click();
+						 break;
+					 }
+				}
+				 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						 getConfirmDelete().Visible() ;}}), Input.wait30);
+				 getConfirmDelete().isElementAvailable(10);
+				 getConfirmDelete().waitAndClick(5);
+				 bc.VerifySuccessMessage("User has been deactivated");
+			 }catch(Exception e) {
+				 e.printStackTrace();
+				 bc.failedStep("Exception occured while deleting added user"+e.getLocalizedMessage());
+			 }
+
+		}
 }

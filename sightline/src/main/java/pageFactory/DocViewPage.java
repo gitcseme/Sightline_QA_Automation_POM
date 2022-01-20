@@ -21586,4 +21586,62 @@ public class DocViewPage {
 
 		}
 	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * @Description : this methoad will select the document from mini doc list and click text,image,translation tab and 
+	 *                 again click on default tab and verify Doc icon and Tooltip message
+	 * @param docId
+	 * @param ExpectedText(Expected tooltip message for selected doc id Icon on default view tab
+	 */
+	public void verifydocIdIconAfterClickOnallTabsOndocviewPanal(String docId,String ExpectedText) {
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocumentByid(docId));
+		getDocumentByid(docId).isElementAvailable(10);
+		getDocumentByid(docId).waitAndClick(5);
+		base.waitForElement(getDocView_TextTab());
+		getDocView_TextTab().waitAndClick(5);
+		driver.scrollPageToTop();
+		base.waitForElement(getDocView_ImagesTab());
+		getDocView_ImagesTab().waitAndClick(5);
+		getDocView_TranslationTab().isElementAvailable(10);
+		base.waitForElement(getDocView_TranslationTab());
+		getDocView_TranslationTab().waitAndClick(5);
+		getDefaultViewTab().isElementAvailable(10);
+		base.waitForElement(getDefaultViewTab());
+		driver.waitForPageToBeReady();
+		getDefaultViewTab().waitAndClick(5);
+		base.waitTime(2);
+		if(getDefaultViewTab().GetAttribute("class").contains("active")) {
+			base.passedStep("After click on all tabs returning back to default texttab ");
+		}
+		else {
+			base.failedStep("unable to load the document on default view after click on all tabs");
+		}
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		getDocView_IconFileType().isElementAvailable(10);
+		base.waitForElement(getDocView_IconFileType());
+		String ActualValue = getDocView_IconFileType().getText();
+		System.out.println("default value:" + ActualValue);
+		if (getDocView_IconFileType().isDisplayed()) {
+			base.passedStep("Default " + ActualValue + " value  is displayed");
+		} else {
+			base.failedStep("Default " + ActualValue + " value is not displayed");
+		}
+
+		Actions act = new Actions(driver.getWebDriver());
+		act.moveToElement(getDocView_IconFileType().getWebElement()).build().perform();
+		String ActualText = getDocView_IconFileType().GetAttribute("title");
+		System.out.println(ActualText);
+
+		if (ActualText.equals(ExpectedText)) {
+			System.out.println("" + ExpectedText + " as expected");
+			base.passedStep("" + ExpectedText + " as expected");
+		} else {
+			base.failedStep("" + ExpectedText + " is not  as expected");
+		}
+	}
 }
