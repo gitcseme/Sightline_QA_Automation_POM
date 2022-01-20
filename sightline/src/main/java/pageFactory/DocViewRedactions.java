@@ -1344,7 +1344,7 @@ public class DocViewRedactions {
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
-
+		base.waitTime(5);
 	}
 
 	/**
@@ -1693,7 +1693,7 @@ public class DocViewRedactions {
 			base = new BaseClass(driver);
 			base.waitForElement(thisPageRedaction());
 			base.waitTillElemetToBeClickable(thisPageRedaction());
-			thisPageRedaction().Click();
+			thisPageRedaction().waitAndClick(5);
 			base.waitForElement(getSelectReductionTagDropDown());
 			getSelectReductionTagDropDown().selectFromDropdown().selectByVisibleText(redactiontag);
 			base.waitForElement(getSaveButton());
@@ -2559,7 +2559,7 @@ public class DocViewRedactions {
 	 * @param isSavedFlag -- This is the flag to denote whether redaction should be
 	 *                    saved or not.
 	 */
-	public void verifyWhetherThisPageRedactionIsSaved(Boolean isSavedFlag) {
+	public void verifyWhetherRedactionIsSaved(Boolean isSavedFlag) {
 		try {
 			base = new BaseClass(driver);
 			driver.waitForPageToBeReady();
@@ -2570,7 +2570,7 @@ public class DocViewRedactions {
 			if (isSavedFlag) {
 				base.waitForElement(getRedactionPopup());
 				softAssertion.assertEquals(getRedactionPopup().getWebElement().isDisplayed(), true);
-				base.passedStep("Redaction is  saved");
+				base.passedStep("Redaction is  saved and popup is displayed");
 			} else {
 				Element element = getRedactionPopup();
 				try {
