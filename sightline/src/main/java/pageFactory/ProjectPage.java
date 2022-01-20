@@ -353,6 +353,20 @@ public class ProjectPage {
 		bc.CloseSuccessMsgpopup();
 		driver.waitForPageToBeReady();
 	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method for navigating to projects page
+	 */
+	public void navigateToProductionPage() {
+		try {
+			driver.getWebDriver().get(Input.url + "Project/Project");
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while navigating to project page" + e.getMessage());
+		}
+	}
 }
     
     
