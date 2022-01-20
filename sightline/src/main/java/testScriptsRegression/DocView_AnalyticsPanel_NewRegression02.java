@@ -761,6 +761,102 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 20/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify for RMU Family Members tab when no family members and parent child relationship. 'RPMXCON-50814' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+    @Test(enabled = true, groups = { "regression" }, priority = 7)
+	public void verifyProjectNoFamilyMemberTab() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50814");
+		baseClass.stepInfo(
+				"To verify for RMU Family Members tab when no family members and parent child relationship.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.toggleEnableSaveWithoutCompletion();
+		assignmentsPage.add2ReviewerAndDistribute();
+
+		baseClass.stepInfo("Step 2: Navigating Doc view from Assignment Page");
+		driver.waitForPageToBeReady();
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.miniConceptualNoDoc);
+		
+        driver.waitForPageToBeReady();
+        baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
+        docView.getDocView_Analytics_FamilyTab().waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_AnalyticalPanel_NoData());
+		String familyData=docView.getDocView_AnalyticalPanel_NoData().getText();
+		System.out.println(familyData);
+		softAssertion.assertTrue(docView.getDocView_AnalyticalPanel_NoData().Displayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("AnalyticalPanel FamilyMember Docs Is " + familyData );
+
+		loginPage.logout();
+		
+	}
+	
+    /**
+	 * Author : Vijaya.Rani date: 20/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify that user can select documents from the Conceptually Similar and folder them when 
+	 * redirects from basic search.'RPMXCON-50821' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 8)
+	public void verifySelectDocsInFolderFromConceptalSimilarTab(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50821");
+		baseClass.stepInfo(
+				"To verify that user can select documents from the Conceptually Similar and folder them when redirects from basic search.");
+
+		loginPage = new LoginPage(driver);
+
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewConceptualDocsInDocViews();
+		
+		//Conceptual new Folder 
+		docView.performExitingFolderForConceptualDocuments();
+		
+		loginPage.logout();
+	}
 	
 	
 	
