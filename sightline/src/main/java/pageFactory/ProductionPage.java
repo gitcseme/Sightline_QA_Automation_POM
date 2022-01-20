@@ -16003,6 +16003,7 @@ public class ProductionPage {
 			System.out.println(text+" is not visible");
 		}
 	}
+
 	
 	/**
 	 * @author Brundha
@@ -16022,5 +16023,65 @@ public class ProductionPage {
 			}
 		
 	}
+
+	/**
+	 * @Author Aathith
+	 */
+	public void fillingTIFFSectionwithBurnRedactionWithoutUpdatedText() throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_defaultRedactionTag());
+		getClkCheckBox_defaultRedactionTag().isDisplayed();
+		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_selectingRedactionTags());
+		getClkCheckBox_selectingRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().isDisplayed();
+		getClk_selectBtn().waitAndClick(10);
+
+	}
+	
+
 	
 }
