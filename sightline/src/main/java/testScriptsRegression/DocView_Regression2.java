@@ -1484,11 +1484,126 @@ public class DocView_Regression2 {
 			baseClass.passedStep("No assignments pre esist for the SG. The view in doc view Icon is disabled");
 		}	
 	}
+	/**
+	 * Author : Iyappan.Kasinathan
+	 * Description : Verify on click of the reviewer remark respecive page should be scrolled in doc view when redirecting from basic search/saved search/doc list
+	 */
+	@Test(enabled = true, dataProvider = "UsersWithoutPA",alwaysRun = true, groups = { "regression" }, priority = 29)
+	public void VerifyReviewerRemarksPageFromSearchPg(String userName, String password, String fullName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-51083");
+		baseClass.stepInfo(" Verify on click of the reviewer remark respecive page should be scrolled in doc view when redirecting from basic search/saved search/doc list");
+		baseClass = new BaseClass(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		String remarksName = "remarks"+Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(userName, password);
+		sessionsearch.basicContentSearch("null");
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewRedact.getDocView_PageNumber());
+		docViewRedact.getDocView_PageNumber().SendKeys("4");
+		docViewRedact.getSearchIcon().waitAndClick(5);
+		docViewRedact.clickingRemarksIcon();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
+		Thread.sleep(4000);
+		//Thread sleep added for the page to adjust resolution
+		Actions actions = new Actions(driver.getWebDriver());
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
+		.moveByOffset(200, 90).release().build().perform();
+		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
+		actions.click().build().perform();
+		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
+		actions.click();
+		actions.sendKeys(remarksName);
+		actions.build().perform();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.saveRemarksBtn());
+		docViewRedact.saveRemarksBtn().waitAndClick(10);	
+		baseClass.stepInfo("Remarks added successfully");
+		baseClass.waitForElement(docView.getDocView_SelectRemarks(remarksName));
+		docView.getDocView_SelectRemarks(remarksName).waitAndClick(10);
+		String id= docView.getRemarksId(remarksName).GetAttribute("id");
+		if(docView.getRemarksInPg(id).isElementAvailable(5)) {
+			baseClass.passedStep("The page is loaded sucessfully where the remarks is added");
+		}else {
+			baseClass.failedStep("The page is not loaded where the remarks is added");
+		}
+		docViewRedact.clickingRemarksIcon();
+		docView.deleteReamark(remarksName);
 
-
-
-
-	
+	}
+	/**
+	 * Author : Iyappan.Kasinathan
+	 * Description : Verify on click of the reviewer remark respective page should be scrolled in doc view when redirecting from my assignment
+	 */
+	@Test(enabled = true, dataProvider = "UsersWithoutPA",alwaysRun = true, groups = { "regression" }, priority = 30)
+	public void VerifyReviewerRemarksPageFromAssignments(String userName, String password, String fullName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-51082");
+		baseClass.stepInfo("Verify on click of the reviewer remark respective page should be scrolled in doc view when redirecting from my assignment");
+		baseClass = new BaseClass(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String remarksName = "remarks"+Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(userName, password);
+		//create assignment
+		if(fullName.contains("RMU")) {
+		sessionsearch.basicContentSearch("null");
+		sessionsearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.add2ReviewerAndDistribute();
+		//Impersonate to reviewer
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.viewSelectedAssgnUsingPagination(assignmentName);
+		assignmentPage.assgnViewInAllDocView();
+		baseClass.stepInfo("Navigated to docview from assignment page successfully");
+		driver.waitForPageToBeReady();
+		}else {
+			assignmentPage.SelectAssignmentByReviewer(assignmentName);
+			baseClass.stepInfo("User on the doc view after selecting the assignment");
+		}
+		baseClass.waitForElement(docViewRedact.getDocView_PageNumber());
+		docViewRedact.getDocView_PageNumber().SendKeys("4");
+		docViewRedact.getSearchIcon().waitAndClick(5);
+		docViewRedact.clickingRemarksIcon();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
+		Thread.sleep(4000);
+		//Thread sleep added for the page to adjust resolution
+		Actions actions = new Actions(driver.getWebDriver());
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
+		.moveByOffset(200, 90).release().build().perform();
+		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
+		actions.click().build().perform();
+		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
+		actions.click();
+		actions.sendKeys(remarksName);
+		actions.build().perform();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.saveRemarksBtn());
+		docViewRedact.saveRemarksBtn().waitAndClick(10);	
+		baseClass.stepInfo("Remarks added successfully");
+		baseClass.waitForElement(docView.getDocView_SelectRemarks(remarksName));
+		docView.getDocView_SelectRemarks(remarksName).waitAndClick(10);
+		String id= docView.getRemarksId(remarksName).GetAttribute("id");
+		if(docView.getRemarksInPg(id).isElementAvailable(5)) {
+			baseClass.passedStep("The page is loaded sucessfully where the remarks is added");
+		}else {
+			baseClass.failedStep("The page is not loaded where the remarks is added");
+		}
+		docViewRedact.clickingRemarksIcon();
+		docView.deleteReamark(remarksName);
+		if(fullName.contains("REV")) {
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
+		}
+	}
+	@DataProvider(name = "UsersWithoutPA")
+	public Object[][] UsersWithoutPA() {
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName }, { Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
+	}	
 	
 	
 	@AfterMethod(alwaysRun = true)
