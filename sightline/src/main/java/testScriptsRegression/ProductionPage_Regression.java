@@ -3,7 +3,10 @@ package testScriptsRegression;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
 
@@ -1730,7 +1733,7 @@ public class ProductionPage_Regression {
 	 *              Document Match [RPMXCON-47900]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	@Test(enabled = false, groups = { "regression" }, priority = 32)
 	public void verifyPrivGuardForDocMatch() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		baseClass.stepInfo("RPMXCON-47900 -Production Sprint 10");
@@ -1781,7 +1784,7 @@ public class ProductionPage_Regression {
 	 *              wizard For Tag [RPMXCON-47898]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 33)
+	@Test(enabled = false, groups = { "regression" }, priority = 33)
 	public void verifyDocSelectionForTag() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		baseClass.stepInfo("RPMXCON-47898 -Production Sprint 10");
@@ -1823,6 +1826,95 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 
 	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:19/01/2021 Modified by: Baskar
+	 * Description : Verify that read only custom metadata field value should be
+	 * retained on click of saved stamp in context of security group
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 34)
+	public void verifyProductionCreationDateMarkComplete() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		baseClass.stepInfo("Test case Id: RPMXCON-49041");
+		baseClass.stepInfo("To verify that 'Production Creation Date' should displayed when it Mark Complete .");
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		// page.addANewProduction(productionname);
+		page.getAddNewProductionbutton().waitAndClick(10);
+		page.getProductionName().SendKeys(productionname);
+		page.getMarkCompleteLink().waitAndClick(10);
+		baseClass.stepInfo("Click action using mark complete button");
+		driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		page.getGridView().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Nativated to production Grid View");
+		String createdTime = page.getProductionCreatedTimeInGridView(productionname).getText();
+
+		DateFormat dateFormat = new SimpleDateFormat("dd");
+		Date date = new Date();
+		String date1 = dateFormat.format(date);
+		System.out.println("Current date" + date1);
+		boolean flag = createdTime.contains(date1);
+		if (flag) {
+			baseClass.passedStep("current date is displayed on production grid view");
+			System.out.println("date visible");
+		} else {
+			baseClass.failedStep("date is not contain in text");
+			System.out.println("date not visible");
+		}
+
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:19/01/2021 Modified by: Baskar
+	 * Description : Verify that if PA selects the Export with Production and has Native Files and Tags 
+	 *              selected in the native components section, then Component tab should Complete without any error.
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 35)
+	public void verifyProductionCreationDateMarkComp() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		baseClass.stepInfo("Test case Id: RPMXCON-49360");
+		baseClass.stepInfo("Verify that if PA selects the Export with Production and has Native Files and Tags "
+				+ "selected in the native components section, then Component tab should Complete without any error.");
+
+		String AAfolder = "AFolderProd" + Utility.dynamicNameAppender();
+		String AAAfolder = "AFolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		// String tagNameTechnical = Input.tagNameTechnical;
+		String newExport = "Ex" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateTag(AAfolder, "Default Security Group");
+		tagsAndFolderPage.CreateTag(AAAfolder, "Default Security Group");
+		// tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String text = page.getProdExport_ProductionSets().getText();
+		if (text.contains("Export Set")) {
+		page.selectExportSetFromDropDown();
+		} else {
+		page.createNewExport(newExport);
+		}
+		page.addANewExport(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectNativeTag(AAfolder, AAAfolder);
+		driver.scrollPageToTop();
+		page.getComponentsMarkComplete().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Mark Complete successful");
+		baseClass.passedStep("Componenet tab completed without any error");
+	}
+	
+
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
