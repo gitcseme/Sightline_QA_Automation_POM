@@ -6514,6 +6514,83 @@ public class DocView_Redactions_Regression {
 
 	}
 	
+	/**
+	 * Author : Sai Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-51044 Verify after impersonation user can maximize the middle panel of the doc view
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
+	public void verifyAfterImpersonationMiddlePanelInDocView() throws Exception {
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+
+		// Login As RMU
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Test case Id: RPMXCON- 51044");
+		baseClass.stepInfo(
+				"Verify after impersonation user can maximize the middle panel of the doc view");
+		
+		baseClass.impersonateRMUtoReviewer();
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA user");
+		baseClass.impersonateSAtoPA();
+		baseClass.stepInfo("SA has been impersonated as PA");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		SessionSearch sessionsearch1 = new SessionSearch(driver);
+		sessionsearch1.basicContentSearch(Input.searchString1);
+		sessionsearch1.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA user");
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("SA has been impersonated as RMU");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		SessionSearch sessionsearch2 = new SessionSearch(driver);
+		sessionsearch2.basicContentSearch(Input.searchString1);
+		sessionsearch2.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA user");
+		baseClass.impersonateSAtoReviewer();
+		baseClass.stepInfo("SA has been impersonated as RMU");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		SessionSearch sessionsearch3 = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("PA has been impersonated as RMU");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		SessionSearch sessionsearch4 = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("PA has been impersonated as Rev");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		SessionSearch sessionsearch5 = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();		
+	 
+	}
+
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
