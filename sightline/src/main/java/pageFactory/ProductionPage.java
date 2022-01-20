@@ -2344,6 +2344,20 @@ public class ProductionPage {
 	public Element ProductionLocationSplitCount() {
 		return driver.FindElementByXPath("//input[@id='ProductionComponentsFolderDetails_SplitCount']");
 	}
+	
+	public Element getNativeFileTagSelection(String tag) {
+		return driver.FindElementByXPath(
+				"//div[@id='tagTreeNativeComponent']//a[text()='"+tag+"']/i[@class='jstree-icon jstree-checkbox']");
+	}
+	public Element getNativeFileTagSelectButton() {
+		return driver.FindElementByXPath(
+				"//button[contains(@class,'submitNativeSelection')]");
+	}
+	
+	public Element getNativeFileSelectingTag() {
+		return driver.FindElementByXPath(
+				"//button[contains(@class,'selectNativeTags')]");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -16080,6 +16094,22 @@ public class ProductionPage {
 		getClk_selectBtn().isDisplayed();
 		getClk_selectBtn().waitAndClick(10);
 
+	}
+	
+	/**
+	 * Indium-Baskar
+	 */
+	
+	public void selectNativeTag(String tagOne,String tagTwo) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getNativeFileSelectingTag());
+		getNativeFileSelectingTag().waitAndClick(5);
+		base.waitForElement(getNativeFileTagSelection(tagOne));
+		getNativeFileTagSelection(tagOne).waitAndClick(5);
+		base.waitForElement(getNativeFileTagSelection(tagTwo));
+		getNativeFileTagSelection(tagTwo).waitAndClick(5);
+		base.waitForElement(getNativeFileTagSelectButton());
+		getNativeFileTagSelectButton().waitAndClick(5);
 	}
 	
 
