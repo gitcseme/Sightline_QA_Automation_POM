@@ -1961,6 +1961,173 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author : Mohan date: 18/01/2022 Modified date: NA Modified by: NA
+	 * @Description :To verify Sys Admin/Project Admin after impersonating- Conceptual tab if there are no conceptual similar documents 'RPMXCON-50832'
+	 * 
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	public void verifyAfterImpersonatingConceptualTabNoDocuments() throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-50832");
+		baseClass.stepInfo("To verify Sys Admin/Project Admin after impersonating- Conceptual tab if there are no conceptual similar documents");
+		
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String docId1 = Input.analyticsConceptualDocId1;
+		String docId2 = Input.analyticsConceptualDocId2;
+		// Login as SA
+		baseClass.stepInfo("Step 1: Login As SA");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From SA to RMU");
+		baseClass.impersonateSAtoRMU();
+
+		baseClass.stepInfo("Step 3: Create an Assignment and View in DocView");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, Input.codeFormName);
+		assignmentsPage.add3ReviewerAndDistribute();
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+
+		baseClass.stepInfo("Step 4: Verify 'Conceptually Similar Documents' tab in the analytics panel");
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ConceptualQueryNoData().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Message is displayed as 'Your query returned no data.'");
+
+		loginPage.logout();
+		
+		
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From PA to RMU");
+		baseClass.impersonatePAtoRMU();
+
+		baseClass.stepInfo("Step 3: Select an Assignment and go to View in DocView");
+		
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+
+		baseClass.stepInfo("Step 4: Verify 'Conceptually Similar Documents' tab in the analytics panel");
+		docView.selectDocIdInMiniDocList(docId1);
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ConceptualQueryNoData().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Message is displayed as 'Your query returned no data.'");
+
+		loginPage.logout();
+		
+		
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From PA to Reviewer");
+		baseClass.impersonatePAtoReviewer();
+
+		baseClass.stepInfo("Step 3: Select an Assignment and go to View in DocView");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		baseClass.stepInfo("Step 4: Verify 'Conceptually Similar Documents' tab in the analytics panel");
+		docView.selectDocIdInMiniDocList(docId2);
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ConceptualQueryNoData().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Message is displayed as 'Your query returned no data.'");
+
+		loginPage.logout();
+		
+		baseClass.stepInfo("Step 1: Login As RMU");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+
+		baseClass.stepInfo("Step 3: Select an Assignment and go to View in DocView");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		baseClass.stepInfo("Step 4: Verify 'Conceptually Similar Documents' tab in the analytics panel");
+		docView.selectDocIdInMiniDocList(docId1);
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ConceptualQueryNoData().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Message is displayed as 'Your query returned no data.'");
+
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Mohan date: 18/01/2022 Modified date: NA Modified by: NA
+	 * @Description :To verify for Project Admin Conceptual tab when there are no conceptually similar documents 'RPMXCON-50831'
+	 * 
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	public void verifyProjectAdminConceptualTabNoDocuments() throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		String docId1 = Input.analyticsConceptualDocId1;
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-50831");
+		baseClass.stepInfo("To verify for Project Admin Conceptual tab when there are no conceptually similar documents");
+		
+		
+		//login as PA
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Admin with " + Input.pa1userName + "");
+		baseClass.stepInfo("Step 2: Basic search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+		baseClass.stepInfo("Step 3: Verify 'Conceptually Similar Documents' tab in the analytics panel");
+		docView.selectDocIdInMiniDocList(docId1);
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ConceptualQueryNoData().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Message is displayed as 'Your query returned no data.'");
+
+		loginPage.logout();
+		
+		
+		
+	}
 
 	
 	
