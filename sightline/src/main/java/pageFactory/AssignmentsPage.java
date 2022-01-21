@@ -31,6 +31,7 @@ public class AssignmentsPage {
 	SoftAssert assertion;
 	SessionSearch search;
 	LoginPage lp;
+	KeywordPage keywordPage;
 
 	public Element getAssignmentActionDropdown() {
 		return driver.FindElementByXPath("//*[@id='ulActions']/../button[@class='btn btn-defualt dropdown-toggle']");
@@ -9260,8 +9261,48 @@ public class AssignmentsPage {
 			driver.waitForPageToBeReady();
 			bc.getYesBtn().ScrollTo();
 			bc.getYesBtn().waitAndClick(10);
+		
+		}
+		
+		/**
+		 * @author Arunkumar
+		 * @throws InterruptedException 
+		 * @description this method will unmap/unassign the keywords which assigned to the document.
+		 *             
+		 */
+		public void unmappingKeywordsFromAssignment(String assignmentName) throws InterruptedException {
+			bc = new BaseClass(driver);
+			keywordPage = new KeywordPage(driver);
+			editAssignmentUsingPaginationConcept(assignmentName);
+			driver.waitForPageToBeReady();
+			getAssgn_Keywordsbutton().ScrollTo();
+			getAssgn_Keywordsbutton().isElementAvailable(10);
+			getAssgn_Keywordsbutton().waitAndClick(10);
+			bc.waitForElement(getAssgn_Keywordspopup());
+			getAvailableKeywordCheckboxes();
+			List<WebElement> allvalues = getAvailableKeywordCheckboxes().FindWebElements();
+			List<String> expkey = new ArrayList<String>();
 			
+			for(int j=0;j<=allvalues.size()-1;j++) {
+			
+					allvalues.get(j).click();
+			}
+			driver.waitForPageToBeReady();
+			getAssgn_Keywordokbutton().ScrollTo();
+			getAssgn_Keywordokbutton().isElementAvailable(10);
+			getAssgn_Keywordokbutton().Click();
+			keywordPage.getYesButton().Click();
+			driver.waitForPageToBeReady();
+			bc.passedStep("Keywords unmapped from the assignment successfully");
+			}
+			
+			
+			public ElementCollection getAvailableKeywordCheckboxes() {
+			return driver.FindElementsByXPath("//div[@id='divkeyword']//label[@class='checkbox']//i");
+		}
+
 			return actualDocs;
+
 	}
 
 }

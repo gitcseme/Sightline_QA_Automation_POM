@@ -1678,6 +1678,87 @@ public class DocView_Regression2 {
 	}
 	
 	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51045
+	 * Description :Verify user can not see the keywords highlighted in context of an assignment when keyword group assigned to the security group only
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 28)
+	public void verifyKeywordsHighlightingWhenUnMappedFromAssignment() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		keywordPage = new KeywordPage(driver);
+		
+		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
+		
+		//Pre-requisites
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51045");
+		baseClass.stepInfo("Verify keywords highlighting when keywords are not mapped to the assignment");
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssignExisting(assignmentName);
+		assignPage.unmappingKeywordsFromAssignment(assignmentName);
+		assignPage.addReviewerAndDistributeDocs();
+		baseClass.waitForElement(assignPage.getAssignmentSaveButton());
+		assignPage.getAssignmentSaveButton().Click();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+			
+		//Login as RMU and verify keyword Highlighting
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined as RMU");
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.selectAssignmentToViewinDocView(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+		// click eye icon and verify the highlighting of search term
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		
+		if(docView.getPersistentToogle().isDisplayed()) {
+			baseClass.failedStep("Keywprds are highlighted while checking as RMU");
+		}
+		else
+		{
+			baseClass.passedStep("Keywords are not highlighted while checking as RMU");
+		}	
+		loginPage.logout();
+				
+		//login as reviewer and verify keyword highlighting
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logined as Reviewer");
+		assignPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+
+		// click eye icon and verify the highlighting of search term
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);		
+		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		if(docView.getPersistentToogle().isDisplayed()) {
+			baseClass.failedStep("Keywprds are highlighted while checking as reviewer");
+		}
+		else
+		{
+			baseClass.passedStep("Keywords are not highlighted while checking as reviewer");
+		}		
+		
+	}
+/**
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51557
 	 * 
 	 */
@@ -1769,6 +1850,7 @@ public class DocView_Regression2 {
 	
 	
 	
+
 	
 	
 	@AfterMethod(alwaysRun = true)
