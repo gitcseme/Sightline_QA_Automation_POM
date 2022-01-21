@@ -255,6 +255,8 @@ public class Input {
 	public static String testSecondDocId;
 	public static String testTenthDocId;
 	public static String docNearDupeDocId;
+	public static String UniCodeDocId;
+	public  static String TiffDocId;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -715,6 +717,8 @@ public class Input {
 		testSecondDocId = testData.getTestSecondDocId();
 		testTenthDocId = testData.getTestTenthDocId();
 		docNearDupeDocId=testData.getDocNearDupeDocId();
+		UniCodeDocId = testData.getUniCodeDocId();
+		TiffDocId = testData.getTiffDocId();
 
 			
 		// Added by Arun
