@@ -7889,6 +7889,106 @@ public class Production_Regression1 {
 
 	}
 
+
+/**
+ * @author Brundha Test case id-RPMXCON-49901
+ * @Description Verify and generate Production with Search as source
+ * 
+ */
+@Test(groups = { "regression" }, priority = 103)
+public void verifyProductionGenerationWithSearches() throws Exception {
+
+	UtilityLog.info(Input.prodPath);
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+	base.stepInfo("RPMXCON-49901 -Production Sprint 10");
+	base.stepInfo(
+			"Verify and generate Production with Search as source");
+
+	String SearchName="Search" + Utility.dynamicNameAppender();
+	String SearchName1="Search" + Utility.dynamicNameAppender();
+	String productionname = "p" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.saveSearchAtAnyRootGroup(SearchName,Input.shareSearchDefaultSG);
+	sessionSearch.saveSearchAtAnyRootGroup(SearchName1,Input.shareSearchPA);
+	
+	ProductionPage page = new ProductionPage(driver);
+	page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocuSelectionPage(SearchName,SearchName1);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	
+	
+}
+
+
+/**
+ * @author Brundha Test case id-RPMXCON-48577
+ * @Description To verify that Export Bates option is available on Production-Generate tab
+ * 
+ */
+@Test(groups = { "regression" }, priority = 104)
+public void verifyExportBatesOptionInGenerateTab() throws Exception {
+
+	UtilityLog.info(Input.prodPath);
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+	base.stepInfo("RPMXCON-48577 - from Production");
+	base.stepInfo(
+			"To verify that Export Bates option is available on Production-Generate tab");
+
+	String foldername = "Folder" + Utility.dynamicNameAppender();
+	String productionname = "p" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+	
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	page = new ProductionPage(driver);
+	page.selectingDefaultSecurityGroup();
+	String beginningBates = page.getRandomNumber(2);
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.getExportBatesButton().ScrollTo();
+	if(page.getExportBatesButton().isDisplayed()) {
+		base.passedStep("Export Bates Option is visible in Generate tab as Expected");
+	}else {base.failedStep("Export Bates Option is not visible in Generate tab as Expected");}
+	
+	
+}
+
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {
