@@ -9169,5 +9169,31 @@ public class AssignmentsPage {
 			return actualDocs;
 			
 		}
+		/**
+		 * @author Jayanthi.ganesan
+		 * @param Username
+		 * @return
+		 * @throws InterruptedException
+		 */
+		public String manageRevTabToViewInDocView(String Username) throws InterruptedException {
+			System.out.println(Username);
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			bc.waitTime(1);
+			String actualDocs = getDistributedDocs(Username).getText();
+			System.out.println(actualDocs);	
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_selectReviewer(Username));
+			getAssgn_ManageRev_selectReviewer(Username).ScrollTo();
+			getAssgn_ManageRev_selectReviewer(Username).waitAndClick(10);
+			getAssgn_ManageRev_Action().waitAndClick(20);
+			bc.waitForElement(getAssgn_ManageRev_Action_ViewDocview());
+			getAssgn_ManageRev_Action_ViewDocview().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			bc.getYesBtn().ScrollTo();
+			bc.getYesBtn().waitAndClick(10);
+			
+			return actualDocs;
 	}
 
+}
