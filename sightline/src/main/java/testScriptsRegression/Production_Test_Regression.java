@@ -2945,7 +2945,141 @@ public class Production_Test_Regression {
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 					}
-					
+					/**
+					 * @author Aathith.Senthilkumar
+					 * 			RPMXCONO-47174
+					 * @Description Verify that TIFF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 1000 
+					 */
+					@Test(groups = { "regression" }, priority = 50)
+					public void genaratetDocumentswithMultipleBrandingTagsnotsplit() throws Exception {
+						
+						UtilityLog.info(Input.prodPath);
+						base.stepInfo("RPMXCON-47174 -Production Sprint 10");
+						base.stepInfo("Verify that TIFF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 1000");
+						String testData1 = Input.testData1;
+						foldername = "FolderProd" + Utility.dynamicNameAppender();
+						tagname = "Tag" + Utility.dynamicNameAppender();
+						
+						// Pre-requisites
+						// create tag and folder
+						TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+						tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+						
+						// search for folder
+						SessionSearch sessionSearch = new SessionSearch(driver);
+						sessionSearch = new SessionSearch(driver);
+						sessionSearch.basicContentSearch(testData1);
+						sessionSearch.bulkTagExisting(tagname);
+						sessionSearch.bulkFolderExisting(foldername);
+						
+						//Verify archive status on Gen page
+						ProductionPage page = new ProductionPage(driver);
+						productionname = "p" + Utility.dynamicNameAppender();
+						String beginningBates = page.getRandomNumber(2);
+						page.selectingDefaultSecurityGroup();
+						page.addANewProduction(productionname);
+						page.fillingDATSection();
+						page.fillingNativeSection();
+						page.fillingTIFFSection(tagname);
+						page.fillingTextSection();
+						page.navigateToNextSection();
+						page.visibleCheck("Numbering and Sorting");
+						page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+						page.navigateToNextSection();
+						page.fillingDocumentSelectionPage(foldername);
+						page.navigateToNextSection();
+						page.visibleCheck("Priv Guard");
+						page.fillingPrivGuardPage();
+						page.visibleCheck("Production Location");
+						driver.scrollingToBottomofAPage();
+						page.getsplitSubFolderbtn().waitAndClick(10);
+						base.stepInfo("split sub folder toggle as OFF");
+						driver.scrollPageToTop();
+						page.fillingProductionLocationPageAndPassingText(productionname);
+						page.navigateToNextSection();
+						page.visibleCheck("Summary & Preview");
+						page.fillingSummaryAndPreview();
+						page.fillingGeneratePageWithContinueGenerationPopup();
+						page.getBackButton().waitAndClick(10);
+						page.getBackButton().waitAndClick(10);
+						page.getBackButton().waitAndClick(10);
+						driver.scrollingToBottomofAPage();
+						page.toggleOffCheck(page.getsplitSubFolderbtn());
+						
+						base.passedStep("Verified that TIFF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 1000");
+						
+						tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+						tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith.Senthilkumar
+					 * 			RPMXCONO-55653
+					 * @Description To  Verify the availability of 'Translations' under the Advanced Production Types show/hide section (in Production Component). 
+					 */
+					@Test(groups = { "regression" }, priority = 51)
+					public void verifyAvailabilityOfTranslationComponent() throws Exception {
+						
+						UtilityLog.info(Input.prodPath);
+						base.stepInfo("Testcase No: RPMXCON-55653");
+						base.stepInfo("To  Verify the availability of 'Translations' under the Advanced Production Types show/hide section (in Production Component).");
+						String testData1 = Input.testData1;
+						//foldername = "FolderProd" + Utility.dynamicNameAppender();
+						tagname = "Tag" + Utility.dynamicNameAppender();
+						
+						// Pre-requisites
+						// create tag and folder
+						TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+						//tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+						
+						// search for folder
+						SessionSearch sessionSearch = new SessionSearch(driver);
+						sessionSearch = new SessionSearch(driver);
+						sessionSearch.basicContentSearch(testData1);
+						sessionSearch.bulkTagExisting(tagname);
+						//sessionSearch.bulkFolderExisting(foldername);
+						
+						//Verify 
+						ProductionPage page = new ProductionPage(driver);
+						productionname = "p" + Utility.dynamicNameAppender();
+						page.selectingDefaultSecurityGroup();
+						page.addANewProduction(productionname);
+						page.fillingDATSection();
+						page.fillingNativeSection();
+						page.fillingTIFFSection(tagname);
+						driver.scrollingToBottomofAPage();
+						page.getAdvancedProductionToggle().waitAndClick(10);
+						page.getCheckBoxUnCheckVerificaation(page.getTranlationCheckMarkVerication());
+						base.stepInfo("By default Translation check box is unchecked");
+						boolean flag = page.getTranlationOpenCloseCheck().GetAttribute("class").contains("in");
+						if (!flag) {
+							base.passedStep("user didn't view Translation details ");
+						} else {
+							base.failedStep("Tranlation tab is open");
+						}
+						page.getTranslationsCheckBox().waitAndClick(10);
+						base.stepInfo("Translation tab is clicked");
+						driver.waitForPageToBeReady();
+						
+						boolean flag1 = page.getTranlationOpenCloseCheck().GetAttribute("class").contains("in");
+						if (flag1) {
+							base.passedStep("Translation component details is displayed");
+						} else {
+							base.failedStep("Tranlation tab is not open");
+						}
+						
+						base.passedStep("Verified the availability of 'Translations' under the Advanced Production Types show/hide section (in Production Component).");
+						
+						tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						//tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+						tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
 					
 	
 	

@@ -2358,6 +2358,17 @@ public class ProductionPage {
 		return driver.FindElementByXPath(
 				"//button[contains(@class,'selectNativeTags')]");
 	}
+	//Add by Aathith
+	public Element getsplitSubFolderbtn() {
+		return driver.FindElementByXPath("//*[text()='Split Sub Folders:']/..//i");
+	}
+	public Element getTranlationCheckMarkVerication() {
+		return driver.FindElementByXPath("//input[@id='chkIsTranslation']");
+	}
+	public Element getTranlationOpenCloseCheck() {
+		return driver.FindElementByXPath("//div[@id='TranslationsContainer']");
+	}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -16111,7 +16122,47 @@ public class ProductionPage {
 		base.waitForElement(getNativeFileTagSelectButton());
 		getNativeFileTagSelectButton().waitAndClick(5);
 	}
-	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @description toogle off check for element
+	 */
+	public void toggleOffCheck(Element element) {
+		try {
+			driver.waitForPageToBeReady();		
+			driver.scrollPageToTop();
+			String color = element.GetCssValue("background-color");
+			System.out.println(color);
+			String ExpectedColor = Color.fromString(color).asHex();
+			System.out.println(ExpectedColor);
+			String ActualColor="#e54036";
+			if(ActualColor.equals(ExpectedColor)) {
+				base.passedStep("toggle is off :"+element);
+			}else {
+				base.failedStep("toggle off verifaction failed");
+				}
+		} catch (Exception e) {
+			base.failedStep("Exception occcured toggle off check" + e.getMessage());
+			e.printStackTrace();
+		}
+
+
+	}
+	/**
+	 * @author Aathith
+	 * @Description : CheckBox notChecked verification
+	 */
+	public void getCheckBoxUnCheckVerificaation(Element element) {
+		String value = element.GetAttribute("checked");
+		System.out.println("value :"+value);
+		softAssertion.assertNull(value);
+		if(value==null) {
+			base.passedStep(element+"element is not checked");
+			System.out.println("element is unChecked");
+		}else {
+			base.failedStep(element+"element is checked");
+			System.out.println("element is Checked");
+		}
+	}
 
 	
 }
