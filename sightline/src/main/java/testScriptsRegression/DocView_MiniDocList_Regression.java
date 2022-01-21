@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -2772,8 +2773,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
 
 		// creating And Distributing the Assignment
-		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
-
+		String assignmentName ="TestAssignmentNo" + Utility.dynamicNameAppender();
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.verifyPureHitsCount();
 		sessionSearch.bulkAssign();
@@ -2827,6 +2827,49 @@ public class DocView_MiniDocList_Regression {
 		} else {
 			baseClass.failedStep("RMU user viewed Completed icon in mini doc list in context of manage assignment.");
 		}
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 67)
+	public void manageReviewerToDocView_PanelVerify() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50810");
+		baseClass.stepInfo("To verify Mini DocList Panel from doc view page for RMU when redirects from"
+				+ " Edit Assignmnet > Manage Reviewers >Doc View");
+
+		String expectedURL = Input.url + "DocumentViewer/DocView";
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as RMU");
+		// creating And Distributing the Assignment
+		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.verifyPureHitsCount();
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.add2ReviewerAndDistribute();
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+		String assignedCount = assignmentPage.manageRevTabToViewInDocView(Input.rmu1userName);
+		driver.waitForPageToBeReady();
+
+		if (driver.getUrl().equals(expectedURL)) {
+			baseClass.passedStep("User navigated to docview page from Manage Reviewer Tab/EditAssignemnt  page");
+			List<String> listOfData = new ArrayList<>();
+			listOfData = reusableDocViewPage.miniDocList();
+			List<String> listOfDataAfterSort = new ArrayList<>();
+			listOfDataAfterSort = reusableDocViewPage.miniDocList();
+			Collections.sort(listOfDataAfterSort);
+			baseClass.stepInfo("Assigned doc Count--" + assignedCount);
+			baseClass.stepInfo("Docs Count in DocView Page --" + listOfData.size());
+			softAssertion.assertEquals(listOfData, listOfDataAfterSort);
+			softAssertion.assertEquals(listOfData.size(), Integer.parseInt(assignedCount));
+			softAssertion.assertAll();
+			baseClass.passedStep("Reviewer Assigned Documents  listed  and documents  sorted as per the document ID  ");
+		} else {
+			baseClass.failedStep("Application not redirected to the  doc view page ");
+		}
+		assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
 	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
