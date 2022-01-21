@@ -21751,5 +21751,18 @@ public class DocViewPage {
 		}
 
 	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description: To verify tags of coding form name in docview page
+	 */
+	public void verifyTagsAreEnabled(int objectNo) {
+		// base.waitForElement(getCodingFormTag(objectNo));
+		driver.waitForPageToBeReady();
+		if (getCodingFormTag(objectNo).isElementAvailable(3) == false) {
+			base.passedStep("The added tags are editable and enabled");
+		} else {
+			base.failedStep("The added tags are not editable and enabled");
+		}
+	}
 
 }
