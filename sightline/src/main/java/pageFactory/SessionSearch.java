@@ -7989,7 +7989,20 @@ public class SessionSearch {
 	 *         the Conceptual Doc in the to an Assignment
 	 */
 	public void bulkAssignConceptualDocuments() {
-		driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConceptuallyPlayButton().isDisplayed();
+			}
+		}), Input.wait60);
+
+		getConceptuallyPlayButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConceptPureHitsCount().isDisplayed();
+			}
+		}), Input.wait120);
 		if (getConceptPureHitsCount().isElementAvailable(5)) {
 			getConceptPureHitsCount().Click();
 		} else {
