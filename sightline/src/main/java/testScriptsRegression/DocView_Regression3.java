@@ -1776,7 +1776,7 @@ public class DocView_Regression3 {
 		
 		baseClass.stepInfo("Verify highlighted text for already added remark is deleted from document on doc view. ");
 		docViewMetaDataPage.verifyHighlightedTextRemarkNotPresentOnDoc();
-
+ 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
 		loginPage.quitBrowser();

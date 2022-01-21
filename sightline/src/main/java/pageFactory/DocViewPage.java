@@ -21680,7 +21680,7 @@ public class DocViewPage {
 	 * @param expectedElementHexCode(selected keyword color hex code
 	 */
 	public void verifyKeywordHighlightedOnDocViewwithKeywordColour( String rgbCode, String expectedElementHexCode) {
-		try {
+		try { 
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			List<WebElement> keyword = getHighlightedKeywordrgbCode(rgbCode).FindWebElements();

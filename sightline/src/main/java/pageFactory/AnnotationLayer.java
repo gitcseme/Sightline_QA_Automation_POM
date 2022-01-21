@@ -90,7 +90,7 @@ public class AnnotationLayer {
       	 */
           public void deleteAnnotationByPagination(String name) {
           	try{
-          		
+          		 
           		driver.getWebDriver().get(Input.url+ "Annotations/Annotations");
           		driver.waitForPageToBeReady();
           		java.util.List<WebElement> pages = getPages().FindWebElements();
