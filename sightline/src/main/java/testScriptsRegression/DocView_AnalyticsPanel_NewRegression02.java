@@ -3,6 +3,7 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.Set;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -13,6 +14,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
@@ -858,31 +861,140 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		loginPage.logout();
 	}
 	
+
+	/**
+	 * Author : Vijaya.Rani date: 21/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify user can select Multiple documents in Thread
+	 * Map->Analytic Panel from dockout screens and Select Action as 'Code Same as
+	 * this'. 'RPMXCON-51127' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	public void verifySelectMultipleDocsCodeSameAsThreadMapTab() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51127");
+		baseClass.stepInfo(
+				"To verify user can select Multiple documents in Thread Map->Analytic Panel from dockout screens and Select Action as 'Code Same as this'.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		// view docs DocView
+		docView.performCodeSameForThreadDocuments(parentWindowID);
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		loginPage.logout();
+
+		// login As REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+
+		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId1 = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId1) {
+			if (!parentWindowID1.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		// view docs DocView
+		docView.performCodeSameForThreadDocuments(parentWindowID1);
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 21/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify user can assign documents to selected folder from
+	 * Dockout screen->Analytics panel- Near Dupe tab.'RPMXCON-51129' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 10)
+	public void verifySelectDocsInFolderFromNearDupeTab(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51129");
+		baseClass.stepInfo(
+				"To verify user can assign documents to selected folder from Dockout screen->Analytics panel-Near Dupe tab.");
+
+		loginPage = new LoginPage(driver);
+
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		// view docs DocView
+		docView.performFloderNearDupeDocsInChildWindow(parentWindowID);
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		loginPage.logout();
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	@AfterMethod(alwaysRun = true)
