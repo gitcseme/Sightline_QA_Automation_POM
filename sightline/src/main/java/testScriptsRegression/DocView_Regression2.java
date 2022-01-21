@@ -1678,14 +1678,14 @@ public class DocView_Regression2 {
 	}
 	
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51157
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51557
 	 * 
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =28)
 	public void verifySearchIconGreyedForTiff(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
-		baseClass.stepInfo("Test case Id: RPMXCON-51157");
+		baseClass.stepInfo("Test case Id: RPMXCON-51557");
 		baseClass.stepInfo("Verify that by default, the document is simply shows the search icon [magnifying]");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
