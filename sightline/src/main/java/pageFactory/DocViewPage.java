@@ -1489,6 +1489,20 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	
+	public Element getDocView_AnalyticsPanel_FamilyMemberTabQueryNoData() {
+		return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//td[text()='Your query returned no data']");
+	}
+	
+	
+	public Element getDocView_AnalyticsPanel_NearDupeTabQueryNoData() {
+		return driver.FindElementByXPath("//*[@id='dtDocumentNearDuplicates']//td[text()='Your query returned no data']");
+	}
+	
+	public Element getDocView_AnalyticsPanel_ConceptualWholeTabel() {
+		return driver.FindElementById("conceptual1");
+	}
+	
 	public Element getDocView_AnalyticsPanel_ConceptualQueryNoData() {
 		return driver.FindElementByXPath("//*[@id='dtDocumentConceptuallySimilar']//td[text()='Your query returned no data']");
 	}

@@ -104,7 +104,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 *               coding outside reviewer batch is enabled in assignment
 	 */
 
-	// @Test(enabled = true, groups = { "regression" }, priority = 1)
+	// @Test(enabled = false, groups = { "regression" }, priority = 1)
 	public void verifyWarningMsgForDocsWhichAreNotPresentInAssignment() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -165,7 +165,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 *               panel 'RPMXCON-50921' Sprint 8
 	 */
 
-	// @Test(enabled = true, groups = { "regression" }, priority = 2)
+	// @Test(enabled = false, groups = { "regression" }, priority = 2)
 	public void verifyWarningMsgWHenUserClicksBackButton() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -251,7 +251,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 *               logged in user 'RPMXCON-50902' Sprint 8
 	 */
 
-	// @Test(enabled = true, groups = { "regression" }, priority = 3)
+	// @Test(enabled = false, groups = { "regression" }, priority = 3)
 	public void verifyThreadedMapTabWhenNoDocsAreDisplayed() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -307,7 +307,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 *               this' 'RPMXCON-50902' Sprint 9
 	 */
 
-	// @Test(enabled = true, groups = { "regression" }, priority = 4)
+	// @Test(enabled = false, groups = { "regression" }, priority = 4)
 	public void verifyFamilyMemberTabWhenMultiDocsAreSelectedAndActionCodeSameAs() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -382,7 +382,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 *               'RPMXCON-50907' Sprint 9
 	 */
 
-	// @Test(enabled = true, groups = { "regression" }, priority = 5)
+	// @Test(enabled = false, groups = { "regression" }, priority = 5)
 	public void verifyFamilyMemberTabWhenCodingFormOverWritten() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -472,7 +472,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 *               as 'Code Same as This'. 'RPMXCON-50943' Sprint 9
 	 */
 
-	// @Test(enabled = true, groups = { "regression" }, priority = 6)
+	// @Test(enabled = false, groups = { "regression" }, priority = 6)
 	public void verifyUserCanSelectMultiDocsFromConceptualTab() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -537,7 +537,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 7)
+	// @Test(enabled = false, groups = { "regression" }, priority = 7)
 	public void verifyDocViewFromSaveSearchDocViewConceptual() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50878");
@@ -594,7 +594,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 8)
+	// @Test(enabled = false, groups = { "regression" }, priority = 8)
 	public void verifyThredMapDefaultNumberOfDocuments() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50901");
@@ -650,7 +650,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 9)
+	// @Test(enabled = false, groups = { "regression" }, priority = 9)
 	public void verifyCodeSameAsDocsSelectionForFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50908");
@@ -723,7 +723,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	// @Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
+	// @Test(enabled = false, dataProvider = "userDetails", groups = { "regression"
 	// }, priority = 11)
 	public void verifyViewTheDocsFromDocViewThreadMap(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
@@ -766,7 +766,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 12)
+	// @Test(enabled = false, groups = { "regression" }, priority = 12)
 	public void verifyCheckMarkIconAndCodeSameAsFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48716");
@@ -844,7 +844,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 13)
+	//@Test(enabled = false, groups = { "regression" }, priority = 13)
 	public void verifyViewInDocsFromNearDupeWithOutSelectDocs()
 			throws ParseException, InterruptedException, IOException {
 
@@ -916,7 +916,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 14)
+	//@Test(enabled = false, groups = { "regression" }, priority = 14)
 	public void verifyViewAllInDocListInNearDupe() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50873");
@@ -990,7 +990,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 15)
+	//@Test(enabled = false, groups = { "regression" }, priority = 15)
 	public void verifyViewInDocListFromThreadMapTab() throws ParseException, InterruptedException, IOException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50874");
@@ -1045,7 +1045,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 16)
+	//@Test(enabled = false, groups = { "regression" }, priority = 16)
 	public void verifyViewAllInDocListInAnalyticalThreadMap() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50871");
@@ -1119,7 +1119,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 17)
+	//@Test(enabled = false, groups = { "regression" }, priority = 17)
 	public void verifyViewInDocListSelectSingleDocInNearDupe()
 			throws ParseException, InterruptedException, IOException {
 
@@ -1190,7 +1190,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(enabled = false, groups = { "regression" }, priority = 18)
 	public void verifyViewInDocListInSetOfDocsInConceptualTab()
 			throws ParseException, InterruptedException, IOException {
 
@@ -1264,7 +1264,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = false, groups = { "regression" }, priority = 19)
 	public void verifyViewInDocListInSelectSignleDocInConceptualTab()
 			throws ParseException, InterruptedException, IOException {
 
@@ -1338,7 +1338,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = false, groups = { "regression" }, priority = 20)
 	public void verifyViewInDocListInAnalyticalPanelConceptualTab() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50862");
@@ -1413,7 +1413,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = false, groups = { "regression" }, priority = 21)
 	public void verifyDocViewFromSaveSearchDocViewThreadMap() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50864");
@@ -1478,7 +1478,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 22)
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 22)
 	public void verifyViewDocumentActionInThreadMap(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -1539,7 +1539,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = false, groups = { "regression" }, priority = 23)
 	public void verifyViewInDocListInAnalyticalPanelFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50863");
@@ -1613,7 +1613,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 24)
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 24)
 	public void verifyViewAllDocumentsInFamilyMember(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -1675,7 +1675,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 25)
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 25)
 	public void verifyViewInDocListConceptualSimilarTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -1721,7 +1721,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
 	public void verifySaveSearchViewInDocListConceptualTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -1768,7 +1768,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
 	public void verifySaveSearchViewInDocListNearDupeTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -1811,7 +1811,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
 	public void verifyViewInDocListNearDupeTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -1855,7 +1855,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
 	public void verifyViewAllDocumentsDisplayInConceptualTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -1911,7 +1911,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 30)
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 30)
 	public void verifyViewAllDocumentsDisplayInFamilyMemberTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -2125,8 +2125,340 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		loginPage.logout();
 		
+	}
+	
+	/**
+	 * @Author : Mohan date: 21/01/2022 Modified date: NA Modified by: NA
+	 * @Description :To verify conceptual similar documents should be displayed as per the 
+	 * clicked document from mini doc list panel and from document navigation 'RPMXCON-50833'
+	 * 
+	 */
+	
+	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 33)
+	public void verifyConceptualSimilarDocsDisplayedAsPerDocsSelectedFromMiniDocListPanel(String fullName, String userName, String password) throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
 		
 		
+		baseClass.stepInfo("Test case Id: RPMXCON-50833");
+		baseClass.stepInfo("To verify conceptual similar documents should be displayed as per the clicked document from mini doc list panel and from document navigation");
+		
+		
+		//login as PA
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		
+		baseClass.stepInfo("Step 1: Basic search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewConceptualDocsInDocViews();
+		
+		baseClass.stepInfo("Step 2: Click the document one by one from mini doc list panel");
+		for (int i = 1; i <= 5; i++) {
+			baseClass.waitTillElemetToBeClickable(miniDocListpage.getClickDocviewID(i));
+			miniDocListpage.getClickDocviewID(i).waitAndClick(5);
+			String docId = docView.getDocView_CurrentDocId().getText();
+			System.out.println(docId);
+			baseClass.passedStep("User is able see the document one by one in doc view section successfully");
+			driver.waitForPageToBeReady();
+
+		}
+		
+		baseClass.stepInfo("Step 3: Verify the conceptual similar documents from analytics panel");
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ConceptualWholeTabel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Conceptual similar documents is displayed as per the clicked document from mini doc list panel and from document navigation.");
+		
+		loginPage.logout();
+		  
+		
+	}
+	
+	/**
+	 * @Author : Mohan date: 21/01/2022 Modified date: NA Modified by: NA
+	 * @Description :To verify User will be able to see all the conceptually similar 
+	 * documents in the analytics panel of the main selected document in the Doc view 'RPMXCON-50827'
+	 * 
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
+	public void verifyUserIsAbleToSeeAllConceptualDocsWenMainDocsIsSelected() throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case Id: RPMXCON-50827");
+		baseClass.stepInfo("To verify User will be able to see all the conceptually similar documents in the analytics panel of the main selected document in the Doc view");
+		
+		// login as RMU
+		baseClass.stepInfo("Step 1: Login As RMU");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+		
+		baseClass.stepInfo("Step 2: Create Assignment and Navigate to DocView");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignConceptualDocuments();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, Input.codeFormName, 0);
+		
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		baseClass.passedStep("Application is redirect to the Doc View page successfully");
+		
+		baseClass.stepInfo("Step 3:Verify 'Conceptually Similar Documents' tab in the analytics panel");
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ConceptualWholeTabel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("RMU is be able to see all the conceptually similar documents in the analytics panel of the main selected document in the Doc view");
+		
+		loginPage.logout();
+		
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
+		
+		baseClass.stepInfo("Step 2: Select Assignment and Navigate to Docview");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.passedStep("Application is redirect to the Doc View page successfully");
+		
+		baseClass.stepInfo("Step 3:Verify 'Conceptually Similar Documents' tab in the analytics panel");
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ConceptualWholeTabel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("RMU is be able to see all the conceptually similar documents in the analytics panel of the main selected document in the Doc view");
+		
+		loginPage.logout();
+		
+		
+		
+	}
+	
+	/**
+	 * @Author : Mohan date: 21/01/2022 Modified date: NA Modified by: NA
+	 * @Description :To verify for RMU Near Dupe tab if there are no near duplicate documents 'RPMXCON-50825'
+	 * 
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	public void verifyRMUNearDupeTabWithMsgAsNoDocuments() throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String docId1 = Input.NewDocId;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-50825");
+		baseClass.stepInfo("To verify for RMU Near Dupe tab if there are no near duplicate documents");
+		
+		
+		//login as PA
+		baseClass.stepInfo("Step 1: Login As RMU");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Admin with " + Input.pa1userName + "");
+		baseClass.stepInfo("Step 2: Select Assignment and action as 'View All Docs in Doc View' from Action drop down of manage assignment page     ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, Input.codeFormName);
+		assignmentsPage.add2ReviewerAndDistribute();
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		baseClass.passedStep("Application is redirect to the Doc View page successfully");
+		
+		baseClass.stepInfo("Step 3: Verify 'Near Duplicate Documents' tab in the analytics panel");
+		docView.selectDocIdInMiniDocList(docId1);
+
+		baseClass.waitForElement(docView.getDocView_Analytics_NearDupeTab());
+		docView.getDocView_Analytics_NearDupeTab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_NearDupeTabQueryNoData().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Message is displayed as 'Your query returned no data.'");
+
+		loginPage.logout();
+		
+		
+	}
+	
+	/**
+	 * @Author : Mohan date: 18/01/2022 Modified date: NA Modified by: NA
+	 * @Description :To verify Sys Admin/Project Admin/RMU after impersonating- Family Members tab when no documents 'RPMXCON-50817'
+	 * 
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	public void verifyAfterImpersonatingFamilyMemberTabNoDocuments() throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-50817");
+		baseClass.stepInfo("To verify Sys Admin/Project Admin/RMU after impersonating- Family Members tab when no documents");
+		
+		
+		// Login as SA
+		baseClass.stepInfo("Step 1: Login As SA");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From SA to RMU");
+		baseClass.impersonateSAtoRMU();
+
+		baseClass.stepInfo("Step 3: Basic Search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+
+		baseClass.stepInfo("Step 4: Verify 'Family Members' tab in the analytics panel");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
+		docView.getDocView_Analytics_FamilyTab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_FamilyMemberTabQueryNoData().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Message is displayed as 'Your query returned no data.'");
+
+		loginPage.logout();
+		
+		baseClass.stepInfo("Step 1: Login As SA");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From SA to Reviewer");
+		baseClass.impersonateSAtoReviewer();
+
+		baseClass.stepInfo("Step 3: Basic Search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+
+		baseClass.stepInfo("Step 4: Verify 'Family Members' tab in the analytics panel");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
+		docView.getDocView_Analytics_FamilyTab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_FamilyMemberTabQueryNoData().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Message is displayed as 'Your query returned no data.'");
+
+		loginPage.logout();
+		
+		baseClass.stepInfo("Step 1: Login As SA");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From SA to PA");
+		baseClass.impersonateSAtoPA();
+
+		baseClass.stepInfo("Step 3: Basic Search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+
+		baseClass.stepInfo("Step 4: Verify 'Family Members' tab in the analytics panel");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
+		docView.getDocView_Analytics_FamilyTab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_FamilyMemberTabQueryNoData().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Message is displayed as 'Your query returned no data.'");
+
+		loginPage.logout();
+		
+		
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From PA to RMU");
+		baseClass.impersonatePAtoRMU();
+
+		baseClass.stepInfo("Step 3: Basic Search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+
+		baseClass.stepInfo("Step 4: Verify 'Family Members' tab in the analytics panel");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
+		docView.getDocView_Analytics_FamilyTab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_FamilyMemberTabQueryNoData().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Message is displayed as 'Your query returned no data.'");
+
+		loginPage.logout();
+		
+		
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From PA to Reviewer");
+		baseClass.impersonatePAtoReviewer();
+
+		baseClass.stepInfo("Step 3: Basic Search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+
+		baseClass.stepInfo("Step 4: Verify 'Family Members' tab in the analytics panel");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
+		docView.getDocView_Analytics_FamilyTab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_FamilyMemberTabQueryNoData().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Message is displayed as 'Your query returned no data.'");
+
+		loginPage.logout();
+		
+		baseClass.stepInfo("Step 1: Login As RMU");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+
+		baseClass.stepInfo("Step 3: Basic Search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+
+		baseClass.stepInfo("Step 4: Verify 'Family Members' tab in the analytics panel");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
+		docView.getDocView_Analytics_FamilyTab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_FamilyMemberTabQueryNoData().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Message is displayed as 'Your query returned no data.'");
+
+		loginPage.logout();
 	}
 
 	
