@@ -99,6 +99,11 @@ public class DocView_AnalyticsPanel_DataProvider {
 				{ Input.rev1FullName, Input.rev1userName, Input.rev1password }};
 	}
 	
+	@DataProvider(name = "userDetailAsRev")
+	public Object[][] userLoginAsReviewer() {
+		return new Object[][] { { "rmu", Input.rmu1userName, Input.rmu1password },
+				{ "pa", Input.pa1userName, Input.pa1password }, { "rev", Input.rev1userName, Input.rev1password } };
+	}
 	
 	/**
 	 * @Author : Mohan date: 21/10/2021 Modified date: NA Modified by: Mohan
@@ -1067,7 +1072,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @Description :To Verify that after impersonation if the document native/PDF/TIFF/Text is being presented, the N/P/T/X icon with the accompanying mouse over tool tip must appear.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true,dataProvider="multiUserCredentials", groups = { "regression" }, priority = 1)
+	@Test(enabled = true,dataProvider="multiUserCredentials", groups = { "regression" }, priority = 15)
 	public void verifyDocIdIconOnDocViewPanal(String fullName,String userName,String password,String fromRole,String toRole) throws InterruptedException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1111,6 +1116,71 @@ public class DocView_AnalyticsPanel_DataProvider {
 		
 		
 		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Steffy date: 20/01/2022 Modified date: NA Modified by: Mohan
+	 * @Description : To verify Family Members tab if the document has no family
+	 *              members. 'RPMXCON-50815'
+	 * 
+	 */
+
+	@Test(enabled = true, dataProvider = "userDetailAsRev", groups = { "regression" }, priority = 16)
+	public void verifyFamilyMemberTabWhenNoDocsToDisplay(String roll, String userName, String password)
+			throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50815");
+		baseClass.stepInfo("To verify Family Members tab if the document has no family members");
+
+		loginPage.loginToSightLine(userName, password);
+		switch (roll) {
+		case "pa":
+			driver.waitForPageToBeReady();
+			baseClass.impersonatePAtoReviewer();
+			break;
+		case "rmu":
+			driver.waitForPageToBeReady();
+			baseClass.impersonateRMUtoReviewer();
+			break;
+		}
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		docViewPage.verifyFamilyTabWithNoDocs();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author : Steffy date: 20/01/2022 Modified date: NA Modified by: Mohan
+	 * @Description : To verify for Project Admin Family Members tab if the document
+	 *              has no family members. 'RPMXCON-50816'
+	 * 
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	public void verifyFamilyMemberTabWhenNoDocsToDisplayForPAUser()
+			throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50816");
+		baseClass.stepInfo("To verify for Project Admin Family Members tab if the document has no family members");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as Project Administrator");
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		docViewPage.verifyFamilyTabWithNoDocs();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)
