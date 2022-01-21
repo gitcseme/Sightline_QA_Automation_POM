@@ -49,6 +49,8 @@ public class CreateCodingForm_New_Regression2 {
 	SessionSearch sessionSearch;
 	TagsAndFoldersPage  tagsAndFoldersPage;
 	ReusableDocViewPage reusableDocView;
+	String assgnCoding = "codingAssgn"+Utility.dynamicNameAppender();
+	String codingform = "CFTags"+Utility.dynamicNameAppender();
 
 	String helpMsg1 = "Is there some reason that review cannot determined?";
 	String helpMsg2 = "Does this doc contain some type of issue that prohibits the ability for the record to be reviewed";
@@ -61,16 +63,16 @@ public class CreateCodingForm_New_Regression2 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-//		Input in = new Input();
-//	    in.loadEnvConfig();
+		Input in = new Input();
+	    in.loadEnvConfig();
 	}
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -800,12 +802,107 @@ public class CreateCodingForm_New_Regression2 {
 		codingForm.deleteCodingForm(codingform,codingform);	
 		codingForm.verifyCodingFormIsDeleted(codingform);
 	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description :To verify that if Project Admin impersonate as RMU Or Reviewer, coding form should be displayed on the Doc View.
+	 */
+	@Test(enabled = true, dataProvider = "ImpersonationOfPA",groups = { "regression" }, priority = 13)
+	public void verifyCfDisplayedAfterImpersonation(String userName, String password, String user) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50939");
+		baseClass.stepInfo("To verify that if Project Admin impersonate as RMU Or Reviewer, coding form should be displayed on the Doc View.");
+		loginPage.loginToSightLine(userName, password);
+		if(user=="rmu") {
+			baseClass.impersonatePAtoRMU();
+		}else {
+			baseClass.impersonatePAtoReviewer();
+		}
+	    sessionSearch.basicContentSearch("null");
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_CFName());
+		String codingformName = docViewPage.getDocView_CFName().getText();
+		softAssertion.assertEquals(Input.codeFormName, codingformName);
+		softAssertion.assertAll();
+		baseClass.passedStep("Coding form in the docview page displayed to the user sucessfully");
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description : Verify after impersonation document not marked as completed in an assignment, custom coding form is editable on doc view page
+	 */
+	@Test(enabled = true, dataProvider = "ImpersonationOfUsers", groups = { "regression" }, priority = 14)
+	public void verifyEditableCfInDocviewPg(String userName, String password, String user) throws InterruptedException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-50969");
+	    baseClass.stepInfo("Verify after impersonation document not marked as completed in an assignment, custom coding form is editable on doc view page");
+	       
+	    // login as RMU
+	 	loginPage.loginToSightLine(userName, password);
+	 	baseClass.stepInfo("Successfully login as "+user);
+	 	// create new coding form
+	 	if(user=="SA") {
+	 	baseClass.impersonateSAtoRMU();
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	codingForm.createCodingFormUsingTwoObjects(codingform, null, null, null, "tag");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.enterErrorAndHelpMsg(0,"Yes","Help for testing","Error for testing");
+	 	String expectedFirstObjectName = codingForm.getCFObjectsLabel(0);
+	 	System.out.println(expectedFirstObjectName);
+	 	codingForm.saveCodingForm();
+	 	codingForm.assignCodingFormToSG(codingform);
+	 	//create assignment
+	 	sessionSearch.basicContentSearch("null");
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assgnCoding, codingform);
+		assignmentPage.add2ReviewerAndDistribute();
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.viewSelectedAssgnUsingPagination(assgnCoding);
+		assignmentPage.assgnViewInAllDocView();
+	 	}
+	 	if(user=="PA") {
+	 		baseClass.impersonatePAtoRMU();
+	 		assignmentPage.selectAssignmentToViewinDocview(assgnCoding);
+	 	}
+	 	if(user=="RMU") {
+	 		baseClass.impersonateRMUtoReviewer();
+	 		baseClass.stepInfo("Impersonated to reviewer successfully");
+			assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+			baseClass.stepInfo("User on the doc view after selecting the assignment");
+	 	}
+		
+		driver.waitForPageToBeReady();
+		if(reusableDocView.getUnCompleteButton().isElementAvailable(5)==false) {
+			baseClass.passedStep("Document is not completed as expected");		}
+		docViewPage.verifyCodingFormName(codingform);
+		docViewPage.verifyTagsAreEnabled(0);
+		docViewPage.verifyTagsAreEnabled(1);
+		if(user=="RMU") {
+		loginPage.logout();
+		//delete assignment and codinform
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
+		codingForm.assignCodingFormToSG(Input.codeFormName);
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.deleteCodingForm(codingform,codingform);	
+		codingForm.verifyCodingFormIsDeleted(codingform);
+		}
+	}
+	@DataProvider(name = "ImpersonationOfUsers")
+	public Object[][] ImpersonationOfUsers() {
+		Object[][] users = { { Input.sa1userName, Input.sa1password, "SA" }, { Input.pa1userName, Input.pa1password, "PA" }, { Input.rmu1userName, Input.rmu1password, "RMU" } };
+		return users;
+	}
+	
+	@DataProvider(name = "ImpersonationOfPA")
+	public Object[][] ImpersonationOfPA() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "rmu" }, { Input.pa1userName, Input.pa1password, "rev" } };
+		return users;
+	}
 	
 	@DataProvider(name = "UsersWithoutPA")
 	public Object[][] UsersWithoutPA() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.rev1userName, Input.rev1password } };
 		return users;
 	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
