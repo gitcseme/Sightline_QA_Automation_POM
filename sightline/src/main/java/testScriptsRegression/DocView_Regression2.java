@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -33,6 +34,7 @@ import pageFactory.DocExplorerPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SecurityGroupsPage;
@@ -53,6 +55,8 @@ public class DocView_Regression2 {
 	DocViewMetaDataPage docViewMetaDataPage;
 	UserManagement userManage;
 	DocExplorerPage docexp;
+	AssignmentsPage assignPage;
+	KeywordPage keywordPage;
 
 	String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 
@@ -1604,6 +1608,80 @@ public class DocView_Regression2 {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName }, { Input.rev1userName, Input.rev1password, Input.rev1FullName } };
 		return users;
 	}	
+	
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51046
+	 * Description :Verify user can not see the keywords highlighted outside of an assignment when keyword groups assigned to the assignment only
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 27)
+	public void verifyKeywordsHighlightingWhenMappedToAssignment() throws InterruptedException, AWTException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		keywordPage = new KeywordPage(driver);
+		
+		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
+		
+		//Pre-requisites
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51046");
+		baseClass.stepInfo("Verify keywords highlighting after keywords mapped to the assignment");
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssignExisting(assignmentName);
+		assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		assignPage.getAssgn_Keywordsbutton().ScrollTo();
+		assignPage.getAssgn_Keywordsbutton().isElementAvailable(10);
+		assignPage.getAssgn_Keywordsbutton().waitAndClick(10);
+		baseClass.waitForElement(assignPage.getAssgn_Keywordspopup());
+		driver.waitForPageToBeReady();
+		List<String> values =baseClass.availableListofElements(assignPage.getAssgn_AllKeywords());
+		baseClass.stepInfo("Mapped keywords for the assignment are " +values);
+		assignPage.getAssgn_Keywordokbutton().ScrollTo();
+		assignPage.getAssgn_Keywordokbutton().isElementAvailable(10);
+		assignPage.getAssgn_Keywordokbutton().Click();
+		keywordPage.getYesButton().Click();
+		driver.waitForPageToBeReady();
+		assignPage.addReviewerAndDistributeDocs();
+		baseClass.stepInfo("Added reviewer and distributed docs");
+		loginPage.logout();
+		
+		//Login as RMU and verify keyword Highlighting
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined as RMU");
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.selectAssignmentToViewinDocView(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+		// click eye icon and verify the highlighting of search term
+		docView.getPersistentHit(Input.testData1);
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+		
+		//login as reviewer and verify keyword highlighting
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logined as Reviewer");
+		assignPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+		// click eye icon and verify the highlighting of search term
+		docView.getPersistentHit(Input.testData1);
+		docView.verifyKeywordHighlightedOnDocView();
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	@AfterMethod(alwaysRun = true)
