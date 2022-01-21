@@ -1210,6 +1210,8 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath("(//div[@class='ui-resizable-handle ui-resizable-e'])[last()]");
 	}
 	
+	public Element getSearchIconDisabled() {
+		return driver.FindElementByXPath("//div[@class='searchOnDemand disabled']");}
 	
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;

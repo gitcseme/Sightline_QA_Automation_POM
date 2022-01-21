@@ -3,6 +3,8 @@ package pageFactory;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.asserts.SoftAssert;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -13,6 +15,7 @@ public class Categorization {
 	Driver driver;
 	BaseClass base;
 	ReportsPage reportPage;
+	SoftAssert softAssertion;
 
 	public Element getSelectIdentifyByTags() {
 		return driver.FindElementByPartialLinkText("Identify by Tag");
@@ -20,6 +23,10 @@ public class Categorization {
 
 	public Element getSelectTag(String tagName) {
 		return driver.FindElementByXPath("//div[@id='tags']//a[@data-content='" + tagName + "']");
+	}
+
+	public Element getSelectFolderName(String folderName) {
+		return driver.FindElementByXPath("//div[@id='divTree']//a[@data-content='" + folderName + "']");
 	}
 
 	public Element getGotoStep2() {
@@ -48,6 +55,10 @@ public class Categorization {
 
 	public Element getPopupYesBtn() {
 		return driver.FindElementByXPath("//button[@id='btnYes']");
+	}
+
+	public Element getPopupNoBtn() {
+		return driver.FindElementByXPath("//button[@id='btnNo']");
 	}
 
 	public Element getResults() {
@@ -93,12 +104,44 @@ public class Categorization {
 		return driver.FindElementByXPath("//a[@title='Categorize']");
 	}
 
+	// Added by Jayanthi
+	public Element getBullHornIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']");
+	}
+
+	public Element getBullHornIcon_CC() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']//following::b[1]");
+	}
+
+	public Element getBullHornIcon_NotificationMsg() {
+		return driver.FindElementByXPath(
+				"(//div[@id='bgTask']//a[contains(text(),' Your CATEGORIZATION with Notification Id ')])[1]");
+	}
+
+	public Element getCohesionResult() {
+		return driver.FindElementByXPath("//div[@class='cohesion']");
+	}
+
+	public Element getSetCohesionLevel() {
+		return driver.FindElementByXPath("//span[@class='irs-single']");
+	}
+
+	public Element getViewInDoclist() {
+		return driver.FindElementById("btnGotoDocList");
+	}
+
+	public Element getDocListWarningPopUp() {
+		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']");
+	}
+
 	public Categorization(Driver driver) {
 
 		this.driver = driver;
 		this.driver.getWebDriver().get(Input.url + "Proview/Proview");
 		base = new BaseClass(driver);
-		reportPage = new ReportsPage(driver);
+		softAssertion = new SoftAssert();
+
+		// reportPage = new ReportsPage(driver);
 		driver.waitForPageToBeReady();
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
@@ -330,4 +373,122 @@ public class Categorization {
 		}
 	}
 
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param tagName
+	 * @param folderName
+	 * @throws InterruptedException
+	 */
+	public void CategorizationFunctionalityVerification(String tagName, String folderName) throws InterruptedException {
+		String bullHornValue = getBullHornIcon_CC().getText();
+		int valueBeforeAnalysis = Integer.parseInt(bullHornValue);
+		System.out.println(valueBeforeAnalysis);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectIdentifyByTags().Visible();
+			}
+		}), Input.wait30);
+
+		getSelectIdentifyByTags().Click();
+		driver.scrollingToBottomofAPage();
+
+		getSelectTag(tagName).ScrollTo();
+		getSelectTag(tagName).Click();
+		// selectTagInCat(tagName);
+		driver.scrollingToBottomofAPage();
+
+		getGotoStep2().Click();
+		getAnalyzeSelectFolders().ScrollTo();
+		getAnalyzeSelectFolders().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderSelectionPopUp().Visible();
+			}
+		}), Input.wait30);
+		getFolderSelectionPopUp().Click();
+		base.waitTime(3);
+		System.out.println(getCatFolderTree().FindWebElements().size());
+		for (WebElement iterable_element : getCatFolderTree().FindWebElements()) {
+			System.out.println(iterable_element.getText());
+			System.out.println(folderName);
+			if (iterable_element.getText().contains(folderName)) {
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+				driver.scrollingToBottomofAPage();
+				iterable_element.click();
+				break;
+			}
+		}
+		getSelectBtn().Click();
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		getRun().Click();
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPopupNoBtn().Visible() || getResults().getText() != null;
+				}
+			}), Input.wait30);
+			getPopupNoBtn().Click();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getResults().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+
+		String bullHornValue2 = getBullHornIcon_CC().getText();
+		int valueAfterAnalysis = Integer.parseInt(bullHornValue2);
+		System.out.println(valueAfterAnalysis);
+		if (valueAfterAnalysis > valueBeforeAnalysis) {
+			// verify Bull Horn Icon
+			softAssertion.assertEquals(valueAfterAnalysis, valueBeforeAnalysis);
+			base.passedStep("Bull horn icon has New Notification");
+			// verify color of bullhorn
+			String color2 = getBullHornIcon().GetCssValue("color");
+			color2 = base.rgbTohexaConvertor(color2);
+			System.out.println(color2);
+			if (color2.equalsIgnoreCase(Input.bullHornIconColor)) {
+				System.out.println("Notification is [Red color] : " + color2);
+				base.stepInfo("Notification is [Red color] : " + color2);
+			} else {
+				base.failedMessage("Color Doesnot Match");
+			}
+			base.waitForElement(getBullHornIcon());
+			getBullHornIcon().waitAndClick(10);
+			String id = getBullHornIcon_NotificationMsg().GetAttribute("id");
+			System.out.println(id);
+			getBullHornIcon_NotificationMsg().Click();
+			driver.waitForPageToBeReady();
+			base.waitTime(1);
+			System.out.println(getResults().getText());
+			System.out.println(getCohesionResult().getText());
+			System.out.println(getSetCohesionLevel().getText());
+			softAssertion.assertEquals(getCohesionResult().getText(), getSetCohesionLevel().getText());
+
+		}
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+
+	public void ViewInDocLIst() {
+		getViewInDoclist().Click();
+		if (getDocListWarningPopUp().isElementAvailable(2)) {
+			base.getYesBtn();
+		} else {
+			base.stepInfo("PopUp Not Appeared");
+		}
+
+	}
 }
