@@ -94,6 +94,32 @@ public class UsersAndRoleManagement_Regression {
 		userManage.deleteAddedUser(firstName);
 	}
 	
+	/**
+	 * Author : Baskar date: NA Modified date:21/01/2021 Modified by: Baskar
+	 * Description :Verify that System Admin can create user with Domain Admin role
+	 */
+	@Test(alwaysRun = true,groups={"regression"},priority = 2)
+	public void createNewUserForDomain() throws Exception {		
+		baseClass=new BaseClass(driver);
+		String firstName = Input.randomText + Utility.dynamicNameAppender();
+		String lastName = Input.randomText + Utility.dynamicNameAppender();
+		String role = "Domain Administrator";
+		String emailId = Input.randomText + Utility.dynamicNameAppender()+"@consilio.com";
+		baseClass.stepInfo("Test case Id: RPMXCON-52773");
+		utility = new Utility(driver);
+		baseClass.stepInfo("Verify that System Admin can create user with Domain Admin role");
+		userManage = new UserManagement(driver);
+		
+		baseClass.stepInfo("Create new user for domain administration");
+		userManage.createNewUser(firstName, lastName, role, emailId, " ",Input.projectName );
+		
+		baseClass.stepInfo("Domain admin role displayed in dropdown field");
+		baseClass.passedStep("Created new user with Domain admin rule");
+	
+		baseClass.stepInfo("Delete added users");
+		userManage.deleteAddedUser(firstName);
+	}
+	
 	
 	
 	@AfterMethod(alwaysRun = true)
