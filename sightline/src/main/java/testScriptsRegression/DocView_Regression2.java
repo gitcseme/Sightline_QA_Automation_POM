@@ -1677,7 +1677,94 @@ public class DocView_Regression2 {
 		
 	}
 	
-	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51557
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =28)
+	public void verifySearchIconGreyedForTiff(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51557");
+		baseClass.stepInfo("Verify that by default, the document is simply shows the search icon [magnifying]");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.TiffDocId, null);
+		sessionsearch.ViewInDocView();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.getSearchIconDisabled());
+		String SearchIcon = docViewRedact.getSearchIconDisabled().GetAttribute("class");
+		if (SearchIcon.contains("disabled")) {
+			baseClass.passedStep("The search text icon is disabled for Tiff images - as expected");
+		} else {
+			baseClass.failedStep("Search Icon not disabled for Tiff images");
+		}
+	}
+
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51267
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 29)
+	public void verifyUniCodeFilesViewInDocView() throws Exception {
+		baseClass = new BaseClass(driver);
+//	 checking hits as SA to PA		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Test case Id: RPMXCON-51267");
+		baseClass.stepInfo("Verify after impersonation user view unicode files in near native view of doc view");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to PA");
+		loginPage.logout();
+
+//	 checking hits as SA to RMU
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoRMU();
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
+		loginPage.logout();
+
+//	checking hits as SA to Rev
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoReviewer();
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
+		loginPage.logout();
+
+//		 checking hits as PA to Rev
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoReviewer();
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
+		loginPage.logout();
+
+// 	checking hits as PA to RMU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoRMU();
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
+		loginPage.logout();
+
+//		 checking hits as RMU to Rev
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.impersonateRMUtoReviewer();
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
+
+	}
 	
 	
 	

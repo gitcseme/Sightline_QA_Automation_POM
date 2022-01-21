@@ -161,6 +161,8 @@ public class TestData {
 	public String testSecondDocId;
 	public String testTenthDocId;
 	public String docNearDupeDocId;
+	public String UniCodeDocId;
+	public String TiffDocId;
 	
 	//Added by arunkumar
 	public String pageRange1;
