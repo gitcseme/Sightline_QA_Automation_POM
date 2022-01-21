@@ -2755,6 +2755,10 @@ public class DocViewPage {
 		return driver.FindElementByCssSelector("g[data-pcc-mark='highlighttextannotation-"+id+"']");
 	}
 	
+	public Element getDocView_Analytics_FamilyTab_NoQuery() {
+		return driver.FindElementByXPath("//*[@id='analyticsResize']//td[contains(text(),'Your query')]");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -21715,4 +21719,37 @@ public class DocViewPage {
 
 	      
 	}
+	
+	/**
+	 * @Author Steffy Created on 21/01/2022
+	 * @Description To verify Analytics Family member Map Tab with no docs
+	 * 
+	 */
+	public void verifyFamilyTabWithNoDocs() {
+
+		try {
+			driver.waitForPageToBeReady();
+			getDocView_MiniDoc_Selectdoc(1).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+			driver.waitForPageToBeReady();
+			Point p = getDocView_Analytics_liDocumentThreadMap().getWebElement().getLocation();
+			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+			getDocView_Analytics_FamilyTab().ScrollTo();
+
+			base.waitForElement(getDocView_Analytics_FamilyTab());
+			getDocView_Analytics_FamilyTab().Click();
+
+			base.waitForElement(getDocView_Analytics_FamilyTab_NoQuery());
+			softAssertion.assertTrue(getDocView_Analytics_FamilyTab_NoQuery().isDisplayed());
+			softAssertion.assertAll();
+			base.passedStep("Message is displayed as 'Your query returned no data' successfully");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("No Doc is viewed from Analytics panel Thread Map tab successfully");
+		}
+
+	}
+
 }
