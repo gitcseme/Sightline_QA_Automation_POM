@@ -241,6 +241,19 @@ public class SecurityGroupsPage {
 		return driver.FindElementByXPath("//span[@id='SecurityGroup-selector']");
 	}
 
+	//Added by gopinath - 21/01/2022
+	public Element getCommentCheckBox(String name) {
+		return driver.FindElementByXPath("//div[@id='commentJSTree']//a[@data-content = '"+name+"']//i[@class='jstree-icon jstree-checkbox']");
+	}
+	public Element getCommentLink() {
+		return driver.FindElementByXPath("//ul[@id='myTab1']//a[text()='Comments']");
+	}
+	public Element getCommentRightShiftButton() {
+		return driver.FindElementByXPath("//div[@id='s5']/div[1]/div[2]/a[1]");
+	}
+	public Element getCommentBoard() {
+		return driver.FindElementById("commentJSTree");
+	}
 	public SecurityGroupsPage(Driver driver) {
 
 		this.driver = driver;
@@ -830,5 +843,62 @@ public class SecurityGroupsPage {
 			bc.failedStep("Exception occured while navigating to security groups is failed" + e.getMessage());
 		}
 	}
+	
+	
+
+	/**
+	 * @author : Gopinath Created date: 08-09-2021 Modified date: NA Modified
+	 *         by:Gopinath.
+	 * @Description: Method for adding comment to security field..
+	 * @param securityGroupName -- (securityGroupName is a string value that need to
+	 *                          add to security group).
+	 * @param commentName           -- (commentName is a string value that name of comment field)
+	 */
+	public void addCommentToSecurityGroup(String securityGroupName, String commentName) {
+		try {
+			bc.waitForElement(getSelectSecurityGroup());
+			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getCommentLink());
+			bc.waitTillElemetToBeClickable(getCommentLink());
+			getCommentLink().isElementAvailable(10);
+			getCommentLink().Click();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getCommentBoard());
+			getCommentBoard().isElementAvailable(10);
+			getCommentBoard().Click();
+			for (int i = 0; i < 20; i++) {
+				try {
+					getCommentCheckBox(commentName).isElementAvailable(10);
+					getCommentCheckBox(commentName).getWebElement().click();
+					break;
+				} catch (Exception e) {
+					bc.waitForElement(getCommentCheckBox(commentName));
+				}
+			}
+			bc.waitForElement(getCommentRightShiftButton());
+			getCommentRightShiftButton().isElementAvailable(10);
+			getCommentRightShiftButton().Click();
+			driver.scrollingToBottomofAPage();
+			getProjectLevelEmailCheckBox().Click();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getSG_AnnSaveButton());
+			getSG_AnnSaveButton().isElementAvailable(10);
+			getSG_AnnSaveButton().Click();
+			bc.waitForElement(bc.getSuccessMsg());
+			bc.getSuccessMsg().waitAndFind(10);
+			Assert.assertEquals("Success message is not displayed", true,
+					bc.getSuccessMsg().getWebElement().isDisplayed());
+			if (bc.getSuccessMsg().getWebElement().isDisplayed()) {
+				bc.passedStep("Success message is displayed successfully");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occcured while adding comment to security group" + e.getMessage());
+
+		}
+	}
+
 
 }
