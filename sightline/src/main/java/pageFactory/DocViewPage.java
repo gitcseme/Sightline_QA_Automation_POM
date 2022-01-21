@@ -2759,6 +2759,27 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@id='analyticsResize']//td[contains(text(),'Your query')]");
 	}
 	
+	//Added by Vijaya.Rani
+	public Element getDocView_AnalyticsNewFolderFamilyMember() {
+		return driver.FindElementById("tabNew");
+	}
+	
+	public Element getManageTab() {
+		return driver.FindElementByXPath("//a[@name='Manage']");
+	}
+	
+	public Element getManageTagsAndFolderTab() {
+		return driver.FindElementByXPath("//a[@name='Tags']");
+	}
+	
+	public Element getManageFolderBtn() {
+		return driver.FindElementByXPath("//a[text()='Folders']");
+	}
+	
+	public Element getDocView_AnalyticsChild_NearDupe_Folder() {
+		return driver.FindElementById("liNearDupeBulkFolder");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -21748,6 +21769,59 @@ public class DocViewPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("No Doc is viewed from Analytics panel Thread Map tab successfully");
+		}
+
+	}
+
+	/**
+	 * @Author Vijaya.Rani Created on 21/1/2022
+	 * @Description To perform Folder NearDupe tab in the ChildWindow. Test Case id:
+	 *              RPMXCON- 51129
+	 */
+	public void performFloderNearDupeDocsInChildWindow(String windowId) throws InterruptedException {
+
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(10);
+
+		for (int i = 1; i <= 3; i++) {
+			base.waitForElement(getDocView_Analytics_NearDupe_Doc(i));
+			getDocView_Analytics_NearDupe_Doc(i).waitAndClick(5);
+		}
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+
+		base.waitForElement(getDocView_AnalyticsChild_NearDupe_Folder());
+		getDocView_AnalyticsChild_NearDupe_Folder().waitAndClick(15);
+
+		driver.switchTo().window(windowId);
+
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
+		base.passedStep("Folder pop up is opened successfully");
+
+		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
+		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsExitingFolderName());
+		getDocView_AnalyticsExitingFolderName().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
+		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
+
+		base.waitForElement(getTotalSelectedDocuments());
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().Displayed());
+		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
+		base.VerifySuccessMessage("Records saved successfully");
+
+		base.passedStep("Selected folder is applied to the selected documents successfully");
+		base.CloseSuccessMsgpopup();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!windowId.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
 		}
 
 	}
