@@ -49,8 +49,8 @@ public class AdvancedSearch_Regression2 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -827,7 +827,7 @@ public class AdvancedSearch_Regression2 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 19,enabled=false)
+	@Test(dataProvider = "Users", groups = { "regression" }, priority = 19,enabled=true)
 	public void audioSearch_warningTile(String username, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-47151");
 		baseClass.stepInfo("Verify that warning should be displayed for search results when audio docs searched with German/Japanese characters and"
@@ -852,6 +852,64 @@ public class AdvancedSearch_Regression2 {
 			}
 		}
 			}
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	@Test( groups = { "regression" }, priority = 20,enabled=true)
+	public void verifyDroppedTile() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48787");
+		baseClass.stepInfo("Verify that Dropped tiles are retained in shopping cart when User Navigates Advanced Search"
+				+ " (Pure Hit) >> \"Manage >> Assignments\" screen and Come back to Search Page.");
+		loginPage.loginToSightLine( Input.rmu1userName, Input.rmu1password);
+		search.basicContentSearch(Input.testData1);
+		driver.waitForPageToBeReady();
+		search.getPureHitAddButton().waitAndClick(10);
+		baseClass.waitForElement(search.getPureHitDroppedTileBtn());
+		if(search.getPureHitDroppedTileBtn().isElementAvailable(2)){
+			baseClass.stepInfo("PureHit block added to shopping cart block and "
+					+ " dropped hit tile is displayed in cart");
+		}else {
+			baseClass.stepInfo("Pure Hit tile not added to cart.");
+		}
+		
+		baseClass.stepInfo("Navigating to manage assignments page");
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Again Navigating to Advacned search page");
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		if(search.getPureHitDroppedTileBtn().isElementAvailable(3)){
+			baseClass.passedStep("Dropped hit tile is displayed in cart after navigating from manage assignments page to "
+					+ "advanced search page");
+		}else {
+			baseClass.failedStep("Dropped Pure Hit tile not in cart.");
+		}
+		
+		}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	@Test(dataProvider = "Users", groups = { "regression" }, priority = 21,enabled=true)
+	public void verifyDoubleQuotesSearch(String username, String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-57272");
+		baseClass.stepInfo("Verify that result appears for phrase(in double quote) search in Advanced Search Query Screen.");
+		loginPage.loginToSightLine( username,  password);
+		baseClass.stepInfo("Logged in as "+username);
+		String eleValue[]= {"\"discrepancy in\"","“john@consilio.com”"};
+		driver.scrollingToBottomofAPage();
+		for(int i=0;i<eleValue.length;i++) {
+		search.basicContentSearch(eleValue[i]);
+		driver.waitForPageToBeReady();
+		String hitsCount=search.verifyPureHitsCount();
+		softAssertion.assertNotNull(hitsCount);
+		if(i==0) {
+		baseClass.selectproject();}
+		baseClass.stepInfo("Performed a search for phrase "+eleValue[i]+" and get a pure hit value of "+hitsCount);
+		}
+		softAssertion.assertAll();
+		baseClass.passedStep("Sucessfully Verified that result appears for phrase(in double quote) search in Advanced Search Query Screen.");
+		}
 
 	@DataProvider(name = "AudioSearchwithUsers")
 	public Object[][] AudioSearchwithUsers() {

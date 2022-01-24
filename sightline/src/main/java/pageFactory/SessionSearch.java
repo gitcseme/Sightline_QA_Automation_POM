@@ -1455,6 +1455,9 @@ public class SessionSearch {
 	public Element getDocViewActionGerman() {
 		return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[contains(.,'Dokumentviewer')]");
 	}
+	public Element getPureHitDroppedTileBtn() {
+		return driver.FindElementByXPath("//i[@title='Remove from Selected Results']/ancestor::li/a/span/count");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -2390,6 +2393,7 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getFolderAllRoot().Click();
+		driver.Manage().window().fullscreen();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -2397,6 +2401,7 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getContinueButton().Click();
+		driver.Manage().window().maximize();
 
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
@@ -2609,13 +2614,14 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getTagsAllRoot().Click();
-
+driver.Manage().window().fullscreen();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait60);
 		getContinueButton().Click();
+		driver.Manage().window().maximize();
 
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
@@ -9469,5 +9475,5 @@ public class SessionSearch {
 		System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
 		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
 	}
-
+	
 }
