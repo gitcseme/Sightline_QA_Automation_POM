@@ -4,7 +4,7 @@
         <prodpath>Productions PT WorkSpace\Automation</prodpath>
         <SourceLocation>IngestionTestData\Automation\Master Automation Data</SourceLocation>
         <domainName>Automation_Regression_BackUp</domainName>
-        <projectName>Regression_AllDataset_Consilio</projectName>
+        <projectName>AutomationRegressionBackup</projectName>
         <additionalDataProject>AutomationAdditionalDataProject</additionalDataProject>
         <ingestDataProject>AutomationIngestionProject</ingestDataProject>
         <largeVolDataProject>AutomationHighVolumeProject</largeVolDataProject>
