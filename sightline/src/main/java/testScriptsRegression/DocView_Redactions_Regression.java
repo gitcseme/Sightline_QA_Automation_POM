@@ -6663,7 +6663,7 @@ public class DocView_Redactions_Regression {
 	 *         Description : Verify that when rectangle redaction added for
 	 *         different file types (e.g. XLS, XLSX, CSV, etc...) then redaction
 	 *         should not be shifted when visiting these documents : RPMXCON-52310
-	 *         (52301) Sprint : 10
+	 *         Sprint : 10
 	 * 
 	 * @throws Exception
 	 */
