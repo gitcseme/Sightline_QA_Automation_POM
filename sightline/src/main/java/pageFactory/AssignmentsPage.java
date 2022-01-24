@@ -1372,7 +1372,7 @@ public class AssignmentsPage {
 				"//*[@id='divDistributedDocUsers']//div[contains(.,'" + Input.da1userName + "')]/div/label");
 	}
 
-	//Added by Jeevitha
+	// Added by Jeevitha
 	public Element getKeepFamilyTogetther_Text() {
 		return driver
 				.FindElementByXPath("//input[@id='IsKeepFamiliesTogether']/parent::label /i//following-sibling::span");
@@ -1386,8 +1386,12 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath(
 				"//input[@id='IsKeepEmailThreadsTogether']/parent::label /i//following-sibling::span");
 	}
-
 	
+
+	public ElementCollection getAvailableKeywordCheckboxes() {
+		return driver.FindElementsByXPath("//div[@id='divkeyword']//label[@class='checkbox']//i");
+	}
+
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -9238,71 +9242,67 @@ public class AssignmentsPage {
 				bc.CloseSuccessMsgpopup();
 			}
 		}
-		/**
-		 * @author Jayanthi.ganesan
-		 * @param Username
-		 * @return
-		 * @throws InterruptedException
-		 */
-		public String manageRevTabToViewInDocView(String Username) throws InterruptedException {
-			System.out.println(Username);
-			bc.waitForElement(getAssignment_ManageReviewersTab());
-			getAssignment_ManageReviewersTab().waitAndClick(5);
-			driver.waitForPageToBeReady();
-			bc.waitTime(1);
-			String actualDocs = getDistributedDocs(Username).getText();
-			System.out.println(actualDocs);	
-			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_selectReviewer(Username));
-			getAssgn_ManageRev_selectReviewer(Username).ScrollTo();
-			getAssgn_ManageRev_selectReviewer(Username).waitAndClick(10);
-			getAssgn_ManageRev_Action().waitAndClick(20);
-			bc.waitForElement(getAssgn_ManageRev_Action_ViewDocview());
-			getAssgn_ManageRev_Action_ViewDocview().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			bc.getYesBtn().ScrollTo();
-			bc.getYesBtn().waitAndClick(10);
-		
-		}
-		
-		/**
-		 * @author Arunkumar
-		 * @throws InterruptedException 
-		 * @description this method will unmap/unassign the keywords which assigned to the document.
-		 *             
-		 */
-		public void unmappingKeywordsFromAssignment(String assignmentName) throws InterruptedException {
-			bc = new BaseClass(driver);
-			keywordPage = new KeywordPage(driver);
-			editAssignmentUsingPaginationConcept(assignmentName);
-			driver.waitForPageToBeReady();
-			getAssgn_Keywordsbutton().ScrollTo();
-			getAssgn_Keywordsbutton().isElementAvailable(10);
-			getAssgn_Keywordsbutton().waitAndClick(10);
-			bc.waitForElement(getAssgn_Keywordspopup());
-			getAvailableKeywordCheckboxes();
-			List<WebElement> allvalues = getAvailableKeywordCheckboxes().FindWebElements();
-			List<String> expkey = new ArrayList<String>();
-			
-			for(int j=0;j<=allvalues.size()-1;j++) {
-			
-					allvalues.get(j).click();
-			}
-			driver.waitForPageToBeReady();
-			getAssgn_Keywordokbutton().ScrollTo();
-			getAssgn_Keywordokbutton().isElementAvailable(10);
-			getAssgn_Keywordokbutton().Click();
-			keywordPage.getYesButton().Click();
-			driver.waitForPageToBeReady();
-			bc.passedStep("Keywords unmapped from the assignment successfully");
-			}
-			
-			
-			public ElementCollection getAvailableKeywordCheckboxes() {
-			return driver.FindElementsByXPath("//div[@id='divkeyword']//label[@class='checkbox']//i");
-		}
+	}
 
-			return actualDocs;
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param Username
+	 * @return
+	 * @throws InterruptedException
+	 */
+	public String manageRevTabToViewInDocView(String Username) throws InterruptedException {
+		System.out.println(Username);
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		bc.waitTime(1);
+		String actualDocs = getDistributedDocs(Username).getText();
+		System.out.println(actualDocs);
+		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_selectReviewer(Username));
+		getAssgn_ManageRev_selectReviewer(Username).ScrollTo();
+		getAssgn_ManageRev_selectReviewer(Username).waitAndClick(10);
+		getAssgn_ManageRev_Action().waitAndClick(20);
+		bc.waitForElement(getAssgn_ManageRev_Action_ViewDocview());
+		getAssgn_ManageRev_Action_ViewDocview().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.getYesBtn().ScrollTo();
+		bc.getYesBtn().waitAndClick(10);
+		return actualDocs;
 
 	}
+
+	/**
+	 * @author Arunkumar
+	 * @throws InterruptedException
+	 * @description this method will unmap/unassign the keywords which assigned to
+	 *              the document.
+	 * 
+	 */
+	public void unmappingKeywordsFromAssignment(String assignmentName) throws InterruptedException {
+		bc = new BaseClass(driver);
+		keywordPage = new KeywordPage(driver);
+		editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		getAssgn_Keywordsbutton().ScrollTo();
+		getAssgn_Keywordsbutton().isElementAvailable(10);
+		getAssgn_Keywordsbutton().waitAndClick(10);
+		bc.waitForElement(getAssgn_Keywordspopup());
+		getAvailableKeywordCheckboxes();
+		List<WebElement> allvalues = getAvailableKeywordCheckboxes().FindWebElements();
+		List<String> expkey = new ArrayList<String>();
+
+		for (int j = 0; j <= allvalues.size() - 1; j++) {
+
+			allvalues.get(j).click();
+		}
+		driver.waitForPageToBeReady();
+		getAssgn_Keywordokbutton().ScrollTo();
+		getAssgn_Keywordokbutton().isElementAvailable(10);
+		getAssgn_Keywordokbutton().Click();
+		keywordPage.getYesButton().Click();
+		driver.waitForPageToBeReady();
+		bc.passedStep("Keywords unmapped from the assignment successfully");
+	}
+
 
 }
