@@ -44,5 +44,9 @@ public class Environment {
 	public String SourceLocation;
 	public String shareTo;
 	public String ICEProjectName;
+// Added by Krishna	
+	public String additionalDataProject;
+	public String ingestDataProject;
+	public String largeVolDataProject;
 	
 }
