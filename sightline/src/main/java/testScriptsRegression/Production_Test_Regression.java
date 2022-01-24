@@ -3080,7 +3080,145 @@ public class Production_Test_Regression {
 						//tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 						tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-47884
+					 * @Description: To Verify Native Section with various options(Produce Native Files selection/Generate Load LST/Advance Show Hide/and Toggles in Advance)
+					 */
+					@Test(groups = { "regression" }, priority = 52)
+					public void verifyNativeSectionElements() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-47884 -Production Sprint 11");
+					base.stepInfo("To Verify Native Section with various options(Produce Native Files selection/Generate Load LST/Advance Show Hide/and Toggles in Advance)");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					//tagname = "Tag" + Utility.dynamicNameAppender();
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					//tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					//sessionSearch.bulkTagExisting(tagname);
+
+					//Verify archive status on Grid view
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(2);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSectionWithVerification();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					base.passedStep("To Verify Native Section with various options(Produce Native Files selection/Generate Load LST/Advance Show Hide/and Toggles in Advance)");
 					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-47994
+					 * @Description: To Verify On grid view of the productions  the start date and end date  for a production that is still in Completed state.
+					 */
+					@Test(groups = { "regression" }, priority = 53)
+					public void startDateEndDateVarification() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-47944 -Production Sprint 11");
+					base.stepInfo("To Verify On grid view of the productions  the start date and end date  for a production that is still in Completed state.");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					//tagname = "Tag" + Utility.dynamicNameAppender();
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					//tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					//sessionSearch.bulkTagExisting(tagname);
+
+					//Verify archive status on Grid view
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(2);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					//page.fillingTIFFSectionwithBurnRedaction();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					
+					this.driver.getWebDriver().get(Input.url + "Production/Home");
+					driver.Navigate().refresh();
+					base.waitForElement(page.getFilterByButton());
+					page.getFilterByButton().waitAndClick(10);
+					base.waitForElement(page.getFilterByCOMPLETED());
+					page.getFilterByCOMPLETED().waitAndClick(10);
+					page.getRefreshButton().waitAndClick(10);
+					driver.waitForPageToBeReady();
+					page.getGridView().waitAndClick(10);
+					driver.waitForPageToBeReady();
+					base.stepInfo("Nativated to production Grid View");
+					String startDate =page.getProductionStartDateInGridView(productionname).getText();
+					String EndDate =page.getProductionEndDateInGridView(productionname).getText();
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+					Date date = new Date();
+					String date1= dateFormat.format(date);
+					System.out.println("Current date " +date1);
+					boolean flag =startDate.contains(date1);
+					boolean flag1 =EndDate.contains(date1);
+					if(flag) {
+						base.passedStep("Start date is displayed on production grid view");
+						System.out.println("date visible");
+					}else {
+						base.failedStep("date is not contain in text");
+						System.out.println("date not visible");
+					}
+					if(flag1) {
+						base.passedStep("End date is displayed on production grid view");
+						System.out.println("date visible");
+					}else {
+						base.failedStep("date is not contain in text");
+						System.out.println("date not visible");
+					}
+					
+					base.passedStep("To Verify On grid view of the productions  the start date and end date  for a production that is still in Completed state.");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
 	
 	
 	@AfterMethod(alwaysRun = true)
