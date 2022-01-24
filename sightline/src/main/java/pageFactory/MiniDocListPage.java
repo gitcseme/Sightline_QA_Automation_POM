@@ -468,6 +468,7 @@ public class MiniDocListPage {
 	public ElementCollection getAvailableSetDocumentField() {
 		return driver.FindElementsByXPath("//ul[@id='sortable1DocumentSort']//li");
 	}// Added by jayanthi
+
 	public Element getDocView_CodingFromName() {
 		return driver.FindElementById("lblCodingFormName");
 	}
@@ -475,9 +476,13 @@ public class MiniDocListPage {
 	public Element getSelectAssignmentFromDashborad(String assignmentName) {
 		return driver.FindElementByXPath(
 				"//*[@id='dt_basic']//following-sibling::tbody//following-sibling::tr//strong[text()='" + assignmentName
-						+ "']");}
+						+ "']");
+	}
+
 	public Element getDashboardButton() {
-		return driver.FindElementByXPath("//label[text()='Dashboard']");}
+		return driver.FindElementByXPath("//label[text()='Dashboard']");
+	}
+
 	public Element miniDocListDisplay() {
 		return driver.FindElementByXPath("//div[@id='divMiniDocList']//div[@class='dataTables_scroll']");
 	}
@@ -3980,8 +3985,8 @@ public class MiniDocListPage {
 		}
 		pickColumnDisplaySelectedLists.removeAll(Arrays.asList(null, ""));
 		String PickcolumnfieldtoCompare = pickColumnDisplaySelectedListAssignmentTwo.toString().toLowerCase();
-		System.out.println(PickcolumnfieldtoCompare+"Selected we fields.");
-		System.out.println(headerfieldtoCompare+"__header");
+		System.out.println(PickcolumnfieldtoCompare + "Selected we fields.");
+		System.out.println(headerfieldtoCompare + "__header");
 		if (headerfieldtoCompare.equalsIgnoreCase(PickcolumnfieldtoCompare)) {
 			baseClass.passedStep("Default Web Fields present Manual sort Order are as exepected");
 		} else {
@@ -4031,7 +4036,6 @@ public class MiniDocListPage {
 		getMiniDocListConfirmationButton("Save").Click();
 		System.out.println("Saved Confirmed");
 
-		
 		String headerfieldtoCompare = reusableDocViewPage.defaultHeaderValue().toLowerCase();
 		String PickcolumnfieldtoCompare = afterActionselectedFieldsPickColumnDisplayFirstAssignment.toString()
 				.toLowerCase();
@@ -4093,6 +4097,26 @@ public class MiniDocListPage {
 		}
 	}
 
+	/**
+	 * @author Raghuram.A Description : docToCHoose Date: 01/20/22 Modified date:
+	 *         N/A Modified by: N/As
+	 * @param firnstDocname
+	 * @param sizeofList
+	 * @return
+	 */
+	public String docToCHoose(int sizeofList, List<String> docIDlist) {
+		String docName;
+		int numToCHoose;
+		String nameSelected;
+
+		numToCHoose = baseClass.randNumber(sizeofList);
+		nameSelected = docIDlist.get(numToCHoose);
+		getDociD(nameSelected).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		docName = getMainWindowActiveDocID().getText();
+
+		return docName;
+	} 
+
 }
-
-

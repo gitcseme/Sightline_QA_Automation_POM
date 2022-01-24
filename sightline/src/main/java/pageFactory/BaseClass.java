@@ -212,13 +212,15 @@ public class BaseClass {
 	public Element getSaveBtn() {
 		return driver.FindElementById("btnsubmit");
 	}
-	public Element  selectSecurityGroup() {
+
+	public Element selectSecurityGroup() {
 		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='SG1134047']");
 	}
-	
-	public Element  selectDefaultSecurityGroup() {
+
+	public Element selectDefaultSecurityGroup() {
 		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='Default Security Group']");
 	}
+
 	public BaseClass(Driver driver) {
 
 		this.driver = driver;
@@ -2333,6 +2335,7 @@ public class BaseClass {
 		}
 		softAssertion.assertAll();
 	}
+
 	public void SelectSecurityGrp(String username) {
 		waitForElement(SelectSearchOption());
 		SelectSearchOption().SendKeys(username);
@@ -2343,16 +2346,14 @@ public class BaseClass {
 		driver.scrollingToBottomofAPage();
 		selectSecurityGroup().ScrollTo();
 		selectSecurityGroup().isDisplayed();
-	    waitTillElemetToBeClickable(selectSecurityGroup());
+		waitTillElemetToBeClickable(selectSecurityGroup());
 		selectSecurityGroup().waitAndClick(10);
 		getSaveBtn().waitAndClick(5);
 		VerifySuccessMessage("User profile was successfully modified");
 		CloseSuccessMsgpopup();
-		
-		
-		
-}
-	
+
+	}
+
 	public void SelectDefaultSecurityGrp(String username) {
 		waitForElement(SelectSearchOption());
 		SelectSearchOption().SendKeys(username);
@@ -2367,11 +2368,29 @@ public class BaseClass {
 		getSaveBtn().waitAndClick(10);
 		VerifySuccessMessage("User profile was successfully modified");
 		CloseSuccessMsgpopup();
-		
-		
-		
-}
 
+	}
 
-
+	/**
+	 * @author Indium Raghuram ] Description : Method to collect the list of
+	 *         elements and returns as list with attributeValues (GenericMethod)
+	 *         Date:8/15/21 Modified date: N/A Modified by: N/A
+	 */
+	public List<String> availableListofElementsWithAttributeValues(ElementCollection element, String attributeName) {
+		try {
+			List<String> elementNames = new ArrayList<>();
+			List<WebElement> elementList = null;
+			elementList = element.FindWebElements();
+			for (WebElement wenElementNames : elementList) {
+				String elementName = wenElementNames.getAttribute(attributeName);
+				elementNames.add(elementName);
+			}
+			return elementNames;
+		} catch (Exception E) {
+			E.printStackTrace(pw);
+			UtilityLog.info(sw.toString());
+			return null;
+		}
+	}
+ 
 }

@@ -172,7 +172,7 @@ public class TestData {
 	public String searchPhraseWithQuote;
 	
 
-	// Added by Raghuram - Last Modified 12/30/21
+	// Added by Raghuram - Last Modified 01/28/21 
 	public String docHighlightColor;
 	public String sortType;
 	public String sortDataBy;
@@ -196,6 +196,7 @@ public class TestData {
 	public String batchColumnHeaderErrorFileName;
 	public String BatchFileWithMultiplesheetFile;
 	public String savedSearchColor;
+	public String searchString8;
 
 	// Added by jeevitha
 	public String colorCodeOfRed;

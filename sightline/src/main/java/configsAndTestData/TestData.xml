@@ -192,7 +192,7 @@
 	<searchStringStar>*</searchStringStar>
 	<docIDs>ID0000</docIDs>
 
-	<!-- Raghuram Indium modified on 12/30/21 -->
+	<!-- Raghuram Indium modified on 01/28/21 --> 
 	<docHighlightColor>#CDD9E1</docHighlightColor>
 	<sortDataBy>DocID</sortDataBy>
 	<sortType>Ascending</sortType>
@@ -224,6 +224,7 @@
 	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet
 	</BatchFileWithMultiplesheetFile>
 	<savedSearchColor>#FFFFFF</savedSearchColor>
+	<searchString8>XLS OR XLSX OR CSV</searchString8>
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 

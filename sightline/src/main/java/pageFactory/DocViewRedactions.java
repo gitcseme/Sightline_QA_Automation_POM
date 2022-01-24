@@ -7,6 +7,8 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1191,28 +1193,57 @@ public class DocViewRedactions {
 				"//p[contains(@id,'PHitCount')]//following-sibling::span[@data-custom-id='" + term + "']");
 	}
 
-	
 	// added by krishna
-	
+
 	public Element getAssgn_PrintPdfToggle() {
-		return driver.FindElementByXPath(
-				"//*[@id='AdditionalPreferences_IsAllowPDFPrinting']/following-sibling::i");
+		return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowPDFPrinting']/following-sibling::i");
 	}
-	
+
 	public Element get_PrintIcon() {
-		return driver.FindElementById("print_divDocViewer");}
-	
+		return driver.FindElementById("print_divDocViewer");
+	}
+
 	public Element getDocViewPanel() {
 		return driver.FindElementById("CoddingContent");
 	}
-	
+
 	public Element getMaximizePanel() {
 		return driver.FindElementByXPath("(//div[@class='ui-resizable-handle ui-resizable-e'])[last()]");
 	}
-	
+
 	public Element getSearchIconDisabled() {
-		return driver.FindElementByXPath("//div[@class='searchOnDemand disabled']");}
-	
+		return driver.FindElementByXPath("//div[@class='searchOnDemand disabled']");
+	}
+
+	// added by Raghuram
+	public Element getDocView_RedactHTextarea() {
+		return driver.FindElementByXPath("//div[@class='igViewerGraphics']");
+	}
+
+	public Element highLightRectangleClick() {
+		return driver.FindElementById("highlightRectangle_divDocViewer");
+	}
+
+	public Element rectangleRedactStats(String xAxis, String yAxis) {
+		return driver.FindElementByCssSelector("rect[x='" + xAxis + "' ][y='" + yAxis + "']:last-child");
+	}
+
+	public Element rectangleRedactXYStats() {
+		return driver.FindElementByCssSelector("g[fill-opacity='1']>rect:last-child");
+	}
+
+	public ElementCollection rectangleRedactionXYStats() {
+		return driver.FindElementsByCssSelector("g[fill-opacity='1']>g[data-pcc-mark^='mark-']");
+	}
+
+	public Element rectangleRedactionXYStats(String parameter1) {
+		return driver.FindElementByCssSelector("g[fill-opacity='1']>g[data-pcc-mark='" + parameter1 + "']");
+	}
+
+	public ElementCollection textRedactionXYStats() {
+		return driver.FindElementsByCssSelector("g[fill-opacity='1']>g[data-pcc-mark^='mark-']>rect");
+	}
+
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements
@@ -2462,11 +2493,11 @@ public class DocViewRedactions {
 		base.passedStep(
 				"Given access for these SG's " + securityGroup1 + " " + securityGroup2 + "  for this user" + user);
 	}
-	
+
 	/*
-	 * Steffy 18/01/2022 Method for assigning access to RMU user for newly
-	 * created SGs From PA user provide access to SGs for RMU-- Needed few wait
-	 * times to make the method robust
+	 * Steffy 18/01/2022 Method for assigning access to RMU user for newly created
+	 * SGs From PA user provide access to SGs for RMU-- Needed few wait times to
+	 * make the method robust
 	 */
 
 	public void assignAccesstoSGs(String securityGroup1, String user) throws Exception {
@@ -2498,8 +2529,7 @@ public class DocViewRedactions {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		Thread.sleep(3000);
-		base.passedStep(
-				"Given access for these SG's " + securityGroup1 + "  for this user" + user);
+		base.passedStep("Given access for these SG's " + securityGroup1 + "  for this user" + user);
 	}
 
 	/*
@@ -3429,8 +3459,7 @@ public class DocViewRedactions {
 		}
 
 	}
-	
-	
+
 	/*
 	 * Arunkumar Description:getting last saved redaction tag selected in
 	 * multiredact pop-up
@@ -3438,7 +3467,7 @@ public class DocViewRedactions {
 	public String gettingLastSavedRedactionTagName() throws InterruptedException {
 		docView = new DocViewPage(driver);
 		base = new BaseClass(driver);
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return multiPageIcon().Visible() && multiPageIcon().Enabled();
@@ -3455,7 +3484,7 @@ public class DocViewRedactions {
 
 		Select multiplepageredaction = new Select(redactionTagSelect().getWebElement());
 		String selectedTag = multiplepageredaction.getFirstSelectedOption().getText();
-		 
+
 		return selectedTag;
 	}
 
@@ -3500,10 +3529,10 @@ public class DocViewRedactions {
 		softAssertion.assertAll();
 		base.passedStep("Keyword highlighted count in document is same as persistent hit panel count");
 	}
-	
 
-	// Added by krishna - disabling print toggle for assignment after going into edit
-	
+	// Added by krishna - disabling print toggle for assignment after going into
+	// edit
+
 	public void DisablePrintToggleinAssignment() {
 		base = new BaseClass(driver);
 		driver.waitForPageToBeReady();
@@ -3519,7 +3548,7 @@ public class DocViewRedactions {
 		getAssignmentSaveButton().waitAndClick(5);
 		base.VerifySuccessMessage("Assignment updated successfully");
 	}
-	
+
 	// added by Sai krishna
 	public void verifyViewDocAnalyticalPanelIsNotPartInMiniDocList() {
 		docView = new DocViewPage(driver);
@@ -3566,7 +3595,7 @@ public class DocViewRedactions {
 
 		}
 	}
-	
+
 	public void verifyViewDocAnalyticalPanelPartInMiniDocList() {
 		driver.waitForPageToBeReady();
 		docView = new DocViewPage(driver);
@@ -3612,7 +3641,7 @@ public class DocViewRedactions {
 
 		}
 	}
-	
+
 	public void verifyMaximizetheMiddlePanel() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		base = new BaseClass(driver);
@@ -3623,24 +3652,234 @@ public class DocViewRedactions {
 			base.passedStep("DocView panels are displayed");
 			softAssertion.assertEquals(getDocViewPanel().isDisplayed().booleanValue(), true);
 		} else {
-			base.failedStep( "panels are not displayed");
+			base.failedStep("panels are not displayed");
 		}
 		Actions actions = new Actions(driver.getWebDriver());
 		driver.waitForPageToBeReady();
 		base.waitForElement(getMaximizePanel());
 		wait.until(ExpectedConditions.elementToBeClickable(getMaximizePanel().getWebElement()));
 		Thread.sleep(4000);
-		//Thread sleep added for the page to maximize		
-		actions.moveToElement(getMaximizePanel().getWebElement()).clickAndHold().moveByOffset(800, 80).release().build().perform();
+		// Thread sleep added for the page to maximize
+		actions.moveToElement(getMaximizePanel().getWebElement()).clickAndHold().moveByOffset(800, 80).release().build()
+				.perform();
 		base.stepInfo("Middle panel of the doc view page is successfully maximized");
 		base.waitForElement(getDocViewPanel());
 		if (getDocViewPanel().isDisplayed()) {
 			base.passedStep("DocView panels are collapsed on maximizing the middle panel ");
 			softAssertion.assertTrue(getDocViewPanel().isDisplayed());
 		} else {
-			base.failedStep( "panels are not displayed");
+			base.failedStep("panels are not displayed");
 		}
 	}
 
+	/**
+	 * @author Raghuram.A Description : doDrawUsingXY Date: 01/20/22 Modified date:
+	 *         N/A Modified by: N/A
+	 * @param x
+	 * @param y
+	 * @param offsetx
+	 * @param offsety
+	 * @throws Exception
+	 */
+	public void doDrawUsingXY(int x, int y, int offsetx, int offsety) throws Exception {
+
+		base = new BaseClass(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		driver.waitForPageToBeReady();
+		base.waitTime(3);// To handle abnormal waits
+
+		actions.moveToElement(getDocView_RedactHTextarea().getWebElement(), x, y).clickAndHold()
+				.moveByOffset(offsetx, offsety).release().build().perform();
+
+	}
+
+	/**
+	 * @author Raghuram.A Description : checkANdDOThisPageHighlight Date: 01/20/22
+	 *         Modified date: N/A Modified by: N/A
+	 * @throws InterruptedException
+	 */
+	public void checkANdDOThisPageHighlight() throws InterruptedException {
+		base = new BaseClass(driver);
+
+		getDocView_RedactHTextarea().waitAndClick(5);
+		driver.scrollPageToTop();
+		if (highliteDeleteBtn().isElementAvailable(5)) {
+			base.stepInfo("The page has been highlited already");
+		} else {
+			clickingHighlitingIcon();
+			base.stepInfo("Clicked This page icon");
+			driver.waitForPageToBeReady();
+			base.passedStep("Current page is highlighted successfully");
+			driver.waitForPageToBeReady();
+		}
+	}
+
+	/**
+	 * @author Raghuram.A Description : verifyThisPageHighlightMaintained Date:
+	 *         01/20/22 Modified date: N/A Modified by: N/A
+	 * @param torRmoveAnnotation
+	 */
+	public void verifyThisPageHighlightMaintained(Boolean torRmoveAnnotation) {
+		base = new BaseClass(driver);
+
+		getDocView_RedactHTextarea().waitAndClick(5);
+		driver.scrollPageToTop();
+		if (highliteDeleteBtn().isElementAvailable(10)) {
+			base.passedStep(
+					"Document remains highlighted and Highlighting not shifted when visiting the different file types having page highlighting");
+			if (torRmoveAnnotation) {
+				deleteRedactioBtn().waitAndClick(5);
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage("Annotation Removed successfully.");
+			}
+		} else {
+			base.failedStep("Fail");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A Description : removeThisPageHighlight Date: 01/20/22
+	 *         Modified date: N/A Modified by: N/A
+	 */
+	public void removeThisPageHighlight() {
+		base = new BaseClass(driver);
+
+		getDocView_RedactHTextarea().waitAndClick(5);
+		driver.scrollPageToTop();
+		if (highliteDeleteBtn().isElementAvailable(5)) {
+			base.stepInfo("The page has been highlited already");
+			deleteRedactioBtn().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.VerifySuccessMessage("Annotation Removed successfully.");
+			base.stepInfo("Annotation Removed successfully.");
+		} else {
+			System.out.println("This Page highlight not done at current doc");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A Description : doRectangleHighlightWithXYPoints Date:
+	 *         01/20/22 Modified date: N/A Modified by: N/A
+	 * @param x
+	 * @param y
+	 * @param xOffset
+	 * @param yOffset
+	 * @return
+	 * @throws Exception
+	 */
+	public HashMap<String, String> doRectangleHighlightWithXYPoints(int x, int y, int xOffset, int yOffset)
+			throws Exception {
+		base = new BaseClass(driver);
+		String xAxis, yAxis;
+		HashMap<String, String> xyMap = new HashMap<String, String>();
+
+		HighliteIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		highLightRectangleClick().waitAndClick(8);
+		doDrawUsingXY(x, y, xOffset, yOffset);
+		base.waitTime(5);// To handle abnormal waits
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		xAxis = rectangleRedactXYStats().GetAttribute("x");
+		yAxis = rectangleRedactXYStats().GetAttribute("y");
+		xyMap.put("xAxis", xAxis);
+		xyMap.put("yAxis", yAxis);
+
+		base.stepInfo("Rectangle highlighted position : X axis : " + xAxis + " and Y axis : " + yAxis);
+
+		return xyMap;
+	}
+
+	/**
+	 * @author Raghuram.A Description : doRectangleRedactWithXYPoints Date: 01/20/22
+	 *         Modified date: N/A Modified by: N/A
+	 * @param x
+	 * @param y
+	 * @param xOffset
+	 * @param yOffset
+	 * @return
+	 * @throws Exception
+	 */
+	public HashMap<String, String> doRectangleRedactWithXYPoints(int x, int y, int xOffset, int yOffset)
+			throws Exception {
+		base = new BaseClass(driver);
+		String xAxis, yAxis;
+		HashMap<String, String> xyMap = new HashMap<String, String>();
+		List<String> sortList = new ArrayList<>();
+
+		redactionIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		textSelectionRedactionIcon().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		doDrawUsingXY(x, y, xOffset, yOffset);
+		driver.waitForPageToBeReady();
+		multiPageInputSavaBtn().waitAndClick(3);
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		sortList = base.availableListofElementsWithAttributeValues(rectangleRedactionXYStats(), "data-pcc-mark");
+		Collections.sort(sortList, Collections.reverseOrder());
+		String attributeValue = sortList.get(0).toString();
+		System.out.println(attributeValue);
+
+		xAxis = rectangleRedactionXYStats(attributeValue).GetAttribute("x");
+		yAxis = rectangleRedactionXYStats(attributeValue).GetAttribute("y");
+		xyMap.put("xAxis", xAxis);
+		xyMap.put("yAxis", yAxis);
+
+		base.stepInfo("Rectangle redacted position : X axis : " + xAxis + " and Y axis : " + yAxis);
+
+		return xyMap;
+	}
+
+	/**
+	 * @author Raghuram.A Description : verifyRectangleHighlightPositionRetained
+	 *         Date: 01/20/22 Modified date: N/A Modified by: N/A
+	 * @param xAxis
+	 * @param yAxis
+	 * @param toRemoveAnnotation
+	 */
+	public void verifyRectangleHighlightPositionRetained(String xAxis, String yAxis, Boolean toRemoveAnnotation) {
+		base = new BaseClass(driver);
+		base.stepInfo(
+				"Rectangle highlighted position retained to verify : X axis : " + xAxis + " and Y axis : " + yAxis);
+		if (rectangleRedactStats(xAxis, yAxis).isElementAvailable(5)) {
+			base.passedStep(
+					"Highlighting should not be shifted when visiting the different file types having Rectangle highlighting");
+			if (toRemoveAnnotation) {
+				rectangleRedactStats(xAxis, yAxis).waitAndClick(3);
+				deleteRedactioBtn().waitAndClick(3);
+				// highliteDeleteBtn().waitAndClick(3);
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage("Annotation Removed successfully.");
+			}
+		} else {
+			base.failedStep("Rectangle highlighting position mismatch");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A Description : verifyRectangleRedactionPositionRetained
+	 *         Date: 01/20/22 Modified date: N/A Modified by: N/A
+	 * @param xAxis
+	 * @param yAxis
+	 * @param toRemoveAnnotation
+	 */
+	public void verifyRectangleRedactionPositionRetained(String xAxis, String yAxis, Boolean toRemoveAnnotation) {
+		base = new BaseClass(driver);
+		base.stepInfo("Rectangle redaction position retained to verify : X axis : " + xAxis + " and Y axis : " + yAxis);
+		if (rectangleRedactStats(xAxis, yAxis).isElementAvailable(5)) {
+			base.passedStep(
+					"Rectangle redaction should not be shifted when visiting the different file types having Rectangle redaction");
+			if (toRemoveAnnotation) {
+				rectangleRedactStats(xAxis, yAxis).waitAndClick(3);
+				// deleteRedactioBtn().waitAndClick(3);
+				highliteDeleteBtn().waitAndClick(3);
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage("Redaction Removed successfully.");
+			}
+		} else {
+			base.failedStep("Rectangle redaction position mismatch");
+		}
+	}
 
 }
