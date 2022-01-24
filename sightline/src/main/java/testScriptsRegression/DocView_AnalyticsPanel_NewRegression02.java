@@ -26,6 +26,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -41,6 +42,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	SoftAssert softAssertion;
 	DocViewRedactions docViewRedact;
 	SavedSearch savedSearch;
+	TagsAndFoldersPage tagsAndFolderPage;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -746,7 +748,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 
 		baseClass.stepInfo("Step 1: Impersonate SA to Reviewer,select assignment and go to Docview");
 		baseClass.impersonateSAtoReviewer();
-		baseClass.stepInfo("Step 2: Search for the doc and assignment is created");
+		baseClass.stepInfo("Step 2: Searching documents based on search string and Navigate to DocView");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewFamilyMemberDocsInDocViews();
 
@@ -890,7 +892,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		baseClass.stepInfo("Step 1:Searching documents based on search string and Navigate to DocView");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewThreadedDocsInDocViews();
 
@@ -917,7 +919,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 
-		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewThreadedDocsInDocViews();
 
@@ -994,6 +996,114 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author : Vijaya.Rani date: 24/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify RMU can select documents from Family member and view
+	 * the existing folders. 'RPMXCON-50818' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void verifySelectMultipleDocsFolderFamilyMemberTab() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50818");
+		baseClass.stepInfo("To verify RMU can select documents from Family member and view the existing folders.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+		String text = "SaveFolder" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.familyDocument);
+
+		// FamilyMember Folder Action
+		docView.Analytics_FamilyActionsFolderMultipleDocument(text);
+
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.getFolderName(text).ScrollTo();
+		softAssertion.assertTrue(tagsAndFolderPage.getFolderName(text).isDisplayed());
+		baseClass.passedStep("All existing folder under that security group is " + text + "displayed");
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 24/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify for RMU Conceptual tab when there are no conceptually
+	 * similar documents. 'RPMXCON-50830' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	public void verifyThereAreNoDocsInConceptualSimilartab() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50830");
+		baseClass.stepInfo("To verify for RMU Conceptual tab when there are no conceptually similar documents.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.add2ReviewerAndDistribute();
+
+		baseClass.stepInfo("Step 2: Navigating Doc view from Assignment Page");
+		driver.waitForPageToBeReady();
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.miniConceptualNoDoc);
+
+		//No Data For Conceptual Tab
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_AnalyticalPanel_NoData());
+		String familyData = docView.getDocView_AnalyticalPanel_NoData().getText();
+		System.out.println(familyData);
+		softAssertion.assertTrue(docView.getDocView_AnalyticalPanel_NoData().Displayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("AnalyticalPanel ConceptualSimilar Docs Is " + familyData);
+
+		loginPage.logout();
+	}
 
 	
 	
