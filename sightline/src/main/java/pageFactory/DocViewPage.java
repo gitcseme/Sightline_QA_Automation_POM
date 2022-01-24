@@ -21910,4 +21910,60 @@ public class DocViewPage {
 
 	}
 
+	/**
+	 * @author Vijaya.Rani Modified On: 24/1/2022
+	 * @description : To create Folder for Family Member multiple docs
+	 * @throws Exception
+	 */
+	public void Analytics_FamilyActionsFolderMultipleDocument(String text) throws Exception {
+		driver.waitForPageToBeReady();
+		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+		driver.waitForPageToBeReady();
+		Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
+		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+		getDocView_Analytics_FamilyTab().waitAndClick(10);
+
+		for (int i = 1; i <= 3; i++) {
+			base.waitForElement(getDocView_Analytics_FamilyMember_Doc(i));
+			getDocView_Analytics_FamilyMember_Doc(i).waitAndClick(10);
+		}
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+
+		base.waitForElement(getDocView_FamilyBulkFolder());
+		getDocView_FamilyBulkFolder().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getDocView_FamilyBulkFolder().Displayed());
+		base.passedStep("Folder pop up is opened successfully");
+
+		base.waitForElement(getDocView_AnalyticsNewFolderFamilyMember());
+		getDocView_AnalyticsNewFolderFamilyMember().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsNewFolderTree());
+		getDocView_AnalyticsNewFolderTree().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsNewFolderTextBox());
+		getDocView_AnalyticsNewFolderTextBox().SendKeys(text);
+
+		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
+		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
+
+		base.waitForElement(getTotalSelectedDocuments());
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().Displayed());
+		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
+		base.VerifySuccessMessage("Records saved successfully");
+
+		base.passedStep("Selected folder is applied to the selected documents successfully");
+
+		base.waitForElement(getManageTab());
+		getManageTab().waitAndClick(10);
+	
+		base.waitForElement(getManageTagsAndFolderTab());
+		getManageTagsAndFolderTab().waitAndClick(10);
+		
+		base.waitForElement(getManageFolderBtn());
+		getManageFolderBtn().waitAndClick(10);
+	}
 }
