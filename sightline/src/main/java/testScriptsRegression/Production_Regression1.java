@@ -1,9 +1,12 @@
 package testScriptsRegression;
 
 import java.awt.AWTException;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+
+import org.openqa.selenium.support.Color;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
@@ -7988,6 +7991,97 @@ public void verifyExportBatesOptionInGenerateTab() throws Exception {
 	
 	
 }
+
+/**
+ * @author Brundha Test case id-RPMXCON-48601
+ * @Description To verify that Export bates is disabled if pre gen check is not
+ *              completed
+ * 
+ */
+@Test(groups = { "regression" }, priority = 105)
+public void verifyExportBatesOptionDisabledInGenerateTab() throws Exception {
+
+	UtilityLog.info(Input.prodPath);
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+	base.stepInfo("RPMXCON-48601 - from Production");
+	base.stepInfo("To verify that Export bates is disabled if pre gen check is not completed");
+
+	String foldername = "Folder" + Utility.dynamicNameAppender();
+	String productionname = "p" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.getbtnProductionGenerate().isDisplayed();
+	page.getbtnProductionGenerate().waitAndClick(10);
+	page.verifyProductionStatusInGenPage("Pre-Generation Checks In Progress");
+	String color = page.getExportBatesButton().GetCssValue("background-color");
+	String ExpectedColor = Color.fromString(color).asHex();
+	System.out.println(ExpectedColor);
+	String ActualColor = "#3276b1";
+	base.textCompareEquals(ActualColor, ExpectedColor,
+			"Export Bates option is disabled before pre gen check as Expected",
+			"Export Bates option is not disabled before pre gen check as Expected");
+
+}
+
+/**
+ * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48642
+ * @Description:To verify that on Tiff OR PDF section, 'Do Not Produce TIFFs for
+ *                 Natively Produced Docs' option is disabled by default
+ */
+@Test(groups = { "regression" }, priority = 106)
+public void verifyingNativelyProducedDocsToggleIsDisAbledInTiffAndPDFSection() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-48642 - from Production");
+	base.stepInfo(
+			"To verify that on Tiff OR PDF section, 'Do Not Produce TIFFs for Natively Produced Docs' option is disabled by default");
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+	ProductionPage page = new ProductionPage(driver);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.addANewProduction(productionname);
+
+	base.stepInfo("Verifying 'Do Not Produce TIFFs for Natively Produced Docs' in TIFF section");
+	page.verifyingNativelyProducedToggle();
+
+	base.stepInfo("Verifying 'Do Not Produce TIFFs for Natively Produced Docs' in PDF section");
+	page.getPDFGenerateRadioButton().waitAndClick(10);
+
+	String color = page.getDoNotProduceFullContentTiff().GetCssValue("background-color");
+	String ExpectedColor = Color.fromString(color).asHex();
+	System.out.println(ExpectedColor);
+	String ActualColor = "#e54036";
+	base.textCompareEquals(ActualColor, ExpectedColor,
+			"Do Not Produce TIFFs for Natively Produced Docs' option is disabled by default  as Expected",
+			" Do Not Produce TIFFs for Natively Produced Docs' option is not  disabled by default as Expected");
+
+}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void close() {
