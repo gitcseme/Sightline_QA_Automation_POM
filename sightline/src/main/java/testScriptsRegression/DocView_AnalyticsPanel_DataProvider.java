@@ -334,9 +334,9 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : Verify that PCC-Fitcontent/Reset Zoom icon should be 
 	 * functional from 'Original' and 'Near Dupe' document panel of near dupe comparison'RPMXCON-51704' Sprint : 5
 	 * @throws InterruptedException 
-	 *  @Stabilization - done
+	 *  @Stabilization - Not done [Test Data updated]
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 5)
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 5)
 	public void verifyResetZoomIconInNearDupeComparisonWindow(String fullName, String userName, String password) throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -392,9 +392,9 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : Verify that Zoom-in, Zoom-out should work from the 
 	 * Original document panel of near dupe comparison window'RPMXCON-51705' Sprint : 5
 	 * @throws InterruptedException 
-	 *  @Stabilization - done
+	 *  @Stabilization - not done [Test Data updated]
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 6)
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 6)
 	public void verifyZoomInZoomOutIconInNearDupeComparisonWindow(String fullName, String userName, String password) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -523,8 +523,8 @@ public class DocView_AnalyticsPanel_DataProvider {
 		
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.conceptualDocumentReviewer;
-		String revDocToBeSelected = Input.MetaDataId;
+		String documentToBeSelected = Input.conceptualDocumentReviewer; 	
+		String revDocToBeSelected = Input.MetaDataId; 
 
 		// Login as a Admin
 		loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
@@ -661,9 +661,9 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : To verify user can select Multiple documents in Family Members->Analytic Panel 
 	 * from dockout screens and Select Action as 'Code Same as'.'RPMXCON-51126' Sprint : 6
 	 * @throws Exception 
-	 *  @Stabilization - done
+	 *  @Stabilization - done [Coding form is not proper]
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
 	public void verifyCodeSameAsActionInAnalyticsFamilyMemberTabAndSaveCodingForm(String fullName, String userName, String password) throws Exception {
 		
 		loginPage = new LoginPage(driver);
@@ -723,9 +723,9 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description :Verify check mark icon should be displayed when coding stamp 
 	 * applied after selecting 'Code same as this' action' from Analytics Panel > Family Member'RPMXCON-51060' Sprint : 6
 	 * @throws InterruptedException 
-	 *  @Stabilization - done
+	 *  @Stabilization - done [coding form]
 	 */
-	@Test(enabled = true,  groups = { "regression" }, priority = 11)
+	//@Test(enabled = true,  groups = { "regression" }, priority = 11)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForFamilyMember() throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -820,9 +820,9 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description :Verify check mark icon should be displayed when coding stamp 
 	 * applied after selecting 'Code same as this' action' from Analytics Panel > Near Dupe'RPMXCON-51061' Sprint : 6
 	 * @throws InterruptedException
-	 * @Stabilization - done 
+	 * @Stabilization - done  [coding form]
 	 */
-	@Test(enabled = true,  groups = { "regression" }, priority = 12)
+	//@Test(enabled = true,  groups = { "regression" }, priority = 12)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForNearDupe() throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -1072,7 +1072,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @Description :To Verify that after impersonation if the document native/PDF/TIFF/Text is being presented, the N/P/T/X icon with the accompanying mouse over tool tip must appear.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true,dataProvider="multiUserCredentials", groups = { "regression" }, priority = 15)
+	//@Test(enabled = true,dataProvider="multiUserCredentials", groups = { "regression" }, priority = 15)
 	public void verifyDocIdIconOnDocViewPanal(String fullName,String userName,String password,String fromRole,String toRole) throws InterruptedException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
