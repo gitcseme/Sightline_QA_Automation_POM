@@ -84,7 +84,7 @@ public class DocView_CodingForm_Regression {
 	String assignFour = "Assignment" + Utility.dynamicNameAppender();
 	String assignFive = "Assignment" + Utility.dynamicNameAppender();
 	String assign = "Assignment" + Utility.dynamicNameAppender();
-	
+	String assgn = "Assignment" + Utility.dynamicNameAppender();
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -9070,7 +9070,7 @@ public class DocView_CodingForm_Regression {
 	 * @TestCase_id : 51005 - To verify that comment should not be displayed on document, if document is in two different security group and comment is in one security group.
 	 * @Description : To verify that comment should not be displayed on document, if document is in two different security group and comment is in one security group
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 17)
+	@Test(alwaysRun = false, groups = { "regression" }, priority = 200)
 	public void verifyCommentTextFieldIsNotAppearedAtDiffSecurityGroup() throws Exception {
 		String AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		String namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -9192,6 +9192,129 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 		loginPage.quitBrowser();
 		LoginPage.clearBrowserCache();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:24/01/2021 Modified by: Baskar
+	 * Description : Verify comment, metadata should be indexed for the document 
+	 *               when user applies coding stamp to the document in context of an assignment
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 201)
+	public void validateCodingStampPureHitCont() throws InterruptedException, AWTException {
+		projectPage = new ProjectPage(driver);
+		securityGroupPage = new SecurityGroupsPage(driver);
+		commentsPage = new CommentsPage(driver);
+		docViewPage = new DocViewPage(driver);
+		codingForm = new CodingForm(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51150");
+		baseClass.stepInfo("Verify comment, metadata should be indexed for "
+				+ "the document when user applies coding stamp to the document in context of an assignment");
+		UtilityLog.info("Started Execution for prerequisite");
+		String assignName = "AAsign" + Utility.dynamicNameAppender();
+		String addComment = "addomment" + Utility.dynamicNameAppender();
+		String cfName = "coding" + Utility.dynamicNameAppender();
+		String commentText = "ct" + Utility.dynamicNameAppender();
+		String metadataText = "mt" + Utility.dynamicNameAppender();
+		String stamp = "stamp" + Utility.dynamicNameAppender();
+
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+
+		// Custom Field created with INT DataType
+		projectPage.addCustomFieldProjectDataType(projectFieldINT, "NVARCHAR");
+		baseClass.stepInfo("Custom meta data field created with INT datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(projectFieldINT);
+		baseClass.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		commentsPage.AddComments(addComment);
+
+		// Creating Coding Form
+		codingForm.createCommentAndMetadata(projectFieldINT, addComment, cfName);
+		baseClass.stepInfo("Project field added to coding form in Doc view");
+		
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignName, cfName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+		
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer '" + Input.rev1userName + "'");
+
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// verify the coding form panel
+		int size=docViewPage.verifyCommentAndMetaDataUsingCodingStamp(addComment, commentText, projectFieldINT, metadataText,stamp);
+		baseClass.stepInfo("Checking index of comment and metadata for saved document");
+		int pureHit=sessionSearch.metadataAndCommentSearch(projectFieldINT, metadataText, addComment, commentText);
+
+		softAssertion.assertEquals(size, pureHit);
+		softAssertion.assertAll();
+		
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+	}
+	
+	/**
+	 * @Author : Baskar date: 24/01/2021 Modified date: NA Modified by: Baskar
+	 * @Description:To verify that user can complete the document.
+	 */
+	@Test(enabled = true,dataProvider = "rmuRevLogin",groups = { "regression" }, priority = 202)
+	public void validateUserCanCompleteDocsInAssgn(String fullName, String userName, String password)throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion=new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-50983");
+		baseClass.stepInfo("To verify that user can complete the document.");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String rmu="RMU";
+		
+		loginPage.loginToSightLine(userName,password);
+
+		if (fullName.contains(rmu)) {
+//			 searching document for assignment creation
+			sessionSearch.basicContentSearch(Input.searchString2);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assgn, Input.codingFormName);
+			assignmentPage.toggleCodingStampEnabled();
+			assignmentPage.add2ReviewerAndDistribute();
+			baseClass.impersonateRMUtoReviewer();
+			System.out.println(assgn);
+		}
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assgn);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		docViewPage.verifyUserDocsCompleteBtn(comment);
+       
+		// logout
+		loginPage.logout();
+		
 	}
 	
 	@DataProvider(name = "paToRmuRev")

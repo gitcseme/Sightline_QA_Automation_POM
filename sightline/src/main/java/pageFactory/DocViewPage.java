@@ -21966,4 +21966,41 @@ public class DocViewPage {
 		base.waitForElement(getManageFolderBtn());
 		getManageFolderBtn().waitAndClick(10);
 	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+
+	public int verifyCommentAndMetaDataUsingCodingStamp(String addComment, String commentText, String metadata,
+			String metadataText,String fieldText) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCodingFormHelpText(addComment));
+		getCodingFormHelpText(addComment).SendKeys(commentText);
+		base.waitForElement(getReadOnlyTextBox(metadata));
+		getReadOnlyTextBox(metadata).SendKeys(metadataText);
+		codingStampButton();
+		popUpAction(fieldText, Input.stampSelection);
+		driver.waitForPageToBeReady();
+		lastAppliedStamp(Input.stampSelection);
+//		base.VerifySuccessMessage("Coding Stamp applied successfully");
+		base.waitForElementCollection(getCheckMarkIcon());
+		int size = getCheckMarkIcon().size();
+		return size;
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void verifyUserDocsCompleteBtn(String comment) {
+		String prnDoc = getVerifyPrincipalDocument().getText();
+		editCodingForm(comment);
+		completeButton();
+		boolean flag = getverifyCodeSameAsLast().Displayed();
+		softAssertion.assertTrue(flag);
+		base.stepInfo("Check mark icon displayed for the completed docs");
+		String secDoc = getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnDoc, secDoc);
+		base.passedStep("Cursor navigated to next docs in minidoclist");
+		softAssertion.assertAll();
+	}
 }
