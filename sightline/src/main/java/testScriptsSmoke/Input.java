@@ -277,7 +277,7 @@ public class Input {
 	public static String pageRange4;
 	public static String searchPhraseWithQuote;
 
-	// Added by Raghuram - Modified 01/28/21
+	// Added by Raghuram - Modified 01/28/21 
 	public static String docHighlightColor;
 	public static String sortDataBy;
 	public static String sortType;

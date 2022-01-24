@@ -3882,45 +3882,4 @@ public class DocViewRedactions {
 		}
 	}
 
-	/**
-	 * @author Raghuram.A Description : doTextRedactWithXYPoints Date: 01/20/22
-	 *         Modified date: N/A Modified by: N/A
-	 * @param x
-	 * @param y
-	 * @param xOffset
-	 * @param yOffset
-	 * @return
-	 * @throws Exception
-	 */
-	public HashMap<String, String> doTextRedactWithXYPoints(int x, int y, int xOffset, int yOffset) throws Exception {
-		base = new BaseClass(driver);
-		String xAxis, yAxis, attributeValue;
-		HashMap<String, String> xyMap = new HashMap<String, String>();
-		List<String> sortList = new ArrayList<>();
-
-		redactionIcon().waitAndClick(30);
-		driver.waitForPageToBeReady();
-		rectangleClick().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		doDrawUsingXY(x, y, xOffset, yOffset);
-		driver.waitForPageToBeReady();
-		multiPageInputSavaBtn().waitAndClick(3);
-		driver.scrollPageToTop();
-		driver.waitForPageToBeReady();
-		sortList = base.availableListofElementsWithAttributeValues(textRedactionXYStats(), "data-pcc-mark");
-		Collections.sort(sortList);
-		for (String datas : sortList) {
-
-			System.out.println(datas);
-			xAxis = rectangleRedactionXYStats(datas).GetAttribute("x");
-			yAxis = rectangleRedactionXYStats(datas).GetAttribute("y");
-			xyMap.put("xAxis", xAxis);
-			xyMap.put("yAxis", yAxis);
-			base.stepInfo("Rectangle redacted position : X axis : " + xAxis + " and Y axis : " + yAxis);
-
-		}
-
-		return xyMap;
-	}
-
 }

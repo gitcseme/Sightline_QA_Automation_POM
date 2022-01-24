@@ -6656,7 +6656,7 @@ public class DocView_Redactions_Regression {
 		// verify ThisPage Redacted Maintained
 		docViewRedact.verifyThisPageHighlightMaintained(true);
 
-	}
+	} 
 
 	/**
 	 * @author Raghuram.A date: NA Modified date: 01/18/21 Modified by: Raghuram A

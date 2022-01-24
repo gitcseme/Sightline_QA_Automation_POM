@@ -4117,6 +4117,6 @@ public class MiniDocListPage {
 		docName = getMainWindowActiveDocID().getText();
 
 		return docName;
-	}
+	} 
 
 }
