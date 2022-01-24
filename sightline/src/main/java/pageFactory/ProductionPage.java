@@ -2368,6 +2368,12 @@ public class ProductionPage {
 	public Element getTranlationOpenCloseCheck() {
 		return driver.FindElementByXPath("//div[@id='TranslationsContainer']");
 	}
+	public Element getProductionStartDateInGridView(String production) {
+		return driver.FindElementByXPath("//*[text()='"+production+"']/../td[6]");
+	}
+	public Element getProductionEndDateInGridView(String production) {
+		return driver.FindElementByXPath("//*[text()='"+production+"']/../td[7]");
+	}
 	
 	public ProductionPage(Driver driver) {
 
@@ -16162,6 +16168,56 @@ public class ProductionPage {
 			base.failedStep(element+"element is checked");
 			System.out.println("element is Checked");
 		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void fillingNativeSectionWithVerification() throws InterruptedException {
+		SoftAssert softAssertion = new SoftAssert();
+
+		visibleCheck("Native");
+		base.waitForElement(getNativeChkBox());
+		getNativeChkBox().Click();
+
+		base.waitForElement(getNativeTab());
+		getNativeTab().Click();
+
+		visibleCheck("Natives Files");
+		
+		String expected = "To produce specific docs natively, please select file types and/or tags below. "
+				+ "In addition, to export placeholders for these docs, configure placeholder in the TIFF/PDF section"
+				+ " for the same selected file types and/or tags." + "\r\n" + "\r\n"
+				+ "For native only productions, please make sure to exclude the Privileged documents from the selected production corpus, "
+				+ "in order to avoid the Privileged natives from being exported.";
+
+		// added thread.sleep to avoid exception while running in batch
+		driver.waitForPageToBeReady();
+		String actual = getNative_text().getWebElement().getText();
+
+		softAssertion.assertEquals(actual, expected);
+
+		base.waitForElement(getNative_SelectAllCheck());
+		getNative_SelectAllCheck().waitAndClick(10);
+
+		visibleCheck("Select Tags");
+		
+		base.waitForElement(getNative_AdvToggle());
+		getNative_AdvToggle().Click();
+
+		base.waitForElement(getNative_GenerateLoadFileLST());
+		getNative_GenerateLoadFileLST().waitAndClick(10);
+
+		visibleCheck("LST");
+		
+		String Expect = "Note that, if Privileged Placeholdering and Burn Redactions are enabled in the TIFF/PDF section, natives are not produced by default for privileged documents, redacted documents, and parents of privileged and redacted documents.";
+
+		String Actual = getNativeAdvanced_Text().getWebElement().getText();
+
+		softAssertion.assertEquals(Actual, Expect);
+		driver.scrollingToBottomofAPage();
+
+		base.stepInfo("Native section is verified");
+		base.stepInfo("Native section is filled");
 	}
 
 	
