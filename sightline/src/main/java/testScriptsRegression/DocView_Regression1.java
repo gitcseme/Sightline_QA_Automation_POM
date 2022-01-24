@@ -1,5 +1,6 @@
 package testScriptsRegression;
 
+import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -4584,6 +4585,93 @@ public class DocView_Regression1 {
 					
 					baseClass.stepInfo("Verifying N icon and tolltip message for selected document");
 					docView.verifydocIdIconAfterClickOnallTabsOndocviewPanal(N_DocID, N_DocToolTipMessage);
+			}
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id:51046 Verify user can not see the keywords highlighted outside of an
+			 *          assignment when keyword groups assigned to the assignment only
+			 *Description : Verify user can not see the keywords highlighted outside of an assignment when
+			 *              assigned to the assignment only keyword groups
+			 * @throws InterruptedException
+			 * @throws AWTException
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 67)
+			public void verifyKeyWordHighlightOnDocView() throws InterruptedException, AWTException{
+				String AssignName = Input.randomText + Utility.dynamicNameAppender();
+				String keywordname = "t";
+				String colour = "Gold";
+				String rgbCode = "rgb(255, 215, 0)";
+				String HaxCode = "#ffd700";
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51046 sprint 10");
+				baseClass.stepInfo(
+						"####Verify user can not see the keywords highlighted outside of an assignment when keyword groups assigned to the assignment only####");
+
+				docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+
+				AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+
+				KeywordPage keywordPage = new KeywordPage(driver);
+
+				baseClass.stepInfo("Navigate to keyword page");
+				keywordPage.navigateToKeywordPage();
+
+				baseClass.stepInfo("Add keyword");
+				keywordPage.addKeyword(keywordname, colour);
+
+				DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+				docViewRedact.selectsecuritygroup(Input.securityGroup);
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.searchString1);
+
+				baseClass.stepInfo("Create bulk assign with new assignment with persistant hit.");
+				session.bulkAssignWithNewAssignmentWithPersistantHit(AssignName, Input.codingFormName);
+
+				baseClass.stepInfo("Edit assignment");
+				assignmentPage.editAssignment(AssignName);
+
+				baseClass.stepInfo("Verify added keyword is checked.");
+				assignmentPage.verifyAddedKeywordsChecked();
+
+				baseClass.stepInfo("Reviews adding and distributing to Reviewer");
+				assignmentPage.assignmentDistributingToReviewer();
+
+				loginPage.logout();
+				baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+				// Login As Reviewer
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+				// selecting the assignment
+				assignmentPage.SelectAssignmentByReviewer(AssignName);
+
+				baseClass.stepInfo("Verify persistant hit for keyword");
+				docView.persistenHitWithSearchString(keywordname);
+				
+                                baseClass.stepInfo("verify highlight keyword in document");
+				docView.verifyKeywordHighlightedOnDocViewwithKeywordColour(rgbCode, HaxCode);
+
+				loginPage.logout();
+
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+				baseClass.stepInfo("Navigate To Assignments Page");
+				assignmentPage.navigateToAssignmentsPage();
+
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+
+				baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+				assignmentPage.deleteAssignment(AssignName);
+
+				baseClass.stepInfo("Navigate to keyword page");
+				keywordPage.navigateToKeywordPage();
+
+				baseClass.stepInfo("Delete keyword");
+				keywordPage.deleteKeywordByName(keywordname);
+
 			}
 			 
 		

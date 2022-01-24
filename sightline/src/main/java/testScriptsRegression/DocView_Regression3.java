@@ -1671,7 +1671,218 @@ public class DocView_Regression3 {
 
 		loginPage.logout();
 	}
+	
+	
+	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA
+	 * @TestCase_id : 52257 - Verify that after deleting the annotation layer by PA user under specific SecurityGroup should not present respective redactions/annotations/remarks.
+	 * @Description : Verify that after deleting the annotation layer by PA user under specific SecurityGroup should not present respective redactions/annotations/remarks.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 16)
+	public void verifyRedactionAnnoationtRemarkByAnnotationlayerDeleted() throws Exception {
+		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		namesg2 = Input.randomText + Utility.dynamicNameAppender();
+		namesg3 = Input.randomText + Utility.dynamicNameAppender();
+		String remark = Input.randomText + Utility.dynamicNameAppender();
+		docExp = new DocExplorerPage(driver);
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52257");
+		utility = new Utility(driver);
+		loginPage = new LoginPage(driver);
+		loginPage.logout();
 
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		Reporter.log("Logged in as User: " + Input.pa2userName);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		baseClass.stepInfo("#### Verify that after deleting the annotation layer by PA user under specific SecurityGroup should not present respective redactions/annotations/remarks ####");
+
+		// creating two new security groups and adding annotation layer
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.AddSecurityGroup(namesg2);
+		baseClass.CloseSuccessMsgpopup();
+		driver.scrollPageToTop();
+		securityGroupsPage.AddSecurityGroup(namesg3);
+
+		// Creating annotation layer and assigning to newly created SGs
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+		baseClass.CloseSuccessMsgpopup();
+		
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+
+		sessionsearch.bulkRelease(namesg2);
+		sessionsearch.bulkRelease(namesg3);
+		driver.waitForPageToBeReady();
+
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+
+		// Switch To SG1
+		docViewRedact.selectsecuritygroup(namesg2);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		docView = new DocViewPage(driver);
+
+		docView.navigateToDocViewPageURL();
+
+		baseClass.stepInfo("Perfrompage redaction");
+		docView.nonAudioPageRedaction(Input.defaultRedactionTag);
+
+		baseClass.stepInfo("Perfrom non audio annotation");
+		docView.performNonAudioAnnotation();
+		
+		baseClass.stepInfo("Perform Remark with save operation");
+		docViewMetaDataPage.performRemarkWithSaveOperation(10, 15,remark);
+
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		Reporter.log("Logged in as User: " + Input.pa2userName);
+
+		AnnotationLayer annotation = new AnnotationLayer(driver);
+		annotation.deleteAnnotationByPagination(AnnotationLayerNew);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		
+		docViewRedact.selectsecuritygroup(namesg2);
+		baseClass.stepInfo("Navigating to docview from session search");
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+
+		baseClass.stepInfo("Verify redaction,annotation and remark buttons are not displayed.");
+		docView.verifyRedactionAnnotaionAndRemarkButtonsAreDisabled();
+
+		baseClass.stepInfo("Verify applied redaction and annotation is not displayed.");
+		docView.verifyAppliedRedactionAndAnnotationIsNotDisplayed();
+		
+		baseClass.stepInfo("Verify highlighted text for already added remark is deleted from document on doc view. ");
+		docViewMetaDataPage.verifyHighlightedTextRemarkNotPresentOnDoc();
+ 
+		docViewRedact.selectsecuritygroup(Input.securityGroup);
+		loginPage.logout();
+		loginPage.quitBrowser();
+		LoginPage.clearBrowserCache();
+	}
+
+	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA
+	 * @TestCase_id : 52258 - Verify that after deleting the annotation layer by RMU user should not present respective redactions/annotations/remarks.
+	 * @Description : Verify that after deleting the annotation layer by RMU user should not present respective redactions/annotations/remarks.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 17)
+	public void verifyRedactionAnnoationtRemarkByAnnotlayerDeletedByRMU() throws Exception {
+		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		namesg2 = Input.randomText + Utility.dynamicNameAppender();
+		namesg3 = Input.randomText + Utility.dynamicNameAppender();
+		String remark = Input.randomText + Utility.dynamicNameAppender();
+		docExp = new DocExplorerPage(driver);
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52258");
+		utility = new Utility(driver);
+		loginPage = new LoginPage(driver);
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		Reporter.log("Logged in as User: " + Input.pa2userName);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		baseClass.stepInfo("#### Verify that after deleting the annotation layer by RMU user should not present respective redactions/annotations/remarks. ####");
+
+		// creating two new security groups and adding annotation layer
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.AddSecurityGroup(namesg2);
+		baseClass.CloseSuccessMsgpopup();
+		driver.scrollPageToTop();
+		securityGroupsPage.AddSecurityGroup(namesg3);
+
+		// Creating annotation layer and assigning to newly created SGs
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+		baseClass.CloseSuccessMsgpopup();
+		
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+
+		sessionsearch.bulkRelease(namesg2);
+		sessionsearch.bulkRelease(namesg3);
+		driver.waitForPageToBeReady();
+
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+
+		// Switch To SG1
+		docViewRedact.selectsecuritygroup(namesg2);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		docView = new DocViewPage(driver);
+
+		docView.navigateToDocViewPageURL();
+
+		baseClass.stepInfo("Perfrompage redaction");
+		docView.nonAudioPageRedaction(Input.defaultRedactionTag);
+
+		baseClass.stepInfo("Perfrom non audio annotation");
+		docView.performNonAudioAnnotation();
+		
+		baseClass.stepInfo("Perform Remark with save operation");
+		docViewMetaDataPage.performRemarkWithSaveOperation(10, 15,remark);
+
+		AnnotationLayer annotation = new AnnotationLayer(driver);
+		annotation.deleteAnnotationByPagination(AnnotationLayerNew);
+
+		docViewRedact.selectsecuritygroup(namesg2);
+		baseClass.stepInfo("Navigating to docview from session search");
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+
+		baseClass.stepInfo("Verify redaction,annotation and remark buttons are not displayed.");
+		docView.verifyRedactionAnnotaionAndRemarkButtonsAreDisabled();
+
+		baseClass.stepInfo("Verify applied redaction and annotation is not displayed.");
+		docView.verifyAppliedRedactionAndAnnotationIsNotDisplayed();
+		
+		baseClass.stepInfo("Verify highlighted text for already added remark is deleted from document on doc view. ");
+		docViewMetaDataPage.verifyHighlightedTextRemarkNotPresentOnDoc();
+
+		docViewRedact.selectsecuritygroup(Input.securityGroup);
+		loginPage.logout();
+		loginPage.quitBrowser();
+		LoginPage.clearBrowserCache();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void close() throws ParseException, InterruptedException, IOException {
 		try {

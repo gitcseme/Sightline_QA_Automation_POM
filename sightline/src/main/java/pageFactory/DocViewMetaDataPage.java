@@ -546,6 +546,11 @@ public class DocViewMetaDataPage {
 		return driver.FindElementByXPath(
 				"//table[@id='MetaDataDT']//td[text()='ParentDocID']//..//td[text()='" + docID + "']");
 	}
+	
+	//Added by Gopinath
+	public ElementCollection getAddedRemark() {
+		return driver.FindElementsByCssSelector("g[data-pcc-mark*='highlighttextannotation']");
+	}
 
 	public DocViewMetaDataPage(Driver driver) {
 
@@ -2878,4 +2883,29 @@ public class DocViewMetaDataPage {
 			System.out.println("Not able to select redacted area");
 		}
 	}
+	/** 
+	 * @author Gopinath Method for perform remark.
+	 * @description : Method for verifying highlighted text for already added remark is deleted from document on doc view. 
+	 */
+	public void verifyHighlightedTextRemarkNotPresentOnDoc() {
+		try {
+			List<WebElement> addedRemarks=null;
+			driver.scrollPageToTop();
+			try {
+				addedRemarks = getAddedRemark().FindWebElements();
+				if(addedRemarks.size()==0) {
+					base.passedStep("Highlighted text for already added remark is deleted from document on doc view successfully");
+				}else {
+					base.failedStep("Highlighted text for already added remark is not deleted from document on doc view");
+				}
+			}catch(Exception e) {
+				base.passedStep("Highlighted text for already added remark is deleted from document on doc view successfully");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying highlighted text for already added remark is deleted from document on doc view. "+e.getLocalizedMessage());
+		}
+	}
+	
+	
 }

@@ -2750,6 +2750,11 @@ public class DocViewPage {
 	public Element getDocView_AnalyticalPanel_NoData() {
 		return driver.FindElementByXPath("//td[@class='dataTables_empty']");
 	}
+	//Added by Gopinath -21/01/2022
+	public ElementCollection getHighlightedKeywordrgbCode(String rgbCode) {
+		return driver.FindElementsByCssSelector("rect[style*='fill'][style*='"+rgbCode+"']");
+	}
+	
 
 	public Element getDocView_AnalyticsExitingFolderConceptual() {
 		return driver.FindElementById("tabExiting");
@@ -21706,6 +21711,58 @@ public class DocViewPage {
 	}
 	
 	/**
+	 * @author Gopinath
+	 * @Description :Verify comment inner text area field inner text.
+	 */
+	public void verifyCommentTextFieldInnerText(String text) {
+		try {
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocviewCommentSection());
+			getDocviewCommentSection().isElementAvailable(15);
+			String comment = getDocviewCommentSection().getText();
+			if(!comment.contentEquals(text)) {
+				base.passedStep("Added Comment of text field area of security group is not eqaul with different security group");
+			}else {
+				base.failedStep("Added Comment of text field area of security group is eqaul with different security group");
+			}
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while comment inner text." + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @author Gopinath.
+	 * 
+	 * @description : This method to verify keyword highlighted on doc view.
+	 * @param rgbCode (selected keyword colour rgb code
+	 * @param expectedElementHexCode(selected keyword color hex code
+	 */
+	public void verifyKeywordHighlightedOnDocViewwithKeywordColour( String rgbCode, String expectedElementHexCode) {
+		try { 
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			List<WebElement> keyword = getHighlightedKeywordrgbCode(rgbCode).FindWebElements();
+			System.out.println(keyword.get(0).getCssValue("fill"));
+			String color = keyword.get(0).getCssValue("fill");
+			String hex = org.openqa.selenium.support.Color.fromString(color).asHex();
+			System.out.println(hex);
+			if (keyword.get(0).isDisplayed() && (hex.contentEquals(expectedElementHexCode))) {
+				System.out.println("Keyword highlighted on doc view successfully");
+				base.passedStep("Keyword highlighted on doc view successfully");
+				base.passedStep("Keyword highlighted on doc view with expected colour");
+			} else {
+				System.out.println("Keyword not highlighted on doc view ");
+				base.failedStep("Keyword not highlighted on doc view ");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while click on translation tab." + e.getMessage());
+
+		}
+	}
+  /*
 	 * @Author Vijaya.Rani Created on 20/01/2022
 	 * @Description To perform folder Conceputually docs in the DocView Test Case
 	 *              id: RPMXCON-50821

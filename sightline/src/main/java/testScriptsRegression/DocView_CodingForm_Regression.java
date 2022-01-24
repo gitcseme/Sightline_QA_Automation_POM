@@ -22,10 +22,13 @@ import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AnnotationLayer;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
+import pageFactory.DocExplorerPage;
+import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
@@ -9060,6 +9063,135 @@ public class DocView_CodingForm_Regression {
 		// logout
 		loginPage.logout();
 
+	}
+	
+	/** 
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA
+	 * @TestCase_id : 51005 - To verify that comment should not be displayed on document, if document is in two different security group and comment is in one security group.
+	 * @Description : To verify that comment should not be displayed on document, if document is in two different security group and comment is in one security group
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 17)
+	public void verifyCommentTextFieldIsNotAppearedAtDiffSecurityGroup() throws Exception {
+		String AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		String namesg2 = Input.randomText + Utility.dynamicNameAppender();
+		String namesg3 = Input.randomText + Utility.dynamicNameAppender();
+		String codingForm =  Input.randomText + Utility.dynamicNameAppender();
+		String codingForm2 =  Input.randomText + Utility.dynamicNameAppender();
+		String action="Make It Required";
+		String comments="comment";
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51005");
+		loginPage = new LoginPage(driver);
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		Reporter.log("Logged in as User: " + Input.pa2userName);
+		baseClass.stepInfo("#### To verify that comment should not be displayed on document, if document is in two different security group and comment is in one security group ####");
+
+		// creating two new security groups and adding annotation layer
+		SecurityGroupsPage securityGroupsPage = new SecurityGroupsPage(driver);
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.AddSecurityGroup(namesg2);
+		baseClass.CloseSuccessMsgpopup();
+		driver.scrollPageToTop();
+		securityGroupsPage.AddSecurityGroup(namesg3);
+
+		// Creating annotation layer and assigning to newly created SGs
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+		baseClass.CloseSuccessMsgpopup();
+		
+		baseClass.stepInfo("Add comment to security group");
+		securityGroupsPage.addCommentToSecurityGroup(namesg2, Input.documentComments);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		securityGroupsPage.addCommentToSecurityGroup(namesg3, Input.documentComments);
+		
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+
+		sessionsearch.bulkRelease(namesg2);
+		sessionsearch.bulkRelease(namesg3);
+		driver.waitForPageToBeReady();
+
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rev1userName);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+
+		CodingForm coding = new CodingForm(driver);
+		// Switch To SG1
+		docViewRedact.selectsecuritygroup(namesg2);
+		coding.navigateToCodingFormPage();
+		baseClass.stepInfo("Add coding form with comment");
+		coding.addCodingFormWithCommentValidation(codingForm, "", Input.documentComments,comments,"",action);
+		
+		coding.navigateToCodingFormPage();
+		baseClass.stepInfo("Coding form to security group");
+		coding.CodingformToSecurityGroup(codingForm);
+		
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		DocViewPage docView = new DocViewPage(driver);
+		docView.navigateToDocViewPageURL();
+		driver.waitForPageToBeReady();
+		docView.fillingTheDocviewCommentsSection(Input.comment);
+		
+		docViewRedact.selectsecuritygroup(namesg3);
+		coding.navigateToCodingFormPage();
+		baseClass.stepInfo("Add coding form with comment");
+		coding.addCodingFormWithCommentValidation(codingForm2, "", Input.documentComments,comments,"",action);
+		coding.navigateToCodingFormPage();
+		baseClass.stepInfo("Coding form to security group");
+		coding.CodingformToSecurityGroup(codingForm2);
+		docViewRedact.selectsecuritygroup(Input.securityGroup);
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		docViewRedact.selectsecuritygroup(namesg3);
+		baseClass.stepInfo("Navigating to docview from session search");
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		
+		baseClass.stepInfo("Verify comment inner text area field inner text.");
+		docView.verifyCommentTextFieldInnerText(comments);
+		docViewRedact.selectsecuritygroup(Input.securityGroup);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		securityGroupsPage.deleteSecurityGroups(namesg3);
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
+		loginPage.quitBrowser();
+		LoginPage.clearBrowserCache();
 	}
 	
 	@DataProvider(name = "paToRmuRev")
