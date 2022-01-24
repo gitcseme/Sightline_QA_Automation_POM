@@ -256,7 +256,7 @@ public class Input {
 	public static String testTenthDocId;
 	public static String docNearDupeDocId;
 	public static String UniCodeDocId;
-	public  static String TiffDocId;
+	public static String TiffDocId;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -269,18 +269,15 @@ public class Input {
 	public static String pageRange;
 	public static String fullPageRange;
 	public static String iconColor;
-	
-	//added by arun
+
+	// added by arun
 	public static String pageRange1;
 	public static String pageRange2;
 	public static String pageRange3;
 	public static String pageRange4;
 	public static String searchPhraseWithQuote;
-	
-	
-	
 
-	// Added by Raghuram - Modified 12/30/21
+	// Added by Raghuram - Modified 01/28/21
 	public static String docHighlightColor;
 	public static String sortDataBy;
 	public static String sortType;
@@ -304,6 +301,7 @@ public class Input {
 	public static String batchColumnHeaderErrorFileName;
 	public static String BatchFileWithMultiplesheetFile;
 	public static String savedSearchColor;
+	public static String searchString8;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -463,13 +461,11 @@ public class Input {
 	public static String threadDocWithToolTip;
 	public static String conceptualDoc;
 
-
-
-	//added by jayanthi-30/12/21
+	// added by jayanthi-30/12/21
 	public static String TallySearch;
 	public static String TallyCN;
-	
-	//Added by Gopinath - 05/01/2021
+
+	// Added by Gopinath - 05/01/2021
 	public static String downloadDocID;
 	public static String translationDocId;
 
@@ -616,7 +612,7 @@ public class Input {
 		nearDupeDocumentForReviewer = testData.getNearDupeDocumentForReviewer();
 		threadDocumentForReviewer = testData.getThreadDocumentForReviewer();
 		newNearDupeDocId = testData.getNewNearDupeDocId();
-		nearDupeViewDocId=testData.getNearDupeViewDocId();
+		nearDupeViewDocId = testData.getNearDupeViewDocId();
 		nearDupeCompletedDocId = testData.getNearDupeCompletedDocId();
 		nearDupeDocId = testData.getNearDupeDocId();
 		nearDupeCompletedDocIdReviewer = testData.getNearDupeCompletedDocIdReviewer();
@@ -629,15 +625,13 @@ public class Input {
 		nearDupeBlukAssignReviewer = testData.getNearDupeBulkAssignReviewer();
 		nearDupeBulkAssignReviewId = testData.getNearDupeBulkAssignReviewId();
 		theardMapViewId = testData.getTheardMapViewId();
-		threadMapNewId=testData.getThreadMapNewId();
-		conceptualDocId1=testData.getConceptualDocId1();
+		threadMapNewId = testData.getThreadMapNewId();
+		conceptualDocId1 = testData.getConceptualDocId1();
 		nearDupeDocId1 = testData.getNearDupeDocId1();
-		nearDupeImageDoc=testData.getNearDupeImageDoc();
+		nearDupeImageDoc = testData.getNearDupeImageDoc();
 		analyticsConceptualDocId1 = testData.getAnalyticsConceptualDocId1();
-		analyticsConceptualDocId2= testData.getAnalyticsConceptualDocId2();
-		miniConceptualNoDoc=testData.getMiniConceptualNoDoc();
-		
-		
+		analyticsConceptualDocId2 = testData.getAnalyticsConceptualDocId2();
+		miniConceptualNoDoc = testData.getMiniConceptualNoDoc();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
@@ -716,22 +710,18 @@ public class Input {
 		docIdThumbnails = testData.getDocIdThumbnails();
 		testSecondDocId = testData.getTestSecondDocId();
 		testTenthDocId = testData.getTestTenthDocId();
-		docNearDupeDocId=testData.getDocNearDupeDocId();
+		docNearDupeDocId = testData.getDocNearDupeDocId();
 		UniCodeDocId = testData.getUniCodeDocId();
 		TiffDocId = testData.getTiffDocId();
 
-			
 		// Added by Arun
 		pageRange1 = testData.getPageRange1();
 		pageRange2 = testData.getPageRange2();
 		pageRange3 = testData.getPageRange3();
 		pageRange4 = testData.getPageRange4();
 		searchPhraseWithQuote = testData.getSearchPhraseWithQuote();
-		
-		
-		
-		
-		// Added by Raghuram
+
+		// Added by Raghuram 01/28/21
 		docHighlightColor = testData.getDocHighlightColor();
 		sortDataBy = testData.getSortDataBy();
 		sortType = testData.getSortType();
@@ -755,6 +745,7 @@ public class Input {
 		batchColumnHeaderErrorFileName = testData.getBatchColumnHeaderErrorFileName();
 		BatchFileWithMultiplesheetFile = testData.getBatchFileWithMultiplesheetFile();
 		savedSearchColor = testData.getSavedSearchColor();
+		searchString8 = testData.getSearchString8();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
@@ -762,8 +753,8 @@ public class Input {
 		batchFileNewLocation = testData.getBatchFileNewLocation();
 		bullHornIconColor = testData.getBullHornIconColor();
 		progresBarColor = testData.getProgresBarColor();
-		BatchFileduplicateHeader= testData.getBatchFileduplicateHeader();
-		
+		BatchFileduplicateHeader = testData.getBatchFileduplicateHeader();
+
 		/**
 		 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
 		 *         by:Gopinath.
@@ -942,15 +933,15 @@ public class Input {
 
 		threadDocWithToolTip = testData.getThreadDocWithToolTip();
 		conceptualDoc = testData.getConceptualDoc();
-		
-         TallySearch=testData.getTallySearch();
-		 TallyCN=testData.getTallyCN();
-		 
-		 //Added by Gopinath 05/01/2021
-		 downloadDocID = testData.getDownloadDocID();
-		 translationDocId = testData.getTranslationDocId();
-		 
-		 conceptualSearchString1 = testData.getConceptualSearchString1();
+
+		TallySearch = testData.getTallySearch();
+		TallyCN = testData.getTallyCN();
+
+		// Added by Gopinath 05/01/2021
+		downloadDocID = testData.getDownloadDocID();
+		translationDocId = testData.getTranslationDocId();
+
+		conceptualSearchString1 = testData.getConceptualSearchString1();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

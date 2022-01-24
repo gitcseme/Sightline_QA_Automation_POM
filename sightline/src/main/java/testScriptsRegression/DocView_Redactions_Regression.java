@@ -9,6 +9,8 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -5643,8 +5645,7 @@ public class DocView_Redactions_Regression {
 		baseClass.stepInfo(
 				"Verify highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search when documents searched with work product");
 
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 		driver.waitForPageToBeReady();
 		sessionSearch.switchToWorkproduct();
 		sessionSearch.getSavedSearchBtn1().Click();
@@ -5657,9 +5658,9 @@ public class DocView_Redactions_Regression {
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
 		docView.getPersistantHitEyeIcon().Click();
 		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(keywordsArrayPT[0]);
-		
+
 	}
-	
+
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51849 Verify that persistent hits panel should not retain
@@ -5835,9 +5836,11 @@ public class DocView_Redactions_Regression {
 
 	/**
 	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-49990 Description :Verify that when two different users applies redaction to same document 
-	 * then default selection of redaction tag should be as per users session.
-	 * @throws Exception 
+	 * Id:RPMXCON-49990 Description :Verify that when two different users applies
+	 * redaction to same document then default selection of redaction tag should be
+	 * as per users session.
+	 * 
+	 * @throws Exception
 	 * 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 66)
@@ -5876,24 +5879,24 @@ public class DocView_Redactions_Regression {
 		// performing multi page redaction include with different tag
 		docViewRedact.selectingMultiplePagesForRedactionInclude(redactionTag);
 		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
-		
+
 		baseClass.passedStep("Redaction done for Tag Name : " + redactionTag);
-		
-		//Logout and login as different user Reviewer
+
+		// Logout and login as different user Reviewer
 		loginPage.logout();
 		baseClass.passedStep("Logged out as RMU");
-		
+
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.passedStep("Logged in as other user- Reviewer");
-		
+
 		// Adding search results and perform action view in docview
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.ViewInDocView();
 
 		// Clicking redact icon
 		driver.WaitUntil((new Callable<Boolean>() {
-		public Boolean call() throws Exception {
-		return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			public Boolean call() throws Exception {
+				return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
 			}
 		}), Input.wait30);
 		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
@@ -5904,7 +5907,7 @@ public class DocView_Redactions_Regression {
 		docViewRedact.verifyDefaultRedactionTagSelectionInMultiPageRedact();
 
 	}
-	
+
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51330 Verify after impersonation all hits of the document should
@@ -6079,8 +6082,8 @@ public class DocView_Redactions_Regression {
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
 		loginPage.logout();
-		
-        //Login as PA
+
+		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
 		baseClass.stepInfo("PA has been impersonated as RMU");
@@ -6113,8 +6116,8 @@ public class DocView_Redactions_Regression {
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
 		loginPage.logout();
-		
-        //Login as PA
+
+		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoReviewer();
 		baseClass.stepInfo("PA has been impersonated as REV");
@@ -6148,11 +6151,12 @@ public class DocView_Redactions_Regression {
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
 	}
-	
-	
+
 	/**
 	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-46955 Description :Part of 7.1: Verify that when enters only ‘Page Range’ from multi-page redactions pop up then for entered page range redaction should be applied
+	 * Id:RPMXCON-46955 Description :Part of 7.1: Verify that when enters only ‘Page
+	 * Range’ from multi-page redactions pop up then for entered page range
+	 * redaction should be applied
 	 * 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 68)
@@ -6164,47 +6168,48 @@ public class DocView_Redactions_Regression {
 
 		baseClass.stepInfo("Test case id : RPMXCON-46955");
 		baseClass.stepInfo("Verify docview multipage redaction only entering page range");
-		
-		//Login as RMU and performing basic search
+
+		// Login as RMU and performing basic search
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.ViewInDocView();
 		baseClass.passedStep("Navigated to DocView");
-		
-		//clicking docview redact icon
+
+		// clicking docview redact icon
 		driver.WaitUntil((new Callable<Boolean>() {
-		public Boolean call() throws Exception {
-		return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			public Boolean call() throws Exception {
+				return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
 			}
-			}), Input.wait30);
+		}), Input.wait30);
 		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
 		docView.getDocView_RedactIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
-		
-		//performing redact by entering only page range
+
+		// performing redact by entering only page range
 		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return baseClass.getSuccessMsgHeader().Visible();
 			}
 		}), Input.wait60);
-		baseClass.passedStep("Redaction done for entered page Range :"+Input.pageRange);
-		String successMessage =baseClass.getSuccessMsgHeader().getText().toString();
-		
-		if(successMessage.contains("Success !")) {
+		baseClass.passedStep("Redaction done for entered page Range :" + Input.pageRange);
+		String successMessage = baseClass.getSuccessMsgHeader().getText().toString();
+
+		if (successMessage.contains("Success !")) {
 			baseClass.passedStep("Redaction done when entering only page range with default selected redaction tag");
+		} else {
+			baseClass
+					.failedStep("Redaction not done when entering only page range with default selected redaction tag");
 		}
-		else {
-			baseClass.failedStep("Redaction not done when entering only page range with default selected redaction tag");
-		}
-	
+
 	}
-	
-	
+
 	/**
 	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-46957 Description :Verify that when applies 'Multi Page' redaction,
-	 *  the redaction popup should automatically select the redaction tag that was last applied across user session(s) 
-	 * @throws Exception 
+	 * Id:RPMXCON-46957 Description :Verify that when applies 'Multi Page'
+	 * redaction, the redaction popup should automatically select the redaction tag
+	 * that was last applied across user session(s)
+	 * 
+	 * @throws Exception
 	 * 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 69)
@@ -6216,26 +6221,26 @@ public class DocView_Redactions_Regression {
 
 		baseClass.stepInfo("Test case id : RPMXCON-46957");
 		baseClass.stepInfo("Verify automatic selection of redaction tag that last applied across user session");
-		
-		//Pre-requisite - getting the last saved redaction tag name
-		
+
+		// Pre-requisite - getting the last saved redaction tag name
+
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.ViewInDocView();
 		driver.WaitUntil((new Callable<Boolean>() {
-		public Boolean call() throws Exception {
-		return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			public Boolean call() throws Exception {
+				return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
 			}
-			}), Input.wait30);
+		}), Input.wait30);
 		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
 		docView.getDocView_RedactIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
 		String lastSavedRedactionTag = docViewRedact.gettingLastSavedRedactionTagName();
-		baseClass.passedStep("Last saved Redaction Tagname :"+ lastSavedRedactionTag);
+		baseClass.passedStep("Last saved Redaction Tagname :" + lastSavedRedactionTag);
 		docViewRedact.redactionTagCancleBtn().Click();
-		
-		// Loggedout and login back  as RMU
+
+		// Loggedout and login back as RMU
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// Adding search results and view in docview
 		sessionSearch.basicContentSearch(Input.testData1);
@@ -6254,16 +6259,16 @@ public class DocView_Redactions_Regression {
 		// performing multi page redaction include with pagerange
 		String redactionTagSelected = docViewRedact.gettingLastSavedRedactionTagName();
 		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
-		baseClass.passedStep("Automatically selected redaction tag name :"+ redactionTagSelected);
-		
-		
-		if(lastSavedRedactionTag.equalsIgnoreCase(redactionTagSelected)) {
-			baseClass.passedStep("Redaction tag selected automatically which applied for last redaction as per user session");
+		baseClass.passedStep("Automatically selected redaction tag name :" + redactionTagSelected);
+
+		if (lastSavedRedactionTag.equalsIgnoreCase(redactionTagSelected)) {
+			baseClass.passedStep(
+					"Redaction tag selected automatically which applied for last redaction as per user session");
+		} else {
+			baseClass.failedStep(
+					"Redaction tag selected automatically which is not applied for last redaction as per user session");
 		}
-		else {
-			baseClass.failedStep("Redaction tag selected automatically which is not applied for last redaction as per user session");
-		}
-		
+
 	}
 
 	/**
@@ -6403,22 +6408,22 @@ public class DocView_Redactions_Regression {
 		robot.keyPress(KeyEvent.VK_DELETE);
 		robot.keyRelease(KeyEvent.VK_DELETE);
 		driver.waitForPageToBeReady();
-		
-		
+
 		baseClass.stepInfo("Move to next page to add this page redaction");
 		baseClass.waitForElement(docViewRedact.docViewNextPage());
 		docViewRedact.docViewNextPage().Click();
 		driver.waitForPageToBeReady();
-		
+
 		baseClass.stepInfo("Adding the this page redaction");
 		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
 		baseClass.stepInfo("This page redaction has been performed");
-		
-		baseClass.stepInfo("Move to previous page to verify this page redaction is still present after del key is pressed");
+
+		baseClass.stepInfo(
+				"Move to previous page to verify this page redaction is still present after del key is pressed");
 		baseClass.waitForElement(docViewRedact.docViewPreviousPage());
 		docViewRedact.docViewPreviousPage().Click();
 		driver.waitForPageToBeReady();
-		
+
 		baseClass.stepInfo("Navigate to another document and come back to redacted document");
 		baseClass.waitForElement(docViewRedact.nextDocViewBtn());
 		docViewRedact.nextDocViewBtn().Click();
@@ -6435,7 +6440,7 @@ public class DocView_Redactions_Regression {
 		softAssert.assertAll();
 
 	}
-	
+
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-49371 Verify that when 'Rectangle' redaction selected to delete with
@@ -6513,10 +6518,11 @@ public class DocView_Redactions_Regression {
 		softAssert.assertAll();
 
 	}
-	
+
 	/**
 	 * Author : Sai Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
-	 * RPMXCON-51044 Verify after impersonation user can maximize the middle panel of the doc view
+	 * RPMXCON-51044 Verify after impersonation user can maximize the middle panel
+	 * of the doc view
 	 * 
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
@@ -6526,16 +6532,15 @@ public class DocView_Redactions_Regression {
 		// Login As RMU
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		baseClass.stepInfo("Test case Id: RPMXCON- 51044");
-		baseClass.stepInfo(
-				"Verify after impersonation user can maximize the middle panel of the doc view");
-		
+		baseClass.stepInfo("Verify after impersonation user can maximize the middle panel of the doc view");
+
 		baseClass.impersonateRMUtoReviewer();
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Logged in as SA user");
 		baseClass.impersonateSAtoPA();
@@ -6546,7 +6551,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch1.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Logged in as SA user");
 		baseClass.impersonateSAtoRMU();
@@ -6557,7 +6562,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch2.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Logged in as SA user");
 		baseClass.impersonateSAtoReviewer();
@@ -6568,7 +6573,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
 		baseClass.stepInfo("PA has been impersonated as RMU");
@@ -6578,7 +6583,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoReviewer();
 		baseClass.stepInfo("PA has been impersonated as Rev");
@@ -6586,11 +6591,213 @@ public class DocView_Redactions_Regression {
 		SessionSearch sessionsearch5 = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
-		docViewRedact.verifyMaximizetheMiddlePanel();		
-	 
+		docViewRedact.verifyMaximizetheMiddlePanel();
+
 	}
 
-	
+	/**
+	 * @author Raghuram.A date: NA Modified date: 01/18/21 Modified by: Raghuram A
+	 *         Description : Verify that when page highlighting added for different
+	 *         file types (e.g. XLS, XLSX, CSV, etc...) then highlighting should not
+	 *         be shifted when visiting these documents : RPMXCON-52309 Sprint : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 70)
+	public void verifyHighlightedThisPage() throws Exception {
+
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		List<String> docIDlist = new ArrayList<>();
+		int sizeofList;
+		String firnstDocname, secondDocname, docName;
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52309 Sprint 10");
+		baseClass.stepInfo(
+				"Verify that when page highlighting added for different file types (e.g. XLS, XLSX, CSV, etc...) then highlighting should not be shifted when visiting these documents");
+
+		// search and View in DocView
+		sessionSearch.basicContentSearch(Input.searchString8);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// Main method
+		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
+		sizeofList = miniDocListpage.getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
+		docIDlist = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
+
+		firnstDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Current Document Viewed : " + firnstDocname);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// check And DO ThisPage Redact
+		docViewRedact.checkANdDOThisPageHighlight();
+
+		// Switch to a different document
+		secondDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Switched Document : " + secondDocname);
+		baseClass.stepInfo("Switched Document : " + secondDocname);
+
+		// Back to Iniital Document
+		baseClass.stepInfo("Back to Initial document");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);// To handle abnormal waits
+		miniDocListpage.getDociD(firnstDocname).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);// To handle abnormal waits
+		docName = miniDocListpage.getMainWindowActiveDocID().getText();
+		System.out.println("Current Document Viewed : " + docName);
+		baseClass.stepInfo("Current Document Viewed : " + docName);
+
+		// verify ThisPage Redacted Maintained
+		docViewRedact.verifyThisPageHighlightMaintained(true);
+
+	}
+
+	/**
+	 * @author Raghuram.A date: NA Modified date: 01/18/21 Modified by: Raghuram A
+	 *         Description : Verify that when rectangle redaction added for
+	 *         different file types (e.g. XLS, XLSX, CSV, etc...) then redaction
+	 *         should not be shifted when visiting these documents : RPMXCON-52310
+	 *         (52301) Sprint : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 71)
+	public void verifyRectangleHighlightingPosition() throws Exception {
+
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		List<String> docIDlist = new ArrayList<>();
+		int sizeofList, x = 200, y = 100;
+		int xOffset = 200, yOffset = 100;
+		String firnstDocname, secondDocname, docName, xAxis, yAxis;
+		HashMap<String, String> xyMap = new HashMap<String, String>();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52310 Sprint 10");
+		baseClass.stepInfo(
+				"Verify that when highlighting added for different file types (e.g. XLS, XLSX, CSV, etc...) on different pages then highlighting should not be shifted when visiting these documents");
+
+		// search and View in DocView
+		sessionSearch.basicContentSearch(Input.searchString8);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// Main method
+		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
+		sizeofList = miniDocListpage.getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
+		docIDlist = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
+
+		firnstDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Current Document Viewed : " + firnstDocname);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Check for this page highlight and remove
+		docViewRedact.removeThisPageHighlight();
+
+		// do Rectangle Redact With XY Points
+		xyMap = docViewRedact.doRectangleHighlightWithXYPoints(x, y, xOffset, yOffset);
+		xAxis = xyMap.get("xAxis");
+		yAxis = xyMap.get("yAxis");
+
+		// Switch to a different document
+		secondDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Switched Document : " + secondDocname);
+		baseClass.stepInfo("Switched Document : " + secondDocname);
+
+		// Back to Initial Document
+		baseClass.stepInfo("Back to Initial document");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);// To handle abnormal waits
+		miniDocListpage.getDociD(firnstDocname).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docName = miniDocListpage.getMainWindowActiveDocID().getText();
+		System.out.println("Current Document Viewed : " + docName);
+		baseClass.stepInfo("Current Document Viewed : " + docName);
+
+		// Verify Position Retained
+		docViewRedact.verifyRectangleHighlightPositionRetained(xAxis, yAxis, true);
+
+	}
+
+	/**
+	 * @author Raghuram.A date: NA Modified date: 01/18/21 Modified by: Raghuram A
+	 *         Description : Verify that when rectangle redaction added for
+	 *         different file types (e.g. XLS, XLSX, CSV, etc...) then redaction
+	 *         should not be shifted when visiting these documents : RPMXCON-52301
+	 *         Sprint : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 71)
+	public void verifyRectangleRedactionPosition() throws Exception {
+
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		List<String> docIDlist = new ArrayList<>();
+		int sizeofList, x = 200, y = 100;
+		int xOffset = 200, yOffset = 100;
+		String firnstDocname, secondDocname, docName, xAxis, yAxis;
+		HashMap<String, String> xyMap = new HashMap<String, String>();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52301 Sprint 10");
+		baseClass.stepInfo(
+				"Verify that when rectangle redaction added for different file types (e.g. XLS, XLSX, CSV, etc...) then redaction should not be shifted when visiting these documents");
+
+		// search and View in DocView
+		sessionSearch.basicContentSearch(Input.searchString8);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// Main method
+		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
+		sizeofList = miniDocListpage.getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
+		docIDlist = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
+
+		firnstDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Current Document Viewed : " + firnstDocname);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Check for this page highlighted and remove
+		docViewRedact.removeThisPageHighlight();
+
+		// do Rectangle Redact With XY Points
+		xyMap = docViewRedact.doRectangleRedactWithXYPoints(x, y, xOffset, yOffset);
+		xAxis = xyMap.get("xAxis");
+		yAxis = xyMap.get("yAxis");
+
+		// Switch to a different document
+		secondDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Switched Document : " + secondDocname);
+		baseClass.stepInfo("Switched Document : " + secondDocname);
+
+		// Back to Initial Document
+		baseClass.stepInfo("Back to Initial document");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);// To handle abnormal waits
+		miniDocListpage.getDociD(firnstDocname).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docName = miniDocListpage.getMainWindowActiveDocID().getText();
+		System.out.println("Current Document Viewed : " + docName);
+		baseClass.stepInfo("Current Document Viewed : " + docName);
+
+		// Verify Position Retained
+		docViewRedact.verifyRectangleRedactionPositionRetained(xAxis, yAxis, true);
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
