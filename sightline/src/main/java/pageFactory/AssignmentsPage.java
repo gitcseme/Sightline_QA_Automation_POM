@@ -31,6 +31,7 @@ public class AssignmentsPage {
 	SoftAssert assertion;
 	SessionSearch search;
 	LoginPage lp;
+	KeywordPage keywordPage;
 
 	public Element getAssignmentActionDropdown() {
 		return driver.FindElementByXPath("//*[@id='ulActions']/../button[@class='btn btn-defualt dropdown-toggle']");
@@ -1035,7 +1036,7 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath(
 				"//*[@id='GridAssignment']/tbody//tr[td='" + assignmentName + "' and @class[contains(.,'highlight')]]");
 	}
-	
+
 	public Element getSortByMetaDataType() {
 		return driver.FindElementByXPath("//select[@id='ddlMetaDataDirection']");
 	}
@@ -1130,7 +1131,7 @@ public class AssignmentsPage {
 	}
 
 	public Element getAssignmentsInreviewerPg() {
-		return driver.FindElementByXPath("//h2[text()='Assignments within Assignment Group >>']");
+		return driver.FindElementByXPath("//h2[contains(text(),'Assignments within Assignment Group >>')]");
 	}
 
 	public Element getAssignmentsCompletedCountInreviewerPg(String assignmentName) {
@@ -1337,7 +1338,7 @@ public class AssignmentsPage {
 	public Element getUnComplePopOutYes() {
 		return driver.FindElementByXPath("//button[text()=' Yes']");
 	}
-	
+
 	public Element getSelectUserToAssignDA() {
 		return driver.FindElementByXPath(
 				"//*[@id='divNotAssignedUsers']//div[contains(.,'" + Input.da1userName + "')]/../div/label");
@@ -1361,14 +1362,34 @@ public class AssignmentsPage {
 				".//*[@id='dt_basic']//td[contains(.,'" + userNAme + "')]/following-sibling::td[2]");
 	}
 
-	
 	public Element getSelectDAUserToAssign() {
 		return driver.FindElementByXPath(
 				"//*[@id='divNotAssignedUsers']//div[contains(.,'" + Input.da1userName + "')]/../div/label");
 	}
+
 	public Element getSelectUserInDistributeTabsDA() {
 		return driver.FindElementByXPath(
 				"//*[@id='divDistributedDocUsers']//div[contains(.,'" + Input.da1userName + "')]/div/label");
+	}
+
+	// Added by Jeevitha
+	public Element getKeepFamilyTogetther_Text() {
+		return driver
+				.FindElementByXPath("//input[@id='IsKeepFamiliesTogether']/parent::label /i//following-sibling::span");
+	}
+
+	public Element getAssgn_keepEmailThreadTogetherToggle() {
+		return driver.FindElementByXPath("//input[@id='IsKeepEmailThreadsTogether']/parent::label /i");
+	}
+
+	public Element getKeepEmailThreadTogether_Text() {
+		return driver.FindElementByXPath(
+				"//input[@id='IsKeepEmailThreadsTogether']/parent::label /i//following-sibling::span");
+	}
+	
+
+	public ElementCollection getAvailableKeywordCheckboxes() {
+		return driver.FindElementsByXPath("//div[@id='divkeyword']//label[@class='checkbox']//i");
 	}
 
 	public AssignmentsPage(Driver driver) {
@@ -5976,7 +5997,6 @@ public class AssignmentsPage {
 		}
 
 	}
-	
 
 	/**
 	 * @author Iyappan.Kasinathan date: 10/7/2021 Modified date: NA
@@ -6582,10 +6602,9 @@ public class AssignmentsPage {
 		}
 	}
 
-
 	/**
-	 * Author : Raghuram A date: 10/12/21 NA Modified date:19/1/2022 Modified by:Raghuram A
-	 * Description :
+	 * Author : Raghuram A date: 10/12/21 NA Modified date:19/1/2022 Modified
+	 * by:Raghuram A Description :
 	 */
 	public String selectAssignmentToViewinDocView(String assignmentName) {
 		String compareCount = null;
@@ -6628,7 +6647,7 @@ public class AssignmentsPage {
 		}
 		return compareCount;
 	}
-	
+
 	/**
 	 * @author Jayanthi.ganesan Modified date-18/10/21
 	 */
@@ -9028,10 +9047,11 @@ public class AssignmentsPage {
 		driver.waitForPageToBeReady();
 
 	}
-	
+
 	/**
-	 * @author Jayanthi 
-	 * @Description: Add 4 reviewers and distributed docs to them(Reviewer/RMU/PA/DA).
+	 * @author Jayanthi
+	 * @Description: Add 4 reviewers and distributed docs to
+	 *               them(Reviewer/RMU/PA/DA).
 	 */
 	public void add4ReviewerAndDistribute() {
 		bc.waitForElement(getAssignment_ManageReviewersTab());
@@ -9060,7 +9080,8 @@ public class AssignmentsPage {
 		getDistributeBtn().waitAndClick(3);
 		bc.stepInfo("Documents are distributed to four reviewers successfully");
 
-  }
+	}
+
 	/**
 	 * @author Steffy
 	 * @description this method will the unassigned docs to the specific user.
@@ -9081,93 +9102,207 @@ public class AssignmentsPage {
 		bc.passedStep("User successfully unassigned from the Assignment" + user);
 		bc.CloseSuccessMsgpopup();
 	}
-	
-	 /**
-		 * @author Indium-Baskar date: 10/7/2021 Modified date: NA
-		 * @Description: Add three reviewers and distributed docs to them
-		 */
-		public void addReviewerAndDistributeDaPa() {
-			bc.waitForElement(getAssignment_ManageReviewersTab());
-			getAssignment_ManageReviewersTab().waitAndClick(10);
-			bc.waitForElement(getAddReviewersBtn());
-			getAddReviewersBtn().waitAndClick(10);
-			bc.waitForElement(getSelectUserToAssig());
-			getSelectUserToAssig().waitAndClick(5);
-			driver.scrollingToElementofAPage(getSelectUserToAssignDA());
-			getSelectUserToAssignDA().waitAndClick(5);
-			driver.scrollingToElementofAPage(getSelectUserToAssignPA());
-			getSelectUserToAssignPA().waitAndClick(5);
-			bc.waitForElement(getAdduserBtn());
-			getAdduserBtn().waitAndClick(5);
-			bc.VerifySuccessMessage("Record saved successfully");
-			bc.waitForElement(getDistributeTab());
-			getDistributeTab().waitAndClick(5);
-			bc.waitForElement(getSelectUserInDistributeDA());
-			getSelectUserInDistributeDA().waitAndClick(5);
-			getSelectUserInDistributeTabsPA().waitAndClick(5);
-			bc.CloseSuccessMsgpopup();
-			getDistributeBtn().waitAndClick(3);
-			bc.stepInfo("Documents are distributed to three reviewers successfully");
 
+	/**
+	 * @author Indium-Baskar date: 10/7/2021 Modified date: NA
+	 * @Description: Add three reviewers and distributed docs to them
+	 */
+	public void addReviewerAndDistributeDaPa() {
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		bc.waitForElement(getSelectUserToAssig());
+		getSelectUserToAssig().waitAndClick(5);
+		driver.scrollingToElementofAPage(getSelectUserToAssignDA());
+		getSelectUserToAssignDA().waitAndClick(5);
+		driver.scrollingToElementofAPage(getSelectUserToAssignPA());
+		getSelectUserToAssignPA().waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Record saved successfully");
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		bc.waitForElement(getSelectUserInDistributeDA());
+		getSelectUserInDistributeDA().waitAndClick(5);
+		getSelectUserInDistributeTabsPA().waitAndClick(5);
+		bc.CloseSuccessMsgpopup();
+		getDistributeBtn().waitAndClick(3);
+		bc.stepInfo("Documents are distributed to three reviewers successfully");
+
+	}
+
+	/**
+	 * @author Vijaya.Rani date: 19/01/2022 Modified date: NA Description: Toggle
+	 *         Disable Analytical panel Batch
+	 */
+
+	public void toggleEnableAnalyticalPanelSaveWithoutCompletion() {
+		// permissions
+		// Toggle disable for DisableCodeOutsideReviewersBatch
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		String analyticalPanelFlag = getAssgn_ToggleForAllowSaveWithoutCompletion().GetAttribute("class");
+
+		if (analyticalPanelFlag.contains("false")) {
+			getAssgn_ToggleForAllowSaveWithoutCompletion().Click();
 		}
-		
-		/**
-		 * @author Vijaya.Rani date: 19/01/2022 Modified date: NA Description: Toggle
-		 *         Disable Analytical panel Batch
-		 */
 
-		public void toggleEnableAnalyticalPanelSaveWithoutCompletion() {
-			// permissions
-			// Toggle disable for DisableCodeOutsideReviewersBatch
-			driver.waitForPageToBeReady();
-			driver.scrollingToBottomofAPage();
-			String analyticalPanelFlag = getAssgn_ToggleForAllowSaveWithoutCompletion().GetAttribute("class");
-
-			if (analyticalPanelFlag.contains("false")) {
-				getAssgn_ToggleForAllowSaveWithoutCompletion().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssgn_AnalyticsPanelToggle().Visible();
 			}
+		}), Input.wait60);
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAssgn_AnalyticsPanelToggle().Visible();
+		String analyticalPanelFlag1 = getAssgn_AnalyticsPanelToggle().GetAttribute("class");
+
+		if (!analyticalPanelFlag1.contains("False")) {
+			getAssgn_AnalyticsPanelToggle().Click();
+		}
+
+		driver.scrollPageToTop();
+		bc.waitForElement(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(5);
+		bc.CloseSuccessMsgpopup();
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param assginmentName
+	 * @throws InterruptedException
+	 */
+	public void selectAssignmentfromRMUDashborad(String assginmentName) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		bc.waitForElement(getRMUDashBoardBtn());
+		getRMUDashBoardBtn().waitAndClick(10);
+		bc.waitForElement(RMUDashBoardAssgn(assginmentName));
+		RMUDashBoardAssgn(assginmentName).ScrollTo();
+		RMUDashBoardAssgn(assginmentName).waitAndClick(10);
+	}
+
+	public String getDistibuteDocsCount(String userNAme) {
+		getAssignment_ManageReviewersTab().ScrollTo();
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(15);
+		bc.waitTime(1);
+		String actualDocs = getDistributedDocs(userNAme).getText();
+		System.out.println(actualDocs);
+		return actualDocs;
+
+	}
+
+	/**
+	 * @Authro Jeevitha
+	 * @Description : Can Enable or Disable Toggles
+	 * @param enableToggle
+	 * @param DisableToggle
+	 * @param toggleEle
+	 * @param ELementName
+	 * @param save
+	 */
+	public void toggleEnableOrDisableOfAssignPage(boolean enableToggle, boolean DisableToggle, Element toggleEle,
+			String ELementName, boolean save) {
+
+		if (enableToggle) {
+			bc.waitForElement(toggleEle);
+			String keepFMToggleStatus = toggleEle.GetAttribute("class");
+			if (keepFMToggleStatus.equals("true")) {
+				System.out.println(ELementName + " : Toggle is Already Enabled ");
+				bc.stepInfo(ELementName + " : Toggle is Already Enabled ");
+
+			} else if (keepFMToggleStatus.equals(Input.TextEmpty) || keepFMToggleStatus.equalsIgnoreCase("false")) {
+				toggleEle.waitAndClick(5);
+				if (ELementName.equalsIgnoreCase("Draw From Pool")) {
+					getAssgnGrp_Create_DrawPoolCount().SendKeys("100");
 				}
-			}), Input.wait60);
-
-			String analyticalPanelFlag1 = getAssgn_AnalyticsPanelToggle().GetAttribute("class");
-
-			if (!analyticalPanelFlag1.contains("False")) {
-				getAssgn_AnalyticsPanelToggle().Click();
+				System.out.println(ELementName + " : Toggle is Now Enabled ");
+				bc.stepInfo(ELementName + " : Toggle is Now Enabled ");
 			}
-			
-			driver.scrollPageToTop();
+		}
+
+		if (DisableToggle) {
+			bc.waitForElement(toggleEle);
+			String keepFMToggleStatus = toggleEle.GetAttribute("class");
+			if (keepFMToggleStatus.equals("true")) {
+				toggleEle.waitAndClick(5);
+				System.out.println(ELementName + " : Toggle is Now Disabled ");
+				bc.stepInfo(ELementName + " : Toggle is Now Disabled ");
+			} else if (keepFMToggleStatus.equals(Input.TextEmpty) || keepFMToggleStatus.equalsIgnoreCase("false")) {
+				System.out.println(ELementName + " : Toggle is Already Disabled ");
+				bc.stepInfo(ELementName + " : Toggle is Already Disabled ");
+			}
+		}
+
+		if (save) {
 			bc.waitForElement(getAssignmentSaveButton());
 			getAssignmentSaveButton().waitAndClick(5);
-			bc.CloseSuccessMsgpopup();
-		}
-		/**
-		 * @author Jayanthi.ganesan
-		 * @param assginmentName
-		 * @throws InterruptedException
-		 */
-		public void selectAssignmentfromRMUDashborad(String assginmentName) throws InterruptedException {
-			driver.waitForPageToBeReady();
-			driver.scrollPageToTop();
-			bc.waitForElement(getRMUDashBoardBtn());
-			getRMUDashBoardBtn().waitAndClick(10);
-			bc.waitForElement(RMUDashBoardAssgn(assginmentName));
-			RMUDashBoardAssgn(assginmentName).ScrollTo();
-			RMUDashBoardAssgn(assginmentName).waitAndClick(10);
-		}
-
-		public String getDistibuteDocsCount(String userNAme) {
-			getAssignment_ManageReviewersTab().ScrollTo();
-			bc.waitForElement(getAssignment_ManageReviewersTab());
-			getAssignment_ManageReviewersTab().waitAndClick(15);
-			bc.waitTime(1);
-			String actualDocs = getDistributedDocs(userNAme).getText();
-			System.out.println(actualDocs);
-			return actualDocs;
-			
+			if (bc.getSuccessMsgHeader().isElementAvailable(3)) {
+				bc.VerifySuccessMessage("Assignment updated successfully");
+				bc.CloseSuccessMsgpopup();
+			}
 		}
 	}
 
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param Username
+	 * @return
+	 * @throws InterruptedException
+	 */
+	public String manageRevTabToViewInDocView(String Username) throws InterruptedException {
+		System.out.println(Username);
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		bc.waitTime(1);
+		String actualDocs = getDistributedDocs(Username).getText();
+		System.out.println(actualDocs);
+		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_selectReviewer(Username));
+		getAssgn_ManageRev_selectReviewer(Username).ScrollTo();
+		getAssgn_ManageRev_selectReviewer(Username).waitAndClick(10);
+		getAssgn_ManageRev_Action().waitAndClick(20);
+		bc.waitForElement(getAssgn_ManageRev_Action_ViewDocview());
+		getAssgn_ManageRev_Action_ViewDocview().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.getYesBtn().ScrollTo();
+		bc.getYesBtn().waitAndClick(10);
+		return actualDocs;
+
+	}
+
+	/**
+	 * @author Arunkumar
+	 * @throws InterruptedException
+	 * @description this method will unmap/unassign the keywords which assigned to
+	 *              the document.
+	 * 
+	 */
+	public void unmappingKeywordsFromAssignment(String assignmentName) throws InterruptedException {
+		bc = new BaseClass(driver);
+		keywordPage = new KeywordPage(driver);
+		editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		getAssgn_Keywordsbutton().ScrollTo();
+		getAssgn_Keywordsbutton().isElementAvailable(10);
+		getAssgn_Keywordsbutton().waitAndClick(10);
+		bc.waitForElement(getAssgn_Keywordspopup());
+		getAvailableKeywordCheckboxes();
+		List<WebElement> allvalues = getAvailableKeywordCheckboxes().FindWebElements();
+		List<String> expkey = new ArrayList<String>();
+
+		for (int j = 0; j <= allvalues.size() - 1; j++) {
+
+			allvalues.get(j).click();
+		}
+		driver.waitForPageToBeReady();
+		getAssgn_Keywordokbutton().ScrollTo();
+		getAssgn_Keywordokbutton().isElementAvailable(10);
+		getAssgn_Keywordokbutton().Click();
+		keywordPage.getYesButton().Click();
+		driver.waitForPageToBeReady();
+		bc.passedStep("Keywords unmapped from the assignment successfully");
+	}
+
+
+}

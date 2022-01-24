@@ -24,6 +24,7 @@ import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -556,40 +557,157 @@ public class Assignment_Regression3 {
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-		
-			baseClass.stepInfo("Test case Id:RPMXCON-54497");
-			baseClass.stepInfo("Disable the \"Draw from Pool\" field settings in the Assignment");
-			String assignmentName ="AR3Assignment" + Utility.dynamicNameAppender();
-			AssignmentsPage agnmt = new AssignmentsPage(driver);
-			DocExpPage = new DocExplorerPage(driver);
-			softAssertion = new SoftAssert();
-			search = new SessionSearch(driver);
-			search.basicContentSearch(Input.searchString2);
-			search.bulkAssign();
-			agnmt.assignmentCreation(assignmentName,Input.codeFormName);
-			baseClass.waitForElement(agnmt.getAssgnGrp_Create_DrawPooltoggle());
-			agnmt.getAssgnGrp_Create_DrawPooltoggle().Click();
-			driver.scrollPageToTop();
-			baseClass.waitForElement(agnmt.getAssignmentSaveButton());
-			agnmt.getAssignmentSaveButton().waitAndClick(5);
-			agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-			agnmt.getEmailThreadsTogetherBtnDisabled().ScrollTo();
-			softAssertion.assertEquals(agnmt.getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"), "false");
-			baseClass.ValidateElement_Presence(agnmt.getEmailThreadsTogetherBtnDisabled(), "Disabled Email Threads Toggle Button ");
-			baseClass.ValidateElement_Presence(agnmt.getKeepFamiliesBtnDisabled(), "Disabled KeepFamilies Toggle Button ");
-			baseClass.passedStep("Sucessfully Verified the Disable the \"Draw from Pool\" field settings in the Assignment");
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-			baseClass.stepInfo("Logged Out and Logged in again as same RMU User to "
-					+ "check whether the updated setting are reflected or not");
-			agnmt.getEmailThreadsTogetherBtnDisabled().ScrollTo();
-			softAssertion.assertEquals(agnmt.getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"), "false");
-			baseClass.ValidateElement_Presence(agnmt.getEmailThreadsTogetherBtnDisabled(), "Disabled Email Threads Toggle Button ");
-			baseClass.ValidateElement_Presence(agnmt.getKeepFamiliesBtnDisabled(), "Disabled KeepFamilies Toggle Button ");
-			softAssertion.assertAll();
-			baseClass.passedStep("Sucessfully Verified the Disable the \"Draw from Pool\" field settings in the Assignment is reflected or not by logging out and loggin as same user.");
-			
+
+		baseClass.stepInfo("Test case Id:RPMXCON-54497");
+		baseClass.stepInfo("Disable the \"Draw from Pool\" field settings in the Assignment");
+		String assignmentName = "AR3Assignment" + Utility.dynamicNameAppender();
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		DocExpPage = new DocExplorerPage(driver);
+		softAssertion = new SoftAssert();
+		search = new SessionSearch(driver);
+		search.basicContentSearch(Input.searchString2);
+		search.bulkAssign();
+		agnmt.assignmentCreation(assignmentName, Input.codeFormName);
+		baseClass.waitForElement(agnmt.getAssgnGrp_Create_DrawPooltoggle());
+		agnmt.getAssgnGrp_Create_DrawPooltoggle().Click();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		agnmt.getEmailThreadsTogetherBtnDisabled().ScrollTo();
+		softAssertion.assertEquals(agnmt.getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"), "false");
+		baseClass.ValidateElement_Presence(agnmt.getEmailThreadsTogetherBtnDisabled(),
+				"Disabled Email Threads Toggle Button ");
+		baseClass.ValidateElement_Presence(agnmt.getKeepFamiliesBtnDisabled(), "Disabled KeepFamilies Toggle Button ");
+		baseClass
+				.passedStep("Sucessfully Verified the Disable the \"Draw from Pool\" field settings in the Assignment");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		baseClass.stepInfo("Logged Out and Logged in again as same RMU User to "
+				+ "check whether the updated setting are reflected or not");
+		agnmt.getEmailThreadsTogetherBtnDisabled().ScrollTo();
+		softAssertion.assertEquals(agnmt.getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"), "false");
+		baseClass.ValidateElement_Presence(agnmt.getEmailThreadsTogetherBtnDisabled(),
+				"Disabled Email Threads Toggle Button ");
+		baseClass.ValidateElement_Presence(agnmt.getKeepFamiliesBtnDisabled(), "Disabled KeepFamilies Toggle Button ");
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"Sucessfully Verified the Disable the \"Draw from Pool\" field settings in the Assignment is reflected or not by logging out and loggin as same user.");
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that when Keep Families Together is disabled, the draw
+	 *              will be limited to the configured draw size/limit
+	 *              [RPMXCON-59178]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	public void verifyDrawLinkWhenFamiliesToggleDisabled() throws InterruptedException {
+		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
+		softAssertion = new SoftAssert();
+		loginPage = new LoginPage(driver);
+		agnmt = new AssignmentsPage(driver);
+		search = new SessionSearch(driver);
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-59178 Assignments Sprint-10");
+		baseClass.stepInfo(
+				"Verify that when Keep Families Together is disabled, the draw will be limited to the configured draw size/limit");
+
+		// assignment Creation
+		int count = search.basicContentSearch(Input.TallySearch);
+		search.bulkAssign();
+		agnmt.assignmentCreation(assignmentName, Input.codeFormName);
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+
+		// Disable Familes and email Thread Toggles Disable
+		driver.scrollingToElementofAPage(agnmt.getKeepEmailThreadTogether_Text());
+		String familyMem = agnmt.getKeepFamilyTogetther_Text().getText();
+		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepFamiliesTogetherToggle(), familyMem,
+				false);
+
+		String emailThread = agnmt.getKeepEmailThreadTogether_Text().getText();
+		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepEmailThreadTogetherToggle(),
+				emailThread, true);
+
+		// Distribute to RMU and REV
+		agnmt.distributeHalfTheDocsToReviewer(count);
+		agnmt.assignmentDistributingToReviewer();
+
+		// verify Draw from pool line as RMU
+		baseClass.selectproject();
+		baseClass.waitForElement(agnmt.getAssignmentsInreviewerPg());
+		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
+		baseClass.ValidateElement_Absence(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName),
+				"Draw From pool Link is not Dispalyed For RMU");
+		loginPage.logout();
+
+		// verify Draw from pool line as REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.waitForElement(agnmt.getAssignmentsInreviewerPg());
+		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
+		baseClass.ValidateElement_Absence(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName),
+				"Draw From pool Link is not Dispalyed For REV");
+		loginPage.logout();
+
+		// Delete Assignment
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that after editing assignment group with cascading,
+	 *              changes should reflect in its respective assignment
+	 *              [RPMXCON-59201]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	public void verifyAfterEditingAssignGroup() throws InterruptedException {
+		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
+		String assignment = "Assignment" + Utility.dynamicNameAppender();
+		String cascadeSettings_yes = "Yes";
+
+		softAssertion = new SoftAssert();
+		loginPage = new LoginPage(driver);
+		agnmt = new AssignmentsPage(driver);
+		search = new SessionSearch(driver);
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-59201 Assignments Sprint-10");
+		baseClass.stepInfo(
+				"Verify that after editing assignment group with cascading, changes should reflect in its respective assignment");
+
+		//create Assignmnet group with Draw Toggle Disabled
+		agnmt.navigateToAssignmentsPage();
+		agnmt.createCascadeNonCascadeAssgnGroup_withoutSave(cascadeAsgnGrpName, cascadeSettings_yes);
+		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", true);
+
+		//Create Assignment in Assignment Group 
+		agnmt.selectAssignmentGroup(cascadeAsgnGrpName);
+		agnmt.createAssignmentFromAssgnGroup(assignment, Input.codeFormName);
+
+		//Enable Draw Toggle in Assign Group
+		agnmt.editAssgnGrp(cascadeAsgnGrpName, "Yes");
+		driver.waitForPageToBeReady();
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", true);
+
+		//verify Draw Toggle is Enabled in Assignment
+		agnmt.selectAssignmentToView(assignment);
+		baseClass.waitForElement(agnmt.getAssignmentActionDropdown());
+		agnmt.getAssignmentAction_EditAssignment().waitAndClick(3);
+		agnmt.VerifyDrawPoolToggleEnabled();
+
+		//Delete Assign group and assign
+		agnmt.navigateToAssignmentsPage();
+		agnmt.deleteAssignmentFromSingleAssgnGrp(cascadeAsgnGrpName, assignment);
+		agnmt.DeleteAssgnGroup(cascadeAsgnGrpName);
+
 	}
 
 	@AfterMethod(alwaysRun = true)

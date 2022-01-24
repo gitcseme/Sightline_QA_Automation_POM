@@ -2481,7 +2481,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/19/22 TESTCASE No:RPMXCON-55696
 	 * @Description:To Verify Sorting configured in the production is being honored by the generated production
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 47)
+	@Test(enabled = false, groups = { " regression" }, priority = 47)
 	public void verifySortingInProduction() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-55696- Production Sprint 10");
@@ -2536,7 +2536,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/19/22 TESTCASE No:RPMXCON-55696
 	 * @Description:To Verify User will be able to enter production components information on the self production wizard
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 48)
+	@Test(enabled = false, groups = { " regression" }, priority = 48)
 	public void verifyProductionComponents() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-55696- Production Sprint 10");
@@ -2557,6 +2557,233 @@ public class Production_Page_Regression {
 
 	}
 	
+	/**
+	 * @author Sowndarya.Velraj created on:01/20/22 TESTCASE No:RPMXCON-47925
+	 * @Description:To Verify in Natives section of Productions, Product Native Files for select file types are to being honored by the production
+	 */
+	@Test(enabled = false, groups = { " regression" }, priority = 49)
+	public void verifyNativesForSelectedFiles() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-47925- Production Sprint 11");
+		baseClass.stepInfo("To Verify in Natives section of Productions, Product Native Files for select file types are to being honored by the production");
+		UtilityLog.info(Input.prodPath);
+		
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates =page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.getNativeChkBox().waitAndClick(10);
+		page.getNativeTab().waitAndClick(10);
+		page.getChkBoxNative_SpreadSheets().waitAndClick(10);
+		page.getChkBoxNative_WordTextFiles().waitAndClick(10);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		baseClass.stepInfo("Sorting configured in the production");
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:01/20/22 TESTCASE No:RPMXCON-47927
+	 * @Description:To Verify ProductionBatesRange in production slip sheet.
+	 */
+	@Test(enabled = false, groups = { " regression" }, priority = 50)
+	public void verifySlipSheetInProduction() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-47927- Production Sprint 11");
+		baseClass.stepInfo("To Verify ProductionBatesRange in production slip sheet.");
+		UtilityLog.info(Input.prodPath);
+		
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates =page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSection(tagname);
+		driver.waitForPageToBeReady();
+		page.slipSheetToggleEnable();
+		driver.scrollingToBottomofAPage();
+		page.availableFieldSelection("ProductionBatesRange");
+		baseClass.stepInfo("Slip Sheet is enabled and ProductionBatesRange checkbox is selected");
+		driver.waitForPageToBeReady();
+		page.getAddSelected().waitAndClick(10);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		baseClass.stepInfo("Sorting configured in the production");
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:01/21/22 TESTCASE No:RPMXCON-48269
+	 * @Description:To Verify In Productions, the produced DAT should have DAT filed name configured in DAT component.
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 51)
+	public void verifyDATFieldName() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48269- Production Sprint 11");
+		baseClass.stepInfo("To Verify In Productions, the produced DAT should have DAT filed name configured in DAT component.");
+		UtilityLog.info(Input.prodPath);
+		
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates =page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		batesNumber = "B" + Utility.dynamicNameAppender();
+		String datField="BN";
+		page.fillingDATSectionWithBates(Input.bates, Input.batesNumber, datField);
+		baseClass.stepInfo("BN is passed in DAT field");
+		page.fillingTIFFSection(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		baseClass.stepInfo("Sorting configured in the production");
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:01/21/22 TESTCASE No:RPMXCON-48144
+	 * @Description:To Verify Redaction check box under DAT Section in Production Component Section.
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 52)
+	public void verifyRedactionCheckboxInDAT() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48144- Production Sprint 11");
+		baseClass.stepInfo("To Verify Redaction check box under DAT Section in Production Component Section.");
+		UtilityLog.info(Input.prodPath);
+		
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates =page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.getDATRedactionsCBox().waitAndClick(10);
+		baseClass.stepInfo("Redaction checkbox is selected in DAT components");
+		page.fillingTIFFSectionwithBurnRedaction(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		baseClass.stepInfo("Sorting configured in the production");
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+	}
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },

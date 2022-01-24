@@ -1489,6 +1489,23 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	
+	public Element getDocView_AnalyticsPanel_FamilyMemberTabQueryNoData() {
+		return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//td[text()='Your query returned no data']");
+	}
+	
+	
+	public Element getDocView_AnalyticsPanel_NearDupeTabQueryNoData() {
+		return driver.FindElementByXPath("//*[@id='dtDocumentNearDuplicates']//td[text()='Your query returned no data']");
+	}
+	
+	public Element getDocView_AnalyticsPanel_ConceptualWholeTabel() {
+		return driver.FindElementById("conceptual1");
+	}
+	
+	public Element getDocView_AnalyticsPanel_ConceptualQueryNoData() {
+		return driver.FindElementByXPath("//*[@id='dtDocumentConceptuallySimilar']//td[text()='Your query returned no data']");
+	}
 
 	public Element getDocView_SearchTextBox_HitCount() {
 		return driver.FindElementByXPath("//span[@class='count']");
@@ -2739,6 +2756,49 @@ public class DocViewPage {
 	}
 	
 
+	public Element getDocView_AnalyticsExitingFolderConceptual() {
+		return driver.FindElementById("tabExiting");
+	}
+
+	public Element getDocView_AnalyticsExitingFolderName() {
+		return driver.FindElementById("472_anchor");
+	}
+	// Added by Iyappan
+	public Element getRemarksId(String remarksName) {
+		return driver.FindElementByXPath(".//*[@id='newRemarks']//p[text()='"+remarksName+"']");
+	}
+	public Element getDocView_SelectRemarks(String remarksName) {
+		return driver.FindElementByXPath(".//*[@id='newRemarks']//p[text()='"+remarksName+"']/parent::span");
+	}
+	public Element getRemarksInPg(String id) {
+		return driver.FindElementByCssSelector("g[data-pcc-mark='highlighttextannotation-"+id+"']");
+	}
+	
+	public Element getDocView_Analytics_FamilyTab_NoQuery() {
+		return driver.FindElementByXPath("//*[@id='analyticsResize']//td[contains(text(),'Your query')]");
+	}
+	
+	//Added by Vijaya.Rani
+	public Element getDocView_AnalyticsNewFolderFamilyMember() {
+		return driver.FindElementById("tabNew");
+	}
+	
+	public Element getManageTab() {
+		return driver.FindElementByXPath("//a[@name='Manage']");
+	}
+	
+	public Element getManageTagsAndFolderTab() {
+		return driver.FindElementByXPath("//a[@name='Tags']");
+	}
+	
+	public Element getManageFolderBtn() {
+		return driver.FindElementByXPath("//a[text()='Folders']");
+	}
+	
+	public Element getDocView_AnalyticsChild_NearDupe_Folder() {
+		return driver.FindElementById("liNearDupeBulkFolder");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -21702,4 +21762,152 @@ public class DocViewPage {
 
 		}
 	}
+  /*
+	 * @Author Vijaya.Rani Created on 20/01/2022
+	 * @Description To perform folder Conceputually docs in the DocView Test Case
+	 *              id: RPMXCON-50821
+	 *
+	 */
+	public void performExitingFolderForConceptualDocuments() throws InterruptedException {
+		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		Point p = getDocView_Analytics_liDocumentConceptualSimilarab().getWebElement().getLocation();
+		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
+
+		for (int i = 1; i <= 2; i++) {
+			base.waitForElement(getDocView_Analytics_Conceptual_Docs(i));
+			getDocView_Analytics_Conceptual_Docs(i).waitAndClick(10);
+		}
+		
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+		
+		base.waitForElement(getDocView_Analytics_ConceptualFolderAction());
+		getDocView_Analytics_ConceptualFolderAction().waitAndClick(15);
+		
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
+		base.passedStep("Folder pop up is opened successfully");
+
+		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
+		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsExitingFolderName());
+		getDocView_AnalyticsExitingFolderName().waitAndClick(10);
+		
+		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
+		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
+
+		base.waitForElement(getTotalSelectedDocuments());
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().Displayed());
+		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
+		base.VerifySuccessMessage("Records saved successfully");
+
+		base.passedStep("Selected folder is applied to the selected documents successfully");
+
+	      
+	}
+	
+	/**
+	 * @Author Steffy Created on 21/01/2022
+	 * @Description To verify Analytics Family member Map Tab with no docs
+	 * 
+	 */
+	public void verifyFamilyTabWithNoDocs() {
+
+		try {
+			driver.waitForPageToBeReady();
+			getDocView_MiniDoc_Selectdoc(1).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+			driver.waitForPageToBeReady();
+			Point p = getDocView_Analytics_liDocumentThreadMap().getWebElement().getLocation();
+			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+			getDocView_Analytics_FamilyTab().ScrollTo();
+
+			base.waitForElement(getDocView_Analytics_FamilyTab());
+			getDocView_Analytics_FamilyTab().Click();
+
+			base.waitForElement(getDocView_Analytics_FamilyTab_NoQuery());
+			softAssertion.assertTrue(getDocView_Analytics_FamilyTab_NoQuery().isDisplayed());
+			softAssertion.assertAll();
+			base.passedStep("Message is displayed as 'Your query returned no data' successfully");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("No Doc is viewed from Analytics panel Thread Map tab successfully");
+		}
+
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description: To verify tags of coding form name in docview page
+	 */
+	public void verifyTagsAreEnabled(int objectNo) {
+		// base.waitForElement(getCodingFormTag(objectNo));
+		driver.waitForPageToBeReady();
+		if (getCodingFormTag(objectNo).isElementAvailable(3) == false) {
+			base.passedStep("The added tags are editable and enabled");
+		} else {
+			base.failedStep("The added tags are not editable and enabled");
+		}
+	}
+
+	/**
+	 * @Author Vijaya.Rani Created on 21/1/2022
+	 * @Description To perform Folder NearDupe tab in the ChildWindow. Test Case id:
+	 *              RPMXCON- 51129
+	 */
+	public void performFloderNearDupeDocsInChildWindow(String windowId) throws InterruptedException {
+
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(10);
+
+		for (int i = 1; i <= 3; i++) {
+			base.waitForElement(getDocView_Analytics_NearDupe_Doc(i));
+			getDocView_Analytics_NearDupe_Doc(i).waitAndClick(5);
+		}
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+
+		base.waitForElement(getDocView_AnalyticsChild_NearDupe_Folder());
+		getDocView_AnalyticsChild_NearDupe_Folder().waitAndClick(15);
+
+		driver.switchTo().window(windowId);
+
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
+		base.passedStep("Folder pop up is opened successfully");
+
+		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
+		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsExitingFolderName());
+		getDocView_AnalyticsExitingFolderName().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
+		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
+
+		base.waitForElement(getTotalSelectedDocuments());
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().Displayed());
+		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
+		base.VerifySuccessMessage("Records saved successfully");
+
+		base.passedStep("Selected folder is applied to the selected documents successfully");
+		base.CloseSuccessMsgpopup();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!windowId.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+	}
+
 }

@@ -737,65 +737,6 @@ public class Production_Test_Regression {
 	
 	}
 	/**
-	 * @author Aathith.Senthilkumar
-	 * 			RPMXCONO-47175
-	 * @Description To Verify that produced PDF/TIFF files should not be split when 'Split Sub Folders' is ON with split count as 1000 and selected documents <= 1000. 
-	 */
-	//@Test(groups = { "regression" }, priority = 14)
-	public void genaratetDocumentswithMultipleBrandingTags() throws Exception {
-	UtilityLog.info(Input.prodPath);
-	base.stepInfo("RPMXCON-47175 -Production Sprint 7");
-	foldername = "FolderProd" + Utility.dynamicNameAppender();
-	String tagname1 = "Tag" + Utility.dynamicNameAppender();
-	String tagname2 = "Tag1" + Utility.dynamicNameAppender();
-	String testData1 = Input.testData1;
-	//Pre-requisites
-	//create tag and folder
-	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-	tagsAndFolderPage.CreateTagwithClassification(tagname1, "Privileged");
-	RedactionPage reductionPage = new RedactionPage(driver);
-//	reductionPage.selectDefaultSecurityGroup();
-//	reductionPage.manageRedactionTagsPage(tagname2);
-	
-	//search for redacted documents and adding to bulk folder
-	SessionSearch sessionSearch = new SessionSearch(driver);
-	sessionSearch = new SessionSearch(driver);
-	sessionSearch.basicContentSearch(testData1);
-	sessionSearch.bulkTagExisting(tagname1);
-	//sessionSearch.bulkTagExisting(tagname2);
-	
-	
-	//document 
-	ProductionPage page = new ProductionPage(driver);
-	productionname = "p" + Utility.dynamicNameAppender();
-	String beginningBates = page.getRandomNumber(2);
-	page.addANewProduction(productionname);
-	page.fillingDATSection();
-	page.fillingNativeSection();
-	page.fillingTIFFSection(tagname1,tagname2);
-	page.fillingTextSection();
-	page.navigateToNextSection();
-	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
-	page.navigateToNextSection();
-	page.fillingDocumentSelectionPageWithTag(tagname1,tagname2);
-	page.navigateToNextSection();
-	page.fillingPrivGuardPage();
-	page.splictCountCheck();
-	page.fillingProductionLocationPageAndPassingText(productionname);
-	page.navigateToNextSection();
-	page.fillingSummaryAndPreview();
-	page.fillingGeneratePageWithContinueGenerationPopup();
-	//page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname);
-	base.passedStep("Verify that produced PDF/TIFF files should not be split when 'Split Sub Folders' is ON with split count as 1000 and selected documents <= 1000");
-	
-	//delete tags and folders
-	tagsAndFolderPage = new TagsAndFoldersPage(driver);
-	tagsAndFolderPage.DeleteTagWithClassification(tagname1, "Default Security Group");
-	driver.waitForPageToBeReady();
-	reductionPage.DeleteRedaction(tagname2);
-	}
-	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-56034
 	 * @Description: To Verify that after Archiving is completed it should displays 'Creating Archive Complete' status on Production Generation page.
@@ -2888,8 +2829,258 @@ public class Production_Test_Regression {
 						
 						base.passedStep("Verified that the production field PageCount is renamed to TIFFPageCount");
 						
-						
 					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-49967
+					 * @Description: Verify that production should generated with modified Redaction placeholder text
+					 */
+					@Test(groups = { "regression" }, priority = 48)
+					public void verifyReductionPlacholderText() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-49967 -Production Sprint 10");
+					base.stepInfo("Verify that production should generated with modified Redaction placeholder text");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					sessionSearch.bulkTagExisting(tagname);
+
+					//Verify 
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(2);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.visibleCheck("Productions & Exports");
+					base.stepInfo("production home page is Displayed");
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSection();
+					page.fillingTIFFSectionwithBurnRedactionWithoutUpdatedText();
+					base.waitForElement(page.gettextRedactionPlaceHolder());
+					String text=page.gettextRedactionPlaceHolder().getText();
+					if(text.equalsIgnoreCase("REDACTED")) {
+						base.passedStep("By default 'REDACTED' text should be displayed");
+					}
+					page.gettextRedactionPlaceHolder().waitAndClick(10);
+					page.gettextRedactionPlaceHolder().SendKeys(Input.searchString4);
+					base.stepInfo("Reduction text is updated");
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					base.passedStep("Verified that production should generated with modified Redaction placeholder text");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-49815
+					 * @Description: To verify that Production should generate successfully if Prefix is up to 50 characters
+					 */
+					@Test(groups = { "regression" }, priority = 49)
+					public void verifyPrifixWith50char() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-49815 -Production Sprint 10");
+					base.stepInfo("To verify that Production should generate successfully if Prefix is up to 50 characters");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					//tagname = "Tag" + Utility.dynamicNameAppender();
+					prefixID =Utility.randomCharacterAppender(50);
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					//tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					//sessionSearch.bulkTagExisting(tagname);
+
+					//Verify archive status on Grid view
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(2);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageAndVerfyingBatesRange(prefixID);
+					base.passedStep("Verified that Production should generate successfully if Prefix is up to 50 characters");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith.Senthilkumar
+					 * 			RPMXCONO-47174
+					 * @Description Verify that TIFF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 1000 
+					 */
+					@Test(groups = { "regression" }, priority = 50)
+					public void genaratetDocumentswithMultipleBrandingTagsnotsplit() throws Exception {
+						
+						UtilityLog.info(Input.prodPath);
+						base.stepInfo("RPMXCON-47174 -Production Sprint 10");
+						base.stepInfo("Verify that TIFF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 1000");
+						String testData1 = Input.testData1;
+						foldername = "FolderProd" + Utility.dynamicNameAppender();
+						tagname = "Tag" + Utility.dynamicNameAppender();
+						
+						// Pre-requisites
+						// create tag and folder
+						TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+						tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+						
+						// search for folder
+						SessionSearch sessionSearch = new SessionSearch(driver);
+						sessionSearch = new SessionSearch(driver);
+						sessionSearch.basicContentSearch(testData1);
+						sessionSearch.bulkTagExisting(tagname);
+						sessionSearch.bulkFolderExisting(foldername);
+						
+						//Verify archive status on Gen page
+						ProductionPage page = new ProductionPage(driver);
+						productionname = "p" + Utility.dynamicNameAppender();
+						String beginningBates = page.getRandomNumber(2);
+						page.selectingDefaultSecurityGroup();
+						page.addANewProduction(productionname);
+						page.fillingDATSection();
+						page.fillingNativeSection();
+						page.fillingTIFFSection(tagname);
+						page.fillingTextSection();
+						page.navigateToNextSection();
+						page.visibleCheck("Numbering and Sorting");
+						page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+						page.navigateToNextSection();
+						page.fillingDocumentSelectionPage(foldername);
+						page.navigateToNextSection();
+						page.visibleCheck("Priv Guard");
+						page.fillingPrivGuardPage();
+						page.visibleCheck("Production Location");
+						driver.scrollingToBottomofAPage();
+						page.getsplitSubFolderbtn().waitAndClick(10);
+						base.stepInfo("split sub folder toggle as OFF");
+						driver.scrollPageToTop();
+						page.fillingProductionLocationPageAndPassingText(productionname);
+						page.navigateToNextSection();
+						page.visibleCheck("Summary & Preview");
+						page.fillingSummaryAndPreview();
+						page.fillingGeneratePageWithContinueGenerationPopup();
+						page.getBackButton().waitAndClick(10);
+						page.getBackButton().waitAndClick(10);
+						page.getBackButton().waitAndClick(10);
+						driver.scrollingToBottomofAPage();
+						page.toggleOffCheck(page.getsplitSubFolderbtn());
+						
+						base.passedStep("Verified that TIFF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 1000");
+						
+						tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+						tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith.Senthilkumar
+					 * 			RPMXCONO-55653
+					 * @Description To  Verify the availability of 'Translations' under the Advanced Production Types show/hide section (in Production Component). 
+					 */
+					@Test(groups = { "regression" }, priority = 51)
+					public void verifyAvailabilityOfTranslationComponent() throws Exception {
+						
+						UtilityLog.info(Input.prodPath);
+						base.stepInfo("Testcase No: RPMXCON-55653");
+						base.stepInfo("To  Verify the availability of 'Translations' under the Advanced Production Types show/hide section (in Production Component).");
+						String testData1 = Input.testData1;
+						//foldername = "FolderProd" + Utility.dynamicNameAppender();
+						tagname = "Tag" + Utility.dynamicNameAppender();
+						
+						// Pre-requisites
+						// create tag and folder
+						TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+						//tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+						
+						// search for folder
+						SessionSearch sessionSearch = new SessionSearch(driver);
+						sessionSearch = new SessionSearch(driver);
+						sessionSearch.basicContentSearch(testData1);
+						sessionSearch.bulkTagExisting(tagname);
+						//sessionSearch.bulkFolderExisting(foldername);
+						
+						//Verify 
+						ProductionPage page = new ProductionPage(driver);
+						productionname = "p" + Utility.dynamicNameAppender();
+						page.selectingDefaultSecurityGroup();
+						page.addANewProduction(productionname);
+						page.fillingDATSection();
+						page.fillingNativeSection();
+						page.fillingTIFFSection(tagname);
+						driver.scrollingToBottomofAPage();
+						page.getAdvancedProductionToggle().waitAndClick(10);
+						page.getCheckBoxUnCheckVerificaation(page.getTranlationCheckMarkVerication());
+						base.stepInfo("By default Translation check box is unchecked");
+						boolean flag = page.getTranlationOpenCloseCheck().GetAttribute("class").contains("in");
+						if (!flag) {
+							base.passedStep("user didn't view Translation details ");
+						} else {
+							base.failedStep("Tranlation tab is open");
+						}
+						page.getTranslationsCheckBox().waitAndClick(10);
+						base.stepInfo("Translation tab is clicked");
+						driver.waitForPageToBeReady();
+						
+						boolean flag1 = page.getTranlationOpenCloseCheck().GetAttribute("class").contains("in");
+						if (flag1) {
+							base.passedStep("Translation component details is displayed");
+						} else {
+							base.failedStep("Tranlation tab is not open");
+						}
+						
+						base.passedStep("Verified the availability of 'Translations' under the Advanced Production Types show/hide section (in Production Component).");
+						
+						tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						//tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+						tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					
 	
 	
 	@AfterMethod(alwaysRun = true)

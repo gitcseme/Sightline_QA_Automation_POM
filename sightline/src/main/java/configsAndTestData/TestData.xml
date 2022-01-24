@@ -105,6 +105,9 @@
 	<conceptualDocId1>ID00003840</conceptualDocId1>
 	<nearDupeDocId1>ID00000896</nearDupeDocId1>
 	<nearDupeImageDoc>ID00001072</nearDupeImageDoc>
+	<analyticsConceptualDocId1>ID00001475</analyticsConceptualDocId1>
+	<analyticsConceptualDocId2>ID00000271</analyticsConceptualDocId2>
+	<miniConceptualNoDoc>ID00004800</miniConceptualNoDoc>
 
 
 
@@ -170,6 +173,8 @@
 		<testSecondDocId>ID00000104</testSecondDocId>
 	<testTenthDocId>ID00000667</testTenthDocId>
 	<docNearDupeDocId>ID00001329</docNearDupeDocId>
+	<TiffDocId>ID00001075</TiffDocId>
+	<UniCodeDocId>ID00005206</UniCodeDocId>
 
 
 	<!-- Baskar Indium Audio Search to DocView MiniList - modify on 9/01/21 -->

@@ -8841,15 +8841,9 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Searching audio documents based on search string");
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 
-		docViewPage.selectPureHit();
-
-		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch1(Input.testData1);
-
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
 
-		docViewPage.verifyLastDocsUsingNavigationOption(comment,stamp);
 
 		// logout
 		loginPage.logout();

@@ -179,6 +179,9 @@ public class Input {
 	public static String conceptualDocId1;
 	public static String nearDupeDocId1;
 	public static String nearDupeImageDoc;
+	public static String analyticsConceptualDocId1;
+	public static String analyticsConceptualDocId2;
+	public static String miniConceptualNoDoc;
 
 	// DocView codingform Baskar Indium
 
@@ -252,6 +255,8 @@ public class Input {
 	public static String testSecondDocId;
 	public static String testTenthDocId;
 	public static String docNearDupeDocId;
+	public static String UniCodeDocId;
+	public  static String TiffDocId;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -628,6 +633,9 @@ public class Input {
 		conceptualDocId1=testData.getConceptualDocId1();
 		nearDupeDocId1 = testData.getNearDupeDocId1();
 		nearDupeImageDoc=testData.getNearDupeImageDoc();
+		analyticsConceptualDocId1 = testData.getAnalyticsConceptualDocId1();
+		analyticsConceptualDocId2= testData.getAnalyticsConceptualDocId2();
+		miniConceptualNoDoc=testData.getMiniConceptualNoDoc();
 		
 		
 
@@ -709,6 +717,8 @@ public class Input {
 		testSecondDocId = testData.getTestSecondDocId();
 		testTenthDocId = testData.getTestTenthDocId();
 		docNearDupeDocId=testData.getDocNearDupeDocId();
+		UniCodeDocId = testData.getUniCodeDocId();
+		TiffDocId = testData.getTiffDocId();
 
 			
 		// Added by Arun

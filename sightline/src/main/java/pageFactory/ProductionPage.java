@@ -2339,6 +2339,36 @@ public class ProductionPage {
 	public Element getDocumentMatchesButton() {
 		return driver.FindElementById("btnDocumentMatch");
 	}
+	
+	
+	public Element ProductionLocationSplitCount() {
+		return driver.FindElementByXPath("//input[@id='ProductionComponentsFolderDetails_SplitCount']");
+	}
+	
+	public Element getNativeFileTagSelection(String tag) {
+		return driver.FindElementByXPath(
+				"//div[@id='tagTreeNativeComponent']//a[text()='"+tag+"']/i[@class='jstree-icon jstree-checkbox']");
+	}
+	public Element getNativeFileTagSelectButton() {
+		return driver.FindElementByXPath(
+				"//button[contains(@class,'submitNativeSelection')]");
+	}
+	
+	public Element getNativeFileSelectingTag() {
+		return driver.FindElementByXPath(
+				"//button[contains(@class,'selectNativeTags')]");
+	}
+	//Add by Aathith
+	public Element getsplitSubFolderbtn() {
+		return driver.FindElementByXPath("//*[text()='Split Sub Folders:']/..//i");
+	}
+	public Element getTranlationCheckMarkVerication() {
+		return driver.FindElementByXPath("//input[@id='chkIsTranslation']");
+	}
+	public Element getTranlationOpenCloseCheck() {
+		return driver.FindElementByXPath("//div[@id='TranslationsContainer']");
+	}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -15998,7 +16028,141 @@ public class ProductionPage {
 			System.out.println(text+" is not visible");
 		}
 	}
+
 	
+	/**
+	 * @author Brundha
+	 * @Description  : Method to verify volume included toggle is on by default
+	 */
+	public void verifyVolumeIncludedToggleInProductionSelection(){
+		driver.waitForPageToBeReady();
+		String color = driver.FindElement(By.xpath("//input[@id='ProductionOutputLocation_IsVolumeIncluded']/..//i")).GetCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor="#a9c981";	
+		if(ActualColor.equals(ExpectedColor)) {
+			base.passedStep("Volume included  toggle is enabled by default");
+		}else {
+			base.failedStep("Volume included  toggle is  not enabled by default");
+			}
+		
+	}
+
+	/**
+	 * @Author Aathith
+	 */
+	public void fillingTIFFSectionwithBurnRedactionWithoutUpdatedText() throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_defaultRedactionTag());
+		getClkCheckBox_defaultRedactionTag().isDisplayed();
+		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_selectingRedactionTags());
+		getClkCheckBox_selectingRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().isDisplayed();
+		getClk_selectBtn().waitAndClick(10);
+
+	}
 	
+	/**
+	 * Indium-Baskar
+	 */
+	
+	public void selectNativeTag(String tagOne,String tagTwo) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getNativeFileSelectingTag());
+		getNativeFileSelectingTag().waitAndClick(5);
+		base.waitForElement(getNativeFileTagSelection(tagOne));
+		getNativeFileTagSelection(tagOne).waitAndClick(5);
+		base.waitForElement(getNativeFileTagSelection(tagTwo));
+		getNativeFileTagSelection(tagTwo).waitAndClick(5);
+		base.waitForElement(getNativeFileTagSelectButton());
+		getNativeFileTagSelectButton().waitAndClick(5);
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @description toogle off check for element
+	 */
+	public void toggleOffCheck(Element element) {
+		try {
+			driver.waitForPageToBeReady();		
+			driver.scrollPageToTop();
+			String color = element.GetCssValue("background-color");
+			System.out.println(color);
+			String ExpectedColor = Color.fromString(color).asHex();
+			System.out.println(ExpectedColor);
+			String ActualColor="#e54036";
+			if(ActualColor.equals(ExpectedColor)) {
+				base.passedStep("toggle is off :"+element);
+			}else {
+				base.failedStep("toggle off verifaction failed");
+				}
+		} catch (Exception e) {
+			base.failedStep("Exception occcured toggle off check" + e.getMessage());
+			e.printStackTrace();
+		}
+
+
+	}
+	/**
+	 * @author Aathith
+	 * @Description : CheckBox notChecked verification
+	 */
+	public void getCheckBoxUnCheckVerificaation(Element element) {
+		String value = element.GetAttribute("checked");
+		System.out.println("value :"+value);
+		softAssertion.assertNull(value);
+		if(value==null) {
+			base.passedStep(element+"element is not checked");
+			System.out.println("element is unChecked");
+		}else {
+			base.failedStep(element+"element is checked");
+			System.out.println("element is Checked");
+		}
+	}
+
 	
 }

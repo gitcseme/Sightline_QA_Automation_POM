@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -33,6 +34,7 @@ import pageFactory.DocExplorerPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SecurityGroupsPage;
@@ -53,6 +55,8 @@ public class DocView_Regression2 {
 	DocViewMetaDataPage docViewMetaDataPage;
 	UserManagement userManage;
 	DocExplorerPage docexp;
+	AssignmentsPage assignPage;
+	KeywordPage keywordPage;
 
 	String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 
@@ -1345,7 +1349,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException 
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 27)
 	public void verifyPrintIconAfterDisablingToggle() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -1389,7 +1393,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-48810
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =15)
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =28)
 	public void verifyTextRedactionFunctionDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -1417,8 +1421,436 @@ public class DocView_Regression2 {
 		}
 	}
 
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50774
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
+	public void verifyAssignmentDocs() throws Exception {
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-50774");
+		baseClass.stepInfo("To verify that 'View All Doc in Doc View' option is disabled if assignment is not added in the list");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.bulkAssign();
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		baseClass.stepInfo(
+				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
+		String verifydocsCountInAssgnPage = assignmentspage.verifydocsCountInAssgnPage(assignmentName);
+	
+		if(verifydocsCountInAssgnPage.equalsIgnoreCase("201")) {
+			baseClass.passedStep("The doc count has been verified");
+		} else {
+			baseClass.failedStep("The doc count is not verified");
+		}
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		baseClass.passedStep("Assignment viewed in DocView Successfully");
+		
+		
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50776
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 14)
+	public void verifyAssignmentPageViewInDocView() throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-50776");
+		baseClass.stepInfo("To verify that 'View All Doc in Doc View' option is disabled if assignment is not added in the list");
+		docViewRedact = new DocViewRedactions(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		assignmentspage.navigateToAssignmentsPage();
+		driver.scrollPageToTop();
+		assignmentspage.getAssignmentActionDropdown().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return assignmentspage.getAssignmentAction_ViewinDocView().Visible();
+			}
+		}), Input.wait60);
+		Assert.assertTrue(assignmentspage.getAssgnAction_Export().isDisplayed());
+		String getAttribute = assignmentspage.getAssignmentAction_ViewinDocView().GetAttribute("disabled");
+		System.out.println(getAttribute);
+		if(getAttribute == null) {
+			assignmentspage.getAssignmentAction_ViewinDocView().waitAndClick(3);
+			baseClass.VerifyWarningMessage("Please select at least one assignment from the displayed assignment list");
+			
+		} else {
+			baseClass.passedStep("No assignments pre esist for the SG. The view in doc view Icon is disabled");
+		}	
+	}
+	/**
+	 * Author : Iyappan.Kasinathan
+	 * Description : Verify on click of the reviewer remark respecive page should be scrolled in doc view when redirecting from basic search/saved search/doc list
+	 */
+	@Test(enabled = true, dataProvider = "UsersWithoutPA",alwaysRun = true, groups = { "regression" }, priority = 29)
+	public void VerifyReviewerRemarksPageFromSearchPg(String userName, String password, String fullName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-51083");
+		baseClass.stepInfo(" Verify on click of the reviewer remark respecive page should be scrolled in doc view when redirecting from basic search/saved search/doc list");
+		baseClass = new BaseClass(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		String remarksName = "remarks"+Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(userName, password);
+		sessionsearch.basicContentSearch("null");
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewRedact.getDocView_PageNumber());
+		docViewRedact.getDocView_PageNumber().SendKeys("4");
+		docViewRedact.getSearchIcon().waitAndClick(5);
+		docViewRedact.clickingRemarksIcon();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
+		Thread.sleep(4000);
+		//Thread sleep added for the page to adjust resolution
+		Actions actions = new Actions(driver.getWebDriver());
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
+		.moveByOffset(200, 90).release().build().perform();
+		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
+		actions.click().build().perform();
+		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
+		actions.click();
+		actions.sendKeys(remarksName);
+		actions.build().perform();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.saveRemarksBtn());
+		docViewRedact.saveRemarksBtn().waitAndClick(10);	
+		baseClass.stepInfo("Remarks added successfully");
+		baseClass.waitForElement(docView.getDocView_SelectRemarks(remarksName));
+		docView.getDocView_SelectRemarks(remarksName).waitAndClick(10);
+		String id= docView.getRemarksId(remarksName).GetAttribute("id");
+		if(docView.getRemarksInPg(id).isElementAvailable(5)) {
+			baseClass.passedStep("The page is loaded sucessfully where the remarks is added");
+		}else {
+			baseClass.failedStep("The page is not loaded where the remarks is added");
+		}
+		docViewRedact.clickingRemarksIcon();
+		docView.deleteReamark(remarksName);
+
+	}
+	/**
+	 * Author : Iyappan.Kasinathan
+	 * Description : Verify on click of the reviewer remark respective page should be scrolled in doc view when redirecting from my assignment
+	 */
+	@Test(enabled = true, dataProvider = "UsersWithoutPA",alwaysRun = true, groups = { "regression" }, priority = 30)
+	public void VerifyReviewerRemarksPageFromAssignments(String userName, String password, String fullName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-51082");
+		baseClass.stepInfo("Verify on click of the reviewer remark respective page should be scrolled in doc view when redirecting from my assignment");
+		baseClass = new BaseClass(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String remarksName = "remarks"+Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(userName, password);
+		//create assignment
+		if(fullName.contains("RMU")) {
+		sessionsearch.basicContentSearch("null");
+		sessionsearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.add2ReviewerAndDistribute();
+		//Impersonate to reviewer
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.viewSelectedAssgnUsingPagination(assignmentName);
+		assignmentPage.assgnViewInAllDocView();
+		baseClass.stepInfo("Navigated to docview from assignment page successfully");
+		driver.waitForPageToBeReady();
+		}else {
+			assignmentPage.SelectAssignmentByReviewer(assignmentName);
+			baseClass.stepInfo("User on the doc view after selecting the assignment");
+		}
+		baseClass.waitForElement(docViewRedact.getDocView_PageNumber());
+		docViewRedact.getDocView_PageNumber().SendKeys("4");
+		docViewRedact.getSearchIcon().waitAndClick(5);
+		docViewRedact.clickingRemarksIcon();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
+		Thread.sleep(4000);
+		//Thread sleep added for the page to adjust resolution
+		Actions actions = new Actions(driver.getWebDriver());
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
+		.moveByOffset(200, 90).release().build().perform();
+		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
+		actions.click().build().perform();
+		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
+		actions.click();
+		actions.sendKeys(remarksName);
+		actions.build().perform();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.saveRemarksBtn());
+		docViewRedact.saveRemarksBtn().waitAndClick(10);	
+		baseClass.stepInfo("Remarks added successfully");
+		baseClass.waitForElement(docView.getDocView_SelectRemarks(remarksName));
+		docView.getDocView_SelectRemarks(remarksName).waitAndClick(10);
+		String id= docView.getRemarksId(remarksName).GetAttribute("id");
+		if(docView.getRemarksInPg(id).isElementAvailable(5)) {
+			baseClass.passedStep("The page is loaded sucessfully where the remarks is added");
+		}else {
+			baseClass.failedStep("The page is not loaded where the remarks is added");
+		}
+		docViewRedact.clickingRemarksIcon();
+		docView.deleteReamark(remarksName);
+		if(fullName.contains("REV")) {
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
+		}
+	}
+	@DataProvider(name = "UsersWithoutPA")
+	public Object[][] UsersWithoutPA() {
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName }, { Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
+	}	
 	
 	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51046
+	 * Description :Verify user can not see the keywords highlighted outside of an assignment when keyword groups assigned to the assignment only
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 27)
+	public void verifyKeywordsHighlightingWhenMappedToAssignment() throws InterruptedException, AWTException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		keywordPage = new KeywordPage(driver);
+		
+		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
+		
+		//Pre-requisites
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51046");
+		baseClass.stepInfo("Verify keywords highlighting after keywords mapped to the assignment");
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssignExisting(assignmentName);
+		assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		assignPage.getAssgn_Keywordsbutton().ScrollTo();
+		assignPage.getAssgn_Keywordsbutton().isElementAvailable(10);
+		assignPage.getAssgn_Keywordsbutton().waitAndClick(10);
+		baseClass.waitForElement(assignPage.getAssgn_Keywordspopup());
+		driver.waitForPageToBeReady();
+		List<String> values =baseClass.availableListofElements(assignPage.getAssgn_AllKeywords());
+		baseClass.stepInfo("Mapped keywords for the assignment are " +values);
+		assignPage.getAssgn_Keywordokbutton().ScrollTo();
+		assignPage.getAssgn_Keywordokbutton().isElementAvailable(10);
+		assignPage.getAssgn_Keywordokbutton().Click();
+		keywordPage.getYesButton().Click();
+		driver.waitForPageToBeReady();
+		assignPage.addReviewerAndDistributeDocs();
+		baseClass.stepInfo("Added reviewer and distributed docs");
+		loginPage.logout();
+		
+		//Login as RMU and verify keyword Highlighting
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined as RMU");
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.selectAssignmentToViewinDocView(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+		// click eye icon and verify the highlighting of search term
+		docView.getPersistentHit(Input.testData1);
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+		
+		//login as reviewer and verify keyword highlighting
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logined as Reviewer");
+		assignPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+		// click eye icon and verify the highlighting of search term
+		docView.getPersistentHit(Input.testData1);
+		docView.verifyKeywordHighlightedOnDocView();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51045
+	 * Description :Verify user can not see the keywords highlighted in context of an assignment when keyword group assigned to the security group only
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 28)
+	public void verifyKeywordsHighlightingWhenUnMappedFromAssignment() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		keywordPage = new KeywordPage(driver);
+		
+		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
+		
+		//Pre-requisites
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51045");
+		baseClass.stepInfo("Verify keywords highlighting when keywords are not mapped to the assignment");
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssignExisting(assignmentName);
+		assignPage.unmappingKeywordsFromAssignment(assignmentName);
+		assignPage.addReviewerAndDistributeDocs();
+		baseClass.waitForElement(assignPage.getAssignmentSaveButton());
+		assignPage.getAssignmentSaveButton().Click();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+			
+		//Login as RMU and verify keyword Highlighting
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined as RMU");
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.selectAssignmentToViewinDocView(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+		// click eye icon and verify the highlighting of search term
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		
+		if(docView.getPersistentToogle().isDisplayed()) {
+			baseClass.failedStep("Keywprds are highlighted while checking as RMU");
+		}
+		else
+		{
+			baseClass.passedStep("Keywords are not highlighted while checking as RMU");
+		}	
+		loginPage.logout();
+				
+		//login as reviewer and verify keyword highlighting
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logined as Reviewer");
+		assignPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+
+		// click eye icon and verify the highlighting of search term
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);		
+		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		if(docView.getPersistentToogle().isDisplayed()) {
+			baseClass.failedStep("Keywprds are highlighted while checking as reviewer");
+		}
+		else
+		{
+			baseClass.passedStep("Keywords are not highlighted while checking as reviewer");
+		}		
+		
+	}
+/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51557
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =28)
+	public void verifySearchIconGreyedForTiff(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51557");
+		baseClass.stepInfo("Verify that by default, the document is simply shows the search icon [magnifying]");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.TiffDocId, null);
+		sessionsearch.ViewInDocView();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.getSearchIconDisabled());
+		String SearchIcon = docViewRedact.getSearchIconDisabled().GetAttribute("class");
+		if (SearchIcon.contains("disabled")) {
+			baseClass.passedStep("The search text icon is disabled for Tiff images - as expected");
+		} else {
+			baseClass.failedStep("Search Icon not disabled for Tiff images");
+		}
+	}
+
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51267
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 29)
+	public void verifyUniCodeFilesViewInDocView() throws Exception {
+		baseClass = new BaseClass(driver);
+//	 checking hits as SA to PA		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Test case Id: RPMXCON-51267");
+		baseClass.stepInfo("Verify after impersonation user view unicode files in near native view of doc view");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to PA");
+		loginPage.logout();
+
+//	 checking hits as SA to RMU
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoRMU();
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
+		loginPage.logout();
+
+//	checking hits as SA to Rev
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoReviewer();
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
+		loginPage.logout();
+
+//		 checking hits as PA to Rev
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoReviewer();
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
+		loginPage.logout();
+
+// 	checking hits as PA to RMU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoRMU();
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
+		loginPage.logout();
+
+//		 checking hits as RMU to Rev
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.impersonateRMUtoReviewer();
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
+
+	}
+	
+	
+	
+	
+
 	
 	
 	@AfterMethod(alwaysRun = true)

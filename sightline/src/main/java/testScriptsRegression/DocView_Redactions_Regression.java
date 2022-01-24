@@ -939,7 +939,7 @@ public class DocView_Redactions_Regression {
 		robot.keyPress(KeyEvent.VK_F5);
 		robot.keyRelease(KeyEvent.VK_F5);
 		baseClass.stepInfo("Verifying that redaction is not saved since page is refreshed");
-		docViewRedact.verifyWhetherThisPageRedactionIsSaved(false);
+		docViewRedact.verifyWhetherRedactionIsSaved(false);
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -953,7 +953,7 @@ public class DocView_Redactions_Regression {
 		robot.keyPress(KeyEvent.VK_F5);
 		robot.keyRelease(KeyEvent.VK_F5);
 		baseClass.stepInfo("Verifying that redaction is not saved since page is refreshed");
-		docViewRedact.verifyWhetherThisPageRedactionIsSaved(false);
+		docViewRedact.verifyWhetherRedactionIsSaved(false);
 
 	}
 
@@ -1051,14 +1051,14 @@ public class DocView_Redactions_Regression {
 		docViewPage.selectDocIdInMiniDocList(docId);
 
 		baseClass.stepInfo("Verify whether the redaction popup is displayed on select of redacted page");
-		docViewRedact.verifyWhetherThisPageRedactionIsSaved(true);
+		docViewRedact.verifyWhetherRedactionIsSaved(true);
 
 		driver.scrollPageToTop();
 		baseClass.waitForElement(docViewRedact.docViewNextPage());
 		docViewRedact.docViewNextPage().Click();
 
 		baseClass.stepInfo("Verify whether the redaction popup is displayed on select of next redacted page");
-		docViewRedact.verifyWhetherThisPageRedactionIsSaved(true);
+		docViewRedact.verifyWhetherRedactionIsSaved(true);
 
 		if (docViewRedact.getRedactionPopups().size() == 1) {
 			softAssert.assertEquals(docViewRedact.getRedactionPopups().size(), 1);
@@ -1080,14 +1080,14 @@ public class DocView_Redactions_Regression {
 		docViewPage.selectDocIdInMiniDocList(docId);
 
 		baseClass.stepInfo("Verify whether the redaction popup is displayed on select of redacted page");
-		docViewRedact.verifyWhetherThisPageRedactionIsSaved(true);
+		docViewRedact.verifyWhetherRedactionIsSaved(true);
 
 		driver.scrollPageToTop();
 		baseClass.waitForElement(docViewRedact.docViewNextPage());
 		docViewRedact.docViewNextPage().Click();
 
 		baseClass.stepInfo("Verify whether the redaction popup is displayed on select of next redacted page");
-		docViewRedact.verifyWhetherThisPageRedactionIsSaved(true);
+		docViewRedact.verifyWhetherRedactionIsSaved(true);
 
 		baseClass.stepInfo(
 				"Verify whether the multiple rectangle redaction does not remain selected, Only one is selected");
@@ -6348,7 +6348,248 @@ public class DocView_Redactions_Regression {
 		docViewRedact.verifyViewDocAnalyticalPanelPartInMiniDocList();
 	}
 
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-49372 Verify that when 'This page' redaction selected to delete with
+	 * 'Delete' key from keyboard should be disabled keyboard action
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 32)
+	public void verifyKeyBoardDelActionDisabledForThisRedaction() throws Exception {
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SoftAssert softAssert = new SoftAssert();
+		// Login As RMU
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Test case Id: RPMXCON-49372 ");
+		baseClass.stepInfo(
+				"Verify that when 'This Page' redaction selected to delete with 'Delete' key from keyboard should be disabled keyboard action");
+
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+
+		baseClass.stepInfo("Adding Text redaction");
+		docViewRedact.redactTextUsingOffset();
+		docViewRedact.selectingRectangleRedactionTag();
+
+		baseClass.passedStep("Text redaction is added successfully");
+
+		baseClass.stepInfo("Adding the this page redaction");
+		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
+		baseClass.stepInfo("This page redaction has been performed");
+
+		String getRedactedDocid = docViewRedact.activeDocId().getText();
+
+		baseClass.stepInfo("Navigate to another document and come back to redacted document");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewRedact.nextDocViewBtn());
+		docViewRedact.nextDocViewBtn().Click();
+		driver.waitForPageToBeReady();
+
+		String nextDoc = docViewRedact.activeDocId().getText();
+
+		baseClass.stepInfo("Verify that user is navigated to next document");
+		softAssert.assertNotEquals(getRedactedDocid, nextDoc);
+
+		baseClass.waitForElement(docViewRedact.previousDocViewBtn());
+		docViewRedact.previousDocViewBtn().Click();
+		driver.waitForPageToBeReady();
+		nextDoc = docViewRedact.activeDocId().getText();
+		softAssert.assertEquals(getRedactedDocid, nextDoc);
+
+		baseClass.stepInfo("Select the rectangular redaction and Press Delete key");
+		docViewRedact.verifyWhetherRedactionIsSaved(true);
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_DELETE);
+		robot.keyRelease(KeyEvent.VK_DELETE);
+		driver.waitForPageToBeReady();
+		
+		
+		baseClass.stepInfo("Move to next page to add this page redaction");
+		baseClass.waitForElement(docViewRedact.docViewNextPage());
+		docViewRedact.docViewNextPage().Click();
+		driver.waitForPageToBeReady();
+		
+		baseClass.stepInfo("Adding the this page redaction");
+		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
+		baseClass.stepInfo("This page redaction has been performed");
+		
+		baseClass.stepInfo("Move to previous page to verify this page redaction is still present after del key is pressed");
+		baseClass.waitForElement(docViewRedact.docViewPreviousPage());
+		docViewRedact.docViewPreviousPage().Click();
+		driver.waitForPageToBeReady();
+		
+		baseClass.stepInfo("Navigate to another document and come back to redacted document");
+		baseClass.waitForElement(docViewRedact.nextDocViewBtn());
+		docViewRedact.nextDocViewBtn().Click();
+		driver.waitForPageToBeReady();
+
+		baseClass.waitForElement(docViewRedact.previousDocViewBtn());
+		docViewRedact.previousDocViewBtn().Click();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify still the this redaction is displayed even after  del key is pressed");
+		docViewRedact.verifyWhetherRedactionIsSaved(true);
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+
+		softAssert.assertAll();
+
+	}
 	
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-49371 Verify that when 'Rectangle' redaction selected to delete with
+	 * 'Delete' key from keyboard should be disabled keyboard action
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 33)
+	public void verifyKeyBoardDelActionDisabledForRectangleRedaction() throws Exception {
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SoftAssert softAssert = new SoftAssert();
+		// Login As RMU
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Test case Id: RPMXCON-49371 ");
+		baseClass.stepInfo(
+				"Verify that when 'Rectangle' redaction selected to delete with 'Delete' key from keyboard should be disabled keyboard action");
+
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+
+		baseClass.stepInfo("Adding Text redaction");
+		docViewRedact.redactTextUsingOffset();
+		docViewRedact.selectingRectangleRedactionTag();
+
+		baseClass.passedStep("Text redaction is added successfully");
+
+		baseClass.stepInfo("Adding Rectangle redaction");
+		docViewRedact.redactionIcon().waitAndClick(20);
+		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
+		docViewRedact.selectingRectangleRedactionTag();
+		baseClass.passedStep("Rect redaction is added successfully");
+
+		String getRedactedDocid = docViewRedact.activeDocId().getText();
+
+		baseClass.stepInfo("Navigate to another document and come back to redacted document");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewRedact.nextDocViewBtn());
+		docViewRedact.nextDocViewBtn().Click();
+		driver.waitForPageToBeReady();
+
+		String nextDoc = docViewRedact.activeDocId().getText();
+
+		baseClass.stepInfo("Verify that user is navigated to next document");
+		softAssert.assertNotEquals(getRedactedDocid, nextDoc);
+
+		baseClass.waitForElement(docViewRedact.previousDocViewBtn());
+		docViewRedact.previousDocViewBtn().Click();
+		driver.waitForPageToBeReady();
+		nextDoc = docViewRedact.activeDocId().getText();
+		softAssert.assertEquals(getRedactedDocid, nextDoc);
+
+		baseClass.stepInfo("Select the rectangular redaction and Press Delete key");
+		docViewRedact.verifyWhetherRedactionIsSaved(true);
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_DELETE);
+		robot.keyRelease(KeyEvent.VK_DELETE);
+
+		baseClass.stepInfo("Adding the third redaction");
+		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
+		baseClass.stepInfo("This page redaction has been performed");
+
+		baseClass.stepInfo("Navigate to another document and come back to redacted document");
+		baseClass.waitForElement(docViewRedact.nextDocViewBtn());
+		docViewRedact.nextDocViewBtn().Click();
+		driver.waitForPageToBeReady();
+
+		baseClass.waitForElement(docViewRedact.previousDocViewBtn());
+		docViewRedact.previousDocViewBtn().Click();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify still the rectangle redaction is displayed even after  del key is pressed");
+		docViewRedact.verifyWhetherRedactionIsSaved(true);
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+
+		softAssert.assertAll();
+
+	}
+	
+	/**
+	 * Author : Sai Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-51044 Verify after impersonation user can maximize the middle panel of the doc view
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
+	public void verifyAfterImpersonationMiddlePanelInDocView() throws Exception {
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+
+		// Login As RMU
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Test case Id: RPMXCON- 51044");
+		baseClass.stepInfo(
+				"Verify after impersonation user can maximize the middle panel of the doc view");
+		
+		baseClass.impersonateRMUtoReviewer();
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA user");
+		baseClass.impersonateSAtoPA();
+		baseClass.stepInfo("SA has been impersonated as PA");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		SessionSearch sessionsearch1 = new SessionSearch(driver);
+		sessionsearch1.basicContentSearch(Input.searchString1);
+		sessionsearch1.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA user");
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("SA has been impersonated as RMU");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		SessionSearch sessionsearch2 = new SessionSearch(driver);
+		sessionsearch2.basicContentSearch(Input.searchString1);
+		sessionsearch2.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA user");
+		baseClass.impersonateSAtoReviewer();
+		baseClass.stepInfo("SA has been impersonated as RMU");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		SessionSearch sessionsearch3 = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("PA has been impersonated as RMU");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		SessionSearch sessionsearch4 = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("PA has been impersonated as Rev");
+		baseClass.stepInfo("Search the non audio documents and go to docview");
+		SessionSearch sessionsearch5 = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();		
+	 
+	}
+
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

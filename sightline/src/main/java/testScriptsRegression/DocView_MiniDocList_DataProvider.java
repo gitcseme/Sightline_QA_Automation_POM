@@ -4,6 +4,7 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -54,7 +55,8 @@ public class DocView_MiniDocList_DataProvider {
 	DocListPage docListPage;
 
 	String assignmentNameToChoose;
-
+    String hitsCount;
+    String savedSearchs = "AsavedToDocview" + Utility.dynamicNameAppender();
 	@BeforeClass(alwaysRun = true)
 	private void TestStart() throws Exception, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1450,6 +1452,7 @@ public class DocView_MiniDocList_DataProvider {
 		savedSearch.getToDocView().waitAndClick(5);
 		baseClass.stepInfo("User navigated to docview page from SavedSearch page");
 		miniDocListpage.verifyOptimizedSortIsSelected(); // validation part
+		
 	}
 
 	/**
@@ -1511,7 +1514,98 @@ public class DocView_MiniDocList_DataProvider {
 		loginPage.logout();
 
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param fullName
+	 * @param userName
+	 * @param password
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 59)
+	public void BasicSearchToDocView_PanelVerify(String fullName, String userName, String password)
+			throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50811");
+		baseClass.stepInfo("To verify Mini DocList Panel from doc view page for user when redirects from"
+				+ " Basic Search > View all in doc view");
+		String expectedURL=Input.url+"DocumentViewer/DocView";
+		loginPage.loginToSightLine(userName, password);
 
+		baseClass.stepInfo("Successfully login as '" + fullName);
+		// basic search to doc view
+		sessionSearch.basicContentSearch(Input.testData1);
+		hitsCount=sessionSearch.verifyPureHitsCount();
+		sessionSearch.ViewInDocView();
+	    driver.waitForPageToBeReady();
+		if(driver.getUrl().equals(expectedURL)) {
+			baseClass.passedStep("User navigated to docview page from Basic search page");
+			List<String> listOfData= new ArrayList<>();
+			listOfData=reusableDocViewPage.miniDocList();
+			List<String> listOfDataAfterSort=  new ArrayList<>();
+			listOfDataAfterSort=reusableDocViewPage.miniDocList(); 
+			Collections.sort(listOfDataAfterSort);
+			baseClass.stepInfo("Pure Hits Count--"+hitsCount);
+			baseClass.stepInfo("Docs Count in DocView Page --"+listOfData.size());
+			softAssertion.assertEquals(listOfData,listOfDataAfterSort);
+			softAssertion.assertEquals(listOfData.size(),Integer.parseInt(hitsCount));
+			softAssertion.assertAll();
+			baseClass.passedStep("Documents  listed as per the saved into the search and documents  sorted as per the document ID  ");
+		}
+		else{
+			baseClass.failedStep("Application not redirected to the  doc view page ");
+		}
+	
+		loginPage.logout();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param fullName
+	 * @param userName
+	 * @param password
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 60)
+	public void savedSearchToDocView_PanelVerify(String fullName, String userName, String password)
+			throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50809");
+		baseClass.stepInfo("To verify Mini DocList Panel from doc view page for user when redirects from saved search");
+		
+		String expectedURL=Input.url+"DocumentViewer/DocView";
+		loginPage.loginToSightLine(userName, password);
+
+		baseClass.stepInfo("Successfully login as '" + fullName);
+		if(userName==Input.pa1userName) {
+		// saved search search to doc view
+		sessionSearch.basicContentSearch(Input.TallySearch);
+		hitsCount=sessionSearch.verifyPureHitsCount();
+		sessionSearch.saveSearchAtAnyRootGroup(savedSearchs, Input.shareSearchDefaultSG);
+		}
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
+		savedSearch.savedSearch_SearchandSelect(savedSearchs, "Yes");
+		savedSearch.getToDocView().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		if(driver.getUrl().equals(expectedURL)) {
+			baseClass.passedStep("User navigated to docview page from SavedSearch  page");
+			List<String> listOfData= new ArrayList<>();
+			listOfData=reusableDocViewPage.miniDocList();
+			List<String> listOfDataAfterSort=  new ArrayList<>();
+			listOfDataAfterSort=reusableDocViewPage.miniDocList(); 
+			Collections.sort(listOfDataAfterSort);
+			baseClass.stepInfo("Pure Hits Count--"+hitsCount);
+			baseClass.stepInfo("Docs Count in DocView Page --"+listOfData.size());
+			softAssertion.assertEquals(listOfData,listOfDataAfterSort);
+			softAssertion.assertEquals(listOfData.size(),Integer.parseInt(hitsCount));
+			softAssertion.assertAll();
+			baseClass.passedStep("Documents  listed as per the saved into the search and documents  sorted as per the document ID  ");
+		}
+		else{
+			baseClass.failedStep("Application not redirected to the  doc view page ");
+		}
+	
+		loginPage.logout();
+	}
+
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);

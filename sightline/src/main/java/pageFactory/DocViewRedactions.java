@@ -1202,7 +1202,16 @@ public class DocViewRedactions {
 	public Element get_PrintIcon() {
 		return driver.FindElementById("print_divDocViewer");}
 	
+	public Element getDocViewPanel() {
+		return driver.FindElementById("CoddingContent");
+	}
 	
+	public Element getMaximizePanel() {
+		return driver.FindElementByXPath("(//div[@class='ui-resizable-handle ui-resizable-e'])[last()]");
+	}
+	
+	public Element getSearchIconDisabled() {
+		return driver.FindElementByXPath("//div[@class='searchOnDemand disabled']");}
 	
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
@@ -1344,7 +1353,7 @@ public class DocViewRedactions {
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
-
+		base.waitTime(5);
 	}
 
 	/**
@@ -1693,7 +1702,7 @@ public class DocViewRedactions {
 			base = new BaseClass(driver);
 			base.waitForElement(thisPageRedaction());
 			base.waitTillElemetToBeClickable(thisPageRedaction());
-			thisPageRedaction().Click();
+			thisPageRedaction().waitAndClick(5);
 			base.waitForElement(getSelectReductionTagDropDown());
 			getSelectReductionTagDropDown().selectFromDropdown().selectByVisibleText(redactiontag);
 			base.waitForElement(getSaveButton());
@@ -2559,7 +2568,7 @@ public class DocViewRedactions {
 	 * @param isSavedFlag -- This is the flag to denote whether redaction should be
 	 *                    saved or not.
 	 */
-	public void verifyWhetherThisPageRedactionIsSaved(Boolean isSavedFlag) {
+	public void verifyWhetherRedactionIsSaved(Boolean isSavedFlag) {
 		try {
 			base = new BaseClass(driver);
 			driver.waitForPageToBeReady();
@@ -2570,7 +2579,7 @@ public class DocViewRedactions {
 			if (isSavedFlag) {
 				base.waitForElement(getRedactionPopup());
 				softAssertion.assertEquals(getRedactionPopup().getWebElement().isDisplayed(), true);
-				base.passedStep("Redaction is  saved");
+				base.passedStep("Redaction is  saved and popup is displayed");
 			} else {
 				Element element = getRedactionPopup();
 				try {
@@ -3601,6 +3610,35 @@ public class DocViewRedactions {
 		} else {
 			base.failedStep("Image tab is not displayed");
 
+		}
+	}
+	
+	public void verifyMaximizetheMiddlePanel() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		base = new BaseClass(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		base.waitForElement(getDocViewPanel());
+		if (getDocViewPanel().isDisplayed()) {
+			base.passedStep("DocView panels are displayed");
+			softAssertion.assertEquals(getDocViewPanel().isDisplayed().booleanValue(), true);
+		} else {
+			base.failedStep( "panels are not displayed");
+		}
+		Actions actions = new Actions(driver.getWebDriver());
+		driver.waitForPageToBeReady();
+		base.waitForElement(getMaximizePanel());
+		wait.until(ExpectedConditions.elementToBeClickable(getMaximizePanel().getWebElement()));
+		Thread.sleep(4000);
+		//Thread sleep added for the page to maximize		
+		actions.moveToElement(getMaximizePanel().getWebElement()).clickAndHold().moveByOffset(800, 80).release().build().perform();
+		base.stepInfo("Middle panel of the doc view page is successfully maximized");
+		base.waitForElement(getDocViewPanel());
+		if (getDocViewPanel().isDisplayed()) {
+			base.passedStep("DocView panels are collapsed on maximizing the middle panel ");
+			softAssertion.assertTrue(getDocViewPanel().isDisplayed());
+		} else {
+			base.failedStep( "panels are not displayed");
 		}
 	}
 
