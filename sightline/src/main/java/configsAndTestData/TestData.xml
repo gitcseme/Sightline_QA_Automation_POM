@@ -18,9 +18,11 @@
 	<metaDataCN>P Allen</metaDataCN>
 	<metaDataCNcount>1135</metaDataCNcount>
 	<totalNumberOfDocs>1202</totalNumberOfDocs>
-	<totalNumberOfDocsincludeadvoption>103</totalNumberOfDocsincludeadvoption>
+	<totalNumberOfDocsincludeadvoption>103
+	</totalNumberOfDocsincludeadvoption>
 	<historyTab>History</historyTab>
-	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
+	<documentConceptualTab>liDocumentConceptualSimilar
+	</documentConceptualTab>
 	<randomText>Test</randomText>
 	<metaDataName>CustodianName</metaDataName>
 	<is_Or_Range>range</is_Or_Range>
@@ -39,7 +41,7 @@
 	<nameColumnName>Name</nameColumnName>
 	<userColumnName>User</userColumnName>
 	<timeStampColumnName>Time Stamp</timeStampColumnName>
-	
+
 	<!-- Added by Arunkumar -->
 	<pageRange1>4-7</pageRange1>
 	<pageRange2>3</pageRange2>
@@ -48,8 +50,10 @@
 	<searchPhraseWithQuote>"is required"</searchPhraseWithQuote>
 
 	<!-- Production path for redaction master doc -->
-	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
-	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf</MasterPDF2location>
+	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
+	</MasterPDF1location>
+	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf
+	</MasterPDF2location>
 
 	<!-- Docview Analytics -->
 	<Panel>Conceptually Similar</Panel>
@@ -64,12 +68,9 @@
 	<MiniDocId>ID00000102</MiniDocId>
 	<ThreadQuery>"testing the same"</ThreadQuery>
 	<NewDocId>ID00001178</NewDocId>
-	<MetaDataId>ID00001360</MetaDataId>
 	<documentToBeScrolled>ID00001352-I</documentToBeScrolled>
 	<conceptualDocument>ID00004389</conceptualDocument>
 	<conceptualDocs1>ID00000703</conceptualDocs1>
-	<conceptualDocumentReviewer>ID00001178</conceptualDocumentReviewer>
-	<familyDocument>ID00001132</familyDocument>
 	<threadDocId>ID00001355</threadDocId>
 	<principalDocId>5168</principalDocId>
 	<principalDocId1>5138</principalDocId1>
@@ -90,8 +91,8 @@
 	<familyDocumentForReviewer>ID00001355</familyDocumentForReviewer>
 	<nearDupeCompletedDocId>ID00000944</nearDupeCompletedDocId>
 	<nearDupeDocId>ID00001158</nearDupeDocId>
-	<nearDupeCompletedDocIdReviewer>ID00001532</nearDupeCompletedDocIdReviewer>
-	<historyClockIconDocId>ID00000667</historyClockIconDocId>
+	<nearDupeCompletedDocIdReviewer>ID00001532
+	</nearDupeCompletedDocIdReviewer>
 	<newNearDupeDocId>ID00001531</newNearDupeDocId>
 	<warningDocId>ID00001304</warningDocId>
 	<threadData1>ID00005182</threadData1>
@@ -129,7 +130,8 @@
 	<tagNameTechnical> Technical_Issue</tagNameTechnical>
 	<signatureDocumentID>ID00005088</signatureDocumentID>
 	<searchString20Docs>conceptually</searchString20Docs>
-	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation</prodPathUAT>
+	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation
+	</prodPathUAT>
 	<bates>Bates</bates>
 	<batesNumber>BatesNumber</batesNumber>
 	<ChildBates>ChildBates</ChildBates>
@@ -138,7 +140,8 @@
 
 	<!-- Added by Gopinath -->
 	<historyTab>History</historyTab>
-	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
+	<documentConceptualTab>liDocumentConceptualSimilar
+	</documentConceptualTab>
 	<randomText>Test</randomText>
 	<metaDataName>CustodianName</metaDataName>
 	<is_Or_Range>range</is_Or_Range>
@@ -170,7 +173,7 @@
 	<pageRange>1-2</pageRange>
 	<fullPageRange>1-4</fullPageRange>
 	<iconColor>#E64634</iconColor>
-		<testSecondDocId>ID00000104</testSecondDocId>
+	<testSecondDocId>ID00000104</testSecondDocId>
 	<testTenthDocId>ID00000667</testTenthDocId>
 	<docNearDupeDocId>ID00001329</docNearDupeDocId>
 	<TiffDocId>ID00001075</TiffDocId>
@@ -193,23 +196,33 @@
 	<docHighlightColor>#CDD9E1</docHighlightColor>
 	<sortDataBy>DocID</sortDataBy>
 	<sortType>Ascending</sortType>
-	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads</fileDownloadLocation>
+	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads
+	</fileDownloadLocation>
 	<completedWithErrColorCodeBR>#F88C00</completedWithErrColorCodeBR>
 	<shareSearchPA>Shared With Project Administrator</shareSearchPA>
-	<shareSearchDefaultSG>Shared with Default Security Group</shareSearchDefaultSG>
+	<shareSearchDefaultSG>Shared with Default Security Group
+	</shareSearchDefaultSG>
 	<mySavedSearch>My Saved Search</mySavedSearch>
 	<zeroPureHitString>#$%^</zeroPureHitString>
-	<invalidBatchFileNewLocation>\Misc\InvalidBatchFiles\</invalidBatchFileNewLocation>
+	<invalidBatchFileNewLocation>\Misc\InvalidBatchFiles\
+	</invalidBatchFileNewLocation>
 	<xlsBatchFile>Invalid_xlx_BatchSearchTemplate.xls</xlsBatchFile>
-	<invalidBatchFileFormatErrMsg>Please select a valid file of typexls/xlsx</invalidBatchFileFormatErrMsg>
+	<invalidBatchFileFormatErrMsg>Please select a valid file of
+		typexls/xlsx
+	</invalidBatchFileFormatErrMsg>
 	<metaDataCustodianNameInput>Andrew</metaDataCustodianNameInput>
 	<selectionHighlightColor>#B0BED9</selectionHighlightColor>
 	<searchString7>term</searchString7>
-	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is in progress, you cannot overwrite it. Please wait until SavedSearch is completed.</errMsgSinceExecutionInProgress>
+	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is
+		in progress, you cannot overwrite it. Please wait until SavedSearch is
+		completed.
+	</errMsgSinceExecutionInProgress>
 	<validBatchFileLocation>\Misc\ValidBatchFiles\</validBatchFileLocation>
 	<fileDataErrMsg>Error in file saving</fileDataErrMsg>
-	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error</batchColumnHeaderErrorFileName>
-	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet</BatchFileWithMultiplesheetFile>
+	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error
+	</batchColumnHeaderErrorFileName>
+	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet
+	</BatchFileWithMultiplesheetFile>
 	<savedSearchColor>#FFFFFF</savedSearchColor>
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
@@ -225,7 +238,9 @@
 
 
 	<!-- Added by Gopinath Modified date - 21/09/2021 -->
-	<codeSameAsLastMsg>Code this document the same as the last coded document</codeSameAsLastMsg>
+	<codeSameAsLastMsg>Code this document the same as the last coded
+		document
+	</codeSameAsLastMsg>
 
 	<!-- Added by Jeevitha -->
 	<colorCodeOfRed>#FF0000</colorCodeOfRed>
@@ -234,8 +249,9 @@
 	<performaceBatchFile>\performance BatchFile\</performaceBatchFile>
 	<bullHornIconColor>#E74735</bullHornIconColor>
 	<progresBarColor>#3276B1</progresBarColor>
-    <BatchFileduplicateHeader>BatchFile_duplicateHeader_Error</BatchFileduplicateHeader>
-    
+	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error
+	</BatchFileduplicateHeader>
+
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>
 	<endTime>00:00:01</endTime>
@@ -310,9 +326,10 @@
 	<EmailAuthourName>gouri dhavalikar</EmailAuthourName>
 	<MetaDataEAName>EmailAuthorName</MetaDataEAName>
 	<MetaDataDomainName>gmail.com</MetaDataDomainName>
-	<MetaDataReciepientsDomain>EmailRecipientDomains</MetaDataReciepientsDomain>
+	<MetaDataReciepientsDomain>EmailRecipientDomains
+	</MetaDataReciepientsDomain>
 	<KeyWordColour>Blue</KeyWordColour>
-	
+
 	<!-- Added by Baskar Created date - 24/11/2021 -->
 	<tinyInt>Tiny - 20 Characters</tinyInt>
 	<smallInt>Small - 50 Characters</smallInt>
@@ -322,7 +339,9 @@
 	<docBasic>Doc Basic</docBasic>
 
 	<!-- Added by Gopinath Created date - 25/11/2021 -->
-	<exText>The configured format is applicable only to OCRed text and production generated text, and not to ingested text.</exText>
+	<exText>The configured format is applicable only to OCRed text and
+		production generated text, and not to ingested text.
+	</exText>
 
 	<!-- Added by Gopinath Created date - 29/11/2021 -->
 	<paginationDocId>ID00000196</paginationDocId>
@@ -353,7 +372,8 @@
 	<notSelect>Not Selected</notSelect>
 	<securityGroup_sg47>SG1134047</securityGroup_sg47>
 	<regressionConsilio>Regression_AllDataset_Consilio</regressionConsilio>
-	<regressionConsilio1>Regression_AllDataset_Consilio1</regressionConsilio1>
+	<regressionConsilio1>Regression_AllDataset_Consilio1
+	</regressionConsilio1>
 
 
 
@@ -368,7 +388,10 @@
 	<thankyouText>thank you</thankyouText>
 
 	<!-- Added by Gopinath Created date - 08/12/2021 -->
-	<anotherRemarkMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.</anotherRemarkMessage>
+	<anotherRemarkMessage>Another user has applied redactions, annotations
+		or Reviewer Remarks to this document since you presented it in
+		DocView.
+	</anotherRemarkMessage>
 
 	<!-- Added by Gopinath Created date - 09/12/2021 -->
 	<familyMembersDocId>ID00001251</familyMembersDocId>
@@ -383,14 +406,24 @@
 	<tiffPageCountText>TIFFPAGECOUNT</tiffPageCountText>
 
 	<!-- Added by Gopinath Created date - 27/12/2021 -->
-	<errorQueryFileLocation>\BatchFiles\InvalidQuery\</errorQueryFileLocation>
+	<errorQueryFileLocation>\BatchFiles\InvalidQuery\
+	</errorQueryFileLocation>
 	<invalidNameText>Invalid Name</invalidNameText>
-<threadDocWithToolTip>ID00000703</threadDocWithToolTip>
-		<conceptualDoc>ID00000001</conceptualDoc>
-		<TallySearch>null</TallySearch>
-		<TallyCN>auto</TallyCN>
-		
-		<!-- Added by Gopinath Created date - 05/01/2022 -->
-		<downloadDocID>ID00001069</downloadDocID>
-		<translationDocId>STC4_00000001</translationDocId>
+	<threadDocWithToolTip>ID00000703</threadDocWithToolTip>
+	<conceptualDoc>ID00000001</conceptualDoc>
+	<TallySearch>null</TallySearch>
+	<TallyCN>auto</TallyCN>
+
+	<!-- Added by Gopinath Created date - 05/01/2022 -->
+	<downloadDocID>ID00001069</downloadDocID>
+	<translationDocId>STC4_00000001</translationDocId>
+
+	<!-- DocView Analytical Panel PT environment -->
+
+	<historyClockIconDocId>ID00000350</historyClockIconDocId>
+	<nearDupeCompletedDocId>ID00004707</nearDupeCompletedDocId>
+	<familyDocument>ID00003711</familyDocument>
+	<MetaDataId>ID00003739</MetaDataId>
+	<conceptualDocumentReviewer>ID00004989</conceptualDocumentReviewer>
+
 </TestData>
