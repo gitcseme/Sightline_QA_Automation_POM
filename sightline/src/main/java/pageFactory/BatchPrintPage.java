@@ -263,7 +263,51 @@ public class BatchPrintPage {
 	public Element getSavedSearch_MySearchTab() {
 		return driver.FindElementByXPath("//a[text()='My Saved Search']");
 	}
-
+	
+	
+	//Added by Gopinath - 24/01/2022
+	public Element getExcelFilesText() {
+		return driver.FindElementByXPath("//div[@class='col-md-12 clear']//p[contains(text(),'In your selected documents,') and contains(text(),'docs are Excel files. Many of these have printing issues.')]");
+	}
+	public Element getPrintPlaceholdersForDocs() {
+		return driver.FindElementByXPath("//div[@class='col-md-12 clear']//p[text()='Do you want to print them or skip them? If skipping them, do you want to include placeholders for these docs?']");
+	}
+	public Element getPrintExcelFileRadioButton() {
+		return driver.FindElementByXPath("//input[@id='printExcelFileRadiobutton']/following-sibling::i");
+	}
+	public Element getSkipExcelFileRadioButton() {
+		return driver.FindElementByXPath("//input[@id='skipExcelFileRadioButton']/following-sibling::i");
+	}
+	public Element getIncludePlaceholdersToogle() {
+		return driver.FindElementByXPath("//input[@id='includeExcelFileCheckBox']/following-sibling::i");
+	}
+	public Element getExcelMetaDataLink() {
+		return driver.FindElementByXPath("//a[@id='excelFileInsertMetadataLinkButton']");
+	}
+	public Element getExcelOkButton() {
+		return driver.FindElementByXPath("//button[@id='excelFileOk']");
+	}
+	public Element getExceptionNext() {
+		return driver.FindElementById("exception-file-types-next-button");
+	}
+	public Element getExceptionFileTypeException() {
+		return driver.FindElementByXPath("//input[@id='includeOtherExceptionFileTypesCheckBox']/following-sibling::i");
+	}
+	public Element getMetaDataCheckbox(String metadata) {
+		return driver.FindElementByXPath("//strong[text()='"+metadata+"']/preceding-sibling::i");
+	}
+	public Element getAddToSelectedButton() {
+		return driver.FindElementByXPath("//a[text()='Add to Selected']");
+	}
+	public Element getBrandingAndRedactionNextButton() {
+		return driver.FindElementByXPath("//a[@id='branding-and-redaction-next-button']");
+	}
+	public Element getIncludePlaceHolderToogle() {
+		return driver.FindElementById("includeExcelFileCheckBox");
+	}
+	public Element getExcelSkipMetaDataDropdown() {
+		return driver.FindElementById("excelfileMetaData");
+	}
 	public BatchPrintPage(Driver driver) {
 
 		this.driver = driver;
@@ -1427,5 +1471,207 @@ public class BatchPrintPage {
 
 		}
 	}
+	/**
+	 * @author Gopinath
+	 * @Description: Verifies Search in BAtch Print Page
+	 * @param searchName : searchName is String value that name of search.
+	 */
+	public void BatchPrintWithProduction(String searchname) {
+		try {
+			driver.getWebDriver().get(Input.url + "BatchPrint/");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getMenuBatchPrint().Visible();
+				}
+			}), Input.wait30);
+			getMenuBatchPrint().Click();
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getMySavedSearchArrow().Visible();
+				}
+			}), Input.wait30);
+			getMySavedSearchArrow().Click();
+	
+			getSelectSavedSearch(searchname).waitAndClick(5);
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSourcenextbutton().Enabled();
+				}
+			}), Input.wait30);
+			getSourcenextbutton().waitAndClick(5);
+	
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getBasisnextbutton().Enabled();
+				}
+			}), Input.wait30);
+			getBasisnextbutton().waitAndClick(5);
+			base.waitTime(2);
+	
+			driver.scrollPageToTop();
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAnalysisnextbutton().Enabled();
+				}
+			}), Input.wait30);
+			getAnalysisnextbutton().waitAndClick(5);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while entering to exception file types"+e.getLocalizedMessage());
+		}
+	}
+	
+		/**
+		 * @author Gopinath
+		 * @Description: Slip sheet to batch print creation 
+		 * @param metaData : metaData is String value that name of metadata.
+		 */
+		public void slipSheetToBatchPrintCreation(String metaData) {
+			try {
+				driver.scrollingToBottomofAPage();
+				getExceptionFileTypeException().isElementAvailable(10);
+				getExceptionFileTypeException().Click();
+				driver.scrollPageToTop();
+				getExceptionNext().isElementAvailable(10);
+				getExceptionNext().Click();
+				getMetaDataCheckbox(metaData).isElementAvailable(10);
+				getMetaDataCheckbox(metaData).Click();
+				driver.scrollingToBottomofAPage();
+				getAddToSelectedButton().isElementAvailable(10);
+				getAddToSelectedButton().Click();
+				driver.scrollPageToTop();
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getSlipnextbutton().Enabled();
+					}
+				}), Input.wait30);
+				getSlipnextbutton().waitAndClick(5);
 
+				getBrandingAndRedactionNextButton().isElementAvailable(10);
+				getBrandingAndRedactionNextButton().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getGenerateButton().Enabled();
+					}
+				}), Input.wait30);
+				getGenerateButton().waitAndClick(5);
+
+				base.VerifySuccessMessage("Successfully initiated the batch print. You will be prompted with notification once completed.");
+
+				for (int i = 0; i < 10; i++) {
+					try {
+						
+						if (getbackgroundDownLoadLink().isDisplayed()) {
+							break;
+						}else {
+							driver.Navigate().refresh();
+							System.out.println("Refresh");
+						}
+							
+					} catch (Exception e) {
+						driver.Navigate().refresh();
+						System.out.println("Refresh");
+					}
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while slip sheet to batch print"+e.getLocalizedMessage());
+			}
+		}
+			
+		/**
+		 * @author Gopinath
+		 * @Description: Verify excel file printing issues without slip excel print.
+		 */
+		public void verifyPrintExcelFileIssuesWithoutSkipExcelPrint() {
+			try {
+				driver.scrollingToBottomofAPage();
+				driver.waitForPageToBeReady();
+				getExcelFilesText().isElementAvailable(10);
+				if(getExcelFilesText().isDisplayed()) {
+					base.passedStep("In your selected documents, 17 docs are Excel files. Many of these have printing issues. -- text displayed succuessfully");
+				}else {
+					base.failedStep("In your selected documents, 17 docs are Excel files. Many of these have printing issues. -- text not displayed");
+					
+				}
+				if(getPrintPlaceholdersForDocs().isDisplayed()) {
+					base.passedStep("Do you want to print them or skip them? If skipping them, do you want to include placeholders for these docs? -- text displayed succuessfully");
+				}else {
+					base.failedStep("Do you want to print them or skip them? If skipping them, do you want to include placeholders for these docs? -- text not displayed");
+					
+				}
+				if(getPrintExcelFileRadioButton().isDisplayed()) {
+					base.passedStep("Print excel file toogle is displayed successsfully");
+				}else {
+					base.failedStep("Print excel file toogle is not displayed");
+				}
+				if(getSkipExcelFileRadioButton().isDisplayed()) {
+					base.passedStep("Skip excel file toogle is displayed successsfully");
+				}else {
+					base.failedStep("Skip excel file toogle is not displayed");
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while verifying excel file printing issues without slip excel print."+e.getLocalizedMessage());
+			}
+		}
+		
+		/**
+		 * @author Gopinath
+		 * @Description: Clickon excel file printing issues without slip excel print and disable place holder toogle.
+		 */
+		public void clickOnSkipExcelFilesAndDisablePlaceHolderToogle(boolean flag) {
+			try {
+				driver.scrollingToBottomofAPage();
+				driver.waitForPageToBeReady();
+				getSkipExcelFileRadioButton().isElementAvailable(10);
+				getSkipExcelFileRadioButton().Click();
+				driver.waitForPageToBeReady();
+				String value = getIncludePlaceHolderToogle().GetAttribute("class");
+				if(flag==false && value.contains("active")) {
+					base.passedStep("Excel include place holder toogle is already enabled");
+				}else if(!(value.contains("active")) && flag==false) {
+					getIncludePlaceholdersToogle().isElementAvailable(10);
+					getIncludePlaceholdersToogle().Click();
+					base.passedStep("Excel include place holder toogle is enabled successfully");
+				}else if(value.contains("active") && flag==true) {
+					getIncludePlaceholdersToogle().isElementAvailable(10);
+					getIncludePlaceholdersToogle().Click();
+					base.passedStep("Excel include place holder toogle is disabled successfully");
+				}else if(!(value.contains("active")) && flag==true) {
+					base.passedStep("Excel include place holder toogle is already disabled");
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured whileClickon excel file printing issues without slip excel print and disable place holder toogle."+e.getLocalizedMessage());
+				
+			}
+		}
+		/**
+		 * @author Gopinath
+		 * @Description: Verify Skip place holder and insert meta data.
+		 */
+		public void verifyRedactorSkipPlaceHolderAndSelectMetaData(String metaData) {
+			try {
+				driver.scrollingToBottomofAPage();
+				driver.waitForPageToBeReady();
+				getExcelMetaDataLink().isElementAvailable(10);
+				getExcelMetaDataLink().Click();
+				driver.waitForPageToBeReady();
+				getExcelSkipMetaDataDropdown().isElementAvailable(10);
+				getExcelSkipMetaDataDropdown().selectFromDropdown().selectByVisibleText(metaData);
+				getExcelOkButton().isElementAvailable(10);
+				getExcelOkButton().Click();
+				driver.scrollPageToTop();
+			}catch(Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured whileClickon excel file printing issues without slip excel print and disable place holder toogle."+e.getLocalizedMessage());
+				
+			}
+		}
 }
