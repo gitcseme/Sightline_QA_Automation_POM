@@ -25,6 +25,7 @@ import pageFactory.LoginPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -40,6 +41,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	DocViewRedactions docViewRedact;
 	ReusableDocViewPage reusableDocViewPage;
 	SavedSearch savedSearch;
+	TagsAndFoldersPage tagsAndFolderPage;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -2548,6 +2550,64 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 	}
 
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-51133 To verify user can remove assigned folder from Dockout
+	 * screen->Analytics-Near Dupes
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
+	public void verifyRemoveAssignedFolderDockoutAnalyticalNearDupe() throws Exception {
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		String folderName = "AnalyticalPanel" + Utility.dynamicNameAppender();
+
+		// Login As RMU
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Test case Id: RPMXCON- 51133");
+		baseClass.stepInfo("To verify user can remove assigned folder from Dockout" + "screen->Analytics-Near Dupes");
+
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.comments);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+
+		// To view the NearDupe Doc in the DocView
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		driver.waitForPageToBeReady();
+		docView.popOutAnalyticsPanel();
+		driver.waitForPageToBeReady();
+		docView.switchToNewWindow(2);
+
+		// Selected Documents in NearDupe folder
+		docView.selectTwoDocInNearDupeFolder();
+		driver.waitForPageToBeReady();
+		docView.switchToNewWindow(1);
+
+		// Creating a new folder in selected Documents.
+		docView.createNewFolderInAnalytical(folderName);
+		driver.waitForPageToBeReady();
+		docView.switchToNewWindow(2);
+
+		// Selected Documents in NearDupe folder
+		docView.selectTwoDocInNearDupeFolder();
+		driver.waitForPageToBeReady();
+		docView.closeWindow(1);
+		docView.switchToNewWindow(1);
+
+		// UnFoldered in selected Documents.
+		docView.selectingUnFoldersAndVerifyingTheDocCount(folderName);
+		driver.getWebDriver().navigate().refresh();
+		baseClass.handleAlert();
+		driver.waitForPageToBeReady();
+
+		// navigating to tags and folder page.
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.ViewinDocViewthrFolder(folderName);
+		baseClass.VerifyWarningMessage("There are NO documents in the tags or folders that you have selected");
+		baseClass.passedStep("Documents removed from the selected folder same folder is not displayed for documents");
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
