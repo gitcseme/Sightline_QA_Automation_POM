@@ -2368,12 +2368,6 @@ public class ProductionPage {
 	public Element getTranlationOpenCloseCheck() {
 		return driver.FindElementByXPath("//div[@id='TranslationsContainer']");
 	}
-	public Element getProductionStartDateInGridView(String production) {
-		return driver.FindElementByXPath("//*[text()='"+production+"']/../td[6]");
-	}
-	public Element getProductionEndDateInGridView(String production) {
-		return driver.FindElementByXPath("//*[text()='"+production+"']/../td[7]");
-	}
 	public Element getTextFormateANSIradiobtn() {
 		return driver.FindElementByXPath("//input[@id='rdbANSIType']/../i");
 	}
@@ -2382,6 +2376,12 @@ public class ProductionPage {
 	}
 	public Element getProductionNameInGenPage() {
 		return driver.FindElementByXPath("//*[text()='Production Name:']/following-sibling::label");
+	}
+	public ElementCollection getGridWebTableHeader() {
+		return driver.FindElementsByXPath("//*[@id='ProductionListGridViewTable']/thead/tr/th");
+	}
+	public Element getGridProdValues(String production,int i) {
+		return driver.FindElementByXPath("//*[text()='"+production+"']/../td["+i+"]");
 	}
 	
 	public ProductionPage(Driver driver) {

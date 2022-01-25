@@ -3166,7 +3166,6 @@ public class Production_Test_Regression {
 					page.selectingDefaultSecurityGroup();
 					page.addANewProduction(productionname);
 					page.fillingDATSection();
-					//page.fillingTIFFSectionwithBurnRedaction();
 					page.navigateToNextSection();
 					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 					page.navigateToNextSection();
@@ -3189,8 +3188,10 @@ public class Production_Test_Regression {
 					page.getGridView().waitAndClick(10);
 					driver.waitForPageToBeReady();
 					base.stepInfo("Nativated to production Grid View");
-					String startDate =page.getProductionStartDateInGridView(productionname).getText();
-					String EndDate =page.getProductionEndDateInGridView(productionname).getText();
+					int startDateIndex =base.getIndex(page.getGridWebTableHeader(), "START DATE");
+					int endDateIndex =base.getIndex(page.getGridWebTableHeader(), "END DATE");
+					String startDate =page.getGridProdValues(productionname, startDateIndex).getText();
+					String EndDate =page.getGridProdValues(productionname, endDateIndex).getText();
 					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 					Date date = new Date();
 					String date1= dateFormat.format(date);
