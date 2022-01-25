@@ -3166,7 +3166,6 @@ public class Production_Test_Regression {
 					page.selectingDefaultSecurityGroup();
 					page.addANewProduction(productionname);
 					page.fillingDATSection();
-					//page.fillingTIFFSectionwithBurnRedaction();
 					page.navigateToNextSection();
 					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 					page.navigateToNextSection();
@@ -3189,8 +3188,10 @@ public class Production_Test_Regression {
 					page.getGridView().waitAndClick(10);
 					driver.waitForPageToBeReady();
 					base.stepInfo("Nativated to production Grid View");
-					String startDate =page.getProductionStartDateInGridView(productionname).getText();
-					String EndDate =page.getProductionEndDateInGridView(productionname).getText();
+					int startDateIndex =base.getIndex(page.getGridWebTableHeader(), "START DATE");
+					int endDateIndex =base.getIndex(page.getGridWebTableHeader(), "END DATE");
+					String startDate =page.getGridProdValues(productionname, startDateIndex).getText();
+					String EndDate =page.getGridProdValues(productionname, endDateIndex).getText();
 					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 					Date date = new Date();
 					String date1= dateFormat.format(date);
@@ -3219,7 +3220,114 @@ public class Production_Test_Regression {
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 					}
-	
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-56078
+					 * @Description: Verify that Production should export Native with  the Text file in selected format if Text is not ingested
+					 */
+					@Test(groups = { "regression" }, priority = 54)
+					public void verifyTextFileWithSelectedFormat() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-56078 -Production Sprint 11");
+					base.stepInfo("Verify that Production should export Native with  the Text file in selected format if Text is not ingested");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					//tagname = "Tag" + Utility.dynamicNameAppender();
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					//tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					//sessionSearch.bulkTagExisting(tagname);
+
+					//Verify archive status on Grid view
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(2);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSection();
+					page.fillingTextSectionWithTextFormat("ANSI Arabic; Arabic (Windows)");
+					page.navigateToNextSection();
+					page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+					base.passedStep("Verified that Production should export Native with  the Text file in selected format if Text is not ingested");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-47889
+					 * @Description: To Verify Generate Section for Production Name and Status.
+					 */
+					@Test(groups = { "regression" }, priority = 55)
+					public void verifyProdNameAndSatatus() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-47889 -Production Sprint 11");
+					base.stepInfo("To Verify Generate Section for Production Name and Status.");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					sessionSearch.bulkTagExisting(tagname);
+
+					//Verify archive status on Grid view
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(2);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingTIFFSection(tagname);
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					driver.waitForPageToBeReady();
+					String prodName = page.getProductionNameInGenPage().getText().trim();
+					if(prodName.equals(productionname)) {
+						base.passedStep("Production name is displayed on genaration tab");
+						System.out.println("name displayed");
+					}else {
+						base.failedStep("Production name is not displayed on genaration tab");
+						System.out.println("name not displayed");
+					}
+					page.verifyProductionStatusInGenPage("Draft");
+					base.stepInfo("Status is in Draft by default");
+					base.passedStep("Verified Generate Section for Production Name and Status.");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

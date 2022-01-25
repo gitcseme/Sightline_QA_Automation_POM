@@ -2368,11 +2368,20 @@ public class ProductionPage {
 	public Element getTranlationOpenCloseCheck() {
 		return driver.FindElementByXPath("//div[@id='TranslationsContainer']");
 	}
-	public Element getProductionStartDateInGridView(String production) {
-		return driver.FindElementByXPath("//*[text()='"+production+"']/../td[6]");
+	public Element getTextFormateANSIradiobtn() {
+		return driver.FindElementByXPath("//input[@id='rdbANSIType']/../i");
 	}
-	public Element getProductionEndDateInGridView(String production) {
-		return driver.FindElementByXPath("//*[text()='"+production+"']/../td[7]");
+	public Element getTextFormateANSIdropdown() {
+		return driver.FindElementByXPath("//select[@id='lstTextANSIType']");
+	}
+	public Element getProductionNameInGenPage() {
+		return driver.FindElementByXPath("//*[text()='Production Name:']/following-sibling::label");
+	}
+	public ElementCollection getGridWebTableHeader() {
+		return driver.FindElementsByXPath("//*[@id='ProductionListGridViewTable']/thead/tr/th");
+	}
+	public Element getGridProdValues(String production,int i) {
+		return driver.FindElementByXPath("//*[text()='"+production+"']/../td["+i+"]");
 	}
 	
 	public ProductionPage(Driver driver) {
@@ -16219,6 +16228,46 @@ public class ProductionPage {
 		base.stepInfo("Native section is verified");
 		base.stepInfo("Native section is filled");
 	}
+	/**
+	 * @Author Aathith
+	 * @Description selecting text formate
+	 */
+	public void fillingTextSectionWithTextFormat(String format) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTextChkBox().waitAndClick(5);
 
-	
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextTab().Enabled();
+			}
+		}), Input.wait30);
+		getTextTab().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextcomponent_text().isDisplayed();
+			}
+		}), Input.wait30);
+		getTextcomponent_text().isElementAvailable(15);
+		base.waitTime(3);
+		String exptext = getTextcomponent_text().getText();
+		System.out.println(exptext);
+		UtilityLog.info(exptext);
+		
+		base.waitForElement(getTextFormateANSIradiobtn());
+		getTextFormateANSIradiobtn().waitAndClick(10);
+		
+		base.waitForElement(getTextFormateANSIdropdown());
+		getTextFormateANSIdropdown().selectFromDropdown().selectByVisibleText(format);
+		
+		base.stepInfo("text format is selected");
+		base.stepInfo("Text section is filled");
+
+		driver.scrollPageToTop();
+	}
+
 }
