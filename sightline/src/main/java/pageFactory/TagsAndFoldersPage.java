@@ -2474,8 +2474,8 @@ public class TagsAndFoldersPage {
 				String sourceString = getEditTagWaringMessageText().getText();
 				String compreString = "You are about to change the name of the tag. All existing searches that are using the existing tag name in their queries may no longer execute correctly. Do you want to continue?";
 				base.textCompareEquals(sourceString, compreString,
-						"Edit Tag Warning Message Text is Varified Successfully",
-						"Edit Tag Warning Message Text is not Varified");
+						"Edit Tag Warning Message Text is Verified Successfully",
+						"Edit Tag Warning Message Text is not Verified");
 				base.getYesBtn().waitAndClick(10);
 			}
 			if (verifyNotification.equalsIgnoreCase("Success")) {

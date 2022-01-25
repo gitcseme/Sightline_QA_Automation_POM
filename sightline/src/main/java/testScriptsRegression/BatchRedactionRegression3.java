@@ -1964,6 +1964,70 @@ public class BatchRedactionRegression3 {
 		login.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : [Covered localization]Verify that informative message /error
+	 *              message should be displayed on batch redactions page when
+	 *              annotation layer, redaction tag is not mapped to the security
+	 *              group [RPMXCON-53335]
+	 * @param searchTerm
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	public void verifyingInformativeErrorMessageInBothLanguage() throws Exception {
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		String securityGroupName = "securityGroup" + Utility.dynamicNameAppender();
+		UserManagement user = new UserManagement(driver);
+		base.stepInfo("Test case Id:RPMXCON-53335");
+		base.stepInfo(
+				"[Covered localization]Verify that informative message /error message should be displayed on batch redactions page when annotation layer, redaction tag is not mapped to the security group");
+
+		// Login as a PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroupName);
+
+		// assigning the security group to user
+		user.assignAccessToSecurityGroups(securityGroupName, Input.rmu1userName);
+
+		login.logout();
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// selecting the assigned security group
+		base.selectsecuritygroup(securityGroupName);
+
+		// verifying the Informative/Error message
+		batch.verifyInformativeErrorMessage();
+
+		// chaning the language into German
+		login.editProfile("German - Germany");
+		base.stepInfo("Successfully selected German Language");
+
+		batch.verifyInformativeErrorMessage();
+
+		// Edit Profile Language to English.
+		login.editProfile("English - United States");
+		base.selectsecuritygroup(Input.securityGroup);
+
+		login.logout();
+
+		// Login as a PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// deleting the security group
+		security.deleteSecurityGroups(securityGroupName);
+
+		login.logout();
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
