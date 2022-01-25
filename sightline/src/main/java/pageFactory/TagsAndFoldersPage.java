@@ -438,6 +438,42 @@ public class TagsAndFoldersPage {
 		return driver.FindElementByXPath("(//a[contains(text(),'" + tagName + "')])");
 	}
 
+	public Element getEditFolderPopup() {
+		return driver.FindElementByXPath("//span[text()='Edit Folder']");
+	}
+
+	public Element getNewFolderInputTextBox() {
+		return driver.FindElementByXPath("//input[@id='txtFolderName']");
+	}
+
+	public Element getUpdateFolderSaveBtn() {
+		return driver.FindElementByXPath("//button[@id='btnUpdateFolder']");
+	}
+
+	public Element getEditFolderWaringMessagePopupTitle() {
+		return driver.FindElementByXPath("//span[text()='Edit Folder' and @class='MsgTitle']");
+	}
+
+	public Element getEditFolderWaringMessageText() {
+		return driver.FindElementByXPath("//span[text()='Edit Folder' and @class='MsgTitle']/parent::div//label");
+	}
+
+	public Element getEditTagPopup() {
+		return driver.FindElementByXPath("//span[text()='Edit Tag']");
+	}
+
+	public Element getUpdateTagSaveBtn() {
+		return driver.FindElementByXPath("//button[@id='btnUpdateTag']");
+	}
+
+	public Element getEditTagWaringMessagePopupTitle() {
+		return driver.FindElementByXPath("//span[@class='MsgTitle' and text()='Edit Tag']");
+	}
+
+	public Element getEditTagWaringMessageText() {
+		return driver.FindElementByXPath("//span[text()='Edit Tag' and @class='MsgTitle']/parent::div//label");
+	}
+
 	public TagsAndFoldersPage(Driver driver) {
 
 		this.driver = driver;
@@ -2155,21 +2191,11 @@ public class TagsAndFoldersPage {
 	}
 
 	/**
-	 * @author Raghuram.A date: 01/18/21 NA Modified date: N/A Modified by:
+	 * @author Raghuram.A date: 01/18/21 Modified date: 1/24/21 Modified by:
+	 *         Raghuram A
 	 */
 	public void createTagGroup(String securityGroup, String tagGroupName, String verifyNotification,
 			Boolean additionalValue) {
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		driver.waitForPageToBeReady();
-
-		getTagsTab().waitAndClick(10);
-		// Select root all
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAllTagRoot().Visible();
-			}
-		}), Input.wait30);
-		getAllTagRoot().waitAndClick(10);
 
 		selectActionArrow("New Tag Group");
 
@@ -2193,28 +2219,15 @@ public class TagsAndFoldersPage {
 	}
 
 	/**
-	 * @author Raghuram.A date: 01/18/21 NA Modified date: N/A Modified by:
+	 * @author Raghuram.A date: 01/18/21 Modified date: 1/24/21 Modified by:
+	 *         Raghuram A
 	 */
 	public void editTagGroup(String securityGroup, String selectTagName, String retagGroupName,
 			String verifyNotification, Boolean additionalValue) {
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		driver.waitForPageToBeReady();
-
-		getTagsTab().waitAndClick(10);
-		// Select root all
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAllTagRoot().Visible();
-			}
-		}), Input.wait30);
-		getAllTagRoot().waitAndClick(10);
-
-		driver.waitForPageToBeReady();
-		if (getTagNameDataCon(selectTagName).isElementAvailable(5)) {
-			base.stepInfo("Created Tag Group : " + selectTagName + " is available");
-		}
 
 		getTagNameDataCon(selectTagName).waitAndClick(5);
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
 		selectActionArrow("Edit");
 
 		if (getEditTagGroupPopup().isElementAvailable(4)) {
@@ -2265,17 +2278,14 @@ public class TagsAndFoldersPage {
 	}
 
 	/**
-	 * @author Raghuram.A date: 01/18/21 NA Modified date: N/A Modified by:
+	 * @author Raghuram.A date: 01/18/21 Modified date: 1/24/21 Modified by:
+	 *         Raghuram A
 	 */
 	public void createFolderGroup(String securityGroup, String folderGroupName, String verifyNotification,
 			Boolean additionalValue) {
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+
+		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
-
-		getFoldersTab().waitAndClick(10);
-		// Select root all
-		getAllFolderRoot().waitAndClick(10);
-
 		getFolderActionDropDownArrow().waitAndClick(10);
 		base.waitTime(3); // To handle abnormal loading
 		driver.waitForPageToBeReady();
@@ -2301,23 +2311,14 @@ public class TagsAndFoldersPage {
 	}
 
 	/**
-	 * @author Raghuram.A date: 01/18/21 NA Modified date: N/A Modified by:
+	 * @author Raghuram.A date: 01/18/21 Modified date: 1/24/21 Modified by:
+	 *         Raghuram A
 	 */
 	public void editFolderGroup(String securityGroup, String selectFolderName, String reFolderGroupName,
 			String verifyNotification, Boolean additionalValue) {
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+
+		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
-
-		getFoldersTab().waitAndClick(10);
-		// Select root all
-		getAllFolderRoot().waitAndClick(10);
-
-		driver.waitForPageToBeReady();
-		if (getTagNameDataCon(selectFolderName).isElementAvailable(5)) {
-			base.stepInfo("Created Folder Group : " + selectFolderName + " is available");
-		}
-
-		getTagNameDataCon(selectFolderName).waitAndClick(5);
 		getFolderActionDropDownArrow().waitAndClick(10);
 		base.waitTime(3);
 		driver.waitForPageToBeReady();
@@ -2362,6 +2363,128 @@ public class TagsAndFoldersPage {
 					base.CloseSuccessMsgpopup();
 				}
 			}
+		}
+	}
+
+	/**
+	 * @author Raghuram.A date: 01/24/21 NA Modified date: N/A Modified by:
+	 */
+	public void editFolder(String securityGroup, String selectFolderName, String reFolderName,
+			String verifyNotification, Boolean additionalValue) {
+
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		getFolderActionDropDownArrow().waitAndClick(10);
+		base.waitTime(3);
+		driver.waitForPageToBeReady();
+		getEditFolderGroup().waitAndClick(5);
+
+		if (getEditFolderPopup().isElementAvailable(4)) {
+			System.out.println("Edit Popup opened");
+
+			getNewFolderInputTextBox().SendKeys(reFolderName);
+			getUpdateFolderSaveBtn().waitAndClick(3);
+
+			if (getEditFolderWaringMessagePopupTitle().isElementPresent()) {
+				System.out.println("Edit Folder Warning Message appeared");
+				String sourceString = getEditFolderWaringMessageText().getText();
+				String compreString = "You are about to change the name of the folder. All existing searches that are using the existing folder name in their queries may no longer execute correctly. Do you want to continue?";
+				base.textCompareEquals(sourceString, compreString,
+						"Edit Folder Warning Message Text is Varified Successfully",
+						"Edit Folder Warning Message Text is not Varified");
+				base.getYesBtn().waitAndClick(10);
+			}
+			if (verifyNotification.equalsIgnoreCase("Success")) {
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage("Folder updated successfully");
+				base.CloseSuccessMsgpopup();
+			}
+			base.stepInfo("Folder name updated successfully : " + reFolderName);
+			System.out.println("Folder name updated successfully : " + reFolderName);
+		}
+	}
+
+	/**
+	 * @author Raghuram.A date: 01/24/21 NA Modified date: N/A Modified by:
+	 */
+	public void selectallFolderRoot() {
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		driver.waitForPageToBeReady();
+
+		getFoldersTab().waitAndClick(10);
+		// Select root all
+		getAllFolderRoot().waitAndClick(10);
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Raghuram.A date: 01/24/21 NA Modified date: N/A Modified by:
+	 */
+	public void selectallTagRoot() {
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		driver.waitForPageToBeReady();
+
+		getTagsTab().waitAndClick(10);
+		// Select root all
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAllTagRoot().Visible();
+			}
+		}), Input.wait30);
+		getAllTagRoot().waitAndClick(10);
+	}
+
+	/**
+	 * @author Raghuram.A date: 01/24/21 NA Modified date: N/A Modified by:
+	 */
+	public boolean verifyNodePresent(String toSelectName, Boolean click, String type) {
+		Boolean present = false;
+		driver.waitForPageToBeReady();
+		if (getTagNameDataCon(toSelectName).isElementAvailable(5)) {
+			base.stepInfo("Created " + type + " : " + toSelectName + " is available");
+			present = true;
+		} else {
+			base.failedStep("Created " + type + " : " + toSelectName + " is not available");
+		}
+		if (click) {
+			getTagNameDataCon(toSelectName).waitAndClick(5);
+		}
+
+		return present;
+	}
+
+	/**
+	 * @author Raghuram.A date: 01/24/21 NA Modified date: N/A Modified by:
+	 */
+	public void editTag(String securityGroup, String selectTagName, String reTagName, String verifyNotification,
+			Boolean additionalValue) {
+
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		selectActionArrow("Edit");
+
+		if (getEditTagPopup().isElementAvailable(4)) {
+			System.out.println("Edit Popup opened");
+
+			getTagName().SendKeys(reTagName);
+			getUpdateTagSaveBtn().waitAndClick(3);
+
+			if (getEditTagWaringMessagePopupTitle().isElementPresent()) {
+				System.out.println("Edit Tag Warning Message appeared");
+				String sourceString = getEditTagWaringMessageText().getText();
+				String compreString = "You are about to change the name of the tag. All existing searches that are using the existing tag name in their queries may no longer execute correctly. Do you want to continue?";
+				base.textCompareEquals(sourceString, compreString,
+						"Edit Tag Warning Message Text is Varified Successfully",
+						"Edit Tag Warning Message Text is not Varified");
+				base.getYesBtn().waitAndClick(10);
+			}
+			if (verifyNotification.equalsIgnoreCase("Success")) {
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage("Tag updated successfully");
+				base.CloseSuccessMsgpopup();
+			}
+			base.stepInfo("Tag name updated successfully : " + reTagName);
+			System.out.println("Tag name updated successfully : " + reTagName);
 		}
 	}
 
