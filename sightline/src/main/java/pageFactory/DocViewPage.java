@@ -2798,6 +2798,7 @@ public class DocViewPage {
 	public Element getDocView_AnalyticsChild_NearDupe_Folder() {
 		return driver.FindElementById("liNearDupeBulkFolder");
 	}
+
 	
 	public DocViewPage(Driver driver) {
 
@@ -22002,5 +22003,79 @@ public class DocViewPage {
 		softAssertion.assertNotEquals(prnDoc, secDoc);
 		base.passedStep("Cursor navigated to next docs in minidoclist");
 		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Steffy Created on : 23/01/2022 Modified By: NA Modified On: NA
+	 * @description: Create New Folder in Analytics Panel
+	 * @param folderName
+	 */
+	public void createNewFolderInAnalytical(String folderName) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_AnalyticsNewFolderThreadMap());
+		getDocView_AnalyticsNewFolderThreadMap().waitAndClick(10);
+		base.waitForElement(getDocView_AnalyticsNewFolderTree());
+		getDocView_AnalyticsNewFolderTree().waitAndClick(10);
+		base.waitForElement(getDocView_AnalyticsNewFolderTextBox());
+		getDocView_AnalyticsNewFolderTextBox().SendKeys(folderName);
+		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
+		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
+		base.waitForElement(getTotalSelectedDocuments());
+		base.waitForElement(getDocView_AnalyticsNewFolderFinalizeBtn());
+		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
+		base.VerifySuccessMessage("Records saved successfully");
+		base.CloseSuccessMsgpopup();
+		base.stepInfo("Folder created a Selected doc in Neardupe");
+
+	}
+
+	/**
+	 * @author Steffy
+	 * @Description :Selecting unfolder in selecting the doc.
+	 * 
+	 * @param :Folder name
+	 */
+	public void selectingUnFoldersAndVerifyingTheDocCount(String Foldername) throws InterruptedException {
+		DocListPage docList = new DocListPage(driver);
+		try {
+			base.waitForElement(docList.getUnFolderRadioBtn());
+			base.waitTillElemetToBeClickable(docList.getUnFolderRadioBtn());
+			docList.getUnFolderRadioBtn().waitAndClick(5);
+			base.waitForElement(docList.getSelectFolderCheckBox(Foldername));
+			docList.getSelectFolderCheckBox(Foldername).ScrollTo();
+			docList.getSelectFolderCheckBox(Foldername).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(docList.gettotalSelectedDocuments());
+			base.waitForElement(docList.getContinueCount());
+			base.waitTillElemetToBeClickable(docList.getContinueCount());
+			docList.getContinueCount().waitAndClick(10);
+			base.VerifySuccessMessage("Records saved successfully");
+			base.CloseSuccessMsgpopup();
+			base.stepInfo("Folder removed a Selected doc in Neardupe");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception is occured while unfoldering the documents" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Steffy
+	 * @Description :Selecting Two Doc in nearDupe.
+	 *
+	 */
+	public void selectTwoDocInNearDupeFolder() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 2; i++) {
+			base.waitForElement(getDocView_Analytics_NearDupe_Doc(i));
+			getDocView_Analytics_NearDupe_Doc(i).WaitUntilPresent().waitAndClick(50);
+		}
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+		base.waitForElement(getDocView_AnalyticsChild_NearDupe_Folder());
+		getDocView_AnalyticsChild_NearDupe_Folder().waitAndClick(10);
 	}
 }
