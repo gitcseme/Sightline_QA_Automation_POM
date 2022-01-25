@@ -3,8 +3,11 @@
         <url>https://sightlinept.consilio.com/</url>
         <prodpath>Productions PT WorkSpace\Automation</prodpath>
         <SourceLocation>IngestionTestData\Automation\Master Automation Data</SourceLocation>
-        <domainName>Indium</domainName>
-        <projectName>Regression_AllDataset_Consilio</projectName>
+        <domainName>Automation_Regression_BackUp</domainName>
+        <projectName>AutomationRegressionBackup</projectName>
+        <additionalDataProject>AutomationAdditionalDataProject</additionalDataProject>
+        <ingestDataProject>AutomationIngestionProject</ingestDataProject>
+        <largeVolDataProject>AutomationHighVolumeProject</largeVolDataProject>
         
         <!-- Provide ICE Project Name -->
         <ICEProjectName>ICETest2</ICEProjectName>

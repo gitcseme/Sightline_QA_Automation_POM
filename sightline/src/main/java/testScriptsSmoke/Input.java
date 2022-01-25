@@ -57,6 +57,10 @@ public class Input {
 	public static String testingBuild;
 	public static String iCESmokeFolderPath;
 	public static String ICEProjectName;
+// Added by krishna - new projects 
+	public static String additionalDataProject;
+	public static String ingestDataProject;
+	public static String largeVolDataProject;
 
 	// Environment data---------------------------------------------
 
@@ -507,6 +511,11 @@ public class Input {
 		jiraProject = config.getJiraProject();
 		testingBuild = config.getTestingBuild();
 		iCESmokeFolderPath = config.getICESmokeFolderPath();
+		// Added by krishna - new projects 
+		
+		additionalDataProject = envConfig.getAdditionalDataProject();
+		ingestDataProject = envConfig.getIngestDataProject();
+		largeVolDataProject = envConfig.getLargeVolDataProject();
 
 		/*
 		 * Ingestion Data

@@ -82,6 +82,16 @@ public class LoginPage {
 		return driver.FindElementById("btnSaveEditProfile");
 	}
 
+	//Added by krishna to handle additional pop up in New build 
+	
+		public Element getGlobalMessagePopUp() {
+			return driver.FindElementById("globalMessageModal");
+		}
+		
+		public Element getGlobalMessagePopUpClose() {
+			return driver.FindElementById("btnDialogClose");
+		}
+		
 	public LoginPage(Driver driver) {
 
 		this.driver = driver;
@@ -147,6 +157,13 @@ public class LoginPage {
 //		}
 
 		// Make sure sign out menu is visible post login
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+			getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+			// TODO: handle exception
+			}
+			}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSignoutMenu().Visible();
@@ -157,6 +174,74 @@ public class LoginPage {
 			// Modified on 12/24/21 - Raghuram (!strUserName.equals(Input.da1userName)
 			if (!strUserName.equals(Input.sa1userName) && (!strUserName.equals(Input.da1userName)))
 				bc.selectproject();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		Assert.assertTrue(getSignoutMenu().Visible());
+		// System.out.println("Login success!");
+		UtilityLog.info("Login success!");
+		Reporter.log("Login success!", true);
+
+	}
+	/* login method overloaded to handle new projects for data
+	 * for ingestion and additional req documents 
+	 * Added by Krishna
+	 */
+	public void loginToSightLine(String strUserName, String strPasword, String projectName) {
+		driver.waitForPageToBeReady();
+		// Fill user name
+		getEuserName().waitAndClick(10); // to adjust with app!
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getEuserName().Visible();
+			}
+		}), Input.wait30);
+		getEuserName().SendKeys(strUserName);
+
+		// Fill password
+		getEpassword().SendKeys(strPasword);
+
+		// Click Login button
+		getEloginButton().Click();
+		// check if user session is active
+		if (getActiveSessionYesButton().isElementAvailable(3)) {
+			try {
+				base.waitForElement(getActiveSessionYesButton());
+				getActiveSessionYesButton().Click();
+				// driver.Navigate().refresh();
+				driver.waitForPageToBeReady();
+				base.waitForElement(getEuserName());
+				base.waitTillElemetToBeClickable(getEuserName());
+				getEuserName().Clear();
+				getEpassword().Clear();
+				getEuserName().SendKeys(strUserName);
+				// Fill password
+				getEuserName().Click();
+				getEpassword().SendKeys(strPasword);
+				// Click Login button
+				getEloginButton().Click();
+				driver.waitForPageToBeReady();
+			} catch (Exception e) {
+
+			}
+		}
+
+		// Make sure sign out menu is visible post login
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+			getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+			// TODO: handle exception
+			}
+			}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSignoutMenu().Visible();
+			}
+		}), Input.wait30);
+		BaseClass bc = new BaseClass(driver);
+		try {
+				bc.selectproject(projectName);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
