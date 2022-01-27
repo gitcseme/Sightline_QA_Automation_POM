@@ -1947,6 +1947,44 @@ public class DocView_Regression2 {
 	    	baseClass.passedStep("Rotate AntiClock visible in DocView"); 	
 	    } else {
 	    	baseClass.failedStep("Rotate AntiClock not visible in DocView"); }   
+		
+	 if(docViewRedact.HighliteIcon().isDisplayed()) {
+	    	baseClass.passedStep("Highlite icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Highlite Icon not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.redactionIcon().isDisplayed()) {
+	    	baseClass.passedStep("Redaction icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Redaction Icon not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.getSearchIcon().isDisplayed()) {
+	    	baseClass.passedStep("Search icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Search Icon not visible in DocView");
+	    }
+		
+		 if(docViewRedact.remarksIcon().isDisplayed()) {
+	    	baseClass.passedStep("Remarks iocn visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Remarks icon not visible in DocView"); }
+	    
+	    if(docViewRedact.persistantHitBtn().isDisplayed()) {
+	    	baseClass.passedStep("Persistent hit button visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("persistent hit button not visible in DocView"); }
+	    
+	    if(docViewRedact.downloadIcon().isDisplayed()) {
+	    	baseClass.passedStep("Download iocn visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Download icon not visible in DocView"); }
+		
+		 if(docViewRedact.printIcon().isDisplayed()) {
+	    	baseClass.passedStep("print iocn visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("print icon not visible in DocView"); }
 	}
 	
 	/**
