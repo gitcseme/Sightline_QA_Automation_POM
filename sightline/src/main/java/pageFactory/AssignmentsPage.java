@@ -9303,6 +9303,31 @@ public class AssignmentsPage {
 		driver.waitForPageToBeReady();
 		bc.passedStep("Keywords unmapped from the assignment successfully");
 	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws InterruptedException
+	 * @description this method complete all documents.
+	 * 
+	 */
+	public void completeAllDocsByReviewer(String assignmentName) throws InterruptedException {
+		bc.waitForElement(dashBoardPageTitle());
+		assgnInDashBoardPg(assignmentName).waitAndClick(2);
+		bc.waitForElement(completeBtn());
+		getTotalRecords().waitAndClick(15);
+		String recordsLabel = getTotalRecords().getText();
+		System.out.println("recordslabel " + recordsLabel);
+		String[] totalRecords = recordsLabel.split(" ");
+		String count = totalRecords[1];
+		System.out.println("count " + count);
+		int records = Integer.parseInt(count);
+		for (int i = 0; i < records; i++) {
+			driver.waitForPageToBeReady();			
+			bc.waitForElement(completeBtn());
+			completeBtn().waitAndClick(5);
+		}
+		bc.stepInfo("All the docs are completed");
+	}
+
 
 
 }
