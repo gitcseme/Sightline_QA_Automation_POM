@@ -16,6 +16,8 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.DocViewMetaDataPage;
+import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -107,7 +109,7 @@ public class BasicSearch_Regression1 {
 	 *         [#3]RPMXCON-57451,RPMXCON-57449,RPMXCON-57447
 	 * 
 	 */
-	@Test(dataProvider = "reservedWords", groups = { "regression" }, priority = 1)
+//	@Test(dataProvider = "reservedWords", groups = { "regression" }, priority = 1)
 	public void verifyBasicSearch(String data, String TC_ID) throws ParseException, InterruptedException, IOException {
 		// login as PA
 
@@ -142,7 +144,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(groups = { "regression" }, priority = 2)
+//	@Test(groups = { "regression" }, priority = 2)
 	public void verifyCountOfSearch() throws ParseException, InterruptedException, IOException {
 		// login as PA
 		lp = new LoginPage(driver);
@@ -173,7 +175,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 */
 
-	@Test(groups = { "regression" }, priority = 3)
+//	@Test(groups = { "regression" }, priority = 3)
 	public void verifyPinSearch() throws InterruptedException {
 		// login as Pa
 		lp = new LoginPage(driver);
@@ -221,7 +223,7 @@ public class BasicSearch_Regression1 {
 		return new Object[][] { { "DocFileType", "oth" }, { "DocFileName", "tes" } };
 	}
 
-	@Test(dataProvider = "reserveWords", groups = { "regression" }, priority = 4)
+//	@Test(dataProvider = "reserveWords", groups = { "regression" }, priority = 4)
 	public void verifyAutoSuggest(String data1, String data2) throws InterruptedException {
 		// login as Pa
 		lp = new LoginPage(driver);
@@ -254,7 +256,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 */
 
-	@Test(dataProvider = "reserve", groups = { "regression" }, priority = 5)
+//	@Test(dataProvider = "reserve", groups = { "regression" }, priority = 5)
 	public void verifyAutoSugges(String data1, String data2, String data3, String data4) throws InterruptedException {
 
 		lp = new LoginPage(driver);
@@ -313,7 +315,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(dataProvider = "query", groups = { "regression" }, priority = 6)
+//	@Test(dataProvider = "query", groups = { "regression" }, priority = 6)
 	public void verifyBasicSearch2(String data, String TC_ID) throws ParseException, InterruptedException, IOException {
 		// login as PA
 
@@ -348,7 +350,7 @@ public class BasicSearch_Regression1 {
 	 *         corresponding value gets wrapped in double quotes. (RPMXCON-46993)
 	 * @throws InterruptedException
 	 */
-	@Test(groups = { "regression" }, priority = 7)
+//	@Test(groups = { "regression" }, priority = 7)
 	public void verifyCompoundQuery() throws InterruptedException {
 		String tag = "TAGX" + Utility.dynamicNameAppender();
 		String metadataFieldLabel = "DocFileName";
@@ -388,7 +390,7 @@ public class BasicSearch_Regression1 {
 	 *         double quotes.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = false, groups = { "regression" }, priority = 8)
 	public void verifyMetadataAutoSuggest() throws InterruptedException {
 		String expectedFileName = "\"Scott Tholan\"";
 		String metaDataField = "EmailToAddresses";
@@ -435,6 +437,88 @@ public class BasicSearch_Regression1 {
 		softAssertion.assertAll();
 		lp.logout();
 	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify Search result should work correctly for Comments with
+	 *              format like \"##PF[0-9]{4}\" [RPMXCON-49637]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	public void verifySearchResultForComment() throws InterruptedException {
+		String docComment = "PF1231";
+		String searchTerm = "\"##PF[0-9]{4}\"";
+		int count = 2;
+
+		lp = new LoginPage(driver);
+		DocViewPage docview = new DocViewPage(driver);
+		lp.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+
+		bc.stepInfo("RPMXCON- 49637   Basic Search Sprint-10");
+		bc.stepInfo("Verify Search result should work correctly for Comments with format like \"##PF[0-9]{4}\"");
+
+		ss.basicContentSearch(Input.searchString1);
+		ss.ViewInDocView();
+
+		// Apply comments to document
+		docview.addCommentAndSave(docComment, true, count);
+		lp.logout();
+
+		// login As PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("Logged In as : " + Input.pa1FullName);
+		int PureHit1 = ss.getCommentsOrRemarksCount(Input.documentComments, searchTerm);
+		softAssertion.assertEquals(PureHit1, count);
+		lp.logout();
+
+		// login As RMU
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Logged In as : " + Input.rmu1FullName);
+		int PureHit2 = ss.getCommentsOrRemarksCount(Input.documentComments, searchTerm);
+		softAssertion.assertEquals(PureHit2, count);
+		lp.logout();
+
+		// login As REV
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		bc.stepInfo("Logged In as : " + Input.rev1FullName);
+		int PureHit3 = ss.getCommentsOrRemarksCount(Input.documentComments, searchTerm);
+		softAssertion.assertEquals(PureHit3, count);
+		lp.logout();
+
+	}
+
+//	@Test(enabled = true, groups = { "regression" }, priority = 10)
+//	public void verifySearchResultForComment1() throws InterruptedException {
+//		String docComment = "PF1231";
+////		String searchTerm = "\"##PF[0-9]{4}\"";
+//
+//		lp = new LoginPage(driver);
+//		DocViewPage docview = new DocViewPage(driver);
+//		lp.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+//
+//		bc.stepInfo("RPMXCON- 49637   Basic Search Sprint-10");
+//		bc.stepInfo("Verify Search result should work correctly for Comments with format like \"##PF[0-9]{4}\"");
+//		
+//		ss.audioSearch(Input.audioSearchString1,Input.language);
+//		ss.ViewInDocView();
+//
+//		// Apply comments to document
+//		docview.addCommentAndSave(docComment, true);
+//		lp.logout();
+//	}
+//	@Test(enabled = true, groups = { "regression" }, priority = 9)
+//	public void verifyThreadedDocs1() throws InterruptedException {
+//		lp = new LoginPage(driver);
+//		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+//
+//		bc.stepInfo("RPMXCON- 47712   Basic Search Sprint-10");
+//		bc.stepInfo("Verify that basic search is working properly for Metadata");
+//
+//		ss.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+//		driver.scrollingToBottomofAPage();
+//        ss.details();
+//
+//	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
