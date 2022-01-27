@@ -2803,7 +2803,7 @@ public class Production_Page_Regression {
 	 *                 with new production documents and with new bates numbers, if
 	 *                 the production is not flagged as Locked
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 53)
+	@Test(enabled = false, groups = { " regression" }, priority = 53)
 	public void verifyOverwriteDocumentFromProduction() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47902- Production Sprint 11");
@@ -2879,7 +2879,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/25/22 TESTCASE No:RPMXCON-48572
 	 * @Description:To verify that the pre-gen checks continue to show through out the next steps of the production.
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 54)
+	@Test(enabled = false, groups = { " regression" }, priority = 54)
 	public void verifyBatesRangeAfterProduction() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48572- Production Sprint 11");
@@ -2927,6 +2927,130 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 	}
 
+	/**
+	 * @author Sowndarya.Velraj created on:01/27/22 TESTCASE No:RPMXCON-47897
+	 * @Description:To Verify Document Selection Section on the self production wizard For Folder
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 55)
+	public void verifyDocumentSelectionWithFolder() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-47897- Production Sprint 11");
+		baseClass.stepInfo("To Verify Document Selection Section on the self production wizard For Folder");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		
+		if(page.getDocumentSelectionLink().isDisplayed()) {
+			baseClass.passedStep("Total Documents selected is displayed correctly on the self production wizard For Folder");
+		}
+		
+		else {
+			baseClass.failedMessage("Total Documents selected is not displayed on the self production wizard For Folder");
+		}
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:01/27/22 TESTCASE No:RPMXCON-47892
+	 * @Description:To Verify numbering and sorting Section on the self production wizard for Numbering
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 56)
+	public void verifyNumberingAndSorting() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-47892- Production Sprint 11");
+		baseClass.stepInfo("To Verify numbering and sorting Section on the self production wizard for Numbering");
+		UtilityLog.info(Input.prodPath);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		driver.waitForPageToBeReady();
+		
+		if(page.pageRadioButton().Selected()) {
+			baseClass.passedStep("Page Radio button is selected by default");
+		}
+		else {
+			baseClass.failedMessage("Page Radio button is not selected by default");
+		}
+		page.getNumbering_Document_RadioButton().waitAndClick(10);
+		
+		if(page.getBeginningSubBatesNumber().GetAttribute("value").contains("1"))
+		{
+			baseClass.passedStep("Beginning bates number is 1 by default");
+		}
+		else {
+			baseClass.failedMessage("Beginning bates number is not 1 by default");
+		}		
+		if(page.getBeginningSubBatesNumber().GetAttribute("value").contains("5"))
+		{
+			baseClass.passedStep("Minimum length number is 5 by default");
+		}
+		else {
+			baseClass.failedMessage("Minimum length number is not 5 by default");
+		}		
+		
+		page.pageRadioButton().ScrollTo();
+		page.pageRadioButton().waitAndClick(10);
+		
+		if(page.specifyBatesNumbering().Selected()) {
+			baseClass.passedStep("specify bates numbering is selected by default");
+		}
+		else {
+			baseClass.failedMessage("specify bates numbering is not selected  by default");
+		}	
+		
+		if(page.beginningBatesInFormat().GetAttribute("value").contains("0")) {
+			baseClass.passedStep("Beginning bates is 0 by default");
+		}
+		else {
+			baseClass.failedMessage("Beginning bates is not 0 by default");
+		}
+		
+		page.getNumbering_Document_RadioButton().ScrollTo();
+		page.getNumbering_Document_RadioButton().waitAndClick(10);
+		page.useMetadataFied().ScrollTo();
+		page.useMetadataFied().waitAndClick(10);
+		
+	if(page.getExportPrefixId().isDisplayed()&&page.getExportSuffixId().isDisplayed()) {
+		baseClass.passedStep("Prefix and suffix is displayed in user metadata field");
+	}
+	
+	else {
+		baseClass.failedMessage("Prefix and suffix is not displayed in user metadata field");
+	}
+	}
+	
+	
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
