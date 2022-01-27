@@ -1243,6 +1243,28 @@ public class DocViewRedactions {
 	public ElementCollection textRedactionXYStats() {
 		return driver.FindElementsByCssSelector("g[fill-opacity='1']>g[data-pcc-mark^='mark-']>rect");
 	}
+	
+	// Added by krishna 
+
+	public Element zoomOutDocView() {
+		return driver.FindElementById("zoomOut_divDocViewer");
+	}
+
+	public Element zoomInDocView() {
+		return driver.FindElementById("zoomIn_divDocViewer");
+	}
+
+	public Element zoomFitToScreenDocView() {
+		return driver.FindElementById("fitContent_divDocViewer");
+	}
+
+	public Element rotateClockWise() {
+		return driver.FindElementById("rotateRight_divDocViewer");
+	}
+
+	public Element rotateAntiClockWise() {
+		return driver.FindElementById("rotateLeft_divDocViewer");
+	}
 
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
