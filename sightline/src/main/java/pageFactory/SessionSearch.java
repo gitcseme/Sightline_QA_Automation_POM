@@ -1458,7 +1458,9 @@ public class SessionSearch {
 	public Element getPureHitDroppedTileBtn() {
 		return driver.FindElementByXPath("//i[@title='Remove from Selected Results']/ancestor::li/a/span/count");
 	}
-
+	public Element getQueryAlertGetTextHeader() {
+		return driver.FindElementByXPath("//span[@class='MsgTitle']");
+	}
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -9475,5 +9477,41 @@ driver.Manage().window().fullscreen();
 		System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
 		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
 	}
-	
+
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void verifyProximitySearch() {
+		String expectedHeaderMsg = "Possible Wrong Query Alert";
+		String expectedAlertMSg = "Double quotes are missing in your search query. Please correct the query to include double quotes.";
+		String actualHeadaerMsg = getQueryAlertGetTextHeader().getText().trim();
+		String ActualAlertMSg = getQueryAlertGetTextSingleLine().getText().trim();
+		System.out.println(actualHeadaerMsg);
+		System.out.println(ActualAlertMSg);
+		getTallyContinue().Click();
+		if (actualHeadaerMsg.contentEquals(expectedHeaderMsg) && ActualAlertMSg.contentEquals(expectedAlertMSg)) {
+			base.passedStep("Application  displayed below  warning message on screen");
+			base.passedStep(actualHeadaerMsg);
+			base.passedStep(ActualAlertMSg);
+		} else {
+			base.failedStep("Application  not displayed  warning message on screen");
+		}
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void AdvContentSearchWithoutPopHandling(String SearchString) {
+		// To make sure we are in basic search page
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		base.waitForElement(getAdvancedSearchLink());
+		getAdvancedSearchLink().Click();
+		base.waitForElement(getContentAndMetaDatabtn());
+		getContentAndMetaDatabtn().Click();
+		// Enter search string
+		base.waitForElement(getAdvancedContentSearchInput());
+		getAdvancedContentSearchInput().SendKeys(SearchString);
+		// Click on Search button
+		base.waitForElement(getQuerySearchButton());
+		getQuerySearchButton().waitAndClick(10);
+	}
 }
