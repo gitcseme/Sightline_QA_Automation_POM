@@ -2383,6 +2383,9 @@ public class ProductionPage {
 	public Element getGridProdValues(String production,int i) {
 		return driver.FindElementByXPath("//*[text()='"+production+"']/../td["+i+"]");
 	}
+	public Element getCenterHeaderInsertMetadataField() {
+		return driver.FindElementByXPath("//div[@id='divCenterHeaderBranding']//a[@id='Launcheditor_0']");
+	}
 	
 	public ProductionPage(Driver driver) {
 
@@ -16268,6 +16271,107 @@ public class ProductionPage {
 		base.stepInfo("Text section is filled");
 
 		driver.scrollPageToTop();
+	}
+	/**
+	 * @author Aathith
+	 * @description : Method for filling pdf section with default annatation layer.
+	 */
+	public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
+		try {
+
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+
+			driver.scrollingToBottomofAPage();
+
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			
+			base.waitForElement(getPDFGenerateRadioButton());
+			base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+			getPDFGenerateRadioButton().waitAndClick(10);
+
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			// disabling enable for priviledged docs
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+
+			getClk_burnReductiontoggle().ScrollTo();
+
+			// enable burn redaction
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getAllRedactionsAnnotaionLayer());
+			driver.waitForPageToBeReady();
+			getAllRedactionsAnnotaionLayer().Click();
+			base.stepInfo("filled pdf section with default annatation layer.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while  filling pdf section with default annatation layer." + e.getMessage());
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @description In branding center choose batesnumber and left confidential text passed for both pdf or tiff 
+	 */
+	public void getTiffPdfBranding(String tagname,String ObjectName) {
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().waitAndClick(5);
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().waitAndClick(5);
+		
+		if (ObjectName=="pdf") {
+			base.waitForElement(getPDFGenerateRadioButton());
+			base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+			getPDFGenerateRadioButton().waitAndClick(10);
+			base.stepInfo("pdf selected");
+		}
+		
+		//center branding with batenumber
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
+		base.waitForElement(getCenterHeaderInsertMetadataField());
+		getCenterHeaderInsertMetadataField().waitAndClick(5);
+		base.waitForElement(getTIFF_selectedMetadataField());
+		getTIFF_selectedMetadataField().waitAndClick(5);
+		getTIFF_selectedMetadataField().selectFromDropdown().selectByVisibleText("BatesNumber");
+		base.waitForElement(getPopUpOkButtonInserMetaData());
+		getPopUpOkButtonInserMetaData().waitAndClick(5);
+		
+		getLeftHeaderBranding().waitAndClick(10);
+		getEnterBranding(1).SendKeys("Confidentiality");
+		
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().isDisplayed();
+
+		base.waitForElement(getPriveldge_SelectTagButton());
+		getPriveldge_SelectTagButton().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+
+		driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+		base.waitForElement(getPriveldge_TagTree(tagname));
+		getPriveldge_TagTree(tagname).waitAndClick(20);
+
+		base.waitForElement(getPriveldge_TagTree_SelectButton());
+		getPriveldge_TagTree_SelectButton().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		
+		base.waitForElement(getPriveldge_TextArea());
+		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+		getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("TIFF section is filled with Branding in bitesnumber and confidencial");
 	}
 
 }
