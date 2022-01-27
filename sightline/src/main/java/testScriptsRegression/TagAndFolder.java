@@ -384,6 +384,181 @@ public class TagAndFolder {
 		lp.logout();
 	}
 
+	/**
+	 * @author Raghuram A Date: 01/25/21 Modified date:N/A Modified by: Description
+	 *         :Verify that after Impersonation of SA User - can edit/delete Tag
+	 *         Group name appropriately that have created on \"Tags and Folders\" >>
+	 *         Folders screen - RPMXCON-59210 Sprint 11
+	 */
+	@Test(enabled = true, groups = { "regression" }, dataProvider = "impersonateData", priority = 8)
+	public void verifyAfterImpersonateUserEditAndDeleteTagGroup(String fromRole, String toRole) throws Exception {
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		String tagGroup = "newTagGroup" + Utility.dynamicNameAppender();
+		String renamedTagGroup = "renamedTagGroup" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59210 TagsAndFolder Sprint 11");
+		bc.stepInfo(
+				"Verify that after Impersonation of SA User - can edit/delete Tag Group name appropriately that have created on \"Tags and Folders\" >> Folders screen");
+
+		// login as SA
+		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		// Impersonate into PA/RMU
+		driver.waitForPageToBeReady();
+		bc.rolesToImp(fromRole, toRole);
+
+		// Create Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.createTagGroup(Input.securityGroup, tagGroup, "Success", null);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		// Rename Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.verifyNodePresent(tagGroup, true, "Tag");
+		tagAndFolderPage.editTagGroup(Input.securityGroup, tagGroup, renamedTagGroup, "Success", null);
+
+		// Delete folder group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllTagsGroups(renamedTagGroup, "Success");
+
+		lp.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 01/25/21 Modified date:N/A Modified by: Description
+	 *         :Verify that after Impersonation of SA User - can edit/delete Folder
+	 *         Group name appropriately that have created on "Tags and Folders" >>
+	 *         Folders screen - RPMXCON-59211 Sprint 11
+	 */
+	@Test(enabled = true, groups = { "regression" }, dataProvider = "impersonateData", priority = 9)
+	public void verifyAfterImpersonateUserEditAndDeleteFolderGroup(String fromRole, String toRole) throws Exception {
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		String folderGroup = "newFolderGroup" + Utility.dynamicNameAppender();
+		String renamedFolderGroup = "renamedFolderGroup" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59211 TagsAndFolder Sprint 11");
+		bc.stepInfo(
+				"Verify that after Impersonation of SA User - can edit/delete Folder Group name appropriately that have created on \"Tags and Folders\" >> Folders screen");
+
+		// login as SA
+		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		// impersonate into PA/RMU
+		driver.waitForPageToBeReady();
+		bc.rolesToImp(fromRole, toRole);
+
+		// create Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.createFolderGroup(Input.securityGroup, folderGroup, "Success", null);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		// rename Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.verifyNodePresent(folderGroup, true, "Folder");
+		tagAndFolderPage.editFolderGroup(Input.securityGroup, folderGroup, renamedFolderGroup, "Success", null);
+
+		// delete folder group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllFolderGroup(renamedFolderGroup, "Success");
+
+		lp.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 01/25/21 Modified date:N/A Modified by: Description
+	 *         : Verify that after Impersonation of SA User - can edit/delete folder
+	 *         names appropriately that have created on \"Tags and Folders\" >>
+	 *         Folders screen - RPMXCON-59208 Sprint 11
+	 */
+	@Test(enabled = true, groups = { "regression" }, dataProvider = "impersonateData", priority = 10)
+	public void verifyAfterImpersonateUserEditAndDeleteFolderAsSameUser(String fromRole, String toRole)
+			throws Exception {
+
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		String folder = "newFolder" + Utility.dynamicNameAppender();
+		String renamedFolder = "renamedFolder" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59208 TagsAndFolder Sprint 11");
+		bc.stepInfo(
+				"Verify that after Impersonation of SA User - can edit/delete folder names appropriately that have created on \"Tags and Folders\" >> Folders screen");
+
+		// login as SA
+		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		// impersonate into PA/RMU
+		driver.waitForPageToBeReady();
+		bc.rolesToImp(fromRole, toRole);
+
+		// create Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.CreateFolder(folder, Input.securityGroup);
+
+		// rename folder
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.verifyNodePresent(folder, true, "Folder");
+		tagAndFolderPage.editFolder(Input.securityGroup, folder, renamedFolder, "Success", null);
+
+		// Delete folder
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllFolders(renamedFolder);
+
+		lp.logout();
+	}
+
+	/**
+	 * @author Jeevitha Date: 01/25/21 Modified date:N/A Modified by: Description :
+	 *         Verify that after Impersonation of SA User - can edit/delete Tag
+	 *         names appropriately that have created on \"Tags and Folders\" >>
+	 *         Folders screen - RPMXCON-59209 Sprint 11
+	 */
+	@Test(enabled = true, groups = { "regression" }, dataProvider = "impersonateData", priority = 11)
+	public void verifyAfterImpersonateUserEditAndDeleteTagAsSameUser(String fromRole, String toRole) throws Exception {
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		String Tag = "newTag" + Utility.dynamicNameAppender();
+		String renamedTag = "renamedTag" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59209 TagsAndFolder Sprint 11");
+		bc.stepInfo(
+				"Verify that after Impersonation of SA User - can edit/delete Tag names appropriately that have created on \"Tags and Folders\" >> Folders screen");
+
+		// login as SA
+		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		// impersonate into PA/RMU
+		driver.waitForPageToBeReady();
+		bc.rolesToImp(fromRole, toRole);
+
+		// create folder
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.CreateTag(Tag, Input.securityGroup);
+
+		// rename Tag
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.verifyNodePresent(Tag, true, "Tag");
+		tagAndFolderPage.editTag(Input.securityGroup, Tag, renamedTag, "Success", null);
+
+		// Delete Tag
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllTags(renamedTag);
+
+		lp.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);

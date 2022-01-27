@@ -502,6 +502,10 @@ public class BatchRedactionPage {
 		return driver.FindElementByXPath("//a[contains(text(),'Your Batch Redaction report (ID " + id + "')]");
 	}
 
+	public Element getInformativeErrorMessageText() {
+		return driver.FindElementByXPath("//div[@class='form-group']//strong//label");
+	}
+
 	public BatchRedactionPage(Driver driver) {
 
 		this.driver = driver;
@@ -2706,6 +2710,31 @@ public class BatchRedactionPage {
 		System.out.println(fileName);
 		base.stepInfo(fileName);
 		return fileName;
+	}
+
+	/**
+	 * @author Jeevitha
+	 */
+	public void verifyInformativeErrorMessage() {
+		this.driver.getWebDriver().get(Input.url + "BatchRedaction/BatchRedaction");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getInformativeErrorMessageText());
+
+		String sourceString = getInformativeErrorMessageText().getText();
+
+		if (sourceString.contains("Für die")) {
+			String compreString = "Für die Stapelredaktion sind mindestens ein Redaktions-Tag und eine Anmerkungsebene verfügbar";
+			System.out.println("Informative/Error Message is Localized to German Language");
+			base.stepInfo(sourceString + " : Localized to German Language ");
+			base.textCompareEquals(sourceString, compreString, "Informative/Error Message is Verified successfully",
+					"Informative/Error Message is not Verified");
+		} else {
+			String compreString = "Batch Redaction requires at least one Redaction Tag and one Annotation Layer available";
+			base.stepInfo(sourceString + " : Localized to English Language ");
+			base.textCompareEquals(sourceString, compreString, "Informative/Error Message is Verified successfully",
+					"Informative/Error Message is not Verified");
+		}
+
 	}
 
 }
