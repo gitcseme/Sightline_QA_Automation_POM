@@ -22091,7 +22091,7 @@ public class DocViewPage {
 		base.waitForElement(getDocView_AnalyticsChild_NearDupe_Folder());
 		getDocView_AnalyticsChild_NearDupe_Folder().waitAndClick(10);
 	}
-}	
+	
 	
 	/**
 	 * @author Arunkumar Created Date: 27/1/2022
