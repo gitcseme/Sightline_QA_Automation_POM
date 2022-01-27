@@ -1849,6 +1849,175 @@ public class DocView_Regression2 {
 		docViewRedact.checkingPersistentHitPanel();
 		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
 
+	}/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50787
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true,dataProvider = "userDetails2", alwaysRun = true , groups = { "regression" }, priority = 30)
+	public void verifyDocViewOptions(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-50787");
+		baseClass.stepInfo("To verify options available on menu bar from document view panel of doc view page");
+		loginPage.loginToSightLine(userName, password);
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		sessionSearch.basicContentSearch(Input.searchString1);
+	    sessionSearch.ViewInDocView();
+	    docViewRedact = new DocViewRedactions(driver);
+	    driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.thumbNailsIcon().Visible() && docViewRedact.thumbNailsIcon().Enabled();}
+		}), Input.wait30);
+	    baseClass.waitTillElemetToBeClickable(docViewRedact.thumbNailsIcon());
+	    docViewRedact.HighliteIcon().waitAndFind(30);
+	    if(docViewRedact.HighliteIcon().isDisplayed()) {
+	    	baseClass.passedStep("Thumbnails icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Thumbnails Icon not visible in DocView");  }    
+	    if(docViewRedact.zoomInDocView().isDisplayed()) {
+	    	baseClass.passedStep("Zoom in icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Zoom in Icon not visible in DocView");  }    
+	    if(docViewRedact.zoomOutDocView().isDisplayed()) {
+	    	baseClass.passedStep("Zoom out visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Zoom out Icon not visible in DocView"); }    
+	    if(docViewRedact.zoomFitToScreenDocView().isDisplayed()) {
+	    	baseClass.passedStep("Fit to screen icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Fit to screen forwaard not visible in DocView");} 
+	    if(docViewRedact.rotateClockWise().isDisplayed()) {
+	    	baseClass.passedStep("Rotate Clock wise visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Rotate clock wise not visible in DocView");} 
+	    if(docViewRedact.rotateAntiClockWise().isDisplayed()) {
+	    	baseClass.passedStep("Rotate AntiClock visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Rotate AntiClock not visible in DocView"); }
+	    
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50787
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 31)
+	public void verifyDocViewOptions() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-50787");
+		baseClass.stepInfo("To verify options available on menu bar from document view panel of doc view page");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		sessionSearch.basicContentSearch(Input.randomText);
+		sessionSearch.bulkAssign();
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		baseClass.passedStep("Assignment viewed in DocView Successfully");
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+	    docViewRedact = new DocViewRedactions(driver);
+	    driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.thumbNailsIcon().Visible() && docViewRedact.thumbNailsIcon().Enabled();
+			}
+		}), Input.wait30);
+	    baseClass.waitTillElemetToBeClickable(docViewRedact.thumbNailsIcon());
+	    docViewRedact.thumbNailsIcon().waitAndFind(30);
+	    if(docViewRedact.HighliteIcon().isDisplayed()) {
+	    	baseClass.passedStep("Thumbnails icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Thumbnails Icon not visible in DocView");  }    
+	    if(docViewRedact.zoomInDocView().isDisplayed()) {
+	    	baseClass.passedStep("Zoom in icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Zoom in Icon not visible in DocView");  }    
+	    if(docViewRedact.zoomOutDocView().isDisplayed()) {
+	    	baseClass.passedStep("Zoom out visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Zoom out Icon not visible in DocView"); }    
+	    if(docViewRedact.zoomFitToScreenDocView().isDisplayed()) {
+	    	baseClass.passedStep("Fit to screen icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Fit to screen forwaard not visible in DocView");} 
+	    if(docViewRedact.rotateClockWise().isDisplayed()) {
+	    	baseClass.passedStep("Rotate Clock wise visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Rotate clock wise not visible in DocView");} 
+	    if(docViewRedact.rotateAntiClockWise().isDisplayed()) {
+	    	baseClass.passedStep("Rotate AntiClock visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Rotate AntiClock not visible in DocView"); }   
+		
+	 if(docViewRedact.HighliteIcon().isDisplayed()) {
+	    	baseClass.passedStep("Highlite icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Highlite Icon not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.redactionIcon().isDisplayed()) {
+	    	baseClass.passedStep("Redaction icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Redaction Icon not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.getSearchIcon().isDisplayed()) {
+	    	baseClass.passedStep("Search icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Search Icon not visible in DocView");
+	    }
+		
+		 if(docViewRedact.remarksIcon().isDisplayed()) {
+	    	baseClass.passedStep("Remarks iocn visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Remarks icon not visible in DocView"); }
+	    
+	    if(docViewRedact.persistantHitBtn().isDisplayed()) {
+	    	baseClass.passedStep("Persistent hit button visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("persistent hit button not visible in DocView"); }
+	    
+	    if(docViewRedact.downloadIcon().isDisplayed()) {
+	    	baseClass.passedStep("Download iocn visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Download icon not visible in DocView"); }
+		
+		 if(docViewRedact.printIcon().isDisplayed()) {
+	    	baseClass.passedStep("print iocn visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("print icon not visible in DocView"); }
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50785
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 32)
+	public void verifyAssignmentViewInDocViewZero() throws Exception {
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-50785");
+		baseClass.stepInfo("To verify that on selecting 'View All Doc in Doc View' option when documents are not mapped to the assignment");
+		docViewRedact = new DocViewRedactions(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		assignmentspage.createAssignment(assignmentName, Input.codeFormName);
+		baseClass.stepInfo(
+				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
+		String verifydocsCountInAssgnPage = assignmentspage.verifydocsCountInAssgnPage(assignmentName);
+		if(verifydocsCountInAssgnPage.equalsIgnoreCase("0")) {
+			baseClass.passedStep("The doc count has been verified");
+		} else {
+			baseClass.failedStep("The doc count is not verified");
+		}
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		baseClass.VerifyWarningMessage("Please select an assignment which contains documents assigned to it.");	
+		assignmentspage.deleteAssgnmntUsingPagination(assignmentName);	
 	}
 	
 	/**
