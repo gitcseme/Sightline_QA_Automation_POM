@@ -1488,6 +1488,22 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	
+	public Element getDocView_MetaData_FolderName(String folderName) {
+		return driver.FindElementByXPath("//*[@id='documentFolderJSTree']//a[text()='"+folderName+"']");
+	}
+	
+	public Element getDocView_PersistanceHit_PanelText(String text) {
+		return driver.FindElementByXPath("//p[@id='PHitCount_"+text+"']");
+	}
+	
+	public Element getDocView_AnalyticsPanel_ThreadMapFirstRow() {
+		return driver.FindElementByXPath("//*[@id='dtDocumentThreadedDocuments']//tr[@id='threadedDocumentIdRow']");
+	}
+	
+	public Element getDocView_AnalyticsPanel_NearDupeWholeTabel() {
+		return driver.FindElementById("dupe1");
+	}
 
 	public Element getDocView_AnalyticsPanel_FamilyMemberTabQueryNoData() {
 		return driver
@@ -22190,5 +22206,56 @@ public class DocViewPage {
 				base.CloseSuccessMsgpopup();
 			}
 		}
+	}
+	
+	/**
+	 * @Author Mohan Created on 27/01/2022
+	 * @Description To perform folder Conceputually docs in the DocView 
+	 *              
+	 *
+	 */
+	public void selectDocsAndActionAsFolder(int rowNo,String folderName) throws InterruptedException {
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
+
+		for (int i = 1; i <= rowNo; i++) {
+			base.waitForElement(getDocView_Analytics_Conceptual_Docs(i));
+			getDocView_Analytics_Conceptual_Docs(i).waitAndClick(10);
+		}
+		
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+		
+		base.waitForElement(getDocView_Analytics_ConceptualFolderAction());
+		getDocView_Analytics_ConceptualFolderAction().waitAndClick(15);
+		
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFamilyMember().Displayed());
+		base.passedStep("Folder pop up is opened successfully");
+
+		base.waitForElement(getDocView_AnalyticsNewFolderFamilyMember());
+		getDocView_AnalyticsNewFolderFamilyMember().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsNewFolderTree());
+		getDocView_AnalyticsNewFolderTree().waitAndClick(10);
+		
+		base.waitForElement(getDocView_AnalyticsNewFolderTextBox());
+		getDocView_AnalyticsNewFolderTextBox().SendKeys(folderName);
+		
+		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
+		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
+
+		base.waitForElement(getTotalSelectedDocuments());
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().Displayed());
+		softAssertion.assertAll();
+		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
+		base.VerifySuccessMessage("Records saved successfully");
+		base.CloseSuccessMsgpopup();
+		System.out.println("Docs are folderedUp, folder is : " + folderName);
+		base.passedStep("Docs are selected from Conceptual Tab and FolderedUp sucessfully");
+
+	      
 	}
 }
