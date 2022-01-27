@@ -845,33 +845,51 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+
+	public Element useMetadataFied() {
+		return driver.FindElementByXPath("(//input[@id='rdbUserMetadata']//following::i)[1]");
+	}
+
+	public Element beginningBatesInFormat() {
+		return driver.FindElementByXPath("(//div[@id='divNextBatesNum']//following::input)[1]");
+	}
+
+	public Element specifyBatesNumbering() {
+		return driver.FindElementByXPath("(//input[@id='rdbSpecifyNumber']//following::i)[1]");
+	}
+
+	public Element pageRadioButton() {
+		return driver.FindElementByXPath("(//input[@id='rdbPageLevel']//following::i)[1]");
+	}
+
 	public Element closeButtonInTemplate() {
 		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
 	}
-	
+
 	public Element backButtonInTemplate() {
 		return driver.FindElementByXPath("//div[@class='buttons pull-right']//a[text()='Back']");
 	}
-	
+
 	public Element nextButtonInTemplate() {
 		return driver.FindElementByXPath("//div[@id='template_productionguard']//a[text()='Next']");
 	}
-	
+
 	public Element numberingSortingInTemplate() {
 		return driver.FindElementByXPath("//span[contains(text(),'Numbering & Sorting')]");
 	}
+
 	public Element productionComponentsInTemplate() {
 		return driver.FindElementByXPath("//span[contains(text(),'Production Components')]");
 	}
-	
+
 	public Element privGuardInTemplate() {
 		return driver.FindElementByXPath("//span[contains(text(),'Priv Guard')]");
 	}
-	
+
 	public Element arrowSymbolInHomePage() {
 		return driver.FindElementByXPath("//b[@class='caret']]");
 	}
-	
+
 	public Element productionNameInGeneratePage(String productionname) {
 		return driver.FindElementByXPath("//label[contains(text(),'" + productionname + "')]");
 	}
@@ -2305,85 +2323,102 @@ public class ProductionPage {
 	public Element getErrorMsgText() {
 		return driver.FindElementByXPath("//span//h1");
 	}
+
 	public Element getDocList() {
-		return driver.FindElementById("btnGoToDocList");}
-	
+		return driver.FindElementById("btnGoToDocList");
+	}
+
 	public Element getDocView() {
-		return driver.FindElementById("btnGoToDocView");}
-	
+		return driver.FindElementById("btnGoToDocView");
+	}
+
 	public Element getTags() {
-		return driver.FindElementById("tagsHelper");}
-	
+		return driver.FindElementById("tagsHelper");
+	}
+
 	public Element getAddRule() {
-		return driver.FindElementById("contentmetadata");}
-	
+		return driver.FindElementById("contentmetadata");
+	}
+
 	public Element getRedactions() {
-		return driver.FindElementById("redactionsHelper");}
-	
+		return driver.FindElementById("redactionsHelper");
+	}
+
 	public Element getOperator() {
-		return driver.FindElementByXPath("//button[@class='btn btn-default dropdown-toggle insertOpHelper']");}
-	
+		return driver.FindElementByXPath("//button[@class='btn btn-default dropdown-toggle insertOpHelper']");
+	}
+
 	public Element getTagsCheckbox(String Tag) {
-		return driver.FindElementByXPath("//div[@id='JSTree']/ul/li/ul/li/a[text()='"+Tag+"']");}
-	
+		return driver.FindElementByXPath("//div[@id='JSTree']/ul/li/ul/li/a[text()='" + Tag + "']");
+	}
+
 	public Element getRemoveLink() {
-		return driver.FindElementByXPath("//a[text()='Remove']");}
+		return driver.FindElementByXPath("//a[text()='Remove']");
+	}
+
 	public Element getInsertQueryBtnInPrivGaurd() {
 		return driver.FindElementByXPath("//a[@id='insertQueryBtn']");
 	}
-	//Add by Aathith
+
+	// Add by Aathith
 	public Element gettext(String text) {
-		return driver.FindElementByXPath("//*[text()='"+text+"']");
+		return driver.FindElementByXPath("//*[text()='" + text + "']");
 	}
 
 	public Element getDocumentMatchesButton() {
 		return driver.FindElementById("btnDocumentMatch");
 	}
-	
-	
+
 	public Element ProductionLocationSplitCount() {
 		return driver.FindElementByXPath("//input[@id='ProductionComponentsFolderDetails_SplitCount']");
 	}
-	
+
 	public Element getNativeFileTagSelection(String tag) {
 		return driver.FindElementByXPath(
-				"//div[@id='tagTreeNativeComponent']//a[text()='"+tag+"']/i[@class='jstree-icon jstree-checkbox']");
+				"//div[@id='tagTreeNativeComponent']//a[text()='" + tag + "']/i[@class='jstree-icon jstree-checkbox']");
 	}
+
 	public Element getNativeFileTagSelectButton() {
-		return driver.FindElementByXPath(
-				"//button[contains(@class,'submitNativeSelection')]");
+		return driver.FindElementByXPath("//button[contains(@class,'submitNativeSelection')]");
 	}
-	
+
 	public Element getNativeFileSelectingTag() {
-		return driver.FindElementByXPath(
-				"//button[contains(@class,'selectNativeTags')]");
+		return driver.FindElementByXPath("//button[contains(@class,'selectNativeTags')]");
 	}
-	//Add by Aathith
+
+	// Add by Aathith
 	public Element getsplitSubFolderbtn() {
 		return driver.FindElementByXPath("//*[text()='Split Sub Folders:']/..//i");
 	}
+
 	public Element getTranlationCheckMarkVerication() {
 		return driver.FindElementByXPath("//input[@id='chkIsTranslation']");
 	}
+
 	public Element getTranlationOpenCloseCheck() {
 		return driver.FindElementByXPath("//div[@id='TranslationsContainer']");
 	}
+
 	public Element getTextFormateANSIradiobtn() {
 		return driver.FindElementByXPath("//input[@id='rdbANSIType']/../i");
 	}
+
 	public Element getTextFormateANSIdropdown() {
 		return driver.FindElementByXPath("//select[@id='lstTextANSIType']");
 	}
+
 	public Element getProductionNameInGenPage() {
 		return driver.FindElementByXPath("//*[text()='Production Name:']/following-sibling::label");
 	}
+
 	public ElementCollection getGridWebTableHeader() {
 		return driver.FindElementsByXPath("//*[@id='ProductionListGridViewTable']/thead/tr/th");
 	}
-	public Element getGridProdValues(String production,int i) {
-		return driver.FindElementByXPath("//*[text()='"+production+"']/../td["+i+"]");
+
+	public Element getGridProdValues(String production, int i) {
+		return driver.FindElementByXPath("//*[text()='" + production + "']/../td[" + i + "]");
 	}
-	
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -9322,10 +9357,10 @@ public class ProductionPage {
 
 		base.stepInfo("click on gear icon of the current production");
 		driver.waitForPageToBeReady();
-		
+
 		base.waitForElement(arrowSymbolInHomePage());
 		arrowSymbolInHomePage().waitAndClick(10);
-		
+
 		base.stepInfo("click on save as Template");
 		getprod_Action_SaveTemplate().waitAndClick(10);
 
@@ -9344,52 +9379,47 @@ public class ProductionPage {
 
 		getViewBtn(templateName).ScrollTo();
 		base.waitForElement(getViewBtn(templateName));
-		if(getViewBtn(templateName).isElementAvailable(5))
-		{
+		if (getViewBtn(templateName).isElementAvailable(5)) {
 			getViewBtn(templateName).waitAndClick(10);
 			base.stepInfo("View option is displayed");
 		}
-		
+
 		driver.waitForPageToBeReady();
 		base.waitTime(2);
 		if (getProductionNameInManageView(templateName).isElementAvailable(5)) {
 			base.passedStep("Production which is saved as template is displayed after selecting view option");
 		}
-		
+
 		base.waitForElement(privGuardInTemplate());
-		if(privGuardInTemplate().isElementAvailable(5))
-		{
+		if (privGuardInTemplate().isElementAvailable(5)) {
 			base.stepInfo("priv guard option is displayed");
 		}
-		
+
 		base.waitForElement(productionComponentsInTemplate());
-		if(productionComponentsInTemplate().isElementAvailable(5))
-		{
+		if (productionComponentsInTemplate().isElementAvailable(5)) {
 			base.stepInfo("production component option is displayed");
 		}
-		
+
 		base.waitForElement(numberingSortingInTemplate());
-		if(numberingSortingInTemplate().isElementAvailable(5))
-		{
+		if (numberingSortingInTemplate().isElementAvailable(5)) {
 			base.stepInfo("Numbering and sorting  option is displayed");
 		}
-		
+
 		base.waitForElement(nextButtonInTemplate());
 		nextButtonInTemplate().waitAndClick(10);
 		base.stepInfo("next button works in template correctly");
-		
+
 		base.waitForElement(backButtonInTemplate());
 		backButtonInTemplate().waitAndClick(10);
 		base.stepInfo("back button works in template correctly");
-		
+
 		base.waitForElement(closeButtonInTemplate());
-		if(closeButtonInTemplate().isElementAvailable(5))
-		{
+		if (closeButtonInTemplate().isElementAvailable(5)) {
 			base.stepInfo("close button is displayed");
 		}
-		
-		
+
 	}
+
 	/**
 	 * @Author Indium-Sowndarya.Velraj.Modified on 01/19/22
 	 */
@@ -14950,8 +14980,8 @@ public class ProductionPage {
 			}
 		}), Input.wait30);
 		getSelectFolder(Tag).waitAndClick(10);
-        base.passedStep(Tag+" : Tag Is Selected");
-        
+		base.passedStep(Tag + " : Tag Is Selected");
+
 		driver.scrollingToBottomofAPage();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -15996,72 +16026,72 @@ public class ProductionPage {
 		getSecurityGroup(securityGroup).waitAndClick(10);
 
 	}
-	
+
 	/**
 	 * @author Brundha
-	 * @Description  : Method for add rules in priv guard and remove the rules
+	 * @Description : Method for add rules in priv guard and remove the rules
 	 */
-	public void  AddRuleAndRemoveRule(String Tag) {
+	public void AddRuleAndRemoveRule(String Tag) {
 		base.waitForElement(getAddRule());
 		getAddRule().waitAndClick(10);
-	   driver.waitForPageToBeReady();
-	   getTags().isDisplayed();
-	   getTags().waitAndClick(10);
-	   base.waitForElement( getTagsCheckbox(Tag));
-	   getTagsCheckbox(Tag).Click();
-	   base.waitForElement(getInsertQueryBtnInPrivGaurd());
-	   getInsertQueryBtnInPrivGaurd().Click();
-	   driver.waitForPageToBeReady();
-	   getDocumentMatchesButton().waitAndClick(10);
-	   
+		driver.waitForPageToBeReady();
+		getTags().isDisplayed();
+		getTags().waitAndClick(10);
+		base.waitForElement(getTagsCheckbox(Tag));
+		getTagsCheckbox(Tag).Click();
+		base.waitForElement(getInsertQueryBtnInPrivGaurd());
+		getInsertQueryBtnInPrivGaurd().Click();
+		driver.waitForPageToBeReady();
+		getDocumentMatchesButton().waitAndClick(10);
+
 	}
 
 	/**
 	 * @author Brundha
-	 * @Description  : Method for navigating to doclist page.
+	 * @Description : Method for navigating to doclist page.
 	 */
 	public String VerifyingDocListCountWithPrivGaurdCount() {
 
-
 		System.out.println("Clicked on Mark Complete Button..");
 		driver.waitForPageToBeReady();
-		String docCount=getDocumentSelectionLink().getText();
+		String docCount = getDocumentSelectionLink().getText();
 		base.waitForElement(getDocList());
 		getDocList().waitAndClick(10);
 		return docCount;
-		
+
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
 	public void nonVisibleCheck(String text) {
-		if(gettext("text").isDisplayed()) {
-			base.failedStep(text+" is visibled");
-			System.out.println(text+" is visible");
-		}else {
-			base.passedStep(text+" is not visible");
-			System.out.println(text+" is not visible");
+		if (gettext("text").isDisplayed()) {
+			base.failedStep(text + " is visibled");
+			System.out.println(text + " is visible");
+		} else {
+			base.passedStep(text + " is not visible");
+			System.out.println(text + " is not visible");
 		}
 	}
 
-	
 	/**
 	 * @author Brundha
-	 * @Description  : Method to verify volume included toggle is on by default
+	 * @Description : Method to verify volume included toggle is on by default
 	 */
-	public void verifyVolumeIncludedToggleInProductionSelection(){
+	public void verifyVolumeIncludedToggleInProductionSelection() {
 		driver.waitForPageToBeReady();
-		String color = driver.FindElement(By.xpath("//input[@id='ProductionOutputLocation_IsVolumeIncluded']/..//i")).GetCssValue("background-color");
+		String color = driver.FindElement(By.xpath("//input[@id='ProductionOutputLocation_IsVolumeIncluded']/..//i"))
+				.GetCssValue("background-color");
 		System.out.println(color);
 		String ExpectedColor = Color.fromString(color).asHex();
 		System.out.println(ExpectedColor);
-		String ActualColor="#a9c981";	
-		if(ActualColor.equals(ExpectedColor)) {
+		String ActualColor = "#a9c981";
+		if (ActualColor.equals(ExpectedColor)) {
 			base.passedStep("Volume included  toggle is enabled by default");
-		}else {
+		} else {
 			base.failedStep("Volume included  toggle is  not enabled by default");
-			}
-		
+		}
+
 	}
 
 	/**
@@ -16121,12 +16151,12 @@ public class ProductionPage {
 		getClk_selectBtn().waitAndClick(10);
 
 	}
-	
+
 	/**
 	 * Indium-Baskar
 	 */
-	
-	public void selectNativeTag(String tagOne,String tagTwo) {
+
+	public void selectNativeTag(String tagOne, String tagTwo) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getNativeFileSelectingTag());
 		getNativeFileSelectingTag().waitAndClick(5);
@@ -16137,47 +16167,49 @@ public class ProductionPage {
 		base.waitForElement(getNativeFileTagSelectButton());
 		getNativeFileTagSelectButton().waitAndClick(5);
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @description toogle off check for element
 	 */
 	public void toggleOffCheck(Element element) {
 		try {
-			driver.waitForPageToBeReady();		
+			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
 			String color = element.GetCssValue("background-color");
 			System.out.println(color);
 			String ExpectedColor = Color.fromString(color).asHex();
 			System.out.println(ExpectedColor);
-			String ActualColor="#e54036";
-			if(ActualColor.equals(ExpectedColor)) {
-				base.passedStep("toggle is off :"+element);
-			}else {
+			String ActualColor = "#e54036";
+			if (ActualColor.equals(ExpectedColor)) {
+				base.passedStep("toggle is off :" + element);
+			} else {
 				base.failedStep("toggle off verifaction failed");
-				}
+			}
 		} catch (Exception e) {
 			base.failedStep("Exception occcured toggle off check" + e.getMessage());
 			e.printStackTrace();
 		}
 
-
 	}
+
 	/**
 	 * @author Aathith
 	 * @Description : CheckBox notChecked verification
 	 */
 	public void getCheckBoxUnCheckVerificaation(Element element) {
 		String value = element.GetAttribute("checked");
-		System.out.println("value :"+value);
+		System.out.println("value :" + value);
 		softAssertion.assertNull(value);
-		if(value==null) {
-			base.passedStep(element+"element is not checked");
+		if (value == null) {
+			base.passedStep(element + "element is not checked");
 			System.out.println("element is unChecked");
-		}else {
-			base.failedStep(element+"element is checked");
+		} else {
+			base.failedStep(element + "element is checked");
 			System.out.println("element is Checked");
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -16192,7 +16224,7 @@ public class ProductionPage {
 		getNativeTab().Click();
 
 		visibleCheck("Natives Files");
-		
+
 		String expected = "To produce specific docs natively, please select file types and/or tags below. "
 				+ "In addition, to export placeholders for these docs, configure placeholder in the TIFF/PDF section"
 				+ " for the same selected file types and/or tags." + "\r\n" + "\r\n"
@@ -16209,7 +16241,7 @@ public class ProductionPage {
 		getNative_SelectAllCheck().waitAndClick(10);
 
 		visibleCheck("Select Tags");
-		
+
 		base.waitForElement(getNative_AdvToggle());
 		getNative_AdvToggle().Click();
 
@@ -16217,7 +16249,7 @@ public class ProductionPage {
 		getNative_GenerateLoadFileLST().waitAndClick(10);
 
 		visibleCheck("LST");
-		
+
 		String Expect = "Note that, if Privileged Placeholdering and Burn Redactions are enabled in the TIFF/PDF section, natives are not produced by default for privileged documents, redacted documents, and parents of privileged and redacted documents.";
 
 		String Actual = getNativeAdvanced_Text().getWebElement().getText();
@@ -16228,6 +16260,7 @@ public class ProductionPage {
 		base.stepInfo("Native section is verified");
 		base.stepInfo("Native section is filled");
 	}
+
 	/**
 	 * @Author Aathith
 	 * @Description selecting text formate
@@ -16257,13 +16290,13 @@ public class ProductionPage {
 		String exptext = getTextcomponent_text().getText();
 		System.out.println(exptext);
 		UtilityLog.info(exptext);
-		
+
 		base.waitForElement(getTextFormateANSIradiobtn());
 		getTextFormateANSIradiobtn().waitAndClick(10);
-		
+
 		base.waitForElement(getTextFormateANSIdropdown());
 		getTextFormateANSIdropdown().selectFromDropdown().selectByVisibleText(format);
-		
+
 		base.stepInfo("text format is selected");
 		base.stepInfo("Text section is filled");
 
