@@ -16321,13 +16321,14 @@ public class ProductionPage {
 	 * @description In branding center choose batesnumber and left confidential text passed for both pdf or tiff 
 	 */
 	public void getTiffPdfBranding(String tagname,String ObjectName) {
+		String component ="pdf";
 		base.waitForElement(getTIFFChkBox());
 		getTIFFChkBox().waitAndClick(5);
 
 		base.waitForElement(getTIFFTab());
 		getTIFFTab().waitAndClick(5);
-		
-		if (ObjectName=="pdf") {
+		if(component.equalsIgnoreCase(ObjectName)){
+			softAssertion.assertEquals(component, ObjectName);
 			base.waitForElement(getPDFGenerateRadioButton());
 			base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
 			getPDFGenerateRadioButton().waitAndClick(10);
