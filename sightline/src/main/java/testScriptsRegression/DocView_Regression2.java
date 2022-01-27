@@ -9,10 +9,12 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
 import org.testng.Assert;
@@ -1847,10 +1849,94 @@ public class DocView_Regression2 {
 
 	}
 	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51305
+	 * Description :Verify persistent Hit panel of DocView should present only content terms, not metadata terms when navigating from advance search 
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 30)
+	public void verifyMetaDataTermOnPersistentPanel(String fullName, String userName, String password) throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		
+		//Login to the application
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51305");
+		baseClass.stepInfo("Verify metadata terms on persistent panel when navigating from advance search");
+		
+		//Performing advanced search with metadata term and navigating to docView
+		sessionsearch.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.metaDataCustodianNameInput);
+		sessionsearch.ViewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);		
+		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(30);
 	
+		// getting the available terms and checking the meta data term availability
+ 		List<String> persistantNames = new ArrayList<String>();
+		List<WebElement> persistantElements = docView.getPersistantNames().FindWebElements();
+		for (WebElement persistantNameElement : persistantElements) {
+			persistantNames.add(persistantNameElement.getAttribute("data-custom-id").trim());
+		}
+		System.out.println(persistantNames);
+		if(persistantNames.contains(Input.metaDataCustodianNameInput)) {
+			baseClass.failedStep("Metadata terms are displaying when navigating from advanced search");
+		}
+		else {
+			baseClass.passedStep("Metadata terms are not displaying when navigating from advanced search");
+		}
+	}
 	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51324
+	 * Description :Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from advance search
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 31)
+	public void verifyHighlightingWhenNavigatingFromAdvancedSearch(String fullName, String userName, String password) throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		// Login to the application
+		loginPage.loginToSightLine(userName,password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51324");
+		baseClass.stepInfo("Verify keywords highlighting when navigating from advanced search");
+		
+		// Performing advanced search and navigating to docView
+		sessionsearch.advancedContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		
+		//verify the highlighting without clicking eye icon
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);		
+		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
+		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		System.out.println(color);
+		String hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+		
+		if ( docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep(" Verified that Search term hits are highlighted in the document without clicking the eye icon");
+			
+		}else {
+			baseClass.failedStep("Verified that Search term hits are not highlighted in the document without clicking the eye icon");
+		}
+		
+	}
 	
-
 	
 	
 	@AfterMethod(alwaysRun = true)
