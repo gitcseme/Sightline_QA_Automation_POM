@@ -22091,7 +22091,80 @@ public class DocViewPage {
 		base.waitForElement(getDocView_AnalyticsChild_NearDupe_Folder());
 		getDocView_AnalyticsChild_NearDupe_Folder().waitAndClick(10);
 	}
+}	
+	
+	/**
+	 * @author Arunkumar Created Date: 27/1/2022
+	 * @description To verify highlightining text in docview without clicking the eyeIcon
+	 */
+	public void verifyTermHitsHighlightingInDocumentWithoutClickingEyeIcon(String searchString) {
 
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+		String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
+		System.out.println(color);
+		if (get_textHighlightedColor().isDisplayed()) {
+			base.passedStep(" Verified that term hits are highlighted in the document without clicking the eye icon");
+			
+		}else {
+			base.failedStep("Verified that term hits are not highlighted in the document without clicking the eye icon");
+		}
+	}
+	
+	/**
+	 * @author Arunkumar Created Date: 27/1/2022
+	 * @description To verify highlightining text in docview after clicking the eyeIcon
+	 */
+	public void verifyTermHitsHighlightingInDocumentAfterClickingEyeIcon(String searchString) {
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+		getPersistantHitEyeIcon().waitAndClick(30);
+		String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
+		System.out.println(color);
+		if (get_textHighlightedColor().isDisplayed()) {
+			base.passedStep(" Verified that term hits are highlighted in the document");
+			
+		}else {
+			base.failedStep("Verified that term hits are not highlighted in the document");
+		}
+	
+		
+	}
+	
+	public void verifyMetaDataTermDisplayingOnPersistentPanel(String searchString) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);		
+		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+		getPersistantHitEyeIcon().waitAndClick(30);
+		
+		List<String> persistentNames = new ArrayList<String>();
+		List<WebElement> persistantElements = getPersistantNames().FindWebElements();
+		for (WebElement persistantNameElement : persistantElements) {
+			persistentNames.add(persistantNameElement.getAttribute("data-custom-id").trim());
+		}
+		System.out.println(persistentNames);
+		if(persistentNames.contains(searchString)) {
+			base.failedStep("Metadata terms are displaying on the persistent panel ");
+		}
+		else {
+			base.passedStep("Metadata terms are not displaying on the persistent panel");
+    }
+  }
 	/**
 	 * @Author Jeevitha
 	 * @param comment

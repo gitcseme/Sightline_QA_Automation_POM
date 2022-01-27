@@ -9,10 +9,12 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
 import org.testng.Assert;
@@ -37,6 +39,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ReusableDocViewPage;
+import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
@@ -57,6 +60,7 @@ public class DocView_Regression2 {
 	DocExplorerPage docexp;
 	AssignmentsPage assignPage;
 	KeywordPage keywordPage;
+	SavedSearch savedsearch;
 
 	String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 
@@ -1847,10 +1851,85 @@ public class DocView_Regression2 {
 
 	}
 	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51305
+	 * Description :Verify persistent Hit panel of DocView should present only content terms, not metadata terms when navigating from advance search 
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 30)
+	public void verifyMetaDataTermOnPersistentPanel(String fullName, String userName, String password) throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51305");
+		baseClass.stepInfo("Verify metadata terms on persistent panel when navigating from advance search");
+		sessionsearch.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.metaDataCustodianNameInput);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Navigated to docView");
+		docView.verifyMetaDataTermDisplayingOnPersistentPanel(Input.metaDataCustodianNameInput);
+	}
 	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51324
+	 * Description :Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from advance search
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 31)
+	public void verifyHighlightingWhenNavigatingFromAdvancedSearch(String fullName, String userName, String password) throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		loginPage.loginToSightLine(userName,password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51324");
+		baseClass.stepInfo("Verify keywords highlighting when navigating from advanced search");
+		sessionsearch.advancedContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Navigated to docView");
+		docView.verifyTermHitsHighlightingInDocumentWithoutClickingEyeIcon(Input.searchString1);
+		
+	}
 	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51012
+	 * Description :To verify that persistent search should be displayed on doc view if user navigates from Saved Search-Doc View.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 32)
+	public void verifyHighlightingWhenNavigatingFromSavedSearch() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		savedsearch = new SavedSearch(driver);
+		String searchName = "Atestsearch" + Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51012");
+		baseClass.stepInfo("verify that persistent search should be displayed on doc view if user navigates from Saved Search-Doc View");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.saveSearch(searchName);
+		savedsearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Navigated to docView");
+		docView.verifyTermHitsHighlightingInDocumentAfterClickingEyeIcon(Input.testData1);
+		int availableTermwithCount = docView.getPersistantNames().size();
+		if(availableTermwithCount>0) {
+			baseClass.passedStep("Hit terms with count displayed on the persistent panel");
+		}
+		else {
+			baseClass.failedStep("Hit terms with count not displayed on the persistent panel");
+		}
+		
+	}
 	
-
 	
 	
 	@AfterMethod(alwaysRun = true)
