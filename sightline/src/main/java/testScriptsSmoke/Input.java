@@ -763,7 +763,8 @@ public class Input {
 		bullHornIconColor = testData.getBullHornIconColor();
 		progresBarColor = testData.getProgresBarColor();
 		BatchFileduplicateHeader = testData.getBatchFileduplicateHeader();
-
+		metaDataCNcount= testData.getMetaDataCNcount();
+		
 		/**
 		 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
 		 *         by:Gopinath.
