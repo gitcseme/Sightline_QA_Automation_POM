@@ -39,6 +39,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ReusableDocViewPage;
+import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
@@ -59,6 +60,7 @@ public class DocView_Regression2 {
 	DocExplorerPage docexp;
 	AssignmentsPage assignPage;
 	KeywordPage keywordPage;
+	SavedSearch savedsearch;
 
 	String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 
@@ -1861,36 +1863,13 @@ public class DocView_Regression2 {
 		assignPage = new AssignmentsPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
-		
-		//Login to the application
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51305");
 		baseClass.stepInfo("Verify metadata terms on persistent panel when navigating from advance search");
-		
-		//Performing advanced search with metadata term and navigating to docView
 		sessionsearch.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.metaDataCustodianNameInput);
 		sessionsearch.ViewInDocView();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return docView.getPersistantHitEyeIcon().Displayed();
-			}
-		}), Input.wait30);		
-		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(30);
-	
-		// getting the available terms and checking the meta data term availability
- 		List<String> persistantNames = new ArrayList<String>();
-		List<WebElement> persistantElements = docView.getPersistantNames().FindWebElements();
-		for (WebElement persistantNameElement : persistantElements) {
-			persistantNames.add(persistantNameElement.getAttribute("data-custom-id").trim());
-		}
-		System.out.println(persistantNames);
-		if(persistantNames.contains(Input.metaDataCustodianNameInput)) {
-			baseClass.failedStep("Metadata terms are displaying when navigating from advanced search");
-		}
-		else {
-			baseClass.passedStep("Metadata terms are not displaying when navigating from advanced search");
-		}
+		baseClass.stepInfo("Navigated to docView");
+		docView.verifyMetaDataTermDisplayingOnPersistentPanel(Input.metaDataCustodianNameInput);
 	}
 	
 	/**
@@ -1906,33 +1885,47 @@ public class DocView_Regression2 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		docViewRedact = new DocViewRedactions(driver);
-		// Login to the application
 		loginPage.loginToSightLine(userName,password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51324");
 		baseClass.stepInfo("Verify keywords highlighting when navigating from advanced search");
-		
-		// Performing advanced search and navigating to docView
 		sessionsearch.advancedContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Navigated to docView");
+		docView.verifyTermHitsHighlightingInDocumentWithoutClickingEyeIcon(Input.searchString1);
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51012
+	 * Description :To verify that persistent search should be displayed on doc view if user navigates from Saved Search-Doc View.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 32)
+	public void verifyHighlightingWhenNavigatingFromSavedSearch() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		savedsearch = new SavedSearch(driver);
+		String searchName = "Atestsearch" + Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51012");
+		baseClass.stepInfo("verify that persistent search should be displayed on doc view if user navigates from Saved Search-Doc View");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.saveSearch(searchName);
+		savedsearch.savedSearchToDocView(searchName);
 		driver.waitForPageToBeReady();
-		
-		//verify the highlighting without clicking eye icon
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return docView.getPersistantHitEyeIcon().Displayed();
-			}
-		}), Input.wait30);		
-		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
-		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
-		System.out.println(color);
-		String hex1 = Color.fromString(color).asHex();
-		System.out.println(hex1);
-		
-		if ( docViewRedact.get_textHighlightedColor().isDisplayed()) {
-			baseClass.passedStep(" Verified that Search term hits are highlighted in the document without clicking the eye icon");
-			
-		}else {
-			baseClass.failedStep("Verified that Search term hits are not highlighted in the document without clicking the eye icon");
+		baseClass.stepInfo("Navigated to docView");
+		docView.verifyTermHitsHighlightingInDocumentAfterClickingEyeIcon(Input.testData1);
+		int availableTermwithCount = docView.getPersistantNames().size();
+		if(availableTermwithCount>0) {
+			baseClass.passedStep("Hit terms with count displayed on the persistent panel");
+		}
+		else {
+			baseClass.failedStep("Hit terms with count not displayed on the persistent panel");
 		}
 		
 	}
