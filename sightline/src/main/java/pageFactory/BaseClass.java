@@ -221,6 +221,11 @@ public class BaseClass {
 		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='Default Security Group']");
 	}
 
+	// Added by Jeevitha
+	public Element getWarningMsgHeader() {
+		return driver.FindElementByXPath("//span[text()='Warning !']");
+	}
+
 	public BaseClass(Driver driver) {
 
 		this.driver = driver;
@@ -421,31 +426,30 @@ public class BaseClass {
 		UtilityLog.info("Project is successfully selected");
 
 	}
-	
+
 	/**
-	* Over load the above method to get the project name as input parameter
-	*/
-		public void selectproject(String projectName) {
-			driver.scrollPageToTop();
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getProjectNames().Visible();
-				}
-			}), Input.wait3);
-			driver.scrollPageToTop();
-			// Select project if required one is not seletced
-			getProjectNames().waitAndClick(3);
+	 * Over load the above method to get the project name as input parameter
+	 */
+	public void selectproject(String projectName) {
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProjectNames().Visible();
+			}
+		}), Input.wait3);
+		driver.scrollPageToTop();
+		// Select project if required one is not seletced
+		getProjectNames().waitAndClick(3);
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSelectProject(projectName).Visible();
-				}
-			}), Input.wait3);
-			getSelectProject(projectName).waitAndClick(3);
-			driver.waitForPageToBeReady();
-			
-		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectProject(projectName).Visible();
+			}
+		}), Input.wait3);
+		getSelectProject(projectName).waitAndClick(3);
+		driver.waitForPageToBeReady();
 
+	}
 
 	public void BckTaskMessageverify(String texttosearch) {
 
@@ -2417,5 +2421,5 @@ public class BaseClass {
 			return null;
 		}
 	}
- 
+
 }
