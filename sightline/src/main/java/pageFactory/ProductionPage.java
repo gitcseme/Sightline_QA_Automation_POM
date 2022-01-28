@@ -4625,6 +4625,8 @@ public class ProductionPage {
 			gettextRedactionPlaceHolder().waitAndClick(10);
 
 			gettextRedactionPlaceHolder().SendKeys(searchString4);
+			
+			base.stepInfo("Enabled burn redaction with selecting redaction tag");
 
 		} catch (Exception e) {
 
@@ -10473,6 +10475,8 @@ public class ProductionPage {
 			base.waitForElement(getAllRedactionsAnnotaionLayer());
 			driver.waitForPageToBeReady();
 			getAllRedactionsAnnotaionLayer().Click();
+			
+			base.stepInfo("Tiff section is enabled with burn redaction with default annatation layer");
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep(
