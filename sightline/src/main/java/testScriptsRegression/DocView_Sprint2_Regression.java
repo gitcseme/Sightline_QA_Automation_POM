@@ -40,9 +40,11 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
+import pageFactory.ProductionPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -2968,7 +2970,7 @@ else {
 	@Test(enabled = true, groups = { "regression" }, priority = 53)
 	public void verifyPersistentHitDisplayInUncompleteDocEditAssign() throws Exception {
 
-		baseClass.stepInfo("Test case Id: RPMXCON-51355");
+		baseClass.stepInfo("Test case Id: RPMXCON-51775");
 		baseClass.stepInfo(
 				"Verify that previously saved Persistent hits should be displayed on the doc view when documents are uncompleted from edit assignment.");
 
@@ -3530,6 +3532,433 @@ else {
 
 		
 	}
+	
+	
+	/**
+	 * Author : Mohan date: 26/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify Persistent KW Groups as well as Saved Searching on doc view.'RPMXCON-51553' 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 58)
+	public void verifyKWGroupAndSavedSeacrhOnDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51553");
+		baseClass.stepInfo(
+				"Verify Persistent KW Groups as well as Saved Searching on doc view");
+		sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		docView = new DocViewPage(driver);
+		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
+		String panelText = "basis)";
+		softAssertion = new SoftAssert();
+		
+		
+		baseClass.stepInfo("Step 2: Search for documents with search term and save the search");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		
+		
+		baseClass.stepInfo("Step 3: From Saved Search select the search and action as Doc View   ");
+		savedSearch.savedSearchToDocView(saveName);
+		
+		
+		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(panelText).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Hit count for the matching keywords is displayed against the keywords on persistent hit panel");
+		
+		loginPage.logout();
+		
+		
+		//login As PA
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Step 2: Search for documents with search term and save the search");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		
+		
+		baseClass.stepInfo("Step 3: From Saved Search select the search and action as Doc View   ");
+		savedSearch.savedSearchToDocView(saveName);
+		
+		
+		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(panelText).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Hit count for the matching keywords is displayed against the keywords on persistent hit panel");
+		
+		loginPage.logout();
+
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo("Step 2: Search for documents with search term and save the search");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+
+		baseClass.stepInfo("Step 3: From Saved Search select the search and action as Doc View   ");
+		savedSearch.savedSearchToDocView(saveName);
+
+		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(panelText).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"Hit count for the matching keywords is displayed against the keywords on persistent hit panel");
+
+		
+	}
+	
+	/**
+	 * Author : Mohan date: 27/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify Search Term highlighting is working for Searchable PDF (with Mapped dataset having RequiredPDFGenartion is TRUE)'RPMXCON-51981' 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 59)
+	public void verifySearchTermHighlightingWorkingForSearchablePDF() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51981");
+		baseClass.stepInfo(
+				"Verify Search Term highlighting is working for Searchable PDF (with Mapped dataset having RequiredPDFGenartion is TRUE)");
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Step 3: Go to Basic/Advanced Search   Search by term   Go to Doc View ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+		baseClass.stepInfo("Step 4: Click on the eye icon to see the persistent hits panel");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		softAssertion.assertTrue(docView.getPersistentPanel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"All search hit terms is displayed on the panel successfully");
+		
+		loginPage.logout();
+		
+		// login As PA
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Step 2: Go to Basic/Advanced Search   Search by term   Go to Doc View ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+		baseClass.stepInfo("Step 3: Click on the eye icon to see the persistent hits panel");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		softAssertion.assertTrue(docView.getPersistentPanel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"All search hit terms is displayed on the panel successfully");
+		
+		loginPage.logout();
+
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+		
+
+		baseClass.stepInfo("Step 2: Go to Basic/Advanced Search   Search by term   Go to Doc View ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+		baseClass.stepInfo("Step 3: Click on the eye icon to see the persistent hits panel");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		softAssertion.assertTrue(docView.getPersistentPanel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"All search hit terms is displayed on the panel successfully");
+		
+		
+	}
+	
+	
+	/**
+	 * Author : Mohan date: 27/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify Keyword highlighting is working for Searchable PDF (with Mapped dataset having RequiredPDFGenartion is TRUE)'RPMXCON-51982' 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 60)
+	public void verifyKeywordHighlightingWorkingForSearchablePDF() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51981");
+		baseClass.stepInfo(
+				"Verify Search Term highlighting is working for Searchable PDF (with Mapped dataset having RequiredPDFGenartion is TRUE)");
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		keywordPage = new KeywordPage(driver);
+		softAssertion = new SoftAssert();
+		String keyword = "to"+ Utility.dynamicNameAppender();
+		String color = "Gold";
+		
+		baseClass.stepInfo("Step 1: Prerequisites: Keyword groups should be created   with different Keywords");
+		
+		keywordPage.addKeywordWithColor(keyword, color);
+		
+		baseClass.stepInfo("Step 2:  Go to Basic/Advanced Search Search by term   Go to Doc View and ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		baseClass.stepInfo("Step 3: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"Keyword is highlighted with specified color in the Doc View successfully");
+		
+		loginPage.logout();
+		
+		// login As PA
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		
+		baseClass.stepInfo("Step 2:  Go to Basic/Advanced Search Search by term   Go to Doc View and ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		baseClass.stepInfo("Step 3: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"Keyword is highlighted with specified color in the Doc View successfully");
+		
+		loginPage.logout();
+		
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+		
+		baseClass.stepInfo("Step 3:  Go to Basic/Advanced Search Search by term   Go to Doc View and ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		baseClass.stepInfo("Step 4: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"Keyword is highlighted with specified color in the Doc View successfully");
+	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 26/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify after impersonation when Highlighting, Persistent Hit
+	 * panel, Reviewer Remarks panel, Redactios menu is selected from doc view and
+	 * views other document from analytics panel previously selected panels/menus
+	 * should remain.'RPMXCON-51356' Sprint: 11
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 61)
+	public void verifyAfterImpersonationAllMenusInDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51356");
+		baseClass.stepInfo(
+				"Verify after impersonation when Highlighting, Persistent Hit panel, Reviewer Remarks panel, Redactios menu is selected from doc view and views other document from analytics panel previously selected panels/menus should remain.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		docView.performDisplayIconReviewerHighlightingMenus();
+		loginPage.logout();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Assisent with " + Input.sa1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		docView.performDisplayIconReviewerHighlightingMenus();
+		loginPage.logout();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Assisent with " + Input.sa1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating SA to Reviewer");
+		baseClass.impersonateSAtoReviewer();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		docView.performDisplayIconReviewerHighlightingMenus();
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		docView.performDisplayIconReviewerHighlightingMenus();
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as project Assisent with " + Input.pa1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		docView.performDisplayIconReviewerHighlightingMenus();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 26/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify waning message is prompted to the user after
+	 * impersonation when user navigates away from the page without saving action
+	 * from doc view.'RPMXCON-50923' Sprint: 11
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 62)
+	public void verifyAfterImpersonationNavigatePageSavingFromDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50923");
+		baseClass.stepInfo(
+				"Verify waning message is prompted to the user after impersonation when user navigates away from the page without saving action from doc view.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		loginPage.logout();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Assisent with " + Input.sa1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignThreadedDocs();
+		baseClass.stepInfo("Search with text input for docs completed");
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.add3ReviewerAndDistribute();
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click code Same As");
+		docView.selectDocsFromThreadMapTabAndActionCodeSame();
+		docView.performConfirmNavigationDisplay();
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click code Same As");
+		docView.selectDocsFromThreadMapTabAndActionCodeSame();
+		docView.performConfirmNavigationDisplay();
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click code Same As");
+		docView.selectDocsFromThreadMapTabAndActionCodeSame();
+		docView.performConfirmNavigationDisplay();
+		loginPage.logout();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click code Same As");
+		docView.performCodeSameForFamilyMembersDocuments();
+		docView.performConfirmNavigationDisplay();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

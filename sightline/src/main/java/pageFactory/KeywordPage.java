@@ -230,4 +230,36 @@ public class KeywordPage {
        	getExitFullScreen();
         	
        }
+       
+       /**
+      	 * @author Arunkumar
+           * @throws AWTException 
+      	 * @Description: Method for adding two same keywords with different color
+      	 */
+    
+         public void addTwoSameKeywordWithDifferentColor(String[] keywordGroupName,String keywordName,String[] color) throws AWTException {
+      	driver.getWebDriver().get(Input.url+"Keywords/Keywords");
+      	for(int i=0;i<=1;i++) {
+      		driver.waitForPageToBeReady();
+          	base.waitForElement(getNewKeywordButton());
+             	getNewKeywordButton().waitAndClick(5);
+             	base.waitForElement(getKeywordName());
+             	getKeywordName().SendKeys(keywordGroupName[i]);
+             	base.waitForElement(getDescription());
+             	getDescription().SendKeys(keywordName);
+             	base.waitForElement(getKeywords());
+             	getKeywords().SendKeys(keywordName);
+             	getSelectColor().selectFromDropdown().selectByVisibleText(color[i]);
+             	getIntoFullScreen();
+             	base.waitForElement(getSaveBtn());
+             	getSaveBtn().waitAndClick(5);
+             	base.waitForElement(getYesButton());
+             	getYesButton().waitAndClick(5);
+             	getExitFullScreen();
+             	base.VerifySuccessMessage("Keyword Highlighting Group added successfully");
+              base.CloseSuccessMsgpopup();
+      		
+      	}
+   }
+	
  }

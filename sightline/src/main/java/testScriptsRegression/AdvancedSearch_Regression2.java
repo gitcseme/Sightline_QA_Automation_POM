@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -18,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.CustomDocumentDataReport;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.RedactionPage;
@@ -910,6 +913,90 @@ public class AdvancedSearch_Regression2 {
 		softAssertion.assertAll();
 		baseClass.passedStep("Sucessfully Verified that result appears for phrase(in double quote) search in Advanced Search Query Screen.");
 		}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	@Test(dataProvider = "Export", groups = { "regression" }, priority = 22,enabled=true)
+	public void verifyExportAction(String username, String password,boolean saerch) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-46876");
+		baseClass.stepInfo("Verify that Bulk Export Data Action is working properly on Advanced Search result Screen");
+		loginPage.loginToSightLine( username,  password);
+	
+		if(saerch) {
+		search.advancedContentSearch(Input.testData1);
+		baseClass.stepInfo("Logged in as "+username+"Verify Export option for advanced  search");
+		}
+		else{
+			search.basicContentSearch(Input.testData1);
+			baseClass.stepInfo("Logged in as "+username+"Verify Export option for basic  search");
+		}
+		driver.waitForPageToBeReady();
+		search.exportData();
+		driver.waitForPageToBeReady();
+		String[] metaDataFields1 = { "CustodianName", "DocFileName", "AttachCount" };
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+		cddr.selectMetaDataFields(metaDataFields1);
+		String Filename2=cddr.runReportandVerifyFileDownloaded();
+		System.out.println(Filename2);
+		String value = cddr.csvfileVerification("", Filename2);
+		String[] strArray = value.split(",");
+		List<String> slectdFieldList_excel = Arrays.asList(strArray);
+		List<String> slectdFieldList = Arrays.asList(metaDataFields1);	
+		for (int i = 0; i < slectdFieldList_excel.size(); i++) {
+			String temp = slectdFieldList_excel.get(i).replaceAll("\"", "");
+			slectdFieldList_excel.set(i, temp);
+			slectdFieldList_excel.get(i).trim();
+			System.out.println(slectdFieldList_excel.get(i));
+		}
+		if (slectdFieldList.containsAll(slectdFieldList_excel)) {
+			baseClass.passedStep("Sucessfully Verified that Bulk Export Data Action is working properly on Advanced Search result Screen");
+		} else {
+			baseClass.failedStep("Exported Data is not  reflected in excel file.");
+		}
+		}
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	@Test(dataProvider = "Users", groups = { "regression" }, priority = 22,enabled=true)
+	public void verifyWarningDForDoubleQuote(String username, String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-57290");
+		baseClass.stepInfo("Verify that belly band message appears when user tries to run search having "
+				+ "left double quote only in Advanced Search Query Screen.");
+		loginPage.loginToSightLine( username,  password);
+		baseClass.stepInfo("Logged in as "+username);
+		String eleValue[]= {"iterative methodology”","iterative methodology”","“stock investment~5"};
+		driver.scrollingToBottomofAPage();
+		for(int i=0;i<eleValue.length;i++) {
+		search.AdvContentSearchWithoutPopHandling(eleValue[i]);
+		baseClass.stepInfo("Entered a search string with left double quote "+eleValue[i]);
+		driver.waitForPageToBeReady();
+		search.verifyProximitySearch();
+		// Click on Search button
+		baseClass.waitForElement(search.getQuerySearchButton());
+		search.getQuerySearchButton().waitAndClick(10);
+		search.verifyProximitySearch();
+		if(i!=2) {
+			baseClass.selectproject();
+		}
+		baseClass.passedStep("Sucessfully Verified that belly band message appears when user tries to run search having "
+				+ "left double quote only in Advanced Search Query Screen.");
+		}
+		
+		}
+	
+	@DataProvider(name = "Export")
+	public Object[][] Export() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, true },
+				{ Input.rmu1userName, Input.rmu1password, true },
+				{ Input.rev1userName, Input.rev1password, true },
+				{ Input.pa1userName, Input.pa1password, false },
+				{ Input.rmu1userName, Input.rmu1password, false },
+				{ Input.rev1userName, Input.rev1password, false }
+				};
+		return users;
+	}
+
 
 	@DataProvider(name = "AudioSearchwithUsers")
 	public Object[][] AudioSearchwithUsers() {

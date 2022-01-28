@@ -9402,10 +9402,74 @@ public class DocView_CodingForm_Regression {
 			baseClass.failedStep("Doc not completed");
 		}
 		softAssertion.assertAll();
+    	// logout
+		loginPage.logout();
+	}
 
+  /*
+	 * @Author : Baskar date:28/01/22 Modified date: NA Modified by: Baskar
+	 * @Description : To verify that user can edit the custom coding form, 
+	 *                and mark the document as 'Save'.
+	 */
+
+	@Test(enabled = true , dataProvider = "rmuRevRmuLogin", groups = { "regression" }, priority = 203)
+	public void validateCustomCodingFormUsingSave(String roll, String userName, String password)
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50981");
+		baseClass.stepInfo(
+				"To verify that user can edit the custom coding form, and mark the document as 'Save'.");
+
+		codingForm = new CodingForm(driver);
+		sessionSearch = new SessionSearch(driver);
+		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
+		docViewPage = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String cf = "customCf" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		if (roll == "rmu") {
+			// Creating Coding Form
+			codingForm.commentRequired(cf);
+			// Assign to security group
+			codingForm.assignCodingFormToSG(cf);
+			System.out.println(cf);
+			baseClass.stepInfo("Coding form assigned to security group");
+			baseClass.stepInfo("Customized coding form created successfully");
+		}
+		if (roll == "rmu"||roll == "rev") {
+		// Session search to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("User landed on the docview page");
+
+		// validation customized coding form
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocument_CommentsTextBox());
+		docViewPage.getDocument_CommentsTextBox().SendKeys(comment);
+		docViewPage.codingFormSaveButton();
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.stepInfo("Performing action in Child window");
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		String parent=docViewPage.switchTochildWindow();
+		baseClass.waitForElement(docViewPage.getDocument_CommentsTextBox());
+		docViewPage.getDocument_CommentsTextBox().SendKeys(comment);
+		docViewPage.codingFormSaveButton();
+		docViewPage.childWindowToParentWindowSwitching(parent);
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		}
+		if (roll=="assgnCf") {
+			codingForm.assignCodingFormToSG(Input.codingFormName);
+    }
+    
 		// logout
 		loginPage.logout();
 	}
+			
 	
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {
@@ -9453,6 +9517,14 @@ public class DocView_CodingForm_Regression {
 				{ "da", Input.da1userName, Input.da1password, "rev" },
 				{ "pa", Input.pa1userName, Input.pa1password, "rmu" },
 				{ "pa", Input.pa1userName, Input.pa1password, "rev" } };
+	}
+	
+	@DataProvider(name = "rmuRevRmuLogin")
+	public Object[][] userRmuRevRmu() {
+		return new Object[][] { 
+				{ "rmu", Input.rmu1userName, Input.rmu1password },
+				{ "rev", Input.rev1userName, Input.rev1password },
+				{ "assgnCf", Input.rmu1userName, Input.rmu1password }};
 	}
 
 	@AfterMethod(alwaysRun = true)

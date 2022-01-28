@@ -163,6 +163,7 @@ public class TestData {
 	public String docNearDupeDocId;
 	public String UniCodeDocId;
 	public String TiffDocId;
+	public String IconOriginalColour;
 	
 	//Added by arunkumar
 	public String pageRange1;
@@ -170,6 +171,7 @@ public class TestData {
 	public String pageRange3;
 	public String pageRange4;
 	public String searchPhraseWithQuote;
+	public String keywordColor1;
 	
 
 	// Added by Raghuram - Last Modified 01/28/21 
@@ -357,7 +359,9 @@ public class TestData {
 
 		//added by Brundha
 		
-		public String documentId; 
+		public String documentId;
+		public String telecaSearchString;
+		public String docFile;
 		
 		//Added by gopinath - 08/12/2021
 		public String anotherRemarkMessage;

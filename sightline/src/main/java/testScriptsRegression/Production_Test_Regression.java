@@ -3166,7 +3166,6 @@ public class Production_Test_Regression {
 					page.selectingDefaultSecurityGroup();
 					page.addANewProduction(productionname);
 					page.fillingDATSection();
-					//page.fillingTIFFSectionwithBurnRedaction();
 					page.navigateToNextSection();
 					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 					page.navigateToNextSection();
@@ -3189,8 +3188,10 @@ public class Production_Test_Regression {
 					page.getGridView().waitAndClick(10);
 					driver.waitForPageToBeReady();
 					base.stepInfo("Nativated to production Grid View");
-					String startDate =page.getProductionStartDateInGridView(productionname).getText();
-					String EndDate =page.getProductionEndDateInGridView(productionname).getText();
+					int startDateIndex =base.getIndex(page.getGridWebTableHeader(), "START DATE");
+					int endDateIndex =base.getIndex(page.getGridWebTableHeader(), "END DATE");
+					String startDate =page.getGridProdValues(productionname, startDateIndex).getText();
+					String EndDate =page.getGridProdValues(productionname, endDateIndex).getText();
 					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 					Date date = new Date();
 					String date1= dateFormat.format(date);
@@ -3219,7 +3220,367 @@ public class Production_Test_Regression {
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 					}
-	
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-56078
+					 * @Description: Verify that Production should export Native with  the Text file in selected format if Text is not ingested
+					 */
+					@Test(groups = { "regression" }, priority = 54)
+					public void verifyTextFileWithSelectedFormat() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-56078 -Production Sprint 11");
+					base.stepInfo("Verify that Production should export Native with  the Text file in selected format if Text is not ingested");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					//tagname = "Tag" + Utility.dynamicNameAppender();
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					//tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					//sessionSearch.bulkTagExisting(tagname);
+
+					//Verify archive status on Grid view
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(2);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSection();
+					page.fillingTextSectionWithTextFormat("ANSI Arabic; Arabic (Windows)");
+					page.navigateToNextSection();
+					page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+					base.passedStep("Verified that Production should export Native with  the Text file in selected format if Text is not ingested");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-47889
+					 * @Description: To Verify Generate Section for Production Name and Status.
+					 */
+					@Test(groups = { "regression" }, priority = 55)
+					public void verifyProdNameAndSatatus() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-47889 -Production Sprint 11");
+					base.stepInfo("To Verify Generate Section for Production Name and Status.");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					sessionSearch.bulkTagExisting(tagname);
+
+					//Verify archive status on Grid view
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(2);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingTIFFSection(tagname);
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					driver.waitForPageToBeReady();
+					String prodName = page.getProductionNameInGenPage().getText().trim();
+					if(prodName.equals(productionname)) {
+						base.passedStep("Production name is displayed on genaration tab");
+						System.out.println("name displayed");
+					}else {
+						base.failedStep("Production name is not displayed on genaration tab");
+						System.out.println("name not displayed");
+					}
+					page.verifyProductionStatusInGenPage("Draft");
+					base.stepInfo("Status is in Draft by default");
+					base.passedStep("Verified Generate Section for Production Name and Status.");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-49968
+					 * @Description: Verify that Production should generated with redaction text if user selects the annotation layer
+					 */
+					@Test(groups = { "regression" }, priority = 56)
+					public void verifyProductionRedactionTextWithAnnotation() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-49968 -Production Sprint 11");
+					base.stepInfo("Verify that Production should generated with redaction text if user selects the annotation layer");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					//tagname = "Tag" + Utility.dynamicNameAppender();
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					//tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					//sessionSearch.bulkTagExisting(tagname);
+
+					//Verify archive status on Grid view
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(2);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingPDFSectionwithBurnRedaction();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					base.passedStep("Verify that Production should generated with redaction text if user selects the annotation layer");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+					 *         No:RPMXCON-49728
+					 * @Description: Verify that branding is applied on all pages for redacted image based documents
+					 */
+					@Test(groups = { "regression" }, priority = 57)
+					public void verifyBrandingRedactedImage() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-49728 -Production Sprint 11");
+					base.stepInfo("Verify that branding is applied on all pages for redacted image based documents");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					sessionSearch.bulkTagExisting(tagname);
+
+					//Verify archive status on Grid view
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(2);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.getTiffPdfBranding(tagname,null);
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					
+					page = new ProductionPage(driver);
+					beginningBates = page.getRandomNumber(2);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.getTiffPdfBranding(tagname,"pdf");
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					base.passedStep("Verify that branding is applied on all pages for redacted image based documents");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					}
+					/**
+					 * @author Aathith.Senthilkumar
+					 * 			RPMXCON-49057
+					 * @Description In Productions, text was produced with redaction burned, when Burn Redactions option was enabled
+					 * 
+					 */
+				@Test(groups = { "regression" }, priority = 58)
+				public void verifyBurnRedactionIsEnabled() throws Exception {
+						loginPage.logout();
+						loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+						UtilityLog.info(Input.prodPath);
+						base.stepInfo("RPMXCON-49057 -Production Sprint 11");
+						base.stepInfo("In Productions, text was produced with redaction burned, when Burn Redactions option was enabled");
+						
+						foldername = "RedactFolderProd" + Utility.dynamicNameAppender();
+						tagname = "Tag" + Utility.dynamicNameAppender();
+						String Redactiontag1;
+						Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+						
+						RedactionPage redactionpage=new RedactionPage(driver);
+
+				        driver.waitForPageToBeReady();
+				        redactionpage.manageRedactionTagsPage(Redactiontag1);
+				        System.out.println("First Redaction Tag is created"+Redactiontag1);
+				        
+				        DocExplorerPage docExp=new DocExplorerPage(driver);
+			     		docExp.documentSelectionIteration();
+			     		docExp.docExpViewInDocView();
+			     		  
+			     		DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+			     		//doc1
+			     		 docViewRedactions.selectDoc1();
+			     		 docViewRedactions.selectDoc2();
+			     		docViewRedactions.selectDoc3();
+
+			            driver.waitForPageToBeReady();
+			             docViewRedactions.redactRectangleUsingOffset(10,10,100,100);
+			             driver.waitForPageToBeReady();
+			             docViewRedactions.selectingRedactionTag2(Redactiontag1);
+			             
+
+						// Pre-requisites
+						// create tag and folder
+						TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						tagsAndFolderPage.CreateFolderInRMU(foldername);
+
+						 //Adding folder to bulkfolder
+			            DocExplorerPage docExplorer=new DocExplorerPage(driver);
+			            docExplorer.documentSelectionIteration();
+			            docExplorer.bulkFolderExisting(foldername);
+						
+
+						//Verify 
+						ProductionPage page = new ProductionPage(driver);
+						productionname = "p" + Utility.dynamicNameAppender();
+						String beginningBates = page.getRandomNumber(2);
+						page.selectingDefaultSecurityGroup();
+						page.addANewProduction(productionname);
+						page.fillingDATSection();
+						page.fillingNativeSection();
+						page.fillingTIFFFSectionWithRedactionTags(Redactiontag1);
+						page.fillingTextSection();
+						page.navigateToNextSection();
+						page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+						page.navigateToNextSection();
+						page.fillingDocumentSelectionPage(foldername);
+						page.navigateToNextSection();
+						page.fillingPrivGuardPage();
+						page.fillingProductionLocationPage(productionname);
+						page.navigateToNextSection();
+						page.fillingSummaryAndPreview();
+						page.fillingGeneratePageWithContinueGenerationPopup();
+						base.passedStep("In Productions, text was produced with redaction burned, when Burn Redactions option was enabled");
+						
+						//delete tags and folders
+						tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+					}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-48816
+				 * @Description: Verify that redaction text displays on generated Tiff/PDF for orphan redactions documents, if user selects the option as 'All redactions in annotation layer' for Burn Redactions
+				 */
+				@Test(groups = { "regression" }, priority = 59)
+				public void verifyProductionRedactionTextWithAnnotationLayer() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48816 -Production Sprint 11");
+				base.stepInfo("Verify that redaction text displays on generated Tiff/PDF for orphan redactions documents, if user selects the option as 'All redactions in annotation layer' for Burn Redactions");
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				//tagname = "Tag" + Utility.dynamicNameAppender();
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				//tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.orphanDocument);
+				sessionSearch.bulkFolderExisting(foldername);
+				//sessionSearch.bulkTagExisting(tagname);
+
+				//Verify archive status on Grid view
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSectionwithBurnRedaction();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				base.passedStep("Verified that redaction text displays on generated Tiff/PDF for orphan redactions documents, if user selects the option as 'All redactions in annotation layer' for Burn Redactions");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				}
+				
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

@@ -1964,6 +1964,122 @@ public class BatchRedactionRegression3 {
 		login.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : [Covered localization]Verify that informative message /error
+	 *              message should be displayed on batch redactions page when
+	 *              annotation layer, redaction tag is not mapped to the security
+	 *              group [RPMXCON-53335]
+	 * @param searchTerm
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	public void verifyingInformativeErrorMessageInBothLanguage() throws Exception {
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		String securityGroupName = "securityGroup" + Utility.dynamicNameAppender();
+		UserManagement user = new UserManagement(driver);
+		base.stepInfo("Test case Id:RPMXCON-53335");
+		base.stepInfo(
+				"[Covered localization]Verify that informative message /error message should be displayed on batch redactions page when annotation layer, redaction tag is not mapped to the security group");
+
+		// Login as a PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroupName);
+
+		// assigning the security group to user
+		user.assignAccessToSecurityGroups(securityGroupName, Input.rmu1userName);
+
+		login.logout();
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// selecting the assigned security group
+		base.selectsecuritygroup(securityGroupName);
+
+		// verifying the Informative/Error message
+		batch.verifyInformativeErrorMessage();
+
+		// chaning the language into German
+		login.editProfile("German - Germany");
+		base.stepInfo("Successfully selected German Language");
+
+		batch.verifyInformativeErrorMessage();
+
+		// Edit Profile Language to English.
+		login.editProfile("English - United States");
+		base.selectsecuritygroup(Input.securityGroup);
+
+		login.logout();
+
+		// Login as a PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// deleting the security group
+		security.deleteSecurityGroups(securityGroupName);
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Dsecription : Verify Batch Redaction navigation should work if there are
+	 *              multiple batch redactions that are numeric [RPMXCON-53502]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	public void verifyRedactionNavigationIconAndDeleteIcon1() throws Exception {
+		String searchName = "Search Name" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+		String searchTerm = Integer.toString(Input.metaDataCNcount);
+
+		base.stepInfo("Test case Id:RPMXCON-53502");
+		base.stepInfo(
+				"Verify Batch Redaction navigation should work if there are multiple batch redactions that are numeric");
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Create saved search
+		session.basicContentSearch(searchTerm);
+		session.saveSearch(searchName);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
+
+		// verify History status
+		batch.verifyBatchHistoryStatus(searchName);
+
+		// selecting saved search for docView
+		saveSearch.savedSearchToDocView(searchName);
+
+		// verifying redaction panel
+		docview.verifyPanel();
+
+		// getting the Batch Redaction total count
+		Element batchRedactCount = docview.getDocView_BatchRedactionCount();
+		int batchRedactionCount = docview.getRedactionCount(batchRedactCount, "Batch Redaction");
+
+		// navigating through Batch Redaction
+		Element batchRedact = docview.BatchredactionForwardNavigate();
+		Element batchRedactCOunt = docview.getDocView_BatchRedactionCount();
+		docview.navigateToRedaction(batchRedactionCount, batchRedact, batchRedactCOunt, true, false);
+
+		// delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);

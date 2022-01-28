@@ -1,6 +1,7 @@
 package pageFactory;
 
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -221,6 +222,11 @@ public class BaseClass {
 		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='Default Security Group']");
 	}
 
+	// Added by Jeevitha
+	public Element getWarningMsgHeader() {
+		return driver.FindElementByXPath("//span[text()='Warning !']");
+	}
+
 	public BaseClass(Driver driver) {
 
 		this.driver = driver;
@@ -421,31 +427,30 @@ public class BaseClass {
 		UtilityLog.info("Project is successfully selected");
 
 	}
-	
+
 	/**
-	* Over load the above method to get the project name as input parameter
-	*/
-		public void selectproject(String projectName) {
-			driver.scrollPageToTop();
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getProjectNames().Visible();
-				}
-			}), Input.wait3);
-			driver.scrollPageToTop();
-			// Select project if required one is not seletced
-			getProjectNames().waitAndClick(3);
+	 * Over load the above method to get the project name as input parameter
+	 */
+	public void selectproject(String projectName) {
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProjectNames().Visible();
+			}
+		}), Input.wait3);
+		driver.scrollPageToTop();
+		// Select project if required one is not seletced
+		getProjectNames().waitAndClick(3);
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSelectProject(projectName).Visible();
-				}
-			}), Input.wait3);
-			getSelectProject(projectName).waitAndClick(3);
-			driver.waitForPageToBeReady();
-			
-		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectProject(projectName).Visible();
+			}
+		}), Input.wait3);
+		getSelectProject(projectName).waitAndClick(3);
+		driver.waitForPageToBeReady();
 
+	}
 
 	public void BckTaskMessageverify(String texttosearch) {
 
@@ -2417,5 +2422,54 @@ public class BaseClass {
 			return null;
 		}
 	}
- 
+	/**
+	 * @author @Brundha
+	 *@Description:Method to verify data in excel file
+	 * 
+	 */
+	public void csvFileVerification() throws IOException, InterruptedException {
+		driver.waitForPageToBeReady();
+		String fileName=GetFileName();
+		List<String> lines = new ArrayList<>();
+		String line = null;
+		String[] headerToVerify = { "DocID", "Beg Bates", "End Bates" };
+		FileReader file = null;
+		file = new FileReader(fileName);
+		BufferedReader br = new BufferedReader(file);
+		while ((line = br.readLine()) != null) {
+		lines.add(line);
+		}
+		String value = lines.get(0);
+		System.out.println(value);
+		String[] arrOfStr = value.split(",");
+		for (int i = 0; i < headerToVerify.length; i++) {
+	    textCompareEquals(arrOfStr[i], headerToVerify[i], "Data is Present as Expected: " + arrOfStr[i],
+		"Data is not Present as Expected : " + arrOfStr[i]);
+	}
+}
+	
+	
+	
+	/**
+	 * @author @Brundha
+	 *@Description:Method to get the file name
+	 * 
+	 */
+	public String GetFileName() {
+			File ab = new File(Input.fileDownloadLocation);
+			String testPath = ab.toString() + "\\";
+			File a = getLatestFilefromDir(testPath);
+			if (a != null) {
+				stepInfo("last modified file found id " + a.getName());
+				String fileName = a.getName();
+				fileName = testPath + fileName;
+				System.out.println(fileName);
+				return fileName;
+			} else {
+				stepInfo("No files found in the given directory");
+				return null;
+			}
+		
+
+	}
 }
