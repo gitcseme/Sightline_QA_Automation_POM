@@ -3449,7 +3449,138 @@ public class Production_Test_Regression {
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 					}
-					
+					/**
+					 * @author Aathith.Senthilkumar
+					 * 			RPMXCON-49057
+					 * @Description In Productions, text was produced with redaction burned, when Burn Redactions option was enabled
+					 * 
+					 */
+				@Test(groups = { "regression" }, priority = 58)
+				public void verifyBurnRedactionIsEnabled() throws Exception {
+						loginPage.logout();
+						loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+						UtilityLog.info(Input.prodPath);
+						base.stepInfo("RPMXCON-49057 -Production Sprint 11");
+						base.stepInfo("In Productions, text was produced with redaction burned, when Burn Redactions option was enabled");
+						
+						foldername = "RedactFolderProd" + Utility.dynamicNameAppender();
+						tagname = "Tag" + Utility.dynamicNameAppender();
+						String Redactiontag1;
+						Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+						
+						RedactionPage redactionpage=new RedactionPage(driver);
+
+				        driver.waitForPageToBeReady();
+				        redactionpage.manageRedactionTagsPage(Redactiontag1);
+				        System.out.println("First Redaction Tag is created"+Redactiontag1);
+				        
+				        DocExplorerPage docExp=new DocExplorerPage(driver);
+			     		docExp.documentSelectionIteration();
+			     		docExp.docExpViewInDocView();
+			     		  
+			     		DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+			     		//doc1
+			     		 docViewRedactions.selectDoc1();
+			     		 docViewRedactions.selectDoc2();
+			     		docViewRedactions.selectDoc3();
+
+			            driver.waitForPageToBeReady();
+			             docViewRedactions.redactRectangleUsingOffset(10,10,100,100);
+			             driver.waitForPageToBeReady();
+			             docViewRedactions.selectingRedactionTag2(Redactiontag1);
+			             
+
+						// Pre-requisites
+						// create tag and folder
+						TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						tagsAndFolderPage.CreateFolderInRMU(foldername);
+
+						 //Adding folder to bulkfolder
+			            DocExplorerPage docExplorer=new DocExplorerPage(driver);
+			            docExplorer.documentSelectionIteration();
+			            docExplorer.bulkFolderExisting(foldername);
+						
+
+						//Verify 
+						ProductionPage page = new ProductionPage(driver);
+						productionname = "p" + Utility.dynamicNameAppender();
+						String beginningBates = page.getRandomNumber(2);
+						page.selectingDefaultSecurityGroup();
+						page.addANewProduction(productionname);
+						page.fillingDATSection();
+						page.fillingNativeSection();
+						page.fillingTIFFFSectionWithRedactionTags(Redactiontag1);
+						page.fillingTextSection();
+						page.navigateToNextSection();
+						page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+						page.navigateToNextSection();
+						page.fillingDocumentSelectionPage(foldername);
+						page.navigateToNextSection();
+						page.fillingPrivGuardPage();
+						page.fillingProductionLocationPage(productionname);
+						page.navigateToNextSection();
+						page.fillingSummaryAndPreview();
+						page.fillingGeneratePageWithContinueGenerationPopup();
+						base.passedStep("In Productions, text was produced with redaction burned, when Burn Redactions option was enabled");
+						
+						//delete tags and folders
+						tagsAndFolderPage = new TagsAndFoldersPage(driver);
+						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+						tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+					}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-48816
+				 * @Description: Verify that redaction text displays on generated Tiff/PDF for orphan redactions documents, if user selects the option as 'All redactions in annotation layer' for Burn Redactions
+				 */
+				@Test(groups = { "regression" }, priority = 59)
+				public void verifyProductionRedactionTextWithAnnotationLayer() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48816 -Production Sprint 11");
+				base.stepInfo("Verify that redaction text displays on generated Tiff/PDF for orphan redactions documents, if user selects the option as 'All redactions in annotation layer' for Burn Redactions");
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				//tagname = "Tag" + Utility.dynamicNameAppender();
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				//tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.orphanDocument);
+				sessionSearch.bulkFolderExisting(foldername);
+				//sessionSearch.bulkTagExisting(tagname);
+
+				//Verify archive status on Grid view
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSectionwithBurnRedaction();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				base.passedStep("Verified that redaction text displays on generated Tiff/PDF for orphan redactions documents, if user selects the option as 'All redactions in annotation layer' for Burn Redactions");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				}
+				
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
