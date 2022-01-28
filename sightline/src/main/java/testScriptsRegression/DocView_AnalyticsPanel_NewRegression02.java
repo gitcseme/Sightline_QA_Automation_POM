@@ -1105,6 +1105,98 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		loginPage.logout();
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 25/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify Sys Admin/Domain Admin/Project Admin after
+	 * impersonating to RMU should be able to see all the conceptually similar
+	 * documents in the analytics panel of the main selected document in the Doc
+	 * view. 'RPMXCON-50829' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	public void verifyAfterImpersonatingSelectDocsViewConceptualSimilarTab() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50829");
+		baseClass.stepInfo(
+				"To verify Sys Admin/Domain Admin/Project Admin after impersonating to RMU should be able to see all the conceptually similar documents in the analytics panel of the main selected document in the Doc view.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		loginPage = new LoginPage(driver);
+
+		// Login as SA
+		baseClass.stepInfo("Step 1: Login As SA");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Admin with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Step 2: Impersonate From SA to RMU");
+		baseClass.impersonateSAtoRMU();
+
+		baseClass.stepInfo("Step 3: Basic Search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewConceptualDocsInDocViews();
+
+		baseClass.stepInfo("Step 3:Verify 'Conceptually Similar Documents' tab in the analytics panel");
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ConceptualWholeTabel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("RMU is be able to see all the conceptually similar documents in the analytics panel of the main selected document in the Doc view");
+
+		loginPage.logout();
+
+		// Login as PA
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Admin with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Step 2: Impersonate From SA to RMU");
+		baseClass.impersonateSAtoRMU();
+
+		baseClass.stepInfo("Step 3: Basic Search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewConceptualDocsInDocViews();
+
+		baseClass.stepInfo("Step 3:Verify 'Conceptually Similar Documents' tab in the analytics panel");
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ConceptualWholeTabel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("RMU is be able to see all the conceptually similar documents in the analytics panel of the main selected document in the Doc view");
+		
+		loginPage.logout();
+
+		 //Login as DA
+		baseClass.stepInfo("Step 1: Login As DA");
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Domain Admin with " + Input.da1userName + "");
+
+		baseClass.stepInfo("Step 2: Impersonate From DA to RMU");
+		baseClass.impersonateDAtoRMU();
+
+		baseClass.stepInfo("Step 3: Basic Search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewConceptualDocsInDocViews();
+
+		baseClass.stepInfo("Step 3:Verify 'Conceptually Similar Documents' tab in the analytics panel");
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ConceptualWholeTabel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("RMU is be able to see all the conceptually similar documents in the analytics panel of the main selected document in the Doc view");
+		
+		loginPage.logout();
+
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)
