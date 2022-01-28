@@ -2850,12 +2850,12 @@ public class Production_Page_Regression {
 
 		page.prodGenerationInProgressStatus();
 		driver.waitForPageToBeReady();
-		
+
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		baseClass.stepInfo("In progress productions are filtered and In progress production from homepage is selected");
 		page.getQC_backbutton().waitAndClick(10);
-		for(int i=0;i<4;i++) {
-		page.getBckBtn().waitAndClick(10);
+		for (int i = 0; i < 4; i++) {
+			page.getBckBtn().waitAndClick(10);
 		}
 		driver.waitForPageToBeReady();
 		page.getMarkIncompleteButton().waitAndClick(10);
@@ -2877,13 +2877,15 @@ public class Production_Page_Regression {
 
 	/**
 	 * @author Sowndarya.Velraj created on:01/25/22 TESTCASE No:RPMXCON-48572
-	 * @Description:To verify that the pre-gen checks continue to show through out the next steps of the production.
+	 * @Description:To verify that the pre-gen checks continue to show through out
+	 *                 the next steps of the production.
 	 */
 	@Test(enabled = false, groups = { " regression" }, priority = 54)
 	public void verifyBatesRangeAfterProduction() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48572- Production Sprint 11");
-		baseClass.stepInfo("To verify that the pre-gen checks continue to show through out the next steps of the production.");
+		baseClass.stepInfo(
+				"To verify that the pre-gen checks continue to show through out the next steps of the production.");
 		UtilityLog.info(Input.prodPath);
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
@@ -2920,7 +2922,7 @@ public class Production_Page_Regression {
 		driver.waitForPageToBeReady();
 		page.getProd_BatesRange().isDisplayed();
 		baseClass.passedStep("Bates Range is displayed in generate page");
-		
+
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
@@ -2929,7 +2931,8 @@ public class Production_Page_Regression {
 
 	/**
 	 * @author Sowndarya.Velraj created on:01/27/22 TESTCASE No:RPMXCON-47897
-	 * @Description:To Verify Document Selection Section on the self production wizard For Folder
+	 * @Description:To Verify Document Selection Section on the self production
+	 *                 wizard For Folder
 	 */
 	@Test(enabled = true, groups = { " regression" }, priority = 55)
 	public void verifyDocumentSelectionWithFolder() throws Exception {
@@ -2945,7 +2948,7 @@ public class Production_Page_Regression {
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		
+
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -2963,22 +2966,25 @@ public class Production_Page_Regression {
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
-		
-		if(page.getDocumentSelectionLink().isDisplayed()) {
-			baseClass.passedStep("Total Documents selected is displayed correctly on the self production wizard For Folder");
+
+		if (page.getDocumentSelectionLink().isDisplayed()) {
+			baseClass.passedStep(
+					"Total Documents selected is displayed correctly on the self production wizard For Folder");
 		}
-		
+
 		else {
-			baseClass.failedMessage("Total Documents selected is not displayed on the self production wizard For Folder");
+			baseClass.failedMessage(
+					"Total Documents selected is not displayed on the self production wizard For Folder");
 		}
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:01/27/22 TESTCASE No:RPMXCON-47892
-	 * @Description:To Verify numbering and sorting Section on the self production wizard for Numbering
+	 * @Description:To Verify numbering and sorting Section on the self production
+	 *                 wizard for Numbering
 	 */
 	@Test(enabled = true, groups = { " regression" }, priority = 56)
 	public void verifyNumberingAndSorting() throws Exception {
@@ -2995,62 +3001,113 @@ public class Production_Page_Regression {
 		page.fillingDATSection();
 		page.navigateToNextSection();
 		driver.waitForPageToBeReady();
-		
-		if(page.pageRadioButton().Selected()) {
+
+		if (page.pageRadioButton().Selected()) {
 			baseClass.passedStep("Page Radio button is selected by default");
-		}
-		else {
+		} else {
 			baseClass.failedMessage("Page Radio button is not selected by default");
 		}
 		page.getNumbering_Document_RadioButton().waitAndClick(10);
-		
-		if(page.getBeginningSubBatesNumber().GetAttribute("value").contains("1"))
-		{
+
+		if (page.getBeginningSubBatesNumber().GetAttribute("value").contains("1")) {
 			baseClass.passedStep("Beginning bates number is 1 by default");
-		}
-		else {
+		} else {
 			baseClass.failedMessage("Beginning bates number is not 1 by default");
-		}		
-		if(page.getBeginningSubBatesNumber().GetAttribute("value").contains("5"))
-		{
-			baseClass.passedStep("Minimum length number is 5 by default");
 		}
-		else {
+		if (page.getBeginningSubBatesNumber().GetAttribute("value").contains("5")) {
+			baseClass.passedStep("Minimum length number is 5 by default");
+		} else {
 			baseClass.failedMessage("Minimum length number is not 5 by default");
-		}		
-		
+		}
+
 		page.pageRadioButton().ScrollTo();
 		page.pageRadioButton().waitAndClick(10);
-		
-		if(page.specifyBatesNumbering().Selected()) {
+
+		if (page.specifyBatesNumbering().Selected()) {
 			baseClass.passedStep("specify bates numbering is selected by default");
-		}
-		else {
+		} else {
 			baseClass.failedMessage("specify bates numbering is not selected  by default");
-		}	
-		
-		if(page.beginningBatesInFormat().GetAttribute("value").contains("0")) {
-			baseClass.passedStep("Beginning bates is 0 by default");
 		}
-		else {
+
+		if (page.beginningBatesInFormat().GetAttribute("value").contains("0")) {
+			baseClass.passedStep("Beginning bates is 0 by default");
+		} else {
 			baseClass.failedMessage("Beginning bates is not 0 by default");
 		}
-		
+
 		page.getNumbering_Document_RadioButton().ScrollTo();
 		page.getNumbering_Document_RadioButton().waitAndClick(10);
 		page.useMetadataFied().ScrollTo();
 		page.useMetadataFied().waitAndClick(10);
-		
-	if(page.getExportPrefixId().isDisplayed()&&page.getExportSuffixId().isDisplayed()) {
-		baseClass.passedStep("Prefix and suffix is displayed in user metadata field");
+
+		if (page.getExportPrefixId().isDisplayed() && page.getExportSuffixId().isDisplayed()) {
+			baseClass.passedStep("Prefix and suffix is displayed in user metadata field");
+		}
+
+		else {
+			baseClass.failedMessage("Prefix and suffix is not displayed in user metadata field");
+		}
 	}
-	
-	else {
-		baseClass.failedMessage("Prefix and suffix is not displayed in user metadata field");
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that Tiff/PDF should generate with Priv
+	 *              placeholdering even though File group/tag based placeholdering
+	 *              is exists. [RPMXCON-48506]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 57)
+	public void verifyTIffOrPdfWithPrivPlaceholder() throws Exception {
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		ProductionPage page = new ProductionPage(driver);
+
+		String tagname = "TAG" + Utility.dynamicNameAppender();
+		String folder = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48506 Production Sprint 11");
+		baseClass.stepInfo(
+				"To verify that Tiff/PDF should generate with Priv placeholdering even though File group/tag based placeholdering is exists.");
+
+		// create tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(folder, Input.securityGroup);
+
+		// search for folder
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(folder);
+
+		// create production with DAT,Native,PDF& ingested Text
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSectionWithTags(tagname);
+		page.fillingTIFFSection(tagname, Input.tagNamePrev);
+		page.fillingNativeDocsPlaceholder(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(folder);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		baseClass.waitTime(4);
+		String name = page.getProduction().getText().trim();
+		page.isFileDownloaded(Input.fileDownloadLocation, name);
+
+		// Delete Tag and folder
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(folder);
 	}
-	}
-	
-	
+
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
