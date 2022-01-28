@@ -1,6 +1,7 @@
 package pageFactory;
 
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -2421,5 +2422,54 @@ public class BaseClass {
 			return null;
 		}
 	}
+	/**
+	 * @author @Brundha
+	 *@Description:Method to verify data in excel file
+	 * 
+	 */
+	public void csvFileVerification() throws IOException, InterruptedException {
+		driver.waitForPageToBeReady();
+		String fileName=GetFileName();
+		List<String> lines = new ArrayList<>();
+		String line = null;
+		String[] headerToVerify = { "DocID", "Beg Bates", "End Bates" };
+		FileReader file = null;
+		file = new FileReader(fileName);
+		BufferedReader br = new BufferedReader(file);
+		while ((line = br.readLine()) != null) {
+		lines.add(line);
+		}
+		String value = lines.get(0);
+		System.out.println(value);
+		String[] arrOfStr = value.split(",");
+		for (int i = 0; i < headerToVerify.length; i++) {
+	    textCompareEquals(arrOfStr[i], headerToVerify[i], "Data is Present as Expected: " + arrOfStr[i],
+		"Data is not Present as Expected : " + arrOfStr[i]);
+	}
+}
+	
+	
+	
+	/**
+	 * @author @Brundha
+	 *@Description:Method to get the file name
+	 * 
+	 */
+	public String GetFileName() {
+			File ab = new File(Input.fileDownloadLocation);
+			String testPath = ab.toString() + "\\";
+			File a = getLatestFilefromDir(testPath);
+			if (a != null) {
+				stepInfo("last modified file found id " + a.getName());
+				String fileName = a.getName();
+				fileName = testPath + fileName;
+				System.out.println(fileName);
+				return fileName;
+			} else {
+				stepInfo("No files found in the given directory");
+				return null;
+			}
+		
 
+	}
 }

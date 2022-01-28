@@ -2423,6 +2423,21 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//div[@id='divCenterHeaderBranding']//a[@id='Launcheditor_0']");
 	}
 	
+	public Element getNotificationLink() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']/following-sibling::b");}
+	
+	public Element getSelectTheExportedProduction() {
+		return driver.FindElementByXPath("//div[@id='bgTask']//ul//li//a");}
+	
+	public Element getDownloadLinkforExport() {
+		return driver.FindElementByXPath("//td[text()='COMPLETED']/following-sibling::td//a[text()='Download File']");}
+	
+	public Element getViewAll() {
+		return driver.FindElementById("btnViewAll");}
+	
+
+
+
 
 	public ProductionPage(Driver driver) {
 
@@ -16409,5 +16424,20 @@ public class ProductionPage {
 		driver.scrollingToBottomofAPage();
 		base.stepInfo("TIFF section is filled with Branding in bitesnumber and confidencial");
 	}
-
+	/**
+	 * @author Brundha
+	 * @Description  : Method to verify volume included toggle is on by default
+	 */
+	public void verifyExportedCSVFile(){
+		
+		driver.waitForPageToBeReady();
+		String ExpectedText=getSelectTheExportedProduction().getText();
+		String Actualtext="Your export production bates range is ready please click here to download";
+		
+		base.textCompareEquals(Actualtext, ExpectedText, "Notification is Displayed as Expected", "Notification is not  Displayed as Expected");
+		getSelectTheExportedProduction().waitAndClick(5);
+//		base.passedStep("Verified that user can download the CSV file once Production-Generate-Export is completed");
+		
+		
+	}
 }
