@@ -357,7 +357,9 @@ public class TestData {
 
 		//added by Brundha
 		
-		public String documentId; 
+		public String documentId;
+		public String telecaSearchString;
+		public String docFile;
 		
 		//Added by gopinath - 08/12/2021
 		public String anotherRemarkMessage;
