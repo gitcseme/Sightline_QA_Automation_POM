@@ -2818,6 +2818,10 @@ public class DocViewPage {
 	public Element getDocView_AnalyticsChild_NearDupe_Folder() {
 		return driver.FindElementById("liNearDupeBulkFolder");
 	}
+	
+	public Element getMiniDocList_CodeSameIcon(String text) {
+		return driver.FindElementByXPath("//td[text()='"+text+"']//ancestor::tr//i[@class='fa fa-link']");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -22256,6 +22260,63 @@ public class DocViewPage {
 		System.out.println("Docs are folderedUp, folder is : " + folderName);
 		base.passedStep("Docs are selected from Conceptual Tab and FolderedUp sucessfully");
 
-	      
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//  Reusable method for clicking the checkbox and perform codesameas and verify chain link
+//	Action clcik code same as using parameter
+	public void clickCheckBoxMiniDocListActionCodeSameAs(int row) {
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocumetCountMiniDocList());
+		for (int i = 1; i <= row; i++) {
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);;
+		}
+		base.waitForElement(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
+		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
+		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
+		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+		
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//	Reusable method for validating navigation option in docview panel
+	public void navigationOptionValidation(int number) {
+		driver.waitForPageToBeReady();
+		SoftAssert assertion=new SoftAssert();
+//	    validating first option
+		base.waitForElement(getDocView_First());
+		String fistDoc=getDocView_NumTextBox().GetAttribute("value");
+		assertion.assertEquals(fistDoc, "1");
+		base.stepInfo("Navigated,cursor moved to first docs in minidoclist ");
+//	    validating next option
+		base.waitForElement(getDocView_Next());
+		getDocView_Next().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String nextDoc=getDocView_NumTextBox().GetAttribute("value");
+		assertion.assertEquals(nextDoc, "2");
+		base.stepInfo("Navigated,cursor moved to next docs in minidoclist ");
+//	    validating previous option
+		base.waitForElement(getDocView_Previous());
+		getDocView_Previous().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String previousDoc=getDocView_NumTextBox().GetAttribute("value");
+		assertion.assertEquals(previousDoc, "1");
+		base.stepInfo("Navigated,cursor moved to previous docs in minidoclist ");
+//	    validating Last option
+		base.waitForElement(getDocView_Last());
+		getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String LastDoc=getDocView_NumTextBox().GetAttribute("value");
+		base.stepInfo("Navigated,cursor moved to last docs in minidoclist ");
+		assertion.assertEquals(LastDoc,Integer.toString(number));
+//		overall assertion
+		assertion.assertAll();
+		base.passedStep("While navigating to last document loading displayed with more number of document");
 	}
 }
