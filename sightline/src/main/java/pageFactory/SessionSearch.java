@@ -1035,11 +1035,11 @@ public class SessionSearch {
 	// end
 
 	// Added by Mohan
-	
+
 	public Element getPureHitsCountNumText() {
 		return driver.FindElementByXPath("//*[@id='001']//span//count");
 	}
-	
+
 	public Element getNearDupePureHitsCount() {
 		return driver.FindElementByXPath("//*[@id='003']//i[contains(@class,'addTile')]");
 	}
@@ -1456,19 +1456,23 @@ public class SessionSearch {
 	public Element getPersistantHitCheckBox() {
 		return driver.FindElementByXPath("sdz");
 	}
-	
+
 	public Element getDocViewActionGerman() {
 		return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[contains(.,'Dokumentviewer')]");
 	}
+
 	public Element getPureHitDroppedTileBtn() {
 		return driver.FindElementByXPath("//i[@title='Remove from Selected Results']/ancestor::li/a/span/count");
 	}
+
 	public Element getQueryAlertGetTextHeader() {
 		return driver.FindElementByXPath("//span[@class='MsgTitle']");
 	}
+
 	public Element getAdvSearchCopyToNewSearch() {
 		return driver.FindElementByXPath("//*[@id=\"Adv\"]/div/div/button[@class='btn btn-default dropdown-toggle']");
 	}
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -2624,7 +2628,7 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getTagsAllRoot().Click();
-driver.Manage().window().fullscreen();
+		driver.Manage().window().fullscreen();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
@@ -2745,11 +2749,12 @@ driver.Manage().window().fullscreen();
 		UtilityLog.info("Navigated to docView to view docs");
 
 	}
-	
+
 	/**
-	*  modified the same available method for german locale
-	* @throws InterruptedException
-	*/
+	 * modified the same available method for german locale
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void ViewInDocViewGerman() throws InterruptedException {
 
 		if (getPureHitAddButton().isElementAvailable(2)) {
@@ -5374,15 +5379,20 @@ driver.Manage().window().fullscreen();
 					return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
 				}
 			}), Input.wait90);
-			getPureHitsCount().isDisplayed();
-
-			pureHit = Integer.parseInt(getPureHitsCount().getText());
-			System.out.println("Conceptual search is done for " + SearchString + " and PureHit is : " + pureHit);
-			base.passedStep("Conceptual search is done for " + SearchString + " and PureHit is : " + pureHit);
-
+			if (getPureHitsCount().isDisplayed()) {
+				SoftAssert assertion = new SoftAssert();
+				assertion.assertNotNull(pureHit);
+				assertion.assertAll();
+				pureHit = Integer.parseInt(getPureHitsCount().getText());
+				System.out.println("Conceptual search is done for " + SearchString + " and PureHit is : " + pureHit);
+				base.passedStep("Conceptual search is done for " + SearchString + " and PureHit is : " + pureHit);
+			} else {
+				base.failedStep("Conceptual search is not working and pure hit "
+						+ " not displayed when we set precision at defualt.");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Failed to verify Concept Search when precision is set as default ");
+			base.failedStep("Failed to verify Concept Search when precision is set as default & purehit not displayed ");
 
 		}
 		return pureHit;
@@ -9004,9 +9014,7 @@ driver.Manage().window().fullscreen();
 
 			Reporter.log("Saved the search with name '" + searchName + "'", true);
 			UtilityLog.info("Saved search with name - " + searchName);
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -9505,6 +9513,7 @@ driver.Manage().window().fullscreen();
 			base.failedStep("Application  not displayed  warning message on screen");
 		}
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
@@ -9522,13 +9531,13 @@ driver.Manage().window().fullscreen();
 		base.waitForElement(getQuerySearchButton());
 		getQuerySearchButton().waitAndClick(10);
 	}
-	
 
 	public void resubmitSearch() {
 		getModifyASearch().waitAndClick(10);
 		getAdvSearchCopyToNewSearch().waitAndClick(10);
 		getAdvanceSearch_btn_Current().waitAndClick(10);
 	}
+
 	public void navigateToAdvancedSearchPage() {
 		try {
 			driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -9541,7 +9550,7 @@ driver.Manage().window().fullscreen();
 			base.failedStep("Exception occured while navigating to advanced search page is failed" + e.getMessage());
 		}
 	}
-	
+
 	public void selctProductionsAlreadyProduced() {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -9557,16 +9566,17 @@ driver.Manage().window().fullscreen();
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
 		base.waitForElement(getMetaDataInserQuery());
-			
+
 		getMetaDataInserQuery().Click();
 		driver.scrollPageToTop();
 
 	}
-	public void workProductSearch(String WpSearch,String WPName,boolean WPBtnClick) throws InterruptedException {
-		if(WPBtnClick) {
-		base.waitForElement(getWorkproductBtn());
-		getWorkproductBtn().Click();
-		base.stepInfo("Switched to Advanced search - Work product");
+
+	public void workProductSearch(String WpSearch, String WPName, boolean WPBtnClick) throws InterruptedException {
+		if (WPBtnClick) {
+			base.waitForElement(getWorkproductBtn());
+			getWorkproductBtn().Click();
+			base.stepInfo("Switched to Advanced search - Work product");
 		}
 		if (WpSearch.equalsIgnoreCase("tag")) {
 			selectTagInASwp(WPName);
@@ -9636,14 +9646,13 @@ driver.Manage().window().fullscreen();
 		Reporter.log("Bulk folder is done, folder is : " + folderName, true);
 		driver.getWebDriver().navigate().refresh();
 	}
-	
-	
+
 	/**
 	 * @author Mohan date: 27/01/2021 Modified date: NA
 	 * @Description: Bulk assign docs
 	 */
 	public void performBulkAssignDocsAction() {
-		
+
 		base.waitForElement(getBulkActionButton());
 		getBulkActionButton().waitAndClick(3);
 
@@ -9652,7 +9661,6 @@ driver.Manage().window().fullscreen();
 
 		base.stepInfo("performing bulk assign");
 		UtilityLog.info("performing bulk assign");
-
 
 	}
 }
