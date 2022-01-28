@@ -390,7 +390,7 @@ public class BasicSearch_Regression1 {
 	 *         double quotes.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyMetadataAutoSuggest() throws InterruptedException {
 		String expectedFileName = "\"Scott Tholan\"";
 		String metaDataField = "EmailToAddresses";
@@ -487,38 +487,27 @@ public class BasicSearch_Regression1 {
 
 	}
 
-//	@Test(enabled = true, groups = { "regression" }, priority = 10)
-//	public void verifySearchResultForComment1() throws InterruptedException {
-//		String docComment = "PF1231";
-////		String searchTerm = "\"##PF[0-9]{4}\"";
-//
-//		lp = new LoginPage(driver);
-//		DocViewPage docview = new DocViewPage(driver);
-//		lp.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-//
-//		bc.stepInfo("RPMXCON- 49637   Basic Search Sprint-10");
-//		bc.stepInfo("Verify Search result should work correctly for Comments with format like \"##PF[0-9]{4}\"");
-//		
-//		ss.audioSearch(Input.audioSearchString1,Input.language);
-//		ss.ViewInDocView();
-//
-//		// Apply comments to document
-//		docview.addCommentAndSave(docComment, true);
-//		lp.logout();
-//	}
-//	@Test(enabled = true, groups = { "regression" }, priority = 9)
-//	public void verifyThreadedDocs1() throws InterruptedException {
-//		lp = new LoginPage(driver);
-//		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-//
-//		bc.stepInfo("RPMXCON- 47712   Basic Search Sprint-10");
-//		bc.stepInfo("Verify that basic search is working properly for Metadata");
-//
-//		ss.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
-//		driver.scrollingToBottomofAPage();
-//        ss.details();
-//
-//	}
+	/**
+	 * @author Raghuram A Date: 11/25/21 Modified date:N/A Modified by: N/A
+	 *         Description : Verify that basic search is working properly for
+	 *         Metadata RPMXCON-47712 Sprint 11
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void basicSearchWithMedtaDataDetails() throws InterruptedException {
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		bc.stepInfo("RPMXCON- 47712 Basic Search Sprint-11");
+		bc.stepInfo("Verify that basic search is working properly for Metadata");
+
+		ss.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+		ss.verifySearchReult(Input.metaDataCustodianNameInput, Input.metaDataName.toUpperCase());
+
+		lp.logout();
+
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
