@@ -92,6 +92,11 @@ public class LoginPage {
 			return driver.FindElementById("btnDialogClose");
 		}
 		
+		//Added by Gopinath - 28/01/2022
+		public Element getWarningLogOutMessage() {
+			return driver.FindElementByXPath("//i[@id='botClose1']/following-sibling::p[contains(text(),'Your current session expired. Please log in again')]");
+		}
+		
 	public LoginPage(Driver driver) {
 
 		this.driver = driver;
