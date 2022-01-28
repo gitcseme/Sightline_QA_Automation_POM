@@ -9586,6 +9586,7 @@ driver.Manage().window().fullscreen();
 		if (WpSearch.equalsIgnoreCase("assignments")) {
 			selectAssignmentInWPS(WPName);
 		}
+	}
 
 	/**
 	 * @author Mohan date: 27/01/2021 Modified date: NA
