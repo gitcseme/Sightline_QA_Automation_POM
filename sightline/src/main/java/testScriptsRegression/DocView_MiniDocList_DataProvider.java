@@ -1,6 +1,7 @@
 
 package testScriptsRegression;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -57,6 +60,10 @@ public class DocView_MiniDocList_DataProvider {
 	String assignmentNameToChoose;
     String hitsCount;
     String savedSearchs = "AsavedToDocview" + Utility.dynamicNameAppender();
+    String assgn = "Assignment" + Utility.dynamicNameAppender();
+	String projectFieldINT = "AAMini" + Utility.dynamicNameAppender();
+	
+	
 	@BeforeClass(alwaysRun = true)
 	private void TestStart() throws Exception, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -85,15 +92,17 @@ public class DocView_MiniDocList_DataProvider {
 		UtilityLog.info("Executing method : " + testMethod.getName());
 	}
 
-	/**
-	 * Author : Raghuram A date: 8/18/21 NA Modified date: NA Modified by: N/A
-	 * Description : DataProvider for Different User Login
-	 */
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
 		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
 				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
+	}
+
+	@DataProvider(name = "paRmuRole")
+	public Object[][] paRmuRole() {
+		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
+				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password } };
 	}
 
 	@DataProvider(name = "userDetailss")
@@ -110,6 +119,15 @@ public class DocView_MiniDocList_DataProvider {
 		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
 	}
+
+	@DataProvider(name = "sixRole")
+	public Object[][] sixRole() {
+		return new Object[][] { { "pa", Input.pa1userName, Input.pa1password },
+				{ "rmu", Input.rmu1userName, Input.rmu1password }, { "rev", Input.rev1userName, Input.rev1password },
+				{ "pa1", Input.pa1userName, Input.pa1password }, { "rmu1", Input.rmu1userName, Input.rmu1password },
+				{ "rev1", Input.rev1userName, Input.rev1password } };
+	}
+
 
 	/**
 	 * Author : Raghuram A date: 8/15/21 NA Modified date: 8/18/21 Modified by:
@@ -1603,6 +1621,156 @@ public class DocView_MiniDocList_DataProvider {
 		}
 	
 		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 27/01/2022 Modified date: NA Modified by: Baskar
+	 * @Description : To verify user can select Multiple documents in Mini Doc List
+	 *              from dockout screens and Select Action as 'Folder'
+	 */
+
+	@Test(enabled = true, dataProvider = "paRmuRole", groups = { "regression" }, priority = 61)
+	public void validateFolderFromMiniDocList(String fullName, String userName, String password)
+			throws InterruptedException, Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-51132");
+		baseClass.stepInfo("To verify user can select Multiple documents in Mini Doc List "
+				+ "from dockout screens and Select Action as 'Folder'");
+
+		String folderName = "AFolder" + Utility.dynamicNameAppender();
+
+		// Login as a Admin
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+		// Session search to docview
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+		// validate Folder action
+		docViewPage.performFolderAction(folderName, 2);
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 27/01/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify scrolling in mini doc list should work when user
+	 *                     completes the document from mini doc list
+	 */
+	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 62)
+	public void validateScrollAndLastDocsCursor(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51088");
+		baseClass.stepInfo("Verify scrolling in mini doc list should "
+				+ "work when user completes the document from mini doc list");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String rmu = "RMU";
+
+		loginPage.loginToSightLine(userName, password);
+
+		if (fullName.contains(rmu)) {
+//			 searching document for assignment creation
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assgn, Input.codingFormName);
+			assignmentPage.toggleCodingStampEnabled();
+			assignmentPage.add2ReviewerAndDistribute();
+			baseClass.impersonateRMUtoReviewer();
+			System.out.println(assgn);
+		}
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assgn);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validate last docs navigtion in assignment
+		docViewPage.verifyThatIsLastDoc();
+		String lastDocs = docViewPage.getVerifyPrincipalDocument().getText();
+		baseClass.stepInfo("Completing last docs");
+		docViewPage.editCodingForm(comment);
+		docViewPage.completeButton();
+		String lastDocsAfterComplete = docViewPage.getVerifyPrincipalDocument().getText();
+		softAssertion.assertEquals(lastDocs, lastDocsAfterComplete);
+		softAssertion.assertAll();
+		baseClass.passedStep("Cursor still in the last document after completed the document");
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author : Baskar date: 27/01/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify scrolling in mini doc list should work when user enters
+	 *                     document ID in document navigation
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 63)
+	public void validateScrollIsScrollableWhenDocIdEntered(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51087");
+		baseClass.stepInfo("Verify scrolling in mini doc list should work when "
+				+ "user enters document ID in document navigation");
+
+		// login as
+		loginPage.loginToSightLine(userName, password);
+
+		// Session search to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		// validate using docid and scroll bar
+		driver.waitForPageToBeReady();
+		baseClass.waitForElementCollection(docViewPage.getDocumetCountMiniDocList());
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+
+		// Before scroll position
+		Long value = (Long) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		System.out.println(value);
+
+		// enter document number
+		docViewPage.getDocView_NumTextBox().SendKeys("20" + Keys.ENTER);
+		baseClass.stepInfo("Entering the document number in docview panel");
+		driver.waitForPageToBeReady();
+
+		// After scroll position
+		Long value1 = (Long) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		System.out.println(value1);
+		softAssertion.assertNotEquals(value, value1);
+		softAssertion.assertAll();
+		baseClass.stepInfo("Scroll bar is scrollable");
+		baseClass.passedStep("Scrolling working in minidoclist when document number entered");
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author : Baskar date: 27/01/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify scrolling in mini doc list should work when user clicks
+	 *                     to go to first, last , prev and next document from
+	 *                     document navigation
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 64)
+	public void validateNavigationOptions(String fullName, String userName, String password)
+			throws InterruptedException,AWTException{
+		baseClass.stepInfo("Test case Id: RPMXCON-51086");
+		baseClass.stepInfo("Verify scrolling in mini doc list should work when user clicks "
+				+ "to go to first, last , prev and next document from document navigation");
+
+		// login as
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Session search to docview
+		int size = sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		// validate using docid and scroll bar
+		driver.waitForPageToBeReady();
+		docViewPage.navigationOptionValidation(size);
+
+		// logout
+		loginPage.logout();
+
 	}
 
 	
