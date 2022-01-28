@@ -2323,6 +2323,34 @@ public class DocViewPage {
 	public Element getMiniDocListConfirmationButton(String actionType) {
 		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[text()='" + actionType + "']");
 	}
+	
+	public Element getEyeIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-eye']");
+	}
+
+	public Element remarksIcon() {
+		return driver.FindElementByXPath("//i[@class='fa-stack-1x fa fa-wifi fa-rotate-270']");
+	}
+	
+	public Element redactionIcon() {
+		return driver.FindElementByXPath("//li[@id='gray-tab']");
+	}
+
+	public Element multiPageIcon() {
+		return driver.FindElementByXPath("//li[@id='multipageRedaction_divDocViewer']");
+	}
+
+	public Element multiPageInputTextbox() {
+		return driver.FindElementByXPath("//input[@name='pages']");
+	}
+	
+	public Element HighliteIcon() {
+		return driver.FindElementByXPath("//li[@id='yellow-tab']");
+	}
+	
+	public Element docViewEyeSearchTerm() {
+		return driver.FindElementByXPath("//h3[text()='Search Hits:']");
+	}
 
 	// added by brundha
 	public Element getMIniDocListDocument() {
@@ -22211,6 +22239,96 @@ public class DocViewPage {
 			}
 		}
 	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 26/01/22 NA Modified date: NA Modified by:NA
+	 * Description :perform Display Icon Reviewer Highlight.
+	 *
+	 */
+	public void performDisplayIconReviewerHighlightingMenus() throws Exception {
+		base = new BaseClass(driver);
+		getDocView_MiniDoc_Selectdoc(1).waitAndClick(20);
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return redactionIcon().Visible();
+			}
+		}), Input.wait30);
+		redactionIcon().waitAndClick(30);
+
+		base.stepInfo("Redaction Icon Clicked Successfully");
+
+		softAssertion.assertTrue(multiPageIcon().Displayed());
+		base.passedStep("DocView Redaction Page is Displayed");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getEyeIcon().Visible() && HighliteIcon().Enabled();
+			}
+		}), Input.wait30);
+		getEyeIcon().waitAndClick(30);
+
+		base.stepInfo("docView Eye Icon Clicked Successfully");
+
+		softAssertion.assertTrue(docViewEyeSearchTerm().Displayed());
+		base.passedStep("DocView EyeIcon Search Term Is Displayed");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return remarksIcon().Visible();
+			}
+		}), Input.wait30);
+		remarksIcon().waitAndClick(30);
+
+		base.stepInfo("Reviewer Remark Icon Clicked Successfully");
+
+		softAssertion.assertTrue(docViewReviewerPage().Displayed());
+		base.passedStep("DocView Reviewer Page Is Displayed");
+
+		getDocView_MiniDoc_Selectdoc(3).waitAndClick(20);
+		base.passedStep("Mini Doc List  Docs Selected Successfully");
+		softAssertion.assertTrue(docViewReviewerPage().Displayed());
+		base.passedStep("DocView Reviewer Page Is Displayed");
+		
+		driver.waitForPageToBeReady();
+		getDocView_Analytics_FamilyTab().waitAndClick(30);
+		getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().waitAndClick(10);
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+		base.waitForElement(getDocView_FamilyViewInDocView());
+		getDocView_FamilyViewInDocView().waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(docViewReviewerPage().Displayed());
+		base.passedStep("DocView Reviewer Page Is Displayed");
+	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 26/01/22 NA Modified date: NA Modified by:NA
+	 * Description :perform navigate Back Confirm Box Displayed.
+	 *
+	 */
+	public void performConfirmNavigationDisplay() throws Exception {
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDashboardButton().Visible();
+			}
+		}), Input.wait30);
+		getDashboardButton().waitAndClick(5);
+		driver.WaitUntil(new Callable<Boolean>() {
+			public Boolean call() {
+				return getAlertConfrimButton().Visible() && getAlertConfrimButton().Enabled();
+			}
+		}, Input.wait30);
+		getAlertConfrimButton().Click();
+		softAssertion.assertTrue(getAlertConfrimButton().isDisplayed());
+		base.passedStep("Yes and No buttons Are displayed");
+
+	}
+	
 	
 	/**
 	 * @Author Mohan Created on 27/01/2022
