@@ -436,7 +436,8 @@ public class Input {
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
-
+	public static String telecaSearchString;
+	public static String docFile;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -915,6 +916,8 @@ public class Input {
 		// Added by Brundha-1/12/2021
 
 		documentId = testData.getDocumentID();
+		telecaSearchString=testData.getTelecaSearchString();
+		docFile=testData.getDocFile();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();

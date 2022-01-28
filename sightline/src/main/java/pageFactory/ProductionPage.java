@@ -2435,6 +2435,12 @@ public class ProductionPage {
 	public Element getViewAll() {
 		return driver.FindElementById("btnViewAll");}
 	
+	public Element getSaveOption() {
+		return driver.FindElementByXPath("//a[text()='Save']");}
+	public Element getAdvancedLSTToggle() {
+		return driver.FindElementByXPath("//label/input[@id='chkTIFFProduceLoadFile']/following-sibling::i");
+	}
+	
 
 
 
@@ -16436,8 +16442,34 @@ public class ProductionPage {
 		
 		base.textCompareEquals(Actualtext, ExpectedText, "Notification is Displayed as Expected", "Notification is not  Displayed as Expected");
 		getSelectTheExportedProduction().waitAndClick(5);
-//		base.passedStep("Verified that user can download the CSV file once Production-Generate-Export is completed");
+		base.passedStep("Verified that user can download the CSV file once Production-Generate-Export is completed");
 		
 		
+	}
+	/**
+	 * @author Brundha
+	 * @Description : Method for filling advanced toggle in tiff/pdf section
+	 */
+	public void fillingAdvancedInTiffSection() {
+		base.waitForElement(getTiffAdvancedLink());
+		getTiffAdvancedLink().Click();
+
+		getAdvancedLSTToggle().isDisplayed();
+		String color = getAdvancedLSTToggle().GetCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor = "#a9c981";
+		base.textCompareEquals(ActualColor, ExpectedColor, "Generate LST file Toggle is enabled  by Default",
+				"Generate LST file Toggle is not  enabled  by Default");
+
+		base.waitForElement(getLoadFileTypeInTIFF());
+		getLoadFileTypeInTIFF().Click();
+		base.waitForElement(getOPTInLoadFileType());
+		getOPTInLoadFileType().Click();
+		driver.scrollPageToTop();
+		getSaveOption().waitAndClick(10);
+		base.VerifySuccessMessage("Information Saved Successfully");
+		base.CloseSuccessMsgpopup();
 	}
 }
