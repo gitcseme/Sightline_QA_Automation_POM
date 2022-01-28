@@ -2460,6 +2460,302 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		loginPage.logout();
 	}
+	
+
+	/**
+	 * @Author : Mohan date: 25/01/2022 Modified date: NA Modified by: NA
+	 * @Description :To verify Near Duplicate documents should be displayed as per the
+	 *  clicked document from mini doc list panel and from document navigation 'RPMXCON-50826'
+	 * 
+	 */
+	
+	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 37)
+	public void verifyNearDupeDocsDisplayedAsPerDocsSelectedFromMiniDocListPanel(String fullName, String userName, String password) throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-50826");
+		baseClass.stepInfo("To verify Near Duplicate documents should be displayed as per the clicked document from mini doc list panel and from document navigation");
+		
+		
+		//Login
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		
+		baseClass.stepInfo("Step 1: Basic search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		
+		baseClass.stepInfo("Step 2: Click the document one by one from mini doc list panel");
+		for (int i = 1; i <= 3; i++) {
+			baseClass.waitTillElemetToBeClickable(miniDocListpage.getClickDocviewID(i));
+			miniDocListpage.getClickDocviewID(i).waitAndClick(5);
+			String docId = docView.getDocView_CurrentDocId().getText();
+			System.out.println(docId);
+			baseClass.passedStep("User is able see the document one by one in doc view section successfully");
+			driver.waitForPageToBeReady();
+
+		}
+		
+		baseClass.stepInfo("Step 3: Verify the Near Duplicate documents from analytics panel");
+		baseClass.waitForElement(docView.getDocView_Analytics_NearDupeTab());
+		docView.getDocView_Analytics_NearDupeTab().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_NearDupeWholeTabel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Near duplicate documents is be displayed as per the clicked document from mini doc list panel and from document navigation.");
+		
+		loginPage.logout();
+		  
+		
+	}
+	
+	
+	/**
+	 * @Author : Mohan date: 18/01/2022 Modified date: NA Modified by: NA
+	 * @Description :To verify user after impersonation should view threaded document for the selected document from mini doc list 'RPMXCON-50950'
+	 * 
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
+	public void verifyAfterImpersonatingThreadedDocumentsForSelectedDocsInMiniDocList() throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-50950");
+		baseClass.stepInfo("To verify user after impersonation should view threaded document for the selected document from mini doc list");
+		
+		
+		// Login as SA
+		baseClass.stepInfo("Step 1: Login As SA");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From SA to RMU");
+		baseClass.impersonateSAtoRMU();
+
+		baseClass.stepInfo("Step 3: Select Assignment and action as 'View All Docs in Doc View' from Action drop down of manage assignment page");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignThreadedDocs();
+		assignmentsPage.assignmentCreation(assname, Input.codeFormName);
+		assignmentsPage.add3ReviewerAndDistribute();
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		baseClass.passedStep("Application is redirect to the Doc View page successfully");
+		
+
+		baseClass.stepInfo("Step 4: Verify 'Thread Map' tab in the analytics panel");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+		
+		baseClass.waitTime(1);
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ThreadMapFirstRow().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Threaded documents for the selected document from mini doc list is displayed.LoadEmailThreadings_A order by DocumentID asc");
+		
+		
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		
+		// Login as DA
+		baseClass.stepInfo("Step 1: Login As DA");
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From DA to RMU");
+		baseClass.impersonateDAtoRMU();
+		
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		baseClass.passedStep("Application is redirect to the Doc View page successfully");
+		
+
+		baseClass.stepInfo("Step 3: Verify 'Thread Map' tab in the analytics panel");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ThreadMapFirstRow().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Threaded documents for the selected document from mini doc list is displayed.LoadEmailThreadings_A order by DocumentID asc");
+		
+		
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		
+		// Login as PA
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From PA to RMU");
+		baseClass.impersonatePAtoRMU();
+
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		baseClass.passedStep("Application is redirect to the Doc View page successfully");
+
+		baseClass.stepInfo("Step 3: Verify 'Thread Map' tab in the analytics panel");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ThreadMapFirstRow().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"Threaded documents for the selected document from mini doc list is displayed.LoadEmailThreadings_A order by DocumentID asc");
+
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		
+		
+		// Login as PA
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Step 2: Impersonate From PA to Reviewer");
+		baseClass.impersonatePAtoReviewer();
+
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.passedStep("Application is redirect to the Doc View page successfully");
+
+		baseClass.stepInfo("Step 3: Verify 'Thread Map' tab in the analytics panel");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ThreadMapFirstRow().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"Threaded documents for the selected document from mini doc list is displayed.LoadEmailThreadings_A order by DocumentID asc");
+
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		
+		
+	}
+	
+	
+	
+	/**
+	 * @Author Mohan Created date: NA Modified date: NA Modified by: Mohan
+	 * @Description To verify that user can select documents from the Conceptually Similar and folder them when redirects from manage assignment.
+	 *              'RPMXCON-48693'
+	 *  @Stabilization - done
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
+	public void verifyUserCanSelectDocumentFromAnalyticsPanelConceputuallySimilarTab() throws ParseException, InterruptedException, IOException {
+		softAssertion = new SoftAssert();
+		loginPage = new LoginPage(driver);
+		docView = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48693");
+		baseClass.stepInfo("To verify that user can select documents from the Conceptually Similar and folder them when redirects from manage assignment.");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully Logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		String foldName = "FolderName" + Utility.dynamicNameAppender();
+		String conceptualFolder = "ConceptualFolder" + Utility.dynamicNameAppender();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.getConceptDocument();
+		sessionSearch.bulkFolderConceptualDocs(foldName);
+		sessionSearch.performBulkAssignDocsAction();
+		
+		
+		baseClass.stepInfo("Step 3: Go to Assignment > DocView");
+		assignmentsPage.assignmentCreation(assname, Input.codeFormName);
+		assignmentsPage.add2ReviewerAndDistribute();
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		baseClass.passedStep("Application is redirect to the Doc View page successfully");
+		
+		
+		baseClass.stepInfo("Step 4: Select document from conceptual similar tab and perform folder action from action drop-down ");
+		docView.selectDocsAndActionAsFolder(1,conceptualFolder);
+		
+		baseClass.stepInfo("Step 5: Select the same document from Conceptually Similar tab Select action as View Document Select Folder tab");
+		docView.selectDocsFromConceptualTabAndViewTheDocs();
+		
+		baseClass.waitTime(1);
+		String docID = docView.getDocView_CurrentDocId().getText();
+		System.out.println(docID);
+		driver.scrollingToBottomofAPage();
+		baseClass.waitForElement(docView.getDocView_FolderTab());
+		docView.getDocView_FolderTab().waitAndClick(5);
+		
+		baseClass.waitForElement(docView.getDocView_FolderTab_Expand());
+		docView.getDocView_FolderTab_Expand().waitAndClick(5);
+		
+		docView.getDocView_MetaData_FolderName(conceptualFolder).ScrollTo();
+		softAssertion.assertTrue(docView.getDocView_MetaData_FolderName(conceptualFolder).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Folderis displayed under Folder tab in Metadata section successfully");
+		
+		
+		baseClass.stepInfo("Step 6: Navigate to search page and switch to advanced search");
+		docView.selectAdvancedSearch(conceptualFolder);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+		
+		baseClass.waitForElement(sessionSearch.getPureHitsCountNumText());
+		softAssertion.assertTrue(sessionSearch.getPureHitsCountNumText().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("the number of documents added into the folder and its doc-id is verified successfully");
+		
+		loginPage.logout();
+		
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+		
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.passedStep("Application is redirect to the Doc View page successfully");
+		
+		
+		baseClass.stepInfo("Step 5: Select the same document from Conceptually Similar tab Select action as View Document Select Folder tab");
+		docView.selectDocsFromConceptualTabAndViewTheDocs();
+		
+		baseClass.waitTime(1);
+		String docID1 = docView.getDocView_CurrentDocId().getText();
+		System.out.println(docID1);
+		driver.scrollingToBottomofAPage();
+		baseClass.waitForElement(docView.getDocView_FolderTab());
+		docView.getDocView_FolderTab().waitAndClick(5);
+		
+		baseClass.waitForElement(docView.getDocView_FolderTab_Expand());
+		docView.getDocView_FolderTab_Expand().waitAndClick(5);
+		
+		docView.getDocView_MetaData_FolderName(conceptualFolder).ScrollTo();
+		softAssertion.assertTrue(docView.getDocView_MetaData_FolderName(conceptualFolder).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Folderis displayed under Folder tab in Metadata section successfully");
+		
+		
+		baseClass.stepInfo("Step 6: Navigate to search page and switch to advanced search");
+		docView.selectAdvancedSearch(conceptualFolder);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+		
+		baseClass.waitForElement(sessionSearch.getPureHitsCountNumText());
+		softAssertion.assertTrue(sessionSearch.getPureHitsCountNumText().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("the number of documents added into the folder and its doc-id is verified successfully");
+		
+		loginPage.logout();
+		
+		
+		
+		
+	}
 
 	
 	

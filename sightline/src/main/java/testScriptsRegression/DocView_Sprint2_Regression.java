@@ -3530,6 +3530,259 @@ else {
 
 		
 	}
+	
+	
+	/**
+	 * Author : Mohan date: 26/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify Persistent KW Groups as well as Saved Searching on doc view.'RPMXCON-51553' 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 58)
+	public void verifyKWGroupAndSavedSeacrhOnDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51553");
+		baseClass.stepInfo(
+				"Verify Persistent KW Groups as well as Saved Searching on doc view");
+		sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		docView = new DocViewPage(driver);
+		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
+		String panelText = "basis)";
+		softAssertion = new SoftAssert();
+		
+		
+		baseClass.stepInfo("Step 2: Search for documents with search term and save the search");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		
+		
+		baseClass.stepInfo("Step 3: From Saved Search select the search and action as Doc View   ");
+		savedSearch.savedSearchToDocView(saveName);
+		
+		
+		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(panelText).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Hit count for the matching keywords is displayed against the keywords on persistent hit panel");
+		
+		loginPage.logout();
+		
+		
+		//login As PA
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Step 2: Search for documents with search term and save the search");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+		
+		
+		baseClass.stepInfo("Step 3: From Saved Search select the search and action as Doc View   ");
+		savedSearch.savedSearchToDocView(saveName);
+		
+		
+		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(panelText).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Hit count for the matching keywords is displayed against the keywords on persistent hit panel");
+		
+		loginPage.logout();
+
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo("Step 2: Search for documents with search term and save the search");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchQuery(saveName);
+
+		baseClass.stepInfo("Step 3: From Saved Search select the search and action as Doc View   ");
+		savedSearch.savedSearchToDocView(saveName);
+
+		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(panelText).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"Hit count for the matching keywords is displayed against the keywords on persistent hit panel");
+
+		
+	}
+	
+	/**
+	 * Author : Mohan date: 27/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify Search Term highlighting is working for Searchable PDF (with Mapped dataset having RequiredPDFGenartion is TRUE)'RPMXCON-51981' 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 59)
+	public void verifySearchTermHighlightingWorkingForSearchablePDF() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51981");
+		baseClass.stepInfo(
+				"Verify Search Term highlighting is working for Searchable PDF (with Mapped dataset having RequiredPDFGenartion is TRUE)");
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Step 3: Go to Basic/Advanced Search   Search by term   Go to Doc View ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+		baseClass.stepInfo("Step 4: Click on the eye icon to see the persistent hits panel");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		softAssertion.assertTrue(docView.getPersistentPanel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"All search hit terms is displayed on the panel successfully");
+		
+		loginPage.logout();
+		
+		// login As PA
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Step 2: Go to Basic/Advanced Search   Search by term   Go to Doc View ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+		baseClass.stepInfo("Step 3: Click on the eye icon to see the persistent hits panel");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		softAssertion.assertTrue(docView.getPersistentPanel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"All search hit terms is displayed on the panel successfully");
+		
+		loginPage.logout();
+
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+		
+
+		baseClass.stepInfo("Step 2: Go to Basic/Advanced Search   Search by term   Go to Doc View ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+		baseClass.stepInfo("Step 3: Click on the eye icon to see the persistent hits panel");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		softAssertion.assertTrue(docView.getPersistentPanel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"All search hit terms is displayed on the panel successfully");
+		
+		
+	}
+	
+	
+	/**
+	 * Author : Mohan date: 27/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify Keyword highlighting is working for Searchable PDF (with Mapped dataset having RequiredPDFGenartion is TRUE)'RPMXCON-51982' 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 60)
+	public void verifyKeywordHighlightingWorkingForSearchablePDF() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51981");
+		baseClass.stepInfo(
+				"Verify Search Term highlighting is working for Searchable PDF (with Mapped dataset having RequiredPDFGenartion is TRUE)");
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		keywordPage = new KeywordPage(driver);
+		softAssertion = new SoftAssert();
+		String keyword = "to"+ Utility.dynamicNameAppender();
+		String color = "Gold";
+		
+		baseClass.stepInfo("Step 1: Prerequisites: Keyword groups should be created   with different Keywords");
+		
+		keywordPage.addKeywordWithColor(keyword, color);
+		
+		baseClass.stepInfo("Step 2:  Go to Basic/Advanced Search Search by term   Go to Doc View and ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		baseClass.stepInfo("Step 3: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"Keyword is highlighted with specified color in the Doc View successfully");
+		
+		loginPage.logout();
+		
+		// login As PA
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		
+		baseClass.stepInfo("Step 2:  Go to Basic/Advanced Search Search by term   Go to Doc View and ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		baseClass.stepInfo("Step 3: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"Keyword is highlighted with specified color in the Doc View successfully");
+		
+		loginPage.logout();
+		
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+		
+		baseClass.stepInfo("Step 3:  Go to Basic/Advanced Search Search by term   Go to Doc View and ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		baseClass.stepInfo("Step 4: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"Keyword is highlighted with specified color in the Doc View successfully");
+	}
+	
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

@@ -1035,6 +1035,11 @@ public class SessionSearch {
 	// end
 
 	// Added by Mohan
+	
+	public Element getPureHitsCountNumText() {
+		return driver.FindElementByXPath("//*[@id='001']//span//count");
+	}
+	
 	public Element getNearDupePureHitsCount() {
 		return driver.FindElementByXPath("//*[@id='003']//i[contains(@class,'addTile')]");
 	}
@@ -9513,5 +9518,72 @@ driver.Manage().window().fullscreen();
 		// Click on Search button
 		base.waitForElement(getQuerySearchButton());
 		getQuerySearchButton().waitAndClick(10);
+	}
+	
+	/**
+	 * @author Mohan date: 27/01/2021 Modified date: NA
+	 * @Description: Assign Conceptual document to bulk folder
+	 */
+	public void bulkFolderConceptualDocs(String folderName) throws InterruptedException {
+		// driver.getWebDriver().get(Input.url+"Search/Searches");
+		driver.waitForPageToBeReady();
+		if (getConceptPureHitsCount().isElementAvailable(5)) {
+			getConceptPureHitsCount().Click();
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+		base.waitForElement(getBulkActionButton());
+		getBulkActionButton().waitAndClick(5);
+		base.waitForElement(getBulkFolderAction());
+		getBulkFolderAction().waitAndClick(5);
+		base.waitForElement(getBulkNewTab());
+		getBulkNewTab().waitAndClick(20);
+		base.waitForElement(getEnterFolderName());
+		getEnterFolderName().SendKeys(folderName);
+		base.waitForElement(getFolderAllRoot());
+		getFolderAllRoot().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getContinueButton().Click();
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getFinalizeButton().Click();
+		base.VerifySuccessMessage("Records saved successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		UtilityLog.info("Bulk folder is done, folder is : " + folderName);
+		Reporter.log("Bulk folder is done, folder is : " + folderName, true);
+		driver.getWebDriver().navigate().refresh();
+	}
+	
+	
+	/**
+	 * @author Mohan date: 27/01/2021 Modified date: NA
+	 * @Description: Bulk assign docs
+	 */
+	public void performBulkAssignDocsAction() {
+		
+		base.waitForElement(getBulkActionButton());
+		getBulkActionButton().waitAndClick(3);
+
+		base.waitForElement(getBulkAssignAction());
+		getBulkAssignAction().waitAndClick(10);
+
+		base.stepInfo("performing bulk assign");
+		UtilityLog.info("performing bulk assign");
+
 	}
 }
