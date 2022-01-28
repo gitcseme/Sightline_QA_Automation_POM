@@ -171,6 +171,7 @@ public class TestData {
 	public String pageRange3;
 	public String pageRange4;
 	public String searchPhraseWithQuote;
+	public String keywordColor1;
 	
 
 	// Added by Raghuram - Last Modified 01/28/21 

@@ -1391,6 +1391,10 @@ public class AssignmentsPage {
 	public ElementCollection getAvailableKeywordCheckboxes() {
 		return driver.FindElementsByXPath("//div[@id='divkeyword']//label[@class='checkbox']//i");
 	}
+	
+	 public ElementCollection getKeywordNames() {
+			return driver.FindElementsByXPath("//div[contains(@style,'color')]");
+		}
 
 	public AssignmentsPage(Driver driver) {
 
@@ -9327,6 +9331,36 @@ public class AssignmentsPage {
 		}
 		bc.stepInfo("All the docs are completed");
 	}
+	
+	
+		
+		public void mappingKeywordToAssignment(String keywordName) throws InterruptedException {
+			bc = new BaseClass(driver);
+			driver.waitForPageToBeReady();
+			getAssgn_Keywordsbutton().ScrollTo();
+			getAssgn_Keywordsbutton().isElementAvailable(10);
+			getAssgn_Keywordsbutton().waitAndClick(10);
+			bc.waitForElement(getAssgn_Keywordspopup());
+			
+			List<WebElement> allvalues = getAvailableKeywordCheckboxes().FindWebElements();
+			List<String> names = bc.availableListofElements(getKeywordNames());
+			System.out.println(names);
+			for(int i=0;i<= names.size()-1; i++) {
+				if(names.get(i).contains(keywordName)) {
+					allvalues.get(i).click();
+					System.out.println("done");
+					break;
+				}
+				
+			}
+			driver.waitForPageToBeReady();
+			getAssgn_Keywordokbutton().ScrollTo();
+			getAssgn_Keywordokbutton().isElementAvailable(10);
+			getAssgn_Keywordokbutton().Click();
+			keywordPage.getYesButton().Click();
+			bc.passedStep("Required keyword mapped to the assignment successfully");
+			
+		}
 
 
 

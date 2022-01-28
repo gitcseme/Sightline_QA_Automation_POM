@@ -281,6 +281,7 @@ public class Input {
 	public static String pageRange3;
 	public static String pageRange4;
 	public static String searchPhraseWithQuote;
+	public static String keywordColor1;
 
 	// Added by Raghuram - Modified 01/28/21 
 	public static String docHighlightColor;
@@ -731,6 +732,7 @@ public class Input {
 		pageRange3 = testData.getPageRange3();
 		pageRange4 = testData.getPageRange4();
 		searchPhraseWithQuote = testData.getSearchPhraseWithQuote();
+		keywordColor1 = testData.getKeywordColor1();
 
 		// Added by Raghuram 01/28/21
 		docHighlightColor = testData.getDocHighlightColor();
