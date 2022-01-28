@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -1469,6 +1470,29 @@ public class SessionSearch {
 	public Element getAdvSearchCopyToNewSearch() {
 		return driver.FindElementByXPath("//*[@id=\"Adv\"]/div/div/button[@class='btn btn-default dropdown-toggle']");
 	}
+
+	public ElementCollection getDetailsTable() {
+		return driver.FindElementsByXPath("//table[contains(@id,'taskbasicPureHits')]//th");
+	}
+
+	public Element getDetailsTableToMap(int i) {
+		return driver.FindElementByXPath("//table[contains(@id,'taskbasicPureHits')]//th[" + i + "]");
+	}
+
+	public ElementCollection getTableDetails(int index) {
+		return driver.FindElementsByXPath("//table[contains(@id,'taskbasicPureHits')]//td[" + index + "]");
+	}
+
+	public ElementCollection getTotalRows() {
+		return driver.FindElementsByXPath("// table[contains(@id,'taskbasicPureHits')]//tbody//tr");
+	}
+
+	public Element getCellValue(int rowNum, int colNum) {
+		return driver.FindElementByXPath(
+				"//table[contains(@id,'taskbasicPureHits')]//tbody//tr[" + rowNum + "]//td[" + colNum + "]");
+	}
+
+	
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -9654,5 +9678,51 @@ driver.Manage().window().fullscreen();
 		UtilityLog.info("performing bulk assign");
 
 
+	}
+	
+	/**
+	 * @author Raghuram.A
+	 * @param cdName
+	 * @param headerName
+	 */
+	public void verifySearchReult(String cdName, String headerName) {
+		HashMap<String, Integer> headerDataPair = new HashMap<>();
+		Boolean conditionPass = false;
+		String custodianName = "";
+
+		base.stepInfo("Expected custodianName result : " + cdName);
+
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		System.out.println(getDetailsTable().size());
+		for (int i = 1; i <= getDetailsTable().size(); i++) {
+			headerDataPair.put(getDetailsTableToMap(i).getText().toString(), i);
+		}
+
+		// Header List
+		base.stepInfo("Available table headers");
+		for (Entry<String, Integer> entry : headerDataPair.entrySet()) {
+			System.out.println(entry.getKey() + " => " + entry.getValue());
+			base.stepInfo(entry.getKey());
+		}
+
+		// Condition check
+		int totalRows = getTotalRows().size();
+		for (int i = 1; i <= totalRows; i++) {
+			custodianName = getCellValue(i, headerDataPair.get(headerName)).getText();
+			if (custodianName.equalsIgnoreCase(cdName)) {
+				conditionPass = true;
+			} else {
+				conditionPass = false;
+				break;
+			}
+		}
+
+		// Result check
+		if (conditionPass) {
+			base.passedStep("Relevant Custodian details displayed on screen. : " + custodianName);
+		} else {
+			base.failedStep("CustodianName mis-matches : " + custodianName);
+		}
 	}
 }
