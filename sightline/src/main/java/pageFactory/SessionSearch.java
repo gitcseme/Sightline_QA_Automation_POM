@@ -1466,6 +1466,9 @@ public class SessionSearch {
 	public Element getQueryAlertGetTextHeader() {
 		return driver.FindElementByXPath("//span[@class='MsgTitle']");
 	}
+	public Element getAdvSearchCopyToNewSearch() {
+		return driver.FindElementByXPath("//*[@id=\"Adv\"]/div/div/button[@class='btn btn-default dropdown-toggle']");
+	}
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -6902,11 +6905,11 @@ driver.Manage().window().fullscreen();
 	 */
 	public int verifyBulkTag(String TagName) throws InterruptedException {
 		driver.waitForPageToBeReady();
-		if (getPureHitAddButton().isElementAvailable(2)) {
-			getPureHitAddButton().Click();
-		} else {
+		if (getRemovePureHit().isElementAvailable(3)) {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
+		} else if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(10);
 		}
 
 		base.waitForElement(getBulkActionButton());
@@ -9520,6 +9523,70 @@ driver.Manage().window().fullscreen();
 		getQuerySearchButton().waitAndClick(10);
 	}
 	
+
+	public void resubmitSearch() {
+		getModifyASearch().waitAndClick(10);
+		getAdvSearchCopyToNewSearch().waitAndClick(10);
+		getAdvanceSearch_btn_Current().waitAndClick(10);
+	}
+	public void navigateToAdvancedSearchPage() {
+		try {
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			base.waitForElement(getAdvancedSearchLink());
+			getAdvancedSearchLink().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while navigating to advanced search page is failed" + e.getMessage());
+		}
+	}
+	
+	public void selctProductionsAlreadyProduced() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionBtn().Visible() && getProductionBtn().Enabled();
+			}
+		}), Input.wait30);
+		getProductionBtn().Click();
+		base.waitForElement(getadwp_assgn_status());
+		getadwp_assgn_status().waitAndClick(5);
+		base.waitForElement(getDdnAlreadyProducedOption());
+		getDdnAlreadyProducedOption().waitAndClick(5);
+
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getMetaDataInserQuery());
+			
+		getMetaDataInserQuery().Click();
+		driver.scrollPageToTop();
+
+	}
+	public void workProductSearch(String WpSearch,String WPName,boolean WPBtnClick) throws InterruptedException {
+		if(WPBtnClick) {
+		base.waitForElement(getWorkproductBtn());
+		getWorkproductBtn().Click();
+		base.stepInfo("Switched to Advanced search - Work product");
+		}
+		if (WpSearch.equalsIgnoreCase("tag")) {
+			selectTagInASwp(WPName);
+		}
+		if (WpSearch.equalsIgnoreCase("folder")) {
+			selectFolderInASwp(WPName);
+		}
+		if (WpSearch.equalsIgnoreCase("redactions")) {
+			selectRedactioninWPS(WPName);
+		}
+		if (WpSearch.equalsIgnoreCase("security group")) {
+			selectSecurityGinWPS(WPName);
+		}
+		if (WpSearch.equalsIgnoreCase("productions")) {
+			selectProductionstInASwp(WPName);
+		}
+		if (WpSearch.equalsIgnoreCase("assignments")) {
+			selectAssignmentInWPS(WPName);
+		}
+
 	/**
 	 * @author Mohan date: 27/01/2021 Modified date: NA
 	 * @Description: Assign Conceptual document to bulk folder
@@ -9584,6 +9651,7 @@ driver.Manage().window().fullscreen();
 
 		base.stepInfo("performing bulk assign");
 		UtilityLog.info("performing bulk assign");
+
 
 	}
 }
