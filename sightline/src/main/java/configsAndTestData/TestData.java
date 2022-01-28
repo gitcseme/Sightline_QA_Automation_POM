@@ -163,6 +163,7 @@ public class TestData {
 	public String docNearDupeDocId;
 	public String UniCodeDocId;
 	public String TiffDocId;
+	public String IconOriginalColour;
 	
 	//Added by arunkumar
 	public String pageRange1;

@@ -261,6 +261,7 @@ public class Input {
 	public static String docNearDupeDocId;
 	public static String UniCodeDocId;
 	public static String TiffDocId;
+	public static String IconOriginalColour;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -867,7 +868,7 @@ public class Input {
 		// Added by Krishna
 		docIdKeyWordTest = testData.getDocIdKeyWordTest();
 		keyWordHexCode = testData.getKeyWordHexCode();
-
+		IconOriginalColour = testData.getIconOriginalColour();
 		// Added by Gopinath - 16/11/2021
 		signDocumentId = testData.getSignDocumentId();
 		technicalIssue = testData.getTechnicalIssue();

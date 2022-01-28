@@ -2099,6 +2099,73 @@ public class DocView_Regression2 {
 		
 	}
 	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-47878 To verify that when redaction control in red "on" state, if the icon is clicked again by the user, it must revert to an "off" state
+	 * DocView Page
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 33)
+	public void VerifyOnColourChangeInRedactionMenu() throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		Actions actions = new Actions(driver.getWebDriver());
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47878");
+		baseClass.stepInfo("To verify that when redaction control in red \"on\" state, if the icon is clicked again by the user, it must revert to an \"off\" state");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchBulletDocId);
+		baseClass.stepInfo("Search for document completed");
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Document viewed in DocView");
+		docViewRedact.clickingRedactionIcon();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
+		docViewRedact.multiPageIcon().Click();
+		docViewRedact.verifyingMultipageIconColour(Input.iconColor);
+		docViewRedact.getMultipageCancleBtn().Click();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
+		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
+		actions.build().perform();
+		String color1 = docViewRedact.multiPageIcon().getWebElement().getCssValue("color");
+		String hex1 = Color.fromString(color1).asHex();
+		System.out.println(hex1);
+		if (hex1.equalsIgnoreCase(Input.IconOriginalColour)) {
+			baseClass.passedStep("The multipage icon turned back to normal colour on unselecting as expected- Successfully");
+		} else {
+			baseClass.failedStep("The multipage icon NOT turned to normal  colour as expected");
+		}
+		
+	}
+	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-49974 
+	 * Part of 7.1: Verify that when enters only ‘Page Range’ from multi-page redactions pop up then for entered page range redaction should be applied
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
+	public void VerifyMultiPageRedaction() throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49974");
+		baseClass.stepInfo("Part of 7.1: Verify that when enters only ‘Page Range’ from multi-page redactions pop up then for entered page range redaction should be applied");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.clickingRedactionIcon();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.multiPageIcon().Visible() && docViewRedact.multiPageIcon().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.multiPageIcon().waitAndClick(10);
+		baseClass.stepInfo("The Multipage icon is clicked Menu is Visible");
+		docViewRedact.selectingMultiplePagesForRedaction();
+		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
+		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)
