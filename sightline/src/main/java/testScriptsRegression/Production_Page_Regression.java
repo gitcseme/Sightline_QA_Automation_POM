@@ -3048,6 +3048,67 @@ public class Production_Page_Regression {
 		else {
 			baseClass.failedMessage("Prefix and suffix is not displayed in user metadata field");
 		}
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that Tiff/PDF should generate with Priv
+	 *              placeholdering even though File group/tag based placeholdering
+	 *              is exists. [RPMXCON-48506]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 57)
+	public void verifyTIffOrPdfWithPrivPlaceholder() throws Exception {
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		ProductionPage page = new ProductionPage(driver);
+
+		String tagname = "TAG" + Utility.dynamicNameAppender();
+		String folder = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48506 Production Sprint 11");
+		baseClass.stepInfo(
+				"To verify that Tiff/PDF should generate with Priv placeholdering even though File group/tag based placeholdering is exists.");
+
+		// create tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(folder, Input.securityGroup);
+
+		// search for folder
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(folder);
+
+		// create production with DAT,Native,PDF& ingested Text
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSectionWithTags(tagname);
+		page.fillingTIFFSection(tagname, Input.tagNamePrev);
+		page.fillingNativeDocsPlaceholder(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(folder);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		baseClass.waitTime(4);
+		String name = page.getProduction().getText().trim();
+		page.isFileDownloaded(Input.fileDownloadLocation, name);
+
+		// Delete Tag and folder
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(folder);
+
 	}
 
 	/**
@@ -3188,6 +3249,7 @@ public class Production_Page_Regression {
 		baseClass.passedStep("Total Document Count of  DocView : " + docviewCount);
 		
 		softAssertion.assertAll();
+
 
 	}
 

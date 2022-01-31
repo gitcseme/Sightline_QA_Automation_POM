@@ -488,7 +488,7 @@ public class BasicSearch_Regression1 {
 	}
 
 	/**
-	 * @author Raghuram A Date: 11/25/21 Modified date:N/A Modified by: N/A
+	 * @author Raghuram A Date: 1/25/22 Modified date:N/A Modified by: N/A
 	 *         Description : Verify that basic search is working properly for
 	 *         Metadata RPMXCON-47712 Sprint 11
 	 * @throws InterruptedException
@@ -503,12 +503,69 @@ public class BasicSearch_Regression1 {
 		bc.stepInfo("Verify that basic search is working properly for Metadata");
 
 		ss.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
-		ss.verifySearchReult(Input.metaDataCustodianNameInput, Input.metaDataName.toUpperCase());
+		ss.verifySearchReult(Input.metaDataCustodianNameInput, Input.metaDataName.toUpperCase(), "Equal", true);
 
 		lp.logout();
 
 	}
 
+	/**
+	 * @author Raghuram A Date: 1/28/22 Modified date:N/A Modified by: N/A
+	 *         Description : Verify that basic search for Custodian is working
+	 *         properly with Wildcard Character like * RPMXCON-47278 Sprint 11
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	public void basicSearchWithMedtaDataEildSearchDetails() throws InterruptedException {
+		String wildcaseString = "An*";
+		String wildcaseCompareString = "An";
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		bc.stepInfo("RPMXCON- 47278 Basic Search Sprint-11");
+		bc.stepInfo("Verify that basic search for Custodian is working properly with Wildcard Character like * ");
+
+		ss.basicMetaDataSearch(Input.metaDataName, null, wildcaseString, null);
+		ss.verifySearchReult(wildcaseCompareString, Input.metaDataName.toUpperCase(), "contains", false);
+
+		lp.logout();
+
+	}
+
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that correct result appears when User configured
+	 *              Expanded query format and having 'White Space' ~ character.
+	 *              [RPMXCON-57455]
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	public void verifyProximityWarning() throws ParseException, InterruptedException, IOException {
+		String searchTerm = "(( \"Hello U~C\"~5 OR \"U~C\" OR ( \"##U~C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		lp = new LoginPage(driver);
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("RPMXCON-57455 Basic Search Sprint-11");
+		bc.stepInfo(
+				"Verify that correct result appears when User configured Expanded query format and having 'White Space' ~ character.");
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(searchTerm, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+		sessionSearchPage.returnPurehitCount();
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + searchTerm);
+		bc.passedStep(" successfully Proximity Warning is diplayed for input " + searchTerm);
+
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
