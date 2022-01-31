@@ -3958,6 +3958,96 @@ else {
 		docView.performConfirmNavigationDisplay();
 
 	}
+	
+
+	/**
+	 * Author : Mohan date: 28/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify user can see the associated tiff images on clicking of the images tab'RPMXCON-51105' 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 63)
+	public void verifyAssociatedTiffImage() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51105");
+		baseClass.stepInfo(
+				"Verify user can see the associated tiff images on clicking of the images tab");
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		String dropDownValue = "DocFileExtension";
+		
+		
+		baseClass.stepInfo("Step 2:  Go to doc view in context of an assignment/outside of an assignment ");
+		sessionSearch.basicSearchWithMetaDataQuery(Input.tiffSearchQuery, dropDownValue);
+		sessionSearch.ViewInDocView();
+		
+		baseClass.stepInfo("Step 3:  Click Images tab from doc view");
+		baseClass.waitForElement(docView.getDocView_Select_MiniDocList_Docs(2));
+		docView.getDocView_Select_MiniDocList_Docs(2).waitAndClick(10);
+		baseClass.waitForElement(docView.getDocView_ImagesTab());
+		docView.getDocView_ImagesTab().waitAndClick(5);
+		
+		baseClass.waitForElement(docView.getDocView_Production_Navigation());
+		docView.getDocView_Production_Navigation().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_Production_Image().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Associated images is displayed on click of Images tab.Pagination is loaded for the multiple images");
+		
+		loginPage.logout();
+		
+		// Login as PA
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Step 2:  Go to doc view in context of an assignment/outside of an assignment ");
+		sessionSearch.basicSearchWithMetaDataQuery(Input.tiffSearchQuery, dropDownValue);
+		sessionSearch.ViewInDocView();
+		
+		baseClass.stepInfo("Step 3:  Click Images tab from doc view");
+		baseClass.waitForElement(docView.getDocView_Select_MiniDocList_Docs(2));
+		docView.getDocView_Select_MiniDocList_Docs(2).waitAndClick(10);
+		baseClass.waitForElement(docView.getDocView_ImagesTab());
+		docView.getDocView_ImagesTab().waitAndClick(5);
+		
+		baseClass.waitForElement(docView.getDocView_Production_Navigation());
+		docView.getDocView_Production_Navigation().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_Production_Image().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Associated images is displayed on click of Images tab.Pagination is loaded for the multiple images");
+		
+		loginPage.logout();
+		
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+		
+		baseClass.stepInfo("Step 2:  Go to doc view in context of an assignment/outside of an assignment ");
+		sessionSearch.basicSearchWithMetaDataQuery(Input.tiffSearchQuery, dropDownValue);
+		sessionSearch.ViewInDocView();
+		
+		baseClass.stepInfo("Step 3:  Click Images tab from doc view");
+		baseClass.waitForElement(docView.getDocView_Select_MiniDocList_Docs(2));
+		docView.getDocView_Select_MiniDocList_Docs(2).waitAndClick(10);
+		baseClass.waitForElement(docView.getDocView_ImagesTab());
+		docView.getDocView_ImagesTab().waitAndClick(5);
+		
+		baseClass.waitForElement(docView.getDocView_Production_Navigation());
+		docView.getDocView_Production_Navigation().waitAndClick(5);
+		
+		softAssertion.assertTrue(docView.getDocView_Production_Image().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Associated images is displayed on click of Images tab.Pagination is loaded for the multiple images");
+
+
+		
+		
+		
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

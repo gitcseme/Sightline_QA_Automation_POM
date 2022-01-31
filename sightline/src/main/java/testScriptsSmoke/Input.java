@@ -186,6 +186,7 @@ public class Input {
 	public static String analyticsConceptualDocId1;
 	public static String analyticsConceptualDocId2;
 	public static String miniConceptualNoDoc;
+	public static String tiffSearchQuery;
 
 	// DocView codingform Baskar Indium
 
@@ -644,6 +645,7 @@ public class Input {
 		analyticsConceptualDocId1 = testData.getAnalyticsConceptualDocId1();
 		analyticsConceptualDocId2 = testData.getAnalyticsConceptualDocId2();
 		miniConceptualNoDoc = testData.getMiniConceptualNoDoc();
+		tiffSearchQuery=testData.getTiffSearchQuery();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
