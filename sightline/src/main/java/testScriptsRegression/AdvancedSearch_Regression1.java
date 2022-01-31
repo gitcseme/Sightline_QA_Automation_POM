@@ -45,8 +45,8 @@ public class AdvancedSearch_Regression1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -73,9 +73,10 @@ public class AdvancedSearch_Regression1 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
+			//loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
@@ -124,6 +125,7 @@ public class AdvancedSearch_Regression1 {
 		softAssertion.assertEquals(PureHitCountBeforeDistribution, PureHitCountAfterDistribution);
 		softAssertion.assertEquals(reviwersListInAssgnPg, reviwersListInSearchPg);
         softAssertion.assertAll();
+        loginPage.logout();
 	}
 
 	/**
@@ -149,7 +151,7 @@ public class AdvancedSearch_Regression1 {
 		baseClass.selectproject();
 		search.validateAutosuggestSearchResult(metaDataFileName, metadataFieldLabel, Value, expectedFileDisplay,
 				expectedFileDisplayInQuerySelection);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -174,6 +176,7 @@ public class AdvancedSearch_Regression1 {
 		baseClass.selectproject();
 		search.validateAutosuggestSearchResult(metaDataFileName, metadataFieldLabel, Value, expectedFileDisplay,
 				expectedFileDisplayInQuerySelection);
+		loginPage.logout();
 
 	}
 
@@ -206,6 +209,7 @@ public class AdvancedSearch_Regression1 {
 		if (username == Input.rev1userName) {
 			baseClass.stepInfo("Advance search query is executed in saved search using Reviewer");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -241,6 +245,7 @@ public class AdvancedSearch_Regression1 {
 			baseClass.stepInfo(
 					"Navigated to advance search page successfully from saved search page and new query is searched using Reviewer");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -264,6 +269,7 @@ public class AdvancedSearch_Regression1 {
 		} catch (Exception e) {
 			baseClass.failedStep(" Maximum confidence level is not set as expected on Advanced Search screen");
 		}
+		loginPage.logout();
 
 	}
 
@@ -288,6 +294,7 @@ public class AdvancedSearch_Regression1 {
 		} catch (Exception e) {
 			baseClass.failedStep(" Minimum confidence level is not set as expected on Advanced Search screen");
 		}
+		loginPage.logout();
 
 	}
 
@@ -312,6 +319,7 @@ public class AdvancedSearch_Regression1 {
 		} catch (Exception e) {
 			baseClass.failedStep(" Default confidence level is not set as expected on Advanced Search screen");
 		}
+		loginPage.logout();
 
 	}
 
@@ -336,6 +344,7 @@ public class AdvancedSearch_Regression1 {
 		} catch (Exception e) {
 			baseClass.failedStep("Not getting same search results after edit and search the existing query");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -358,6 +367,7 @@ public class AdvancedSearch_Regression1 {
 		} catch (Exception e) {
 			baseClass.failedStep("Not getting Pure hits for the search successfully");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -400,6 +410,7 @@ public class AdvancedSearch_Regression1 {
 		} catch (Exception e) {
 			baseClass.failedStep("Not getting conceptual hits for the search successfully");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -441,6 +452,7 @@ public class AdvancedSearch_Regression1 {
 		} catch (Exception e) {
 			baseClass.failedStep("Not getting conceptual hits for the search successfully");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -483,7 +495,7 @@ public class AdvancedSearch_Regression1 {
 		} catch (Exception e) {
 			baseClass.failedStep("Not getting threaded docs Count for the search successfully");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -528,7 +540,7 @@ public class AdvancedSearch_Regression1 {
 		} catch (Exception e) {
 			baseClass.failedStep("Not getting threaded docs Count for the search successfully");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -553,6 +565,7 @@ public class AdvancedSearch_Regression1 {
 		search.verifySearchQueryForAlreadyProducedFilter();
 		baseClass.passedStep(
 				"Search criteria is set by selecting Multiple Production and Already Produced Optional Filter.");
+		loginPage.logout();
 	}
 
 	/**
@@ -577,6 +590,7 @@ public class AdvancedSearch_Regression1 {
 		search.verifySearchQueryForSelectedForProductionFilter();
 		baseClass.passedStep(
 				"Search criteria is set by selecting Multiple Production and Selected For Productions Optional Filter.");
+		loginPage.logout();
 	}
 
 	/**
@@ -642,6 +656,7 @@ public class AdvancedSearch_Regression1 {
 					"Sucessfuly Verified the threshold value and PureHit Count for modified Audio search Displays as Expected in"
 							+ " saved search page");
 			softAssertion.assertAll();
+			loginPage.logout();
 		} catch (Exception e) {
 			baseClass.failedStep("Threshold or PureHit count mismatched from sessions search page");
 
@@ -719,6 +734,7 @@ public class AdvancedSearch_Regression1 {
 					"Sucessfuly Verified the threshold value and PureHit Count for modified Audio search Displays as Expected in"
 							+ " saved search page");
 			softAssertion.assertAll();
+			loginPage.logout();
 		} catch (Exception e) {
 			baseClass.failedStep("Threshold or PureHit count mismatched from sessions search page");
 
@@ -745,6 +761,7 @@ public class AdvancedSearch_Regression1 {
 				"Verify that " + Language + " language get selected from Language Pack / Dialect list box\r\n" + "");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		search.VerifyaudioSearchDropdown(Language);
+		loginPage.logout();
 	}
 
 	/**
@@ -761,6 +778,7 @@ public class AdvancedSearch_Regression1 {
 				+ "precision for concept search in advanced search & get the search results based on that");
 		loginPage.loginToSightLine(username, password);
 		search.conceptualSearch_new("field report", "mid");
+		loginPage.logout();
 	}
 
 	/**
@@ -784,6 +802,7 @@ public class AdvancedSearch_Regression1 {
         } else {
             baseClass.failedStep("Pure hits for threaded documents are displayed in search results");
         }
+        loginPage.logout();
     }
 
 	 /**
@@ -807,6 +826,7 @@ public class AdvancedSearch_Regression1 {
         } else {
             baseClass.failedStep("Pure hits for family members are displayed in search results");
         }
+        loginPage.logout();
     }
     /**
      * @author Jayanthi.ganesan
@@ -829,6 +849,7 @@ public class AdvancedSearch_Regression1 {
         } else {
             baseClass.failedStep("Pure hits for near dupes are displayed in search results");
         }
+        loginPage.logout();
     }
 
 	/**
@@ -855,6 +876,7 @@ public class AdvancedSearch_Regression1 {
 					"User can be able to search by Applying By Pass sanitization filter on Folders in work product tab");
 
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -880,6 +902,7 @@ public class AdvancedSearch_Regression1 {
 			baseClass.passedStep(
 					"User can be able to search by Applying By Pass sanitization filter on Saved search in work product tab");
 		}
+		loginPage.logout();
 	}
 
 	@DataProvider(name = "DDLanguage")
@@ -906,7 +929,7 @@ public class AdvancedSearch_Regression1 {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			LoginPage.clearBrowserCache();
+//			LoginPage.clearBrowserCache();
 
 		} catch (Exception e) {
 			System.out.println("Sessions already closed");

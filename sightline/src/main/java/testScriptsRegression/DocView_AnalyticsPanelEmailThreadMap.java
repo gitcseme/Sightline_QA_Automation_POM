@@ -87,6 +87,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 		softAssertion.assertEquals(text, textValue);
 		baseClass.passedStep(
 				"To Verify that when the thread map toggle is enabled, the length of the email thread should not be a constraint and with email threads such as the above (23 mails and 140 participants) from Analytics panel child window");
+		loginPage.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -95,6 +96,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		UtilityLog.info("Executed :" + result.getMethod().getMethodName());
 
@@ -103,7 +105,8 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			loginPage.logout();
+//			loginPage.logout();
+			loginPage.quitBrowser();
 		} finally {
 			loginPage.closeBrowser();
 

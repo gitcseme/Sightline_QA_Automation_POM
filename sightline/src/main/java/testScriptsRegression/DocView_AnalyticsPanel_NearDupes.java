@@ -167,7 +167,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		driver.switchTo().window(parentWindowID);
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -308,6 +308,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		driver.switchTo().window(parentWindowID);
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -354,6 +355,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.switchTo().window(parentWindowID);
 		softAssertion.assertAll();
 		baseClass.passedStep("verify that 'Apply Coding to this Near Dupe' is not be visible for Project Admin user");
+		loginPage.logout();
 
 	}
 
@@ -472,7 +474,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewPage.editCodingFormSave();
 
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -525,6 +527,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewPage.viewThreadMapViewInDocList();
 		baseClass
 				.stepInfo("'View in doc list' action is disabled when no document to display and verified succesfully");
+		loginPage.logout();
 
 	}
 
@@ -615,6 +618,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Doc is verified with chain link and coding form is completed successfully");
 
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -744,7 +748,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewPage.editCodingFormSave();
 
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -996,6 +1000,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"Verify when Code same action selected from Analytics Panel > Near Dupe child window and Save/Complete clicked from coding form child window");
 
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -1106,7 +1111,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"To Verify when Code same action selected from Analytics Panel > Near Dupe and Save/Complete clicked from coding form child window");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1266,6 +1271,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"To Verify when Code same action selected from Analytics Panel > Near Dupe child window and Save/Complete clicked from coding form parent window");
+		loginPage.logout();
 
 	}
 
@@ -1367,6 +1373,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewPage.completeDocsAndVerifyCheckMark();
 
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -1466,6 +1473,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewPage.completeDocsWithCodeSameAsLastAndVerifyCheckMark();
 
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -1586,7 +1594,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"To Verify when document is completed when 'Apply Coding to this Near Dupe' is clicked from near dupe comparison window opened from analytics panel child window are successfully verified");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1719,7 +1727,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Coding Stamp is applied and docs are verified with the check mark successfully");
 		baseClass.passedStep(
 				"To Verify when document is completed after applying stamp when 'Apply Coding to this Near Dupe' is clicked from near dupe comparison window opened from analytics panel child window are successfully verified");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1823,7 +1831,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.getWebDriver().close();
 
 		driver.switchTo().window(parentWindowID);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1887,7 +1895,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// Perform Code Same for Threaded Docs
 		baseClass.stepInfo("CodeAsSame is performed for the selected docs");
 		docViewAnalytics.performCodeSameForThreadedDocuments();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1946,7 +1954,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Verify columns in Family tab in Analytical columns");
 		driver.waitForPageToBeReady();
 		docViewAnalytics.verifyFamilyMembersTabColumns();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2014,7 +2022,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify columns in Near Dupe tab in Analytical columns");
 		docViewAnalytics.verifyNearDupeTabColumns();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2081,7 +2089,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify columns in conceptual tab in Analytical columns");
 		docViewAnalytics.verifyConceptualTabColumns();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2189,6 +2197,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewAnalytics.verifyWhetherCompletedCheckmarkIsDisplayedInOtherTabs();
 
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -2359,6 +2368,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Complete CheckMark is verified Successfully");
 
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -2611,7 +2621,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Complete CheckMark is verified Successfully");
 
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2716,6 +2726,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Complete CheckMark is verified Successfully");
 
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -3098,7 +3109,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// Verify CheckMark is present
 		docViewAnalytics.verifyWhetherCompletedCheckmarkIsDisplayedInOtherTabs();
 		baseClass.stepInfo("Complete CheckMark is verified Successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3206,7 +3217,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"To Verify when Code same action selected from Analytics Panel > Near Dupe and Save/Complete clicked from coding form parent window has been succesfully verified");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3460,7 +3471,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewPage.verifyWhetherCompletedCheckmarkIsDisplayedInOtherTabs();
 
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3553,7 +3564,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify completed check mark on thread map tab");
 		docViewAnalytics.verifyCompleteCheckMarkForThreadMapTabDocs();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3728,6 +3739,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// verify Completed checkmark
 		docViewPage.verifyCheckMark();
 		baseClass.stepInfo("Complete CheckMark is verified successfully");
+		loginPage.logout();
 
 	}
 
@@ -3918,7 +3930,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 			baseClass.failedStep("The tab selected on analytical panel changed after completing document");
 		}
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -4105,7 +4117,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 			baseClass.failedStep("The tab selected on analytical panel changed after completing document");
 		}
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -4359,7 +4371,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.switchTo().window(parentWindowID);
 
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -4621,6 +4633,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.switchTo().window(parentWindowID);
 
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -4664,8 +4677,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo(
 				"Verify whether the threaded documents has documents which has Inclusive emails is either Yes or No");
 		docViewAnalytics.verifyThreadDocsDisplayDocsIrrespectiveOfInclusiveEmailValue();
-		
-		
+		loginPage.logout();	
 
 	}
 
@@ -4677,9 +4689,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
+//			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

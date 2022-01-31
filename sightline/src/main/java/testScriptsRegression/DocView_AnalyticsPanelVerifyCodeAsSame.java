@@ -134,6 +134,7 @@ public class DocView_AnalyticsPanelVerifyCodeAsSame {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		UtilityLog.info("Executed :" + result.getMethod().getMethodName());
 
@@ -141,7 +142,7 @@ public class DocView_AnalyticsPanelVerifyCodeAsSame {
 	
 	public void close() {
 		try {
-			loginPage.logout();
+			loginPage.quitBrowser();
 		} finally {
 			loginPage.closeBrowser();
 

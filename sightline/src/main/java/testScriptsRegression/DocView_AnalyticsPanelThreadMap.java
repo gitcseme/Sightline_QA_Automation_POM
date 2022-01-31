@@ -70,6 +70,7 @@ public class DocView_AnalyticsPanelThreadMap {
 		softAssertion.assertTrue(true, text);
 		baseClass.passedStep(
 				"Verify that Thread Map tab should be displayed when navigating to doc view outside of assignment is successfully");
+		loginPage.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -77,13 +78,14 @@ public class DocView_AnalyticsPanelThreadMap {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			loginPage.logout();
+			loginPage.quitBrowser();
 		} finally {
 
 			loginPage.closeBrowser();

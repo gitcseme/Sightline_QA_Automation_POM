@@ -106,6 +106,7 @@ public class Assignment_Regression3 {
 			e.printStackTrace();
 			baseClass.failedStep("Docs Count in manage assignment page is not  displayed as expected.");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -157,6 +158,7 @@ public class Assignment_Regression3 {
 			e.printStackTrace();
 			baseClass.failedStep("Docs Count in documents distribute tab is not displayed as expected.");
 		}
+		loginPage.logout();
 
 	}
 
@@ -208,7 +210,7 @@ public class Assignment_Regression3 {
 			e.printStackTrace();
 			baseClass.failedStep("Docs Count in documents Manage Reviewer tab is not displayed as expected.");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -251,7 +253,7 @@ public class Assignment_Regression3 {
 			e.printStackTrace();
 			baseClass.failedStep("Docs Count in documents Doc View is not displayed as expected.");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -293,6 +295,7 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("'Show Default View Tab' toggle is enabled by default when new assignment  is created");
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.DeleteAssgnGroup(assignmentGroup);
+		loginPage.logout();
 	}
 
 	/**
@@ -340,7 +343,7 @@ public class Assignment_Regression3 {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.verifyKeywordsBeforeAndAfterDelete(keywordName, KeywordsListInKEywordPageAfterdelete, false);
 		agnmt.getKeywordPopUpCancelBtn().waitAndClick(5);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -378,6 +381,7 @@ public class Assignment_Regression3 {
 		agnmt.selectAssignmentGroup(assgnGrp);
 		agnmt.DeleteAssgnGroup(assgnGrp);
 		softAssertion.assertAll();
+		loginPage.logout();
 	}
 
 	/**
@@ -418,6 +422,7 @@ public class Assignment_Regression3 {
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.selectAssignmentGroup(assgnGrp);
 		agnmt.DeleteAssgnGroup(assgnGrp);
+		loginPage.logout();
 	}
 
 	/**
@@ -455,6 +460,7 @@ public class Assignment_Regression3 {
 		agnmt.VerifyDrawPoolToggleEnabled();
 		agnmt.verifyPresentationControlTogglesEnabledDisabled();
 		softAssertion.assertAll();
+		loginPage.logout();
 	}
 
 	/**
@@ -492,6 +498,7 @@ public class Assignment_Regression3 {
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		loginPage.logout();
 
 	}
 
@@ -542,6 +549,7 @@ public class Assignment_Regression3 {
 			baseClass.stepInfo(e.getMessage());
 			baseClass.failedStep("Exception occured");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -594,7 +602,7 @@ public class Assignment_Regression3 {
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"Sucessfully Verified the Disable the \"Draw from Pool\" field settings in the Assignment is reflected or not by logging out and loggin as same user.");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -656,6 +664,7 @@ public class Assignment_Regression3 {
 		// Delete Assignment
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		loginPage.logout();
 	}
 
 	/**
@@ -707,6 +716,7 @@ public class Assignment_Regression3 {
 		agnmt.navigateToAssignmentsPage();
 		agnmt.deleteAssignmentFromSingleAssgnGrp(cascadeAsgnGrpName, assignment);
 		agnmt.DeleteAssgnGroup(cascadeAsgnGrpName);
+		loginPage.logout();
 
 	}
 
@@ -717,9 +727,10 @@ public class Assignment_Regression3 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
+//			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

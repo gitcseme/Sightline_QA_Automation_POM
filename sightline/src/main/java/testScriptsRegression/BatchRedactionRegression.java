@@ -1916,6 +1916,7 @@ public class BatchRedactionRegression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			login.logoutWithoutAssert();
 		}
 	login.quitBrowser();
 	}
