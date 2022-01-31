@@ -3,6 +3,8 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
@@ -18,6 +20,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
+import pageFactory.ReusableDocViewPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
@@ -120,7 +123,74 @@ public class UsersAndRoleManagement_Regression {
 		userManage.deleteAddedUser(firstName);
 	}
 	
-	
+	/**
+	 * @author Gopinath 
+	 * @TestCase Id:52454 To verify users authentication
+	 *         session, from same machine in browsers new window/new tab
+	 * @Description:To To verify users authentication session, from same machine in
+	 *                 browsers new window/new tab
+	 */
+	@Test(alwaysRun = true,groups={"regression"},priority = 3)
+	public void verifyuserAuthenticationSession() {
+		String userName = Input.rmu1userName;
+		String password = Input.rmu1password;
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52454");
+		baseClass.stepInfo(
+				"###To verify users authentication session, from same machine in browsers new window/new tab###");
+		ReusableDocViewPage reusb = new ReusableDocViewPage(driver);
+		loginPage.logout();
+
+		baseClass.stepInfo("user login to application in window 1 as session 1");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		baseClass.stepInfo("Opening second tab");
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("window.open()");
+
+		baseClass.stepInfo("switching to second tab");
+		String parentWindow = reusb.switchTochildWindow();
+		String childWindow = driver.getWebDriver().getWindowHandle();
+
+		baseClass.stepInfo("Entering Url in second tab");
+		baseClass.waitTime(2);
+		driver.getWebDriver().get(Input.url);
+		System.out.println(Input.browserName + "is opned and loading application");
+
+		baseClass.stepInfo("Enter user name and password");
+		driver.waitForPageToBeReady();
+		loginPage.getEuserName().waitAndClick(10); // to adjust with app!
+		loginPage.getEuserName().isElementAvailable(10);
+		loginPage.getEuserName().SendKeys(userName);
+		// Fill password
+		loginPage.getEpassword().SendKeys(password);
+
+		baseClass.stepInfo("Cliac on loginbutton");
+		loginPage.getEloginButton().Click();
+
+		if (loginPage.getActiveSessionYesButton().isElementAvailable(3)) {
+			baseClass.passedStep(
+					"After click on Login Button In Second tab Active session popup is displayed with cancel and yes options");
+		} else {
+			baseClass.failedStep("Active Session popup is not dispalyed");
+		}
+		baseClass.waitForElement(loginPage.getActiveSessionYesButton());
+		loginPage.getActiveSessionYesButton().Click();
+		baseClass.waitForElement(loginPage.getWarningLogOutMessage());
+		if (loginPage.getWarningLogOutMessage().isElementAvailable(5)) {
+			driver.getWebDriver().switchTo().window(parentWindow);
+			baseClass.waitForElement(loginPage.getWarningLogOutMessage());
+			if (loginPage.getWarningLogOutMessage().isElementAvailable(5)) {
+				baseClass.passedStep("Session was expire in both tabs");
+
+			}
+		} else {
+			baseClass.failedStep("Session was not expired in second tab");
+		}
+		reusb.childWindowToParentWindowSwitching(childWindow);
+		baseClass.stepInfo("login to appliction in second tab");
+		loginPage.loginToSightLine(userName, password);
+
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void close() {
