@@ -8082,6 +8082,233 @@ public void verifyingNativelyProducedDocsToggleIsDisAbledInTiffAndPDFSection() t
 
 }
 
+/**
+ * @author Brundha Test case id-RPMXCON-48604
+ * @Description Verify the exported CSV data
+ * 
+ */
+@Test(groups = { "regression" }, priority = 1)
+public void verifyExportBatesGeneratedFile() throws Exception {
+
+	UtilityLog.info(Input.prodPath);
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+	base.stepInfo("RPMXCON-48604 - from Production-sprint 11");
+	base.stepInfo("Verify the exported CSV data");
+
+	String foldername = "Folder" + Utility.dynamicNameAppender();
+	String productionname = "p" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.getbtnProductionGenerate().isDisplayed();
+	page.getbtnProductionGenerate().waitAndClick(10);
+	page.verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+	page.getExportBatesButton().isDisplayed();
+	page.getExportBatesButton().waitAndClick(5);
+	BaseClass base= new BaseClass(driver);
+	base.VerifySuccessMessage("Export bates range has been added to background services. You will get notification once completed");
+	driver.waitForPageToBeReady();
+	page.getNotificationLink().waitAndClick(5);
+	page.getViewAll().waitAndClick(10);
+	for(int i=0;i<2;i++) {
+	driver.Navigate().refresh();
+	}
+	page.getDownloadLinkforExport().Click();
+	base.csvFileVerification();
+	base.passedStep("Verified the exported CSV data");
+}
+
+
+
+/**
+ * @author Brundha Test case id-RPMXCON-48603
+ * @DescriptionTo verify that user can download the CSV file once Production-Generate-Export is completed
+ * 
+ */
+@Test(groups = { "regression" }, priority = 1)
+public void verifyExportBatesGeneratedFileInNotification() throws Exception {
+
+	UtilityLog.info(Input.prodPath);
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+	base.stepInfo("RPMXCON-48603 - from Production sprint 11");
+	base.stepInfo("To verify that user can download the CSV file once Production-Generate-Export is completed");
+
+	String foldername = "Folder" + Utility.dynamicNameAppender();
+	String productionname = "p" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.getbtnProductionGenerate().isDisplayed();
+	page.getbtnProductionGenerate().waitAndClick(10);
+	page.verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+	
+	page.getExportBatesButton().waitAndClick(5);
+	BaseClass base= new BaseClass(driver);
+	base.VerifySuccessMessage("Export bates range has been added to background services. You will get notification once completed");
+	page.getNotificationLink().waitAndClick(5);
+	page.verifyExportedCSVFile();
+	 base= new BaseClass(driver);
+	base.csvFileVerification();
+	
+}
+/**
+ * @author Brundha Test case id-RPMXCON-48654
+ * @Description To verify that if "Do Not Produce PDFs for Natively Produced Docs" is Enabled, then only Native should be produced
+ * 
+ */
+@Test(groups = { "regression" }, priority = 107)
+public void verifyingTheProductionOnVolumeIncludedToggl() throws Exception {
+
+	UtilityLog.info(Input.prodPath);
+	loginPage.logout();		
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+	base.stepInfo("RPMXCON-48654-Production Sprint 11");
+	base.stepInfo(
+			"To verify that if 'Do Not Produce PDFs for Natively Produced Docs' is Enabled, then only Native should be produced");
+	
+
+	String foldername = "Folder" + Utility.dynamicNameAppender();
+	String tagname = "Tag" + Utility.dynamicNameAppender();
+	String productionname = "p" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearchForTwoItems(Input.telecaSearchString,Input.docFile);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSection();
+	page.fillingTextSection();
+	page.fillingTIFFSection(tagname, Input.searchString4);
+	driver.scrollPageToTop();
+	page.getDoNotProduceFullContentTiff().isDisplayed();
+	page.getDoNotProduceFullContentTiff().waitAndClick(10);
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID,suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.verifyVolumeIncludedToggleInProductionSelection();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+
+}
+
+
+/**
+* @author Brundha Test case id-RPMXCON-48307
+* @Description To verify that the order of docs in OPT is matching the order of docs in DAT.
+* 
+*/
+@Test(groups = { "regression" }, priority = 108)
+public void verifyOrderOfDATAndOPTInGeneratedProduction() throws Exception {
+
+UtilityLog.info(Input.prodPath);
+loginPage.logout();		
+loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+base.stepInfo("RPMXCON-48307-Production Sprint 11");
+base.stepInfo(
+		"To verify that the order of docs in OPT is matching the order of docs in DAT.");
+
+
+String foldername = "Folder" + Utility.dynamicNameAppender();
+String productionname = "p" + Utility.dynamicNameAppender();
+String prefixID = Input.randomText + Utility.dynamicNameAppender();
+String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+SessionSearch sessionSearch = new SessionSearch(driver);
+sessionSearch.basicContentSearch(Input.testData1);
+sessionSearch.bulkFolderExisting(foldername);
+
+ProductionPage page = new ProductionPage(driver);
+page = new ProductionPage(driver);
+String beginningBates = page.getRandomNumber(2);
+page.selectingDefaultSecurityGroup();
+page.addANewProduction(productionname);
+page.fillingDATSection();
+page.fillingNativeSection();
+page.selectGenerateOption(false);
+page.fillingAdvancedInTiffSection();
+page.navigateToNextSection();
+page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+page.navigateToNextSection();
+page.fillingDocumentSelectionPage(foldername);
+page.navigateToNextSection();
+page.fillingPrivGuardPage();
+page.fillingProductionLocationPage(productionname);
+page.navigateToNextSection();
+page.fillingSummaryAndPreview();
+page.fillingGeneratePageWithContinueGenerationPopup();
+
+}
+
+
+
 
 	@AfterMethod(alwaysRun = true)
 	public void close() {

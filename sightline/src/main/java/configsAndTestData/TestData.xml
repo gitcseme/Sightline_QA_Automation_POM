@@ -48,6 +48,7 @@
 	<pageRange3>1,2,8,10,11,12,13</pageRange3>
 	<pageRange4>2-13</pageRange4>
 	<searchPhraseWithQuote>"is required"</searchPhraseWithQuote>
+	<keywordColor1>Cyan</keywordColor1>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
@@ -178,6 +179,7 @@
 	<docNearDupeDocId>ID00001329</docNearDupeDocId>
 	<TiffDocId>ID00001075</TiffDocId>
 	<UniCodeDocId>ID00005206</UniCodeDocId>
+	<IconOriginalColour>#444444</IconOriginalColour>
 
 
 	<!-- Baskar Indium Audio Search to DocView MiniList - modify on 9/01/21 -->
@@ -373,14 +375,15 @@
 	<notSelect>Not Selected</notSelect>
 	<securityGroup_sg47>SG1134047</securityGroup_sg47>
 	<regressionConsilio>Regression_AllDataset_Consilio</regressionConsilio>
-	<regressionConsilio1>Regression_AllDataset_Consilio1
-	</regressionConsilio1>
+	<regressionConsilio1>Regression_AllDataset_Consilio1</regressionConsilio1>
+	
 
 
 
 	<!-- Added by Brundha -->
 	<documentID>ID00001333</documentID>
-
+    <telecaSearchString>teleca</telecaSearchString>
+	<docFile>ID00001493</docFile>
 
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>

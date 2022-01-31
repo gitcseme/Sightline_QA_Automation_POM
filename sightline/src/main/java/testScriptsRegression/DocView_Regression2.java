@@ -9,10 +9,12 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
 import org.testng.Assert;
@@ -37,6 +39,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ReusableDocViewPage;
+import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
@@ -57,6 +60,7 @@ public class DocView_Regression2 {
 	DocExplorerPage docexp;
 	AssignmentsPage assignPage;
 	KeywordPage keywordPage;
+	SavedSearch savedsearch;
 
 	String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 
@@ -1845,12 +1849,388 @@ public class DocView_Regression2 {
 		docViewRedact.checkingPersistentHitPanel();
 		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
 
+	}/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50787
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true,dataProvider = "userDetails2", alwaysRun = true , groups = { "regression" }, priority = 30)
+	public void verifyDocViewOptions(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-50787");
+		baseClass.stepInfo("To verify options available on menu bar from document view panel of doc view page");
+		loginPage.loginToSightLine(userName, password);
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		sessionSearch.basicContentSearch(Input.searchString1);
+	    sessionSearch.ViewInDocView();
+	    docViewRedact = new DocViewRedactions(driver);
+	    driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.thumbNailsIcon().Visible() && docViewRedact.thumbNailsIcon().Enabled();}
+		}), Input.wait30);
+	    baseClass.waitTillElemetToBeClickable(docViewRedact.thumbNailsIcon());
+	    docViewRedact.HighliteIcon().waitAndFind(30);
+	    if(docViewRedact.HighliteIcon().isDisplayed()) {
+	    	baseClass.passedStep("Thumbnails icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Thumbnails Icon not visible in DocView");  }    
+	    if(docViewRedact.zoomInDocView().isDisplayed()) {
+	    	baseClass.passedStep("Zoom in icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Zoom in Icon not visible in DocView");  }    
+	    if(docViewRedact.zoomOutDocView().isDisplayed()) {
+	    	baseClass.passedStep("Zoom out visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Zoom out Icon not visible in DocView"); }    
+	    if(docViewRedact.zoomFitToScreenDocView().isDisplayed()) {
+	    	baseClass.passedStep("Fit to screen icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Fit to screen forwaard not visible in DocView");} 
+	    if(docViewRedact.rotateClockWise().isDisplayed()) {
+	    	baseClass.passedStep("Rotate Clock wise visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Rotate clock wise not visible in DocView");} 
+	    if(docViewRedact.rotateAntiClockWise().isDisplayed()) {
+	    	baseClass.passedStep("Rotate AntiClock visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Rotate AntiClock not visible in DocView"); }
+	    
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50787
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 31)
+	public void verifyDocViewOptions() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-50787");
+		baseClass.stepInfo("To verify options available on menu bar from document view panel of doc view page");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		SessionSearch sessionSearch = new SessionSearch(driver);	
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		sessionSearch.basicContentSearch(Input.randomText);
+		sessionSearch.bulkAssign();
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		baseClass.passedStep("Assignment viewed in DocView Successfully");
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+	    docViewRedact = new DocViewRedactions(driver);
+	    driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.thumbNailsIcon().Visible() && docViewRedact.thumbNailsIcon().Enabled();
+			}
+		}), Input.wait30);
+	    baseClass.waitTillElemetToBeClickable(docViewRedact.thumbNailsIcon());
+	    docViewRedact.thumbNailsIcon().waitAndFind(30);
+	    if(docViewRedact.HighliteIcon().isDisplayed()) {
+	    	baseClass.passedStep("Thumbnails icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Thumbnails Icon not visible in DocView");  }    
+	    if(docViewRedact.zoomInDocView().isDisplayed()) {
+	    	baseClass.passedStep("Zoom in icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Zoom in Icon not visible in DocView");  }    
+	    if(docViewRedact.zoomOutDocView().isDisplayed()) {
+	    	baseClass.passedStep("Zoom out visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Zoom out Icon not visible in DocView"); }    
+	    if(docViewRedact.zoomFitToScreenDocView().isDisplayed()) {
+	    	baseClass.passedStep("Fit to screen icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Fit to screen forwaard not visible in DocView");} 
+	    if(docViewRedact.rotateClockWise().isDisplayed()) {
+	    	baseClass.passedStep("Rotate Clock wise visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Rotate clock wise not visible in DocView");} 
+	    if(docViewRedact.rotateAntiClockWise().isDisplayed()) {
+	    	baseClass.passedStep("Rotate AntiClock visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Rotate AntiClock not visible in DocView"); }   
+		
+	 if(docViewRedact.HighliteIcon().isDisplayed()) {
+	    	baseClass.passedStep("Highlite icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Highlite Icon not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.redactionIcon().isDisplayed()) {
+	    	baseClass.passedStep("Redaction icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Redaction Icon not visible in DocView");
+	    }
+	    
+	    if(docViewRedact.getSearchIcon().isDisplayed()) {
+	    	baseClass.passedStep("Search icon visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Search Icon not visible in DocView");
+	    }
+		
+		 if(docViewRedact.remarksIcon().isDisplayed()) {
+	    	baseClass.passedStep("Remarks iocn visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Remarks icon not visible in DocView"); }
+	    
+	    if(docViewRedact.persistantHitBtn().isDisplayed()) {
+	    	baseClass.passedStep("Persistent hit button visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("persistent hit button not visible in DocView"); }
+	    
+	    if(docViewRedact.downloadIcon().isDisplayed()) {
+	    	baseClass.passedStep("Download iocn visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("Download icon not visible in DocView"); }
+		
+		 if(docViewRedact.printIcon().isDisplayed()) {
+	    	baseClass.passedStep("print iocn visible in DocView"); 	
+	    } else {
+	    	baseClass.failedStep("print icon not visible in DocView"); }
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50785
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 32)
+	public void verifyAssignmentViewInDocViewZero() throws Exception {
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-50785");
+		baseClass.stepInfo("To verify that on selecting 'View All Doc in Doc View' option when documents are not mapped to the assignment");
+		docViewRedact = new DocViewRedactions(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		assignmentspage.createAssignment(assignmentName, Input.codeFormName);
+		baseClass.stepInfo(
+				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
+		String verifydocsCountInAssgnPage = assignmentspage.verifydocsCountInAssgnPage(assignmentName);
+		if(verifydocsCountInAssgnPage.equalsIgnoreCase("0")) {
+			baseClass.passedStep("The doc count has been verified");
+		} else {
+			baseClass.failedStep("The doc count is not verified");
+		}
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		baseClass.VerifyWarningMessage("Please select an assignment which contains documents assigned to it.");	
+		assignmentspage.deleteAssgnmntUsingPagination(assignmentName);	
+	}
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51305
+	 * Description :Verify persistent Hit panel of DocView should present only content terms, not metadata terms when navigating from advance search 
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 30)
+	public void verifyMetaDataTermOnPersistentPanel(String fullName, String userName, String password) throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51305");
+		baseClass.stepInfo("Verify metadata terms on persistent panel when navigating from advance search");
+		sessionsearch.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.metaDataCustodianNameInput);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Navigated to docView");
+		docView.verifyMetaDataTermDisplayingOnPersistentPanel(Input.metaDataCustodianNameInput);
+	}
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51324
+	 * Description :Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from advance search
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 31)
+	public void verifyHighlightingWhenNavigatingFromAdvancedSearch(String fullName, String userName, String password) throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		loginPage.loginToSightLine(userName,password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51324");
+		baseClass.stepInfo("Verify keywords highlighting when navigating from advanced search");
+		sessionsearch.advancedContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Navigated to docView");
+		docView.verifyTermHitsHighlightingInDocumentWithoutClickingEyeIcon(Input.searchString1);
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51012
+	 * Description :To verify that persistent search should be displayed on doc view if user navigates from Saved Search-Doc View.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 32)
+	public void verifyHighlightingWhenNavigatingFromSavedSearch() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		assignPage = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		savedsearch = new SavedSearch(driver);
+		String searchName = "Atestsearch" + Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51012");
+		baseClass.stepInfo("verify that persistent search should be displayed on doc view if user navigates from Saved Search-Doc View");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.saveSearch(searchName);
+		savedsearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Navigated to docView");
+		docView.verifyTermHitsHighlightingInDocumentAfterClickingEyeIcon(Input.testData1);
+		int availableTermwithCount = docView.getPersistantNames().size();
+		if(availableTermwithCount>0) {
+			baseClass.passedStep("Hit terms with count displayed on the persistent panel");
+		}
+		else {
+			baseClass.failedStep("Hit terms with count not displayed on the persistent panel");
+		}
+		
+	}
+	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-47878 To verify that when redaction control in red "on" state, if the icon is clicked again by the user, it must revert to an "off" state
+	 * DocView Page
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 33)
+	public void VerifyOnColourChangeInRedactionMenu() throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		Actions actions = new Actions(driver.getWebDriver());
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47878");
+		baseClass.stepInfo("To verify that when redaction control in red \"on\" state, if the icon is clicked again by the user, it must revert to an \"off\" state");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchBulletDocId);
+		baseClass.stepInfo("Search for document completed");
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Document viewed in DocView");
+		docViewRedact.clickingRedactionIcon();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
+		docViewRedact.multiPageIcon().Click();
+		docViewRedact.verifyingMultipageIconColour(Input.iconColor);
+		docViewRedact.getMultipageCancleBtn().Click();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
+		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
+		actions.build().perform();
+		String color1 = docViewRedact.multiPageIcon().getWebElement().getCssValue("color");
+		String hex1 = Color.fromString(color1).asHex();
+		System.out.println(hex1);
+		if (hex1.equalsIgnoreCase(Input.IconOriginalColour)) {
+			baseClass.passedStep("The multipage icon turned back to normal colour on unselecting as expected- Successfully");
+		} else {
+			baseClass.failedStep("The multipage icon NOT turned to normal  colour as expected");
+		}
+		
+	}
+	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-49974 
+	 * Part of 7.1: Verify that when enters only ‘Page Range’ from multi-page redactions pop up then for entered page range redaction should be applied
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
+	public void VerifyMultiPageRedaction() throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49974");
+		baseClass.stepInfo("Part of 7.1: Verify that when enters only ‘Page Range’ from multi-page redactions pop up then for entered page range redaction should be applied");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.clickingRedactionIcon();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.multiPageIcon().Visible() && docViewRedact.multiPageIcon().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.multiPageIcon().waitAndClick(10);
+		baseClass.stepInfo("The Multipage icon is clicked Menu is Visible");
+		docViewRedact.selectingMultiplePagesForRedaction();
+		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
+		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
 	}
 	
 	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51047
+	 * Description :Verify keyword highlighting color from doc view when mapped keywords are having same word with different color
+	 * @throws AWTException 
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 35)
+	public void verifyHighlightingWhenSameKeywordsHaveDifferentColor() throws AWTException, InterruptedException {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		assignPage = new AssignmentsPage(driver);
+		savedsearch = new SavedSearch(driver);
+		keywordPage = new KeywordPage(driver);
+		
+		String keywordGroupName1 = "firstGroup"+utility.dynamicNameAppender();
+		String keywordGroupName2 = "secondGroup"+utility.dynamicNameAppender();
+		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
+	    String[] Color= {Input.keywordColor1,Input.KeyWordColour};
+		String[] keywordGroupName= {keywordGroupName1,keywordGroupName2};
+		
+		//Pre-requisite
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51047");
+		baseClass.stepInfo("Verify keyword highlighting color from doc view when mapped keywords are having same word with different color");
+		keywordPage.addTwoSameKeywordWithDifferentColor(keywordGroupName, Input.testData1, Color);
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssignExisting(assignmentName);
+		assignPage.unmappingKeywordsFromAssignment(assignmentName);
+		assignPage.mappingKeywordToAssignment(keywordGroupName1);
+		driver.waitForPageToBeReady();
+		assignPage.mappingKeywordToAssignment(keywordGroupName2);
+		driver.waitForPageToBeReady();
+		assignPage.addReviewerAndDistributeDocs();
+		baseClass.waitForElement(assignPage.getAssignmentSaveButton());
+		assignPage.getAssignmentSaveButton().Click();
+		loginPage.logout();
+		//Login as RMU and verify keyword color Highlighting
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined as RMU");
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.selectAssignmentToViewinDocView(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+		//Login as Reviewer and verify keyword color Highlighting
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logined as Reviewer");
+		assignPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		docView.verifyKeywordHighlightedOnDocView();
+		
+	}
 	
-	
-
 	
 	
 	@AfterMethod(alwaysRun = true)

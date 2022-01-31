@@ -175,10 +175,9 @@ public class DocViewPage {
 	}
 
 	public ElementCollection getRemarkPanelItems(String text) {
-		return driver.FindElementsByXPath("//div[@id='RemarkPnl']//p[contains(text(),'"+text+"')]");
+		return driver.FindElementsByXPath("//div[@id='RemarkPnl']//p[contains(text(),'" + text + "')]");
 	}
-	
-	
+
 	public Element getDocview_Redactionstags_Value() {
 		return driver.FindElementByXPath("//ul[@class='multiselect-container dropdown-menu']/li[1]//input");
 	}
@@ -1490,21 +1489,39 @@ public class DocViewPage {
 
 	// Added by Mohan
 	
+	public Element getDocView_MetaData_FolderName(String folderName) {
+		return driver.FindElementByXPath("//*[@id='documentFolderJSTree']//a[text()='"+folderName+"']");
+	}
+	
+	public Element getDocView_PersistanceHit_PanelText(String text) {
+		return driver.FindElementByXPath("//p[@id='PHitCount_"+text+"']");
+	}
+	
+	public Element getDocView_AnalyticsPanel_ThreadMapFirstRow() {
+		return driver.FindElementByXPath("//*[@id='dtDocumentThreadedDocuments']//tr[@id='threadedDocumentIdRow']");
+	}
+	
+	public Element getDocView_AnalyticsPanel_NearDupeWholeTabel() {
+		return driver.FindElementById("dupe1");
+	}
+
 	public Element getDocView_AnalyticsPanel_FamilyMemberTabQueryNoData() {
-		return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//td[text()='Your query returned no data']");
+		return driver
+				.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//td[text()='Your query returned no data']");
 	}
-	
-	
+
 	public Element getDocView_AnalyticsPanel_NearDupeTabQueryNoData() {
-		return driver.FindElementByXPath("//*[@id='dtDocumentNearDuplicates']//td[text()='Your query returned no data']");
+		return driver
+				.FindElementByXPath("//*[@id='dtDocumentNearDuplicates']//td[text()='Your query returned no data']");
 	}
-	
+
 	public Element getDocView_AnalyticsPanel_ConceptualWholeTabel() {
 		return driver.FindElementById("conceptual1");
 	}
-	
+
 	public Element getDocView_AnalyticsPanel_ConceptualQueryNoData() {
-		return driver.FindElementByXPath("//*[@id='dtDocumentConceptuallySimilar']//td[text()='Your query returned no data']");
+		return driver.FindElementByXPath(
+				"//*[@id='dtDocumentConceptuallySimilar']//td[text()='Your query returned no data']");
 	}
 
 	public Element getDocView_SearchTextBox_HitCount() {
@@ -2306,6 +2323,34 @@ public class DocViewPage {
 	public Element getMiniDocListConfirmationButton(String actionType) {
 		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[text()='" + actionType + "']");
 	}
+	
+	public Element getEyeIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-eye']");
+	}
+
+	public Element remarksIcon() {
+		return driver.FindElementByXPath("//i[@class='fa-stack-1x fa fa-wifi fa-rotate-270']");
+	}
+	
+	public Element redactionIcon() {
+		return driver.FindElementByXPath("//li[@id='gray-tab']");
+	}
+
+	public Element multiPageIcon() {
+		return driver.FindElementByXPath("//li[@id='multipageRedaction_divDocViewer']");
+	}
+
+	public Element multiPageInputTextbox() {
+		return driver.FindElementByXPath("//input[@name='pages']");
+	}
+	
+	public Element HighliteIcon() {
+		return driver.FindElementByXPath("//li[@id='yellow-tab']");
+	}
+	
+	public Element docViewEyeSearchTerm() {
+		return driver.FindElementByXPath("//h3[text()='Search Hits:']");
+	}
 
 	// added by brundha
 	public Element getMIniDocListDocument() {
@@ -2738,11 +2783,11 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//ul[@id='documentTypeDropDown']/li[4]");
 	}
 
-	//Added by Vijaya.Rani
+	// Added by Vijaya.Rani
 	public Element getDocView_Analytics_ConceptViewAllDocsBtn() {
 		return driver.FindElementById("btnShowAllconceptual");
 	}
-	
+
 	public Element getDocView_AnalyticalPanelTab() {
 		return driver.FindElementByXPath("//ul[@class='nav nav-tabs tab-style clsAnalyticsTabs']");
 	}
@@ -2750,11 +2795,11 @@ public class DocViewPage {
 	public Element getDocView_AnalyticalPanel_NoData() {
 		return driver.FindElementByXPath("//td[@class='dataTables_empty']");
 	}
-	//Added by Gopinath -21/01/2022
+
+	// Added by Gopinath -21/01/2022
 	public ElementCollection getHighlightedKeywordrgbCode(String rgbCode) {
-		return driver.FindElementsByCssSelector("rect[style*='fill'][style*='"+rgbCode+"']");
+		return driver.FindElementsByCssSelector("rect[style*='fill'][style*='" + rgbCode + "']");
 	}
-	
 
 	public Element getDocView_AnalyticsExitingFolderConceptual() {
 		return driver.FindElementById("tabExiting");
@@ -2763,43 +2808,49 @@ public class DocViewPage {
 	public Element getDocView_AnalyticsExitingFolderName() {
 		return driver.FindElementById("472_anchor");
 	}
+
 	// Added by Iyappan
 	public Element getRemarksId(String remarksName) {
-		return driver.FindElementByXPath(".//*[@id='newRemarks']//p[text()='"+remarksName+"']");
+		return driver.FindElementByXPath(".//*[@id='newRemarks']//p[text()='" + remarksName + "']");
 	}
+
 	public Element getDocView_SelectRemarks(String remarksName) {
-		return driver.FindElementByXPath(".//*[@id='newRemarks']//p[text()='"+remarksName+"']/parent::span");
+		return driver.FindElementByXPath(".//*[@id='newRemarks']//p[text()='" + remarksName + "']/parent::span");
 	}
+
 	public Element getRemarksInPg(String id) {
-		return driver.FindElementByCssSelector("g[data-pcc-mark='highlighttextannotation-"+id+"']");
+		return driver.FindElementByCssSelector("g[data-pcc-mark='highlighttextannotation-" + id + "']");
 	}
-	
+
 	public Element getDocView_Analytics_FamilyTab_NoQuery() {
 		return driver.FindElementByXPath("//*[@id='analyticsResize']//td[contains(text(),'Your query')]");
 	}
-	
-	//Added by Vijaya.Rani
+
+	// Added by Vijaya.Rani
 	public Element getDocView_AnalyticsNewFolderFamilyMember() {
 		return driver.FindElementById("tabNew");
 	}
-	
+
 	public Element getManageTab() {
 		return driver.FindElementByXPath("//a[@name='Manage']");
 	}
-	
+
 	public Element getManageTagsAndFolderTab() {
 		return driver.FindElementByXPath("//a[@name='Tags']");
 	}
-	
+
 	public Element getManageFolderBtn() {
 		return driver.FindElementByXPath("//a[text()='Folders']");
 	}
-	
+
 	public Element getDocView_AnalyticsChild_NearDupe_Folder() {
 		return driver.FindElementById("liNearDupeBulkFolder");
 	}
-
 	
+	public Element getMiniDocList_CodeSameIcon(String text) {
+		return driver.FindElementByXPath("//td[text()='"+text+"']//ancestor::tr//i[@class='fa fa-link']");
+	}
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -17267,7 +17318,7 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @Author Jeevitha
+	 * @Author Jeevitha @modified date : 27/1/2022 @modified By : Jeevitha
 	 * @param readctionCount
 	 * @param navigateBtn
 	 * @param getCountAfterNavigating
@@ -17278,6 +17329,12 @@ public class DocViewPage {
 		for (int i = 1; i <= readctionCount; i++) {
 			base.waitForElement(navigateBtn);
 			navigateBtn.waitAndClick(10);
+
+			if (base.getWarningMsgHeader().isElementAvailable(2)) {
+				base.failedStep("Warning Message Displayed while navigating the redactions");
+			} else {
+				base.passedStep("Warning Message is not displayed while navigating the redactions");
+			}
 		}
 		if (highlitedRedacrtion().isElementAvailable(3)) {
 			System.out.println(" Redaction is highlited");
@@ -21538,13 +21595,13 @@ public class DocViewPage {
 		driver.getWebDriver().navigate().refresh();
 		deleteStampColour(Input.stampSelection);
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani 18/01/22 NA Modified date: NA Modified by:NA
-	 * @description To verify ConceptualSimilar  docs more than 20 Cols/rows
+	 * @description To verify ConceptualSimilar docs more than 20 Cols/rows
 	 */
 	public void selectDocsFromMiniDocsListAndCheckTheConceptualSimilarDocsSize() throws InterruptedException {
-		
+
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
 		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
@@ -21553,18 +21610,19 @@ public class DocViewPage {
 
 		base.passedStep("The Threaed Documents having Columns are :" + getDocView_ConceptualDocs().size()
 				+ "which is more than 20 docs");
-		
-		if(getDocView_Analytics_ConceptViewAllDocsBtn().Displayed()) {
-			softAssertion.assertTrue(getDocView_Analytics_ConceptViewAllDocsBtn().getWebElement().isDisplayed());;
+
+		if (getDocView_Analytics_ConceptViewAllDocsBtn().Displayed()) {
+			softAssertion.assertTrue(getDocView_Analytics_ConceptViewAllDocsBtn().getWebElement().isDisplayed());
+			;
 			base.passedStep("Conceptual Tab View All Documents Btn Is enabled.");
 		}
-		
+
 		else {
 			base.failedStep("Conceptual Tab View All Documents Btn Is Not enabled.");
 		}
 
 	}
-	
+
 	/**
 	 * @author Vijaya Rani 18/01/22 NA Modified date: NA Modified by:NA
 	 * @description perform FamilyMember Docs ViewAllDocuments
@@ -21580,17 +21638,16 @@ public class DocViewPage {
 		base.passedStep("The Threaed Documents having :" + getDocView_Analytics_FamilyMember_Docs().size()
 				+ "which is more than 20 docs");
 
-		if(getDocView_Analytics_FamilyViewAllDocsBtn().Displayed()) {
-			softAssertion.assertTrue(getDocView_Analytics_FamilyViewAllDocsBtn().getWebElement().isDisplayed());;
+		if (getDocView_Analytics_FamilyViewAllDocsBtn().Displayed()) {
+			softAssertion.assertTrue(getDocView_Analytics_FamilyViewAllDocsBtn().getWebElement().isDisplayed());
+			;
 			base.passedStep("Conceptual Tab View All Documents Btn Is enabled.");
 		}
-		
+
 		else {
 			base.failedStep("Conceptual Tab View All Documents Btn Is Not enabled.");
 		}
 	}
-	
-
 
 	/**
 	 * @Author Jeevitha
@@ -21652,16 +21709,17 @@ public class DocViewPage {
 
 		}
 	}
-	
-	
+
 	/**
 	 * @author Gopinath
-	 * @Description : this methoad will select the document from mini doc list and click text,image,translation tab and 
-	 *                 again click on default tab and verify Doc icon and Tooltip message
+	 * @Description : this methoad will select the document from mini doc list and
+	 *              click text,image,translation tab and again click on default tab
+	 *              and verify Doc icon and Tooltip message
 	 * @param docId
-	 * @param ExpectedText(Expected tooltip message for selected doc id Icon on default view tab
+	 * @param ExpectedText(Expected tooltip message for selected doc id Icon on
+	 *                              default view tab
 	 */
-	public void verifydocIdIconAfterClickOnallTabsOndocviewPanal(String docId,String ExpectedText) {
+	public void verifydocIdIconAfterClickOnallTabsOndocviewPanal(String docId, String ExpectedText) {
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocumentByid(docId));
@@ -21680,10 +21738,9 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		getDefaultViewTab().waitAndClick(5);
 		base.waitTime(2);
-		if(getDefaultViewTab().GetAttribute("class").contains("active")) {
+		if (getDefaultViewTab().GetAttribute("class").contains("active")) {
 			base.passedStep("After click on all tabs returning back to default texttab ");
-		}
-		else {
+		} else {
 			base.failedStep("unable to load the document on default view after click on all tabs");
 		}
 		driver.scrollPageToTop();
@@ -21710,7 +21767,7 @@ public class DocViewPage {
 			base.failedStep("" + ExpectedText + " is not  as expected");
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description :Verify comment inner text area field inner text.
@@ -21722,26 +21779,28 @@ public class DocViewPage {
 			base.waitForElement(getDocviewCommentSection());
 			getDocviewCommentSection().isElementAvailable(15);
 			String comment = getDocviewCommentSection().getText();
-			if(!comment.contentEquals(text)) {
-				base.passedStep("Added Comment of text field area of security group is not eqaul with different security group");
-			}else {
-				base.failedStep("Added Comment of text field area of security group is eqaul with different security group");
+			if (!comment.contentEquals(text)) {
+				base.passedStep(
+						"Added Comment of text field area of security group is not eqaul with different security group");
+			} else {
+				base.failedStep(
+						"Added Comment of text field area of security group is eqaul with different security group");
 			}
 		} catch (Exception e) {
 			base.failedStep("Exception occcured while comment inner text." + e.getMessage());
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath.
 	 * 
 	 * @description : This method to verify keyword highlighted on doc view.
-	 * @param rgbCode (selected keyword colour rgb code
+	 * @param rgbCode                         (selected keyword colour rgb code
 	 * @param expectedElementHexCode(selected keyword color hex code
 	 */
-	public void verifyKeywordHighlightedOnDocViewwithKeywordColour( String rgbCode, String expectedElementHexCode) {
-		try { 
+	public void verifyKeywordHighlightedOnDocViewwithKeywordColour(String rgbCode, String expectedElementHexCode) {
+		try {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			List<WebElement> keyword = getHighlightedKeywordrgbCode(rgbCode).FindWebElements();
@@ -21763,10 +21822,12 @@ public class DocViewPage {
 
 		}
 	}
-  /*
+
+	/*
 	 * @Author Vijaya.Rani Created on 20/01/2022
+	 * 
 	 * @Description To perform folder Conceputually docs in the DocView Test Case
-	 *              id: RPMXCON-50821
+	 * id: RPMXCON-50821
 	 *
 	 */
 	public void performExitingFolderForConceptualDocuments() throws InterruptedException {
@@ -21783,13 +21844,13 @@ public class DocViewPage {
 			base.waitForElement(getDocView_Analytics_Conceptual_Docs(i));
 			getDocView_Analytics_Conceptual_Docs(i).waitAndClick(10);
 		}
-		
+
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
-		
+
 		base.waitForElement(getDocView_Analytics_ConceptualFolderAction());
 		getDocView_Analytics_ConceptualFolderAction().waitAndClick(15);
-		
+
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
 		base.passedStep("Folder pop up is opened successfully");
@@ -21799,7 +21860,7 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_AnalyticsExitingFolderName());
 		getDocView_AnalyticsExitingFolderName().waitAndClick(10);
-		
+
 		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
 
@@ -21810,9 +21871,8 @@ public class DocViewPage {
 
 		base.passedStep("Selected folder is applied to the selected documents successfully");
 
-	      
 	}
-	
+
 	/**
 	 * @Author Steffy Created on 21/01/2022
 	 * @Description To verify Analytics Family member Map Tab with no docs
@@ -21844,6 +21904,7 @@ public class DocViewPage {
 		}
 
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @description: To verify tags of coding form name in docview page
@@ -21960,20 +22021,20 @@ public class DocViewPage {
 
 		base.waitForElement(getManageTab());
 		getManageTab().waitAndClick(10);
-	
+
 		base.waitForElement(getManageTagsAndFolderTab());
 		getManageTagsAndFolderTab().waitAndClick(10);
-		
+
 		base.waitForElement(getManageFolderBtn());
 		getManageFolderBtn().waitAndClick(10);
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
 
 	public int verifyCommentAndMetaDataUsingCodingStamp(String addComment, String commentText, String metadata,
-			String metadataText,String fieldText) {
+			String metadataText, String fieldText) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodingFormHelpText(addComment));
 		getCodingFormHelpText(addComment).SendKeys(commentText);
@@ -21988,7 +22049,7 @@ public class DocViewPage {
 		int size = getCheckMarkIcon().size();
 		return size;
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -22004,7 +22065,7 @@ public class DocViewPage {
 		base.passedStep("Cursor navigated to next docs in minidoclist");
 		softAssertion.assertAll();
 	}
-	
+
 	/**
 	 * @author Steffy Created on : 23/01/2022 Modified By: NA Modified On: NA
 	 * @description: Create New Folder in Analytics Panel
@@ -22077,5 +22138,303 @@ public class DocViewPage {
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
 		base.waitForElement(getDocView_AnalyticsChild_NearDupe_Folder());
 		getDocView_AnalyticsChild_NearDupe_Folder().waitAndClick(10);
+	}
+	
+	
+	/**
+	 * @author Arunkumar Created Date: 27/1/2022
+	 * @description To verify highlightining text in docview without clicking the eyeIcon
+	 */
+	public void verifyTermHitsHighlightingInDocumentWithoutClickingEyeIcon(String searchString) {
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+		String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
+		System.out.println(color);
+		if (get_textHighlightedColor().isDisplayed()) {
+			base.passedStep(" Verified that term hits are highlighted in the document without clicking the eye icon");
+			
+		}else {
+			base.failedStep("Verified that term hits are not highlighted in the document without clicking the eye icon");
+		}
+	}
+	
+	/**
+	 * @author Arunkumar Created Date: 27/1/2022
+	 * @description To verify highlightining text in docview after clicking the eyeIcon
+	 */
+	public void verifyTermHitsHighlightingInDocumentAfterClickingEyeIcon(String searchString) {
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+		getPersistantHitEyeIcon().waitAndClick(30);
+		String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
+		System.out.println(color);
+		if (get_textHighlightedColor().isDisplayed()) {
+			base.passedStep(" Verified that term hits are highlighted in the document");
+			
+		}else {
+			base.failedStep("Verified that term hits are not highlighted in the document");
+		}
+	
+		
+	}
+	
+	public void verifyMetaDataTermDisplayingOnPersistentPanel(String searchString) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);		
+		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+		getPersistantHitEyeIcon().waitAndClick(30);
+		
+		List<String> persistentNames = new ArrayList<String>();
+		List<WebElement> persistantElements = getPersistantNames().FindWebElements();
+		for (WebElement persistantNameElement : persistantElements) {
+			persistentNames.add(persistantNameElement.getAttribute("data-custom-id").trim());
+		}
+		System.out.println(persistentNames);
+		if(persistentNames.contains(searchString)) {
+			base.failedStep("Metadata terms are displaying on the persistent panel ");
+		}
+		else {
+			base.passedStep("Metadata terms are not displaying on the persistent panel");
+    }
+  }
+	/**
+	 * @Author Jeevitha
+	 * @param comment
+	 * @param save
+	 * @param docs
+	 */
+	public void addCommentAndSave(String comment, boolean save, int docs) {
+		for (int i = 1; i <= docs; i++) {
+			getClickDocviewID(i).waitAndClick(5);
+			base.waitForElement(getResponsiveCheked());
+			getResponsiveCheked().waitAndClick(5);
+			base.waitForElement(getNonPrivilegeRadio());
+			getNonPrivilegeRadio().waitAndClick(5);
+			base.waitForElement(getDocument_CommentsTextBox());
+			getDocument_CommentsTextBox().SendKeys(comment);
+			base.stepInfo("Added Document Comment : " + comment);
+			if (save) {
+				driver.scrollPageToTop();
+				base.waitForElement(getCodingFormSaveBtn());
+				getCodingFormSaveBtn().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage("Document saved successfully");
+				base.CloseSuccessMsgpopup();
+			}
+		}
+	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 26/01/22 NA Modified date: NA Modified by:NA
+	 * Description :perform Display Icon Reviewer Highlight.
+	 *
+	 */
+	public void performDisplayIconReviewerHighlightingMenus() throws Exception {
+		base = new BaseClass(driver);
+		getDocView_MiniDoc_Selectdoc(1).waitAndClick(20);
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return redactionIcon().Visible();
+			}
+		}), Input.wait30);
+		redactionIcon().waitAndClick(30);
+
+		base.stepInfo("Redaction Icon Clicked Successfully");
+
+		softAssertion.assertTrue(multiPageIcon().Displayed());
+		base.passedStep("DocView Redaction Page is Displayed");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getEyeIcon().Visible() && HighliteIcon().Enabled();
+			}
+		}), Input.wait30);
+		getEyeIcon().waitAndClick(30);
+
+		base.stepInfo("docView Eye Icon Clicked Successfully");
+
+		softAssertion.assertTrue(docViewEyeSearchTerm().Displayed());
+		base.passedStep("DocView EyeIcon Search Term Is Displayed");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return remarksIcon().Visible();
+			}
+		}), Input.wait30);
+		remarksIcon().waitAndClick(30);
+
+		base.stepInfo("Reviewer Remark Icon Clicked Successfully");
+
+		softAssertion.assertTrue(docViewReviewerPage().Displayed());
+		base.passedStep("DocView Reviewer Page Is Displayed");
+
+		getDocView_MiniDoc_Selectdoc(3).waitAndClick(20);
+		base.passedStep("Mini Doc List  Docs Selected Successfully");
+		softAssertion.assertTrue(docViewReviewerPage().Displayed());
+		base.passedStep("DocView Reviewer Page Is Displayed");
+		
+		driver.waitForPageToBeReady();
+		getDocView_Analytics_FamilyTab().waitAndClick(30);
+		getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().waitAndClick(10);
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+		base.waitForElement(getDocView_FamilyViewInDocView());
+		getDocView_FamilyViewInDocView().waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(docViewReviewerPage().Displayed());
+		base.passedStep("DocView Reviewer Page Is Displayed");
+	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 26/01/22 NA Modified date: NA Modified by:NA
+	 * Description :perform navigate Back Confirm Box Displayed.
+	 *
+	 */
+	public void performConfirmNavigationDisplay() throws Exception {
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDashboardButton().Visible();
+			}
+		}), Input.wait30);
+		getDashboardButton().waitAndClick(5);
+		driver.WaitUntil(new Callable<Boolean>() {
+			public Boolean call() {
+				return getAlertConfrimButton().Visible() && getAlertConfrimButton().Enabled();
+			}
+		}, Input.wait30);
+		getAlertConfrimButton().Click();
+		softAssertion.assertTrue(getAlertConfrimButton().isDisplayed());
+		base.passedStep("Yes and No buttons Are displayed");
+
+	}
+	
+	
+	/**
+	 * @Author Mohan Created on 27/01/2022
+	 * @Description To perform folder Conceputually docs in the DocView 
+	 *              
+	 *
+	 */
+	public void selectDocsAndActionAsFolder(int rowNo,String folderName) throws InterruptedException {
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
+
+		for (int i = 1; i <= rowNo; i++) {
+			base.waitForElement(getDocView_Analytics_Conceptual_Docs(i));
+			getDocView_Analytics_Conceptual_Docs(i).waitAndClick(10);
+		}
+		
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+		
+		base.waitForElement(getDocView_Analytics_ConceptualFolderAction());
+		getDocView_Analytics_ConceptualFolderAction().waitAndClick(15);
+		
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFamilyMember().Displayed());
+		base.passedStep("Folder pop up is opened successfully");
+
+		base.waitForElement(getDocView_AnalyticsNewFolderFamilyMember());
+		getDocView_AnalyticsNewFolderFamilyMember().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsNewFolderTree());
+		getDocView_AnalyticsNewFolderTree().waitAndClick(10);
+		
+		base.waitForElement(getDocView_AnalyticsNewFolderTextBox());
+		getDocView_AnalyticsNewFolderTextBox().SendKeys(folderName);
+		
+		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
+		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
+
+		base.waitForElement(getTotalSelectedDocuments());
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().Displayed());
+		softAssertion.assertAll();
+		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
+		base.VerifySuccessMessage("Records saved successfully");
+		base.CloseSuccessMsgpopup();
+		System.out.println("Docs are folderedUp, folder is : " + folderName);
+		base.passedStep("Docs are selected from Conceptual Tab and FolderedUp sucessfully");
+
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//  Reusable method for clicking the checkbox and perform codesameas and verify chain link
+//	Action clcik code same as using parameter
+	public void clickCheckBoxMiniDocListActionCodeSameAs(int row) {
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocumetCountMiniDocList());
+		for (int i = 1; i <= row; i++) {
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);;
+		}
+		base.waitForElement(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
+		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
+		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
+		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+		
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//	Reusable method for validating navigation option in docview panel
+	public void navigationOptionValidation(int number) {
+		driver.waitForPageToBeReady();
+		SoftAssert assertion=new SoftAssert();
+//	    validating first option
+		base.waitForElement(getDocView_First());
+		String fistDoc=getDocView_NumTextBox().GetAttribute("value");
+		assertion.assertEquals(fistDoc, "1");
+		base.stepInfo("Navigated,cursor moved to first docs in minidoclist ");
+//	    validating next option
+		base.waitForElement(getDocView_Next());
+		getDocView_Next().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String nextDoc=getDocView_NumTextBox().GetAttribute("value");
+		assertion.assertEquals(nextDoc, "2");
+		base.stepInfo("Navigated,cursor moved to next docs in minidoclist ");
+//	    validating previous option
+		base.waitForElement(getDocView_Previous());
+		getDocView_Previous().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String previousDoc=getDocView_NumTextBox().GetAttribute("value");
+		assertion.assertEquals(previousDoc, "1");
+		base.stepInfo("Navigated,cursor moved to previous docs in minidoclist ");
+//	    validating Last option
+		base.waitForElement(getDocView_Last());
+		getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String LastDoc=getDocView_NumTextBox().GetAttribute("value");
+		base.stepInfo("Navigated,cursor moved to last docs in minidoclist ");
+		assertion.assertEquals(LastDoc,Integer.toString(number));
+//		overall assertion
+		assertion.assertAll();
+		base.passedStep("While navigating to last document loading displayed with more number of document");
 	}
 }

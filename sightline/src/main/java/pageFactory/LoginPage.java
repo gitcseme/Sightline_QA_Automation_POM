@@ -344,6 +344,26 @@ public class LoginPage {
 		Assert.assertTrue(getEuserName().Visible());
 		UtilityLog.info("Logged out successfully!");
 	}
+	public void logoutWithoutAssert() {
+		if (getSignoutMenu().isElementAvailable(1)) {
+			driver.Navigate().refresh();
+			try {
+				base.waitTime(8);
+				base.handleAlert();
+				driver.scrollPageToTop();
+				base.waitForElement(getSignoutMenu());
+				Element element = getSignoutMenu();
+				element.Click();
+				base.waitForElement(getLogoutOption());
+				element = getLogoutOption();
+				element.Click();
+				driver.waitForPageToBeReady();
+			} catch (Exception e) {
+				UtilityLog.info("Logout failed due to exception " + e.getMessage());
+			}
+		}
+	}
+
 
 	public void logOutWithConfirmation() {
 

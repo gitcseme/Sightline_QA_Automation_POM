@@ -1391,6 +1391,14 @@ public class AssignmentsPage {
 	public ElementCollection getAvailableKeywordCheckboxes() {
 		return driver.FindElementsByXPath("//div[@id='divkeyword']//label[@class='checkbox']//i");
 	}
+	
+	public Element getBatchAssignmentBar(String assignmentName) {
+		return driver.FindElementByXPath("//strong[text()='" + assignmentName
+				+ "']/ancestor::tr[@role='row']//following::td/div[@class='progress-lg']/div[@class='progress-bar bg-color-green']");
+	}
+	 public ElementCollection getKeywordNames() {
+			return driver.FindElementsByXPath("//div[contains(@style,'color')]");
+		}
 
 	public AssignmentsPage(Driver driver) {
 
@@ -9303,6 +9311,61 @@ public class AssignmentsPage {
 		driver.waitForPageToBeReady();
 		bc.passedStep("Keywords unmapped from the assignment successfully");
 	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws InterruptedException
+	 * @description this method complete all documents.
+	 * 
+	 */
+	public void completeAllDocsByReviewer(String assignmentName) throws InterruptedException {
+		bc.waitForElement(dashBoardPageTitle());
+		assgnInDashBoardPg(assignmentName).waitAndClick(2);
+		bc.waitForElement(completeBtn());
+		getTotalRecords().waitAndClick(15);
+		String recordsLabel = getTotalRecords().getText();
+		System.out.println("recordslabel " + recordsLabel);
+		String[] totalRecords = recordsLabel.split(" ");
+		String count = totalRecords[1];
+		System.out.println("count " + count);
+		int records = Integer.parseInt(count);
+		for (int i = 0; i < records; i++) {
+			driver.waitForPageToBeReady();			
+			bc.waitForElement(completeBtn());
+			completeBtn().waitAndClick(5);
+		}
+		bc.stepInfo("All the docs are completed");
+	}
+	
+	
+		
+		public void mappingKeywordToAssignment(String keywordName) throws InterruptedException {
+			bc = new BaseClass(driver);
+			driver.waitForPageToBeReady();
+			getAssgn_Keywordsbutton().ScrollTo();
+			getAssgn_Keywordsbutton().isElementAvailable(10);
+			getAssgn_Keywordsbutton().waitAndClick(10);
+			bc.waitForElement(getAssgn_Keywordspopup());
+			
+			List<WebElement> allvalues = getAvailableKeywordCheckboxes().FindWebElements();
+			List<String> names = bc.availableListofElements(getKeywordNames());
+			System.out.println(names);
+			for(int i=0;i<= names.size()-1; i++) {
+				if(names.get(i).contains(keywordName)) {
+					allvalues.get(i).click();
+					System.out.println("done");
+					break;
+				}
+				
+			}
+			driver.waitForPageToBeReady();
+			getAssgn_Keywordokbutton().ScrollTo();
+			getAssgn_Keywordokbutton().isElementAvailable(10);
+			getAssgn_Keywordokbutton().Click();
+			keywordPage.getYesButton().Click();
+			bc.passedStep("Required keyword mapped to the assignment successfully");
+			
+		}
+
 
 
 }

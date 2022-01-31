@@ -261,6 +261,7 @@ public class Input {
 	public static String docNearDupeDocId;
 	public static String UniCodeDocId;
 	public static String TiffDocId;
+	public static String IconOriginalColour;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -280,6 +281,7 @@ public class Input {
 	public static String pageRange3;
 	public static String pageRange4;
 	public static String searchPhraseWithQuote;
+	public static String keywordColor1;
 
 	// Added by Raghuram - Modified 01/28/21 
 	public static String docHighlightColor;
@@ -436,7 +438,8 @@ public class Input {
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
-
+	public static String telecaSearchString;
+	public static String docFile;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -729,6 +732,7 @@ public class Input {
 		pageRange3 = testData.getPageRange3();
 		pageRange4 = testData.getPageRange4();
 		searchPhraseWithQuote = testData.getSearchPhraseWithQuote();
+		keywordColor1 = testData.getKeywordColor1();
 
 		// Added by Raghuram 01/28/21
 		docHighlightColor = testData.getDocHighlightColor();
@@ -763,7 +767,8 @@ public class Input {
 		bullHornIconColor = testData.getBullHornIconColor();
 		progresBarColor = testData.getProgresBarColor();
 		BatchFileduplicateHeader = testData.getBatchFileduplicateHeader();
-
+		metaDataCNcount= testData.getMetaDataCNcount();
+		
 		/**
 		 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
 		 *         by:Gopinath.
@@ -865,7 +870,7 @@ public class Input {
 		// Added by Krishna
 		docIdKeyWordTest = testData.getDocIdKeyWordTest();
 		keyWordHexCode = testData.getKeyWordHexCode();
-
+		IconOriginalColour = testData.getIconOriginalColour();
 		// Added by Gopinath - 16/11/2021
 		signDocumentId = testData.getSignDocumentId();
 		technicalIssue = testData.getTechnicalIssue();
@@ -914,6 +919,8 @@ public class Input {
 		// Added by Brundha-1/12/2021
 
 		documentId = testData.getDocumentID();
+		telecaSearchString=testData.getTelecaSearchString();
+		docFile=testData.getDocFile();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();

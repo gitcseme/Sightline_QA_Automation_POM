@@ -1244,6 +1244,46 @@ public class DocViewRedactions {
 		return driver.FindElementsByCssSelector("g[fill-opacity='1']>g[data-pcc-mark^='mark-']>rect");
 	}
 
+	// Added by krishna
+
+	public Element zoomOutDocView() {
+		return driver.FindElementById("zoomOut_divDocViewer");
+	}
+
+	public Element zoomInDocView() {
+		return driver.FindElementById("zoomIn_divDocViewer");
+	}
+
+	public Element zoomFitToScreenDocView() {
+		return driver.FindElementById("fitContent_divDocViewer");
+	}
+
+	public Element rotateClockWise() {
+		return driver.FindElementById("rotateRight_divDocViewer");
+	}
+
+	public Element rotateAntiClockWise() {
+		return driver.FindElementById("rotateLeft_divDocViewer");
+	}
+
+	// Added by Raghuram
+
+	public Element getDoTextRedactionXYStats() {
+		return driver.FindElementByCssSelector("text[x]:first-child");
+	}
+
+	public Element getDoTextRedactionXYStatsAttribute() {
+		return driver.FindElementByCssSelector("g[fill-opacity='1']>g[data-pcc-mark^='mark-']:first-child");
+	}
+
+	public Element getDoTextRedactionXYStatsAttributeSelect(String x, String y) {
+		return driver.FindElementByCssSelector("text[x='" + x + "'][y='" + y + "']");
+	}
+
+	public Element getMarkedTextRedactionXYStatsAttributeSelect(String x, String y) {
+		return driver.FindElementByCssSelector("g[x='" + x + "'][y='" + y + "']");
+	}
+
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements
@@ -3722,8 +3762,9 @@ public class DocViewRedactions {
 	public void verifyThisPageHighlightMaintained(Boolean torRmoveAnnotation) {
 		base = new BaseClass(driver);
 
-		getDocView_RedactHTextarea().waitAndClick(5);
 		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		getDocView_RedactHTextarea().waitAndClick(5);
 		if (highliteDeleteBtn().isElementAvailable(10)) {
 			base.passedStep(
 					"Document remains highlighted and Highlighting not shifted when visiting the different file types having page highlighting");
@@ -3776,6 +3817,7 @@ public class DocViewRedactions {
 		HighliteIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
 		highLightRectangleClick().waitAndClick(8);
+		base.waitTime(5);
 		doDrawUsingXY(x, y, xOffset, yOffset);
 		base.waitTime(5);// To handle abnormal waits
 		driver.scrollPageToTop();
@@ -3809,7 +3851,7 @@ public class DocViewRedactions {
 
 		redactionIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
-		textSelectionRedactionIcon().waitAndClick(5);
+		rectangleClick().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		doDrawUsingXY(x, y, xOffset, yOffset);
 		driver.waitForPageToBeReady();
@@ -3844,11 +3886,10 @@ public class DocViewRedactions {
 				"Rectangle highlighted position retained to verify : X axis : " + xAxis + " and Y axis : " + yAxis);
 		if (rectangleRedactStats(xAxis, yAxis).isElementAvailable(5)) {
 			base.passedStep(
-					"Highlighting should not be shifted when visiting the different file types having Rectangle highlighting");
+					"Highlighting not shifted when visiting the different file types having Rectangle highlighting");
 			if (toRemoveAnnotation) {
 				rectangleRedactStats(xAxis, yAxis).waitAndClick(3);
 				deleteRedactioBtn().waitAndClick(3);
-				// highliteDeleteBtn().waitAndClick(3);
 				driver.waitForPageToBeReady();
 				base.VerifySuccessMessage("Annotation Removed successfully.");
 			}
@@ -3869,16 +3910,75 @@ public class DocViewRedactions {
 		base.stepInfo("Rectangle redaction position retained to verify : X axis : " + xAxis + " and Y axis : " + yAxis);
 		if (rectangleRedactStats(xAxis, yAxis).isElementAvailable(5)) {
 			base.passedStep(
-					"Rectangle redaction should not be shifted when visiting the different file types having Rectangle redaction");
+					"Rectangle redaction not shifted when visiting the different file types having Rectangle redaction");
 			if (toRemoveAnnotation) {
 				rectangleRedactStats(xAxis, yAxis).waitAndClick(3);
-				// deleteRedactioBtn().waitAndClick(3);
 				highliteDeleteBtn().waitAndClick(3);
 				driver.waitForPageToBeReady();
 				base.VerifySuccessMessage("Redaction Removed successfully.");
 			}
 		} else {
 			base.failedStep("Rectangle redaction position mismatch");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A Description : doTextRedactWithXYPoints Date: 01/27/22
+	 *         Modified date: N/A Modified by: N/A
+	 */
+	public HashMap<String, String> doTextRedactWithXYPoints() throws Exception {
+		base = new BaseClass(driver);
+		String xAxis, yAxis;
+		HashMap<String, String> xyMap = new HashMap<String, String>();
+
+		redactionIcon().waitAndClick(30);
+		textSelectionRedactionIcon().waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		xAxis = getDoTextRedactionXYStats().GetAttribute("x");
+		yAxis = getDoTextRedactionXYStats().GetAttribute("y");
+		System.out.println(xAxis);
+		System.out.println(yAxis);
+
+		driver.waitForPageToBeReady();
+		base.waitTime(3);// To handle abnormal waits
+		getDoTextRedactionXYStatsAttributeSelect(xAxis, yAxis).waitAndClick(5);
+
+		multiPageInputSavaBtn().waitAndClick(5);
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+
+		xAxis = getDoTextRedactionXYStatsAttribute().GetAttribute("x");
+		yAxis = getDoTextRedactionXYStatsAttribute().GetAttribute("y");
+		xyMap.put("xAxis", xAxis);
+		xyMap.put("yAxis", yAxis);
+
+		if (getMarkedTextRedactionXYStatsAttributeSelect(xAxis, yAxis).isElementAvailable(4)) {
+			System.out.println("Text marked");
+		}
+
+		base.stepInfo("Text redacted position : X axis : " + xAxis + " and Y axis : " + yAxis);
+
+		return xyMap;
+	}
+
+	/**
+	 * @author Raghuram.A Description : verifyTextRedactionPositionRetained Date:
+	 *         01/27/22 Modified date: N/A Modified by: N/A
+	 */
+	public void verifyTextRedactionPositionRetained(String xAxis, String yAxis, Boolean toRemoveAnnotation) {
+		base = new BaseClass(driver);
+		base.stepInfo("Text redaction position retained to verify : X axis : " + xAxis + " and Y axis : " + yAxis);
+		if (getMarkedTextRedactionXYStatsAttributeSelect(xAxis, yAxis).isElementAvailable(5)) {
+			base.passedStep("Text redaction not shifted when visiting the different file types having Text redaction");
+			if (toRemoveAnnotation) {
+				getMarkedTextRedactionXYStatsAttributeSelect(xAxis, yAxis).waitAndClick(3);
+				highliteDeleteBtn().waitAndClick(3);
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage("Redaction Removed successfully.");
+			}
+		} else {
+			base.failedStep("Text redaction position mismatch");
 		}
 	}
 
