@@ -1399,6 +1399,10 @@ public class AssignmentsPage {
 	 public ElementCollection getKeywordNames() {
 			return driver.FindElementsByXPath("//div[contains(@style,'color')]");
 		}
+	 
+     public Element getKeywordCheckBox(String keywordName) {
+         return driver.FindElementByXPath("//div[text()='"+keywordName+"']//..//i");
+         }
 
 	public AssignmentsPage(Driver driver) {
 
@@ -9365,7 +9369,47 @@ public class AssignmentsPage {
 			bc.passedStep("Required keyword mapped to the assignment successfully");
 			
 		}
+		/**
+		* @author Gopinath
+		* @description thsi methoad will select the required keyword by its name and ignore if it is already selcted from list
+		* @param keywordName
+		*/
+		public void addKeywordToAssignment(String keywordName) {
+		driver.waitForPageToBeReady();
+		if(getAssgn_Keywordsbutton().isElementAvailable(2)) {
+		getAssgn_Keywordsbutton().ScrollTo();
+		getAssgn_Keywordsbutton().isElementAvailable(10);
+		getAssgn_Keywordsbutton().waitAndClick(10);
+		}
+		bc.waitForElement(getAssgn_Keywordspopup());
+		bc.waitForElement(getKeywordCheckBox(keywordName));
+		if(getKeywordCheckBox(keywordName).isElementAvailable(5)) {
+		bc.passedStep("selected keyword group found");
+		}else {
+		bc.failedStep("selected keyword not found");
+		}
+		if(getKeywordCheckBox(keywordName).getWebElement().isSelected()==false) {
+		getKeywordCheckBox(keywordName).waitAndClick(5);
 
+		}else {
+		bc.stepInfo("keyword group is already selected");
+
+		}
+		driver.waitForPageToBeReady();
+		getAssgn_Keywordokbutton().ScrollTo();
+		getAssgn_Keywordokbutton().isElementAvailable(10);
+		getAssgn_Keywordokbutton().Click();
+		bc.waitTime(1);
+		if (getRedistributeYesPopup().isDisplayed()) {
+		getRedistributeYesPopup().Click();
+		}
+		driver.scrollPageToTop();
+		bc.waitForElement(getSaveBtn());
+
+		getSaveBtn().waitAndClick(5);
+
+		}
+		
 
 
 }
