@@ -2440,6 +2440,7 @@ public class ProductionPage {
 	public Element getAdvancedLSTToggle() {
 		return driver.FindElementByXPath("//label/input[@id='chkTIFFProduceLoadFile']/following-sibling::i");
 	}
+
 	public Element getDatDateFormate() {
 		return driver.FindElementByXPath("//select[@id='lstDateFormat']");
 	}
@@ -2461,6 +2462,14 @@ public class ProductionPage {
 
 
 
+	public Element CancelBtn() {
+		return driver.FindElementById("bot2-Msg1");
+	}
+
+
+	public Element getSplitSubFolderToggle() {
+		return driver.FindElementByXPath("//label[text()='Split Sub Folders:']/..//i");
+	}
 
 	public ProductionPage(Driver driver) {
 
@@ -16539,5 +16548,59 @@ public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
 		}
 	}
 	
-	
+/**
+	 * @Author Brundha Description:Method to verify blank page removal toggle
+	 *         message
+	 * 
+	 */
+	public void verifyBlankPageRemovalMeassage() {
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().waitAndClick(5);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getPDFGenerateRadioButton().waitAndClick(10);
+		String color = getBlankPageRemovalToggle().GetCssValue("background-color");
+		String ExpectedColor = Color.fromString(color).asHex();
+		String ActualColor = "#e54036";
+		base.textCompareEquals(ActualColor, ExpectedColor, "Blank Page Removal Toggle is disabled  by Default",
+				"Blank Page Removal Toggle is not  disabled  by Default");
+		getBlankPageRemovalToggle().Click();
+		String ExpectedText = blankPageRemovalMessage().getText();
+		String ActualText = "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
+		base.textCompareEquals(ActualText, ExpectedText, "" + ExpectedText + "Message is displayed as expected",
+				"" + ExpectedText + "Message not displayed as expected");
+
+		base.waitForElement(getContinueBtn());
+		if (getContinueBtn().isDisplayed()) {base.passedStep("Continue button is displayed as Expected");}
+		 else {base.failedStep("Continue button is not displayed as Expected");}
+		if (CancelBtn().isDisplayed()) {
+			base.passedStep("Cancel button is displayed as Expected");}
+		 else {base.failedStep("Cancel button is not displayed as Expected");}
+
+	}
+
+	/**
+	 * @Author Brundha
+	 *  Description:Method to verify split sub folder toggle  
+	 * 
+	 */
+	public void verifySubFolderToggle() {
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		getSplitSubFolderToggle().isDisplayed();
+		String color = getSplitSubFolderToggle().GetCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor = "#a9c981";
+		base.textCompareEquals(ActualColor, ExpectedColor, "Split Sub Folder Toggle is enabled  by Default",
+				"Split Sub Folder Toggle is not  enabled  by Default");
+		ProductionLocationSplitCount().Clear();
+		ProductionLocationSplitCount().SendKeys(Input.pageNumber);
+		driver.scrollPageToTop();
+
+	}
+
 }

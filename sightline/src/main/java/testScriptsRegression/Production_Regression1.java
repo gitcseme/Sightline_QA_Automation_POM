@@ -8307,6 +8307,74 @@ page.fillingGeneratePageWithContinueGenerationPopup();
 
 }
 
+/**
+ * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48530
+ * @Description:To verify that by Blank Page Removal option is OFF by default in
+ *                 Tiff/PDF section and should display confirmation message when
+ *                 it is enable
+ * 
+ */
+@Test(groups = { "regression" }, priority =109)
+public void verifyBlankPageRemovalToggle() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-48530 -Production Sprint 11");
+	base.stepInfo(
+			"To verify that by Blank Page Removal option is OFF by default in Tiff/PDF section and should display confirmation message when it is enable.");
+
+	
+	String productionname = "p" + Utility.dynamicNameAppender();
+	ProductionPage page = new ProductionPage(driver);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.verifyBlankPageRemovalMeassage();
+	
+
+}
+/**
+ * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-47173
+ * @Description:Verify that TIFF files should be copied to folder when 'Split Sub Folders' is ON with split count as 10
+ */
+@Test(groups = { "regression" }, priority = 110)
+public void verifyTheSubFolderInProductionGeneration() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	base.stepInfo("RPMXCON-47173 -Production Sprint 11");
+	base.stepInfo(
+			"Verify that TIFF files should be copied to folder when 'Split Sub Folders' is ON with split count as 10");
+
+	String tagname = "Tag" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.telecaSearchString);
+	sessionSearch.bulkTagExisting(tagname);
+	
+	ProductionPage page = new ProductionPage(driver);
+	String productionname = "p" + Utility.dynamicNameAppender();
+	String beginningBates = page.getRandomNumber(2);
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSection();
+	page.selectPrivDocsInTiffSection(tagname);
+	page.fillingTextSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionWithTag(tagname);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.verifySubFolderToggle();
+	page.fillingProductionLocationPageAndPassingText(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+}
 
 
 
