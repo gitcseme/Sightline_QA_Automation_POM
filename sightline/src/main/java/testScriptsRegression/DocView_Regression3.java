@@ -1883,6 +1883,65 @@ public class DocView_Regression3 {
 		loginPage.quitBrowser();
 		LoginPage.clearBrowserCache();
 	}
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51078
+	 * Description :Verify user can not redact/annotate in a document when annotation layer is not added
+	 * @throws Exception 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 18)
+	public void verifyFunctionAvailabilityWhenAnnotationLayerNotAdded() throws Exception {
+		
+		String securityGroupName = "Security Group"+ Utility.dynamicNameAppender();
+		
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		loginPage = new LoginPage(driver);
+		loginPage.logout();
+		
+		//Pre-requisites-Login as PA
+		baseClass.stepInfo("Logined as project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51078");
+		baseClass.stepInfo("Verify user can not redact/annotate in a document when annotation layer is not added");
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.AddSecurityGroup(securityGroupName);
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.selectSecurityGroup(securityGroupName);
+		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkRelease(securityGroupName);
+		driver.waitForPageToBeReady();
+		docViewRedact.assignAccesstoSGs(securityGroupName,Input.rmu2userName );
+		docViewRedact.assignAccesstoSGs(securityGroupName,Input.rev2userName );
+		loginPage.logout();
+		//Login as RMU and verify
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("logged in as RMU");
+		docViewRedact.selectsecuritygroup(securityGroupName);
+		driver.waitForPageToBeReady();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Navigated to docView");
+		driver.waitForPageToBeReady();
+		docView.verifyRedactionAnnotaionAndRemarkButtonsAreDisabled();
+		loginPage.logout();		
+		//Login as Reviewer and verify
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("logged in as reviewer");
+		docViewRedact.selectsecuritygroup(securityGroupName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Navigated to docView");
+		driver.waitForPageToBeReady();
+		docView.verifyRedactionAnnotaionAndRemarkButtonsAreDisabled();
+
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void close() throws ParseException, InterruptedException, IOException {
 		try {

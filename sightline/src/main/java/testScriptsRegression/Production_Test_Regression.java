@@ -3701,7 +3701,128 @@ public class Production_Test_Regression {
 				tagsAndFolderPage = new TagsAndFoldersPage(driver);
 				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-48061
+				 * @Description: To Verify selection of one or more tags for placeholdering with File type a set of documents (For Production)
+				 */
+				@Test(groups = { "regression" }, priority = 62)
+				public void verifyNativelyPlaceHolderWithFileType() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48061 -Production Sprint 11");
+				base.stepInfo("To Verify selection of one or more tags for placeholdering with File type a set of documents (For Production)");
 				
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				String tagname1 ="Tag1" + Utility.dynamicNameAppender();
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+				tagsAndFolderPage.createNewTagwithClassification(tagname1, "Privileged");
+				base.stepInfo("Tags are created with file type");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				driver.waitForPageToBeReady();
+				sessionSearch.ViewInDocListWithOutPureHit();
+
+				DocListPage doc = new DocListPage(driver);
+				doc.documentSelection(3);
+				driver.waitForPageToBeReady();
+				doc.bulkTagExistingFromDoclist(tagname);
+				doc.documentSelection(3);
+				doc.documentSelection(6);
+				driver.scrollPageToTop();
+				doc.bulkTagExistingFromDoclist(tagname1);
+
+				//Verify archive status on Grid view
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSectionwithNativelyPlaceholder(tagname,tagname1);
+				page.navigateToNextSection();
+				page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+				driver.waitForPageToBeReady();
+				String name = page.getProduction().getText().trim();
+				System.out.println(name);
+				page.isFileDownloaded(Input.fileDownloadLocation, name);
+				
+				base.passedStep("Verified selection of one or more tags for placeholdering with File type a set of documents (For Production)");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-48062
+				 * @Description: To Verify selection of one or more tags without selecting any file types for placeholdering a set of documents (For Production)
+				 */
+				@Test(groups = { "regression" }, priority = 63)
+				public void verifyNativelyPlaceHolderWithoutFileType() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48062 -Production Sprint 11");
+				base.stepInfo("To Verify selection of one or more tags without selecting any file types for placeholdering a set of documents (For Production)");
+				
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				String tagname1 ="Tag1" + Utility.dynamicNameAppender();
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.CreateTag(tagname, "Default Security Group");
+				tagsAndFolderPage.CreateTag(tagname1, "Default Security Group");
+				base.stepInfo("Tags are created without file type");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				driver.waitForPageToBeReady();
+				sessionSearch.ViewInDocListWithOutPureHit();
+
+				DocListPage doc = new DocListPage(driver);
+				doc.documentSelection(3);
+				driver.waitForPageToBeReady();
+				doc.bulkTagExistingFromDoclist(tagname);
+				doc.documentSelection(3);
+				doc.documentSelection(6);
+				driver.scrollPageToTop();
+				doc.bulkTagExistingFromDoclist(tagname1);
+
+				//Verify archive status on Grid view
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSectionwithNativelyPlaceholder(tagname,tagname1);
+				page.navigateToNextSection();
+				page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+				driver.waitForPageToBeReady();
+				String name = page.getProduction().getText().trim();
+				System.out.println(name);
+				page.isFileDownloaded(Input.fileDownloadLocation, name);
+				
+				base.passedStep("Verified selection of one or more tags without selecting any file types for placeholdering a set of documents (For Production)");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				}
 				
 	
 	@AfterMethod(alwaysRun = true)
