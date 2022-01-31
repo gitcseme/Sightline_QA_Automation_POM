@@ -22527,7 +22527,7 @@ public class DocViewPage {
 
 	/**
 	 * @Author Vijaya.Rani Created on 31/1/2022
-	 * @Description To perform Folder MiniDocList For Reviewer 
+	 * @Description To perform Folder MiniDocList For Reviewer test id:50820
 	 *              
 	 */
 	public void performFloderMiniDocListForReviewer() throws InterruptedException {
