@@ -33,15 +33,15 @@ import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
+import pageFactory.ProjectPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-/*
- * Author : Raghuram A
- */
+
 
 public class DocView_MiniDocList_DataProvider {
 	Driver driver;
@@ -56,12 +56,16 @@ public class DocView_MiniDocList_DataProvider {
 	SavedSearch savedSearch;
 	CodingForm codingForm;
 	DocListPage docListPage;
+	ProjectPage projectPage;
+	SecurityGroupsPage securityGroupPage;
 
 	String assignmentNameToChoose;
     String hitsCount;
     String savedSearchs = "AsavedToDocview" + Utility.dynamicNameAppender();
     String assgn = "Assignment" + Utility.dynamicNameAppender();
 	String projectFieldINT = "AAMini" + Utility.dynamicNameAppender();
+	String assgnWindow = "AAWindow" + Utility.dynamicNameAppender();
+	String assgnOne = "AAOneBy" + Utility.dynamicNameAppender();
 	
 	
 	@BeforeClass(alwaysRun = true)
@@ -83,6 +87,8 @@ public class DocView_MiniDocList_DataProvider {
 		codingForm = new CodingForm(driver);
 		docListPage = new DocListPage(driver);
 		softAssertion = new SoftAssert();
+		projectPage = new ProjectPage(driver);
+		securityGroupPage=new SecurityGroupsPage(driver);
 
 	}
 
@@ -1773,6 +1779,268 @@ public class DocView_MiniDocList_DataProvider {
 
 	}
 
+
+	/**
+	 * @Author : Baskar date: 28/01/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify user can scroll down the mini doc list to see the
+	 *                     additional documents
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 65)
+	public void validateScrollBarIsScrollable(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51085");
+		baseClass.stepInfo("Verify user can scroll down the mini doc " + "list to see the additional documents");
+
+		// login as
+		loginPage.loginToSightLine(userName, password);
+
+		// Session search to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		// validate using docid and scroll bar
+		driver.waitForPageToBeReady();
+		baseClass.waitForElementCollection(docViewPage.getDocumetCountMiniDocList());
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+
+		// Before scroll position
+		Long value = (Long) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		System.out.println(value);
+
+		// scrolling docs till end
+		docViewPage.scrollingDocumentInMiniDocList();
+
+		// After scroll position
+		Long value1 = (Long) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		System.out.println(value1);
+		softAssertion.assertNotEquals(value, value1);
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:28/01/2022 Modified by: Baskar
+	 * Description : To verify fields from optimized/manual mode when with/without
+	 * project fields mapping to a security group
+	 */
+
+	@Test(enabled = true, dataProvider = "sixRole", groups = { "regression" }, priority = 66)
+	public void validateProjectFieldFromMiniDocList(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50958");
+		baseClass.stepInfo("To verify fields from optimized/manual mode when "
+				+ "with/without project fields mapping to a security group");
+		UtilityLog.info("Started Execution for prerequisite");
+
+		loginPage.loginToSightLine(userName, password);
+		// project field created but not mapped
+		if (fullName.equalsIgnoreCase("pa")) {
+			// Custom Field created with INT DataType
+			projectPage.addCustomFieldProjectDataType(projectFieldINT, "INT");
+			baseClass.stepInfo("Project field created with INT datatype");
+			baseClass.stepInfo("Project field not mapped to SG");
+		}
+		// Mapping project field to SG
+		if (fullName.equalsIgnoreCase("pa1")) {
+			// Custom Field Assign to SecurityGroup
+			securityGroupPage.addProjectFieldtoSG(projectFieldINT);
+			System.out.println(projectFieldINT);
+			baseClass.stepInfo("Project field assign to security group");
+
+		}
+		// validation in minidoclist popup window
+		if (fullName.equalsIgnoreCase("rmu") || fullName.equalsIgnoreCase("rev") || fullName.equalsIgnoreCase("rmu1")
+				|| fullName.equalsIgnoreCase("rev1")) {
+			// Session search to doc view Coding Form
+			sessionSearch.basicContentSearch(Input.searchString2);
+			sessionSearch.ViewInDocView();
+		}
+		// Without mapping validation
+		if (fullName.equalsIgnoreCase("rmu") || fullName.equalsIgnoreCase("rev")) {
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(miniDocListpage.getGearIcon());
+			miniDocListpage.getGearIcon().waitAndClick(5);
+			baseClass.stepInfo("Minidoclist popup window opened");
+			baseClass.stepInfo("Optimized sort order button is selected");
+			// Without mapping validation in optimized mode
+			if (fullName.equalsIgnoreCase("rmu") || fullName.equalsIgnoreCase("rev")) {
+				if (miniDocListpage.getAvailableFieldsDisplay(projectFieldINT).isElementAvailable(3)) {
+					boolean flagOptimize = miniDocListpage.getAvailableFieldsDisplay(projectFieldINT).isDisplayed();
+					softAssertion.assertFalse(flagOptimize);	
+				}
+			}
+			// With mapping validation in optimized mode
+			else if (fullName.equalsIgnoreCase("rmu1") || fullName.equalsIgnoreCase("rev1")) {
+				if (miniDocListpage.getAvailableFieldsDisplay(projectFieldINT).isElementAvailable(3)) {
+					boolean flagOptimize = miniDocListpage.getAvailableFieldsDisplay(projectFieldINT).isDisplayed();
+					softAssertion.assertTrue(flagOptimize);	
+				}
+			}
+			baseClass.waitForElement(miniDocListpage.getManualSortRadioButton());
+			miniDocListpage.getManualSortRadioButton().waitAndClick(5);
+			baseClass.stepInfo("Manual sort order button opened");
+			// Without mapping validation in Manual mode
+			if (fullName.equalsIgnoreCase("rmu") || fullName.equalsIgnoreCase("rev")) {
+				if (miniDocListpage.getAvailableFieldsDisplay(projectFieldINT).isElementAvailable(3)) {
+				boolean flagManual = miniDocListpage.getAvailableFieldsDisplay(projectFieldINT).isDisplayed();
+				softAssertion.assertFalse(flagManual);
+			}
+		}
+			// With mapping validation in Manual mode
+			else if (fullName.equalsIgnoreCase("rmu1") || fullName.equalsIgnoreCase("rev1")) {
+				if (miniDocListpage.getAvailableFieldsDisplay(projectFieldINT).isElementAvailable(3)) {
+				boolean flagManual = miniDocListpage.getAvailableFieldsDisplay(projectFieldINT).isDisplayed();
+				softAssertion.assertTrue(flagManual);
+			}
+		}
+	}
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 31/01/2022 Modified date: NA Modified by: Baskar
+	 * @Description : To verify that user can 'popout panels' on Doc View, if
+	 *              preferences is set as 'Enabled' from the assignment.
+	 */
+
+	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 67)
+	public void validatePopOutPanelAtAssgnLevel(String fullName, String userName, String password)
+			throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50840");
+		baseClass.stepInfo("To verify that user can 'popout panels' on Doc View, "
+				+ "if preferences is set as 'Enabled' from the assignment.");
+
+		String rmu = "RMU";
+		String miniDocListChild = Input.url + "DocumentViewer/DocViewChild";
+		String analyticalChild = Input.url + "DocumentViewer/AnalyticsChildWindow";
+		String metaDataChild = Input.url + "DocumentViewer/MetaDataChildWindow";
+
+//      Login As
+		loginPage.loginToSightLine(userName, password);
+
+		if (fullName.contains(rmu)) {
+//			 searching document for assignment creation
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assgnWindow, Input.codingFormName);
+			assignmentPage.checkForToggleEnable(assignmentPage.getAssgn_PopOutPanelToggle());
+			driver.scrollPageToTop();
+			assignmentPage.add2ReviewerAndDistribute();
+			baseClass.impersonateRMUtoReviewer();
+			System.out.println(assgnWindow);
+		}
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assgnWindow);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// opening all child window
+		driver.waitForPageToBeReady();
+//		MiniDoclist child window
+		baseClass.waitForElement(docViewPage.getDocView_EditMode());
+		docViewPage.getDocView_EditMode().waitAndClick(10);
+		docViewPage.getDocView_HdrMinDoc().WaitUntilPresent().ScrollTo();
+		baseClass.waitForElement(docViewPage.getDocView_HdrMinDoc());
+		docViewPage.getDocView_HdrMinDoc().waitAndClick(5);
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		String miniDocListUrl = driver.getUrl();
+		softAssertion.assertEquals(miniDocListChild, miniDocListUrl);
+		if (driver.getUrl().equalsIgnoreCase(miniDocListChild)) {
+			baseClass.passedStep("User can able to popup out the minidcolist child window");
+			docViewPage.closeWindow(1);
+		}
+		docViewPage.switchToNewWindow(1);
+//		Analytical child window
+		docViewPage.getDocView_HdrAnalytics().WaitUntilPresent().ScrollTo();
+		baseClass.waitForElement(docViewPage.getDocView_HdrAnalytics());
+		docViewPage.getDocView_HdrAnalytics().waitAndClick(5);
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		String analyticalUrl = driver.getUrl();
+		softAssertion.assertEquals(analyticalChild, analyticalUrl);
+		if (driver.getUrl().equalsIgnoreCase(analyticalChild)) {
+			baseClass.passedStep("User can able to popup out the analytical child window");
+			docViewPage.closeWindow(1);
+		}
+		docViewPage.switchToNewWindow(1);
+//		Metadata child window
+		docViewPage.getDocView_HdrMetaData().WaitUntilPresent().ScrollTo();
+		baseClass.waitForElement(docViewPage.getDocView_HdrMetaData());
+		docViewPage.getDocView_HdrMetaData().waitAndClick(5);
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		String metaDataUrl = driver.getUrl();
+		softAssertion.assertEquals(metaDataChild, metaDataUrl);
+		if (driver.getUrl().equalsIgnoreCase(metaDataChild)) {
+			baseClass.passedStep("User can able to popup out the analytical child window");
+			docViewPage.closeWindow(1);
+		}
+		docViewPage.switchToNewWindow(1);
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 31/01/2022 Modified date: NA Modified by: Baskar
+	 * @Description : To verify user can see the document one by one in doc view by
+	 *              selecting document from mini doc list
+	 */
+
+	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 68)
+	public void validateUserViewingOneByOne(String fullName, String userName, String password)
+			throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50835");
+		baseClass.stepInfo("To verify user can see the document one by one "
+				+ "in doc view by selecting document from mini doc list");
+
+		String rmu = "RMU";
+
+//      Login As
+		loginPage.loginToSightLine(userName, password);
+
+		if (fullName.contains(rmu)) {
+//			 searching document for assignment creation
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assgnOne, Input.codingFormName);
+			assignmentPage.checkForToggleEnable(assignmentPage.getAssgn_PopOutPanelToggle());
+			driver.scrollPageToTop();
+			assignmentPage.add2ReviewerAndDistribute();
+			baseClass.impersonateRMUtoReviewer();
+			System.out.println(assgnOne);
+		}
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assgnOne);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		
+		// validating user viewing one by one docs
+		List<String> addData = new LinkedList<String>();
+		List<String> docviewPanelDocId = new LinkedList<String>();
+		for (int i = 1; i <= 4; i++) {
+			docViewPage.getMiniDocList_IterationDocs(i).waitAndClick(5);
+			driver.waitForPageToBeReady();
+			String activeDocId = docViewPage.getDocView_CurrentDocId().getText();
+			docviewPanelDocId.add(activeDocId);
+		}
+		for (String docId : docviewPanelDocId) {
+			docViewPage.getDociD(docId).waitAndClick(5);
+			driver.waitForPageToBeReady();
+			String pnDocs = docViewPage.getVerifyPrincipalDocument().getText();
+			addData.add(pnDocs);
+			softAssertion.assertEquals(pnDocs, docId);
+		}
+		softAssertion.assertEquals(addData, docviewPanelDocId);
+		softAssertion.assertAll();
+		baseClass.passedStep("User can able to see the document one by one in docview panel");
+		
+		// logout
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {

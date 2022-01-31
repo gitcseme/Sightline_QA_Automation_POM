@@ -2859,6 +2859,9 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//td[text()='"+text+"']//ancestor::tr//i[@class='fa fa-link']");
 	}
 
+	public Element getMiniDocList_IterationDocs(int row) {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr["+row+"]//td[2]");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
