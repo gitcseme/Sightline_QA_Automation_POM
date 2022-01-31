@@ -237,7 +237,7 @@ public void verifyDocsCntAssgnments() throws InterruptedException, AWTException 
 	 * @author Jayanthi.ganesan
 	 * @throws AWTException
 	 */
-	@Test(groups = { "regression" }, priority = 1, enabled = true)
+	@Test(groups = { "regression" }, priority = 4, enabled = true)
 	public void verifyDocsCntTagNOTProd() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49300");
@@ -344,7 +344,64 @@ public void verifyDocsCntCompletedAssgnments() throws InterruptedException, AWTE
 			+ "AND operator in search result.");
 	
 }
-	
+
+/**
+ * @author Jayanthi.ganesan
+ * @throws InterruptedException
+ */
+@Test(dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 6)
+public void verifySearchResultForComment(String username, String password) throws InterruptedException {
+
+	String docComment = "Reviewed";
+	int count = 2;
+
+	lp = new LoginPage(driver);
+	SessionSearch search = new SessionSearch(driver);
+	DocViewPage docview = new DocViewPage(driver);
+	lp.loginToSightLine(username, password);
+	baseClass.stepInfo("Logged In as : " + username);
+	baseClass.stepInfo("Test case Id: RPMXCON-47778");
+	baseClass.stepInfo("To verify as an user login into the Application, user will be able to search based on"
+			+ " comments text on Content & Metadata in advanced search");
+	if (username == Input.rmu1userName) {
+		search.advancedContentSearch(Input.searchString1);
+		search.ViewInDocView();
+
+		// Apply comments to document
+		docview.addCommentAndSave(docComment, true, count);
+		baseClass.selectproject();
+	}
+
+	int pureHit1 = search.getCommentsOrRemarksCount_AdvancedSearch(Input.documentComments, docComment);
+	SoftAssert assertion = new SoftAssert();
+	assertion.assertEquals(pureHit1, count);
+	assertion.assertAll();
+	baseClass.passedStep("user  able to search based on comments text on Content & Metadata in "
+			+ "advanced search and pure hit count displayed is " + pureHit1 + " Which is expected.");
+
+}
+	/**
+	 * @author Jayanthi.ganesan]
+	 * @throws InterruptedException
+	 */
+	@Test(dataProvider = "Users",enabled = true, groups = { "regression" }, priority = 7)
+	public void verifyPinnedIcon(String username, String password) throws InterruptedException {
+		lp = new LoginPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+		lp.loginToSightLine(username, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-47761");
+		baseClass.stepInfo("To verify as an user login into the Application, user will be able to lock/pin"
+				+ " this search a In-Session advanced search query");
+		search.advancedContentSearch(Input.searchString1);
+		driver.waitForPageToBeReady();
+		search.getPureHitAddButton().waitAndClick(5);
+		baseClass.stepInfo("Performed a advanced content and metadata search  and moved the pure hit block to shopping cart");
+		if(search.getPinnedSearchIcon().isElementAvailable(2)) {
+			baseClass.passedStep(" pin icon  locked/Pinned this search when user drag the results into the Shopping cart  ");
+		}else {
+			baseClass.failedStep(" pin icon is not locked/Pinned this search when user drag the results into the Shopping cart  ");
+		}
+	}
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {

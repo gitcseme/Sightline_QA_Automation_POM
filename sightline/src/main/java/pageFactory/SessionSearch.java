@@ -1496,8 +1496,14 @@ public class SessionSearch {
 				"//table[contains(@id,'taskbasicPureHits')]//tbody//tr[" + rowNum + "]//td[" + colNum + "]");
 	}
 
+	public Element getCommentsFieldAndRemarks_AdvacnedSearch() {
+		return driver.FindElementByXPath(
+				"//ol[@class='dd-list smart-accordion-default Adv']//div//button[@id='commentsHelper']");
+	}
+	public Element getPinnedSearchIcon() {
+		return driver.FindElementByXPath("//span[@title='Un Pin this Search']");
+	}
 	
-
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -9828,6 +9834,44 @@ public class SessionSearch {
 
 	}
 
+	/**
+	 * @author Jayanthi
+	 * @param remarks
+	 * @param val1
+	 * @return
+	 */
+	public int getCommentsOrRemarksCount_AdvancedSearch(String remarks, String val1) {
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		base.waitForElement( getAdvancedSearchLink());
+		getAdvancedSearchLink().Click();
+		base.waitForElement(getContentAndMetaDatabtn());		
+		getContentAndMetaDatabtn().Click();	
+		base.waitForElement(getCommentsFieldAndRemarks_AdvacnedSearch());
+		getCommentsFieldAndRemarks_AdvacnedSearch().waitAndClick(5);
+		base.waitForElement(SelectFromDropDown(remarks));
+		SelectFromDropDown(remarks).waitAndClick(10);
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().Click();
+		// Click on Search button
+		getQuerySearchButton().Click();
+		// look for warnings, in case of proximity search	
+		if (getTallyContinue().isElementAvailable(2)) {
+			getTallyContinue().waitAndClick(10);
+		}
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsLastCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
 
+		int pureHit = Integer.parseInt(getPureHitsLastCount().getText());
+		Reporter.log("Serach is done for comments term' " + remarks + "' and PureHit is : " + pureHit, true);
+		UtilityLog.info("Serach is done for  comments term " + remarks + " and PureHit is : " + pureHit);
+
+		return pureHit;
+	}
 }
 
