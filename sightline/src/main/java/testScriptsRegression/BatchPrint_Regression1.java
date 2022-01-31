@@ -207,10 +207,9 @@ public class BatchPrint_Regression1 {
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {
-			loginPage.logout();
+			loginPage.quitBrowser();
 		} finally {
-			loginPage.closeBrowser();
-			LoginPage.clearBrowserCache();
+			loginPage.quitBrowser();
 		}
 	}
 
@@ -221,7 +220,7 @@ public class BatchPrint_Regression1 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			try { // if any tc failed and dint logout!
-				loginPage.logout();
+				loginPage.logoutWithoutAssert();
 			} catch (Exception e) {
 				// TODO: handle exception
 			}

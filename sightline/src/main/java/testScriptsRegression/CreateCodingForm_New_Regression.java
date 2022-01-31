@@ -4107,7 +4107,7 @@ public class CreateCodingForm_New_Regression {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
 			try { // if any tc failed and dint logout!
-				loginPage.logout();
+				loginPage.logoutWithoutAssert();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

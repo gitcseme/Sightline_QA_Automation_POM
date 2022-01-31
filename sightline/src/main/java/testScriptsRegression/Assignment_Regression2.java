@@ -87,6 +87,7 @@ public class Assignment_Regression2 {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		bc.stepInfo("Logged in as RMU user");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -127,6 +128,7 @@ public class Assignment_Regression2 {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		bc.stepInfo("Logged in as RMU user");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		lp.logout();
 	}
 	
 
@@ -141,6 +143,7 @@ public class Assignment_Regression2 {
 		bc.stepInfo("Test case Id: RPMXCON-54945");
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.verifyHelpTextPopUpWhenHovering();
+		lp.logout();
 	}
 
 	/**
@@ -159,6 +162,7 @@ public class Assignment_Regression2 {
 
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.verifyHelpTextPopUpWhenClicking();
+		lp.logout();
 	}
 
 	/**
@@ -194,6 +198,7 @@ public class Assignment_Regression2 {
 		}
 		agnmt.deleteSelectedAgnmt(assignmentName);
 		assertion.assertAll();
+		lp.logout();
 	}
 
 	/**
@@ -228,6 +233,7 @@ public class Assignment_Regression2 {
 		}
 		agnmt.deleteSelectedAgnmt(assignmentName);
 		assertion.assertAll();
+		lp.logout();
 	}
 
 	/**
@@ -286,6 +292,7 @@ public class Assignment_Regression2 {
 		}
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		assertion.assertAll();
+		lp.logout();
 	}
 
 	/**
@@ -342,6 +349,7 @@ public class Assignment_Regression2 {
 		}
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		assertion.assertAll();
+		lp.logout();
 	}
 
 	/**
@@ -374,6 +382,7 @@ public class Assignment_Regression2 {
 		lp.logout();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -396,6 +405,7 @@ public class Assignment_Regression2 {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.ValidateUnassignUserInAgnmt();
 		agnmt.deleteSelectedAgnmt(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -428,6 +438,7 @@ public class Assignment_Regression2 {
 			bc.failedStep("Exception Occured,Failed To verify that on selecting specific category, only that category "
 					+ "documents are assign to Assignment.");
 		}
+		lp.logout();
 	}
 
 	/**
@@ -460,6 +471,7 @@ public class Assignment_Regression2 {
 					"Exception occured,Failed to verify Rmu is able to view instruction pop out Elements on New/Edit Assignments Page");
 
 		}
+		lp.logout();
 	}
 
 	/**
@@ -498,6 +510,7 @@ public class Assignment_Regression2 {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		bc.stepInfo("Logged in as RMU user");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -524,6 +537,7 @@ public class Assignment_Regression2 {
 			bc.failedStep(
 					"Exception occured,Failed to verify Rmu is able to view  Configure Button  on New Assignments Page");
 		}
+		lp.logout();
 	}
 
 	/**
@@ -560,6 +574,7 @@ public class Assignment_Regression2 {
 			bc.failedStep(
 					"Exception occured,Failed to verify Rmu is able to view  Configure Button in Edit Assignments Page");
 		}
+		lp.logout();
 	}
 	/**
 	 * @author Jayanthi.ganesan
@@ -595,6 +610,7 @@ public class Assignment_Regression2 {
 					"Exception occured,Failed to verify that on clicking Keyword button pop up is displayed on New/Edit Assignment Page\r\n"
 							+ "");
 		}
+		lp.logout();
 	}
 
 	/**
@@ -636,6 +652,7 @@ public class Assignment_Regression2 {
 			bc.failedStep("Exception Occcured,Failed to verify Document PresentationSequence options displayed");
 
 		}
+		lp.logout();
 	}
 
 	/**
@@ -666,6 +683,7 @@ public class Assignment_Regression2 {
 			bc.failedStep("Exception occured,failed to create assignment from assign/unassign popup from DocList Page");
 
 		}
+		lp.logout();
 
 	}
 
@@ -700,7 +718,8 @@ public class Assignment_Regression2 {
 		agnmt.editCopyAssignmentUsingPaginationConcept("updated " + assignmentName);
 		agnmt.verifyAgnmtDetailsInCopyAgnmt(assignmentName, Input.codeFormName, status);
 	    agnmt.deleteSelectedAgnmt(assignmentName);
-		agnmt.deleteAssgnmntUsingPagination("updated " + assignmentName);		
+		agnmt.deleteAssgnmntUsingPagination("updated " + assignmentName);	
+		lp.logout();
 	}
 
 	/**
@@ -721,6 +740,7 @@ public class Assignment_Regression2 {
 		agnmt.validateCopyAssgnCascadingNoncascadingSettings(CascasdeAssignmentGrpName, assignmentName, "Yes");
 		bc.selectproject();
 		agnmt.validateCopyAssgnCascadingNoncascadingSettings(NonCascasdeAssignmentGrpName, assignmentName_2, "No");
+		lp.logout();
 	
 	}
 
@@ -783,6 +803,7 @@ public class Assignment_Regression2 {
 		lp.logout();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -857,6 +878,7 @@ public class Assignment_Regression2 {
 		lp.logout();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -879,6 +901,7 @@ public class Assignment_Regression2 {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.verifyDisplayedValidations();
 		agnmt.deleteSelectedAgnmt(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -903,6 +926,7 @@ public class Assignment_Regression2 {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.verifyDisplayedValidationsOfRemovedDocs(count);
 		agnmt.deleteSelectedAgnmt(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -943,6 +967,7 @@ public class Assignment_Regression2 {
 							+ "with descending meta data sorting");
 
 		}
+		lp.logout();
 	}
 
 	/**
@@ -987,6 +1012,7 @@ public class Assignment_Regression2 {
 			bc.failedStep("Failed to verify that RMU can create assignments from assign/unassign popup"
 					+ " if search results are saved");
 		}
+		lp.logout();
 
 	}
 
@@ -1037,6 +1063,7 @@ public class Assignment_Regression2 {
 		lp.logout();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -1121,6 +1148,7 @@ public class Assignment_Regression2 {
 		agnmt.DeleteChildAssgnGroup(assignmentGrpName_4, assgnGrpName);
 		agnmt.DeleteAssgnGroup(assgnGrpName);
 		assertion.assertAll();
+		lp.logout();
 	}
 
 	/**
@@ -1150,6 +1178,7 @@ public class Assignment_Regression2 {
 		agnmt.getAssignmentAction_DeleteAssignment().waitAndClick(3);
 		bc.getYesBtn().waitAndClick(5);
 		bc.VerifySuccessMessage("Assignment deleted successfully");
+		lp.logout();
 	}
 
 	/**
@@ -1197,6 +1226,7 @@ public class Assignment_Regression2 {
 			bc.stepInfo(e.getMessage());
 			bc.failedStep("Exception occurred");
 		}
+		lp.logout();
 	}
 
 	/**
@@ -1236,6 +1266,7 @@ public class Assignment_Regression2 {
 			bc.failedStep("Exception occurred");
 
 		}
+		lp.logout();
 	}
 
 	/**
@@ -1301,6 +1332,7 @@ public class Assignment_Regression2 {
 		bc.selectproject();
 		agnmt.deleteSelectedAgnmt(assignmentName);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -1334,7 +1366,7 @@ public class Assignment_Regression2 {
 		agnmt.verifyKeywordsPopup();
 		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		keyword.deleteKeyword(keywordName);
-
+		lp.logout();
 	}
 
 	/**
@@ -1413,6 +1445,7 @@ public class Assignment_Regression2 {
 		agnmt.DeleteChildAssgnGroup(childNonCascadeAssgnGroup, NoncascadeAsgnGrpName);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.DeleteAssgnGroup(NoncascadeAsgnGrpName);
+		lp.logout();
 	}
 
 	/**
@@ -1472,6 +1505,7 @@ public class Assignment_Regression2 {
 			bc.stepInfo(e.getMessage());
 			bc.failedStep("Exception occurred");
 		}
+		lp.logout();
 	}
 
 	@DataProvider(name = "Users")
@@ -1527,6 +1561,7 @@ public class Assignment_Regression2 {
 			bc.stepInfo(e.getMessage());
 			bc.failedStep("Exception occurred");
 		}
+		lp.logout();
 	}
 
 	/**
@@ -1588,6 +1623,7 @@ public class Assignment_Regression2 {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssignmentFromSingleAssgnGrp(NoncascadeAsgnGrpName, noncascadeAssgnName);
 		agnmt.DeleteAssgnGroup(NoncascadeAsgnGrpName);
+		lp.logout();
 	}
 
 	/**
@@ -1648,7 +1684,7 @@ public class Assignment_Regression2 {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssignmentFromSingleAssgnGrp(NoncascadeAsgnGrpName, noncascadeAssgnName);
 		agnmt.DeleteAssgnGroup(NoncascadeAsgnGrpName);
-
+		lp.logout();
 	}
 
 	/**
@@ -1673,6 +1709,7 @@ public class Assignment_Regression2 {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.unassignTheAddedReviewer(count);
 		agnmt.deleteSelectedAgnmt(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -1715,6 +1752,7 @@ public class Assignment_Regression2 {
 		lp.logout();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -1739,6 +1777,7 @@ public class Assignment_Regression2 {
 		System.out.println(Distributeduser);
 		agnmt.VerifyTodocountinManageRevTab_RedistributeDocs();
 		agnmt.deleteSelectedAgnmt(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -1766,6 +1805,7 @@ public class Assignment_Regression2 {
 		lp.logout();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		lp.logout();
 	}
 
 	@BeforeMethod
@@ -1789,9 +1829,10 @@ public class Assignment_Regression2 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
+			lp.logoutWithoutAssert();
 		}
 		try {			
-			lp.logout();
+//			lp.logout();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();

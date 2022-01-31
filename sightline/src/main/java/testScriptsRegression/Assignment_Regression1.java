@@ -42,8 +42,8 @@ public class Assignment_Regression1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		softAssertion=new SoftAssert ();
 	}
@@ -91,6 +91,7 @@ public class Assignment_Regression1 {
 		agnmt.DeleteChildAssgnGroup(nonCascadeAsgnGrpName, cascadeAsgnGrpName);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.DeleteAssgnGroup(cascadeAsgnGrpName);
+		lp.logout();
 
 	}
 
@@ -131,6 +132,7 @@ public class Assignment_Regression1 {
 		agnmt.DeleteChildAssgnGroup(cascadeAsgnGrpName, parentCascadeAsgnGrpName);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.DeleteAssgnGroup(parentCascadeAsgnGrpName);
+		lp.logout();
 	}
 
 	/**
@@ -176,6 +178,7 @@ public class Assignment_Regression1 {
 		agnmt.DeleteChildAssgnGroup(cascadeAsgnGrpName, nonCascadeAsgnGrpName);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.DeleteAssgnGroup(nonCascadeAsgnGrpName);
+		lp.logout();
 	}
 
 	/**
@@ -220,6 +223,7 @@ public class Assignment_Regression1 {
 		agnmt.DeleteChildAssgnGroup(cascadeAsgnGrpName, cascadeAsgnGrpName2);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.DeleteAssgnGroup(cascadeAsgnGrpName2);
+		lp.logout();
 	}
 
 	/**
@@ -259,6 +263,7 @@ public class Assignment_Regression1 {
 		agnmt.DeleteChildAssgnGroup(nonCascadeAsgnGrpName_1, noncascadeAsgnGrpName);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.DeleteAssgnGroup(noncascadeAsgnGrpName);
+		lp.logout();
 	}
 
 	/**
@@ -300,6 +305,7 @@ public class Assignment_Regression1 {
 		agnmt.DeleteChildAssgnGroup(nonCascadeAsgnGrpName, cascadeAsgnGrpName);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.DeleteAssgnGroup(cascadeAsgnGrpName);
+		lp.logout();
 	}
 
 	/**
@@ -325,6 +331,7 @@ public class Assignment_Regression1 {
 		agnmt.validateMetadataOption(assignmentName, Input.codeFormName);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.DeleteAssgnGroup(assignmentGroup);
+		lp.logout();
 	}
 
 	/**
@@ -351,6 +358,7 @@ public class Assignment_Regression1 {
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		bc.stepInfo("Logged in as review user");
 		agnmt.verifyInstructionTextInDistDocs(assignmentName, Input.searchString1);
+		lp.logout();
 	}
 
 	/**
@@ -389,6 +397,7 @@ public class Assignment_Regression1 {
 		softAssertion.assertEquals(PureHitCount, docCount);
 		bc.passedStep("The total documents are equal as per the pure hit count");
 		softAssertion.assertAll();
+		lp.logout();
 
 	}
 
@@ -429,7 +438,7 @@ public class Assignment_Regression1 {
 		softAssertion.assertEquals(PureHitCount, docCount);
 		softAssertion.assertAll();
 		bc.passedStep("The total documents are equal as per the pure hit count");
-
+		lp.logout();
 	}
 
 	/**
@@ -458,6 +467,7 @@ public class Assignment_Regression1 {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		bc.stepInfo("Logged in as RMU user");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -480,6 +490,7 @@ public class Assignment_Regression1 {
 		agnmt.verifyFormattingToolBar_InstructionPopUp("No");
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 		agnmt.deleteSelectedAgnmt(assignmentName);
+		lp.logout();
 	}
 
 	/**
@@ -494,6 +505,7 @@ public class Assignment_Regression1 {
 				"To verify that if 'Show Docs Counts' is OFF  then document counts is not displayed on the Assignment.");
 		bc.stepInfo("Test case Id: RPMXCON-54164");
 		agnmt.verifyDocCountDisplay();
+		lp.logout();
 	}
 
 	/**
@@ -519,6 +531,7 @@ public class Assignment_Regression1 {
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		bc.stepInfo("Logged in as review user");
 		agnmt.verifyInstructionTextInDistDocs(assignmentName, Input.searchString1);
+		lp.logout();
 	}
 
 	/**
@@ -557,6 +570,7 @@ public class Assignment_Regression1 {
 			bc.failedStep("Distributed Reviewer user appeared in redistribute document list.");
 		}
 		softAssertion.assertAll();
+		lp.logout();
 	}
 
 	/**
@@ -570,6 +584,7 @@ public class Assignment_Regression1 {
 		bc.stepInfo("To verify that RMU is able to view option \"View All Docs in DocList\"");
 		bc.stepInfo("Test case Id:RPMXCON-53803");
 		agnmt.verifViewAllDocsinDocListBtnINActionDD();
+		lp.logout();
 	}
 
 	/**
@@ -624,6 +639,7 @@ public class Assignment_Regression1 {
 		bc.CloseSuccessMsgpopup();
 		agnmt.DeleteAssgnGroup(assignmentGroup);
 		softAssertion.assertAll();
+		lp.logout();
 	}
 	
 	/**
@@ -661,6 +677,7 @@ public class Assignment_Regression1 {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		bc.stepInfo("Logged in as RMU user");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		lp.logout();
 	}
 	/**
 	 * @author Jayanthi.ganesan 
@@ -689,6 +706,7 @@ public class Assignment_Regression1 {
 		search.basicContentSearch(searchText);
 		search.bulkAssign();
 		agnmt.assignAndVerifyDocsCountwithSamplemethod(assignmentName,"Count of Selected Docs",assignmentName2);
+		lp.logout();
 	}
 	/**
 	 * @author Jayanthi.ganesan 
@@ -716,7 +734,9 @@ public class Assignment_Regression1 {
 		bc.selectproject();
 		search.basicContentSearch(searchText);
 		search.bulkAssign();
-		agnmt.assignAndVerifyDocsCountwithSamplemethod(assignmentName,"Percentage",assignmentName2);			softAssertion.assertAll();
+		agnmt.assignAndVerifyDocsCountwithSamplemethod(assignmentName,"Percentage",assignmentName2);			
+		softAssertion.assertAll();
+		lp.logout();
 	}
 	/**
 	 * @author Jayanthi.ganesan 
@@ -751,6 +771,7 @@ public class Assignment_Regression1 {
 		agnmt.getAssignmentAction_EditAssignment().waitAndClick(10);
 		bc.stepInfo("Assignment edit option is clicked");
 		agnmt.validatedTheSortByAndSortType(Input.metaDataName, "Ascending");	
+		lp.logout();
 	}
 	
 	/**
@@ -789,7 +810,8 @@ public class Assignment_Regression1 {
 		bc.waitForElement(agnmt.getAssignmentAction_EditAssignment());
 		agnmt.getAssignmentAction_EditAssignment().waitAndClick(10);
 		bc.stepInfo("Assignment edit option is clicked");
-		agnmt.validateTheAvailableCriteriaInCategory(" Email Threads");				
+		agnmt.validateTheAvailableCriteriaInCategory(" Email Threads");
+		lp.logout();
 	}
 
 	@BeforeMethod
@@ -812,9 +834,10 @@ public class Assignment_Regression1 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
+			lp.logoutWithoutAssert();
 		}
 		try {			
-			lp.logout();
+//			lp.logout();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();

@@ -9,6 +9,7 @@ import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -118,6 +119,7 @@ public class DocExplorer_Regression1 {
 
 		baseClass.stepInfo("Verify documents count by tag name subtally");
 		tally.verifyDocumentsCountByTagNameSubTally(random1);
+		loginPage.logout();
 	}
 	
 	
@@ -163,6 +165,7 @@ public class DocExplorer_Regression1 {
 		
 		baseClass.stepInfo("Verify tally chart rect is displayed");
 		tally.verifyTallyChartRectIsDisplayed(true);
+		loginPage.logout();
 		
 	}
 
@@ -199,6 +202,7 @@ public class DocExplorer_Regression1 {
 		
 		baseClass.stepInfo("Verify documents after applying exclude functionality by tag");
 		docexp.verifyExcludeFunctionlityForTag(totalDocCount, 3);
+		loginPage.logout();
 	}
 
 	/*
@@ -233,6 +237,7 @@ public class DocExplorer_Regression1 {
 		
 		baseClass.stepInfo("Verify documents after applying include functionality by tag");
 		docexp.verifyIncludeTagFilterWorksProperly(selectedDocs);
+		loginPage.logout();
 	}
 	
 	
@@ -289,9 +294,7 @@ public class DocExplorer_Regression1 {
 		
 		baseClass.stepInfo("Verify documents after applying exclude functionality by folder");
 		docexp.verifyExcludeFunctionlityForFolder(totalDocCount, 3);
-		
-		
-		
+		loginPage.logout();		
 	}
 
 	
@@ -327,6 +330,7 @@ public class DocExplorer_Regression1 {
 		
 		baseClass.stepInfo("Verifying selected documents are visible in docexplorerpage");
 		docExplorer.verifyingTheSelectedDocumentInDocExplorerPage(documentId,Input.documentComments);
+		loginPage.logout();
 	 }
 	 
 	 /**
@@ -356,19 +360,10 @@ public class DocExplorer_Regression1 {
 			
 			baseClass.stepInfo("Verify Doc List Header");
 			docExplorer.verifyDocListHeader();
+			loginPage.logout();
 		
 		 }
 	
-	@AfterMethod(alwaysRun = true)
-	public void close() {
-		try {
-			loginPage.logout();
-		} finally {
-			loginPage.closeBrowser();
-			LoginPage.clearBrowserCache();
-		}
-	}
-
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
@@ -376,13 +371,22 @@ public class DocExplorer_Regression1 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			try { // if any tc failed and dint logout!
-				loginPage.logout();
+				loginPage.logoutWithoutAssert();
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 
+	}
+	@AfterClass(alwaysRun = true)
+	public void close() {
+		try {
+			loginPage.quitBrowser();
+		} finally {
+			loginPage.closeBrowser();
+			LoginPage.clearBrowserCache();
+		}
 	}
 
 }

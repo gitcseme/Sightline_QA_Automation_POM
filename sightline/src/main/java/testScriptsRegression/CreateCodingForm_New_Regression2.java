@@ -154,6 +154,7 @@ public class CreateCodingForm_New_Regression2 {
 	    codingForm.deleteCodingForm(codingform, codingform);
 	    codingForm.verifyCodingFormIsDeleted(codingform);
 	    softAssertion.assertAll();
+	    loginPage.logout();
 	}
 	/**
 	 * @throws Exception 
@@ -229,6 +230,7 @@ public class CreateCodingForm_New_Regression2 {
 	    codingForm.deleteCodingForm(codingform, codingform);
 	    codingForm.verifyCodingFormIsDeleted(codingform);
 	    softAssertion.assertAll();
+	    loginPage.logout();
 	}
 	/**
 	 * @throws Exception 
@@ -310,6 +312,7 @@ public class CreateCodingForm_New_Regression2 {
 	    codingForm.deleteCodingForm(codingform, codingform);
 	    codingForm.verifyCodingFormIsDeleted(codingform);
 	    softAssertion.assertAll();
+	    loginPage.logout();
 	}
 	/**
 	 * @throws Exception 
@@ -385,6 +388,7 @@ public class CreateCodingForm_New_Regression2 {
 	    codingForm.deleteCodingForm(codingform, codingform);
 	    codingForm.verifyCodingFormIsDeleted(codingform);
 	    softAssertion.assertAll();
+	    loginPage.logout();
 	}
 	/**
 	 * @throws Exception 
@@ -466,6 +470,7 @@ public class CreateCodingForm_New_Regression2 {
 	    codingForm.deleteCodingForm(codingform, codingform);
 	    codingForm.verifyCodingFormIsDeleted(codingform);
 	    softAssertion.assertAll();
+	    loginPage.logout();
 	}
 	/**
 	 * @throws Exception 
@@ -541,6 +546,7 @@ public class CreateCodingForm_New_Regression2 {
 	    codingForm.deleteCodingForm(codingform, codingform);
 	    codingForm.verifyCodingFormIsDeleted(codingform);
 	    softAssertion.assertAll();
+	    loginPage.logout();
 	}
 	/**
 	 * @throws Exception 
@@ -574,6 +580,7 @@ public class CreateCodingForm_New_Regression2 {
 	    softAssertion.assertEquals(value, "true");
 	    baseClass.passedStep("No changes are saved after clicking yes button to navigate some other page");
 	    softAssertion.assertAll();
+	    loginPage.logout();
 	}
 	/**
 	 * @throws Exception 
@@ -610,6 +617,7 @@ public class CreateCodingForm_New_Regression2 {
 	    softAssertion.assertEquals(value, "true");
 	    baseClass.passedStep("No changes are saved after clicking yes button to navigate some other page");
 	    softAssertion.assertAll();
+	    loginPage.logout();
 	}
 	/**
 	 * @throws Exception 
@@ -652,6 +660,7 @@ public class CreateCodingForm_New_Regression2 {
 	    softAssertion.assertEquals(value, "true");
 	    baseClass.passedStep("No changes are saved after clicking yes button to navigate some other page");
 	    softAssertion.assertAll();
+	    loginPage.logout();
 	}
 	/**
 	 * @throws Exception 
@@ -695,6 +704,7 @@ public class CreateCodingForm_New_Regression2 {
 	    softAssertion.assertEquals(value, "true");
 	    baseClass.passedStep("No changes are saved after clicking yes button to navigate some other page");
 	    softAssertion.assertAll();
+	    loginPage.logout();
 	}
 	/**
 	 * @Author : Iyappan.Kasinathan 
@@ -756,6 +766,7 @@ public class CreateCodingForm_New_Regression2 {
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform,codingform);	
 		codingForm.verifyCodingFormIsDeleted(codingform);
+		loginPage.logout();
 	}
 	/**
 	 * @Author : Iyappan.Kasinathan 
@@ -805,6 +816,7 @@ public class CreateCodingForm_New_Regression2 {
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform,codingform);	
 		codingForm.verifyCodingFormIsDeleted(codingform);
+		loginPage.logout();
 	}
 	/**
 	 * @Author : Iyappan.Kasinathan 
@@ -828,6 +840,7 @@ public class CreateCodingForm_New_Regression2 {
 		softAssertion.assertEquals(Input.codeFormName, codingformName);
 		softAssertion.assertAll();
 		baseClass.passedStep("Coding form in the docview page displayed to the user sucessfully");
+		loginPage.logout();
 	}
 	/**
 	 * @Author : Iyappan.Kasinathan 
@@ -887,6 +900,7 @@ public class CreateCodingForm_New_Regression2 {
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform,codingform);	
 		codingForm.verifyCodingFormIsDeleted(codingform);
+		loginPage.logout();
 		}
 	}
 	/**
@@ -954,6 +968,7 @@ public class CreateCodingForm_New_Regression2 {
 		codingForm.deleteCodingForm(cfName1,cfName1);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(cfName2,cfName2);
+		loginPage.logout();
 		}	
 		
 	}
@@ -1015,6 +1030,7 @@ public class CreateCodingForm_New_Regression2 {
 		assignmentPage.deleteAssgnmntUsingPagination(assignment2);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(cfName1,cfName1);
+		loginPage.logout();
 		}	
 		
 	}
@@ -1051,9 +1067,10 @@ public class CreateCodingForm_New_Regression2 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
+//			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

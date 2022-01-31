@@ -108,6 +108,7 @@ public class DocView_AnalyticsPanel_Regression {
 		
 		baseClass.passedStep(
 				"To Verify that when the thread map toggle is enabled, the length of the email thread should not be a constraint and with email threads such as the above (23 mails and 140 participants) from Analytics panel child window");
+		loginPage.logout();
 	}
 
 	/**
@@ -150,6 +151,7 @@ public class DocView_AnalyticsPanel_Regression {
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"To Verify that when document is viewed from analytics panel when hits panel is open then enable/disable should be retained is successfully");
+		loginPage.logout();
 
 	}
 
@@ -205,7 +207,7 @@ public class DocView_AnalyticsPanel_Regression {
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"To Verify that when document is viewed from analytics panel child window when hits panel is open then enable/disable should be retained is successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -277,7 +279,7 @@ public class DocView_AnalyticsPanel_Regression {
 		// Doc Viewed in Analytics Panel
 		docViewAnalytics.verifyHorizontalTab(text);
 		baseClass.stepInfo("Doc is selected and viewed in the DocView Analytics Panel successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -313,7 +315,7 @@ public class DocView_AnalyticsPanel_Regression {
 		softAssertion.assertTrue(true, doc);
 		baseClass.passedStep(
 				"Verify that Thread Map tab should be displayed when navigating to doc view outside of assignment is successfully");
-
+		loginPage.logout();
 	}
 
 
@@ -374,7 +376,7 @@ public class DocView_AnalyticsPanel_Regression {
 		
 		baseClass.passedStep(
 				"To Verify that when the threadmap toggle is enabled, the length of the email thread should not be a constraint and with email threads such as the above (23 mails and 140 participants) from Analytics panel is succesfully verifed");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -426,6 +428,7 @@ public class DocView_AnalyticsPanel_Regression {
 		softAssertion.assertEquals(text, textValue);
 		baseClass.passedStep(
 				"To Verify that when the threadmap toggle is disabled, the application should not try to pull the thread information on doc view is sucessfully");
+		loginPage.logout();
 
 	}
 
@@ -477,7 +480,7 @@ public class DocView_AnalyticsPanel_Regression {
 		
 		baseClass.passedStep(
 				"To Verify that when the threadmap toggle is disabled, the application should not try to pull the thread information on doc view from Analytics panel child window is sucessfully");
-
+		loginPage.logout();
 	}
 
 	
@@ -524,7 +527,7 @@ public class DocView_AnalyticsPanel_Regression {
 		// Verify Code As Same
 		docViewAnalytics.verifyCodeAsSameInMiniDocList();
 		baseClass.stepInfo("Doc is selected from Mini Doclist and Code As Same is verified successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -562,6 +565,7 @@ public class DocView_AnalyticsPanel_Regression {
 		// Verifying Code as Same Icon
 		docViewAnalytics.verifyCodeAsSameInMiniDocList();
 		baseClass.stepInfo("Doc is selected from Mini Doclist and Code As Same is verified successfully");
+		loginPage.logout();
 
 	}
 
@@ -629,7 +633,7 @@ public class DocView_AnalyticsPanel_Regression {
 		// Select AnalyticsPanel
 		docViewAnalytics.verifyThreadMapWithNoDocs();
 		baseClass.stepInfo("No Doc is viewed from Analytics panel Thread Map tab successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -694,7 +698,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// verify 20 plus docs in the thread map tab
 		docViewAnalytics.verifyThreadMapWith20Docs(text);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -772,7 +776,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// Verify Thread Map DocId
 		docViewAnalytics.verifyThreadMapDocId();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -848,7 +852,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// Verify Threaded docs DocId
 		docViewAnalytics.verifyThreadedDocsFromDocList();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -923,7 +927,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// select doc from Analytics thread map tab and verify the doc
 		docViewAnalytics.selectDocsFromThreadMapTab();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1000,6 +1004,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// Navigates to other document from Mini doc list and verify analytics panel
 		docViewAnalytics.selectAnalyticsNearDupeTab();
+		loginPage.logout();
 	}
 
 	/**
@@ -1064,7 +1069,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// View the email document from mini doc list having non email attachment
 		docViewAnalytics.selectDocAndVerifyInMetaData(text);
-
+		loginPage.logout();
 	}
 	/**
 	 * 
@@ -1139,7 +1144,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// select doc from mini dockist and verify Horizontal tab
 		docViewAnalytics.checkingDocsAndVerifyHorizontalScrollBar(documentToBeScrolled);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1215,7 +1220,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// select doc from mini dockist and verify Horizontal tab
 		docViewAnalytics.checkingDocsAndVerifyHorizontalScrollBarWithChildWindow(documentToBeScrolled);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1282,7 +1287,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// select doc from mini dockist and verify Horizontal tab
 		docViewAnalytics.checkingDocsAndVerifyHorizontalScrollBar(documentToBeScrolled);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1351,7 +1356,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// select doc from mini dockist and verify Horizontal tab
 		docViewAnalytics.VerifyHorizontalScrollBarWithChildWindow(documentToBeScrolled);
-
+		loginPage.logout();
 	}
 
 
@@ -1407,7 +1412,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// verify warning message when select the same doc
 		docViewAnalytics.verifyWarningMessageCodeAsSameIsSelectedCompletedDocs();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1465,6 +1470,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// verify warning message when select the same doc
 		docViewAnalytics.verifyWarningMessageWithChildWindow();
+		loginPage.logout();
 
 	}
 
@@ -1532,6 +1538,7 @@ public class DocView_AnalyticsPanel_Regression {
 		baseClass.stepInfo("To verify MetaData Panel in DocView");
 		docViewAnalytics.verifyMetaDataPanelInDocView();
 		driver.waitForPageToBeReady();
+		loginPage.logout();
 
 	}
 
@@ -1809,6 +1816,7 @@ public class DocView_AnalyticsPanel_Regression {
 				"To Verify when Code same action selected from Analytics Panel > Conceptually Similar and Save/Complete clicked from coding form child window is verified successfully");
 
 		softAssertion.assertAll();
+		loginPage.logout();
 	}
 
 
@@ -1920,7 +1928,7 @@ public class DocView_AnalyticsPanel_Regression {
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"To Verify when Code same action selected from Analytics Panel > Conceptually Similar and Save/Complete clicked from coding form child window is verified successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2033,7 +2041,7 @@ public class DocView_AnalyticsPanel_Regression {
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"Verify when Code same action selected from Analytics Panel > Conceptually Similar and Save/Complete clicked from coding form parent window is verified Successfully");
-
+		loginPage.logout();
 	}
 	
 	/**
@@ -2078,6 +2086,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		baseClass.passedStep(
 				"To Verify that on thread map tab when the principal document is F2, the thread map should not present any emails is verified successfully");
+		loginPage.logout();
 
 	}
 
@@ -2125,6 +2134,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		baseClass.passedStep(
 				"To Verify that on thread map tab when the principal document is E2, the thread map presents E1, E2, E3 is verified successfully");
+		loginPage.logout();
 
 	}
 
@@ -2181,7 +2191,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		baseClass.passedStep(
 				"To Verify that on thread map tab when the principal document is E3, the thread map presents E1, E2, E3 is verified successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2263,6 +2273,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.verifyErrorMsgOnMultiSelectedDocsInThreadMap();
 		baseClass.passedStep(
 				"To Verify when 'View Document' action is selected from thread map when multiple documents are selected is verified successfully");
+		loginPage.logout();
 
 	}
 
@@ -2313,7 +2324,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.selectDocsFromThreadMapTabAndActionCodeSame();
 		baseClass.passedStep(
 				"To Verify user select Multiple documents in Thread Map->Analytic Panel and Select Action as 'Code Same as this' and code same icon is displayed successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2361,6 +2372,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.verifyWhenNoDocsAreSelectedFromThreadMapAndFolderAction();
 		baseClass.passedStep(
 				"To Verify when user select 'Folder' action from thread map without selecting document has been verified successfully");
+		loginPage.logout();
 
 	}
 
@@ -2408,6 +2420,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.verifyNoDocsThereInThreadDisabed();
 		baseClass.passedStep(
 				"To Verify when no document to display on thread map all actions should be disable are verified successfully");
+		loginPage.logout();
 
 	}
 
@@ -2456,6 +2469,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.verifyFolderActionForThreadMapDocs(folderName);
 		baseClass.passedStep(
 				"To Verify user select multiple documents in Thread Map->Analytic Panel and Select Action as 'Folder' is verified successfully");
+		loginPage.logout();
 
 	}
 
@@ -2543,7 +2557,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// edit coding form and Save
 		docViewAnalytics.editCodingFormCompleteForThreadDocsForReviewer();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2607,7 +2621,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// verify completed docs completed checkmark Icon
 		docViewAnalytics.verifyCompletedCheckMarkForThreadMapTabDocs(rowNo);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2650,7 +2664,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// verify Uncompleted icon in Thread Map Tab
 		docViewAnalytics.verifyUncompleteCheckMarkForThreadMapTabDocs();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2744,7 +2758,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		baseClass.passedStep(
 				"To Verify that completed icon should not be displayed on thread map tab of analytics panel child window which are completed from assignment has been verified successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2799,7 +2813,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.verifyFamilyMemberRemainsSameNavigatedAlso();
 		baseClass.passedStep(
 				"To Verify that user has selected an Analytics Panel > Family Member tab and navigates to another document, the Analytics Panel Tab previously selected must remain has been verified successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2916,7 +2930,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.verifyConceputalTabRemainsSameNavigatedAlso();
 		baseClass.passedStep(
 				"To Verify that user has selected an Analytics Panel > Conceptual Similar tab and navigates to another document, the Analytics Panel Tab previously selected must remain has been verified successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3033,7 +3047,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.verifyThreadMapTabRemainsSameNavigatedAlso();
 		baseClass.passedStep(
 				"To verify that user has selected an Analytics Panel > Thread Map tab and navigates to another document, the Analytics Panel Tab previously selected must remain has been verified successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3100,7 +3114,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.verifyWarningMsgWhenOtherDocsSelectedAndRemoveCodeAsSame();
 		baseClass.passedStep(
 				"To verify when user select action as 'Remove code same' for documents which are not marked as code same as this from thread map has been verified successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3140,6 +3154,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.verifyRemoveCodeAsSameInMiniDoclistAndAnalyticsPanel();
 		baseClass.passedStep(
 				"To Verify for Project Admin 'Remove Code same as' action should not be displayed in mini doc list, analytics panel has been verified successfully");
+		loginPage.logout();
 	}
 
 	/**
@@ -3240,7 +3255,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.verifyThreadMapTabWhenThreadedDocsInMiniDocList();
 		baseClass.passedStep(
 				"To verify that user has selected an Analytics Panel > Thread Map tab and completed document, the Analytics Panel Tab previously selected must remain. has been verified successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3328,7 +3343,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.verifyFamilyMemberWhenDocsAreCompletedInMiniDocList();
 		baseClass.passedStep(
 				"To verify that user has selected an Analytics Panel > Family Member tab and completed document, the Analytics Panel Tab previously selected must remain. has been verified successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3472,7 +3487,7 @@ public class DocView_AnalyticsPanel_Regression {
 				"To verify that user has selected an Analytics Panel > Thread Map tab from child window and completed document, the Analytics Panel Tab previously selected must remain. has been verified successfully");
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3613,6 +3628,7 @@ public class DocView_AnalyticsPanel_Regression {
 				"To verify that user has selected an Analytics Panel > Family Member tab from child window and completed document, the Analytics Panel Tab previously selected must remain. has been verified successfully");
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
+		loginPage.logout();
 
 	}
 
@@ -3624,9 +3640,10 @@ public class DocView_AnalyticsPanel_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
+//			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

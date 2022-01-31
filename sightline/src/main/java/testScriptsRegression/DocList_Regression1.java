@@ -112,6 +112,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Verify preview Doc list of non audio document");
 		docList.DoclistPreviewNonAudio();
+		loginPage.logout();
 
 	}
 
@@ -155,6 +156,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("All documents are not selected other than current page");
 		docList.verifyAllDocumentsAreNotSelectedOtherThanCurrentPage();
+		loginPage.logout();
 
 	}
 
@@ -193,6 +195,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Verify selecting All Documents on all pages And All Children Of Parents Are Displayed");
 		docList.verifyAllDocumentsAndAllChildrenOfParentsRadioAreDisplayed();
+		loginPage.logout();
 
 	}
 
@@ -234,6 +237,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Verify selected documents on Doc list reflected to docview");
 		docList.verifySelectedDocumentsReflectedToDocView(selectedDocs);
+		loginPage.logout();
 
 	}
 
@@ -274,6 +278,8 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Verify selected document on Doc list reflected to docview");
 		docList.verifySelectedDocumentsReflectedToDocView(selectedDocs);
+		
+		loginPage.logout();
 
 	}
 
@@ -306,6 +312,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Verify user navigate to Saved search by clicking back to source button on DocList page.");
 		docList.verifyUserNaviagtedFromDocListPageToSavedSearchPage(searchname, Input.savedPageTitle);
+		loginPage.logout();
 
 	}
 
@@ -355,6 +362,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Verify downloded file name consists Previwed doc id as file name");
 		docList.verifyDownlodedFileNameConsistsPreviwedDocFileName();
+		loginPage.logout();
 	}
 
 	/**
@@ -393,6 +401,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Verify Non of child documents are repeated");
 		docList.verifyNonOfChildDocumentsAreRepeated();
+		loginPage.logout();
 	}
 
 	/**
@@ -430,6 +439,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Perfom bulk folder action for already existing folder");
 		docList.bulkFolderExisting(folderName);
+		loginPage.logout();
 	}
 
 	/**
@@ -462,6 +472,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Verify that already opened parent is not closed by opening new parent");
 		docList.verifyAlreadyOpenedParentNotClosedByOpeningNewParent();
+		loginPage.logout();
 
 	}
 
@@ -492,6 +503,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Verify that user can view the Child Document on doc list");
 		docList.verifyUserCanViewChildDocumetOnDocList();
+		loginPage.logout();
 
 	}
 
@@ -526,6 +538,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Open Doc list from Saved search page");
 		savedSearch.savedSearchToDocList(searchname);
+		loginPage.logout();
 
 	}
 
@@ -601,6 +614,7 @@ public class DocList_Regression1 {
 //		Delete security group
 		securityGroupsPage.deleteSecurityGroups(securityGroup);
 		driver.waitForPageToBeReady();
+		loginPage.logout();
 	}
 
 	/**
@@ -643,6 +657,7 @@ public class DocList_Regression1 {
 		String text = assignmentsPage.getAssignmentText(assignment).getText().trim();
 		baseClass.stepInfo("Assign document are displyed in assignmnet :" + text);
 		driver.waitForPageToBeReady();
+		loginPage.logout();
 	}
 
 	/**
@@ -684,8 +699,8 @@ public class DocList_Regression1 {
 		docList.selectAllDocumentsInCurrentPageOnly();
 		baseClass.stepInfo("Untag documents");
 		docList.unTagDocmuments(tagName);
-
-	}
+		loginPage.logout();
+		}
 
 	/**
 	 * Author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
@@ -752,6 +767,8 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Verify documents unassigned for a tag");
 		tagsAndFolderPage.verifyTagContainedDocumentsCount(tagName, 0);
+		
+		loginPage.logout();
 
 	}
 
@@ -789,6 +806,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("download the document and verify");
 		docPage.DownloadingTheFile();
+		loginPage.logout();
 	}
 
 	/**
@@ -843,6 +861,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("verified the BulkUnassign Document");
 		AssignmentsPage.countOfDocAfterUnAssigning(testing);
+		loginPage.logout();
 
 	}
 	/**
@@ -875,6 +894,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Select Date From Filter and Applying Filter And Verifying The date");
 		docPage.dateVerificationForDocuments(Input.date);
+		loginPage.logout();
 
 	}
 
@@ -907,6 +927,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Select Exclude and Applying filter InDocList Page");
 		docPage.emailAuthorDomainNameInExcludeVerificationInDoc();
+		loginPage.logout();
 
 	}
 
@@ -943,6 +964,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Clear all applied filters");
 		docPage.clearAllAppliedFilters();
+		loginPage.logout();
 	}
 
 	/**
@@ -985,6 +1007,7 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Verified The Bulk assign single Document in Assignmentpage");
 		AssignmentsPage.verifyingTheDocCount(test, 1, Input.codeFormName);
+		loginPage.logout();
 	}
 	
 	 
@@ -1011,7 +1034,7 @@ public class DocList_Regression1 {
 		
 		baseClass.stepInfo("Select Exclude and Applying filter In Email All Domain DocList Page");
 		docPage.EmailAllDomainsNameInExcludeVerificationInDoc();
-		
+		loginPage.logout();		
 	 }
 	 
 	 
@@ -1044,6 +1067,7 @@ public class DocList_Regression1 {
 		
 		baseClass.stepInfo("Select Exclude and Applying filter In Email Author Name in DocList Page");
 		docPage.EmailAuthorNameInExcludeVerificationInDoc();
+		loginPage.logout();
 	 }
 	
 	 /**
@@ -1093,6 +1117,7 @@ public class DocList_Regression1 {
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		baseClass.stepInfo("Verifying The Count of document as expected count given in doclist");
 		tagsAndFolderPage.selectingFolderAndVerifyingTheDocCount(test,0);
+		loginPage.logout();
 	 }
 	 
 	 
@@ -1145,7 +1170,8 @@ public class DocList_Regression1 {
 			tagsAndFolderPage = new TagsAndFoldersPage(driver);
 			tagsAndFolderPage.navigateToTagsAndFolderPage();
 			baseClass.stepInfo("Verifying The Count of document as expected count given in doclist");
-			tagsAndFolderPage.selectingFolderAndVerifyingTheDocCount(test,0);	
+			tagsAndFolderPage.selectingFolderAndVerifyingTheDocCount(test,0);
+			loginPage.logout();
 	 }
 	
 	
@@ -1175,6 +1201,7 @@ public class DocList_Regression1 {
 			
 			baseClass.stepInfo("Verifying th docfilesize count is lesser in row doc data file size");
 			docPage.selectDocFileSize(Input.docFileSize,Input.docFileName);
+			loginPage.logout();
 	 }
 
 	 
@@ -1205,6 +1232,7 @@ public class DocList_Regression1 {
 			
 			baseClass.stepInfo("Verifying th docfilesize count is lesser in row doc data file size");
 			docPage.selectDocFileSize(Input.docFileSize,Input.docFileName);
+			loginPage.logout();
 	 }
 
 	 
@@ -1249,6 +1277,7 @@ public class DocList_Regression1 {
 			
 			baseClass.stepInfo("Bulk release to security group of selected documents");
 			docList.docListToBulkRelease(Input.securityGroup);
+			loginPage.logout();
 				
 		}
 	 
@@ -1293,6 +1322,7 @@ public class DocList_Regression1 {
 				
 				baseClass.stepInfo("Bulk unrelease to security group of selected documents");
 				docList.bulkUnRelease(Input.securityGroup);
+				loginPage.logout();
 					
 			}
 			
@@ -1323,6 +1353,7 @@ public class DocList_Regression1 {
 			
 			baseClass.stepInfo("Suffling  the column in doclist page");	
 			docPage.suffleTheColumnInDocListPage(Input.metaDataName,Input.docFileType);
+			loginPage.logout();
 				
 		 }
 			
@@ -1351,7 +1382,7 @@ public class DocList_Regression1 {
 			
 			baseClass.stepInfo("Hiding The document column and verifying it");
 			docPage.verifyingColumnInDocListPage(Input.metaDataName.toUpperCase());
-				
+			loginPage.logout();				
 		 }
 		 
 /**
@@ -1388,6 +1419,7 @@ public class DocList_Regression1 {
                
                 baseClass.stepInfo("Selecting No and verifying the child documents is selected");
                 docPage.SelectDropDownAndCancelItVerifyDocCheckbox();
+                loginPage.logout();
          }
          /**
   		 * Author : Brundha Created date: NA Modified date: NA Modified by: Gopinath
@@ -1456,6 +1488,7 @@ public class DocList_Regression1 {
    			
    			baseClass.stepInfo("Verify Doclist sorting after shuffling the columns");
    			doc.sufflingColumnValueInDocListPage();
+   			loginPage.logout();
   			
   	 }
    
@@ -1463,8 +1496,7 @@ public class DocList_Regression1 {
   	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			LoginPage.clearBrowserCache();
-
+			loginPage.quitBrowser();
 		} catch (Exception e) {
 			System.out.println("Sessions already closed");
 		}
@@ -1476,9 +1508,9 @@ public class DocList_Regression1 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

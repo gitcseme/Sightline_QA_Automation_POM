@@ -1244,6 +1244,7 @@ public class BatchRedactionRegression2 {
 
 		// Delete Created Node
 		saveSearch.deleteNode(Input.mySavedSearch, newNode);
+		login.logout();
 
 	}
 	/**
@@ -1345,7 +1346,7 @@ public class BatchRedactionRegression2 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			login.logout();
+			login.logoutWithoutAssert();
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
@@ -1355,11 +1356,9 @@ public class BatchRedactionRegression2 {
 	public void close() {
 
 		try {
-			driver.scrollPageToTop();
-
-			login.closeBrowser();
+			login.quitBrowser();
 		} finally {
-			login.clearBrowserCache();
+			//login.clearBrowserCache();
 		}
 	}
 
