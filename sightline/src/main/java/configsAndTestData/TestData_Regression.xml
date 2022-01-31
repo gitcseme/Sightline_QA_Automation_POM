@@ -72,7 +72,6 @@
 	<documentToBeScrolled>ID00001352-I</documentToBeScrolled>
 	<conceptualDocument>ID00004389</conceptualDocument>
 	<conceptualDocs1>ID00000703</conceptualDocs1>
-	<threadDocId>ID00001355</threadDocId>
 	<principalDocId>5168</principalDocId>
 	<principalDocId1>5138</principalDocId1>
 	<principalDocId2>5161</principalDocId2>
@@ -90,7 +89,6 @@
 	<nearDupeDocumentForReviewer>ID00001191</nearDupeDocumentForReviewer>
 	<threadDocumentForReviewer>ID00001402</threadDocumentForReviewer>
 	<familyDocumentForReviewer>ID00001355</familyDocumentForReviewer>
-	<nearDupeCompletedDocId>ID00000944</nearDupeCompletedDocId>
 	<nearDupeDocId>ID00001158</nearDupeDocId>
 	<nearDupeCompletedDocIdReviewer>ID00001532
 	</nearDupeCompletedDocIdReviewer>
@@ -195,7 +193,7 @@
 	<searchStringStar>*</searchStringStar>
 	<docIDs>ID0000</docIDs>
 
-	<!-- Raghuram Indium modified on 01/28/21 --> 
+	<!-- Raghuram Indium modified on 01/28/21 -->
 	<docHighlightColor>#CDD9E1</docHighlightColor>
 	<sortDataBy>DocID</sortDataBy>
 	<sortType>Ascending</sortType>
@@ -376,14 +374,15 @@
 	<notSelect>Not Selected</notSelect>
 	<securityGroup_sg47>SG1134047</securityGroup_sg47>
 	<regressionConsilio>Regression_AllDataset_Consilio</regressionConsilio>
-	<regressionConsilio1>Regression_AllDataset_Consilio1</regressionConsilio1>
-	
+	<regressionConsilio1>Regression_AllDataset_Consilio1
+	</regressionConsilio1>
+
 
 
 
 	<!-- Added by Brundha -->
 	<documentID>ID00001333</documentID>
-    <telecaSearchString>teleca</telecaSearchString>
+	<telecaSearchString>teleca</telecaSearchString>
 	<docFile>ID00001493</docFile>
 
 	<!-- Added by Baskar Created date - 30/11/2021 -->
@@ -430,5 +429,9 @@
 	<familyDocument>ID00003711</familyDocument>
 	<MetaDataId>ID00003739</MetaDataId>
 	<conceptualDocumentReviewer>ID00004989</conceptualDocumentReviewer>
+	<threadDocId>ID00004943</threadDocId>
+	<conceptualDocs1>ID00000941</conceptualDocs1>
+	<familyDocumentForReviewer>ID00003745</familyDocumentForReviewer>
+		<newNearDupeDocId>ID00005181</newNearDupeDocId>
 
 </TestData>
