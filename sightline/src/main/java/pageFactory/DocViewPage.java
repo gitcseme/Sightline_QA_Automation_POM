@@ -22437,4 +22437,25 @@ public class DocViewPage {
 		assertion.assertAll();
 		base.passedStep("While navigating to last document loading displayed with more number of document");
 	}
+	
+	/**
+	 * @author sowndarya
+	 * @Description  : Method for verifying doccount in docview
+	 */
+	
+	public int verifyingDocCount() {
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		base.waitForElement(getDocView_info());
+	    String DocListCount=getDocView_info().getText();
+		
+		String[] doccount = DocListCount.split(" ");
+		String DocumentCount = doccount[1];
+		int docViewCount = Integer.parseInt(DocumentCount);
+		
+		System.out.println("docview page document count is : "+DocumentCount);
+		base.stepInfo("docview page document count is : "+DocumentCount);
+		return docViewCount;
+		
+	}
 }
