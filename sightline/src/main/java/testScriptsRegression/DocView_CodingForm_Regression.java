@@ -9318,6 +9318,95 @@ public class DocView_CodingForm_Regression {
 	}
 	
 	/**
+	 * @Author : Steffy date: 28/01/2021 Modified date: NA Modified by:
+	 * @Description:Verify assignment progress bar refreshesh after completing the
+	 *                     document same as last prior documents should be completed
+	 *                     by clicking complete button after selecting code same as
+	 *                     this action.
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 203)
+	public void verifyAssignmentProgressBarDocCompleteAfterCodeSameAs() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51275");
+		baseClass.stepInfo(
+				"Verify assignment progress bar refreshesh after completing the document same as last prior documents should be completed by "
+						+ "clicking complete button after selecting code same as this action");
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docViewPage = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+		String codingForm = Input.codeFormName;
+		String docTextbox = "assignment click";
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(searchString);
+		sessionSearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		driver.waitForPageToBeReady();
+		System.out.println(assname);
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		docViewPage.selectDocsFromMiniDocsAndCodeSameAs();
+		baseClass.waitForElement(docViewPage.getDocument_CommentsTextBox());
+		docViewPage.getDocument_CommentsTextBox().SendKeys(docTextbox);
+		driver.scrollPageToTop();
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		docViewPage.getCompleteDocBtn().waitAndClick(20);
+		baseClass.VerifySuccessMessage("Document completed successfully");
+		driver.waitForPageToBeReady();
+		docViewRedact.getHomeDashBoard().waitAndClick(10);
+
+		// verify assignment progress bar in completed docs
+		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+			softAssertion.assertTrue(assignmentsPage.getBatchAssignmentBar(assname).isDisplayed());
+
+		} else {
+			System.out.println("not completed");
+			baseClass.failedStep("Doc not completed");
+		}
+
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewRedact.getDocView_MiniDoc_Selectdoc(3));
+		docViewRedact.getDocView_MiniDoc_Selectdoc(3).waitAndClick(5);
+		docViewPage.completeButton();
+		baseClass.waitTime(1);
+		docViewPage.clickCodeSameAsLast();
+		docViewRedact.getHomeDashBoard().waitAndClick(10);
+
+		// verify assignment progress bar in completed docs
+		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+			softAssertion.assertTrue(assignmentsPage.getBatchAssignmentBar(assname).isDisplayed());
+
+		} else {
+			System.out.println("not completed");
+			baseClass.failedStep("Doc not completed");
+		}
+		softAssertion.assertAll();
+    	// logout
+		loginPage.logout();
+	}
+
+  /*
 	 * @Author : Baskar date:28/01/22 Modified date: NA Modified by: Baskar
 	 * @Description : To verify that user can edit the custom coding form, 
 	 *                and mark the document as 'Save'.
@@ -9375,11 +9464,12 @@ public class DocView_CodingForm_Regression {
 		}
 		if (roll=="assgnCf") {
 			codingForm.assignCodingFormToSG(Input.codingFormName);
-		}
-		
+    }
+    
 		// logout
 		loginPage.logout();
 	}
+			
 	
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {

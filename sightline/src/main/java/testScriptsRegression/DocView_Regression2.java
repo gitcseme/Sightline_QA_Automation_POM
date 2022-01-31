@@ -2168,6 +2168,71 @@ public class DocView_Regression2 {
 	}
 	
 	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51047
+	 * Description :Verify keyword highlighting color from doc view when mapped keywords are having same word with different color
+	 * @throws AWTException 
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 35)
+	public void verifyHighlightingWhenSameKeywordsHaveDifferentColor() throws AWTException, InterruptedException {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		assignPage = new AssignmentsPage(driver);
+		savedsearch = new SavedSearch(driver);
+		keywordPage = new KeywordPage(driver);
+		
+		String keywordGroupName1 = "firstGroup"+utility.dynamicNameAppender();
+		String keywordGroupName2 = "secondGroup"+utility.dynamicNameAppender();
+		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
+	    String[] Color= {Input.keywordColor1,Input.KeyWordColour};
+		String[] keywordGroupName= {keywordGroupName1,keywordGroupName2};
+		
+		//Pre-requisite
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51047");
+		baseClass.stepInfo("Verify keyword highlighting color from doc view when mapped keywords are having same word with different color");
+		keywordPage.addTwoSameKeywordWithDifferentColor(keywordGroupName, Input.testData1, Color);
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssignExisting(assignmentName);
+		assignPage.unmappingKeywordsFromAssignment(assignmentName);
+		assignPage.mappingKeywordToAssignment(keywordGroupName1);
+		driver.waitForPageToBeReady();
+		assignPage.mappingKeywordToAssignment(keywordGroupName2);
+		driver.waitForPageToBeReady();
+		assignPage.addReviewerAndDistributeDocs();
+		baseClass.waitForElement(assignPage.getAssignmentSaveButton());
+		assignPage.getAssignmentSaveButton().Click();
+		loginPage.logout();
+		//Login as RMU and verify keyword color Highlighting
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined as RMU");
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.selectAssignmentToViewinDocView(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+		//Login as Reviewer and verify keyword color Highlighting
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logined as Reviewer");
+		assignPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		docView.verifyKeywordHighlightedOnDocView();
+		
+	}
+	
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

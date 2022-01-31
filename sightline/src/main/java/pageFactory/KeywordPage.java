@@ -230,4 +230,61 @@ public class KeywordPage {
        	getExitFullScreen();
         	
        }
+       
+       /**
+    	 * @author Gopinath
+    	 * @Description: Method for add keyword
+    	 * @param keyword : keyword is String value that name of keyword.
+    	 * @param color : color is String value that name of color
+    	 * @param keywordname : keywordname is string value that keyword name
+    	 */
+       public void addKeyword(String keywordName,String keywordname, String color) throws AWTException {
+         	base.waitForElement(getNewKeywordButton());
+         	getNewKeywordButton().waitAndClick(5);
+         	base.waitForElement(getKeywordName());
+         	getKeywordName().SendKeys(keywordName);
+         	base.waitForElement(getDescription());
+         	getDescription().SendKeys(keywordname);
+         	base.waitForElement(getKeywords());
+         	getKeywords().SendKeys(keywordname);
+         	getSelectColor().selectFromDropdown().selectByVisibleText(color);
+         	getIntoFullScreen();
+         	base.waitForElement(getSaveBtn());
+         	getSaveBtn().waitAndClick(5);
+         	base.waitForElement(getYesButton());
+         	getYesButton().waitAndClick(5);
+         	getExitFullScreen();
+          	
+         }
+/**
+      	 * @author Arunkumar
+           * @throws AWTException 
+      	 * @Description: Method for adding two same keywords with different color
+      	 */
+    
+         public void addTwoSameKeywordWithDifferentColor(String[] keywordGroupName,String keywordName,String[] color) throws AWTException {
+      	driver.getWebDriver().get(Input.url+"Keywords/Keywords");
+      	for(int i=0;i<=1;i++) {
+      		driver.waitForPageToBeReady();
+          	base.waitForElement(getNewKeywordButton());
+             	getNewKeywordButton().waitAndClick(5);
+             	base.waitForElement(getKeywordName());
+             	getKeywordName().SendKeys(keywordGroupName[i]);
+             	base.waitForElement(getDescription());
+             	getDescription().SendKeys(keywordName);
+             	base.waitForElement(getKeywords());
+             	getKeywords().SendKeys(keywordName);
+             	getSelectColor().selectFromDropdown().selectByVisibleText(color[i]);
+             	getIntoFullScreen();
+             	base.waitForElement(getSaveBtn());
+             	getSaveBtn().waitAndClick(5);
+             	base.waitForElement(getYesButton());
+             	getYesButton().waitAndClick(5);
+             	getExitFullScreen();
+             	base.VerifySuccessMessage("Keyword Highlighting Group added successfully");
+              base.CloseSuccessMsgpopup();
+      		
+      	}
+   }
+	
  }

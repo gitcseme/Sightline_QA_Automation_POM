@@ -48,6 +48,7 @@
 	<pageRange3>1,2,8,10,11,12,13</pageRange3>
 	<pageRange4>2-13</pageRange4>
 	<searchPhraseWithQuote>"is required"</searchPhraseWithQuote>
+	<keywordColor1>Cyan</keywordColor1>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
@@ -381,7 +382,7 @@
 
 	<!-- Added by Brundha -->
 	<documentID>ID00001333</documentID>
- 	<telecaSearchString>teleca</telecaSearchString>
+    <telecaSearchString>teleca</telecaSearchString>
 	<docFile>ID00001493</docFile>
 
 	<!-- Added by Baskar Created date - 30/11/2021 -->

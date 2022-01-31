@@ -6869,6 +6869,44 @@ public class DocView_Redactions_Regression {
 		docViewRedact.verifyTextRedactionPositionRetained(xAxis, yAxis, true);
 
 	}
+	
+	/**
+	 * Author : Sakthivel date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-51043 Verify user can maximize the middle panel of the doc view
+	 * redirecting from Basic Search/Saved Search/Doc List/My Assignment/Manage
+	 * Assignment/Manage Reviewers.
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 76)
+	public void verifyMaximizeTheMiddlePanelInDocView() throws Exception {
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+
+		// Login As RMU
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Test case Id: RPMXCON- 51043");
+		baseClass.stepInfo("Doc view redirecting from BasicSearch and go to docview");
+
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
+        
+		//Login as REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in using Reviewer account");
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
+        
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in using PA account");
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifyMaximizetheMiddlePanel();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

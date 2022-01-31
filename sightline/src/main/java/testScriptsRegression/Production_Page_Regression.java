@@ -75,6 +75,7 @@ public class Production_Page_Regression {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
+		softAssertion = new SoftAssert();
 
 		// Login as a PA
 		loginPage = new LoginPage(driver);
@@ -2934,7 +2935,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify Document Selection Section on the self production
 	 *                 wizard For Folder
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 55)
+	@Test(enabled = false, groups = { " regression" }, priority = 55)
 	public void verifyDocumentSelectionWithFolder() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47897- Production Sprint 11");
@@ -2986,7 +2987,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify numbering and sorting Section on the self production
 	 *                 wizard for Numbering
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 56)
+	@Test(enabled = false, groups = { " regression" }, priority = 56)
 	public void verifyNumberingAndSorting() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47892- Production Sprint 11");
@@ -3047,6 +3048,7 @@ public class Production_Page_Regression {
 		else {
 			baseClass.failedMessage("Prefix and suffix is not displayed in user metadata field");
 		}
+
 	}
 
 	/**
@@ -3106,6 +3108,149 @@ public class Production_Page_Regression {
 		// Delete Tag and folder
 		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(folder);
+
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:01/28/22 TESTCASE No:RPMXCON-49362
+	 * @Description:Verify if PA Select the Production using a template that has
+	 *                     only Native Files selected in the native components, then
+	 *                     Component tab should Complete without any error.
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 58)
+	public void verifyComponentTabWithoutAnyError() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-49362- Production Sprint 11");
+		baseClass.stepInfo(
+				"Verify if PA Select the Production using a template that has only Native Files selected in the native components, then Component tab should Complete without any error.");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSection(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		// Go To Production Home Page
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		page.prodGenerationInProgressStatus();
+		driver.waitForPageToBeReady();
+		page.getProductionFromHomepage(productionname).waitAndClick(10);
+		baseClass.stepInfo("completed productions are filtered and In progress production from homepage is selected");
+		page.getQC_backbutton().waitAndClick(10);
+		for (int i = 0; i < 6; i++) {
+			page.getBckBtn().waitAndClick(10);
+		}
+		driver.waitForPageToBeReady();
+		page.getMarkIncompleteButton().waitAndClick(10);
+		if (page.getNativeTab().Selected()) {
+			baseClass.passedStep("Native section is selected by default");
+		}
+		page.getComponentsMarkComplete().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Mark Complete successful");
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:01/28/22 TESTCASE
+	 *         No:RPMXCON-47888,RPMXCON-47894
+	 * @Description:To Verify in Priv Guard View in Doclist and DocView.
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 59)
+	public void verifyPrivGuardSectionViewInDoclistAndDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-49362- Production Sprint 11");
+		baseClass.stepInfo("To Verify in Priv Guard View in Doclist and DocView.");
+		baseClass.stepInfo("To Verify Priv Guard Section on the self production wizard");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		int purehit = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSection(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingSelectDocumentUsingTags(tagname);
+		page.navigateToNextSection();
+		page.priviledgeDocCheck(true, tagname);
+		driver.waitForPageToBeReady();
+
+		//checking matching documents with purehit
+		String docCount = page.VerifyingDocListCountWithPrivGaurdCount();
+		int matchingDocs = Integer.parseInt(docCount);
+		softAssertion.assertEquals(purehit, matchingDocs);
+		baseClass.passedStep("Matching Document Count is : " + matchingDocs);
+
+		//verify doclist total document with purehit
+		docPage = new DocListPage(driver);
+		String doclistCount = docPage.verifyingDocCount();
+		int docListCount = Integer.parseInt(doclistCount);
+		softAssertion.assertEquals(purehit, docListCount);
+		baseClass.passedStep("Total Document Count of  DocList : " + docListCount);
+		
+		//verify docview total document with purehit
+		driver.waitForPageToBeReady();
+		page.getDocView().waitAndClick(10);
+		docViewPage = new DocViewPage(driver);
+		int docviewCount = docViewPage.verifyingDocCount();
+		softAssertion.assertEquals(purehit, docviewCount);
+		baseClass.passedStep("Total Document Count of  DocView : " + docviewCount);
+		
+		softAssertion.assertAll();
+
+
 	}
 
 	@DataProvider(name = "PAandRMU")
