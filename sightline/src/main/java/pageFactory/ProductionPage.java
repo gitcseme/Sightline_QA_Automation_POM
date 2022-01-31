@@ -16333,116 +16333,50 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 	}
 
-	
-	/**
-	 * @Author Gopinath
-	 * @Description : Filling tiff section that burn redaction with tag
-	 */
-	public void fillingTIFFSectionBurnRedaction(String tagname,String placeHolderValue) throws InterruptedException {
-		try {
-			base.waitForElement(getTIFFChkBox());
-			getTIFFChkBox().Click();
-	
-			driver.scrollingToBottomofAPage();
-	
-			base.waitForElement(getTIFFTab());
-			getTIFFTab().Click();
-	
-			getTIFF_EnableforPrivilegedDocs().ScrollTo();
-	
-			// disabling enable for priviledged docs
-    }
-	/**
-	 * @author Aathith
-	 * @description : Method for filling pdf section with default annatation layer.
-	 */
-	public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
-		try {
 
-			base.waitForElement(getTIFFChkBox());
-			getTIFFChkBox().Click();
+		
+/**
+* @author Aathith
+* @description : Method for filling pdf section with default annatation layer.
+*/
+public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
+	try {
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
 
-			driver.scrollingToBottomofAPage();
+		base.waitForElement(getPDFGenerateRadioButton());
+		base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+		getPDFGenerateRadioButton().waitAndClick(10);
 
-			base.waitForElement(getTIFFTab());
-			getTIFFTab().Click();
-			
-			base.waitForElement(getPDFGenerateRadioButton());
-			base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
-			getPDFGenerateRadioButton().waitAndClick(10);
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
 
-			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+// disabling enable for priviledged docs
 
-			// disabling enable for priviledged docs
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
 
-			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-			base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
-			getTIFF_EnableforPrivilegedDocs().Enabled();
-			getTIFF_EnableforPrivilegedDocs().Click();
+		getClk_burnReductiontoggle().ScrollTo();
 
-	
-			getClk_burnReductiontoggle().ScrollTo();
-	
-			// enable burn redaction
-			base.waitForElement(getClk_burnReductiontoggle());
-			getClk_burnReductiontoggle().Click();
-	
-			getClkRadioBtn_selectRedactionTags().ScrollTo();
-	
-			base.waitForElement(getClkRadioBtn_selectRedactionTags());
-			getClkRadioBtn_selectRedactionTags().isDisplayed();
-			driver.waitForPageToBeReady();
-			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
-	
-			base.waitForElement(getClkCheckBox_defaultRedactionTag());
-			getClkCheckBox_defaultRedactionTag().isDisplayed();
-			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
-	
-			base.waitForElement(getClkLink_selectingRedactionTags());
-			getClkLink_selectingRedactionTags().isDisplayed();
-			getClkLink_selectingRedactionTags().waitAndClick(10);
-	
-			base.waitForElement(getClkBtn_selectingRedactionTags());
-			getClkBtn_selectingRedactionTags().isDisplayed();
-			getClkBtn_selectingRedactionTags().waitAndClick(10);
-	
-			base.waitForElement(getPriveldged_TagTree(tagname));
-			getPriveldged_TagTree(tagname).isElementAvailable(10);
-			getPriveldged_TagTree(tagname).ScrollTo();
-			getPriveldged_TagTree(tagname).isDisplayed();
-			getPriveldged_TagTree(tagname).waitAndClick(10);
-	
-			base.waitForElement(getClk_selectBtn());
-			getClk_selectBtn().isDisplayed();
-			getClk_selectBtn().waitAndClick(10);
-	
-			base.waitForElement(gettextRedactionPlaceHolder());
-			gettextRedactionPlaceHolder().isDisplayed();
-			gettextRedactionPlaceHolder().waitAndClick(10);
-			gettextRedactionPlaceHolder().SendKeys(placeHolderValue);
-		}catch(Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occured while filling tiff section with burn redaction tag"+e.getLocalizedMessage());
-		}
+// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getAllRedactionsAnnotaionLayer());
+		driver.waitForPageToBeReady();
+		getAllRedactionsAnnotaionLayer().Click();
+		base.stepInfo("filled pdf section with default annatation layer.");
+	} catch (Exception e) {
+		e.printStackTrace();
+		base.failedStep("Exception occcured while filling pdf section with default annatation layer." + e.getMessage());
 	}
+}
 
 
-			getClk_burnReductiontoggle().ScrollTo();
-
-			// enable burn redaction
-			base.waitForElement(getClk_burnReductiontoggle());
-			getClk_burnReductiontoggle().Click();
-			driver.waitForPageToBeReady();
-			base.waitForElement(getAllRedactionsAnnotaionLayer());
-			driver.waitForPageToBeReady();
-			getAllRedactionsAnnotaionLayer().Click();
-			base.stepInfo("filled pdf section with default annatation layer.");
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep(
-					"Exception occcured while  filling pdf section with default annatation layer." + e.getMessage());
-		}
-	}
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @description In branding center choose batesnumber and left confidential text passed for both pdf or tiff 

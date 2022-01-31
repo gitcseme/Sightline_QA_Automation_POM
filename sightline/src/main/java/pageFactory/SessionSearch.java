@@ -9763,7 +9763,7 @@ public class SessionSearch {
 		getMetaDataInserQuery().waitAndClick(5);
 		driver.scrollPageToTop();
 	}
-}
+
 
 }
 
