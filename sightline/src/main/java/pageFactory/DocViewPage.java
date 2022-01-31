@@ -1488,27 +1488,27 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
-	
+
 	public Element getDocView_Production_Image() {
 		return driver.FindElementByXPath("//*[@id='divViewerProductions']");
 	}
-	
+
 	public Element getDocView_Production_Navigation() {
 		return driver.FindElementByXPath("//*[@id='divViewerProductions']//i[@class='fa fa-angle-right']");
 	}
-	
+
 	public Element getDocView_MetaData_FolderName(String folderName) {
-		return driver.FindElementByXPath("//*[@id='documentFolderJSTree']//a[text()='"+folderName+"']");
+		return driver.FindElementByXPath("//*[@id='documentFolderJSTree']//a[text()='" + folderName + "']");
 	}
-	
+
 	public Element getDocView_PersistanceHit_PanelText(String text) {
-		return driver.FindElementByXPath("//p[@id='PHitCount_"+text+"']");
+		return driver.FindElementByXPath("//p[@id='PHitCount_" + text + "']");
 	}
-	
+
 	public Element getDocView_AnalyticsPanel_ThreadMapFirstRow() {
 		return driver.FindElementByXPath("//*[@id='dtDocumentThreadedDocuments']//tr[@id='threadedDocumentIdRow']");
 	}
-	
+
 	public Element getDocView_AnalyticsPanel_NearDupeWholeTabel() {
 		return driver.FindElementById("dupe1");
 	}
@@ -2331,7 +2331,7 @@ public class DocViewPage {
 	public Element getMiniDocListConfirmationButton(String actionType) {
 		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[text()='" + actionType + "']");
 	}
-	
+
 	public Element getEyeIcon() {
 		return driver.FindElementByXPath("//i[@class='fa fa-eye']");
 	}
@@ -2339,7 +2339,7 @@ public class DocViewPage {
 	public Element remarksIcon() {
 		return driver.FindElementByXPath("//i[@class='fa-stack-1x fa fa-wifi fa-rotate-270']");
 	}
-	
+
 	public Element redactionIcon() {
 		return driver.FindElementByXPath("//li[@id='gray-tab']");
 	}
@@ -2351,11 +2351,11 @@ public class DocViewPage {
 	public Element multiPageInputTextbox() {
 		return driver.FindElementByXPath("//input[@name='pages']");
 	}
-	
+
 	public Element HighliteIcon() {
 		return driver.FindElementByXPath("//li[@id='yellow-tab']");
 	}
-	
+
 	public Element docViewEyeSearchTerm() {
 		return driver.FindElementByXPath("//h3[text()='Search Hits:']");
 	}
@@ -2854,9 +2854,14 @@ public class DocViewPage {
 	public Element getDocView_AnalyticsChild_NearDupe_Folder() {
 		return driver.FindElementById("liNearDupeBulkFolder");
 	}
-	
+
 	public Element getMiniDocList_CodeSameIcon(String text) {
-		return driver.FindElementByXPath("//td[text()='"+text+"']//ancestor::tr//i[@class='fa fa-link']");
+		return driver.FindElementByXPath("//td[text()='" + text + "']//ancestor::tr//i[@class='fa fa-link']");
+	}
+
+	public Element getNavigationMsgPopupYesBtnD() {
+		return driver.FindElementByXPath(
+				"(//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//button[text()='Yes'])[last()]");
 	}
 
 	public DocViewPage(Driver driver) {
@@ -22147,11 +22152,11 @@ public class DocViewPage {
 		base.waitForElement(getDocView_AnalyticsChild_NearDupe_Folder());
 		getDocView_AnalyticsChild_NearDupe_Folder().waitAndClick(10);
 	}
-	
-	
+
 	/**
 	 * @author Arunkumar Created Date: 27/1/2022
-	 * @description To verify highlightining text in docview without clicking the eyeIcon
+	 * @description To verify highlightining text in docview without clicking the
+	 *              eyeIcon
 	 */
 	public void verifyTermHitsHighlightingInDocumentWithoutClickingEyeIcon(String searchString) {
 
@@ -22166,15 +22171,17 @@ public class DocViewPage {
 		System.out.println(color);
 		if (get_textHighlightedColor().isDisplayed()) {
 			base.passedStep(" Verified that term hits are highlighted in the document without clicking the eye icon");
-			
-		}else {
-			base.failedStep("Verified that term hits are not highlighted in the document without clicking the eye icon");
+
+		} else {
+			base.failedStep(
+					"Verified that term hits are not highlighted in the document without clicking the eye icon");
 		}
 	}
-	
+
 	/**
 	 * @author Arunkumar Created Date: 27/1/2022
-	 * @description To verify highlightining text in docview after clicking the eyeIcon
+	 * @description To verify highlightining text in docview after clicking the
+	 *              eyeIcon
 	 */
 	public void verifyTermHitsHighlightingInDocumentAfterClickingEyeIcon(String searchString) {
 
@@ -22190,37 +22197,36 @@ public class DocViewPage {
 		System.out.println(color);
 		if (get_textHighlightedColor().isDisplayed()) {
 			base.passedStep(" Verified that term hits are highlighted in the document");
-			
-		}else {
+
+		} else {
 			base.failedStep("Verified that term hits are not highlighted in the document");
 		}
-	
-		
+
 	}
-	
+
 	public void verifyMetaDataTermDisplayingOnPersistentPanel(String searchString) {
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getPersistantHitEyeIcon().Displayed();
 			}
-		}), Input.wait30);		
+		}), Input.wait30);
 		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
 		getPersistantHitEyeIcon().waitAndClick(30);
-		
+
 		List<String> persistentNames = new ArrayList<String>();
 		List<WebElement> persistantElements = getPersistantNames().FindWebElements();
 		for (WebElement persistantNameElement : persistantElements) {
 			persistentNames.add(persistantNameElement.getAttribute("data-custom-id").trim());
 		}
 		System.out.println(persistentNames);
-		if(persistentNames.contains(searchString)) {
+		if (persistentNames.contains(searchString)) {
 			base.failedStep("Metadata terms are displaying on the persistent panel ");
-		}
-		else {
+		} else {
 			base.passedStep("Metadata terms are not displaying on the persistent panel");
-    }
-  }
+		}
+	}
+
 	/**
 	 * @Author Jeevitha
 	 * @param comment
@@ -22247,7 +22253,7 @@ public class DocViewPage {
 			}
 		}
 	}
-	
+
 	/**
 	 * Author : Vijaya.Rani date: 26/01/22 NA Modified date: NA Modified by:NA
 	 * Description :perform Display Icon Reviewer Highlight.
@@ -22298,7 +22304,7 @@ public class DocViewPage {
 		base.passedStep("Mini Doc List  Docs Selected Successfully");
 		softAssertion.assertTrue(docViewReviewerPage().Displayed());
 		base.passedStep("DocView Reviewer Page Is Displayed");
-		
+
 		driver.waitForPageToBeReady();
 		getDocView_Analytics_FamilyTab().waitAndClick(30);
 		getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().waitAndClick(10);
@@ -22306,12 +22312,12 @@ public class DocViewPage {
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
 		base.waitForElement(getDocView_FamilyViewInDocView());
 		getDocView_FamilyViewInDocView().waitAndClick(10);
-		
+
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(docViewReviewerPage().Displayed());
 		base.passedStep("DocView Reviewer Page Is Displayed");
 	}
-	
+
 	/**
 	 * Author : Vijaya.Rani date: 26/01/22 NA Modified date: NA Modified by:NA
 	 * Description :perform navigate Back Confirm Box Displayed.
@@ -22336,16 +22342,15 @@ public class DocViewPage {
 		base.passedStep("Yes and No buttons Are displayed");
 
 	}
-	
-	
+
 	/**
 	 * @Author Mohan Created on 27/01/2022
-	 * @Description To perform folder Conceputually docs in the DocView 
-	 *              
+	 * @Description To perform folder Conceputually docs in the DocView
+	 * 
 	 *
 	 */
-	public void selectDocsAndActionAsFolder(int rowNo,String folderName) throws InterruptedException {
-		
+	public void selectDocsAndActionAsFolder(int rowNo, String folderName) throws InterruptedException {
+
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
 		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
@@ -22354,13 +22359,13 @@ public class DocViewPage {
 			base.waitForElement(getDocView_Analytics_Conceptual_Docs(i));
 			getDocView_Analytics_Conceptual_Docs(i).waitAndClick(10);
 		}
-		
+
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
-		
+
 		base.waitForElement(getDocView_Analytics_ConceptualFolderAction());
 		getDocView_Analytics_ConceptualFolderAction().waitAndClick(15);
-		
+
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFamilyMember().Displayed());
 		base.passedStep("Folder pop up is opened successfully");
@@ -22370,10 +22375,10 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_AnalyticsNewFolderTree());
 		getDocView_AnalyticsNewFolderTree().waitAndClick(10);
-		
+
 		base.waitForElement(getDocView_AnalyticsNewFolderTextBox());
 		getDocView_AnalyticsNewFolderTextBox().SendKeys(folderName);
-		
+
 		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
 
@@ -22387,7 +22392,7 @@ public class DocViewPage {
 		base.passedStep("Docs are selected from Conceptual Tab and FolderedUp sucessfully");
 
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -22397,7 +22402,8 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getDocumetCountMiniDocList());
 		for (int i = 1; i <= row; i++) {
-			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);;
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+			;
 		}
 		base.waitForElement(getDocView_Mini_ActionButton());
 		getDocView_Mini_ActionButton().waitAndClick(5);
@@ -22405,65 +22411,65 @@ public class DocViewPage {
 		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
 		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
-		
+
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
 //	Reusable method for validating navigation option in docview panel
 	public void navigationOptionValidation(int number) {
 		driver.waitForPageToBeReady();
-		SoftAssert assertion=new SoftAssert();
+		SoftAssert assertion = new SoftAssert();
 //	    validating first option
 		base.waitForElement(getDocView_First());
-		String fistDoc=getDocView_NumTextBox().GetAttribute("value");
+		String fistDoc = getDocView_NumTextBox().GetAttribute("value");
 		assertion.assertEquals(fistDoc, "1");
 		base.stepInfo("Navigated,cursor moved to first docs in minidoclist ");
 //	    validating next option
 		base.waitForElement(getDocView_Next());
 		getDocView_Next().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		String nextDoc=getDocView_NumTextBox().GetAttribute("value");
+		String nextDoc = getDocView_NumTextBox().GetAttribute("value");
 		assertion.assertEquals(nextDoc, "2");
 		base.stepInfo("Navigated,cursor moved to next docs in minidoclist ");
 //	    validating previous option
 		base.waitForElement(getDocView_Previous());
 		getDocView_Previous().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		String previousDoc=getDocView_NumTextBox().GetAttribute("value");
+		String previousDoc = getDocView_NumTextBox().GetAttribute("value");
 		assertion.assertEquals(previousDoc, "1");
 		base.stepInfo("Navigated,cursor moved to previous docs in minidoclist ");
 //	    validating Last option
 		base.waitForElement(getDocView_Last());
 		getDocView_Last().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		String LastDoc=getDocView_NumTextBox().GetAttribute("value");
+		String LastDoc = getDocView_NumTextBox().GetAttribute("value");
 		base.stepInfo("Navigated,cursor moved to last docs in minidoclist ");
-		assertion.assertEquals(LastDoc,Integer.toString(number));
+		assertion.assertEquals(LastDoc, Integer.toString(number));
 //		overall assertion
 		assertion.assertAll();
 		base.passedStep("While navigating to last document loading displayed with more number of document");
 	}
-	
+
 	/**
 	 * @author sowndarya
-	 * @Description  : Method for verifying doccount in docview
+	 * @Description : Method for verifying doccount in docview
 	 */
-	
+
 	public int verifyingDocCount() {
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		base.waitForElement(getDocView_info());
-	    String DocListCount=getDocView_info().getText();
-		
+		String DocListCount = getDocView_info().getText();
+
 		String[] doccount = DocListCount.split(" ");
 		String DocumentCount = doccount[1];
 		int docViewCount = Integer.parseInt(DocumentCount);
-		
-		System.out.println("docview page document count is : "+DocumentCount);
-		base.stepInfo("docview page document count is : "+DocumentCount);
+
+		System.out.println("docview page document count is : " + DocumentCount);
+		base.stepInfo("docview page document count is : " + DocumentCount);
 		return docViewCount;
-		
+
 	}
 }
