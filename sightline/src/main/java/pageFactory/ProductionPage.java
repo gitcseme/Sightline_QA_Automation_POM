@@ -16332,6 +16332,26 @@ public class ProductionPage {
 
 		driver.scrollPageToTop();
 	}
+
+	
+	/**
+	 * @Author Gopinath
+	 * @Description : Filling tiff section that burn redaction with tag
+	 */
+	public void fillingTIFFSectionBurnRedaction(String tagname,String placeHolderValue) throws InterruptedException {
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+	
+			driver.scrollingToBottomofAPage();
+	
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+	
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+	
+			// disabling enable for priviledged docs
+    }
 	/**
 	 * @author Aathith
 	 * @description : Method for filling pdf section with default annatation layer.
@@ -16359,6 +16379,53 @@ public class ProductionPage {
 			base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
 			getTIFF_EnableforPrivilegedDocs().Enabled();
 			getTIFF_EnableforPrivilegedDocs().Click();
+
+	
+			getClk_burnReductiontoggle().ScrollTo();
+	
+			// enable burn redaction
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+	
+			getClkRadioBtn_selectRedactionTags().ScrollTo();
+	
+			base.waitForElement(getClkRadioBtn_selectRedactionTags());
+			getClkRadioBtn_selectRedactionTags().isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+	
+			base.waitForElement(getClkCheckBox_defaultRedactionTag());
+			getClkCheckBox_defaultRedactionTag().isDisplayed();
+			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+	
+			base.waitForElement(getClkLink_selectingRedactionTags());
+			getClkLink_selectingRedactionTags().isDisplayed();
+			getClkLink_selectingRedactionTags().waitAndClick(10);
+	
+			base.waitForElement(getClkBtn_selectingRedactionTags());
+			getClkBtn_selectingRedactionTags().isDisplayed();
+			getClkBtn_selectingRedactionTags().waitAndClick(10);
+	
+			base.waitForElement(getPriveldged_TagTree(tagname));
+			getPriveldged_TagTree(tagname).isElementAvailable(10);
+			getPriveldged_TagTree(tagname).ScrollTo();
+			getPriveldged_TagTree(tagname).isDisplayed();
+			getPriveldged_TagTree(tagname).waitAndClick(10);
+	
+			base.waitForElement(getClk_selectBtn());
+			getClk_selectBtn().isDisplayed();
+			getClk_selectBtn().waitAndClick(10);
+	
+			base.waitForElement(gettextRedactionPlaceHolder());
+			gettextRedactionPlaceHolder().isDisplayed();
+			gettextRedactionPlaceHolder().waitAndClick(10);
+			gettextRedactionPlaceHolder().SendKeys(placeHolderValue);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while filling tiff section with burn redaction tag"+e.getLocalizedMessage());
+		}
+	}
+
 
 			getClk_burnReductiontoggle().ScrollTo();
 
@@ -16466,6 +16533,7 @@ public class ProductionPage {
 		String ActualColor = "#a9c981";
 		base.textCompareEquals(ActualColor, ExpectedColor, "Generate LST file Toggle is enabled  by Default",
 				"Generate LST file Toggle is not  enabled  by Default");
+
 
 		base.waitForElement(getLoadFileTypeInTIFF());
 		getLoadFileTypeInTIFF().Click();

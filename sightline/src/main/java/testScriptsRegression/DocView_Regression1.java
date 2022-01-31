@@ -4650,7 +4650,7 @@ public class DocView_Regression1 {
 				baseClass.stepInfo("Verify persistant hit for keyword");
 				docView.persistenHitWithSearchString(keywordname);
 				
-                                baseClass.stepInfo("verify highlight keyword in document");
+                baseClass.stepInfo("verify highlight keyword in document");
 				docView.verifyKeywordHighlightedOnDocViewwithKeywordColour(rgbCode, HaxCode);
 
 				loginPage.logout();
@@ -4672,6 +4672,233 @@ public class DocView_Regression1 {
 				baseClass.stepInfo("Delete keyword");
 				keywordPage.deleteKeywordByName(keywordname);
 
+			}
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id 51040 Verify keyword highlighting from doc view when same keyword groups are mapped to assignment and security group
+			 * @description:To Verify keyword highlighting from doc view when same keyword groups are mapped to assignment and security group
+			 * @throws InterruptedException
+			 * @throws AWTException
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 68)
+			public void verifyKeyWordHighlightofbasicSearchAndAssignmentOnDocView() throws InterruptedException, AWTException{
+				String AssignName = Input.randomText + Utility.dynamicNameAppender();
+				String keywordname = "t";
+				String colour = "Gold";
+				String rgbCode = "rgb(255, 215, 0)";
+				String HaxCode = "#ffd700";
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51040 sprint 10");
+				baseClass.stepInfo(
+						"####Verify keyword highlighting from doc view when same keyword groups are mapped to assignment and security group####");
+
+				docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+
+				AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+
+				KeywordPage keywordPage = new KeywordPage(driver);
+
+				baseClass.stepInfo("Navigate to keyword page");
+				keywordPage.navigateToKeywordPage();
+
+				baseClass.stepInfo("Add keyword");
+				keywordPage.addKeyword(keywordname, colour);
+
+				DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+				//docViewRedact.selectsecuritygroup(Input.securityGroup);
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.searchString1);
+
+				baseClass.stepInfo("Create bulk assign with new assignment with persistant hit.");
+				session.bulkAssignWithNewAssignmentWithPersistantHit(AssignName, Input.codingFormName);
+
+				baseClass.stepInfo("Edit assignment");
+				assignmentPage.editAssignment(AssignName);
+
+				baseClass.stepInfo("Verify added keyword is checked.");
+				assignmentPage.verifyAddedKeywordsChecked();
+
+				baseClass.stepInfo("Reviews adding and distributing to Reviewer");
+				assignmentPage.assignmentDistributingToReviewer();
+
+				loginPage.logout();
+				baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+				// Login As Reviewer
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.searchString1);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Verify persistant hit for keyword");
+				docView.persistenHitWithSearchString(keywordname);
+				
+                baseClass.stepInfo("verify highlight keyword in document as keyword mapped to security group");
+				docView.verifyKeywordHighlightedOnDocViewwithKeywordColour(rgbCode, HaxCode);
+
+				// selecting the assignment
+				assignmentPage.SelectAssignmentByReviewer(AssignName);
+
+				baseClass.stepInfo("Verify persistant hit for keyword as keywords are mapped to assignment");
+				docView.persistenHitWithSearchString(keywordname);
+				
+                baseClass.stepInfo("verify highlight keyword in document");
+				docView.verifyKeywordHighlightedOnDocViewwithKeywordColour(rgbCode, HaxCode);
+
+				loginPage.logout();
+
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+				baseClass.stepInfo("Navigate To Assignments Page");
+				assignmentPage.navigateToAssignmentsPage();
+
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+
+				baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+				assignmentPage.deleteAssignment(AssignName);
+
+				baseClass.stepInfo("Navigate to keyword page");
+				keywordPage.navigateToKeywordPage();
+
+				baseClass.stepInfo("Delete keyword");
+				keywordPage.deleteKeywordByName(keywordname);
+
+			}
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id:51038 Verify keyword highlighting when different keyword groups having same keywords, different color mapped to different assignments having same documents
+			 * Description:To Verify keyword highlighting when different keyword groups having same keywords, different color mapped to different assignments having same documents
+			 * @throws AWTException,InterruptedException
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 69)
+			public void verifyKeywordHighlightSameKeywordWithDifferentColor() throws AWTException, InterruptedException {
+				String AssignName1 = Input.randomText + Utility.dynamicNameAppender();
+				String AssignName2 = Input.randomText + Utility.dynamicNameAppender();
+				String keywordName1="key"+Utility.dynamicNameAppender();
+				String keywordName2="key"+Utility.dynamicNameAppender();
+				String keyword = "es";
+				String colour1 = "Gold";
+				String rgbCode1 = "rgb(255, 215, 0)";
+				String HaxCode1 = "#ffd700";
+				String colour2 = Input.KeyWordColour;//blue
+				String rgbCode2 = "rgb(0, 0, 255)";
+				String HaxCode2 = "#0000ff";
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51038 sprint 10");
+				baseClass.stepInfo(
+						"####Verify keyword highlighting when different keyword groups having same keywords, different color mapped to different assignments having same documents####");
+
+				docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+
+				AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+
+				KeywordPage keywordPage = new KeywordPage(driver);
+
+				DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+				//docViewRedact.selectsecuritygroup(Input.securityGroup);
+				baseClass.stepInfo("Navigate to keyword page");
+				keywordPage.navigateToKeywordPage();
+
+				baseClass.stepInfo("Add keyword one");
+				keywordPage.addKeyword(keywordName1,keyword, colour1);
+				driver.Navigate().refresh();
+				baseClass.stepInfo("Add keyword two");
+				keywordPage.addKeyword(keywordName2,keyword, colour2);
+
+				baseClass.stepInfo(" Basic content search for");
+				session.basicContentSearch(Input.MiniDocId);
+
+				baseClass.stepInfo("Create bulk assign with new assignment one with persistant hit.");
+				session.bulkAssignWithNewAssignmentWithPersistantHit(AssignName1, Input.codingFormName);
+				driver.getWebDriver().get(Input.url + "Search/Searches");
+				
+
+				baseClass.stepInfo("Create bulk assign with new assignment two with persistant hit.");
+				session.bulkAssignWithNewAssignmentWithPersistantHit(AssignName2, Input.codingFormName);
+
+				baseClass.stepInfo("unmapping all keywords from first assignment");
+				assignmentPage.unmappingKeywordsFromAssignment(AssignName1);
+				
+				baseClass.stepInfo("aading keyword to first assignment");
+				assignmentPage.addKeywordToAssignment(keywordName1);
+
+				baseClass.stepInfo("Reviews adding and distributing to Reviewer");
+				assignmentPage.assignmentDistributingToReviewer();
+				
+				loginPage.logout();
+				baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+				// Login As Reviewer
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+
+				// selecting the assignment
+				assignmentPage.SelectAssignmentByReviewer(AssignName1);
+
+				baseClass.stepInfo("Verify persistant hit for keyword of first assignment");
+				docView.persistenHitWithSearchString(keyword);
+				
+                 baseClass.stepInfo("verify highlight keyword in document for first assignment");
+				docView.verifyKeywordHighlightedOnDocViewwithKeywordColour(rgbCode1, HaxCode1);
+
+				loginPage.logout();
+				baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+				// Login As Reviewer
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				baseClass.stepInfo("unmapping all keywords from second assignment");
+				assignmentPage.unmappingKeywordsFromAssignment(AssignName2);
+				
+				baseClass.stepInfo("aading keyword to second assignment");
+				assignmentPage.addKeywordToAssignment(keywordName2);
+				
+
+				baseClass.stepInfo("Reviews adding and distributing to Reviewer");
+				assignmentPage.assignmentDistributingToReviewer();
+				
+				loginPage.logout();
+				baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+				// Login As Reviewer
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+				
+				assignmentPage.SelectAssignmentByReviewer(AssignName2);
+
+				baseClass.stepInfo("Verify persistant hit for keyword of second assignment");
+				docView.persistenHitWithSearchString(keyword);
+				
+                 baseClass.stepInfo("verify highlight keyword in document for second assignment");
+				docView.verifyKeywordHighlightedOnDocViewwithKeywordColour(rgbCode2, HaxCode2);
+
+				loginPage.logout();
+
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+				baseClass.stepInfo("Navigate To Assignments Page");
+				assignmentPage.navigateToAssignmentsPage();
+
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+
+				baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+				assignmentPage.deleteAssignment(AssignName1);
+				assignmentPage.deleteAssignment(AssignName2);
+
+				baseClass.stepInfo("Navigate to keyword page");
+				keywordPage.navigateToKeywordPage();
+
+				baseClass.stepInfo("Delete keyword");
+				keywordPage.deleteKeywordByName(keywordName1);
+				keywordPage.deleteKeywordByName(keywordName2);
 			}
 			 
 		

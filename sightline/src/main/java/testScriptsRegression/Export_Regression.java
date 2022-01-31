@@ -19,6 +19,7 @@ import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
 import pageFactory.ProductionPage;
 import pageFactory.ProjectFieldsPage;
+import pageFactory.RedactionPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -693,6 +694,384 @@ public class Export_Regression {
 	}
 	
 	
+	/**
+	 * @author Gopinath created on:NA modified by:NA
+	 * @TESTCASE_No:RPMXCON-50630 : Verify that TIFF should Export with Burned Redaction if Only Burn Redaction is enabled.
+	 * @Description: Verify that TIFF should Export with Burned Redaction if Only Burn Redaction is enabled.
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 7)
+	public void verifyTIFFExportWithBurnRedaction() throws Exception {
+		base=new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-50630");
+		base.stepInfo("#### Verify that TIFF should Export with Burned Redaction if Only Burn Redaction is enabled ####");
+ 		
+
+		String foldername = Input.randomText + Utility.dynamicNameAppender();
+		String redactiontag1 = Input.randomText + Utility.dynamicNameAppender();
+		String testData1 = Input.testData1;
+		String exportname = Input.randomText + Utility.dynamicNameAppender();
+		String prefixID = Utility.randomCharacterAppender(25);
+ 		String suffixID =Utility.randomCharacterAppender(25);
+ 		loginPage = new LoginPage(driver);
+		loginPage.logout();
+		
+		base.stepInfo("Login with RMU");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		// Pre-requisites
+		// create folder and tag
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		
+		base.stepInfo("Navigate to security group");
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		
+		base.stepInfo("Create Folder");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		RedactionPage redactionpage = new RedactionPage(driver);
+
+		base.stepInfo("Creating redaction tag");
+		redactionpage.manageRedactionTagsPage(redactiontag1);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		
+		// testData string contains redacted documents as per Pre-requisites
+		base.stepInfo("Basic Content Search");
+		sessionSearch.basicContentSearch(testData1);
+		
+		base.stepInfo("Bulk Folder Existing");
+		sessionSearch.bulkFolderExisting(foldername);
+		
+		base.stepInfo("View searched for audio docs in Doc view");
+		sessionSearch.ViewInDocView();
+		
+		base.stepInfo("Click on reduction button ");
+		docViewMetaDataPage.clickOnRedactAndRectangle();
+
+		base.stepInfo("Set rectangle reduct in doc");
+		docViewMetaDataPage.redactbyrectangle(10, 15, redactiontag1);
+
+		// create export with native which displays message about priviledged and
+		// redacted export
+		ProductionPage page = new ProductionPage(driver);
+		
+		base.stepInfo("Selecting Default Security Group");
+		page.selectingDefaultSecurityGroup();
+		
+		base.stepInfo("select Export Set From DropDown");
+		page.selectExportSetFromDropDown();
+		
+		base.stepInfo("Add New Export");
+		page.addANewExport(exportname);
+		
+		base.stepInfo("Filling DAT Section");
+ 		page.fillingDATSection();
+		
+		base.stepInfo("Filling Native Section");
+		page.fillingNativeSection();
+		
+		base.stepInfo("Filling TIFF Section with Burn Redaction");
+		page.fillingTIFFSectionBurnRedaction(redactiontag1,Input.searchString4);
+		
+		base.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		base.stepInfo("Filling Export Numbering And Sorting Page");
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID);
+		
+		base.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		base.stepInfo("Filling Document Selection Page");
+		page.fillingDocumentSelectionPage(foldername);
+		
+		base.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		base.stepInfo("Filling Priv Guard Page");
+		page.fillingPrivGuardPage();
+		
+		base.stepInfo("Filling Export Location Page");
+		page.fillingExportLocationPage(exportname);
+		
+		base.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		base.stepInfo("Viewing Tool Tip In Summary And Preview");
+		page.viewingToolTipInSummaryAndPreview();
+		
+		base.stepInfo("Click on Next Button");
+		page.getNextButton().waitAndClick(10);
+		
+		base.stepInfo("Filling Generate Page");
+		page.fillingExportGeneratePageWithContinueGenerationPopup();
+		
+		//To delete tag and folder 
+		base.stepInfo("Navigate To Tags And Folder Page");
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		
+		base.stepInfo("Delete Folder With Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		
+		base.stepInfo("Delete added redaction tag");
+		redactionpage.DeleteRedaction(redactiontag1);
+	}
+	
+	
+	/**
+	 * @author Gopinath created on:NA modified by:NA
+	 * @TESTCASE_No:RPMXCON-50330 : Verify that TIFF should Export with Burned Redaction if Only Burn Redaction is enabled.
+	 * @Description: Verify that TIFF should Export with Burned Redaction if Only Burn Redaction is enabled.
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 8)
+	public void verifyTIFFExportWithBurnRedactionEnabled() throws Exception {
+		base=new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-50330");
+		base.stepInfo("#### Verify that TIFF should Export with Burned Redaction if Only Burn Redaction is enabled ####");
+ 		
+
+		String foldername = Input.randomText + Utility.dynamicNameAppender();
+		String redactiontag1 = Input.randomText + Utility.dynamicNameAppender();
+		String testData1 = Input.testData1;
+		String exportname = Input.randomText + Utility.dynamicNameAppender();
+		String prefixID = Utility.randomCharacterAppender(25);
+ 		String suffixID =Utility.randomCharacterAppender(25);
+ 		loginPage = new LoginPage(driver);
+		loginPage.logout();
+		
+		base.stepInfo("Login with RMU");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		// Pre-requisites
+		// create folder and tag
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		
+		base.stepInfo("Navigate to security group");
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		
+		base.stepInfo("Create Folder");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		RedactionPage redactionpage = new RedactionPage(driver);
+
+		base.stepInfo("Creating redaction tag");
+		redactionpage.manageRedactionTagsPage(redactiontag1);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		
+		// testData string contains redacted documents as per Pre-requisites
+		base.stepInfo("Basic Content Search");
+		sessionSearch.basicContentSearch(testData1);
+		
+		base.stepInfo("Bulk Folder Existing");
+		sessionSearch.bulkFolderExisting(foldername);
+		
+		base.stepInfo("View searched for audio docs in Doc view");
+		sessionSearch.ViewInDocView();
+		
+		base.stepInfo("Click on reduction button ");
+		docViewMetaDataPage.clickOnRedactAndRectangle();
+
+		base.stepInfo("Set rectangle reduct in doc");
+		docViewMetaDataPage.redactbyrectangle(10, 15, redactiontag1);
+
+		// create export with native which displays message about priviledged and
+		// redacted export
+		ProductionPage page = new ProductionPage(driver);
+		
+		base.stepInfo("Selecting Default Security Group");
+		page.selectingDefaultSecurityGroup();
+		
+		base.stepInfo("select Export Set From DropDown");
+		page.selectExportSetFromDropDown();
+		
+		base.stepInfo("Add New Export");
+		page.addANewExport(exportname);
+		
+		base.stepInfo("Filling DAT Section");
+ 		page.fillingDATSection();
+		
+		base.stepInfo("Filling Native Section");
+		page.fillingNativeSection();
+		
+		base.stepInfo("Filling TIFF Section with Burn Redaction");
+		page.fillingTIFFSectionBurnRedaction(redactiontag1,Input.searchString4);
+		
+		base.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		base.stepInfo("Filling Export Numbering And Sorting Page");
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID);
+		
+		base.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		base.stepInfo("Filling Document Selection Page");
+		page.fillingDocumentSelectionPage(foldername);
+		
+		base.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		base.stepInfo("Filling Priv Guard Page");
+		page.fillingPrivGuardPage();
+		
+		base.stepInfo("Filling Export Location Page");
+		page.fillingExportLocationPage(exportname);
+		
+		base.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		base.stepInfo("Viewing Tool Tip In Summary And Preview");
+		page.viewingToolTipInSummaryAndPreview();
+		
+		base.stepInfo("Click on Next Button");
+		page.getNextButton().waitAndClick(10);
+		
+		base.stepInfo("Filling Generate Page");
+		page.fillingExportGeneratePageWithContinueGenerationPopup();
+		
+		//To delete tag and folder 
+		base.stepInfo("Navigate To Tags And Folder Page");
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		
+		base.stepInfo("Delete Folder With Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		
+		base.stepInfo("Delete added redaction tag");
+		redactionpage.DeleteRedaction(redactiontag1);
+	}
+	
+	/**
+	 * @author Gopinath created on:NA modified by:NA
+	 * @TESTCASE_No:RPMXCON-49248 : To Verify in Export TIFFPageCount for placeholders.
+	 * @Description: To Verify in Export TIFFPageCount for placeholders.
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 9)
+	public void verifyTIFFPageCountForPlaceholders() throws Exception {
+		base=new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-49248");
+		base.stepInfo("#### To Verify in Export TIFFPageCount for placeholders. ####");
+ 		
+
+		String foldername = Input.randomText + Utility.dynamicNameAppender();
+		String redactiontag1 = Input.randomText + Utility.dynamicNameAppender();
+		String testData1 = Input.testData1;
+		String exportname = Input.randomText + Utility.dynamicNameAppender();
+		String prefixID = Utility.randomCharacterAppender(25);
+ 		String suffixID =Utility.randomCharacterAppender(25);
+ 		loginPage = new LoginPage(driver);
+		loginPage.logout();
+		
+		base.stepInfo("Login with RMU");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		// Pre-requisites
+		// create folder and tag
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		
+		base.stepInfo("Navigate to security group");
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		
+		base.stepInfo("Create Folder");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		RedactionPage redactionpage = new RedactionPage(driver);
+
+		base.stepInfo("Creating redaction tag");
+		redactionpage.manageRedactionTagsPage(redactiontag1);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		
+		// testData string contains redacted documents as per Pre-requisites
+		base.stepInfo("Basic Content Search");
+		sessionSearch.basicContentSearch(testData1);
+		
+		base.stepInfo("Bulk Folder Existing");
+		sessionSearch.bulkFolderExisting(foldername);
+		
+		base.stepInfo("View searched for audio docs in Doc view");
+		sessionSearch.ViewInDocView();
+		
+		base.stepInfo("Click on reduction button ");
+		docViewMetaDataPage.clickOnRedactAndRectangle();
+
+		base.stepInfo("Set rectangle reduct in doc");
+		docViewMetaDataPage.redactbyrectangle(10, 15, redactiontag1);
+
+		// create export with native which displays message about priviledged and
+		// redacted export
+		ProductionPage page = new ProductionPage(driver);
+		
+		base.stepInfo("Selecting Default Security Group");
+		page.selectingDefaultSecurityGroup();
+		
+		base.stepInfo("select Export Set From DropDown");
+		page.selectExportSetFromDropDown();
+		
+		base.stepInfo("Add New Export");
+		page.addANewExport(exportname);
+		
+		base.stepInfo("Filling DAT Section");
+ 		page.fillingDATSection();
+		
+ 		base.stepInfo("Add DAT Field At SecondRow");
+		page.addDATFieldAtSecondRow(Input.productionText, Input.tiffPageCountNam, Input.tiffPageCountText);
+		
+ 		base.stepInfo("Add DAT Field At Third row");
+		page.addDATFieldAtThirdRow(Input.docBasic,Input.docName,Input.documentID);
+		
+		base.stepInfo("Filling TIFF Section with Burn Redaction");
+		page.fillingTIFFSectionBurnRedaction(redactiontag1,Input.searchString4);
+		
+		base.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		base.stepInfo("Filling Export Numbering And Sorting Page");
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID);
+		
+		base.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		base.stepInfo("Filling Document Selection Page");
+		page.fillingDocumentSelectionPage(foldername);
+		
+		base.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		base.stepInfo("Filling Priv Guard Page");
+		page.fillingPrivGuardPage();
+		
+		base.stepInfo("Filling Export Location Page");
+		page.fillingExportLocationPage(exportname);
+		
+		base.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		base.stepInfo("Viewing Tool Tip In Summary And Preview");
+		page.viewingToolTipInSummaryAndPreview();
+		
+		base.stepInfo("Click on Next Button");
+		page.getNextButton().waitAndClick(10);
+		
+		base.stepInfo("Filling Generate Page");
+		page.fillingExportGeneratePageWithContinueGenerationPopup();
+		
+		//To delete tag and folder 
+		base.stepInfo("Navigate To Tags And Folder Page");
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		
+		base.stepInfo("Delete Folder With Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		
+		base.stepInfo("Delete added redaction tag");
+		redactionpage.DeleteRedaction(redactiontag1);
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void close() {

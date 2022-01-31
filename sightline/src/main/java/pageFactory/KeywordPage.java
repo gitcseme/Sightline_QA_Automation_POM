@@ -232,6 +232,31 @@ public class KeywordPage {
        }
        
        /**
+    	 * @author Gopinath
+    	 * @Description: Method for add keyword
+    	 * @param keyword : keyword is String value that name of keyword.
+    	 * @param color : color is String value that name of color
+    	 * @param keywordname : keywordname is string value that keyword name
+    	 */
+       public void addKeyword(String keywordName,String keywordname, String color) throws AWTException {
+         	base.waitForElement(getNewKeywordButton());
+         	getNewKeywordButton().waitAndClick(5);
+         	base.waitForElement(getKeywordName());
+         	getKeywordName().SendKeys(keywordName);
+         	base.waitForElement(getDescription());
+         	getDescription().SendKeys(keywordname);
+         	base.waitForElement(getKeywords());
+         	getKeywords().SendKeys(keywordname);
+         	getSelectColor().selectFromDropdown().selectByVisibleText(color);
+         	getIntoFullScreen();
+         	base.waitForElement(getSaveBtn());
+         	getSaveBtn().waitAndClick(5);
+         	base.waitForElement(getYesButton());
+         	getYesButton().waitAndClick(5);
+         	getExitFullScreen();
+          	
+         }
+/**
       	 * @author Arunkumar
            * @throws AWTException 
       	 * @Description: Method for adding two same keywords with different color

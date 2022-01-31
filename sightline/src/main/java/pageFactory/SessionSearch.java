@@ -9690,11 +9690,11 @@ public class SessionSearch {
 	}
 	
 	/**
-	 * @author Raghuram.A
+	 * @author Raghuram.A Date: 1/26/22 Modified date:1/26/21 Modified by: Raghuram
 	 * @param cdName
 	 * @param headerName
 	 */
-	public void verifySearchReult(String cdName, String headerName) {
+	public void verifySearchReult(String cdName, String headerName, String checkType, Boolean resultCheck) {
 		HashMap<String, Integer> headerDataPair = new HashMap<>();
 		Boolean conditionPass = false;
 		String custodianName = "";
@@ -9716,24 +9716,39 @@ public class SessionSearch {
 		}
 
 		// Condition check
-		int totalRows = getTotalRows().size();
-		for (int i = 1; i <= totalRows; i++) {
-			custodianName = getCellValue(i, headerDataPair.get(headerName)).getText();
-			if (custodianName.equalsIgnoreCase(cdName)) {
-				conditionPass = true;
-			} else {
-				conditionPass = false;
-				break;
+		if (checkType.equalsIgnoreCase("Equal")) {
+			int totalRows = getTotalRows().size();
+			for (int i = 1; i <= totalRows; i++) {
+				custodianName = getCellValue(i, headerDataPair.get(headerName)).getText();
+				if (custodianName.equalsIgnoreCase(cdName)) {
+					conditionPass = true;
+				} else {
+					conditionPass = false;
+					break;
+				}
+			}
+		} else if (checkType.equalsIgnoreCase("contains")) {
+			int totalRows = getTotalRows().size();
+			for (int i = 1; i <= totalRows; i++) {
+				custodianName = getCellValue(i, headerDataPair.get(headerName)).getText();
+				if (custodianName.contains(cdName)) {
+					base.passedStep(cdName + " - Relevant Custodian details displayed on screen. : " + custodianName);
+				} else {
+					base.failedStep(cdName + " - Unrelevant Custodian details displayed on screen. : " + custodianName);
+				}
 			}
 		}
 
 		// Result check
-		if (conditionPass) {
-			base.passedStep("Relevant Custodian details displayed on screen. : " + custodianName);
-		} else {
-			base.failedStep("CustodianName mis-matches : " + custodianName);
+		if (resultCheck) {
+			if (conditionPass) {
+				base.passedStep("Relevant Custodian details displayed on screen. : " + custodianName);
+			} else {
+				base.failedStep("CustodianName mis-matches : " + custodianName);
+			}
 		}
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param status
@@ -9749,3 +9764,6 @@ public class SessionSearch {
 		driver.scrollPageToTop();
 	}
 }
+
+}
+
