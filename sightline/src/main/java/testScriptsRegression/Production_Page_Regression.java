@@ -3084,6 +3084,7 @@ public class Production_Page_Regression {
 		sessionSearch.bulkFolderExisting(folder);
 
 		// create production with DAT,Native,PDF& ingested Text
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -3106,6 +3107,7 @@ public class Production_Page_Regression {
 		page.isFileDownloaded(Input.fileDownloadLocation, name);
 
 		// Delete Tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(folder);
 
@@ -3202,7 +3204,7 @@ public class Production_Page_Regression {
 
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3227,30 +3229,150 @@ public class Production_Page_Regression {
 		page.priviledgeDocCheck(true, tagname);
 		driver.waitForPageToBeReady();
 
-		//checking matching documents with purehit
+		// checking matching documents with purehit
 		String docCount = page.VerifyingDocListCountWithPrivGaurdCount();
 		int matchingDocs = Integer.parseInt(docCount);
 		softAssertion.assertEquals(purehit, matchingDocs);
 		baseClass.passedStep("Matching Document Count is : " + matchingDocs);
 
-		//verify doclist total document with purehit
+		// verify doclist total document with purehit
 		docPage = new DocListPage(driver);
 		String doclistCount = docPage.verifyingDocCount();
 		int docListCount = Integer.parseInt(doclistCount);
 		softAssertion.assertEquals(purehit, docListCount);
 		baseClass.passedStep("Total Document Count of  DocList : " + docListCount);
-		
-		//verify docview total document with purehit
+
+		// verify docview total document with purehit
 		driver.waitForPageToBeReady();
 		page.getDocView().waitAndClick(10);
 		docViewPage = new DocViewPage(driver);
 		int docviewCount = docViewPage.verifyingDocCount();
 		softAssertion.assertEquals(purehit, docviewCount);
 		baseClass.passedStep("Total Document Count of  DocView : " + docviewCount);
-		
+
 		softAssertion.assertAll();
 
+	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that the selected metadata is not displayed only
+	 *              when the doc has at least one of the selected redaction tags in
+	 *              Burn Redactions in PDF section [RPMXCON-48501]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 60)
+	public void verifySelectedMetadataNotDisplayedOnDocs() throws Exception {
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		ProductionPage page = new ProductionPage(driver);
+
+		String folder = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48501 Production Sprint 11");
+		baseClass.stepInfo(
+				"To verify that the selected metadata is not displayed only when the doc has at least one of the selected redaction tags in Burn Redactions in PDF section");
+
+		// create tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.CreateFolder(folder, Input.securityGroup);
+
+		// search for folder
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(folder);
+
+		// create production with DAT,Native,PDF with burn redaction
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		baseClass.waitForElement(page.getDATRedactionsCBox());
+		page.getDATRedactionsCBox().waitAndClick(10);
+		page.fillingNativeSection();
+		page.fillingPDFSectionwithBurnRedaction();
+		page.specifyRedactionTextAreaInBurnRedact(Input.defaultRedactionTag, Input.searchString4);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(folder);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		baseClass.waitTime(4);
+		String name = page.getProduction().getText().trim();
+		page.isFileDownloaded(Input.fileDownloadLocation, name);
+
+		// Delete Tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(folder);
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :To verify that Tiff/PDF should generate with File/Tag-based
+	 *              placeholdering if Only File/Tag-based Placeholdering is exists
+	 *              [RPMXCON-48507]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 61)
+	public void verifyTIFFAndGenerate() throws Exception {
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		ProductionPage page = new ProductionPage(driver);
+
+		String tagname = "TAG" + Utility.dynamicNameAppender();
+		String folder = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48507 Production Sprint 11");
+		baseClass.stepInfo(
+				"To verify that Tiff/PDF should generate with File/Tag-based placeholdering if Only File/Tag-based Placeholdering is exists");
+
+		// create tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(folder, Input.securityGroup);
+
+		// search for folder
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(folder);
+
+		// create production with DAT,Native,tiff with native placeholder
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(folder);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		baseClass.waitTime(4);
+		String name = page.getProduction().getText().trim();
+		page.isFileDownloaded(Input.fileDownloadLocation, name);
+
+		// Delete Tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.deleteAllTags(tagname);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(folder);
 	}
 
 	@DataProvider(name = "PAandRMU")
