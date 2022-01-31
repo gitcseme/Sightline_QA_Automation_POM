@@ -16602,5 +16602,45 @@ public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
 		driver.scrollPageToTop();
 
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description :Natively placeholder selecting multiple tag
+	 */
+	public void fillingTIFFSectionwithNativelyPlaceholder(String tagname, String tagname1) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		// clicking enable for natively placeholder
+		base.waitForElement(getTiff_NativeDoc());
+		getTiff_NativeDoc().Click();
+		base.waitForElement(getclkSelectTag());
+		getclkSelectTag().Click();
+		base.waitForElement(getPriveldged_TagTree(tagname));
+		getPriveldged_TagTree(tagname).waitAndClick(10);
+		base.waitForElement(getPriveldged_TagTree(tagname1));
+		getPriveldged_TagTree(tagname1).waitAndClick(10);
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		Thread.sleep(Input.wait30 / 10);
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(tagname);
+		
+		base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting multiple tag");
+
+	}
 
 }
