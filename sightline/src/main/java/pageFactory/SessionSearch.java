@@ -9748,4 +9748,22 @@ public class SessionSearch {
 			}
 		}
 	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param status
+	 * @throws InterruptedException
+	 */
+	public void selectCompletedAssignmentInWP(String status) throws InterruptedException {
+		base.waitForElement(getWP_assignmentsBtn());
+		getWP_assignmentsBtn().Click();
+		base.waitTime(1);
+		selectStatusInAssgnWp(status).waitAndClick(2);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(5);
+		driver.scrollPageToTop();
+	}
 }
+
+}
+
