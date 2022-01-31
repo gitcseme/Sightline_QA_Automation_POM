@@ -1392,6 +1392,10 @@ public class AssignmentsPage {
 		return driver.FindElementsByXPath("//div[@id='divkeyword']//label[@class='checkbox']//i");
 	}
 	
+	public Element getBatchAssignmentBar(String assignmentName) {
+		return driver.FindElementByXPath("//strong[text()='" + assignmentName
+				+ "']/ancestor::tr[@role='row']//following::td/div[@class='progress-lg']/div[@class='progress-bar bg-color-green']");
+	}
 	 public ElementCollection getKeywordNames() {
 			return driver.FindElementsByXPath("//div[contains(@style,'color')]");
 		}
