@@ -1415,6 +1415,10 @@ public class DocViewPage {
 		return driver.FindElementsByCssSelector("li[class*='paginate_button '] a");
 	}
 
+	public Element getDocView_AssignmentProgressDocs() {
+		return driver.FindElementByXPath("//td[@class=' colHCenter colHCenter']//span[text()='20%']");
+	}
+	
 	public Element getAssgnPaginationNextButton() {
 		return driver.FindElementByCssSelector("li[class='paginate_button next'] a");
 	}
@@ -21963,7 +21967,7 @@ public class DocViewPage {
 		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
 
-		base.waitForElement(getTotalSelectedDocuments());
+		base.waitForElement(getDocView_AnalyticsNewFolderFinalizeBtn());
 		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().Displayed());
 		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
 		base.VerifySuccessMessage("Records saved successfully");
@@ -22020,7 +22024,7 @@ public class DocViewPage {
 		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
 
-		base.waitForElement(getTotalSelectedDocuments());
+		base.waitForElement(getDocView_AnalyticsNewFolderFinalizeBtn());
 		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().Displayed());
 		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
 		base.VerifySuccessMessage("Records saved successfully");
@@ -22466,4 +22470,104 @@ public class DocViewPage {
 		return docViewCount;
 		
 	}
+	
+	/**
+	 * @Author Vijaya.Rani Created on 31/1/2022
+	 * @Description To perform Folder MiniDocList 
+	 *              
+	 */
+	public void performFloderMiniDocList() throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 2; i++) {
+
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(10);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Mini_ActionButton().Displayed();
+			}
+		}), Input.wait30);
+		getDocView_Mini_ActionButton().Click();
+
+		getDocView__ChildWindow_Mini_FolderAction().waitAndClick(10);
+
+
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
+		base.passedStep("Folder pop up is opened successfully");
+
+		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
+		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsExitingFolderName());
+		getDocView_AnalyticsExitingFolderName().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
+		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsNewFolderFinalizeBtn());
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().Displayed());
+		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
+		base.VerifySuccessMessage("Records saved successfully");
+
+		base.passedStep("Selected folder is applied to the selected documents successfully");
+		
+		driver.scrollPageToTop();
+		base.waitForElement(getManageTab());
+		getManageTab().waitAndClick(10);
+
+		base.waitForElement(getManageTagsAndFolderTab());
+		getManageTagsAndFolderTab().waitAndClick(10);
+
+		base.waitForElement(getManageFolderBtn());
+		getManageFolderBtn().waitAndClick(10);
+	}
+
+	/**
+	 * @Author Vijaya.Rani Created on 31/1/2022
+	 * @Description To perform Folder MiniDocList For Reviewer 
+	 *              
+	 */
+	public void performFloderMiniDocListForReviewer() throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 2; i++) {
+
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(10);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Mini_ActionButton().Displayed();
+			}
+		}), Input.wait30);
+		getDocView_Mini_ActionButton().Click();
+
+		getDocView__ChildWindow_Mini_FolderAction().waitAndClick(10);
+
+
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
+		base.passedStep("Folder pop up is opened successfully");
+
+		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
+		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsExitingFolderName());
+		getDocView_AnalyticsExitingFolderName().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
+		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
+
+		base.waitForElement(getDocView_AnalyticsNewFolderFinalizeBtn());
+		softAssertion.assertTrue(getDocView_AnalyticsNewFolderFinalizeBtn().Displayed());
+		getDocView_AnalyticsNewFolderFinalizeBtn().waitAndClick(10);
+		base.VerifySuccessMessage("Records saved successfully");
+
+		base.passedStep("Selected folder is applied to the selected documents successfully");
+    }
 }
+
+
