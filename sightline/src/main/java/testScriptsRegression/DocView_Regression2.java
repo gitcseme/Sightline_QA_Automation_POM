@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -2281,6 +2282,90 @@ public class DocView_Regression2 {
 		}
 		
 	}
+	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-49971
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 37)
+	public void VerifyRectangleRedactionTagSelection() throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49971");
+		baseClass.stepInfo("Verify that when applies ‘Rectangle’ redaction for the first time then application should automatically select the ‘Default Redaction Tag’");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.rectangleRedactionTagSelect().Visible() && docViewRedact.rectangleRedactionTagSelect().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.rectangleRedactionTagSelect().waitAndFind(10);
+		Select redactionTag = new Select(docViewRedact.rectangleRedactionTagSelect().getWebElement());
+		String attribute = redactionTag.getFirstSelectedOption().getAttribute("text");
+		System.out.println(attribute);
+		if(attribute.equalsIgnoreCase("Default Redaction Tag")) {
+			baseClass.passedStep("The first selected redaction tag is Default Redaction Tag");
+		} else {
+			baseClass.failedStep("The first selected redaction tag is NOT Default Redaction Tag");
+		}
+		
+	
+	}
+	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-49973
+	 *
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 38)
+	public void VerifyMultiPageRedactionTagSelection() throws Exception {
+		baseClass = new BaseClass(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49973");
+		baseClass.stepInfo("Part of 7.1: Verify that when applies ‘Multi Page’ redaction for the first time then application should automatically select the ‘Default Redaction Tag’");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.clickingRedactionIcon();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.multiPageIcon().Visible() && docViewRedact.multiPageIcon().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.multiPageIcon().waitAndClick(10);
+		baseClass.stepInfo("The Multipage icon is clicked Menu is Visible");
+		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
+		actions.click().build().perform();
+		docViewRedact.multiPageInputTextbox().waitAndClick(5);
+		docViewRedact.multiPageInputTextbox().Clear();
+		docViewRedact.multiPageInputTextbox().SendKeys(Input.pageRange);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.multiPageRedactionTagSelect().Visible() && docViewRedact.multiPageRedactionTagSelect().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.multiPageRedactionTagSelect().waitAndFind(10);
+		Select redactionTag = new Select(docViewRedact.multiPageRedactionTagSelect().getWebElement());
+		String attribute = redactionTag.getFirstSelectedOption().getAttribute("text");
+		System.out.println(attribute);
+		if(attribute.equalsIgnoreCase("Default Redaction Tag")) {
+			baseClass.passedStep("The first selected redaction tag is Default Redaction Tag");
+		} else {
+			baseClass.failedStep("The first selected redaction tag is NOT Default Redaction Tag");
+		}
+		}
+		
 	
 	
 	
