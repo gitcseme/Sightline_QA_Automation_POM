@@ -9799,6 +9799,34 @@ public class SessionSearch {
 		}
 
 	}
+	public void ViewInDocListWithOutPureHit() throws InterruptedException {
+
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+	
+		System.out.println("Pure hit block already moved to action panel");
+		UtilityLog.info("Pure hit block already moved to action panel");
+		
+
+		getBulkActionButton().waitAndClick(5);
+		Thread.sleep(2000);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocListAction().Visible();
+			}
+		}), Input.wait60);
+
+		getDocListAction().waitAndClick(5);
+		if (getTallyContinue().isElementAvailable(5)) {
+			try {
+				getTallyContinue().waitAndClick(5);
+			} catch (Exception e) {
+			}
+		}
+		base.stepInfo("Navigated to doclist, to view docslist");
+		UtilityLog.info("Navigated to doclist, to view docslist");
+
+	}
 
 
 }
