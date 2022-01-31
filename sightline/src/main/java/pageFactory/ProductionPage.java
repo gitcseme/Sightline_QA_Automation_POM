@@ -2440,7 +2440,24 @@ public class ProductionPage {
 	public Element getAdvancedLSTToggle() {
 		return driver.FindElementByXPath("//label/input[@id='chkTIFFProduceLoadFile']/following-sibling::i");
 	}
-	
+	public Element getDatDateFormate() {
+		return driver.FindElementByXPath("//select[@id='lstDateFormat']");
+	}
+	public Element getlstSortByKeepDocsWithNoMasterDate() {
+		return driver.FindElementByXPath("//select[@id='lstSortByKeepDocsWithNoMasterDate']");
+	}
+	public Element getviewProductionNextbtn() {
+		return driver.FindElementByXPath("//div[@id='viewProduction']//a[text()='Next']");
+	}
+	public Element getviewProductionBackbtn() {
+		return driver.FindElementByXPath("//div[@id='viewProduction']//a[text()='Back']");
+	}
+	public Element chkIsDATSelected() {
+		return driver.FindElementByXPath("//input[@id='chkIsDATSelected']");
+	}
+	public Element templateCloseBtn(String temp) {
+		return driver.FindElementByXPath("//span[text()='"+temp+"']/..//button[@class='ui-dialog-titlebar-close']");
+	}
 
 
 
@@ -16477,5 +16494,48 @@ public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
 		getSaveOption().waitAndClick(10);
 		base.VerifySuccessMessage("Information Saved Successfully");
 		base.CloseSuccessMsgpopup();
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param element
+	 * @param n
+	 */
+	public void clickElementNthtime(Element element,int n) {
+		for(int i=0;i<n;i++) {
+			element.waitAndClick(10);
+			driver.waitForPageToBeReady();
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param element
+	 */
+	public void getElementDisplayCheck(Element element) {
+		boolean flag= element.isElementAvailable(10);
+		if(flag) {
+			softAssertion.assertTrue(flag);
+			base.passedStep("Element is Visible"+element);
+			System.out.println("Element is visible");
+		}else {
+			softAssertion.assertFalse(flag);
+			base.failedStep("Element is not Visible"+element);
+			System.out.println("Element is not visible");
+		}
+	}
+	/**
+	 * @author Aathith
+	 * @Description : CheckBox Checked verification
+	 */
+	public void getCheckBoxCheckedVerification(Element element) {
+		String value = element.GetAttribute("checked");
+		System.out.println("value :"+value);
+		if(value.equals("true")) {
+			softAssertion.assertTrue(true);
+			base.passedStep(element+"element is checked");
+			System.out.println("element is Checked");
+		}else {
+			base.failedStep(element+"element is not checked");
+			System.out.println("element is not Checked");
+		}
 	}
 }
