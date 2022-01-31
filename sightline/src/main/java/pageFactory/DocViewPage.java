@@ -1489,6 +1489,14 @@ public class DocViewPage {
 
 	// Added by Mohan
 	
+	public Element getDocView_Production_Image() {
+		return driver.FindElementByXPath("//*[@id='divViewerProductions']");
+	}
+	
+	public Element getDocView_Production_Navigation() {
+		return driver.FindElementByXPath("//*[@id='divViewerProductions']//i[@class='fa fa-angle-right']");
+	}
+	
 	public Element getDocView_MetaData_FolderName(String folderName) {
 		return driver.FindElementByXPath("//*[@id='documentFolderJSTree']//a[text()='"+folderName+"']");
 	}
