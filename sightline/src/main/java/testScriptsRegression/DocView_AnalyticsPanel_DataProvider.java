@@ -661,9 +661,9 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : To verify user can select Multiple documents in Family Members->Analytic Panel 
 	 * from dockout screens and Select Action as 'Code Same as'.'RPMXCON-51126' Sprint : 6
 	 * @throws Exception 
-	 *  @Stabilization - done [Coding form is not proper]
+	 *  @Stabilization - done 
 	 */
-	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
 	public void verifyCodeSameAsActionInAnalyticsFamilyMemberTabAndSaveCodingForm(String fullName, String userName, String password) throws Exception {
 		
 		loginPage = new LoginPage(driver);
@@ -723,9 +723,9 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description :Verify check mark icon should be displayed when coding stamp 
 	 * applied after selecting 'Code same as this' action' from Analytics Panel > Family Member'RPMXCON-51060' Sprint : 6
 	 * @throws InterruptedException 
-	 *  @Stabilization - done [coding form]
+	 *  @Stabilization - done 
 	 */
-	//@Test(enabled = true,  groups = { "regression" }, priority = 11)
+	@Test(enabled = true,  groups = { "regression" }, priority = 11)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForFamilyMember() throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -743,8 +743,8 @@ public class DocView_AnalyticsPanel_DataProvider {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String colour = "BLUE";
 		String colourName = "colourName" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.familyDocument;
-		String revDocToBeSelected= Input.threadDocId;
+		String documentToBeSelected = Input.threadDocId;
+		String revDocToBeSelected= Input.familyDocument;
 
 		// Login as a Admin
 		loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
@@ -820,7 +820,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description :Verify check mark icon should be displayed when coding stamp 
 	 * applied after selecting 'Code same as this' action' from Analytics Panel > Near Dupe'RPMXCON-51061' Sprint : 6
 	 * @throws InterruptedException
-	 * @Stabilization - done  [coding form]
+	 * @Stabilization - not done   [Docs need to be ingested]
 	 */
 	//@Test(enabled = true,  groups = { "regression" }, priority = 12)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForNearDupe() throws InterruptedException {
@@ -1071,6 +1071,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @TestCase Id:51438 Verify that after impersonation if the document native/PDF/TIFF/Text is being presented, the N/P/T/X icon with the accompanying mouse over tool tip must appear
 	 * @Description :To Verify that after impersonation if the document native/PDF/TIFF/Text is being presented, the N/P/T/X icon with the accompanying mouse over tool tip must appear.
 	 * @throws InterruptedException
+	 * stabilization - not done
 	 */
 	//@Test(enabled = true,dataProvider="multiUserCredentials", groups = { "regression" }, priority = 15)
 	public void verifyDocIdIconOnDocViewPanal(String fullName,String userName,String password,String fromRole,String toRole) throws InterruptedException {
