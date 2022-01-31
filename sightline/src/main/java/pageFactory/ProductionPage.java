@@ -2422,21 +2422,27 @@ public class ProductionPage {
 	public Element getCenterHeaderInsertMetadataField() {
 		return driver.FindElementByXPath("//div[@id='divCenterHeaderBranding']//a[@id='Launcheditor_0']");
 	}
-	
+
 	public Element getNotificationLink() {
-		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']/following-sibling::b");}
-	
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']/following-sibling::b");
+	}
+
 	public Element getSelectTheExportedProduction() {
-		return driver.FindElementByXPath("//div[@id='bgTask']//ul//li//a");}
-	
+		return driver.FindElementByXPath("//div[@id='bgTask']//ul//li//a");
+	}
+
 	public Element getDownloadLinkforExport() {
-		return driver.FindElementByXPath("//td[text()='COMPLETED']/following-sibling::td//a[text()='Download File']");}
-	
+		return driver.FindElementByXPath("//td[text()='COMPLETED']/following-sibling::td//a[text()='Download File']");
+	}
+
 	public Element getViewAll() {
-		return driver.FindElementById("btnViewAll");}
-	
+		return driver.FindElementById("btnViewAll");
+	}
+
 	public Element getSaveOption() {
-		return driver.FindElementByXPath("//a[text()='Save']");}
+		return driver.FindElementByXPath("//a[text()='Save']");
+	}
+
 	public Element getAdvancedLSTToggle() {
 		return driver.FindElementByXPath("//label/input[@id='chkTIFFProduceLoadFile']/following-sibling::i");
 	}
@@ -2444,28 +2450,30 @@ public class ProductionPage {
 	public Element getDatDateFormate() {
 		return driver.FindElementByXPath("//select[@id='lstDateFormat']");
 	}
+
 	public Element getlstSortByKeepDocsWithNoMasterDate() {
 		return driver.FindElementByXPath("//select[@id='lstSortByKeepDocsWithNoMasterDate']");
 	}
+
 	public Element getviewProductionNextbtn() {
 		return driver.FindElementByXPath("//div[@id='viewProduction']//a[text()='Next']");
 	}
+
 	public Element getviewProductionBackbtn() {
 		return driver.FindElementByXPath("//div[@id='viewProduction']//a[text()='Back']");
 	}
+
 	public Element chkIsDATSelected() {
 		return driver.FindElementByXPath("//input[@id='chkIsDATSelected']");
 	}
+
 	public Element templateCloseBtn(String temp) {
-		return driver.FindElementByXPath("//span[text()='"+temp+"']/..//button[@class='ui-dialog-titlebar-close']");
+		return driver.FindElementByXPath("//span[text()='" + temp + "']/..//button[@class='ui-dialog-titlebar-close']");
 	}
-
-
 
 	public Element CancelBtn() {
 		return driver.FindElementById("bot2-Msg1");
 	}
-
 
 	public Element getSplitSubFolderToggle() {
 		return driver.FindElementByXPath("//label[text()='Split Sub Folders:']/..//i");
@@ -4657,7 +4665,7 @@ public class ProductionPage {
 			gettextRedactionPlaceHolder().waitAndClick(10);
 
 			gettextRedactionPlaceHolder().SendKeys(searchString4);
-			
+
 			base.stepInfo("Enabled burn redaction with selecting redaction tag");
 
 		} catch (Exception e) {
@@ -10507,7 +10515,7 @@ public class ProductionPage {
 			base.waitForElement(getAllRedactionsAnnotaionLayer());
 			driver.waitForPageToBeReady();
 			getAllRedactionsAnnotaionLayer().Click();
-			
+
 			base.stepInfo("Tiff section is enabled with burn redaction with default annatation layer");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -16359,70 +16367,69 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 	}
 
+	/**
+	 * @author Aathith
+	 * @description : Method for filling pdf section with default annatation layer.
+	 */
+	public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
 
-		
-/**
-* @author Aathith
-* @description : Method for filling pdf section with default annatation layer.
-*/
-public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
-	try {
-		base.waitForElement(getTIFFChkBox());
-		getTIFFChkBox().Click();
-		driver.scrollingToBottomofAPage();
-		base.waitForElement(getTIFFTab());
-		getTIFFTab().Click();
+			base.waitForElement(getPDFGenerateRadioButton());
+			base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+			getPDFGenerateRadioButton().waitAndClick(10);
 
-		base.waitForElement(getPDFGenerateRadioButton());
-		base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
-		getPDFGenerateRadioButton().waitAndClick(10);
-
-		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
 
 // disabling enable for priviledged docs
 
-		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
-		getTIFF_EnableforPrivilegedDocs().Enabled();
-		getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
 
-		getClk_burnReductiontoggle().ScrollTo();
+			getClk_burnReductiontoggle().ScrollTo();
 
 // enable burn redaction
-		base.waitForElement(getClk_burnReductiontoggle());
-		getClk_burnReductiontoggle().Click();
-		driver.waitForPageToBeReady();
-		base.waitForElement(getAllRedactionsAnnotaionLayer());
-		driver.waitForPageToBeReady();
-		getAllRedactionsAnnotaionLayer().Click();
-		base.stepInfo("filled pdf section with default annatation layer.");
-	} catch (Exception e) {
-		e.printStackTrace();
-		base.failedStep("Exception occcured while filling pdf section with default annatation layer." + e.getMessage());
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getAllRedactionsAnnotaionLayer());
+			driver.waitForPageToBeReady();
+			getAllRedactionsAnnotaionLayer().Click();
+			base.stepInfo("filled pdf section with default annatation layer.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while filling pdf section with default annatation layer." + e.getMessage());
+		}
 	}
-}
-
 
 	/**
 	 * @author Aathith.Senthilkumar
-	 * @description In branding center choose batesnumber and left confidential text passed for both pdf or tiff 
+	 * @description In branding center choose batesnumber and left confidential text
+	 *              passed for both pdf or tiff
 	 */
-	public void getTiffPdfBranding(String tagname,String ObjectName) {
-		String component ="pdf";
+	public void getTiffPdfBranding(String tagname, String ObjectName) {
+		String component = "pdf";
 		base.waitForElement(getTIFFChkBox());
 		getTIFFChkBox().waitAndClick(5);
 
 		base.waitForElement(getTIFFTab());
 		getTIFFTab().waitAndClick(5);
-		if(component.equalsIgnoreCase(ObjectName)){
+		if (component.equalsIgnoreCase(ObjectName)) {
 			softAssertion.assertEquals(component, ObjectName);
 			base.waitForElement(getPDFGenerateRadioButton());
 			base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
 			getPDFGenerateRadioButton().waitAndClick(10);
 			base.stepInfo("pdf selected");
 		}
-		
-		//center branding with batenumber
+
+		// center branding with batenumber
 		getTIFF_CenterHeaderBranding().waitAndClick(10);
 		base.waitForElement(getCenterHeaderInsertMetadataField());
 		getCenterHeaderInsertMetadataField().waitAndClick(5);
@@ -16431,10 +16438,10 @@ public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
 		getTIFF_selectedMetadataField().selectFromDropdown().selectByVisibleText("BatesNumber");
 		base.waitForElement(getPopUpOkButtonInserMetaData());
 		getPopUpOkButtonInserMetaData().waitAndClick(5);
-		
+
 		getLeftHeaderBranding().waitAndClick(10);
 		getEnterBranding(1).SendKeys("Confidentiality");
-		
+
 		getTIFF_EnableforPrivilegedDocs().ScrollTo();
 
 		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
@@ -16453,7 +16460,7 @@ public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
 		getPriveldge_TagTree_SelectButton().waitAndClick(10);
 
 		driver.waitForPageToBeReady();
-		
+
 		base.waitForElement(getPriveldge_TextArea());
 		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
 		getPriveldge_TextArea().SendKeys(tagNameTechnical);
@@ -16461,22 +16468,24 @@ public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
 		driver.scrollingToBottomofAPage();
 		base.stepInfo("TIFF section is filled with Branding in bitesnumber and confidencial");
 	}
+
 	/**
 	 * @author Brundha
-	 * @Description  : Method to verify volume included toggle is on by default
+	 * @Description : Method to verify volume included toggle is on by default
 	 */
-	public void verifyExportedCSVFile(){
-		
+	public void verifyExportedCSVFile() {
+
 		driver.waitForPageToBeReady();
-		String ExpectedText=getSelectTheExportedProduction().getText();
-		String Actualtext="Your export production bates range is ready please click here to download";
-		
-		base.textCompareEquals(Actualtext, ExpectedText, "Notification is Displayed as Expected", "Notification is not  Displayed as Expected");
+		String ExpectedText = getSelectTheExportedProduction().getText();
+		String Actualtext = "Your export production bates range is ready please click here to download";
+
+		base.textCompareEquals(Actualtext, ExpectedText, "Notification is Displayed as Expected",
+				"Notification is not  Displayed as Expected");
 		getSelectTheExportedProduction().waitAndClick(5);
 		base.passedStep("Verified that user can download the CSV file once Production-Generate-Export is completed");
-		
-		
+
 	}
+
 	/**
 	 * @author Brundha
 	 * @Description : Method for filling advanced toggle in tiff/pdf section
@@ -16494,7 +16503,6 @@ public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
 		base.textCompareEquals(ActualColor, ExpectedColor, "Generate LST file Toggle is enabled  by Default",
 				"Generate LST file Toggle is not  enabled  by Default");
 
-
 		base.waitForElement(getLoadFileTypeInTIFF());
 		getLoadFileTypeInTIFF().Click();
 		base.waitForElement(getOPTInLoadFileType());
@@ -16504,51 +16512,54 @@ public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
 		base.VerifySuccessMessage("Information Saved Successfully");
 		base.CloseSuccessMsgpopup();
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param element
 	 * @param n
 	 */
-	public void clickElementNthtime(Element element,int n) {
-		for(int i=0;i<n;i++) {
+	public void clickElementNthtime(Element element, int n) {
+		for (int i = 0; i < n; i++) {
 			element.waitAndClick(10);
 			driver.waitForPageToBeReady();
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param element
 	 */
 	public void getElementDisplayCheck(Element element) {
-		boolean flag= element.isElementAvailable(10);
-		if(flag) {
+		boolean flag = element.isElementAvailable(10);
+		if (flag) {
 			softAssertion.assertTrue(flag);
-			base.passedStep("Element is Visible"+element);
+			base.passedStep("Element is Visible" + element);
 			System.out.println("Element is visible");
-		}else {
+		} else {
 			softAssertion.assertFalse(flag);
-			base.failedStep("Element is not Visible"+element);
+			base.failedStep("Element is not Visible" + element);
 			System.out.println("Element is not visible");
 		}
 	}
+
 	/**
 	 * @author Aathith
 	 * @Description : CheckBox Checked verification
 	 */
 	public void getCheckBoxCheckedVerification(Element element) {
 		String value = element.GetAttribute("checked");
-		System.out.println("value :"+value);
-		if(value.equals("true")) {
+		System.out.println("value :" + value);
+		if (value.equals("true")) {
 			softAssertion.assertTrue(true);
-			base.passedStep(element+"element is checked");
+			base.passedStep(element + "element is checked");
 			System.out.println("element is Checked");
-		}else {
-			base.failedStep(element+"element is not checked");
+		} else {
+			base.failedStep(element + "element is not checked");
 			System.out.println("element is not Checked");
 		}
 	}
-	
-/**
+
+	/**
 	 * @Author Brundha Description:Method to verify blank page removal toggle
 	 *         message
 	 * 
@@ -16573,17 +16584,21 @@ public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
 				"" + ExpectedText + "Message not displayed as expected");
 
 		base.waitForElement(getContinueBtn());
-		if (getContinueBtn().isDisplayed()) {base.passedStep("Continue button is displayed as Expected");}
-		 else {base.failedStep("Continue button is not displayed as Expected");}
+		if (getContinueBtn().isDisplayed()) {
+			base.passedStep("Continue button is displayed as Expected");
+		} else {
+			base.failedStep("Continue button is not displayed as Expected");
+		}
 		if (CancelBtn().isDisplayed()) {
-			base.passedStep("Cancel button is displayed as Expected");}
-		 else {base.failedStep("Cancel button is not displayed as Expected");}
+			base.passedStep("Cancel button is displayed as Expected");
+		} else {
+			base.failedStep("Cancel button is not displayed as Expected");
+		}
 
 	}
 
 	/**
-	 * @Author Brundha
-	 *  Description:Method to verify split sub folder toggle  
+	 * @Author Brundha Description:Method to verify split sub folder toggle
 	 * 
 	 */
 	public void verifySubFolderToggle() {
@@ -16603,4 +16618,29 @@ public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @param RedactionTag
+	 * @param redactionText
+	 */
+	public void specifyRedactionTextAreaInBurnRedact(String RedactionTag, String redactionText) {
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(redactionTagInBurnRedactionCheckBox(RedactionTag));
+		driver.waitForPageToBeReady();
+		redactionTagInBurnRedactionCheckBox(RedactionTag).waitAndClick(10);
+		base.stepInfo("Selected Redaction Tag is : " + RedactionTag);
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().waitAndClick(10);
+
+		base.waitForElement(gettextRedactionPlaceHolder());
+		gettextRedactionPlaceHolder().waitAndClick(10);
+		gettextRedactionPlaceHolder().SendKeys(redactionText);
+		base.stepInfo("Reaction Text : " + redactionText);
+	}
 }
