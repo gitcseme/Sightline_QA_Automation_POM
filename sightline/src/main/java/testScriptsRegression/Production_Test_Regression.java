@@ -3580,6 +3580,128 @@ public class Production_Test_Regression {
 				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 				//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-47987
+				 * @Description: To Verify The format of the date produced in the Production DAT should honor the date format configured in DAT section
+				 */
+				@Test(groups = { "regression" }, priority = 60)
+				public void verifyDatWithDeffDateFormate() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-47987 -Production Sprint 11");
+				base.stepInfo("To Verify The format of the date produced in the Production DAT should honor the date format configured in DAT section");
+				String testData1 = Input.testData1;
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+
+				//Verify archive status on Grid view
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.getDatDateFormate().selectFromDropdown().selectByVisibleText("DD/MM/YYYY");
+				base.stepInfo("DAT section selected with different date format");
+				page.fillingTIFFSection(tagname);
+				page.navigateToNextSection();
+				page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+				
+				base.passedStep("Verified The format of the date produced in the Production DAT should honor the date format configured in DAT section");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-47846
+				 * @Description: To Verify the View of the already created Template with existing Project and Production Set
+				 */
+				@Test(groups = { "regression" }, priority =61)
+				public void verifyTemplateforexitingProductionSet() throws Exception{
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-47846 Production- Sprint 11");
+				base.stepInfo("To Verify the View of the already created Template with existing Project and Production Set");
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				//tagname = "Tag" + Utility.dynamicNameAppender();
+				TempName = "templateName" + Utility.dynamicNameAppender();
+				
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				//sessionSearch.bulkTagExisting(tagname);
+
+				//Verify archive status on Grid view
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.navigateToNextSection();
+				page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+
+				page.addProductionFilter();
+				page.getprod_ActionButton_Reusable(productionname).Click();
+				driver.waitForPageToBeReady();
+				page.getprod_Action_SaveTemplate_Reusable(productionname).Click();
+				
+				page.saveTemple(TempName);
+				page.getManageTemplates().waitAndClick(10);
+				base.CloseSuccessMsgpopup();
+				driver.scrollingToBottomofAPage();
+				page.getNextBtn().waitAndClick(10);
+				driver.scrollingToBottomofAPage();
+				page.getElementDisplayCheck(page.getViewBtn(TempName));
+				page.getElementDisplayCheck(page.getDeleteBtn(TempName));
+				page.getViewBtn(TempName).waitAndClick(10);
+				
+				page.visibleCheck(TempName);
+				page.visibleCheck("Priv Guard");
+				page.visibleCheck("Production Components");
+				page.visibleCheck("Numbering & Sorting");
+				page.clickElementNthtime(page.getviewProductionNextbtn(), 2);
+				base.stepInfo("Next button working proberly");
+				page.clickElementNthtime(page.getviewProductionBackbtn(), 2);
+				base.stepInfo("Back button working proberly");
+				page.getviewProductionNextbtn().waitAndClick(10);
+				page.getCheckBoxCheckedVerification(page.chkIsDATSelected());
+				base.stepInfo("Dat is selected by default");
+				page.getElementDisplayCheck(page.closeButtonInTemplate());
+				base.stepInfo("close button is displayed");
+				driver.waitForPageToBeReady();
+				page.templateCloseBtn(TempName).waitAndClick(10);
+				base.passedStep("To Verify the View of the already created Template with existing Project and Production Set");
+				
+				base.stepInfo("Deleting the tags and folders after the production gets completed");
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				}
+				
 				
 	
 	@AfterMethod(alwaysRun = true)
