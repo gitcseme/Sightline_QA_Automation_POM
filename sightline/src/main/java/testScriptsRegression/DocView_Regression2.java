@@ -2231,6 +2231,57 @@ public class DocView_Regression2 {
 		
 	}
 	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51461
+	 * Description :Verify that a  DocView functionality is working properly through assignments. like   - All Panels Verifications with child window / Complete
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 36)
+	public void verifyDocviewFunctionalityThroughAssignments() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		assignPage = new AssignmentsPage(driver);
+		
+		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+	    
+		//Pre-requisite
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51461");
+		baseClass.stepInfo("Verify that a  DocView functionality is working properly through assignments");
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssignExisting(assignmentName);
+		assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		assignPage.addReviewerAndDistributeDocs();
+		baseClass.waitForElement(assignPage.getAssignmentSaveButton());
+		assignPage.getAssignmentSaveButton().Click();
+		loginPage.logout();
+		//Login as reviewer and verify
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logined as Reviewer");
+		assignPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.waitForPageToBeReady();
+		docView.popOutCodingFormPanel();
+		docView.editCodingFormComplete();
+		docView.verifyCheckMarkIconFromMiniDocListChildWindow();
+		int checkMarkIconCount = docView.getCheckMarkIcon().size();
+		baseClass.waitForElement(docView.getDocView_Last());
+		docView.getDocView_Last().Click();
+		driver.waitForPageToBeReady();
+		docView.verifyCodingFormPanelIsLoadedAfterDocsAreViewed();
+		docView.editCodingFormComplete();
+		baseClass.waitForElementCollection(docView.getCheckMarkIcon());
+		int checkMarkIconsAfterEditingCF = docView.getCheckMarkIcon().size();
+		if(checkMarkIconsAfterEditingCF>checkMarkIconCount) {
+			baseClass.passedStep("Check mark icon displayed for completed document");
+		}
+		
+	}
+	
 	
 	
 	@AfterMethod(alwaysRun = true)
