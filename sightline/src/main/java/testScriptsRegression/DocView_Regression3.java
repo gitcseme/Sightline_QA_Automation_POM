@@ -1941,6 +1941,101 @@ public class DocView_Regression3 {
 
 	}
 	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA
+	 * @TestCase id: 51053 - Verify RMU/Reviewer can not see the annotations of document on doc view page in different security group when different annotation layer is mapped to different security groups.
+	 * @Descrption : Verify RMU/Reviewer can not see the annotations of document on doc view page in different security group when different annotation layer is mapped to different security groups
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
+	public void verifyAnnatationAcrossDifferentSecurityGroupSecurityGroups() throws Exception {
+		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		String AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
+		namesg2 = Input.randomText + Utility.dynamicNameAppender();
+		namesg3 = Input.randomText + Utility.dynamicNameAppender();
+		docExp = new DocExplorerPage(driver);
+		baseClass = new BaseClass(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51053 of Sprint 11");
+		utility = new Utility(driver);
+		loginPage = new LoginPage(driver);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa2userName);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		baseClass.stepInfo(
+				"#####  Verify RMU/Reviewer can not see the annotations of document on doc view page in different security group when different annotation layer is mapped to different security groups ######");
+
+		// Creating annotation layer and assigning to newly created SGs
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew1);
+		
+		// creating two new security groups and adding annotation layer
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.AddSecurityGroup(namesg2);
+		securityGroupsPage.AddSecurityGroup(namesg3);
+
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+		securityGroupsPage.selectSecurityGroup(namesg3);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew1);
+		baseClass.CloseSuccessMsgpopup();
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+		baseClass.CloseSuccessMsgpopup();
+		securityGroupsPage.selectSecurityGroup(namesg3);
+		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+		baseClass.CloseSuccessMsgpopup();
+
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkRelease(namesg2);
+		sessionsearch.bulkRelease(namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu1userName);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Perform Redaction in SG1
+		docViewRedact.selectsecuritygroup(namesg2);
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("Perfrom non audio annotation");
+		docView.performNonAudioAnnotation();
+		driver.Navigate().refresh();
+		baseClass.stepInfo("Verify annotation layer is added");
+		docView.verifyAddedAnnotationToDocument(1);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		docViewRedact.selectsecuritygroup(namesg3);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		
+		baseClass.stepInfo("Verify annotation layer is not present");
+		docView.verifyAddedAnnotationToDocument(0);
+		
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
+
+		AnnotationLayer annotation = new AnnotationLayer(driver);
+		annotation.deleteAnnotationByPagination(AnnotationLayerNew);
+		annotation.deleteAnnotationByPagination(AnnotationLayerNew1);
+		loginPage.logout();
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	public void close() throws ParseException, InterruptedException, IOException {

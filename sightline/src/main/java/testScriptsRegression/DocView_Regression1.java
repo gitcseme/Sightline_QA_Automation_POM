@@ -4977,6 +4977,188 @@ public class DocView_Regression1 {
 				keywordPage.deleteKeywordByName(keywordName2);
 				loginPage.logout();
 			}
+			
+			/**
+			 * @author Gopinath
+			 * TestCase Id:51063 Verify keyword highlighting from doc view in context of assignments having same assigned documents and keyword group.
+			 * Description: Verify keyword highlighting from doc view in context of assignments having same assigned documents and keyword group.
+			 * @throws AWTException,InterruptedException
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 70)
+			public void verifyKeywordHighlightByDifferentAssignments() throws AWTException, InterruptedException {
+				String AssignName1 = Input.randomText + Utility.dynamicNameAppender();
+				String AssignName2 = Input.randomText + Utility.dynamicNameAppender();
+				String keywordName1="key"+Utility.dynamicNameAppender();
+				String keyword = "es";
+				String colour2 = Input.KeyWordColour;//blue
+				String rgbCode2 = "rgb(0, 0, 255)";
+				String HaxCode2 = "#0000ff";
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51063 sprint 11");
+				baseClass.stepInfo("#### Verify keyword highlighting from doc view in context of assignments having same assigned documents and keyword group. ####");
+
+				docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+
+				AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+
+				KeywordPage keywordPage = new KeywordPage(driver);
+
+				baseClass.stepInfo("Navigate to keyword page");
+				keywordPage.navigateToKeywordPage();
+
+				baseClass.stepInfo("Add keyword one");
+				keywordPage.addKeyword(keywordName1,keyword, colour2);
+				
+				baseClass.stepInfo(" Basic content search for");
+				session.basicContentSearch(Input.MiniDocId);
+
+				baseClass.stepInfo("Create bulk assign with new assignment one with persistant hit.");
+				session.bulkAssignWithNewAssignmentWithPersistantHit(AssignName1, Input.codingFormName);
+				
+				baseClass.stepInfo("unmapping all keywords from first assignment");
+				assignmentPage.unmappingKeywordsFromAssignment(AssignName1);
+				
+				baseClass.stepInfo("aading keyword to first assignment");
+				assignmentPage.addKeywordToAssignment(keywordName1);
+				
+				baseClass.stepInfo("Select assignment to view in Doc view");
+				assignmentPage.selectAssignmentToViewinDocview(AssignName1);
+				
+				baseClass.stepInfo("Verify expected document is displayed in mini doc list.");
+				docView.verifyExpectedDocumentIsDisplayedInMiniDocList(Input.MiniDocId);
+				
+				baseClass.stepInfo("verify highlight keyword in document for first assignment");
+				docView.verifyKeywordHighlightedOnDocViewwithKeywordColour(rgbCode2, HaxCode2);
+				
+				baseClass.stepInfo("Navigate to session search");
+				session.navigateToSessionSearchPageURL();
+				
+				baseClass.stepInfo(" Basic content search for");
+				session.basicContentSearch(Input.MiniDocId);
+
+				baseClass.stepInfo("Create bulk assign with new assignment two with persistant hit.");
+				session.bulkAssignWithNewAssignmentWithPersistantHit(AssignName2, Input.codingFormName);
+
+				baseClass.stepInfo("unmapping all keywords from first assignment");
+				assignmentPage.unmappingKeywordsFromAssignment(AssignName2);
+
+				baseClass.stepInfo("Scroll to top of page");
+				driver.scrollPageToTop();
+				
+				baseClass.stepInfo("Click on save button");
+				driver.waitForPageToBeReady();
+				assignmentPage.getSaveBtn().Click();
+				
+				baseClass.stepInfo("Reviews adding and distributing to Reviewer");
+				assignmentPage.assignmentDistributingToReviewer();
+				
+				baseClass.stepInfo("Select assignment to view in Doc view");
+				assignmentPage.selectAssignmentToViewinDocview(AssignName2);
+				
+				baseClass.stepInfo("Verify expected document is displayed in mini doc list.");
+				docView.verifyExpectedDocumentIsDisplayedInMiniDocList(Input.MiniDocId);
+				
+				baseClass.stepInfo("Verify keyword not highlighted on doc view.");
+				docView.verifyKeywordIsNotHighlightedOnDocView(rgbCode2, HaxCode2);
+				
+				loginPage.logout();
+				baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+				// Login As Reviewer
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+				// selecting the assignment
+				assignmentPage.SelectAssignmentByReviewer(AssignName2);
+				
+				baseClass.stepInfo("Verify expected document is displayed in mini doc list.");
+				docView.verifyExpectedDocumentIsDisplayedInMiniDocList(Input.MiniDocId);
+
+				baseClass.stepInfo("Verify keyword not highlighted on doc view.");
+				docView.verifyKeywordIsNotHighlightedOnDocView(rgbCode2, HaxCode2);
+
+				loginPage.logout();
+
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+				baseClass.stepInfo("Navigate To Assignments Page");
+				assignmentPage.navigateToAssignmentsPage();
+
+				baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+				assignmentPage.deleteAssignment(AssignName1);
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+				assignmentPage.deleteAssignment(AssignName2);
+
+				baseClass.stepInfo("Navigate to keyword page");
+				keywordPage.navigateToKeywordPage();
+
+				baseClass.stepInfo("Delete keyword");
+				keywordPage.deleteKeywordByName(keywordName1);
+			}
+			
+			
+			/**
+			 * @author Gopinath
+			 * @testCase Id:51541 Verify that same user with two different tabs in the same browser, and confirm that able to add reviewer remark to the same records successfully, and confirm the XML nodes are all properly reflected in the XML
+			 * @description To Verify that same user with two different tabs in the same browser, and confirm that able to add reviewer remark to the same records successfully, and confirm the XML nodes are all properly reflected in the XML
+			 * @throws InterruptedException
+			 * @throws AWTException 
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 71)
+			public void verifyRemarkOnDifferentTabsOnSameBrowser() throws InterruptedException, AWTException {
+				String remark="testone";
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51541 sprint 11");
+				baseClass.stepInfo("###Verify that same user with two different tabs in the same browser, and confirm that able to add reviewer remark to the same records successfully, and confirm the XML nodes are all properly reflected in the XML###");
+				DocViewPage docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.MiniDocId);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				String currentUrl = driver.getUrl();
+				
+				DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
+				
+				baseClass.stepInfo("Opening second tab");
+				docVIewMetaData.openDuplicateTabOfAlreadyOpenedTab();
+				
+				baseClass.stepInfo("Switching to second tab");
+				String parentWindowHandle = reusableDocView.switchTochildWindow();
+				String childWindowHandle = driver.getWebDriver().getWindowHandle();
+				
+				baseClass.stepInfo("Getting : "+currentUrl+" url in second tab");
+				driver.getWebDriver().get(currentUrl);
+				
+				baseClass.stepInfo("Adding remark to document");
+				docView.addRemarkToNonAudioDocument(56,134,remark);
+				
+				baseClass.stepInfo("Switchimg to first window");
+				driver.switchTo().window(parentWindowHandle);
+				
+				baseClass.stepInfo("Verify Disable Remark Warning Message");
+				docView.verifyDisableRemarkWarningMessage();
+				
+				baseClass.stepInfo("Select Doc To View In DocView Panal");
+				docView.selectDocToViewInDocViewPanal(Input.MiniDocId);
+				
+				baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
+				docView.verifyRemarkIsAdded(remark);
+				
+				baseClass.stepInfo("Switch to parent window from child window");
+				reusableDocView.childWindowToParentWindowSwitching(childWindowHandle);
+				
+				baseClass.stepInfo("verify visibility of added remark after reload the document in second tab");
+				docView.verifyRemarkIsAdded(remark);	
+			}
+			
 			 
 		
 	     @AfterMethod(alwaysRun = true)
