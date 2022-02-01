@@ -267,7 +267,7 @@ public class DocView_Sprint2_Regression {
 	 *         document list using search input and view in DocView print document
 	 *         and verify bullhorn notification & background tasks
 	 */
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
 
 	public void verifyBullhornNotifications() throws Exception {
 // Selecting Document from Session search
@@ -426,7 +426,7 @@ public class DocView_Sprint2_Regression {
 	 * as RMU use search term to get a pdf document and print
 	 */
 
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
 	public void printRedactedPdfasReviewer() throws Exception {
 
 // Selecting Document from Session search	
@@ -684,7 +684,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void verifyToolTipMouseOverCodeSameAsLast() throws Exception {
 		String assignmentName = "assignmentA1" + Utility.dynamicNameAppender();
 		int pureHitCount = 201;
@@ -1056,7 +1056,7 @@ public class DocView_Sprint2_Regression {
 	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 53421
 	 * Verifying keyword is redacted Batch Redactions - sprint 3
 	 */
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 24)
 	public void verifyKeywordHighlitingAfterBatchRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53421");
@@ -1085,7 +1085,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying while navigating from mini doclist child window, persistent hit
 	 * panel stays open DocView-Sprint 4
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 25)
+	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 25)
 	public void verifyingPersistenthitAudioPanel() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52190");
@@ -1150,7 +1150,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying text remarks can not be added when no text is present in existing
 	 * rectangular redaction DocView- sprint 4
 	 */
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 27)
 	public void textRemarksWithoutTextInRectangleRedaction() throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
@@ -1344,7 +1344,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 32)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 32)
 	public void verifyArrowsRedirdctedToDocViewFromBasicSearch() throws Exception {
 
 		baseClass = new BaseClass(driver);
@@ -1457,7 +1457,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
 	public void verifyWithOutAddingRemarkShouldNotSave() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51625");
@@ -1519,7 +1519,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-//	@Test(enabled = true, groups = { "regression" }, priority = 35)
+    @Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void verifyCountShouldBeUpdatedDocumentIsMarkedIsUncompleted() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51031");
 		baseClass
@@ -4036,14 +4036,14 @@ public class DocView_Sprint2_Regression {
 	}
 
 	/**
-	 * Author : Vijaya.Rani date: 26/01/22 NA Modified date: NA Modified by:NA
+	 * Author : Vijaya.Rani date: 31/01/22 NA Modified date: NA Modified by:NA
 	 * Description :Verify after impersonation user can load the produced document
 	 * by clicking the drop down selection.'RPMXCON-51271' Sprint: 11
 	 * 
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	@Test(enabled = true, groups = { "regression" }, priority = 64)
 	public void verifyAfterImpersonationProducedDocsByDropDownSelection() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51271");
@@ -4106,6 +4106,7 @@ public class DocView_Sprint2_Regression {
 		docView.clickOnImageTab();
 		driver.waitForPageToBeReady();
 		docView.verifyProductionNameForPDFFileInDocView(productionname);
+		driver.waitForPageToBeReady();
 		if(docView.getDocView_MiniDocList_Docs().Displayed()) {
 			baseClass.passedStep("Completed Proceded Document is Displayed Successfully");
 		}
@@ -4113,10 +4114,11 @@ public class DocView_Sprint2_Regression {
 			baseClass.failedStep("Completed Proceded Document is Not Displayed");
 			
 		}
+		
 	}
 
 	/**
-	 * Author : Vijaya.Rani date: 26/01/22 NA Modified date: NA Modified by:NA
+	 * Author : Vijaya.Rani date: 31/01/22 NA Modified date: NA Modified by:NA
 	 * Description :Verify after impersonation user can see the production option in
 	 * the drop down selection of Images tab when document generated as part of
 	 * production.'RPMXCON-51270' Sprint: 11
@@ -4124,7 +4126,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 42)
+	@Test(enabled = true, groups = { "regression" }, priority = 65)
 	public void verifyAfterImpersonationProducedDocsInImageTabDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51270");
@@ -4186,18 +4188,132 @@ public class DocView_Sprint2_Regression {
 		baseClass.impersonateSAtoPA();
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("View searched for audio docs in Doc view");
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionsearch.ViewInDocView();
 
 		driver.waitForPageToBeReady();
 		docView.clickOnImageTab();
 		driver.waitForPageToBeReady();
 		docView.verifyProductionNameForPDFFileInDocView(productionname);
+		driver.waitForPageToBeReady();
 		if(docView.getDocView_MiniDocList_Docs().Displayed()) {
 			baseClass.passedStep("Completed Proceded Document is Displayed Successfully");
 		}
 		else {
 			baseClass.failedStep("Completed Proceded Document is Not Displayed");
 			
+		}
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 31/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify assignment progress bar refreshesh after completing the
+	 * document. 'RPMXCON-51272' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 66)
+	public void verifyAssignmentProgressBarCompleteDocs() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51271");
+		baseClass.stepInfo("Verify assignment progress bar refreshesh after completing the document.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.toggleEnableSaveWithoutCompletion();
+		assignmentsPage.add2ReviewerAndDistribute();
+
+		baseClass.stepInfo("Step 2: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+
+		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		// edit coding form
+		docView.editCodingFormComplete();
+		baseClass.waitForElement(docView.getDashboardButton());
+		docView.getDashboardButton().Click();
+		baseClass.waitForElement(docView.getDocView_AssignmentProgressDocs());
+		String progress = docView.getDocView_AssignmentProgressDocs().getText();
+		System.out.println(progress);
+		baseClass.passedStep("Docs Are Completed After Progress bar is Updated Succesfully");
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 31/01/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify that user can view the folders which is associated to
+	 * the security group only. 'RPMXCON-50820' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 67)
+	public void veriyUserCanSeeTheFlodersSecurityGroup() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50820");
+		baseClass.stepInfo("To verify that user can view the folders which is associated to the security group only.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and View In Doc View");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		docView.performFloderMiniDocList();
+		driver.waitForPageToBeReady();
+		if (docView.getDocView_AnalyticsExitingFolderName().Displayed()) {
+			baseClass.passedStep("All existing folder under that security group is displayed");
+		} else {
+			baseClass.failedStep("All existing folder under that security group is not displayed");
+		}
+		loginPage.logout();
+
+		// Login as REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
+		baseClass.stepInfo("Step 1: Search for the doc and View In Doc View");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		docView.performFloderMiniDocListForReviewer();
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
+		baseClass.stepInfo("Step 1: Search for the doc and View In Doc View");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		docView.performFloderMiniDocList();
+		driver.waitForPageToBeReady();
+		if (docView.getDocView_AnalyticsExitingFolderName().Displayed()) {
+			baseClass.passedStep("All existing folder under that security group is displayed");
+		} else {
+			baseClass.failedStep("All existing folder under that security group is not displayed");
 		}
 	}
 
