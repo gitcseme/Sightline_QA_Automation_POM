@@ -1386,29 +1386,41 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath(
 				"//input[@id='IsKeepEmailThreadsTogether']/parent::label /i//following-sibling::span");
 	}
-	
 
 	public ElementCollection getAvailableKeywordCheckboxes() {
 		return driver.FindElementsByXPath("//div[@id='divkeyword']//label[@class='checkbox']//i");
 	}
-	
+
 	public Element getBatchAssignmentBar(String assignmentName) {
 		return driver.FindElementByXPath("//strong[text()='" + assignmentName
 				+ "']/ancestor::tr[@role='row']//following::td/div[@class='progress-lg']/div[@class='progress-bar bg-color-green']");
 	}
-	 public ElementCollection getKeywordNames() {
-			return driver.FindElementsByXPath("//div[contains(@style,'color')]");
-		}
-	 
-     public Element getKeywordCheckBox(String keywordName) {
-         return driver.FindElementByXPath("//div[text()='"+keywordName+"']//..//i");
-         }
 
-     public Element getAssgn_PopOutPanelToggle() {
-			return driver.FindElementByXPath(
-					"//*[@id='AdditionalPreferences_IsAllowPopoutPanels']/following-sibling::i");
-		}
-     
+	public ElementCollection getKeywordNames() {
+		return driver.FindElementsByXPath("//div[contains(@style,'color')]");
+	}
+
+	public Element getKeywordCheckBox(String keywordName) {
+		return driver.FindElementByXPath("//div[text()='" + keywordName + "']//..//i");
+	}
+
+	public Element getAssgn_PopOutPanelToggle() {
+		return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowPopoutPanels']/following-sibling::i");
+	}
+
+	public ElementCollection getManageAssignmentsHeader() {
+		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHeadInner']//tr[@role='row']//th");
+	}
+
+	public ElementCollection getManageReviewereTabHeader() {
+		return driver.FindElementsByXPath("//table[@id='dt_basic']//thead//td");
+	}
+
+	public Element getDistributedDocs(String userNAme, String index) {
+		return driver.FindElementByXPath(
+				".//*[@id='dt_basic']//td[contains(.,'" + userNAme + "')]/following-sibling::td[" + index + "]");
+	}
+
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -3888,7 +3900,10 @@ public class AssignmentsPage {
 			Boolean status = getSelectAssignment(assignmentName).isElementAvailable(5);
 			if (status == true) {
 				getSelectAssignment(assignmentName).ScrollTo();
-				getSelectAssignment(assignmentName).waitAndClick(5);
+				if (!getSelectAssignmentHighlightCheck(assignmentName).isElementAvailable(5)) {
+					getSelectAssignment(assignmentName).waitAndClick(3);
+					getSelectAssignment(assignmentName).waitAndClick(5);
+				}
 				driver.scrollPageToTop();
 				bc.waitForElement(getAssignmentActionDropdown());
 				getAssignmentActionDropdown().Click();
@@ -3927,7 +3942,10 @@ public class AssignmentsPage {
 			Boolean status = getSelectAssignment(assignmentName).isElementAvailable(5);
 			if (status == true) {
 				driver.scrollingToElementofAPage(getSelectAssignment(assignmentName));
-				getSelectAssignment(assignmentName).waitAndClick(3);
+				if (!getSelectAssignmentHighlightCheck(assignmentName).isElementAvailable(5)) {
+					getSelectAssignment(assignmentName).waitAndClick(3);
+					getSelectAssignment(assignmentName).waitAndClick(5);
+				}
 				driver.scrollPageToTop();
 				getAssignmentActionDropdown().waitAndClick(3);
 				bc.stepInfo("Expected assignment found in the page " + i);
@@ -6917,7 +6935,7 @@ public class AssignmentsPage {
 				break;
 			} else {
 				driver.scrollingToBottomofAPage();
-				getAssgnPaginationNextButton().waitAndClick(3);
+				getAssgnPaginationNextButton().waitAndClick(10);
 				bc.stepInfo("Expected assignment not found in the page " + i);
 			}
 		}
@@ -9320,6 +9338,7 @@ public class AssignmentsPage {
 		driver.waitForPageToBeReady();
 		bc.passedStep("Keywords unmapped from the assignment successfully");
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @throws InterruptedException
@@ -9338,66 +9357,66 @@ public class AssignmentsPage {
 		System.out.println("count " + count);
 		int records = Integer.parseInt(count);
 		for (int i = 0; i < records; i++) {
-			driver.waitForPageToBeReady();			
+			driver.waitForPageToBeReady();
 			bc.waitForElement(completeBtn());
 			completeBtn().waitAndClick(5);
 		}
 		bc.stepInfo("All the docs are completed");
 	}
-	
-	
-		
-		public void mappingKeywordToAssignment(String keywordName) throws InterruptedException {
-			bc = new BaseClass(driver);
-			driver.waitForPageToBeReady();
-			getAssgn_Keywordsbutton().ScrollTo();
-			getAssgn_Keywordsbutton().isElementAvailable(10);
-			getAssgn_Keywordsbutton().waitAndClick(10);
-			bc.waitForElement(getAssgn_Keywordspopup());
-			
-			List<WebElement> allvalues = getAvailableKeywordCheckboxes().FindWebElements();
-			List<String> names = bc.availableListofElements(getKeywordNames());
-			System.out.println(names);
-			for(int i=0;i<= names.size()-1; i++) {
-				if(names.get(i).contains(keywordName)) {
-					allvalues.get(i).click();
-					System.out.println("done");
-					break;
-				}
-				
-			}
-			driver.waitForPageToBeReady();
-			getAssgn_Keywordokbutton().ScrollTo();
-			getAssgn_Keywordokbutton().isElementAvailable(10);
-			getAssgn_Keywordokbutton().Click();
-			keywordPage.getYesButton().Click();
-			bc.passedStep("Required keyword mapped to the assignment successfully");
-			
-		}
-		/**
-		* @author Gopinath
-		* @description thsi methoad will select the required keyword by its name and ignore if it is already selcted from list
-		* @param keywordName
-		*/
-		public void addKeywordToAssignment(String keywordName) {
+
+	public void mappingKeywordToAssignment(String keywordName) throws InterruptedException {
+		bc = new BaseClass(driver);
 		driver.waitForPageToBeReady();
-		if(getAssgn_Keywordsbutton().isElementAvailable(2)) {
 		getAssgn_Keywordsbutton().ScrollTo();
 		getAssgn_Keywordsbutton().isElementAvailable(10);
 		getAssgn_Keywordsbutton().waitAndClick(10);
+		bc.waitForElement(getAssgn_Keywordspopup());
+
+		List<WebElement> allvalues = getAvailableKeywordCheckboxes().FindWebElements();
+		List<String> names = bc.availableListofElements(getKeywordNames());
+		System.out.println(names);
+		for (int i = 0; i <= names.size() - 1; i++) {
+			if (names.get(i).contains(keywordName)) {
+				allvalues.get(i).click();
+				System.out.println("done");
+				break;
+			}
+
+		}
+		driver.waitForPageToBeReady();
+		getAssgn_Keywordokbutton().ScrollTo();
+		getAssgn_Keywordokbutton().isElementAvailable(10);
+		getAssgn_Keywordokbutton().Click();
+		keywordPage.getYesButton().Click();
+		bc.passedStep("Required keyword mapped to the assignment successfully");
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description thsi methoad will select the required keyword by its name and
+	 *              ignore if it is already selcted from list
+	 * @param keywordName
+	 */
+	public void addKeywordToAssignment(String keywordName) {
+		driver.waitForPageToBeReady();
+		if (getAssgn_Keywordsbutton().isElementAvailable(2)) {
+			getAssgn_Keywordsbutton().ScrollTo();
+			getAssgn_Keywordsbutton().isElementAvailable(10);
+			getAssgn_Keywordsbutton().waitAndClick(10);
 		}
 		bc.waitForElement(getAssgn_Keywordspopup());
 		bc.waitForElement(getKeywordCheckBox(keywordName));
-		if(getKeywordCheckBox(keywordName).isElementAvailable(5)) {
-		bc.passedStep("selected keyword group found");
-		}else {
-		bc.failedStep("selected keyword not found");
+		if (getKeywordCheckBox(keywordName).isElementAvailable(5)) {
+			bc.passedStep("selected keyword group found");
+		} else {
+			bc.failedStep("selected keyword not found");
 		}
-		if(getKeywordCheckBox(keywordName).getWebElement().isSelected()==false) {
-		getKeywordCheckBox(keywordName).waitAndClick(5);
+		if (getKeywordCheckBox(keywordName).getWebElement().isSelected() == false) {
+			getKeywordCheckBox(keywordName).waitAndClick(5);
 
-		}else {
-		bc.stepInfo("keyword group is already selected");
+		} else {
+			bc.stepInfo("keyword group is already selected");
 
 		}
 		driver.waitForPageToBeReady();
@@ -9406,15 +9425,57 @@ public class AssignmentsPage {
 		getAssgn_Keywordokbutton().Click();
 		bc.waitTime(1);
 		if (getRedistributeYesPopup().isDisplayed()) {
-		getRedistributeYesPopup().Click();
+			getRedistributeYesPopup().Click();
 		}
 		driver.scrollPageToTop();
 		bc.waitForElement(getSaveBtn());
 
 		getSaveBtn().waitAndClick(5);
 
-		}
-		
+	}
 
+	/**
+	 * @author Raghuram.A Date 01/02/22 Modified date: NA Modified by:NA
+	 * @param userName
+	 * @param iteration
+	 * @param distributedCOunt
+	 * @param distrCount
+	 * @param completedCount
+	 * @param leftToDoCOunt
+	 */
+	public void verifyCountMatches(String userName, int iteration, String distributedCOunt, Boolean distrCount,
+			Boolean completedCount, Boolean leftToDoCOunt, Boolean additional1) {
+		int totalDOcsCompleted = 0;
+		int indexDisdocC = 0;
+		if (distrCount) {
+			// Total no.of distributed docs count verification
+			bc.stepInfo("Verify DISTRIBUTED TO USER count matches with initial count");
+			int indexDisdoc = bc.getIndex(getManageReviewereTabHeader(), "DISTRIBUTED TO USER") - 1;
+			indexDisdocC = Integer.parseInt(getDistributedDocs(userName, Integer.toString(indexDisdoc)).getText());
+			bc.digitCompareEquals(indexDisdocC, Integer.parseInt(distributedCOunt),
+					"DISTRIBUTED TO USER count matches : " + indexDisdocC, "DISTRIBUTED TO USER count mis-matches");
+		}
+
+		if (completedCount) {
+			// Total no.of completed docs count verification
+			bc.stepInfo("Verify total completed document count matches with the completion iteration count");
+			int indexTotalCompleted = bc.getIndex(getManageReviewereTabHeader(), "TOTAL COMPLETED") - 1;
+			totalDOcsCompleted = Integer
+					.parseInt(getDistributedDocs(userName, Integer.toString(indexTotalCompleted)).getText());
+			bc.digitCompareEquals(totalDOcsCompleted, iteration,
+					"Completed Document count matches : " + totalDOcsCompleted, "Wrong completed document count");
+		}
+
+		if (leftToDoCOunt) {
+			// Left to DOcount verification
+			bc.stepInfo(
+					"Verify LEFT TO DO count is the subtraction of distributed count - total completed doument count");
+			int indexLefttoDo = bc.getIndex(getManageReviewereTabHeader(), "LEFT TO DO") - 1;
+			int totalLeftToDo = Integer
+					.parseInt(getDistributedDocs(userName, Integer.toString(indexLefttoDo)).getText());
+			bc.digitCompareEquals(totalLeftToDo, indexDisdocC - totalDOcsCompleted,
+					"LEFT TO DO count matches : " + totalLeftToDo, "LEFT TO DO count is wrong");
+		}
+	}
 
 }
