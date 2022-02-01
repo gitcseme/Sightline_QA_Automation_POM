@@ -114,7 +114,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			assertFalse(false);
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -168,6 +168,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			assertFalse(false);
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -210,6 +211,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			assertFalse(false);
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -259,6 +261,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			assertTrue(false);
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -310,7 +313,7 @@ public class DocView_Sprint2_Regression {
 		String urlBackground = driver.getUrl();
 		assertEquals(urlBackground, "https://sightlineuat.consiliotest.com/Background/BackgroundTask");
 		baseClass.passedStep("Navigated to document download page");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -358,6 +361,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			assertTrue(false);
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -397,6 +401,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.passedStep("Text redaction has been performed by RMU user");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -419,6 +424,7 @@ public class DocView_Sprint2_Regression {
 		Thread.sleep(5000);
 		docViewRedact.docListTableItration();
 		baseClass.passedStep("The redacted documents are checked while navigating from Mini Doc List");
+		loginPage.logout();
 	}
 
 	/**
@@ -480,7 +486,7 @@ public class DocView_Sprint2_Regression {
 		}), Input.wait30);
 		docViewRedact.viewAllBtn().waitAndClick(15);
 		baseClass.passedStep("Navigated to document download page");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -530,8 +536,8 @@ public class DocView_Sprint2_Regression {
 			baseClass.passedStep("The delete Redaction icon is displayed while clicking on redacted area");
 		} else {
 			baseClass.failedStep("Delete redaction Icon is not displayed");
-
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -557,6 +563,7 @@ public class DocView_Sprint2_Regression {
 		robot.keyPress(KeyEvent.VK_F5);
 		robot.keyRelease(KeyEvent.VK_F5);
 		baseClass.passedStep("Page has been refreshed after applying redaction and Redaction is visible");
+		loginPage.logout();
 	}
 
 	/**
@@ -610,6 +617,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.passedStep("Verified Remarks");
 		}
+		loginPage.logout();
 
 	}
 
@@ -641,6 +649,7 @@ public class DocView_Sprint2_Regression {
 		{
 			baseClass.passedStep("The text redaction button is not avilable for audio docs");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -675,6 +684,7 @@ public class DocView_Sprint2_Regression {
 		robot.keyPress(KeyEvent.VK_F5);
 		robot.keyRelease(KeyEvent.VK_F5);
 		baseClass.passedStep("The selected text area is unselected after refreshing");
+		loginPage.logout();
 	}
 
 	/**
@@ -737,6 +747,7 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.mouseOverToCodeSameAsLastIcon();
 		baseClass.passedStep(
 				"'Code this document the same as the last coded document' is displayed when mouserhover to Code Same As Last doc successfully");
+		loginPage.logout();
 
 	}
 
@@ -785,6 +796,7 @@ public class DocView_Sprint2_Regression {
 		driver.getWebDriver().switchTo().window(childWindowHandle);
 		String urlDocPrint = driver.getUrl();
 		baseClass.stepInfo(urlDocPrint);
+		loginPage.logout();
 	}
 
 	/**
@@ -815,6 +827,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			assertTrue(false);
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -846,6 +859,7 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.backwardToFirstDoc().Click();
 		driver.waitForPageToBeReady();
 		docViewRedact.VerifyKeywordHitsinDoc();
+		loginPage.logout();
 	}
 
 	/**
@@ -867,7 +881,7 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.checkingPersistentHitPanelAudio();
 		reusabledocviewpage.clickGearIconOpenMiniDocList();
 		docViewRedact.selectingDocFromMiniDocListChildWindow();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -890,7 +904,7 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.checkingPersistentHitPanelAudio();
 		reusabledocviewpage.clickGearIconOpenMiniDocList();
 		docViewRedact.selectingDocFromMiniDocListChildWindow();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -951,6 +965,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.passedStep("The Highlighted text is not present after the remark has been Deleted");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -979,7 +994,7 @@ public class DocView_Sprint2_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		docViewRedact.checkingPersistentHitPanel();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1004,9 +1019,8 @@ public class DocView_Sprint2_Regression {
 			baseClass.passedStep("Remarks as RMU Can not be selected as text area is not selected");
 		} else {
 			baseClass.failedStep("Created Remarks as RMU");
-
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1050,7 +1064,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.failedStep("The redaction has not been selected or pop up did not appear");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1078,7 +1092,7 @@ public class DocView_Sprint2_Regression {
 		SavedSearch savedsearch = new SavedSearch(driver);
 		savedsearch.savedSearchToDocView(search);
 		docViewRedact.checkinHighlitedText();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1099,7 +1113,7 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.checkingPersistentHitPanelAudio();
 		reusabledocviewpage.clickGearIconOpenMiniDocList();
 		docViewRedact.selectingDocFromMiniDocListChildWindow();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1144,6 +1158,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			assertTrue(false);
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -1182,6 +1197,7 @@ public class DocView_Sprint2_Regression {
 			baseClass.passedStep("Remarks as RMU Can not be selected as text area is not selected");
 
 		}
+		loginPage.logout();
 
 	}
 
@@ -1229,6 +1245,7 @@ public class DocView_Sprint2_Regression {
 			baseClass.passedStep("The highlite is not present on the page after deleting and refreshing");
 
 		}
+		loginPage.logout();
 
 	}
 
@@ -1267,7 +1284,7 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.deleteRemarksBtn().Click();
 		docViewRedact.confirmDeleteRemarksBtn().Click();
 		baseClass.passedStep("Verified Remarks and delete using RMU without deleting the Rectangular redaction");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1305,7 +1322,8 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.failedStep("failed");
 		}
-	}
+		loginPage.logout();
+		}
 
 	/**
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
@@ -1335,6 +1353,7 @@ public class DocView_Sprint2_Regression {
 			baseClass.failedStep("The thumbnail Panel menu is NOT displayed");
 		}
 		assignmentspage.deleteAssignment(assignmentName);
+		loginPage.logout();
 	}
 
 	/**
@@ -1380,7 +1399,7 @@ public class DocView_Sprint2_Regression {
 
 		baseClass.stepInfo(
 				"That > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view from basic search is Successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1448,6 +1467,7 @@ public class DocView_Sprint2_Regression {
 			baseClass.failedStep("The Search Icon is not Displayed");
 
 		}
+		loginPage.logout();
 
 	}
 
@@ -1510,6 +1530,7 @@ public class DocView_Sprint2_Regression {
 		} catch (Exception e) {
 			baseClass.passedStep("The Highlighted text is not Same");
 		}
+		loginPage.logout();
 
 	}
 
@@ -1557,6 +1578,7 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.manageAssignments().waitAndClick(20);
 		driver.waitForPageToBeReady();
 		baseClass.passedStep("The Documents is marked Uncompleted successfully");
+		loginPage.logout();
 
 	}
 
@@ -1603,6 +1625,7 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.performUnCompleteToDocs();
 		docViewRedact.getHomeDashBoard();
 		baseClass.stepInfo("The Progress bar is Changed Successfully");
+		loginPage.logout();
 
 	}
 
@@ -1690,6 +1713,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.failedStep("Image tab is not retained");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -1776,6 +1800,7 @@ public class DocView_Sprint2_Regression {
 		softAssertion.assertNotEquals(docId3, docId4);
 		softAssertion.assertAll();
 		baseClass.passedStep("The next document from mini doc list is loaded successfully");
+		loginPage.logout();
 
 	}
 
@@ -1869,6 +1894,7 @@ public class DocView_Sprint2_Regression {
 		softAssertion.assertNotEquals(docId3, docId4);
 		softAssertion.assertAll();
 		baseClass.passedStep("The next document from mini doc list is loaded successfully");
+		loginPage.logout();
 
 	}
 
@@ -1965,6 +1991,7 @@ public class DocView_Sprint2_Regression {
 		softAssertion.assertNotEquals(docId3, docId4);
 		softAssertion.assertAll();
 		baseClass.passedStep("The next document from mini doc list is loaded successfully");
+		loginPage.logout();
 
 	}
 
@@ -2008,6 +2035,7 @@ public class DocView_Sprint2_Regression {
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"Persistent hits panel is opened and all search hit terms saved for the search and keywords are displayed on the panel with the count");
+		loginPage.logout();
 
 	}
 
@@ -2100,6 +2128,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.failedStep("Image Tab is not loaded with respective docs");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -2148,6 +2177,7 @@ public class DocView_Sprint2_Regression {
 		docViewPage.verifyUncompleteCheckMarkForThreadMapTabDocs();
 		baseClass.passedStep(
 				"Complete icon is not displayed for the documents on thread map which are completed in context of an assignment");
+		loginPage.logout();
 
 	}
 
@@ -2271,6 +2301,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.failedStep("The user is not able to view and enter the longer text");
 		}
+		loginPage.logout();
 
 	}
 
@@ -2376,6 +2407,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
 		}
+		loginPage.logout();
 
 	}
 
@@ -2469,6 +2501,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
 		}
+		loginPage.logout();
 
 	}
 
@@ -2633,7 +2666,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2712,6 +2745,7 @@ public class DocView_Sprint2_Regression {
 		sessionsearch.ViewInDocView();
 		// perform DocView page
 		docViewRedact.performDisplayIconReviewerHighlight();
+		loginPage.logout();
 
 	}
 
@@ -2766,6 +2800,7 @@ public class DocView_Sprint2_Regression {
 
 		// perform AnalyticalPanel After earlier documents section
 		docView.performDisplayIconReviewerHighlightAnalyticalPanel();
+		loginPage.logout();
 
 	}
 
@@ -2829,6 +2864,7 @@ public class DocView_Sprint2_Regression {
 
 		docView.getPersistentHit(hitTerms);
 		docView.verifyPersistentHitPanelAndCount(hitTerms);
+		loginPage.logout();
 	}
 
 	/**
@@ -2905,7 +2941,7 @@ public class DocView_Sprint2_Regression {
 
 		docView.getPersistentHit(hitTerms);
 		docView.verifyPersistentHitPanelAndCount(hitTerms);
-
+		loginPage.logout();
 	}
 
 	@Test(enabled = true, groups = { "regression" }, priority = 52)
@@ -2954,7 +2990,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.failedStep("Application not redirected to the doc view page ");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3017,7 +3053,7 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.getDocView_MiniDoc_Selectdoc(1).waitAndClick(20);
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
 		docView.getPersistantHitEyeIcon().waitAndClick(5);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3060,7 +3096,7 @@ public class DocView_Sprint2_Regression {
 		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName1);
 		softAssertion.assertAll();
 		baseClass.passedStep("Document count  matched with the filtered documents on DocView screen.");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3202,7 +3238,7 @@ public class DocView_Sprint2_Regression {
 		driver.waitForPageToBeReady();
 		docView.getPersistentHitWithoutClickingEyeIcon("test");
 		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3363,7 +3399,7 @@ public class DocView_Sprint2_Regression {
 		driver.waitForPageToBeReady();
 		docView.getPersistentHitWithoutClickingEyeIcon("test");
 		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3525,6 +3561,7 @@ public class DocView_Sprint2_Regression {
 		driver.waitForPageToBeReady();
 		docView.getPersistentHitWithoutClickingEyeIcon("is");
 		baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+		loginPage.logout();
 
 	}
 
@@ -3613,7 +3650,7 @@ public class DocView_Sprint2_Regression {
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"Hit count for the matching keywords is displayed against the keywords on persistent hit panel");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3684,6 +3721,7 @@ public class DocView_Sprint2_Regression {
 		softAssertion.assertTrue(docView.getPersistentPanel().isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("All search hit terms is displayed on the panel successfully");
+		loginPage.logout();
 
 	}
 
@@ -3768,6 +3806,7 @@ public class DocView_Sprint2_Regression {
 		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("Keyword is highlighted with specified color in the Doc View successfully");
+		loginPage.logout();
 	}
 
 	/**
@@ -3853,6 +3892,7 @@ public class DocView_Sprint2_Regression {
 		sessionSearch.ViewFamilyMemberDocsInDocViews();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
 		docView.performDisplayIconReviewerHighlightingMenus();
+		loginPage.logout();
 
 	}
 
@@ -3943,8 +3983,8 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.performCodeSameForFamilyMembersDocuments();
 		docView.performConfirmNavigationDisplay();
-
-	}
+		loginPage.logout();
+		}
 	
 
 	/**
@@ -4029,6 +4069,7 @@ public class DocView_Sprint2_Regression {
 		softAssertion.assertTrue(docView.getDocView_Production_Image().isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("Associated images is displayed on click of Images tab.Pagination is loaded for the multiple images");
+		loginPage.logout();
 		
 	}
 
@@ -4111,6 +4152,7 @@ public class DocView_Sprint2_Regression {
 			baseClass.failedStep("Completed Proceded Document is Not Displayed");
 			
 		}
+		loginPage.logout();
 		
 	}
 
@@ -4200,6 +4242,7 @@ public class DocView_Sprint2_Regression {
 			baseClass.failedStep("Completed Proceded Document is Not Displayed");
 			
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -4284,7 +4327,7 @@ public class DocView_Sprint2_Regression {
 			System.out.println("not completed");
 			baseClass.failedStep("Doc not completed");
 		}
-		
+		loginPage.logout();		
 	}
 
 	/**
@@ -4348,6 +4391,7 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.failedStep("All existing folder under that security group is not displayed");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -4437,6 +4481,7 @@ public class DocView_Sprint2_Regression {
 			System.out.println("not completed");
 			baseClass.failedStep("Doc not completed");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -4513,6 +4558,7 @@ public class DocView_Sprint2_Regression {
 		docView.getDashboardButton().Click();
         softAssertion.assertTrue(assignmentsPage.getBatchAssignmentBar(assname).isDisplayed());
 		baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+		loginPage.logout();
 
 	}
 
@@ -4523,9 +4569,9 @@ public class DocView_Sprint2_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
