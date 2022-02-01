@@ -3940,7 +3940,7 @@ public class Production_Test_Regression {
 				@Test(groups = { "regression" }, priority = 65)
 				public void verifyPrivGuardVariousTag() throws Exception {
 				UtilityLog.info(Input.prodPath);
-				base.stepInfo("RPMXCON-47877 -Production Sprint 11");
+				base.stepInfo("RPMXCON-47887 -Production Sprint 11");
 				base.stepInfo("To Verify Priv Guard  with various tag and redaction options");
 				
 				foldername = "FolderProd" + Utility.dynamicNameAppender();
