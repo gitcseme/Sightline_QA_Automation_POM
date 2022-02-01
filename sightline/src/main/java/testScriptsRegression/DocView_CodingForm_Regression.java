@@ -86,6 +86,8 @@ public class DocView_CodingForm_Regression {
 	String assignFive = "Assignment" + Utility.dynamicNameAppender();
 	String assign = "Assignment" + Utility.dynamicNameAppender();
 	String assgn = "Assignment" + Utility.dynamicNameAppender();
+	String assgnCf = "Assignment" + Utility.dynamicNameAppender();
+	String cfName = "CfName" + Utility.dynamicNameAppender();
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -9726,6 +9728,89 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Retained Input : " + retainedInput);
 		baseClass.textCompareNotEquals(comments, retainedInput, "Edited input not saved", "Input saved");
 
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @Author : Baskar date: 01/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:To verify that Project Admin cannot view the coding form.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 205)
+	public void validateCodingFormInPaUser() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-50927");
+		baseClass.stepInfo("To verify that Project Admin cannot view the coding form.");
+
+		// Login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Assign coding form
+		codingForm.assignCodingFormByCondition(Input.codingFormName);
+		baseClass.passedStep(Input.codingFormName + "Coding form assigned to context of security group");
+
+		// logout
+		loginPage.logout();
+
+		// Login as pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// navigation to docview page from session search page
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// validation for pa user in coding form
+		docViewPage.validateCodingFormDisplayAsPaUser(Input.codingFormName);
+		docViewPage.paWarningMsgForCodingForm();
+
+		// logout
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @Author : Baskar date: 01/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:To verify that user can view the coding form if it is Assigned
+	 *                 to the assignment.
+	 */
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 206)
+	public void validateAssignedCfInAssignment(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		codingForm = new CodingForm(driver);
+		softAssertion = new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-50926");
+		baseClass.stepInfo("To verify that user can view the coding form if it is Assigned to the assignment.");
+		String rmu = "RMU";
+
+		loginPage.loginToSightLine(userName, password);
+
+		if (fullName.contains(rmu)) {
+			// New Coding form creation
+			codingForm.commentRequired(cfName);
+//			 searching document for assignment creation
+			sessionSearch.basicContentSearch(Input.searchString2);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assgnCf, cfName);
+			assignmentPage.toggleCodingStampEnabled();
+			assignmentPage.add2ReviewerAndDistribute();
+			baseClass.impersonateRMUtoReviewer();
+			System.out.println(assgnCf);
+		}
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assgnCf);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validation for assigned coding form
+		docViewPage.verifyCodingFormName(cfName);
+		baseClass.passedStep("Coding form displayed on right side of the panel");
+
+		// logout
 		loginPage.logout();
 
 	}

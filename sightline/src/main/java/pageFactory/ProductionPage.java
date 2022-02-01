@@ -2496,6 +2496,16 @@ public class ProductionPage {
 	public Element getGenrateTIFFRadioButton() {
 		return driver.FindElementByXPath("//span//b[text()='Generate TIFF']/../..//input[@id='CommonTIFFSettings_FileType']");
 	}
+
+	public Element chkIsTIFFSelected() {
+		return driver.FindElementByXPath("//input[@id='chkIsTIFFSelected']");
+	}
+
+	
+	public Element getclkSelectTag(int i) {
+		return driver.FindElementByXPath("//button[@id='btnTIFFPHSelectTags_"+ i +"']");
+	}
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -16848,6 +16858,151 @@ public class ProductionPage {
 		base.textCompareEquals(option,"Rotate 90 degrees clock-wise","Rotation value is retained in Template", "Rotation value is not retained in Template as Expected");
 		
 	}
+	/**
+	 * @Author Brundha
+	 *  Description:Verifying component section value retained on markcomplete
+	 * 
+	 */
+	
+	public void verifyingComponentTabOnMarkComplete() throws InterruptedException {
 
+	 * @author Aathith.Senthilkumar
+	 * @Description :Natively placeholder selecting tags Type in different Native docs
+	 */
+	public void fillingTIFFSectionwithNativelyPlaceholderWithTagTypeAndTags(String tagname, String tagname1) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		// clicking enable for natively placeholder
+		base.waitForElement(getTiff_NativeDoc());
+		getTiff_NativeDoc().ScrollTo();
+		clickElementNthtime(getTiff_NativeDoc(), 3);
+		
+		base.waitForElement(getclkSelectTag());
+		getclkSelectTag().ScrollTo();
+		getclkSelectTag().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPriveldged_TagTree(Input.tagNamePrev));
+		getPriveldged_TagTree(Input.tagNamePrev).waitAndClick(10);
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(Input.tagNamePrev);
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getclkSelectTag(1));
+		getclkSelectTag(1).ScrollTo();
+		getclkSelectTag(1).Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPriveldged_TagTree(tagname));
+		getPriveldged_TagTree(tagname).waitAndClick(10);
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(tagname);
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getclkSelectTag(2));
+		getclkSelectTag(2).ScrollTo();
+		getclkSelectTag(2).Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPriveldged_TagTree(tagname1));
+		getPriveldged_TagTree(tagname1).waitAndClick(10);
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(tagname1);
+		
+		base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting tags and tag type");
+
+	}
+
+
+		driver.scrollPageToTop();
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+		base.VerifySuccessMessage("Mark Complete successful");
+		base.CloseSuccessMsgpopup();
+		base.stepInfo("Verifying DAT and TIFF is retained on Markcomplete");
+		getCheckBoxCheckedVerification(chkIsDATSelected());
+		driver.waitForPageToBeReady();
+		getCheckBoxCheckedVerification(chkIsTIFFSelected());
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+		driver.scrollingToBottomofAPage();
+		String PlaceholderText=getPriveldge_TextArea().getText();
+		if("Technical_Issue".equals(PlaceholderText)) {
+			base.passedStep(""+PlaceholderText+". placeholder text is retained on Markcomplete");
+		}else {base.failedStep(""+PlaceholderText+". placeholder text  is retained on Markcomplete");}
+		driver.scrollPageToTop();
+		base.waitForElement(getNextButton());
+		getNextButton().waitAndClick(10);
+		base.stepInfo("Navigate to next page");
+	}
+	
+	
+	
+	/**
+	 * @Author Brundha
+	 *  Description:Verifying Docs w/ No Master Date retained on markcomplete
+	 * 
+	 */
+	
+	public void verifyMasterDateRetainedOnMarkComplete() throws InterruptedException {
+		driver.scrollingToBottomofAPage();
+		getlstSortByKeepDocsWithNoMasterDate().selectFromDropdown().selectByVisibleText("At the beginning");
+		driver.scrollPageToTop();
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+		base.VerifySuccessMessage("Mark Complete successful");
+		base.CloseSuccessMsgpopup();
+		
+		Select select = new Select(getlstSortingOrder().getWebElement());
+		String option = select.getFirstSelectedOption().getText();
+		System.out.println("the value is "+option);
+		base.textCompareEquals(option,"Ascending","Sorting order dropdown Option is retained on MarkComplete", "Sorting order dropdown Option is not retained on MarkComplete");
+	     select = new Select(getlstSortByKeepDocsWithNoMasterDate().getWebElement());
+		String DropdownValue = select.getFirstSelectedOption().getText();
+		System.out.println("the value is "+DropdownValue);
+		base.textCompareEquals(DropdownValue,"At the beginning","Master Date Option is retained on MarkComplete", "Master Date Option is not retained on MarkComplete");
+		driver.scrollPageToTop();
+		base.waitForElement(getNextButton());
+		
+		getNextButton().Click();
+		base.stepInfo("Navigate to next page");
+	}
+	
+	/**
+	 * @Author Brundha
+	 * Description:Method to add new production and save
+	 */
+	public void addANewProductionAndSave(String productionName) throws InterruptedException {
+		base.waitForElement(getAddNewProductionbutton());
+		getAddNewProductionbutton().Click();
+		base.waitForElement(getProductionName());
+		getProductionName().SendKeys(productionName);
+		base.waitForElement(getProductionDesc());
+		getProductionDesc().SendKeys(productionName);
+		base.waitForElement(getBasicInfoSave());
+		getBasicInfoSave().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getBasicInfoMarkComplete());
+		getBasicInfoMarkComplete().Click();
+		base.stepInfo("New production is added");
+	}
 
 }

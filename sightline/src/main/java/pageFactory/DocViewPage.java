@@ -2880,6 +2880,9 @@ public class DocViewPage {
 			return driver.FindElementByXPath("//div[@id='disableRedactionWarningForRemarks']/span[contains(text(),'Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.')]");
 		
 			}
+		public Element getCodingForm_PA() {
+			return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
+		}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -22703,8 +22706,37 @@ public class DocViewPage {
 				base.passedStep("Edit and delete buttons of all remarks disabled");
 			}
 		}
-		
-		
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 * @description: Validate Code form presence in Pa
+	 */
+//	Reusable method for validate coding form presence
+	public void validateCodingFormDisplayAsPaUser(String cfName) {
+		if (getDocView_CFName().isElementAvailable(3)) {
+			base.waitForElement(getDocView_CFName());
+			softAssertion.assertEquals(cfName, getDocView_CFName().getText());
+			base.passedStep(cfName + " Coding form displayed in context of security group");
+		} else {
+			base.passedStep(cfName + " coding form not displayed as Pa user");
+		}
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 * @description: Validate Code form presence in Pa using warning message
+	 */
+//	Reusable metod to check warning message
+	public void paWarningMsgForCodingForm() {
+		driver.waitForPageToBeReady();
+		String expected="No Coding Form is presented because you're outside the context of a Security Group";
+	    String actualOutsidrCf=getCodingForm_PA().getText();
+	    softAssertion.assertEquals(expected, actualOutsidrCf);
+	    softAssertion.assertAll();
+	    base.passedStep("Message displayed as outside the context of a Security Group");
+	  
 	}
 }
 

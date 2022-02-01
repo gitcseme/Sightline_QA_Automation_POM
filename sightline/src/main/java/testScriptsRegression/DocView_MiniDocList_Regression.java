@@ -2891,46 +2891,6 @@ public class DocView_MiniDocList_Regression {
 		assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
 	}
 
-	/**
-	 * @Author : Baskar date: 27/01/2022 Modified date: NA Modified by: Baskar
-	 * @Description :To verify user can select Multiple documents in Mini Doc List
-	 *              from dockout screens and Select Action as 'Code Same as this'
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 68)
-	public void validateCodeSameIconForSelectedDocs() throws InterruptedException, Exception {
-		baseClass.stepInfo("To verify user can select Multiple documents in Mini Doc List from dockout screens "
-				+ "and Select Action as 'Code Same as this'");
-
-		String expectedURL = Input.url + "DocumentViewer/DocViewChild";
-
-		// Login as a Admin
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
-
-		// Session search to docview
-		sessionSearch.basicContentSearch(Input.searchString2);
-		sessionSearch.ViewInDocView();
-
-		// validate code same as icon
-		docViewPage.clickGearIconOpenMiniDocList();
-		String parent = docViewPage.switchTochildWindow();
-		driver.waitForPageToBeReady();
-		if (driver.getUrl().equalsIgnoreCase(expectedURL)) {
-//			minidoclist child window opened
-			baseClass.passedStep("MiniDocList Child window opened");
-			String prnDoc = docViewPage.getVerifyPrincipalDocument().getText();
-			docViewPage.clickCheckBoxMiniDocListActionCodeSameAs(2);
-			driver.getWebDriver().navigate().refresh();
-//			validation for codesame as icon
-			boolean flag = docViewPage.getMiniDocList_CodeSameIcon(prnDoc).Displayed();
-			softAssertion.assertTrue(flag);
-			docViewPage.childWindowToParentWindowSwitching(parent);
-			baseClass.passedStep("Chain link displayed for selected document in minidoclist child window");
-		} else {
-			baseClass.failedMessage("Minidoclist child window not opened yet");
-		}
-		softAssertion.assertAll();
-	}
 
 	/**
 	 * Author : Raghuram A date: 01/31/22 Modified date:N/A Modified by: Raghuram A
@@ -2986,9 +2946,81 @@ public class DocView_MiniDocList_Regression {
 		// login as Reviewer
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignmentPage.deleteAssgnmntUsingPagination(assignmentNameToCreate);
-
 	}
 
+	/**
+	 * @Author : Baskar date: 27/01/2022 Modified date: NA Modified by: Baskar
+	 * @Description :To verify user can select Multiple documents in Mini Doc List
+	 *              from dockout screens and Select Action as 'Code Same as this'
+	 */
+	//@Test(enabled = true, groups = { "regression" }, priority = 68)
+	public void validateCodeSameIconForSelectedDocs() throws InterruptedException, Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-51131");
+		baseClass.stepInfo("To verify user can select Multiple documents in Mini Doc List from dockout screens "
+				+ "and Select Action as 'Code Same as this'");
+
+		String expectedURL = Input.url + "DocumentViewer/DocViewChild";
+
+		// Login as a Admin
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+
+		// Session search to docview
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+		// validate code same as icon
+		docViewPage.clickGearIconOpenMiniDocList();
+		String parent = docViewPage.switchTochildWindow();
+		driver.waitForPageToBeReady();
+		if (driver.getUrl().equalsIgnoreCase(expectedURL)) {
+//			minidoclist child window opened
+			baseClass.passedStep("MiniDocList Child window opened");
+			String prnDoc = docViewPage.getVerifyPrincipalDocument().getText();
+			docViewPage.clickCheckBoxMiniDocListActionCodeSameAs(2);
+			driver.getWebDriver().navigate().refresh();
+//			validation for codesame as icon
+			boolean flag = docViewPage.getMiniDocList_CodeSameIcon(prnDoc).Displayed();
+			softAssertion.assertTrue(flag);
+			docViewPage.childWindowToParentWindowSwitching(parent);
+			baseClass.passedStep("Chain link displayed for selected document in minidoclist child window");
+		} else {
+			baseClass.failedMessage("Minidoclist child window not opened yet");
+		}
+		softAssertion.assertAll();
+	}
+
+	/**
+	 * @Author : Baskar date: 01/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description :To verify that small icon should be displayed if document is
+	 *              tagged as 'Code Same as this'.
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 68)
+	public void validateCodeSameAsSmallIcon() throws InterruptedException, Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-50946");
+		baseClass.stepInfo("To verify that small icon should be displayed " + "if document is tagged as 'Code Same as this'.");
+
+		// Login as a Admin
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+
+		// Session search to docview
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+		// validate code same as icon
+		driver.waitForPageToBeReady();
+		String prnDoc = docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.clickCheckBoxMiniDocListActionCodeSameAs(2);
+		driver.getWebDriver().navigate().refresh();
+		
+//		validation for codesame as icon
+		boolean flag = docViewPage.getMiniDocList_CodeSameIcon(prnDoc).Displayed();
+		softAssertion.assertTrue(flag);
+		baseClass.passedStep("Small icon displayed for selected document in minidoclist for code same as");
+		softAssertion.assertAll();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

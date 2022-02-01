@@ -3467,6 +3467,47 @@ public class Production_Page_Regression {
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingSelectDocumentUsingTags(tagname);
+/**
+	 * @Author Jeevitha
+	 * @Description : To verify that Native should be generated when PRIV
+	 *              placeholdering and Burn Redactions are not enabled [
+	 *              RPMXCON-48377]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 62)
+	public void VerifyNativeWithPrivPlaceholder() throws Exception {
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		ProductionPage page = new ProductionPage(driver);
+
+		String tagname = "TAG" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48377 Production Sprint 11");
+		baseClass.stepInfo(
+				"To verify that Native should be generated when PRIV placeholdering and Burn Redactions are not enabled");
+
+		// create tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for folder
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+
+		// create production with DAT,Native,tiff 
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectPrivilegedTagAndEnterPlaceHolderValue(tagname, Input.searchString4);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
 		page.fillingProductionLocationPage(productionname);
@@ -3520,6 +3561,61 @@ public class Production_Page_Regression {
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingSelectDocumentUsingTags(tagname);
+
+		baseClass.waitTime(4);
+		String name = page.getProduction().getText().trim();
+		page.isFileDownloaded(Input.fileDownloadLocation, name);
+
+		// Delete Tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.deleteAllTags(tagname);
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :To verify that Tiff/PDF should generate with 'Tech Issue Docs'
+	 *              placeholdering even though Burn redactions and File group/tag
+	 *              based placeholdering is exists in the document. [ RPMXCON-48343]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 63)
+	public void verifyTiffWIthTechIssueDocs() throws Exception {
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		ProductionPage page = new ProductionPage(driver);
+
+		String tagname = "TAG" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48343 Production Sprint 11");
+		baseClass.stepInfo(
+				"To verify that Tiff/PDF should generate with 'Tech Issue Docs' placeholdering even though Burn redactions and File group/tag based placeholdering is exists in the document.");
+
+		// create tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.technicalIssue);
+
+		// search for folder
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+
+		// create production with DAT,Native,tiff
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTiffSectionTechIssueMetaDataField(tagname);
+		page.fillingNativeDocsPlaceholder(tagname);
+		page.getClk_burnReductiontoggle().ScrollTo();
+		page.getClk_burnReductiontoggle().waitAndClick(10);
+		page.specifyRedactionTextAreaInBurnRedact(Input.defaultRedactionTag, Input.searchString4);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
 		page.fillingProductionLocationPage(productionname);
@@ -3532,6 +3628,16 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
+
+		baseClass.waitTime(4);
+		String name = page.getProduction().getText().trim();
+		page.isFileDownloaded(Input.fileDownloadLocation, name);
+
+		// Delete Tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.deleteAllTags(tagname);
+	}
+
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
