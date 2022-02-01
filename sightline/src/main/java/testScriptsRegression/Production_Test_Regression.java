@@ -563,7 +563,6 @@ public class Production_Test_Regression {
 	public void regeneratePopUpClickCancel() throws InterruptedException { 
 		UtilityLog.info(Input.prodPath); base.stepInfo("RPMXCON-56151 -Production Sprint 07"); 
 		String testData1 = Input.testData1; 
-		String tagNameTechnical = Input.tagNameTechnical; 
 		foldername = "FolderProd" + Utility.dynamicNameAppender(); 
 		tagname = "Tag" + Utility.dynamicNameAppender(); 
 		// Pre-requisites 
@@ -3870,6 +3869,157 @@ public class Production_Test_Regression {
 				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 				loginPage.logout();
+				
+				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-48065
+				 * @Description: To Verify document matches multiple criteria (file type or tags), the precedence will be from top to bottom.(For Production)
+				 */
+				@Test(groups = { "regression" }, priority = 64)
+				public void verifyNativelyPlaceHolderWithFileTypeAndTag() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48065 -Production Sprint 11");
+				base.stepInfo("To Verify document matches multiple criteria (file type or tags), the precedence will be from top to bottom.(For Production)");
+				
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				String tagname1 ="Tag1" + Utility.dynamicNameAppender();
+				String prefixID = "A_" + Utility.dynamicNameAppender();
+				String suffixID = "_P" + Utility.dynamicNameAppender();
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+				tagsAndFolderPage.createNewTagwithClassification(tagname1, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				driver.waitForPageToBeReady();
+				sessionSearch.ViewInDocListWithOutPureHit();
+
+				DocListPage doc = new DocListPage(driver);
+				doc.documentSelection(3);
+				driver.waitForPageToBeReady();
+				doc.bulkTagExistingFromDoclist(tagname);
+				doc.documentSelection(6);
+				driver.scrollPageToTop();
+				doc.bulkTagExistingFromDoclist(tagname1);
+
+				//Verify archive status on Grid view
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSectionwithNativelyPlaceholderWithTagTypeAndTags(tagname,tagname1);
+				page.navigateToNextSection();
+				page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+				driver.waitForPageToBeReady();
+				String name = page.getProduction().getText().trim();
+				System.out.println(name);
+				page.isFileDownloaded(Input.fileDownloadLocation, name);
+				
+				base.passedStep("Verified document matches multiple criteria (file type or tags), the precedence will be from top to bottom.(For Production)");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-47887
+				 * @Description: To Verify Priv Guard  with various tag and redaction options;
+				 */
+				@Test(groups = { "regression" }, priority = 65)
+				public void verifyPrivGuardVariousTag() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-47887 -Production Sprint 11");
+				base.stepInfo("To Verify Priv Guard  with various tag and redaction options");
+				
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				String tagname1 ="Tag1" + Utility.dynamicNameAppender();
+				String prefixID = "A_" + Utility.dynamicNameAppender();
+				String suffixID = "_P" + Utility.dynamicNameAppender();
+				
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+				tagsAndFolderPage.createNewTagwithClassification(tagname1, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				int count =sessionSearch.basicContentSearch(Input.testData1);
+				System.out.println(count);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+				
+				//Verify 
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTiffSectionDisablePrivilegedDocs();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.AddRuleAndRemoveRule(tagname);
+				driver.waitForPageToBeReady();
+				String docNo = page.getDocumentSelectionLink().getText().trim();
+				int displayCount = Integer.parseInt(docNo);
+				System.out.println(displayCount);
+				SoftAssert softAssertion = new SoftAssert();
+				if(count==displayCount) {
+					softAssertion.assertEquals(count, displayCount);
+					base.passedStep("Document count is get displayed Correctly");
+					System.out.println("count is verified");
+				}else {
+					base.failedStep("Document Count verification failed");
+					System.out.println("count not verified");
+				}
+				
+				page = new ProductionPage(driver);
+				beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingPDFSectionDisablePrivilegedDocs();
+				page.getTiffSinglePage().ScrollTo();
+				page.getTiffSinglePage().waitAndClick(10);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.AddRuleAndRemoveRule(tagname);
+				String docNo1 = page.getDocumentSelectionLink().getText().trim();
+				driver.waitForPageToBeReady();
+				int displayCount1 = Integer.parseInt(docNo1);
+				if(count==displayCount) {
+					softAssertion.assertEquals(count, displayCount1);
+					base.passedStep("Document count is get displayed Correctly");
+				}else {
+					base.failedStep("Document Count verification failed");
+				}
+				base.passedStep("Verified Priv Guard  with various tag and redaction options;");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 				
 				}
 				
