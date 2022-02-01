@@ -12,6 +12,7 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -126,6 +127,7 @@ public class DocView_Regression1 {
 		
 		baseClass.stepInfo("Verify Code same as last doc message is displayed by mouse over on code last white pencil on child window");
 		docView.verifyCodeSameAsLastDocMsgIsDisplayedOnChildWindow(Input.codeSameAsLastMsg);
+		loginPage.logout();
 		
 	}
 	
@@ -161,6 +163,7 @@ public class DocView_Regression1 {
 		
 		baseClass.stepInfo("Verify Code same as last doc message is displayed by mouse over on code last white pencil on child window");
 		docView.verifyCodeSameAsLastDocMsgIsDisplayedOnChildWindow(Input.codeSameAsLastMsg);
+		loginPage.logout();
 		
 	}
 	
@@ -198,6 +201,7 @@ public class DocView_Regression1 {
 		
 		baseClass.stepInfo("Verify Code same as last doc message is displayed by mouse over on code last white pencil on child window");
 		docView.verifyCodeSameAsLastDocMsgIsDisplayedOnChildWindow(Input.codeSameAsLastMsg);
+		loginPage.logout();
 		
 	}
 	
@@ -235,6 +239,7 @@ public class DocView_Regression1 {
 		
 		baseClass.stepInfo("Verify Code same as last doc message is displayed by mouse over on code last white pencil on child window");
 		docView.verifyCodeSameAsLastDocMsgIsDisplayedOnChildWindow(Input.codeSameAsLastMsg);
+		loginPage.logout();
 		
 	}
 	/**
@@ -301,6 +306,7 @@ public class DocView_Regression1 {
 		
 		baseClass.stepInfo("Verify selected option from untag select dropdown is blank");
 		redact.verifySelectedOptionFromUnRedactionDropdownIsBlank();
+		loginPage.logout();
 		
 	}
 	
@@ -333,6 +339,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verify redaction dropdown for audio document is not blank");
 			docViewRedact.verifyWeatherAudioRedactionDropdownIsBlank(false);
+			loginPage.logout();
 		}
 		
 		
@@ -407,6 +414,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verify redaction dropdown for audio document is blank");
 			docViewRedact.verifyWeatherAudioRedactionDropdownIsBlank(true);
+			loginPage.logout();
 		}
 		
 		/**
@@ -460,7 +468,8 @@ public class DocView_Regression1 {
 			baseClass.stepInfo("Verify Code same as last doc message is displayed by mouse over on code last white pencil");
 			docView.verifyCodeSameAsLastDocMsgIsDisplayed(Input.codeSameAsLastMsg);			
 			baseClass.stepInfo("Verify Code same as last doc message is displayed by mouse over on code last white pencil on child window");
-			docView.verifyCodeSameAsLastDocMsgIsDisplayedOnChildWindow(Input.codeSameAsLastMsg);			
+			docView.verifyCodeSameAsLastDocMsgIsDisplayedOnChildWindow(Input.codeSameAsLastMsg);
+			loginPage.logout();
 		}
 		
 		/**
@@ -490,7 +499,8 @@ public class DocView_Regression1 {
 			baseClass.stepInfo("Verify Code same as last doc message is displayed by mouse over on code last white pencil");
 			docView.verifyCodeSameAsLastDocMsgIsDisplayed(Input.codeSameAsLastMsg);		
 			baseClass.stepInfo("Verify Code same as last doc message is displayed by mouse over on code last white pencil on child window");
-			docView.verifyCodeSameAsLastDocMsgIsDisplayedOnChildWindow(Input.codeSameAsLastMsg);			
+			docView.verifyCodeSameAsLastDocMsgIsDisplayedOnChildWindow(Input.codeSameAsLastMsg);
+			loginPage.logout();
 		}
 		
 		/**
@@ -519,6 +529,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Handling new windows in docview page");
 			docViewMetaDataPage.verifyingTheNewWindowsInDocView();
+			loginPage.logout();
 
 		}
 		
@@ -583,6 +594,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Perform exclude Multiple Page Redaction by page number and page range");
 			redact.performMultiplePageRedactionForExclude(Input.defaultRedactionTag,Input.pageNumber+","+Input.pageRange+","+Input.documentIdNum);
+			loginPage.logout();
 		}
 	
 		/**
@@ -635,7 +647,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Perform exclude Multiple Page Redaction by page range");
 			redact.performMultiplePageRedactionForInclude(Redactiontag1,Input.pageRange);
-			
+			loginPage.logout();			
 		}
 		/**
 		 * @author Brundha created on:NA modified by:NA
@@ -664,6 +676,7 @@ public class DocView_Regression1 {
 	 		
 	 		baseClass.stepInfo("impersnated from reviewer to RMU");
 	 		baseClass.impersonationReviewertoRMU();
+	 		loginPage.logout();
 	 		
 		}
 		
@@ -782,6 +795,7 @@ public class DocView_Regression1 {
 	 		
 	 		baseClass.stepInfo("Filling Generate Page And Regenerating Again");
 	 		page.clickOnGenerateButtonAndVerifyPreGenChecksStatus();
+	 		loginPage.logout();
 		}
 		
 		
@@ -900,6 +914,7 @@ public class DocView_Regression1 {
 	 		
 	 		baseClass.stepInfo("Filling Generate Page And Regenerating Again");
 	 		page.clickOnGenerateButtonAndVerifyPreGenChecksStatus();
+	 		loginPage.logout();
 		}
 		
 		/**
@@ -982,6 +997,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
 			assgnPage.deleteAssignment(assignmentName);
+			loginPage.logout();
 		}
 		
 		/**
@@ -1088,6 +1104,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
 			assgnPage.deleteAssignment(assignmentName);
+			loginPage.logout();
 		}
 		
 		
@@ -1155,6 +1172,7 @@ public class DocView_Regression1 {
 			baseClass.stepInfo("Get Persistent Hit");
 			docView.getPersistentHit(Input.searchString1);
 			docView.getPersistentHit(Input.thankyouText);
+			loginPage.logout();
 			
 		}
 		
@@ -1273,6 +1291,7 @@ public class DocView_Regression1 {
 	 		
 	 		baseClass.stepInfo("Filling Generate Page And Regenerating Again");
 	 		page.clickOnGenerateButtonAndVerifyPreGenChecksStatus();
+	 		loginPage.logout();
 			
 		}
 		
@@ -1391,6 +1410,7 @@ public class DocView_Regression1 {
 	 		
 	 		baseClass.stepInfo("Filling Generate Page And Regenerating Again");
 	 		page.clickOnGenerateButtonAndVerifyPreGenChecksStatus();
+	 		loginPage.logout();
 			
 		}
 		/** 
@@ -1457,6 +1477,7 @@ public class DocView_Regression1 {
 				baseClass.stepInfo("Exception occured while handling  Producing a PDF with Page Redaction"+e.getMessage());
 				e.printStackTrace();
 			}
+			loginPage.logout();
 			
 		}
 		
@@ -1533,6 +1554,7 @@ public class DocView_Regression1 {
 				baseClass.stepInfo("Exception occured while Producing a PDF with Block Redaction burning"+e.getMessage());
 				e.printStackTrace();
 			}
+			loginPage.logout();
 		}
 
 		/**
@@ -1651,6 +1673,7 @@ public class DocView_Regression1 {
 	 		
 	 		baseClass.stepInfo("Filling Generate Page And Regenerating Again");
 	 		page.clickOnGenerateButtonAndVerifyPreGenChecksStatus();
+	 		loginPage.logout();
 		}
 		
 		
@@ -1769,6 +1792,7 @@ public class DocView_Regression1 {
 	 		
 	 		baseClass.stepInfo("Filling Generate Page And Regenerating Again");
 	 		page.clickOnGenerateButtonAndVerifyPreGenChecksStatus();
+	 		loginPage.logout();
 		}
 		
 		/**
@@ -1863,6 +1887,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verify Another user applied message displayed by adding remark in duplicate window");
 			docViewMetaDataPage.verifyAnotherUserAppliedRemarkMsgDisplayed(Input.anotherRemarkMessage);
+			loginPage.logout();
 		
 		}
 		
@@ -1901,6 +1926,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Select Doc From Family Members And Create Folder");
 			docViewMetaDataPage.selectDocFromFamilyMembersAndCreateFolder(Input.familyMembersDocId,folderName);
+			loginPage.logout();
 			
 		}
 		
@@ -1927,6 +1953,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("verifying the Document selected on minidoclist in main window");
 			doc.selectMiniDocListDocAndComparingWithParentWindow();
+			loginPage.logout();
 		}
 		
 		
@@ -1954,6 +1981,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verification of navigated DocID with parent window DocID");
 			doc.switchFromChildWindowToParentWindow();
+			loginPage.logout();
 		}
 		
 		
@@ -1982,6 +2010,7 @@ public class DocView_Regression1 {
 			baseClass.stepInfo("verify persistent Hit panel of docview contains basic search string");
 			doc.getPersistentHit(Input.testData1);
 			doc.SearchStringVerification();
+			loginPage.logout();
 		}
 		
 		/**
@@ -2006,6 +2035,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("verify persistent Hit panel of docview contains basic search string");
 			doc.verifyPersistentPanelNotContainsTerm(Input.metaDataCN);
+			loginPage.logout();
 		}
 		
 		
@@ -2046,7 +2076,7 @@ public class DocView_Regression1 {
 			baseClass.stepInfo("verify persistent Hit panel of docview contains remark");
 			docView.verifyPersistentPanelNotContainsTerm(remark);
 			
-			
+			loginPage.logout();			
 		}
 		
 		/**
@@ -2084,6 +2114,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verify Image Tab Is Enabled");
 			docView.verifyImageTabIsEnabled();
+			loginPage.logout();
 		}
 		
 		
@@ -2121,6 +2152,7 @@ public class DocView_Regression1 {
 			docView = new DocViewPage(driver);
 			
 			docView.stampCompleteNavigateNextDocumumentVerification(comment, fieldText, Input.stampSelection);
+			loginPage.logout();
 			}
 
 		
@@ -2153,6 +2185,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("Verify image tab is enabled if folder is added.");
 				docView.verifyImageEnabledAfterCreatedFolder(folderName, RowNumber);
+				loginPage.logout();
 		}
 		
 		/**
@@ -2207,6 +2240,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verify cursor navigated to child window clicking on saved stamp.");
 			miniDoc.verifyCursorNavigatedToChildWindowClickingOnSavedStamp(assgnColour, Input.stampSelection);
+			loginPage.logout();
 			
 		}
 		
@@ -2257,7 +2291,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Complete coding form and verify cursor navigated to next document.");
 			docView.completeCodingFormAndVerifyCursorNavigateToNextDoc();
-			
+			loginPage.logout();			
 		}
 		
 		
@@ -2288,6 +2322,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verifying document loaded in default view.");
 			docView.verifyDocumentLoadedInDefaultView();
+			loginPage.logout();
 		
 		}
 		
@@ -2334,6 +2369,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Refresh page");
 			driver.Navigate().refresh();
+			loginPage.logout();
 		}
 		
 		
@@ -2399,6 +2435,7 @@ public class DocView_Regression1 {
 
 			baseClass.stepInfo("Verify Native Document Tooltip");
 			docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
+			loginPage.logout();
 			
 		}
 
@@ -2464,6 +2501,7 @@ public class DocView_Regression1 {
 
 			baseClass.stepInfo("Verify PDF Document Tooltip");
 			docView.verifyingToolTipPopupMessage(Doc, ExpectedText);
+			loginPage.logout();
 			
 		}
 
@@ -2523,7 +2561,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verify Persistent Hits Panel Displayed");
 			docView.verifyPersistentHitsPanelDisplayed();
-			
+			loginPage.logout();			
 		}
 		
 		/**
@@ -2598,6 +2636,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verifying persistent Hits Displayed.");
 			docView.verifyPersistentHitsDisplayed(Input.testData1);
+			loginPage.logout();
 		}
 		
 		/**
@@ -2624,6 +2663,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Select Document From Mini Doc LIst");
 			docView.selectDocumentFromMiniDocList(rowNumber);
+			loginPage.logout();
 		}
 		
 		/**
@@ -2689,6 +2729,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verifying persistent Hits Displayed.");
 			docView.verifyPersistentHitsDisplayed(Input.searchString1);
+			loginPage.logout();
 		}
 		
 		/**
@@ -2746,6 +2787,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verify Persistent Hits Panel Displayed");
 			docView.verifyPersistentHitsPanelDisplayed();
+			loginPage.logout();
 		}
 		
 		
@@ -2805,6 +2847,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verifying persistent Hits Displayed.");
 			docView.verifyPersistentHitsDisplayed(Input.searchString1);
+			loginPage.logout();
 		}
 		
 		
@@ -2853,6 +2896,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Delete keyword");
 			keywordPage.deleteKeywordByName(keyword);
+			loginPage.logout();
 		}
 		
 		/**
@@ -2970,6 +3014,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
 			assgnPage.deleteAssignment(assignStamp);
+			loginPage.logout();
 			
 		}
 		
@@ -3022,6 +3067,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
 			agnmt.deleteAssignment(assignmentName);
+			loginPage.logout();
 			
 		}
 		
@@ -3050,7 +3096,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("verifying search terms displayed on persistaent hit panel without operator or not");
 			docView.persistenHitWithSearchStringWithOutOperator(Input.searchString1, Input.testData1,operator);
-			
+			loginPage.logout();			
 		}
 		
 		/**
@@ -3085,6 +3131,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verify image tab in doc view.");
 			docView.verifyImageTabIsNotDisplayed();
+			loginPage.logout();
 		}
 		
 		
@@ -3117,7 +3164,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Click On Translation From Translations Dropdown");
 			docView.clickOnTranslationFromTranslationsDropdown();
-			
+			loginPage.logout();			
 		}
 		
 		/**
@@ -3196,6 +3243,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Delete keyword");
 			keywordPage.deleteKeywordByName(keyword);
+			loginPage.logout();
 			
 		}
 		
@@ -3269,6 +3317,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
 			assgnPage.deleteAssignment(assignStamp);
+			loginPage.logout();
 			
 		}
 		
@@ -3330,6 +3379,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
 			agnmt.deleteAssignment(assignmentName);
+			loginPage.logout();
 			
 		}
 		
@@ -3360,6 +3410,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Select document to view in doc view");
 			assignmentPage.selectAssignmentToViewinDocview(AssignStamp);
+			loginPage.logout();
 		}
 		
 		
@@ -3400,7 +3451,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Select Doc And Download All Formats");
 			docview.selectDocAndDownloadAllFormats(Input.downloadDocID);
-
+			loginPage.logout();
 		}
 		
 		
@@ -3470,6 +3521,7 @@ public class DocView_Regression1 {
 
 			baseClass.stepInfo("Verify Native Document Tooltip");
 			docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
+			loginPage.logout();
 		}
 		
 		/**
@@ -3540,6 +3592,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
 			assgnPage.deleteAssignment(assignStamp);
+			loginPage.logout();
 			
 		}
 	
@@ -3575,6 +3628,7 @@ public class DocView_Regression1 {
 		
 			baseClass.stepInfo("Add Remark To Non Audio Document by 1000 characters");
 			docView.addRemarkToNonAudioDocument1000Characters(30, 45);
+			loginPage.logout();
 			
 		}
 		
@@ -3625,6 +3679,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("Performing Code sameAs for family members document");
 				docView.performFamilyMemeberDocCodeSameAs(rowno,DOcId,InputText);
+				loginPage.logout();
 		}
 		
 		/**
@@ -3688,6 +3743,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Delete Assgnmnt Using Pagination");
 			assignmentPage.deleteAssignment(AssignStamp);
+			loginPage.logout();
 			
 		}
 		
@@ -3718,6 +3774,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verify doclist headers expand collapse.");
 			docList.verifyDocListHeadersExpandCollapse();
+			loginPage.logout();
 		
 		}
 		
@@ -3776,6 +3833,7 @@ public class DocView_Regression1 {
 			
 			baseClass.stepInfo("Verify naviagted to doc view");
 			docView.verifyDocViewPageNaviagted();
+			loginPage.logout();
 		
 		 }
 			
@@ -3819,6 +3877,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("Verify first document of mini doc list is fully visible on doc view by navigating from doc list.");
 				docView.verifyFirstDocumentofMiniDocListIsFullyVisibleFromDocList(firstDocument);
+				loginPage.logout();
 				
 			}
 			
@@ -3881,6 +3940,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("Get Persistent Hit");
 				docView.getPersistentHit(Input.thankyouText);
+				loginPage.logout();
 			}
 			
 			
@@ -3928,6 +3988,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("Verify Remark Is Not Added");
 				docView.verifyRemarkIsNotAdded(remark2);
+				loginPage.logout();
 				
 			}
 			
@@ -4007,6 +4068,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("Delete Assgnmnt Using Pagination");
 				agnmt.deleteAssignment(assignmentName);
+				loginPage.logout();
 			}
 			
 			/**
@@ -4089,6 +4151,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("Delete keyword");
 				keywordPage.deleteKeywordByName(keyword);
+				loginPage.logout();
 			}
 			
 			/**
@@ -4132,6 +4195,7 @@ public class DocView_Regression1 {
 				
 				docView.saveConfigFromChildWindow();
 				baseClass.stepInfo("saved the minidoc list config from child window");
+				loginPage.logout();
 			}
 			
 			
@@ -4186,6 +4250,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("performing code sameAs for min doc list  in child window");
 				docView.performCodeSameAsMiniDocChildWindow();
+				loginPage.logout();
 			}
 			
 			/**
@@ -4222,6 +4287,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("Clicking on text highlighted and verify remark is not added that not editable and clickable in doc view panel.");
 				docView.verifyAlreadyRemarkedTextHighlightedNotRemarkAgain();
+				loginPage.logout();
 				
 			}
 			
@@ -4250,6 +4316,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("Verify document in docview loaded in 4 sec");
 				docView.verifyDocumentLoadedWithIn4Seconds();
+				loginPage.logout();
 				
 			}
 			
@@ -4280,6 +4347,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("Downloading and verifying Native and text format for select document");
 				docView.downloadNativerAndTextFormat(docId,Input.fileDownloadLocation);
+				loginPage.logout();
 				
 			}
 			
@@ -4310,6 +4378,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("click on previous navigation button and verifying navigation");
 				docView.performPrevNavigation(2);
+				loginPage.logout();
 			}
 			
 			/**
@@ -4371,6 +4440,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("Verify pdf document icon on default tab is not clickable");
 				docView.verifyDocumentIconIsNotClickable(pdfDocId);
+				loginPage.logout();
 			}
 			
 			
@@ -4471,6 +4541,7 @@ public class DocView_Regression1 {
 				
 				baseClass.stepInfo("Verify Pdf Document Icon Is Not Displayed On Default Tab");
 				docView.verifyDocumentIconIsNotDisplayedOnDefaultTab(pdfDocId,"P");
+				loginPage.logout();
 				
 			}
 			/**
@@ -4504,6 +4575,7 @@ public class DocView_Regression1 {
 					
 					baseClass.stepInfo("Downloading native 1 form selected document");
 					docView.downloadSelectedFormaats(Input.fileDownloadLocation,"native",null,  null ,null);
+					loginPage.logout();
 			}
 			
 			/**
@@ -4541,6 +4613,7 @@ public class DocView_Regression1 {
 				baseClass.stepInfo("select document to download translation 1 ");
 				docView.selectDocToViewInDocViewPanal(docId2);
 				docView.downloadSelectedFormats(Input.fileDownloadLocation,"tiff","translation");
+				loginPage.logout();
 				
 			}
 			
@@ -4585,6 +4658,7 @@ public class DocView_Regression1 {
 					
 					baseClass.stepInfo("Verifying N icon and tolltip message for selected document");
 					docView.verifydocIdIconAfterClickOnallTabsOndocviewPanal(N_DocID, N_DocToolTipMessage);
+					loginPage.logout();
 			}
 			
 			/**
@@ -4671,6 +4745,7 @@ public class DocView_Regression1 {
 
 				baseClass.stepInfo("Delete keyword");
 				keywordPage.deleteKeywordByName(keywordname);
+				loginPage.logout();
 
 			}
 			
@@ -4768,6 +4843,7 @@ public class DocView_Regression1 {
 
 				baseClass.stepInfo("Delete keyword");
 				keywordPage.deleteKeywordByName(keywordname);
+				loginPage.logout();
 
 			}
 			
@@ -4899,18 +4975,9 @@ public class DocView_Regression1 {
 				baseClass.stepInfo("Delete keyword");
 				keywordPage.deleteKeywordByName(keywordName1);
 				keywordPage.deleteKeywordByName(keywordName2);
+				loginPage.logout();
 			}
 			 
-		
-		@AfterMethod(alwaysRun = true)
-		public void close() {
-			try {
-				loginPage.logout();
-			} finally {
-				loginPage.closeBrowser();
-				LoginPage.clearBrowserCache();
-			} 
-		}
 		
 	     @AfterMethod(alwaysRun = true)
 		 public void takeScreenShot(ITestResult result) {
@@ -4919,7 +4986,7 @@ public class DocView_Regression1 {
 	 		Utility bc = new Utility(driver);
 	 		bc.screenShot(result);
 	 		try{ //if any tc failed and dint logout!
-	 		loginPage.logout();
+	 		loginPage.logoutWithoutAssert();
 	 		}catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -4927,6 +4994,14 @@ public class DocView_Regression1 {
 	 	 System.out.println("Executed :" + result.getMethod().getMethodName());
 	 	
 	     }
-	    
+	     @AfterClass(alwaysRun = true)
+			public void close() {
+				try {
+					loginPage.quitBrowser();
+				} finally {
+					loginPage.closeBrowser();
+					LoginPage.clearBrowserCache();
+				} 
+			}
      
 }

@@ -140,7 +140,7 @@ public class DocView_MiniDocList_Regression2 {
 
 		// Click gear icon open popup window and cancel
 		miniDocListpage.performGesrIconCancelBtn();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -201,7 +201,7 @@ public class DocView_MiniDocList_Regression2 {
 		baseClass.stepInfo("Doc are viewed in Docview successfully");
 
 		miniDocListpage.performSortDocIdMiniDocList();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -262,7 +262,7 @@ public class DocView_MiniDocList_Regression2 {
 		baseClass.stepInfo("Doc are viewed in Docview successfully");
 
 		miniDocListpage.selectSourceDocIdInAvailableField();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -323,7 +323,7 @@ public class DocView_MiniDocList_Regression2 {
 		baseClass.stepInfo("Doc are viewed in Docview successfully");
 
 		miniDocListpage.performReviewModeGearIconCheckEmailAuthorAndAddress();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -421,7 +421,7 @@ public class DocView_MiniDocList_Regression2 {
 
 		// Click Gear Icon Check Child windoe Symbol
 		docViewPage.performGearIconChildWindowSymbol();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -479,7 +479,7 @@ public class DocView_MiniDocList_Regression2 {
 							+ "with descending meta data sorting");
 
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -540,6 +540,7 @@ public class DocView_MiniDocList_Regression2 {
 					"Mini doc list Completed  Principal document is not displayed under the header successfully");
 
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -584,7 +585,7 @@ public class DocView_MiniDocList_Regression2 {
 		miniDocListpage.viewInDocView();
 
 		docViewPage.docViewMiniDocListCodeSameAs();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -649,7 +650,7 @@ public class DocView_MiniDocList_Regression2 {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
 		docViewPage.docViewMiniDocListCodeSameAsAndCompleteForReviewer();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -721,6 +722,7 @@ public class DocView_MiniDocList_Regression2 {
 
 		softAssertion.assertNotEquals(lastDocIdBFRev, lastDocIdAFRev);
 		softAssertion.assertAll();
+		loginPage.logout();
 	}
 
 	/**
@@ -794,7 +796,7 @@ public class DocView_MiniDocList_Regression2 {
 		// verifying the order of web fields
 		miniDocListpage.verifyDefaultValueInOptimizedSort();
 		baseClass.passedStep("The altered Sort order in previous session is not reflected in this session");
-
+		loginPage.logout();
 	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
@@ -803,9 +805,10 @@ public class DocView_MiniDocList_Regression2 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
+//			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

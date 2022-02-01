@@ -107,7 +107,7 @@ public class AdvancedSearch_Regression2 {
 			baseClass.failedStep("A user will be unable to search based on Remarks text on Content & Metadata"
 					+ " in basic search.Assertion failed ");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -159,6 +159,7 @@ public class AdvancedSearch_Regression2 {
 		}
 		savedSearch.SaveSearchDelete(savedSearchName);
 		savedSearch.SaveSearchDelete(savedSearchName_2);
+		loginPage.logout();
 	}
 
 	/**
@@ -208,6 +209,7 @@ public class AdvancedSearch_Regression2 {
 		}
 		savedSearch.SaveSearchDelete(savedSearchName);
 		savedSearch.SaveSearchDelete(savedSearchName_2);
+		loginPage.logout();
 	}
 
 	/**
@@ -248,6 +250,7 @@ public class AdvancedSearch_Regression2 {
 			baseClass.failedStep(
 					"Failed to verify search with combination of Content/Metadata, Audio, Conceptual, WorkProduct");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -278,6 +281,7 @@ public class AdvancedSearch_Regression2 {
 					+ "able to save the In-Session search query from advanced search");
 
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -322,6 +326,7 @@ public class AdvancedSearch_Regression2 {
 			e.printStackTrace();
 			baseClass.failedStep("All and Any Operator is not working properly on Advanced Search screen");
 		}
+		loginPage.logout();
 
 	}
 
@@ -379,6 +384,7 @@ public class AdvancedSearch_Regression2 {
 			baseClass.failedStep("Not getting threaded docs for the search successfully");
 		}
 		softAssertion.assertAll();
+		loginPage.logout();
 	}
 
 	/**
@@ -441,6 +447,7 @@ public class AdvancedSearch_Regression2 {
 		String PureHitCountAfterDistribution1 = search.verifyPureHitsCount();
 		baseClass.stepInfo("Pure hit count after Distribution of Docs  is " + PureHitCountAfterDistribution1);
 		assgnPage.deleteAssgnmntUsingPagination(assignmentName);
+		loginPage.logout();
 	}
 
 	/**
@@ -463,6 +470,7 @@ public class AdvancedSearch_Regression2 {
 		search.MetaDataSearchInAdvancedSearch(Input.metaDataName, "Andrew");
 		search.exportData();
 		search.closeExportDataPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -496,6 +504,7 @@ public class AdvancedSearch_Regression2 {
 			baseClass.failedStep("Purehits of saved search query is not displayed as expected");
 		}
 		savedSearch.SaveSearchDelete(savedSearchName);
+		loginPage.logout();
 	}
 
 	/**
@@ -512,6 +521,7 @@ public class AdvancedSearch_Regression2 {
 		String searchText = "~ ! @ # $ % & * ( ) { } | : ; , . ? / = '";
 		search.VerifyaudioSearch_DisallowedSpecialCharachters(searchText);
 		softAssertion.assertAll();
+		loginPage.logout();
 	}
 
 	/**
@@ -541,6 +551,7 @@ public class AdvancedSearch_Regression2 {
 		baseClass.stepInfo("Audio Search is done using Japnese language  is done PureHit is : " + actualPH2 + "");
 		search.saveSearchAdvanced_New(Search2, "My Saved Search");
 		savedSearch.VerifySavedSearchExecuteStatus(Search2);
+		loginPage.logout();
 	}
 
 	/**
@@ -570,6 +581,7 @@ public class AdvancedSearch_Regression2 {
 		baseClass.stepInfo(
 				"Audio Search is done using Japnese language  PureHit is displayed as expected : " + actualPH2 + "");
 		search.saveSearchAdvanced_New(Search2, "My Saved Search");
+		loginPage.logout();
 	}
 
 	/**
@@ -606,6 +618,7 @@ public class AdvancedSearch_Regression2 {
 			search.modifyAudioSearch("が", "Japanese", "min");
 			search.getPureHitsCount_ModifySearch().getText();
 			baseClass.passedStep("Sucessfully modified the query and get the search results for the japanese language");
+			loginPage.logout();
 		} catch (Exception e) {
 			e.printStackTrace();
 			baseClass.failedStep("Threshold or PureHit count mismatched from sessions search page");
@@ -644,9 +657,8 @@ public class AdvancedSearch_Regression2 {
 		} catch (Exception e) {
 			e.printStackTrace();
 			baseClass.failedStep("Threshold or PureHit count mismatched from sessions search page");
-
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -690,7 +702,7 @@ public class AdvancedSearch_Regression2 {
 		 * stepInfo("Audio Search is done using Japnese language  PureHit is displayed as expected : "
 		 * + actualPH3 + "");
 		 */
-
+		loginPage.logout();
 	}
 
 	/**
@@ -790,6 +802,7 @@ public class AdvancedSearch_Regression2 {
 
 		}
 		softAssertion.assertAll();
+		loginPage.logout();
 	}
 	/**
 	 * @author Jayanthi.ganesan
@@ -826,6 +839,7 @@ public class AdvancedSearch_Regression2 {
 			baseClass.passedStep("Saved search query is displayed as expected in saved saerch page and search screen.");
 			baseClass.passedStep("Sucessfully verified whether Saved Search Name with < 500 chars is truncating on edit search page");
 		//savedSearch.SaveSearchDelete(savedSearchName);
+			loginPage.logout();
 	}
 	/**
 	 * @author Jayanthi.ganesan
@@ -854,6 +868,7 @@ public class AdvancedSearch_Regression2 {
 				
 			}
 		}
+		loginPage.logout();
 			}
 	
 	/**
@@ -888,7 +903,7 @@ public class AdvancedSearch_Regression2 {
 		}else {
 			baseClass.failedStep("Dropped Pure Hit tile not in cart.");
 		}
-		
+		loginPage.logout();		
 		}
 	/**
 	 * @author Jayanthi.ganesan
@@ -912,6 +927,7 @@ public class AdvancedSearch_Regression2 {
 		}
 		softAssertion.assertAll();
 		baseClass.passedStep("Sucessfully Verified that result appears for phrase(in double quote) search in Advanced Search Query Screen.");
+		loginPage.logout();
 		}
 	/**
 	 * @author Jayanthi.ganesan
@@ -953,6 +969,7 @@ public class AdvancedSearch_Regression2 {
 		} else {
 			baseClass.failedStep("Exported Data is not  reflected in excel file.");
 		}
+		loginPage.logout();
 		}
 	
 	/**
@@ -982,7 +999,7 @@ public class AdvancedSearch_Regression2 {
 		baseClass.passedStep("Sucessfully Verified that belly band message appears when user tries to run search having "
 				+ "left double quote only in Advanced Search Query Screen.");
 		}
-		
+		loginPage.logout();		
 		}
 	
 	@DataProvider(name = "Export")
@@ -1026,9 +1043,9 @@ public class AdvancedSearch_Regression2 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

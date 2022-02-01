@@ -128,7 +128,7 @@ public class Reports_Regression1 {
 				baseClass.failedStep("After Logging in as " + role + " Tagscount by Tags report option is not displayed on Report menu.");
 			}
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -163,6 +163,7 @@ public class Reports_Regression1 {
 			e.printStackTrace();
 			baseClass.failedStep("Exception occured,Failed to verify Tag Types display. " + e.getMessage());
 		}
+		loginPage.logout();
 
 	}
 	
@@ -186,6 +187,7 @@ public class Reports_Regression1 {
 		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		reportPage.verifyCustomReportDisplaydetails(reportName);
 		reportPage.deleteCustomReport(reportName);	
+		loginPage.logout();
 	}
 	/**
 	 * @author Jayanthi
@@ -214,6 +216,7 @@ public class Reports_Regression1 {
 		comExpPage.generateReportusingDefaultSG();
 		baseClass.stepInfo("Report Generated.");
 		comExpPage.verifyFilters("Tags",false,TagName);
+		loginPage.logout();
 	}
 	
 	
@@ -250,6 +253,7 @@ public class Reports_Regression1 {
 		else {
 			baseClass.failedStep("File not downloaded");
 		}
+		loginPage.logout();
 
 	}
 	/**
@@ -303,6 +307,7 @@ public class Reports_Regression1 {
 		if(role=="PA") {
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagPage.deleteAllTags("ASTag");
+		loginPage.logout();
 		}
 	}
 	/**
@@ -361,6 +366,7 @@ public class Reports_Regression1 {
 			e.getStackTrace();
 			baseClass.failedStep(e.getMessage());
 		}
+		loginPage.logout();
 	
 	}
 	/**
@@ -402,6 +408,7 @@ public class Reports_Regression1 {
 			softAssertion.assertFalse(false);
 			baseClass.failedStep("All selected documents are not displayed in Doc View");
 		}
+		loginPage.logout();
 	}
 	/**
 	 * @author Jayanthi
@@ -435,7 +442,7 @@ public class Reports_Regression1 {
 					baseClass.passedStep("Tag counts By Tag page is not displayed with selection "
 							+ "criteria as Tags Types and Tags Group.");
 				}
-				
+				loginPage.logout();				
 	}
 	
 /**
@@ -455,7 +462,8 @@ public class Reports_Regression1 {
 		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		driver.waitForPageToBeReady();
 		tagCounts.ValidateResetFunctionality();
-		softAssertion.assertAll();			
+		softAssertion.assertAll();	
+		loginPage.logout();
 	}
 
 	@Test(enabled = true, groups = { "regression" }, priority = 11)
@@ -513,6 +521,7 @@ public class Reports_Regression1 {
 		softAssertion.assertAll();
 		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, true, true);
 		baseClass.passedStep("Sucessfully Validated data on Advanced batch management report when Domain and Project Admin associated to Assignments of a project");
+		loginPage.logout();
 	}
 
 	@DataProvider(name = "Users_PARMU")
@@ -535,9 +544,9 @@ public class Reports_Regression1 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

@@ -134,6 +134,7 @@ public class BasicSearch_Regression1 {
 
 		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
 		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
 
 	}
 
@@ -165,7 +166,7 @@ public class BasicSearch_Regression1 {
 
 		bc.getPopupYesBtn();
 		System.out.println("Succesfully Searched For Input " + Input.searchString2);
-
+		lp.logout();
 	}
 
 	/**
@@ -208,7 +209,7 @@ public class BasicSearch_Regression1 {
 
 		System.out.println("Conceptually similar count : " + sessionSearchPage.verifyConceptuallySimilarCount());
 		bc.stepInfo("Conceptually similar count : " + sessionSearchPage.verifyConceptuallySimilarCount());
-
+		lp.logout();
 	}
 
 	/**
@@ -236,7 +237,7 @@ public class BasicSearch_Regression1 {
 				+ " auto-suggest value is selected (presence of a space in Multiple words) then multiple values that are being selected is wrapped in double quotes.  ");
 		bc.stepInfo(autoSuggestedValue
 				+ " auto-suggest value is selected (presence of a space in Multiple words) then multiple values that are being selected is wrapped in double quotes.  ");
-
+		lp.logout();
 	}
 
 	@DataProvider(name = "reserve")
@@ -340,7 +341,7 @@ public class BasicSearch_Regression1 {
 
 		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
 		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
-
+		lp.logout();
 	}
 
 	/**
@@ -562,6 +563,7 @@ public class BasicSearch_Regression1 {
 
 		System.out.println(" successfully Proximity Warning is diplayed for input " + searchTerm);
 		bc.passedStep(" successfully Proximity Warning is diplayed for input " + searchTerm);
+		lp.logout();
 
 	}
 	
@@ -572,6 +574,7 @@ public class BasicSearch_Regression1 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
+			lp.logoutWithoutAssert();
 		}
 		try {
 			lp.quitBrowser();

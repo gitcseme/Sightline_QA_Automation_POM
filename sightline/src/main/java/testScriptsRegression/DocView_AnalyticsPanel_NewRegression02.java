@@ -1207,7 +1207,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
 			try { // if any tc failed and dint logout!
-				loginPage.logout();
+				loginPage.logoutWithoutAssert();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

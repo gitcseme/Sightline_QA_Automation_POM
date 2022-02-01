@@ -1988,6 +1988,7 @@ public class SavedSearchRegression_New {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
+			login.logoutWithoutAssert();
 		}
 		try {
 			base.clearAllCookies();

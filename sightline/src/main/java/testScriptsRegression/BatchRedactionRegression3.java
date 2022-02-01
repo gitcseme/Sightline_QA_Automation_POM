@@ -2103,13 +2103,12 @@ public class BatchRedactionRegression3 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-
+			login.logoutWithoutAssert();
 		}
 		try {
 			login.quitBrowser();
 		} catch (Exception e) {
 			login.quitBrowser();
-			login.clearBrowserCache();
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}

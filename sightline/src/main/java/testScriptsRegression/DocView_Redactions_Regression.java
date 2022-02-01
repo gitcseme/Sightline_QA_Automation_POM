@@ -169,6 +169,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			assertTrue(false);
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -223,6 +224,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			assertTrue(false);
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -262,6 +264,7 @@ public class DocView_Redactions_Regression {
 			assertTrue(false);
 		}
 		baseClass.passedStep("The redaction icon and multipage icon are sucessfully operated");
+		loginPage.logout();
 	}
 
 	/**
@@ -317,7 +320,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			assertFalse(false);
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -399,6 +402,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			assertTrue(false);
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -438,6 +442,7 @@ public class DocView_Redactions_Regression {
 		baseClass.stepInfo("Success message has been verified");
 		baseClass
 				.passedStep("Redaction using page range option for all pages in the document is successfully executed");
+		loginPage.logout();
 
 	}
 
@@ -481,7 +486,7 @@ public class DocView_Redactions_Regression {
 		baseClass.stepInfo("Success message has been verified");
 		baseClass
 				.passedStep("Redaction using page range option for all pages in the document is successfully executed");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -524,9 +529,8 @@ public class DocView_Redactions_Regression {
 			baseClass.passedStep("The Redaction name is not empty");
 		} else {
 			baseClass.failedStep("The Redaction name is empty as the previously used redaction tag was deleted");
-
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -556,7 +560,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			assertTrue(false);
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -572,6 +576,7 @@ public class DocView_Redactions_Regression {
 		System.out.println("Logged-in as RMU User");
 		docexp = new DocExplorerPage(driver);
 		docexp.exportData();
+		loginPage.logout();
 	}
 
 	/**
@@ -591,7 +596,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		docViewRedact.TextHightingNotPresentVerify();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -611,6 +616,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		docViewRedact.ToggleONhideZeroHits();
+		loginPage.logout();
 	}
 
 	/**
@@ -630,7 +636,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		docViewRedact.ToggleOFFshowZeroHits();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -694,7 +700,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			baseClass.failedStep("The color for the Highlighted text is not-verfied - Failed");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -718,6 +724,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			baseClass.failedStep("The X Icon is not displayed");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -748,6 +755,7 @@ public class DocView_Redactions_Regression {
 		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
 		actions.build().perform();
 		docViewRedact.verifyingMultipageIconColour(Input.iconColor);
+		loginPage.logout();
 	}
 
 	/**
@@ -774,6 +782,7 @@ public class DocView_Redactions_Regression {
 			baseClass.failedStep(
 					"The persistent hit button for non-audio docs from basic search is NOT avilable in DocView as RMU");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -799,6 +808,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			baseClass.failedStep("The highlite menu is NOT open while navigating docs from mini Doc List");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -822,7 +832,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			baseClass.failedStep("Remarks menu is NOT visble after navigating through docs from mini doc list");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -846,7 +856,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			baseClass.failedStep("Persistent hit menu is NOT visble after navigating through docs from mini doc list");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -879,7 +889,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			baseClass.failedStep("Error message is NOT visible if wrong page range is entered");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -914,6 +924,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			baseClass.failedStep("Error message is NOT visible if wrong page range is entered");
 		}
+		loginPage.logout();
 
 	}
 
@@ -956,7 +967,7 @@ public class DocView_Redactions_Regression {
 		robot.keyRelease(KeyEvent.VK_F5);
 		baseClass.stepInfo("Verifying that redaction is not saved since page is refreshed");
 		docViewRedact.verifyWhetherRedactionIsSaved(false);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -995,7 +1006,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifySearchUsingMagnifyingIcon(true);
 		docViewRedact.verifySearchUsingMagnifyingIcon(false);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1194,7 +1205,7 @@ public class DocView_Redactions_Regression {
 			baseClass.passedStep("Search is cleared successfully");
 
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1231,6 +1242,7 @@ public class DocView_Redactions_Regression {
 
 			baseClass.passedStep("The multipage pop up is closed after clicking the cancle button");
 		}
+		loginPage.logout();
 
 	}
 
@@ -1270,7 +1282,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			baseClass.failedStep("The persistent hit toggle is OFF while document is navigated to last");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1341,7 +1353,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			baseClass.failedStep("next button not clickable");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1406,7 +1418,7 @@ public class DocView_Redactions_Regression {
 		} else {
 			baseClass.failedStep("next btn not clickable");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1430,6 +1442,7 @@ public class DocView_Redactions_Regression {
 		baseClass.stepInfo("Search for audio docs completed");
 		sessionsearch.ViewInDocView();
 		docViewRedact.addAudioRedaction(Input.startTime, Input.endTime, Input.defaultRedactionTag);
+		loginPage.logout();
 	}
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 36)
@@ -1519,6 +1532,7 @@ public class DocView_Redactions_Regression {
 		assignmentsPage.deleteAssgnmntUsingPagination(assname);
 
 		softAssert.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -1622,6 +1636,7 @@ public class DocView_Redactions_Regression {
 		assignmentsPage.deleteAssgnmntUsingPagination(assname);
 
 		softAssert.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -1727,6 +1742,7 @@ public class DocView_Redactions_Regression {
 		assignmentsPage.deleteAssgnmntUsingPagination(assname);
 
 		softAssert.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -1769,6 +1785,7 @@ public class DocView_Redactions_Regression {
 		docView.getPersistantHitEyeIcon().waitAndClick(5);
 		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
 		docView.verifyKeywordsAreDisplayed(keywordsArray);
+		loginPage.logout();
 
 	}
 
@@ -1816,6 +1833,7 @@ public class DocView_Redactions_Regression {
 		docView.verifyKeywordsAreDisplayed(keywordsArray);
 		baseClass.impersonateReviewertoRMU();
 		assignmentsPage.deleteAssignment(assignmentName);
+		loginPage.logout();
 	}
 
 	/**
@@ -1862,6 +1880,7 @@ public class DocView_Redactions_Regression {
 		docView.verifyKeywordsAreDisplayed(keywordsArray);
 		baseClass.impersonateReviewertoRMU();
 		assignmentsPage.deleteAssignment(assignmentName);
+		loginPage.logout();
 	}
 
 	/**
@@ -1900,6 +1919,7 @@ public class DocView_Redactions_Regression {
 		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
 		docView.verifyKeywordsAreDisplayed(keywordsArray);
 		assignmentsPage.deleteAssignment(assignmentName);
+		loginPage.logout();
 	}
 
 	/**
@@ -1940,7 +1960,7 @@ public class DocView_Redactions_Regression {
 		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
 		docView.verifyKeywordsAreDisplayed(keywordsArray);
 		assignmentsPage.deleteAssignment(assignmentName);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2197,7 +2217,7 @@ public class DocView_Redactions_Regression {
 		driver.getWebDriver().close();
 
 		driver.switchTo().window(parentWindowID);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2454,6 +2474,7 @@ public class DocView_Redactions_Regression {
 		driver.getWebDriver().close();
 
 		driver.switchTo().window(parentWindowID);
+		loginPage.logout();
 
 	}
 
@@ -2631,7 +2652,7 @@ public class DocView_Redactions_Regression {
 			baseClass.failedStep(
 					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2748,6 +2769,7 @@ public class DocView_Redactions_Regression {
 		assignmentsPage.deleteAssgnmntUsingPagination(assname);
 
 		softAssert.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -2868,6 +2890,7 @@ public class DocView_Redactions_Regression {
 		assignmentsPage.deleteAssgnmntUsingPagination(assname);
 
 		softAssert.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -2912,6 +2935,7 @@ public class DocView_Redactions_Regression {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignmentsPage.deleteAssignment(assignmentName);
+		loginPage.logout();
 	}
 
 	/**
@@ -2984,6 +3008,7 @@ public class DocView_Redactions_Regression {
 
 		softAssert.assertNotEquals(beforeComplete, afterComplete);
 		softAssert.assertAll();
+		loginPage.logout();		
 	}
 
 	/**
@@ -3149,7 +3174,7 @@ public class DocView_Redactions_Regression {
 		}
 
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3322,7 +3347,7 @@ public class DocView_Redactions_Regression {
 		}
 
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3495,7 +3520,7 @@ public class DocView_Redactions_Regression {
 		}
 
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -4045,6 +4070,7 @@ public class DocView_Redactions_Regression {
 		}
 
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -4815,7 +4841,7 @@ public class DocView_Redactions_Regression {
 		driver.switchTo().window(parentWindowID);
 
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -4976,6 +5002,7 @@ public class DocView_Redactions_Regression {
 		driver.switchTo().window(parentWindowID);
 
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -5046,7 +5073,7 @@ public class DocView_Redactions_Regression {
 		sessionSearch.viewInDocView_redactions();
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -5102,7 +5129,7 @@ public class DocView_Redactions_Regression {
 		sessionSearch.viewInDocView_redactions();
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -5195,6 +5222,7 @@ public class DocView_Redactions_Regression {
 
 		softAssert.assertNotEquals(beforeComplete, afterComplete);
 		softAssert.assertAll();
+		loginPage.logout();
 	}
 
 	/**
@@ -5301,7 +5329,7 @@ public class DocView_Redactions_Regression {
 
 		softAssert.assertNotEquals(beforeComplete, afterComplete);
 		softAssert.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -5341,7 +5369,7 @@ public class DocView_Redactions_Regression {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 		docView.verifyReviewModeText();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -5387,7 +5415,7 @@ public class DocView_Redactions_Regression {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignmentspage.deleteAssgnmntUsingPagination(assignmentName);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -5418,6 +5446,7 @@ public class DocView_Redactions_Regression {
 		// Verifying multiple multiPage redactions
 
 		docViewRedact.multipleMultiPageRedactions(Input.pageRange1, Input.pageRange2, Input.pageRange3);
+		loginPage.logout();
 	}
 
 	/**
@@ -5470,6 +5499,7 @@ public class DocView_Redactions_Regression {
 
 		// verifying all redaction count status after performing redaction
 		docViewRedact.verifyAllRedactionCountStatusAfterRedaction(beforeRedactedCount);
+		loginPage.logout();
 	}
 
 	/**
@@ -5574,6 +5604,7 @@ public class DocView_Redactions_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
 		softAssert.assertAll();
+		loginPage.logout();
 	}
 
 	/**
@@ -5625,6 +5656,7 @@ public class DocView_Redactions_Regression {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
+		loginPage.logout();
 	}
 
 	/**
@@ -5658,6 +5690,7 @@ public class DocView_Redactions_Regression {
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
 		docView.getPersistantHitEyeIcon().Click();
 		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(keywordsArrayPT[0]);
+		loginPage.logout();
 
 	}
 
@@ -5734,6 +5767,7 @@ public class DocView_Redactions_Regression {
 		baseClass.stepInfo("persistent hits panel is not retain previously viewed hits");
 		softAssert.assertEquals(beforeComplete, afterComplete);
 		softAssert.assertAll();
+		loginPage.logout();
 	}
 
 	/**
@@ -5832,6 +5866,7 @@ public class DocView_Redactions_Regression {
 			baseClass.failedStep("Persistent hit panels are not displayed");
 		}
 		softAssert.assertAll();
+		loginPage.logout();
 	}
 
 	/**
@@ -5905,7 +5940,7 @@ public class DocView_Redactions_Regression {
 
 		// verifying the default selection of redaction tag
 		docViewRedact.verifyDefaultRedactionTagSelectionInMultiPageRedact();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -6150,6 +6185,7 @@ public class DocView_Redactions_Regression {
 		savedSearch.savedSearchToDocView(searchName);
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
 	}
 
 	/**
@@ -6200,7 +6236,7 @@ public class DocView_Redactions_Regression {
 			baseClass
 					.failedStep("Redaction not done when entering only page range with default selected redaction tag");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -6268,7 +6304,7 @@ public class DocView_Redactions_Regression {
 			baseClass.failedStep(
 					"Redaction tag selected automatically which is not applied for last redaction as per user session");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -6351,6 +6387,7 @@ public class DocView_Redactions_Regression {
 		}
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyViewDocAnalyticalPanelPartInMiniDocList();
+		loginPage.logout();
 	}
 
 	/**
@@ -6438,7 +6475,7 @@ public class DocView_Redactions_Regression {
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
 
 		softAssert.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -6516,7 +6553,7 @@ public class DocView_Redactions_Regression {
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
 
 		softAssert.assertAll();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -6592,7 +6629,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -6655,7 +6692,7 @@ public class DocView_Redactions_Regression {
 
 		// verify ThisPage Redacted Maintained
 		docViewRedact.verifyThisPageHighlightMaintained(true);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -6726,6 +6763,7 @@ public class DocView_Redactions_Regression {
 
 		// Verify Position Retained
 		docViewRedact.verifyRectangleHighlightPositionRetained(xAxis, yAxis, true);
+		loginPage.logout();
 
 	}
 
@@ -6797,7 +6835,7 @@ public class DocView_Redactions_Regression {
 
 		// Verify Position Retained
 		docViewRedact.verifyRectangleRedactionPositionRetained(xAxis, yAxis, true);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -6867,6 +6905,7 @@ public class DocView_Redactions_Regression {
 
 		// Verify Position Retained
 		docViewRedact.verifyTextRedactionPositionRetained(xAxis, yAxis, true);
+		loginPage.logout();
 
 	}
 	
@@ -6906,6 +6945,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
+		loginPage.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -6915,9 +6955,10 @@ public class DocView_Redactions_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
+//			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

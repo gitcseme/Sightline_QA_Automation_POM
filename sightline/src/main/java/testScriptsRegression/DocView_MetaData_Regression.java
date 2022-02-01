@@ -108,6 +108,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Create new folder and add selected document to it");
 		docViewMetaDataPage.createNewFolderAndAddSelectedDocument(Input.randomText+String.valueOf(utility.dynamicNameAppender()));
+		loginPage.logout();
 	}
 	
 	
@@ -172,6 +173,7 @@ public class DocView_MetaData_Regression {
 		manageAssignment.getBackToManageButton().Click();
 		manageAssignment.navigateToDocView(row);
 		docViewMetaDataPage.verifyHistoryTabIsEnabled();
+		loginPage.logout();
 	}
 
 
@@ -205,6 +207,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Verifying hidden properties is blank from Doc view page");
 		docViewMetaDataPage.verifyHiddenPropertiesIsBlank();
+		loginPage.logout();
 		
 	}
 	/**
@@ -243,7 +246,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Verify reduction tagged and untagged added to history table.");
 		docViewMetaDataPage.verifyReductionTaggedAndUnTaggedAddedToHistory();
-		
+		loginPage.logout();		
 	}
 	
 	/**
@@ -319,13 +322,8 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Verify project field entered in project field text field value is added to meta data");
 		docViewMetaDataPage.verifyProjectFieldEnteredInMetadataTable(random2);
-	}
-	
-	
-	
-	
-	
-	
+		loginPage.logout();
+		}
 	
 	/**
 	 * Author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
@@ -363,6 +361,7 @@ public class DocView_MetaData_Regression {
 		manageAssignment.navigateToDocView(row);
 		docViewMetaDataPage.verifyMetaDataPanelIsEnabled();
 		docViewMetaDataPage.navigateBack();
+		loginPage.logout();
 	}
 	
 	
@@ -419,6 +418,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Verify Metadata tab pop up");
 		docViewMetaDataPage.verifyMetaDataPopup();
+		loginPage.logout();
 		
 	}
 	
@@ -449,7 +449,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Create new folder and add selected document to it");
 		docViewMetaDataPage.createNewFolderAndAddSelectedDocument(Input.randomText+String.valueOf(utility.dynamicNameAppender()));
-		
+		loginPage.logout();		
 	}
 	
 	/**
@@ -502,6 +502,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Impersonate Reviewer to RMU");
 		baseClass.impersonateReviewertoRMU();
+		loginPage.logout();
 	}
 	
 	
@@ -525,8 +526,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Verifying metadata pop up table is paginated in  doc view page.");
 		docViewMetaDataPage.verifyMetaDataPopIsPaginated();
-		
-		
+		loginPage.logout();		
 	}
 	 
 	/**
@@ -569,9 +569,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Verify history table column headers");
 		docViewMetaDataPage.verifyHistoryTableColumnHeaders(Input.actionColumnName, Input.nameColumnName, Input.userColumnName, Input.timeStampColumnName);
-		
-		
-		
+		loginPage.logout();		
 	}
 	
 	
@@ -641,7 +639,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Refresh page");
 		driver.Navigate().refresh();
-		
+		loginPage.logout();		
 	}
 	
 	
@@ -730,6 +728,7 @@ public class DocView_MetaData_Regression {
 			
 			baseClass.impersonateDAtoPA();
 		}
+		loginPage.logout();
 	}
 	
 	
@@ -760,6 +759,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Create new folder and add selected document to it");
 		docViewMetaDataPage.createNewFolderAndAddSelectedDocument(Input.randomText+Utility.dynamicNameAppender());
+		loginPage.logout();
 	}
 	
 	/**
@@ -809,6 +809,7 @@ public class DocView_MetaData_Regression {
 	
 		baseClass.stepInfo("Verify Inactive Project Field Not Displayed In MetadataTab.");
 		docViewMetaDataPage.verifyInactiveProjectFieldNotDisplayedInMetadataTab(random1);
+		loginPage.logout();
 	}
 	
 	
@@ -862,6 +863,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Verify Added Folder Displayed On Folder Tree");
 		docViewMetaDataPage.verifyAddedFolderDisplayedOnFolderTree(foldername);
+		loginPage.logout();
 	}
 	
 	/**
@@ -888,6 +890,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Verify folder tab does not have any folders except default all folders.");
 		docViewMetaDataPage.verifyFolderTabNotContainsFolders();
+		loginPage.logout();
 	}
 	
 	
@@ -935,7 +938,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Verify history table column headers");
 		docViewMetaDataPage.verifyHistoryTableColumnHeaders(Input.actionColumnName, Input.nameColumnName, Input.userColumnName, Input.timeStampColumnName);
-		
+		loginPage.logout();		
 	}
 	
 	/**
@@ -1023,7 +1026,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Delete Assgnmnt Using Pagination");
 		assgnPage.deleteAssignment(assignmentName);
-		
+		loginPage.logout();		
 	}
 	
 	
@@ -1105,7 +1108,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Verify folder tab contains folders and expand collapse button is displayed.");
 		docViewMetaDataPage.verifyFolderTabContainsFolders();
-		
+		loginPage.logout();		
 	}
 	
 	/**
@@ -1193,7 +1196,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Delete Assgnmnt Using Pagination");
 		assgnPage.deleteAssignment(assignmentName);
-		
+		loginPage.logout();		
 	}
 	
 	/**
@@ -1263,6 +1266,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Delete Assgnmnt Using Pagination");
 		assgnPage.deleteAssignment(assignmentName);
+		loginPage.logout();
 		
 	}
 	@AfterMethod(alwaysRun = true)
@@ -1272,9 +1276,10 @@ public class DocView_MetaData_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
+//			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

@@ -329,6 +329,7 @@ public class DocViewAudio_IndiumRegression {
 		else {
 			baseClass.failedStep("Search term not displayed");
 		}		
+		loginPage.logout();
 	}
 	
 	
@@ -386,6 +387,7 @@ public class DocViewAudio_IndiumRegression {
         	baseClass.failedMessage("persistent hit navigation not worked when searched with phrase and quote");
         	
         }
+        loginPage.logout();
   
 	}
 
@@ -395,6 +397,7 @@ public class DocViewAudio_IndiumRegression {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
+			loginPage.logoutWithoutAssert();
 		}
 		try {
 			// loginPage.logout();
