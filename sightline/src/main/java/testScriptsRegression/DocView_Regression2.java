@@ -2404,6 +2404,74 @@ public class DocView_Regression2 {
 		}
 		
 	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-49972 
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 39)
+	public void VerifyThisPageRedactionTagSelection() throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49972");
+		baseClass.stepInfo("Verify that when applies ‘This Page’ redaction for the first time then application should automatically select the ‘Default Redaction Tag’");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.clickingRedactionIcon();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
+		docViewRedact.thisPageRedaction().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.rectangleRedactionTagSelect().Visible() && docViewRedact.rectangleRedactionTagSelect().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.rectangleRedactionTagSelect().waitAndFind(10);
+		Select redactionTag = new Select(docViewRedact.rectangleRedactionTagSelect().getWebElement());
+		String attribute = redactionTag.getFirstSelectedOption().getAttribute("text");
+		System.out.println(attribute);
+		if(attribute.equalsIgnoreCase("Default Redaction Tag")) {
+			baseClass.passedStep("The first selected redaction tag is Default Redaction Tag");
+		} else {
+			baseClass.failedStep("The first selected redaction tag is NOT Default Redaction Tag");
+		}}
+		
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-47725
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 40)
+	public void VerifyRectangleRedactionDeletion() throws Exception {
+		baseClass = new BaseClass(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47725");
+		baseClass.stepInfo("Verify user can delete the redaction in a document");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.redactRectangleUsingOffset(0, 0, 200, 100);
+		docViewRedact.selectingRectangleRedactionTag();
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.rectangleClick().Visible() && docViewRedact.rectangleClick().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.rectangleClick().waitAndClick(8);
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).click();
+		actions.build().perform();
+		actions.moveToElement(docViewRedact.deleteClick().getWebElement());
+		actions.click();
+		actions.build().perform();
+		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Deleted successfully");
+
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)
