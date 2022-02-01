@@ -59,6 +59,7 @@ public class DocView_Sprint2_Regression {
 	SoftAssert softAssertion;
 	KeywordPage keywordPage;
 	SavedSearch savedSearch;
+	ReusableDocViewPage reusableDocView;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -4028,10 +4029,6 @@ public class DocView_Sprint2_Regression {
 		softAssertion.assertTrue(docView.getDocView_Production_Image().isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("Associated images is displayed on click of Images tab.Pagination is loaded for the multiple images");
-
-
-		
-		
 		
 	}
 
@@ -4216,7 +4213,7 @@ public class DocView_Sprint2_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority = 66)
 	public void verifyAssignmentProgressBarCompleteDocs() throws Exception {
 
-		baseClass.stepInfo("Test case Id: RPMXCON-51271");
+		baseClass.stepInfo("Test case Id: RPMXCON-51272");
 		baseClass.stepInfo("Verify assignment progress bar refreshesh after completing the document.");
 
 		sessionSearch = new SessionSearch(driver);
@@ -4245,13 +4242,49 @@ public class DocView_Sprint2_Regression {
 
 		// edit coding form
 		docView.editCodingFormComplete();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
 		baseClass.waitForElement(docView.getDashboardButton());
 		docView.getDashboardButton().Click();
-		baseClass.waitForElement(docView.getDocView_AssignmentProgressDocs());
-		String progress = docView.getDocView_AssignmentProgressDocs().getText();
-		System.out.println(progress);
-		baseClass.passedStep("Docs Are Completed After Progress bar is Updated Succesfully");
 
+		// verify assignment progress bar in completed docs
+		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+
+		} else {
+			System.out.println("not completed");
+			baseClass.failedStep("Doc not completed");
+		}
+		loginPage.logout();
+
+		// Login as REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
+
+		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		// edit coding form
+		docView.editCodingFormComplete();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(docView.getDashboardButton());
+		docView.getDashboardButton().Click();
+
+		// verify assignment progress bar in completed docs
+		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+
+		} else {
+			System.out.println("not completed");
+			baseClass.failedStep("Doc not completed");
+		}
+		
 	}
 
 	/**
@@ -4315,6 +4348,172 @@ public class DocView_Sprint2_Regression {
 		} else {
 			baseClass.failedStep("All existing folder under that security group is not displayed");
 		}
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 1/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify assignment progress bar refreshesh after completing the
+	 * document on selecting code same as this action. 'RPMXCON-51274' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 68)
+	public void verifyAssignmentProgressBarCodeSameAsAction() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51274");
+		baseClass.stepInfo(
+				"Verify assignment progress bar refreshesh after completing the document on selecting code same as this action.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.toggleEnableSaveWithoutCompletion();
+		assignmentsPage.add2ReviewerAndDistribute();
+
+		baseClass.stepInfo("Step 2: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+
+		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		// perform MiniDocList CodeSame As
+		docView.selectDocsFromMiniDocsAndCodeSameAs();
+		// edit coding form
+		docView.editCodingFormComplete();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(docView.getDashboardButton());
+		docView.getDashboardButton().Click();
+
+		// verify assignment progress bar in completed docs
+		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+
+		} else {
+			System.out.println("not completed");
+			baseClass.failedStep("Doc not completed");
+		}
+		loginPage.logout();
+
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		// perform MiniDocList CodeSame As
+		docView.selectDocsFromMiniDocsAndCodeSameAs();
+		// edit coding form
+		docView.editCodingFormComplete();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(docView.getDashboardButton());
+		docView.getDashboardButton().Click();
+
+		// verify assignment progress bar in completed docs
+		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+
+		} else {
+			System.out.println("not completed");
+			baseClass.failedStep("Doc not completed");
+		}
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 1/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify assignment progress bar refreshesh after applying coding
+	 * stamp. 'RPMXCON-51276' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 69)
+	public void verifyAssignmentProgressBarCompleteTheCodingStamp() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51276");
+		baseClass.stepInfo("Verify assignment progress bar refreshesh after applying coding stamp.");
+
+		sessionSearch = new SessionSearch(driver);
+		reusableDocView = new ReusableDocViewPage(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		baseClass.stepInfo("Step 2: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+
+		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		reusableDocView.stampColourSelection(Input.searchString2, Input.stampColour);
+		// edit coding form
+		docView.editCodingFormComplete();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(docView.getDashboardButton());
+		docView.getDashboardButton().Click();
+
+		// verify assignment progress bar in completed docs
+		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+
+		} else {
+			System.out.println("not completed");
+			baseClass.failedStep("Doc not completed");
+		}
+		loginPage.logout();
+
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		reusableDocView.stampColourSelection(Input.searchString2, Input.stampColour);
+		// edit coding form
+		docView.editCodingFormComplete();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(docView.getDashboardButton());
+		docView.getDashboardButton().Click();
+        softAssertion.assertTrue(assignmentsPage.getBatchAssignmentBar(assname).isDisplayed());
+		baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+
 	}
 
 	@AfterMethod(alwaysRun = true)
