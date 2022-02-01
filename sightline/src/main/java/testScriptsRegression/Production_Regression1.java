@@ -8579,6 +8579,107 @@ public void verifySaveTemplateAndRetainedValueInRotationConfiguration() throws E
 	loginPage.logout();
 
 }
+/**
+ * @author Brundha created on:NA modified by:NA TESTCASE
+ *         No:RPMXCON-47976
+ * @Description: To Verify Keep Docs w/ No Master Date on Numbering and Sorting
+ *               Page.
+ */
+@Test(groups = { "regression" }, priority = 113)
+public void verifyTheMasterDateInGeneratedProduction() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	base.stepInfo("RPMXCON-47976 -Production Sprint 11");
+	base.stepInfo("To Verify Keep Docs w/ No Master Date on Numbering and Sorting Page.");
+	String testData1 = Input.testData1;
+	foldername = "FolderProd" + Utility.dynamicNameAppender();
+	tagname = "Tag" + Utility.dynamicNameAppender();
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+	tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearchForTwoItems(testData1,Input.newNearDupeDocId);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingTIFFSection(tagname, Input.tagNamePrev);
+	page.verifyingComponentTabOnMarkComplete();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.verifyMasterDateRetainedOnMarkComplete();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+	tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+}
+
+
+/**
+ * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-46895
+ * @Description:Verify the Production for Audio Files for International Language
+ *                     Package.
+ * 
+ */
+ @Test(groups = { "regression" }, priority = 114)
+public void ProductionGenerateForAudioFile() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	base.stepInfo("RPMXCON-46895 -Production Sprint 11");
+	base.stepInfo("Verify the Production for Audio Files for International Language Package.");
+
+	String foldername = "Folder" + Utility.dynamicNameAppender();
+	String productionname = "p" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.audioSearch(Input.audioSearch, Input.audioLanguage);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProductionAndSave(productionname);
+	page.fillingDATSection();
+	page.SelectMP3FileAndVerifyLstFile();
+	driver.scrollPageToTop();
+	page.getSaveBtn().Click();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+
+}
 
 @AfterMethod(alwaysRun = true)
 public void takeScreenShot(ITestResult result) {
