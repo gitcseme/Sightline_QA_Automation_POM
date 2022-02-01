@@ -161,6 +161,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -224,6 +225,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -271,6 +273,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -318,6 +321,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -348,6 +352,7 @@ public class Production_Page_Regression {
 		softAssertion.assertEquals(actual, expected);
 		baseClass.passedStep(
 				"Error message displayed in DAT as No fields are added in the DAT section. Please complete before navigating to the next step.");
+		loginPage.logout();
 
 	}
 
@@ -395,6 +400,7 @@ public class Production_Page_Regression {
 		softAssertion.assertEquals(actual, expected);
 		baseClass.passedStep(
 				"Error message displayed in DAT as In the DAT configuration, at least one of the project fields is mapped to multiple DAT fields. Do you want to continue with this same configuration?");
+		loginPage.logout();
 	}
 
 	/**
@@ -461,6 +467,7 @@ public class Production_Page_Regression {
 		softAssertion.assertEquals(actual, expected);
 		baseClass.passedStep(
 				"Error message displayed in DAT as Multiple project fields are not allowed to be mapped to the same field in DAT. Please check.");
+		loginPage.logout();
 	}
 
 	/**
@@ -492,6 +499,7 @@ public class Production_Page_Regression {
 		softAssertion.assertEquals(actual, expected);
 		baseClass.passedStep(
 				"Error message displayed in DAT as Special characters other than underscore (_) are not allowed in the  DAT field names. Please check.");
+		loginPage.logout();
 	}
 
 	/**
@@ -523,6 +531,7 @@ public class Production_Page_Regression {
 		softAssertion.assertEquals(actual, expected);
 		baseClass.passedStep(
 				"Error message displayed in DAT as DAT field names must begin with an alphabet. Please check.");
+		loginPage.logout();
 	}
 
 	/**
@@ -567,6 +576,7 @@ public class Production_Page_Regression {
 		softAssertion.assertEquals(actual, expected);
 		baseClass.passedStep(
 				"Error message displayed in DAT asBates Number must be selected in the DAT for a production.");
+		loginPage.logout();
 	}
 
 	/**
@@ -610,6 +620,7 @@ public class Production_Page_Regression {
 		softAssertion.assertEquals(actual, expected);
 		baseClass.passedStep(
 				"Error message displayed in DAT as Selection of the DAT component is mandatory for a production.");
+		loginPage.logout();
 	}
 
 	/**
@@ -670,6 +681,7 @@ public class Production_Page_Regression {
 		page.verifyProductionStatusInHomePage("Post-Gen QC Checks Complete", productionname);
 		baseClass.passedStep(
 				" Generation is completed and displays 'Prod Generation Complete' status in Grid View on Production Home page");
+		loginPage.logout();
 	}
 
 	/**
@@ -740,6 +752,7 @@ public class Production_Page_Regression {
 
 //		loginPage.logout();
 //		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.logout();
 	}
 
 	/**
@@ -803,6 +816,7 @@ public class Production_Page_Regression {
 		driver.Navigate().refresh();
 		page.verifyProductionStatusInHomePage("Reserving Bates Range", productionname);
 		baseClass.passedStep(" 'Reserving Bates Range' status on Grid View on Production Home page");
+		loginPage.logout();
 	}
 
 	/**
@@ -865,6 +879,7 @@ public class Production_Page_Regression {
 		driver.Navigate().refresh();
 		page.verifyProductionStatusInHomePage("Pre-Gen Checks Complete", productionname);
 		baseClass.passedStep(" verified 'Pre-Gen Checks Complete 'status on Grid View on Production Home page");
+		loginPage.logout();
 	}
 
 	/**
@@ -929,6 +944,7 @@ public class Production_Page_Regression {
 		driver.Navigate().refresh();
 		page.verifyProductionStatusInHomePage("Pre-Gen Checks Complete", productionname);
 		baseClass.passedStep("verified 'Pre-Gen Checks Complete 'status on  Production Home page");
+		loginPage.logout();
 	}
 
 	/**
@@ -993,6 +1009,7 @@ public class Production_Page_Regression {
 		page.verifyProductionStatusInGenPage("Post-Generation QC Checks In Progress");
 		baseClass.passedStep(
 				" Generation is completed and displays Post-Gen QC Checks In Progress' status Generation page");
+		loginPage.logout();
 
 	}
 
@@ -1062,6 +1079,7 @@ public class Production_Page_Regression {
 		page.verifyProductionStatusInHomePage("Post-Gen QC Checks Complete", productionname);
 		baseClass.passedStep(
 				" Post Generation is in progress, it will displays status on Production Progress bar ,Tile View as 'Post-Gen QC Checks In Progress'");
+		loginPage.logout();
 	}
 
 	/**
@@ -1115,6 +1133,7 @@ public class Production_Page_Regression {
 		baseClass.waitForElement(page.getClkBtnDownloadDATFiles());
 		page.getClkBtnDownloadDATFiles().waitAndClick(5);
 		baseClass.VerifySuccessMessage("Your Production DAT Archive download will get started shortly");
+		loginPage.logout();
 	}
 
 	/**
@@ -1165,7 +1184,7 @@ public class Production_Page_Regression {
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		baseClass.passedStep(
 				"Production generated  by selecting components like DAT,TIFF,NATIVE and with selection of multiple tags with audio files");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1204,7 +1223,7 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, tagname,
 				beginningBates);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1246,7 +1265,7 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, tagname,
 				beginningBates);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1295,7 +1314,7 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		String expected = page.getValueTotalDocuments().getText();
 		baseClass.passedStep("Total Documents:" + expected);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1343,7 +1362,7 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		String expected = page.getValueTotalPagesCount().getText();
 		baseClass.passedStep("Total Page count is:" + expected);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1388,6 +1407,7 @@ public class Production_Page_Regression {
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		loginPage.logout();
 
 	}
 
@@ -1456,6 +1476,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -1501,6 +1522,7 @@ public class Production_Page_Regression {
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -1547,6 +1569,7 @@ public class Production_Page_Regression {
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -1581,6 +1604,7 @@ public class Production_Page_Regression {
 			Assert.assertTrue(true);
 			baseClass.passedStep("Generate Load File is  enabled by default  for TIFF components.");
 		}
+		loginPage.logout();
 
 	}
 
@@ -1616,6 +1640,7 @@ public class Production_Page_Regression {
 			Assert.assertTrue(true);
 			baseClass.passedStep("Generate Load File is  enabled by default  for PDF components.");
 		}
+		loginPage.logout();
 
 	}
 
@@ -1680,6 +1705,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 
 		baseClass.passedStep("verified Production Generation for NATIVE/PDF/TIFF/Text");
+		loginPage.logout();
 	}
 
 	/**
@@ -1709,6 +1735,7 @@ public class Production_Page_Regression {
 		softAssertion.assertEquals(actual, expected);
 		softAssertion.assertAll();
 		baseClass.passedStep("verified that confirmation message is displays if Blank Page Removal option is enabled");
+		loginPage.logout();
 
 	}
 
@@ -1764,6 +1791,7 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -1818,6 +1846,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 
 	}
 
@@ -1847,6 +1876,7 @@ public class Production_Page_Regression {
 		if (page.getPriveldge_TextArea().isDisplayed()) {
 			baseClass.passedStep("Verified 'Placeholders' section in Tiff/PDF components");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -1868,7 +1898,7 @@ public class Production_Page_Regression {
 		if (page.nativeSectionBlueText().isDisplayed()) {
 			baseClass.passedStep("Verified Native section in Production Components section");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1931,7 +1961,7 @@ public class Production_Page_Regression {
 		page.isFileDownloaded(downloadsHome, name);
 		baseClass.passedStep(
 				"Verified that user can download the production by using the Shareable link for 'DAT Only'");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1987,6 +2017,7 @@ public class Production_Page_Regression {
 		page.prodGenerationInProgressStatus();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		page.verifyDownloadProductionUsingSharableLink();
+		loginPage.logout();
 	}
 
 	/**
@@ -2041,6 +2072,7 @@ public class Production_Page_Regression {
 		page.prodGenerationInProgressStatus();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		page.verifyDownloadProductionUsingSharableLinkAndCheckErrorMessage();
+		loginPage.logout();
 	}
 
 	/**
@@ -2095,6 +2127,7 @@ public class Production_Page_Regression {
 		page.prodGenerationInProgressStatus();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		page.verifyDownloadProductionUsingInvalidLink();
+		loginPage.logout();
 	}
 
 	/**
@@ -2154,6 +2187,7 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -2221,6 +2255,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -2280,6 +2315,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -2340,6 +2376,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -2395,6 +2432,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -2446,6 +2484,7 @@ public class Production_Page_Regression {
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -2477,6 +2516,7 @@ public class Production_Page_Regression {
 		driver.waitForPageToBeReady();
 		page.getProductionFromHomepage(productionname).isDisplayed();
 		page.saveProductionAsTemplateAndVerifyInManageTemplateTab(productionname, templateName);
+		loginPage.logout();
 
 	}
 
@@ -2535,6 +2575,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -2561,7 +2602,7 @@ public class Production_Page_Regression {
 		page.fillingTextSection();
 		page.getComponentsMarkComplete().waitAndClick(10);
 		baseClass.VerifySuccessMessage("Mark Complete successful");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2621,7 +2662,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2682,6 +2723,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -2740,6 +2782,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -2796,6 +2839,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -2874,6 +2918,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -2928,6 +2973,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -2980,6 +3026,7 @@ public class Production_Page_Regression {
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -3048,7 +3095,7 @@ public class Production_Page_Regression {
 		else {
 			baseClass.failedMessage("Prefix and suffix is not displayed in user metadata field");
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3110,7 +3157,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(folder);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3184,6 +3231,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -3251,6 +3299,7 @@ public class Production_Page_Regression {
 		baseClass.passedStep("Total Document Count of  DocView : " + docviewCount);
 
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 
@@ -3312,7 +3361,7 @@ public class Production_Page_Regression {
 		// Delete Tag and folder
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(folder);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -3373,6 +3422,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.deleteAllTags(tagname);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(folder);
+		loginPage.logout();
 	}
 
 	@DataProvider(name = "PAandRMU")
@@ -3389,9 +3439,9 @@ public class Production_Page_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

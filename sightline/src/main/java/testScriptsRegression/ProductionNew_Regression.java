@@ -95,6 +95,7 @@ public class ProductionNew_Regression {
 		page.selectingDefaultSecurityGroup();
 		// verify saved template controls in dat mapping
 		page.viewSaveTemplateControlForDATMapping();
+		loginPage.logout();
 	}
 
 	/**
@@ -131,6 +132,7 @@ public class ProductionNew_Regression {
 		
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 
 	}
 
@@ -184,6 +186,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 	}
 	
 	/**
@@ -228,7 +231,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -284,7 +287,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
-
+		loginPage.logout();
 	}
 	
 	/**
@@ -308,7 +311,7 @@ public class ProductionNew_Regression {
 		page.addANewProduction(productionname);
 		page.fillingTheTIFFSection();
 		base.passedStep("Verified TIFF section");
-		
+		loginPage.logout();		
 	}
 	
 	/**
@@ -329,6 +332,7 @@ public class ProductionNew_Regression {
 	page.fillingDATSection();
 	page.fillingNativeSectionWithoutSelectingTag();
 	base.passedStep("Error Message for NATIVE is Displayed");
+	loginPage.logout();
 	}
 	
 	/**
@@ -349,6 +353,7 @@ public class ProductionNew_Regression {
 	page.fillingDATSection();
 	page.AssertionInTIFFSection();
 	base.passedStep("Error Message Displayed");
+	loginPage.logout();
 	}
 	
 	
@@ -407,6 +412,7 @@ public class ProductionNew_Regression {
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 	tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+	loginPage.logout();
 	}
 	
 	/**
@@ -530,6 +536,7 @@ public class ProductionNew_Regression {
              //To delete the created Tag and folder 
            	tagsAndFolderPage = new TagsAndFoldersPage(driver);
            	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+           	loginPage.logout();
           }
 	
 	
@@ -569,6 +576,7 @@ public class ProductionNew_Regression {
 			Assert.assertTrue(false, message);
 			base.failedStep("Error message is not displayed for mp3 component");
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -611,6 +619,7 @@ public class ProductionNew_Regression {
 				Assert.assertTrue(false, message);
 				base.failedStep("Error message is not displayed for  not selecting redaction tags");
 			}
+		loginPage.logout();
 			}
 
 	/**
@@ -648,6 +657,7 @@ public class ProductionNew_Regression {
 				Assert.assertTrue(false, message);
 				base.failedStep("Error message is not displayed for  not selecting redaction tags");
 			}
+		loginPage.logout();
 	}
 	
 	/**
@@ -702,6 +712,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 	}
 	
 
@@ -741,6 +752,7 @@ public class ProductionNew_Regression {
 		//To delete the created Tag and folder 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 	}
 	
 	
@@ -797,6 +809,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 	}
 
 	
@@ -860,6 +873,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 		
 	}
 
@@ -901,6 +915,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 
 	}
 	
@@ -968,6 +983,7 @@ public class ProductionNew_Regression {
 		//To delete the created Tag and folder 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 	}
 	
 	/**
@@ -1024,6 +1040,7 @@ public class ProductionNew_Regression {
 		//To delete the created Tag and folder 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -1078,6 +1095,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 	}
 	
 	/**
@@ -1134,6 +1152,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 	}
 
 	/**
@@ -1183,6 +1202,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 	}
 		
 	/**
@@ -1240,6 +1260,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 	}
 	
 	/**
@@ -1302,6 +1323,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 	}
 	
 	/**
@@ -1366,6 +1388,7 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,"Default Security Group");
+		loginPage.logout();
 	}
 	
 	@AfterMethod(alwaysRun = true)
@@ -1373,10 +1396,11 @@ public class ProductionNew_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			loginPage.logout();
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 
-		loginPage.logout();
+		loginPage.quitBrowser();
 
 	}
 

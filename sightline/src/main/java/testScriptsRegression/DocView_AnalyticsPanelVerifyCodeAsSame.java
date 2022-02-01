@@ -92,6 +92,7 @@ public class DocView_AnalyticsPanelVerifyCodeAsSame {
 		docViewPage.verifyCodeAsSameInMiniDocList();
 		baseClass.stepInfo("Doc is selected from Mini Doclist and Code As Same is verified successfully");
 		
+		loginPage.logout();
 	
 	}
 	
@@ -125,35 +126,33 @@ public class DocView_AnalyticsPanelVerifyCodeAsSame {
 		docViewPage.verifyCodeAsSameInMiniDocList();
 		baseClass.stepInfo("Doc is selected from Mini Doclist and Code As Same is verified successfully");
 		
+		loginPage.logout();
+		
 	
 	}
 
 	@AfterMethod(alwaysRun = true)
-
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 			loginPage.logoutWithoutAssert();
 		}
-		UtilityLog.info("Executed :" + result.getMethod().getMethodName());
-
-	}
-	
-	public void close() {
 		try {
 			loginPage.quitBrowser();
-		} finally {
-			loginPage.closeBrowser();
-
+		} catch (Exception e) {
+			loginPage.quitBrowser();
 		}
-		LoginPage.clearBrowserCache();
-	}
-	
-	@AfterClass(alwaysRun = true)
-	
-	public void end() {
-	System.out.println("The Execution is completed");
 	}
 
+	@AfterClass(alwaysRun = true)
+	public void close() {
+		try {
+		//	LoginPage.clearBrowserCache();
+
+		} catch (Exception e) {
+			System.out.println("Sessions already closed");
+		}
+	}
 }

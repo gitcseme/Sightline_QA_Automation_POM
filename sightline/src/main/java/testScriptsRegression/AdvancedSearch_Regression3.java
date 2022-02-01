@@ -131,6 +131,7 @@ public class AdvancedSearch_Regression3 {
 		assertion.assertAll();
 		baseClass.passedStep("Sucessfully Verified that - Application returns consistent search result when user resubmits a "
 				+ "saved search(Content & Metadata Block) multiple times(twice)");
+		lp.logout();
 	}
 	
 	/**
@@ -171,6 +172,7 @@ public void verifyDocsCntAlreadyProduced() throws InterruptedException {
 	assertion.assertAll();
 	baseClass.passedStep("Sucessfully Verified that - Application returns all the documents which are available under selected group with AND operator and"
 			+ " production optional filters - status  in search result.");
+	lp.logout();
 }
 	
 	
@@ -230,7 +232,7 @@ public void verifyDocsCntAssgnments() throws InterruptedException, AWTException 
 			+ "selected security group in search result.     "+PureHitCount);
 	baseClass.passedStep("Sucessfully Verified that - Application returns all the documents which are available under selected group and "
 			+ "Assignments with OR operator in search result.");
-	
+	lp.logout();	
 }
 	
 	/**
@@ -286,7 +288,7 @@ public void verifyDocsCntAssgnments() throws InterruptedException, AWTException 
 		baseClass.passedStep(
 				"Sucessfully Verified that - Application returns all the documents which are available under selected Tags with NOT operator"
 						+ " in search result.");
-
+		lp.logout();
 	}
 	/**
 	 * @author Jayanthi.ganesan
@@ -342,6 +344,7 @@ public void verifyDocsCntCompletedAssgnments() throws InterruptedException, AWTE
 			+ "selected security group in search result   for the configured query."+PureHitCount);
 	baseClass.passedStep("Sucessfully Verified that - Application returns all the documents which are available under selected group and Assignments - Completed status with "
 			+ "AND operator in search result.");
+	lp.logout();
 	
 }
 
@@ -378,7 +381,7 @@ public void verifySearchResultForComment(String username, String password) throw
 	assertion.assertAll();
 	baseClass.passedStep("user  able to search based on comments text on Content & Metadata in "
 			+ "advanced search and pure hit count displayed is " + pureHit1 + " Which is expected.");
-
+	lp.logout();
 }
 	/**
 	 * @author Jayanthi.ganesan]
@@ -401,6 +404,7 @@ public void verifySearchResultForComment(String username, String password) throw
 		}else {
 			baseClass.failedStep(" pin icon is not locked/Pinned this search when user drag the results into the Shopping cart  ");
 		}
+		lp.logout();
 	}
 
 	@BeforeMethod
@@ -417,10 +421,9 @@ public void verifySearchResultForComment(String username, String password) throw
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			lp.quitBrowser();
+			lp.logoutWithoutAssert();
 		}
 		try {
-			lp.logout();
 			//LoginPage.clearBrowserCache();
 			lp.quitBrowser();
 		} catch (Exception e) {

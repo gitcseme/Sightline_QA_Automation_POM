@@ -9,6 +9,7 @@ import java.text.ParseException;
 import org.openqa.selenium.support.Color;
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -103,6 +104,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify manage template filling tiff section");
 		page.verifyingManageTemplateFillingTiffSection();
+		loginPage.logout();
 	}
 
 	/**
@@ -136,6 +138,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling tiff section tech issue without entering tect");
 		page.fillingTiffSectionTechIssueWithoutEnteringText(Input.randomText);
+		loginPage.logout();
 
 	}
 
@@ -171,6 +174,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling tiff section without entering text in specific redaction");
 		page.fillingTiffSectionWithoutEnteringTextInSpecifyRedaction();
+		loginPage.logout();
 
 	}
 
@@ -204,6 +208,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling tiff section without entering tag in specific redaction.");
 		page.fillingTiffSectionWithoutEnteringTagInSpecifyRedaction(Input.randomText);
+		loginPage.logout();
 
 	}
 
@@ -232,6 +237,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify the message on tiff section specify branding without tag");
 		page.TiffSectionSpecifyBrandingWithoutTag(Input.randomText);
+		loginPage.logout();
 	}
 
 	/**
@@ -266,6 +272,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify  the message on tiff section specify branding without text");
 		page.TiffSectionSpecifyBrandingWithTagandWithoutText(tagName);
+		loginPage.logout();
 
 	}
 
@@ -294,6 +301,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify the message on tiff section specify branding without tag and text");
 		page.TiffSectionSpecifyBrandingWithoutTagandText();
+		loginPage.logout();
 
 	}
 
@@ -330,6 +338,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify the tag selected in the natively produced doc is enabled in specify branding ");
 		page.selectingNativelyProducedDocsAndBrandingTag(tagName, Input.randomText);
+		loginPage.logout();
 	}
 
 	/**
@@ -367,6 +376,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify tag enabled after seelcting tag in previliged");
 		page.verifyTagEnabledAfterSelectingTagInPreviliged(tagName);
+		loginPage.logout();
 	}
 
 	/**
@@ -394,6 +404,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify the tag selected in the natively produced doc is enabled in specify branding ");
 		page.verifyWarningMessageDisplayedByWithoutSelectingMp3RedationTag();
+		loginPage.logout();
 
 	}
 
@@ -483,6 +494,7 @@ public class Production_Regression1 {
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
 		base.passedStep("Generated production successfully");
+		loginPage.logout();
 	}
 
 	/**
@@ -564,6 +576,7 @@ public class Production_Regression1 {
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
 		base.passedStep("Generated production successfully");
+		loginPage.logout();
 	}
 
 	/**
@@ -650,6 +663,7 @@ public class Production_Regression1 {
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
 		base.stepInfo("verified  the reduction text printed on selecting TIFF ");
+		loginPage.logout();
 	}
 
 	/**
@@ -735,6 +749,7 @@ public class Production_Regression1 {
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
 		base.stepInfo("verified  the reduction text printed on selecting PDF");
+		loginPage.logout();
 	}
 
 	/**
@@ -828,6 +843,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify export bates button is enabled");
 		page.verifyExportBatesButtonIsEnabled();
+		loginPage.logout();
 	}
 
 	/**
@@ -949,7 +965,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify pure hit count with production count after uncommit");
 		search.verifyPureHitsCountWithManyProductionCount(0);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1027,6 +1043,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 	}
 
 	/**
@@ -1056,6 +1073,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verifying Is Searchable Bates Range Is Selected");
 		projectFieldsPage.verifyingIsSearchableBatesRangeIsSelected();
+		loginPage.logout();
 	}
 
 	/**
@@ -1137,6 +1155,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 	}
 
 	/**
@@ -1228,6 +1247,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling generate page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 
 	}
 
@@ -1319,6 +1339,7 @@ public class Production_Regression1 {
 
 			base.stepInfo("Filling generate page");
 			page.fillingGeneratePage();
+			loginPage.logout();
 
 		}
 
@@ -1399,6 +1420,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Summary And Preview And Verifying MP3 Files");
 		page.fillingSummaryAndPreviewAndVerifyingMP3Files();
+		loginPage.logout();
 	}
 
 	/**
@@ -1487,6 +1509,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling generate page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 
 	}
 
@@ -1568,6 +1591,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 
 	}
 
@@ -1664,6 +1688,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("OCR And TIFF Count In Summary And Preview");
 		page.OCRAndTIFFCountInSummaryAndPreview();
+		loginPage.logout();
 
 	}
 
@@ -1698,6 +1723,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify availble Link At Numbering And Sorting");
 		page.verifyAvailbleLinkAtNumberingAndSorting();
+		loginPage.logout();
 
 	}
 
@@ -1785,6 +1811,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page AFter Uncommit");
 		page.fillingGeneratePageAFterUncommit();
+		loginPage.logout();
 	}
 
 	/**
@@ -1884,6 +1911,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 
 	}
 
@@ -1965,6 +1993,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify download production using sharable link.");
 		page.verifyDownloadProductionUsingSharableLink();
+		loginPage.logout();
 	}
 
 	/**
@@ -2060,6 +2089,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 	}
 
 	/**
@@ -2146,6 +2176,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page AFter Uncommit");
 		page.fillingGeneratePageAFterUncommit();
+		loginPage.logout();
 
 	}
 
@@ -2234,6 +2265,7 @@ public class Production_Regression1 {
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
 		base.stepInfo("Production is generated successfully on Selecting Priv docs placeholder");
+		loginPage.logout();
 
 	}
 
@@ -2318,6 +2350,7 @@ public class Production_Regression1 {
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
 		base.stepInfo("Production is generated successfully on filling DAT and PDF section");
+		loginPage.logout();
 	}
 
 	/**
@@ -2374,6 +2407,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling TIFF With Burning Redactions And Previously Selected Tag Disabled");
 		page.fillingTIFFWithBurningRedactionsAndPreviouslySelectedTagDisabled(tagname);
+		loginPage.logout();
 	}
 
 	/**
@@ -2467,6 +2501,7 @@ public class Production_Regression1 {
 		page.fillingGeneratePage();
 
 		base.stepInfo("Production is generated successfully on filling DAT,PDF and TEXT section");
+		loginPage.logout();
 	}
 
 	/**
@@ -2545,6 +2580,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 	}
 
 	/**
@@ -2590,6 +2626,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling TIFF With Natively Produced Docs And Previously Selected Tag Enabled");
 		page.fillingTIFFWithNativelyProducedDocsAndPreviouslySelectedTagEnabled(tagname);
+		loginPage.logout();
 
 	}
 
@@ -2637,6 +2674,7 @@ public class Production_Regression1 {
 		base.stepInfo("Again Selecting Right Header Branding");
 		page.againSelectingRightHeaderBranding(tagname);
 		base.stepInfo("verifying tag selected in the  specify branding at right Header branding");
+		loginPage.logout();
 
 	}
 
@@ -2727,6 +2765,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 	}
 
 	/**
@@ -2816,6 +2855,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 	}
 
 	/**
@@ -2904,6 +2944,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 	}
 
 	/**
@@ -2993,6 +3034,7 @@ public class Production_Regression1 {
 		page.fillingGeneratePage();
 
 		base.stepInfo("Production is generated successfully on Selecting Priv docs placeholder");
+		loginPage.logout();
 	}
 
 	/**
@@ -3085,6 +3127,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify Doc View Images");
 		docViewPage.verifyDocViewImages();
+		loginPage.logout();
 
 	}
 
@@ -3174,6 +3217,7 @@ public class Production_Regression1 {
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
 		base.stepInfo("production generated successfully on filling DAT and PDF section TechissueDocs");
+		loginPage.logout();
 	}
 
 	/**
@@ -3257,6 +3301,7 @@ public class Production_Regression1 {
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
 		base.stepInfo("production generated successfully on filling DAT and PDF section NativelyProducedDocs");
+		loginPage.logout();
 	}
 
 	/**
@@ -3364,6 +3409,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Select Document Audit Report");
 		reportPage.selectDocumentAuditReport(Input.crammerDocId, Input.producedDeleted);
+		loginPage.logout();
 
 	}
 
@@ -3394,6 +3440,7 @@ public class Production_Regression1 {
 		page.verfyingGenerateTIFFAndPDF();
 
 		base.stepInfo("Generate TIFF and Pdf Radio button is displayed");
+		loginPage.logout();
 
 	}
 
@@ -3483,6 +3530,7 @@ public class Production_Regression1 {
 		page.verifyingProductionStatusInGenerate();
 
 		base.stepInfo("Production status in generate page is verified successfully");
+		loginPage.logout();
 
 	}
 
@@ -3565,6 +3613,7 @@ public class Production_Regression1 {
 		page.fillingGeneratePage();
 
 		base.stepInfo("DAT section with different DAT field is generated successfully");
+		loginPage.logout();
 
 	}
 
@@ -3661,6 +3710,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 
 	}
 
@@ -3755,6 +3805,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 
 	}
 
@@ -3870,6 +3921,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 
 	}
 
@@ -3963,6 +4015,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 
 	}
 
@@ -4048,6 +4101,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 
 	}
 
@@ -4143,6 +4197,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 
 	}
 
@@ -4233,6 +4288,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Copy Path In QC Tab");
 		page.copyPathInQCTab();
+		loginPage.logout();
 	}
 
 	/**
@@ -4324,6 +4380,7 @@ public class Production_Regression1 {
 		page.fillingGeneratePage();
 
 		base.stepInfo("Production is generated successfully on Selecting PDF Priv tag");
+		loginPage.logout();
 	}
 
 	/**
@@ -4437,6 +4494,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePage();
+		loginPage.logout();
 
 	}
 
@@ -4460,6 +4518,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Text Section And Verfying Text");
 		page.fillingTextSectionAndVerfyingText(Input.exText);
+		loginPage.logout();
 
 	}
 
@@ -4556,6 +4615,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -4652,6 +4712,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -4742,6 +4803,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -4829,6 +4891,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -4913,6 +4976,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -4947,6 +5011,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Basic content search");
 		sessionSearch.basicContentSearch(Input.documentId);
+		loginPage.logout();
 	}
 
 	/**
@@ -5043,6 +5108,7 @@ public class Production_Regression1 {
 		page.fillingGeneratePage();
 
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -5140,6 +5206,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify Production Status In HomePage");
 		page.verifyProductionStatusInHomePage(Input.postGenQcChecks, productionname);
+		loginPage.logout();
 	}
 
 	/**
@@ -5224,6 +5291,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page And Regenerating Again");
 		page.clickOnGenerateButtonAndVerifyPreGenChecksStatus();
+		loginPage.logout();
 	}
 
 	/**
@@ -5314,7 +5382,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePageAndVerfyingBatesRange(prefixID);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -5406,6 +5474,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePageAndVerfyingBatesRange(suffixID);
+		loginPage.logout();
 
 	}
 
@@ -5499,6 +5568,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePageAndVerfyingBatesRange(suffixID);
+		loginPage.logout();
 
 	}
 
@@ -5639,6 +5709,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		Page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -5657,6 +5728,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("verifying show and hide of DAT checkbox");
 		page.verfyingDATCheckBox();
+		loginPage.logout();
 	}
 
 	/**
@@ -5709,6 +5781,7 @@ public class Production_Regression1 {
 		driver.Navigate().refresh();
 		page.addProductionFilter();
 		page.verifyingProductionStatusInHomePage("Completed", productionname);
+		loginPage.logout();
 
 	}
 
@@ -5762,6 +5835,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -5782,6 +5856,7 @@ public class Production_Regression1 {
 
 		base.stepInfo(" Verify the Natively produced docs toggle");
 		page.verifyingNativelyProducedToggle();
+		loginPage.logout();
 	}
 
 	/**
@@ -5832,6 +5907,7 @@ public class Production_Regression1 {
 		page.verifyNavigationToProductionPage();
 		base.textCompareEquals(docCount, DocumentCount, "The document count is equal as expected",
 				"The document count is not equal as expected");
+		loginPage.logout();
 
 	}
 
@@ -5874,6 +5950,7 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 		page.navigatingBackToNumberingAndSortingPage();
 		page.SelectNextBatesNumber();
+		loginPage.logout();
 	}
 
 	/**
@@ -5894,6 +5971,7 @@ public class Production_Regression1 {
 		page.fillingDATSection();
 		page.navigateToNextSection();
 		page.verifyClickHereLinkNotAvailableAtMarkComplete();
+		loginPage.logout();
 	}
 
 	/**
@@ -5916,7 +5994,7 @@ public class Production_Regression1 {
 		page.verifyClickHereLinkNotAvailableAtMarkComplete();
 		page.getMarkInCompleteBtn().waitAndClick(10);
 		page.enteringNewNextBatesNumber();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -5990,6 +6068,7 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 		base.stepInfo("Export for priviledged doc in pdf section is to generate");
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		loginPage.logout();
 
 	}
 
@@ -6030,6 +6109,7 @@ public class Production_Regression1 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.verifyingUniqueCustodianNameInSummaryPreviewTab();
+		loginPage.logout();
 
 	}
 
@@ -6073,6 +6153,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -6116,6 +6197,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -6167,6 +6249,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -6217,6 +6300,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -6305,6 +6389,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -6377,6 +6462,7 @@ public class Production_Regression1 {
 		page.viewingPreviewInSummaryTab();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -6450,6 +6536,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePage();
+		loginPage.logout();
 	}
 
 	/**
@@ -6522,6 +6609,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePage();
+		loginPage.logout();
 	}
 
 	/**
@@ -6570,7 +6658,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -6617,7 +6705,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -6687,6 +6775,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -6734,6 +6823,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -6781,6 +6871,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -6847,6 +6938,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -6918,6 +7010,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -6941,6 +7034,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verifying the dropdown option in the completed production");
 		page.verifyDropDownValueInCompletedProduction("Remove");
+		loginPage.logout();
 	}
 
 	/**
@@ -6964,6 +7058,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verifying the dropdown option in the completed production");
 		page.verifyDropDownValueInCompletedProduction("Add");
+		loginPage.logout();
 
 	}
 
@@ -7043,6 +7138,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -7069,6 +7165,7 @@ public class Production_Regression1 {
 
 		page.selectGenerateOption(false);
 		page.verifyPlaceholderTextInBurnRedaction(Input.defaultRedactionTag);
+		loginPage.logout();
 	}
 
 	/**
@@ -7095,6 +7192,7 @@ public class Production_Regression1 {
 
 		page.selectGenerateOption(true);
 		page.verifyPlaceholderTextInBurnRedaction(Input.defaultRedactionTag);
+		loginPage.logout();
 	}
 
 	/**
@@ -7118,6 +7216,7 @@ public class Production_Regression1 {
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.verifyTextInTextSection();
+		loginPage.logout();
 	}
 
 	/**
@@ -7189,6 +7288,7 @@ public class Production_Regression1 {
 		page.viewingPreviewInSummaryTab();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -7237,6 +7337,7 @@ public class Production_Regression1 {
 		page.getbtnProductionGenerate().waitAndClick(10);
 		page.verifyProductionStatusInGenPage("Pre-Generation Checks Completed");
 		page.verifyProductionStatusInGenPage("Reserving Bates Range");
+		loginPage.logout();
 	}
 
 	/**
@@ -7287,6 +7388,7 @@ public class Production_Regression1 {
 		// Deleting folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		loginPage.logout();
 	}
 
 	/**
@@ -7335,7 +7437,7 @@ public class Production_Regression1 {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		base = new BaseClass(driver);
 		base.UnSelectTheProductionChecKboxInUser(Input.pa1userName);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -7370,6 +7472,7 @@ public class Production_Regression1 {
 
 		base.stepInfo("Deleting the Drafted production");
 		page.deleteProduction(productionname);
+		loginPage.logout();
 
 	}
 
@@ -7431,7 +7534,7 @@ public class Production_Regression1 {
 		doc.clickOnImageTab();
 		driver.waitForPageToBeReady();
 		doc.verifyProductionNameForPDFFileInDocView(productionname);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -7532,6 +7635,7 @@ public class Production_Regression1 {
 
 		base.textCompareEquals(docCount, DocumentCount, "The document count is equal as expected",
 				"The document count is not equal as expected");
+		loginPage.logout();
 
 	}
 
@@ -7590,7 +7694,7 @@ public class Production_Regression1 {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		base = new BaseClass(driver);
 		base.SelectDefaultSecurityGrp(Input.rmu1userName);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -7643,6 +7747,7 @@ public class Production_Regression1 {
 		page.viewingPreviewInSummaryTab();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 
 	}
 
@@ -7692,6 +7797,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -7834,6 +7940,7 @@ public class Production_Regression1 {
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep(
 				"Verify that produced PDF/TIFF files should not be split when 'Split Sub Folders' is ON with split count as 10 and selected documents <= 10");
+		loginPage.logout();
 
 	}
 
@@ -7889,8 +7996,8 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
-
-	}
+		loginPage.logout();
+		}
 
 
 /**
@@ -7936,7 +8043,7 @@ public void verifyProductionGenerationWithSearches() throws Exception {
 	page.navigateToNextSection();
 	page.fillingSummaryAndPreview();
 	page.fillingGeneratePageWithContinueGenerationPopup();
-	
+	loginPage.logout();	
 	
 }
 
@@ -7988,7 +8095,7 @@ public void verifyExportBatesOptionInGenerateTab() throws Exception {
 	if(page.getExportBatesButton().isDisplayed()) {
 		base.passedStep("Export Bates Option is visible in Generate tab as Expected");
 	}else {base.failedStep("Export Bates Option is not visible in Generate tab as Expected");}
-	
+	loginPage.logout();
 	
 }
 
@@ -8045,6 +8152,7 @@ public void verifyExportBatesOptionDisabledInGenerateTab() throws Exception {
 	base.textCompareEquals(ActualColor, ExpectedColor,
 			"Export Bates option is disabled before pre gen check as Expected",
 			"Export Bates option is not disabled before pre gen check as Expected");
+	loginPage.logout();
 
 }
 
@@ -8079,6 +8187,7 @@ public void verifyingNativelyProducedDocsToggleIsDisAbledInTiffAndPDFSection() t
 	base.textCompareEquals(ActualColor, ExpectedColor,
 			"Do Not Produce TIFFs for Natively Produced Docs' option is disabled by default  as Expected",
 			" Do Not Produce TIFFs for Natively Produced Docs' option is not  disabled by default as Expected");
+	loginPage.logout();
 
 }
 
@@ -8140,6 +8249,7 @@ public void verifyExportBatesGeneratedFile() throws Exception {
 	page.getDownloadLinkforExport().Click();
 	base.csvFileVerification();
 	base.passedStep("Verified the exported CSV data");
+	loginPage.logout();
 }
 
 
@@ -8196,6 +8306,7 @@ public void verifyExportBatesGeneratedFileInNotification() throws Exception {
 	page.verifyExportedCSVFile();
 	 base= new BaseClass(driver);
 	base.csvFileVerification();
+	loginPage.logout();
 	
 }
 /**
@@ -8252,6 +8363,7 @@ public void verifyingTheProductionOnVolumeIncludedToggl() throws Exception {
 	page.navigateToNextSection();
 	page.fillingSummaryAndPreview();
 	page.fillingGeneratePageWithContinueGenerationPopup();
+	loginPage.logout();
 
 }
 
@@ -8304,6 +8416,7 @@ page.fillingProductionLocationPage(productionname);
 page.navigateToNextSection();
 page.fillingSummaryAndPreview();
 page.fillingGeneratePageWithContinueGenerationPopup();
+loginPage.logout();
 
 }
 
@@ -8327,7 +8440,7 @@ public void verifyBlankPageRemovalToggle() throws Exception {
 	page.selectingDefaultSecurityGroup();
 	page.addANewProduction(productionname);
 	page.verifyBlankPageRemovalMeassage();
-	
+	loginPage.logout();
 
 }
 /**
@@ -8374,6 +8487,7 @@ public void verifyTheSubFolderInProductionGeneration() throws Exception {
 	page.navigateToNextSection();
 	page.fillingSummaryAndPreview();
 	page.fillingGeneratePageWithContinueGenerationPopup();
+	loginPage.logout();
 }
 
 /**
@@ -8424,7 +8538,7 @@ public void verifySaveTemplateAndRetainedValueInBurnRedaction() throws Exception
 	Page.baseInfoLoadTemplate(productionname1, Templatename);
 	page.verifyingMP3FileBurnRedaction(Redactiontag1);
 	page.getCheckBoxCheckedVerification(page.getMP3FileSelectRedactionTags());
-
+	loginPage.logout();
 }
 
 
@@ -8462,32 +8576,32 @@ public void verifySaveTemplateAndRetainedValueInRotationConfiguration() throws E
 	Page.savedTemplateAndNewProdcution(productionname, Templatename);
 	Page.baseInfoLoadTemplate(productionname1, Templatename);
 	page.verifyRotationInComponentTab("pdf");
+	loginPage.logout();
 
 }
 
-	@AfterMethod(alwaysRun = true)
-	public void close() {
-		try {
-			loginPage.logout();
-		} finally {
-			loginPage.quitBrowser();
-			LoginPage.clearBrowserCache();
-		}
-	}
-
-	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
-		if (ITestResult.FAILURE == result.getStatus()) {
-
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				loginPage.logout();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		}
+@AfterMethod(alwaysRun = true)
+public void takeScreenShot(ITestResult result) {
+	if (ITestResult.FAILURE == result.getStatus()) {
+		Utility bc = new Utility(driver);
+		bc.screenShot(result);
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-
+		loginPage.logoutWithoutAssert();
 	}
+	try {
+		loginPage.quitBrowser();
+	} catch (Exception e) {
+		loginPage.quitBrowser();
+	}
+}
+
+@AfterClass(alwaysRun = true)
+public void close() {
+	try {
+	//	LoginPage.clearBrowserCache();
+
+	} catch (Exception e) {
+		System.out.println("Sessions already closed");
+	}
+}
 }

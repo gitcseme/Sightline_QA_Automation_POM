@@ -73,7 +73,8 @@ public class ReviewResultReport_Regression{
 		}
 		}
 		softAssertion.assertAll();
-	}
+		lp.logout();
+		}
 
 	/**
 	 * @author Jayanthi.ganesan
@@ -105,6 +106,7 @@ public class ReviewResultReport_Regression{
 		} else {
 			bc.failedStep("Report not shared to any  user");
 		}
+		lp.logout();
 
 	}
 	/**
@@ -133,8 +135,7 @@ public class ReviewResultReport_Regression{
 		SchedulesPage sp =new SchedulesPage(driver);
 		sp.verifyScheduledTime_Reports(1);
 		sp.checkStatusComplete_reports();
-		
-
+		lp.logout();
 	}
 
 	@BeforeMethod
@@ -151,10 +152,9 @@ public class ReviewResultReport_Regression{
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			lp.logoutWithoutAssert();
 		}
 		try {
-			lp.logout();
-			LoginPage.clearBrowserCache();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();

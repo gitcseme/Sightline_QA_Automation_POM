@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -164,6 +165,9 @@ public class Export_Regression {
  		
  		base.stepInfo("Click On Complete And Verify Success Message");
  		page.clickOnCompleteAndVerifySuccessMessage();
+ 		loginPage.logout();
+ 		
+ 		
 	}
 	
 
@@ -275,6 +279,7 @@ public class Export_Regression {
 		
 		base.stepInfo("Delete Tag With Classification");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 	
 	/**
@@ -378,6 +383,7 @@ public class Export_Regression {
 		
 		base.stepInfo("Delete Tag With Classification");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 	
 	
@@ -483,6 +489,7 @@ public class Export_Regression {
 		
 		base.stepInfo("Verify uncommitted production is not added to export production drop down.");
 		page.verifyUnCommittedProdIsNotAddedToExportProdDropdown(exportName, productionname);
+		loginPage.logout();
 	}
 	
 	
@@ -579,6 +586,7 @@ public class Export_Regression {
 		
 		base.stepInfo("Verify export bates button is enabled");
 		page.verifyExportBatesButtonIsEnabled();
+		loginPage.logout();
 	}
 	
 	
@@ -691,6 +699,7 @@ public class Export_Regression {
 		
 		base.stepInfo("Delete Tag With Classification");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 	
 	
@@ -817,6 +826,7 @@ public class Export_Regression {
 		
 		base.stepInfo("Delete added redaction tag");
 		redactionpage.DeleteRedaction(redactiontag1);
+		loginPage.logout();
 	}
 	
 	
@@ -943,6 +953,7 @@ public class Export_Regression {
 		
 		base.stepInfo("Delete added redaction tag");
 		redactionpage.DeleteRedaction(redactiontag1);
+		loginPage.logout();
 	}
 	
 	/**
@@ -1071,33 +1082,33 @@ public class Export_Regression {
 		
 		base.stepInfo("Delete added redaction tag");
 		redactionpage.DeleteRedaction(redactiontag1);
+		loginPage.logout();
 	}
 	
 	@AfterMethod(alwaysRun = true)
-	public void close() {
+	public void takeScreenShot(ITestResult result) {
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
+			loginPage.logoutWithoutAssert();
+		}
 		try {
-			loginPage.logout();
-		} finally {
-			loginPage.closeBrowser();
-			LoginPage.clearBrowserCache();
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
 		}
 	}
-	
-     @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		 
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 		try{ //if any tc failed and dint logout!
- 		loginPage.logout();
- 		}catch (Exception e) {
-			// TODO: handle exception
+
+	@AfterClass(alwaysRun = true)
+	public void close() {
+		try {
+		//	LoginPage.clearBrowserCache();
+
+		} catch (Exception e) {
+			System.out.println("Sessions already closed");
 		}
- 	}
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
+	}
     
 }
 
