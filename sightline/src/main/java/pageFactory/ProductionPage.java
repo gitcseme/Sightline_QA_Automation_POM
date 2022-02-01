@@ -24,6 +24,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
@@ -2478,7 +2479,23 @@ public class ProductionPage {
 	public Element getSplitSubFolderToggle() {
 		return driver.FindElementByXPath("//label[text()='Split Sub Folders:']/..//i");
 	}
-
+	public Element getMP3FilesRedactionTag() {
+		return driver.FindElementByXPath("//div[@id='MP3RedactiontreeFolder']/ul/li//a[text()='Default Redaction Tag']");
+	}
+	public Element getGenratePDFRadioButton() {
+		return driver.FindElementByXPath("//span//b[text()='Generate PDF']/../..//input[@id='CommonTIFFSettings_FileType']");
+	}
+	public Element getMP3FilesBurnRedactionTag(String Tag) {
+		return driver.FindElementByXPath("//div[@id='MP3RedactiontreeFolder']/ul/li//a[text()='"+Tag+"']");
+	}
+	
+	public Element getMP3FileSelectRedactionTags() {
+		return driver.FindElementByXPath("//input[@id='chkMP3SPecifytRedactions']");
+	}
+	
+	public Element getGenrateTIFFRadioButton() {
+		return driver.FindElementByXPath("//span//b[text()='Generate TIFF']/../..//input[@id='CommonTIFFSettings_FileType']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -16741,4 +16758,96 @@ public class ProductionPage {
 		gettextRedactionPlaceHolder().SendKeys(redactionText);
 		base.stepInfo("Reaction Text : " + redactionText);
 	}
+	
+	
+	/**
+	 * @Author Brundha
+	 *  Description:Method to fill burn redaction in MP3 file
+	 * 
+	 */
+	
+	public void fillingMP3FileWithBurnRedaction(String redactionTag) throws InterruptedException {	
+	
+		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
+		base.clickButton(getAdvancedProductionComponent());
+		base.waitForElement(getMP3CheckBox());
+		getMP3CheckBox().Click();
+		base.clickButton(getMP3CheckBoxToggle());
+		base.clickButton(getMP3CheckReductionBoxEnable());
+		getMP3CheckReductionBoxEnable().Enabled();
+		base.clickButton(getMP3RatiobtnRedactiontag());
+		
+		driver.waitForPageToBeReady();
+		getMP3FilesRedactionTag().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		 getMP3FilesBurnRedactionTag(redactionTag).ScrollTo();
+		getMP3FilesBurnRedactionTag(redactionTag).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getSelect_RedactionStyle_Dropdown().Click();
+		base.clickButton(getSelect_Beep_RedactionStyle_Dropdown());
+		base.clickButton(getAdvancedInMP3Files());
+		String color = driver.FindElement(By.xpath("//label//input[@id='chkMP3ProduceLoadFile']//following-sibling::i"))
+				.GetCssValue("background-color");
+		String ExpectedColor = Color.fromString(color).asHex();
+		String ActualColor = "#a9c981";
+		base.textCompareEquals(ActualColor, ExpectedColor, "lst files toggle is enabled by default",
+				"lst files toggle is not enabled by default");
+		driver.scrollPageToTop();
+	}
+
+	/**
+	 * @Author Brundha
+	 *  Description:verifying the retained data in MP3 file burn redaction 
+	 * 
+	 */
+	public void verifyingMP3FileBurnRedaction( String Redactiontag) {
+		
+		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
+		base.clickButton(getAdvancedProductionComponent());
+		base.clickButton(getMP3CheckBoxToggle());
+		driver.scrollingToBottomofAPage();
+		getMP3FilesRedactionTag().ScrollTo();
+		boolean flag = getMP3FilesBurnRedactionTag(Redactiontag).GetAttribute("class").contains("clicked");
+		
+		if (flag) {
+			Assert.assertTrue(true);
+			base.passedStep("production template retains the redaction tags configured in the production");
+		} else {
+			Assert.assertTrue(false);
+			base.failedStep("production template not retain the redaction tags configured in the production");
+		}
+		Select select = new Select(driver.FindElementByXPath("//select[@id='lstFillerAudio']").getWebElement());
+		String option = select.getFirstSelectedOption().getText();
+		System.out.println("the dropdown value is "+option);
+		base.textCompareEquals(option,"Beep","Dropdown value is retained in Template", "Drop down value is not retained in Template as Expected");
+		base.stepInfo("Verifying the Redaction tag and dropdown in Mp3 checkbox");
+		
+	}
+	
+	/**
+	 * @Author Brundha
+	 *  Description:Method to verify retained rotation in component tab
+	 * 
+	 */
+	
+	public void verifyRotationInComponentTab(String GenerateButton) {
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		if("tiff".equals(GenerateButton)) {
+			base.stepInfo("Verifying  Generate TIFF radio button in Component tab");
+			getCheckBoxCheckedVerification(getGenrateTIFFRadioButton());
+		}else if("pdf".equals(GenerateButton)) {
+			base.stepInfo("Verifying  Generate TIFF radio button in Component tab");
+			getCheckBoxCheckedVerification(getGenratePDFRadioButton());
+		}
+		Select select = new Select(driver.FindElementByXPath("//select[@id='dldPageRotatePreference']").getWebElement());
+		String option = select.getFirstSelectedOption().getText();
+		System.out.println("the value is "+option);
+		base.textCompareEquals(option,"Rotate 90 degrees clock-wise","Rotation value is retained in Template", "Rotation value is not retained in Template as Expected");
+		
+	}
+
+
 }

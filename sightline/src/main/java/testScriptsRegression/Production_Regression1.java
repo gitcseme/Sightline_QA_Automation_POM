@@ -8376,7 +8376,94 @@ public void verifyTheSubFolderInProductionGeneration() throws Exception {
 	page.fillingGeneratePageWithContinueGenerationPopup();
 }
 
+/**
+ * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48196
+ * @Description:To Verify In Productions, production template Should retain the redaction tags configured in the production.
+ */
+@Test(groups = { "regression" }, priority = 111)
+public void verifySaveTemplateAndRetainedValueInBurnRedaction() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	
+	base.stepInfo("RPMXCON-48196 -Production Sprint 11");
+	base.stepInfo(
+			"To Verify In Productions, production template Should retain the redaction tags configured in the production.");
 
+	String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+	RedactionPage redactionpage = new RedactionPage(driver);
+
+	driver.waitForPageToBeReady();
+	redactionpage.manageRedactionTagsPage(Redactiontag1);
+	System.out.println("First Redaction Tag is created" + Redactiontag1);
+
+	DocExplorerPage docExp = new DocExplorerPage(driver);
+	docExp.documentSelectionIteration();
+	docExp.docExpViewInDocView();
+
+	DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+	// doc1
+	docViewRedactions.selectDoc1();
+	driver.waitForPageToBeReady();
+	docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+	driver.waitForPageToBeReady();
+	docViewRedactions.selectingRedactionTag2(Redactiontag1);
+	
+	ProductionPage page = new ProductionPage(driver);
+	String productionname = "p" + Utility.dynamicNameAppender();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSection();
+	page.fillingMP3FileWithBurnRedaction(Redactiontag1);
+	page.navigateToNextSection();
+
+	ProductionPage Page = new ProductionPage(driver);
+	String productionname1 = "p" + Utility.dynamicNameAppender();
+	String Templatename = Input.randomText + Utility.dynamicNameAppender();
+
+	driver.Navigate().refresh();
+	Page.savedTemplateAndNewProdcution(productionname, Templatename);
+	Page.baseInfoLoadTemplate(productionname1, Templatename);
+	page.verifyingMP3FileBurnRedaction(Redactiontag1);
+	page.getCheckBoxCheckedVerification(page.getMP3FileSelectRedactionTags());
+
+}
+
+
+
+
+
+/**
+ * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48285
+ * @Description:To Verify Production Using Template Should be able to load the configuration of Rotation in PDF and TIFF.
+ */
+@Test(groups = { "regression" }, priority = 112)
+public void verifySaveTemplateAndRetainedValueInRotationConfiguration() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	
+	base.stepInfo("RPMXCON-48285 -Production Sprint 11");
+	base.stepInfo(
+			"To Verify Production Using Template Should be able to load the configuration of Rotation in PDF and TIFF");
+
+	
+	ProductionPage page = new ProductionPage(driver);
+	String productionname = "p" + Utility.dynamicNameAppender();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSection();
+	page.selectGenerateOption(true);
+	driver.scrollPageToTop();
+	page.getRotationLandScapeDropdown().Click();
+	page.navigateToNextSection();
+
+	ProductionPage Page = new ProductionPage(driver);
+	String productionname1 = "p" + Utility.dynamicNameAppender();
+	String Templatename = Input.randomText + Utility.dynamicNameAppender();
+
+	driver.Navigate().refresh();
+	Page.savedTemplateAndNewProdcution(productionname, Templatename);
+	Page.baseInfoLoadTemplate(productionname1, Templatename);
+	page.verifyRotationInComponentTab("pdf");
+
+}
 
 	@AfterMethod(alwaysRun = true)
 	public void close() {
