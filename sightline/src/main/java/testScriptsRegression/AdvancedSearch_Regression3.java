@@ -412,7 +412,8 @@ public void verifySearchResultForComment(String username, String password) throw
 	@Test( groups = { "regression" }, priority = 2, enabled = true)
 	public void verifyResubmit_WPAndAudio() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48766");
-		baseClass.stepInfo("");
+		baseClass.stepInfo("Verify that - Application returns consistent search result when user resubmits a 
+				   saved search(WorkProduct Block -Security Group and Audio Block) multiple times(twice)");
 		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA" );
@@ -434,16 +435,17 @@ public void verifySearchResultForComment(String username, String password) throw
 		driver.waitForPageToBeReady();
 		baseClass.waitTime(3);
 		String expectedHits1 = search.getPureHitsLastCount().getText();
-		baseClass.stepInfo("Pure hit count after WP saved search is " + PureHitCount);
+		baseClass.stepInfo("Pure hit count after WP saved search is " + expectedHits1);
 		search.resubmitSearch();
 		driver.waitForPageToBeReady();
 		baseClass.waitTime(3);
 		baseClass.waitForElement(search.getPureHitsLastCount());
 		String expectedHits2 = search.getPureHitsLastCount().getText();
+                baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + expectedHits2);
 		SoftAssert assertion=new SoftAssert();
 		assertion.assertEquals(PureHitCount, expectedHits2);
 		assertion.assertEquals(PureHitCount, expectedHits1);
-        SavedSearch savedSearch=new SavedSearch(driver);		
+                SavedSearch savedSearch=new SavedSearch(driver);		
 		savedSearch.SaveSearchDelete(saveSearchName);
 		assertion.assertAll();
 		baseClass.passedStep("Sucessfully Verified that - Application returns consistent search result when user resubmits a "
