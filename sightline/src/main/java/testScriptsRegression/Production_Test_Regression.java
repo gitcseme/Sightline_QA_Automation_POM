@@ -3923,8 +3923,7 @@ public class Production_Test_Regression {
 				driver.waitForPageToBeReady();
 				String name = page.getProduction().getText().trim();
 				System.out.println(name);
-				String downloadsHome = "C:\\Users\\Aathith.Senthilkumar\\Downloads";
-				page.isFileDownloaded(downloadsHome, name);
+				page.isFileDownloaded(Input.fileDownloadLocation, name);
 				
 				base.passedStep("Verified document matches multiple criteria (file type or tags), the precedence will be from top to bottom.(For Production)");
 				
