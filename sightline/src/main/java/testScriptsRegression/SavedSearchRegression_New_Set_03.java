@@ -2756,7 +2756,7 @@ public class SavedSearchRegression_New_Set_03 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			try { // if any tc failed and dint logout!
-				login.logout();
+				login.logoutWithoutAssert();
 			} catch (Exception e) {
 //							 TODO: handle exception
 			}

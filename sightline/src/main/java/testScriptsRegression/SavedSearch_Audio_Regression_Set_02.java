@@ -631,6 +631,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
+			login.logoutWithoutAssert();
 		}
 		try {
 			base.clearAllCookies();

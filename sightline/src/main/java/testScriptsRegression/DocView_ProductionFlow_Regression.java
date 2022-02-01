@@ -115,7 +115,7 @@ public class DocView_ProductionFlow_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePage();
-
+		loginPage.logout();
 	}
 	
 	/**
@@ -157,7 +157,7 @@ public class DocView_ProductionFlow_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePage();
-
+		loginPage.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -167,9 +167,10 @@ public class DocView_ProductionFlow_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
+//			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
