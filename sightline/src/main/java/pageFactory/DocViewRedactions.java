@@ -1283,6 +1283,16 @@ public class DocViewRedactions {
 	public Element getMarkedTextRedactionXYStatsAttributeSelect(String x, String y) {
 		return driver.FindElementByCssSelector("g[x='" + x + "'][y='" + y + "']");
 	}
+	
+	//Added by Krishna
+	
+	public Element multiPageRedactionTagSelect() {
+		return driver.FindElementById("ddlMultiRedactionTagsForPopup");
+	}
+
+	public Element hiddenInfoIcon() {
+		return driver.FindElementById("hiddenProperty");
+	}
 
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
