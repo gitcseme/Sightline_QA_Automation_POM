@@ -114,6 +114,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Logged in as Reviewer Manager");
 		System.out.println("Logged in as Reviewer Manager");
 		miniDocListpage.verifyDocMiniListConfiguration();
+		loginPage.logout();
 
 	}
 
@@ -142,6 +143,7 @@ public class DocView_MiniDocList_Regression {
 		System.out.println("Logged in as Reviewer Manager");
 		miniDocListpage.verifyDocMiniListMethodChildWindow();
 		baseClass.stepInfo("verify DocMiniList Method via ChildWindow");
+		loginPage.logout();
 
 	}
 
@@ -173,6 +175,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.configureMiniDocList();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.pa1userName + "'");
+		loginPage.logout();
 	}
 
 	/**
@@ -219,6 +222,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.enterDocumentNumberTillLoading();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
+		loginPage.logout();
 	}
 
 	/**
@@ -256,6 +260,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.playAudioOnly();
 		docViewPage.scrollUntilLoadingElementIsDisplayed();
 		baseClass.passedStep("Loading displayed while scrolling the document based on ID");
+		loginPage.logout();
 	}
 
 	/**
@@ -321,6 +326,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.passedStep("Select All check-box is not visible in the child window of MiniDoc successfully");
 		baseClass.stepInfo(
 				"Select all check-box must no longer appear for any user in the mini doc list is successfully");
+		loginPage.logout();
 
 	}
 
@@ -341,6 +347,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.documentCountShouldBeSame(Input.searchString2);
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.logout();
 	}
 
 	/**
@@ -376,6 +383,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.verifyingCheckMarkIconInMiniDocList();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -410,6 +418,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.childWindowToParentWindowSwitching(parentWindow);
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.pa1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -434,6 +443,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.clickClockIconMiniDocList();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.pa1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -471,6 +481,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.verifyPrincipalDocumentMiniDocList();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -492,6 +503,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.minimizeAndMaximizeDocumentCountShouldBeSame(Input.searchString2);
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.pa1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -520,6 +532,7 @@ public class DocView_MiniDocList_Regression {
 		sessionSearch.bulkAssign();
 
 		miniDocListpage.verifyOptimizedSortOrderCase();
+		loginPage.logout();
 
 	}
 
@@ -548,6 +561,7 @@ public class DocView_MiniDocList_Regression {
 		sessionSearch.bulkAssign();
 
 		miniDocListpage.verifyOptimizedSortOrderCaseforSameAssignment();
+		loginPage.logout();
 
 	}
 
@@ -577,6 +591,7 @@ public class DocView_MiniDocList_Regression {
 
 		miniDocListpage.verifyOptimizedSortOrderViaChildwindow();
 		driver.waitForPageToBeReady();
+		loginPage.logout();
 	}
 
 	/**
@@ -607,6 +622,7 @@ public class DocView_MiniDocList_Regression {
 
 		miniDocListpage.verifyOriginalSortOrderInChildWindow(assignmentNameToCreate);
 		baseClass.stepInfo("Verified Original SortOrder In ChildWindow");
+		loginPage.logout();
 
 	}
 
@@ -631,6 +647,7 @@ public class DocView_MiniDocList_Regression {
 		sessionSearch.ViewInDocView();
 
 		miniDocListpage.enableOrdisableToRetain();
+		loginPage.logout();
 
 	}
 
@@ -656,6 +673,7 @@ public class DocView_MiniDocList_Regression {
 		// Login as a Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		miniDocListpage.checkmarkVerification(assignmentNameToCreate);
+		loginPage.logout();
 
 	}
 
@@ -693,6 +711,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.uncompleteButtonShouldDisplay();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -733,6 +752,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.verifyingRightArrowInMiniDocList();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -773,6 +793,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.lastDocumentVerifyRightArrow();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -813,7 +834,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.verifyWarningMessage();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -856,6 +877,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.codingStampIconToVerifyPrincipalDocument(assgnColour, Input.stampColours, Input.stampColours);
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -897,6 +919,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.verifyprincipalDocumentMiniDocList();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -968,7 +991,7 @@ public class DocView_MiniDocList_Regression {
 		miniDocListpage.popOutChildWindowAndConfigureMiniDocList();
 		baseClass.stepInfo(
 				"To Verify Configure Mini DocList modal window should be launched on click of the small gear icon from Mini DocList child window is done successfully");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1012,6 +1035,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Doc are selected from Analytics Panel and viewed in the Default View successfully");
 
 		miniDocListpage.verifyArrowMarkInMiniDocList();
+		loginPage.logout();
 
 	}
 
@@ -1043,6 +1067,7 @@ public class DocView_MiniDocList_Regression {
 
 		// Select the Gear icon and an doc from the child window
 		miniDocListpage.selectDocFromMiniDocListChildWindow();
+		loginPage.logout();
 
 	}
 
@@ -1072,6 +1097,7 @@ public class DocView_MiniDocList_Regression {
 		miniDocListpage.VerifyArrow();
 
 		driver.waitForPageToBeReady();
+		loginPage.logout();
 	}
 
 	/**
@@ -1111,6 +1137,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.saveAndCompleteButtonPerformCodeSameAs();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -1149,6 +1176,7 @@ public class DocView_MiniDocList_Regression {
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(miniDocListpage.getMiniDocListcloseButton());
 		miniDocListpage.getMiniDocListcloseButton().Click();
+		loginPage.logout();
 
 	}
 
@@ -1189,6 +1217,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.verifyCheckMarkFromMiniDocListChildWindow();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -1230,6 +1259,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.verifyUncompletebuttonFromParentWindow();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -1271,6 +1301,7 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.miniDocListCodeSameAsUncomplteBtnChildWindow();
 
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		loginPage.logout();
 
 	}
 
@@ -1309,6 +1340,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		miniDocListpage.sortingVerifyAfterSelectedWebFields();
+		loginPage.logout();
 
 	}
 
@@ -1347,6 +1379,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		miniDocListpage.optimizedSortToSelcetWebFields();
+		loginPage.logout();
 
 	}
 
@@ -1385,7 +1418,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		miniDocListpage.moreThanFourWebFieldNotDraggable();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1425,6 +1458,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		miniDocListpage.removeCodeSameAsAndCompleteDocs(assgnColour, Input.stampSelection);
+		loginPage.logout();
 
 	}
 
@@ -1462,6 +1496,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		miniDocListpage.warningMsgForCompletedDocsCodeSameAs();
+		loginPage.logout();
 
 	}
 
@@ -1484,6 +1519,7 @@ public class DocView_MiniDocList_Regression {
 		sessionSearch.ViewInDocView();
 
 		miniDocListpage.docsShouldNotOfMiniDocList(0);
+		loginPage.logout();
 
 	}
 
@@ -1507,6 +1543,7 @@ public class DocView_MiniDocList_Regression {
 		sessionSearch.ViewInDocView();
 
 		miniDocListpage.focusOnChildWindowHistoryDrpDw();
+		loginPage.logout();
 
 	}
 
@@ -1530,6 +1567,7 @@ public class DocView_MiniDocList_Regression {
 		sessionSearch.ViewInDocView();
 
 		miniDocListpage.selectDocFromHistoryDropDown();
+		loginPage.logout();
 
 	}
 
@@ -1564,6 +1602,7 @@ public class DocView_MiniDocList_Regression {
 		keywordPage.getDeleteButton(hitTerms).waitAndClick(5);
 		keywordPage.getYesButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		loginPage.logout();
 
 	}
 
@@ -1591,6 +1630,7 @@ public class DocView_MiniDocList_Regression {
 		boolean flag = docViewPage.geDocView_MiniList_CodeSameAsIcon().isElementPresent();
 		Assert.assertFalse(flag);
 		baseClass.passedStep("Code same as icon not displayed in minidoclist after performing folder action");
+		loginPage.logout();
 	}
 
 	/**
@@ -1641,6 +1681,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		assignmentPage.deleteAssgnmntUsingPagination(Asssignment);
+		loginPage.logout();
 	}
 
 	/**
@@ -1675,6 +1716,7 @@ public class DocView_MiniDocList_Regression {
 
 		docViewPage.verifyCheckMarkIcon(stampText, Input.stampSelection);
 		reusableDocViewPage.deleteStampColour(Input.stampSelection);
+		loginPage.logout();
 	}
 
 	/**
@@ -1714,6 +1756,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		docViewPage.verifyOtherPageNavUsingYesAndNoBtn();
+		loginPage.logout();
 	}
 
 	/**
@@ -1756,7 +1799,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		docViewPage.verifyOtherPageNavUsingReloadBtn();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1811,6 +1854,7 @@ public class DocView_MiniDocList_Regression {
 		System.out.println(userTwo);
 		softAssertion.assertNotEquals(userOne, userTwo);
 		baseClass.passedStep("Sort Sequence not displayed for second user for same assignment");
+		loginPage.logout();
 	}
 
 	/**
@@ -1838,6 +1882,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("User navigated to docview page from basic search page");
 
 		docViewPage.verifyMiniDocListPanel();
+		loginPage.logout();
 
 	}
 
@@ -1871,6 +1916,7 @@ public class DocView_MiniDocList_Regression {
 		codingForm = new CodingForm(driver);
 		codingForm.assignCodingFormToSG(Input.codeFormName);
 		driver.waitForPageToBeReady();
+		loginPage.logout();
 	}
 
 	/**
@@ -1936,6 +1982,7 @@ public class DocView_MiniDocList_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// delete Created Assignment
 		assignmentPage.deleteAssgnmntUsingPagination(Asssignment);
+		loginPage.logout();
 	}
 
 	/**
@@ -2000,6 +2047,7 @@ public class DocView_MiniDocList_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// delete Created Assignment
 		assignmentPage.deleteAssgnmntUsingPagination(Asssignment);
+		loginPage.logout();
 	}
 
 	/**
@@ -2030,6 +2078,7 @@ public class DocView_MiniDocList_Regression {
 
 		// verify warning msg
 		baseClass.VerifyWarningMessage("Please select at least one document");
+		loginPage.logout();
 
 	}
 
@@ -2091,7 +2140,7 @@ public class DocView_MiniDocList_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// delete Created Assignment
 		assignmentPage.deleteAssgnmntUsingPagination(assignName);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2161,7 +2210,7 @@ public class DocView_MiniDocList_Regression {
 
 		// delete Created Assignment
 		assignmentPage.deleteAssgnmntUsingPagination(assignName);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -2209,6 +2258,7 @@ public class DocView_MiniDocList_Regression {
 			baseClass.failedStep("Mini doc list not displayed if toggle is enabled");
 		}
 		assignmentPage.deleteAssgnmntUsingPagination(assignName);
+		loginPage.logout();
 
 	}
 
@@ -2257,6 +2307,7 @@ public class DocView_MiniDocList_Regression {
 			baseClass.failedStep("Mini doc list displayed if toggle is disabled which is not expected");
 		}
 		assignmentPage.deleteAssgnmntUsingPagination(assignName);
+		loginPage.logout();
 
 	}
 
@@ -2302,6 +2353,7 @@ public class DocView_MiniDocList_Regression {
 			baseClass.passedStep(
 					"'Remove Code Same' is not  displayed in mini doc list child window for Project Admin user. ");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -2347,6 +2399,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 		// Validation part
 		miniDocListpage.fromSavedSearchToSelectWebField();
+		loginPage.logout();
 	}
 
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 60)
@@ -2378,6 +2431,7 @@ public class DocView_MiniDocList_Regression {
 		miniDocListpage.verifyOriginalSortOrderInChildWindow(assignmentName);
 
 		loginPage.logout();
+		loginPage.logout();
 	}
 
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 61)
@@ -2399,6 +2453,7 @@ public class DocView_MiniDocList_Regression {
 		} else {
 			baseClass.passedStep("Project admin is not able to view the completed icon on mini doc list.");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -2450,6 +2505,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Successfully logout as Reviewer'" + Input.rev1userName + "'");
 		baseClass.passedStep("Verify on click of 'Save' button coding form should be validated when coding form+"
 				+ "customized for all objects along with all condition and Check Item");
+		loginPage.logout();
 	}
 
 	/**
@@ -2528,6 +2584,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.passedStep(
 				"Verify that when mini doclist child window reloads by adding additional docs then for completed documents"
 						+ " checkmark with light blue highlighting should be displayed when Show Completed Docs is ON");
+		loginPage.logout();
 
 	}
 
@@ -2592,6 +2649,7 @@ public class DocView_MiniDocList_Regression {
 
 		// Comparing selected Fields and MiniDocList Header
 		docViewPage.ComparingSelectedFieldsWithMiniDocListHeaderValue(selectedFields_1, miniDocListHeaders_1);
+		loginPage.logout();
 
 	}
 
@@ -2638,6 +2696,7 @@ public class DocView_MiniDocList_Regression {
 		// Completing the Document in MiniDocList
 		driver.waitForPageToBeReady();
 		docViewPage.CompleteTheDocumentInMiniDocList(3);
+		loginPage.logout();
 	}
 
 	/**
@@ -2708,6 +2767,7 @@ public class DocView_MiniDocList_Regression {
 		driver.waitForPageToBeReady();
 		miniDocListpage.configureMiniDocListPopupOpen();
 		miniDocListpage.comparingWebfieldsInOptimizedSortOrderAndManualSortOrder(SetDocumentSorting);
+		loginPage.logout();
 	}
 
 	/**
@@ -2774,6 +2834,7 @@ public class DocView_MiniDocList_Regression {
 		}
 		baseClass.passedStep("Document Count displayed in doc view  is same as assigned to the assignment.");
 		miniDocListpage.verifyDefaultWebfieldsInManualSortOrder();
+		loginPage.logout();
 	}
 
 	/**
@@ -2846,6 +2907,7 @@ public class DocView_MiniDocList_Regression {
 		} else {
 			baseClass.failedStep("RMU user viewed Completed icon in mini doc list in context of manage assignment.");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -2889,6 +2951,7 @@ public class DocView_MiniDocList_Regression {
 			baseClass.failedStep("Application not redirected to the  doc view page ");
 		}
 		assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
+		loginPage.logout();
 	}
 
 
@@ -2946,6 +3009,7 @@ public class DocView_MiniDocList_Regression {
 		// login as Reviewer
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignmentPage.deleteAssgnmntUsingPagination(assignmentNameToCreate);
+		loginPage.logout();
 	}
 
 	/**
@@ -2988,6 +3052,7 @@ public class DocView_MiniDocList_Regression {
 			baseClass.failedMessage("Minidoclist child window not opened yet");
 		}
 		softAssertion.assertAll();
+		loginPage.logout();
 	}
 
 	/**
@@ -3020,6 +3085,7 @@ public class DocView_MiniDocList_Regression {
 		softAssertion.assertTrue(flag);
 		baseClass.passedStep("Small icon displayed for selected document in minidoclist for code same as");
 		softAssertion.assertAll();
+		loginPage.logout();
 	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
@@ -3028,9 +3094,9 @@ public class DocView_MiniDocList_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
