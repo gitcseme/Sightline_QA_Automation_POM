@@ -551,6 +551,17 @@ public class DocViewMetaDataPage {
 	public ElementCollection getAddedRemark() {
 		return driver.FindElementsByCssSelector("g[data-pcc-mark*='highlighttextannotation']");
 	}
+	
+	//Added by Gopinath - 01/02/2021
+		public Element getMetaDataTableOnPopupFieldName() {
+			return driver.FindElementByXPath("//div[@id='MetaDataDT1_wrapper']/descendant::th[text()='Field Name']");
+		}
+		public Element getMetaDataTableOnPopupFieldValue() {
+			return driver.FindElementByXPath("//div[@id='MetaDataDT1_wrapper']/descendant::th[text()='Field Value']");
+		}
+		public ElementCollection getMetadataPopUpFieldnameList() {
+			return driver.FindElementsByXPath("//table[@id='MetaDataDT1']//td[@class='sorting_1']");
+		}
 
 	public DocViewMetaDataPage(Driver driver) {
 
@@ -2906,6 +2917,35 @@ public class DocViewMetaDataPage {
 			base.failedStep("Exception occured while verifying highlighted text for already added remark is deleted from document on doc view. "+e.getLocalizedMessage());
 		}
 	}
-	
+	/**
+	 * @author Gopinath
+	 * @description: this method will verify metadata pop with field name and value is displayed or not
+	 */
+	public void verifyMetadataPopUpColumns() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMetaDataTableOnPopup());
+			if (getMetaDataTableOnPopup().getWebElement().isDisplayed()) {
+				base.passedStep("metadata popup is displayed");
+			} else {
+				base.failedStep("metadata popup is not displayed");
+			}
+			base.waitForElement(getMetaDataTableOnPopupFieldName());
+			if (getMetaDataTableOnPopupFieldName().getWebElement().isDisplayed()
+					&& getMetadataPopUpFieldnameList().size() > 0) {
+				base.passedStep("metadata popup field name with list is  displayed");
+				if (getMetaDataTableOnPopupFieldValue().getWebElement().isDisplayed()) {
+					base.passedStep("poup is displayed with metadalist with field name and value");
+				} else {
+					base.failedStep("metadat poup is Not displayed with metadalist with field name and value");
+				}
+			} else {
+				base.failedStep("metadata popup field name with list is not displayed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 	
 }

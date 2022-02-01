@@ -1269,6 +1269,34 @@ public class DocView_MetaData_Regression {
 		loginPage.logout();
 		
 	}
+	
+	/**
+	 * @author Gopinath
+	 * @testCase Id:50790 To verify sorting from list of metadata pop up
+	 * @description:  To verify sorting from list of metadata pop up
+	 * @throws InterruptedException
+	 */
+	@Test(alwaysRun = true,groups={"regression"},priority = 23)
+	public void verifyMetadataPopUpColumns() throws InterruptedException {
+		baseClass=new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-50790 sprint-11");
+		baseClass.stepInfo("###To verify sorting from list of metadata pop up###");
+		DocViewMetaDataPage docViewMetaData = new DocViewMetaDataPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+		
+		baseClass.stepInfo("Basic  content search ");
+		session.basicContentSearch(Input.searchString1);
+		
+		baseClass.stepInfo("View serached docs in Docview");
+		session.ViewInDocView();
+		
+		baseClass.stepInfo("opening metadata popup");
+		docViewMetaData.openDocViewMetaDataPopup();
+		
+		baseClass.stepInfo("verify metadapop list and columns");
+		docViewMetaData.verifyMetadataPopUpColumns();
+		
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
