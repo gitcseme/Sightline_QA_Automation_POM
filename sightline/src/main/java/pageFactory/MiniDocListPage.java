@@ -494,6 +494,9 @@ public class MiniDocListPage {
 	public Element getSelectedOptimizedSortRadioButton() {
 		return driver.FindElementByXPath("//input[@id='rbOptimized']");
 	}
+	public Element getAvailableFieldsDisplay(String fields) {
+		return driver.FindElementByXPath("//ul[@id='sortable1PickColumns']//li[@customfield-name='"+fields+"']");
+	}
 
 	/**
 	 * @author Indium Raghuram ] Description : To get the list of elements

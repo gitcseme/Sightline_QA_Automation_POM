@@ -1404,6 +1404,11 @@ public class AssignmentsPage {
          return driver.FindElementByXPath("//div[text()='"+keywordName+"']//..//i");
          }
 
+     public Element getAssgn_PopOutPanelToggle() {
+			return driver.FindElementByXPath(
+					"//*[@id='AdditionalPreferences_IsAllowPopoutPanels']/following-sibling::i");
+		}
+     
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
