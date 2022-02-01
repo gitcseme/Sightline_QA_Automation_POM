@@ -9729,6 +9729,45 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * @Author : Baskar date: 01/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:To verify that Project Admin cannot view the coding form.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 205)
+	public void validateCodingFormInPaUser() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-50927");
+		baseClass.stepInfo("To verify that Project Admin cannot view the coding form.");
+
+		// Login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Assign coding form
+		codingForm.assignCodingFormByCondition(Input.codingFormName);
+		baseClass.passedStep(Input.codingFormName + "Coding form assigned to context of security group");
+
+		// logout
+		loginPage.logout();
+
+		// Login as pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// navigation to docview page from session search page
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// validation for pa user in coding form
+		docViewPage.validateCodingFormDisplayAsPaUser(Input.codingFormName);
+		docViewPage.paWarningMsgForCodingForm();
+
+		// logout
+		loginPage.logout();
+
+	}
 
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {
