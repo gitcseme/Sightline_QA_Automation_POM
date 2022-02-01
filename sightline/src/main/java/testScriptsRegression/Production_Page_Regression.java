@@ -3105,7 +3105,7 @@ public class Production_Page_Regression {
 	 *              is exists. [RPMXCON-48506]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 57)
+	@Test(enabled = false, groups = { "regression" }, priority = 57)
 	public void verifyTIffOrPdfWithPrivPlaceholder() throws Exception {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3166,7 +3166,7 @@ public class Production_Page_Regression {
 	 *                     only Native Files selected in the native components, then
 	 *                     Component tab should Complete without any error.
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 58)
+	@Test(enabled = false, groups = { " regression" }, priority = 58)
 	public void verifyComponentTabWithoutAnyError() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49362- Production Sprint 11");
@@ -3239,7 +3239,7 @@ public class Production_Page_Regression {
 	 *         No:RPMXCON-47888,RPMXCON-47894
 	 * @Description:To Verify in Priv Guard View in Doclist and DocView.
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 59)
+	@Test(enabled = false, groups = { " regression" }, priority = 59)
 	public void verifyPrivGuardSectionViewInDoclistAndDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49362- Production Sprint 11");
@@ -3310,7 +3310,7 @@ public class Production_Page_Regression {
 	 *              Burn Redactions in PDF section [RPMXCON-48501]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 60)
+	@Test(enabled = false, groups = { "regression" }, priority = 60)
 	public void verifySelectedMetadataNotDisplayedOnDocs() throws Exception {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3371,7 +3371,7 @@ public class Production_Page_Regression {
 	 *              [RPMXCON-48507]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 61)
+	@Test(enabled = false, groups = { "regression" }, priority = 61)
 	public void verifyTIFFAndGenerate() throws Exception {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3425,6 +3425,113 @@ public class Production_Page_Regression {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Sowndarya.Velraj created on:01/28/22 TESTCASE No:RPMXCON-48331
+	 * @Description:To verify that the selected metadata is not displayed in DAT if
+	 *                 the doc has at least one of the selected PRIV tags in PRIV
+	 *                 placeholdering for Audio files
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 64)
+	public void verifyDATWithPrivilegedCheckboxForAudioFiles() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-47888- Production Sprint 11");
+		baseClass.stepInfo("To Verify in Priv Guard View in Doclist and DocView.");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.audioSearch(Input.audioSearchString1,Input.language);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.getDATPrivledgedCheckbox().waitAndClick(10);
+		baseClass.stepInfo("Privileged checkbox is selected in DAT component");
+		page.advancedProductionComponentsMP3WithBurnReductionTag();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingSelectDocumentUsingTags(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:01/28/22 TESTCASE No:RPMXCON-48334
+	 * @Description:To verify that the selected metadata is not displayed in DAT if the doc has at least one of the selected Redaction tags for Audio files
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 65)
+	public void verifyDATWithRedactionsCheckboxForAudioFiles() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48334- Production Sprint 11");
+		baseClass.stepInfo("To Verify in Priv Guard View in Doclist and DocView.");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.audioSearch(Input.audioSearchString1,Input.language);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.getDATRedactionsCBox().waitAndClick(10);
+		baseClass.stepInfo("Redaction checkbox is selected in DAT component");
+		page.advancedProductionComponentsMP3WithBurnReductionTag();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingSelectDocumentUsingTags(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+	}
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
