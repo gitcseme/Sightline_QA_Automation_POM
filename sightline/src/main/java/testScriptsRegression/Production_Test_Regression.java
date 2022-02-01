@@ -141,6 +141,7 @@ public class Production_Test_Regression {
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 	tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+	loginPage.logout();
 	
 	}
 	/**
@@ -200,6 +201,7 @@ public class Production_Test_Regression {
 			tagsAndFolderPage = new TagsAndFoldersPage(driver);
 			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 			tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+			loginPage.logout();
 	 }
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -290,6 +292,7 @@ public class Production_Test_Regression {
 			tagsAndFolderPage = new TagsAndFoldersPage(driver);
 			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+			loginPage.logout();
 			
 	 }
 	/**
@@ -332,6 +335,7 @@ public class Production_Test_Regression {
 	driver.scrollingToBottomofAPage();
 	page.translationDisableCheck();
 	base.passedStep("Verified that for the saved template under Translations component- File Type Options should be disabled");
+	loginPage.logout();
 	}
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -384,6 +388,7 @@ public class Production_Test_Regression {
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 	tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+	loginPage.logout();
 	
 	}
 	/**
@@ -439,6 +444,7 @@ public class Production_Test_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -492,6 +498,7 @@ public class Production_Test_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -545,6 +552,7 @@ public class Production_Test_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 	/**
 	 * @author Aathith.Senthilkumar
@@ -593,7 +601,8 @@ public class Production_Test_Regression {
 		//delete tag and folder 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver); 
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group"); 
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group"); 
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 	}
 	/**
 	 * @author Aathith.Senthilkumar
@@ -621,7 +630,7 @@ public class Production_Test_Regression {
 		base.VerifyWarningMessage("For the MP3 Files component, you must either enable LST load file option or specify the MP3 file path in the DAT, in order to generate a load file for the generated MP3s files.");
 		
 		base.passedStep("Verified the error message for MP3 component when 'Disable generate load File ");
-		
+		loginPage.logout();
 	}
 	/**
 	 * @author Aathith.Senthilkumar
@@ -664,7 +673,7 @@ public class Production_Test_Regression {
 		base.VerifyErrorMessage("Privileged tags or corresponding placeholder text is missing in the Privileged Placeholdering of the TIFF/PDF section.");
 		
 		base.passedStep("Verified the error message for TIFF/PDF component when 'Enabled privileg doc without tag or text'");
-		
+		loginPage.logout();
 	}
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -734,7 +743,7 @@ public class Production_Test_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
-	
+		loginPage.logout();
 	}
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -791,7 +800,7 @@ public class Production_Test_Regression {
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 	tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
-	
+	loginPage.logout();
 	}
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -881,7 +890,7 @@ public class Production_Test_Regression {
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 	tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
-	
+	loginPage.logout();
 	}
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -974,7 +983,7 @@ public class Production_Test_Regression {
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 	tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
-	
+	loginPage.logout();
 	}
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -1031,7 +1040,7 @@ public class Production_Test_Regression {
 	//delete tags and folders
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-	
+	loginPage.logout();
 }
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -1084,7 +1093,7 @@ public class Production_Test_Regression {
 	//delete tags and folders
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-	
+	loginPage.logout();
 }
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -1143,7 +1152,7 @@ public class Production_Test_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		
+		loginPage.logout();
 	}
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -1178,7 +1187,7 @@ public class Production_Test_Regression {
 		projectField.getAllProductionBatesRanges().waitAndClick(5);
 		projectField.enableIsSearchableBatesRangeIsSelected();
 		base.passedStep("Verified if currently 'AllProductionBatesRanges' is searchable, then we should leave the field to be searchable..");
-		
+		loginPage.logout();
 	}
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -1215,7 +1224,7 @@ public class Production_Test_Regression {
 		projectField.getAllProductionBatesRanges().waitAndClick(5);
 		projectField.disableIsSearchableBatesRangeIsSelected();
 		base.passedStep("Verified if in existing project, 'AllProductionBatesRange' field is searchable and if  this field has been edited and is make it non-searchable, then this field cannot make as searchable again");
-		
+		loginPage.logout();
 	}
 	/**
 	 * @author Aathith.Senthilkumar
@@ -1270,6 +1279,7 @@ public class Production_Test_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
 		
 	 }
 		/**
@@ -1340,6 +1350,7 @@ public class Production_Test_Regression {
 			tagsAndFolderPage = new TagsAndFoldersPage(driver);
 			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+			loginPage.logout();
 			
 		 }
 			/**
@@ -1397,6 +1408,7 @@ public class Production_Test_Regression {
 				tagsAndFolderPage = new TagsAndFoldersPage(driver);
 				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
 			}
 				/**
 				 * @author Aathith.Senthilkumar
@@ -1502,6 +1514,7 @@ public class Production_Test_Regression {
 					//delete tags and folders
 					tagsAndFolderPage = new TagsAndFoldersPage(driver);
 					tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+					loginPage.logout();
 				}
 			/**
 			 * @author Aathith.Senthilkumar
@@ -1557,6 +1570,7 @@ public class Production_Test_Regression {
 				tagsAndFolderPage = new TagsAndFoldersPage(driver);
 				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
 			}
 				/**
 				 * @author Aathith.Senthilkumar
@@ -1630,6 +1644,7 @@ public class Production_Test_Regression {
 					tagsAndFolderPage = new TagsAndFoldersPage(driver);
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 				}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -1693,6 +1708,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 				}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -1758,6 +1774,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					
 				}
 					/**
@@ -1801,6 +1818,7 @@ public class Production_Test_Regression {
 						System.out.println("date not visible");
 					}
 					base.passedStep("Verified that 'Production Creation Date' should displayed when it saved first time");
+					loginPage.logout();
 					
 					}
 					/**
@@ -1864,6 +1882,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 				}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -1935,6 +1954,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 				}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -1984,6 +2004,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 				}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -2055,6 +2076,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 				}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -2110,6 +2132,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -2169,6 +2192,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -2231,6 +2255,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -2295,6 +2320,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -2366,6 +2392,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}					
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -2465,6 +2492,7 @@ public class Production_Test_Regression {
 						System.out.println(Component+" is not visible");
 					}
 					base.passedStep("Verified that in the Production components page 'Archive File from FTP' component is not available");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -2548,6 +2576,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith 
@@ -2583,7 +2612,7 @@ public class Production_Test_Regression {
 						driver.Navigate().back();
 						
 						base.passedStep("Verified that RMU cannot access the Production by copying the Production URL if user is not part of that security group");
-						
+						loginPage.logout();
 					}
 					/**
 					 * @author Aathith 
@@ -2620,6 +2649,7 @@ public class Production_Test_Regression {
 						driver.Navigate().back();
 						
 						base.passedStep("Verified that RMU cannot access the Production if he is not part of that Project");
+						loginPage.logout();
 						
 					}
 					/**
@@ -2682,6 +2712,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith 
@@ -2718,6 +2749,7 @@ public class Production_Test_Regression {
 						driver.Navigate().back();
 						
 						base.passedStep("Verify that PAU cannot access the Production if he is not part of that Project");
+						loginPage.logout();
 						
 					}
 					/**
@@ -2805,6 +2837,7 @@ public class Production_Test_Regression {
 						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 						tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 						//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+						loginPage.logout();
 					}
 					/**
 					 * @author Aathith.Senthilkumar
@@ -2828,7 +2861,7 @@ public class Production_Test_Regression {
 						base.stepInfo("PageCount was be renamed to TIFFPageCount");
 						
 						base.passedStep("Verified that the production field PageCount is renamed to TIFFPageCount");
-						
+						loginPage.logout();						
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -2892,6 +2925,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -2944,6 +2978,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith.Senthilkumar
@@ -3014,6 +3049,7 @@ public class Production_Test_Regression {
 						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 						tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 						tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+						loginPage.logout();
 					}
 					/**
 					 * @author Aathith.Senthilkumar
@@ -3079,6 +3115,7 @@ public class Production_Test_Regression {
 						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 						//tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 						tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+						loginPage.logout();
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -3131,6 +3168,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -3219,6 +3257,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -3264,6 +3303,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -3326,6 +3366,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -3378,6 +3419,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -3448,6 +3490,7 @@ public class Production_Test_Regression {
 					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
 					}
 					/**
 					 * @author Aathith.Senthilkumar
@@ -3528,6 +3571,7 @@ public class Production_Test_Regression {
 						tagsAndFolderPage = new TagsAndFoldersPage(driver);
 						this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 						tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+						loginPage.logout();
 					}
 				/**
 				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -3579,6 +3623,7 @@ public class Production_Test_Regression {
 				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 				//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
 				}
 				/**
 				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -3626,6 +3671,7 @@ public class Production_Test_Regression {
 				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
 				}
 				/**
 				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -3761,6 +3807,7 @@ public class Production_Test_Regression {
 				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
 				}
 				/**
 				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
@@ -3822,6 +3869,8 @@ public class Production_Test_Regression {
 				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				
 				}
 				
 	
@@ -3832,11 +3881,12 @@ public class Production_Test_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
+			loginPage.quitBrowser();
 		} catch (Exception e) {
-			loginPage.logout();
+			loginPage.quitBrowser();
 		}
 	}
 	
@@ -3845,12 +3895,12 @@ public class Production_Test_Regression {
 
 	public void close() {
 		System.out.println("******TEST CASES FOR PRODUCTION EXECUTED******");
-		try {
-			loginPage.quitBrowser();
-		} catch (Exception e) {
-			loginPage.quitBrowser();
-
-		}
+//		try {
+//			loginPage.quitBrowser();
+//		} catch (Exception e) {
+//			loginPage.quitBrowser();
+//
+//		}
 	}
 	
 }

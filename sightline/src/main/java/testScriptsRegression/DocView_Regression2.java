@@ -129,6 +129,7 @@ public class DocView_Regression2 {
 		String urlBackgroundfromdocview = driver.getUrl();
 		assertEquals(urlBackgroundfromdocview, "https://sightlinept.consilio.com/Background/BackgroundTask");
 		baseClass.passedStep("Navigated to document download page");
+		loginPage.logout();
 	}
 
 	/**
@@ -170,6 +171,7 @@ public class DocView_Regression2 {
 		} else {
 			baseClass.failedStep("The doc View page had not been loaded as per thumbnail");
 		}
+		loginPage.logout();
 
 	}
 
@@ -199,6 +201,7 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Purehits viewed in DocView");
 		docViewRedact.verifyHighlightedText();
+		loginPage.logout();
 	}
 
 	/**
@@ -221,6 +224,7 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Purehits viewed in DocView");
 		docViewRedact.TraverseForwardAndBackwardOnHits();
+		loginPage.logout();
 	}
 
 	/**
@@ -241,7 +245,7 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Purehits viewed in DocView");
 		docViewRedact.thereAreNoHitsVerify();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -275,7 +279,7 @@ public class DocView_Regression2 {
 		} else {
 			assertTrue(false);
 		}
-
+		loginPage.logout();
 	}
 
 	/**
@@ -311,6 +315,7 @@ public class DocView_Regression2 {
 		} else {
 			assertTrue(false);
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -343,8 +348,7 @@ public class DocView_Regression2 {
 		else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
-		
-		
+		loginPage.logout();	
 		
 	}
 	
@@ -383,6 +387,7 @@ public class DocView_Regression2 {
 		else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -419,6 +424,7 @@ public class DocView_Regression2 {
 		else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
+		loginPage.logout();
 	}
 
 	
@@ -455,6 +461,7 @@ public class DocView_Regression2 {
 		else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -482,6 +489,7 @@ public class DocView_Regression2 {
 		docViewRedact.verifyHighlightedText_withclick();
 		baseClass.stepInfo("On demand search text searched and application highlight the text  and highlights are"
 				+ " light red in color as exepcted.");
+		loginPage.logout();
 	}
 
 	@DataProvider(name = "userDetails2")
@@ -518,7 +526,7 @@ public class DocView_Regression2 {
 		else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
-			
+		loginPage.logout();
 		
 	}
 	
@@ -551,6 +559,7 @@ public class DocView_Regression2 {
 		else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -576,6 +585,7 @@ public class DocView_Regression2 {
 		} else {
 			baseClass.failedStep("Keyword assigned to security group is not present in the panel");
 		}
+		loginPage.logout();
 	}
 
 
@@ -609,6 +619,7 @@ public class DocView_Regression2 {
 		else {
 			baseClass.failedStep("Persistent hit panel is NOT retained after loding the new page by entering page number");
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -657,7 +668,8 @@ public class DocView_Regression2 {
 			baseClass.passedStep("The download dropdown is clicked and doc is downloaded");
 		} else {
 			baseClass.failedStep("The dropdown for downloading is not present");
-		}	
+		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -709,6 +721,7 @@ public class DocView_Regression2 {
 		else {
 			baseClass.failedStep("The images tab is retained");
 		}
+		loginPage.logout();
 	}
 		
 	
@@ -744,6 +757,7 @@ public class DocView_Regression2 {
 		}
 	
 	assignmentsPage.deleteAssgnmntUsingPagination(assname);
+	loginPage.logout();
 	}
 	
 	/**
@@ -795,6 +809,7 @@ public class DocView_Regression2 {
 		} else {
 			baseClass.failedStep("images Tab fit to screen option is not avilable");
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -824,6 +839,7 @@ public class DocView_Regression2 {
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
 		baseClass.stepInfo("First redaction tag on the list saved successfully");
+		loginPage.logout();
 	}
 	
 	
@@ -856,8 +872,8 @@ public class DocView_Regression2 {
 	    	baseClass.failedStep("The search box is present in the default view of DocView");
 	    } else {
 	    	baseClass.passedStep("The search box is not present in the default view of docview");
-	    }    
-	    
+	    } 
+	    loginPage.logout();	    
 	}
 	
 	/**
@@ -931,6 +947,7 @@ public class DocView_Regression2 {
 	    } else {
 	    	baseClass.failedStep("page number box not visible in DocView");
 	    }
+	    loginPage.logout();
 	    
 	}
 
@@ -996,6 +1013,7 @@ public class DocView_Regression2 {
 		} else {
 			baseClass.failedStep("moving forward on hits unsuccessful");
 		}	
+		loginPage.logout();
 		
 	}
 	
@@ -1031,6 +1049,7 @@ public class DocView_Regression2 {
 		} else {
 			baseClass.failedStep("The applied annotation was not removed");
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -1060,7 +1079,7 @@ public class DocView_Regression2 {
 		docViewRedact.thisPageRedaction().waitAndClick(3);
 	    docViewRedact.selectingRectangleRedactionTag();
 	    baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
-	    
+	    loginPage.logout();	    
 	}
 	
 	/**
@@ -1094,6 +1113,7 @@ public class DocView_Regression2 {
 		else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -1124,7 +1144,7 @@ public class DocView_Regression2 {
 		} else {
 			assertTrue(false);
 		}
-	    
+		loginPage.logout();	    
 	}
 	
 	/**
@@ -1175,6 +1195,7 @@ public class DocView_Regression2 {
 		else {
 			baseClass.failedStep("Presently Viewed Document is not present in visible area of the mini-doclist");
 			}
+		loginPage.logout();
 				
 	}
 	
@@ -1236,6 +1257,7 @@ public class DocView_Regression2 {
 		baseClass.impersonateRMUtoReviewer();
 		baseClass.stepInfo("Impersonated from RMU to Reviewer");
 		docView.statusCheckAfterImpersonation();
+		loginPage.logout();
 	}
 	
 	/**
@@ -1266,7 +1288,7 @@ public class DocView_Regression2 {
 		} else {
 			assertTrue(false);
 		}
-	    
+		loginPage.logout();	    
 	}
 	
 	/**
@@ -1300,7 +1322,7 @@ public class DocView_Regression2 {
 			} else {
 				assertTrue(false);
 			}
-
+			loginPage.logout();
 		}
 
 
@@ -1345,6 +1367,7 @@ public class DocView_Regression2 {
 		
 		//setting back to default locale
 		loginPage.editProfile("English - United States");
+		loginPage.logout();
 	}
 	
 	
@@ -1389,7 +1412,7 @@ public class DocView_Regression2 {
 			assertTrue(false);
 			baseClass.failedStep("The print Icon is present in DoocView - failed");
 		}
-		
+		loginPage.logout();
 
 	}
 
@@ -1424,6 +1447,7 @@ public class DocView_Regression2 {
 		} else {
 			baseClass.failedStep("The icon NOT turned to red colour as expected");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -1456,7 +1480,7 @@ public class DocView_Regression2 {
 		}
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		baseClass.passedStep("Assignment viewed in DocView Successfully");
-		
+		loginPage.logout();
 		
 	}
 	
@@ -1492,6 +1516,7 @@ public class DocView_Regression2 {
 		} else {
 			baseClass.passedStep("No assignments pre esist for the SG. The view in doc view Icon is disabled");
 		}	
+		loginPage.logout();
 	}
 	/**
 	 * Author : Iyappan.Kasinathan
@@ -1540,7 +1565,7 @@ public class DocView_Regression2 {
 		}
 		docViewRedact.clickingRemarksIcon();
 		docView.deleteReamark(remarksName);
-
+		loginPage.logout();
 	}
 	/**
 	 * Author : Iyappan.Kasinathan
@@ -1607,6 +1632,7 @@ public class DocView_Regression2 {
 			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
 		}
+		loginPage.logout();
 	}
 	@DataProvider(name = "UsersWithoutPA")
 	public Object[][] UsersWithoutPA() {
@@ -1679,7 +1705,7 @@ public class DocView_Regression2 {
 		// click eye icon and verify the highlighting of search term
 		docView.getPersistentHit(Input.testData1);
 		docView.verifyKeywordHighlightedOnDocView();
-		
+		loginPage.logout();
 	}
 	
 	/**
@@ -1760,7 +1786,8 @@ public class DocView_Regression2 {
 		else
 		{
 			baseClass.passedStep("Keywords are not highlighted while checking as reviewer");
-		}		
+		}
+		loginPage.logout();
 		
 	}
 /**
@@ -1784,6 +1811,7 @@ public class DocView_Regression2 {
 		} else {
 			baseClass.failedStep("Search Icon not disabled for Tiff images");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -1849,6 +1877,7 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		docViewRedact.checkingPersistentHitPanel();
 		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
+		loginPage.logout();
 
 	}/**
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50787
@@ -1897,6 +1926,7 @@ public class DocView_Regression2 {
 	    	baseClass.passedStep("Rotate AntiClock visible in DocView"); 	
 	    } else {
 	    	baseClass.failedStep("Rotate AntiClock not visible in DocView"); }
+	    loginPage.logout();
 	    
 	}
 	
@@ -1990,6 +2020,7 @@ public class DocView_Regression2 {
 	    	baseClass.passedStep("print iocn visible in DocView"); 	
 	    } else {
 	    	baseClass.failedStep("print icon not visible in DocView"); }
+		 loginPage.logout();
 	}
 	
 	/**
@@ -2019,6 +2050,7 @@ public class DocView_Regression2 {
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		baseClass.VerifyWarningMessage("Please select an assignment which contains documents assigned to it.");	
 		assignmentspage.deleteAssgnmntUsingPagination(assignmentName);	
+		loginPage.logout();
 	}
 	
 	/**
@@ -2040,6 +2072,7 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Navigated to docView");
 		docView.verifyMetaDataTermDisplayingOnPersistentPanel(Input.metaDataCustodianNameInput);
+		loginPage.logout();
 	}
 	
 	/**
@@ -2062,7 +2095,7 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Navigated to docView");
 		docView.verifyTermHitsHighlightingInDocumentWithoutClickingEyeIcon(Input.searchString1);
-		
+		loginPage.logout();		
 	}
 	
 	/**
@@ -2097,7 +2130,7 @@ public class DocView_Regression2 {
 		else {
 			baseClass.failedStep("Hit terms with count not displayed on the persistent panel");
 		}
-		
+		loginPage.logout();		
 	}
 	
 	/**
@@ -2134,6 +2167,7 @@ public class DocView_Regression2 {
 		} else {
 			baseClass.failedStep("The multipage icon NOT turned to normal  colour as expected");
 		}
+		loginPage.logout();
 		
 	}
 	
@@ -2166,6 +2200,7 @@ public class DocView_Regression2 {
 		docViewRedact.selectingMultiplePagesForRedaction();
 		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
 		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
+		loginPage.logout();
 	}
 	
 	
@@ -2229,6 +2264,7 @@ public class DocView_Regression2 {
 		docView.getPersistantHitEyeIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
 		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
 		
 	}
 	
@@ -2280,7 +2316,7 @@ public class DocView_Regression2 {
 		if(checkMarkIconsAfterEditingCF>checkMarkIconCount) {
 			baseClass.passedStep("Check mark icon displayed for completed document");
 		}
-		
+		loginPage.logout();		
 	}
 	
 	/**
@@ -2314,7 +2350,7 @@ public class DocView_Regression2 {
 		} else {
 			baseClass.failedStep("The first selected redaction tag is NOT Default Redaction Tag");
 		}
-		
+		loginPage.logout();
 	
 	}
 	
@@ -2364,6 +2400,7 @@ public class DocView_Regression2 {
 		} else {
 			baseClass.failedStep("The first selected redaction tag is NOT Default Redaction Tag");
 		}
+		loginPage.logout();
 		}
 		
 	
@@ -2376,9 +2413,9 @@ public class DocView_Regression2 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

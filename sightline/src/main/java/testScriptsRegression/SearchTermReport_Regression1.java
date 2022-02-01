@@ -124,6 +124,7 @@ public class SearchTermReport_Regression1 {
 		softAssertion.assertEquals(actualHitCount,hitCountTagged);
 		softAssertion.assertAll();
 		bc.stepInfo("Document Count associated to selected tag is as excpeted");
+		lp.logout();
 	}
 
 	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
@@ -156,6 +157,7 @@ public class SearchTermReport_Regression1 {
 		softAssertion.assertEquals(actualHitCount,folderedDocCount);
 		softAssertion.assertAll();
 		bc.stepInfo("Document Count associated to selected folder is as excpeted");
+		lp.logout();
 	}
 
 	//@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
@@ -190,6 +192,7 @@ public class SearchTermReport_Regression1 {
 		softAssertion.assertAll();
 		bc.stepInfo("Document Count associated to selected saved search in STR page is  displayed"
 				+ " as excpeted in doc view page");
+		lp.logout();
 	}
 
 	@Test(groups = { "regression" }, priority = 4)
@@ -222,6 +225,7 @@ public class SearchTermReport_Regression1 {
 		softAssertion.assertAll();
 		bc.passedStep("Document Count associated to selected Saved search in Search term report is displayed  as"
 				+ " excpeted in manage assignments page after assigning the docs to assignment .");
+		lp.logout();
 	}
 	/**
 	 * @author Jayanthi.ganesan
@@ -258,7 +262,7 @@ public class SearchTermReport_Regression1 {
 		softAssertion.assertEquals(actualHitCount,TotalCount );
 		softAssertion.assertAll();
 		bc.passedStep("Sucessfully verified that total selected unique count will be displayed as Total Selected under Actions drop down");
-		
+		lp.logout();		
 	}
 	@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 6)
 	public void navigateToSearchTermReport(String username, String password, String role) {
@@ -285,7 +289,7 @@ public class SearchTermReport_Regression1 {
         {
         	bc.failedStep("Search Term Report link is not found in Reports landing page.");
         }
-        
+        lp.logout();        
     }
 	/**
 	 * @author Jayanthi.ganesan
@@ -332,7 +336,7 @@ public class SearchTermReport_Regression1 {
 		softAssertion.assertEquals(uniquefamilyHitsSum,expecteduniquefamilyHits);
 		softAssertion.assertAll();
 		bc.passedStep("Sucessfully verified that aggregate unique document counts displays under the Summary section on Search Term Report is sum of all Unique Doc values under report table.");
-		
+		lp.logout();
 	}
 	/**
 	 * @author Jayanthi.ganesan
@@ -360,8 +364,8 @@ public class SearchTermReport_Regression1 {
 		st.verifyColumnSorting("UNIQUE HITS",st.getUniqueHits());
 		driver.scrollPageToTop();
 		//st.getUniqueFamilyHits().ScrollTo();
-		//st.verifyColumnSorting("UNIQUE FAMILY HITS",st.getUniqueFamilyHits());	
-		
+		//st.verifyColumnSorting("UNIQUE FAMILY HITS",st.getUniqueFamilyHits());
+		lp.logout();		
 	}
 	/**
 	 * @author Jayanthi.ganesan
@@ -386,6 +390,7 @@ public class SearchTermReport_Regression1 {
 		if(role=="RMU") {
 		    st.GenerateReportWithAllSearches(savedSearchNamesRMU);
 		st.verifySearchInReportsTable(savedSearchNamesRMU);
+		lp.logout();
 		}
 	}
 	/**
@@ -434,6 +439,7 @@ public class SearchTermReport_Regression1 {
 	    bc.stepInfo("The unique Hits Count for saved saerch "+saveSearchNameRMU2+"--"+st.getHitsValueFromRow("UNIQUE HITS",saveSearchNameRMU2));
 		SoftAssertion.assertAll();
 		bc.passedStep("Suceddfully verified the Unique Hits Column value in STR Page");
+		lp.logout();
 		}
 		
 	}
@@ -464,6 +470,7 @@ public class SearchTermReport_Regression1 {
 			//securityPage.deleteSecurityGroups(securitygroupname);
 			softAssertion.assertAll();
 			bc.passedStep("The Search term report docs released to Security group "+securitygroupname+" is reflected as expected");
+			lp.logout();
 		}
 		
 		/**
@@ -497,6 +504,7 @@ public class SearchTermReport_Regression1 {
 			cddr.runReportandVerifyFileDownloaded();
 			softAssertion.assertAll();
 			bc.passedStep("Sucessfully verified that Export Data action is working on Search Term Report Page.");
+			lp.logout();
 		}
 
 		/**
@@ -551,6 +559,7 @@ public class SearchTermReport_Regression1 {
 				savedSearch.SaveSearchDelete(cmbSearchName1);
 				savedSearch.SaveSearchDelete(cmbSearchName2);
 			}
+			lp.logout();
 			}
 			
 		
@@ -567,9 +576,9 @@ public class SearchTermReport_Regression1 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			lp.logoutWithoutAssert();
 		}
 		try {
-			lp.logout();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();

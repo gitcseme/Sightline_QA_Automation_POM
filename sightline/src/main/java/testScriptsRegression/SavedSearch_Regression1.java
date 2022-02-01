@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -97,6 +98,7 @@ public class SavedSearch_Regression1 {
 		
 		baseClass.stepInfo("Delete uploded batch file.");
 		saveSearch.deleteUplodedBatchFile(fileName);
+		loginPage.logout();
 	}
 	
 	 /**
@@ -133,6 +135,7 @@ public class SavedSearch_Regression1 {
 			
 			baseClass.stepInfo("Count Verifaction Of Draft Basic Meta Data Search");
 			saveSearch.countVerifactionOfDraftBasicMetaDataSearch(BasicMetaDataSearchName);
+			loginPage.logout();
 		}
 	     
 		
@@ -183,6 +186,7 @@ public class SavedSearch_Regression1 {
 			
 			baseClass.stepInfo("count Verifaction Of Draft Basic Meta Data Search");
 			saveSearch.countVerifactionOfDraftBasicMetaDataSearch(AdvanceSearchName);
+			loginPage.logout();
 			
 		}
 
@@ -217,6 +221,7 @@ public class SavedSearch_Regression1 {
 			
 			baseClass.stepInfo("Count Verifaction Of Draft Basic MetaData Search");
 			saveSearch.countVerifactionOfDraftBasicMetaDataSearch(AdvanceSearchName);
+			loginPage.logout();
 			
 		}
 		
@@ -259,6 +264,7 @@ public class SavedSearch_Regression1 {
 			
 			baseClass.stepInfo("Count Verifaction Of Draft Basic MetaData Search");
 			saveSearch.countVerifactionOfDraftBasicMetaDataSearch(tillsCount,advanceSearchName);
+			loginPage.logout();
 			
 		}
 
@@ -294,6 +300,7 @@ public class SavedSearch_Regression1 {
 			
 			baseClass.stepInfo("Delete uploded batch file.");
 			saveSearch.deleteUplodedBatchFile(fileName);
+			loginPage.logout();
 		}
 		
 
@@ -329,6 +336,7 @@ public class SavedSearch_Regression1 {
 			
 			baseClass.stepInfo("Delete uploded batch file.");
 			saveSearch.deleteUplodedBatchFile(fileName);
+			loginPage.logout();
 		}
 		/**
 		 * Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
@@ -362,32 +370,32 @@ public class SavedSearch_Regression1 {
 			
 			baseClass.stepInfo("Delete uploded batch file.");
 			saveSearch.deleteUplodedBatchFile(fileName);
-		}
-		
-	@AfterMethod(alwaysRun = true)
-	public void close() {
-		try {
 			loginPage.logout();
-		} finally {
-			loginPage.closeBrowser();
-			LoginPage.clearBrowserCache();
-		} 
-	}
-	
-     @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		 
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 		try{ //if any tc failed and dint logout!
- 		loginPage.logout();
- 		}catch (Exception e) {
-			// TODO: handle exception
 		}
- 	}
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
+		@AfterMethod(alwaysRun = true)
+		public void takeScreenShot(ITestResult result) {
+			if (ITestResult.FAILURE == result.getStatus()) {
+				Utility bc = new Utility(driver);
+				bc.screenShot(result);
+				System.out.println("Executed :" + result.getMethod().getMethodName());
+				loginPage.logoutWithoutAssert();
+			}
+			try {
+				loginPage.quitBrowser();
+			} catch (Exception e) {
+				loginPage.quitBrowser();
+			}
+		}
+
+		@AfterClass(alwaysRun = true)
+		public void close() {
+			try {
+			//	LoginPage.clearBrowserCache();
+
+			} catch (Exception e) {
+				System.out.println("Sessions already closed");
+			}
+		}		
+
      
 }

@@ -60,6 +60,7 @@ public class ReviewerProductiviytReport_Regression {
 		bc.stepInfo("Logged in as -" + role);
 		ReviewerProductivityReportPage reviewerProdReport = new ReviewerProductivityReportPage(driver);
 		reviewerProdReport.navigateTOReviewerPodReportPage();
+		lp.logout();
 	}
 	
 	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
@@ -75,6 +76,7 @@ public class ReviewerProductiviytReport_Regression {
 		rp.navigateTOReviewerPodReportPage();
 		rp.generateReport(null);
 		rp.verifyColumnDisplay(rp.getTableHeader("Distributed Docs Completed by This Reviewer"),"Distributed Docs Completed by This Reviewer");
+		lp.logout();
 	}
 	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
 	public void verifyTotalDocsCount(String username, String password, String role)
@@ -122,6 +124,7 @@ public class ReviewerProductiviytReport_Regression {
 	softAssertion.assertEquals(Input.pageCount,rp.verifyColumnValueDisplay(rp.getTableHeaders(),"TOTAL DOCS COMPLETED BY THIS REVIEWER"));
 	softAssertion.assertAll();
 	bc.passedStep("Sucessfully verified  the 'Total Docs Completed by This Reviewer' in the 'Reviewer Productivity Report'.");
+	lp.logout();
 	}
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
@@ -137,10 +140,10 @@ public class ReviewerProductiviytReport_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			LoginPage lp = new LoginPage(driver);
+			lp.logoutWithoutAssert();
 		}
 		try {
-			LoginPage lp = new LoginPage(driver);
-			lp.logout();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();
