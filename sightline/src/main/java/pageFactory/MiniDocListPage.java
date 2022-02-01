@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -4114,12 +4115,47 @@ public class MiniDocListPage {
 
 		numToCHoose = baseClass.randNumber(sizeofList);
 		nameSelected = docIDlist.get(numToCHoose);
+		System.out.println(nameSelected);
 		getDociD(nameSelected).waitAndClick(5);
 		driver.waitForPageToBeReady();
 		baseClass.waitTime(2);
 		docName = getMainWindowActiveDocID().getText();
 
 		return docName;
-	} 
+	}
+
+	/**
+	 * @author Raghuram.A Description : docToCHoose Date: 01/31/22 Modified date:
+	 *         N/A Modified by: N/As
+	 * @param firnstDocname
+	 * @param sizeofList
+	 * @return
+	 */
+	public void docToCHoose(int sizeofList, List<String> docIDlist, Boolean additional) {
+		int numToCHoose;
+		String nameSelected;
+
+		numToCHoose = baseClass.randNumber(sizeofList);
+		nameSelected = docIDlist.get(numToCHoose);
+		System.out.println(nameSelected);
+		getDociD(nameSelected).waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @return
+	 */
+	public List<String> getDocListDatas() {
+		int sizeofList;
+		driver.waitForPageToBeReady();
+		baseClass.waitForElementCollection(getListofDocIDinCW());
+		sizeofList = getListofDocIDinCW().size();
+		baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
+		docIDlist = baseClass.availableListofElements(getListofDocIDinCW());
+
+		return docIDlist;
+	}
 
 }

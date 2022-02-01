@@ -1,5 +1,6 @@
 package pageFactory;
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -2422,14 +2424,15 @@ public class BaseClass {
 			return null;
 		}
 	}
+
 	/**
 	 * @author @Brundha
-	 *@Description:Method to verify data in excel file
+	 * @Description:Method to verify data in excel file
 	 * 
 	 */
 	public void csvFileVerification() throws IOException, InterruptedException {
 		driver.waitForPageToBeReady();
-		String fileName=GetFileName();
+		String fileName = GetFileName();
 		List<String> lines = new ArrayList<>();
 		String line = null;
 		String[] headerToVerify = { "DocID", "Beg Bates", "End Bates" };
@@ -2437,39 +2440,65 @@ public class BaseClass {
 		file = new FileReader(fileName);
 		BufferedReader br = new BufferedReader(file);
 		while ((line = br.readLine()) != null) {
-		lines.add(line);
+			lines.add(line);
 		}
 		String value = lines.get(0);
 		System.out.println(value);
 		String[] arrOfStr = value.split(",");
 		for (int i = 0; i < headerToVerify.length; i++) {
-	    textCompareEquals(arrOfStr[i], headerToVerify[i], "Data is Present as Expected: " + arrOfStr[i],
-		"Data is not Present as Expected : " + arrOfStr[i]);
+			textCompareEquals(arrOfStr[i], headerToVerify[i], "Data is Present as Expected: " + arrOfStr[i],
+					"Data is not Present as Expected : " + arrOfStr[i]);
+		}
 	}
-}
-	
-	
-	
+
 	/**
 	 * @author @Brundha
-	 *@Description:Method to get the file name
+	 * @Description:Method to get the file name
 	 * 
 	 */
 	public String GetFileName() {
-			File ab = new File(Input.fileDownloadLocation);
-			String testPath = ab.toString() + "\\";
-			File a = getLatestFilefromDir(testPath);
-			if (a != null) {
-				stepInfo("last modified file found id " + a.getName());
-				String fileName = a.getName();
-				fileName = testPath + fileName;
-				System.out.println(fileName);
-				return fileName;
-			} else {
-				stepInfo("No files found in the given directory");
-				return null;
-			}
-		
+		File ab = new File(Input.fileDownloadLocation);
+		String testPath = ab.toString() + "\\";
+		File a = getLatestFilefromDir(testPath);
+		if (a != null) {
+			stepInfo("last modified file found id " + a.getName());
+			String fileName = a.getName();
+			fileName = testPath + fileName;
+			System.out.println(fileName);
+			return fileName;
+		} else {
+			stepInfo("No files found in the given directory");
+			return null;
+		}
+
+	}
+
+	/**
+	 * @author Indium Raghuram Description : verify Original SortOrder Date:01/31/21
+	 *         Modified date: N/A Modified by: N/A
+	 */
+	public void verifyOriginalSortOrder(List<String> originalOrderedList, List<String> afterSortList, String sortType,
+			Boolean sortOrder) throws InterruptedException, AWTException {
+
+		System.out.println("Original Order");
+		for (String a : originalOrderedList) {
+			System.out.println(a);
+		}
+
+		if (sortType.equals("Ascending")) {
+			Collections.sort(afterSortList);
+		} else if (sortType.equals("Descending")) {
+			Collections.sort(afterSortList, Collections.reverseOrder());
+		}
+
+		System.out.println("Sorted Order");
+		for (String b : afterSortList) {
+			System.out.println(b);
+		}
+
+		if (sortOrder) {
+			listCompareEquals(originalOrderedList, afterSortList, "Sorting order maintained", "Sorting order failed");
+		}
 
 	}
 }
