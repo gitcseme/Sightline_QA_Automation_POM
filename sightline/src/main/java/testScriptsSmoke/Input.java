@@ -284,7 +284,7 @@ public class Input {
 	public static String searchPhraseWithQuote;
 	public static String keywordColor1;
 
-	// Added by Raghuram - Modified 01/28/21 
+	// Added by Raghuram - Modified 02/02/21
 	public static String docHighlightColor;
 	public static String sortDataBy;
 	public static String sortType;
@@ -309,6 +309,9 @@ public class Input {
 	public static String BatchFileWithMultiplesheetFile;
 	public static String savedSearchColor;
 	public static String searchString8;
+	public static String specialString1;
+	public static String specialString2;
+	public static String specialString3;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -515,8 +518,8 @@ public class Input {
 		jiraProject = config.getJiraProject();
 		testingBuild = config.getTestingBuild();
 		iCESmokeFolderPath = config.getICESmokeFolderPath();
-		// Added by krishna - new projects 
-		
+		// Added by krishna - new projects
+
 		additionalDataProject = envConfig.getAdditionalDataProject();
 		ingestDataProject = envConfig.getIngestDataProject();
 		largeVolDataProject = envConfig.getLargeVolDataProject();
@@ -645,7 +648,7 @@ public class Input {
 		analyticsConceptualDocId1 = testData.getAnalyticsConceptualDocId1();
 		analyticsConceptualDocId2 = testData.getAnalyticsConceptualDocId2();
 		miniConceptualNoDoc = testData.getMiniConceptualNoDoc();
-		tiffSearchQuery=testData.getTiffSearchQuery();
+		tiffSearchQuery = testData.getTiffSearchQuery();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
@@ -736,7 +739,7 @@ public class Input {
 		searchPhraseWithQuote = testData.getSearchPhraseWithQuote();
 		keywordColor1 = testData.getKeywordColor1();
 
-		// Added by Raghuram 01/28/21
+		// Added by Raghuram 02/02/21
 		docHighlightColor = testData.getDocHighlightColor();
 		sortDataBy = testData.getSortDataBy();
 		sortType = testData.getSortType();
@@ -761,6 +764,9 @@ public class Input {
 		BatchFileWithMultiplesheetFile = testData.getBatchFileWithMultiplesheetFile();
 		savedSearchColor = testData.getSavedSearchColor();
 		searchString8 = testData.getSearchString8();
+		specialString1 = testData.getSpecialString1();
+		specialString2 = testData.getSpecialString2();
+		specialString3 = testData.getSpecialString3();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
@@ -769,8 +775,8 @@ public class Input {
 		bullHornIconColor = testData.getBullHornIconColor();
 		progresBarColor = testData.getProgresBarColor();
 		BatchFileduplicateHeader = testData.getBatchFileduplicateHeader();
-		metaDataCNcount= testData.getMetaDataCNcount();
-		
+		metaDataCNcount = testData.getMetaDataCNcount();
+
 		/**
 		 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
 		 *         by:Gopinath.
@@ -921,8 +927,8 @@ public class Input {
 		// Added by Brundha-1/12/2021
 
 		documentId = testData.getDocumentID();
-		telecaSearchString=testData.getTelecaSearchString();
-		docFile=testData.getDocFile();
+		telecaSearchString = testData.getTelecaSearchString();
+		docFile = testData.getDocFile();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();

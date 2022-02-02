@@ -22251,23 +22251,29 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @Author Jeevitha
+	 * @Author Jeevitha @modified Date: 2/2/2022 @modified By : Jeevitha
 	 * @param comment
 	 * @param save
 	 * @param docs
 	 */
-	public void addCommentAndSave(String comment, boolean save, int docs) {
+	public void addCommentAndSave(String comment, boolean save, int docs, boolean responAndNonPriv_CB) {
 		for (int i = 1; i <= docs; i++) {
 			getClickDocviewID(i).waitAndClick(5);
-			base.waitForElement(getResponsiveCheked());
-			getResponsiveCheked().waitAndClick(5);
-			base.waitForElement(getNonPrivilegeRadio());
-			getNonPrivilegeRadio().waitAndClick(5);
+
+			if (responAndNonPriv_CB) {
+				base.waitForElement(getResponsiveCheked());
+				getResponsiveCheked().waitAndClick(5);
+				base.waitForElement(getNonPrivilegeRadio());
+				getNonPrivilegeRadio().waitAndClick(5);
+			}
+			driver.waitForPageToBeReady();
 			base.waitForElement(getDocument_CommentsTextBox());
 			getDocument_CommentsTextBox().SendKeys(comment);
+			driver.waitForPageToBeReady();
 			base.stepInfo("Added Document Comment : " + comment);
 			if (save) {
 				driver.scrollPageToTop();
+				driver.waitForPageToBeReady();
 				base.waitForElement(getCodingFormSaveBtn());
 				getCodingFormSaveBtn().waitAndClick(10);
 				driver.waitForPageToBeReady();

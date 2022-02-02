@@ -3,6 +3,8 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
@@ -15,10 +17,14 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.CodingForm;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
+import pageFactory.MiniDocListPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -38,8 +44,8 @@ public class BasicSearch_Regression1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		// Input in = new Input();
-		// in.loadEnvConfig();
+		 Input in = new Input();
+		 in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -462,7 +468,7 @@ public class BasicSearch_Regression1 {
 		ss.ViewInDocView();
 
 		// Apply comments to document
-		docview.addCommentAndSave(docComment, true, count);
+		docview.addCommentAndSave(docComment, true, count, true);
 		lp.logout();
 
 		// login As PA
@@ -484,6 +490,7 @@ public class BasicSearch_Regression1 {
 		bc.stepInfo("Logged In as : " + Input.rev1FullName);
 		int PureHit3 = ss.getCommentsOrRemarksCount(Input.documentComments, searchTerm);
 		softAssertion.assertEquals(PureHit3, count);
+		softAssertion.assertAll();
 		lp.logout();
 
 	}
@@ -610,6 +617,223 @@ public class BasicSearch_Regression1 {
 
 		lp.logout();
 
+	}
+
+	/**
+	 * @Author Raghuram A date:02/02/2022 Modified date: NA Modified by:N/A
+	 * @Description : Verify that Application is not displaying warning message when
+	 *              white-space character (Right Curly Brace }) embedded within a
+	 *              Regular Expression query.[RPMXCON-61622]
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	public void verifyRightCurlyBracesInSearch() throws Exception {
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		String[] datasToVerify = { "U&C", "U& C", "U C", "U/C", "U &C", "U!C", "U%C", "U:C", "U)C", "U(C", "U>C", "U<C",
+				"U?C", "U=C", "U;C", "U & C" };
+		List<String> docIDlist = new ArrayList<>();
+		String wildInputString = Input.specialString1;
+
+		bc.stepInfo("Test case Id:RPMXCON-61622 Sprint 11");
+		bc.stepInfo(
+				"Verify that Application is not displaying warning message when white-space character (Right Curly Brace }) embedded within a Regular Expression query.");
+
+		// login as RMU
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Search and View in DocView
+		bc.stepInfo("Configured Regular Expression query with Right Curly Brace }   : " + wildInputString);
+		sessionSearch.basicContentSearch(wildInputString);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// Collect total doc datas
+		docIDlist = miniDocListpage.getDocListDatas();
+		docViewRedact.verifyContentPresentForListOfDocs(docIDlist, datasToVerify);
+
+		bc.stepInfo(
+				"---------------------------------------------------------------------------------------------------------------------------------------------------");
+		bc.passedStep(
+				"Right Curly Brace } treated as whitespace and it returned all documents  having word mentioned \"U and C Tester \"on basic search screen. like\r\n"
+						+ "U&C Tester\r\n" + "U C Tester\r\n" + "U\\C Tester etc.");
+		bc.stepInfo(
+				"---------------------------------------------------------------------------------------------------------------------------------------------------");
+
+		lp.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram A date:02/02/2022 Modified date: NA Modified by:N/A
+	 * @Description : Verify that Application is not displaying warning message when
+	 *              white-space character (Double Quote ") embedded within a Regular
+	 *              Expression query.[RPMXCON-61590]
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	public void verifyDoubleQuotesInSearch() throws Exception {
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		String[] datasToVerify = { "U&C", "U& C", "U C", "U/C", "U &C", "U!C", "U%C", "U:C", "U)C", "U(C", "U>C", "U<C",
+				"U?C", "U=C", "U;C", "U & C" };
+		List<String> docIDlist = new ArrayList<>();
+		String wildInputString = Input.specialString2;
+
+		bc.stepInfo("Test case Id:RPMXCON-61590 Sprint 11");
+		bc.stepInfo(
+				"Verify that Application is not displaying warning message when white-space character (Double Quote \") embedded within a Regular Expression query.");
+
+		// login as RMU
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Search and View in DocView
+		bc.stepInfo("Configured Regular Expression query with Right Curly Brace }   : " + wildInputString);
+		sessionSearch.basicContentSearch(wildInputString);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// Collect total doc datas
+		docIDlist = miniDocListpage.getDocListDatas();
+		docViewRedact.verifyContentPresentForListOfDocs(docIDlist, datasToVerify);
+
+		bc.stepInfo(
+				"---------------------------------------------------------------------------------------------------------------------------------------------------");
+		bc.passedStep(
+				"Double Quote treated as whitespace and it returned all documents  having word mentioned \"U and C Tester \"on basic search screen. like\r\n"
+						+ "U&C Tester\r\n" + "U C Tester\r\n" + "U\\C Tester etc.");
+		bc.stepInfo(
+				"---------------------------------------------------------------------------------------------------------------------------------------------------");
+
+		lp.logout();
+
+	}
+
+	/**
+	 * @Author date:02/02/2022 Modified date: NA Modified by:N/A
+	 * @Description : Verify that Application is not displaying warning message when
+	 *              white-space character (Left Curly Brace {) embedded within a
+	 *              Regular Expression query.[RPMXCON-61589]
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	public void verifyLeftCurlyBracesInSearch() throws Exception {
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		String[] datasToVerify = { "U&C", "U& C", "U C", "U/C", "U &C", "U!C", "U%C", "U:C", "U)C", "U(C", "U>C", "U<C",
+				"U?C", "U=C", "U;C", "U & C" };
+		List<String> docIDlist = new ArrayList<>();
+		String wildInputString = Input.specialString3;
+
+		bc.stepInfo("Test case Id:RPMXCON-61589 Sprint 11");
+		bc.stepInfo(
+				"Verify that Application is not displaying warning message when white-space character (Left Curly Brace {) embedded within a Regular Expression query.");
+
+		// login as RMU
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Search and View in DocView
+		bc.stepInfo("Configured Regular Expression query with Right Curly Brace }   : " + wildInputString);
+		sessionSearch.basicContentSearch(wildInputString);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// Collect total doc datas
+		docIDlist = miniDocListpage.getDocListDatas();
+		docViewRedact.verifyContentPresentForListOfDocs(docIDlist, datasToVerify);
+
+		bc.stepInfo(
+				"---------------------------------------------------------------------------------------------------------------------------------------------------");
+		bc.passedStep(
+				"Left Curly Brace { treated as whitespace and it returned all documents  having word mentioned \"U and C Tester \"on basic search screen. like\r\n"
+						+ "U&C Tester\r\n" + "U C Tester\r\n" + "U\\C Tester etc.");
+		bc.stepInfo(
+				"---------------------------------------------------------------------------------------------------------------------------------------------------");
+
+		lp.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that added comments for audio documents is working
+	 *              correctly in Basic Search. [RPMXCON-46882]
+	 * @return
+	 */
+	@DataProvider(name = "commentsCF")
+	public Object[][] commentsCF() {
+		Object[][] commentsCF = { { Input.pa1userName, Input.pa1password, true, false },
+				{ Input.rev1userName, Input.rev1password, false, false },
+				{ Input.rmu1userName, Input.rmu1password, false, true } };
+		return commentsCF;
+	}
+
+	@Test(enabled = true, dataProvider = "commentsCF", groups = { "regression" }, priority = 18)
+	public void verifyCommentsForAudioDoc(String username, String password, boolean coding_Form, boolean DefaultCF)
+			throws InterruptedException {
+		String docComment = Input.comments;
+		String codingform = "CF" + Utility.dynamicNameAppender();
+		int count = 1;
+
+		lp = new LoginPage(driver);
+		CodingForm codingForm = new CodingForm(driver);
+		DocViewPage docview = new DocViewPage(driver);
+
+		bc.stepInfo("RPMXCON- 46882 Basic Search Sprint-11");
+		bc.stepInfo("Verify that added comments for audio documents is working correctly in Basic Search.");
+
+		if (coding_Form) {
+
+			// Login as RMU
+			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+			// Create coding form with comment
+			codingForm.navigateToCodingFormPage();
+			codingForm.addNewCodingFormButton();
+			codingForm.basedOnCreatingNewObject(null, Input.documentComments, null, Input.comments);
+			codingForm.addcodingFormAddButton();
+			codingForm.passingCodingFormName(codingform);
+			codingForm.saveCodingForm();
+
+			// set coding form as SG
+			codingForm.assignCodingFormToSG(codingform);
+
+			// Apply comments to document
+			ss.audioSearch(Input.audioSearch, Input.language);
+			ss.ViewInDocView();
+			docview.addCommentAndSave(docComment, true, count, false);
+
+			lp.logout();
+		}
+
+		lp.loginToSightLine(username, password);
+		int PureHit = ss.getCommentsOrRemarksCount(Input.documentComments, docComment);
+		softAssertion.assertEquals(PureHit, count);
+
+		if (DefaultCF) {
+			codingForm.assignCodingFormToSG(Input.codeFormName);
+		}
+
+		softAssertion.assertAll();
+		lp.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
