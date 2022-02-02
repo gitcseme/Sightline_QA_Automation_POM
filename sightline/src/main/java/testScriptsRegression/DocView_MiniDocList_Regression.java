@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -3087,6 +3088,126 @@ public class DocView_MiniDocList_Regression {
 		softAssertion.assertAll();
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author : Baskar date: 02/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description :Verify when loading is displayed in mini doc list after selecting 
+	 *               the audio document from history drop down then persistent hits 
+	 *               should be displayed
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 69)
+	public void validateAudioDocsEyeIcon() throws InterruptedException, Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-51869");
+		baseClass.stepInfo("Verify when loading is displayed in mini doc list after "
+				+ "selecting the audio document from history drop down then persistent hits should be displayed");
+
+		// Login as a Admin
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+
+		// Session search to docview
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+
+		// validate audio docs eye icon with persistent hits
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		String audioEyePersistent=docViewPage.getDocView_Audio_Hit().getText().toString();
+		softAssertion.assertTrue(audioEyePersistent.toLowerCase().contains(Input.audioSearchString1));
+		baseClass.stepInfo("Persistent hit panel opened and displaying"+audioEyePersistent+"");
+		
+		// keep on viewing the document in minidoclist through docview
+		for (int i = 1; i <= 5; i++) {
+			docViewPage.getMiniDocList_IterationDocs(i).waitAndClick(5);
+			driver.waitForPageToBeReady();
+			softAssertion.assertTrue(docViewPage.getDocView_TextFileType().Enabled());
+			softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+			String prnDocs = docViewPage.getVerifyPrincipalDocument().getText();
+			String activeDocId = docViewPage.getDocView_CurrentDocId().getText();
+			softAssertion.assertEquals(prnDocs, activeDocId);
+			String audioPersistent=docViewPage.getDocView_Audio_Hit().getText().toString();
+			softAssertion.assertTrue(audioPersistent.toLowerCase().contains(Input.audioSearchString1));
+		}
+		baseClass.stepInfo("Navigating one by one document");
+		baseClass.passedStep("Persistent hit displayed when navigated to all document from minidoclist");
+		
+		// validating from histroy dropdown
+		docViewPage.clickClockIconMiniDocList();
+		String audioClockPersistent=docViewPage.getDocView_Audio_Hit().getText().toString();
+		softAssertion.assertTrue(audioClockPersistent.toLowerCase().contains(Input.audioSearchString1));
+		baseClass.passedStep("Persistent hit panel displaying when clicked from history drop down");
+
+		// overall assertion
+		softAssertion.assertAll();
+		
+		// logout
+		loginPage.logout();
+	}
+	
+
+	/**
+	 * @Author : Baskar date: 02/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description :Verify when loading is displayed in mini doc list after scrolling 
+	 *               mini doc list then persistent hits should be displayed for the audio document
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 70)
+	public void validateAudioDocsEyeIconAfterScrollAndNavOptions() throws InterruptedException, Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-51867");
+		baseClass.stepInfo("Verify when loading is displayed in mini doc list after "
+				+ "scrolling mini doc list then persistent hits should be displayed for the audio document");
+
+		// Login as a Admin
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+
+		// Session search to docview
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+
+		// validate audio docs eye icon with persistent hits
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		String audioEyePersistent=docViewPage.getDocView_Audio_Hit().getText().toString();
+		softAssertion.assertTrue(audioEyePersistent.toLowerCase().contains(Input.audioSearchString1));
+		baseClass.stepInfo("Persistent hit panel opened and displaying"+audioEyePersistent+"");
+		
+		// Before scroll position
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		Long value = (Long) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		System.out.println(value);
+		
+		// Scrolling minidoclist
+		jse.executeScript("document.querySelector('.dataTables_scrollBody').scrollBy(0,4000)");
+		driver.waitForPageToBeReady();
+		
+		// After scroll position
+		Long value1 = (Long) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		System.out.println(value1);
+		softAssertion.assertNotEquals(value, value1);
+		baseClass.stepInfo("Minidoclist scrolled with more number of document");
+		
+		// After scrolling validating persistent hit panel
+		String audioPersistent=docViewPage.getDocView_Audio_Hit().getText().toString();
+		softAssertion.assertTrue(audioPersistent.toLowerCase().contains(Input.audioSearchString1));
+		baseClass.passedStep("Persistent hit panel displaying after scrolling the document in minidoclist");
+		
+		// validation through navigation option
+		docViewPage.verifyThatIsLastDoc();
+		String navPersistent=docViewPage.getDocView_Audio_Hit().getText().toString();
+		softAssertion.assertTrue(navPersistent.toLowerCase().contains(Input.audioSearchString1));
+		baseClass.passedStep("Persistent hit panel displaying when navigation option done");
+		
+		// overall assertion
+		softAssertion.assertAll();
+		
+		// logout
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
