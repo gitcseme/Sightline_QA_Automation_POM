@@ -8680,7 +8680,57 @@ public void ProductionGenerateForAudioFile() throws Exception {
 	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 
 }
+ /**
+	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48301
+	 * @Description:To verify that in Production, the order of Documents is
+	 *                 maintained even when the user has not "checked" the option to
+	 *                 "club family members together".
+	 */
+	@Test(groups = { "regression" }, priority = 115)
+	public void verifyOrderOfDocumentsInProduction() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-48301 -Production Sprint 11");
+		base.stepInfo(
+				"To verify that in Production, the order of Documents is maintained even when the user has not 'checked' the option to 'club family members together'.");
 
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String tagname="Tag" + Utility.dynamicNameAppender();
+
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername,"Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.SearchMetaData("SourceDocID","335ID00000005");
+		sessionSearch.ViewInDocList();
+		
+		DocListPage doc = new DocListPage(driver);
+		doc.selectingAllDocuments();
+		driver.waitForPageToBeReady();
+		doc.bulkFolderExisting(foldername);
+		
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingPDFSection(tagname,Input.tagNamePrev);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingWithoutFamilyMember(prefixID, suffixID);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		loginPage.logout();
+	}
 @AfterMethod(alwaysRun = true)
 public void takeScreenShot(ITestResult result) {
 	if (ITestResult.FAILURE == result.getStatus()) {

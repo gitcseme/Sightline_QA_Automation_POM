@@ -17017,6 +17017,28 @@ public class ProductionPage {
 		getBasicInfoMarkComplete().Click();
 		base.stepInfo("New production is added");
 	}
+
+	/**
+	 * @Author Brundha
+	 * Description:Method to fill Numbering and sorting page without family members together
+	 */
+	public void fillingNumberingAndSortingWithoutFamilyMember(String prefixId, String suffixId)  {
+
+       base.waitForElement(getBeginningBates());
+		driver.waitForPageToBeReady();
+		num = getRandomNumber(2);
+		getBeginningBates().SendKeys(num);
+		base.waitForElement(gettxtBeginningBatesIDPrefix());
+		gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
+		base.waitForElement(gettxtBeginningBatesIDSuffix());
+		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
+		gettxtBeginningBatesIDMinNumLength().isDisplayed();
+		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
+		num1 = getRandomNumber(1);
+		gettxtBeginningBatesIDMinNumLength().SendKeys(num1);
+		base.stepInfo("Numbering and sorting page is filled without checked 'Family members together' checkbox");
+}
+
 	
 	/**
 	 *   @author Aathith.Senthilkumar
