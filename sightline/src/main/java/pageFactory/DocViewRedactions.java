@@ -3992,4 +3992,30 @@ public class DocViewRedactions {
 		}
 	}
 
+	
+	/**
+	 * @author Krishna Description :  verify assignment progress bar in completed docs
+	 *         Date: 31/01/22 Modified date: N/A Modified by: N/A
+	 * @param  assname
+	
+	 */
+	public void verifyAssignmentBarInSelectedDocs(String assname) {
+		driver.waitForPageToBeReady();
+		base = new BaseClass(driver);
+		SoftAssert softAssert = new SoftAssert();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.getHomeDashBoard().waitAndClick(10);
+		base.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			base.passedStep("Assignment progress bar refreshed on completed doc");
+			softAssert.assertTrue(assignmentsPage.getBatchAssignmentBar(assname).isDisplayed());
+
+		} else {
+			System.out.println("not completed");
+			base.failedStep("Doc not completed");
+		}
+	}
+
 }
