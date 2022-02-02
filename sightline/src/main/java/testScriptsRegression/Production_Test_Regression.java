@@ -4065,9 +4065,14 @@ public class Production_Test_Regression {
 				page.navigateToNextSection();
 				page.fillingSummaryAndPreview();
 				page.clickOnGenerateButton();
-				if(page.gettext("WidthAndHeightCannotBeNegative").isElementAvailable(60)) {
+				
+				SoftAssert softAssertion =new SoftAssert();
+				boolean flag=page.gettext("WidthAndHeightCannotBeNegative").isElementAvailable(60);
+				if(flag) {
+					softAssertion.assertTrue(flag);
 					base.failedStep("Error message displayed");
 				}else {
+					softAssertion.assertFalse(flag);
 					base.passedStep("There Should not be any error message  such as WidthAndHeightCannotBeNegative");
 				}
 				base.passedStep("Verified Production for a document with no error message as 'WidthAndHeightCannotBeNegative'");
