@@ -2474,6 +2474,99 @@ public class DocView_Regression2 {
 	}
 	
 	
+	/**
+	 * @Author : Krishna date: 31/01/2021 Modified date: NA Modified by:
+	 * @Description:Verify assignment progress bar refresh after completing the
+	 *                     document same as last prior documents should be completed
+	 *                     by applying coding stamp after selecting code same as
+	 *                     this action
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	public void verifyAssignmentProgressBarRefreshApplying() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51278");
+		baseClass.stepInfo(
+				"Verify assignment progress bar refreshesh after completing the document same as last prior documents "
+						+ "should be completed by applying coding stamp after selecting code same as this action");
+
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String filedText = "Stamp" + Utility.dynamicNameAppender();
+		String colour = "RED";
+
+		// Login as Reviewer Manager
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("StSearching documents based on search string and Navigate to DocView");
+		sessionsearch.basicContentSearch(searchString);
+		sessionsearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		baseClass.impersonateRMUtoReviewer();
+		driver.waitForPageToBeReady();
+		System.out.println(assname);
+
+		// Assignment selected by reviewer
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		docView.getSelectedDocIdInMiniDocList();
+		baseClass.waitForElement(docView.getDocView_MiniDoc_SelectRow(1));
+		docView.getDocView_MiniDoc_SelectRow(1).waitAndClick(10);
+		docView.stampColourSelection(filedText, Input.stampColour);
+		docView.completeButton();
+		baseClass.waitTime(1);
+		docView.clickCodeSameAsLast();
+		docViewRedact.verifyAssignmentBarInSelectedDocs(assname);
+
+		driver.waitForPageToBeReady();
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewRedact.getDocView_MiniDoc_Selectdoc(3));
+		docViewRedact.getDocView_MiniDoc_Selectdoc(3).waitAndClick(5);
+		baseClass.stepInfo("Selected document in minidoclist");
+
+		// click to apply coding in selected doc
+		docView.stampColourSelection(filedText, colour);
+		docView.completeButton();
+		baseClass.waitTime(1);
+		docView.clickCodeSameAsLast();
+		docViewRedact.verifyAssignmentBarInSelectedDocs(assname);
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in using Reviewer account");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.waitForElement(docView.getDocView_MiniDoc_SelectRow(1));
+		docView.getDocView_MiniDoc_SelectRow(1).waitAndClick(10);
+		baseClass.stepInfo("Selected document in minidoclist");
+
+		// click to apply coding in selected doc
+		docView.stampColourSelection(filedText, Input.stampColour);
+		docView.completeButton();
+		baseClass.waitTime(1);
+		docView.clickCodeSameAsLast();
+		docViewRedact.verifyAssignmentBarInSelectedDocs(assname);
+		driver.waitForPageToBeReady();
+
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewRedact.getDocView_MiniDoc_Selectdoc(3));
+		docViewRedact.getDocView_MiniDoc_Selectdoc(3).waitAndClick(5);
+		docView.stampColourSelection(filedText, colour);
+		docView.completeButton();
+		baseClass.waitTime(1);
+		docView.clickCodeSameAsLast();
+		docViewRedact.verifyAssignmentBarInSelectedDocs(assname);
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
