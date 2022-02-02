@@ -406,6 +406,51 @@ public void verifySearchResultForComment(String username, String password) throw
 		}
 		lp.logout();
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	@Test( groups = { "regression" }, priority = 2, enabled = true)
+	public void verifyResubmit_WPAndAudio() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48766");
+		baseClass.stepInfo("Verify that - Application returns consistent search result when user resubmits a 
+				   saved search(WorkProduct Block -Security Group and Audio Block) multiple times(twice)");
+		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA" );
+		SessionSearch search = new SessionSearch(driver);
+		search.switchToWorkproduct();
+		search.workProductSearch("security group",Input.securityGroup,false);
+		search.audioSearch_Combined();
+		search.selectOperator("NOT",1);
+		baseClass.stepInfo("Configured a Work product search query with security group block and audio block");
+		search.serarchWP();
+		driver.waitForPageToBeReady();
+		String PureHitCount = search.verifyPureHitsCount();
+		driver.scrollPageToTop();
+		search.saveSearchAdvanced(saveSearchName);
+		baseClass.stepInfo("Created a saved search -" + saveSearchName);
+		search.selectSavedsearchInASWp(saveSearchName);
+		baseClass.stepInfo("Configured a Work product search query -- saved search -" + saveSearchName + " ");
+		search.serarchWP();
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+		String expectedHits1 = search.getPureHitsLastCount().getText();
+		baseClass.stepInfo("Pure hit count after WP saved search is " + expectedHits1);
+		search.resubmitSearch();
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+		baseClass.waitForElement(search.getPureHitsLastCount());
+		String expectedHits2 = search.getPureHitsLastCount().getText();
+                baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + expectedHits2);
+		SoftAssert assertion=new SoftAssert();
+		assertion.assertEquals(PureHitCount, expectedHits2);
+		assertion.assertEquals(PureHitCount, expectedHits1);
+                SavedSearch savedSearch=new SavedSearch(driver);		
+		savedSearch.SaveSearchDelete(saveSearchName);
+		assertion.assertAll();
+		baseClass.passedStep("Sucessfully Verified that - Application returns consistent search result when user resubmits a "
+				+ "saved search(Content & Metadata Block) multiple times(twice)");
+	}
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
