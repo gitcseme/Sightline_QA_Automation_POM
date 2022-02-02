@@ -18882,7 +18882,8 @@ public class DocViewPage {
 		int numOfPanels = getHitPanels().size();
 		boolean flag = false;
 		for (int i = 2; i <= numOfPanels; i++) {
-
+			String p = getTermInHitPanels(i).getText();
+			System.out.println(getTermInHitPanels(i).getText());
 			if (getTermInHitPanels(i).getText().contains(SearchString)) {
 				String hitCount = getTermInHitPanels(i).getText();
 
@@ -22737,6 +22738,39 @@ public class DocViewPage {
 	    softAssertion.assertAll();
 	    base.passedStep("Message displayed as outside the context of a Security Group");
 	  
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @description this method will verify document in docview loaded in 4 sec after enter doc number
+	 * @param docNum
+	 */
+	public void verifyDocumentLoadedWithInFourSeconds(String docNum) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_NumTextBox());
+			getDocView_NumTextBox().SendKeys(docNum);
+			getDocView_NumTextBox().Enter();
+			long start = System.currentTimeMillis();
+			for (int i = 0; i < 500; i++) {
+				if (documentOnDocView().getWebElement().isDisplayed()
+						&& documentOnDocView().getWebElement().isEnabled()) {
+					break;
+				}
+			}
+			long finish = System.currentTimeMillis();
+			long totalTime = finish - start;
+			long timeSeconds = TimeUnit.MILLISECONDS.toSeconds(totalTime);
+			if (timeSeconds <= 4) {
+				base.passedStep("Document in docview loaded in 4 sec successfuly and ready for user to act up on");
+			} else {
+				base.failedStep("Failed to load document in docview in 4 seconds is failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying document in docview loaded in 4 sec" + e.getMessage());
+
+		}
 	}
 }
 

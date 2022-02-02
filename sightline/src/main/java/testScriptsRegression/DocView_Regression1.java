@@ -5158,9 +5158,105 @@ public class DocView_Regression1 {
 				baseClass.stepInfo("verify visibility of added remark after reload the document in second tab");
 				docView.verifyRemarkIsAdded(remark);	
 			}
+			/**
+			 * @author Gopinath
+			 * TestCase Id: 51406 Verify on click of the "eye" icon, ALL highlighted terms - including those that are set from Manage > Keywords configured within the assignment.
+			 * Description:Verify on click of the "eye" icon, ALL highlighted terms - including those that are set from Manage > Keywords configured within the assignment.           
+			 * @throws InterruptedException 
+			 */
+			@Test(groups = { "regression" }, priority = 38)
+			public void verifyAllKeywordsAreDisplayedOnPersistantHitPanel() throws InterruptedException {
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51406 of Sprint 11");
+				String keywordname = Input.randomText +Utility.dynamicNameAppender();
+				String keyword = Input.randomText +Utility.dynamicNameAppender();
+				String assignName1 = Input.randomText +Utility.dynamicNameAppender();
+				baseClass.stepInfo("#### Verify on click of the 'eye' icon, ALL highlighted terms - including those that are set from Manage > Keywords configured within the assignment ####");
+
+				KeywordPage keywordPage = new KeywordPage(driver);
+				
+				baseClass.stepInfo("Navigate to keyword page");
+				keywordPage.navigateToKeywordPage();
 			
+				baseClass.stepInfo("Add keyword");
+				keywordPage.AddKeyword(keywordname, keyword);
+				
+				baseClass.stepInfo("Get All Keywords in keywords lsit table");
+				List<String> keywords = keywordPage.getAllKeywords();
+				
+				docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+
+				baseClass.stepInfo("Basic Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("Create bulk assign with new assignment one with persistant hit.");
+				session.bulkAssignWithNewAssignmentWithPersistantHit(assignName1, Input.codingFormName);
+				
+				AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+				
+				baseClass.stepInfo("Edit assignment");
+				assignmentPage.editAssignment(assignName1);
+				
+				baseClass.stepInfo("Verify added keyword is checked.");
+				assignmentPage.verifyAddedKeywordsChecked();
+				
+				baseClass.stepInfo("Select assignment to view in Doc view");
+				assignmentPage.selectAssignmentToViewinDocview(assignName1);
+				
+				baseClass.stepInfo("Persistent Hit With search string");
+				docView.persistenHitWithSearchString(Input.testData1);
+				
+				baseClass.stepInfo("Verify Persistant Hits With Doc View");
+				docView.verifyPersistantHitsWithDocView(keywords);
+				
+				baseClass.stepInfo("Navigate To Session Search Page URL");
+				session.navigateToSessionSearchPageURL();
+				
+				baseClass.stepInfo("Navigate to  DocView page");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Persistent Hit With search string");
+				docView.persistenHitWithSearchString(Input.testData1);
+				
+				baseClass.stepInfo("Verify Persistant Hits With Doc View");
+				docView.verifyPersistantHitsWithDocView(keywords);
+				
+				baseClass.stepInfo("Navigate to keyword page");
+				keywordPage.navigateToKeywordPage();
+				
+				baseClass.stepInfo("Delete keyword");
+				keywordPage.deleteKeywordByName(keyword);
+				loginPage.logout();
+			}
 			 
-		
+			/**
+			 * @author Gopinath
+			 * TestCase Id :51970 Verify that navigating to document after entering the document number in DocView should bring up the document in 4 sec and ready for the user to act up on
+			 * Description : Verify that navigating to document after entering the document number in DocView should bring up the document in 4 sec and ready for the user to act up on
+			 * @throws InterruptedException 
+			 */
+			@Test(enabled = true,groups = { "regression" }, priority = 39)
+			public void verifyDocumentLoadedinDocViewIn4Seconds() throws InterruptedException {
+				String docNum="4";
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51970 sprint 11");
+				baseClass.stepInfo("#### Verify that navigating to document after entering the document number in DocView should bring up the document in 4 sec and ready for the user to act up on ####");
+				docView = new DocViewPage(driver);
+				docViewMetaDataPage = new DocViewMetaDataPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				docView = new DocViewPage(driver);
+				
+				baseClass.stepInfo("Basic  content search ");
+				session.basicContentSearch(Input.searchString1);
+				
+				baseClass.stepInfo("View serached dos in Docview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Verify document in docview loaded in 4 sec");
+				docView.verifyDocumentLoadedWithInFourSeconds(docNum);
+				
+			}
 	     @AfterMethod(alwaysRun = true)
 		 public void takeScreenShot(ITestResult result) {
 	 	 if(ITestResult.FAILURE==result.getStatus()){
