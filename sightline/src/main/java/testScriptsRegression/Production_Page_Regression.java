@@ -3637,6 +3637,105 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.deleteAllTags(tagname);
 	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:02/02/22 TESTCASE No:RPMXCON-46893
+	 * @Description:To verify Production Generation for MP3 files Audio (redaction Applied).
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 66)
+	public void verifyMP3RedactionForProduction() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-46893- Production Sprint 11");
+		baseClass.stepInfo("To verify Production Generation for MP3 files Audio (redaction Applied).");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.audioSearch(Input.audioSearchString1,Input.language);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		driver.scrollingToBottomofAPage();
+		page.advancedProductionComponentsMP3WithBurnReductionTag();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+	}
+	
+
+	/**
+	 * @author Sowndarya.Velraj created on:02/02/22 TESTCASE No:RPMXCON-47904
+	 * @Description:To verify status on the tile of a production on the landing page should show correct production status
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 67)
+	public void verifyProductionStatusInTileView() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-47904- Production Sprint 11");
+		baseClass.stepInfo("To verify status on the tile of a production on the landing page should show correct production status");
+		UtilityLog.info(Input.prodPath);
+
+		ProductionPage page = new ProductionPage(driver);
+		baseClass.stepInfo("Checking availability of In progress status production ");
+		page.prodGenerationInProgressStatus();
+		if(page.productionNameInHomePage().Displayed())
+		{
+			baseClass.passedStep("production in In Progress Status Displayed");
+		}
+		else {
+			baseClass.failedStep("production in In Progress Status not Displayed");
+		}
+		
+		driver.Navigate().refresh();
+		
+		baseClass.stepInfo("Checking availability of Completed status production ");
+		page.prodGenerationInCompletedStatus(productionname);
+		if(page.productionNameInHomePage().Displayed())
+		{
+			baseClass.passedStep("production in Completed Status Displayed");
+		}
+		else {
+			baseClass.failedStep("production in Completed Status not Displayed");
+		}
+		
+		driver.Navigate().refresh();
+		
+		baseClass.stepInfo("Checking availability of Failed status production ");
+		page.gettxtProdGenerationFailed();
+		if(page.productionNameInHomePage().Displayed())
+		{
+			baseClass.passedStep("production in failed Status Displayed");
+		}
+		else {
+			baseClass.failedStep("production in failed Status not Displayed");
+		}
+		
+		}
 
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
