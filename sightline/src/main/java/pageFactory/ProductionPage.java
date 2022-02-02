@@ -846,6 +846,9 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element productionNameInHomePage() {
+		return driver.FindElementById("pName");
+	}
 
 	public Element useMetadataFied() {
 		return driver.FindElementByXPath("(//input[@id='rdbUserMetadata']//following::i)[1]");
@@ -16858,103 +16861,88 @@ public class ProductionPage {
 		base.textCompareEquals(option,"Rotate 90 degrees clock-wise","Rotation value is retained in Template", "Rotation value is not retained in Template as Expected");
 		
 	}
-	/**
-	 * @Author Brundha
-	 *  Description:Verifying component section value retained on markcomplete
-	 * 
-	 */
 	
-	public void verifyingComponentTabOnMarkComplete() throws InterruptedException {
-
-	 * @author Aathith.Senthilkumar
-	 * @Description :Natively placeholder selecting tags Type in different Native docs
-	 */
+	/**
+	* @author Aathith.Senthilkumar
+	* @Description :Natively placeholder selecting tags Type in different Native docs
+	*/
 	public void fillingTIFFSectionwithNativelyPlaceholderWithTagTypeAndTags(String tagname, String tagname1) throws InterruptedException {
 
-		base.waitForElement(getTIFFChkBox());
-		getTIFFChkBox().Click();
 
-		driver.scrollingToBottomofAPage();
 
-		base.waitForElement(getTIFFTab());
-		getTIFFTab().Click();
+	base.waitForElement(getTIFFChkBox());
+	getTIFFChkBox().Click();
 
-		getTIFF_EnableforPrivilegedDocs().ScrollTo();
 
-		// disabling enable for priviledged docs
 
-		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-		getTIFF_EnableforPrivilegedDocs().Enabled();
-		getTIFF_EnableforPrivilegedDocs().Click();
+	driver.scrollingToBottomofAPage();
 
-		// clicking enable for natively placeholder
-		base.waitForElement(getTiff_NativeDoc());
-		getTiff_NativeDoc().ScrollTo();
-		clickElementNthtime(getTiff_NativeDoc(), 3);
-		
-		base.waitForElement(getclkSelectTag());
-		getclkSelectTag().ScrollTo();
-		getclkSelectTag().Click();
-		driver.waitForPageToBeReady();
-		base.waitForElement(getPriveldged_TagTree(Input.tagNamePrev));
-		getPriveldged_TagTree(Input.tagNamePrev).waitAndClick(10);
-		base.waitForElement(getClkSelect());
-		getClkSelect().Click();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(Input.tagNamePrev);
-		
-		driver.waitForPageToBeReady();
-		base.waitForElement(getclkSelectTag(1));
-		getclkSelectTag(1).ScrollTo();
-		getclkSelectTag(1).Click();
-		driver.waitForPageToBeReady();
-		base.waitForElement(getPriveldged_TagTree(tagname));
-		getPriveldged_TagTree(tagname).waitAndClick(10);
-		base.waitForElement(getClkSelect());
-		getClkSelect().Click();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(tagname);
-		
-		driver.waitForPageToBeReady();
-		base.waitForElement(getclkSelectTag(2));
-		getclkSelectTag(2).ScrollTo();
-		getclkSelectTag(2).Click();
-		driver.waitForPageToBeReady();
-		base.waitForElement(getPriveldged_TagTree(tagname1));
-		getPriveldged_TagTree(tagname1).waitAndClick(10);
-		base.waitForElement(getClkSelect());
-		getClkSelect().Click();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(tagname1);
-		
-		base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting tags and tag type");
+
+
+	base.waitForElement(getTIFFTab());
+	getTIFFTab().Click();
+
+
+
+	getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+
+
+	// disabling enable for priviledged docs
+
+
+
+	base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+	getTIFF_EnableforPrivilegedDocs().Enabled();
+	getTIFF_EnableforPrivilegedDocs().Click();
+
+
+
+	// clicking enable for natively placeholder
+	base.waitForElement(getTiff_NativeDoc());
+	getTiff_NativeDoc().ScrollTo();
+	clickElementNthtime(getTiff_NativeDoc(), 3);
+
+	base.waitForElement(getclkSelectTag());
+	getclkSelectTag().ScrollTo();
+	getclkSelectTag().Click();
+	driver.waitForPageToBeReady();
+	base.waitForElement(getPriveldged_TagTree(Input.tagNamePrev));
+	getPriveldged_TagTree(Input.tagNamePrev).waitAndClick(10);
+	base.waitForElement(getClkSelect());
+	getClkSelect().Click();
+	base.waitForElement(getNativeDocsPlaceholder());
+	getNativeDocsPlaceholder().SendKeys(Input.tagNamePrev);
+
+	driver.waitForPageToBeReady();
+	base.waitForElement(getclkSelectTag(1));
+	getclkSelectTag(1).ScrollTo();
+	getclkSelectTag(1).Click();
+	driver.waitForPageToBeReady();
+	base.waitForElement(getPriveldged_TagTree(tagname));
+	getPriveldged_TagTree(tagname).waitAndClick(10);
+	base.waitForElement(getClkSelect());
+	getClkSelect().Click();
+	base.waitForElement(getNativeDocsPlaceholder());
+	getNativeDocsPlaceholder().SendKeys(tagname);
+
+	driver.waitForPageToBeReady();
+	base.waitForElement(getclkSelectTag(2));
+	getclkSelectTag(2).ScrollTo();
+	getclkSelectTag(2).Click();
+	driver.waitForPageToBeReady();
+	base.waitForElement(getPriveldged_TagTree(tagname1));
+	getPriveldged_TagTree(tagname1).waitAndClick(10);
+	base.waitForElement(getClkSelect());
+	getClkSelect().Click();
+	base.waitForElement(getNativeDocsPlaceholder());
+	getNativeDocsPlaceholder().SendKeys(tagname1);
+
+	base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting tags and tag type");
+
+
 
 	}
-
-
-		driver.scrollPageToTop();
-		base.waitForElement(getMarkCompleteLink());
-		getMarkCompleteLink().waitAndClick(10);
-		base.VerifySuccessMessage("Mark Complete successful");
-		base.CloseSuccessMsgpopup();
-		base.stepInfo("Verifying DAT and TIFF is retained on Markcomplete");
-		getCheckBoxCheckedVerification(chkIsDATSelected());
-		driver.waitForPageToBeReady();
-		getCheckBoxCheckedVerification(chkIsTIFFSelected());
-		base.waitForElement(getTIFFTab());
-		getTIFFTab().Click();
-		driver.scrollingToBottomofAPage();
-		String PlaceholderText=getPriveldge_TextArea().getText();
-		if("Technical_Issue".equals(PlaceholderText)) {
-			base.passedStep(""+PlaceholderText+". placeholder text is retained on Markcomplete");
-		}else {base.failedStep(""+PlaceholderText+". placeholder text  is retained on Markcomplete");}
-		driver.scrollPageToTop();
-		base.waitForElement(getNextButton());
-		getNextButton().waitAndClick(10);
-		base.stepInfo("Navigate to next page");
-	}
-	
-	
 	
 	/**
 	 * @Author Brundha
