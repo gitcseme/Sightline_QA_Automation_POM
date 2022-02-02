@@ -534,7 +534,6 @@ public class BasicSearch_Regression1 {
 
 	}
 
-
 	/**
 	 * @Author Jeevitha
 	 * @Description :Verify that correct result appears when User configured
@@ -566,8 +565,53 @@ public class BasicSearch_Regression1 {
 		lp.logout();
 
 	}
-	
-	
+
+	/**
+	 * @Author Raghuram A date:01/02/2022 Modified date: NA Modified by:N/A
+	 * @Description :Verify that added reviewer remarks for audio documents is
+	 *              working correctly in basic search [RPMXCON-46880]
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	public void VerifyAddedReviewerRemarkForAudioDocInBasicSearch() throws Exception {
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewpage = new DocViewPage(driver);
+
+		String remark = "Remark" + Utility.dynamicNameAppender();
+		int iteration = 2;
+
+		bc.stepInfo("Test case Id:RPMXCON-46880 Sprint 11");
+		bc.stepInfo("Verify that added reviewer remarks for audio documents is working correctly in basic search");
+
+		// login as reviewer
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		bc.stepInfo("Loggedin As : " + Input.rev1FullName);
+
+		// adding remark to audio documents
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		docviewpage.addRemarkToDocuments(iteration, remark);
+
+		lp.logout();
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// configure comment Fields / Remarks
+		int purehitCount1 = sessionSearch.getCommentsOrRemarksCount("Remark", remark);
+
+		// verifying the remark with purehitCount
+		bc.digitCompareEquals(iteration, purehitCount1,
+				"The Count of Remark add to the Audio Documents is matches with the purehit Count", "mis-matches");
+
+		lp.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
