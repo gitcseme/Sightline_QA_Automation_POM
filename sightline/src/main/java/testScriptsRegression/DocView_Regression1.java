@@ -5213,6 +5213,9 @@ public class DocView_Regression1 {
 				baseClass.stepInfo("Navigate To Session Search Page URL");
 				session.navigateToSessionSearchPageURL();
 				
+				baseClass.stepInfo("Basic Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
 				baseClass.stepInfo("Navigate to  DocView page");
 				session.ViewInDocView();
 				
