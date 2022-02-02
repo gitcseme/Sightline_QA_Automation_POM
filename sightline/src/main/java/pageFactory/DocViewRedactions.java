@@ -1283,15 +1283,19 @@ public class DocViewRedactions {
 	public Element getMarkedTextRedactionXYStatsAttributeSelect(String x, String y) {
 		return driver.FindElementByCssSelector("g[x='" + x + "'][y='" + y + "']");
 	}
-	
-	//Added by Krishna
-	
+
+	// Added by Krishna
+
 	public Element multiPageRedactionTagSelect() {
 		return driver.FindElementById("ddlMultiRedactionTagsForPopup");
 	}
 
 	public Element hiddenInfoIcon() {
 		return driver.FindElementById("hiddenProperty");
+	}
+
+	public Element textData() {
+		return driver.FindElementByXPath("//div[@id='divViewerText']");
 	}
 
 	public DocViewRedactions(Driver driver) {
@@ -3992,12 +3996,11 @@ public class DocViewRedactions {
 		}
 	}
 
-	
 	/**
-	 * @author Krishna Description :  verify assignment progress bar in completed docs
-	 *         Date: 31/01/22 Modified date: N/A Modified by: N/A
-	 * @param  assname
-	
+	 * @author Krishna Description : verify assignment progress bar in completed
+	 *         docs Date: 31/01/22 Modified date: N/A Modified by: N/A
+	 * @param assname
+	 * 
 	 */
 	public void verifyAssignmentBarInSelectedDocs(String assname) {
 		driver.waitForPageToBeReady();
@@ -4015,6 +4018,47 @@ public class DocViewRedactions {
 		} else {
 			System.out.println("not completed");
 			base.failedStep("Doc not completed");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A Date: 01/27/22 Modified date: N/A Modified by: N/A
+	 * @param docIDlist
+	 * @param dataToVerify
+	 */
+	public void verifyContentPresentForListOfDocs(List<String> docIDlist, String[] dataToVerify) {
+		base = new BaseClass(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		Boolean check = false;
+
+		for (String nb : docIDlist) {
+			System.out.println(nb);
+			miniDocListpage.getDociD(nb).waitAndClick(10);
+			driver.waitForPageToBeReady();
+
+			base.stepInfo(nb + " : Docs Viewed in Doc View");
+			base.waitTillElemetToBeClickable(textTab());
+			textTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+
+			String datas = textData().getText();
+
+			String[] count = datas.split("\\r?\\n");
+			for (String a : count) {
+				check = false;
+				System.out.println(a);
+				for (String datasToCheck : dataToVerify) {
+					if (a.contains(datasToCheck)) {
+						base.passedStep("Expected data is present in current doucment");
+						check = true;
+						break;
+					}
+				}
+			}
+			if (!check) {
+				base.failedStep("Unrelavent document is filtered");
+			}
 		}
 	}
 

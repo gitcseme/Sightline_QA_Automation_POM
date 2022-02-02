@@ -226,6 +226,9 @@
 	</BatchFileWithMultiplesheetFile>
 	<savedSearchColor>#FFFFFF</savedSearchColor>
 	<searchString8>XLS OR XLSX OR CSV</searchString8>
+	<specialString1>"##U\}C Tester"</specialString1>
+	<specialString2>"##U\"C Tester"</specialString2>
+	<specialString3>"##U\{C Tester"</specialString3>
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 
