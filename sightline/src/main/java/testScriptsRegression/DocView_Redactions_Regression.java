@@ -1014,7 +1014,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-52214 Verify that multiple Rectangle Redaction does not remain
 	 * selected on DocView Screen
 	 */
-//	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 29)
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 29)
 	public void verifyMultiRecRedactionNotRemainSelected() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1032,7 +1032,8 @@ public class DocView_Redactions_Regression {
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Select the doc from mini doc list for redactions");
 		docViewPage.selectDocIdInMiniDocList(docId);
-
+		driver.waitForPageToBeReady();
+		
 		baseClass.stepInfo("Creation of Rectangle Redaction on First Page");
 		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 200);
 
@@ -1120,7 +1121,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-51568 Verify when user navigates to other document while viewing the
 	 * search hits and comes back to same document
 	 */
-//	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 30)
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 30)
 	public void verifyTextSearchAfterUserNavigatesToAnotherDoc() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1544,7 +1545,7 @@ public class DocView_Redactions_Regression {
 	 * in the assignment
 	 */
 
-//	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 37)
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 37)
 	public void verifyPersistentHitsAfterReassignDocumentsSavedSearch() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1750,10 +1751,10 @@ public class DocView_Redactions_Regression {
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51399 Verify highlighted keywords should be displayed on click of
 	 * the eye icon when redirected to doc view from session search when documents
-	 * searched with metadata
+	 * searched with metadata [Need to add step to create and use that keyword]
 	 */
 
-//	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 39)
+	//@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 39)
 	public void verifyHighlightedKeywordsForDocsSearchWithMetadata() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1778,6 +1779,7 @@ public class DocView_Redactions_Regression {
 		driver.waitForPageToBeReady();
 		baseClass.impersonateRMUtoReviewer();
 		assignmentsPage.SelectAssignmentByReviewer(assignmentName);
+		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify whether the panels are displayed in doc view along with terms and its counts");
@@ -1969,9 +1971,10 @@ public class DocView_Redactions_Regression {
 	 * scrolling down/up the mini doc list child window and in DocView, the entry
 	 * for the same document in mini-DocList must always present fully in the
 	 * visible area of the mini-DocList child window
+	 * stabilization -done
 	 */
 
-//	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 44)
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 44)
 	public void verifyDocInMiniDocListChildWindowAfterScrollingDown() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2228,7 +2231,7 @@ public class DocView_Redactions_Regression {
 	 * visible area of the mini-DocList child window
 	 */
 
-//	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 45)
+	//@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 45)
 	public void verifyDocInMiniDocListChildWindowAfterScrollingDownTillLoadingTextDisplayed() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2484,9 +2487,11 @@ public class DocView_Redactions_Regression {
 	 * 'Loading..' displays in mini doc list, the entry for the same document in
 	 * mini-DocList must always present fully in the visible area of the
 	 * mini-DocList
+	 * 
+	 * stabilization - done
 	 */
 
-//	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 46)
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 46)
 	public void verifyDocInMiniDocsAfterScrollingDownTillLoadingTextDisplayedWhenDocIsSearchedUsingDocId()
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -2660,9 +2665,11 @@ public class DocView_Redactions_Regression {
 	 * Id:RPMXCON-51770 Verify when remove non audio docs from a user/reviewer in an
 	 * assignment, displays persistent search hits in the assignment, when
 	 * reassigning these non audio docs to another/same reviewer in the assignment
+	 * 
+	 * stabilization - done
 	 */
 
-//	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 47)
+	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 47)
 	public void verifyPersistentHitsAfterRemoveAndReassignDocumentsSavedSearchGroup() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2780,7 +2787,7 @@ public class DocView_Redactions_Regression {
 	 * from edit assignment
 	 */
 
-//	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 48)
+	//@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 48)
 	public void verifyPersistentHitsAfterCompleteDocumentsSavedSearchGroup() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3008,7 +3015,7 @@ public class DocView_Redactions_Regression {
 
 		softAssert.assertNotEquals(beforeComplete, afterComplete);
 		softAssert.assertAll();
-		loginPage.logout();
+		loginPage.logout();		
 	}
 
 	/**
@@ -3185,7 +3192,7 @@ public class DocView_Redactions_Regression {
 	 * visible area of the mini-DocList
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 52)
+	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 52)
 	public void verifyDocInMiniDocListAfterScrollingDownTillLoadingTextDisplayed() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3358,7 +3365,7 @@ public class DocView_Redactions_Regression {
 	 * mini-DocList (to the user)
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 53)
+	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 53)
 	public void verifyDocInMiniDocListAfterScrollingDown() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4082,7 +4089,7 @@ public class DocView_Redactions_Regression {
 	 * mini-DocList child window
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 56)
+	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 56)
 	public void verifyDocInMiniDocListChildWindowsAfterPerformNavigation() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5012,7 +5019,7 @@ public class DocView_Redactions_Regression {
 	 * without clicking the eye icon when user redirects to doc view from Advanced
 	 * Search > doc list to doc view
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 58)
+	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 58)
 	public void verifyHighlightedKeywordsForDocsAreDisplayedSearchWithAdvancedSearch() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5083,7 +5090,7 @@ public class DocView_Redactions_Regression {
 	 * Search > doc list
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 59)
+	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 59)
 	public void verifyHighlightedKeywordsForDocsAreDisplayedSavedSearch() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5231,7 +5238,7 @@ public class DocView_Redactions_Regression {
 	 * previously viewed hits for the document on completing the document same as
 	 * last from coding form child window.
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 59)
+	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 59)
 	public void verifyPersistentHitsCompletingDocumentsCodeSameAsLastChildWindow() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5377,7 +5384,7 @@ public class DocView_Redactions_Regression {
 	 * Id:RPMXCON-51332 Verify text from review mode in context of an assignment
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 63)
+	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 63)
 	public void verifyReviewModeTextContextOfAssignment() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5510,7 +5517,7 @@ public class DocView_Redactions_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 65)
+	//@Test(enabled = true, groups = { "regression" }, priority = 65)
 	public void verifyMiniDocListChildWindow() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51938");
@@ -5616,7 +5623,7 @@ public class DocView_Redactions_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 65)
+	//@Test(enabled = true, groups = { "regression" }, priority = 65)
 	public void verifySearchTermHighlightedInEyeIconFromAssignment() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51396");
@@ -5700,7 +5707,7 @@ public class DocView_Redactions_Regression {
 	 * previously viewed hits for the document on completing the document
 	 */
 
-	@Test(enabled = true, alwaysRun = false, groups = { "regression" }, priority = 1)
+	//@Test(enabled = true, alwaysRun = false, groups = { "regression" }, priority = 1)
 	public void verifyPersistentHitsAfterCompletingDocumentsNotRetain() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5950,7 +5957,7 @@ public class DocView_Redactions_Regression {
 	 * from doc list
 	 */
 
-	@Test(enabled = true, alwaysRun = false, groups = { "regression" }, priority = 67)
+	//@Test(enabled = true, alwaysRun = false, groups = { "regression" }, priority = 67)
 	public void verifyImpersonationHitsOfDocWithoutClickingEyeIconToDocViewFromDocList() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -6908,7 +6915,7 @@ public class DocView_Redactions_Regression {
 		loginPage.logout();
 
 	}
-
+	
 	/**
 	 * Author : Sakthivel date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-51043 Verify user can maximize the middle panel of the doc view
@@ -6930,16 +6937,16 @@ public class DocView_Redactions_Regression {
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
 		loginPage.logout();
-
-		// Login as REV
+        
+		//Login as REV
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in using Reviewer account");
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
 		loginPage.logout();
-
-		// Login as PA
+        
+		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in using PA account");
 		sessionsearch.basicContentSearch(Input.searchString1);
@@ -6947,7 +6954,7 @@ public class DocView_Redactions_Regression {
 		docViewRedact.verifyMaximizetheMiddlePanel();
 		loginPage.logout();
 	}
-
+	
 	/**
 	 * @Author Raghuram A date:01/02/2022 Modified date: NA Modified by:N/A
 	 * @Description : To verify that once user complete the document, count should
