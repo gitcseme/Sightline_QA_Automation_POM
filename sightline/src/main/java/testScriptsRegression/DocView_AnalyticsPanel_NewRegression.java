@@ -753,7 +753,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected = Input.conceptualDocs1;
+		String docsToBeSelected = Input.threadDocId;
 
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 2: Searching documents based on search string and Navigate to DocView");
@@ -845,7 +845,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected =Input.conceptualDocs1;
+		String docsToBeSelected =Input.threadDocId;
 
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 2: Searching documents based on search string and Navigate to DocView");
@@ -933,7 +933,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 
-		String documentToBeSelected = Input.conceptualDocs1;
+		String documentToBeSelected = Input.threadDocId;
 
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
@@ -1098,10 +1098,10 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description : Verify check mark icon should be displayed when document is
 	 * completed after selecting 'Code same as this' action' from Analytics Panel >
 	 * Conceptual'RPMXCON-51059' Sprint : 7
-	 * @Stabilization - done
+	 * @Stabilization - not done
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	//@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyCheckMarkIconDisplayedTheConceptuallySimilar() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51059");
@@ -1115,7 +1115,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo("Logged in as User: " + Input.rmu1FullName);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = Input.conceptualDoc;
+		String documentToBeSelected = Input.nearDupeCompletedDocId;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
@@ -1125,7 +1125,6 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo(
 				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
 		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.getConceptDocument();
 		sessionSearch.bulkAssignConceptualDocuments();
 
 		assignmentsPage.assignNearDupeDocstoNewAssgn(assname, codingForm, SessionSearch.pureHit);
@@ -1170,7 +1169,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
-		docView.selectDocIdInMiniDocList(Input.nearDupeDocId);
+		docView.selectDocIdInMiniDocList(Input.conceptualDocs1);
 		// perform code same as NearDupe Documents
 		docView.selectDocsFromConceptualTabAndActionCodeSame();
 
@@ -1196,10 +1195,10 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 1/12/21 NA Modified date: NA Modified by:NA
 	 * Description :Verify user can select 'Remove Code Same' from analytics panel
 	 * child window'RPMXCON-51232' Sprint : 7
-	 * @Stabilization - not done [Actually done but coding form issue]
+	 * @Stabilization - done 
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16) 
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16) 
 	public void verifyUserCanSelectRemoveCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1212,7 +1211,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 
-		String docToBeSelected = Input.familyDocument;
+		String docToBeSelected = Input.threadDocId;
 
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
@@ -1339,9 +1338,9 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              after saving selects action 'Code same as this' from family
 	 *              members on same documents then selects 'Remove code same as
 	 *              this' RPMXCON-51222
-	 * @Stabilization - not done [Actually done but coding form issue]
+	 * @Stabilization - done
 	 */
-	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
 	public void verifyUserEditCodingFormMainDocAndActionCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51222");
@@ -1395,10 +1394,10 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Mohan date: 03/12/2021 Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51028 To verify that after impersonation user can see remarks for
 	 * selected document
-	 * @Stabilization - done
+	 * @Stabilization - not done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 18) 
+	//@Test(enabled = true, groups = { "regression" }, priority = 18) 
 	public void verifyRemarksForSelectedDocsAfterImpersonating() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1741,7 +1740,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Stabilized
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 23)
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 23)
 	public void verifySeeAllTheThreadedDocsInAnalyticsPanelSelectedDocInDocView(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -1755,7 +1754,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 
-		String documentToBeSelected = Input.NewDocId;
+		String documentToBeSelected = Input.MetaDataId;
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 
@@ -1784,10 +1783,10 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description :To verify when user edits the coding form of main document and
 	 * after saving selects action 'Code same as this' from family members on same
 	 * documents.'RPMXCON-50909' Sprint : 8
-	 * @Stabilization - not done [Actually done but coding form issue]
+	 * @Stabilization - done 
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 24)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 24)
 	public void verifyEditsCodingFormSelectActionCodeSameAsFromFamilyMember(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -1817,7 +1816,6 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		driver.waitForPageToBeReady();
 		docView.performCodeSameForFamilyMembersDocuments();
-
 		
 		docView.selectDocsMiniDocListAndCodingFormSaveButton();
 
@@ -1835,7 +1833,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              RPMXCON-50956
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 25)
+	//@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 25)
 	public void verifyCompareSimilarDocumentIsDisplayedOnceTheIconIsClicked(String roll, String userName,
 			String password, String impersonate) throws InterruptedException {
 
@@ -1912,7 +1910,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	//@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyCheckMarkIconCodingStampAppliedToSelectedDocs() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1990,7 +1988,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Stabilized
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
 	public void verifyDesignatedDotMarkerInThreadMapTab(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -2039,7 +2037,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	//@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyCompleteLastDocsAndCodeSameAsActionConceptual() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51071");
@@ -2054,7 +2052,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = Input.conceptualDoc;
+		String documentToBeSelected = Input.nearDupeCompletedDocId;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
@@ -2065,7 +2063,6 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo(
 				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
 		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.getConceptDocument();
 		sessionSearch.bulkAssignConceptualDocuments();
 
 		// create Assignment and disturbute docs
@@ -2165,7 +2162,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = Input.familyDocument;
+		String documentToBeSelected = Input.threadDocId;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
@@ -2432,7 +2429,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	//@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyDocViewFromSaveSearchDocViewThreadMap() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50875");
