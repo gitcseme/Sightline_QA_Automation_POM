@@ -9898,5 +9898,41 @@ public class SessionSearch {
 				getAs_AudioTextBox_CombinationSearch().SendKeys(Input.audioSearchString1);
 	}
 	
+	/**
+	* @Author :Aathith
+	* @Description :Selecting metadata in search
+	*/
+	public void SearchMetaData(String Text,String Value) {
+	// To make sure we are in basic search page
+	driver.getWebDriver().get(Input.url + "Search/Searches");
+	driver.waitForPageToBeReady();
+	base.waitForElement(getBasicSearch_MetadataBtn());
+	getBasicSearch_MetadataBtn().waitAndClick(10);
+	driver.waitForPageToBeReady();
+	base.waitForElement(getSelectMetaData());
+	getSelectMetaData().selectFromDropdown().selectByVisibleText(Text);
+	base.waitForElement(getMetaDataSearchText1());
+	getMetaDataSearchText1().SendKeys(Value);
+	base.waitForElement(getMetaDataInserQuery());
+	getMetaDataInserQuery().waitAndClick(5);
+	// Click on Search button
+	base.waitForElement(getSearchButton());
+	getSearchButton().waitAndClick(5);
+	driver.waitForPageToBeReady();
+	driver.WaitUntil((new Callable<Boolean>() {
+	public Boolean call() {
+	return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+	}
+	}), Input.wait90);
+
+
+
+	int pureHit = Integer.parseInt(getPureHitsCount().getText());
+	System.out.println("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
+	UtilityLog.info("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
+
+
+
+	}
 }
 

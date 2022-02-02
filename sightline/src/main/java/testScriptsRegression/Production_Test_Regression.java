@@ -4022,6 +4022,64 @@ public class Production_Test_Regression {
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 				
 				}
+				/**
+				* @author Aathith Test case id-RPMXCON-48288
+				* @Description To Verify Production for a document with no error message as
+				* 'WidthAndHeightCannotBeNegative'
+				*/
+				@Test(groups = { "regression" }, priority = 66)
+				public void verifyNotDisplayOfErrorMessage() throws Exception {
+					
+				base.stepInfo("RPMXCON-48288-Production Sprint 11");
+				base.stepInfo("To Verify Production for a document with no error message as 'WidthAndHeightCannotBeNegative'");
+
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.SearchMetaData("SourceDocID", "STC4_00000995");
+				sessionSearch.bulkFolderExisting(foldername);
+
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page = new ProductionPage(driver);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingPDFSection(tagname, Input.tagNamePrev);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.clickOnGenerateButton();
+				if(page.gettext("WidthAndHeightCannotBeNegative").isElementAvailable(60)) {
+					base.failedStep("Error message displayed");
+				}else {
+					base.passedStep("There Should not be any error message  such as WidthAndHeightCannotBeNegative");
+				}
+				base.passedStep("Verified Production for a document with no error message as 'WidthAndHeightCannotBeNegative'");
+				page.getbtnContinueGenerate().isElementAvailable(60);
+				page.getbtnContinueGenerate().waitAndClick(10);
+				page.getConfirmProductionCommit().isElementAvailable(60);
+				page.getConfirmProductionCommit().waitAndClick(10);
+
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				}
 				
 	
 	@AfterMethod(alwaysRun = true)
