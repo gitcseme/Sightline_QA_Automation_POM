@@ -1418,7 +1418,7 @@ public class DocViewPage {
 	public Element getDocView_AssignmentProgressDocs() {
 		return driver.FindElementByXPath("//td[@class=' colHCenter colHCenter']//span[text()='20%']");
 	}
-	
+
 	public Element getAssgnPaginationNextButton() {
 		return driver.FindElementByCssSelector("li[class='paginate_button next'] a");
 	}
@@ -2869,20 +2869,24 @@ public class DocViewPage {
 	}
 
 	public Element getMiniDocList_IterationDocs(int row) {
-		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr["+row+"]//td[2]");
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr[" + row + "]//td[2]");
 	}
-	
-	//Added by Gopinath - 31/01/2022
-		public Element getDocumnetById(String documentId) {
-			return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr//td[text()='"+documentId+"']");
-		}
-		public Element getDisableRedactionWarningForRemarks() {
-			return driver.FindElementByXPath("//div[@id='disableRedactionWarningForRemarks']/span[contains(text(),'Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.')]");
-		
-			}
-		public Element getCodingForm_PA() {
-			return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
-		}
+
+	// Added by Gopinath - 31/01/2022
+	public Element getDocumnetById(String documentId) {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr//td[text()='" + documentId + "']");
+	}
+
+	public Element getDisableRedactionWarningForRemarks() {
+		return driver.FindElementByXPath(
+				"//div[@id='disableRedactionWarningForRemarks']/span[contains(text(),'Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.')]");
+
+	}
+
+	public Element getCodingForm_PA() {
+		return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
+	}
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -22491,11 +22495,11 @@ public class DocViewPage {
 		return docViewCount;
 
 	}
-	
+
 	/**
 	 * @Author Vijaya.Rani Created on 31/1/2022
-	 * @Description To perform Folder MiniDocList 
-	 *              
+	 * @Description To perform Folder MiniDocList
+	 * 
 	 */
 	public void performFloderMiniDocList() throws InterruptedException {
 
@@ -22514,7 +22518,6 @@ public class DocViewPage {
 
 		getDocView__ChildWindow_Mini_FolderAction().waitAndClick(10);
 
-
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
 		base.passedStep("Folder pop up is opened successfully");
@@ -22534,7 +22537,7 @@ public class DocViewPage {
 		base.VerifySuccessMessage("Records saved successfully");
 
 		base.passedStep("Selected folder is applied to the selected documents successfully");
-		
+
 		driver.scrollPageToTop();
 		base.waitForElement(getManageTab());
 		getManageTab().waitAndClick(10);
@@ -22549,7 +22552,7 @@ public class DocViewPage {
 	/**
 	 * @Author Vijaya.Rani Created on 31/1/2022
 	 * @Description To perform Folder MiniDocList For Reviewer test id:50820
-	 *              
+	 * 
 	 */
 	public void performFloderMiniDocListForReviewer() throws InterruptedException {
 
@@ -22568,7 +22571,6 @@ public class DocViewPage {
 
 		getDocView__ChildWindow_Mini_FolderAction().waitAndClick(10);
 
-
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
 		base.passedStep("Folder pop up is opened successfully");
@@ -22588,9 +22590,8 @@ public class DocViewPage {
 		base.VerifySuccessMessage("Records saved successfully");
 
 		base.passedStep("Selected folder is applied to the selected documents successfully");
-    }
-	
-	
+	}
+
 	/**
 	 * @author Gopinath.
 	 * 
@@ -22603,7 +22604,7 @@ public class DocViewPage {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			List<WebElement> keyword = getHighlightedKeywordrgbCode(rgbCode).FindWebElements();
-			if(keyword.size()!=0) {
+			if (keyword.size() != 0) {
 				System.out.println(keyword.get(0).getCssValue("fill"));
 				String color = keyword.get(0).getCssValue("fill");
 				String hex = org.openqa.selenium.support.Color.fromString(color).asHex();
@@ -22616,7 +22617,7 @@ public class DocViewPage {
 					System.out.println("Keyword highlighted on doc view ");
 					base.failedStep("Keyword highlighted on doc view ");
 				}
-			}else {
+			} else {
 				base.passedStep("Keyword is not highlighted on doc view with expected colour");
 			}
 		} catch (Exception e) {
@@ -22625,30 +22626,31 @@ public class DocViewPage {
 
 		}
 	}
-	
-	
+
 	/**
 	 * @author Gopinath.
 	 * @description : Verify expected document is displayed in mini doc list.
-	 * @param docId : docId is string value that document id need to check in mini doc list on docview.
+	 * @param docId : docId is string value that document id need to check in mini
+	 *              doc list on docview.
 	 */
 	public void verifyExpectedDocumentIsDisplayedInMiniDocList(String docId) {
 		try {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			getDocumnetById(docId).isElementAvailable(15);
-			if(getDocumnetById(docId).isDisplayed()) {
-				base.passedStep(docId+" : is displayed in mini doc list successfully");
-			}else {
-				base.failedStep(docId+" : is not displayed in mini doc list successfully");
+			if (getDocumnetById(docId).isDisplayed()) {
+				base.passedStep(docId + " : is displayed in mini doc list successfully");
+			} else {
+				base.failedStep(docId + " : is not displayed in mini doc list successfully");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occcured while verifying expected document is displayed in mini doc list." + e.getMessage());
+			base.failedStep("Exception occcured while verifying expected document is displayed in mini doc list."
+					+ e.getMessage());
 
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : Method for verifying annotation is added to document.
@@ -22679,35 +22681,35 @@ public class DocViewPage {
 
 		}
 	}
-	
+
 	/**
-	 * @author Gopinath
-	 * Description :this method will verify remark warning message after add or edit remark when same document loaded in two different tabs
-	 *                and verify delete and edit button disabled or not
+	 * @author Gopinath Description :this method will verify remark warning message
+	 *         after add or edit remark when same document loaded in two different
+	 *         tabs and verify delete and edit button disabled or not
 	 */
 	public void verifyDisableRemarkWarningMessage() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getNonAudioRemarkBtn());
 		getNonAudioRemarkBtn().waitAndClick(5);
 		base.waitForElement(getDisableRedactionWarningForRemarks());
-		if(getDisableRedactionWarningForRemarks().isElementAvailable(5)) {
+		if (getDisableRedactionWarningForRemarks().isElementAvailable(5)) {
 			base.passedStep("Remark/redaction is disabled ");
-		}else {
+		} else {
 			base.failedStep("Remark/redaction is enabled");
 		}
 		base.waitForElement(getDocView_SavedRemarkText());
 		getDocView_SavedRemarkText().ScrollTo();
-		if(getRemarkDeleteIcon().getWebElement().isDisplayed()) {
+		if (getRemarkDeleteIcon().getWebElement().isDisplayed()) {
 			base.failedStep("Delete button is displayed after disabled the Remark/redactions");
-		}else {
-			if(getRemarkEditIcon().getWebElement().isDisplayed()) {
+		} else {
+			if (getRemarkEditIcon().getWebElement().isDisplayed()) {
 				base.failedStep("Edit button is displayed even after disabled the Remark/redactions");
-			}else {
+			} else {
 				base.passedStep("Edit and delete buttons of all remarks disabled");
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 * @description: Validate Code form presence in Pa
@@ -22723,7 +22725,7 @@ public class DocViewPage {
 		}
 		softAssertion.assertAll();
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 * @description: Validate Code form presence in Pa using warning message
@@ -22731,13 +22733,32 @@ public class DocViewPage {
 //	Reusable metod to check warning message
 	public void paWarningMsgForCodingForm() {
 		driver.waitForPageToBeReady();
-		String expected="No Coding Form is presented because you're outside the context of a Security Group";
-	    String actualOutsidrCf=getCodingForm_PA().getText();
-	    softAssertion.assertEquals(expected, actualOutsidrCf);
-	    softAssertion.assertAll();
-	    base.passedStep("Message displayed as outside the context of a Security Group");
-	  
+		String expected = "No Coding Form is presented because you're outside the context of a Security Group";
+		String actualOutsidrCf = getCodingForm_PA().getText();
+		softAssertion.assertEquals(expected, actualOutsidrCf);
+		softAssertion.assertAll();
+		base.passedStep("Message displayed as outside the context of a Security Group");
+
+	}
+
+	/**
+	 * @author Raghuram 01/02/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description
+	 */
+	public void addRemarkToDocuments(int iteration, String remark) throws Exception, ParseException {
+
+		List<WebElement> documents = getMiniDocListDocIdText().FindWebElements();
+
+		if (iteration <= documents.size()) {
+			for (int i = 0; i < iteration; i++) {
+				Actions act = new Actions(driver.getWebDriver());
+				act.moveToElement(documents.get(i)).click().perform();
+				audioRemark(remark);
+			}
+		} else {
+			System.out.println("The given iteration count exceed the Document Count");
+			base.stepInfo("The given iteration count exceed the Document Count");
+		}
 	}
 }
-
-

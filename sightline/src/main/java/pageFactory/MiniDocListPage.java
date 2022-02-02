@@ -495,8 +495,9 @@ public class MiniDocListPage {
 	public Element getSelectedOptimizedSortRadioButton() {
 		return driver.FindElementByXPath("//input[@id='rbOptimized']");
 	}
+
 	public Element getAvailableFieldsDisplay(String fields) {
-		return driver.FindElementByXPath("//ul[@id='sortable1PickColumns']//li[@customfield-name='"+fields+"']");
+		return driver.FindElementByXPath("//ul[@id='sortable1PickColumns']//li[@customfield-name='" + fields + "']");
 	}
 
 	/**
@@ -4138,7 +4139,7 @@ public class MiniDocListPage {
 		numToCHoose = baseClass.randNumber(sizeofList);
 		nameSelected = docIDlist.get(numToCHoose);
 		System.out.println(nameSelected);
-		getDociD(nameSelected).waitAndClick(5);
+		getDociD(nameSelected).waitAndClick(10);
 		driver.waitForPageToBeReady();
 
 	}
@@ -4152,10 +4153,65 @@ public class MiniDocListPage {
 		driver.waitForPageToBeReady();
 		baseClass.waitForElementCollection(getListofDocIDinCW());
 		sizeofList = getListofDocIDinCW().size();
-		baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
+		// baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
+		System.out.println("Available documents in DocView page : " + sizeofList);
 		docIDlist = baseClass.availableListofElements(getListofDocIDinCW());
 
 		return docIDlist;
+	}
+
+	/**
+	 * @author Raghuram 01/02/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description
+	 */
+	public void verifyCompleteCheckMarkIconandDocHighlight(List<String> docIDlist, int noOFdocsToComplete,
+			Boolean verifyCheckMark) {
+		// Main method
+		driver.waitForPageToBeReady();
+
+		for (int i = 0; i < noOFdocsToComplete; i++) {
+			String name = docIDlist.get(i);
+			getDociD(name).waitAndClick(5);
+
+			docViewPage.editingCodingFormWithCompleteButton();
+
+			if (verifyCheckMark) {
+				verifyCompletedIconPresent(name);
+			}
+		}
+	}
+
+	/**
+	 * @author Raghuram 01/02/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description
+	 */
+	public void verifyCompletedIconPresent(String name) {
+		baseClass.waitForElement(getDocIDCheckedIcon(name));
+		System.out.println(name);
+		docViewPage.getFirstDocIdOnMiniDocList().ScrollTo();
+		System.out.println(name);
+		softAssertion.assertTrue(getDocIDCheckedIcon(name).isElementPresent());
+		if (getDocIDCheckedIcon(name).isElementPresent()) {
+			System.out.println(" Check Marked - Pass");
+			baseClass.passedStep("DocId Check Mark is displayed successfully ");
+		} else {
+			baseClass.failedStep("DocId Check Mark is not displayed");
+		}
+		getCheckSelectedBgColor(name).ScrollTo();
+		String bgColor = getCheckSelectedBgColor(name).GetCssValue("background-color");
+		System.out.println(bgColor);
+		bgColor = rgbTohexaConvertor(bgColor);
+		System.out.println(bgColor);
+		if (bgColor.equals("#D4E6ED")) {
+			System.out.println("document displayed in light blue highlighting");
+			baseClass.passedStep("document displayed in light blue highlighting");
+		} else {
+			System.out.println("Not highlighted");
+			baseClass.failedStep("Not highlighted");
+
+		}
 	}
 
 }
