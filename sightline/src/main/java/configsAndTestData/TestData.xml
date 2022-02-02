@@ -226,6 +226,9 @@
 	</BatchFileWithMultiplesheetFile>
 	<savedSearchColor>#FFFFFF</savedSearchColor>
 	<searchString8>XLS OR XLSX OR CSV</searchString8>
+	<specialString1>"##U\}C Tester"</specialString1>
+	<specialString2>"##U\"C Tester"</specialString2>
+	<specialString3>"##U\{C Tester"</specialString3>
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 
@@ -432,6 +435,6 @@
 	<threadDocId>ID00004943</threadDocId>
 	<conceptualDocs1>ID00000941</conceptualDocs1>
 	<familyDocumentForReviewer>ID00003745</familyDocumentForReviewer>
-	<newNearDupeDocId>ID00005181</newNearDupeDocId>
+		<newNearDupeDocId>ID00005181</newNearDupeDocId>
 
 </TestData>

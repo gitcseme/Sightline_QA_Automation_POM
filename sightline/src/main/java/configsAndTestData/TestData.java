@@ -175,7 +175,7 @@ public class TestData {
 	public String keywordColor1;
 	
 
-	// Added by Raghuram - Last Modified 01/28/21 
+	// Added by Raghuram - Last Modified 02/02/21 
 	public String docHighlightColor;
 	public String sortType;
 	public String sortDataBy;
@@ -200,6 +200,9 @@ public class TestData {
 	public String BatchFileWithMultiplesheetFile;
 	public String savedSearchColor;
 	public String searchString8;
+	public String specialString1;
+	public String specialString2;
+	public String specialString3;
 
 	// Added by jeevitha
 	public String colorCodeOfRed;

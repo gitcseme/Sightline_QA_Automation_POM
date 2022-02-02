@@ -3008,7 +3008,7 @@ public class DocView_Redactions_Regression {
 
 		softAssert.assertNotEquals(beforeComplete, afterComplete);
 		softAssert.assertAll();
-		loginPage.logout();		
+		loginPage.logout();
 	}
 
 	/**
@@ -6908,7 +6908,7 @@ public class DocView_Redactions_Regression {
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * Author : Sakthivel date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-51043 Verify user can maximize the middle panel of the doc view
@@ -6930,22 +6930,89 @@ public class DocView_Redactions_Regression {
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
 		loginPage.logout();
-        
-		//Login as REV
+
+		// Login as REV
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in using Reviewer account");
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
 		loginPage.logout();
-        
-		//Login as PA
+
+		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in using PA account");
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
 		loginPage.logout();
+	}
+
+	/**
+	 * @Author Raghuram A date:01/02/2022 Modified date: NA Modified by:N/A
+	 * @Description : To verify that once user complete the document, count should
+	 *              increased on the Edit Assignment->Manage Reviewers..
+	 *              [RPMXCON-50987]
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	public void VerifyCompleteDocCountViaRevTab() throws Exception {
+
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		String assignmentNametoCreate = "TestAssignmentNo" + Utility.dynamicNameAppender();
+		List<String> docIDlist = new ArrayList<>();
+		String userName = Input.rmu1userName;
+		int iteration = 3;
+
+		baseClass.stepInfo("Test case Id:RPMXCON-50987 Sprint 11");
+		baseClass.stepInfo(
+				"To verify that once user complete the document, count should increased on the Edit Assignment->Manage Reviewers.");
+
+		// Assignment Creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentNametoCreate, Input.codingFormName);
+		assignmentPage.assignmentDistributingToReviewerManager();
+		baseClass.passedStep("Assignment created and assigned to reviewer");
+
+		// distributedCOunt pick
+		String distributedCOunt = assignmentPage.getDistibuteDocsCount(userName);
+		baseClass.stepInfo("Distributed count to the user : " + distributedCOunt);
+
+		// Assignment selection from Dashboard
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(miniDocListpage.getDashBoardLink());
+		miniDocListpage.getDashBoardLink().waitAndClick(5);
+		miniDocListpage.chooseAnAssignmentFromDashBoard(assignmentNametoCreate);
+
+		// Complete document
+		baseClass.stepInfo("Complete doc iteration count : " + iteration);
+		docIDlist = miniDocListpage.getDocListDatas();
+		miniDocListpage.verifyCompleteCheckMarkIconandDocHighlight(docIDlist, iteration, false);
+
+		// Assignment Edit View
+		assignmentPage.editAssignmentUsingPaginationConcept(assignmentNametoCreate);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo(assignmentName + " assignment opened in edit mode");
+		baseClass.waitForElement(assignmentPage.getAssignment_ManageReviewersTab());
+		assignmentPage.getAssignment_ManageReviewersTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		// Data Verification
+		assignmentPage.verifyCountMatches(userName, iteration, distributedCOunt, true, true, true, false);
+
+		// Delete Assignment
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		assignmentPage.deleteAssgnmntUsingPagination(assignmentNametoCreate);
+
+		loginPage.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)
