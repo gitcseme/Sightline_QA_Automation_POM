@@ -2892,10 +2892,15 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
 	}
 
+	public ElementCollection getHitsNotchOnJplayer() {
+		return driver.FindElementsByXPath("//i[@class='fa fa-caret-down']");
+	}
+
 	public Element getDocView_AnalyticsPanel_FamilyMemberWholeTabel() {
 		return driver.FindElementById("family1");
 	}
 	
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -22757,10 +22762,10 @@ public class DocViewPage {
 
 	}
 
-	
 	/**
 	 * @author Gopinath
-	 * @description this method will verify document in docview loaded in 4 sec after enter doc number
+	 * @description this method will verify document in docview loaded in 4 sec
+	 *              after enter doc number
 	 * @param docNum
 	 */
 	public void verifyDocumentLoadedWithInFourSeconds(String docNum) {
@@ -22791,8 +22796,6 @@ public class DocViewPage {
 		}
 	}
 
-
-
 	/**
 	 * @author Raghuram 01/02/22 NA Modified date: NA Modified by:NA
 	 * @return
@@ -22813,6 +22816,22 @@ public class DocViewPage {
 			base.stepInfo("The given iteration count exceed the Document Count");
 		}
 	}
+
+
+	/**
+	 * @author Raghuram 02/03/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description
+	 */
+	public void verifyPersistantDataPresent(String searchInput) {
+		// Validate audio docs eye icon with persistent hits
+		driver.waitForPageToBeReady();
+		getAudioPersistantHitEyeIcon().waitAndClick(10);
+		String audioEyePersistent = getDocView_Audio_Hit().getText().toString();
+		base.compareTextViaContains(audioEyePersistent.toLowerCase(), searchInput,
+				"Persistent hit panel opened and displaying" + audioEyePersistent + "",
+				"Persistent hit panel not displayed");
+
 	
 	/**
 	 * @author Gopinath 
@@ -22836,5 +22855,6 @@ public class DocViewPage {
 			e.printStackTrace();
 			base.failedStep("Exception occued while verifying weather delete and edit fields are not enabled.");
 		}
+
 	}
 }

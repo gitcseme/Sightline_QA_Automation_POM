@@ -4,6 +4,12 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
@@ -152,8 +158,8 @@ public class DocViewAudio_IndiumRegression {
 
 	/**
 	 * @Author : Steffy date:17/01/22 Modified date: NA Modified by: Steffy
-	 * @Description : RPMXCON-551318 Verify that audio files pause functionality is working properly
-	 *              inside docview screen
+	 * @Description : RPMXCON-551318 Verify that audio files pause functionality is
+	 *              working properly inside docview screen
 	 */
 
 	@Test(enabled = true, groups = { "regression" }, priority = 03)
@@ -175,13 +181,13 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("Open the searched documents in doc view");
 
 		docViewPage.playAudioOnly();
-		
+
 		softAssertion.assertFalse(docViewPage.getDocView_IconPlaying().isDisplayed());
 		baseClass.passedStep("Audio pause functionality is working properly");
 
 		// logout
 		loginPage.logout();
-		
+
 		// Login As
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User is logged in as PA");
@@ -196,10 +202,10 @@ public class DocViewAudio_IndiumRegression {
 
 		softAssertion.assertFalse(docViewPage.getDocView_IconPlaying().isDisplayed());
 		baseClass.passedStep("Audio pause functionality is working properly");
-		
+
 		// logout
 		loginPage.logout();
-		
+
 		// Login As
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("User is logged in as Reviewer");
@@ -219,7 +225,7 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * @Author : Steffy date:17/01/22 Modified date: NA Modified by: Steffy
 	 * @Description : Verify that audio files play functionality is working properly
@@ -247,7 +253,7 @@ public class DocViewAudio_IndiumRegression {
 
 		// logout
 		loginPage.logout();
-		
+
 		// Login As
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User is logged in as PA");
@@ -262,7 +268,7 @@ public class DocViewAudio_IndiumRegression {
 
 		// logout
 		loginPage.logout();
-		
+
 		// Login As
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("User is logged in as Reviewer");
@@ -279,32 +285,35 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-51502 Description : To verify that Persistent hits are working for audio files if user redirect to doc view from Doc list
-	 * @throws InterruptedException 
+	 * Id:RPMXCON-51502 Description : To verify that Persistent hits are working for
+	 * audio files if user redirect to doc view from Doc list
+	 * 
+	 * @throws InterruptedException
 	 * 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 05)
-	public void verifyPersistentHitsForAudioFiles() throws InterruptedException  {
+	public void verifyPersistentHitsForAudioFiles() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docListPage = new DocListPage(driver);
 		baseClass.stepInfo("Test case id :RPMXCON-51502");
-		baseClass.stepInfo("verify that Persistent hits are working for audio files if user redirect to doc view from Doc list");
+		baseClass.stepInfo(
+				"verify that Persistent hits are working for audio files if user redirect to doc view from Doc list");
 
 		// Login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		
+
 		// Performing advanced search
 		sessionSearch.advancedContentSearch(Input.testData1);
-		
-		//view in doclist
+
+		// view in doclist
 		sessionSearch.ViewInDocList();
-		
-		//Select all docs and view as docview
+
+		// Select all docs and view as docview
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return docListPage.getSelectAll().Visible() && docListPage.getSelectAll().Enabled();
@@ -313,82 +322,227 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.waitTillElemetToBeClickable(docListPage.getSelectAll());
 		docListPage.getSelectAll().waitAndClick(30);
 		docListPage.getPopUpOkBtn().Click();
-		
+
 		docListPage.docListToDocView();
 		baseClass.passedStep("Selected all documents and perform action view in docview");
-		
+
 		// click eye icon and verify the availability of search term
 		String searchTerm = docViewPage.getPersistentHit(Input.testData1);
-		
+
 		int searchTermPanelCount = docViewPage.getHitPanelCollection().size();
-		
-		if(searchTerm.contains(Input.testData1) && searchTermPanelCount>0) {
+
+		if (searchTerm.contains(Input.testData1) && searchTermPanelCount > 0) {
 			baseClass.passedStep("Search term displayed");
-			
-		}
-		else {
+
+		} else {
 			baseClass.failedStep("Search term not displayed");
-		}		
+		}
 		loginPage.logout();
 	}
-	
-	
+
 	/**
 	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-46926 Description : Verify Persistent hits navigation should work when audio documents searched with the phrase with quotes
-	 * @throws InterruptedException 
+	 * Id:RPMXCON-46926 Description : Verify Persistent hits navigation should work
+	 * when audio documents searched with the phrase with quotes
+	 * 
+	 * @throws InterruptedException
 	 * 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 06)
-	public void verifyPersistentHitNavigation() throws InterruptedException  {
+	public void verifyPersistentHitNavigation() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 
 		baseClass.stepInfo("Test case id :RPMXCON-46926");
-		baseClass.stepInfo("Verify Persistent hits navigation should work when audio documents searched with the phrase with quotes");
+		baseClass.stepInfo(
+				"Verify Persistent hits navigation should work when audio documents searched with the phrase with quotes");
 
 		// Login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		
-		// Performing advanced search with audio
-		sessionSearch.verifyaudioSearchWarning(Input.searchPhraseWithQuote,Input.language);
-		
-		
-		//view in docview
-    	sessionSearch.ViewInDocView();
 
-    	
-    	// click eye icon and click on navigation in panel
-        
-        String availableSearchTerm = docViewPage.getAudioPersistentHit(Input.searchPhraseWithQuote);
-		
-		if(availableSearchTerm.contains(Input.searchPhraseWithQuote)) {
+		// Performing advanced search with audio
+		sessionSearch.verifyaudioSearchWarning(Input.searchPhraseWithQuote, Input.language);
+
+		// view in docview
+		sessionSearch.ViewInDocView();
+
+		// click eye icon and click on navigation in panel
+
+		String availableSearchTerm = docViewPage.getAudioPersistentHit(Input.searchPhraseWithQuote);
+
+		if (availableSearchTerm.contains(Input.searchPhraseWithQuote)) {
 			baseClass.passedStep("persistent panel opened and searched phrase displayed");
-			
-		}		
+
+		}
 		driver.scrollingToElementofAPage(docViewPage.audioPersistentForwardNavigate());
 		driver.WaitUntil((new Callable<Boolean>() {
-	    public Boolean call() throws Exception {
-	    	return docViewPage.audioPersistentForwardNavigate().Visible() && docViewPage.audioPersistentForwardNavigate().Enabled();
-	    	}
-	    }), Input.wait30);
-	    baseClass.waitTillElemetToBeClickable(docViewPage.audioPersistentForwardNavigate());
-	    docViewPage.audioPersistentForwardNavigate().waitAndClick(10);
-	    
-        	
-        String audioPlayerStatus = docViewPage.audioPlayPauseIcon().GetAttribute("title");
-        
-        if(audioPlayerStatus.equalsIgnoreCase("pause")) {
-        	baseClass.passedStep("Persistent hit navigation works when searched with Phrase and quote");
-        	
-        }
-        else {
-        	baseClass.failedMessage("persistent hit navigation not worked when searched with phrase and quote");
-        	
-        }
-        loginPage.logout();
-  
+			public Boolean call() throws Exception {
+				return docViewPage.audioPersistentForwardNavigate().Visible()
+						&& docViewPage.audioPersistentForwardNavigate().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docViewPage.audioPersistentForwardNavigate());
+		docViewPage.audioPersistentForwardNavigate().waitAndClick(10);
+
+		String audioPlayerStatus = docViewPage.audioPlayPauseIcon().GetAttribute("title");
+
+		if (audioPlayerStatus.equalsIgnoreCase("pause")) {
+			baseClass.passedStep("Persistent hit navigation works when searched with Phrase and quote");
+
+		} else {
+			baseClass.failedMessage("persistent hit navigation not worked when searched with phrase and quote");
+
+		}
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA Test Case
+	 *         Id:RPMXCON-47002 Description : Saved search > Doc View when search is
+	 *         with Metadata & Content search first and then Audio search, hits
+	 *         should be highlighted
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	public void hitsCheckWithDvAudio() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		List<String> searchList = new ArrayList<>();
+		Set<String> purehitKeySet = new HashSet<String>();
+		List<String> docIDlist = new ArrayList<>();
+		int pH = 0;
+		String firnstDocname;
+		String searchName = "", metaDataType = "DocID", metaDataIp = "ID00*";
+		String[] combinations = { "Metadata + Audio" };
+		String audioSearchInput = Input.audioSearch;
+
+		baseClass.stepInfo("Test case id :RPMXCON-47002");
+		baseClass.stepInfo(
+				"Saved search > Doc View when search is with Metadata & Content search first and then Audio search, hits should be highlighted");
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Combinational Search
+		baseClass.stepInfo("Audio Input : " + audioSearchInput);
+		Map<String, Integer> purehit = sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(
+				Input.searchString1, Input.searchString1, audioSearchInput, Input.language, "", combinations,
+				metaDataType, metaDataIp, "");
+		driver.waitForPageToBeReady();
+
+		// Data Collection
+		purehitKeySet = purehit.keySet();
+		Iterator<String> iterator = purehitKeySet.iterator();
+		while (iterator.hasNext()) {
+			searchName = iterator.next();
+			searchList.add(searchName);
+			pH = purehit.get(searchName);
+		}
+
+		// Launch DocVia via Saved Search
+		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.getToDocView().waitAndClick(5);
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.verifyPersistantDataPresent(audioSearchInput);
+
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the player", "Audio hits not highlighted on the player");
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA Test Case
+	 *         Id:RPMXCON-47003 Description : Saved search > Doc View when, search
+	 *         is with Audio search first and then Metadata & Content hits should be
+	 *         highlighted
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	public void hitsCheckWithDvAudioM() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		List<String> searchList = new ArrayList<>();
+		Set<String> purehitKeySet = new HashSet<String>();
+		List<String> docIDlist = new ArrayList<>();
+		int pH = 0;
+		String firnstDocname;
+		String searchName = "", metaDataType = "DocID", metaDataIp = "ID00*";
+		String[] combinations = { "Audio + Metadata" };
+		String audioSearchInput = Input.audioSearch;
+
+		baseClass.stepInfo("Test case id :RPMXCON-47003");
+		baseClass.stepInfo(
+				"Saved search > Doc View when, search is with Audio search first and then Metadata & Content hits should be highlighted");
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Combinational Search
+		baseClass.stepInfo("Audio Input : " + audioSearchInput);
+		Map<String, Integer> purehit = sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(
+				Input.searchString1, Input.searchString1, audioSearchInput, Input.language, "", combinations,
+				metaDataType, metaDataIp, "");
+		driver.waitForPageToBeReady();
+
+		// Data Collection
+		purehitKeySet = purehit.keySet();
+		Iterator<String> iterator = purehitKeySet.iterator();
+		while (iterator.hasNext()) {
+			searchName = iterator.next();
+			searchList.add(searchName);
+			pH = purehit.get(searchName);
+		}
+
+		// Launch DocVia via Saved Search
+		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.getToDocView().waitAndClick(5);
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.verifyPersistantDataPresent(audioSearchInput);
+
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the player", "Audio hits not highlighted on the player");
+
+		// Delete Search
+		baseClass.stepInfo("Initiating Delete Search");
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		loginPage.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)
