@@ -3902,8 +3902,8 @@ public class AssignmentsPage {
 				getSelectAssignment(assignmentName).ScrollTo();
 				if (!getSelectAssignmentHighlightCheck(assignmentName).isElementAvailable(5)) {
 					getSelectAssignment(assignmentName).waitAndClick(3);
-					getSelectAssignment(assignmentName).waitAndClick(5);
-				}
+					//getSelectAssignment(assignmentName).waitAndClick(5);
+				} 
 				driver.scrollPageToTop();
 				bc.waitForElement(getAssignmentActionDropdown());
 				getAssignmentActionDropdown().Click();
@@ -7936,9 +7936,14 @@ public class AssignmentsPage {
 	 */
 	public void reassignDocs(String user) {
 		bc.waitForElement(getDistributeTab());
+		bc.waitTillElemetToBeClickable(getDistributeTab());
 		getDistributeTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		bc.waitForElement(getSelectUserInDistributeTabToReassign(user));
+		bc.waitTillElemetToBeClickable(getSelectUserInDistributeTabToReassign(user));
 		getSelectUserInDistributeTabToReassign(user).waitAndClick(20);
+		bc.waitForElement(getDistributeBtn());
+		bc.waitTillElemetToBeClickable(getDistributeBtn());
 		getDistributeBtn().waitAndClick(3);
 		bc.stepInfo("Documents are distributed to reviewer successfully");
 		bc.passedStep("Documents are reassigned successfully for the reviewer");
@@ -9477,7 +9482,7 @@ public class AssignmentsPage {
 					"LEFT TO DO count matches : " + totalLeftToDo, "LEFT TO DO count is wrong");
 		}
 	}
-
+	
 	/**
 	 * @author Jayanthi.ganesan
 	 * @return
