@@ -2,6 +2,7 @@ package pageFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -398,7 +399,14 @@ public class TallyPage {
 	public ElementCollection getSubtallyTableheader() {
 		return driver.FindElementsByXPath("//table[@class='table table-striped dataGrid']/thead/tr/th");
 	}
+	public Element getSubTallyViewBtn() {
+		return driver.FindElementByXPath(
+				"//button[@id='subtallyactionbtn']/following-sibling::ul[@class='dropdown-menu action-dd']//li//a[text()='View']");
+	}
 
+	public Element getSubTallyViewinDocViewBtn() {
+		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[@id='idSubTallyViewInDocview']");
+	}
 	public TallyPage(Driver driver) {
 
 		this.driver = driver;
@@ -1159,6 +1167,8 @@ public class TallyPage {
 		base.waitForElement(getTally_SearchSaveSelections());
 		base.waitTime(2);
 		getTally_SearchSaveSelections().Click();
+		driver.waitForPageToBeReady();
+		verifySourceSelected();
 		base.stepInfo("Selected " + saveSearch + " as source to generate tally report");
 	}
 
@@ -1244,6 +1254,8 @@ public class TallyPage {
 		base.waitForElement(getTally_assignSaveSelections());
 		base.waitTime(2);
 		getTally_assignSaveSelections().waitAndClick(15);
+		driver.waitForPageToBeReady();
+		verifySourceSelected();
 	}
 
 	/**
@@ -1264,6 +1276,8 @@ public class TallyPage {
 		getTally_foldersSaveSelections().ScrollTo();
 		base.waitForElement(getTally_foldersSaveSelections());
 		getTally_foldersSaveSelections().Click();
+		driver.waitForPageToBeReady();
+		verifySourceSelected();
 	}
 
 	/**
@@ -1283,6 +1297,8 @@ public class TallyPage {
 		base.waitForElement(getTally_SGSaveSelections());
 		getTally_SGSaveSelections().ScrollTo();
 		getTally_SGSaveSelections().Click();
+		driver.waitForPageToBeReady();
+		verifySourceSelected();
 	}
 
 	/**
@@ -1344,6 +1360,8 @@ public class TallyPage {
 		base.waitForElement(getTally_PrjSaveSelections());
 		base.waitTime(2);
 		getTally_PrjSaveSelections().waitAndClick(15);
+		driver.waitForPageToBeReady();
+		verifySourceSelected();
 	}
 
 	/**
@@ -1472,6 +1490,81 @@ public class TallyPage {
 				base.failedStep("Total count of unique docs was not as expected ");
 
 			}
+		} else {
+			base.failedStep("sub tally report not displayed.");
+		}
+		return sum;
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void SubTally_ViewInDocView() {
+		base.waitForElement(getSubTallyViewBtn());
+		driver.scrollingToBottomofAPage();
+		base.waitTime(1);
+		getSubTallyViewBtn().ScrollTo();
+		getSubTallyViewBtn().ScrollTo();
+		getSubTallyViewinDocViewBtn().ScrollTo();
+		getSubTallyViewinDocViewBtn().waitAndClick(30);
+		base.stepInfo("Navigating from Tally page to view in doc view page.");
+	}
+	public void sourceSelectionUsers(String role, String[] sourceArray,int i) {
+		if(role=="PA") {
+	selectSources_PA(i,sourceArray[i]);}
+		if(role=="RMU") {
+	selectSources_RMU(i,sourceArray[i]);}
+}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @return
+	 */
+	public String verifyTallyChartMetadata() {
+		base.waitForElement(getTallyChartRectbar());
+		base.waitTillElemetToBeClickable(getTallyChartRectbar());
+		getTallyChartRectbar().Displayed();
+		List<WebElement> elementList = null;
+		List<String> elementNames = new ArrayList<>();
+		
+		if (getTallyChartRectbar().Displayed()) {
+			base.passedStep("Tally chart  displayed successfully");
+			elementList = getTallyChartMetaData().FindWebElements();
+			for (WebElement webElementNames : elementList) {
+				String elementName = webElementNames.getText();
+				elementNames.add(elementName.toLowerCase());
+			}
+		} else {
+			base.failedStep("Tally chart  not displayed");
+		}	
+		System.out.println(elementNames);
+		Collections.sort(elementNames);
+		
+		return elementNames.toString();
+	
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @return
+	 */
+	public int getDocCountSubTally() {
+		Integer sum = 0;
+		if (getSubtallyTable().isElementAvailable(10)) {
+			List<WebElement> elementList = null;
+			List<Integer> docCount = new ArrayList<>();
+			elementList = getUniqueDocs_Subtally().FindWebElements();
+			for (WebElement webElementNames : elementList) {
+				String elementName = webElementNames.getText();
+				docCount.add(Integer.parseInt(elementName));
+			}
+			System.out.println(docCount);
+			if (docCount == null || docCount.size() < 1) {
+				System.out.println("List size is zero");
+			} else {
+				for (int i : docCount) {
+					sum = sum + i;
+				}
+			}
+			base.stepInfo("Total Count of Unique docs reflected in sub tally Table" + sum.toString());
+		
 		} else {
 			base.failedStep("sub tally report not displayed.");
 		}
