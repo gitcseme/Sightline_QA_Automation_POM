@@ -165,6 +165,8 @@ public class TestData {
 	public String UniCodeDocId;
 	public String TiffDocId;
 	public String IconOriginalColour;
+	public String DocIdWithHiddenContent;
+	public String TextHidden;
 	
 	//Added by arunkumar
 	public String pageRange1;
