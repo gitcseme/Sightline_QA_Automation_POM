@@ -18,6 +18,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
@@ -43,7 +44,11 @@ public class Tally_Regression1 {
 	String securityGrpName="Tally"+Utility.dynamicNameAppender(); 
 	String projectName=Input.projectName;
 	String[] sourceName_RMU = { assgnName, folderName,SearchName,"Default Security Group"};
-	String[] sourceName_PA = {"Regression_AllDataset_Consilio1", folderName,SearchName,"Default Security Group" };
+	String[] sourceName_PA = {projectName, folderName,SearchName,securityGrpName};
+	String expectedCusName;
+	String expectedEAName;
+	String expectedDocFileType;
+	String expectedEAAdress;
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
@@ -63,27 +68,36 @@ public class Tally_Regression1 {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
 		ss.basicContentSearch(Input.TallySearch);
-		hitsCountPA=ss.verifyPureHitsCount();
+		hitsCountPA = ss.verifyPureHitsCount();
 		ss.saveSearchAtAnyRootGroup(SearchName, Input.shareSearchDefaultSG);
 		ss.bulkAssign();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assgnName, Input.codeFormName);
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
-		bc.stepInfo("Created a assignment " + assgnName);  	
-		driver.getWebDriver().get(Input.url+"Search/Searches");
+		bc.stepInfo("Created a assignment " + assgnName);
+		driver.waitForPageToBeReady();
+		DocListPage dp = new DocListPage(driver);
+		dp.SelectColumnDisplayByRemovingExistingOnes();  
+		//getting  metadata list for search term so that we can use this list as expected value when we generate tally report(Bar chart).
+		expectedCusName = dp.duplicateCheckList1(dp.getColumnValue(Input.metaDataName));
+		expectedEAName = dp.duplicateCheckList1(dp.getColumnValue(Input.MetaDataEAName));
+		expectedDocFileType = dp.duplicateCheckList1(dp.getColumnValue(Input.docFileType));
+		expectedEAAdress = dp.duplicateCheckList1(dp.getColumnValue("EmailAuthorAddress"));
+		driver.getWebDriver().get(Input.url + "Search/Searches");
 		ss.bulkFolderWithOutHitADD(folderName);
 		lp.logout();
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		securityPage.AddSecurityGroup(securityGrpName);
 		ss.basicContentSearch(Input.TallySearch);
-		hitsCount=Integer.parseInt(ss.verifyPureHitsCount());
+		hitsCount = Integer.parseInt(ss.verifyPureHitsCount());
 		ss.bulkRelease(securityGrpName);
 		bc.stepInfo("Created a security group" + securityGrpName + "Bulk Realese is done");
 		lp.logout();
 		lp.quitBrowser();  
 
 	}
+
 /**
  * @author Jayanthi.ganesan
  * @throws InterruptedException
@@ -485,6 +499,73 @@ public class Tally_Regression1 {
 				}
 				bc.selectproject();
 			}
+			softAssertion.assertAll();
+		}
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 13)
+		public void verifySubTally_docview(String username, String password, String role) throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56213");
+			bc.stepInfo("To verify Admin/RMU can view all the documents tallied in a doc view (SubTally)");
+			String[][] subTally = { { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" },
+					{ "EmailAuthorName", "CustodianName", "DocFileType", "EmailAuthorAddress" },
+					{ "DocFileType", "EmailAuthorName", "EmailAuthorAddress", "CustodianName" },
+					{ "EmailAuthorAddress", "CustodianName", "DocFileType", "EmailAuthorName" } };
+			String[] expectedMetaData = { expectedCusName, expectedEAName, expectedDocFileType, expectedEAAdress };
+			lp.loginToSightLine(username, password);
+			String[] sourceNames = new String[4];
+			if (role == "RMU") {
+				sourceNames = sourceName_RMU;
+			}
+			if (role == "PA") {
+				sourceNames = sourceName_PA;
+			}
+			bc.stepInfo("Logged in as " + role);
+			TallyPage tp = new TallyPage(driver);
+			SoftAssert softAssertion = new SoftAssert();
+			tp.navigateTo_Tallypage();
+			//iterating this for loop to change the source for every iteration of loop
+			for (int k = 0; k < expectedMetaData.length; k++) {
+				//iterating this for loop to change the tally by metadata value  for every iteration of loop
+				for (int i = 0; i < subTally.length; i++) {
+					String metadataTally = subTally[i][0];
+					//iterating this for loop to change thesub- tally by metadata value for every iteration of loop
+					for (int j = 1; j < subTally[i].length; j++) {
+						bc.stepInfo(
+								"**To Verify View in doc view after Sub Tally Report Table generated -- if Tally By Metadata as "
+										+ metadataTally + " and Sub Tally By subMetaData as-" + subTally[i][j] + "**");
+
+						tp.sourceSelectionUsers(role, sourceNames, k);
+						tp.selectTallyByMetaDataField(metadataTally);
+						tp.validateMetaDataFieldName(metadataTally);
+						String metadataBarchartTally=tp.verifyTallyChartMetadata();
+						if ((!sourceNames[k].equalsIgnoreCase(Input.projectName))||(!sourceNames[k].equalsIgnoreCase(Input.securityGroup)) ){
+							softAssertion.assertEquals(expectedMetaData[i],metadataBarchartTally.toLowerCase());
+						}
+						tp.tallyActions();
+						bc.waitTime(2);
+						tp.getTally_actionSubTally().Click();
+						driver.waitForPageToBeReady();
+						tp.selectMetaData_SubTally(subTally[i][j]);
+						int subTallyDocCount=tp.getDocCountSubTally();
+						bc.stepInfo("Doc Count selected in subtally to view in doc view--"+subTallyDocCount);
+						tp.subTallyActions();
+						tp.SubTally_ViewInDocView();
+						driver.waitForPageToBeReady();
+						AssignmentsPage ap = new AssignmentsPage(driver);
+						int ActualCount = ap.docCountViewinDocView();
+						//Validating the doc ocunt selected from sub taly table
+						//with doc count in doc view page
+						softAssertion.assertEquals(subTallyDocCount, ActualCount);
+						this.driver.getWebDriver().get(Input.url + "Report/Tally");
+					}
+					
+				}
+			}
+
 			softAssertion.assertAll();
 		}
 
