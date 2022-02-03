@@ -4847,7 +4847,7 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
 
-		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		baseClass.stepInfo("Step 1:Search and Go to docView");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionSearch.ViewInDocView();
@@ -4875,7 +4875,7 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Step 1: Login As Reviewer");
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
-		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		baseClass.stepInfo("Step 1:Search and Go to docView");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionSearch.ViewInDocView();
