@@ -2887,6 +2887,10 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
 	}
 
+	public Element getDocView_AnalyticsPanel_FamilyMemberWholeTabel() {
+		return driver.FindElementById("family1");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
