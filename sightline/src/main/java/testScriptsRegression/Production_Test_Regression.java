@@ -4085,6 +4085,103 @@ public class Production_Test_Regression {
 				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-48095
+				 * @Description: To verify that Rotate 90 degrees clockwise page is rotated before the branding is applied
+				 */
+				@Test(groups = { "regression" }, priority = 67)
+				public void verify90DegreeRotationbeforeBrandingApply() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48095 -Production Sprint 11");
+				base.stepInfo("To verify that Rotate 90 degrees clockwise page is rotated before the branding is applied");
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearchForTwoItems("921ID00000169", "921ID00000171");
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+
+				//Verify archive status on Grid view
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSectionRotate90DegreeClockWise(tagname);
+				page.navigateToNextSection();
+				page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,beginningBates);
+				base.passedStep("verified that Rotate 90 degrees clockwise page is rotated before the branding is applied");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				base.stepInfo("deleting created tags and folders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-46905
+				 * @Description: Verify that production should be generated successfully for audio files
+				 */
+				@Test(groups = { "regression" }, priority = 68)
+				public void verifyAudiofileGenaratedSuccessfully() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-46905 -Production Sprint 11");
+				base.stepInfo("Verify that production should be generated successfully for audio files");
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				//tagname = "Tag" + Utility.dynamicNameAppender();
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				//tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.SearchMetaData("AudioPlayerReady", "1");
+				sessionSearch.bulkFolderExisting(foldername);
+				//sessionSearch.bulkTagExisting(tagname);
+
+				//Verify archive status on Grid view
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.SelectMP3FileAndVerifyLstFile();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPageAndPassingText(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopupWithoutDownload();
+				base.passedStep("Verified that production should be generated successfully for audio files");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				base.stepInfo("deleting created tags and folders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				}
+				
 				
 	
 	@AfterMethod(alwaysRun = true)
