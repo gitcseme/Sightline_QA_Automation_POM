@@ -1198,6 +1198,78 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 
 	}
 	
+	/**
+	 * Author : Vijaya.Rani date: 03/02/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify Sys Admin/Project Admin after impersonating to RMU
+	 * should be able to see all the family members in the analytics panel of the
+	 * main selected document in the Doc view. 'RPMXCON-50812' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	public void verifyAfterImpersonatingSelectDocsViewFamilyMemberTab() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50812");
+		baseClass.stepInfo(
+				"To verify Sys Admin/Project Admin after impersonating to RMU should be able to see all the family members in the analytics panel of the main selected document in the Doc view.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		loginPage = new LoginPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Login as SA
+		baseClass.stepInfo("Step 1: Login As SA");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Admin with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Step 2: Impersonate From SA to RMU");
+		baseClass.impersonateSAtoRMU();
+
+		baseClass.stepInfo("Step 3: Basic Search and Navigate to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignFamilyMemberDocuments();
+
+		baseClass.stepInfo("Step 4: Create new assignment and distribute docs to reviewer");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+
+		baseClass.stepInfo("Step 5:Verify 'Family Member Documents' tab in the analytics panel");
+		baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
+		docView.getDocView_Analytics_FamilyTab().waitAndClick(5);
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_FamilyMemberWholeTabel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("RMU is be able to see all the family member documents in the same family.");
+		loginPage.logout();
+
+		// Login as PA
+		baseClass.stepInfo("Step 1: Login As PA");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Admin with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Step 2: Impersonate From PA to RMU");
+		baseClass.impersonatePAtoRMU();
+		
+		baseClass.stepInfo("Step 3: Select the Assigment go to Docview");
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		
+		baseClass.stepInfo("Step 4:Verify 'Family Member Documents' tab in the analytics panel");
+		baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
+		docView.getDocView_Analytics_FamilyTab().waitAndClick(5);
+
+		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_FamilyMemberWholeTabel().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("RMU is be able to see all the family member documents in the same family.");
+		loginPage.logout();
+
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
