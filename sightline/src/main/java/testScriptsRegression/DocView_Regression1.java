@@ -5410,6 +5410,159 @@ public class DocView_Regression1 {
 				baseClass.stepInfo("Log out");
 				loginPage.logout();
 			}
+			
+			/**
+			 * @author Gopinath
+			 * @testCase Id:51532 Verify that when two different users adds highlighting to the same record successfully
+			 * @description  Verify that when two different users adds highlighting to the same record successfully
+			 * @throws InterruptedException
+			 * @throws AWTException 
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 42)
+			public void verifyHighlightingOnDifferentTabsOnSameBrowserDifferentUsers() throws InterruptedException, AWTException {
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51532 sprint 11");
+				baseClass.stepInfo("###  Verify that when two different users adds highlighting to the same record successfully ###");
+				DocViewPage docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				String currentUrl = driver.getUrl();
+				
+				DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
+				
+				baseClass.stepInfo("Opening second tab");
+				docVIewMetaData.openDuplicateTabOfAlreadyOpenedTab();
+				
+				baseClass.stepInfo("Switching to second tab");
+				String parentWindowHandle = reusableDocView.switchTochildWindow();
+				String childWindowHandle = driver.getWebDriver().getWindowHandle();
+				
+				baseClass.stepInfo("Getting : "+currentUrl+" url in second tab");
+				driver.getWebDriver().get(currentUrl);
+				
+				baseClass.impersonateRMUtoReviewer();
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Perform this page annotation");
+				docView.performNonAudioAnnotation();
+				
+				baseClass.stepInfo("Get annotation count");
+				int previousAnnotationCount = docView.getAppiedAnnotationCount();
+				
+				baseClass.stepInfo("Switch to parent window");
+				driver.switchTo().window(parentWindowHandle);
+				
+				baseClass.stepInfo("Click on redaction icon");
+				docView.redactionIcon().Click();
+				
+				baseClass.stepInfo("Verify Disable Remark Warning Message");
+				docView.verifyDisableAnnotationWarningMessageAndSubMenu();
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Verify annotation is added to document.");
+				docView.verifyAnnotationAddedToDocument(previousAnnotationCount);
+				
+				baseClass.stepInfo("Switch to child window");
+				driver.switchTo().window(childWindowHandle);
+				
+				baseClass.stepInfo("Verify annotation is added to document.");
+				docView.verifyAddedAnnotationToDocument(previousAnnotationCount);
+				
+				baseClass.stepInfo("Switch to parent window from child window");
+				reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+				
+				baseClass.stepInfo("Log out");
+				loginPage.logout();
+			}
+			
+			/**
+			 * @author Gopinath
+			 * @testCase Id:51533 Verify that when two different users edits highlighting to the same record successfully.
+			 * @description Verify that when two different users edits highlighting to the same record successfully.
+			 * @throws InterruptedException
+			 * @throws AWTException 
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 43)
+			public void verifyEditHighlightingOnDifferentTabsOnSameBrowserDifferentUsers() throws InterruptedException, AWTException {
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51533  sprint 11");
+				baseClass.stepInfo("### Verify that when two different users edits highlighting to the same record successfully ###");
+				DocViewPage docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				String currentUrl = driver.getUrl();
+				
+				DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
+				
+				baseClass.stepInfo("Opening second tab");
+				docVIewMetaData.openDuplicateTabOfAlreadyOpenedTab();
+				
+				baseClass.stepInfo("Switching to second tab");
+				String parentWindowHandle = reusableDocView.switchTochildWindow();
+				
+				baseClass.stepInfo("Getting : "+currentUrl+" url in second tab");
+				driver.getWebDriver().get(currentUrl);
+				
+				baseClass.impersonateRMUtoReviewer();
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Perform this page annotation");
+				docView.performNonAudioAnnotation();
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Edit Annotation Layer Of Current Document");
+				docView.editAnnotationLayer();
+				
+				baseClass.stepInfo("Get annotation count");
+				int previousAnnotationCount = docView.getAppiedAnnotationCount();
+				
+				baseClass.stepInfo("Switch to parent window from child window");
+				reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+				
+				baseClass.stepInfo("Click on redaction icon");
+				docView.redactionIcon().Click();
+				
+				baseClass.stepInfo("Verify Disable Remark Warning Message");
+				docView.verifyDisableAnnotationWarningMessageAndSubMenu();
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Verify annotation is added to document.");
+				docView.verifyAddedAnnotationToDocument(previousAnnotationCount);
+				
+				baseClass.stepInfo("Log out");
+				loginPage.logout();
+			}
+			
 	     @AfterMethod(alwaysRun = true)
 		 public void takeScreenShot(ITestResult result) {
 	 	 if(ITestResult.FAILURE==result.getStatus()){
@@ -5428,7 +5581,7 @@ public class DocView_Regression1 {
 	     @AfterClass(alwaysRun = true)
 			public void close() {
 				try {
-					loginPage.quitBrowser();
+				//	loginPage.quitBrowser();
 				} finally {
 					loginPage.closeBrowser();
 					LoginPage.clearBrowserCache();
