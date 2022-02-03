@@ -263,6 +263,8 @@ public class Input {
 	public static String UniCodeDocId;
 	public static String TiffDocId;
 	public static String IconOriginalColour;
+	public static String DocIdWithHiddenContent;
+	public static String TextHidden;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -879,6 +881,8 @@ public class Input {
 		docIdKeyWordTest = testData.getDocIdKeyWordTest();
 		keyWordHexCode = testData.getKeyWordHexCode();
 		IconOriginalColour = testData.getIconOriginalColour();
+		DocIdWithHiddenContent = testData.getDocIdWithHiddenContent();
+		TextHidden = testData.getTextHidden();
 		// Added by Gopinath - 16/11/2021
 		signDocumentId = testData.getSignDocumentId();
 		technicalIssue = testData.getTechnicalIssue();

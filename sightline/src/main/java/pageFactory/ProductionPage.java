@@ -2504,10 +2504,14 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//input[@id='chkIsTIFFSelected']");
 	}
 
-	
 	public Element getclkSelectTag(int i) {
 		return driver.FindElementByXPath("//button[@id='btnTIFFPHSelectTags_"+ i +"']");
 	}
+	
+	public Element getRotationDropDown() {
+		return driver.FindElementByXPath("//select[@id='dldPageRotatePreference']");
+	}
+	
 
 	public ProductionPage(Driver driver) {
 
@@ -16886,89 +16890,75 @@ public class ProductionPage {
 		base.stepInfo("Navigate to next page");
   }
 
+
 	/**
 	* @author Aathith.Senthilkumar
 	* @Description :Natively placeholder selecting tags Type in different Native docs
 	*/
-	public void fillingTIFFSectionwithNativelyPlaceholderWithTagTypeAndTags(String tagname, String tagname1) throws InterruptedException {
+	public void fillingTIFFSectionwithNativelyPlaceholderWithTagTypeAndTags(String tagname, String tagname1)
+			throws InterruptedException {
 
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
 
+		driver.scrollingToBottomofAPage();
 
-	base.waitForElement(getTIFFChkBox());
-	getTIFFChkBox().Click();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
 
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
 
+		// disabling enable for priviledged docs
 
-	driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
 
+		// clicking enable for natively placeholder
+		base.waitForElement(getTiff_NativeDoc());
+		getTiff_NativeDoc().ScrollTo();
+		clickElementNthtime(getTiff_NativeDoc(), 3);
 
+		base.waitForElement(getclkSelectTag());
+		getclkSelectTag().ScrollTo();
+		getclkSelectTag().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPriveldged_TagTree(Input.tagNamePrev));
+		getPriveldged_TagTree(Input.tagNamePrev).waitAndClick(10);
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(Input.tagNamePrev);
 
-	base.waitForElement(getTIFFTab());
-	getTIFFTab().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getclkSelectTag(1));
+		getclkSelectTag(1).ScrollTo();
+		getclkSelectTag(1).Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPriveldged_TagTree(tagname));
+		getPriveldged_TagTree(tagname).waitAndClick(10);
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(tagname);
 
+		driver.waitForPageToBeReady();
+		base.waitForElement(getclkSelectTag(2));
+		getclkSelectTag(2).ScrollTo();
+		getclkSelectTag(2).Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPriveldged_TagTree(tagname1));
+		getPriveldged_TagTree(tagname1).waitAndClick(10);
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(tagname1);
 
-
-	getTIFF_EnableforPrivilegedDocs().ScrollTo();
-
-
-
-	// disabling enable for priviledged docs
-
-
-
-	base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-	getTIFF_EnableforPrivilegedDocs().Enabled();
-	getTIFF_EnableforPrivilegedDocs().Click();
-
-
-
-	// clicking enable for natively placeholder
-	base.waitForElement(getTiff_NativeDoc());
-	getTiff_NativeDoc().ScrollTo();
-	clickElementNthtime(getTiff_NativeDoc(), 3);
-
-	base.waitForElement(getclkSelectTag());
-	getclkSelectTag().ScrollTo();
-	getclkSelectTag().Click();
-	driver.waitForPageToBeReady();
-	base.waitForElement(getPriveldged_TagTree(Input.tagNamePrev));
-	getPriveldged_TagTree(Input.tagNamePrev).waitAndClick(10);
-	base.waitForElement(getClkSelect());
-	getClkSelect().Click();
-	base.waitForElement(getNativeDocsPlaceholder());
-	getNativeDocsPlaceholder().SendKeys(Input.tagNamePrev);
-
-	driver.waitForPageToBeReady();
-	base.waitForElement(getclkSelectTag(1));
-	getclkSelectTag(1).ScrollTo();
-	getclkSelectTag(1).Click();
-	driver.waitForPageToBeReady();
-	base.waitForElement(getPriveldged_TagTree(tagname));
-	getPriveldged_TagTree(tagname).waitAndClick(10);
-	base.waitForElement(getClkSelect());
-	getClkSelect().Click();
-	base.waitForElement(getNativeDocsPlaceholder());
-	getNativeDocsPlaceholder().SendKeys(tagname);
-
-	driver.waitForPageToBeReady();
-	base.waitForElement(getclkSelectTag(2));
-	getclkSelectTag(2).ScrollTo();
-	getclkSelectTag(2).Click();
-	driver.waitForPageToBeReady();
-	base.waitForElement(getPriveldged_TagTree(tagname1));
-	getPriveldged_TagTree(tagname1).waitAndClick(10);
-	base.waitForElement(getClkSelect());
-	getClkSelect().Click();
-	base.waitForElement(getNativeDocsPlaceholder());
-	getNativeDocsPlaceholder().SendKeys(tagname1);
-
-	base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting tags and tag type");
-
-
-
+		base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting tags and tag type");
 
 	}
 	
+
 	/**
 	 * @Author Brundha
 	 *  Description:Verifying Docs w/ No Master Date retained on markcomplete
@@ -17037,73 +17027,136 @@ public class ProductionPage {
 		num1 = getRandomNumber(1);
 		gettxtBeginningBatesIDMinNumLength().SendKeys(num1);
 		base.stepInfo("Numbering and sorting page is filled without checked 'Family members together' checkbox");
-}
-
-	
-	/**
-	 *   @author Aathith.Senthilkumar
-	 * @Description :Natively placeholder selecting tags Type in different Native docs
-	 */
-	public void fillingTIFFSectionwithNativelyPlaceholderWithTagTypeAndTags(String tagname, String tagname1) throws InterruptedException {
-
-		base.waitForElement(getTIFFChkBox());
-		getTIFFChkBox().Click();
-
-		driver.scrollingToBottomofAPage();
-
-		base.waitForElement(getTIFFTab());
-		getTIFFTab().Click();
-
-		getTIFF_EnableforPrivilegedDocs().ScrollTo();
-
-		// disabling enable for priviledged docs
-
-		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-		getTIFF_EnableforPrivilegedDocs().Enabled();
-		getTIFF_EnableforPrivilegedDocs().Click();
-
-		// clicking enable for natively placeholder
-		base.waitForElement(getTiff_NativeDoc());
-		getTiff_NativeDoc().ScrollTo();
-		clickElementNthtime(getTiff_NativeDoc(), 3);
-		
-		base.waitForElement(getclkSelectTag());
-		getclkSelectTag().ScrollTo();
-		getclkSelectTag().Click();
-		driver.waitForPageToBeReady();
-		base.waitForElement(getPriveldged_TagTree(Input.tagNamePrev));
-		getPriveldged_TagTree(Input.tagNamePrev).waitAndClick(10);
-		base.waitForElement(getClkSelect());
-		getClkSelect().Click();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(Input.tagNamePrev);
-		
-		driver.waitForPageToBeReady();
-		base.waitForElement(getclkSelectTag(1));
-		getclkSelectTag(1).ScrollTo();
-		getclkSelectTag(1).Click();
-		driver.waitForPageToBeReady();
-		base.waitForElement(getPriveldged_TagTree(tagname));
-		getPriveldged_TagTree(tagname).waitAndClick(10);
-		base.waitForElement(getClkSelect());
-		getClkSelect().Click();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(tagname);
-		
-		driver.waitForPageToBeReady();
-		base.waitForElement(getclkSelectTag(2));
-		getclkSelectTag(2).ScrollTo();
-		getclkSelectTag(2).Click();
-		driver.waitForPageToBeReady();
-		base.waitForElement(getPriveldged_TagTree(tagname1));
-		getPriveldged_TagTree(tagname1).waitAndClick(10);
-		base.waitForElement(getClkSelect());
-		getClkSelect().Click();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(tagname1);
-		
-		base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting tags and tag type");
-
 	}
+	/**
+	 * @throws InterruptedException
+	 * @Author Aathith
+	 */
+	public void fillingGeneratePageWithContinueGenerationPopupWithoutDownload() throws InterruptedException {
+
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
+
+		base.waitForElement(getbtnProductionGenerate());
+		getbtnProductionGenerate().waitAndClick(10);
+
+		getbtnContinueGeneration().isElementAvailable(150);
+		if (getbtnContinueGeneration().isDisplayed()) {
+			base.waitForElement(getbtnContinueGeneration());
+			getbtnContinueGeneration().waitAndClick(10);
+		}
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+			}
+		}), Input.wait120);
+		String actualText = getStatusSuccessTxt().getText();
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+
+		getConfirmProductionCommit().isElementAvailable(150);
+
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(2000);
+		getConfirmProductionCommit().waitAndClick(10);
+
+		String PDocCount = getProductionDocCount().getText();
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(1000);
+		System.out.println(PDocCount);
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+		System.out.println(Doc);
+		UtilityLog.info(Doc);
+
+		base.waitForElement(getCopyPath());
+		getCopyPath().waitAndClick(10);
+
+		base.stepInfo("Generate production page is filled");
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void fillingTIFFSectionRotate90DegreeClockWise(String tagname) throws InterruptedException {
+
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+
+			driver.scrollingToBottomofAPage();
+
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			
+			getRotationDropDown().ScrollTo();
+			getRotationDropDown().selectFromDropdown().selectByVisibleText("Rotate 90 degrees clock-wise");
+			base.stepInfo("'Rotate 90 degrees clock-wise' is selected in Tiff");
+
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().ScrollTo();
+			getTIFF_CenterHeaderBranding().waitAndClick(10);
+
+			base.waitForElement(getTIFF_EnterBranding());
+			new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
+			getTIFF_EnterBranding().SendKeys(searchString4);
+
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().isDisplayed();
+
+			base.waitForElement(getPriveldge_SelectTagButton());
+			getPriveldge_SelectTagButton().waitAndClick(5);
+
+			driver.waitForPageToBeReady();
+
+			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+
+			base.waitForElement(getPriveldge_TagTree(tagname));
+			Thread.sleep(5000);
+			getPriveldge_TagTree(tagname).waitAndClick(20);
+
+			base.waitForElement(getPriveldge_TagTree_SelectButton());
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getPriveldge_TextArea());
+			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+			getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+			driver.scrollingToBottomofAPage();
+			base.stepInfo("TIFF section is filled");
+		} catch (InterruptedException e) {
+
+			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+
+			base.waitForElement(getPriveldge_TagTree(tagname));
+			Thread.sleep(5000);
+			getPriveldge_TagTree(tagname).waitAndClick(20);
+
+			base.waitForElement(getPriveldge_TagTree_SelectButton());
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getPriveldge_TextArea());
+			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+			getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+			driver.scrollingToBottomofAPage();
+		}
+	}
+
 	
+
 }

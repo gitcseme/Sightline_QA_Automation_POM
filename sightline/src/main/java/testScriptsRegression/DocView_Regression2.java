@@ -2482,7 +2482,7 @@ public class DocView_Regression2 {
 	 *                     this action
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
 	public void verifyAssignmentProgressBarRefreshApplying() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51278");
 		baseClass.stepInfo(
@@ -2565,6 +2565,135 @@ public class DocView_Regression2 {
 		baseClass.waitTime(1);
 		docView.clickCodeSameAsLast();
 		docViewRedact.verifyAssignmentBarInSelectedDocs(assname);
+	}
+	
+	/**
+	 * @Author : Sai Krishna date: 02/02/2021 Modified date: NA Modified by:
+	 * @Description:Verify assignment progress bar refreshesh after completing the
+	 *                     document on applying coding stamp after selecting code
+	 *                     same as this action
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 42)
+	public void verifyAssignmentProgressBarRefreshApplyingCodingStamp() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51277");
+		baseClass.stepInfo(
+				"Verify assignment progress bar refreshesh after completing the document on applying coding stamp after selecting code same as this action");
+
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String filedText = "Stamp" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("StSearching documents based on search string and Navigate to DocView");
+		sessionsearch.basicContentSearch(searchString);
+		sessionsearch.bulkAssign();
+
+		// create Assignment and distribute doc
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		baseClass.impersonateRMUtoReviewer();
+		driver.waitForPageToBeReady();
+		System.out.println(assname);
+
+		// Assignment selected by reviewer
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		docView.getSelectedDocIdInMiniDocList();
+		baseClass.waitForElement(docView.getDocView_MiniDoc_SelectRow(1));
+		docView.getDocView_MiniDoc_SelectRow(1).waitAndClick(10);
+		docView.stampColourSelection(filedText, Input.stampColour);
+		docView.completeButton();
+		baseClass.waitTime(1);
+		docView.clickCodeSameAsLast();
+		docViewRedact.verifyAssignmentBarInSelectedDocs(assname);
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in using Reviewer account");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.waitForElement(docView.getDocView_MiniDoc_SelectRow(1));
+		docView.getDocView_MiniDoc_SelectRow(1).waitAndClick(10);
+		baseClass.stepInfo("Selected document in minidoclist");
+
+		// click to apply coding in selected doc
+		docView.stampColourSelection(filedText, Input.stampColour);
+		docView.completeButton();
+		baseClass.waitTime(1);
+		docView.clickCodeSameAsLast();
+		docViewRedact.verifyAssignmentBarInSelectedDocs(assname);
+
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51961
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =43)
+	public void verifyDocsWithHiddenProperties(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+		baseClass.stepInfo("Test case Id: RPMXCON-51961");
+		baseClass.stepInfo("Verify that document having any of the field value \"Hidden Properties\" \"ExcelProtectedSheets\" ExcelProtectedWorkbook should display alert message");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.DocIdWithHiddenContent, null);
+		sessionsearch.ViewInDocView();
+	    baseClass.VerifyWarningMessage("The document has the following hidden information that is presented in the Viewer.");
+	}
+	
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51959
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =44)
+	public void verifyHiddenInfoIcon(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+		baseClass.stepInfo("Test case Id: RPMXCON-51959");
+		baseClass.stepInfo("Verify that a Hidden Info icon should not be presented in the action icon section of Doc View if the document being viewed has not any Hidden Content");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.TextHidden);
+		sessionsearch.ViewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.doclistTable(2).Visible() && docViewRedact.doclistTable(2).Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.doclistTable(2).waitAndFind(10);
+		docViewRedact.doclistTable(2).Click();
+		if(docViewRedact.hiddenInfoIcon().isDisplayed() == false) {
+			baseClass.passedStep("Hidden info icon is not visible for document without hidden content");
+		} else {
+			baseClass.failedStep("Hidden info Icon is visible for document with hidden content");
+		}
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.doclistTable(3).Visible() && docViewRedact.doclistTable(3).Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.doclistTable(3).waitAndFind(10);
+		docViewRedact.doclistTable(3).Click();
+		if(docViewRedact.hiddenInfoIcon().isDisplayed() == true) {
+			baseClass.passedStep("Hidden info Icon is visible for document with hidden content");
+		} else {
+			
+			baseClass.passedStep("Hidden info icon is not visible for document with hidden content");
+		}
+
+
 	}
 	
 	@AfterMethod(alwaysRun = true)

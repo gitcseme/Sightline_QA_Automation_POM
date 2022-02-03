@@ -9478,4 +9478,16 @@ public class AssignmentsPage {
 		}
 	}
 
+	/**
+	 * @author Jayanthi.ganesan
+	 * @return
+	 */
+	public int  docCountViewinDocView() {
+		bc.waitForElement(getAssg_DocView_DocCOunt());
+		String resultValue = getAssg_DocView_DocCOunt().getText();
+		ArrayList<String> result = new ArrayList<String>(Arrays.asList(resultValue.split(" ")));
+		int docCount=Integer.parseInt(result.get(1));
+		bc.stepInfo("Doc Count reflected in doc view page");
+		return docCount;
+	}
 }

@@ -5723,7 +5723,7 @@ public class SavedSearch {
 		// Executing and Saving the Different Combinations of Advanced SavedSearch under
 		base.stepInfo(" Different Combinations of Advanced SavedSearch under My Saved Search");
 		Map<String, Integer> purehit = search.advancedSearchWithCombinationsSaveUnderMySearches(Input.searchString1,
-				Input.searchString1, "morning", Input.language, tagName, combinations);
+				Input.searchString1, "morning", Input.language, tagName, combinations, "", "", "");
 		System.out.println(purehit);
 
 		// Sharing the Saved Search with Default Security Group

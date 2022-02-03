@@ -3393,7 +3393,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.CreateFolder(folder, Input.securityGroup);
 
 		// search for folder
-		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.basicContentSearch("yellow");
 		sessionSearch.bulkFolderExisting(folder);
 
 		// create production with DAT,Native,tiff with native placeholder
@@ -3402,7 +3402,7 @@ public class Production_Page_Regression {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+		page.burnRedactionWithRedactionTagInTiffSection(Input.defaultRedactionTag);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
@@ -3431,7 +3431,7 @@ public class Production_Page_Regression {
 	 *                 the doc has at least one of the selected PRIV tags in PRIV
 	 *                 placeholdering for Audio files
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 64)
+	@Test(enabled = false, groups = { " regression" }, priority = 63)
 	public void verifyDATWithPrivilegedCheckboxForAudioFiles() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47888- Production Sprint 11");
@@ -3449,7 +3449,7 @@ public class Production_Page_Regression {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.audioSearch(Input.audioSearchString1,Input.language);
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -3467,14 +3467,21 @@ public class Production_Page_Regression {
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingSelectDocumentUsingTags(tagname);
-/**
+
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+	}
+
+	/**
 	 * @Author Jeevitha
 	 * @Description : To verify that Native should be generated when PRIV
 	 *              placeholdering and Burn Redactions are not enabled [
 	 *              RPMXCON-48377]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 62)
+	@Test(enabled = false, groups = { "regression" }, priority = 64)
 	public void VerifyNativeWithPrivPlaceholder() throws Exception {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3497,7 +3504,7 @@ public class Production_Page_Regression {
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 
-		// create production with DAT,Native,tiff 
+		// create production with DAT,Native,tiff
 		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -3515,17 +3522,18 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
-		// To delete tag and folder
-		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		// Delete Tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.deleteAllTags(tagname);
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:01/28/22 TESTCASE No:RPMXCON-48334
-	 * @Description:To verify that the selected metadata is not displayed in DAT if the doc has at least one of the selected Redaction tags for Audio files
+	 * @Description:To verify that the selected metadata is not displayed in DAT if
+	 *                 the doc has at least one of the selected Redaction tags for
+	 *                 Audio files
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 65)
+	@Test(enabled = false, groups = { " regression" }, priority = 65)
 	public void verifyDATWithRedactionsCheckboxForAudioFiles() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48334- Production Sprint 11");
@@ -3543,7 +3551,7 @@ public class Production_Page_Regression {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.audioSearch(Input.audioSearchString1,Input.language);
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -3566,9 +3574,10 @@ public class Production_Page_Regression {
 		String name = page.getProduction().getText().trim();
 		page.isFileDownloaded(Input.fileDownloadLocation, name);
 
-		// Delete Tag and folder
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
-		tagsAndFolderPage.deleteAllTags(tagname);
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
 
 	/**
@@ -3578,7 +3587,7 @@ public class Production_Page_Regression {
 	 *              based placeholdering is exists in the document. [ RPMXCON-48343]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 63)
+	@Test(enabled = false, groups = { "regression" }, priority = 66)
 	public void verifyTiffWIthTechIssueDocs() throws Exception {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3623,12 +3632,6 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
-		// To delete tag and folder
-		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
-	}
-
 		baseClass.waitTime(4);
 		String name = page.getProduction().getText().trim();
 		page.isFileDownloaded(Input.fileDownloadLocation, name);
@@ -3637,12 +3640,13 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.deleteAllTags(tagname);
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:02/02/22 TESTCASE No:RPMXCON-46893
-	 * @Description:To verify Production Generation for MP3 files Audio (redaction Applied).
+	 * @Description:To verify Production Generation for MP3 files Audio (redaction
+	 *                 Applied).
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 66)
+	@Test(enabled = false, groups = { " regression" }, priority = 66)
 	public void verifyMP3RedactionForProduction() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-46893- Production Sprint 11");
@@ -3660,7 +3664,7 @@ public class Production_Page_Regression {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.audioSearch(Input.audioSearchString1,Input.language);
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		ProductionPage page = new ProductionPage(driver);
@@ -3687,55 +3691,123 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
-	
 
 	/**
 	 * @author Sowndarya.Velraj created on:02/02/22 TESTCASE No:RPMXCON-47904
-	 * @Description:To verify status on the tile of a production on the landing page should show correct production status
+	 * @Description:To verify status on the tile of a production on the landing page
+	 *                 should show correct production status
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 67)
+	@Test(enabled = false, groups = { " regression" }, priority = 67)
 	public void verifyProductionStatusInTileView() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47904- Production Sprint 11");
-		baseClass.stepInfo("To verify status on the tile of a production on the landing page should show correct production status");
+		baseClass.stepInfo(
+				"To verify status on the tile of a production on the landing page should show correct production status");
 		UtilityLog.info(Input.prodPath);
 
 		ProductionPage page = new ProductionPage(driver);
 		baseClass.stepInfo("Checking availability of In progress status production ");
 		page.prodGenerationInProgressStatus();
-		if(page.productionNameInHomePage().Displayed())
-		{
+		if (page.productionNameInHomePage().Displayed()) {
 			baseClass.passedStep("production in In Progress Status Displayed");
-		}
-		else {
+		} else {
 			baseClass.failedStep("production in In Progress Status not Displayed");
 		}
-		
+
 		driver.Navigate().refresh();
-		
+
 		baseClass.stepInfo("Checking availability of Completed status production ");
 		page.prodGenerationInCompletedStatus(productionname);
-		if(page.productionNameInHomePage().Displayed())
-		{
+		if (page.productionNameInHomePage().Displayed()) {
 			baseClass.passedStep("production in Completed Status Displayed");
-		}
-		else {
+		} else {
 			baseClass.failedStep("production in Completed Status not Displayed");
 		}
-		
+
 		driver.Navigate().refresh();
-		
+
 		baseClass.stepInfo("Checking availability of Failed status production ");
 		page.gettxtProdGenerationFailed();
-		if(page.productionNameInHomePage().Displayed())
-		{
+		if (page.productionNameInHomePage().Displayed()) {
 			baseClass.passedStep("production in failed Status Displayed");
-		}
-		else {
+		} else {
 			baseClass.failedStep("production in failed Status not Displayed");
 		}
+
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:02/03/22 TESTCASE No:RPMXCON-48039
+	 * @Description:To Verify Removal of Priv Tag from a Document should get
+	 *                 Produced in Production for Native
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 68)
+	public void verifyPrivilegedTagInNative() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48039- Production Sprint 11");
+		baseClass
+				.stepInfo("To Verify Removal of Priv Tag from a Document should get Produced in Production for Native");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String tagname2 = "tag" + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.createNewTagwithClassification(tagname2, "Technical Issue");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+		baseClass.stepInfo("set of 6 Documents are Bulk Tagged as Privileged tag");
 		
+		sessionSearch.navigateToSessionSearchPageURL();
+		baseClass.selectproject();
+		sessionSearch.basicContentSearch(Input.searchString5);
+		sessionSearch.bulkTagExisting(tagname2);
+		baseClass.stepInfo("set of  Documents are Bulk Tagged as Tevhnical Issue tag");
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPageWithTag(tagname, tagname2);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		// Go To Production Home Page
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		baseClass.waitForElement(page.getProductionFromHomepage(productionname));
+		page.getProductionFromHomepage(productionname).waitAndClick(10);
+		page.getQC_backbutton().waitAndClick(10);
+		for (int i = 0; i < 4; i++) {
+			page.getBckBtn().waitAndClick(10);
 		}
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Navigating back to Document selection page");
+		page.getMarkIncompleteButton().waitAndClick(10);
+		page.fillingDocumentSelectionWithTag(tagname2);
+		baseClass.stepInfo("Removed Tags with native file");
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		baseClass.passedStep("Removed Priv Tag from a Document should get Produced in Production for Native");
+	}
 
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {

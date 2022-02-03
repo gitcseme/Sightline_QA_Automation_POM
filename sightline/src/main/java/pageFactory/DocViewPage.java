@@ -2886,6 +2886,20 @@ public class DocViewPage {
 	public Element getCodingForm_PA() {
 		return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
 	}
+	
+	//Added by Gopinath - 03/02/2022
+	public Element getEditButton() {
+		return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
+	}
+
+	public ElementCollection getHitsNotchOnJplayer() {
+		return driver.FindElementsByXPath("//i[@class='fa fa-caret-down']");
+	}
+
+	public Element getDocView_AnalyticsPanel_FamilyMemberWholeTabel() {
+		return driver.FindElementById("family1");
+	}
+	
 
 	public DocViewPage(Driver driver) {
 
@@ -22748,10 +22762,10 @@ public class DocViewPage {
 
 	}
 
-	
 	/**
 	 * @author Gopinath
-	 * @description this method will verify document in docview loaded in 4 sec after enter doc number
+	 * @description this method will verify document in docview loaded in 4 sec
+	 *              after enter doc number
 	 * @param docNum
 	 */
 	public void verifyDocumentLoadedWithInFourSeconds(String docNum) {
@@ -22781,8 +22795,6 @@ public class DocViewPage {
 
 		}
 	}
-}
-
 
 	/**
 	 * @author Raghuram 01/02/22 NA Modified date: NA Modified by:NA
@@ -22803,5 +22815,46 @@ public class DocViewPage {
 			System.out.println("The given iteration count exceed the Document Count");
 			base.stepInfo("The given iteration count exceed the Document Count");
 		}
+	}
+
+
+	/**
+	 * @author Raghuram 02/03/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description
+	 */
+	public void verifyPersistantDataPresent(String searchInput) {
+		// Validate audio docs eye icon with persistent hits
+		driver.waitForPageToBeReady();
+		getAudioPersistantHitEyeIcon().waitAndClick(10);
+		String audioEyePersistent = getDocView_Audio_Hit().getText().toString();
+		base.compareTextViaContains(audioEyePersistent.toLowerCase(), searchInput,
+				"Persistent hit panel opened and displaying" + audioEyePersistent + "",
+				"Persistent hit panel not displayed");
+
+	
+	/**
+	 * @author Gopinath 
+	 * @Description : this method for verifying weather delete and edit fields are not enabled.
+	 */
+	public void verifyDeleteAndEditFieldsAreNotEnabled() {
+		try {
+			List<WebElement> deleteRmarks = getDeleteRemarks().FindWebElements();
+			if(!deleteRmarks.get(0).isSelected()) {
+				base.passedStep("Delete icon is not displayed and enabled on doc view successfully");
+			}else {
+				base.failedStep("Delete icon is displayed and enabled on doc view");
+			}
+			List<WebElement> pencilsofRemarks = getPencilsofRemarks().FindWebElements();
+			if(!pencilsofRemarks.get(0).isSelected()) {
+				base.passedStep("Edit icon is not displayed and enabled on doc view successfully");
+			}else {
+				base.failedStep("Edit icon is displayed and enabled on doc view");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occued while verifying weather delete and edit fields are not enabled.");
+		}
+
 	}
 }
