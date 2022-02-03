@@ -1474,7 +1474,6 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//*[@id=\"Adv\"]/div/div/button[@class='btn btn-default dropdown-toggle']");
 	}
 
-
 	public ElementCollection getDetailsTable() {
 		return driver.FindElementsByXPath("//table[contains(@id,'taskbasicPureHits')]//th");
 	}
@@ -1500,10 +1499,11 @@ public class SessionSearch {
 		return driver.FindElementByXPath(
 				"//ol[@class='dd-list smart-accordion-default Adv']//div//button[@id='commentsHelper']");
 	}
+
 	public Element getPinnedSearchIcon() {
 		return driver.FindElementByXPath("//span[@title='Un Pin this Search']");
 	}
-	
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -1661,6 +1661,7 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getSaveSearch_SaveButton().Click();
+		driver.waitForPageToBeReady();
 
 		base.VerifySuccessMessage("Saved search saved successfully");
 
@@ -5423,7 +5424,8 @@ public class SessionSearch {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Failed to verify Concept Search when precision is set as default & purehit not displayed ");
+			base.failedStep(
+					"Failed to verify Concept Search when precision is set as default & purehit not displayed ");
 
 		}
 		return pureHit;
@@ -8238,8 +8240,8 @@ public class SessionSearch {
 	 * @author Raghuram.A Date: 11/23/21 Modified date:N/A Modified by: N/A
 	 */
 	public Map<String, Integer> advancedSearchWithCombinationsSaveUnderMySearches(String contentMetadataString,
-			String conceptualString, String audioText, String language, String tabName, String[] combinations)
-			throws InterruptedException {
+			String conceptualString, String audioText, String language, String tabName, String[] combinations,
+			String metaDataType, String metaDataInput, String audioThreshold) throws InterruptedException {
 		Map<String, Integer> pureHitCount = new HashMap<String, Integer>();
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 
@@ -8277,11 +8279,37 @@ public class SessionSearch {
 				advancedSearchConceptual(conceptualString);// Conceptual Search
 				advancedSearchAudio(audioText, language);// Audio Search
 				advancedSearchWorkProduct(tabName);// Work Product Search
+			} else if (flowType.equalsIgnoreCase("Metadata + Audio")) {
+				advMetaDataSearchQueryInsertTest(metaDataType, metaDataInput);
+				advancedSearchAudio(audioText, language);// Audio Search
+				driver.waitForPageToBeReady();
+				setThresholdAudioSearch(audioThreshold);
+			} else if (flowType.equalsIgnoreCase("Audio + Metadata")) {
+				advancedSearchAudio(audioText, language);// Audio Search
+				driver.waitForPageToBeReady();
+				setThresholdAudioSearch(audioThreshold);
+				advMetaDataSearchQueryInsertTest(metaDataType, metaDataInput);
 			}
 			pureHitCount = saveAndCountMapping();
 		}
 
 		return pureHitCount;
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param metaDataField
+	 * @param val1
+	 */
+	public void advMetaDataSearchQueryInsertTest(String metaDataField, String val1) {
+		base.waitForElement(getContentAndMetaDatabtn());
+		getContentAndMetaDatabtn().Click();
+		base.waitForElement(getAdvanceSearch_MetadataBtn());
+		getAdvanceSearch_MetadataBtn().Click();
+		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().Click();
 	}
 
 	/**
@@ -9694,7 +9722,7 @@ public class SessionSearch {
 		UtilityLog.info("performing bulk assign");
 
 	}
-	
+
 	/**
 	 * @author Raghuram.A Date: 1/26/22 Modified date:1/26/21 Modified by: Raghuram
 	 * @param cdName
@@ -9769,7 +9797,7 @@ public class SessionSearch {
 		getMetaDataInserQuery().waitAndClick(5);
 		driver.scrollPageToTop();
 	}
-	
+
 	/**
 	 * @author Mohan 31/01/22 NA Modified date: NA Modified by:NA
 	 * @param metadataDocId
@@ -9805,13 +9833,13 @@ public class SessionSearch {
 		}
 
 	}
+
 	public void ViewInDocListWithOutPureHit() throws InterruptedException {
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-	
+
 		System.out.println("Pure hit block already moved to action panel");
 		UtilityLog.info("Pure hit block already moved to action panel");
-		
 
 		getBulkActionButton().waitAndClick(5);
 		Thread.sleep(2000);
@@ -9842,10 +9870,10 @@ public class SessionSearch {
 	 */
 	public int getCommentsOrRemarksCount_AdvancedSearch(String remarks, String val1) {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		base.waitForElement( getAdvancedSearchLink());
+		base.waitForElement(getAdvancedSearchLink());
 		getAdvancedSearchLink().Click();
-		base.waitForElement(getContentAndMetaDatabtn());		
-		getContentAndMetaDatabtn().Click();	
+		base.waitForElement(getContentAndMetaDatabtn());
+		getContentAndMetaDatabtn().Click();
 		base.waitForElement(getCommentsFieldAndRemarks_AdvacnedSearch());
 		getCommentsFieldAndRemarks_AdvacnedSearch().waitAndClick(5);
 		base.waitForElement(SelectFromDropDown(remarks));
@@ -9856,7 +9884,7 @@ public class SessionSearch {
 		getMetaDataInserQuery().Click();
 		// Click on Search button
 		getQuerySearchButton().Click();
-		// look for warnings, in case of proximity search	
+		// look for warnings, in case of proximity search
 		if (getTallyContinue().isElementAvailable(2)) {
 			getTallyContinue().waitAndClick(10);
 		}
@@ -9873,66 +9901,63 @@ public class SessionSearch {
 
 		return pureHit;
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param operator1
 	 * @param operatorPosition
 	 */
-	public void selectOperator(String operator1,int operatorPosition) {
+	public void selectOperator(String operator1, int operatorPosition) {
 		base.waitForElement(getAs_SelectOperation(operatorPosition));
 		getAs_SelectOperation(operatorPosition).selectFromDropdown().selectByVisibleText(operator1);
-		
+
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
 	public void audioSearch_Combined() {
 		// Audio search
-				base.waitForElement(getAs_Audio());
-				getAs_Audio().waitAndClick(10);
-				base.waitForElement(getAs_AudioLanguage());
-				getAs_AudioLanguage().selectFromDropdown().selectByVisibleText("North American English");
-				// Enter search string
-				driver.scrollingToBottomofAPage();
-				base.waitForElement(getAs_AudioTextBox_CombinationSearch());
-				getAs_AudioTextBox_CombinationSearch().SendKeys(Input.audioSearchString1);
+		base.waitForElement(getAs_Audio());
+		getAs_Audio().waitAndClick(10);
+		base.waitForElement(getAs_AudioLanguage());
+		getAs_AudioLanguage().selectFromDropdown().selectByVisibleText("North American English");
+		// Enter search string
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getAs_AudioTextBox_CombinationSearch());
+		getAs_AudioTextBox_CombinationSearch().SendKeys(Input.audioSearchString1);
 	}
-	
+
 	/**
-	* @Author :Aathith
-	* @Description :Selecting metadata in search
-	*/
-	public void SearchMetaData(String Text,String Value) {
-	// To make sure we are in basic search page
-	driver.getWebDriver().get(Input.url + "Search/Searches");
-	driver.waitForPageToBeReady();
-	base.waitForElement(getBasicSearch_MetadataBtn());
-	getBasicSearch_MetadataBtn().waitAndClick(10);
-	driver.waitForPageToBeReady();
-	base.waitForElement(getSelectMetaData());
-	getSelectMetaData().selectFromDropdown().selectByVisibleText(Text);
-	base.waitForElement(getMetaDataSearchText1());
-	getMetaDataSearchText1().SendKeys(Value);
-	base.waitForElement(getMetaDataInserQuery());
-	getMetaDataInserQuery().waitAndClick(5);
-	// Click on Search button
-	base.waitForElement(getSearchButton());
-	getSearchButton().waitAndClick(5);
-	driver.waitForPageToBeReady();
-	driver.WaitUntil((new Callable<Boolean>() {
-	public Boolean call() {
-	return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
-	}
-	}), Input.wait90);
+	 * @Author :Aathith
+	 * @Description :Selecting metadata in search
+	 */
+	public void SearchMetaData(String Text, String Value) {
+		// To make sure we are in basic search page
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getBasicSearch_MetadataBtn());
+		getBasicSearch_MetadataBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectMetaData());
+		getSelectMetaData().selectFromDropdown().selectByVisibleText(Text);
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(Value);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(5);
+		// Click on Search button
+		base.waitForElement(getSearchButton());
+		getSearchButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
 
-
-
-	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-	System.out.println("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
-	UtilityLog.info("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
-
-
+		int pureHit = Integer.parseInt(getPureHitsCount().getText());
+		System.out.println("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
+		UtilityLog.info("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
 
 	}
 }
-

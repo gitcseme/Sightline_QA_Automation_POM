@@ -2501,4 +2501,18 @@ public class BaseClass {
 		}
 
 	}
+
+	/**
+	 * @author Indium Raghuram Description : Date:02/03/21 Modified date: N/A
+	 *         Modified by: N/A
+	 */
+	public Boolean verifyElementCollectionIsNotEmpty(ElementCollection elementC, String passMsg, String failMsg) {
+		if (elementC.size() > 0) {
+			passedStep(passMsg);
+			return true;
+		} else {
+			failedMessage(failMsg);
+			return false;
+		}
+	}
 }
