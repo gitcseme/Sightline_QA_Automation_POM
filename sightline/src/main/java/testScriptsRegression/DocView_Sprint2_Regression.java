@@ -3861,7 +3861,6 @@ public class DocView_Sprint2_Regression {
 				"User successfully logged into slightline webpage as System Assisent with " + Input.sa1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating SA to Reviewer");
 		baseClass.impersonateSAtoReviewer();
-		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewFamilyMemberDocsInDocViews();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
@@ -3887,7 +3886,6 @@ public class DocView_Sprint2_Regression {
 				"User successfully logged into slightline webpage as project Assisent with " + Input.pa1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
 		baseClass.impersonatePAtoReviewer();
-		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewFamilyMemberDocsInDocViews();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
@@ -3930,7 +3928,6 @@ public class DocView_Sprint2_Regression {
 				"User successfully logged into slightline webpage as System Assisent with " + Input.sa1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
 		baseClass.impersonateSAtoRMU();
-		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignThreadedDocs();
 		baseClass.stepInfo("Search with text input for docs completed");
@@ -3949,7 +3946,6 @@ public class DocView_Sprint2_Regression {
 				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
 		baseClass.impersonatePAtoReviewer();
-		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
@@ -3963,7 +3959,6 @@ public class DocView_Sprint2_Regression {
 				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
 		baseClass.impersonatePAtoRMU();
-		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		assignmentsPage.selectAssignmentToViewinDocview(assname);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
@@ -3977,7 +3972,6 @@ public class DocView_Sprint2_Regression {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
-		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
@@ -4280,7 +4274,6 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Step 2: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
 
-		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		// edit coding form
@@ -4307,7 +4300,6 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
 
-		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		// edit coding form
@@ -4430,7 +4422,6 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Step 2: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
 
-		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		// perform MiniDocList CodeSame As
@@ -4459,7 +4450,6 @@ public class DocView_Sprint2_Regression {
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
 
-		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		// perform MiniDocList CodeSame As
@@ -4518,7 +4508,6 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Step 2: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
 
-		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		reusableDocView.stampColourSelection(Input.searchString2, Input.stampColour);
@@ -4598,7 +4587,6 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Step 2: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
 
-		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		docView.completeButton();
@@ -4637,7 +4625,6 @@ public class DocView_Sprint2_Regression {
 			baseClass.failedStep("Doc not completed");
 		}
 
-		baseClass.stepInfo("Step 5: Search the documents with search term from basic search and go to doc view");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
 		for (int i = 4; i <= 5; i++) {
@@ -4675,9 +4662,8 @@ public class DocView_Sprint2_Regression {
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
 
-		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
-		assignmentsPage.SelectAssignmentByReviewer(assname);
 
+		assignmentsPage.SelectAssignmentByReviewer(assname);
 		docView.completeButton();
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
@@ -4759,7 +4745,6 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Step 2: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
 
-		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.waitForElement(docView.getDocument_CommentsTextBox());
 		docView.getDocument_CommentsTextBox().SendKeys(docTextbox);
@@ -4810,7 +4795,6 @@ public class DocView_Sprint2_Regression {
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
 
-		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.waitForElement(docView.getDocument_CommentsTextBox());
 		docView.getDocument_CommentsTextBox().SendKeys(docTextbox);
@@ -4838,6 +4822,82 @@ public class DocView_Sprint2_Regression {
 
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 03/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that user should be able to edit an applied redaction and change the redaction 
+	 * tag that was applied automatically. 'RPMXCON-46958' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 72)
+	public void verifyEditAndApplyRedactionTag() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-46958");
+		baseClass.stepInfo(
+				"Verify that user should be able to edit an applied redaction and change the redaction tag that was applied automatically.");
+		baseClass = new BaseClass(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		docView = new DocViewPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+	
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionSearch.ViewInDocView();
+		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
+		docViewRedact.selectingRectangleRedactionTag();
+		sessionSearch.ViewInDocView();
+		docView.redactionIcon().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.rectangleClick().Visible() && docViewRedact.rectangleClick().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.rectangleClick().waitAndClick(8);
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).click();
+		actions.build().perform();
+		actions.moveToElement(docViewRedact.saveClick().getWebElement());
+		actions.click();
+		actions.build().perform();
+		baseClass.VerifySuccessMessage("Redaction tags saved successfully");
+		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Saved successfully");
+		loginPage.logout();
+
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionSearch.ViewInDocView();
+		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
+		docViewRedact.selectingRectangleRedactionTag();
+		sessionSearch.ViewInDocView();
+		docView.redactionIcon().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.rectangleClick().Visible() && docViewRedact.rectangleClick().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.rectangleClick().waitAndClick(8);
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).click();
+		actions.build().perform();
+		actions.moveToElement(docViewRedact.saveClick().getWebElement());
+		actions.click();
+		actions.build().perform();
+		baseClass.VerifySuccessMessage("Redaction tags saved successfully");
+		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Saved successfully");
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
