@@ -5260,6 +5260,156 @@ public class DocView_Regression1 {
 				docView.verifyDocumentLoadedWithInFourSeconds(docNum);
 				
 			}
+			/**
+			 * @author Gopinath
+			 * @testCase Id:51538 Verify that when two different users adds reviewer remarks to the same record successfully, and confirm that the XML nodes are all properly created/reflected.
+			 * @description Verify that when two different users adds reviewer remarks to the same record successfully, and confirm that the XML nodes are all properly created/reflected.
+			 * @throws InterruptedException
+			 * @throws AWTException 
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 40)
+			public void verifyRemarkOnDifferentTabsOnSameBrowserDifferentUsers() throws InterruptedException, AWTException {
+				String remark=Input.randomText+Utility.dynamicNameAppender();
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51538 sprint 11");
+				baseClass.stepInfo("### Verify that when two different users adds reviewer remarks to the same record successfully, and confirm that the XML nodes are all properly created/reflected ###");
+				DocViewPage docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				String currentUrl = driver.getUrl();
+				
+				DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
+				
+				baseClass.stepInfo("Opening second tab");
+				docVIewMetaData.openDuplicateTabOfAlreadyOpenedTab();
+				
+				baseClass.stepInfo("Switching to second tab");
+				String parentWindowHandle = reusableDocView.switchTochildWindow();
+				
+				baseClass.stepInfo("Getting : "+currentUrl+" url in second tab");
+				driver.getWebDriver().get(currentUrl);
+				
+				baseClass.impersonateRMUtoReviewer();
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Adding remark to document");
+				docView.addRemarkToNonAudioDocument(56,134,remark);
+				
+				baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
+				docView.verifyRemarkIsAdded(remark);
+				
+				baseClass.stepInfo("Switch to parent window from child window");
+				reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+				
+				baseClass.stepInfo("Click on redaction icon");
+				docView.redactionIcon().Click();
+				
+				baseClass.stepInfo("Verify Disable Remark Warning Message");
+				docView.verifyDisableRemarkWarningMessage();
+				
+				baseClass.stepInfo("Verify weather delete and edit fields are not enabled.");
+				docView.verifyDeleteAndEditFieldsAreNotEnabled();
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
+				docView.verifyRemarkIsAdded(remark);
+					
+				baseClass.stepInfo("Log out");
+				loginPage.logout();
+			}
+			
+			/**
+			 * @author Gopinath
+			 * @testCase Id:51539 Verify that when two different users edits reviewer remarks to the same record successfully.
+			 * @description Verify that when two different users edits reviewer remarks to the same record successfully.
+			 * @throws InterruptedException
+			 * @throws AWTException 
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 41)
+			public void verifyEditRemarkOnDifferentTabsOnSameBrowserDifferentUsers() throws InterruptedException, AWTException {
+				String remark=Input.randomText+Utility.dynamicNameAppender();
+				String editRemark=Input.randomText+Utility.dynamicNameAppender();
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51539 sprint 11");
+				baseClass.stepInfo("### Verify that when two different users edits reviewer remarks to the same record successfully. ###");
+				DocViewPage docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				String currentUrl = driver.getUrl();
+				
+				DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
+				
+				baseClass.stepInfo("Opening second tab");
+				docVIewMetaData.openDuplicateTabOfAlreadyOpenedTab();
+				
+				baseClass.stepInfo("Switching to second tab");
+				String parentWindowHandle = reusableDocView.switchTochildWindow();
+				
+				baseClass.stepInfo("Getting : "+currentUrl+" url in second tab");
+				driver.getWebDriver().get(currentUrl);
+				
+				baseClass.impersonateRMUtoReviewer();
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Adding remark to document");
+				docView.addRemarkToNonAudioDocument(56,134,remark);
+				
+				baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
+				docView.verifyRemarkIsAdded(remark);
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Edit already added remark");
+				docView.editRemark(editRemark);
+				
+				baseClass.stepInfo("Switch to parent window from child window");
+				reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+				
+				baseClass.stepInfo("Click on redaction icon");
+				docView.redactionIcon().Click();
+				
+				baseClass.stepInfo("Verify Disable Remark Warning Message");
+				docView.verifyDisableRemarkWarningMessage();
+				
+				baseClass.stepInfo("Verify weather delete and edit fields are not enabled.");
+				docView.verifyDeleteAndEditFieldsAreNotEnabled();
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("verify visibility of edited remark after reload the document in first tab");
+				docView.verifyRemarkIsAdded(editRemark);
+					
+				baseClass.stepInfo("Log out");
+				loginPage.logout();
+			}
 	     @AfterMethod(alwaysRun = true)
 		 public void takeScreenShot(ITestResult result) {
 	 	 if(ITestResult.FAILURE==result.getStatus()){

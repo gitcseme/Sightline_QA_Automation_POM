@@ -2886,6 +2886,11 @@ public class DocViewPage {
 	public Element getCodingForm_PA() {
 		return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
 	}
+	
+	//Added by Gopinath - 03/02/2022
+	public Element getEditButton() {
+		return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
+	}
 
 	public Element getDocView_AnalyticsPanel_FamilyMemberWholeTabel() {
 		return driver.FindElementById("family1");
@@ -22806,6 +22811,30 @@ public class DocViewPage {
 		} else {
 			System.out.println("The given iteration count exceed the Document Count");
 			base.stepInfo("The given iteration count exceed the Document Count");
+		}
+	}
+	
+	/**
+	 * @author Gopinath 
+	 * @Description : this method for verifying weather delete and edit fields are not enabled.
+	 */
+	public void verifyDeleteAndEditFieldsAreNotEnabled() {
+		try {
+			List<WebElement> deleteRmarks = getDeleteRemarks().FindWebElements();
+			if(!deleteRmarks.get(0).isSelected()) {
+				base.passedStep("Delete icon is not displayed and enabled on doc view successfully");
+			}else {
+				base.failedStep("Delete icon is displayed and enabled on doc view");
+			}
+			List<WebElement> pencilsofRemarks = getPencilsofRemarks().FindWebElements();
+			if(!pencilsofRemarks.get(0).isSelected()) {
+				base.passedStep("Edit icon is not displayed and enabled on doc view successfully");
+			}else {
+				base.failedStep("Edit icon is displayed and enabled on doc view");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occued while verifying weather delete and edit fields are not enabled.");
 		}
 	}
 }
