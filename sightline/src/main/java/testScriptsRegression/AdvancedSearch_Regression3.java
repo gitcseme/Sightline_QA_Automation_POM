@@ -371,7 +371,7 @@ public void verifySearchResultForComment(String username, String password) throw
 		search.ViewInDocView();
 
 		// Apply comments to document
-		docview.addCommentAndSave(docComment, true, count);
+		docview.addCommentAndSave(docComment, true, count,true);
 		baseClass.selectproject();
 	}
 
@@ -412,8 +412,7 @@ public void verifySearchResultForComment(String username, String password) throw
 	@Test( groups = { "regression" }, priority = 2, enabled = true)
 	public void verifyResubmit_WPAndAudio() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48766");
-		baseClass.stepInfo("Verify that - Application returns consistent search result when user resubmits a 
-				   saved search(WorkProduct Block -Security Group and Audio Block) multiple times(twice)");
+		baseClass.stepInfo("Verify that - Application returns consistent search result when user resubmits a  saved search(WorkProduct Block -Security Group and Audio Block) multiple times(twice)");
 		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA" );

@@ -22832,7 +22832,7 @@ public class DocViewPage {
 				"Persistent hit panel opened and displaying" + audioEyePersistent + "",
 				"Persistent hit panel not displayed");
 
-	
+	}
 	/**
 	 * @author Gopinath 
 	 * @Description : this method for verifying weather delete and edit fields are not enabled.
