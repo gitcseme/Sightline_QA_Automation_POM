@@ -2085,7 +2085,7 @@ public class BaseClass {
 	}
 
 	/**
-	 * @author Jayanthi.ganesan
+	 * @author Jayanthi.ganesan Modified by jayanthi-3/2/22
 	 * @param element
 	 * @param text
 	 * @return
@@ -2100,7 +2100,7 @@ public class BaseClass {
 				String elementName = wenElementNames.getText().trim();
 				System.out.println(elementName);
 				System.out.println(text);
-				if (text.equals(elementName)) {
+				if (text.equalsIgnoreCase(elementName)) {
 					break;
 				} else {
 					k++;

@@ -5,9 +5,11 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
@@ -1131,6 +1133,25 @@ public class DocListPage {
 	}
 	public Element getFilterHeaderExpandIcon() {
 		return driver.FindElementByXPath("//a[@id='lnk_collapsID']");
+	}
+	//added by jayanthi
+	public ElementCollection getAvailableRemoveButtonCount() {
+		return driver.FindElementsByXPath("//a[text()='Remove']");
+	}
+	public Element getRemoveBtn() {
+		return driver.FindElementByXPath("//a[text()='Remove']");
+	}
+	public Element getSelectAvailMetadata(String eleValue) {
+		return driver.FindElementByXPath("//li//Strong[text()='"+eleValue+"']");
+	}
+	
+	public ElementCollection getTableHeaders() {
+		return driver.FindElementsByXPath("//table[@id='dtDocList']//tr//th");
+	}
+	
+	public ElementCollection getTableRowText(int i) {
+		return driver.FindElementsByXPath("//table[@id='dtDocList']//tbody//tr/td["+i+"]");
+		
 	}
 
 	public DocListPage(Driver driver) {
@@ -4206,6 +4227,93 @@ public class DocListPage {
 			base.failedStep("Exception occured while verifying doclist headers expand collapse." + e.getMessage());
 		}
 
+	}
+	
+	public String duplicateCheckList1(List<String> listToVerify) {
+		String result = "Selected fields displayed more than once";
+		Set<String> hash_Set = new HashSet<String>();
+		List<String> result_List = new ArrayList<>();
+		for (String fieldNames : listToVerify) {
+			if (hash_Set.add(fieldNames)) {
+				System.out.println(fieldNames + " : Selected field displayed more than once");
+				result_List.add(fieldNames);
+			} else {
+
+			}
+		}
+		System.out.println(result_List);
+Collections.sort(result_List);
+		
+		
+		return result_List.toString();
+	}
+	
+	
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param ele
+	 */
+	public void SelectColumnDisplayByRemovingExistingOnes() {
+
+		try {
+			base.waitForElement(SelectColumnBtn());
+			SelectColumnBtn().waitAndClick(10);
+			
+			int metadatasCount = getAvailableRemoveButtonCount().size();
+			for (int i = 0; i < metadatasCount; i++) {
+				getRemoveBtn().Click();
+				System.out.println(i);
+			}
+			String[] eleValue= {"EmailAuthorAddress",Input.MetaDataEAName ,Input.docFileType,Input.metaDataName};
+			for(int j=0;j<eleValue.length;j++) {
+			base.waitForElement(getSelectAvailMetadata(eleValue[j]));
+			getSelectAvailMetadata(eleValue[j]).ScrollTo();
+			getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
+			}
+			base.waitForElement(getAddToSelect());
+			getAddToSelect().waitAndClick(10);
+			base.waitForElement(getUpdateColumnBtn());
+			getUpdateColumnBtn().waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param IndexElement
+	 * @return
+	 */
+	public int getIndex(String IndexElement) {
+		int i;
+		i = base.getIndex(getTableHeaders(), IndexElement);
+		return i;
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param ele
+	 * @return
+	 */
+	public List<String> getColumnValue(String IndexElement) {
+		base.waitForElement(getSelectDropDown());
+		base.waitTillElemetToBeClickable(getSelectDropDown());
+		getSelectDropDown().Click();
+		driver.waitForPageToBeReady();
+		int i;
+		i = base.getIndex(getTableHeaders(), IndexElement);
+		List<String> elementNames = new ArrayList<>();
+		List<WebElement> elementList = null;
+		base.waitTime(2);
+		elementList = getTableRowText(i).FindWebElements();
+		for (WebElement webElementNames : elementList) {
+			String elementName = webElementNames.getText();
+			elementNames.add(elementName.toLowerCase());
+		}
+		System.out.println(elementNames);
+		Collections.sort(elementNames);
+		
+		return elementNames;
 	}
 	
 }
