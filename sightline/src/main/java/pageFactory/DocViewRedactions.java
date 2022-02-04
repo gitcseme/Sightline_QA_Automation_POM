@@ -903,6 +903,10 @@ public class DocViewRedactions {
 		return driver.FindElementById("NextHit_test");
 	}
 
+	public Element saveClick() {
+		return driver.FindElementByXPath("//*[@id='btnRedactionTag']/span");
+	}
+	
 	// added by jayanthi
 	public Element getTrashIcon() {
 		return driver.FindElementByXPath("//div[@class='text-truncate' and contains(text(),'" + Input.testData1
