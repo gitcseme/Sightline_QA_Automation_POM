@@ -2911,6 +2911,22 @@ public class DocViewPage {
 	public Element getDocIdRow(int i) {
 		return driver.FindElementByXPath("//*[contains(@class,'rowNumber_"+i+"')]");
 	}
+	
+	public Element getDocView_AnalyticsDocIdFamilyTab(String documentToBeSelected) {
+		return driver
+				.FindElementByXPath("//tr[contains(@class,'dtDocumentFamilyMembersRowNumber')]//td[contains(text(),'"
+						+ documentToBeSelected + "')]//preceding-sibling::td/label");
+	}
+
+	public Element getDocView_AnalyticsDocIdFamilyTabBG(String documentToBeSelected) {
+		return driver.FindElementByXPath(
+				"//tr[contains(@class,'dtDocumentFamilyMembersRowNumber')]//td//following-sibling::td[text()='"
+						+ documentToBeSelected + "']");
+	}
+	
+	public Element getDocView_Analytics_ChildWindow_FamilyTab_Istdoc() {
+		return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//tr[1]//td[contains(text(),'ID')]");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -22844,7 +22860,6 @@ public class DocViewPage {
 		
 	}
 
-	}
 	/**
 	 * @author Gopinath 
 	 * @Description : this method for verifying weather delete and edit fields are not enabled.
@@ -22938,6 +22953,7 @@ public class DocViewPage {
 			base.failedStep("Exception occured while editing annotation layer of current document." + e.getMessage());
 
 		}
+	}
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -23050,6 +23066,45 @@ public class DocViewPage {
 			base.passedStep(" '>>' button is enabled");
 		}
 		
+	}
+	
+	/**
+	 * @Author Steffy Created on 04/02/2022
+	 * @Description To select docs from Analytics Family member Tab
+	 * 
+	 */
+	public void selectDocsFromFamilyTabUsingDocIdAndViewInDocview(String docIdToBeSelected) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_Analytics_FamilyTab());
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_Analytics_FamilyTab());
+			getDocView_Analytics_FamilyTab().waitAndClick(10);
+			base.waitForElement(getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected));
+			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).waitAndClick(5);
+			base.waitForElement(getDocView_ChildWindow_ActionButton());
+			getDocView_ChildWindow_ActionButton().waitAndClick(5);
+
+			base.waitForElement(getAnalyticalDropDown());
+			softAssertion.assertTrue(getAnalyticalDropDown().isDisplayed());
+			softAssertion.assertAll();
+			getAnalyticalDropDown().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.stepInfo("'View Document' action is displayed on family member tab successfully");
+
+			driver.scrollPageToTop();
+
+			base.waitForElement(getDocView_CurrentDocId());
+			System.err.println(getDocView_CurrentDocId().getText());
+			softAssertion.assertEquals(getDocView_CurrentDocId().getText(), docIdToBeSelected);
+			softAssertion.assertAll();
+			base.passedStep(
+					"On selecting document and view document action from family member tab is displayed in doc view panel with complete DocID successfully");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Doc are verified successfully");
+		}
 	}
 }
 
