@@ -4,6 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -4898,6 +4900,130 @@ public class DocView_Sprint2_Regression {
 		baseClass.VerifySuccessMessage("Redaction tags saved successfully");
 		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Saved successfully");
 	}
+	/**
+	 * Author : Aathith date: 02/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that large Excels are loading properly without any issues in DocView.. '
+	 * 				RPMXCON-52203' Sprint : 11
+	 * @throws AWTException
+	 * @throws Exception
+	 * 
+	 * testcase hint : used project :AutomationAdditionalDataProject , Runs On : PT env
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 73)
+	public void verifyLargeExcelInDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52203");
+		baseClass.stepInfo("Verify assignment progress bar refreshesh after completing the document same as last prior document should be completed by clicking the complete button.");
+
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		docView = new DocViewPage(driver);
+		
+		sessionSearch.MetaDataSearchInAdvancedSearch("DocID", "ID00000006");
+		baseClass.stepInfo("'.xls' large file is searched in section search");
+		
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Document is viewed in Doc view action performed");
+		
+		driver.waitForPageToBeReady();
+		boolean flag =((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.readyState").equals("complete");
+		if (flag)
+        { 
+			softAssertion.assertTrue(flag);
+			baseClass.passedStep("Large Excels should load properly without any issues in DocView.");
+        }else {
+        	baseClass.failedStep("verification failed");
+        }
+		baseClass.passedStep("RMU user can able to view Docview large excel file without any issue.");
+		
+		loginPage.logout();
+		
+		// Login as a rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as Rev: " + Input.rev1userName);
+		
+		sessionSearch.MetaDataSearchInAdvancedSearch("DocID", "ID00000006");
+		baseClass.stepInfo("'.xls' large file is searched in section search");
+		
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Document is viewed in Doc view action performed");
+		
+		driver.waitForPageToBeReady();
+		boolean flag1 =((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.readyState").equals("complete");
+		if (flag1)
+        { 
+			softAssertion.assertTrue(flag1);
+			baseClass.passedStep("Large Excels should load properly without any issues in DocView.");
+        }else {
+        	baseClass.failedStep("verification failed");
+        }
+		baseClass.passedStep("REV user can able to view Docview large excel file without any issue.");
+		
+		loginPage.logout();
+		
+		baseClass.passedStep("Verified that large Excels are loading properly without any issues in DocView.");
+	}
+	/**
+	 * @Author : Aathith date:14/12/21 Modified date: NA Modified by: Aathith
+	 *         RPMXCON-50786
+	 * @Description : To verify document should be displayed in doc view panel as per the entered document number in the inputbox.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 74)
+	public void verifyDocumentAsPerEnteredDocument() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50786");
+		baseClass.stepInfo("To verify document should be displayed in doc view panel as per the entered document number in the inputbox.");
+
+		
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		
+		assignmentPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		
+		baseClass.stepInfo("Select the Assigment go to Docview");
+		assignmentPage.selectAssignmentToViewinDocview(assname);
+		baseClass.stepInfo("Doc view page is selected from assigment page");
+		
+		driver.waitForPageToBeReady();
+		docViewPage.document_Navigation_verification(15);
+		docViewPage.navigation_Bar_EnableDisableCheck();
+		docViewPage.lastDoc_Navigation_Bar_EnableDisableCheck();
+		docViewPage.document_Navigation_verification(25);
+		
+		int lastdoc = docViewPage.verifyingDocCount();
+		
+		docViewPage.document_Navigation_verification(lastdoc);
+		docViewPage.navigation_Bar_EnableDisableCheck();
+		docViewPage.lastDoc_Navigation_Bar_EnableDisableCheck();
+		
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Doc view page is selected from sessionsearch page");
+		
+		driver.waitForPageToBeReady();
+		docViewPage.document_Navigation_verification(15);
+		docViewPage.navigation_Bar_EnableDisableCheck();
+		docViewPage.lastDoc_Navigation_Bar_EnableDisableCheck();
+		docViewPage.document_Navigation_verification(25);
+		
+		int lastdoc1 = docViewPage.verifyingDocCount();
+		
+		docViewPage.document_Navigation_verification(lastdoc1);
+		docViewPage.navigation_Bar_EnableDisableCheck();
+		docViewPage.lastDoc_Navigation_Bar_EnableDisableCheck();
+		
+		baseClass.passedStep("verified document should be displayed in doc view panel as per the entered document number in the inputbox.");
+		loginPage.logout();
+	}
+	
+	
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

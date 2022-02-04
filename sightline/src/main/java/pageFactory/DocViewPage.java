@@ -2900,6 +2900,11 @@ public class DocViewPage {
 	public Element getDocView_AnalyticsPanel_FamilyMemberWholeTabel() {
 		return driver.FindElementById("family1");
 	}
+	
+	//Added by Aathith
+	public Element getDocIdRow(int i) {
+		return driver.FindElementByXPath("//*[contains(@class,'rowNumber_"+i+"')]");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -22903,6 +22908,74 @@ public class DocViewPage {
 		childWindowToParentWindowSwitching(parent);
 		driver.waitForPageToBeReady();
         softAssertion.assertAll();
+		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void document_Navigation_verification(int DocumentNumber) {
+		driver.waitForPageToBeReady();
+		String text = Integer.toString(DocumentNumber);
+		getDocView_NumTextBox().Clear();
+		getDocView_NumTextBox().SendKeys(text);
+		getDocView_NumTextBox().Enter();
+		driver.waitForPageToBeReady();
+		int value =DocumentNumber-1;
+		driver.waitForPageToBeReady();
+		boolean flag = getDocIdRow(value).GetAttribute("class").contains("doc_current");
+		if(flag) {
+			softAssertion.assertTrue(flag);
+			base.passedStep("Document is viewed as per entered document number : "+DocumentNumber);
+		}else {
+			base.failedStep("verification failed");
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void navigation_Bar_EnableDisableCheck() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getVerifyPrincipalDocument());
+		String prnDoc = getVerifyPrincipalDocument().getText();
+		
+		base.waitForElement(getDocView_Next());
+		getDocView_Next().waitAndClick(5);
+		
+		base.waitForElement(getVerifyPrincipalDocument());
+		driver.waitForPageToBeReady();
+		String prnSecDoc = getVerifyPrincipalDocument().getText();
+		
+		if (prnDoc.equals(prnSecDoc)) {
+			softAssertion.assertEquals(prnDoc, prnSecDoc);
+			base.passedStep(" '>' button is disabled");
+		} else {
+			softAssertion.assertNotEquals(prnDoc, prnSecDoc);
+			base.passedStep(" '>' button is enabled");
+		}
+		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void lastDoc_Navigation_Bar_EnableDisableCheck() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getVerifyPrincipalDocument());
+		String prnDoc = getVerifyPrincipalDocument().getText();
+		
+		base.waitForElement(getDocView_Last());
+		getDocView_Last().waitAndClick(5);
+		
+		base.waitForElement(getVerifyPrincipalDocument());
+		driver.waitForPageToBeReady();
+		String prnSecDoc = getVerifyPrincipalDocument().getText();
+		
+		if (prnDoc.equals(prnSecDoc)) {
+			softAssertion.assertEquals(prnDoc, prnSecDoc);
+			base.passedStep(" '>>' button is disabled");
+		} else {
+			softAssertion.assertNotEquals(prnDoc, prnSecDoc);
+			base.passedStep(" '>>' button is enabled");
+		}
 		
 	}
 }
