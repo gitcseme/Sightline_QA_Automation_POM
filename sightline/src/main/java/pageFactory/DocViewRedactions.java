@@ -4066,6 +4066,16 @@ public class DocViewRedactions {
 			}
 		}
 	}
+	public void RedactTextInDocView(int x, int y, int offsetx, int offsety) {
+		Actions actions = new Actions(driver.getWebDriver());
+		redactionIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		textSelectionRedactionIcon().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		actions.moveToElement(getDocView_Redactrec_textarea().getWebElement(), x, y).clickAndHold()
+				.moveByOffset(offsetx, offsety).release().build().perform();
+
+	}
 
 }
 
