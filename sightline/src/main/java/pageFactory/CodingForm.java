@@ -1252,6 +1252,11 @@ public class CodingForm {
 	public Element getCF_Preview1CheckBox() {
 		return driver.FindElementByXPath("//div[@id='item0']//input[@class='checkbox']");
 	}
+	
+	public Element getCodingForm_MetaDataUsingIndex(int index) {
+		return driver.FindElementByXPath("//*[@id='lstMetadata']/li["+index+"]/label/i");
+	}
+	
 
 	// projectfiledWithData
 	String expectedStaticText = "This is the default Coding Form for this project.  Please complete all fields.";
@@ -4731,5 +4736,26 @@ public class CodingForm {
 		addLogicOptionWithIndexWithoutIncreace(4, 0, Input.select, Input.thisOptional);
 		addLogicOptionWithIndexWithoutIncreace(5, 0, Input.notSelect, Input.thisRequired);
 		driver.waitForPageToBeReady();
+	}
+	
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	// Reusable method for creating large coding form
+	public void codingFormLarge(String cfName) throws InterruptedException {
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		addNewCodingFormButton();
+		base.waitForElement(getCodingForm_EDITABLE_METADATA_Tab());
+		getCodingForm_EDITABLE_METADATA_Tab().waitAndClick(10);
+		for (int i = 1; i <=25; i++) {
+			base.waitForElement(getCodingForm_MetaDataUsingIndex(i));
+			getCodingForm_MetaDataUsingIndex(i).waitAndClick(5);
+		}
+		base.stepInfo("Coding form for created for 25 fields");
+		addcodingFormAddButton();
+		passingCodingFormName(cfName);
+		saveCodingForm();
 	}
 }

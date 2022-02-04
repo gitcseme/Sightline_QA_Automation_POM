@@ -331,6 +331,9 @@ public class AdvancedSearch_Regression3 {
 		String expectedPureHitCount = search.verifyPureHitsCount();// expected value
 		baseClass.stepInfo("Total no docs in  Completed status under Assignments  " + expectedPureHitCount);
 
+
+		// Apply comments to document
+		docview.addCommentAndSave(docComment, true, count,true);
 		baseClass.selectproject();
 		search.navigateToAdvancedSearchPage();
 		// Adding WP tag into search text box

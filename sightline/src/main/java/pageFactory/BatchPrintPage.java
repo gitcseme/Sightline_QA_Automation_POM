@@ -1674,4 +1674,76 @@ public class BatchPrintPage {
 				
 			}
 		}
+		
+		/**
+		 * @author Brundha
+		 * @Description: Method to select a folder in batch sprint 
+		 * @param searchName : Tagname in String value .
+		 */
+		public void BatchPrintWithSourceSelection(String name) {
+			
+				driver.getWebDriver().get(Input.url + "BatchPrint/");
+				base.waitForElement(getMenuBatchPrint());
+				getMenuBatchPrint().Click();
+				getFolderBatchPrint().isElementAvailable(10);
+				getFolderBatchPrint().waitAndClick(10);
+				getAllFoldersArrow().isElementAvailable(10);
+				getAllFoldersArrow().waitAndClick(10);
+				getSelectFolder(name).isElementAvailable(10);
+				getSelectFolder(name).waitAndClick(10);
+				base.waitForElement(getSourcenextbutton());
+				getSourcenextbutton().waitAndClick(5);
+				base.waitForElement(getBasisnextbutton());
+				getBasisnextbutton().waitAndClick(5);
+				base.waitTime(2);
+				driver.scrollPageToTop();
+				getAnalysisnextbutton().isElementAvailable(10);
+				getAnalysisnextbutton().waitAndClick(5);
+			
+		}
+		
+		/**
+		 * @author Brundha
+		 * @Description: filling Batch Redaction page 
+		 * @param metaData : metaData is String value that name of metadata.
+		 */
+		public void FillingBatchRedactionAndverifyingTheDownloadInBatchSprint(String metaData) {
+			
+				getExceptionNext().isElementAvailable(10);
+				getExceptionNext().Click();
+				getMetaDataCheckbox(metaData).isElementAvailable(10);
+				getMetaDataCheckbox(metaData).Click();
+				driver.scrollingToBottomofAPage();
+				getAddToSelectedButton().isElementAvailable(10);
+				getAddToSelectedButton().Click();
+				driver.scrollPageToTop();
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getSlipnextbutton().Enabled();
+					}
+				}), Input.wait30);
+				getSlipnextbutton().waitAndClick(5);
+				getBrandingAndRedactionNextButton().isElementAvailable(10);
+				getBrandingAndRedactionNextButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getGenerateButton().Enabled();
+					}
+				}), Input.wait30);
+				getGenerateButton().waitAndClick(5);
+				base.VerifySuccessMessage("Successfully initiated the batch print. You will be prompted with notification once completed.");
+				for (int i = 0; i < 10; i++) {
+					try {
+						if (getbackgroundDownLoadLink().isDisplayed()) {
+							getbackgroundDownLoadLink().Click();
+							break;
+						}else {
+							driver.Navigate().refresh();
+							System.out.println("Refresh");}
+					} catch (Exception e) {
+						driver.Navigate().refresh();
+						System.out.println("Refresh");
+					}
+					}
+		}
 }

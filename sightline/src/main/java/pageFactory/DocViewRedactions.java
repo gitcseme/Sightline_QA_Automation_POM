@@ -903,6 +903,10 @@ public class DocViewRedactions {
 		return driver.FindElementById("NextHit_test");
 	}
 
+	public Element saveClick() {
+		return driver.FindElementByXPath("//*[@id='btnRedactionTag']/span");
+	}
+	
 	// added by jayanthi
 	public Element getTrashIcon() {
 		return driver.FindElementByXPath("//div[@class='text-truncate' and contains(text(),'" + Input.testData1
@@ -4061,6 +4065,16 @@ public class DocViewRedactions {
 				base.failedStep("Unrelavent document is filtered");
 			}
 		}
+	}
+	public void RedactTextInDocView(int x, int y, int offsetx, int offsety) {
+		Actions actions = new Actions(driver.getWebDriver());
+		redactionIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		textSelectionRedactionIcon().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		actions.moveToElement(getDocView_Redactrec_textarea().getWebElement(), x, y).clickAndHold()
+				.moveByOffset(offsetx, offsety).release().build().perform();
+
 	}
 
 }
