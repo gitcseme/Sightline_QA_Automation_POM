@@ -4913,7 +4913,7 @@ public class DocView_Sprint2_Regression {
 	public void verifyLargeExcelInDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52203");
-		baseClass.stepInfo("Verify assignment progress bar refreshesh after completing the document same as last prior document should be completed by clicking the complete button.");
+		baseClass.stepInfo("Verify that large Excels are loading properly without any issues in DocView.");
 
 		sessionSearch = new SessionSearch(driver);
 		softAssertion = new SoftAssert();
