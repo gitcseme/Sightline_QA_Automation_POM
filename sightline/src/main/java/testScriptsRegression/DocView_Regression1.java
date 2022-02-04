@@ -5564,7 +5564,7 @@ public class DocView_Regression1 {
 				loginPage.logout();
 			}
 			
-      /*
+			/*
 			 *
 			 * @Author : Brundha
 			 * @Testcase id : 52204 - Verify that text redaction is working proper in Batch Print.
@@ -5624,6 +5624,270 @@ public class DocView_Regression1 {
 				batchPrint.FillingBatchRedactionAndverifyingTheDownloadInBatchSprint("CustodianName");
 				loginPage.logout();
 				
+			}
+			
+			/**
+			 * @author Gopinath
+			 * @testCase Id:51534 Verify that when two different users deletes highlighting to the same record successfully.
+			 * @description Verify that when two different users deletes highlighting to the same record successfully.
+			 * @throws InterruptedException
+			 * @throws AWTException 
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 43)
+			public void verifyDeleteHighlightingOnDifferentTabsOnSameBrowserDiffUsers() throws InterruptedException, AWTException {
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51534  sprint 11");
+				baseClass.stepInfo("### Verify that when two different users deletes highlighting to the same record successfully ###");
+				DocViewPage docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				String currentUrl = driver.getUrl();
+				
+				DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
+				
+				baseClass.stepInfo("Opening second tab");
+				docVIewMetaData.openDuplicateTabOfAlreadyOpenedTab();
+				
+				baseClass.stepInfo("Switching to second tab");
+				String parentWindowHandle = reusableDocView.switchTochildWindow();
+				
+				baseClass.stepInfo("Getting : "+currentUrl+" url in second tab");
+				driver.getWebDriver().get(currentUrl);
+				
+				baseClass.impersonateRMUtoReviewer();
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Perform this page annotation");
+				docView.performNonAudioAnnotation();
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Delete added annotation.");
+				docView.deleteAddedAnnotaion();
+				
+				baseClass.stepInfo("Get annotation count");
+				int previousAnnotationCount = docView.getAppiedAnnotationCount();
+				
+				baseClass.stepInfo("Switch to parent window from child window");
+				reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+				
+				baseClass.stepInfo("Click on redaction icon");
+				docView.redactionIcon().Click();
+				
+				baseClass.stepInfo("Verify Disable Remark Warning Message");
+				docView.verifyDisableAnnotationWarningMessageAndSubMenu();
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Verify annotation is added to document.");
+				docView.verifyAnnotationsToDocument(previousAnnotationCount);
+				
+				baseClass.stepInfo("Log out");
+				loginPage.logout();
+			}
+			/**
+			 * @author Gopinath
+			 * @testCase Id:51537 Verify that same user with two different tabs in the same browser, and confirm that able to delete highlighting to the same records successfully.
+			 * @description Verify that same user with two different tabs in the same browser, and confirm that able to delete highlighting to the same records successfully.
+			 * @throws InterruptedException
+			 * @throws AWTException 
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 44)
+			public void verifyDeleteHighlightingOnDifferentTabsOnSameBrowserSameUser() throws InterruptedException, AWTException {
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51537  sprint 11");
+				baseClass.stepInfo("### Verify that same user with two different tabs in the same browser, and confirm that able to delete highlighting to the same records successfully ###");
+				DocViewPage docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				String currentUrl = driver.getUrl();
+				
+				DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
+				
+				baseClass.stepInfo("Opening second tab");
+				docVIewMetaData.openDuplicateTabOfAlreadyOpenedTab();
+				
+				baseClass.stepInfo("Switching to second tab");
+				String parentWindowHandle = reusableDocView.switchTochildWindow();
+				
+				baseClass.stepInfo("Getting : "+currentUrl+" url in second tab");
+				driver.getWebDriver().get(currentUrl);
+				
+				baseClass.stepInfo("Perform this page annotation");
+				docView.performNonAudioAnnotation();
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Delete added annotation.");
+				docView.deleteAddedAnnotaion();
+				
+				baseClass.stepInfo("Get annotation count");
+				int previousAnnotationCount = docView.getAppiedAnnotationCount();
+				
+				baseClass.stepInfo("Switch to parent window from child window");
+				reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+				
+				baseClass.stepInfo("Click on redaction icon");
+				docView.redactionIcon().Click();
+				
+				baseClass.stepInfo("Verify Disable Remark Warning Message");
+				docView.verifyDisableAnnotationWarningMessageAndSubMenu();
+				
+				baseClass.stepInfo("Refresh page");
+				driver.Navigate().refresh();
+				
+				baseClass.stepInfo("Verify annotation is added to document.");
+				docView.verifyAnnotationsToDocument(previousAnnotationCount);
+				
+				baseClass.stepInfo("Log out");
+				loginPage.logout();
+			}
+			
+			/**
+			 * @author Gopinath
+			 * @testCase Id:51535 Verify that same user with two different tabs in the same browser, and confirm that able to add highlighting to the same records successfully, and confirm the XML nodes are all properly reflected in the XML
+			 * @description : To Verify that same user with two different tabs in the same browser, and confirm that able to add highlighting to the same records successfully, and confirm the XML nodes are all properly reflected in the XML
+			 * @throws InterruptedException
+			 * @throws AWTException 
+			 */
+			@Test(alwaysRun = true,groups={"regression"},priority = 45)
+			public void verifyHighlightingOnDifferentTabsOfSameBrowser() throws InterruptedException, AWTException {
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51535 sprint 11");
+				baseClass.stepInfo("###Verify that same user with two different tabs in the same browser, and confirm that able to add highlighting to the same records successfully, and confirm the XML nodes are all properly reflected in the XML###");
+				DocViewPage docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				DocViewMetaDataPage docViewMetaData= new DocViewMetaDataPage(driver);
+				ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+				DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.MiniDocId);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				String currentUrl = driver.getUrl();
+				
+				baseClass.stepInfo("Opening second tab");
+				docVIewMetaData.openDuplicateTabOfAlreadyOpenedTab();
+				
+				baseClass.stepInfo("Switching to second tab");
+				String parentWindowHandle = reusableDocView.switchTochildWindow();
+				String childWindowHandle = driver.getWebDriver().getWindowHandle();
+				
+				baseClass.stepInfo("Getting : "+currentUrl+" url in second tab");
+				driver.getWebDriver().get(currentUrl);
+				
+				baseClass.stepInfo("Adding Annotation to document");
+				docViewMetaData.performAnnotationByRectangle(10,10);
+				
+				baseClass.stepInfo("Switchimg to first window");
+				driver.switchTo().window(parentWindowHandle);
+				
+				baseClass.stepInfo("Verify Duplicate redaction/highlighting/Annotation Warning");
+				docView.verifydDuplicateRedactionWarningMessage();
+				
+				baseClass.stepInfo("Select Doc To View In DocView Panal");
+				docView.selectDocToViewInDocViewPanal(Input.MiniDocId);
+				
+				baseClass.stepInfo("verify visibility of added Annotation in document in first window");
+				docView.verifyAddedAnnotation();
+				
+				baseClass.stepInfo("Switch to parent window from child window");
+				reusableDocView.childWindowToParentWindowSwitching(childWindowHandle);
+				
+				baseClass.stepInfo("verify visibility of added Annotation in document in second window");
+				docView.verifyAddedAnnotation();
+				
+				baseClass.stepInfo("Removing annotation in Document");
+				docViewMetaData.unTagAnnotationOfDocument();
+			}
+			
+			/**
+			 * @author Gopinath
+			 * @testCase Id:51536 Verify that same user with two different tabs in the same browser, and confirm that able to edit highlighting to the same records successfully, and confirm the XML nodes are all properly reflected in the XML
+			 * @description : To Verify that same user with two different tabs in the same browser, and confirm that able to edit highlighting to the same records successfully, and confirm the XML nodes are all properly reflected in the XML
+			 * @throws InterruptedException
+			 * @throws AWTException 
+			 */
+			@Test
+			public void verifyEditHighlightingOnDifferentTabsOfSameBrowser() throws InterruptedException, AWTException {
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51536 sprint 11");
+				baseClass.stepInfo("###Verify that same user with two different tabs in the same browser, and confirm that able to edit highlighting to the same records successfully, and confirm the XML nodes are all properly reflected in the XML###");
+				DocViewPage docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				DocViewMetaDataPage docViewMetaData= new DocViewMetaDataPage(driver);
+				ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+				DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
+				
+				baseClass.stepInfo(" Basic content search");
+				session.basicContentSearch(Input.MiniDocId);
+				
+				baseClass.stepInfo("view in docview");
+				session.ViewInDocView();
+				
+				String currentUrl = driver.getUrl();
+				
+				baseClass.stepInfo("Opening second tab");
+				docVIewMetaData.openDuplicateTabOfAlreadyOpenedTab();
+				
+				baseClass.stepInfo("Switching to second tab");
+				String parentWindowHandle = reusableDocView.switchTochildWindow();
+				String childWindowHandle = driver.getWebDriver().getWindowHandle();
+				
+				baseClass.stepInfo("Getting : "+currentUrl+" url in second tab");
+				driver.getWebDriver().get(currentUrl);
+				
+				baseClass.stepInfo("Adding Annotation to document");
+				docViewMetaData.performAnnotationByRectangle(10,10);
+				
+				baseClass.stepInfo("Edit highligting");
+				docViewMetaData.moveAnnotationByRectangle();
+				
+				baseClass.stepInfo("Switchimg to first window");
+				driver.switchTo().window(parentWindowHandle);
+				
+				baseClass.stepInfo("Verify Duplicate redaction/highlighting/Annotation Warning");
+				docView.verifydDuplicateRedactionWarningMessage();
+				
+				baseClass.stepInfo("Select Doc To View In DocView Panal");
+				docView.selectDocToViewInDocViewPanal(Input.MiniDocId);
+				
+				baseClass.stepInfo("verify visibility of edit Annotation in document in first window");
+				docView.verifyAddedAnnotation();
+				
+				baseClass.stepInfo("Switch to parent window from child window");
+				reusableDocView.childWindowToParentWindowSwitching(childWindowHandle);
+				
+				baseClass.stepInfo("verify visibility of edit Annotation in document in second window");
+				docView.verifyAddedAnnotation();
+				
+				baseClass.stepInfo("Removing annotation in Document");
+				docViewMetaData.unTagAnnotationOfDocument();
 			}
 	     @AfterMethod(alwaysRun = true)
 		 public void takeScreenShot(ITestResult result) {

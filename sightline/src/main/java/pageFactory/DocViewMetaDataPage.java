@@ -562,6 +562,9 @@ public class DocViewMetaDataPage {
 		public ElementCollection getMetadataPopUpFieldnameList() {
 			return driver.FindElementsByXPath("//table[@id='MetaDataDT1']//td[@class='sorting_1']");
 		}
+		public ElementCollection getDocViewAppliedAnnotation() {
+			return driver.FindElementsByCssSelector("rect[data-pcc-mark*='mark'][style*='rgb(255, 255, 0)']");
+		}
 
 	public DocViewMetaDataPage(Driver driver) {
 
@@ -2946,6 +2949,30 @@ public class DocViewMetaDataPage {
 			e.printStackTrace();
 		}
 
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @description: method to remove annotation in document 
+	 */
+	public void unTagAnnotationOfDocument() {
+		try {
+			Actions actions = new Actions(driver.getWebDriver());
+			driver.waitForPageToBeReady();
+			base.waitForElement(getYellowUnRedactRectButton());
+			getYellowUnRedactRectButton().waitAndClick(5);
+			List<WebElement> annotation = getDocViewAppliedAnnotation().FindWebElements();
+			actions.moveToElement(annotation.get(0)).click().build().perform();
+			base.waitForElement(getUnTaggedDeleteButton());
+			actions.moveToElement(getUnTaggedDeleteButton().getWebElement()).click().build().perform();
+			base.VerifySuccessMessage("Annotation Removed successfully.");
+			base.passedStep("Annotation removed from docuent");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("unable to Remove annotation from document due to "+e.getMessage());
+			
+		}
 	}
 	
 }
