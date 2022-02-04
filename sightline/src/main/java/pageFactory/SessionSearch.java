@@ -1474,7 +1474,7 @@ public class SessionSearch {
 	}
 
 	public Element getAdvSearchCopyToNewSearch() {
-		return driver.FindElementByXPath("//*[@id=\"Adv\"]/div/div/button[@class='btn btn-default dropdown-toggle']");
+		return driver.FindElementByXPath("(//*[@id=\"Adv\"]/div/div/button[@class='btn btn-default dropdown-toggle'])[last()]");
 	}
 
 	public ElementCollection getDetailsTable() {
@@ -1505,6 +1505,9 @@ public class SessionSearch {
 
 	public Element getPinnedSearchIcon() {
 		return driver.FindElementByXPath("//span[@title='Un Pin this Search']");
+	}
+	public Element getModifyASearch_Last() {
+		return driver.FindElementByXPath("(//a[@id='qModifySearch'])[last()]");
 	}
 
 	public SessionSearch(Driver driver) {
@@ -9593,9 +9596,12 @@ public class SessionSearch {
 		base.waitForElement(getQuerySearchButton());
 		getQuerySearchButton().waitAndClick(10);
 	}
-
+/**
+ * @author Jayanthi.ganesan  
+ * Modified by jayanthi-3/2/21
+ */
 	public void resubmitSearch() {
-		getModifyASearch().waitAndClick(10);
+		getModifyASearch_Last().waitAndClick(10);
 		getAdvSearchCopyToNewSearch().waitAndClick(10);
 		getAdvanceSearch_btn_Current().waitAndClick(10);
 	}
