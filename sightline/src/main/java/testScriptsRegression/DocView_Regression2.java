@@ -27,6 +27,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -62,6 +63,7 @@ public class DocView_Regression2 {
 	AssignmentsPage assignPage;
 	KeywordPage keywordPage;
 	SavedSearch savedsearch;
+	
 
 	String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 
@@ -2694,6 +2696,187 @@ public class DocView_Regression2 {
 		}
 
 
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan
+	 * @Description: Verify when navigation to the document with hidden content is done after completing the document, 
+	 *               should display the warning message to indicate that document is having hidden content
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
+	public void verifyWarningMsgOfHiddenDocs() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51957");
+		baseClass.stepInfo("Verify when navigation to the document with hidden content is done after completing the document, should display the warning message to indicate that document is having hidden content");
+
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SoftAssert softassertion = new SoftAssert();
+		docView = new DocViewPage(driver);
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		System.out.println(assname);
+		String filedText = "Stamp" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.closeAdpopUp();
+		baseClass.selectproject(Input.additionalDataProject);
+		baseClass.closeAdpopUp();
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Basic Search and select the pure hit count
+		sessionsearch.basicContentSearch(Input.TextHidden);
+		sessionsearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, Input.codingFormName);
+		assignmentsPage.toggleCodingStampEnabled();
+		assignmentsPage.assignmentDistributingToReviewer();
+		baseClass.stepInfo("Assignment created with required documents and distributed to reviewer successfully");
+		loginPage.logout();
+		// Login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.selectproject(Input.additionalDataProject);
+		// create Assignment and distribute doc
+		// Assignment selected by reviewer
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docIdBeforeCompleteAction=docView.getDocView_CurrentDocId().getText();
+		docView.editCodingForm(Input.searchString1);
+		baseClass.stepInfo("Coding form is edited successfully");
+		docView.stampColourSelection(filedText, Input.stampColour);
+		baseClass.CloseSuccessMsgpopup();
+		//validation after complete action
+		docView.completeButton();
+		baseClass.stepInfo("After editing the coding form complete action is performed");
+		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docIdAfterCompleteAction=docView.getDocView_CurrentDocId().getText();
+		softassertion.assertNotEquals(docIdBeforeCompleteAction, docIdAfterCompleteAction);
+		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");
+		//Validation after hidden info icon
+		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
+		docViewRedact.hiddenInfoIcon().waitAndClick(5);
+		baseClass.stepInfo("Hidden info action is performed");
+		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.passedStep("Warning message is displayed as expected");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docIdBeforeCodeSameAsLastAction=docView.getDocView_CurrentDocId().getText();
+		//Validation after code same as last action
+		docView.clickCodeSameAsLast();
+		baseClass.stepInfo("Code same as last action is performed");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docIdAfterCodeSameAsLastAction=docView.getDocView_CurrentDocId().getText();
+		softassertion.assertNotEquals(docIdBeforeCodeSameAsLastAction, docIdAfterCodeSameAsLastAction);
+		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");
+		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docIdBeforeSavedStampAction=docView.getDocView_CurrentDocId().getText();
+		//Validation after saved stamp action
+		docView.lastAppliedStamp(Input.stampColour);
+		baseClass.stepInfo("Saved stamp is applied succesfully");
+		baseClass.waitTime(3);
+		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docIdAfterSavedStampAction=docView.getDocView_CurrentDocId().getText();
+		softassertion.assertNotEquals(docIdBeforeSavedStampAction, docIdAfterSavedStampAction);
+		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");
+		softassertion.assertAll();
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan
+	 * @Description Verify when navigation to the document with hidden content is done after completing the document from coding form child window, 
+	 *                    should display the warning message to indicate that document is having hidden content
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
+	public void verifyWarningMsgOfHiddenDocsInChildWindow() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51958");
+		baseClass.stepInfo("Verify when navigation to the document with hidden content is done after completing the document from coding form child window, should display the warning message to indicate that document is having hidden content");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SoftAssert softassertion = new SoftAssert();
+		docView = new DocViewPage(driver);
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		System.out.println(assname);
+		String filedText = "Stamp" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.closeAdpopUp();
+		baseClass.selectproject(Input.additionalDataProject);
+		baseClass.closeAdpopUp();
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Basic Search and select the pure hit count
+		sessionsearch.basicContentSearch(Input.TextHidden);
+		sessionsearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, Input.codingFormName);
+		assignmentsPage.toggleCodingStampEnabled();
+		assignmentsPage.assignmentDistributingToReviewer();
+		baseClass.stepInfo("Assignment created with required documents and distributed to reviewer successfully");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.selectproject(Input.additionalDataProject);
+		// Assignment selected by reviewer
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docIdBeforeCompleteAction=docView.getDocView_CurrentDocId().getText();		
+		docView.editCodingForm(Input.searchString1);
+		baseClass.stepInfo("Coding form is edited successfully");
+		docView.stampColourSelection(filedText, Input.stampColour);
+		baseClass.CloseSuccessMsgpopup();
+		docView.clickGearIconOpenCodingFormChildWindow();
+		baseClass.stepInfo("Child window of coding form is opened");
+		docView.switchToNewWindow(2);
+		//Validation after complete button
+		docView.completeButton();
+		docView.switchToNewWindow(1);
+		baseClass.stepInfo("After editing the coding form complete action is performed in child window");
+		baseClass.handleAlert();
+		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docIdAfterCompleteAction=docView.getDocView_CurrentDocId().getText();
+		softassertion.assertNotEquals(docIdBeforeCompleteAction, docIdAfterCompleteAction);
+		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");
+		//Validation after hidden info icon
+		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
+		docViewRedact.hiddenInfoIcon().waitAndClick(5);
+		baseClass.stepInfo("Hidden info action is performed");
+		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.passedStep("Warning message is displayed as expected");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docIdBeforeCodeSameAsLastAction=docView.getDocView_CurrentDocId().getText();
+		docView.switchToNewWindow(2);
+		//Validation after code same as last
+		docView.clickCodeSameAsLast();
+		docView.switchToNewWindow(1);
+		baseClass.handleAlert();
+		baseClass.stepInfo("Code same as last action is performed in child window");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docIdAfterCodeSameAsLastAction=docView.getDocView_CurrentDocId().getText();
+		softassertion.assertNotEquals(docIdBeforeCodeSameAsLastAction, docIdAfterCodeSameAsLastAction);
+		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");		
+		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docIdBeforeSavedStampAction=docView.getDocView_CurrentDocId().getText();
+		docView.switchToNewWindow(2);
+		//validation after saved stamp
+		docView.lastAppliedStamp(Input.stampColour);
+		baseClass.handleAlert();
+		baseClass.stepInfo("Saved stamp is applied succesfully in child window");
+		docView.switchToNewWindow(1);
+		baseClass.handleAlert();
+		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docIdAfterSavedStampAction=docView.getDocView_CurrentDocId().getText();
+		softassertion.assertNotEquals(docIdBeforeSavedStampAction, docIdAfterSavedStampAction);
+		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");
+		docView.closeWindow(1);
+		softassertion.assertAll();
+		loginPage.logout();
 	}
 	
 	@AfterMethod(alwaysRun = true)
