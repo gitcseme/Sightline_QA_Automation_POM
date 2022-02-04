@@ -2487,5 +2487,37 @@ public class TagsAndFoldersPage {
 			System.out.println("Tag name updated successfully : " + reTagName);
 		}
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param tagName
+	 */
+		public void verifyTagDocCount(String tagName,int count) {
+			base.waitForElement(getTag_ToggleDocCount());
+			getTag_ToggleDocCount().waitAndClick(20);
+			getTagandCount(tagName, count).waitAndGet(30);
+			System.out.println(getTagandCount(tagName, 0).getText());
+			if(getTagandCount(tagName, 0).isElementAvailable(3)) {
+			base.passedStep(tagName + " with zero count  could be seen under tags and folder page -"+getTagandCount(tagName, 0).getText());
+			}
+			else {
+				base.failedStep(tagName+" with zero count is not displayed");
+			}
+		}
+		/**
+		 * @author Jayanthi.ganesan
+		 * @param folderName
+		 * @param count
+		 */
+		public void verifyFolderDocCount(String folderName,int count) {
+		base.waitForElement( getFoldersTab());	
+		getFoldersTab().waitAndClick(10);
+		getFolder_ToggleDocCount().waitAndClick(10);
+		getFolderandCount(folderName, count).WaitUntilPresent();
+		if(getFolderandCount(folderName, count).isElementAvailable(3)) {
+	base.passedStep(folderName + " could be seen under tags and folder page "+getFolderandCount(folderName, count).getText());
+		}else {
+			base.failedStep(folderName+" with zero count is not displayed");
+		}
+		}
 
 }
