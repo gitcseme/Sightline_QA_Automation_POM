@@ -22834,7 +22834,7 @@ public class DocViewPage {
 		
 	}
 
-	
+	}
 	/**
 	 * @author Gopinath 
 	 * @Description : this method for verifying weather delete and edit fields are not enabled.
