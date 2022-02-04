@@ -545,6 +545,162 @@ public class DocViewAudio_IndiumRegression {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Search > Bulk Assign Verify that audio hits should be
+	 *              highlighted in context of an existing/new assignment when search
+	 *              is set up with the Metadata & Content search first and then
+	 *              Audio search [RPMXCON-46997]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	public void verifyBulkAssign() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
+		String[] combinations = { "Metadata + Audio" };
+		String metaDataIp = "ID0*";
+		List<String> docIDlist = new ArrayList<>();
+
+		baseClass.stepInfo("Test case id :RPMXCON-46997");
+		baseClass.stepInfo(
+				"Search > Bulk Assign Verify that audio hits should be highlighted in context of an existing/new assignment when search is set up with the Metadata & Content search first and then Audio search");
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Search for metadata and audio
+		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(null, null, Input.audioSearch, Input.language,
+				"", combinations, Input.docName, metaDataIp, "min");
+
+		driver.scrollPageToTop();
+		sessionSearch.bulkAssign();
+		assignmentPage.assignDocstoNewAssgn(assignmentName);
+		assignmentPage.quickAssignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.saveAssignment(assignmentName, Input.codeFormName);
+
+		assignmentPage.navigateToAssignmentsPage();
+		driver.waitForPageToBeReady();
+		assignmentPage.manageAssignmentToDocViewAsRmu(assignmentName);
+
+		// verify eye icon
+		docIDlist = miniDocListpage.getDocListDatas();
+		String firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.verifyPersistantDataPresent(Input.audioSearch);
+
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the player", "Audio hits not highlighted on the player");
+
+		// existing assignmnet creation
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.bulkAssign_Persistant(true);
+		sessionSearch.bulkAssign_withoutshoppingCartAdd(assignmentName);
+
+		assignmentPage.navigateToAssignmentsPage();
+		assignmentPage.manageAssignmentToDocViewAsRmu(assignmentName);
+		driver.waitForPageToBeReady();
+
+		// verify eye icon
+		docIDlist = miniDocListpage.getDocListDatas();
+		String secondDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + secondDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.verifyPersistantDataPresent(Input.audioSearch);
+
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the player", "Audio hits not highlighted on the player");
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Search > Bulk Assign Verify that audio hits should be
+	 *              highlighted in context of an existing/new assignment when search
+	 *              is set up with the Audio search first then Metadata & Content
+	 *              search [RPMXCON-46996]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	public void verifyBulkAssignFOrAudioAndMetadata() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
+		String[] combinations = { "Audio + Metadata" };
+		String metaDataIp = "ID0*";
+		List<String> docIDlist = new ArrayList<>();
+
+		baseClass.stepInfo("Test case id :RPMXCON-46996");
+		baseClass.stepInfo(
+				"Search > Bulk Assign Verify that audio hits should be highlighted in context of an existing/new assignment when search is set up with the Audio search first then Metadata & Content search");
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Search for metadata and audio
+		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(null, null, Input.audioSearch, Input.language,
+				"", combinations, Input.docName, metaDataIp, "min");
+
+		driver.scrollPageToTop();
+		sessionSearch.bulkAssign();
+		assignmentPage.assignDocstoNewAssgn(assignmentName);
+		assignmentPage.quickAssignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.saveAssignment(assignmentName, Input.codeFormName);
+
+		assignmentPage.navigateToAssignmentsPage();
+		driver.waitForPageToBeReady();
+		assignmentPage.manageAssignmentToDocViewAsRmu(assignmentName);
+
+		// verify eye icon
+		docIDlist = miniDocListpage.getDocListDatas();
+		String firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.verifyPersistantDataPresent(Input.audioSearch);
+
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the player", "Audio hits not highlighted on the player");
+
+		// existing assignmnet creation
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.bulkAssign_Persistant(true);
+		sessionSearch.bulkAssign_withoutshoppingCartAdd(assignmentName);
+
+		assignmentPage.navigateToAssignmentsPage();
+		assignmentPage.manageAssignmentToDocViewAsRmu(assignmentName);
+		driver.waitForPageToBeReady();
+
+		// verify eye icon
+		docIDlist = miniDocListpage.getDocListDatas();
+		String secondDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + secondDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.verifyPersistantDataPresent(Input.audioSearch);
+
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the player", "Audio hits not highlighted on the player");
+
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

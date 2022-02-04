@@ -88,6 +88,7 @@ public class DocView_CodingForm_Regression {
 	String assgn = "Assignment" + Utility.dynamicNameAppender();
 	String assgnCf = "Assignment" + Utility.dynamicNameAppender();
 	String cfName = "CfName" + Utility.dynamicNameAppender();
+	String cfLarge = "CfNameLarge" + Utility.dynamicNameAppender();
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -9809,6 +9810,88 @@ public class DocView_CodingForm_Regression {
 		// validation for assigned coding form
 		docViewPage.verifyCodingFormName(cfName);
 		baseClass.passedStep("Coding form displayed on right side of the panel");
+
+		// logout
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @Author : Baskar date: 03/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Performance: Verify that doc view should not hang when large 
+	 *              coding form is assigned to security group
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 207)
+	public void validateCodingFormInPaUssser() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		codingForm = new CodingForm(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51457");
+		baseClass.stepInfo("Performance: Verify that doc view should not hang when "
+				+ "large coding form is assigned to security group");
+
+		// Login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// creating long coding form
+		codingForm.codingFormLarge(cfLarge);
+		codingForm.assignCodingFormToSG(cfLarge);
+
+		// navigation to docview page from session search page
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("User on the docview page from session search");
+		driver.waitForPageToBeReady();
+
+		// validation for large coding form in context of security group
+		docViewPage.docviewPageLoadPerformanceForCF();
+		
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 03/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Performance: Verify that doc view should not hang when large 
+	 *              coding form is assigned to assignment
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 208)
+	public void validatingLargeCfFromAssgn() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		codingForm = new CodingForm(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51456");
+		baseClass.stepInfo("Performance: Verify that doc view should not hang "
+				+ "when large coding form is assigned to assignment");
+
+		String assignment = "AssCFLarge" + Utility.dynamicNameAppender();
+
+		// login as rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// assign default project coding form
+		codingForm.assignCodingFormToSG(Input.codingFormName);
+
+//	    searching document for assignment creation and new coding form created (existing)
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignment, cfLarge);
+		assignmentPage.add2ReviewerAndDistribute();
+		System.out.println(assignment);
+
+		// logout
+		loginPage.logout();
+
+		// login as rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validation for large coding form in context of security group
+		docViewPage.docviewPageLoadPerformanceForCF();
 
 		// logout
 		loginPage.logout();

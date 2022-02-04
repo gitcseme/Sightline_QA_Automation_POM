@@ -28,6 +28,7 @@ import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
+
 public class AdvancedSearch_Regression3 {
 	Driver driver;
 	LoginPage lp;
@@ -35,28 +36,28 @@ public class AdvancedSearch_Regression3 {
 	BaseClass baseClass;
 	String hitsCountPA;
 	int hitsCount;
-	
+
 	String prefixID = "A_" + Utility.dynamicNameAppender();
 	String suffixID = "_P" + Utility.dynamicNameAppender();
-	String productionname="prod"+Utility.dynamicNameAppender(); 
+	String productionname = "prod" + Utility.dynamicNameAppender();
 	String foldername = "FolderProd" + Utility.dynamicNameAppender();
 	String tagname = "Tag" + Utility.dynamicNameAppender();
-	
+
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException, AWTException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 		Input in = new Input();
-		in.loadEnvConfig();	
+		in.loadEnvConfig();
 		// Open browser
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		// Login as a PA
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		//Pre-requesites creation 
-		
+		// Pre-requesites creation
+
 		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
 		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
@@ -66,9 +67,9 @@ public class AdvancedSearch_Regression3 {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
-		hitsCountPA=sessionSearch.verifyPureHitsCount();
+		hitsCountPA = sessionSearch.verifyPureHitsCount();
 		sessionSearch.bulkTagExisting(tagname);
-		baseClass.stepInfo("Created a Tag " + tagname+ "Count of docs bulk tagged "+hitsCountPA); 
+		baseClass.stepInfo("Created a Tag " + tagname + "Count of docs bulk tagged " + hitsCountPA);
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
@@ -91,7 +92,7 @@ public class AdvancedSearch_Regression3 {
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		lp.logout();
 		lp.quitBrowser();
-		
+
 	}
 
 	/**
@@ -107,7 +108,7 @@ public class AdvancedSearch_Regression3 {
 		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		SessionSearch search = new SessionSearch(driver);
-		search.advancedContentSearch( Input.testData1);
+		search.advancedContentSearch(Input.testData1);
 		String PureHitCount = search.verifyPureHitsCount();
 		search.saveSearchAdvanced(saveSearchName);
 		baseClass.stepInfo("Created a saved search -" + saveSearchName);
@@ -123,118 +124,124 @@ public class AdvancedSearch_Regression3 {
 		baseClass.waitTime(4);
 		String expectedHits2 = search.getPureHitsLastCount().getText();
 		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + expectedHits2);
-		SoftAssert assertion=new SoftAssert();
+		SoftAssert assertion = new SoftAssert();
 		assertion.assertEquals(PureHitCount, expectedHits2);
 		assertion.assertEquals(PureHitCount, expectedHits1);
-        SavedSearch savedSearch=new SavedSearch(driver);		
+		SavedSearch savedSearch = new SavedSearch(driver);
 		savedSearch.SaveSearchDelete(saveSearchName);
 		assertion.assertAll();
-		baseClass.passedStep("Sucessfully Verified that - Application returns consistent search result when user resubmits a "
-				+ "saved search(Content & Metadata Block) multiple times(twice)");
+		baseClass.passedStep(
+				"Sucessfully Verified that - Application returns consistent search result when user resubmits a "
+						+ "saved search(Content & Metadata Block) multiple times(twice)");
 		lp.logout();
 	}
-	
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test( groups = { "regression" }, priority = 2, enabled = true)
-public void verifyDocsCntAlreadyProduced() throws InterruptedException {
-	
-	baseClass.stepInfo("Test case Id: RPMXCON-48747");
-	baseClass.stepInfo("Verify that - Application returns all the documents which are available under selected group with AND "
-			+ "operator and production optional filters - status  in search result.");
-	
-	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-	baseClass.stepInfo("Logged in as PA" );
-	SessionSearch search = new SessionSearch(driver);
-	search.switchToWorkproduct();
-	search.selctProductionsAlreadyProduced();
-	search.serarchWP();
-	driver.waitForPageToBeReady();
-	String expectedPureHitCount = search.verifyPureHitsCount();//expected value
-	baseClass.stepInfo("Total no docs in alerady produced status under Production  "+expectedPureHitCount);
-	baseClass.selectproject();
-	search.navigateToAdvancedSearchPage();
-	//Adding WP Security Group into search text box
-	search.workProductSearch("security group",Input.securityGroup,true);
-	//Adding Operator into search text box
-	search.selectOperator("AND");
-	//Adding WP Productions-already produced into search text box
-	search.selctProductionsAlreadyProduced();
-	baseClass.stepInfo("Configured a Query with SecurityGroup:[ "+Input.securityGroup+"] AND Productions:[produced: \"true\"]"); 
-	search.serarchWP();
-	driver.waitForPageToBeReady();
-	String PureHitCount = search.verifyPureHitsCount();
-	baseClass.stepInfo("Total no docs after configured query as per test case is   "+PureHitCount);
-	System.out.println(expectedPureHitCount+PureHitCount);
-	SoftAssert assertion=new SoftAssert();
-	assertion.assertEquals(expectedPureHitCount, PureHitCount);//Validation of hit count.
-	assertion.assertAll();
-	baseClass.passedStep("Sucessfully Verified that - Application returns all the documents which are available under selected group with AND operator and"
-			+ " production optional filters - status  in search result.");
-	lp.logout();
-}
-	
-	
+	@Test(groups = { "regression" }, priority = 2, enabled = true)
+	public void verifyDocsCntAlreadyProduced() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48747");
+		baseClass.stepInfo(
+				"Verify that - Application returns all the documents which are available under selected group with AND "
+						+ "operator and production optional filters - status  in search result.");
+
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		SessionSearch search = new SessionSearch(driver);
+		search.switchToWorkproduct();
+		search.selctProductionsAlreadyProduced();
+		search.serarchWP();
+		driver.waitForPageToBeReady();
+		String expectedPureHitCount = search.verifyPureHitsCount();// expected value
+		baseClass.stepInfo("Total no docs in alerady produced status under Production  " + expectedPureHitCount);
+		baseClass.selectproject();
+		search.navigateToAdvancedSearchPage();
+		// Adding WP Security Group into search text box
+		search.workProductSearch("security group", Input.securityGroup, true);
+		// Adding Operator into search text box
+		search.selectOperator("AND");
+		// Adding WP Productions-already produced into search text box
+		search.selctProductionsAlreadyProduced();
+		baseClass.stepInfo("Configured a Query with SecurityGroup:[ " + Input.securityGroup
+				+ "] AND Productions:[produced: \"true\"]");
+		search.serarchWP();
+		driver.waitForPageToBeReady();
+		String PureHitCount = search.verifyPureHitsCount();
+		baseClass.stepInfo("Total no docs after configured query as per test case is   " + PureHitCount);
+		System.out.println(expectedPureHitCount + PureHitCount);
+		SoftAssert assertion = new SoftAssert();
+		assertion.assertEquals(expectedPureHitCount, PureHitCount);// Validation of hit count.
+		assertion.assertAll();
+		baseClass.passedStep(
+				"Sucessfully Verified that - Application returns all the documents which are available under selected group with AND operator and"
+						+ " production optional filters - status  in search result.");
+		lp.logout();
+	}
+
 	/**
 	 * @author Jayanthi.ganesan
-	 * @throws AWTException 
+	 * @throws AWTException
 	 */
-	@Test( groups = { "regression" }, priority = 1, enabled = true)
-public void verifyDocsCntAssgnments() throws InterruptedException, AWTException {
-	
-	baseClass.stepInfo("Test case Id: RPMXCON-48746");
-	baseClass.stepInfo("Verify that - Application returns all the documents which are available under selected group and"
-			+ " Assignments with OR operator in search result.");
-	String tagName="combined"+Utility.dynamicNameAppender();
-	String assgnName="combined"+Utility.dynamicNameAppender();
-	lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-	baseClass.stepInfo("Logged in as RMU" );
-	SessionSearch search = new SessionSearch(driver);
-	
-	//Pre requesite creation
-	//Performing Star search since this will add all avail docs from default sec group .
-	search.basicContentSearch(Input.searchStringStar);
-	String expectedHitsCount=search.verifyPureHitsCount();//expected value
-	search.bulkTag(tagName);
-	baseClass.stepInfo("Created a Tag " + tagName+ "Count of docs bulk tagged"+expectedHitsCount); 
-	baseClass.selectproject();
-	search.basicContentSearch(Input.TallySearch);
-	search.bulkAssign();
-	AssignmentsPage agnmt = new AssignmentsPage(driver);
-	agnmt.FinalizeAssignmentAfterBulkAssign();
-	agnmt.createAssignment_fromAssignUnassignPopup(assgnName, Input.codeFormName);
-	agnmt.getAssignmentSaveButton().waitAndClick(5);
-	baseClass.stepInfo("Created a assignment " + assgnName);  	
-	
-	baseClass.selectproject();
-	search.navigateToAdvancedSearchPage();
-	//Adding WP tag into search text box
-	search.workProductSearch("tag",tagName,true);
-	//Adding Operator into search text box
-	search.selectOperator("OR");
-	//Adding WP assignment into search text box
-	search.workProductSearch("assignments",assgnName,false);
-	baseClass.stepInfo("Configured a Query with TagName:[ "+tagName+"] AND AssignmentName:[" + assgnName+"]"); 
-	search.serarchWP();
-	driver.waitForPageToBeReady();
-	String PureHitCount = search.verifyPureHitsCount();
-	System.out.println(expectedHitsCount+PureHitCount);
-	SoftAssert assertion=new SoftAssert();
-	//validation of pure hits
-	assertion.assertEquals(expectedHitsCount, PureHitCount);
-   agnmt.deleteAssgnmntUsingPagination(assgnName);
-   TagsAndFoldersPage tp= new TagsAndFoldersPage(driver);
-   this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-   tp.deleteAllTags(tagName);
-	assertion.assertAll();
-	baseClass.passedStep("Application   returned all the documents which are available under "
-			+ "selected security group in search result.     "+PureHitCount);
-	baseClass.passedStep("Sucessfully Verified that - Application returns all the documents which are available under selected group and "
-			+ "Assignments with OR operator in search result.");
-	lp.logout();	
-}
-	
+	@Test(groups = { "regression" }, priority = 1, enabled = true)
+	public void verifyDocsCntAssgnments() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48746");
+		baseClass.stepInfo(
+				"Verify that - Application returns all the documents which are available under selected group and"
+						+ " Assignments with OR operator in search result.");
+		String tagName = "combined" + Utility.dynamicNameAppender();
+		String assgnName = "combined" + Utility.dynamicNameAppender();
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		SessionSearch search = new SessionSearch(driver);
+
+		// Pre requesite creation
+		// Performing Star search since this will add all avail docs from default sec
+		// group .
+		search.basicContentSearch(Input.searchStringStar);
+		String expectedHitsCount = search.verifyPureHitsCount();// expected value
+		search.bulkTag(tagName);
+		baseClass.stepInfo("Created a Tag " + tagName + "Count of docs bulk tagged" + expectedHitsCount);
+		baseClass.selectproject();
+		search.basicContentSearch(Input.TallySearch);
+		search.bulkAssign();
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		agnmt.FinalizeAssignmentAfterBulkAssign();
+		agnmt.createAssignment_fromAssignUnassignPopup(assgnName, Input.codeFormName);
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created a assignment " + assgnName);
+
+		baseClass.selectproject();
+		search.navigateToAdvancedSearchPage();
+		// Adding WP tag into search text box
+		search.workProductSearch("tag", tagName, true);
+		// Adding Operator into search text box
+		search.selectOperator("OR");
+		// Adding WP assignment into search text box
+		search.workProductSearch("assignments", assgnName, false);
+		baseClass.stepInfo("Configured a Query with TagName:[ " + tagName + "] AND AssignmentName:[" + assgnName + "]");
+		search.serarchWP();
+		driver.waitForPageToBeReady();
+		String PureHitCount = search.verifyPureHitsCount();
+		System.out.println(expectedHitsCount + PureHitCount);
+		SoftAssert assertion = new SoftAssert();
+		// validation of pure hits
+		assertion.assertEquals(expectedHitsCount, PureHitCount);
+		agnmt.deleteAssgnmntUsingPagination(assgnName);
+		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tp.deleteAllTags(tagName);
+		assertion.assertAll();
+		baseClass.passedStep("Application   returned all the documents which are available under "
+				+ "selected security group in search result.     " + PureHitCount);
+		baseClass.passedStep(
+				"Sucessfully Verified that - Application returns all the documents which are available under selected group and "
+						+ "Assignments with OR operator in search result.");
+		lp.logout();
+	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws AWTException
@@ -268,7 +275,8 @@ public void verifyDocsCntAssgnments() throws InterruptedException, AWTException 
 		search.selectOperator("NOT");
 		// Adding WP assignment into search text box
 		search.workProductSearch("productions", productionname, false);
-		baseClass.stepInfo("Configured a Query with TagName:[ " + tagName + "] AND Productions:[" + productionname + "]");
+		baseClass.stepInfo(
+				"Configured a Query with TagName:[ " + tagName + "] AND Productions:[" + productionname + "]");
 		search.serarchWP();
 		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
@@ -290,104 +298,112 @@ public void verifyDocsCntAssgnments() throws InterruptedException, AWTException 
 						+ " in search result.");
 		lp.logout();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
-	 * @throws AWTException 
+	 * @throws AWTException
 	 */
-	@Test( groups = { "regression" }, priority = 5, enabled = true)
-public void verifyDocsCntCompletedAssgnments() throws InterruptedException, AWTException {
-	
-	baseClass.stepInfo("Test case Id: RPMXCON-48748");
-	baseClass.stepInfo("Verify that - Application returns all the documents which are available under selected group and Assignments - Completed status"
-			+ " with AND operator in search result.");
-	String tagName="combined"+Utility.dynamicNameAppender();
-	lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-	baseClass.stepInfo("Logged in as RMU" );
-	SessionSearch search = new SessionSearch(driver);
-	
-	//Pre requesite creation
-	//Performing Star search since this will add all avail docs from default sec group .
-	search.basicContentSearch(Input.searchStringStar);
-	String tagHitsCount=search.verifyPureHitsCount();//expected value
-	search.bulkTag(tagName);
-	baseClass.stepInfo("Created a Tag " + tagName+ "Count of docs bulk tagged "+tagHitsCount); 
-	//getting total count of completed assignments doc count--expected value 	
-	baseClass.selectproject();
-	search.switchToWorkproduct();
-	search.selectCompletedAssignmentInWP("Completed");
-	search.serarchWP();
-	driver.waitForPageToBeReady();
-	String expectedPureHitCount = search.verifyPureHitsCount();//expected value
-	baseClass.stepInfo("Total no docs in  Completed status under Assignments  "+expectedPureHitCount);
-	
-	baseClass.selectproject();
-	search.navigateToAdvancedSearchPage();
-	//Adding WP tag into search text box
-	search.workProductSearch("tag",tagName,true);
-	//Adding Operator into search text box
-	search.selectOperator("AND");
-	//Adding WP assignment into search text box
-	search.selectCompletedAssignmentInWP("Completed");
-	baseClass.stepInfo("Configured a Query with TagName:[ "+tagName+"] AND  Assignments:[completed:\"true\"]"); 
-	search.serarchWP();
-	driver.waitForPageToBeReady();
-	String PureHitCount = search.verifyPureHitsCount();
-	System.out.println(expectedPureHitCount+PureHitCount);
-	SoftAssert assertion=new SoftAssert();
-	//validation of pure hits
-	assertion.assertEquals(expectedPureHitCount, PureHitCount);
-  
-   TagsAndFoldersPage tp= new TagsAndFoldersPage(driver);
-   tp.deleteAllTags(tagName);
-	assertion.assertAll();
-	baseClass.passedStep("Application   returned all the documents which are available under "
-			+ "selected security group in search result   for the configured query."+PureHitCount);
-	baseClass.passedStep("Sucessfully Verified that - Application returns all the documents which are available under selected group and Assignments - Completed status with "
-			+ "AND operator in search result.");
-	lp.logout();
-	
-}
+	@Test(groups = { "regression" }, priority = 5, enabled = true)
+	public void verifyDocsCntCompletedAssgnments() throws InterruptedException, AWTException {
 
-/**
- * @author Jayanthi.ganesan
- * @throws InterruptedException
- */
-@Test(dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 6)
-public void verifySearchResultForComment(String username, String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48748");
+		baseClass.stepInfo(
+				"Verify that - Application returns all the documents which are available under selected group and Assignments - Completed status"
+						+ " with AND operator in search result.");
+		String tagName = "combined" + Utility.dynamicNameAppender();
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		SessionSearch search = new SessionSearch(driver);
 
-	String docComment = "Reviewed";
-	int count = 2;
+		// Pre requesite creation
+		// Performing Star search since this will add all avail docs from default sec
+		// group .
+		search.basicContentSearch(Input.searchStringStar);
+		String tagHitsCount = search.verifyPureHitsCount();// expected value
+		search.bulkTag(tagName);
+		baseClass.stepInfo("Created a Tag " + tagName + "Count of docs bulk tagged " + tagHitsCount);
+		// getting total count of completed assignments doc count--expected value
+		baseClass.selectproject();
+		search.switchToWorkproduct();
+		search.selectCompletedAssignmentInWP("Completed");
+		search.serarchWP();
+		driver.waitForPageToBeReady();
+		String expectedPureHitCount = search.verifyPureHitsCount();// expected value
+		baseClass.stepInfo("Total no docs in  Completed status under Assignments  " + expectedPureHitCount);
 
-	lp = new LoginPage(driver);
-	SessionSearch search = new SessionSearch(driver);
-	DocViewPage docview = new DocViewPage(driver);
-	lp.loginToSightLine(username, password);
-	baseClass.stepInfo("Logged In as : " + username);
-	baseClass.stepInfo("Test case Id: RPMXCON-47778");
-	baseClass.stepInfo("To verify as an user login into the Application, user will be able to search based on"
-			+ " comments text on Content & Metadata in advanced search");
-	if (username == Input.rmu1userName) {
-		search.advancedContentSearch(Input.searchString1);
-		search.ViewInDocView();
 
 		// Apply comments to document
-		docview.addCommentAndSave(docComment, true, count);
+		docview.addCommentAndSave(docComment, true, count,true);
 		baseClass.selectproject();
+		search.navigateToAdvancedSearchPage();
+		// Adding WP tag into search text box
+		search.workProductSearch("tag", tagName, true);
+		// Adding Operator into search text box
+		search.selectOperator("AND");
+		// Adding WP assignment into search text box
+		search.selectCompletedAssignmentInWP("Completed");
+		baseClass.stepInfo("Configured a Query with TagName:[ " + tagName + "] AND  Assignments:[completed:\"true\"]");
+		search.serarchWP();
+		driver.waitForPageToBeReady();
+		String PureHitCount = search.verifyPureHitsCount();
+		System.out.println(expectedPureHitCount + PureHitCount);
+		SoftAssert assertion = new SoftAssert();
+		// validation of pure hits
+		assertion.assertEquals(expectedPureHitCount, PureHitCount);
+
+		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
+		tp.deleteAllTags(tagName);
+		assertion.assertAll();
+		baseClass.passedStep("Application   returned all the documents which are available under "
+				+ "selected security group in search result   for the configured query." + PureHitCount);
+		baseClass.passedStep(
+				"Sucessfully Verified that - Application returns all the documents which are available under selected group and Assignments - Completed status with "
+						+ "AND operator in search result.");
+		lp.logout();
+
 	}
 
-	int pureHit1 = search.getCommentsOrRemarksCount_AdvancedSearch(Input.documentComments, docComment);
-	SoftAssert assertion = new SoftAssert();
-	assertion.assertEquals(pureHit1, count);
-	assertion.assertAll();
-	baseClass.passedStep("user  able to search based on comments text on Content & Metadata in "
-			+ "advanced search and pure hit count displayed is " + pureHit1 + " Which is expected.");
-	lp.logout();
-}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 6)
+	public void verifySearchResultForComment(String username, String password) throws InterruptedException {
+
+		String docComment = "Reviewed";
+		int count = 2;
+
+		lp = new LoginPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+		DocViewPage docview = new DocViewPage(driver);
+		lp.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged In as : " + username);
+		baseClass.stepInfo("Test case Id: RPMXCON-47778");
+		baseClass.stepInfo("To verify as an user login into the Application, user will be able to search based on"
+				+ " comments text on Content & Metadata in advanced search");
+		if (username == Input.rmu1userName) {
+			search.advancedContentSearch(Input.searchString1);
+			search.ViewInDocView();
+
+			// Apply comments to document
+			// docview.addCommentAndSave(docComment, true, count);
+			baseClass.selectproject();
+		}
+
+		int pureHit1 = search.getCommentsOrRemarksCount_AdvancedSearch(Input.documentComments, docComment);
+		SoftAssert assertion = new SoftAssert();
+		assertion.assertEquals(pureHit1, count);
+		assertion.assertAll();
+		baseClass.passedStep("user  able to search based on comments text on Content & Metadata in "
+				+ "advanced search and pure hit count displayed is " + pureHit1 + " Which is expected.");
+		lp.logout();
+	}
+
 	/**
 	 * @author Jayanthi.ganesan]
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users",enabled = true, groups = { "regression" }, priority = 7)
+	@Test(dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyPinnedIcon(String username, String password) throws InterruptedException {
 		lp = new LoginPage(driver);
 		SessionSearch search = new SessionSearch(driver);
@@ -398,30 +414,34 @@ public void verifySearchResultForComment(String username, String password) throw
 		search.advancedContentSearch(Input.searchString1);
 		driver.waitForPageToBeReady();
 		search.getPureHitAddButton().waitAndClick(5);
-		baseClass.stepInfo("Performed a advanced content and metadata search  and moved the pure hit block to shopping cart");
-		if(search.getPinnedSearchIcon().isElementAvailable(2)) {
-			baseClass.passedStep(" pin icon  locked/Pinned this search when user drag the results into the Shopping cart  ");
-		}else {
-			baseClass.failedStep(" pin icon is not locked/Pinned this search when user drag the results into the Shopping cart  ");
+		baseClass.stepInfo(
+				"Performed a advanced content and metadata search  and moved the pure hit block to shopping cart");
+		if (search.getPinnedSearchIcon().isElementAvailable(2)) {
+			baseClass.passedStep(
+					" pin icon  locked/Pinned this search when user drag the results into the Shopping cart  ");
+		} else {
+			baseClass.failedStep(
+					" pin icon is not locked/Pinned this search when user drag the results into the Shopping cart  ");
 		}
 		lp.logout();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test( groups = { "regression" }, priority = 2, enabled = true)
+	@Test(groups = { "regression" }, priority = 8, enabled = true)
 	public void verifyResubmit_WPAndAudio() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48766");
-		baseClass.stepInfo("Verify that - Application returns consistent search result when user resubmits a 
-				   saved search(WorkProduct Block -Security Group and Audio Block) multiple times(twice)");
+		baseClass.stepInfo("Verify that - Application returns consistent search result when "
+				+ "user resubmits a   saved search(WorkProduct Block -Security Group and Audio Block) multiple times(twice)");
 		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("Logged in as PA" );
+		baseClass.stepInfo("Logged in as PA");
 		SessionSearch search = new SessionSearch(driver);
 		search.switchToWorkproduct();
-		search.workProductSearch("security group",Input.securityGroup,false);
+		search.workProductSearch("security group", Input.securityGroup, false);
 		search.audioSearch_Combined();
-		search.selectOperator("NOT",1);
+		search.selectOperator("NOT", 1);
 		baseClass.stepInfo("Configured a Work product search query with security group block and audio block");
 		search.serarchWP();
 		driver.waitForPageToBeReady();
@@ -434,23 +454,129 @@ public void verifySearchResultForComment(String username, String password) throw
 		search.serarchWP();
 		driver.waitForPageToBeReady();
 		baseClass.waitTime(3);
-		String expectedHits1 = search.getPureHitsLastCount().getText();
-		baseClass.stepInfo("Pure hit count after WP saved search is " + expectedHits1);
+		String actualHits1 = search.getPureHitsLastCount().getText();
+		baseClass.stepInfo("Pure hit count after WP saved search is " + actualHits1);
 		search.resubmitSearch();
 		driver.waitForPageToBeReady();
 		baseClass.waitTime(3);
 		baseClass.waitForElement(search.getPureHitsLastCount());
-		String expectedHits2 = search.getPureHitsLastCount().getText();
-                baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + expectedHits2);
-		SoftAssert assertion=new SoftAssert();
-		assertion.assertEquals(PureHitCount, expectedHits2);
-		assertion.assertEquals(PureHitCount, expectedHits1);
-                SavedSearch savedSearch=new SavedSearch(driver);		
+		String actualHits2 = search.getPureHitsLastCount().getText();
+		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + actualHits2);
+		search.resubmitSearch();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(search.getPureHitsLastCount());
+		baseClass.waitTime(4);
+		String actualHits3 = search.getPureHitsLastCount().getText();
+		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + actualHits3);
+		SoftAssert assertion = new SoftAssert();
+		assertion.assertEquals(PureHitCount, actualHits1);
+		assertion.assertEquals(PureHitCount, actualHits2);
+		assertion.assertEquals(PureHitCount, actualHits3);
+		SavedSearch savedSearch = new SavedSearch(driver);
 		savedSearch.SaveSearchDelete(saveSearchName);
 		assertion.assertAll();
-		baseClass.passedStep("Sucessfully Verified that - Application returns consistent search result when user resubmits a "
-				+ "saved search(Content & Metadata Block) multiple times(twice)");
+		baseClass.passedStep(
+				"Sucessfully Verified that - Application returns consistent search result when user resubmits a "
+						+ "saved search(Content & Metadata Block) multiple times(twice)");
+		lp.logout();
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+
+	@Test(groups = { "regression" }, priority = 9, enabled = true)
+	public void verifyResubmit_cntAndMetaAndConceptualAndWPFolderAndAudio() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-46891");
+		baseClass.stepInfo("Verify that - Application returns consistent search result when user resubmits a saved search(Content & Metadata Block"
+				+ ",Conceptual Block,WorkProduct Block - Folder and Audio Block) multiple times(twice)");
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as " + Input.rmu1userName);
+		String folderName = "FolderName" + Utility.dynamicNameAppender();
+		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.searchStringStar);
+		search.bulkFolder(folderName);
+		int ExpectedPureHit = search.verifyCombinedSearch(folderName, "folder", "yes", "AND", "AND", "AND");
+		String ExpectedPureHit1 = String.valueOf(ExpectedPureHit);
+		driver.scrollPageToTop();
+		search.saveSearchAdvanced(saveSearchName);
+		search.selectSavedsearchInASWp(saveSearchName);
+		baseClass.stepInfo("Configured a Work product search query -- saved search -" + saveSearchName + " ");
+		search.serarchWP();
+		driver.waitForPageToBeReady();
+		String actualHits1 = search.getPureHitsLastCount().getText();
+		baseClass.stepInfo("Pure hit count after WP saved search is " + actualHits1);
+		search.resubmitSearch();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(search.getPureHitsLastCount());
+		baseClass.waitTime(4);
+		String actualHits2 = search.getPureHitsLastCount().getText();
+		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + actualHits2);
+		search.resubmitSearch();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(search.getPureHitsLastCount());
+		baseClass.waitTime(4);
+		String actualHits3 = search.getPureHitsLastCount().getText();
+		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + actualHits3);
+		SoftAssert assertion = new SoftAssert();
+		assertion.assertEquals(ExpectedPureHit1, actualHits1);
+		assertion.assertEquals(ExpectedPureHit1, actualHits2); // Validation of pure hit count after resubmitting a
+																// saved search
+		assertion.assertEquals(ExpectedPureHit1, actualHits3);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		savedSearch.SaveSearchDelete(saveSearchName);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
+		tp.deleteAllFolders(folderName);
+		assertion.assertAll();
+		baseClass.passedStep(
+				"Sucessfully Verified that - Application returns consistent search result when user resubmits a saved search(Content & Metadata Block,"
+				+ "Conceptual Block,WorkProduct Block - Folder and Audio Block) multiple times(twice)");
+		lp.logout();
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	@Test( groups = { "regression" }, priority = 10, enabled = true)
+public void verifyDocsCnt_SecGrp_OR_production() throws InterruptedException {
+	
+	baseClass.stepInfo("Test case Id: RPMXCON-48745");
+	baseClass.stepInfo("Verify that - Application returns all the documents which are available under selected"
+			+ " group with OR operator in search result.");	
+	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+	baseClass.stepInfo("Logged in as PA" );
+	SessionSearch search = new SessionSearch(driver);
+	search.navigateToAdvancedSearchPage();
+	//Adding WP Security Group into search text box
+	search.workProductSearch("security group",Input.securityGroup,true);
+	search.serarchWP();
+	driver.waitForPageToBeReady();
+	String expectedPureHitCount = search.verifyPureHitsCount();//expected value
+	baseClass.stepInfo("Total no docs available in default security group  "+expectedPureHitCount);
+	baseClass.selectproject();
+	search.navigateToAdvancedSearchPage();
+	//Adding WP Security Group into search text box
+	search.workProductSearch("security group",Input.securityGroup,true);
+	//Adding Operator into search text box
+	search.selectOperator("OR");
+	//Adding WP Productions[any one production] into search text box
+		search.workProductSearch("productions",productionname,false);
+	baseClass.stepInfo("Configured a Query with SecurityGroup:[ "+Input.securityGroup+"] OR"
+			+ " productions: [ name: [\""+productionname+"\"], produced: \"true\" ]"); 
+	search.serarchWP();
+	driver.waitForPageToBeReady();
+	String PureHitCount = search.verifyPureHitsCount();
+	baseClass.stepInfo("Total no docs after configuring a query as per test case and search  is   "+PureHitCount);
+	System.out.println(expectedPureHitCount+PureHitCount);
+	SoftAssert assertion=new SoftAssert();
+	assertion.assertEquals(expectedPureHitCount, PureHitCount);//Validation of hit count.
+	assertion.assertAll();
+	baseClass.passedStep("Sucessfully verified that application returns all the documents which are available under "
+			+ "selected group with OR operator in search result.");
+}
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
@@ -469,7 +595,7 @@ public void verifySearchResultForComment(String username, String password) throw
 			lp.logoutWithoutAssert();
 		}
 		try {
-			//LoginPage.clearBrowserCache();
+			// LoginPage.clearBrowserCache();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();
@@ -484,7 +610,7 @@ public void verifySearchResultForComment(String username, String password) throw
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.pa1userName, Input.pa1password },
 				{ Input.rev1userName, Input.rev1password } };
 		return users;
-	}	
+	}
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
