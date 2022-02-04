@@ -2887,6 +2887,7 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
 	}
 	
+
 	//Added by Gopinath - 03/02/2022
 	public Element getEditButton() {
 		return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
@@ -2899,7 +2900,6 @@ public class DocViewPage {
 	public Element getDocView_AnalyticsPanel_FamilyMemberWholeTabel() {
 		return driver.FindElementById("family1");
 	}
-	
 
 	public DocViewPage(Driver driver) {
 
@@ -5404,10 +5404,15 @@ public class DocViewPage {
 			}
 		}), Input.wait30);
 		getDocView_NumTextBox().SendKeys("125" + Keys.ENTER);
-		softAssertion.assertEquals(getDocumetListLoading().Displayed().booleanValue(), true);
-		softAssertion.assertEquals(getCentralPanelDispaly().Displayed().booleanValue(), true);
+		base.waitTime(3);
+		base.waitForElement(getDocumetListLoading());
+		base.waitForElement(getCentralPanelDispaly());
+		softAssertion.assertEquals(getDocumetListLoading().isDisplayed().booleanValue(), true);
+		softAssertion.assertEquals(getCentralPanelDispaly().isDisplayed().booleanValue(), true);
 		base.passedStep("While Entering the document number persistent hits displayed");
 		base.passedStep("Persistent hits loaded once while entering the document number");
+		driver.waitForPageToBeReady();
+		base.waitTime(10);
 	}
 
 	/**
@@ -6040,17 +6045,10 @@ public class DocViewPage {
 		base.waitForElement(getDocView_NumTextBox());
 		getDocView_NumTextBox().SendKeys(Integer.toString(id));
 		getDocView_NumTextBox().Enter();
-		driver.getWebDriver().navigate().refresh();
 		driver.waitForPageToBeReady();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocView_MiniDocListIds(id).Visible();
-			}
-		}), Input.wait60);
+		base.waitTime(5);
 		base.waitForElement(getDocView_MiniDocListIds(id));
-		softAssertion.assertTrue(getDocView_MiniDocListIds(id).isDisplayed());
-		softAssertion.assertAll();
+		base.waitTillElemetToBeClickable(getDocView_MiniDocListIds(id));
 	}
 
 	/**
@@ -16970,21 +16968,20 @@ public class DocViewPage {
 	 * @author Aathith.Senthilkumar
 	 */
 	public void verifyThatIsLastDoc() {
+		driver.scrollPageToTop();
+		base.waitTime(5);
 		driver.waitForPageToBeReady();
-		String expectText = getlastDocinMiniDocView().getText().trim();
+		base.waitTillElemetToBeClickable(getDocView_Last());
+		getDocView_Last().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		String expectText = getDocView_NumTextBox().GetAttribute("value");
 		System.out.println(expectText);
-		getDocView_Last().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		String actualText = getDocView_CurrentDocId().getText().trim();
+		String actualText = getDocView_info().getText().trim();
 		System.out.println(actualText);
-		if (expectText.equalsIgnoreCase(actualText)) {
-			softAssertion.assertEquals(actualText, expectText);
-			System.out.println("assert are equal");
-			base.stepInfo("last document navigation navigated successfully");
-			softAssertion.assertAll();
+		if (actualText.contains(expectText)) {
+			base.passedStep("last document navigation navigated successfully");
 		} else {
-			System.out.println("assert are not equal");
-			base.stepInfo("last doc navigation failed");
+			base.failedStep("last doc navigation faileds");
 		}
 	}
 
@@ -22762,10 +22759,10 @@ public class DocViewPage {
 
 	}
 
+	
 	/**
 	 * @author Gopinath
-	 * @description this method will verify document in docview loaded in 4 sec
-	 *              after enter doc number
+	 * @description this method will verify document in docview loaded in 4 sec after enter doc number
 	 * @param docNum
 	 */
 	public void verifyDocumentLoadedWithInFourSeconds(String docNum) {
@@ -22796,6 +22793,8 @@ public class DocViewPage {
 		}
 	}
 
+
+
 	/**
 	 * @author Raghuram 01/02/22 NA Modified date: NA Modified by:NA
 	 * @return
@@ -22818,6 +22817,7 @@ public class DocViewPage {
 	}
 
 
+
 	/**
 	 * @author Raghuram 02/03/22 NA Modified date: NA Modified by:NA
 	 * @return
@@ -22831,6 +22831,8 @@ public class DocViewPage {
 		base.compareTextViaContains(audioEyePersistent.toLowerCase(), searchInput,
 				"Persistent hit panel opened and displaying" + audioEyePersistent + "",
 				"Persistent hit panel not displayed");
+		
+	}
 
 	
 	/**
@@ -22858,3 +22860,4 @@ public class DocViewPage {
 
 	}
 }
+
