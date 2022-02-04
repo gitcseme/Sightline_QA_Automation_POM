@@ -22859,5 +22859,51 @@ public class DocViewPage {
 		}
 
 	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	
+	public void docviewPageLoadPerformanceForCF() {
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		String pageHang=null;
+		
+		// performace testing for page hanging or not
+		Long navigationStart = (Long) jse.executeScript("return window.performance.timing.navigationStart");
+		base.stepInfo("Navigation start from session search to docview"+  navigationStart+ "");
+		Long responseStart = (Long) jse.executeScript("return window.performance.timing.responseStart");
+		softAssertion.assertNotEquals(navigationStart, responseStart);
+		Long backendDom = (Long) jse.executeScript("return performance.timing.responseStart-performance.timing.navigationStart");
+		Long pageLoaded = (Long) jse.executeScript("return window.performance.timing.domComplete");
+		base.stepInfo("Page loaded completely"+  pageLoaded+ "");
+		Long pageLoadEnd = (Long) jse.executeScript("return window.performance.timing.loadEventEnd");
+		softAssertion.assertNotEquals(pageLoadEnd, "null");
+		Long frontEnd = (Long) jse.executeScript("return performance.timing.loadEventEnd-window.performance.timing.responseStart");
+		
+		// validation for page hang
+		if (!pageLoadEnd.equals(pageHang)) {
+			base.passedStep("Docview page not get hanged when coding form created for large");
+		}
+		else {
+			base.failedMessage("Page get hanged when coding form created for large");
+		}
+		
+		// validation for child window
+		base.stepInfo("Opening child window");
+		clickGearIconOpenCodingFormChildWindow();
+        String parent=switchTochildWindow();
+		Long pageLoadEndChild = (Long) jse.executeScript("return window.performance.timing.loadEventEnd");
+		softAssertion.assertNotEquals(pageLoadEndChild, "null");
+		if (!pageLoadEndChild.equals(pageHang)) {
+			base.passedStep("Docview page not get hanged when coding form created for large");
+		}
+		else {
+			base.failedMessage("Page get hanged when coding form created for large");
+		}
+		childWindowToParentWindowSwitching(parent);
+		driver.waitForPageToBeReady();
+        softAssertion.assertAll();
+		
+	}
 }
 
