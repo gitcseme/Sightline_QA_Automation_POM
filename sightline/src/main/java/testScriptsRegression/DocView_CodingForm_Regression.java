@@ -9897,7 +9897,50 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 
 	}
+	/**
+	* @Author : Brundha 
+	* @Description:To verify that message should be displayed if no coding form is
+	* available for principal document and user select action as 'Code Same as this'.
+	*/
+	@Test(enabled = true, groups = { "regression" }, priority = 209)
+	public void validateCodeSameWhenNoCf() throws InterruptedException, AWTException {
+	docViewPage = new DocViewPage(driver);
+	sessionSearch = new SessionSearch(driver);
+	codingForm = new CodingForm(driver);
+	softAssertion=new SoftAssert();
+	baseClass.stepInfo("Test case Id: RPMXCON-50942");
+	baseClass.stepInfo("To verify that message should be displayed if no coding form is"
+	+ " available for principal document and user select action as 'Code Same as this'.");
+	String cf = "cf" + Utility.dynamicNameAppender();
+	
+	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
+	// Removing coding from for sg
+	codingForm.commentRequired(cf);
+	codingForm.assignCodingFormToSG(cf);
+	codingForm.deleteCodingForm(cf,cf);
+
+	// navigation to docview page from session search page
+	sessionSearch.basicContentSearch(Input.searchString1);
+	sessionSearch.ViewNearDupeDocumentsInDocView();
+
+	// valiadte no coding form presence
+	driver.waitForPageToBeReady();
+	boolean flag = docViewPage.getNoDefaultCodingForm().Displayed();
+	softAssertion.assertTrue(flag);
+	baseClass.stepInfo("No coding available in context of security group");
+	baseClass.waitForElement(docViewPage.getDocView_Analytics_NearDupeTab());
+	docViewPage.getDocView_Analytics_NearDupeTab().waitAndClick(10);
+	baseClass.waitForElement(docViewPage.getDocView_Analytics_NearDupe_Doc(1));
+	docViewPage.getDocView_Analytics_NearDupe_Doc(1).waitAndClick(5);
+	baseClass.waitForElement(docViewPage.getDocView_ChildWindow_ActionButton());
+	docViewPage.getDocView_ChildWindow_ActionButton().waitAndClick(15);
+	baseClass.waitForElement(docViewPage.getCodeSameAsNearDupe());
+	docViewPage.getCodeSameAsNearDupe().waitAndClick(15);
+	baseClass.VerifySuccessMessage("Code same performed successfully.");
+	softAssertion.assertAll();
+	loginPage.logout();
+	}
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {
 		return new Object[][] { { "pa", Input.pa1userName, Input.pa1password, "rmu" },
