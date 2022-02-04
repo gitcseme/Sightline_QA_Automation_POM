@@ -100,6 +100,9 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
+	public Element getPersistantHitCb_Existing() {
+		return driver.FindElementByXPath("//div[@id='existingassignment']//div//label[@class='checkbox']//i");
+	}
 	public Element getPinBtn(String searchName) {
 		return driver.FindElementByXPath(
 				"//span[text()='SS:" + searchName + "']//following::span[@class='pin-search']//button");
@@ -1471,7 +1474,7 @@ public class SessionSearch {
 	}
 
 	public Element getAdvSearchCopyToNewSearch() {
-		return driver.FindElementByXPath("//*[@id=\"Adv\"]/div/div/button[@class='btn btn-default dropdown-toggle']");
+		return driver.FindElementByXPath("(//*[@id=\"Adv\"]/div/div/button[@class='btn btn-default dropdown-toggle'])[last()]");
 	}
 
 	public ElementCollection getDetailsTable() {
@@ -1502,6 +1505,9 @@ public class SessionSearch {
 
 	public Element getPinnedSearchIcon() {
 		return driver.FindElementByXPath("//span[@title='Un Pin this Search']");
+	}
+	public Element getModifyASearch_Last() {
+		return driver.FindElementByXPath("(//a[@id='qModifySearch'])[last()]");
 	}
 
 	public SessionSearch(Driver driver) {
@@ -9590,9 +9596,12 @@ public class SessionSearch {
 		base.waitForElement(getQuerySearchButton());
 		getQuerySearchButton().waitAndClick(10);
 	}
-
+/**
+ * @author Jayanthi.ganesan  
+ * Modified by jayanthi-3/2/21
+ */
 	public void resubmitSearch() {
-		getModifyASearch().waitAndClick(10);
+		getModifyASearch_Last().waitAndClick(10);
 		getAdvSearchCopyToNewSearch().waitAndClick(10);
 		getAdvanceSearch_btn_Current().waitAndClick(10);
 	}
@@ -9960,4 +9969,35 @@ public class SessionSearch {
 		UtilityLog.info("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
 
 	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @param persistant
+	 */
+	public void bulkAssign_Persistant(boolean persistant) {
+
+		if (getRemovePureHit().isElementAvailable(3)) {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		} else if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(10);
+		}
+		base.waitForElement(getBulkActionButton());
+		getBulkActionButton().waitAndClick(3);
+
+		base.waitForElement(getBulkAssignAction());
+		getBulkAssignAction().waitAndClick(10);
+
+		base.stepInfo("performing bulk assign");
+		UtilityLog.info("performing bulk assign");
+
+		if (persistant) {
+			driver.waitForPageToBeReady();
+			if (getPersistantHitCb_Existing().isElementAvailable(3))
+				getPersistantHitCb_Existing().waitAndClick(5);
+		} else if (getPersistantHitCheckBox().isElementAvailable(3)) {
+			getPersistantHitCheckBox().waitAndClick(5);
+		}
+	}
+	
 }

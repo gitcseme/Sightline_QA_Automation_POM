@@ -6580,7 +6580,8 @@ public class AssignmentsPage {
 		getPersistCB_NewAssgn().waitAndClick(15);
 		for (int i = 0; i < 30; i++) {
 			try {
-				search.getContinueButton().Click();
+				bc.waitTillElemetToBeClickable(search.getContinueButton());
+				search.getContinueButton().waitAndClick(15);
 				break;
 			} catch (Exception e) {
 				bc.waitForElement(search.getContinueButton());
@@ -7839,6 +7840,7 @@ public class AssignmentsPage {
 	 */
 	public void saveAssignment(String assignmentName, String codingForm) {
 		driver.scrollPageToTop();
+		bc.waitForElement(getAssignmentSaveButton());
 		getAssignmentSaveButton().waitAndClick(30);
 		System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
 		System.out.println("Docs assigned to  " + assignmentName);

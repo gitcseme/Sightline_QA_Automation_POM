@@ -2900,6 +2900,17 @@ public class DocViewPage {
 	public Element getDocView_AnalyticsPanel_FamilyMemberWholeTabel() {
 		return driver.FindElementById("family1");
 	}
+	
+	//Added by Gopinath - 03/02/2022
+	public Element getDisableAnnotationWarning() {
+		return driver.FindElementByXPath(
+				"//div[@id='divDuplicateAnnotationWarning']/self::div[contains(text(),'Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.')]");
+		}
+  
+	//Added by Aathith
+	public Element getDocIdRow(int i) {
+		return driver.FindElementByXPath("//*[contains(@class,'rowNumber_"+i+"')]");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -15611,8 +15622,7 @@ public class DocViewPage {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			List<WebElement> annotations = getAnnotations().FindWebElements();
-			driver.waitForPageToBeReady();
-			annotations.get(0).click();
+			annotations.get(annotations.size()-1).click();
 			base.passedStep("Editing annotation layer of current document successfull");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -22834,7 +22844,7 @@ public class DocViewPage {
 		
 	}
 
-	
+	}
 	/**
 	 * @author Gopinath 
 	 * @Description : this method for verifying weather delete and edit fields are not enabled.
@@ -22860,6 +22870,74 @@ public class DocViewPage {
 
 	}
 	
+	
+	/**
+	 * @author Gopinath 
+	 * @Description :this method will verify remark warning message
+	 *         after add or edit remark when same document loaded in two different
+	 *         tabs and verify delete and edit button disabled or not
+	 */
+	public void verifyDisableAnnotationWarningMessageAndSubMenu() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_AnnotateIcon());
+			getDocView_AnnotateIcon().waitAndClick(5);
+			getDisableAnnotationWarning().isElementAvailable(20);
+			base.waitForElement(getDisableAnnotationWarning());
+			if (getDisableAnnotationWarning().isElementAvailable(5)) {
+				base.passedStep("Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup – because that would overwrite the work done by the other user.  Please reload the document.  --- message is displayed");
+			} else {
+				base.failedStep("Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup – because that would overwrite the work done by the other user.  Please reload the document. -- message not displayed");
+			}
+			driver.scrollPageToTop();
+			if (!getDocView_Annotate_Rectangle().getWebElement().isSelected()) {
+				base.passedStep("Rectangle annotaion is disabled successfully");
+			} else {
+				base.failedStep("Rectangle annotaion is not disabled");
+			}
+			if (!getDocView_Annotate_ThisPage().getWebElement().isSelected()) {
+				base.passedStep("This page annotaion is disabled successfully");
+			} else {
+				base.failedStep("This page annotaion is not disabled");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occued while verify remark warning message after add or edit remark when same document loaded in two different users message");
+		}
+	}
+	
+	/**
+	 * @author Gopinath 
+	 * @Description : this method for getting already applied annotation count.
+	 */
+	public int getAppiedAnnotationCount() {
+		int annotationCount = 0;
+		try {
+			annotationCount = getAnnotations().FindWebElements().size();
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occued while verifying weather delete and edit fields are not enabled.");
+		}
+		return annotationCount;
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method for editing annotation layer of current document.
+	 */
+	public void editAnnotationLayer() throws InterruptedException {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			List<WebElement> annotations = getAnnotations().FindWebElements();
+			driver.waitForPageToBeReady();
+			annotations.get(annotations.size()-1).click();
+			base.passedStep("Editing annotation layer of current document successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while editing annotation layer of current document." + e.getMessage());
+
+		}
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -22903,6 +22981,74 @@ public class DocViewPage {
 		childWindowToParentWindowSwitching(parent);
 		driver.waitForPageToBeReady();
         softAssertion.assertAll();
+		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void document_Navigation_verification(int DocumentNumber) {
+		driver.waitForPageToBeReady();
+		String text = Integer.toString(DocumentNumber);
+		getDocView_NumTextBox().Clear();
+		getDocView_NumTextBox().SendKeys(text);
+		getDocView_NumTextBox().Enter();
+		driver.waitForPageToBeReady();
+		int value =DocumentNumber-1;
+		driver.waitForPageToBeReady();
+		boolean flag = getDocIdRow(value).GetAttribute("class").contains("doc_current");
+		if(flag) {
+			softAssertion.assertTrue(flag);
+			base.passedStep("Document is viewed as per entered document number : "+DocumentNumber);
+		}else {
+			base.failedStep("verification failed");
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void navigation_Bar_EnableDisableCheck() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getVerifyPrincipalDocument());
+		String prnDoc = getVerifyPrincipalDocument().getText();
+		
+		base.waitForElement(getDocView_Next());
+		getDocView_Next().waitAndClick(5);
+		
+		base.waitForElement(getVerifyPrincipalDocument());
+		driver.waitForPageToBeReady();
+		String prnSecDoc = getVerifyPrincipalDocument().getText();
+		
+		if (prnDoc.equals(prnSecDoc)) {
+			softAssertion.assertEquals(prnDoc, prnSecDoc);
+			base.passedStep(" '>' button is disabled");
+		} else {
+			softAssertion.assertNotEquals(prnDoc, prnSecDoc);
+			base.passedStep(" '>' button is enabled");
+		}
+		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void lastDoc_Navigation_Bar_EnableDisableCheck() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getVerifyPrincipalDocument());
+		String prnDoc = getVerifyPrincipalDocument().getText();
+		
+		base.waitForElement(getDocView_Last());
+		getDocView_Last().waitAndClick(5);
+		
+		base.waitForElement(getVerifyPrincipalDocument());
+		driver.waitForPageToBeReady();
+		String prnSecDoc = getVerifyPrincipalDocument().getText();
+		
+		if (prnDoc.equals(prnSecDoc)) {
+			softAssertion.assertEquals(prnDoc, prnSecDoc);
+			base.passedStep(" '>>' button is disabled");
+		} else {
+			softAssertion.assertNotEquals(prnDoc, prnSecDoc);
+			base.passedStep(" '>>' button is enabled");
+		}
 		
 	}
 }
