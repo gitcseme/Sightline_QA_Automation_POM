@@ -22,6 +22,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.BatchPrintPage;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
@@ -5409,6 +5410,68 @@ public class DocView_Regression1 {
 					
 				baseClass.stepInfo("Log out");
 				loginPage.logout();
+			}
+			
+			/**
+			 *
+			 * @Author : Brundha
+			 * @Testcase id : 52204 - Verify that text redaction is working proper in Batch Print.
+			 */
+			@Test(groups = { "regression" },priority = 42)
+			public void verifyTheBatchSprintGeneration() throws Exception {
+				 BaseClass baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-52204 from Docview Component");
+				baseClass.stepInfo("Verify that text redaction is working proper in Batch Print.");
+
+				String foldername = "folder" + Utility.dynamicNameAppender();
+				String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+				RedactionPage redactionpage = new RedactionPage(driver);
+
+				driver.waitForPageToBeReady();
+				redactionpage.manageRedactionTagsPage(Redactiontag1);
+				System.out.println("First Redaction Tag is created" + Redactiontag1);
+
+				DocExplorerPage docExp = new DocExplorerPage(driver);
+				docExp.documentSelectionIteration();
+				driver.waitForPageToBeReady();
+				docExp.docExpViewInDocView();
+
+				DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+				docViewRedactions.selectDoc1();
+				driver.waitForPageToBeReady();
+				docViewRedactions.RedactTextInDocView(10, 10, 100, 100);
+				driver.waitForPageToBeReady();
+				docViewRedactions.selectingRedactionTag2(Redactiontag1);
+				
+				// create  folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+				// Adding folder to bulkfolder
+				DocExplorerPage docExplorer = new DocExplorerPage(driver);
+				docExplorer.documentSelectionIteration();
+				docExplorer.bulkFolderExisting(foldername);
+
+				BatchPrintPage batchPrint = new BatchPrintPage(driver);
+				
+				baseClass.stepInfo("Navigate to Batch Sprint and select the folder");
+				batchPrint.BatchPrintWithSourceSelection(foldername);
+				
+				baseClass.stepInfo("filling Slipsheet tab,Branding,Export format tab in Batch Sprint and Generate");
+				batchPrint.FillingBatchRedactionAndverifyingTheDownloadInBatchSprint("CustodianName");
+				
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+				
+				batchPrint = new BatchPrintPage(driver);
+				baseClass.stepInfo("Navigate to Batch Sprint and select the folder");
+				batchPrint.BatchPrintWithSourceSelection(foldername);
+				
+				baseClass.stepInfo("filling Slipsheet tab,Branding,Export format tab in Batch Sprint and Generate");
+				batchPrint.FillingBatchRedactionAndverifyingTheDownloadInBatchSprint("CustodianName");
+				loginPage.logout();
+				
 			}
 	     @AfterMethod(alwaysRun = true)
 		 public void takeScreenShot(ITestResult result) {
