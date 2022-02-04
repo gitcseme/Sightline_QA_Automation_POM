@@ -1243,66 +1243,67 @@ public class DocViewRedactions {
 	public ElementCollection textRedactionXYStats() {
 		return driver.FindElementsByCssSelector("g[fill-opacity='1']>g[data-pcc-mark^='mark-']>rect");
 	}
-
+	
 	// Added by krishna
 
-	public Element zoomOutDocView() {
-		return driver.FindElementById("zoomOut_divDocViewer");
-	}
+		public Element zoomOutDocView() {
+			return driver.FindElementById("zoomOut_divDocViewer");
+		}
 
-	public Element zoomInDocView() {
-		return driver.FindElementById("zoomIn_divDocViewer");
-	}
+		public Element zoomInDocView() {
+			return driver.FindElementById("zoomIn_divDocViewer");
+		}
 
-	public Element zoomFitToScreenDocView() {
-		return driver.FindElementById("fitContent_divDocViewer");
-	}
+		public Element zoomFitToScreenDocView() {
+			return driver.FindElementById("fitContent_divDocViewer");
+		}
 
-	public Element rotateClockWise() {
-		return driver.FindElementById("rotateRight_divDocViewer");
-	}
+		public Element rotateClockWise() {
+			return driver.FindElementById("rotateRight_divDocViewer");
+		}
 
-	public Element rotateAntiClockWise() {
-		return driver.FindElementById("rotateLeft_divDocViewer");
-	}
+		public Element rotateAntiClockWise() {
+			return driver.FindElementById("rotateLeft_divDocViewer");
+		}
 
-	// Added by Raghuram
+		// Added by Raghuram
 
-	public Element getDoTextRedactionXYStats() {
-		return driver.FindElementByCssSelector("text[x]:first-child");
-	}
+		public Element getDoTextRedactionXYStats() {
+			return driver.FindElementByCssSelector("text[x]:first-child");
+		}
 
-	public Element getDoTextRedactionXYStatsAttribute() {
-		return driver.FindElementByCssSelector("g[fill-opacity='1']>g[data-pcc-mark^='mark-']:first-child");
-	}
+		public Element getDoTextRedactionXYStatsAttribute() {
+			return driver.FindElementByCssSelector("g[fill-opacity='1']>g[data-pcc-mark^='mark-']:first-child");
+		}
 
-	public Element getDoTextRedactionXYStatsAttributeSelect(String x, String y) {
-		return driver.FindElementByCssSelector("text[x='" + x + "'][y='" + y + "']");
-	}
+		public Element getDoTextRedactionXYStatsAttributeSelect(String x, String y) {
+			return driver.FindElementByCssSelector("text[x='" + x + "'][y='" + y + "']");
+		}
 
-	public Element getMarkedTextRedactionXYStatsAttributeSelect(String x, String y) {
-		return driver.FindElementByCssSelector("g[x='" + x + "'][y='" + y + "']");
-	}
+		public Element getMarkedTextRedactionXYStatsAttributeSelect(String x, String y) {
+			return driver.FindElementByCssSelector("g[x='" + x + "'][y='" + y + "']");
+		}
 
-	// Added by Krishna
+		// Added by Krishna
 
-	public Element multiPageRedactionTagSelect() {
-		return driver.FindElementById("ddlMultiRedactionTagsForPopup");
-	}
+		public Element multiPageRedactionTagSelect() {
+			return driver.FindElementById("ddlMultiRedactionTagsForPopup");
+		}
 
-	public Element hiddenInfoIcon() {
-		return driver.FindElementById("hiddenProperty");
-	}
+		public Element hiddenInfoIcon() {
+			return driver.FindElementById("hiddenProperty");
+		}
 
-	public Element textData() {
-		return driver.FindElementByXPath("//div[@id='divViewerText']");
-	}
+		public Element textData() {
+			return driver.FindElementByXPath("//div[@id='divViewerText']");
+		}
 
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
 		softAssertion = new SoftAssert();
+		base = new BaseClass(driver);
 	}
 
 	/**
@@ -2139,7 +2140,7 @@ public class DocViewRedactions {
 
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
-		Thread.sleep(4000); // needed here implicitly
+		base.waitTime(5); // needed here implicitly
 
 		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
 		String hex = Color.fromString(color).asHex(); // #dc5252
@@ -2748,7 +2749,7 @@ public class DocViewRedactions {
 			if ((hex.equals(Input.keyWordHexCode)) || hex.equalsIgnoreCase(Input.colorCodeOfRed))
 				base.passedStep("The text for keyword is highlited in the document");
 			else
-				base.failedStep("The text for keyword is highlited in the document");
+				base.failedStep("The text for keyword is not highlited in the document");
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occcured while verifying highlighted text in Doc View Page" + e.getMessage());
@@ -3775,7 +3776,7 @@ public class DocViewRedactions {
 	 */
 	public void verifyThisPageHighlightMaintained(Boolean torRmoveAnnotation) {
 		base = new BaseClass(driver);
-
+		
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		getDocView_RedactHTextarea().waitAndClick(5);
@@ -4061,5 +4062,16 @@ public class DocViewRedactions {
 			}
 		}
 	}
+	public void RedactTextInDocView(int x, int y, int offsetx, int offsety) {
+		Actions actions = new Actions(driver.getWebDriver());
+		redactionIcon().waitAndClick(30);
+		driver.waitForPageToBeReady();
+		textSelectionRedactionIcon().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		actions.moveToElement(getDocView_Redactrec_textarea().getWebElement(), x, y).clickAndHold()
+				.moveByOffset(offsetx, offsety).release().build().perform();
+
+	}
 
 }
+
