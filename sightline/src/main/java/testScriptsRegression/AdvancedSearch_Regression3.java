@@ -546,7 +546,11 @@ public void verifyDocsCnt_SecGrp_OR_production() throws InterruptedException {
 	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 	baseClass.stepInfo("Logged in as PA" );
 	SessionSearch search = new SessionSearch(driver);
-	search.basicContentSearch(Input.searchStringStar);
+	search.navigateToAdvancedSearchPage();
+	//Adding WP Security Group into search text box
+	search.workProductSearch("security group",Input.securityGroup,true);
+	search.serarchWP();
+	driver.waitForPageToBeReady();
 	String expectedPureHitCount = search.verifyPureHitsCount();//expected value
 	baseClass.stepInfo("Total no docs available in default security group  "+expectedPureHitCount);
 	baseClass.selectproject();
@@ -567,7 +571,7 @@ public void verifyDocsCnt_SecGrp_OR_production() throws InterruptedException {
 	SoftAssert assertion=new SoftAssert();
 	assertion.assertEquals(expectedPureHitCount, PureHitCount);//Validation of hit count.
 	assertion.assertAll();
-	baseClass.passedStep("Sucessfully erified that application returns all the documents which are available under "
+	baseClass.passedStep("Sucessfully verified that application returns all the documents which are available under "
 			+ "selected group with OR operator in search result.");
 }
 
