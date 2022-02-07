@@ -9895,7 +9895,167 @@ public class DocView_CodingForm_Regression {
 
 		// logout
 		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 04/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify waning message is prompted to the user on undocking/docking
+	 *              after impersonation when user navigates away from the page without 
+	 *              completing or saving from doc view
+	 */
+	@Test(enabled = true, dataProvider = "threeUser", groups = { "regression" }, priority = 5)
+	public void validatePopUpMsgUsingAllOption(String roll, String userName, String password,
+			String impersonate) throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		codingForm = new CodingForm(driver);
+		miniDocListPage = new MiniDocListPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-50925");
+		baseClass.stepInfo("Verify waning message is prompted to the user on undocking/docking after "
+				+ "impersonation when user navigates away from the page without completing or saving from doc view");
+		String assignmentNameToManual = null;
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(userName, password);
 
+		if (roll.equalsIgnoreCase("rmu")) {
+			// search to Assignment creation
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.bulkAssignNearDupeDocuments();
+			assignmentNameToManual = miniDocListPage.assignmentCreationWithManualSortForDisToRMUAndRe();
+			System.out.println("assignmentNameToChoose");
+			baseClass.stepInfo("Created Assignment " + assignmentNameToManual);
+		}
+		switch (impersonate) {
+		case "rmu":
+			if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateSAtoRMU();
+			}
+			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonatePAtoRMU();
+			}
+
+		case "rev":
+			if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateSAtoReviewer();
+			}
+			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonatePAtoReviewer();
+			}
+			if (roll.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateRMUtoReviewer();
+			}
+		}
+
+		if (roll.equalsIgnoreCase("rmu")) {
+			assignmentPage.SelectAssignmentByReviewer(assignmentNameToManual);
+			baseClass.stepInfo("User on the doc view after selecting the assignment");
+			docViewPage.popUpMessageUsingAllOption();
+			docViewPage.popUpValidationDoneFromChildWindow();
+		} else if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")
+				|| roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
+			driver.waitForPageToBeReady();
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.ViewNearDupeDocumentsInDocView();
+			docViewPage.popUpMessageUsingAllOption();
+			docViewPage.popUpValidationDoneFromChildWindow();
+		}
+
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @Author : Baskar date: 04/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify waning message is prompted to the user on browser back/refresh after
+	 *              impersonation when user navigates away from the page without completing or 
+	 *              saving from doc view
+	 */
+	@Test(enabled = true, dataProvider = "threeUser", groups = { "regression" }, priority = 5)
+	public void validatePopUpMsgUsingBackAndRefresh(String roll, String userName, String password,
+			String impersonate) throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		codingForm = new CodingForm(driver);
+		miniDocListPage = new MiniDocListPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-50924");
+		baseClass.stepInfo("Verify waning message is prompted to the user on browser back/refresh after"
+				+ " impersonation when user navigates away from the page without completing or saving from doc view");
+		String assignmentNameToManual = null;
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(userName, password);
+
+		if (roll.equalsIgnoreCase("rmu")) {
+			// search to Assignment creation
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.bulkAssignNearDupeDocuments();
+			assignmentNameToManual = miniDocListPage.assignmentCreationWithManualSortForDisToRMUAndRe();
+			System.out.println("assignmentNameToChoose");
+			baseClass.stepInfo("Created Assignment " + assignmentNameToManual);
+		}
+		switch (impersonate) {
+		case "rmu":
+			if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateSAtoRMU();
+			}
+			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonatePAtoRMU();
+			}
+
+		case "rev":
+			if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateSAtoReviewer();
+			}
+			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonatePAtoReviewer();
+			}
+			if (roll.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateRMUtoReviewer();
+			}
+		}
+
+		if (roll.equalsIgnoreCase("rmu")) {
+			assignmentPage.SelectAssignmentByReviewer(assignmentNameToManual);
+			baseClass.stepInfo("User on the doc view after selecting the assignment");
+			docViewPage.popUpMessageUsingAllOption();
+		} else if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")
+				|| roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
+			driver.waitForPageToBeReady();
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.ViewNearDupeDocumentsInDocView();
+			docViewPage.popUpMessageUsingAllOption();
+		}
+
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+
+	}
+	
+	@DataProvider(name = "threeUser")
+	public Object[][] threeUser() {
+		return new Object[][] { { "rmu", Input.rmu1userName, Input.rmu1password, "rev" },
+				{ "sa", Input.sa1userName, Input.sa1password, "rmu" },
+				{ "sa", Input.sa1userName, Input.sa1password, "rev" },
+				{ "pa", Input.pa1userName, Input.pa1password, "rmu" },
+				{ "pa", Input.pa1userName, Input.pa1password, "rev" } };
 	}
 	/**
 	* @Author : Brundha 
