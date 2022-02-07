@@ -2515,4 +2515,22 @@ public class BaseClass {
 			return false;
 		}
 	}
+
+	/*
+	 * @author Steffy
+	 * Description - This method is to verify the background color
+	 */
+	public void verifyBackGroundColor(Element element, String expectedColor) {
+		waitForElement(element);
+		try {
+			String actualColor = element.GetCssValue("background-color");
+			org.openqa.selenium.support.Color hex = org.openqa.selenium.support.Color.fromString(actualColor);
+			softAssertion.assertEquals(actualColor, expectedColor);
+			softAssertion.assertAll();
+			passedStep("Background color is changed as expected");
+		} catch (Exception e) {
+			e.printStackTrace(pw);
+			UtilityLog.info(sw.toString());
+		}
+	}
 }

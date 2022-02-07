@@ -2605,6 +2605,76 @@ public class DocView_AnalyticsPanel_NewRegression {
 		loginPage.logout();
 	}
 	
+	/**
+	 * 
+	 * @Author: Steffy Created date: NA Modified date: NA Modified by: NA
+	 * @Description : Verify Analytics Panel -> Family Member tab for mouse over row
+	 *              color treatment for completed, code same, currently viewed
+	 *              document Test Case Id: RPMXCON-51388
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	public void verifyBGColorOnMousehoverInFamilyMemBerTabAnalyticalPanel() throws InterruptedException {
+
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docView = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+		softAssertion = new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-51388");
+		baseClass.stepInfo(
+				"Verify Analytics Panel -> Family Member tab for mouse over row color treatment for completed, code same, currently viewed document");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Searching documents based on search string to get documents ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+
+		baseClass.stepInfo("Creating assignments with documents and Distributing to reviewer");
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, Input.codingFormName);
+		assignmentsPage.toggleCodingStampEnabled();
+		assignmentsPage.assignmentDistributingToReviewerManager();
+
+		baseClass.stepInfo("Impersonate the RMU as a reviewer");
+		baseClass.impersonateRMUtoReviewer();
+
+		baseClass.stepInfo("Selecting assignment from dashboard to view in doc view");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Select the document from mini doc list which has family member documents");
+		docView.selectDocIdInMiniDocList(Input.familyDocumentForReviewer);
+		
+		baseClass.stepInfo("Verify the background color of the code same docment from family member tab on mouse hover");
+		docView.performCodeSameForFamilyMembersDocuments();
+		docView.getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().ScrollTo();
+		baseClass.verifyBackGroundColor(docView.getDocView_AnalyticsDocIdFamilyTabBG(docView.getDocView_Analytics_ChildWindow_FamilyTab_Istdoc().getText()), Input.bgColorOnMouseHover);
+
+		baseClass.stepInfo("Verify the background color of the completed document from family member tab on mouse hover");
+		docView.editCodingFormComplete();
+		docView.getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().ScrollTo();
+		baseClass.verifyBackGroundColor(docView.getDocView_AnalyticsDocIdFamilyTabBG(docView.getDocView_Analytics_ChildWindow_FamilyTab_Istdoc().getText()), Input.bgColorOnMouseHover);
+
+		baseClass.stepInfo(
+				"Verify the background color of the viewed document on mouse hover from family member tab which is not part of mini doc list ");
+		docView.selectDocsFromFamilyTabUsingDocIdAndViewInDocview(Input.familyDocWhichIsNotInMiniDoc);
+		docView.getDocView_AnalyticsDocIdFamilyTab(Input.familyDocWhichIsNotInMiniDoc).ScrollTo();
+		baseClass.verifyBackGroundColor(docView.getDocView_AnalyticsDocIdFamilyTabBG(Input.familyDocWhichIsNotInMiniDoc),
+				Input.bgColorOnMouseHover);
+
+	
+		loginPage.logout();
+	}
+
+
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
