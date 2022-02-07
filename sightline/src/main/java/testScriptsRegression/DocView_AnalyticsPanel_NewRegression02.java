@@ -1271,6 +1271,44 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 
 	}
 	
+	/**
+	 * Author : Vijaya.Rani date: 04/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify pagination is working from near dupe child window.'RPMXCON-51255' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 15)
+	public void verifyPaginationInNearDupeChildWindow(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51255");
+		baseClass.stepInfo(
+				"Verify pagination is working from near dupe child window.");
+
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		String documentId = Input.nearDupePagination;
+
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+	
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch("DupeCount:[1 TO 10000]");
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		
+		//NearDupe Child Window Pagination
+		docView.openNearDupeComparisonWindowForDocumentPagination(documentId);
+		
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
