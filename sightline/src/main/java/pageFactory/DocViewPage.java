@@ -59,7 +59,10 @@ public class DocViewPage {
 	List<String> completedDoc = new ArrayList<>();
 	List<String> stampList = new ArrayList<>();
 	List<String> completeStampList = new ArrayList<>();
-
+	String navigationConfirmationMsg ="This action will not save your edits, please save your changes before navigating away from Doc View. Do you want to still navigate away without saving your changes ?";
+    String backButtonMsg="Changes that you made may not be saved.";
+	
+	
 	public Element getDocView_info() {
 		return driver.FindElementById("totalRecords");
 	}
@@ -2912,6 +2915,7 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[contains(@class,'rowNumber_"+i+"')]");
 	}
 	
+
 	
 	//Added by Gopinath - 04/02/2022
 	public Element getDocView_Text_Redact_Active() {
@@ -2933,6 +2937,7 @@ public class DocViewPage {
 	public ElementCollection getDocViewAppliedAnnotation() {
 		return driver.FindElementsByCssSelector("rect[data-pcc-mark*='mark'][style*='rgb(255, 255, 0)']");
 	}
+
 
 	public DocViewPage(Driver driver) {
 
@@ -23071,7 +23076,113 @@ public class DocViewPage {
 			softAssertion.assertNotEquals(prnDoc, prnSecDoc);
 			base.passedStep(" '>>' button is enabled");
 		}
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void popUpMessageUsingAllOption() throws InterruptedException {
+		driver.waitForPageToBeReady();
+
+		// Performing code same as action for minidcolist
+		for (int j = 2; j <= 2; j++) {
+			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().waitAndClick(5);
+		}
+		clickCodeSameAs();
+		base.stepInfo("Code same as action done for minidoclist doc");
 		
+		// performing code same as action for analytical panel
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		base.waitForElement(getDocView_Analytics_NearDupe_Doc(1));
+		getDocView_Analytics_NearDupe_Doc(1).waitAndClick(5);
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+		base.waitForElement(getCodeSameAsNearDupe());
+		getCodeSameAsNearDupe().waitAndClick(15);
+		base.stepInfo("Code same as action done for Analytical doc");
+		driver.scrollPageToTop();
+		base.waitForElement(getDashboardButton());
+		
+		// validation for left panel button
+		getDashboardButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPopUpLeftButton());
+		Boolean flag = getPopUpLeftButton().Displayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Yes and No button displayed when navigation to other page");
+		String actualMsg = getNavigationMsg().getText();
+		softAssertion.assertEquals(navigationConfirmationMsg, actualMsg);
+		base.passedStep("Got navigation confirmation  warning message successfully");
+		getNavigationButton("No").waitAndClick(5);
+		
+		// validation for back button
+		driver.Navigate().back();
+		base.passedStep("Leave and cancel button displayed when navigation done through back button");
+		driver.switchTo().alert().dismiss();
+		
+		// validation for browser refresh button
+		driver.Navigate().refresh();
+		driver.switchTo().alert().accept();
+		driver.waitForPageToBeReady();
+		base.passedStep("Reload and cancel button displayed when navigation done through Refresh button");
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void popUpValidationDoneFromChildWindow() {
+		// perfroming action for child window minidoclist
+	   clickGearIconOpenMiniDocList();
+	   String parent=switchTochildWindow();
+	   for (int j = 1; j <= 1; j++) {
+			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().waitAndClick(5);
+		}
+	    base.waitForElement(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
+		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
+		base.stepInfo("Expected Message : Code same performed successfully.");
+		base.stepInfo("Code same as action done for minidoclist doc child window");
+		childWindowToParentWindowSwitching(parent);
+		driver.waitForPageToBeReady();
+		// performing code same as action for analytical panel
+		// Analytical child window
+		getHeader().Click();
+		base.waitForElement(getDocView_HdrAnalytics());
+		getDocView_HdrAnalytics().waitAndClick(5);
+		 String analyticsparent=switchTochildWindow();
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		base.waitForElement(getDocView_Analytics_NearDupe_Doc(1));
+		getDocView_Analytics_NearDupe_Doc(1).waitAndClick(5);
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+		base.waitForElement(getCodeSameAsNearDupe());
+		getCodeSameAsNearDupe().waitAndClick(15);
+		base.stepInfo("Code same as action done for Analytical doc");
+		childWindowToParentWindowSwitching(analyticsparent);
+		// validation for left panel button
+		getDashboardButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPopUpLeftButton());
+		Boolean flag = getPopUpLeftButton().Displayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Yes and No button displayed when navigation to other page");
+		String actualMsg = getNavigationMsg().getText();
+		softAssertion.assertEquals(navigationConfirmationMsg, actualMsg);
+		base.passedStep("Got navigation confirmation  warning message successfully");
+		getNavigationButton("No").waitAndClick(5);
+
+		// validation for back button
+		driver.Navigate().back();
+		base.passedStep("Leave and cancel button displayed when navigation done through back button");
+		driver.switchTo().alert().dismiss();
+
+		// validation for browser refresh button
+		driver.Navigate().refresh();
+		driver.switchTo().alert().accept();
+		base.passedStep("Reload and cancel button displayed when navigation done through Refresh button");
 	}
 	
 	/**

@@ -31,6 +31,7 @@ import pageFactory.ReportsPage;
 import pageFactory.SavedSearch;
 import pageFactory.SearchTermReportPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -2923,6 +2924,91 @@ public class SavedSearchRegression_New_Set_04 {
 		driver.waitForPageToBeReady();
 		session.saveAsOverwrittenSearch(Input.mySavedSearch, searchName1, "First", "Success", "", null);
 
+		// Deleting the SavedSearch
+		saveSearch.navigateToSSPage();
+		saveSearch.deleteSearch(searchName1, Input.mySavedSearch, "Yes");
+		login.logout();
+
+	}
+	
+
+	/**
+	 * @author Jayanthi A Date: 4/2/22 Modified date:N/A Modified by: Description
+	 *         RPMXCON-57185 Sprint 11
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	public void verifyBulkUntag() throws Exception {
+
+		String searchName1 = "Search Name" + Utility.dynamicNameAppender();
+		String tagName = "tagName" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-57185 - Saved Search Sprint 11");
+		base.stepInfo("Verify that UnTag works properly using Bulk " + "Tag Action in Saved Search Screen");
+
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1userName);
+
+		// saving the Search
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchName1);
+
+		// selecting the savedSearch
+		saveSearch.navigateToSSPage();
+		saveSearch.SaveSearchToBulkTag(searchName1, tagName);
+		base.stepInfo("Bulk tag done from saved search screen " + tagName);
+		saveSearch.savedSearch_Searchandclick(searchName1);
+		saveSearch.getSavedSearchToBulkTag().Click();
+		saveSearch.bulkUnTag(tagName);
+		base.stepInfo("Bulk UnTag done from saved search screen" + tagName);
+		TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
+		tf.navigateToTagsAndFolderPage();
+		// verifying for UnTag Completed
+		tf.verifyTagDocCount(tagName, 0);
+		tf.navigateToTagsAndFolderPage();
+		tf.deleteAllTags(tagName);
+		// Deleting the SavedSearch
+		saveSearch.navigateToSSPage();
+		saveSearch.deleteSearch(searchName1, Input.mySavedSearch, "Yes");
+		login.logout();
+
+	}
+
+	/**
+	 * @author Jayanthi A Date: 4/2/22 Modified date:N/A Modified by: Description
+	 *         RPMXCON-48756 Sprint 11
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	public void verifyBulkFolder() throws Exception {
+
+		String searchName1 = "Search Name" + Utility.dynamicNameAppender();
+		String folderName = "folderSS" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-48756 - Saved Search Sprint 11");
+		base.stepInfo("Verify that UnFolder works properly using Bulk Folder Action in Saved Search Screen");
+
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1userName);
+
+		// saving the Search
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchName1);
+
+		// selecting the savedSearch
+		saveSearch.navigateToSSPage();
+		saveSearch.SaveSearchToBulkFolder(searchName1, folderName);
+		base.stepInfo("Bulk folder done from saved search screen" + folderName);
+		saveSearch.savedSearch_Searchandclick(searchName1);
+		saveSearch.getSavedSearchToBulkFolder().Click();
+		saveSearch.bulkUnFolder("Bulk Unfolder done from saved search screen" + folderName);
+		base.stepInfo(folderName);
+		TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
+		tf.navigateToTagsAndFolderPage();
+		// verifying for Unfolder Completed
+		tf.verifyFolderDocCount(folderName, 0);
+		tf.navigateToTagsAndFolderPage();
+		tf.deleteAllFolders("folderSS");
 		// Deleting the SavedSearch
 		saveSearch.navigateToSSPage();
 		saveSearch.deleteSearch(searchName1, Input.mySavedSearch, "Yes");
