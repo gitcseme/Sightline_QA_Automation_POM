@@ -187,6 +187,10 @@ public class Input {
 	public static String analyticsConceptualDocId2;
 	public static String miniConceptualNoDoc;
 	public static String tiffSearchQuery;
+	public static String familyDocWhichIsNotInMiniDoc;
+	public static String bgColorOnMouseHover;
+
+	public static String nearDupePagination;
 
 	// DocView codingform Baskar Indium
 
@@ -651,6 +655,9 @@ public static String  TermOperator;
 		analyticsConceptualDocId2 = testData.getAnalyticsConceptualDocId2();
 		miniConceptualNoDoc = testData.getMiniConceptualNoDoc();
 		tiffSearchQuery = testData.getTiffSearchQuery();
+		familyDocWhichIsNotInMiniDoc = testData.getFamilyDocWhichIsNotInMiniDoc();
+		bgColorOnMouseHover = testData.bgColorOnMouseHover;
+		nearDupePagination=testData.getNearDupePagination();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();

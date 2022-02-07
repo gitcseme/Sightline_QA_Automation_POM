@@ -59,7 +59,10 @@ public class DocViewPage {
 	List<String> completedDoc = new ArrayList<>();
 	List<String> stampList = new ArrayList<>();
 	List<String> completeStampList = new ArrayList<>();
-
+	String navigationConfirmationMsg ="This action will not save your edits, please save your changes before navigating away from Doc View. Do you want to still navigate away without saving your changes ?";
+    String backButtonMsg="Changes that you made may not be saved.";
+	
+	
 	public Element getDocView_info() {
 		return driver.FindElementById("totalRecords");
 	}
@@ -2911,7 +2914,28 @@ public class DocViewPage {
 	public Element getDocIdRow(int i) {
 		return driver.FindElementByXPath("//*[contains(@class,'rowNumber_"+i+"')]");
 	}
+	
+	public Element getDocView_AnalyticsDocIdFamilyTab(String documentToBeSelected) {
+		return driver
+				.FindElementByXPath("//tr[contains(@class,'dtDocumentFamilyMembersRowNumber')]//td[contains(text(),'"
+						+ documentToBeSelected + "')]//preceding-sibling::td/label");
+	}
 
+	public Element getDocView_AnalyticsDocIdFamilyTabBG(String documentToBeSelected) {
+		return driver.FindElementByXPath(
+				"//tr[contains(@class,'dtDocumentFamilyMembersRowNumber')]//td//following-sibling::td[text()='"
+						+ documentToBeSelected + "']");
+	}
+	
+	public Element getDocView_Analytics_ChildWindow_FamilyTab_Istdoc() {
+		return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//tr[1]//td[contains(text(),'ID')]");
+	}
+
+
+	public Element getDocView_ChildPagination() {
+		return driver.FindElementByXPath("//li[@id='nextPage_divNearDupDoc']//i");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -22844,7 +22868,7 @@ public class DocViewPage {
 		
 	}
 
-	}
+
 	/**
 	 * @author Gopinath 
 	 * @Description : this method for verifying weather delete and edit fields are not enabled.
@@ -22936,8 +22960,9 @@ public class DocViewPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while editing annotation layer of current document." + e.getMessage());
-
 		}
+
+	}
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -23049,7 +23074,194 @@ public class DocViewPage {
 			softAssertion.assertNotEquals(prnDoc, prnSecDoc);
 			base.passedStep(" '>>' button is enabled");
 		}
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void popUpMessageUsingAllOption() throws InterruptedException {
+		driver.waitForPageToBeReady();
+
+		// Performing code same as action for minidcolist
+		for (int j = 2; j <= 2; j++) {
+			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().waitAndClick(5);
+		}
+		clickCodeSameAs();
+		base.stepInfo("Code same as action done for minidoclist doc");
 		
+		// performing code same as action for analytical panel
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		base.waitForElement(getDocView_Analytics_NearDupe_Doc(1));
+		getDocView_Analytics_NearDupe_Doc(1).waitAndClick(5);
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+		base.waitForElement(getCodeSameAsNearDupe());
+		getCodeSameAsNearDupe().waitAndClick(15);
+		base.stepInfo("Code same as action done for Analytical doc");
+		driver.scrollPageToTop();
+		base.waitForElement(getDashboardButton());
+		
+		// validation for left panel button
+		getDashboardButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPopUpLeftButton());
+		Boolean flag = getPopUpLeftButton().Displayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Yes and No button displayed when navigation to other page");
+		String actualMsg = getNavigationMsg().getText();
+		softAssertion.assertEquals(navigationConfirmationMsg, actualMsg);
+		base.passedStep("Got navigation confirmation  warning message successfully");
+		getNavigationButton("No").waitAndClick(5);
+		
+		// validation for back button
+		driver.Navigate().back();
+		base.passedStep("Leave and cancel button displayed when navigation done through back button");
+		driver.switchTo().alert().dismiss();
+		
+		// validation for browser refresh button
+		driver.Navigate().refresh();
+		driver.switchTo().alert().accept();
+		driver.waitForPageToBeReady();
+		base.passedStep("Reload and cancel button displayed when navigation done through Refresh button");
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void popUpValidationDoneFromChildWindow() {
+		// perfroming action for child window minidoclist
+	   clickGearIconOpenMiniDocList();
+	   String parent=switchTochildWindow();
+	   for (int j = 1; j <= 1; j++) {
+			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().waitAndClick(5);
+		}
+	    base.waitForElement(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
+		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
+		base.stepInfo("Expected Message : Code same performed successfully.");
+		base.stepInfo("Code same as action done for minidoclist doc child window");
+		childWindowToParentWindowSwitching(parent);
+		driver.waitForPageToBeReady();
+		// performing code same as action for analytical panel
+		// Analytical child window
+		getHeader().Click();
+		base.waitForElement(getDocView_HdrAnalytics());
+		getDocView_HdrAnalytics().waitAndClick(5);
+		 String analyticsparent=switchTochildWindow();
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		base.waitForElement(getDocView_Analytics_NearDupe_Doc(1));
+		getDocView_Analytics_NearDupe_Doc(1).waitAndClick(5);
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+		base.waitForElement(getCodeSameAsNearDupe());
+		getCodeSameAsNearDupe().waitAndClick(15);
+		base.stepInfo("Code same as action done for Analytical doc");
+		childWindowToParentWindowSwitching(analyticsparent);
+		// validation for left panel button
+		getDashboardButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPopUpLeftButton());
+		Boolean flag = getPopUpLeftButton().Displayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Yes and No button displayed when navigation to other page");
+		String actualMsg = getNavigationMsg().getText();
+		softAssertion.assertEquals(navigationConfirmationMsg, actualMsg);
+		base.passedStep("Got navigation confirmation  warning message successfully");
+		getNavigationButton("No").waitAndClick(5);
+
+		// validation for back button
+		driver.Navigate().back();
+		base.passedStep("Leave and cancel button displayed when navigation done through back button");
+		driver.switchTo().alert().dismiss();
+
+		// validation for browser refresh button
+		driver.Navigate().refresh();
+		driver.switchTo().alert().accept();
+		base.passedStep("Reload and cancel button displayed when navigation done through Refresh button");
+	}
+	
+	/**
+	 * @Author Steffy Created on 04/02/2022
+	 * @Description To select docs from Analytics Family member Tab
+	 * 
+	 */
+	public void selectDocsFromFamilyTabUsingDocIdAndViewInDocview(String docIdToBeSelected) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_Analytics_FamilyTab());
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_Analytics_FamilyTab());
+			getDocView_Analytics_FamilyTab().waitAndClick(10);
+			base.waitForElement(getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected));
+			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).waitAndClick(5);
+			base.waitForElement(getDocView_ChildWindow_ActionButton());
+			getDocView_ChildWindow_ActionButton().waitAndClick(5);
+
+			base.waitForElement(getAnalyticalDropDown());
+			softAssertion.assertTrue(getAnalyticalDropDown().isDisplayed());
+			softAssertion.assertAll();
+			getAnalyticalDropDown().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.stepInfo("'View Document' action is displayed on family member tab successfully");
+
+			driver.scrollPageToTop();
+
+			base.waitForElement(getDocView_CurrentDocId());
+			System.err.println(getDocView_CurrentDocId().getText());
+			softAssertion.assertEquals(getDocView_CurrentDocId().getText(), docIdToBeSelected);
+			softAssertion.assertAll();
+			base.passedStep(
+					"On selecting document and view document action from family member tab is displayed in doc view panel with complete DocID successfully");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Doc are verified successfully");
+		}
+  }
+
+  /*
+	 * 
+	 * @author Vijaya.Rani 04/02/22 NA Modified date: NA Modified by:NA
+	 * @description to open NearDupe ComparisonWindow pagination
+	 */
+
+	public void openNearDupeComparisonWindowForDocumentPagination(String documentId)
+			throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Analytics_NearDupeTab().Displayed();
+			}
+		}), Input.wait30);
+		getDocView_Analytics_NearDupeTab().waitAndClick(10);
+
+		getDocView_NearDupeIconForSpecificDocument(documentId).waitAndClick(10);
+		
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
+			driver.switchTo().window(winHandle);
+		}
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getNearDupeDocPageNumber());
+		String beforeNo=getNearDupeDocPageNumber().getText();
+		System.out.println(beforeNo);
+		base.waitForElement(getDocView_ChildPagination());
+		getDocView_ChildPagination().waitAndClick(10);
+		
+		base.waitForElement(getNearDupeDocPageNumber());
+		String afterNo=getNearDupeDocPageNumber().getText();
+		System.out.println(afterNo);
+		softAssertion.assertNotEquals(beforeNo, afterNo);
+		base.passedStep("Pagination is working near dupe child window Successfully");
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		driver.getWebDriver().navigate().refresh();
+		driver.waitForPageToBeReady();
 	}
 }
 

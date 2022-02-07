@@ -92,6 +92,9 @@ public class TestData {
 	public String analyticsConceptualDocId2;
 	public String miniConceptualNoDoc;
 	public String tiffSearchQuery;
+	public String familyDocWhichIsNotInMiniDoc;
+	public String bgColorOnMouseHover;
+	public String nearDupePagination;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;

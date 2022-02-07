@@ -109,6 +109,7 @@
 	<analyticsConceptualDocId2>ID00000271</analyticsConceptualDocId2>
 	<miniConceptualNoDoc>ID00004800</miniConceptualNoDoc>
 	<tiffSearchQuery>.tif</tiffSearchQuery>
+	<nearDupePagination>ID00003939</nearDupePagination>
 
 
 
@@ -438,5 +439,10 @@
 	<conceptualDocs1>ID00000941</conceptualDocs1>
 	<familyDocumentForReviewer>ID00003745</familyDocumentForReviewer>
 		<newNearDupeDocId>ID00005181</newNearDupeDocId>
+
 <TermOperator>ALL</TermOperator>
+
+<familyDocWhichIsNotInMiniDoc>ID00003763</familyDocWhichIsNotInMiniDoc>
+<bgColorOnMouseHover>rgba(212, 230, 237, 1)</bgColorOnMouseHover>
+
 </TestData>
