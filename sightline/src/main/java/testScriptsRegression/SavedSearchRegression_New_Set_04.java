@@ -117,6 +117,15 @@ public class SavedSearchRegression_New_Set_04 {
 		return users;
 	}
 
+
+	@DataProvider(name = "PaAndRmuUsers")
+	public Object[][] PaAndRmuUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password ,Input.pa1FullName}, { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.pa2userName, Input.pa2password,Input.pa1FullName }, { Input.rmu2userName, Input.rmu2password, Input.rmu1FullName }};
+		
+		return users;
+	}
+	
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod)
 			throws IOException, ParseException, InterruptedException {
@@ -3016,6 +3025,109 @@ public class SavedSearchRegression_New_Set_04 {
 
 	}
 
+	/**
+	 * @author Sowndarya.velraj Date: 02/04/22 Description:Verify that logged User
+	 *         Information gets updated in "Last Submitted By" column in Saved
+	 *         Search screen RPMXCON-48587 Sprint 12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true,dataProvider="PaAndRmuUsers", groups = { "regression" }, priority = 48)
+	public void verifyLastSubmittedBYAsRMU_User(String userName,String password, String fullName) throws InterruptedException, ParseException {
+
+		String headername="Last Submitted By";
+		
+		base.stepInfo("Test case Id: RPMXCON-48587 - Saved Search Sprint 11");
+		base.stepInfo(
+				"Verify that logged User Information gets updated in \"Last Submitted By\" column in Saved Search screen");
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// saving the Search
+		String SearchName = "Search" + Utility.dynamicNameAppender();
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		int purehit=session.basicContentSearch(Input.TallySearch);
+		session.saveSearch(SearchName);
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.shareSavedSearchRMU(SearchName, Input.shareSearchDefaultSG);
+
+		login.logout();
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		saveSearch.selectSavedSearchTAb(SearchName, Input.shareSearchDefaultSG, Input.yesButton);
+		saveSearch.savedSearchExecute_Draft(SearchName,purehit);
+		driver.waitForPageToBeReady();
+		String actualName=saveSearch.getListFromSavedSearchTable1(headername, SearchName);
+		softAssertion.assertEquals(actualName, Input.rmu1FullName);
+		login.logout();
+	}
+
+	/**
+	 * @author Sowndarya.velraj Date: 02/04/22 Description:Verify that - After
+	 *         impersonation (SysAdmin to RMU) - logged User Information gets
+	 *         updated in "Last Submitted By" column in Saved Search
+	 *         screen RPMXCON-48589 Sprint 12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 49)
+	public void verifyLastSubmittedBYAsSystemadmin_User() throws InterruptedException, ParseException {
+
+		base.stepInfo("Test case Id: RPMXCON-48589 - Saved Search Sprint 11");
+		base.stepInfo(
+				"Verify that - After impersonation (SysAdmin to RMU) - logged User Information gets updated in \"Last Submitted By\" column in Saved Search screen");
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// saving the Search
+		String headername="Last Submitted By";
+		
+		// saving the Search
+		String SearchName = "Search" + Utility.dynamicNameAppender();
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		int purehit=session.basicContentSearch(Input.TallySearch);
+		session.saveSearch(SearchName);
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.shareSavedSearchRMU(SearchName, Input.shareSearchDefaultSG);
+
+		login.logout();
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.impersonateSAtoRMU();
+		saveSearch.selectSavedSearchTAb(SearchName, Input.shareSearchDefaultSG, Input.yesButton);
+		saveSearch.savedSearchExecute_Draft(SearchName,purehit);
+		driver.waitForPageToBeReady();
+		String actualName=saveSearch.getListFromSavedSearchTable1(headername, SearchName);
+		softAssertion.assertEquals(actualName, Input.rmu1FullName);
+		login.logout();
+	}
+	
+	/**
+	 * @Author Sowndarya
+	 * @Description : Verify that \"Count\" gets updated in conceptual column in
+	 *              Saved Search Screen when user triggered Conceptually Similar
+	 *              count from Advanced search and saved search. [RPMXCON-47568] sprint 12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 50)
+	public void searchCompletedUnderSG() throws InterruptedException, ParseException {
+		
+		String statusToCheck = "COMPLETED";
+		// Login as PA
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		base.stepInfo("Test case Id: 47568 Saved Search");
+		base.stepInfo(
+				"To verify as an RM user login, I will be able to search a saved query based on search status 'COMPLETED' under <Shared with Security Group> folder");
+
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(5);
+		saveSearch.verifyStatusFilter(statusToCheck);
+
+		login.logout();
+
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
