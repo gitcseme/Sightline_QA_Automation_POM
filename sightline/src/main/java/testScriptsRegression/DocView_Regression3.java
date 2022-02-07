@@ -2084,6 +2084,11 @@ public class DocView_Regression3 {
 
 		// verify History status
 		bacth.verifyBatchHistoryStatus(searchName);
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with Reviewer Manager");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		Reporter.log("Logged in as User: " + Input.rmu1userName);
 		
 		sessionsearch.ViewInDocView();
 		
