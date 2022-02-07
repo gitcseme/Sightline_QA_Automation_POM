@@ -2879,6 +2879,78 @@ public class DocView_Regression2 {
 		loginPage.logout();
 	}
 	
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50783
+	 * Description :To verify when user selects 'View All in Doc View' from Action drop down of Manage Assignments page when System Admin impersonates to RMU role
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 47)
+	public void verifyDocViewActionWhenSAImpersonateToRMU() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		assignPage = new AssignmentsPage(driver);
+		
+		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
+		
+		//Impersonate from SA to RMU and verify view all in doc view action
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-50783");
+		baseClass.stepInfo("To verify when user selects 'View All in Doc View' from Action drop down of Manage Assignments page when System Admin impersonates to RMU role");
+		baseClass.impersonateSAtoRMU();
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssignExisting(assignmentName);
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.selectAssignmentToViewinDocView(assignmentName);
+		baseClass.stepInfo("Selected assignment and navigated to docview");
+		int documentsAvailable =docView.getDocumetCountMiniDocList().size();
+		if(documentsAvailable>0) {
+			baseClass.passedStep("List of documents present in the minidoclist panel");
+		}
+		else {
+			baseClass.failedStep("List of documents not present in the minidoclist panel");
+		}
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50784
+	 * Description :To verify when user selects 'View All in Doc View' from Action drop down of Manage Assignments page when Project Admin impersonated to RMU role
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 48)
+	public void verifyDocViewActionWhenPAImpersonateToRMU() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		assignPage = new AssignmentsPage(driver);
+		
+		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
+		
+		//Impersonate from PA to RMU and verify view all in doc view action
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-50784");
+		baseClass.stepInfo("To verify when user selects 'View All in Doc View' from Action drop down of Manage Assignments page when Project Admin impersonated to RMU role");
+		baseClass.impersonatePAtoRMU();
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssignExisting(assignmentName);
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.selectAssignmentToViewinDocView(assignmentName);
+		baseClass.stepInfo("Selected assignment and navigated to docview");
+		int documentsAvailable =docView.getDocumetCountMiniDocList().size();
+		if(documentsAvailable>0) {
+			baseClass.passedStep("List of documents present in the minidoclist panel");
+		}
+		else {
+			baseClass.failedStep("List of documents not present in the minidoclist panel");
+		}
+		
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

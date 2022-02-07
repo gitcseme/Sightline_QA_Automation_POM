@@ -2933,6 +2933,7 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//li[@id='nextPage_divNearDupDoc']//i");
 	}
 
+
 	public Element getAuthorName(String remarkText) {
 		return driver.FindElementByXPath("//p[@class='clsPlotedRemarkText' and text()='" + remarkText
 				+ "']//..//p[@class='clsPlotedStartTimeText']//..//strong//span");
@@ -2976,6 +2977,22 @@ public class DocViewPage {
 	public Element getDocView_AssigmentName() {
 		return driver.FindElementByClassName("assTitle");
 	}
+
+
+	
+	//Added by Aathith
+	public Element getAudioBlock() {
+		return driver.FindElementByXPath("//div[@class='audio-block']");
+	}
+	
+	public Element getAudioPlayState() {
+		return driver.FindElementByXPath("//div[@id='jp_container_1']");
+	}
+	
+	public Element getAudioDocId() {
+		return driver.FindElementByXPath("//div[@class='jp-seek-bar']");
+	}
+	
 
 	public DocViewPage(Driver driver) {
 
@@ -23306,6 +23323,51 @@ public class DocViewPage {
 		driver.getWebDriver().navigate().refresh();
 		driver.waitForPageToBeReady();
 	}
+
+	
+	/**
+	 * @Author Brundha
+	 * @Description :Method to verify switching from child to parent window.
+	 * 
+	 */
+
+	public void verifyingSwitchingFromChildWindowToParentWindow() {
+		
+			driver.waitForPageToBeReady();
+			base.waitTillElemetToBeClickable(getParentDocID());
+			String parentDocId = getParentDocID().getText();
+			base.waitTillElemetToBeClickable(getGearIcon());
+			getGearIcon().waitAndClick(10);
+			getMiniDocListIcon().waitAndClick(10);
+			Set<String> windowhandles = driver.getWebDriver().getWindowHandles();
+			driver.waitForPageToBeReady();
+			List<String> list = new ArrayList<String>(windowhandles);
+			driver.switchTo().window(list.get(1));
+			driver.waitForPageToBeReady();
+			if(getDocView_Mini_ActionButton().isDisplayed()) {
+				base.passedStep("Successfully navigated to child window");}
+			else {base.failedStep("Not Successfully navigated to child window");}
+			driver.close();
+			driver.switchTo().window(list.get(0));
+			base.waitForElement(getDocView_Last());
+			getDocView_Last().Click();
+			driver.waitForPageToBeReady();
+			String DocId = getDocId().getText();
+			System.out.println(DocId);
+			if (parentDocId.equals(DocId)) {
+				base.passedStep("ChildWindow is redirected to main window and parent window is accessible.");
+			} else {
+				base.failedMessage("ChildWindow is not redirected to main window and parent window is accessible.");
+			}
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_SaveWidgetButton());
+			getDocView_SaveWidgetButton().Click();
+		
+	}
+	
+	
+}
+
 
 	/**
 	 * @author Raghuram 02/04/22 NA Modified date: NA Modified by:NA
