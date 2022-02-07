@@ -2036,6 +2036,119 @@ public class DocView_Regression3 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author : Steffy Created date: NA Modified date: NA Modified by:NA TestCase id
+	 * : 51052 - Verify RMU/Reviewer can see the annotations of document on doc view
+	 * page in different security group if the same annotation layer is mapped to
+	 * different security groups
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 15)
+	public void verifyAnnotationAcrossSecurityGroupsWhnSameAnnotationLayerIsMapped() throws Exception {
+		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		namesg2 = Input.randomText + Utility.dynamicNameAppender();
+		namesg3 = Input.randomText + Utility.dynamicNameAppender();
+		docExp = new DocExplorerPage(driver);
+		baseClass = new BaseClass(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		sessionsearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51052");
+		baseClass.stepInfo(
+				"Verify RMU/Reviewer can see the annotations of document on doc view page in different security group if the same annotation layer is mapped to different security groups");
+		utility = new Utility(driver);
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User : " + Input.pa1userName +" to create prerequisite SG's and annotation layer");
+		
+		baseClass.stepInfo("Creation of Prerequisites");
+		baseClass.stepInfo("Creation of two different security groups");
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityGroupsPage.AddSecurityGroup(namesg2);
+		driver.scrollPageToTop();
+		securityGroupsPage.AddSecurityGroup(namesg3);
+
+		baseClass.stepInfo("Creation of annotation layer");
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+		
+		baseClass.stepInfo("Sharing same annotation layer to different security groups");
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+		securityGroupsPage.selectSecurityGroup(namesg3);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+
+		baseClass.stepInfo("Docs are released to both security groups");
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkRelease(namesg2);
+		sessionsearch.bulkRelease(namesg3);
+		
+		baseClass.stepInfo("Access has been given to RMU and Rev to these security groups");
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu1userName);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rev1userName);
+
+		loginPage.logout();
+		
+		baseClass.stepInfo("Adding annotation to document by RMU user as a prequisite");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		docViewRedact.selectsecuritygroup(namesg2);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		driver.waitForPageToBeReady();
+		
+		baseClass.stepInfo("Perfrom non audio annotation");
+		docView.performNonAudioAnnotation();
+		driver.waitForPageToBeReady();	
+		
+		loginPage.logout();
+		baseClass.stepInfo("Prerequisite creation is completed successfully");
+
+		baseClass.stepInfo("Login as RMU user , Selecting the first SG and verify whether the annotation is displayed in the document");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		docViewRedact.selectsecuritygroup(namesg2);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		docView.verifyAnnotationAddedToDocument(0);
+		loginPage.logout();
+		
+		baseClass.stepInfo("Login as RMU user , Selecting the second SG and verify whether the annotation is displayed in the same document");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		docViewRedact.selectsecuritygroup(namesg3);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		docView.verifyAnnotationAddedToDocument(0);
+		loginPage.logout();
+		
+		baseClass.stepInfo("Login as REV user , Selecting the first SG and verify whether the annotation is displayed in the document");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		docViewRedact.selectsecuritygroup(namesg2);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		docView.verifyAnnotationAddedToDocument(0);
+		loginPage.logout();
+		
+		baseClass.stepInfo("Login as REV user , Selecting the second SG and verify whether the annotation is displayed in the same document");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		docViewRedact.selectsecuritygroup(namesg3);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		docView.verifyAnnotationAddedToDocument(0);
+		loginPage.logout();
+
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void close() throws ParseException, InterruptedException, IOException {
