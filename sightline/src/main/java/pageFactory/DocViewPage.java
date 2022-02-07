@@ -59,10 +59,9 @@ public class DocViewPage {
 	List<String> completedDoc = new ArrayList<>();
 	List<String> stampList = new ArrayList<>();
 	List<String> completeStampList = new ArrayList<>();
-	String navigationConfirmationMsg ="This action will not save your edits, please save your changes before navigating away from Doc View. Do you want to still navigate away without saving your changes ?";
-    String backButtonMsg="Changes that you made may not be saved.";
-	
-	
+	String navigationConfirmationMsg = "This action will not save your edits, please save your changes before navigating away from Doc View. Do you want to still navigate away without saving your changes ?";
+	String backButtonMsg = "Changes that you made may not be saved.";
+
 	public Element getDocView_info() {
 		return driver.FindElementById("totalRecords");
 	}
@@ -2889,9 +2888,8 @@ public class DocViewPage {
 	public Element getCodingForm_PA() {
 		return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
 	}
-	
 
-	//Added by Gopinath - 03/02/2022
+	// Added by Gopinath - 03/02/2022
 	public Element getEditButton() {
 		return driver.FindElementByXPath("//div[@id='divCodingForms']//span");
 	}
@@ -2903,18 +2901,18 @@ public class DocViewPage {
 	public Element getDocView_AnalyticsPanel_FamilyMemberWholeTabel() {
 		return driver.FindElementById("family1");
 	}
-	
-	//Added by Gopinath - 03/02/2022
+
+	// Added by Gopinath - 03/02/2022
 	public Element getDisableAnnotationWarning() {
 		return driver.FindElementByXPath(
 				"//div[@id='divDuplicateAnnotationWarning']/self::div[contains(text(),'Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.')]");
-		}
-  
-	//Added by Aathith
-	public Element getDocIdRow(int i) {
-		return driver.FindElementByXPath("//*[contains(@class,'rowNumber_"+i+"')]");
 	}
-	
+
+	// Added by Aathith
+	public Element getDocIdRow(int i) {
+		return driver.FindElementByXPath("//*[contains(@class,'rowNumber_" + i + "')]");
+	}
+
 	public Element getDocView_AnalyticsDocIdFamilyTab(String documentToBeSelected) {
 		return driver
 				.FindElementByXPath("//tr[contains(@class,'dtDocumentFamilyMembersRowNumber')]//td[contains(text(),'"
@@ -2926,15 +2924,87 @@ public class DocViewPage {
 				"//tr[contains(@class,'dtDocumentFamilyMembersRowNumber')]//td//following-sibling::td[text()='"
 						+ documentToBeSelected + "']");
 	}
-	
+
 	public Element getDocView_Analytics_ChildWindow_FamilyTab_Istdoc() {
 		return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//tr[1]//td[contains(text(),'ID')]");
 	}
 
 
+
+
+	
+	//Added by Gopinath - 04/02/2022
+	public Element getDocView_Text_Redact_Active() {
+		return driver.FindElementByXPath("//li[@id='textSelectionRedaction_divDocViewer' and @class='state-active']");
+	}
+	
+	public Element getDuplicateRedactionWarning() {
+		return driver.FindElementByXPath("//div[@id='divDuplicateRedactionWarning' and contains(text(),'Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.')]");
+	}
+	
+	public Element getDocView_Redact_RectangleActive() {
+		return driver.FindElementByXPath("//li[@id='blackRectRedact_divDocViewer' and @class='state-active']");
+	}
+	
+	public Element getDocView_Text_redact() {
+		return driver.FindElementById("textSelectionRedaction_divDocViewer");
+	}
+	
+	public ElementCollection getDocViewAppliedAnnotation() {
+		return driver.FindElementsByCssSelector("rect[data-pcc-mark*='mark'][style*='rgb(255, 255, 0)']");
+	}
+
 	public Element getDocView_ChildPagination() {
 		return driver.FindElementByXPath("//li[@id='nextPage_divNearDupDoc']//i");
 	}
+
+
+
+	public Element getAuthorName(String remarkText) {
+		return driver.FindElementByXPath("//p[@class='clsPlotedRemarkText' and text()='" + remarkText
+				+ "']//..//p[@class='clsPlotedStartTimeText']//..//strong//span");
+	}
+
+	public Element getRemarkText(String remarkText) {
+		return driver.FindElementByXPath("//p[@class='clsPlotedRemarkText' and text()='" + remarkText + "']");
+	}
+
+	public Element getRemarkTimeDuration(String remarkText) {
+		return driver.FindElementByXPath("//p[@class='clsPlotedRemarkText' and text()='" + remarkText
+				+ "']//..//p[@class='clsPlotedStartTimeText']");
+	}
+
+	public Element getRemarkdateTime(String remarkText) {
+		return driver.FindElementByXPath("//p[@class='clsPlotedRemarkText' and text()='" + remarkText
+				+ "']//..//p[@class='clsPlotedStartTimeText']//..//small");
+	}
+
+	public Element getAudioReMarkEdit(String remarkText) {
+		return driver.FindElementByXPath("//p[@class='clsPlotedRemarkText' and text()='" + remarkText
+				+ "']//..//i[@class='fa fa-lg fa-fw fa-pencil clsUpdateRemark']");
+	}
+
+	public Element getTimeDurationSetInput() {
+		return driver.FindElementByXPath("//input[@id='txtRemarkTime']");
+	}
+
+	public Element getUpdateBtn() {
+		return driver.FindElementByXPath("//i[@class='fa fa-check-circle-o EditSaveRemark']");
+	}
+
+	public Element getDocView_AudioReviewerRemarks() {
+		return driver.FindElementByXPath("//span[@class='pull-right']");
+	}
+
+	public Element getDocView_AssignmentProgressBar() {
+		return driver.FindElementByXPath("//*[@id='divProgressBarStarts']");
+	}
+
+	public Element getDocView_AssigmentName() {
+		return driver.FindElementByClassName("assTitle");
+	}
+
+
 	
 	//Added by Aathith
 	public Element getAudioBlock() {
@@ -2948,11 +3018,14 @@ public class DocViewPage {
 	public Element getAudioDocId() {
 		return driver.FindElementByXPath("//div[@class='jp-seek-bar']");
 	}
+
 	
 	public Element getDocView_centralPanel() {
 		return driver.FindElementById("tabs");
 	}
 	
+
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -15663,7 +15736,7 @@ public class DocViewPage {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			List<WebElement> annotations = getAnnotations().FindWebElements();
-			annotations.get(annotations.size()-1).click();
+			annotations.get(annotations.size() - 1).click();
 			base.passedStep("Editing annotation layer of current document successfull");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -22810,10 +22883,10 @@ public class DocViewPage {
 
 	}
 
-	
 	/**
 	 * @author Gopinath
-	 * @description this method will verify document in docview loaded in 4 sec after enter doc number
+	 * @description this method will verify document in docview loaded in 4 sec
+	 *              after enter doc number
 	 * @param docNum
 	 */
 	public void verifyDocumentLoadedWithInFourSeconds(String docNum) {
@@ -22844,8 +22917,6 @@ public class DocViewPage {
 		}
 	}
 
-
-
 	/**
 	 * @author Raghuram 01/02/22 NA Modified date: NA Modified by:NA
 	 * @return
@@ -22867,8 +22938,6 @@ public class DocViewPage {
 		}
 	}
 
-
-
 	/**
 	 * @author Raghuram 02/03/22 NA Modified date: NA Modified by:NA
 	 * @return
@@ -22882,41 +22951,40 @@ public class DocViewPage {
 		base.compareTextViaContains(audioEyePersistent.toLowerCase(), searchInput,
 				"Persistent hit panel opened and displaying" + audioEyePersistent + "",
 				"Persistent hit panel not displayed");
-		
+
 	}
 
-
 	/**
-	 * @author Gopinath 
-	 * @Description : this method for verifying weather delete and edit fields are not enabled.
+	 * @author Gopinath
+	 * @Description : this method for verifying weather delete and edit fields are
+	 *              not enabled.
 	 */
 	public void verifyDeleteAndEditFieldsAreNotEnabled() {
 		try {
 			List<WebElement> deleteRmarks = getDeleteRemarks().FindWebElements();
-			if(!deleteRmarks.get(0).isSelected()) {
+			if (!deleteRmarks.get(0).isSelected()) {
 				base.passedStep("Delete icon is not displayed and enabled on doc view successfully");
-			}else {
+			} else {
 				base.failedStep("Delete icon is displayed and enabled on doc view");
 			}
 			List<WebElement> pencilsofRemarks = getPencilsofRemarks().FindWebElements();
-			if(!pencilsofRemarks.get(0).isSelected()) {
+			if (!pencilsofRemarks.get(0).isSelected()) {
 				base.passedStep("Edit icon is not displayed and enabled on doc view successfully");
-			}else {
+			} else {
 				base.failedStep("Edit icon is displayed and enabled on doc view");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occued while verifying weather delete and edit fields are not enabled.");
 		}
 
 	}
-	
-	
+
 	/**
-	 * @author Gopinath 
-	 * @Description :this method will verify remark warning message
-	 *         after add or edit remark when same document loaded in two different
-	 *         tabs and verify delete and edit button disabled or not
+	 * @author Gopinath
+	 * @Description :this method will verify remark warning message after add or
+	 *              edit remark when same document loaded in two different tabs and
+	 *              verify delete and edit button disabled or not
 	 */
 	public void verifyDisableAnnotationWarningMessageAndSubMenu() {
 		try {
@@ -22926,9 +22994,11 @@ public class DocViewPage {
 			getDisableAnnotationWarning().isElementAvailable(20);
 			base.waitForElement(getDisableAnnotationWarning());
 			if (getDisableAnnotationWarning().isElementAvailable(5)) {
-				base.passedStep("Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup – because that would overwrite the work done by the other user.  Please reload the document.  --- message is displayed");
+				base.passedStep(
+						"Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup – because that would overwrite the work done by the other user.  Please reload the document.  --- message is displayed");
 			} else {
-				base.failedStep("Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup – because that would overwrite the work done by the other user.  Please reload the document. -- message not displayed");
+				base.failedStep(
+						"Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup – because that would overwrite the work done by the other user.  Please reload the document. -- message not displayed");
 			}
 			driver.scrollPageToTop();
 			if (!getDocView_Annotate_Rectangle().getWebElement().isSelected()) {
@@ -22941,27 +23011,28 @@ public class DocViewPage {
 			} else {
 				base.failedStep("This page annotaion is not disabled");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occued while verify remark warning message after add or edit remark when same document loaded in two different users message");
+			base.failedStep(
+					"Exception occued while verify remark warning message after add or edit remark when same document loaded in two different users message");
 		}
 	}
-	
+
 	/**
-	 * @author Gopinath 
+	 * @author Gopinath
 	 * @Description : this method for getting already applied annotation count.
 	 */
 	public int getAppiedAnnotationCount() {
 		int annotationCount = 0;
 		try {
 			annotationCount = getAnnotations().FindWebElements().size();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occued while verifying weather delete and edit fields are not enabled.");
 		}
 		return annotationCount;
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : Method for editing annotation layer of current document.
@@ -22972,7 +23043,7 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			List<WebElement> annotations = getAnnotations().FindWebElements();
 			driver.waitForPageToBeReady();
-			annotations.get(annotations.size()-1).click();
+			annotations.get(annotations.size() - 1).click();
 			base.passedStep("Editing annotation layer of current document successfully");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -22980,51 +23051,53 @@ public class DocViewPage {
 		}
 
 	}
+
 	/**
 	 * @author Indium-Baskar
 	 */
-	
+
 	public void docviewPageLoadPerformanceForCF() {
 		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
-		String pageHang=null;
-		
+		String pageHang = null;
+
 		// performace testing for page hanging or not
 		Long navigationStart = (Long) jse.executeScript("return window.performance.timing.navigationStart");
-		base.stepInfo("Navigation start from session search to docview"+  navigationStart+ "");
+		base.stepInfo("Navigation start from session search to docview" + navigationStart + "");
 		Long responseStart = (Long) jse.executeScript("return window.performance.timing.responseStart");
 		softAssertion.assertNotEquals(navigationStart, responseStart);
-		Long backendDom = (Long) jse.executeScript("return performance.timing.responseStart-performance.timing.navigationStart");
+		Long backendDom = (Long) jse
+				.executeScript("return performance.timing.responseStart-performance.timing.navigationStart");
 		Long pageLoaded = (Long) jse.executeScript("return window.performance.timing.domComplete");
-		base.stepInfo("Page loaded completely"+  pageLoaded+ "");
+		base.stepInfo("Page loaded completely" + pageLoaded + "");
 		Long pageLoadEnd = (Long) jse.executeScript("return window.performance.timing.loadEventEnd");
 		softAssertion.assertNotEquals(pageLoadEnd, "null");
-		Long frontEnd = (Long) jse.executeScript("return performance.timing.loadEventEnd-window.performance.timing.responseStart");
-		
+		Long frontEnd = (Long) jse
+				.executeScript("return performance.timing.loadEventEnd-window.performance.timing.responseStart");
+
 		// validation for page hang
 		if (!pageLoadEnd.equals(pageHang)) {
 			base.passedStep("Docview page not get hanged when coding form created for large");
-		}
-		else {
+		} else {
 			base.failedMessage("Page get hanged when coding form created for large");
 		}
-		
+
 		// validation for child window
 		base.stepInfo("Opening child window");
 		clickGearIconOpenCodingFormChildWindow();
-        String parent=switchTochildWindow();
+		String parent = switchTochildWindow();
 		Long pageLoadEndChild = (Long) jse.executeScript("return window.performance.timing.loadEventEnd");
 		softAssertion.assertNotEquals(pageLoadEndChild, "null");
 		if (!pageLoadEndChild.equals(pageHang)) {
 			base.passedStep("Docview page not get hanged when coding form created for large");
-		}
-		else {
+		} else {
 			base.failedMessage("Page get hanged when coding form created for large");
 		}
 		childWindowToParentWindowSwitching(parent);
 		driver.waitForPageToBeReady();
-        softAssertion.assertAll();
-		
+		softAssertion.assertAll();
+
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -23035,16 +23108,17 @@ public class DocViewPage {
 		getDocView_NumTextBox().SendKeys(text);
 		getDocView_NumTextBox().Enter();
 		driver.waitForPageToBeReady();
-		int value =DocumentNumber-1;
+		int value = DocumentNumber - 1;
 		driver.waitForPageToBeReady();
 		boolean flag = getDocIdRow(value).GetAttribute("class").contains("doc_current");
-		if(flag) {
+		if (flag) {
 			softAssertion.assertTrue(flag);
-			base.passedStep("Document is viewed as per entered document number : "+DocumentNumber);
-		}else {
+			base.passedStep("Document is viewed as per entered document number : " + DocumentNumber);
+		} else {
 			base.failedStep("verification failed");
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -23052,14 +23126,14 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getVerifyPrincipalDocument());
 		String prnDoc = getVerifyPrincipalDocument().getText();
-		
+
 		base.waitForElement(getDocView_Next());
 		getDocView_Next().waitAndClick(5);
-		
+
 		base.waitForElement(getVerifyPrincipalDocument());
 		driver.waitForPageToBeReady();
 		String prnSecDoc = getVerifyPrincipalDocument().getText();
-		
+
 		if (prnDoc.equals(prnSecDoc)) {
 			softAssertion.assertEquals(prnDoc, prnSecDoc);
 			base.passedStep(" '>' button is disabled");
@@ -23067,8 +23141,9 @@ public class DocViewPage {
 			softAssertion.assertNotEquals(prnDoc, prnSecDoc);
 			base.passedStep(" '>' button is enabled");
 		}
-		
+
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -23076,14 +23151,14 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getVerifyPrincipalDocument());
 		String prnDoc = getVerifyPrincipalDocument().getText();
-		
+
 		base.waitForElement(getDocView_Last());
 		getDocView_Last().waitAndClick(5);
-		
+
 		base.waitForElement(getVerifyPrincipalDocument());
 		driver.waitForPageToBeReady();
 		String prnSecDoc = getVerifyPrincipalDocument().getText();
-		
+
 		if (prnDoc.equals(prnSecDoc)) {
 			softAssertion.assertEquals(prnDoc, prnSecDoc);
 			base.passedStep(" '>>' button is disabled");
@@ -23092,7 +23167,7 @@ public class DocViewPage {
 			base.passedStep(" '>>' button is enabled");
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -23105,7 +23180,7 @@ public class DocViewPage {
 		}
 		clickCodeSameAs();
 		base.stepInfo("Code same as action done for minidoclist doc");
-		
+
 		// performing code same as action for analytical panel
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
@@ -23118,7 +23193,7 @@ public class DocViewPage {
 		base.stepInfo("Code same as action done for Analytical doc");
 		driver.scrollPageToTop();
 		base.waitForElement(getDashboardButton());
-		
+
 		// validation for left panel button
 		getDashboardButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
@@ -23130,30 +23205,30 @@ public class DocViewPage {
 		softAssertion.assertEquals(navigationConfirmationMsg, actualMsg);
 		base.passedStep("Got navigation confirmation  warning message successfully");
 		getNavigationButton("No").waitAndClick(5);
-		
+
 		// validation for back button
 		driver.Navigate().back();
 		base.passedStep("Leave and cancel button displayed when navigation done through back button");
 		driver.switchTo().alert().dismiss();
-		
+
 		// validation for browser refresh button
 		driver.Navigate().refresh();
 		driver.switchTo().alert().accept();
 		driver.waitForPageToBeReady();
 		base.passedStep("Reload and cancel button displayed when navigation done through Refresh button");
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
 	public void popUpValidationDoneFromChildWindow() {
 		// perfroming action for child window minidoclist
-	   clickGearIconOpenMiniDocList();
-	   String parent=switchTochildWindow();
-	   for (int j = 1; j <= 1; j++) {
+		clickGearIconOpenMiniDocList();
+		String parent = switchTochildWindow();
+		for (int j = 1; j <= 1; j++) {
 			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().waitAndClick(5);
 		}
-	    base.waitForElement(getDocView_Mini_ActionButton());
+		base.waitForElement(getDocView_Mini_ActionButton());
 		getDocView_Mini_ActionButton().waitAndClick(5);
 		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
 		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
@@ -23166,7 +23241,7 @@ public class DocViewPage {
 		getHeader().Click();
 		base.waitForElement(getDocView_HdrAnalytics());
 		getDocView_HdrAnalytics().waitAndClick(5);
-		 String analyticsparent=switchTochildWindow();
+		String analyticsparent = switchTochildWindow();
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
 		base.waitForElement(getDocView_Analytics_NearDupe_Doc(1));
@@ -23199,8 +23274,112 @@ public class DocViewPage {
 		driver.switchTo().alert().accept();
 		base.passedStep("Reload and cancel button displayed when navigation done through Refresh button");
 	}
+
+	/**
+	 * @author Gopinath 
+	 * @Description : this method for deleting added annotation.
+	 */
+	public void deleteAddedAnnotaion() {
+		try {
+			editAnnotationLayer();
+			driver.waitForPageToBeReady();
+			getDocView_Annotate_DeleteIcon().isElementAvailable(10);
+			getDocView_Annotate_DeleteIcon().Click();
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occued while deleting added annotation."+e.getLocalizedMessage());
+		}
+	}
 	
 	/**
+	 * @author Gopinath
+	 * @Description : Method for verifying annotation is added to document.
+	 * @param alreadyExistsLayers : alreadyExistsLayers is integer value that
+	 *                            annotaion layers count of previous document.
+	 */
+	public void verifyAnnotationsToDocument(int alreadyExistsLayers) throws InterruptedException {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getDocView_AnnotateIcon().isElementAvailable(8);
+			getDocView_AnnotateIcon().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocView_Annotate_ThisPage().Displayed();
+				}
+			}), Input.wait30);
+			driver.waitForPageToBeReady();
+			int annotation = getAnnotations().FindWebElements().size();
+			if (annotation == alreadyExistsLayers) {
+				base.passedStep("Annotation is displayed to document successfully");
+			} else {
+				base.failedStep("Annotation is not displayed to document");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while performing non audio annotation." + e.getMessage());
+
+		}
+	}
+	/**
+	 * @author Gopinath
+	 * @Description : Method for verifying added annotation
+	 */
+	public void verifyAddedAnnotation() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_AnnotateIcon());
+		getDocView_AnnotateIcon().waitAndClick(5);
+		if(!getDuplicateRedactionWarning().getWebElement().isDisplayed()) {
+			if(getDocViewAppliedAnnotation().isElementAvailable(3)) {
+				base.passedStep("Annotation is applied for the document");
+			}else {
+				base.failedStep("Annotation is not applied for the document");
+			}
+		}else {
+			base.failedStep("failed to disappear Dupllicat redaction/highlighting/Annotation Warning message after reload the Document");
+		}
+	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method for verifying duplicate redaction warning message.
+	 */
+	public void verifydDuplicateRedactionWarningMessage() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_RedactIcon());
+			getDocView_RedactIcon().waitAndClick(5);
+			base.waitForElement(getDuplicateRedactionWarning());
+			if (getDuplicateRedactionWarning().isElementAvailable(5)) {
+				base.passedStep(
+						"Duplicate redaction/highlighting Warning message is displayed after Add/Edit Highlighting for same document in other tab/browser");
+			} else {
+				base.failedStep(
+						"Duplicate redaction/highlighting Warning message is displayed after Add/Edit Highlighting for same document in other tab/browser");
+			}
+			base.waitForElement(getDocView_Annotate_Rectangle());
+			getDocView_Redact_Rectangle().waitAndClick(5);
+
+			if (!getDocView_Redact_RectangleActive().isElementAvailable(2)) {
+				base.waitForElement(getDocView_Text_redact());
+				getDocView_Text_redact().waitAndClick(5);
+				if (!getDocView_Text_Redact_Active().isElementAvailable(2)) {
+					base.passedStep(
+							"All submenus of redaction/highlighting are disabled after Duplicate redaction/highlighting message");
+				} else {
+					base.failedStep("failed to disable all sub menus of redaction/highlighting after duplicate redaction/highlighting message");
+					
+				}
+
+			} else {
+				base.failedStep("failed to disable all sub menus of redaction/highlighting after duplicate redaction/highlighting message");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verfifying Duplicate Anno");
+		}
+/*
 	 * @Author Steffy Created on 04/02/2022
 	 * @Description To select docs from Analytics Family member Tab
 	 * 
@@ -23237,16 +23416,16 @@ public class DocViewPage {
 			e.printStackTrace();
 			System.out.println("Doc are verified successfully");
 		}
-  }
+	}
 
-  /*
+	/*
 	 * 
 	 * @author Vijaya.Rani 04/02/22 NA Modified date: NA Modified by:NA
+	 * 
 	 * @description to open NearDupe ComparisonWindow pagination
 	 */
 
-	public void openNearDupeComparisonWindowForDocumentPagination(String documentId)
-			throws InterruptedException {
+	public void openNearDupeComparisonWindowForDocumentPagination(String documentId) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -23256,7 +23435,7 @@ public class DocViewPage {
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
 
 		getDocView_NearDupeIconForSpecificDocument(documentId).waitAndClick(10);
-		
+
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
@@ -23265,13 +23444,13 @@ public class DocViewPage {
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getNearDupeDocPageNumber());
-		String beforeNo=getNearDupeDocPageNumber().getText();
+		String beforeNo = getNearDupeDocPageNumber().getText();
 		System.out.println(beforeNo);
 		base.waitForElement(getDocView_ChildPagination());
 		getDocView_ChildPagination().waitAndClick(10);
-		
+
 		base.waitForElement(getNearDupeDocPageNumber());
-		String afterNo=getNearDupeDocPageNumber().getText();
+		String afterNo = getNearDupeDocPageNumber().getText();
 		System.out.println(afterNo);
 		softAssertion.assertNotEquals(beforeNo, afterNo);
 		base.passedStep("Pagination is working near dupe child window Successfully");
@@ -23279,7 +23458,9 @@ public class DocViewPage {
 		driver.switchTo().window(parentWindowID);
 		driver.getWebDriver().navigate().refresh();
 		driver.waitForPageToBeReady();
+
 	}
+
 	
 	/**
 	 * @Author Brundha
@@ -23324,3 +23505,260 @@ public class DocViewPage {
 	
 }
 
+
+	/**
+	 * @author Raghuram 02/04/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description
+	 */
+	public Map<String, String> addRemarkToDocumentsT(int iteration, String remark, Boolean deleteExistingRemark,
+			String msgType) throws Exception, ParseException {
+
+		Map<String, String> datas = new HashMap<String, String>();
+		List<WebElement> documents = getMiniDocListDocIdText().FindWebElements();
+		String newTime;
+
+		if (iteration <= documents.size()) {
+			for (int i = 0; i < iteration; i++) {
+
+				Actions act = new Actions(driver.getWebDriver());
+				act.moveToElement(documents.get(i)).click().perform();
+				driver.waitForPageToBeReady();
+				String docID = getDocView_CurrentDocId().getText();
+				base.stepInfo("Current viewed document : " + docID);
+
+				// click on remarks button
+				getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+
+				if (deleteExistingRemark) {
+					// Delete Existing Remark
+					deleteExistingRemark();
+				}
+
+				getAdvancedSearchAudioRemarkPlusIcon().waitAndClick(5);
+				String remarkText = remark + i;
+				newTime = audioRemarkDataInput(remarkText, msgType);
+				driver.waitForPageToBeReady();
+				String authorName = getAuthorName(remarkText).getText();
+				String dateAndTime = getRemarkdateTime(remarkText).getText();
+				datas.put("DocID-" + i, docID);
+				datas.put("Time-" + i, newTime);
+				datas.put("remark-" + i, remarkText);
+				datas.put("authorName-" + i, authorName);
+				datas.put("Duration-" + i, dateAndTime);
+			}
+		} else {
+			System.out.println("The given iteration count exceed the Document Count");
+			base.stepInfo("The given iteration count exceed the Document Count");
+		}
+
+		return datas;
+	}
+
+	/**
+	 * @author Raghuram 02/04/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description
+	 */
+	public String audioRemarkDataInput(String remark, String msgToVerify) throws InterruptedException, ParseException {
+
+		// Get Audio duration start and End time first ans Set
+		String newTime = setRemarkTime();
+		getDocView_RemarkTextField().SendKeys(remark);
+
+		if (msgToVerify.equalsIgnoreCase("Success")) {
+			getDocView_AudioRemark_SaveButton().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			// verify success message
+//			base.VerifySuccessMessage("Record added Successfully");
+			base.CloseSuccessMsgpopup();
+		} else if (msgToVerify.equalsIgnoreCase("Update")) {
+			getUpdateBtn().waitAndClick(5);
+			driver.waitForPageToBeReady();
+//			base.VerifySuccessMessage("Record Updated Successfully");
+			base.CloseSuccessMsgpopup();
+		}
+
+		return newTime;
+
+	}
+
+	/**
+	 * @author Raghuram 02/04/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description
+	 */
+	public void deleteExistingRemark() {
+		if (getDocView_AudioRemark_DeleteButton().isElementAvailable(4)) {
+			getDocView_AudioRemark_DeleteButton().Click();
+
+			// click on yes button
+			getDocview_ButtonYes().waitAndClick(5);
+
+			base.VerifySuccessMessage("Record Deleted Successfully");
+			driver.waitForPageToBeReady();
+		} else {
+			System.out.println("No Remarks exist'");
+			UtilityLog.info("No Remarks exist'");
+		}
+	}
+
+	/**
+	 * @author Raghuram 02/04/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description
+	 */
+	public String setRemarkTime() throws ParseException {
+		driver.waitForPageToBeReady();
+		// Get Audio duration start and End time first
+		String Audiostarttimeremark = getAdvancedSearchAudioRemarkTime().GetAttribute("value");
+		System.out.println(Audiostarttimeremark);
+		UtilityLog.info(Audiostarttimeremark);
+		DateFormat df = new SimpleDateFormat("HH:mm");
+		// Get Audio duration start and End time first
+		String Audiostarttime = getDocview_Audio_StartTime().getText();
+		System.out.println(Audiostarttime);
+		UtilityLog.info(Audiostarttime);
+
+		Date d = df.parse(Audiostarttime);
+		Calendar cal = Calendar.getInstance();
+		d = df.parse(Audiostarttimeremark);
+		cal.setTime(d);
+		cal.add(Calendar.MINUTE, 2);
+		String newTime2 = df.format(cal.getTime());
+		System.out.println(newTime2);
+		UtilityLog.info(newTime2);
+
+		// Enter time in remarks field
+		driver.waitForPageToBeReady();
+		getAdvancedSearchAudioRemarkTime().SendKeys(newTime2);
+
+		System.out.println("----------------------------------");
+		String durationInput = getTimeDurationSetInput().GetAttribute("value");
+		System.out.println(durationInput);
+
+		return durationInput;
+	}
+
+	/**
+	 * @author Raghuram 02/04/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description
+	 */
+	public Map<String, String> inputToAudioRemark(String remark) throws Exception, ParseException {
+
+		Map<String, String> datas = new HashMap<String, String>();
+		String newTime;
+
+		newTime = audioRemarkDataInput(remark, "Update");
+		driver.waitForPageToBeReady();
+		String authorName = getAuthorName(remark).getText();
+		String dateAndTime = getRemarkdateTime(remark).getText();
+
+		datas.put("authorName", authorName);
+		datas.put("dateAndTime", dateAndTime);
+		datas.put("newTime", newTime);
+		datas.put("remark", remark);
+
+		return datas;
+	}
+
+	/**
+	 * @author Raghuram 02/05/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description verify remark Results
+	 */
+	public void verifyResults(String remarkText, String remarkTime, String remarkDateTime, String authorName,
+			String status) {
+		base.textCompareEquals(remarkText, getRemarkText(remarkText).getText(),
+				"Remark Text : " + remarkText + " is " + status + " ",
+				"Remark Text : " + remarkText + " not " + status + " ");
+		base.textCompareEquals(remarkTime, getRemarkTimeDuration(remarkText).getText(),
+				"Remark Set Duration : " + remarkTime + " is " + status + " ",
+				"Remark Set Duration : " + remarkTime + " not " + status + " ");
+		base.textCompareEquals(remarkDateTime, getRemarkdateTime(remarkText).getText(),
+				"Remark Set Date and Time : " + remarkDateTime + " is " + status + " ",
+				"Remark Set Date and Time : " + remarkDateTime + " not " + status + " ");
+		base.textCompareEquals(authorName, getAuthorName(remarkText).getText(),
+				"Remark Set Author Name : " + authorName + " is " + status + " ",
+				"Remark Set Author Name : " + authorName + " not " + status + " ");
+	}
+
+	/**
+	 * @author Raghuram 02/05/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description verify Existing Remarks
+	 */
+	public void verifyExistingRemarks(int iteration, Map<String, String> datas, Boolean editFlow, Boolean historyCHeck)
+			throws ParseException, Exception {
+		MiniDocListPage mindiocList = new MiniDocListPage(driver);
+		DocViewMetaDataPage dcMetaPage = new DocViewMetaDataPage(driver);
+		Map<String, String> updateDatas = new HashMap<String, String>();
+		String updatedRemark = "UpdatedRemark" + Utility.dynamicNameAppender();
+
+		// Verify Existing remarks
+		for (int i = 0; i < iteration; i++) {
+
+			String dociID = datas.get("DocID-" + i);
+			String remarkText = datas.get("remark-" + i);
+			String remarkTime = datas.get("Time-" + i);
+			String remarkauthorName = datas.get("authorName-" + i);
+			String dateAndTime = datas.get("Duration-" + i);
+
+			mindiocList.getDociD(dociID).waitAndClick(5);
+			driver.waitForPageToBeReady();
+
+			// click on remarks button
+			getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+
+			// Verify Remark Retained Datas
+			verifyResults(remarkText, remarkTime, dateAndTime, remarkauthorName, "Retained");
+
+			base.failedMessage(
+					"------------------------------------------------------------------------------------------------------------------------");
+			base.passedStep(
+					"Existing reviewers remark along with date time, remark text and user name who added it is retained");
+			base.failedMessage(
+					"------------------------------------------------------------------------------------------------------------------------");
+
+			if (editFlow) {
+				// Edit Flow
+				editAndVerifyData(remarkText, updateDatas, updatedRemark);
+			}
+
+			if (historyCHeck) {
+				dcMetaPage.historyActivityCheck(remarkText);
+			}
+
+		}
+	}
+
+	/**
+	 * @author Raghuram 02/05/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description edit And Verify Audio remark Data
+	 */
+	public void editAndVerifyData(String remarkText, Map<String, String> updateDatas, String updatedRemark)
+			throws ParseException, Exception {
+		// Edit Flow
+		getAudioReMarkEdit(remarkText).waitAndClick(5);
+		updateDatas = inputToAudioRemark(updatedRemark);
+		driver.waitForPageToBeReady();
+
+		// Verify Old datas not available
+		if (!getRemarkText(remarkText).isElementAvailable(2)) {
+			base.passedStep("Olad datas not available");
+		} else {
+			base.failedStep("Old datas still exists");
+		}
+
+		// Verify Updated datas
+		String updatedremarkText = updateDatas.get("remark");
+		String updatedremarkTime = updateDatas.get("newTime");
+		String updatedremarkauthorName = updateDatas.get("authorName");
+		String updateddateAndTime = updateDatas.get("dateAndTime");
+
+		// Verify Remark Retained Datas
+		verifyResults(updatedremarkText, updatedremarkTime, updateddateAndTime, updatedremarkauthorName, "Updated");
+	}
+}

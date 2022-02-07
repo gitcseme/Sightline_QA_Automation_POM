@@ -546,11 +546,12 @@ public class DocViewMetaDataPage {
 		return driver.FindElementByXPath(
 				"//table[@id='MetaDataDT']//td[text()='ParentDocID']//..//td[text()='" + docID + "']");
 	}
-	
-	//Added by Gopinath
+
+	// Added by Gopinath
 	public ElementCollection getAddedRemark() {
 		return driver.FindElementsByCssSelector("g[data-pcc-mark*='highlighttextannotation']");
 	}
+
 	
 	//Added by Gopinath - 01/02/2021
 		public Element getMetaDataTableOnPopupFieldName() {
@@ -562,6 +563,42 @@ public class DocViewMetaDataPage {
 		public ElementCollection getMetadataPopUpFieldnameList() {
 			return driver.FindElementsByXPath("//table[@id='MetaDataDT1']//td[@class='sorting_1']");
 		}
+		public ElementCollection getDocViewAppliedAnnotation() {
+			return driver.FindElementsByCssSelector("rect[data-pcc-mark*='mark'][style*='rgb(255, 255, 0)']");
+		}
+
+
+	// Added by Gopinath - 01/02/2021
+	public Element getMetaDataTableOnPopupFieldName() {
+		return driver.FindElementByXPath("//div[@id='MetaDataDT1_wrapper']/descendant::th[text()='Field Name']");
+	}
+
+	public Element getMetaDataTableOnPopupFieldValue() {
+		return driver.FindElementByXPath("//div[@id='MetaDataDT1_wrapper']/descendant::th[text()='Field Value']");
+	}
+
+	public ElementCollection getMetadataPopUpFieldnameList() {
+		return driver.FindElementsByXPath("//table[@id='MetaDataDT1']//td[@class='sorting_1']");
+	}
+
+	public Element getTimeStampHeader() {
+		return driver.FindElementByXPath("// div[@id='dtDocumentAllHistory_wrapper']//th[text()='Time Stamp']");
+	}
+
+	public Element getRemarkData() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentAllHistory']//td[text()='UpdatedRemark9115399']");
+	}
+
+	public ElementCollection getAHeaderList() {
+		return driver.FindElementsByXPath(
+				"// div[@class='dataTables_scrollHeadInner']//table[@class='table std-table dataTable no-footer']//th");
+	}
+
+	public Element getResult(String remark, int index) {
+		return driver.FindElementByXPath(
+				"//table[@id='dtDocumentAllHistory']//td[text()='" + remark + "']//..//td[" + index + "]");
+	}
+
 
 	public DocViewMetaDataPage(Driver driver) {
 
@@ -2894,32 +2931,41 @@ public class DocViewMetaDataPage {
 			System.out.println("Not able to select redacted area");
 		}
 	}
-	/** 
+
+	/**
 	 * @author Gopinath Method for perform remark.
-	 * @description : Method for verifying highlighted text for already added remark is deleted from document on doc view. 
+	 * @description : Method for verifying highlighted text for already added remark
+	 *              is deleted from document on doc view.
 	 */
 	public void verifyHighlightedTextRemarkNotPresentOnDoc() {
 		try {
-			List<WebElement> addedRemarks=null;
+			List<WebElement> addedRemarks = null;
 			driver.scrollPageToTop();
 			try {
 				addedRemarks = getAddedRemark().FindWebElements();
-				if(addedRemarks.size()==0) {
-					base.passedStep("Highlighted text for already added remark is deleted from document on doc view successfully");
-				}else {
-					base.failedStep("Highlighted text for already added remark is not deleted from document on doc view");
+				if (addedRemarks.size() == 0) {
+					base.passedStep(
+							"Highlighted text for already added remark is deleted from document on doc view successfully");
+				} else {
+					base.failedStep(
+							"Highlighted text for already added remark is not deleted from document on doc view");
 				}
-			}catch(Exception e) {
-				base.passedStep("Highlighted text for already added remark is deleted from document on doc view successfully");
+			} catch (Exception e) {
+				base.passedStep(
+						"Highlighted text for already added remark is deleted from document on doc view successfully");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while verifying highlighted text for already added remark is deleted from document on doc view. "+e.getLocalizedMessage());
+			base.failedStep(
+					"Exception occured while verifying highlighted text for already added remark is deleted from document on doc view. "
+							+ e.getLocalizedMessage());
 		}
 	}
+
 	/**
 	 * @author Gopinath
-	 * @description: this method will verify metadata pop with field name and value is displayed or not
+	 * @description: this method will verify metadata pop with field name and value
+	 *               is displayed or not
 	 */
 	public void verifyMetadataPopUpColumns() {
 		try {
@@ -2947,5 +2993,62 @@ public class DocViewMetaDataPage {
 		}
 
 	}
+
 	
+	/**
+	 * @author Gopinath
+	 * @description: method to remove annotation in document 
+	 */
+	public void unTagAnnotationOfDocument() {
+		try {
+			Actions actions = new Actions(driver.getWebDriver());
+			driver.waitForPageToBeReady();
+			base.waitForElement(getYellowUnRedactRectButton());
+			getYellowUnRedactRectButton().waitAndClick(5);
+			List<WebElement> annotation = getDocViewAppliedAnnotation().FindWebElements();
+			actions.moveToElement(annotation.get(0)).click().build().perform();
+			base.waitForElement(getUnTaggedDeleteButton());
+			actions.moveToElement(getUnTaggedDeleteButton().getWebElement()).click().build().perform();
+			base.VerifySuccessMessage("Annotation Removed successfully.");
+			base.passedStep("Annotation removed from docuent");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("unable to Remove annotation from document due to "+e.getMessage());
+			
+		}
+	}
+	
+
+
+	/**
+	 * @author Raghuram.A
+	 * @param remarkText
+	 */
+	public void historyActivityCheck(String remarkText) {
+		verifyHistoryTabIsEnabled();
+		getHistoryTab().waitAndClick(5);
+
+		base.stepInfo("Verifying history tab is displayed in doc view page.");
+		verifyHistoryTabIsDisplayedByDefault();
+
+		base.stepInfo("Verifying export tab is displayed in browse history pop up in  doc view page.");
+		verifyExportOptionIsDisplayed();
+		driver.waitForPageToBeReady();
+
+		getTimeStampHeader().waitAndClick(5);
+		getTimeStampHeader().waitAndClick(5);
+		getAHeaderList();
+		int actionIndex = base.getIndex(getAHeaderList(), "ACTION");
+		int timeIndex = base.getIndex(getAHeaderList(), "TIME STAMP");
+		int userIndex = base.getIndex(getAHeaderList(), "USER");
+
+		base.textCompareEquals("RemarksRemoved", getResult(remarkText, actionIndex).getText(),
+				"Updated remark is displayed in document’s permanent activity history record", "History not updated");
+
+		getCloseButton().waitAndClick(2);
+		driver.waitForPageToBeReady();
+	}
+
+
 }

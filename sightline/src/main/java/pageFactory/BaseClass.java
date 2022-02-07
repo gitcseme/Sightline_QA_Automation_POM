@@ -228,8 +228,14 @@ public class BaseClass {
 	public Element getWarningMsgHeader() {
 		return driver.FindElementByXPath("//span[text()='Warning !']");
 	}
+
 	public Element getSecondLineOfWarningMsg() {
 		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div//li");
+
+	//Added by Krishna
+	public Element getSecondLineSuccessMsg(int i) {
+		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//li[" + i + "]");
+
 	}
 
 	public BaseClass(Driver driver) {
@@ -2520,8 +2526,7 @@ public class BaseClass {
 	}
 
 	/*
-	 * @author Steffy
-	 * Description - This method is to verify the background color
+	 * @author Steffy Description - This method is to verify the background color
 	 */
 	public void verifyBackGroundColor(Element element, String expectedColor) {
 		waitForElement(element);
@@ -2535,5 +2540,51 @@ public class BaseClass {
 			e.printStackTrace(pw);
 			UtilityLog.info(sw.toString());
 		}
+	}
+
+	
+	public void VerifyWarningMessageAdditionalLine(String ExpectedMsg, String ExpectedMsg2, String ExpectedMsg3) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSuccessMsgHeader().Visible();
+			}
+		}), Input.wait30);
+		Assert.assertEquals("Warning !", getSuccessMsgHeader().getText().toString());
+		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+		UtilityLog.info("Expected message - " + ExpectedMsg);
+		Reporter.log("Expected message - " + ExpectedMsg, true);
+		Assert.assertEquals(ExpectedMsg2, getSecondLineSuccessMsg(1).getText().toString());
+		String string3 = getSecondLineSuccessMsg(1).getText().toString();
+		System.out.println(string3);
+		Assert.assertEquals(ExpectedMsg3, getSecondLineSuccessMsg(3).getText().toString());
+		
+		
+
+
+	/**
+	 * @author Jeevitha
+	 * @param source
+	 * @param compareString
+	 * @param passMsg
+	 * @param failMsg
+	 * @throws InterruptedException
+	 */
+	public void compareListWithString(List<String> source, String compareString, String passMsg, String failMsg)
+			throws InterruptedException {
+		boolean compare = false;
+		for (String actualValue : source) {
+			if (actualValue.equals(compareString)) {
+				compare = true;
+			} else {
+				compare = false;
+				break;
+			}
+		}
+		if (compare) {
+			passedStep(passMsg);
+		} else {
+			failedMessage(failMsg);
+		}
+
 	}
 }
