@@ -103,6 +103,7 @@ public class SessionSearch {
 	public Element getPersistantHitCb_Existing() {
 		return driver.FindElementByXPath("//div[@id='existingassignment']//div//label[@class='checkbox']//i");
 	}
+
 	public Element getPinBtn(String searchName) {
 		return driver.FindElementByXPath(
 				"//span[text()='SS:" + searchName + "']//following::span[@class='pin-search']//button");
@@ -1474,7 +1475,8 @@ public class SessionSearch {
 	}
 
 	public Element getAdvSearchCopyToNewSearch() {
-		return driver.FindElementByXPath("(//*[@id=\"Adv\"]/div/div/button[@class='btn btn-default dropdown-toggle'])[last()]");
+		return driver.FindElementByXPath(
+				"(//*[@id=\"Adv\"]/div/div/button[@class='btn btn-default dropdown-toggle'])[last()]");
 	}
 
 	public ElementCollection getDetailsTable() {
@@ -1506,10 +1508,29 @@ public class SessionSearch {
 	public Element getPinnedSearchIcon() {
 		return driver.FindElementByXPath("//span[@title='Un Pin this Search']");
 	}
+
 	public Element getModifyASearch_Last() {
 		return driver.FindElementByXPath("(//a[@id='qModifySearch'])[last()]");
 	}
 
+	public Element gettingAudioSearchTableRowValues(int i) {
+		return driver.FindElementByXPath("(//table[@class='table table-striped']//td/table[@class='table table-striped']/tbody/tr/td["+i+"]/span)[last()]");
+	}
+	public ElementCollection getAudioSearchTableHeaders() {
+		return driver.FindElementsByXPath("//table[@class='table table-striped']//td/table[@class='table table-striped']/thead/tr/th/strong");
+	}
+	public ElementCollection audioSearchTermResult() {
+		return driver.FindElementsByXPath("//td[text()='Audio']/parent::tr//span[@class='badge']");
+	}
+	public Element languagePackInSearchResult() {
+		return driver.FindElementByXPath("//span[@id='spnAudLang']");
+	}
+	public Element ConenetInSaerchResult() {
+		return driver.FindElementByXPath("//td[text()='Content & MetaData']/parent::tr//span[@class='badge']");
+	}
+	public Element gettingThresholdValue() {
+		return driver.FindElementByXPath("//span[@class='irs-single']");
+	}
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -1615,24 +1636,13 @@ public class SessionSearch {
 		return null;
 	}
 
+	/**
+	 * @author Raghuram.A modifiedOn : 2/5/22 by modified by : Raghuram
+	 * @param searchName
+	 */
 	public void saveSearch(String searchName) {
-		if (getSaveSearch_Button().isElementAvailable(7)) {
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSaveSearch_Button().Visible() && getSaveSearch_Button().Enabled();
-				}
-			}), Input.wait30);
-			getSaveSearch_Button().waitAndClick(5);
-		} else {
-			driver.WaitUntil((new Callable<Boolean>() {
-
-				public Boolean call() {
-					return getAdvanceS_SaveSearch_Button().Visible() && getAdvanceS_SaveSearch_Button().Enabled();
-				}
-			}), Input.wait30);
-			getAdvanceS_SaveSearch_Button().waitAndClick(5);
-		}
+		// Save Search
+		saveSearchAction();
 
 		if (getSaveAsNewSearchRadioButton().isElementAvailable(7)) {
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -3879,18 +3889,15 @@ public class SessionSearch {
 	}
 
 	/**
-	 * @author Jayanthi.ganesan
+	 * @author Jayanthi.ganesan  Modidfied on-7/2/21
 	 * @param productionName
 	 * @throws InterruptedException
 	 * @description-This method selects the production under Work product-
 	 *                   productions search tree.
 	 */
 	public void selectProductionstInASwp(String productionName) throws InterruptedException {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getProductionBtn().Visible() && getProductionBtn().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getProductionBtn());
+		getProductionBtn().ScrollTo();
 		getProductionBtn().Click();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -3899,7 +3906,6 @@ public class SessionSearch {
 		}), Input.wait30);
 		driver.scrollingToBottomofAPage();
 		System.out.println(getTree_productions().FindWebElements().size());
-		UtilityLog.info(getTree_productions().FindWebElements().size());
 		for (WebElement iterable_element : getTree_productions().FindWebElements()) {
 			if (iterable_element.getText().contains(productionName)) {
 
@@ -8243,11 +8249,12 @@ public class SessionSearch {
 	}
 
 	/**
-	 * @author Raghuram.A Date: 11/23/21 Modified date:N/A Modified by: N/A
+	 * @author Raghuram.A Date: 11/23/21 Modified date:2/5/22 Modified by: Raghuram
 	 */
 	public Map<String, Integer> advancedSearchWithCombinationsSaveUnderMySearches(String contentMetadataString,
 			String conceptualString, String audioText, String language, String tabName, String[] combinations,
-			String metaDataType, String metaDataInput, String audioThreshold) throws InterruptedException {
+			String metaDataType, String metaDataInput, String audioThreshold, Boolean save)
+			throws InterruptedException {
 		Map<String, Integer> pureHitCount = new HashMap<String, Integer>();
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 
@@ -8296,7 +8303,9 @@ public class SessionSearch {
 				setThresholdAudioSearch(audioThreshold);
 				advMetaDataSearchQueryInsertTest(metaDataType, metaDataInput);
 			}
-			pureHitCount = saveAndCountMapping();
+			if (save) {
+				pureHitCount = saveAndCountMapping();
+			}
 		}
 
 		return pureHitCount;
@@ -9597,10 +9606,10 @@ public class SessionSearch {
 		base.waitForElement(getQuerySearchButton());
 		getQuerySearchButton().waitAndClick(10);
 	}
-/**
- * @author Jayanthi.ganesan  
- * Modified by jayanthi-3/2/21
- */
+
+	/**
+	 * @author Jayanthi.ganesan Modified by jayanthi-3/2/21
+	 */
 	public void resubmitSearch() {
 		getModifyASearch_Last().waitAndClick(10);
 		getAdvSearchCopyToNewSearch().waitAndClick(10);
@@ -9970,7 +9979,7 @@ public class SessionSearch {
 		UtilityLog.info("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
 
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @param persistant
@@ -10000,5 +10009,100 @@ public class SessionSearch {
 			getPersistantHitCheckBox().waitAndClick(5);
 		}
 	}
+
+public void advancedContentSearchConfigure(String SearchString) {
+		
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContentAndMetaDataBtn().Visible() && getContentAndMetaDataBtn().Enabled();
+			}
+		}), Input.wait30);
+		getContentAndMetaDataBtn().waitAndClick(5);
+		// Enter search string
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAdvancedContentSearchInputAudio().Visible();
+			}
+		}), Input.wait30);
+		getAdvancedContentSearchInputAudio().SendKeys(SearchString);
+
+	}
+public void validateAudioSearchResult(List<String>ExpectedResult,String ExpectedTermOperator,String ExpectedLanguagePack,String ExpectedLocationAudioFile,String ExpectedConfidenceThreshold) {
+		
+		driver.waitForPageToBeReady();
+		List<String> ActualResult = base.availableListofElements(audioSearchTermResult());
+		
+		for(int i=0;i<ExpectedResult.size();i++) {
+			
+		if(ActualResult.contains(ExpectedResult.get(i))) {
+			base.passedStep("The Expected Audio Search term '"+ExpectedResult.get(i)+"' is present in the Search Result");
+		}else {
+			base.failedMessage("The Expected Audio Search term '"+ExpectedResult.get(i)+"' is Not present in the Search Result");
+		}
+		}
+		String actualTermOperator = gettingAudioSearchTableRowValues(base.getIndex(getAudioSearchTableHeaders(), "Term Operator".toUpperCase())).getText();
+		if(actualTermOperator.equalsIgnoreCase(ExpectedTermOperator)) {
+		base.passedStep("Term Operator displayed  in Search Result is "+actualTermOperator+" which is expected .");
+		}else {
+			base.failedStep("Term Operator in Search Result doesn't matches with the applied Term Operator");
+		}
+		String actualLanguagePack = gettingAudioSearchTableRowValues(base.getIndex(getAudioSearchTableHeaders(), "Language Pack / Dialect".toUpperCase())).getText();
+		
+		softAssert.assertEquals(actualLanguagePack, ExpectedLanguagePack);
+		
+		String actualLocationAudioFile = gettingAudioSearchTableRowValues(base.getIndex(getAudioSearchTableHeaders(), "Location in Audio File".toUpperCase())).getText();
+		
+		softAssert.assertEquals(actualLocationAudioFile, ExpectedLocationAudioFile);
+		
+		String actualConfidenceThreshold = gettingAudioSearchTableRowValues(base.getIndex(getAudioSearchTableHeaders(), "Minimum Confidence Threshold".toUpperCase())).getText();
+		
+		softAssert.assertEquals(actualConfidenceThreshold, ExpectedConfidenceThreshold);
+		
+		softAssert.assertAll();
+		base.passedStep("Language pack in Search Result validated Successfully");
+		base.passedStep("Location in audio File in Search Result validated Successfully");
+		base.passedStep("Minimum Confidence Threshold in Search Result validated Successfully");
+		
+	}
 	
+
+public String configureAudioSearchBlock(String SearchString1, String SearchString2, String language, int threshold,
+		String operator,String location,String seconds) throws InterruptedException {
+	this.driver.getWebDriver().get(Input.url + "Search/Searches");
+	driver.waitForPageToBeReady();
+	getAdvancedSearchLink().Click();
+	base.waitForElement(getAs_Audio());	
+	getAs_Audio().waitAndClick(10);
+	base.waitForElement(getAs_AudioLanguage());
+	getAs_AudioLanguage().selectFromDropdown().selectByVisibleText(language);
+	// Enter search string
+	base.waitForElement( getAs_AudioText());
+	getAs_AudioText().SendKeys(SearchString1 + Keys.ENTER + SearchString2 + Keys.ENTER);
+
+	// Select term operator
+	getAudioTermOperator().selectFromDropdown().selectByVisibleText(operator);
+	// Select location
+	base.waitForElement(getAudioLocation());	
+	if(location.equalsIgnoreCase("Entire Audio File")) {
+	getAudioLocation().selectFromDropdown().selectByVisibleText(location);
+	}else if(location.equalsIgnoreCase("Within:")) {
+		getAudioLocation().selectFromDropdown().selectByVisibleText(location);
+		getAudioTimeDiff().SendKeys(seconds);
+	}
+	// select threshold
+	Actions action = new Actions(driver.getWebDriver());
+	action.clickAndHold(GetSliderConfidenceThreshold().getWebElement());
+	action.moveToElement(GetSliderConfidenceThreshold().getWebElement(), threshold, 0);
+	action.release();
+	action.build().perform();
+	GetSliderConfidenceThreshold().Click();
+	base.waitTime(2);
+	String[] thresholdValue = gettingThresholdValue().getText().split(" ");
+	String thresholdValue1=thresholdValue[0];
+	return thresholdValue1;
+}
+
+
+
 }

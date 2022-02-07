@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.ITestResult;
@@ -18,6 +20,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -72,12 +75,22 @@ public class DocViewAudio_IndiumRegression {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
 		softAssertion = new SoftAssert();
-//		docViewPage = new DocViewPage(driver);
-//		assignmentPage = new AssignmentsPage(driver);
-//		sessionSearch = new SessionSearch(driver);
-//		keywordPage = new KeywordPage(driver);
-//		docListPage=new DocListPage(driver);
 
+	}
+
+	@DataProvider(name = "AllTheUsers")
+	public Object[][] AllTheUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
+	}
+
+	@DataProvider(name = "RMUandREV")
+	public Object[][] RMUandREV() {
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
 	}
 
 	/**
@@ -435,7 +448,7 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("Audio Input : " + audioSearchInput);
 		Map<String, Integer> purehit = sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(
 				Input.searchString1, Input.searchString1, audioSearchInput, Input.language, "", combinations,
-				metaDataType, metaDataIp, "");
+				metaDataType, metaDataIp, "", true);
 		driver.waitForPageToBeReady();
 
 		// Data Collection
@@ -508,7 +521,7 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("Audio Input : " + audioSearchInput);
 		Map<String, Integer> purehit = sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(
 				Input.searchString1, Input.searchString1, audioSearchInput, Input.language, "", combinations,
-				metaDataType, metaDataIp, "");
+				metaDataType, metaDataIp, "", true);
 		driver.waitForPageToBeReady();
 
 		// Data Collection
@@ -576,7 +589,7 @@ public class DocViewAudio_IndiumRegression {
 
 		// Search for metadata and audio
 		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(null, null, Input.audioSearch, Input.language,
-				"", combinations, Input.docName, metaDataIp, "min");
+				"", combinations, Input.docName, metaDataIp, "min", true);
 
 		driver.scrollPageToTop();
 		sessionSearch.bulkAssign();
@@ -654,7 +667,7 @@ public class DocViewAudio_IndiumRegression {
 
 		// Search for metadata and audio
 		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(null, null, Input.audioSearch, Input.language,
-				"", combinations, Input.docName, metaDataIp, "min");
+				"", combinations, Input.docName, metaDataIp, "min", true);
 
 		driver.scrollPageToTop();
 		sessionSearch.bulkAssign();
@@ -701,6 +714,254 @@ public class DocViewAudio_IndiumRegression {
 
 		loginPage.logout();
 	}
+	
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 07/02/2022 Modified by: Baskar
+	 * Description:Verify that when mini doc list child window scrolled down and 'Loading' 
+	 *             is displayed then mini doc list child window should be loaded with the documents
+	 * 
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	public void validatePlayIconInMiniDocListChild() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51839");
+		baseClass.stepInfo("Verify that when mini doc list child window scrolled down and 'Loading' "
+				+ "is displayed then mini doc list child window should be loaded with the documents");
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		String miniDocListChild = Input.url + "DocumentViewer/DocViewChild";
+
+		// search to Assignment creation
+		int audioPurehit=sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigating to docview with audio docs: " +audioPurehit+" document");
+
+		// Opening minidoclist child window
+		docViewPage.clickGearIconOpenMiniDocList();
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		if (driver.getUrl().equalsIgnoreCase(miniDocListChild)) {
+			baseClass.passedStep("User can able to popup out the minidcolist child window");
+		}
+		docViewPage.switchToNewWindow(1);
+		docViewPage.audioPlayPauseIcon().waitAndClick(5);
+		docViewPage.switchToNewWindow(2);
+		
+		// scrolling the minidoclist
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		// Before scroll time
+		Long beforeScroll = (Long) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		baseClass.stepInfo("Before scroll position:" +beforeScroll+" at minidoclist child");
+		long start = System.currentTimeMillis();
+		jse.executeScript("document.querySelector('.dataTables_scrollBody').scrollBy(0,15000)");
+		
+		// After scroll time
+		Long afterScroll = (Long) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		baseClass.stepInfo("Before scroll position:" +afterScroll+" at minidoclist child");
+		long finish = System.currentTimeMillis();
+		long totalTime = finish - start;
+		long timeSeconds = TimeUnit.MILLISECONDS.toSeconds(totalTime);
+		System.out.println(timeSeconds);
+		
+		// Should not take much time to load document(Test step time not mentioned)
+		if (timeSeconds <= 2) {
+			baseClass.passedStep("Document not taking much time to load the document when scrolling the minidoclist");
+		} else {
+			baseClass.failedStep("Failed to load document in minidoclist");
+		}
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+		driver.waitForPageToBeReady();
+		boolean audioPlay=docViewPage.audioPlayPauseIcon().GetAttribute("title").contains("Pause");
+		softAssertion.assertTrue(audioPlay);
+        softAssertion.assertAll();
+        baseClass.stepInfo("While scrolling the minidcolist audio player is playing");
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 07/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify that error in console should not be displayed as 'Uncaught 
+	 *              Type Error: _ChildMiniDoc. $ is not a function' when mini doc list 
+	 *              child window opened after completing audio document same as last prior 
+	 *              document is completed after applying stamp
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	public void validatingConsoleErrorMiniDocListUsingStamp() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51830");
+		baseClass.stepInfo("Verify that error in console should not be displayed as 'Uncaught Type Error: "
+				+ "_ChildMiniDoc. $ is not a function' when mini doc list child window opened after completing "
+				+ "audio document same as last prior document is completed after applying stamp");
+
+		String assignment = "AssAudio" + Utility.dynamicNameAppender();
+		String comment = "comments" + Utility.dynamicNameAppender();
+		String stampName = "stamp" + Utility.dynamicNameAppender();
+
+		String miniDocListChild = Input.url + "DocumentViewer/DocViewChild";
+		// login as rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+//	    searching document for assignment creation and new coding form created (existing)
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignment, Input.codeFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+		System.out.println(assignment);
+
+		// logout
+		loginPage.logout();
+
+		// login as rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validation for console error
+		// edit coding form and save the stamp
+		String prnDocs=docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(stampName, Input.stampSelection);
+		driver.waitForPageToBeReady();
+		
+		// applying the save stamp
+		docViewPage.lastAppliedStamp(Input.stampSelection);
+		driver.waitForPageToBeReady();
+		String prnSecDocs=docViewPage.getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnDocs, prnSecDocs);
+		baseClass.stepInfo("Document navigated and selected next docs from minidcolist");
+		
+		// click code same as last
+		docViewPage.getCodeSameAsLast().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Coded as per the coding form for the previous document");
+		docViewPage.getDociD(prnSecDocs).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		
+		// validating coding from filled as per previous
+		docViewPage.verifyingComments(comment);
+		
+		//Switching to minidoclist child window
+		docViewPage.clickGearIconOpenMiniDocList();
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		if (driver.getUrl().equalsIgnoreCase(miniDocListChild)) {
+			baseClass.passedStep("User can able to popup out the minidcolist child window");
+		}
+		
+		// validating in minidcolist document loaded completely or not in console
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		boolean readyStateComplete = (boolean) jse.executeScript("return document.readyState").toString().equals("complete");
+		System.out.println(readyStateComplete);
+		softAssertion.assertTrue(readyStateComplete);
+		baseClass.passedStep("Minidoclist document loaded completely after performing the stamp code same as last action");
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 07/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify that error in console should not be displayed as 'Uncaught Type Error:
+	 *              _ChildMiniDoc. $ is not a function' when mini doc list child window opened 
+	 *              after completing audio document same as last prior document is completed
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	public void validatingConsoleErrorMiniDocListUsingComplete() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51829");
+		baseClass.stepInfo("Verify that error in console should not be displayed "
+				+ "as 'Uncaught Type Error: _ChildMiniDoc. $ is not a function' when "
+				+ "mini doc list child window opened after completing audio document "
+				+ "same as last prior document is completed");
+
+		String assignment = "AssAudio" + Utility.dynamicNameAppender();
+		String comment = "comments" + Utility.dynamicNameAppender();
+		String miniDocListChild = Input.url + "DocumentViewer/DocViewChild";
+		
+		// login as rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+//	    searching document for assignment creation and new coding form created (existing)
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignment, Input.codeFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+		System.out.println(assignment);
+
+		// logout
+		loginPage.logout();
+
+		// login as rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validation for console error
+		// edit coding form and complete
+		String prnDocs=docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.editCodingForm(comment);
+		docViewPage.completeButton();
+		driver.waitForPageToBeReady();
+		String prnSecDocs=docViewPage.getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnDocs, prnSecDocs);
+		baseClass.stepInfo("Document navigated and selected next docs from minidcolist");
+		
+		// click code same as last
+		docViewPage.getCodeSameAsLast().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Coded as per the coding form for the previous document");
+		docViewPage.getDociD(prnSecDocs).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		
+		// validating coding from filled as per previous
+		docViewPage.verifyingComments(comment);
+		
+		//Switching to minidoclist child window
+		docViewPage.clickGearIconOpenMiniDocList();
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		if (driver.getUrl().equalsIgnoreCase(miniDocListChild)) {
+			baseClass.passedStep("User can able to popup out the minidcolist child window");
+		}
+		
+		// validating in minidcolist document loaded completely or not in console
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		boolean readyStateComplete = (boolean) jse.executeScript("return document.readyState").toString().equals("complete");
+		System.out.println(readyStateComplete);
+		softAssertion.assertTrue(readyStateComplete);
+		baseClass.passedStep("Minidoclist document loaded completely after completing code same as last action");
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+
+	
 	/**
 	 * Author :Aathith  date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51862 Description : When a user tries to navigate to Audio DocView with some documents, the first document must present completely and be ready to be acted upon fully
@@ -822,6 +1083,405 @@ public class DocViewAudio_IndiumRegression {
         loginPage.logout();
         
         
+	}
+
+	/**
+	 * @Author Raghuram A date:01/02/2022 Modified date: NA Modified by:N/A
+	 * @Description : Verify that user can edit the reviewer remarks in audio doc
+	 *              view [RPMXCON-46865]
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, dataProvider = "RMUandREV", groups = { "regression" }, priority = 11)
+	public void VerifyAddedReviewerRemarkForAudioDocInBasicSearch(String username, String password, String fullName)
+			throws Exception {
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewpage = new DocViewPage(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+
+		Map<String, String> datas = new HashMap<String, String>();
+		String remark = "Remark" + Utility.dynamicNameAppender();
+		String searchName = "SS" + Utility.dynamicNameAppender();
+		int iteration = 1;
+
+		baseClass.stepInfo("Test case Id:RPMXCON-46865 Sprint 11");
+		baseClass.stepInfo("Verify that user can edit the reviewer remarks in audio doc view");
+
+		// login as RMU/reviewer
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Loggedin As : " + fullName);
+
+		// adding remark to audio documents
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.saveSearch(searchName);
+		sessionSearch.ViewInDocView();
+		datas = docviewpage.addRemarkToDocumentsT(iteration, remark, true, "Success");
+
+		loginPage.logout();
+
+		// login as RMU/reviewer
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Loggedin As : " + fullName);
+
+		// SavedSearch to DocVIew
+		saveSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+
+		// Verify Existing remarks + Edit File
+		docviewpage.verifyExistingRemarks(iteration, datas, true, true);
+
+		// Delete Search
+		baseClass.stepInfo("Initiating Delete Search");
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA Test Case
+	 *         Id:RPMXCON-46994 Description : Search > Doc View Verify that audio
+	 *         hits should be highlighted when search is set up with the Audio
+	 *         search first then Metadata & Content search Sprint 12
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 12)
+	public void hitsCheckWithDvAudioMViaSearch(String username, String password, String fullName)
+			throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		List<String> docIDlist = new ArrayList<>();
+		String firnstDocname;
+		String metaDataType = "DocID", metaDataIp = "ID00*";
+		String[] combinations = { "Audio + Metadata" };
+		String audioSearchInput = Input.audioSearch;
+
+		baseClass.stepInfo("Test case id :RPMXCON-46994 Sprint 12");
+		baseClass.stepInfo(
+				"Search > Doc View Verify that audio hits should be highlighted when search is set up with the Audio search first then Metadata & Content search");
+
+		// Login as USER
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged in as : " + fullName);
+
+		// Combinational Search
+		baseClass.stepInfo("Audio Input : " + audioSearchInput);
+		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(Input.searchString1, Input.searchString1,
+				audioSearchInput, Input.language, "", combinations, metaDataType, metaDataIp, "", false);
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		sessionSearch.getQuerySearchButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.verifyPersistantDataPresent(audioSearchInput);
+
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the player", "Audio hits not highlighted on the player");
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA Test Case
+	 *         Id:RPMXCON-46995 Description : Search > Doc View Verify that audio
+	 *         hits should be highlighted when search is set up with the Metadata &
+	 *         Content search first and then Audio search Sprint 12
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 13)
+	public void hitsCheckWithMetaDataAudioViaSearch(String username, String password, String fullName)
+			throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		List<String> docIDlist = new ArrayList<>();
+		String firnstDocname;
+		String metaDataType = "DocID", metaDataIp = "ID00*";
+		String[] combinations = { "Metadata + Audio" };
+		String audioSearchInput = Input.audioSearch;
+
+		baseClass.stepInfo("Test case id :RPMXCON-46995 Sprint 12");
+		baseClass.stepInfo(
+				"Search > Doc View Verify that audio hits should be highlighted when search is set up with the Metadata & Content search first and then Audio search");
+
+		// Login as USER
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged in as : " + fullName);
+
+		// Combinational Search
+		baseClass.stepInfo("Audio Input : " + audioSearchInput);
+		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(Input.searchString1, Input.searchString1,
+				audioSearchInput, Input.language, "", combinations, metaDataType, metaDataIp, "", false);
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		sessionSearch.getQuerySearchButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.verifyPersistantDataPresent(audioSearchInput);
+
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the player", "Audio hits not highlighted on the player");
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Mohan date: 05/02/22 NA Modified date: NA Modified by:NA
+	 * Description:To verify option to translation the document from doc view
+	 * page'RPMXCON-50778' Sprint : 12
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	public void verifyOptionTranslationDocsInDocViewPage() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50778");
+		baseClass.stepInfo("To verify option to translation the document from doc view page");
+		baseClass = new BaseClass(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info(
+				"User successfully logged into slightline webpage as ReviewManager with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as ReviewManager with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo(
+				"Step 1: Prerequisites: Logged in user should be RMU and should be on Manage Assignments page  Assignment group and assignment should be created."
+						+ "  From Search page result should be 'BulkAssign' to the assignment  Documents should be ingested with Translation documents  ");
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
+
+		assignmentPage.assignmentCreation(assname, codingForm);
+		assignmentPage.add2ReviewerAndDistribute();
+		assignmentPage.selectAssignmentToViewinDocview(assname);
+
+		baseClass.stepInfo("Step 2: Check 'Translations' option from doc view page");
+
+		baseClass.waitForElement(docViewPage.getDocView_TranslationTab());
+		softAssertion.assertTrue(docViewPage.getDocView_TranslationTab().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Translations tab is displayed on doc view page successfully");
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Mohan date: 05/02/22 NA Modified date: NA Modified by:NA
+	 * Description:To verify assignment progress bar should be displayed on Doc View
+	 * page for RMU and Reviewer'RPMXCON-50781' Sprint : 12
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	public void verifyAssignmentProgressBarInDocViewPage() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50781");
+		baseClass.stepInfo(
+				"To verify assignment progress bar should be displayed on Doc View page for RMU and Reviewer");
+		baseClass = new BaseClass(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info(
+				"User successfully logged into slightline webpage as ReviewManager with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as ReviewManager with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo(
+				"Step 1: Prerequisites: Logged @user and go to Doc View page  Manage Assignment > View All in Doc View ");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+
+		assignmentPage.assignmentCreation(assname, codingForm);
+		assignmentPage.add2ReviewerAndDistribute();
+		assignmentPage.selectAssignmentToViewinDocview(assname);
+
+		baseClass.stepInfo("Step 2: Verify assignment progress bar from Doc View page");
+
+		softAssertion.assertTrue(docViewPage.getDocView_AssignmentProgressBar().isDisplayed());
+		softAssertion.assertTrue(docViewPage.getDocView_AssigmentName().isDisplayed());
+		softAssertion.assertAll();
+		String assName = docViewPage.getDocView_AssigmentName().getText();
+		System.out.println(assName);
+		baseClass.passedStep(
+				"Assignment progress bar is displayed on doc view page.Assignment name is also displayed above the assignment progress bar successfully");
+
+		loginPage.logout();
+
+		// login Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		baseClass.stepInfo("Step 2: Verify assignment progress bar from Doc View page");
+
+		softAssertion.assertTrue(docViewPage.getDocView_AssignmentProgressBar().isDisplayed());
+		softAssertion.assertTrue(docViewPage.getDocView_AssigmentName().isDisplayed());
+		softAssertion.assertAll();
+		assName = docViewPage.getDocView_AssigmentName().getText();
+		System.out.println(assName);
+		baseClass.passedStep(
+				"Assignment progress bar is displayed on doc view page.Assignment name is also displayed above the assignment progress bar successfully");
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Mohan date: 05/02/22 NA Modified date: NA Modified by:NA
+	 * Description:Verify that Reviewer can View reviewers remark in audio doc
+	 * view.'RPMXCON-51174' Sprint : 12
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	public void verifyReviewerRemarksTabInDocViewPageForReviewer() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51174");
+		baseClass.stepInfo("Verify that Reviewer can View reviewers remark in audio doc view.");
+		baseClass = new BaseClass(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+
+		// login Reviewer
+		baseClass.stepInfo(
+				"Step 1: Login as Reviewer   Project: Enron  Security Group: SG1, Annotation layer should be created under the security group");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"Step 2:Search for audio documents and go to doc view  Check for the icon to see the reviewer remarks");
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		baseClass.waitForElement(sessionSearch.getAdvancedSearchLink());
+		sessionSearch.getAdvancedSearchLink().waitAndClick(3);
+		sessionSearch.advancedSearchAudio(Input.audioSearch, Input.language);
+		baseClass.waitForElement(sessionSearch.getQuerySearchButton());
+		sessionSearch.getQuerySearchButton().waitAndClick(10);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigated to DocView Sucessfully");
+		softAssertion.assertTrue(docViewPage.getAdvancedSearchAudioRemarkIcon().isDisplayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("User is on audio doc view and Reviewers Remark icon is displayed successfully");
+
+		baseClass.stepInfo("Step 3: Click the Remarks icon to see Reviewers remark.");
+		baseClass.waitForElement(docViewPage.getAdvancedSearchAudioRemarkIcon());
+		docViewPage.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		if (docViewPage.getDocView_AudioReviewerRemarks().isDisplayed()
+				&& docViewPage.getAdvancedSearchAudioRemarkPlusIcon().isDisplayed()) {
+			baseClass.passedStep(
+					"Existing reviewers remark is displayed along with date time.  Also '+' sign is displayed to add the remarks.");
+		} else {
+			baseClass.failedStep("Reviewer remarks and + sign is not displayed");
+
+		}
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Mohan date: 05/02/22 NA Modified date: NA Modified by:NA
+	 * Description:To verify that Project Admin cannot view reviewer remarks in
+	 * audio doc view'RPMXCON-51175' Sprint : 12
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	public void verifyReviewerRemarksTabInDocViewPageForProjectAdmin() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51175");
+		baseClass.stepInfo("To verify that Project Admin cannot view reviewer remarks in audio doc view");
+		baseClass = new BaseClass(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+
+		// Login as PA
+		baseClass.stepInfo("Step 1: Login as Project Admin");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+		UtilityLog.info(
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"Step 2:Search for audio documents and go to doc view  Check for the icon to see the reviewer remarks");
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		baseClass.waitForElement(sessionSearch.getAdvancedSearchLink());
+		sessionSearch.getAdvancedSearchLink().waitAndClick(3);
+		sessionSearch.advancedSearchAudio(Input.audioSearch, Input.language);
+		baseClass.waitForElement(sessionSearch.getQuerySearchButton());
+		sessionSearch.getQuerySearchButton().waitAndClick(10);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigated to DocView Sucessfully");
+
+		baseClass.stepInfo("Step 3: View the audio doc view page for Remarks icon");
+		driver.waitForPageToBeReady();
+		if (docViewPage.getAdvancedSearchAudioRemarkIcon().isDisplayed()) {
+			baseClass.failedStep("Reviewer remarks icon is displayed on audio doc view for Project Admin");
+		} else {
+			baseClass.passedStep("Remarks icon is not displayed on audio doc view for Project Admin");
+		}
+
+		loginPage.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)
