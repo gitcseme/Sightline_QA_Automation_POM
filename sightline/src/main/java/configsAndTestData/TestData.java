@@ -307,6 +307,7 @@ public class TestData {
 	public String MetaDataReciepientsDomain;
 	public String MetaDataDomainName;
     public String KeyWordColour;
+    public  String TermOperator;
 	public String signDocumentId() {
 		// TODO Auto-generated method stub
 		return null; 

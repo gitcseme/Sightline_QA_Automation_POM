@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -98,7 +99,7 @@ public class AdvancedSearch_Regression3 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 3, enabled = true)
+	@Test(dataProvider = "Users", groups = { "regression" }, priority = 3, enabled = false)
 	public void verifyResubmit_content(String username, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48765");
 		baseClass.stepInfo("Verify that - Application returns consistent search result when user resubmits a "
@@ -139,7 +140,7 @@ public class AdvancedSearch_Regression3 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test(groups = { "regression" }, priority = 2, enabled = true)
+	@Test(groups = { "regression" }, priority = 2, enabled = false)
 	public void verifyDocsCntAlreadyProduced() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48747");
@@ -184,7 +185,7 @@ public class AdvancedSearch_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws AWTException
 	 */
-	@Test(groups = { "regression" }, priority = 1, enabled = true)
+	@Test(groups = { "regression" }, priority = 1, enabled = false)
 	public void verifyDocsCntAssgnments() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48746");
@@ -246,7 +247,7 @@ public class AdvancedSearch_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws AWTException
 	 */
-	@Test(groups = { "regression" }, priority = 4, enabled = true)
+	@Test(groups = { "regression" }, priority = 4, enabled = false)
 	public void verifyDocsCntTagNOTProd() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49300");
@@ -303,7 +304,7 @@ public class AdvancedSearch_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws AWTException
 	 */
-	@Test(groups = { "regression" }, priority = 5, enabled = true)
+	@Test(groups = { "regression" }, priority = 5, enabled = false)
 	public void verifyDocsCntCompletedAssgnments() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48748");
@@ -331,9 +332,8 @@ public class AdvancedSearch_Regression3 {
 		String expectedPureHitCount = search.verifyPureHitsCount();// expected value
 		baseClass.stepInfo("Total no docs in  Completed status under Assignments  " + expectedPureHitCount);
 
-
 		// Apply comments to document
-		docview.addCommentAndSave(docComment, true, count,true);
+		// docview.addCommentAndSave(docComment, true, count,true);
 		baseClass.selectproject();
 		search.navigateToAdvancedSearchPage();
 		// Adding WP tag into search text box
@@ -367,7 +367,7 @@ public class AdvancedSearch_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 6)
+	@Test(dataProvider = "Users", enabled = false, groups = { "regression" }, priority = 6)
 	public void verifySearchResultForComment(String username, String password) throws InterruptedException {
 
 		String docComment = "Reviewed";
@@ -403,7 +403,7 @@ public class AdvancedSearch_Regression3 {
 	 * @author Jayanthi.ganesan]
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 7)
+	@Test(dataProvider = "Users", enabled = false, groups = { "regression" }, priority = 7)
 	public void verifyPinnedIcon(String username, String password) throws InterruptedException {
 		lp = new LoginPage(driver);
 		SessionSearch search = new SessionSearch(driver);
@@ -429,7 +429,7 @@ public class AdvancedSearch_Regression3 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test(groups = { "regression" }, priority = 8, enabled = true)
+	@Test(groups = { "regression" }, priority = 8, enabled = false)
 	public void verifyResubmit_WPAndAudio() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48766");
 		baseClass.stepInfo("Verify that - Application returns consistent search result when "
@@ -480,6 +480,7 @@ public class AdvancedSearch_Regression3 {
 						+ "saved search(Content & Metadata Block) multiple times(twice)");
 		lp.logout();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
@@ -488,8 +489,9 @@ public class AdvancedSearch_Regression3 {
 	@Test(groups = { "regression" }, priority = 9, enabled = true)
 	public void verifyResubmit_cntAndMetaAndConceptualAndWPFolderAndAudio() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-46891");
-		baseClass.stepInfo("Verify that - Application returns consistent search result when user resubmits a saved search(Content & Metadata Block"
-				+ ",Conceptual Block,WorkProduct Block - Folder and Audio Block) multiple times(twice)");
+		baseClass.stepInfo(
+				"Verify that - Application returns consistent search result when user resubmits a saved search(Content & Metadata Block"
+						+ ",Conceptual Block,WorkProduct Block - Folder and Audio Block) multiple times(twice)");
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as " + Input.rmu1userName);
 		String folderName = "FolderName" + Utility.dynamicNameAppender();
@@ -533,50 +535,148 @@ public class AdvancedSearch_Regression3 {
 		assertion.assertAll();
 		baseClass.passedStep(
 				"Sucessfully Verified that - Application returns consistent search result when user resubmits a saved search(Content & Metadata Block,"
-				+ "Conceptual Block,WorkProduct Block - Folder and Audio Block) multiple times(twice)");
+						+ "Conceptual Block,WorkProduct Block - Folder and Audio Block) multiple times(twice)");
 		lp.logout();
 	}
 
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test( groups = { "regression" }, priority = 10, enabled = true)
-public void verifyDocsCnt_SecGrp_OR_production() throws InterruptedException {
-	
-	baseClass.stepInfo("Test case Id: RPMXCON-48745");
-	baseClass.stepInfo("Verify that - Application returns all the documents which are available under selected"
-			+ " group with OR operator in search result.");	
-	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-	baseClass.stepInfo("Logged in as PA" );
-	SessionSearch search = new SessionSearch(driver);
-	search.navigateToAdvancedSearchPage();
-	//Adding WP Security Group into search text box
-	search.workProductSearch("security group",Input.securityGroup,true);
-	search.serarchWP();
-	driver.waitForPageToBeReady();
-	String expectedPureHitCount = search.verifyPureHitsCount();//expected value
-	baseClass.stepInfo("Total no docs available in default security group  "+expectedPureHitCount);
-	baseClass.selectproject();
-	search.navigateToAdvancedSearchPage();
-	//Adding WP Security Group into search text box
-	search.workProductSearch("security group",Input.securityGroup,true);
-	//Adding Operator into search text box
-	search.selectOperator("OR");
-	//Adding WP Productions[any one production] into search text box
-		search.workProductSearch("productions",productionname,false);
-	baseClass.stepInfo("Configured a Query with SecurityGroup:[ "+Input.securityGroup+"] OR"
-			+ " productions: [ name: [\""+productionname+"\"], produced: \"true\" ]"); 
-	search.serarchWP();
-	driver.waitForPageToBeReady();
-	String PureHitCount = search.verifyPureHitsCount();
-	baseClass.stepInfo("Total no docs after configuring a query as per test case and search  is   "+PureHitCount);
-	System.out.println(expectedPureHitCount+PureHitCount);
-	SoftAssert assertion=new SoftAssert();
-	assertion.assertEquals(expectedPureHitCount, PureHitCount);//Validation of hit count.
-	assertion.assertAll();
-	baseClass.passedStep("Sucessfully verified that application returns all the documents which are available under "
-			+ "selected group with OR operator in search result.");
-}
+	@Test(groups = { "regression" }, priority = 10, enabled = true)
+	public void verifyDocsCnt_SecGrp_OR_production() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48745");
+		baseClass.stepInfo("Verify that - Application returns all the documents which are available under selected"
+				+ " group with OR operator in search result.");
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		SessionSearch search = new SessionSearch(driver);
+		search.navigateToAdvancedSearchPage();
+		// Adding WP Security Group into search text box
+		search.workProductSearch("security group", Input.securityGroup, true);
+		search.serarchWP();
+		driver.waitForPageToBeReady();
+		String expectedPureHitCount = search.verifyPureHitsCount();// expected value
+		baseClass.stepInfo("Total no docs available in default security group  " + expectedPureHitCount);
+		baseClass.selectproject();
+		search.navigateToAdvancedSearchPage();
+		// Adding WP Security Group into search text box
+		search.workProductSearch("security group", Input.securityGroup, true);
+		// Adding Operator into search text box
+		search.selectOperator("OR");
+		// Adding WP Productions[any one production] into search text box
+		search.workProductSearch("productions", productionname, false);
+		baseClass.stepInfo("Configured a Query with SecurityGroup:[ " + Input.securityGroup + "] OR"
+				+ " productions: [ name: [\"" + productionname + "\"], produced: \"true\" ]");
+		search.serarchWP();
+		driver.waitForPageToBeReady();
+		String PureHitCount = search.verifyPureHitsCount();
+		baseClass.stepInfo("Total no docs after configuring a query as per test case and search  is   " + PureHitCount);
+		System.out.println(expectedPureHitCount + PureHitCount);
+		SoftAssert assertion = new SoftAssert();
+		assertion.assertEquals(expectedPureHitCount, PureHitCount);// Validation of hit count.
+		assertion.assertAll();
+		baseClass
+				.passedStep("Sucessfully verified that application returns all the documents which are available under "
+						+ "selected group with OR operator in search result.");
+	}
+
+	@Test(dataProvider = "Users", groups = { "regression" }, priority = 11)
+	public void verifyAudioSearchCreteria(String username, String password) throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48158");
+		baseClass.stepInfo(
+				"Verify that while Searching Audio with Content searches-  configured Audio search settings does not revert back to "
+						+ "inappropriate setting in \"Audio\" block  on \"Advanced Search\" screen");
+		String audioSearchString1 = Input.audioSearch;
+		String audioSearchString2 = Input.audioSearchString1;
+		String language = Input.language;
+		String termOperator = Input.TermOperator;
+		String loactionAudioFile = "Within:";
+		int threshold = 34;
+		String seconds = String.valueOf(Input.documentIdNum);
+		SessionSearch search = new SessionSearch(driver);
+		List<String> ExpectedResult = new ArrayList<String>(Arrays.asList(audioSearchString2, audioSearchString1));
+		lp.loginToSightLine(username, password);
+		String ExpectedConfidenceThreshold = search.configureAudioSearchBlock(audioSearchString1, audioSearchString2,
+				language, threshold, termOperator, loactionAudioFile, seconds);
+		baseClass.stepInfo("Configured valid query with  language pack as " + language + " and search terms are "
+				+ audioSearchString1 + " " + audioSearchString2 + " "
+				+ " selected 'ALL' as term Operator in drop down, as well as setting the Location In Audio to 5 seconds, Confidence Threshold to"
+				+ ExpectedConfidenceThreshold + " ");
+		search.advancedContentSearchConfigure(Input.searchString1);
+		baseClass.stepInfo("Configured content query with search term " + Input.searchString1);
+		driver.scrollPageToTop();
+		search.getQuerySearchBtn().Click();
+		search.validateAudioSearchResult(ExpectedResult, termOperator, language, seconds, ExpectedConfidenceThreshold);
+		String actualContent = search.ConenetInSaerchResult().getText();
+		SoftAssert assertion = new SoftAssert();
+		assertion.assertEquals(actualContent, Input.searchString1); // verification of content and metadata search term
+																	// in results page
+		assertion.assertAll();
+		baseClass.passedStep(
+				"Sucesfully Verified that while Searching Audio with Content searches-  configured Audio search settings does not revert back to inappropriate "
+						+ "etting in \"Audio\" block  on \"Advanced Search\" screen");
+		lp.logout();
+	}
+
+	@Test(groups = { "regression" }, priority = 12, enabled = true)
+	public void verifyResubmit_cntAndMetaAndConceptualAndWP_Prod() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48767");
+		baseClass.stepInfo(
+				"Verify that - Application returns consistent search result when user resubmits a saved search(Content & Metadata Block ,"
+						+ "Conceptual Block and WorkProduct Block -Production) multiple times(twice)");
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as " + Input.rmu1userName);
+		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		SessionSearch search = new SessionSearch(driver);
+		search.navigateToAdvancedSearchPage();
+		search.advancedSearchContentMetadata(Input.testData1);// C&M Search
+		search.advancedSearchConceptual(Input.testData1); // Conceptual Search
+		driver.scrollPageToTop();
+		search.workProductSearch("productions", productionname, true);// Adding WP Productions[any one production] into
+																		// search text box
+		baseClass.stepInfo(
+				"Configured a search query with content block,Conceptual block and workProduct(Productions) block");
+		search.serarchWP();
+		driver.waitForPageToBeReady();
+		String PureHitCount = search.verifyPureHitsCount();
+		driver.scrollPageToTop();
+		search.saveSearchAdvanced(saveSearchName);
+		baseClass.stepInfo("Created a saved search -" + saveSearchName);
+		search.selectSavedsearchInASWp(saveSearchName);
+		baseClass.stepInfo("Configured a Work product 'saved search ' search query -- -" + saveSearchName + " ");
+		search.serarchWP();
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+		String actualHits1 = search.getPureHitsLastCount().getText();
+		baseClass.stepInfo("Pure hit count after WP saved search is " + actualHits1);
+		search.resubmitSearch();
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+		baseClass.waitForElement(search.getPureHitsLastCount());
+		String actualHits2 = search.getPureHitsLastCount().getText();
+		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + actualHits2);
+		search.resubmitSearch();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(search.getPureHitsLastCount());
+		baseClass.waitTime(3);
+		String actualHits3 = search.getPureHitsLastCount().getText();
+		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + actualHits3);
+		SoftAssert assertion = new SoftAssert();
+		// validations
+		assertion.assertEquals(PureHitCount, actualHits1);
+		assertion.assertEquals(PureHitCount, actualHits2);
+		assertion.assertEquals(PureHitCount, actualHits3);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		savedSearch.SaveSearchDelete(saveSearchName);
+		assertion.assertAll();
+		baseClass.passedStep(
+				"Sucessfully Verified that - Application returns consistent search result when user resubmits a saved search(Content & Metadata Block ,Conceptual Block "
+						+ "and WorkProduct Block -Production) multiple times(twice)");
+		lp.logout();
+	}
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {

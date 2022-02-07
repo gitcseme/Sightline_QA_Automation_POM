@@ -481,7 +481,7 @@ public class Input {
 	// Added by Gopinath - 05/01/2021
 	public static String downloadDocID;
 	public static String translationDocId;
-
+public static String  TermOperator;
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -964,7 +964,7 @@ public class Input {
 
 		TallySearch = testData.getTallySearch();
 		TallyCN = testData.getTallyCN();
-
+		TermOperator=testData.getTermOperator();
 		// Added by Gopinath 05/01/2021
 		downloadDocID = testData.getDownloadDocID();
 		translationDocId = testData.getTranslationDocId();
