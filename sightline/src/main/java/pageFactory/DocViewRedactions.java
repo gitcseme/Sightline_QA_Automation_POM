@@ -906,7 +906,7 @@ public class DocViewRedactions {
 	public Element saveClick() {
 		return driver.FindElementByXPath("//*[@id='btnRedactionTag']/span");
 	}
-	
+
 	// added by jayanthi
 	public Element getTrashIcon() {
 		return driver.FindElementByXPath("//div[@class='text-truncate' and contains(text(),'" + Input.testData1
@@ -1247,60 +1247,65 @@ public class DocViewRedactions {
 	public ElementCollection textRedactionXYStats() {
 		return driver.FindElementsByCssSelector("g[fill-opacity='1']>g[data-pcc-mark^='mark-']>rect");
 	}
-	
+
 	// Added by krishna
 
-		public Element zoomOutDocView() {
-			return driver.FindElementById("zoomOut_divDocViewer");
-		}
+	public Element zoomOutDocView() {
+		return driver.FindElementById("zoomOut_divDocViewer");
+	}
 
-		public Element zoomInDocView() {
-			return driver.FindElementById("zoomIn_divDocViewer");
-		}
+	public Element zoomInDocView() {
+		return driver.FindElementById("zoomIn_divDocViewer");
+	}
 
-		public Element zoomFitToScreenDocView() {
-			return driver.FindElementById("fitContent_divDocViewer");
-		}
+	public Element zoomFitToScreenDocView() {
+		return driver.FindElementById("fitContent_divDocViewer");
+	}
 
-		public Element rotateClockWise() {
-			return driver.FindElementById("rotateRight_divDocViewer");
-		}
+	public Element rotateClockWise() {
+		return driver.FindElementById("rotateRight_divDocViewer");
+	}
 
-		public Element rotateAntiClockWise() {
-			return driver.FindElementById("rotateLeft_divDocViewer");
-		}
+	public Element rotateAntiClockWise() {
+		return driver.FindElementById("rotateLeft_divDocViewer");
+	}
 
-		// Added by Raghuram
+	// Added by Raghuram
 
-		public Element getDoTextRedactionXYStats() {
-			return driver.FindElementByCssSelector("text[x]:first-child");
-		}
+	public Element getDoTextRedactionXYStats() {
+		return driver.FindElementByCssSelector("text[x]:first-child");
+	}
 
-		public Element getDoTextRedactionXYStatsAttribute() {
-			return driver.FindElementByCssSelector("g[fill-opacity='1']>g[data-pcc-mark^='mark-']:first-child");
-		}
+	public Element getDoTextRedactionXYStatsAttribute() {
+		return driver.FindElementByCssSelector("g[fill-opacity='1']>g[data-pcc-mark^='mark-']:first-child");
+	}
 
-		public Element getDoTextRedactionXYStatsAttributeSelect(String x, String y) {
-			return driver.FindElementByCssSelector("text[x='" + x + "'][y='" + y + "']");
-		}
+	public Element getDoTextRedactionXYStatsAttributeSelect(String x, String y) {
+		return driver.FindElementByCssSelector("text[x='" + x + "'][y='" + y + "']");
+	}
 
-		public Element getMarkedTextRedactionXYStatsAttributeSelect(String x, String y) {
-			return driver.FindElementByCssSelector("g[x='" + x + "'][y='" + y + "']");
-		}
+	public Element getMarkedTextRedactionXYStatsAttributeSelect(String x, String y) {
+		return driver.FindElementByCssSelector("g[x='" + x + "'][y='" + y + "']");
+	}
 
-		// Added by Krishna
+	// Added by Krishna
 
-		public Element multiPageRedactionTagSelect() {
-			return driver.FindElementById("ddlMultiRedactionTagsForPopup");
-		}
+	public Element multiPageRedactionTagSelect() {
+		return driver.FindElementById("ddlMultiRedactionTagsForPopup");
+	}
 
-		public Element hiddenInfoIcon() {
-			return driver.FindElementById("hiddenProperty");
-		}
+	public Element hiddenInfoIcon() {
+		return driver.FindElementById("hiddenProperty");
+	}
 
-		public Element textData() {
-			return driver.FindElementByXPath("//div[@id='divViewerText']");
-		}
+	public Element textData() {
+		return driver.FindElementByXPath("//div[@id='divViewerText']");
+	}
+
+	// Added By Vijaya.Rani
+	public Element getDocViewAllRedation() {
+		return driver.FindElementByXPath("//div[@class='pull-right']//div[@id='counterAll']");
+	}
 
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
@@ -3780,7 +3785,7 @@ public class DocViewRedactions {
 	 */
 	public void verifyThisPageHighlightMaintained(Boolean torRmoveAnnotation) {
 		base = new BaseClass(driver);
-		
+
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		getDocView_RedactHTextarea().waitAndClick(5);
@@ -4066,6 +4071,7 @@ public class DocViewRedactions {
 			}
 		}
 	}
+
 	public void RedactTextInDocView(int x, int y, int offsetx, int offsety) {
 		Actions actions = new Actions(driver.getWebDriver());
 		redactionIcon().waitAndClick(30);
@@ -4078,4 +4084,3 @@ public class DocViewRedactions {
 	}
 
 }
-
