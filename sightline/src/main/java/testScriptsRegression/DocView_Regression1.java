@@ -5625,6 +5625,124 @@ public class DocView_Regression1 {
 				loginPage.logout();
 				
 			}
+			
+			/**
+			 * Author : Brundha Created date: NA Modified date: NA Modified by:NA TestCase
+			 * id :RPMXCON- 50959 Description:To verify that after closing child window, it
+			 * should redirect to Parent Window.
+			 */
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 43)
+			public void verifyingNavigationFromChildToParentWindow() throws Exception {
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("RPMXCON-50959  from Docview Component");
+				baseClass.stepInfo("####To verify that after closing child window, it should redirect to Parent Window. ####");
+
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				baseClass.stepInfo("Basic meta data search");
+				sessionSearch.basicContentSearch(Input.testData1);
+
+				baseClass.stepInfo("Navigating to docview page");
+				sessionSearch.ViewInDocView();
+
+				DocViewPage doc = new DocViewPage(driver);
+				baseClass.stepInfo("Verifying navigation of Child window to parent window");
+				doc.verifyingSwitchingFromChildWindowToParentWindow();
+
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+				sessionSearch = new SessionSearch(driver);
+				baseClass.stepInfo("Basic meta data search");
+				sessionSearch.basicContentSearch(Input.testData1);
+
+				baseClass.stepInfo("Navigating to docview page");
+				sessionSearch.ViewInDocView();
+
+				doc = new DocViewPage(driver);
+				baseClass.stepInfo("Verifying navigation of Child window to parent window");
+				doc.verifyingSwitchingFromChildWindowToParentWindow();
+
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+				sessionSearch = new SessionSearch(driver);
+				baseClass.stepInfo("Basic meta data search");
+				sessionSearch.basicContentSearch(Input.testData1);
+
+				baseClass.stepInfo("Navigating to docview page");
+				sessionSearch.ViewInDocView();
+
+				doc = new DocViewPage(driver);
+				baseClass.stepInfo("Verifying navigation of Child window to parent window");
+				doc.verifyingSwitchingFromChildWindowToParentWindow();
+				loginPage.logout();
+
+			}
+
+			/**
+			 * Author : Brundha Created date: NA Modified date: NA Modified by:NA TestCase
+			 * id :RPMXCON- 51436 Description: Verify that if the document Text is being
+			 * presented, the "X" icon with the accompanying mouse over tool tip must appear
+			 */
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 44)
+
+			public void verifyXIconAndToolTipInDocView() throws Exception {
+
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("RPMXCON-51436 from docview Component");
+				baseClass.stepInfo(
+						"#### Verify that if the document native is being presented, the 'X' icon with the accompanying mouse over tool tip must appear ####");
+
+				String DocId = Input.newNearDupeDocId;
+				String ExpectedText = "Text file variant of the document being displayed";
+				baseClass.stepInfo("Basic meta data search");
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(DocId);
+
+				baseClass.stepInfo("Navigating to docview page");
+				sessionSearch.ViewInDocView();
+
+				DocViewPage docView = new DocViewPage(driver);
+				docView.navigateToDocViewPageURL();
+
+				baseClass.stepInfo("Verify Text Document Tooltip");
+				docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
+
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+				sessionSearch = new SessionSearch(driver);
+
+				baseClass.stepInfo("Basic meta data search");
+				sessionSearch.basicContentSearch(DocId);
+
+				baseClass.stepInfo("Navigating to docview page");
+				sessionSearch.ViewInDocView();
+
+				docView = new DocViewPage(driver);
+				docView.navigateToDocViewPageURL();
+
+				baseClass.stepInfo("Verify Text Document Tooltip");
+				docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
+				loginPage.logout();
+
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+				sessionSearch = new SessionSearch(driver);
+				baseClass.stepInfo("Basic meta data search");
+				sessionSearch.basicContentSearch(DocId);
+
+				baseClass.stepInfo("Navigating to docview page");
+				sessionSearch.ViewInDocView();
+
+				docView = new DocViewPage(driver);
+				docView.navigateToDocViewPageURL();
+
+				baseClass.stepInfo("Verify Text Document Tooltip");
+				docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
+				 loginPage.logout();
+			}
+
 	     @AfterMethod(alwaysRun = true)
 		 public void takeScreenShot(ITestResult result) {
 	 	 if(ITestResult.FAILURE==result.getStatus()){
