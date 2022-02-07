@@ -2949,6 +2949,10 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//div[@class='jp-seek-bar']");
 	}
 	
+	public Element getDocView_centralPanel() {
+		return driver.FindElementById("tabs");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;

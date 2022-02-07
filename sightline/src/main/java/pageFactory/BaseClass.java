@@ -228,6 +228,9 @@ public class BaseClass {
 	public Element getWarningMsgHeader() {
 		return driver.FindElementByXPath("//span[text()='Warning !']");
 	}
+	public Element getSecondLineOfWarningMsg() {
+		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div//li");
+	}
 
 	public BaseClass(Driver driver) {
 

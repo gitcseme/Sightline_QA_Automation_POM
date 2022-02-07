@@ -2942,8 +2942,127 @@ public class DocView_Regression2 {
 		}
 		else {
 			baseClass.failedStep("List of documents not present in the minidoclist panel");
+		}		
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan
+	 * @Description: To verify Doc View page for RMU and Reviewer
+	 */
+	@Test(enabled = true, dataProvider = "UsersWithoutPA", groups = { "regression" }, priority = 49)
+	public void verifyDocViewPanels(String userName, String password, String fullName) throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50775");
+		baseClass.stepInfo("To verify Doc View page for RMU and Reviewer");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docView = new DocViewPage(driver);
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(userName, password);
+		if(fullName.contains("RMU")) {
+			baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		// Basic Search and select the pure hit count
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		//create assignment and distribute the docs to reviewer
+		assignmentsPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentsPage.add2ReviewerAndDistribute();
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentsPage.viewSelectedAssgnUsingPagination(assignmentName);
+		baseClass.waitTillElemetToBeClickable(assignmentsPage.getAssignmentActionDropdown());
+		assignmentsPage.getAssignmentActionDropdown().waitAndClick(10);
+		assignmentsPage.assignmentActions("DocView");
+		baseClass.stepInfo("Navigated to docview page in the context of assignments");
+		}else {
+			baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+			baseClass.stepInfo("Logined as Reviewer");
+			assignmentsPage.SelectAssignmentByReviewer(assignmentName);			
+		}
+		driver.waitForPageToBeReady();
+		//validations on displaying panels in docview page
+		baseClass.waitForElement(docView.getDocView_CodingFormPanel());
+		if(docView.getDocView_CodingFormPanel().isDisplayed()) {
+			baseClass.passedStep("Codingform panel is displayed in docview page successfully");
+		}else {
+			baseClass.failedStep("Codingform panel is not displayed");
+		}
+		if(docView.getDocView_centralPanel().isDisplayed()) {
+			baseClass.passedStep("Document view panel is displayed in docview page successfully");
+		}else {
+			baseClass.failedStep("Document view panel is not displayed");
+		}
+		if(docView.getDocView_MiniDoclistPanel().isDisplayed()) {
+			baseClass.passedStep("Minidoclist panel is displayed in docview page successfully");
+		}else {
+			baseClass.failedStep("Minidoclist panel is not displayed");
+		}
+		if(docView.getDocView_MetadataPanel().isDisplayed()) {
+			baseClass.passedStep("Metadata panel is displayed in docview page successfully");
+		}else {
+			baseClass.failedStep("Metadata panel is not displayed");
+		}
+		if(docView.getDocView_AnalyticsPanel().isDisplayed()) {
+			baseClass.passedStep("Analytics panel is displayed in docview page successfully");
+		}else {
+			baseClass.failedStep("Analytics panel is not displayed");
+		}
+		if(fullName.contains("REV")) {
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
+			loginPage.logout();
 		}
 		
+		
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan
+	 * @Description: Verify that document having any of the field value "Hidden Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook viewed from analytics panel should display alert message
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 50)
+	public void verifyWarningMsgOfHiddenDocFromAnalyticsPanel(String fullName, String userName, String password)
+			throws Exception {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+		baseClass.stepInfo("Test case Id: RPMXCON-51962");
+		baseClass.stepInfo(
+				"Verify that document having any of the field value \"Hidden Properties\" \"ExcelProtectedSheets\" ExcelProtectedWorkbook viewed from analytics panel should display alert message");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		if (fullName.contains("RMU")) {
+			baseClass.stepInfo("Successfully login as Review Manager'" + userName + "'");
+		}
+		if (fullName.contains("PA")) {
+			baseClass.stepInfo("Successfully login as Project admin'" + userName + "'");
+		}
+		if (fullName.contains("REV")) {
+			baseClass.stepInfo("Successfully login as Reviewer'" + userName + "'");
+		}
+		sessionsearch.basicContentSearch(Input.hiddenDocId);
+		sessionsearch.ViewInDocView();
+		baseClass.CloseSuccessMsgpopup();
+		//validations
+		docView.getDocView_DocId(Input.hiddenDocId).waitAndClick(10);
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		softassertion.assertEquals(baseClass.getSecondLineOfWarningMsg().getText(), "Hidden Columns;Hidden Rows;Hidden Sheets");
+		baseClass.passedStep("Warning message is displayed for the document has hidden properties");		
+		docView.selectDocsFromFamilyMemberAndViewTheDocument();
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		softassertion.assertEquals(baseClass.getSecondLineOfWarningMsg().getText(), "Hidden Columns;Hidden Rows;Hidden Sheets");
+		baseClass.passedStep(
+				"Warning message is displayed successfully when the document is selected which contains hidden properties from analytics panel");
+		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
+		docViewRedact.hiddenInfoIcon().waitAndClick(10);
+		baseClass.stepInfo("Hidden info action is performed");
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		softassertion.assertEquals(baseClass.getSecondLineOfWarningMsg().getText(), "Hidden Columns;Hidden Rows;Hidden Sheets");
+		baseClass.passedStep("After performing hidden info action, Warning message is displayed for the document has hidden properties");	
+		softassertion.assertAll();
+		loginPage.logout();
 	}
 	
 	
