@@ -20,6 +20,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -43,6 +44,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.RedactionPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -5022,7 +5024,74 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 	}
 	
-	
+	/**
+	 *
+	 * @Author : Brundha
+	 * @Testcase id : 49988 - Verify that after deletion of the last saved redaction, last saved redaction tag should be selected automatically from redaction pop up
+	 */
+	@Test(groups = { "regression" },priority = 75)
+	public void verifyRedactionTagInPopUpDropDown() throws Exception {
+		 BaseClass baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49988 from Docview/redaction Component");
+		baseClass.stepInfo("Verify that after deletion of the last saved redaction, last saved redaction tag should be selected automatically from redaction pop up");
+
+		
+		String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+		String Redactiontag2 = "SecondRedactionTag" + Utility.dynamicNameAppender();
+		
+		RedactionPage redactionpage = new RedactionPage(driver);
+		baseClass.stepInfo("Creating a redaction tag");	
+		redactionpage.manageRedactionTagsPage(Redactiontag1);
+		driver.waitForPageToBeReady();
+		redactionpage.manageRedactionTagsPage(Redactiontag2);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Basic meta data search");
+		sessionSearch.basicContentSearch(Input.testData1);
+		
+		baseClass.stepInfo("Navigate to doc view page");
+		sessionSearch.ViewInDocView();
+
+		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+		docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
+		driver.scrollPageToTop();
+		docViewRedactions.selectDoc1();
+		
+		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10, 100, 120);
+		driver.waitForPageToBeReady();
+		docViewRedactions.selectingRedactionTag2(Redactiontag1);
+		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10, 100, 130);
+		driver.waitForPageToBeReady();
+		docViewRedactions.selectingRedactionTag2(Redactiontag2);
+		
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		redactionpage = new RedactionPage(driver);
+		baseClass.stepInfo("Deleting Redaction tag");
+		redactionpage.DeleteRedaction(Redactiontag2);
+		
+	    sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+
+		docViewRedactions = new DocViewRedactions(driver);
+		docViewRedactions.selectFirstDoc().isElementAvailable(10);
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+		docViewRedactions.rectangleRedactionTagSelect().isDisplayed();
+		Select select = new Select(docViewRedactions.rectangleRedactionTagSelect().getWebElement());
+		String option = select.getFirstSelectedOption().getText();
+		System.out.println("the value is "+option);
+		if(option.equals(Redactiontag1)) {
+			baseClass.passedStep("Last saved redaction tag is selected automatically from redaction pop up");
+		}else{
+			baseClass.failedStep("Last saved redaction tag is not  selected automatically from redaction pop up");
+		}
+		loginPage.logout();
+		
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)
