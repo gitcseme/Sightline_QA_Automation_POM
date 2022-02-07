@@ -2936,6 +2936,19 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//li[@id='nextPage_divNearDupDoc']//i");
 	}
 	
+	//Added by Aathith
+	public Element getAudioBlock() {
+		return driver.FindElementByXPath("//div[@class='audio-block']");
+	}
+	
+	public Element getAudioPlayState() {
+		return driver.FindElementByXPath("//div[@id='jp_container_1']");
+	}
+	
+	public Element getAudioDocId() {
+		return driver.FindElementByXPath("//div[@class='jp-seek-bar']");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
