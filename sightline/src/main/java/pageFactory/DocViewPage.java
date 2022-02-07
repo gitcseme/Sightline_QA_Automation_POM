@@ -2929,9 +2929,35 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//tr[1]//td[contains(text(),'ID')]");
 	}
 
+
+
+
+	
+	//Added by Gopinath - 04/02/2022
+	public Element getDocView_Text_Redact_Active() {
+		return driver.FindElementByXPath("//li[@id='textSelectionRedaction_divDocViewer' and @class='state-active']");
+	}
+	
+	public Element getDuplicateRedactionWarning() {
+		return driver.FindElementByXPath("//div[@id='divDuplicateRedactionWarning' and contains(text(),'Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.')]");
+	}
+	
+	public Element getDocView_Redact_RectangleActive() {
+		return driver.FindElementByXPath("//li[@id='blackRectRedact_divDocViewer' and @class='state-active']");
+	}
+	
+	public Element getDocView_Text_redact() {
+		return driver.FindElementById("textSelectionRedaction_divDocViewer");
+	}
+	
+	public ElementCollection getDocViewAppliedAnnotation() {
+		return driver.FindElementsByCssSelector("rect[data-pcc-mark*='mark'][style*='rgb(255, 255, 0)']");
+	}
+
 	public Element getDocView_ChildPagination() {
 		return driver.FindElementByXPath("//li[@id='nextPage_divNearDupDoc']//i");
 	}
+
 
 
 	public Element getAuthorName(String remarkText) {
@@ -2992,7 +3018,7 @@ public class DocViewPage {
 	public Element getAudioDocId() {
 		return driver.FindElementByXPath("//div[@class='jp-seek-bar']");
 	}
-	
+
 
 	public DocViewPage(Driver driver) {
 
@@ -23244,6 +23270,110 @@ public class DocViewPage {
 	}
 
 	/**
+	 * @author Gopinath 
+	 * @Description : this method for deleting added annotation.
+	 */
+	public void deleteAddedAnnotaion() {
+		try {
+			editAnnotationLayer();
+			driver.waitForPageToBeReady();
+			getDocView_Annotate_DeleteIcon().isElementAvailable(10);
+			getDocView_Annotate_DeleteIcon().Click();
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occued while deleting added annotation."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method for verifying annotation is added to document.
+	 * @param alreadyExistsLayers : alreadyExistsLayers is integer value that
+	 *                            annotaion layers count of previous document.
+	 */
+	public void verifyAnnotationsToDocument(int alreadyExistsLayers) throws InterruptedException {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getDocView_AnnotateIcon().isElementAvailable(8);
+			getDocView_AnnotateIcon().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocView_Annotate_ThisPage().Displayed();
+				}
+			}), Input.wait30);
+			driver.waitForPageToBeReady();
+			int annotation = getAnnotations().FindWebElements().size();
+			if (annotation == alreadyExistsLayers) {
+				base.passedStep("Annotation is displayed to document successfully");
+			} else {
+				base.failedStep("Annotation is not displayed to document");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while performing non audio annotation." + e.getMessage());
+
+		}
+	}
+	/**
+	 * @author Gopinath
+	 * @Description : Method for verifying added annotation
+	 */
+	public void verifyAddedAnnotation() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_AnnotateIcon());
+		getDocView_AnnotateIcon().waitAndClick(5);
+		if(!getDuplicateRedactionWarning().getWebElement().isDisplayed()) {
+			if(getDocViewAppliedAnnotation().isElementAvailable(3)) {
+				base.passedStep("Annotation is applied for the document");
+			}else {
+				base.failedStep("Annotation is not applied for the document");
+			}
+		}else {
+			base.failedStep("failed to disappear Dupllicat redaction/highlighting/Annotation Warning message after reload the Document");
+		}
+	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * @Description : Method for verifying duplicate redaction warning message.
+	 */
+	public void verifydDuplicateRedactionWarningMessage() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_RedactIcon());
+			getDocView_RedactIcon().waitAndClick(5);
+			base.waitForElement(getDuplicateRedactionWarning());
+			if (getDuplicateRedactionWarning().isElementAvailable(5)) {
+				base.passedStep(
+						"Duplicate redaction/highlighting Warning message is displayed after Add/Edit Highlighting for same document in other tab/browser");
+			} else {
+				base.failedStep(
+						"Duplicate redaction/highlighting Warning message is displayed after Add/Edit Highlighting for same document in other tab/browser");
+			}
+			base.waitForElement(getDocView_Annotate_Rectangle());
+			getDocView_Redact_Rectangle().waitAndClick(5);
+
+			if (!getDocView_Redact_RectangleActive().isElementAvailable(2)) {
+				base.waitForElement(getDocView_Text_redact());
+				getDocView_Text_redact().waitAndClick(5);
+				if (!getDocView_Text_Redact_Active().isElementAvailable(2)) {
+					base.passedStep(
+							"All submenus of redaction/highlighting are disabled after Duplicate redaction/highlighting message");
+				} else {
+					base.failedStep("failed to disable all sub menus of redaction/highlighting after duplicate redaction/highlighting message");
+					
+				}
+
+			} else {
+				base.failedStep("failed to disable all sub menus of redaction/highlighting after duplicate redaction/highlighting message");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verfifying Duplicate Anno");
+		}
+/*
 	 * @Author Steffy Created on 04/02/2022
 	 * @Description To select docs from Analytics Family member Tab
 	 * 
@@ -23322,6 +23452,7 @@ public class DocViewPage {
 		driver.switchTo().window(parentWindowID);
 		driver.getWebDriver().navigate().refresh();
 		driver.waitForPageToBeReady();
+
 	}
 
 	
