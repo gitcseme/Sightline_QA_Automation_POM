@@ -2916,6 +2916,7 @@ public class DocViewPage {
 	}
 	
 
+
 	
 	//Added by Gopinath - 04/02/2022
 	public Element getDocView_Text_Redact_Active() {
@@ -2938,6 +2939,11 @@ public class DocViewPage {
 		return driver.FindElementsByCssSelector("rect[data-pcc-mark*='mark'][style*='rgb(255, 255, 0)']");
 	}
 
+
+
+	public Element getDocView_ChildPagination() {
+		return driver.FindElementByXPath("//li[@id='nextPage_divNearDupDoc']//i");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -22871,6 +22877,7 @@ public class DocViewPage {
 		
 	}
 
+
 	/**
 	 * @author Gopinath 
 	 * @Description : this method for verifying weather delete and edit fields are not enabled.
@@ -22962,8 +22969,8 @@ public class DocViewPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while editing annotation layer of current document." + e.getMessage());
-
 		}
+
 	}
 	/**
 	 * @author Indium-Baskar
@@ -23289,6 +23296,47 @@ public class DocViewPage {
 			e.printStackTrace();
 			base.failedStep("Exception occured while verfifying Duplicate Anno");
 		}
+/*
+	 * 
+	 * @author Vijaya.Rani 04/02/22 NA Modified date: NA Modified by:NA
+	 * @description to open NearDupe ComparisonWindow pagination
+	 */
+
+	public void openNearDupeComparisonWindowForDocumentPagination(String documentId)
+			throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Analytics_NearDupeTab().Displayed();
+			}
+		}), Input.wait30);
+		getDocView_Analytics_NearDupeTab().waitAndClick(10);
+
+		getDocView_NearDupeIconForSpecificDocument(documentId).waitAndClick(10);
+		
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
+			driver.switchTo().window(winHandle);
+		}
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getNearDupeDocPageNumber());
+		String beforeNo=getNearDupeDocPageNumber().getText();
+		System.out.println(beforeNo);
+		base.waitForElement(getDocView_ChildPagination());
+		getDocView_ChildPagination().waitAndClick(10);
+		
+		base.waitForElement(getNearDupeDocPageNumber());
+		String afterNo=getNearDupeDocPageNumber().getText();
+		System.out.println(afterNo);
+		softAssertion.assertNotEquals(beforeNo, afterNo);
+		base.passedStep("Pagination is working near dupe child window Successfully");
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		driver.getWebDriver().navigate().refresh();
+		driver.waitForPageToBeReady();
+
 	}
 }
 
