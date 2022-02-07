@@ -627,7 +627,7 @@ public class AdvancedSearch_Regression3 {
 				"Verify that - Application returns consistent search result when user resubmits a saved search(Content & Metadata Block ,"
 						+ "Conceptual Block and WorkProduct Block -Production) multiple times(twice)");
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("Logged in as " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as " + Input.pa1userName);
 		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		SessionSearch search = new SessionSearch(driver);
