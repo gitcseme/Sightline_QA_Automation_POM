@@ -3345,14 +3345,14 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getTagsAllRoot().Click();
-
+		driver.Manage().window().fullscreen();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait60);
 		getContinueButton().Click();
-
+		driver.Manage().window().maximize();
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 
@@ -8498,7 +8498,7 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getFolderAllRoot().Click();
-
+		driver.Manage().window().fullscreen();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
@@ -8512,6 +8512,7 @@ public class SessionSearch {
 				base.waitForElement(getContinueButton());
 			}
 		}
+		driver.Manage().window().maximize();
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 
