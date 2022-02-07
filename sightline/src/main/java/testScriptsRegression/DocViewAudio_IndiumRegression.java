@@ -707,7 +707,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException 
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "PaRmuRev" ,groups = { "regression" }, priority = 11)
+	@Test(enabled = true ,groups = { "regression" }, priority = 11)
 	public void verifyAudioDocumentState() throws InterruptedException  {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
