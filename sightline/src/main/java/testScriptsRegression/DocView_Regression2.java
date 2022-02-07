@@ -2875,6 +2875,7 @@ public class DocView_Regression2 {
 		loginPage.logout();
 	}
 	
+
 	
 	/**
 	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50783
@@ -2943,9 +2944,44 @@ public class DocView_Regression2 {
 		else {
 			baseClass.failedStep("List of documents not present in the minidoclist panel");
 		}
-		
 	}
 	
+	
+
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51956
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 49)
+	public void verifyHiddenContentMessagewhilenavigatingFromDocNumber(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);	
+		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
+		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
+		String expectedMessage3 = "Protected Excel Workbook";
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+		baseClass.stepInfo("Test case Id: RPMXCON-51956");
+		baseClass.stepInfo("Verify that when document number is entered to view having hidden content then should display the warning message to indicate that document is having hidden content");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch("Hidden");
+		sessionsearch.ViewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.pageNumberTextBox().Visible() && docViewRedact.pageNumberTextBox().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.pageNumberTextBox().waitAndClick(10);
+		docViewRedact.pageNumberTextBox().getWebElement().clear();
+		docViewRedact.pageNumberTextBox().getWebElement().sendKeys(Input.pageNumber);
+		driver.waitForPageToBeReady();
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+		driver.waitForPageToBeReady();	
+		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
+	}
+
+
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
