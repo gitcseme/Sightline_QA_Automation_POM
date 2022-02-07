@@ -2933,7 +2933,7 @@ public class DocView_Regression2 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-50784");
 		baseClass.stepInfo("To verify when user selects 'View All in Doc View' from Action drop down of Manage Assignments page when Project Admin impersonated to RMU role");
-		baseClass.impersonateSAtoRMU();
+		baseClass.impersonatePAtoRMU();
 		assignPage.createAssignment(assignmentName, Input.codeFormName);
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkAssignExisting(assignmentName);
