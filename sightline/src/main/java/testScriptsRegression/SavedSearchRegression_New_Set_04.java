@@ -2939,7 +2939,6 @@ public class SavedSearchRegression_New_Set_04 {
 		login.logout();
 
 	}
-	
 
 	/**
 	 * @author Jayanthi A Date: 4/2/22 Modified date:N/A Modified by: Description
@@ -2987,7 +2986,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @author Jayanthi A Date: 4/2/22 Modified date:N/A Modified by: Description
 	 *         RPMXCON-48756 Sprint 11
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
 	public void verifyBulkFolder() throws Exception {
 
 		String searchName1 = "Search Name" + Utility.dynamicNameAppender();
@@ -3128,6 +3127,258 @@ public class SavedSearchRegression_New_Set_04 {
 		login.logout();
 
 	}
+/*
+	 * @author Raghuram A Date: 02/05/22 Modified date:N/A Modified by: Description
+	 *         : Validate navigation to DocView screen from a saved search with
+	 *         Completed status - RPMXCON-48610 Sprint 11
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 42)
+	public void verifyDocsDisplayAndNavigatingToDocview(String username, String password) throws Exception {
+
+		// Login as USER
+		login.loginToSightLine(username, password);
+		base.stepInfo("Logged in as : " + username);
+
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		int latencyCheckTime = 5;
+		String passMessage = "Application not hang or shows latency more than " + latencyCheckTime + " seconds.";
+		String failureMsg = "Continues Loading more than " + latencyCheckTime + " seconds.";
+
+		base.stepInfo("Test case Id: RPMXCON-48610 - Saved Search Sprint 11");
+		base.stepInfo("Validate navigation to DocView screen from a saved search with Completed status");
+
+		// add save search in node
+		int purehit = session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchName);
+
+		// Launch DocVia via Saved Search
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.checkStatus(searchName);
+		saveSearch.getToDocView().waitAndClick(5);
+
+		// Load latency Verification
+		Element loadingElement = session.getspinningWheel();
+		saveSearch.loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
+		driver.waitForPageToBeReady();
+		String currentUrl = driver.getWebDriver().getCurrentUrl();
+		softAssertion.assertEquals(Input.url + "DocumentViewer/DocView", currentUrl);
+		base.stepInfo("Navigated to DocView Page : " + currentUrl);
+
+		// Main method
+		miniDocListPage = new MiniDocListPage(driver);
+		base.waitForElement(miniDocListPage.getDocumentCountFromDocView());
+		String sizeofList = miniDocListPage.getDocumentCountFromDocView().getText();
+		String documentSize = sizeofList.substring(sizeofList.indexOf("of") + 2, sizeofList.indexOf("Docs")).trim();
+		System.out.println("Size : " + documentSize);
+		base.stepInfo("Available documents in DocView page : " + sizeofList);
+
+		base.digitCompareEquals(purehit, Integer.parseInt(documentSize),
+				"Doc View page loaded with selected number of documents  ", "Count Mismatches with the Documents");
+
+		// Delete Search
+		base.stepInfo("Initiating Delete Search");
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To Verify, As a Project Admin login, In saved search page, in
+	 *              \"My Search\" section he will be only able to see his my
+	 *              searches query, not other users my searches [RPMXCON-57018]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 43)
+	public void verifyPaUserNames() throws InterruptedException {
+		String searchName = " Search" + Utility.dynamicNameAppender();
+		String headerName = "Last Submitted By";
+		String expectedName = Input.pa1FullName;
+		List<String> list = new ArrayList<>();
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-57018 - Saved Search Sprint 11");
+		base.stepInfo(
+				"To Verify, As a Project Admin login, In saved search page, in \"My Search\" section he will be only able to see his my searches query, not other users my searches");
+
+		// basic search
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchName);
+
+		// Verify Last Submitted names
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		list = saveSearch.getListFromSavedSearchTable(headerName);
+
+		String passMsg = expectedName + " : is the Last Submiited Name Displayed";
+		String failMsg = "Able to See other User Searches";
+		base.compareListWithString(list, expectedName, passMsg, failMsg);
+
+		softAssertion.assertAll();
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify, As a RMU user login, when user select more than one
+	 *              saved search (select a folder within \"My Search\") then only
+	 *              tag will be enable [RPMXCON-47416]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 44)
+	public void verifyTagAsRmu() throws InterruptedException {
+		String headerName = "Last Submitted By";
+		String passMsg = "Search Group list is Present";
+		String failMsg = "Search Groups is Not Present";
+
+		// login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Test case Id: RPMXCON-47416 - Saved Search Sprint 11");
+		base.stepInfo(
+				"To verify, As a RMU user login, when user select more than one saved search (select a folder within \"My Search\") then only tag will be enable");
+
+		// verify TAG enabled
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		base.verifyElementCollectionIsNotEmpty(saveSearch.getList(), passMsg, failMsg);
+
+		saveSearch.getSavedSearchNewNode().waitAndClick(5);
+		Element tagButtonStatus = saveSearch.getSavedSearchToBulkTag();
+		saveSearch.checkButtonEnabled(tagButtonStatus, "Should be Enabled", "Tag Option");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that \"Count\" display as BLANK in conceptual column in
+	 *              Saved Search Screen when user is not triggered Conceptually
+	 *              Similar count but the Advanced search is saved as a saved
+	 *              search. [RPMXCON-48902]
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
+	public void verifyConceptualWithoutTriggerForAdvance() throws InterruptedException, ParseException {
+		String Search = "search" + Utility.dynamicNameAppender();
+		String conceptually = "Conceptually Similar Count";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		base.stepInfo("Test case Id: RPMXCON-48902 Saved Search");
+		base.stepInfo(
+				"Verify that \"Count\" display as BLANK in conceptual column in Saved Search Screen when user is not triggered Conceptually Similar count but the Advanced search is saved as a saved search.");
+
+		// Advanced Search
+		session.advancedMetaDataForDraft(Input.metaDataName, null, Input.metaDataCN, null);
+		session.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		String concept = session.verifyConceptuallySimilarCount();
+		softAssertion.assertEquals(concept, " ");
+		base.passedStep("Conceptually Similar count is not Triggered");
+		session.saveSearchadvanced(Search);
+
+		// Verify Conceptually Column
+		saveSearch.savedSearch_Searchandclick(Search);
+		String Count = saveSearch.ApplyShowAndHideFilter(conceptually, Search);
+		softAssertion.assertEquals(Count, Input.TextEmpty);
+		softAssertion.assertAll();
+		base.stepInfo("Conceptual Column Count is BLANK");
+
+		// Delete Searches
+		saveSearch.deleteSearch(Search, Input.mySavedSearch, Input.yesButton);
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that \"Count\" gets updated in conceptual column in
+	 *              Saved Search Screen when user triggered Conceptually Similar
+	 *              count from Basic search and saved search. [RPMXCON-48903]
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
+	public void verifyConceptAfterTriggerBasic() throws InterruptedException, ParseException {
+		String Search = "search" + Utility.dynamicNameAppender();
+		String conceptually = "Conceptually Similar Count";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		base.stepInfo("Test case Id: RPMXCON-48903 Saved Search");
+		base.stepInfo(
+				"Verify that \"Count\" gets updated in conceptual column in Saved Search Screen when user triggered Conceptually Similar count from Basic search and saved search.");
+
+		// Basic Search
+		session.basicContentSearch(Input.searchString1);
+		int concept = session.runAndVerifyConceptualSearch();
+		base.CloseSuccessMsgpopup();
+		base.passedStep("Conceptually Similar count is Triggered");
+		session.saveSearch(Search);
+
+		// Verify Conceptually Column
+		saveSearch.savedSearch_Searchandclick(Search);
+		String Count = saveSearch.ApplyShowAndHideFilter(conceptually, Search);
+		softAssertion.assertEquals(Count, concept);
+		softAssertion.assertAll();
+		base.stepInfo("Conceptual Column Count is Updated");
+
+		// Delete Searches
+		saveSearch.deleteSearch(Search, Input.mySavedSearch, Input.yesButton);
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that \"Count\" gets updated in conceptual column in
+	 *              Saved Search Screen when user triggered Conceptually Similar
+	 *              count from Advanced search and saved search. [RPMXCON-48904]
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 47)
+	public void verifyConceptAfterTriggerAdvance() throws InterruptedException, ParseException {
+		String Search = "search" + Utility.dynamicNameAppender();
+		String conceptually = "Conceptually Similar Count";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		base.stepInfo("Test case Id: RPMXCON-48904 Saved Search");
+		base.stepInfo(
+				"Verify that \"Count\" gets updated in conceptual column in Saved Search Screen when user triggered Conceptually Similar count from Advanced search and saved search.");
+
+		// Basic Search
+		session.advancedContentSearch(Input.searchString1);
+		int concept = session.runAndVerifyConceptualSearch();
+		base.CloseSuccessMsgpopup();
+		base.passedStep("Conceptually Similar count is Triggered");
+		session.saveSearchadvanced(Search);
+
+		// Verify Conceptually Column
+		saveSearch.savedSearch_Searchandclick(Search);
+		String Count = saveSearch.ApplyShowAndHideFilter(conceptually, Search);
+		softAssertion.assertEquals(Integer.parseInt(Count), concept);
+		softAssertion.assertAll();
+		base.stepInfo("Conceptual Column Count is Updated");
+
+		// Delete Searches
+		saveSearch.deleteSearch(Search, Input.mySavedSearch, Input.yesButton);
+
+		login.logout();
+	}
+
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);

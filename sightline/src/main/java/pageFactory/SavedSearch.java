@@ -844,6 +844,7 @@ public class SavedSearch {
 	public ElementCollection getColumnValues(int i) {
 		return driver.FindElementsByXPath("//tbody//td[" + i + "]");
 	}
+
 	public Element getSelectFolderExisting(String folderName) {
 		return driver.FindElementByXPath("//*[@id='divBulkFolderJSTree']//a[contains(.,'" + folderName + "')]/i[1]");
 	}
@@ -859,11 +860,17 @@ public class SavedSearch {
 	public Element getBulkUnFolderbutton() {
 		return driver.FindElementByXPath("//*[@id='toUnfolder']/following-sibling::i");
 	}
+
 	public Element getContinueCount() {
 		return driver.FindElementByXPath("//div[@class='bulkActionsSpanLoderTotal']");
 	}
+
 	public Element getContinueButton_Untag() {
 		return driver.FindElementByXPath("//button[@id='btnAdd']");
+	}
+
+	public ElementCollection getList() {
+		return driver.FindElementsByXPath(".//*[@id='jsTreeSavedSearch']//a[contains(.,'New node')]");
 	}
 
 	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
@@ -5755,7 +5762,7 @@ public class SavedSearch {
 		// Executing and Saving the Different Combinations of Advanced SavedSearch under
 		base.stepInfo(" Different Combinations of Advanced SavedSearch under My Saved Search");
 		Map<String, Integer> purehit = search.advancedSearchWithCombinationsSaveUnderMySearches(Input.searchString1,
-				Input.searchString1, "morning", Input.language, tagName, combinations, "", "", "");
+				Input.searchString1, "morning", Input.language, tagName, combinations, "", "", "", true);
 		System.out.println(purehit);
 
 		// Sharing the Saved Search with Default Security Group
@@ -7303,68 +7310,78 @@ public class SavedSearch {
 	 * @param TagName
 	 * @throws InterruptedException
 	 */
-		public void bulkUnTag(final String TagName) throws InterruptedException {
+	public void bulkUnTag(final String TagName) throws InterruptedException {
 
-base.waitForElement(getBulkUntagbutton());
-			
-			getBulkUntagbutton().Click();
-			base.waitForElement(getSelectTagExisting(TagName));
-			
-				
-			getSelectTagExisting(TagName).waitAndClick(10);
+		base.waitForElement(getBulkUntagbutton());
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
-				}
-			}), Input.wait60);
-			driver.Manage().window().fullscreen();
-			
-			getContinueButton_Untag().Click();
-			driver.Manage().window().maximize();
-			final BaseClass bc = new BaseClass(driver);
-			final int Bgcount = bc.initialBgCount();
+		getBulkUntagbutton().Click();
+		base.waitForElement(getSelectTagExisting(TagName));
 
-			bc.VerifySuccessMessage("Records saved successfully");
+		getSelectTagExisting(TagName).waitAndClick(10);
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return base.initialBgCount() == Bgcount + 2;
-				}
-			}), Input.wait60);
-			System.out.println("Bulk Untag is done, Tag is : " + TagName);
-			UtilityLog.info("Bulk Untag is done, Tag is : " + TagName);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		driver.Manage().window().fullscreen();
+
+		getContinueButton_Untag().Click();
+		driver.Manage().window().maximize();
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		bc.VerifySuccessMessage("Records saved successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.initialBgCount() == Bgcount + 2;
+			}
+		}), Input.wait60);
+		System.out.println("Bulk Untag is done, Tag is : " + TagName);
+		UtilityLog.info("Bulk Untag is done, Tag is : " + TagName);
+	}
+
+	public void bulkUnFolder(final String folderName) throws InterruptedException {
+		base.waitForElement(getBulkUnFolderbutton());
+		getBulkUnFolderbutton().Click();
+		base.waitForElement(getSelectFolderExisting(folderName));
+
+		getSelectFolderExisting(folderName).waitAndClick(5);
+		driver.Manage().window().fullscreen();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getContinueButton_Untag().Click();
+
+		driver.Manage().window().maximize();
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		bc.VerifySuccessMessage("Records saved successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		System.out.println("Bulk Unfolder is done, folder is : " + folderName);
+		UtilityLog.info("Bulk Unfolder is done, folder is : " + folderName);
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param search
+	 */
+	public void checkStatus(String search) {
+		if (getSearchStatus(search, "COMPLETED").isElementAvailable(5)) {
+			base.passedStep("search execution is completed status for the saved search changed to 'Completed'");
+		} else {
+			base.failedStep("Search execution status is not displayed as expected.");
 		}
 
-		
-		public void bulkUnFolder(final String folderName) throws InterruptedException {
-			base.waitForElement(getBulkUnFolderbutton());
-			getBulkUnFolderbutton().Click();
-			base.waitForElement(getSelectFolderExisting(folderName));
-			
-			getSelectFolderExisting(folderName).waitAndClick(5);
-			driver.Manage().window().fullscreen();
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
-				}
-			}), Input.wait60);
-			getContinueButton_Untag().Click();
-
-			driver.Manage().window().maximize();
-			final BaseClass bc = new BaseClass(driver);
-			final int Bgcount = bc.initialBgCount();
-
-			bc.VerifySuccessMessage("Records saved successfully");
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return base.initialBgCount() == Bgcount + 1;
-				}
-			}), Input.wait60);
-			System.out.println("Bulk Unfolder is done, folder is : " + folderName);
-			UtilityLog.info("Bulk Unfolder is done, folder is : " + folderName);
-		}
 		
 		/**
 		 * @Author Jeevitha.Modified on 02/05/2022
@@ -7395,5 +7412,6 @@ base.waitForElement(getBulkUntagbutton());
 			getSavedSearch_ApplyFilterButton().waitAndClick(2);
 			verifyExecutionStatusInSavedSearchPage(statusToCHeck);
 		}
+
 
 }
