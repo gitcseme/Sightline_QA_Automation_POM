@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.ITestResult;
@@ -72,11 +73,6 @@ public class DocViewAudio_IndiumRegression {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
 		softAssertion = new SoftAssert();
-//		docViewPage = new DocViewPage(driver);
-//		assignmentPage = new AssignmentsPage(driver);
-//		sessionSearch = new SessionSearch(driver);
-//		keywordPage = new KeywordPage(driver);
-//		docListPage=new DocListPage(driver);
 
 	}
 
@@ -701,6 +697,254 @@ public class DocViewAudio_IndiumRegression {
 
 		loginPage.logout();
 	}
+	
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 07/02/2022 Modified by: Baskar
+	 * Description:Verify that when mini doc list child window scrolled down and 'Loading' 
+	 *             is displayed then mini doc list child window should be loaded with the documents
+	 * 
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	public void validatePlayIconInMiniDocListChild() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51839");
+		baseClass.stepInfo("Verify that when mini doc list child window scrolled down and 'Loading' "
+				+ "is displayed then mini doc list child window should be loaded with the documents");
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		String miniDocListChild = Input.url + "DocumentViewer/DocViewChild";
+
+		// search to Assignment creation
+		int audioPurehit=sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigating to docview with audio docs: " +audioPurehit+" document");
+
+		// Opening minidoclist child window
+		docViewPage.clickGearIconOpenMiniDocList();
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		if (driver.getUrl().equalsIgnoreCase(miniDocListChild)) {
+			baseClass.passedStep("User can able to popup out the minidcolist child window");
+		}
+		docViewPage.switchToNewWindow(1);
+		docViewPage.audioPlayPauseIcon().waitAndClick(5);
+		docViewPage.switchToNewWindow(2);
+		
+		// scrolling the minidoclist
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		// Before scroll time
+		Long beforeScroll = (Long) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		baseClass.stepInfo("Before scroll position:" +beforeScroll+" at minidoclist child");
+		long start = System.currentTimeMillis();
+		jse.executeScript("document.querySelector('.dataTables_scrollBody').scrollBy(0,15000)");
+		
+		// After scroll time
+		Long afterScroll = (Long) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		baseClass.stepInfo("Before scroll position:" +afterScroll+" at minidoclist child");
+		long finish = System.currentTimeMillis();
+		long totalTime = finish - start;
+		long timeSeconds = TimeUnit.MILLISECONDS.toSeconds(totalTime);
+		System.out.println(timeSeconds);
+		
+		// Should not take much time to load document(Test step time not mentioned)
+		if (timeSeconds <= 2) {
+			baseClass.passedStep("Document not taking much time to load the document when scrolling the minidoclist");
+		} else {
+			baseClass.failedStep("Failed to load document in minidoclist");
+		}
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+		driver.waitForPageToBeReady();
+		boolean audioPlay=docViewPage.audioPlayPauseIcon().GetAttribute("title").contains("Pause");
+		softAssertion.assertTrue(audioPlay);
+        softAssertion.assertAll();
+        baseClass.stepInfo("While scrolling the minidcolist audio player is playing");
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 07/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify that error in console should not be displayed as 'Uncaught 
+	 *              Type Error: _ChildMiniDoc. $ is not a function' when mini doc list 
+	 *              child window opened after completing audio document same as last prior 
+	 *              document is completed after applying stamp
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	public void validatingConsoleErrorMiniDocListUsingStamp() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51830");
+		baseClass.stepInfo("Verify that error in console should not be displayed as 'Uncaught Type Error: "
+				+ "_ChildMiniDoc. $ is not a function' when mini doc list child window opened after completing "
+				+ "audio document same as last prior document is completed after applying stamp");
+
+		String assignment = "AssAudio" + Utility.dynamicNameAppender();
+		String comment = "comments" + Utility.dynamicNameAppender();
+		String stampName = "stamp" + Utility.dynamicNameAppender();
+
+		String miniDocListChild = Input.url + "DocumentViewer/DocViewChild";
+		// login as rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+//	    searching document for assignment creation and new coding form created (existing)
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignment, Input.codeFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+		System.out.println(assignment);
+
+		// logout
+		loginPage.logout();
+
+		// login as rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validation for console error
+		// edit coding form and save the stamp
+		String prnDocs=docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(stampName, Input.stampSelection);
+		driver.waitForPageToBeReady();
+		
+		// applying the save stamp
+		docViewPage.lastAppliedStamp(Input.stampSelection);
+		driver.waitForPageToBeReady();
+		String prnSecDocs=docViewPage.getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnDocs, prnSecDocs);
+		baseClass.stepInfo("Document navigated and selected next docs from minidcolist");
+		
+		// click code same as last
+		docViewPage.getCodeSameAsLast().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Coded as per the coding form for the previous document");
+		docViewPage.getDociD(prnSecDocs).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		
+		// validating coding from filled as per previous
+		docViewPage.verifyingComments(comment);
+		
+		//Switching to minidoclist child window
+		docViewPage.clickGearIconOpenMiniDocList();
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		if (driver.getUrl().equalsIgnoreCase(miniDocListChild)) {
+			baseClass.passedStep("User can able to popup out the minidcolist child window");
+		}
+		
+		// validating in minidcolist document loaded completely or not in console
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		boolean readyStateComplete = (boolean) jse.executeScript("return document.readyState").toString().equals("complete");
+		System.out.println(readyStateComplete);
+		softAssertion.assertTrue(readyStateComplete);
+		baseClass.passedStep("Minidoclist document loaded completely after performing the stamp code same as last action");
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 07/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify that error in console should not be displayed as 'Uncaught Type Error:
+	 *              _ChildMiniDoc. $ is not a function' when mini doc list child window opened 
+	 *              after completing audio document same as last prior document is completed
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	public void validatingConsoleErrorMiniDocListUsingComplete() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51829");
+		baseClass.stepInfo("Verify that error in console should not be displayed "
+				+ "as 'Uncaught Type Error: _ChildMiniDoc. $ is not a function' when "
+				+ "mini doc list child window opened after completing audio document "
+				+ "same as last prior document is completed");
+
+		String assignment = "AssAudio" + Utility.dynamicNameAppender();
+		String comment = "comments" + Utility.dynamicNameAppender();
+		String miniDocListChild = Input.url + "DocumentViewer/DocViewChild";
+		
+		// login as rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+//	    searching document for assignment creation and new coding form created (existing)
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignment, Input.codeFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+		System.out.println(assignment);
+
+		// logout
+		loginPage.logout();
+
+		// login as rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validation for console error
+		// edit coding form and complete
+		String prnDocs=docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.editCodingForm(comment);
+		docViewPage.completeButton();
+		driver.waitForPageToBeReady();
+		String prnSecDocs=docViewPage.getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnDocs, prnSecDocs);
+		baseClass.stepInfo("Document navigated and selected next docs from minidcolist");
+		
+		// click code same as last
+		docViewPage.getCodeSameAsLast().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Coded as per the coding form for the previous document");
+		docViewPage.getDociD(prnSecDocs).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		
+		// validating coding from filled as per previous
+		docViewPage.verifyingComments(comment);
+		
+		//Switching to minidoclist child window
+		docViewPage.clickGearIconOpenMiniDocList();
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		if (driver.getUrl().equalsIgnoreCase(miniDocListChild)) {
+			baseClass.passedStep("User can able to popup out the minidcolist child window");
+		}
+		
+		// validating in minidcolist document loaded completely or not in console
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		boolean readyStateComplete = (boolean) jse.executeScript("return document.readyState").toString().equals("complete");
+		System.out.println(readyStateComplete);
+		softAssertion.assertTrue(readyStateComplete);
+		baseClass.passedStep("Minidoclist document loaded completely after completing code same as last action");
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+
+	
 	/**
 	 * Author :Aathith  date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51862 Description : When a user tries to navigate to Audio DocView with some documents, the first document must present completely and be ready to be acted upon fully
