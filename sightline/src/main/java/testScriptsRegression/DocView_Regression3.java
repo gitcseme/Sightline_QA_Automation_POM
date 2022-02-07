@@ -9,22 +9,27 @@ import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AnnotationLayer;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.BatchRedactionPage;
 import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
 import pageFactory.ProductionPage;
 import pageFactory.RedactionPage;
+import pageFactory.ReusableDocViewPage;
+import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -49,7 +54,12 @@ public class DocView_Regression3 {
 	UserManagement userManage;
 	SessionSearch sessionsearch;
 	DocExplorerPage docExp;
-
+	KeywordPage keywordPage;
+	SavedSearch savedSearch;
+	BatchRedactionPage bacth;
+	ReusableDocViewPage reusableDocView;
+	SoftAssert softAssertion;
+	
 	String namesg2 = null;
 	String namesg3 = null;
 	String AnnotationLayerNew = null;
@@ -1946,7 +1956,7 @@ public class DocView_Regression3 {
 	 * @TestCase id: 51053 - Verify RMU/Reviewer can not see the annotations of document on doc view page in different security group when different annotation layer is mapped to different security groups.
 	 * @Descrption : Verify RMU/Reviewer can not see the annotations of document on doc view page in different security group when different annotation layer is mapped to different security groups
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void verifyAnnatationAcrossDifferentSecurityGroupSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		String AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
@@ -2037,6 +2047,71 @@ public class DocView_Regression3 {
 	}
 	
 	/**
+	 * Author : Vijaya.Rani date: 07/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that multi-page redactions should be applied on top of
+	 * the individual redactions in the page of document. 'RPMXCON-47032' Sprint :
+	 * 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	public void verifyMultiPageRedationApplyRedationPageDocument() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47032");
+		baseClass.stepInfo(
+				"Verify that multi-page redactions should be applied on top of the individual redactions in the page of document.");
+		baseClass = new BaseClass(driver);
+		bacth = new BatchRedactionPage(driver);
+		sessionsearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		docView = new DocViewPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		String searchName = "Test" + Utility.dynamicNameAppender();
+		String redactiontag = "Tag" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		// Create saved search
+		sessionsearch.basicContentSearch(Input.TallySearch);
+		sessionsearch.saveSearch(searchName);
+
+		// perform Batch redaction
+		bacth.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		bacth.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
+
+		// verify History status
+		bacth.verifyBatchHistoryStatus(searchName);
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with Reviewer Manager");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		Reporter.log("Logged in as User: " + Input.rmu1userName);
+		
+		sessionsearch.ViewInDocView();
+		
+		//click the Rectangleredaction  icon
+		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
+		docViewRedact.selectingRectangleRedactionTag();
+		
+		//click the text redaction icon
+		docViewRedact.doTextRedactWithXYPoints();
+		
+		//click the this page Redaction icon
+		docViewRedact.performThisPageRedaction(redactiontag);
+		
+		String beforeCount=docViewRedact.getDocViewAllRedation().getText();
+		System.out.println(beforeCount);
+		//click the multipage redaction icon
+		docViewRedact.performAllPagesMultiPageRedaction(redactiontag);
+		
+		String afterCount=docViewRedact.getDocViewAllRedation().getText();
+		System.out.println(afterCount);
+		softAssertion.assertNotEquals(beforeCount, afterCount);
+		baseClass.passedStep("count of 'All Redactions'are increased");
+/**
 	 * Author : Steffy Created date: NA Modified date: NA Modified by:NA TestCase id
 	 * : 51052 - Verify RMU/Reviewer can see the annotations of document on doc view
 	 * page in different security group if the same annotation layer is mapped to
@@ -2147,7 +2222,6 @@ public class DocView_Regression3 {
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 		docView.verifyAnnotationAddedToDocument(0);
 		loginPage.logout();
-
 	}
 	
 	@AfterMethod(alwaysRun = true)
