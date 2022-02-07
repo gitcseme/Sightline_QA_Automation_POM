@@ -707,7 +707,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException 
 	 * 
 	 */
-	@Test(enabled = true ,groups = { "regression" }, priority = 11)
+	@Test(enabled = true ,groups = { "regression" }, priority = 21)
 	public void verifyAudioDocumentState() throws InterruptedException  {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -770,7 +770,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException 
 	 * 
 	 */
-	@Test(enabled = true ,groups = { "regression" }, priority = 12 )
+	@Test(enabled = true ,groups = { "regression" }, priority = 22 )
 	public void verifyAudioDocumentPlayEvenCfisSave() throws InterruptedException  {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
