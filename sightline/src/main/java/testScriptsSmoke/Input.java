@@ -190,6 +190,8 @@ public class Input {
 	public static String familyDocWhichIsNotInMiniDoc;
 	public static String bgColorOnMouseHover;
 
+	public static String nearDupePagination;
+
 	// DocView codingform Baskar Indium
 
 	public static String savedName;
@@ -655,6 +657,7 @@ public class Input {
 		tiffSearchQuery = testData.getTiffSearchQuery();
 		familyDocWhichIsNotInMiniDoc = testData.getFamilyDocWhichIsNotInMiniDoc();
 		bgColorOnMouseHover = testData.bgColorOnMouseHover;
+		nearDupePagination=testData.getNearDupePagination();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
