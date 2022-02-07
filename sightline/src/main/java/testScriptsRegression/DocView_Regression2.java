@@ -2719,9 +2719,7 @@ public class DocView_Regression2 {
 
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.closeAdpopUp();
 		baseClass.selectproject(Input.additionalDataProject);
-		baseClass.closeAdpopUp();
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// Basic Search and select the pure hit count
@@ -2804,9 +2802,7 @@ public class DocView_Regression2 {
 
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.closeAdpopUp();
 		baseClass.selectproject(Input.additionalDataProject);
-		baseClass.closeAdpopUp();
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// Basic Search and select the pure hit count
