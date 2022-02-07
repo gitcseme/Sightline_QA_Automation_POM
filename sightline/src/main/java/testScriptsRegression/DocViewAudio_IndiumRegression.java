@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -699,6 +700,128 @@ public class DocViewAudio_IndiumRegression {
 				"Audio hits highlighted on the player", "Audio hits not highlighted on the player");
 
 		loginPage.logout();
+	}
+	/**
+	 * Author :Aathith  date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51862 Description : When a user tries to navigate to Audio DocView with some documents, the first document must present completely and be ready to be acted upon fully
+	 * @throws InterruptedException 
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "PaRmuRev" ,groups = { "regression" }, priority = 11)
+	public void verifyAudioDocumentState() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case id :RPMXCON-51862");
+		baseClass.stepInfo("When a user tries to navigate to Audio DocView with some documents, the first document must present completely and be ready to be acted upon fully");
+		
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined user : "+Input.rmu1userName);
+		
+		// Performing advanced search with audio
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		//view in docview
+    	sessionSearch.ViewInDocView();
+
+        driver.waitForPageToBeReady();
+        boolean flag =((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.readyState").equals("complete");
+		if (flag)
+        { 
+			softAssertion.assertTrue(flag);
+			baseClass.passedStep("DocView loaded properly");
+			System.out.println("passed");
+        }else {
+        	baseClass.failedStep("verification failed");
+        }
+		boolean flag1 = docViewPage.getAudioBlock().isElementPresent();
+		if(flag1)
+		{
+			softAssertion.assertTrue(flag1);
+			baseClass.passedStep("DocView audio panel Presented completly");
+			System.out.println("passed");
+		}else {
+			baseClass.failedStep("verification failed");
+		}
+        baseClass.waitForElement(docViewPage.audioPlayPauseIcon());
+        docViewPage.audioPlayPauseIcon().waitAndClick(10);
+
+        
+        boolean flag2 = docViewPage.getAudioPlayState().GetAttribute("class").contains("playing");
+		if(flag2)
+		{
+			softAssertion.assertTrue(flag2);
+			baseClass.passedStep("DocView audio ready to be acted upon fully");
+			System.out.println("passed");
+		}else {
+			baseClass.failedStep("verification failed");
+			System.out.println("failed");
+		}
+		
+		baseClass.passedStep("Verified When a user tries to navigate to Audio DocView with some documents, the first document must present completely and be ready to be acted upon fully");
+        loginPage.logout();
+        
+        
+	}
+	/**
+	 * Author :Aathith  date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51818 Description : Verify that when audio file is playing and clicked to Save the document, then waveform should be loaded [Less than 1 hr audio file]
+	 * @throws InterruptedException 
+	 * 
+	 */
+	@Test(enabled = true ,groups = { "regression" }, priority = 12 )
+	public void verifyAudioDocumentPlayEvenCfisSave() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case id :RPMXCON-51818");
+		baseClass.stepInfo("Verify that when audio file is playing and clicked to Save the document, then waveform should be loaded [Less than 1 hr audio file]");
+		
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined user : "+Input.rmu1userName);
+		
+		// Performing advanced search with audio
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);		
+		//view in docview
+    	sessionSearch.ViewInDocView();
+
+        driver.waitForPageToBeReady();
+        baseClass.waitForElement(docViewPage.audioPlayPauseIcon());
+        docViewPage.audioPlayPauseIcon().waitAndClick(10);
+        
+        String docId = docViewPage.getAudioDocId().GetAttribute("style").trim();
+        
+        docViewPage.editCodingFormSave();
+        
+        String docId1 = docViewPage.getAudioDocId().GetAttribute("style").trim();
+		if(docId.equalsIgnoreCase(docId1))
+		{
+			softAssertion.assertEquals(docId,docId1);
+			baseClass.passedStep("waveform is displayed for the same document");
+			System.out.println("passed");
+		}else {
+			baseClass.failedStep("verification failed");
+			System.out.println("failed");
+		}
+        
+        boolean flag2 = docViewPage.getAudioPlayState().GetAttribute("class").contains("playing");
+		if(flag2)
+		{
+			softAssertion.assertTrue(flag2);
+			baseClass.passedStep("audio is also in play mode after coding form saved");
+			System.out.println("passed");
+		}else {
+			baseClass.failedStep("verification failed");
+			System.out.println("failed");
+		}
+		
+		baseClass.passedStep("Verified that when audio file is playing and clicked to Save the document, then waveform should be loaded [Less than 1 hr audio file]");
+        loginPage.logout();
+        
+        
 	}
 
 	@AfterMethod(alwaysRun = true)
