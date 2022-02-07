@@ -2133,7 +2133,7 @@ public class DocViewPage {
 
 	// added by sowndarya.velraj
 	public Element getTermCardInPersistentPanel() {
-		return driver.FindElementByXPath("(//span[contains(text(),'Term:')]//following::p)[1]");
+		return driver.FindElementByXPath("//span[contains(text(),'Term:')]//following::p");
 	}
 	public Element getDocFileTypeCheckbox() {
 		return driver.FindElementByXPath("//tr[contains(@class,'rowNumber_0')]//label[@class='checkbox']/i");
