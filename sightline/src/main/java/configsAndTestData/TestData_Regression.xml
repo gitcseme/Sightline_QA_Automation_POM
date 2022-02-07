@@ -439,5 +439,7 @@
 	<conceptualDocs1>ID00000941</conceptualDocs1>
 	<familyDocumentForReviewer>ID00003745</familyDocumentForReviewer>
 		<newNearDupeDocId>ID00005181</newNearDupeDocId>
+<familyDocWhichIsNotInMiniDoc>ID00003763</familyDocWhichIsNotInMiniDoc>
+<bgColorOnMouseHover>rgba(212, 230, 237, 1)</bgColorOnMouseHover>
 
 </TestData>
