@@ -3157,6 +3157,73 @@ public class DocView_Regression2 {
 
 	}
 	
+	
+	/**
+	 * @author 
+	 * @TestCase Id:51965 Validate Search, Highlighling, PDF creation, and download of native, text and pdf
+	 * @Description:To Validate Search, Highlighling, PDF creation, and download of native, text and pdf
+	 * @throws InterruptedException
+	 */
+	@Test(alwaysRun = true,groups={"regression"})
+	public void verifySearchHighlighAndDownloadFiles() throws InterruptedException {
+		String metaDataField="DocFileExtension";
+		String fileExtensionName=".wmf";
+		String downloadOption="Native 1";
+		String searchTerm="enron";
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51965 sprint 11");
+		baseClass.stepInfo("###Validate Search, Highlighling, PDF creation, and download of native, text and pdf###");
+		DocViewPage docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);	
+		baseClass.stepInfo("basic metadata search");
+		session.basicMetaDataSearch(metaDataField, null, fileExtensionName, null);
+		baseClass.stepInfo("view in DocView");
+		session.ViewInDocView();
+		baseClass.stepInfo("Download and verify files ");
+		docView.downloadFile(downloadOption,fileExtensionName);
+		baseClass.stepInfo("verify images tab");
+		docView.clickOnImageTab();
+		baseClass.stepInfo("verify text Tab");
+		docView.clickOnTextTab();
+		baseClass.stepInfo("Navigate to search page");
+		driver.getWebDriver().get(Input.url + "Search/Searches");	
+		baseClass.stepInfo("remove docs from cart");
+	        session.Removedocsfromresults();
+		baseClass.stepInfo("basic content serch ");
+		session.multipleBasicContentSearch(searchTerm);
+		baseClass.stepInfo("view in docView");
+		session.ViewInDocView();	
+		baseClass.stepInfo("verify highlighting of search term");
+		docView.persistenHitWithSearchString(searchTerm);
+	}
+	
+	/**
+	 * @author 
+	 * @TestCase Id:51265 Verify user can view unicode files in near native view in context of an assignment
+	 * @Description:To Verify user can view unicode files in near native view in context of an assignment
+	 * @throws InterruptedException
+	 */
+	@Test(alwaysRun = true,groups={"regression"})
+	public void verifyUnicodeFilesInNearNativeView() throws InterruptedException {
+		String AssignmentName = Input.randomText + Utility.dynamicNameAppender();
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51265 sprint 10");
+		baseClass.stepInfo("####Verify user can view unicode files in near native view in context of an assignment####");
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		DocViewPage docView = new DocViewPage(driver);	
+		baseClass.stepInfo(" Basic content search for UniCode Docs");
+		session.basicContentSearch(Input.UniCodeDocId);
+		baseClass.stepInfo("Create bulk assign with new assignment with persistant hit.");
+		session.bulkAssignWithNewAssignmentWithPersistantHit(AssignmentName, Input.codingFormName);	
+		baseClass.stepInfo("view Assignment in docView");
+		assignmentPage.selectAssignmentToViewinDocview(AssignmentName);	
+		baseClass.stepInfo("verify files displayed in near native view");
+		docView.clickOnDefaultTextTab();
+		
+	}
+	
 
 	
 	@AfterMethod(alwaysRun = true)

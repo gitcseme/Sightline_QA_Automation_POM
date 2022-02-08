@@ -231,6 +231,7 @@ public class BaseClass {
 
 	public Element getSecondLineOfWarningMsg() {
 		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div//li");
+	}
 
 	//Added by Krishna
 	public Element getSecondLineSuccessMsg(int i) {

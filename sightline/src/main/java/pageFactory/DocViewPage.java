@@ -23760,4 +23760,109 @@ public class DocViewPage {
 		// Verify Remark Retained Datas
 		verifyResults(updatedremarkText, updatedremarkTime, updateddateAndTime, updatedremarkauthorName, "Updated");
 	}
+	
+	/**
+	 * @author 
+	 * @Description: methoad to download and verify the file for the document from docView panel
+	 * @param DownloadOption
+	 * @param downloadedFileExtension
+	 */
+	public void downloadFile(String DownloadOption,String downloadedFileExtension) {
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocViewDonload_Icon());
+		if (getDocViewDonload_Icon().isDisplayed()) {
+			base.passedStep("Download button is displayed");
+		} else {
+			base.failedStep("Download button is not displyed");
+		}
+		base.waitForElement(getDocViewDonload_Icon());
+		getDocViewDonload_Icon().waitAndClick(5);
+		base.waitForElement(getDOcViewDoc_DownloadOption(DownloadOption));
+		Actions actionsClass = new Actions(driver.getWebDriver());
+		actionsClass.moveToElement(getDOcViewDoc_DownloadOption(DownloadOption).getWebElement()).click().perform();
+				
+		base.waitTime(5);
+		File file = new File("C:\\BatchPrintFiles\\downloads");
+		File[] listoffiles = file.listFiles();
+		if (listoffiles != null) {
+			boolean flag = false;
+			for (File eachfile : listoffiles) {
+
+				if (eachfile.getName().toLowerCase().contains(downloadedFileExtension.toLowerCase())) {
+					System.out.println(DownloadOption + " is downloaded for selected document");
+					base.passedStep(DownloadOption + " is downloaded for selected document");
+					eachfile.delete();
+					flag = true;
+					break;
+				}
+
+			}
+			if (flag == false) {
+				System.out.println("unable to download" + DownloadOption + " for selected document");
+				base.failedStep(
+						"failed : unable to download" + DownloadOption + " for selected document");
+			}
+
+		} else {
+			System.out.println("No files are downloaded");
+			base.failedStep("No files are downloaded");
+
+		}
+	}
+
+
+
+
+
+
+/**
+	 * @author Gopinath.
+	 * @description : This method to click on text  tab and verify.
+	 */
+	public void clickOnTextTab() {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getDocView_TextTab().isElementAvailable(10);
+			if (getDocView_TextTab().isDisplayed()) {
+				base.passedStep("Translation tab is displayed successfully");
+			} else {
+				base.failedMessage("Translation tab is not displayed");
+			}
+			getDocView_TextTab().waitAndClick(5);
+			if(getDocView_TextTab().GetAttribute("class").contains("active")) {
+				base.passedStep("text Tab loaded successfully");
+			}else {
+				base.failedStep("Unable to load text tab");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while click on translation tab." + e.getMessage());
+
+		}
+	}
+	
+	/**
+	 * @author 
+	 * @Description: method to click on default text tab and verify.
+	 */
+	public void clickOnDefaultTextTab() {
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDefaultViewTab());
+		if(getDefaultViewTab().isElementAvailable(5)) {
+			base.passedStep("Default view tab is displayed");
+		}else {
+			base.failedStep("Default view tab is not displayed");
+		}
+		getDefaultViewTab().waitAndClick(5);
+		if(getDefaultViewTab().GetAttribute("class").contains("active")) {
+			base.passedStep("documemt loaded in default text");
+		}
+		else {
+			base.failedStep("unable to load the document on default text view ");
+		}
+	}
 }
+
