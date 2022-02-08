@@ -492,6 +492,8 @@ public class Input {
 	public static String hiddenDocId;
 	// Added by Baskar
 	public static String oneHourAudio;
+	public static String excelProtectedHiddenDocId;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -989,6 +991,9 @@ public class Input {
 		// Added by baskar
 		oneHourAudio=testData.getOneHourAudio();
 				
+
+		hiddenDocId = testData.getHiddenDocId();
+		excelProtectedHiddenDocId = testData.getExcelProtectedHiddenDocId();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
