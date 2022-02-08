@@ -3186,6 +3186,94 @@ public class DocView_Regression2 {
 		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Deleted successfully");
 
 	}
+	/**
+	 * @Author : Iyappan.Kasinathan
+	 * @Description: Verify that when viewing the document having the 'ExcelProtectedWorkbook' value should provide indicator in viewer to convey that document is having hidden content
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 52)
+	public void verifyExcelProtectWorkbookWarningMsg(String fullName, String userName, String password)
+			throws Exception {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+		baseClass.stepInfo("Test case Id: RPMXCON-51952");
+		baseClass.stepInfo("Verify that when viewing the document having the 'ExcelProtectedWorkbook' value should provide indicator in viewer to convey that document is having hidden content");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		if (fullName.contains("RMU")) {
+			baseClass.stepInfo("Successfully login as Review Manager'" + userName + "'");
+		}
+		if (fullName.contains("PA")) {
+			baseClass.stepInfo("Successfully login as Project admin'" + userName + "'");
+		}
+		if (fullName.contains("REV")) {
+			baseClass.stepInfo("Successfully login as Reviewer'" + userName + "'");
+		}
+		//document searched and navigated to docview
+		sessionsearch.basicContentSearch(Input.excelProtectedHiddenDocId);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Navigated to docview page from search engine");
+		//validate the warning message contains hidden properties
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(1).getText(), "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...");
+		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(2).getText(), "Protected Excel Workbook");
+		baseClass.passedStep("Warning message is displayed for the excel protect workbook as expected");			
+		softassertion.assertAll();
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan
+	 * @Description: Verify that when document with hidden content is clicked to view from mini doc list child window then should display the warning message to indicate that document is having hidden content
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 53)
+	public void verifyWarningMsgFromMinidoclistChildWindow(String fullName, String userName, String password)
+			throws Exception {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+		baseClass.stepInfo("Test case Id: RPMXCON-51955");
+		baseClass.stepInfo("Verify that when document with hidden content is clicked to view from mini doc list child window then should display the warning message to indicate that document is having hidden content");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		if (fullName.contains("RMU")) {
+			baseClass.stepInfo("Successfully login as Review Manager :" + userName + "'");
+		}
+		if (fullName.contains("PA")) {
+			baseClass.stepInfo("Successfully login as Project admin :" + userName + "'");
+		}
+		if (fullName.contains("REV")) {
+			baseClass.stepInfo("Successfully login as Reviewer :" + userName + "'");
+		}
+		//document searched and navigated to docview
+		sessionsearch.basicContentSearch(Input.excelProtectedHiddenDocId);
+		sessionsearch.ViewInDocView();
+		//open the child window and validate the warning message
+		docView.clickGearIconOpenMiniDocList();
+		baseClass.stepInfo("Mini doc list child window is opened");
+		docView.switchToNewWindow(2);
+		baseClass.stepInfo("Switched to new child window successfully");
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_DocId(Input.excelProtectedHiddenDocId));
+		docView.getDocView_DocId(Input.excelProtectedHiddenDocId).waitAndClick(10);
+		docView.switchToNewWindow(1);
+		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(1).getText(), "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...");
+		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(2).getText(), "Protected Excel Workbook");
+		baseClass.passedStep("Warning message is displayed successfully when the document is selected which contains hidden properties from minidoclist child window");		
+		//validate the warning message after click the hidden info icon
+		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
+		docViewRedact.hiddenInfoIcon().waitAndClick(10);
+		baseClass.stepInfo("Hidden info action is performed");
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(1).getText(), "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...");
+		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(2).getText(), "Protected Excel Workbook");
+		baseClass.passedStep("After performing hidden info action, Warning message is displayed for the document has hidden properties");	
+		softassertion.assertAll();		
+		loginPage.logout();
+	}
 	
 
 	
