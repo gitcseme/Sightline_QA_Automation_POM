@@ -406,4 +406,5 @@ public class TestData {
 		
 		//Added by Iyappan
 		public String hiddenDocId;
+		public String excelProtectedHiddenDocId;
 }
