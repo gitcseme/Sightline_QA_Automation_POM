@@ -490,6 +490,8 @@ public class Input {
     
     //Added by Iyappan
 	public static String hiddenDocId;
+	public static String excelProtectedHiddenDocId;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -983,7 +985,8 @@ public class Input {
 
 		conceptualSearchString1 = testData.getConceptualSearchString1();
 		//Added by Iyappan
-				hiddenDocId = testData.getHiddenDocId();
+		hiddenDocId = testData.getHiddenDocId();
+		excelProtectedHiddenDocId = testData.getExcelProtectedHiddenDocId();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
