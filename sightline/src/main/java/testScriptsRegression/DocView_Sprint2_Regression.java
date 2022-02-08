@@ -5191,7 +5191,48 @@ public class DocView_Sprint2_Regression {
 		baseClass.passedStep("Document produced the clicked production is loaded successfully");
 		
 	}
+	/**
+	 * Author : sowndarya.velraj date: 07/02/22 Description:In the Persistent Search
+	 * Hits Panel, in the upper right of each card is a date should be removed for
+	 * non-audio documents (for Platinum) 'RPMXCON-51501'.sprint 12
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 77)
+	public void verifyDateRemovalInPersistentSearchPanel() throws Exception {
 
+		baseClass.stepInfo("Test case Id: RPMXCON-51501");
+		baseClass.stepInfo(
+				"In the Persistent Search Hits Panel, in the upper right of each card is a date should be removed for non-audio documents (for Platinum)");
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		keywordPage = new KeywordPage(driver);
+		softAssertion = new SoftAssert();
+		String keyword = "to" + Utility.dynamicNameAppender();
+		String color = "Gold";
+
+		baseClass.stepInfo(" Prerequisites: Keyword groups should be created   with different Keywords");
+
+		keywordPage.addKeywordWithColor(keyword, color);
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		baseClass.stepInfo(
+				" Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+
+		String upperCard = docView.getTermCardInPersistentPanel().getText();
+		System.out.println(upperCard);
+
+		if (upperCard.contains("2022")) {
+			baseClass.failedStep("Date is displayed");
+		} else {
+			baseClass.passedStep("Date is not displayed");
+		}
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

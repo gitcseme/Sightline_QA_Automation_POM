@@ -3123,6 +3123,70 @@ public class DocView_Regression2 {
 		}	
 	}
 	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50780
+	 * Description :To verify menu bar options from doc view page
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 51)
+	public void verifyMenuBarOptionsInDocView() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		assignPage = new AssignmentsPage(driver);
+		
+		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
+		
+		//Login as RMU and verify menu bar in docView
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-50780");
+		baseClass.stepInfo("To verify menu bar options from doc view page");
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssignExisting(assignmentName);
+		assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		assignPage.addReviewerAndDistributeDocs();
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.selectAssignmentToViewinDocView(assignmentName);
+		baseClass.stepInfo("Selected assignment and navigated to docview");
+		// Verifying the menu bar option in docView page
+		docView.verifyMenuBarOptionFromDocviewPanel();
+  }
+  /*
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-46860
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 51)
+	public void VerifyRectangleRedactionDeletionFromDocExlorer() throws Exception {
+		baseClass = new BaseClass(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-46860");
+		baseClass.stepInfo("Verify user can delete the redaction in a document");
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		docexp.documentSelectionIteration();
+		docexp.docExpViewInDocView();	
+		docViewRedact.redactRectangleUsingOffset(0, 0, 200, 100);
+		docViewRedact.selectingRectangleRedactionTag();
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.rectangleClick().Visible() && docViewRedact.rectangleClick().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.rectangleClick().waitAndClick(8);
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).click();
+		actions.build().perform();
+		actions.moveToElement(docViewRedact.deleteClick().getWebElement());
+		actions.click();
+		actions.build().perform();
+		baseClass.VerifySuccessMessage("Redaction Removed successfully.");
+		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Deleted successfully");
+
+	}
+	
 
 	
 	@AfterMethod(alwaysRun = true)
