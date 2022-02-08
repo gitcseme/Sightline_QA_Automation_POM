@@ -3123,6 +3123,38 @@ public class DocView_Regression2 {
 		}	
 	}
 	
+	/**
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50780
+	 * Description :To verify menu bar options from doc view page
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 51)
+	public void verifyMenuBarOptionsInDocView() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		assignPage = new AssignmentsPage(driver);
+		
+		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
+		
+		//Login as RMU and verify menu bar in docView
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-50780");
+		baseClass.stepInfo("To verify menu bar options from doc view page");
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssignExisting(assignmentName);
+		assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		assignPage.addReviewerAndDistributeDocs();
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.selectAssignmentToViewinDocView(assignmentName);
+		baseClass.stepInfo("Selected assignment and navigated to docview");
+		// Verifying the menu bar option in docView page
+		docView.verifyMenuBarOptionFromDocviewPanel();
+
+	}
+	
 
 	
 	@AfterMethod(alwaysRun = true)
