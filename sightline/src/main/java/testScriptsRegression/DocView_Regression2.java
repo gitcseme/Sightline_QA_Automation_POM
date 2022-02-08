@@ -3343,26 +3343,19 @@ public class DocView_Regression2 {
 	}
 	
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51265
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51266
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 54)
-	public void verifyUniCodeFilesViewInDocViewforRMUandREVfromAssignemnt(String fullName, String userName, String password) throws Exception {
-		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 48)
+	public void verifyUniCodeFilesViewInDocViewforRMUandREV(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);	
 		loginPage.loginToSightLine(userName, password);
-		baseClass.stepInfo("Test case Id: RPMXCON-51265");
-		baseClass.stepInfo("Verify user can view unicode files in near native view in context of an assignment");
+		baseClass.stepInfo("Test case Id: RPMXCON-51266");
+		baseClass.stepInfo("Verify user can view unicode files in default view outside of an assignment");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
-		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);	
-		sessionsearch.bulkAssign();
-		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
-		baseClass.stepInfo(
-				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
-		assignmentspage.addReviewerAndDistributeDocsT(assignmentName);
-		assignmentspage.selectAssignmentToViewinDocview(assignmentName);	
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
 		docViewRedact.checkingPersistentHitPanel();
 		docViewRedact.verifyingActiveDocIdInDocView(Input.UniCodeDocId);
 		baseClass.passedStep("Sucsessfully Viewed Uni code file in DocView");
