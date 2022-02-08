@@ -346,6 +346,7 @@ public class TestData {
 		public String radioGroup;
 		public String checkGroup;
 		public String yesButton;
+		public String oneHourAudio;
 		
 		//added by Aathith
 		public String pageCount;
@@ -406,4 +407,5 @@ public class TestData {
 		
 		//Added by Iyappan
 		public String hiddenDocId;
+		public String excelProtectedHiddenDocId;
 }

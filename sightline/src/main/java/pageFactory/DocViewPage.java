@@ -3024,7 +3024,8 @@ public class DocViewPage {
 	//Add by Aathith
 	public Element getTriangularIcon() {
 		return driver.FindElementByXPath("//i[@class='fa fa-caret-down']");
-    
+	}
+
 	public Element docViewMenuPanel() {
 		return driver.FindElementByXPath(
 				"//div[@id='divAccusoftHeaderToolbar']");
@@ -3037,6 +3038,16 @@ public class DocViewPage {
 	public Element firstPageViewer() {
 		return driver.FindElementByXPath(
 				"//*[@id='firstPage_divDocViewer']");
+	}
+	
+	public Element getAudioDocZoom() {
+		return driver.FindElementByXPath("//i[@class='fa fa-search-plus']");
+	}
+	public Element getAudioWaveForm() {
+		return driver.FindElementByXPath("//div[@class='jp-play-bar' and contains(@style,'overflow: hidden')]");
+	}
+	public Element getAudioZoomBar() {
+		return driver.FindElementByXPath("//div[@class='jp-progress']");
 	}
 
 
@@ -23936,6 +23947,42 @@ public class DocViewPage {
 	}
 					
  }
+
+	
+	/**
+	 * 
+	 * @author Vijaya.Rani 08/02/22 NA Modified date: NA Modified by:NA
+	 * @description perform Eye Icon
+	 */
+
+	public void performEyeIconHighLighting() throws InterruptedException {
+
+		base = new BaseClass(driver);
+		getDocView_MiniDoc_Selectdoc(3).waitAndClick(20);
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getEyeIcon().Visible() && HighliteIcon().Enabled();
+			}
+		}), Input.wait30);
+		getEyeIcon().waitAndClick(10);
+
+		base.stepInfo("docView Eye Icon Clicked Successfully");
+
+		softAssertion.assertTrue(docViewEyeSearchTerm().Displayed());
+		base.passedStep("DocView EyeIcon Search Term Is Displayed");
+
+		driver.waitForPageToBeReady();
+		scrollingDocumentInMiniDocList();
+		driver.waitForPageToBeReady();
+		getDocView_MiniDoc_Selectdoc(15).ScrollTo();
+		getDocView_MiniDoc_Selectdoc(15).WaitUntilPresent().Click();
+
+		base.waitForElement(audioPlayPauseIcon());
+		audioPlayPauseIcon().waitAndClick(10);
+		base.stepInfo("Audio file is played successfully");
+
+	}
 
 }
 
