@@ -238,6 +238,11 @@ public class BaseClass {
 		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//li[" + i + "]");
 
 	}
+	
+	//added by Aathith
+	public Element text(String text) {
+		return driver.FindElementByXPath("//*[contains(text()," + text + ")]");
+	}
 
 	public BaseClass(Driver driver) {
 
@@ -2588,5 +2593,30 @@ public class BaseClass {
 			failedMessage(failMsg);
 		}
 
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param element
+	 */
+	public void elementDisplayCheck(Element element) {
+		if(element.isDisplayed()) {
+			passedStep("Element is displayed :"+element);
+			System.out.println("element is displayed");
+		}else {
+			failedStep("Element verification failed :"+element);
+			System.out.println("element not is displayed");
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void visibleCheck(String text) {
+		if (text("text").isDisplayed()) {
+			passedStep(text + " is visibled");
+			System.out.println(text + " is visible");
+		} else {
+			failedStep(text + " is not visible");
+			System.out.println(text + " is not visible");
+		}
 	}
 }

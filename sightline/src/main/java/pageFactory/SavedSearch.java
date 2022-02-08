@@ -734,6 +734,17 @@ public class SavedSearch {
 	}
 
 	// Added By sowndarya.velraj
+	public Element getLastStatusAs(String status) {
+		return driver.FindElementByXPath("//select[@id='ddlSavedSearchStatus']//option[text()='" + status + "']");
+	}
+	
+	public Element getSearchColumnValue(String searchName, int i) {
+		return driver.FindElementByXPath("//td[contains(text(),'" + searchName + "')]/parent::tr/td[ " + i + "]");
+	}
+
+	public ElementCollection gettableHeaders() {
+		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHead']//thead//tr//th");
+	}
 
 	public Element getDocListPopup() {
 		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']//span");
@@ -7370,6 +7381,37 @@ public class SavedSearch {
 		} else {
 			base.failedStep("Search execution status is not displayed as expected.");
 		}
-	}
+
+		
+		/**
+		 * @Author Jeevitha.Modified on 02/05/2022
+		 * @param headerName
+		 * @return
+		 */
+		public String getListFromSavedSearchTable1(String headerName, String search) {
+			int i = base.getIndex(gettableHeaders(), headerName);
+			System.out.println(i);
+
+			base.waitForElement(getSearchColumnValue(search, i));
+			String value = getSearchColumnValue(search, i).getText();
+			System.out.println(value);
+			base.stepInfo(headerName + " : " + value);
+			return value;
+
+		}
+		
+		/**
+		 * @author Sowndarya
+		 * @param statusToCHeck
+		 * @throws InterruptedException
+		 */
+		public void verifyStatusFilter(String statusToCHeck) throws InterruptedException {
+			base.stepInfo("To verify Completed Status By applying filter");
+			getStatusDropDown().waitAndClick(2);
+			getLastStatusAs(statusToCHeck).waitAndClick(2);
+			getSavedSearch_ApplyFilterButton().waitAndClick(2);
+			verifyExecutionStatusInSavedSearchPage(statusToCHeck);
+		}
+
 
 }

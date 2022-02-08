@@ -445,6 +445,7 @@ public class Input {
 	public static String securityGroup_sg47;
 	public static String regressionConsilio;
 	public static String regressionConsilio1;
+	public static String audioSearchString2;
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
@@ -705,6 +706,7 @@ public class Input {
 		securityGroup_sg47 = testData.getSecurityGroup_sg47();
 		regressionConsilio = testData.getRegressionConsilio();
 		regressionConsilio1 = testData.getRegressionConsilio1();
+		audioSearchString2 = testData.getAudioSearchString2();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
