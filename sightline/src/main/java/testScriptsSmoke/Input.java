@@ -490,6 +490,8 @@ public class Input {
     
     //Added by Iyappan
 	public static String hiddenDocId;
+	// Added by Baskar
+	public static String oneHourAudio;
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -984,6 +986,9 @@ public class Input {
 		conceptualSearchString1 = testData.getConceptualSearchString1();
 		//Added by Iyappan
 				hiddenDocId = testData.getHiddenDocId();
+		// Added by baskar
+		oneHourAudio=testData.getOneHourAudio();
+				
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
