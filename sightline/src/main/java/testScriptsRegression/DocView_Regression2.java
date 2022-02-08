@@ -3123,6 +3123,40 @@ public class DocView_Regression2 {
 		}	
 	}
 	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-46860
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 51)
+	public void VerifyRectangleRedactionDeletionFromDocExlorer() throws Exception {
+		baseClass = new BaseClass(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-46860");
+		baseClass.stepInfo("Verify user can delete the redaction in a document");
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		docexp.documentSelectionIteration();
+		docexp.docExpViewInDocView();	
+		docViewRedact.redactRectangleUsingOffset(0, 0, 200, 100);
+		docViewRedact.selectingRectangleRedactionTag();
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.rectangleClick().Visible() && docViewRedact.rectangleClick().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.rectangleClick().waitAndClick(8);
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).click();
+		actions.build().perform();
+		actions.moveToElement(docViewRedact.deleteClick().getWebElement());
+		actions.click();
+		actions.build().perform();
+		baseClass.VerifySuccessMessage("Redaction Removed successfully.");
+		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Deleted successfully");
+
+	}
+	
 
 	
 	@AfterMethod(alwaysRun = true)
