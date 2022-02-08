@@ -3024,7 +3024,7 @@ public class DocViewPage {
 	//Add by Aathith
 	public Element getTriangularIcon() {
 		return driver.FindElementByXPath("//i[@class='fa fa-caret-down']");
-    
+	}
 	public Element docViewMenuPanel() {
 		return driver.FindElementByXPath(
 				"//div[@id='divAccusoftHeaderToolbar']");
@@ -3037,6 +3037,16 @@ public class DocViewPage {
 	public Element firstPageViewer() {
 		return driver.FindElementByXPath(
 				"//*[@id='firstPage_divDocViewer']");
+	}
+	
+	public Element getAudioDocZoom() {
+		return driver.FindElementByXPath("//i[@class='fa fa-search-plus']");
+	}
+	public Element getAudioWaveForm() {
+		return driver.FindElementByXPath("//div[@class='jp-play-bar' and contains(@style,'overflow: hidden')]");
+	}
+	public Element getAudioZoomBar() {
+		return driver.FindElementByXPath("//div[@class='jp-progress']");
 	}
 
 
