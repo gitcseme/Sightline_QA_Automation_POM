@@ -1592,6 +1592,116 @@ public class DocViewAudio_IndiumRegression {
     	
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 05/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that when audio document is selected after scrolling down
+	 * the mini doc list then played then browser page should not scroll down
+	 * automatically.'RPMXCON-51816' Sprint: 12
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	public void verifyAudioDocsScrollingMiniDocList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51816");
+		baseClass.stepInfo(
+				"Verify that when audio document is selected after scrolling down the mini doc list then played then browser page should not scroll down automatically.");
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		// Performing advanced search with audio
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+
+		// view in docview
+		sessionSearch.ViewInDocView();
+
+		driver.waitForPageToBeReady();
+		Long value = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return window.pageYOffset;");
+		System.out.println(value);
+
+		// perform Eye icon
+		docViewPage.performEyeIconHighLighting();
+
+		//Checking page Scroll
+		driver.waitForPageToBeReady();
+		Long value1 = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return window.pageYOffset;");
+		System.out.println(value1);
+
+		softAssertion.assertEquals(value, value1);
+		baseClass.passedStep(" browser page is not scroll down automatically");
+
+		// logout
+		loginPage.logout();
+
+		// Login REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User is logged in as Reviewer");
+
+		// Performing advanced search with audio
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+
+		// view in docview
+		sessionSearch.ViewInDocView();
+
+		driver.waitForPageToBeReady();
+		Long value2 = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return window.pageYOffset;");
+		System.out.println(value2);
+
+		// perform Eye icon
+		docViewPage.performEyeIconHighLighting();
+
+		//Checking page Scroll
+		driver.waitForPageToBeReady();
+		Long value3 = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return window.pageYOffset;");
+		System.out.println(value3);
+
+		softAssertion.assertEquals(value2, value3);
+		baseClass.passedStep(" browser page is not scroll down automatically");
+
+		// logout
+		loginPage.logout();
+
+		// Login PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User is logged in as Project Assient ");
+
+		// Performing advanced search with audio
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		// view in docview
+		sessionSearch.ViewInDocView();
+
+		driver.waitForPageToBeReady();
+		Long value4 = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return window.pageYOffset;");
+		System.out.println(value4);
+
+		// perform Eye icon
+		docViewPage.performEyeIconHighLighting();
+
+		//Checking page Scroll
+		driver.waitForPageToBeReady();
+		Long value5 = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return window.pageYOffset;");
+		System.out.println(value5);
+
+		softAssertion.assertEquals(value4, value5);
+		baseClass.passedStep(" browser page is not scroll down automatically");
+
+		// perform Eye icon
+		docViewPage.performEyeIconHighLighting();
+
+		// logout
+		loginPage.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
