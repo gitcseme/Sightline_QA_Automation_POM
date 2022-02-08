@@ -1483,6 +1483,114 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 
 	}
+	/**
+	 * Author :Aathith  date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51780 Description : Verify that audio hits should be displayed when documents searched with same term and different/same threshold from session search
+	 * @throws InterruptedException 
+	 * 
+	 */
+	@Test(enabled = true ,groups = { "regression" }, priority = 22 )
+	public void verifySameDifferentThresholdInSessionSearch() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		
+		baseClass.stepInfo("Test case id :RPMXCON-51780");
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with same term and different/same threshold from session search");
+		
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined user : "+Input.rmu1userName);
+		
+		// Performing advanced search with audio
+		sessionSearch.audioSearch(Input.audioSearchString2 , Input.language);
+		baseClass.elementDisplayCheck(sessionSearch.getPureHitsCount());
+		
+		//add to shop cart
+		baseClass.waitForElement(sessionSearch.getPureHitAddBtn());
+		sessionSearch.getPureHitAddBtn().waitAndClick(10);
+		baseClass.stepInfo("purehit added to shop cart");
+		driver.waitForPageToBeReady();
+		
+		// perform new search
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString2 , Input.language);
+		baseClass.elementDisplayCheck(sessionSearch.getPureHitsCount());
+		
+		//add to shop cart
+		baseClass.waitForElement(sessionSearch.getPureHitAddBtn());
+		sessionSearch.getPureHitAddBtn().waitAndClick(10);
+		baseClass.stepInfo("purehit added to shop cart");
+		
+		//view in docview
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		
+		// click eye icon and triangular arrow display check
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		baseClass.stepInfo("Audio eye icon is clicked");
+		baseClass.elementDisplayCheck(docViewPage.getAudioPersistantHitEyeIcon());
+		baseClass.stepInfo("Audio eye icon is displayed in docview");
+		
+		baseClass.waitForElement(docViewPage.audioPersistentForwardNavigate());
+		docViewPage.audioPersistentForwardNavigate().waitAndClick(10);
+		
+		baseClass.elementDisplayCheck(docViewPage.getTriangularIcon());
+		baseClass.stepInfo("Audio triangular arrow is displayed");
+		baseClass.visibleCheck(Input.audioSearchString2);
+		baseClass.stepInfo("Audio search ,search term is visible in docview");
+		driver.waitForPageToBeReady();
+		
+		
+		//remove purehit from shop cart
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.Removedocsfromresults();
+		baseClass.stepInfo("purehit removed from shop cart");
+		driver.waitForPageToBeReady();
+		sessionSearch.Removedocsfromresults();
+		baseClass.stepInfo("purehit removed from shop cart");
+		
+		//add new search with different threshold
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearchThreshold(Input.audioSearchString2 , Input.language,"min");
+		
+		//add to shop cart
+		baseClass.waitForElement(sessionSearch.getPureHitAddBtn());
+		sessionSearch.getPureHitAddBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		
+		//add new search with different threshold
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearchThreshold(Input.audioSearchString2 , Input.language,"max");
+		
+		//add to shop cart
+		baseClass.waitForElement(sessionSearch.getPureHitAddBtn());
+		sessionSearch.getPureHitAddBtn().waitAndClick(10);
+		baseClass.stepInfo("purehit added to shop cart");
+		
+		//view in docview
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		
+		// click eye icon and triangular arrow display check
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		baseClass.stepInfo("Audio eye icon is clicked");
+		baseClass.elementDisplayCheck(docViewPage.getAudioPersistantHitEyeIcon());
+		baseClass.stepInfo("Audio eye icon is displayed in docview");
+		
+		baseClass.waitForElement(docViewPage.audioPersistentForwardNavigate());
+		docViewPage.audioPersistentForwardNavigate().waitAndClick(10);
+		
+		baseClass.elementDisplayCheck(docViewPage.getTriangularIcon());
+		baseClass.stepInfo("Audio triangular arrow is displayed");
+		baseClass.visibleCheck(Input.audioSearchString2);
+		baseClass.stepInfo("Audio search ,search term is visible in docview");
+		
+		baseClass.passedStep("Verified that audio hits should be displayed when documents searched with same term and different/same threshold from session search");
+		
+		loginPage.logout();
+    	
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

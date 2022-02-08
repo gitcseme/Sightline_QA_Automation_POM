@@ -3018,6 +3018,10 @@ public class DocViewPage {
 		return driver.FindElementById("tabs");
 	}
 	
+	//Add by Aathith
+	public Element getTriangularIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-caret-down']");
+	}
 
 
 
