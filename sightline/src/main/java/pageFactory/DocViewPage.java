@@ -3024,7 +3024,6 @@ public class DocViewPage {
 	}
 
 
-
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;

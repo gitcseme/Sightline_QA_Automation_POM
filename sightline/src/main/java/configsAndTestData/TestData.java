@@ -360,6 +360,7 @@ public class TestData {
 		public String securityGroup_sg47;
 		public String regressionConsilio;
 		public String regressionConsilio1;
+		public String audioSearchString2;
 	
 		//Added by Gopinath - 30/11/2021
 		public String postGenQcChecks;
