@@ -1531,6 +1531,25 @@ public class SessionSearch {
 	public Element gettingThresholdValue() {
 		return driver.FindElementByXPath("//span[@class='irs-single']");
 	}
+	
+	//Added by Aathith
+	public Element getCurrentAudioButton() {
+		return driver.FindElementByXPath("(//button[@id='audio'])[last()]");
+	}
+	public Element getCurrentLanguageSelectButton() {
+		return driver.FindElementByXPath("(//select[@id='audioLanguage'])[last()]");
+	}
+	public Element get_Current_As_AudioText() {
+		return driver.FindElementByXPath("(//*[@id='xEdit']/li/input)[last()]");
+	}
+	public Element GetCurrentSliderConfidenceThreshold() {
+		return driver.FindElementByXPath("(//span[@class='irs-slider single'])[last()]");
+
+	}
+	public Element getCurrentPureHitsCount() {
+		return driver.FindElementByXPath("(//*[@id='001']/span/count)[last()]");
+	}
+	
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -10101,8 +10120,127 @@ public String configureAudioSearchBlock(String SearchString1, String SearchStrin
 	String[] thresholdValue = gettingThresholdValue().getText().split(" ");
 	String thresholdValue1=thresholdValue[0];
 	return thresholdValue1;
-}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void addNewSearch() {
+	driver.scrollPageToTop();
+	base.waitTillElemetToBeClickable(getSelectNewSearchbtn());
+	getSelectNewSearchbtn().waitAndClick(10);
+	base.stepInfo("new search window is added");
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param SearchString
+	 * @param language
+	 * @param ThresholdValue
+	 * @return
+	 * @throws InterruptedException
+	 */
+	public String newAudioSearchThreshold(String SearchString, String language, String ThresholdValue)
+			throws InterruptedException {
+		
+		
+		base.waitForElement(getCurrentAudioButton());
+		getCurrentAudioButton().ScrollTo();
+		getCurrentAudioButton().waitAndClick(10);
+		base.waitForElement(getCurrentLanguageSelectButton());
+		getCurrentLanguageSelectButton().selectFromDropdown().selectByVisibleText(language);
+		base.stepInfo("Selected Language as " + language);
+		driver.waitForPageToBeReady();
+		Actions action = new Actions(driver.getWebDriver());
+		action.clickAndHold(GetCurrentSliderConfidenceThreshold().getWebElement());
+		if (ThresholdValue.equalsIgnoreCase("max")) {
+			action.moveToElement(GetCurrentSliderConfidenceThreshold().getWebElement(), 115, 0);
+		}
+		if (ThresholdValue.equalsIgnoreCase("min")) {
+			action.moveToElement(GetCurrentSliderConfidenceThreshold().getWebElement(), -115, 0);
+		}
+		action.release();
+		action.build().perform();
+		GetCurrentSliderConfidenceThreshold().Click();
+		// Enter search string
+		base.waitForElement(get_Current_As_AudioText());
+		get_Current_As_AudioText().SendKeys(SearchString);
+		base.stepInfo("Entered a text in search text box" + SearchString);
+		base.waitForElement(getAdvanceSearch_btn_Current());
+		getAdvanceSearch_btn_Current().Click();
 
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCurrentPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
 
+		String ActualThresholdValue = GetConfidenceThresholdInSearchResult().getText();
+		System.out.println(
+				"Audio Search is done for " + SearchString + " and Theshold value is : " + ActualThresholdValue);
+		base.stepInfo("Audio Search is done for " + SearchString + " and Threshold value is : " + ActualThresholdValue);
 
+		return ActualThresholdValue;
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param SearchString
+	 * @param language
+	 * @return
+	 */
+	public int newAudioSearch(String SearchString, String language) {
+
+		
+		base.waitForElement(getCurrentAudioButton());
+		getCurrentAudioButton().waitAndClick(10);
+
+		base.waitForElement(getCurrentLanguageSelectButton());
+		getCurrentLanguageSelectButton().selectFromDropdown().selectByVisibleText(language);
+		// Enter seatch string
+		base.waitForElement(get_Current_As_AudioText());
+		get_Current_As_AudioText().SendKeys(SearchString);
+
+		// Click on Search button
+		getAdvanceSearch_btn_Current().Click();
+
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+
+		int pureHit = Integer.parseInt(getPureHitsCount().getText());
+		System.out.println("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
+		UtilityLog.info("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
+
+		return pureHit;
+
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void ViewInDocViewWithoutPureHit() throws InterruptedException {
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+
+		
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+			
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkActionButton().Visible();
+			}
+		}), Input.wait30);
+		Thread.sleep(2000); // App synch
+		getBulkActionButton().waitAndClick(5);
+		Thread.sleep(2000); // App Synch
+
+		getDocViewAction().waitAndClick(10);
+		base.waitTime(3); // added for stabilization
+
+		System.out.println("Navigated to docView to view docs");
+		UtilityLog.info("Navigated to docView to view docs");
+
+	}
 }
