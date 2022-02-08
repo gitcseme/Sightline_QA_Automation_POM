@@ -3342,6 +3342,27 @@ public class DocView_Regression2 {
 		
 	}
 	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51266
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 48)
+	public void verifyUniCodeFilesViewInDocViewforRMUandREV(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);	
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51266");
+		baseClass.stepInfo("Verify user can view unicode files in default view outside of an assignment");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.UniCodeDocId, null);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		docViewRedact.verifyingActiveDocIdInDocView(Input.UniCodeDocId);
+		baseClass.passedStep("Sucsessfully Viewed Uni code file in DocView");
+		loginPage.logout();
+	
+	}
+	
 
 	
 	@AfterMethod(alwaysRun = true)
