@@ -2929,27 +2929,24 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//tr[1]//td[contains(text(),'ID')]");
 	}
 
-
-
-
-	
-	//Added by Gopinath - 04/02/2022
+	// Added by Gopinath - 04/02/2022
 	public Element getDocView_Text_Redact_Active() {
 		return driver.FindElementByXPath("//li[@id='textSelectionRedaction_divDocViewer' and @class='state-active']");
 	}
-	
+
 	public Element getDuplicateRedactionWarning() {
-		return driver.FindElementByXPath("//div[@id='divDuplicateRedactionWarning' and contains(text(),'Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.')]");
+		return driver.FindElementByXPath(
+				"//div[@id='divDuplicateRedactionWarning' and contains(text(),'Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.')]");
 	}
-	
+
 	public Element getDocView_Redact_RectangleActive() {
 		return driver.FindElementByXPath("//li[@id='blackRectRedact_divDocViewer' and @class='state-active']");
 	}
-	
+
 	public Element getDocView_Text_redact() {
 		return driver.FindElementById("textSelectionRedaction_divDocViewer");
 	}
-	
+
 	public ElementCollection getDocViewAppliedAnnotation() {
 		return driver.FindElementsByCssSelector("rect[data-pcc-mark*='mark'][style*='rgb(255, 255, 0)']");
 	}
@@ -2957,8 +2954,6 @@ public class DocViewPage {
 	public Element getDocView_ChildPagination() {
 		return driver.FindElementByXPath("//li[@id='nextPage_divNearDupDoc']//i");
 	}
-
-
 
 	public Element getAuthorName(String remarkText) {
 		return driver.FindElementByXPath("//p[@class='clsPlotedRemarkText' and text()='" + remarkText
@@ -3004,26 +2999,26 @@ public class DocViewPage {
 		return driver.FindElementByClassName("assTitle");
 	}
 
-
-	
-	//Added by Aathith
+	// Added by Aathith
 	public Element getAudioBlock() {
 		return driver.FindElementByXPath("//div[@class='audio-block']");
 	}
-	
+
 	public Element getAudioPlayState() {
 		return driver.FindElementByXPath("//div[@id='jp_container_1']");
 	}
-	
+
 	public Element getAudioDocId() {
 		return driver.FindElementByXPath("//div[@class='jp-seek-bar']");
 	}
+
 
 	
 	public Element getDocView_centralPanel() {
 		return driver.FindElementById("tabs");
 	}
 	
+
 
 
 	public DocViewPage(Driver driver) {
@@ -23276,7 +23271,7 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @author Gopinath 
+	 * @author Gopinath
 	 * @Description : this method for deleting added annotation.
 	 */
 	public void deleteAddedAnnotaion() {
@@ -23285,12 +23280,12 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			getDocView_Annotate_DeleteIcon().isElementAvailable(10);
 			getDocView_Annotate_DeleteIcon().Click();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occued while deleting added annotation."+e.getLocalizedMessage());
+			base.failedStep("Exception occued while deleting added annotation." + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : Method for verifying annotation is added to document.
@@ -23321,6 +23316,7 @@ public class DocViewPage {
 
 		}
 	}
+
 	/**
 	 * @author Gopinath
 	 * @Description : Method for verifying added annotation
@@ -23329,18 +23325,18 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_AnnotateIcon());
 		getDocView_AnnotateIcon().waitAndClick(5);
-		if(!getDuplicateRedactionWarning().getWebElement().isDisplayed()) {
-			if(getDocViewAppliedAnnotation().isElementAvailable(3)) {
+		if (!getDuplicateRedactionWarning().getWebElement().isDisplayed()) {
+			if (getDocViewAppliedAnnotation().isElementAvailable(3)) {
 				base.passedStep("Annotation is applied for the document");
-			}else {
+			} else {
 				base.failedStep("Annotation is not applied for the document");
 			}
-		}else {
-			base.failedStep("failed to disappear Dupllicat redaction/highlighting/Annotation Warning message after reload the Document");
+		} else {
+			base.failedStep(
+					"failed to disappear Dupllicat redaction/highlighting/Annotation Warning message after reload the Document");
 		}
 	}
-	
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description : Method for verifying duplicate redaction warning message.
@@ -23368,19 +23364,24 @@ public class DocViewPage {
 					base.passedStep(
 							"All submenus of redaction/highlighting are disabled after Duplicate redaction/highlighting message");
 				} else {
-					base.failedStep("failed to disable all sub menus of redaction/highlighting after duplicate redaction/highlighting message");
-					
+					base.failedStep(
+							"failed to disable all sub menus of redaction/highlighting after duplicate redaction/highlighting message");
+
 				}
 
 			} else {
-				base.failedStep("failed to disable all sub menus of redaction/highlighting after duplicate redaction/highlighting message");
+				base.failedStep(
+						"failed to disable all sub menus of redaction/highlighting after duplicate redaction/highlighting message");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while verfifying Duplicate Anno");
 		}
-/*
+	}
+
+	/*
 	 * @Author Steffy Created on 04/02/2022
+	 * 
 	 * @Description To select docs from Analytics Family member Tab
 	 * 
 	 */
@@ -23461,7 +23462,6 @@ public class DocViewPage {
 
 	}
 
-	
 	/**
 	 * @Author Brundha
 	 * @Description :Method to verify switching from child to parent window.
@@ -23469,41 +23469,40 @@ public class DocViewPage {
 	 */
 
 	public void verifyingSwitchingFromChildWindowToParentWindow() {
-		
-			driver.waitForPageToBeReady();
-			base.waitTillElemetToBeClickable(getParentDocID());
-			String parentDocId = getParentDocID().getText();
-			base.waitTillElemetToBeClickable(getGearIcon());
-			getGearIcon().waitAndClick(10);
-			getMiniDocListIcon().waitAndClick(10);
-			Set<String> windowhandles = driver.getWebDriver().getWindowHandles();
-			driver.waitForPageToBeReady();
-			List<String> list = new ArrayList<String>(windowhandles);
-			driver.switchTo().window(list.get(1));
-			driver.waitForPageToBeReady();
-			if(getDocView_Mini_ActionButton().isDisplayed()) {
-				base.passedStep("Successfully navigated to child window");}
-			else {base.failedStep("Not Successfully navigated to child window");}
-			driver.close();
-			driver.switchTo().window(list.get(0));
-			base.waitForElement(getDocView_Last());
-			getDocView_Last().Click();
-			driver.waitForPageToBeReady();
-			String DocId = getDocId().getText();
-			System.out.println(DocId);
-			if (parentDocId.equals(DocId)) {
-				base.passedStep("ChildWindow is redirected to main window and parent window is accessible.");
-			} else {
-				base.failedMessage("ChildWindow is not redirected to main window and parent window is accessible.");
-			}
-			driver.waitForPageToBeReady();
-			base.waitForElement(getDocView_SaveWidgetButton());
-			getDocView_SaveWidgetButton().Click();
-		
+
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(getParentDocID());
+		String parentDocId = getParentDocID().getText();
+		base.waitTillElemetToBeClickable(getGearIcon());
+		getGearIcon().waitAndClick(10);
+		getMiniDocListIcon().waitAndClick(10);
+		Set<String> windowhandles = driver.getWebDriver().getWindowHandles();
+		driver.waitForPageToBeReady();
+		List<String> list = new ArrayList<String>(windowhandles);
+		driver.switchTo().window(list.get(1));
+		driver.waitForPageToBeReady();
+		if (getDocView_Mini_ActionButton().isDisplayed()) {
+			base.passedStep("Successfully navigated to child window");
+		} else {
+			base.failedStep("Not Successfully navigated to child window");
+		}
+		driver.close();
+		driver.switchTo().window(list.get(0));
+		base.waitForElement(getDocView_Last());
+		getDocView_Last().Click();
+		driver.waitForPageToBeReady();
+		String DocId = getDocId().getText();
+		System.out.println(DocId);
+		if (parentDocId.equals(DocId)) {
+			base.passedStep("ChildWindow is redirected to main window and parent window is accessible.");
+		} else {
+			base.failedMessage("ChildWindow is not redirected to main window and parent window is accessible.");
+		}
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_SaveWidgetButton());
+		getDocView_SaveWidgetButton().Click();
+
 	}
-	
-	
-}
 
 
 	/**

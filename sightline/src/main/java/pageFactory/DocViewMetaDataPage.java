@@ -552,21 +552,9 @@ public class DocViewMetaDataPage {
 		return driver.FindElementsByCssSelector("g[data-pcc-mark*='highlighttextannotation']");
 	}
 
-	
-	//Added by Gopinath - 01/02/2021
-		public Element getMetaDataTableOnPopupFieldName() {
-			return driver.FindElementByXPath("//div[@id='MetaDataDT1_wrapper']/descendant::th[text()='Field Name']");
-		}
-		public Element getMetaDataTableOnPopupFieldValue() {
-			return driver.FindElementByXPath("//div[@id='MetaDataDT1_wrapper']/descendant::th[text()='Field Value']");
-		}
-		public ElementCollection getMetadataPopUpFieldnameList() {
-			return driver.FindElementsByXPath("//table[@id='MetaDataDT1']//td[@class='sorting_1']");
-		}
-		public ElementCollection getDocViewAppliedAnnotation() {
-			return driver.FindElementsByCssSelector("rect[data-pcc-mark*='mark'][style*='rgb(255, 255, 0)']");
-		}
-
+	public ElementCollection getDocViewAppliedAnnotation() {
+		return driver.FindElementsByCssSelector("rect[data-pcc-mark*='mark'][style*='rgb(255, 255, 0)']");
+	}
 
 	// Added by Gopinath - 01/02/2021
 	public Element getMetaDataTableOnPopupFieldName() {
@@ -598,7 +586,6 @@ public class DocViewMetaDataPage {
 		return driver.FindElementByXPath(
 				"//table[@id='dtDocumentAllHistory']//td[text()='" + remark + "']//..//td[" + index + "]");
 	}
-
 
 	public DocViewMetaDataPage(Driver driver) {
 
@@ -2994,10 +2981,9 @@ public class DocViewMetaDataPage {
 
 	}
 
-	
 	/**
 	 * @author Gopinath
-	 * @description: method to remove annotation in document 
+	 * @description: method to remove annotation in document
 	 */
 	public void unTagAnnotationOfDocument() {
 		try {
@@ -3011,15 +2997,13 @@ public class DocViewMetaDataPage {
 			actions.moveToElement(getUnTaggedDeleteButton().getWebElement()).click().build().perform();
 			base.VerifySuccessMessage("Annotation Removed successfully.");
 			base.passedStep("Annotation removed from docuent");
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("unable to Remove annotation from document due to "+e.getMessage());
-			
+			base.failedStep("unable to Remove annotation from document due to " + e.getMessage());
+
 		}
 	}
-	
-
 
 	/**
 	 * @author Raghuram.A
@@ -3049,6 +3033,5 @@ public class DocViewMetaDataPage {
 		getCloseButton().waitAndClick(2);
 		driver.waitForPageToBeReady();
 	}
-
 
 }

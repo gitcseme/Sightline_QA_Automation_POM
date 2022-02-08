@@ -3102,6 +3102,27 @@ public class DocView_Regression2 {
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
 	}
 
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51946
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =50)
+	public void verifyHiddenInfoIconinDocView(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+		baseClass.stepInfo("Test case Id: RPMXCON-51946");
+		baseClass.stepInfo("Verify that a Hidden Info icon is presented in the action icon section of Doc View if the document being viewed has any Hidden Content");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.DocIdWithHiddenContent);
+		sessionsearch.ViewInDocView();
+		if(docViewRedact.hiddenInfoIcon().isDisplayed() == true) {
+			baseClass.passedStep("Hidden info Icon is visible for document with hidden content");
+		} else {		
+			baseClass.failedStep("Hidden info icon is not visible for document with hidden content");
+		}	
+	}
+	
 
 	
 	@AfterMethod(alwaysRun = true)

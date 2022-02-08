@@ -59,7 +59,7 @@ public class DocView_Regression3 {
 	BatchRedactionPage bacth;
 	ReusableDocViewPage reusableDocView;
 	SoftAssert softAssertion;
-	
+
 	String namesg2 = null;
 	String namesg3 = null;
 	String AnnotationLayerNew = null;
@@ -1619,7 +1619,7 @@ public class DocView_Regression3 {
 		docView.performNonAudioAnnotation();
 
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		docViewRedact.selectsecuritygroup(namesg2);
 		new CommentsPage(driver).AddComments(addComment);
@@ -1681,13 +1681,15 @@ public class DocView_Regression3 {
 
 		loginPage.logout();
 	}
-	
-	
-	
+
 	/**
 	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA
-	 * @TestCase_id : 52257 - Verify that after deleting the annotation layer by PA user under specific SecurityGroup should not present respective redactions/annotations/remarks.
-	 * @Description : Verify that after deleting the annotation layer by PA user under specific SecurityGroup should not present respective redactions/annotations/remarks.
+	 * @TestCase_id : 52257 - Verify that after deleting the annotation layer by PA
+	 *              user under specific SecurityGroup should not present respective
+	 *              redactions/annotations/remarks.
+	 * @Description : Verify that after deleting the annotation layer by PA user
+	 *              under specific SecurityGroup should not present respective
+	 *              redactions/annotations/remarks.
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 16)
 	public void verifyRedactionAnnoationtRemarkByAnnotationlayerDeleted() throws Exception {
@@ -1706,7 +1708,8 @@ public class DocView_Regression3 {
 		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		Reporter.log("Logged in as User: " + Input.pa2userName);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
-		baseClass.stepInfo("#### Verify that after deleting the annotation layer by PA user under specific SecurityGroup should not present respective redactions/annotations/remarks ####");
+		baseClass.stepInfo(
+				"#### Verify that after deleting the annotation layer by PA user under specific SecurityGroup should not present respective redactions/annotations/remarks ####");
 
 		// creating two new security groups and adding annotation layer
 		securityGroupsPage = new SecurityGroupsPage(driver);
@@ -1729,7 +1732,7 @@ public class DocView_Regression3 {
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
 		baseClass.CloseSuccessMsgpopup();
-		
+
 		sessionsearch = new SessionSearch(driver);
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.testData1);
@@ -1756,9 +1759,9 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("Perfrom non audio annotation");
 		docView.performNonAudioAnnotation();
-		
+
 		baseClass.stepInfo("Perform Remark with save operation");
-		docViewMetaDataPage.performRemarkWithSaveOperation(10, 15,remark);
+		docViewMetaDataPage.performRemarkWithSaveOperation(10, 15, remark);
 
 		loginPage.logout();
 
@@ -1771,7 +1774,7 @@ public class DocView_Regression3 {
 
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-		
+
 		docViewRedact.selectsecuritygroup(namesg2);
 		baseClass.stepInfo("Navigating to docview from session search");
 		sessionsearch.navigateToSessionSearchPageURL();
@@ -1783,21 +1786,23 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("Verify applied redaction and annotation is not displayed.");
 		docView.verifyAppliedRedactionAndAnnotationIsNotDisplayed();
-		
+
 		baseClass.stepInfo("Verify highlighted text for already added remark is deleted from document on doc view. ");
 		docViewMetaDataPage.verifyHighlightedTextRemarkNotPresentOnDoc();
- 
+
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
 		loginPage.quitBrowser();
 		LoginPage.clearBrowserCache();
 	}
 
-	
 	/**
 	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA
-	 * @TestCase_id : 52258 - Verify that after deleting the annotation layer by RMU user should not present respective redactions/annotations/remarks.
-	 * @Description : Verify that after deleting the annotation layer by RMU user should not present respective redactions/annotations/remarks.
+	 * @TestCase_id : 52258 - Verify that after deleting the annotation layer by RMU
+	 *              user should not present respective
+	 *              redactions/annotations/remarks.
+	 * @Description : Verify that after deleting the annotation layer by RMU user
+	 *              should not present respective redactions/annotations/remarks.
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 17)
 	public void verifyRedactionAnnoationtRemarkByAnnotlayerDeletedByRMU() throws Exception {
@@ -1816,7 +1821,8 @@ public class DocView_Regression3 {
 		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		Reporter.log("Logged in as User: " + Input.pa2userName);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
-		baseClass.stepInfo("#### Verify that after deleting the annotation layer by RMU user should not present respective redactions/annotations/remarks. ####");
+		baseClass.stepInfo(
+				"#### Verify that after deleting the annotation layer by RMU user should not present respective redactions/annotations/remarks. ####");
 
 		// creating two new security groups and adding annotation layer
 		securityGroupsPage = new SecurityGroupsPage(driver);
@@ -1839,7 +1845,7 @@ public class DocView_Regression3 {
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
 		baseClass.CloseSuccessMsgpopup();
-		
+
 		sessionsearch = new SessionSearch(driver);
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.testData1);
@@ -1866,9 +1872,9 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("Perfrom non audio annotation");
 		docView.performNonAudioAnnotation();
-		
+
 		baseClass.stepInfo("Perform Remark with save operation");
-		docViewMetaDataPage.performRemarkWithSaveOperation(10, 15,remark);
+		docViewMetaDataPage.performRemarkWithSaveOperation(10, 15, remark);
 
 		AnnotationLayer annotation = new AnnotationLayer(driver);
 		annotation.deleteAnnotationByPagination(AnnotationLayerNew);
@@ -1884,7 +1890,7 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("Verify applied redaction and annotation is not displayed.");
 		docView.verifyAppliedRedactionAndAnnotationIsNotDisplayed();
-		
+
 		baseClass.stepInfo("Verify highlighted text for already added remark is deleted from document on doc view. ");
 		docViewMetaDataPage.verifyHighlightedTextRemarkNotPresentOnDoc();
 
@@ -1893,25 +1899,27 @@ public class DocView_Regression3 {
 		loginPage.quitBrowser();
 		LoginPage.clearBrowserCache();
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51078
-	 * Description :Verify user can not redact/annotate in a document when annotation layer is not added
-	 * @throws Exception 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51078 Description :Verify user can not redact/annotate in a
+	 * document when annotation layer is not added
+	 * 
+	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = {"regression" },priority = 18)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyFunctionAvailabilityWhenAnnotationLayerNotAdded() throws Exception {
-		
-		String securityGroupName = "Security Group"+ Utility.dynamicNameAppender();
-		
+
+		String securityGroupName = "Security Group" + Utility.dynamicNameAppender();
+
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		docViewRedact = new DocViewRedactions(driver);
 		loginPage = new LoginPage(driver);
 		loginPage.logout();
-		
-		//Pre-requisites-Login as PA
+
+		// Pre-requisites-Login as PA
 		baseClass.stepInfo("Logined as project administrator");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51078");
@@ -1925,10 +1933,10 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(securityGroupName);
 		driver.waitForPageToBeReady();
-		docViewRedact.assignAccesstoSGs(securityGroupName,Input.rmu2userName );
-		docViewRedact.assignAccesstoSGs(securityGroupName,Input.rev2userName );
+		docViewRedact.assignAccesstoSGs(securityGroupName, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(securityGroupName, Input.rev2userName);
 		loginPage.logout();
-		//Login as RMU and verify
+		// Login as RMU and verify
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("logged in as RMU");
 		docViewRedact.selectsecuritygroup(securityGroupName);
@@ -1938,8 +1946,8 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Navigated to docView");
 		driver.waitForPageToBeReady();
 		docView.verifyRedactionAnnotaionAndRemarkButtonsAreDisabled();
-		loginPage.logout();		
-		//Login as Reviewer and verify
+		loginPage.logout();
+		// Login as Reviewer and verify
 		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
 		baseClass.stepInfo("logged in as reviewer");
 		docViewRedact.selectsecuritygroup(securityGroupName);
@@ -1950,11 +1958,15 @@ public class DocView_Regression3 {
 		docView.verifyRedactionAnnotaionAndRemarkButtonsAreDisabled();
 
 	}
-	
+
 	/**
 	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA
-	 * @TestCase id: 51053 - Verify RMU/Reviewer can not see the annotations of document on doc view page in different security group when different annotation layer is mapped to different security groups.
-	 * @Descrption : Verify RMU/Reviewer can not see the annotations of document on doc view page in different security group when different annotation layer is mapped to different security groups
+	 * @TestCase id: 51053 - Verify RMU/Reviewer can not see the annotations of
+	 *           document on doc view page in different security group when
+	 *           different annotation layer is mapped to different security groups.
+	 * @Descrption : Verify RMU/Reviewer can not see the annotations of document on
+	 *             doc view page in different security group when different
+	 *             annotation layer is mapped to different security groups
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void verifyAnnatationAcrossDifferentSecurityGroupSecurityGroups() throws Exception {
@@ -1981,7 +1993,7 @@ public class DocView_Regression3 {
 		// Creating annotation layer and assigning to newly created SGs
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew1);
-		
+
 		// creating two new security groups and adding annotation layer
 		securityGroupsPage.navigateToSecurityGropusPageURL();
 		securityGroupsPage.AddSecurityGroup(namesg2);
@@ -2030,10 +2042,10 @@ public class DocView_Regression3 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
-		
+
 		baseClass.stepInfo("Verify annotation layer is not present");
 		docView.verifyAddedAnnotationToDocument(0);
-		
+
 		loginPage.logout();
 
 		baseClass.stepInfo("Login with project administrator");
@@ -2045,7 +2057,7 @@ public class DocView_Regression3 {
 		annotation.deleteAnnotationByPagination(AnnotationLayerNew1);
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * Author : Vijaya.Rani date: 07/02/22 NA Modified date: NA Modified by:NA
 	 * Description :Verify that multi-page redactions should be applied on top of
@@ -2089,29 +2101,31 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Login with Reviewer Manager");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		Reporter.log("Logged in as User: " + Input.rmu1userName);
-		
+
 		sessionsearch.ViewInDocView();
-		
-		//click the Rectangleredaction  icon
+
+		// click the Rectangleredaction icon
 		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
 		docViewRedact.selectingRectangleRedactionTag();
-		
-		//click the text redaction icon
+
+		// click the text redaction icon
 		docViewRedact.doTextRedactWithXYPoints();
-		
-		//click the this page Redaction icon
+
+		// click the this page Redaction icon
 		docViewRedact.performThisPageRedaction(redactiontag);
-		
-		String beforeCount=docViewRedact.getDocViewAllRedation().getText();
+
+		String beforeCount = docViewRedact.getDocViewAllRedation().getText();
 		System.out.println(beforeCount);
-		//click the multipage redaction icon
+		// click the multipage redaction icon
 		docViewRedact.performAllPagesMultiPageRedaction(redactiontag);
-		
-		String afterCount=docViewRedact.getDocViewAllRedation().getText();
+
+		String afterCount = docViewRedact.getDocViewAllRedation().getText();
 		System.out.println(afterCount);
 		softAssertion.assertNotEquals(beforeCount, afterCount);
 		baseClass.passedStep("count of 'All Redactions'are increased");
-/**
+	}
+
+	/**
 	 * Author : Steffy Created date: NA Modified date: NA Modified by:NA TestCase id
 	 * : 51052 - Verify RMU/Reviewer can see the annotations of document on doc view
 	 * page in different security group if the same annotation layer is mapped to
@@ -2139,8 +2153,8 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("Login with project administrator");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		Reporter.log("Logged in as User : " + Input.pa1userName +" to create prerequisite SG's and annotation layer");
-		
+		Reporter.log("Logged in as User : " + Input.pa1userName + " to create prerequisite SG's and annotation layer");
+
 		baseClass.stepInfo("Creation of Prerequisites");
 		baseClass.stepInfo("Creation of two different security groups");
 		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
@@ -2150,7 +2164,7 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("Creation of annotation layer");
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
-		
+
 		baseClass.stepInfo("Sharing same annotation layer to different security groups");
 		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		securityGroupsPage.selectSecurityGroup(namesg2);
@@ -2165,13 +2179,13 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
-		
+
 		baseClass.stepInfo("Access has been given to RMU and Rev to these security groups");
 		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu1userName);
 		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rev1userName);
 
 		loginPage.logout();
-		
+
 		baseClass.stepInfo("Adding annotation to document by RMU user as a prequisite");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		docViewRedact.selectsecuritygroup(namesg2);
@@ -2179,15 +2193,16 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 		driver.waitForPageToBeReady();
-		
+
 		baseClass.stepInfo("Perfrom non audio annotation");
 		docView.performNonAudioAnnotation();
-		driver.waitForPageToBeReady();	
-		
+		driver.waitForPageToBeReady();
+
 		loginPage.logout();
 		baseClass.stepInfo("Prerequisite creation is completed successfully");
 
-		baseClass.stepInfo("Login as RMU user , Selecting the first SG and verify whether the annotation is displayed in the document");
+		baseClass.stepInfo(
+				"Login as RMU user , Selecting the first SG and verify whether the annotation is displayed in the document");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		docViewRedact.selectsecuritygroup(namesg2);
 		sessionsearch.navigateToSessionSearchPageURL();
@@ -2195,8 +2210,9 @@ public class DocView_Regression3 {
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 		docView.verifyAnnotationAddedToDocument(0);
 		loginPage.logout();
-		
-		baseClass.stepInfo("Login as RMU user , Selecting the second SG and verify whether the annotation is displayed in the same document");
+
+		baseClass.stepInfo(
+				"Login as RMU user , Selecting the second SG and verify whether the annotation is displayed in the same document");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		docViewRedact.selectsecuritygroup(namesg3);
 		sessionsearch.navigateToSessionSearchPageURL();
@@ -2204,8 +2220,9 @@ public class DocView_Regression3 {
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 		docView.verifyAnnotationAddedToDocument(0);
 		loginPage.logout();
-		
-		baseClass.stepInfo("Login as REV user , Selecting the first SG and verify whether the annotation is displayed in the document");
+
+		baseClass.stepInfo(
+				"Login as REV user , Selecting the first SG and verify whether the annotation is displayed in the document");
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		docViewRedact.selectsecuritygroup(namesg2);
 		sessionsearch.navigateToSessionSearchPageURL();
@@ -2213,8 +2230,9 @@ public class DocView_Regression3 {
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 		docView.verifyAnnotationAddedToDocument(0);
 		loginPage.logout();
-		
-		baseClass.stepInfo("Login as REV user , Selecting the second SG and verify whether the annotation is displayed in the same document");
+
+		baseClass.stepInfo(
+				"Login as REV user , Selecting the second SG and verify whether the annotation is displayed in the same document");
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		docViewRedact.selectsecuritygroup(namesg3);
 		sessionsearch.navigateToSessionSearchPageURL();
@@ -2223,7 +2241,7 @@ public class DocView_Regression3 {
 		docView.verifyAnnotationAddedToDocument(0);
 		loginPage.logout();
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	public void close() throws ParseException, InterruptedException, IOException {
 		try {
