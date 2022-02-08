@@ -402,4 +402,7 @@ public class TestData {
 		//Added by Gopinath - 05/01/2021
 		public String downloadDocID;
 		public String translationDocId;
+		
+		//Added by Iyappan
+		public String hiddenDocId;
 }

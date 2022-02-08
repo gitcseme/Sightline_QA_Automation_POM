@@ -485,7 +485,10 @@ public class Input {
 	// Added by Gopinath - 05/01/2021
 	public static String downloadDocID;
 	public static String translationDocId;
-public static String  TermOperator;
+    public static String  TermOperator;
+    
+    //Added by Iyappan
+	public static String hiddenDocId;
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -977,6 +980,8 @@ public static String  TermOperator;
 		translationDocId = testData.getTranslationDocId();
 
 		conceptualSearchString1 = testData.getConceptualSearchString1();
+		//Added by Iyappan
+				hiddenDocId = testData.getHiddenDocId();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

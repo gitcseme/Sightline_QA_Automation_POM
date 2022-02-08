@@ -228,9 +228,14 @@ public class BaseClass {
 	public Element getWarningMsgHeader() {
 		return driver.FindElementByXPath("//span[text()='Warning !']");
 	}
+
+	public Element getSecondLineOfWarningMsg() {
+		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div//li");
+
 	//Added by Krishna
 	public Element getSecondLineSuccessMsg(int i) {
 		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//li[" + i + "]");
+
 	}
 
 	public BaseClass(Driver driver) {
