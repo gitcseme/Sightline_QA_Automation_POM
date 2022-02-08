@@ -5890,6 +5890,7 @@ public class DocView_Regression1 {
 				docViewMetaData.unTagAnnotationOfDocument();
 			}
 
+			/*
 			 * Author : Brundha Created date: NA Modified date: NA Modified by:NA TestCase
 			 * id :RPMXCON- 50959 Description:To verify that after closing child window, it
 			 * should redirect to Parent Window.

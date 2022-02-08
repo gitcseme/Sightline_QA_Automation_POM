@@ -2552,6 +2552,7 @@ public class BaseClass {
 		String string3 = getSecondLineSuccessMsg(1).getText().toString();
 		System.out.println(string3);
 		Assert.assertEquals(ExpectedMsg3, getSecondLineSuccessMsg(3).getText().toString());
+	}
 		
 		
 
