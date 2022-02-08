@@ -3018,7 +3018,19 @@ public class DocViewPage {
 		return driver.FindElementById("tabs");
 	}
 	
+	public Element docViewMenuPanel() {
+		return driver.FindElementByXPath(
+				"//div[@id='divAccusoftHeaderToolbar']");
+	}
 
+	public Element lastPageViewer() {
+		return driver.FindElementByXPath(
+				"//*[@id='lastPage_divDocViewer']");
+	}
+	public Element firstPageViewer() {
+		return driver.FindElementByXPath(
+				"//*[@id='firstPage_divDocViewer']");
+	}
 
 
 	public DocViewPage(Driver driver) {
@@ -23760,4 +23772,56 @@ public class DocViewPage {
 		// Verify Remark Retained Datas
 		verifyResults(updatedremarkText, updatedremarkTime, updateddateAndTime, updatedremarkauthorName, "Updated");
 	}
+	
+	
+	/**
+	 * @author Arunkumar
+	 * @throws InterruptedException 
+	 * @description To verify menu bar menus in docview
+	 */
+	public void verifyMenuBarOptionFromDocviewPanel()  {
+		DocViewRedactions docviewRedact = new DocViewRedactions(driver);
+		driver.waitForPageToBeReady();
+		base.waitForElement(docViewMenuPanel());
+		if(docViewMenuPanel().isDisplayed()) {
+			if(docviewRedact.docViewNextPage().isDisplayed()&& lastPageViewer().isDisplayed() && firstPageViewer().isDisplayed()
+					&& docviewRedact.docViewPreviousPage().isDisplayed() && docviewRedact.pageNumberBox().isDisplayed()) {
+				base.passedStep("Document pagination menus are present");
+			}
+			else {
+				base.failedStep("Document pagination menus are not present");
+				}
+			
+			if(getDocView_Zoomout().isDisplayed() && getDocView_ZoomIn().isDisplayed() && getDocView_ResetZoom().isDisplayed()) {
+			base.passedStep("Zoomin/zoomout ,reset to original menus are present");
+		    }
+		    else {
+			base.failedStep("Zoomin/zoomout ,reset to original menus are not present");
+		    }
+		
+			if(getDocView_Rotateright().isDisplayed() && getDocView_Rotateleft().isDisplayed()) {
+			base.passedStep("Rotate clockwise and anticlockwise menus are present");
+			}else {
+			base.failedStep("Rotate clockwise and anticlockwise menus are not present");	
+			}
+		
+			if(getDocView_Print().isDisplayed() && getDocView_IconDownload().isDisplayed()) {
+			base.passedStep("Print PDF and download associate files menus are present");
+			}
+			else {
+			base.passedStep("Print PDF and download associate files menus are not present");	
+			}
+		
+			if(getDocView_RedactIcon().isDisplayed() && getDocView_AnnotateIcon().isDisplayed() && getDocView_AddRemarkIcon().isDisplayed()
+					&& getPersistantHitEyeIcon().isDisplayed()) {
+			base.passedStep("Redaction,highlighting,reviewer remarks and hit highlighting menus are present");
+			}else {
+			base.failedStep("Redaction,highlighting,reviewer remarks and hit highlighting menus are not present");
+			}
+		}
+		else {
+			base.failedStep("menu bar not present in docview page");
+	}
+					
+ }
 }
