@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 
+import org.apache.commons.io.FilenameUtils;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -3763,7 +3764,7 @@ public class Production_Page_Regression {
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		baseClass.stepInfo("set of 6 Documents are Bulk Tagged as Privileged tag");
-		
+
 		sessionSearch.navigateToSessionSearchPageURL();
 		baseClass.selectproject();
 		sessionSearch.basicContentSearch(Input.searchString5);
@@ -3807,6 +3808,102 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		baseClass.passedStep("Removed Priv Tag from a Document should get Produced in Production for Native");
+	}
+
+	/**
+	 * @Author sowndarya.velraj
+	 * @Description :To Verify In Production for Translation, File Extn in
+	 *              Translation LST & Translated document Produced [ RPMXCON-55680]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 69)
+	public void verifyTranslation() throws Exception {
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		ProductionPage page = new ProductionPage(driver);
+
+		String tagname = "TAG" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-55680 Production Sprint 12");
+		baseClass.stepInfo(
+				"To Verify In Production for Translation, File Extn in Translation LST & Translated document Produced");
+
+		// create tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.technicalIssue);
+
+		// search for folder
+		sessionSearch.basicContentSearch(Input.translationDocumentId);
+		sessionSearch.bulkTagExisting(tagname);
+
+		// create production with DAT,Native,tiff
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTiffSectionDisablePrivilegedDocs();
+		page.fillingTextSection();
+		page.advancedProductionComponentsTranslations();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		baseClass.waitTime(4);
+		String name = page.getProduction().getText().trim();
+		page.isFileDownloaded(Input.fileDownloadLocation, name);
+
+		// Delete Tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.DeleteTagWithClassification(tagname,Input.securityGroup);
+	}
+
+	/**
+	 * @Author sowndarya.velraj
+	 * @Description :Verify that for the saved template 'File Type Options' under
+	 *              Native component should be disabled [ RPMXCON-56133]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 70)
+	public void verifySavedTemplateForNative() throws Exception {
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String templatename="TEMPLATE"+ Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-56133 Production Sprint 12");
+		baseClass.stepInfo(
+				"Verify that for the saved template 'File Type Options' under Native component should be disabled");
+
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.navigateToNextSection();
+		page.navigateToProductionPage();
+		page.saveProductionAsTemplateAndVerifyProductionComponentsInManageTemplateTab(productionname, templatename);
+		baseClass.waitForElement(page.nextButtonInTemplate());
+		page.nextButtonInTemplate().waitAndClick(10);
+		baseClass.stepInfo("Navigating to Production components page in manage templates tab");
+		driver.waitForPageToBeReady();
+		
+		page.getNativeChkBox().ScrollTo();
+		page.getNativeChkBox().waitAndClick(10);
+		page.getNativeTab().waitAndClick(10);
+		if(page.getChkBoxNativeOthers().Selected()) {
+			baseClass.passedStep("Native File types are disabled for saved template");
+		}
 	}
 
 	@DataProvider(name = "PAandRMU")
