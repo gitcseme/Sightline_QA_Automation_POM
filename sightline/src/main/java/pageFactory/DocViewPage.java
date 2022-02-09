@@ -3057,7 +3057,9 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//div[@class='jp-progress']");
 	}
 
-
+	public Element getAudioPersistentHits() {
+		return driver.FindElementByXPath("//div[@id='divAudioPersistentSearch']/div");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -23999,6 +24001,30 @@ public class DocViewPage {
 		base.stepInfo("Audio file is played successfully");
 
 	}
+	/**
+	 * @Author Brundha
+	 * @Description :Method to verify persistant hit panel for audio files
+	 * 
+	 */
 
+	public void verifyingAudioPersistantHitPanel(String SearchString) {
+
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		base.waitTillElemetToBeClickable(getAudioPersistantHitEyeIcon());
+		getAudioPersistantHitEyeIcon().Click();
+		driver.waitForPageToBeReady();
+		getAudioPersistentHits().isElementAvailable(10);
+		if (getAudioPersistentHits().isDisplayed()) {
+			base.passedStep("Persistent hits panel is displayed as expected");
+		}else{base.failedStep("Persistent Hit panel is not displayed as expected");}
+		base.waitForElement(getDocView_Audio_Hit());
+		String StringInPanels = getDocView_Audio_Hit().getText().trim().toString().toLowerCase();
+		
+		System.out.println("expected text" + StringInPanels);
+		base.compareTextViaContains(StringInPanels, SearchString, "Search string is displayed as expected",
+				"Search string is not displayed as expected");
+		
+	}
 }
 

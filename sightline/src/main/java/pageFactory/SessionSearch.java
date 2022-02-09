@@ -1549,6 +1549,11 @@ public class SessionSearch {
 	public Element getCurrentPureHitsCount() {
 		return driver.FindElementByXPath("(//*[@id='001']/span/count)[last()]");
 	}
+	public Element getAdvancedSearchTextArea() {
+		return driver.FindElementByXPath("//textarea[@class='form-control input-large']");}
+	
+	public Element getRemoveAddBtn() {
+		return driver.FindElementByXPath("//i[@title='Remove from Selected Results']");}
 	
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -10243,4 +10248,45 @@ public String configureAudioSearchBlock(String SearchString1, String SearchStrin
 		UtilityLog.info("Navigated to docView to view docs");
 
 	}
+	/**
+	 * @Author :Brundha
+	 * @Description :Method to modify audio search
+	 */
+
+public int modifyAdvanceSearch(String option,String SearchString) throws InterruptedException {
+	
+		base.waitTillElemetToBeClickable(getModifyASearch());
+		getModifyASearch().waitAndClick(10);
+		base.waitTillElemetToBeClickable(getQueryFromTextBox());
+		getQueryFromTextBox().waitAndClick(10);
+		base.stepInfo("Existing query is edited");
+		if (option == "Yes") {
+			base.waitTillElemetToBeClickable(getAdvancedSearchTextArea());
+			getAdvancedSearchTextArea().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			getAdvancedSearchTextArea().Clear();
+			getAdvancedSearchTextArea().SendKeys(SearchString);
+			base.waitTillElemetToBeClickable(getModifysearchOKBtn());
+			getModifysearchOKBtn().waitAndClick(10);
+			base.passedStep("Ok button is clicked");
+		} else {
+			base.waitTillElemetToBeClickable(getModifysearchNOBtn());
+			getModifysearchNOBtn().waitAndClick(10);
+			base.passedStep("Cancel button is clicked");
+		}
+		base.waitForElement(getQuerySearchButton());
+		getQuerySearchButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsLastCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+		int pureHit = Integer.parseInt(getPureHitsLastCount().getText());
+		Reporter.log("Serach is done and PureHit is : " + pureHit, true);
+		UtilityLog.info("Serach is done and PureHit is : " + pureHit);
+
+		return pureHit;
+	
+}
 }
