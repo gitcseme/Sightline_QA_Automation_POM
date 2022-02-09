@@ -227,6 +227,7 @@ public class Input {
 	public static String ChildBates;
 	public static String Production;
 	public static String TIFFPageCount;
+	public static String translationDocumentId;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -695,6 +696,7 @@ public class Input {
 		ChildBates = testData.getChildBates();
 		Production = testData.getProduced();
 		TIFFPageCount = testData.getPageCount();
+		translationDocumentId=testData.getTranslationDocId();
 
 		/**
 		 * @author Aathith.Senthilkumar

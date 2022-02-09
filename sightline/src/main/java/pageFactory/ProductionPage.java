@@ -9515,6 +9515,61 @@ public class ProductionPage {
 		}
 
 	}
+	/**
+	 * @author Sowndarya.velraj.Modified on 02/08/22
+	 * @Description : Method to save a production as template and verifying it in
+	 *              Manage template tab
+	 * @param productionname : productionname is String value that name of
+	 *                       Production need to select production.
+	 * @throws InterruptedException
+	 */
+	public void saveProductionAsTemplateAndVerifyProductionComponentsInManageTemplateTab(String productionname, String templateName)
+			throws InterruptedException {
+
+		base.stepInfo("click on gear icon of the current production");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getGearIconForProdName(productionname));
+		getGearIconForProdName(productionname).waitAndClick(10);
+
+		base.stepInfo("click on save as Template");
+		getprod_Action_SaveTemplate().waitAndClick(10);
+
+		base.waitForElement(getprod_Templatetext());
+		getprod_Templatetext().waitAndClick(10);
+		getprod_Templatetext().SendKeys(templateName);
+
+		getProdExport_SaveButton().waitAndClick(10);
+		base.VerifySuccessMessage("Production Saved as a Custom Template.");
+
+		getManageTemplates().waitAndClick(10);
+
+		
+		getDeleteBtn(templateName).ScrollTo();
+		getDeleteBtn(templateName).isElementAvailable(5);
+		base.stepInfo("Delete option is displayed");
+
+		getViewBtn(templateName).ScrollTo();
+		base.waitForElement(getViewBtn(templateName));
+		if (getViewBtn(templateName).isElementAvailable(5)) {
+			getViewBtn(templateName).waitAndClick(10);
+			base.stepInfo("View option is displayed");
+		}
+
+		driver.waitForPageToBeReady();
+		base.waitTime(2);
+		if (getProductionNameInManageView(templateName).isElementAvailable(5)) {
+			base.passedStep("Production which is saved as template is displayed after selecting view option");
+		}
+
+		base.waitForElement(privGuardInTemplate());
+		if (privGuardInTemplate().isElementAvailable(5)) {
+			base.stepInfo("priv guard option is displayed");
+		}
+
+		base.waitForElement(productionComponentsInTemplate());
+		if (productionComponentsInTemplate().isElementAvailable(5)) {
+			base.stepInfo("production component option is displayed");
+		}}
 
 	/**
 	 * @Author Indium-Sowndarya.Velraj.Modified on 01/19/22
