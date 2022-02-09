@@ -2049,7 +2049,115 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.passedStep("Verified that audio hits should be displayed when documents searched with common terms and different/same threshold from session search");
 		
 		loginPage.logout();
-    	
+	}
+	
+	/**
+	 * @Author : Baskar date: 09/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify that when last audio document is selected and played 
+	 *              then browser page should not scroll down automatically
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 63)
+	public void validatePullButtonAndWebPage(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51817");
+		baseClass.stepInfo("Verify that when last audio document "
+				+ "is selected and played then browser page should not scroll down automatically");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		// login as
+		loginPage.loginToSightLine(userName, password);
+
+		// session seach to docview
+		int audioPurehit=sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigating to docview with audio docs: " +audioPurehit+" document");
+
+		// clicking eye icon and validating
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		baseClass.waitForElement(docViewPage.getDocView_Audio_Hit());
+		String audioEyePersistent=docViewPage.getDocView_Audio_Hit().getText().toString();
+		softAssertion.assertTrue(audioEyePersistent.toLowerCase().contains(Input.audioSearchString1));
+		
+		// navigation to last docs using >>
+		docViewPage.verifyThatIsLastDoc();
+		
+		// validaing by using persistent hit pull button
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.audioPersistentForwardNavigate());
+		docViewPage.audioPersistentForwardNavigate().waitAndClick(10);
+		
+		// validating when clicking the pull button audio file is playing
+		baseClass.waitForElement(docViewPage.getAudioWaveForm());
+		boolean waveform=docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
+		softAssertion.assertTrue(waveform);
+		
+		// verifying webpage page should not scroll automatically
+		Long notToBeScroll = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return window.pageYOffset;");
+		softAssertion.assertEquals(Long.toString(notToBeScroll), "0");
+		baseClass.passedStep("Webpage not scrolled automatically when previous action done");
+		
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @Author : Baskar date: 09/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify that when last audio document is selected and played 
+	 *              then mini doc list should not scroll up automatically
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 63)
+	public void validatePlayAudioWebPageNotScrollUp(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51815");
+		baseClass.stepInfo("Verify that when last audio document is selected and "
+				+ "played then mini doc list should not scroll up automatically");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		// login as
+		loginPage.loginToSightLine(userName, password);
+
+		// session seach to docview
+		int audioPurehit=sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigating to docview with audio docs: " +audioPurehit+" document");
+
+		// clicking eye icon and validating
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		baseClass.waitForElement(docViewPage.getDocView_Audio_Hit());
+		String audioEyePersistent=docViewPage.getDocView_Audio_Hit().getText().toString();
+		softAssertion.assertTrue(audioEyePersistent.toLowerCase().contains(Input.audioSearchString1));
+		
+		// navigation to last docs using >>
+		docViewPage.verifyThatIsLastDoc();
+		
+		// validaing by using play audio button
+		driver.waitForPageToBeReady();
+		Long lastScrollEnd = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		baseClass.waitForElement(docViewPage.audioPlayPauseIcon());
+		docViewPage.audioPlayPauseIcon().waitAndClick(5);
+		
+		// validating when clicking the pull button audio file is playing
+		baseClass.waitForElement(docViewPage.getAudioWaveForm());
+		boolean waveform=docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
+		softAssertion.assertTrue(waveform);
+		
+		// verifying minidoclist page should not scroll up automatically
+		Long afterAction = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		softAssertion.assertEquals(Long.toString(lastScrollEnd), Long.toString(afterAction));
+		baseClass.passedStep("Minidoclist not scrolled automatically when previous action done");
+		
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
 	}
 	
 	@AfterMethod(alwaysRun = true)
