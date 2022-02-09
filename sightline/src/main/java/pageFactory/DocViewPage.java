@@ -2623,6 +2623,13 @@ public class DocViewPage {
 				.FindElementByXPath("(//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//p)[last()]");
 	}
 
+	public ElementCollection getHitPanels_audio() {
+		return driver.FindElementsByXPath("//div[@id='divAudioPersistentSearch']//div[@class='message-2 col-md-12']");
+	}
+	
+	public Element getAudioHit_persistent(int i) {
+		return driver.FindElementByXPath("//*[@id='divAudioPersistentSearch']/div/p["+i+"]");
+	}
 	// Added by Gopinath - 04/01/2022
 	public ElementCollection getTranslationDropdownOptions() {
 		return driver.FindElementsByXPath("//ul[@id='Tra-dropDown']//a");
@@ -3101,6 +3108,12 @@ public class DocViewPage {
 		return Phit;
 	}
 
+	/**@Modified By Jeevitha 
+	 * @Modified Date : 9/02/2022
+	 * @param searchString
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public String getAudioPersistentHit(String searchString) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3112,19 +3125,22 @@ public class DocViewPage {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getHitPanels().Visible();
+				return getHitPanels_audio().Visible() && getHitPanels_audio().Displayed();
 			}
 		}), Input.wait30);
 
-		int numOfPanels = getHitPanels().size();
+		int numOfPanels = getHitPanels_audio().size();
 		String Phit = "NULL";
-		System.out.println("numOfPanels" + (numOfPanels - 1));
+		System.out.println("numOfPanels : " + numOfPanels );
+		base.stepInfo("numOfPanels : " + numOfPanels );
 		Boolean flag = false;
 		for (int i = 1; i <= numOfPanels; i++) {
-			if (getTermInHitPanels(i).getText().contains(searchString)) {
+			String term=getAudioHit_persistent(i).getText();
+			if (term.contains(searchString)) {
 				System.out.println("Found " + searchString);
+				base.stepInfo("Found " + searchString);
 				flag = true;
-				Phit = getTermInHitPanels(i).getText();
+				Phit = term;
 				break;
 			}
 
@@ -3133,7 +3149,7 @@ public class DocViewPage {
 		// driver.getWebDriver().navigate().refresh();
 		return Phit;
 	}
-
+	
 	public void addCommentToNonAudioDoc(String comment) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {

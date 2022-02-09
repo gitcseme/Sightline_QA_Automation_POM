@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -7066,6 +7067,75 @@ public class DocView_Redactions_Regression {
 
 	}
 
+	/**
+	 * @Author Raghuram A date:2/8/2022 Modified date: NA Modified by:N/A
+	 * @Description : To verify document view panel from doc view page
+	 *              [RPMXCON-50777]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	public void verifyDocViewPanel() throws InterruptedException {
+		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
+		String assignment = "Assignment" + Utility.dynamicNameAppender();
+		String cascadeSettings_yes = "Yes";
+		List<String> docIDlist = new ArrayList<>();
+		String sortBy = "DocID";
+
+		loginPage = new LoginPage(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50777 Assignments Sprint-12");
+		baseClass.stepInfo("To verify document view panel from doc view page");
+
+		// Assignment group creation
+		agnmt.navigateToAssignmentsPage();
+		agnmt.createCascadeNonCascadeAssgnGroup_withoutSave(cascadeAsgnGrpName, cascadeSettings_yes);
+		agnmt.Assgnwithdocumentsequence(sortBy, Input.sortType);
+
+		// Assignment creation under group via search -> bulk assign
+		search.basicContentSearch(Input.TallySearch);
+		search.bulkAssignWithNewAssgn(cascadeAsgnGrpName);
+		agnmt.quickAssignmentCreation(assignment, Input.codeFormName);
+		agnmt.saveAssignment(assignment, Input.codeFormName);
+		baseClass.stepInfo("Created Assignment name : " + assignment);
+
+		// Distribute to RMU
+		agnmt.selectAssignmentGroup(cascadeAsgnGrpName);
+		agnmt.getSelectAssignment(assignment).waitAndClick(5);
+		agnmt.NavigateToNewEditAssignmentPage("edit");
+		agnmt.assignmentDistributingToReviewer();
+
+		// Selecting the assignment from group
+		agnmt.navigateToAssignmentsPage();
+		agnmt.selectAssignmentGroup(cascadeAsgnGrpName);
+		agnmt.selectAssignmentToViewinDocView(assignment);
+
+		// Verify default doc details
+		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
+		docIDlist = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
+		Collections.sort(docIDlist);
+		String defaultDocName = docIDlist.get(0);
+		baseClass.stepInfo("First document from the list : " + defaultDocName);
+
+		// Result
+		baseClass.printResutInReport(miniDocListpage.verifySelectedDocHighlight(defaultDocName),
+				"Default Document is selected : " + defaultDocName,
+				"Failed to select default document" + defaultDocName, "Pass");
+
+		String docName = miniDocListpage.getMainWindowActiveDocID().getText();
+		baseClass.stepInfo("Current Document Viewed : " + docName);
+		baseClass.textCompareEquals(docName, defaultDocName,
+				"Document View panel contains detail/content view of selected document - In default first document of mini doc list is selected",
+				"Failed in Default document view");
+
+		// Delete Assign group and assign
+		agnmt.deleteAssignmentFromSingleAssgnGrp(cascadeAsgnGrpName, assignment);
+		agnmt.DeleteAssgnGroup(cascadeAsgnGrpName);
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

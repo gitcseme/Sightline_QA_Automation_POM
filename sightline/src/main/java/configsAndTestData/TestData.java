@@ -208,7 +208,8 @@ public class TestData {
 	public String specialString1;
 	public String specialString2;
 	public String specialString3;
-
+    public String docSelectionHighlight;
+    
 	// Added by jeevitha
 	public String colorCodeOfRed;
 	public String crammerdocumentID;
