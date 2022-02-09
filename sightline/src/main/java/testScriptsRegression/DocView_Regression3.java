@@ -20,6 +20,7 @@ import pageFactory.BatchRedactionPage;
 import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
@@ -2241,6 +2242,55 @@ public class DocView_Regression3 {
 		docView.verifyAnnotationAddedToDocument(0);
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author : Steffy Created date: NA Modified date: NA Modified by:NA TestCase id
+	 * : RPMXCON-50957 - To verify that user can redirect doc view page from Doc
+	 * List->'Back to Source
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 15)
+	public void verifyBackToSourceBtnRedirectToDocViewPage() throws Exception {
+		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		DocListPage docListPage = new DocListPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-50947");
+		baseClass.stepInfo("To verify that user can redirect doc view page from Doc List->'Back to Source");
+		baseClass.stepInfo("Search the documents and Navigate to Docview Page");
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.addDocsMetCriteriaToActionBoard();
+		driver.waitForPageToBeReady();
+
+		driver.scrollPageToTop();
+		baseClass.stepInfo("Selecting the docs from mini doc list");
+		docView.selectDocIdInMiniDocList(Input.MiniDocId);
+		driver.waitForPageToBeReady();
+
+		docView.performViewInDocListConceputualSignledocs();
+
+		baseClass.waitForElement(docListPage.getBackToSourceBtn());
+		docListPage.getBackToSourceBtn().Click();
+		driver.waitForPageToBeReady();
+
+		String actualURL = driver.getUrl();
+		if (actualURL.contains("DocView")) {
+			baseClass.passedStep("Navigated to docview page successfuly after Back to source button is clicked");
+		} else {
+			baseClass.failedStep("Failed to navigate to docview page");
+		}
+
+		String docAfterNavigation = docView.getDocView_CurrentDocId().getText();
+
+		softAssertion.assertEquals(Input.MiniDocId, docAfterNavigation);
+		softAssertion.assertAll();
+
+		loginPage.logout();
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void close() throws ParseException, InterruptedException, IOException {

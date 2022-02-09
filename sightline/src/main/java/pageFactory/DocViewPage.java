@@ -2135,6 +2135,7 @@ public class DocViewPage {
 	public Element getTermCardInPersistentPanel() {
 		return driver.FindElementByXPath("//span[contains(text(),'Term:')]//following::p");
 	}
+
 	public Element getDocFileTypeCheckbox() {
 		return driver.FindElementByXPath("//tr[contains(@class,'rowNumber_0')]//label[@class='checkbox']/i");
 	}
@@ -2580,7 +2581,7 @@ public class DocViewPage {
 
 	// Added By Vijaya.Rani
 	public Element getDocView_DocListPageDocs() {
-		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr/td[3]");
+		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr/td[contains(text(),'ID')]");
 	}
 
 	// Added by Aathith
@@ -2630,6 +2631,7 @@ public class DocViewPage {
 	public Element getAudioHit_persistent(int i) {
 		return driver.FindElementByXPath("//*[@id='divAudioPersistentSearch']/div/p["+i+"]");
 	}
+	
 	// Added by Gopinath - 04/01/2022
 	public ElementCollection getTranslationDropdownOptions() {
 		return driver.FindElementsByXPath("//ul[@id='Tra-dropDown']//a");
@@ -3022,37 +3024,35 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//div[@class='jp-seek-bar']");
 	}
 
-
-	
 	public Element getDocView_centralPanel() {
 		return driver.FindElementById("tabs");
 	}
-	
-	//Add by Aathith
+
+	// Add by Aathith
 	public Element getTriangularIcon() {
 		return driver.FindElementByXPath("//i[@class='fa fa-caret-down']");
 	}
 
 	public Element docViewMenuPanel() {
-		return driver.FindElementByXPath(
-				"//div[@id='divAccusoftHeaderToolbar']");
+		return driver.FindElementByXPath("//div[@id='divAccusoftHeaderToolbar']");
 	}
 
 	public Element lastPageViewer() {
-		return driver.FindElementByXPath(
-				"//*[@id='lastPage_divDocViewer']");
+		return driver.FindElementByXPath("//*[@id='lastPage_divDocViewer']");
 	}
+
 	public Element firstPageViewer() {
-		return driver.FindElementByXPath(
-				"//*[@id='firstPage_divDocViewer']");
+		return driver.FindElementByXPath("//*[@id='firstPage_divDocViewer']");
 	}
-	
+
 	public Element getAudioDocZoom() {
 		return driver.FindElementByXPath("//i[@class='fa fa-search-plus']");
 	}
+
 	public Element getAudioWaveForm() {
 		return driver.FindElementByXPath("//div[@class='jp-play-bar' and contains(@style,'overflow: hidden')]");
 	}
+
 	public Element getAudioZoomBar() {
 		return driver.FindElementByXPath("//div[@class='jp-progress']");
 	}
@@ -3068,6 +3068,22 @@ public class DocViewPage {
 	public Element getAudioPersistentHits() {
 		return driver.FindElementByXPath("//div[@id='divAudioPersistentSearch']/div");
 	}
+
+	public Element getWarningMessageForRemarkPanel() {
+		return driver.FindElementByXPath(
+				"//div[@id='disableRedactionWarningForRemarks' and normalize-space('" + Input.warningMessage + "')]");
+	}
+
+	public Element getWarningMessageForAnnotations() {
+		return driver.FindElementByXPath(
+				"//div[@id='divDuplicateAnnotationWarning' and normalize-space('" + Input.warningMessage + "')]");
+	}
+
+	public Element getWarningMessageForRedactions() {
+		return driver.FindElementByXPath(
+				"//div[@id='divDuplicateRedactionWarning' and normalize-space('" + Input.warningMessage + "')]");
+	}
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -3159,7 +3175,7 @@ public class DocViewPage {
 		// driver.getWebDriver().navigate().refresh();
 		return Phit;
 	}
-	
+
 	public void addCommentToNonAudioDoc(String comment) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -18297,6 +18313,72 @@ public class DocViewPage {
 		}
 	}
 
+	/*
+	 * @author Steffy D Method to verify whether the sub menus of the redactions are
+	 * disabled
+	 */
+	public void verifyAppliedRedactionSubMenusAreDisabled() {
+		try {
+			getDocView_RedactThisPage().waitAndClick(2);
+			if (getDocView_RedactThisPage().Class().contains("active")) {
+				base.failedStep("Redaction sub menu: This Page are not disabled");
+			} else {
+				base.passedStep("Redaction sub menu: This Page are disabled");
+			}
+
+			getDocView_Text_redact().waitAndClick(2);
+			if (getDocView_Text_redact().Class().contains("active")) {
+				base.failedStep("Redaction sub menu: Text Redact are not disabled");
+			} else {
+				base.passedStep("Redaction sub menu: Text redact are disabled");
+			}
+
+			multiPageIcon().waitAndClick(2);
+			if (multiPageIcon().Class().contains("active")) {
+				base.failedStep("Redaction sub menu: Multi Page are not disabled");
+			} else {
+				base.passedStep("Redaction sub menu: Multi Page are disabled");
+			}
+
+			getDocView_Redact_Rectangle().waitAndClick(2);
+			if (getDocView_Redact_Rectangle().Class().contains("active")) {
+				base.failedStep("Redaction sub menu: Redact Rect are not disabled");
+			} else {
+				base.passedStep("Redaction sub menu: Redact Rect are disabled");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while Verifying applied redaction sub menus" + e.getLocalizedMessage());
+		}
+	}
+
+	/*
+	 * @author Steffy D Method to verify whether the sub menus of the annotation are
+	 * disabled
+	 */
+	public void verifyAppliedAnnotationSubMenusAreDisabled() {
+		try {
+			getDocView_Annotate_ThisPage().waitAndClick(2);
+			if (getDocView_Annotate_ThisPage().Class().contains("active")) {
+				base.failedStep("Redaction sub menu: This Page are not disabled");
+			} else {
+				base.passedStep("Redaction sub menu: This Page are disabled");
+			}
+
+			getDocView_Annotate_ThisPage().waitAndClick(2);
+			if (getDocView_Annotate_ThisPage().Class().contains("active")) {
+				base.failedStep("Annotation sub menu: Rect are not disabled");
+			} else {
+				base.passedStep("Annotation sub menu: Rect are disabled");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while Verifying applied annotation sub menus" + e.getLocalizedMessage());
+		}
+	}
+
 	/**
 	 * @author Gopinath
 	 * @description : Method to complete coding form and verify cursor navigated to
@@ -19195,8 +19277,9 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_DocListPageDocs());
 
-		if (getDocView_DocListPageDocs().Displayed()) {
+		if (getDocView_DocListPageDocs().isDisplayed()) {
 			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep("Selected document is display in Doc List ");
 		} else {
 			base.failedStep("Selected document is not display in Doc List");
@@ -23559,6 +23642,7 @@ public class DocViewPage {
 		getDocView_SaveWidgetButton().Click();
 
 	}
+
 
 
 	/**

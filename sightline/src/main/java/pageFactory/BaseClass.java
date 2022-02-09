@@ -2,6 +2,8 @@ package pageFactory;
 
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -2648,6 +2650,21 @@ public class BaseClass {
 			} else {
 				failedMessage(failMsg);
 			}
+		}
+	}
+	
+	/*
+	 * @author Steffy D This method is to open a new tab
+	 */
+	public void openNewTab() {
+		try {
+			Robot robot = new Robot();                          
+			robot.keyPress(KeyEvent.VK_CONTROL); 
+			robot.keyPress(KeyEvent.VK_T); 
+			robot.keyRelease(KeyEvent.VK_CONTROL); 
+			robot.keyRelease(KeyEvent.VK_T);
+		} catch (Exception e) {
+			UtilityLog.info("Failed to open new tab due to following exception " + e);
 		}
 	}
 }

@@ -3420,7 +3420,139 @@ public class DocView_Regression2 {
 		
 	}
 
+	@DataProvider(name = "userDetailss")
+	public Object[][] userLoginDetailss() {
+		return new Object[][] { { Input.rmu1userName, Input.rmu1password, Input.rmu2userName, Input.rmu2password },
+				{ Input.rev1userName, Input.rev1password, Input.rev2userName, Input.rev2password } };
+	}
 
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-51540 Verify that when two different users deletes reviewer remarks
+	 * to the same record successfully, and confirm that the XML nodes are all
+	 * properly created/reflected in the XML
+	 */
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 3)
+	public void verifyRemarkPanelRemarkDetailsAfterDeletionBetweenTwoUsers(String firstUserName,
+			String firstUserPassword, String secondUserName, String secondUserPassword) throws Exception {
+
+		String remark = Input.randomText + Utility.dynamicNameAppender();
+		String remark1 = Input.randomText + "1" + Utility.dynamicNameAppender();
+
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage = new LoginPage(driver);
+		DocViewPage docView = new DocViewPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51540");
+		baseClass.stepInfo(
+				"Verify that when two different users deletes reviewer remarks to the same record successfully, and confirm that the XML nodes are all properly created/reflected in the XML");
+		baseClass.stepInfo("Creating Prerequisite Reviewer Remark");
+		baseClass.stepInfo("Adding new remark to document as a prerequisite one");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Perfrom non audio remark");
+		docView.addRemarkToNonAudioDocument(20, 40, remark);
+		baseClass.stepInfo("Perfrom non audio remark");
+		docView.addRemarkToNonAudioDocument(10, 20, remark1);
+		loginPage.logout();
+		baseClass.stepInfo("Prerequisites creation completed");
+
+		loginPage.loginToSightLine(firstUserName, firstUserPassword);
+		baseClass.stepInfo("login as" + firstUserName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		String firstUserWindow = driver.CurrentWindowHandle();
+
+		baseClass.openNewTab();
+
+		driver.switchToChildWindow();
+
+		driver.Navigate().to(Input.url);
+		driver.waitForPageToBeReady();
+		loginPage.loginToSightLine(secondUserName, secondUserPassword);
+		baseClass.stepInfo("login as" + secondUserName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		String secondUserWindow = driver.CurrentWindowHandle();
+
+		driver.switchToWindow(firstUserWindow);
+		docView.deleteReamark(remark);
+		driver.switchToWindow(secondUserWindow);
+
+		baseClass.waitForElement(docView.getNonAudioRemarkBtn());
+		docView.getNonAudioRemarkBtn().waitAndClick(9);
+
+		baseClass.waitForElement(docView.getWarningMessageForRemarkPanel());
+		System.err.println("icon" + docView.getDocView_RedactThisPage().Enabled());
+		if (docView.getWarningMessageForRemarkPanel().isDisplayed()) {
+			baseClass.passedStep(
+					"Expected warning message : " + Input.warningMessage + " is getting displayed for Remark panel");
+		} else {
+			baseClass.failedStep("Expected warning message : " + Input.warningMessage
+					+ " is not getting displayed for Remark panel");
+		}
+
+		baseClass.waitForElement(docView.getDocView_AnnotateIcon());
+		docView.getDocView_AnnotateIcon().waitAndClick(9);
+		
+		docView.verifyAppliedAnnotationSubMenusAreDisabled();
+
+		baseClass.waitForElement(docView.getWarningMessageForAnnotations());
+		if (docView.getWarningMessageForAnnotations().isDisplayed()) {
+			baseClass.passedStep(
+					"Expected warning message : " + Input.warningMessage + " is getting displayed for Annotations");
+		} else {
+			baseClass.failedStep(
+					"Expected warning message : " + Input.warningMessage + " is not getting displayed for Annotations");
+		}
+
+		baseClass.waitForElement(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().waitAndClick(9);
+		
+		docView.verifyAppliedRedactionSubMenusAreDisabled();
+
+		baseClass.waitForElement(docView.getWarningMessageForRedactions());
+		if (docView.getWarningMessageForRedactions().isDisplayed()) {
+			baseClass.passedStep(
+					"Expected warning message : " + Input.warningMessage + " is getting displayed for Redactions");
+		} else {
+			baseClass.failedStep(
+					"Expected warning message : " + Input.warningMessage + " is not getting displayed for Redactions");
+		}
+
+		if (docView.getRemarkDeletetIcon().isElementAvailable(1)) {
+			baseClass.failedStep("Delete icon is visible for the remarks");
+		} else {
+			baseClass.passedStep("Delete icon is not visible for the remarks");
+		}
+		
+		if (docView.getRemarkEditIcon().isElementAvailable(1)) {
+			baseClass.failedStep("Edit icon is visible for the remarks");
+		} else {
+			baseClass.passedStep("Edit icon is not visible for the remarks");
+		}
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
+		baseClass.stepInfo("Verify added remark is not displayed");
+		if (docView.getRemarkPanelItems(remark).isElementAvailable(1)) {
+			baseClass.failedStep("Added remark is displayed");
+		} else {
+			baseClass.passedStep("Added remark is not displayed");
+		}
+		
+		
+
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

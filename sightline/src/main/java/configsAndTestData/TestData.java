@@ -171,7 +171,8 @@ public class TestData {
 	public String IconOriginalColour;
 	public String DocIdWithHiddenContent;
 	public String TextHidden;
-	
+	public String warningMessage;
+
 	//Added by arunkumar
 	public String pageRange1;
 	public String pageRange2;
