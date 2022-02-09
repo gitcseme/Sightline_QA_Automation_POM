@@ -40,6 +40,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
+import pageFactory.MiniDocListPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
@@ -3363,6 +3364,62 @@ public class DocView_Regression2 {
 	
 	}
 	
+	/**
+	 * @Author date: 08/02/2022 Modified date: NA Modified by:
+	 * @Description:Verify that when document is viewed from history drop down
+	 *                     having multiple terms when presently viewed document is
+	 *                     with single term then persistent hits panel should
+	 *                     display all the hits present in the document.
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 49)
+	public void verifyMultipleTermsPresentlyViewedDocInPersistentHits() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-51870");
+		baseClass.stepInfo(
+				"Verify that when document is viewed from history drop down having multiple terms when presently viewed document is with single term then persistent hits panel should display all the hits present in the document.");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		MiniDocListPage miniDocList = new MiniDocListPage(driver);
+		String audioSearchString2 = "left";
+		sessionsearch.audioSearch(Input.audioSearchString1, Input.language);
+		docView.selectPureHit();
+		driver.waitForPageToBeReady();
+		sessionsearch.modifyAudioSearch(audioSearchString2, Input.language, null);
+		docView.selectPureHit();
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Searching multiterms in audioDoc view in docview");
+		// click PersistentHits icon on select Docs
+		docViewRedact.checkingPersistentHitPanelAudio();
+		miniDocList.verifyViewDocInPersistentHitPanel(Input.audioSearchString1, audioSearchString2);
+		miniDocList.verifySelectedDocsInClockIcon(audioSearchString2, Input.audioSearchString1);
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51954
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =50)
+	public void verifyMessageForHiddenContentDocsExcelProtecTedWorkSheets(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
+		String expectedMessage2 = "Hidden Columns;Protected Sheets";
+		String expectedMessage3 = "Protected Excel Sheets";
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51954");
+		baseClass.stepInfo("Verify that when document with hidden content is clicked to view from mini doc list then should display the warning message to indicate that document is having hidden content");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.TextHidden);
+		sessionsearch.ViewInDocView();
+		DocViewPage docviewpage = new DocViewPage(driver);
+		docviewpage.selectDocIdInMiniDocList(Input.DocIdWithHiddenContent);
+		baseClass.stepInfo("Document with hidden content - excel protected worsheet selected from mini doclist");
+		driver.waitForPageToBeReady();	
+		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
+		
+	}
+
 
 	
 	@AfterMethod(alwaysRun = true)
