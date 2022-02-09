@@ -448,6 +448,11 @@ public class Input {
 	public static String regressionConsilio;
 	public static String regressionConsilio1;
 	public static String audioSearchString2;
+	public static String audioSearchString3;
+	public static String audioSearchString4;
+	public static String audioSearchString5;
+	public static String audioSearchString6;
+	public static String audioSearchString7;
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
@@ -714,6 +719,11 @@ public class Input {
 		regressionConsilio = testData.getRegressionConsilio();
 		regressionConsilio1 = testData.getRegressionConsilio1();
 		audioSearchString2 = testData.getAudioSearchString2();
+		audioSearchString3 = testData.getAudioSearchString3();
+		audioSearchString4 = testData.getAudioSearchString4();
+		audioSearchString5 = testData.getAudioSearchString5();
+		audioSearchString6 = testData.getAudioSearchString6();
+		audioSearchString7 = testData.getAudioSearchString7();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.

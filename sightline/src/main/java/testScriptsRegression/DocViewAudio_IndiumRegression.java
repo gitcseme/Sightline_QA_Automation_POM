@@ -1998,6 +1998,111 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 
 	}
+/**
+	 * Author :Aathith  date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51781 Description : Verify that audio hits should be displayed when documents searched with common terms and different/same threshold from session search
+	 * @throws InterruptedException 
+	 * 
+	 */
+	@Test(enabled = true ,groups = { "regression" }, priority = 27 )
+	public void verifySameDifferentThresholdAndSearchTerms() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Test case id :RPMXCON-51781");
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with same term and different/same threshold from session search");
+		
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined user : "+Input.rmu1userName);
+		
+		// Performing advanced search with audio
+		int count1 = sessionSearch.audioSearch(Input.audioSearchString2 , Input.language);
+		baseClass.elementDisplayCheck(sessionSearch.getCurrentPureHitAddBtn());
+		baseClass.stepInfo("Search result is displayed");
+		
+		//add to shop cart
+		sessionSearch.addPureHit();
+		
+		// perform new search
+		sessionSearch.addNewSearch();
+		int count2 = sessionSearch.newAudioSearch(Input.audioSearchString2 ,Input.audioSearchString3 ,Input.audioSearchString4 , Input.language);
+		
+		//add to shop cart
+		sessionSearch.addPureHit();
+		
+		//view in docview
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		int sum = count1+count2;
+		// click eye icon and triangular arrow display check
+		docViewPage.trianglurArrowIconPositionVerification();
+		docViewPage.termDisplayCheck(Input.audioSearchString2, Input.audioSearchString3, sum);
+		
+		//remove purehit from shop cart
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.Removedocsfromresults();
+		driver.waitForPageToBeReady();
+		sessionSearch.Removedocsfromresults();
+		
+		//add new search with different threshold
+		sessionSearch.addNewSearch();
+		int count3 =sessionSearch.newAudioSearchThreshold(Input.audioSearchString2 , Input.language, "max");
+		sessionSearch.addPureHit();
+		
+		//add new search with different threshold
+		sessionSearch.addNewSearch();
+		int count4 = sessionSearch.newAudioSearchThreshold(Input.audioSearchString2 ,Input.audioSearchString3 ,Input.audioSearchString4 , Input.language,"min");
+		sessionSearch.addPureHit();
+		
+		//view in docview
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		
+		int sum1 = count3+count4;
+		// click eye icon and triangular arrow display check
+		docViewPage.trianglurArrowIconPositionVerification();
+		docViewPage.termDisplayCheck(Input.audioSearchString2, Input.audioSearchString3 , sum1);
+		
+		//remove purehit from shop cart
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.Removedocsfromresults();
+		driver.waitForPageToBeReady();
+		sessionSearch.Removedocsfromresults();
+				
+		sessionSearch.addNewSearch();
+		int searchCount1 = sessionSearch.newAudioSearchThreshold(Input.audioSearchString5 , Input.audioSearchString6 , Input.audioSearchString7 , Input.language,"80");
+		sessionSearch.addPureHit();
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString6 , Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString7 , Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.addNewSearch();
+		int searchCount4 = sessionSearch.newAudioSearch(Input.audioSearchString5 , Input.audioSearchString6 , Input.audioSearchString7 , Input.language);
+		sessionSearch.addPureHit();
+		
+		driver.waitForPageToBeReady();
+		boolean flag = searchCount1 < searchCount4;
+		if(searchCount1 < searchCount4) {
+			softAssertion.assertTrue(flag);
+			baseClass.passedStep("1st Search result count is less than the 4th search result count");
+			System.out.println("passed");
+		}else {
+			baseClass.failedStep("verification failed");
+			System.out.println("failed");
+		}
+		driver.scrollPageToTop();
+		//view in docview
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		
+		baseClass.passedStep("Verified that audio hits should be displayed when documents searched with common terms and different/same threshold from session search");
+		
+		loginPage.logout();
+    	
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
