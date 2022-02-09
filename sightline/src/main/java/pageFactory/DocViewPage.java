@@ -3056,6 +3056,14 @@ public class DocViewPage {
 	public Element getAudioZoomBar() {
 		return driver.FindElementByXPath("//div[@class='jp-progress']");
 	}
+	
+	//Add by Aathith
+	public Element getAudioPlayerCurrentState() {
+		return driver.FindElementByXPath("//div[@class='jp-play-bar']");
+	}
+	public Element audioPersistentBackwardNavigate() {
+		return driver.FindElementByXPath("//i[@class='fa fa-chevron-left']");
+	}
 
 
 	public DocViewPage(Driver driver) {
@@ -23998,6 +24006,58 @@ public class DocViewPage {
 		audioPlayPauseIcon().waitAndClick(10);
 		base.stepInfo("Audio file is played successfully");
 
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void trianglurArrowIconPositionVerification() {
+		driver.waitForPageToBeReady();
+		
+		//audio eye icon verification
+		base.waitForElement(getAudioPersistantHitEyeIcon());
+		getAudioPersistantHitEyeIcon().waitAndClick(10);
+		base.stepInfo("Audio eye icon is clicked");
+		base.elementDisplayCheck(getAudioPersistantHitEyeIcon());
+		base.stepInfo("Audio eye icon is displayed in docview");
+		
+		base.waitForElement(audioPersistentForwardNavigate());
+		audioPersistentForwardNavigate().waitAndClick(10);
+		base.stepInfo("clicked on hit next");
+		
+		base.elementDisplayCheck(getTriangularIcon());
+		base.stepInfo("Audio triangular arrow is displayed");
+		String start = getAudioPlayerCurrentState().GetAttribute("style").trim();
+		audioPersistentBackwardNavigate().waitAndClick(10);
+		base.stepInfo("clicked on hit Back");
+		String end = getAudioPlayerCurrentState().GetAttribute("style").trim();
+		softAssertion.assertEquals(start, end);
+		base.stepInfo("Audio triangular arrow position verified");
+		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param term1
+	 * @param term2
+	 * @param docCount
+	 */
+	public void termDisplayCheck(String term1, String term2 , int docCount) {
+		
+		for(int i=0;i<docCount;i++) {
+		driver.waitForPageToBeReady();
+		boolean flag1 = base.text("term1").isDisplayed();
+		boolean flag2 =base.text("term2").isDisplayed();
+		if(flag1&&flag2) {
+			softAssertion.assertTrue(flag1);
+			softAssertion.assertTrue(flag2);
+			base.stepInfo("Both terms are visible in the Document");
+			System.out.println("terms are visible");
+			break;
+		}else {
+			base.waitForElement(getDocView_Next());
+			getDocView_Next().waitAndClick(10);
+			driver.waitForPageToBeReady();
+		}
+		}
 	}
 
 }
