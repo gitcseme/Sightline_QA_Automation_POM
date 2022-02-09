@@ -1948,6 +1948,57 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 	}
 	/**
+	 * Author : Brundha Created date: NA Modified date: NA Modified by:NA TestCase
+	 * id :RPMXCON- 51858 Description:Audio only - If user modified Search Term and
+	 * re-execute the same query then modified Term does not appear in Persistent
+	 * Search panel in DocView screen.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 28)
+
+	public void verifyModifiedStringInPersistPanel() throws Exception {
+
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("RPMXCON-51858 from docview/Audio Component");
+		baseClass.stepInfo(
+				"#### Audio only - If user modified Search Term and re-execute the same query then modified Term does not appear in Persistent Search panel in DocView screen. ####");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined user : "+Input.rmu1userName);
+		
+		
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+
+		baseClass.stepInfo("Navigate to docview page");
+		sessionSearch.ViewInDocView();
+
+		DocViewPage docView = new DocViewPage(driver);
+		baseClass.stepInfo("Verifying the Persistent panel search string and Visiblity");
+		docView.verifyingAudioPersistantHitPanel(Input.audioSearch);
+
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Modifying the search string");
+		sessionSearch.modifyAdvanceSearch("Yes", Input.audioSearchString1);
+		baseClass.waitForElement(sessionSearch.getRemoveAddBtn());
+		sessionSearch.getRemoveAddBtn().waitAndClick(10);
+
+		baseClass.waitForElement(sessionSearch.getPureHitAddBtn());
+		sessionSearch.getPureHitAddBtn().waitAndClick(10);
+
+		baseClass.stepInfo("Navigate to docview page");
+		sessionSearch.ViewInDocView();
+
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("Verifying the Persistent panel search string and Visiblity");
+		docView.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		
+		loginPage.logout();
+
+	}
+/**
 	 * Author :Aathith  date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51781 Description : Verify that audio hits should be displayed when documents searched with common terms and different/same threshold from session search
 	 * @throws InterruptedException 
@@ -2051,7 +2102,7 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
     	
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
