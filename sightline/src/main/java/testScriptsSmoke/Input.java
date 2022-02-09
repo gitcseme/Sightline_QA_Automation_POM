@@ -318,6 +318,7 @@ public class Input {
 	public static String specialString1;
 	public static String specialString2;
 	public static String specialString3;
+    public static String docSelectionHighlight;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -758,6 +759,7 @@ public class Input {
 		keywordColor1 = testData.getKeywordColor1();
 
 		// Added by Raghuram 02/02/21
+		docSelectionHighlight=testData.getDocSelectionHighlight();
 		docHighlightColor = testData.getDocHighlightColor();
 		sortDataBy = testData.getSortDataBy();
 		sortType = testData.getSortType();

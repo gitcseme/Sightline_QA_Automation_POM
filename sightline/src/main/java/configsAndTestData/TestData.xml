@@ -234,6 +234,7 @@
 	<specialString1>"##U\}C Tester"</specialString1>
 	<specialString2>"##U\"C Tester"</specialString2>
 	<specialString3>"##U\{C Tester"</specialString3>
+    
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 
@@ -292,7 +293,8 @@
 	<searchString5>commit</searchString5>
 	<searchString6>welcome</searchString6>
 	<docIdRemarks2>ID00000012</docIdRemarks2>
-
+    <docSelectionHighlight>#3E65AC</docSelectionHighlight>
+    
 	<!-- Added by Gopinath Created date - 11/10/2021 -->
 	<atternoyClient>Atternoy_client</atternoyClient>
 	<confidential>Confidential</confidential>

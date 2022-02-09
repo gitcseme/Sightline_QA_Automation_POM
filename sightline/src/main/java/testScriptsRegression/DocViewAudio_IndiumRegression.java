@@ -1904,6 +1904,50 @@ public class DocViewAudio_IndiumRegression {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Doc View->If a audio document is added to an assignment with
+	 *              certain persistent search terms, those shouldn’t be removed
+	 *              unless the document is removed from the assignment [RPMXCON-51857]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	public void verifyPersistentForAudio() throws InterruptedException {
+		String assignmentName = "Assign" + Utility.dynamicNameAppender();
+		String audioSearch=Input.audioSearch.toUpperCase();
+		 docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass = new BaseClass(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		baseClass.stepInfo("Test case id :RPMXCON-51857");
+		baseClass.stepInfo(
+				"Doc View->If a audio document is added to an assignment with certain persistent search terms, those shouldn’t be removed unless the document is removed from the assignment");
+		System.out.println(audioSearch);
+
+		// audio search 1
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.bulkAssign_Persistant(true);
+		assignmentPage.assignDocstoNewAssgn(assignmentName);
+		assignmentPage.quickAssignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.saveAssignment(assignmentName, Input.codeFormName);
+
+		// audio search 2
+		baseClass.selectproject();
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.bulkAssignExisting(assignmentName);
+
+		// persistent
+		assignmentPage.selectAssignmentToViewinDocview(assignmentName);
+		String hitscount = docViewPage.getAudioPersistentHit(audioSearch);
+		baseClass.compareTextViaContains(hitscount, audioSearch, "persistent search term is present in panel", "persistent search terms is Removed");
+
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

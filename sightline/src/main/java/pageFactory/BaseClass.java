@@ -2619,4 +2619,35 @@ public class BaseClass {
 			System.out.println(text + " is not visible");
 		}
 	}
+	/**
+	 * @author Raghuram.A
+	 * @param result
+	 * @param passMsg
+	 * @param failMsg
+	 * @param condition
+	 * @description Method to print result in report based on the bollean value -
+	 *              can be extended
+	 * @creadtedon : 2/8/22 @modifiedon NA @modifiedby NA
+	 */
+	public void printResutInReport(Boolean result, String passMsg, String failMsg, String condition) {
+		if (condition.equalsIgnoreCase("Pass")) {
+			if (result) {
+				passedStep(passMsg);
+			} else {
+				failedStep(failMsg);
+			}
+		} else if (condition.equalsIgnoreCase("Fail")) {
+			if (result) {
+				failedStep(passMsg);
+			} else {
+				passedStep(failMsg);
+			}
+		} else if (condition.equalsIgnoreCase("Warning")) {
+			if (result) {
+				passedStep(passMsg);
+			} else {
+				failedMessage(failMsg);
+			}
+		}
+	}
 }
