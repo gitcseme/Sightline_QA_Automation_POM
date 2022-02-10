@@ -35,6 +35,7 @@ import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
@@ -3419,8 +3420,71 @@ public class DocView_Regression2 {
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
 		
 	}
-
-
+	
+	/*  
+     *Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50914
+	 * Description :To verify user can view the document for review in text view after impersonation
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 51)
+	public void verifyTextViewAfterImpersonation() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		assignPage = new AssignmentsPage(driver);
+		
+		String assignmentName = "Atestassignment"+utility.dynamicNameAppender();
+		
+		//Creating assignment for step 9 and 11 as a pre-requisite for RMU impersonation to avoid creating multiple assignment
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-50914");
+		baseClass.stepInfo("To verify user can view the document for review in text view after impersonation");
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssignExisting(assignmentName);
+		assignPage.editAssignment(assignmentName);
+		assignPage.addReviewerAndDistributeDocs();
+		loginPage.logout();
+		
+		//Impersonate from SA to PA and verify textView in docViewPage
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoPA();
+		baseClass.stepInfo("Impersonated from SA to PA");
+		docView.verifyTextviewInDocviewFromDifferentModuleforPAandREV();
+		loginPage.logout();
+		//Impersonate from SA to RMU and verify textView in docViewPage
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Impersonated from SA to RMU");
+		docView.verifyTextviewInDocviewFromDifferentModuleforRMU(assignmentName);
+		loginPage.logout();
+		//Impersonate from SA to Reviewer and verify textView in docViewPage
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoReviewer();
+		baseClass.stepInfo("Impersonated from SA to Reviewer");
+		docView.verifyTextviewInDocviewFromDifferentModuleforPAandREV();
+		loginPage.logout();
+		//Impersonate from PA to RMU and verify textView in docViewPage
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("Impersonated from PA to RMU");
+		docView.verifyTextviewInDocviewFromDifferentModuleforRMU(assignmentName);
+		loginPage.logout();
+		//Impersonate from PA to Reviewer and verify textView in docViewPage
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("Impersonated from PA to Reviewer");
+		docView.verifyTextviewInDocviewFromDifferentModuleforPAandREV();
+		loginPage.logout();	
+		//Impersonate from  RMU to Reviewer and verify textView in docViewPage
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Impersonated from RMU to Reviewer");
+		docView.verifyTextviewInDocviewFromDifferentModuleforPAandREV();
+		
+	}
+	
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
