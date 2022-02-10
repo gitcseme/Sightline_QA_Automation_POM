@@ -152,6 +152,7 @@ public class TestData {
 	public  String ChildBates;
 	public  String Production;
 	public  String TIFFPageCount;
+	public String translationDocumentId;
 
 	// Added by Sai Krishna
 	public String pageNumber;
@@ -208,7 +209,8 @@ public class TestData {
 	public String specialString1;
 	public String specialString2;
 	public String specialString3;
-
+    public String docSelectionHighlight;
+    
 	// Added by jeevitha
 	public String colorCodeOfRed;
 	public String crammerdocumentID;
@@ -362,6 +364,11 @@ public class TestData {
 		public String regressionConsilio;
 		public String regressionConsilio1;
 		public String audioSearchString2;
+		public String audioSearchString3;
+		public String audioSearchString4;
+		public String audioSearchString5;
+		public String audioSearchString6;
+		public String audioSearchString7;
 	
 		//Added by Gopinath - 30/11/2021
 		public String postGenQcChecks;

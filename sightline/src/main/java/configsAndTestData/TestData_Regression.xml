@@ -140,6 +140,7 @@
 	<ChildBates>ChildBates</ChildBates>
 	<Production>Production</Production>
 	<TIFFPageCount>TIFFPageCount</TIFFPageCount>
+	<translationDocumentId>STC4_00000001</translationDocumentId>
 
 	<!-- Added by Gopinath -->
 	<historyTab>History</historyTab>
@@ -234,6 +235,7 @@
 	<specialString1>"##U\}C Tester"</specialString1>
 	<specialString2>"##U\"C Tester"</specialString2>
 	<specialString3>"##U\{C Tester"</specialString3>
+    
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 
@@ -292,7 +294,8 @@
 	<searchString5>commit</searchString5>
 	<searchString6>welcome</searchString6>
 	<docIdRemarks2>ID00000012</docIdRemarks2>
-
+    <docSelectionHighlight>#3E65AC</docSelectionHighlight>
+    
 	<!-- Added by Gopinath Created date - 11/10/2021 -->
 	<atternoyClient>Atternoy_client</atternoyClient>
 	<confidential>Confidential</confidential>
@@ -384,7 +387,11 @@
 	<regressionConsilio>Regression_AllDataset_Consilio</regressionConsilio>
 	<regressionConsilio1>Regression_AllDataset_Consilio1</regressionConsilio1>
 	<audioSearchString2>interview</audioSearchString2>
-
+	<audioSearchString3>six</audioSearchString3>
+	<audioSearchString4>"Phrase"</audioSearchString4>
+	<audioSearchString5>evidence</audioSearchString5>
+	<audioSearchString6>market</audioSearchString6>
+	<audioSearchString7>transaction</audioSearchString7>
 
 
 	<!-- Added by Brundha -->

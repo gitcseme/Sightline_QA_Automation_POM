@@ -99,7 +99,7 @@ public class DocViewAudio_IndiumRegression {
 	 * files
 	 */
 
-	//@Test(enabled = true, groups = { "regression" }, priority = 01)
+	////@Test(enabled = true, groups = { "regression" }, priority = 01)
 	public void validationCodeSameAsAudioDocs() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51077");
 		baseClass.stepInfo("Verify user can select and apply code same as this for the audio files");
@@ -145,7 +145,7 @@ public class DocViewAudio_IndiumRegression {
 	 *              view
 	 */
 
-	//@Test(enabled = true, groups = { "regression" }, priority = 02)
+	////@Test(enabled = true, groups = { "regression" }, priority = 02)
 	public void validateLastNavigationOption() throws Exception {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -176,7 +176,7 @@ public class DocViewAudio_IndiumRegression {
 	 *              working properly inside docview screen
 	 */
 
-	//@Test(enabled = true, groups = { "regression" }, priority = 03)
+	////@Test(enabled = true, groups = { "regression" }, priority = 03)
 	public void validatePauseAudioInsideDocView() throws Exception {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -246,7 +246,7 @@ public class DocViewAudio_IndiumRegression {
 	 *              inside docview screen
 	 */
 
-	//@Test(enabled = true, groups = { "regression" }, priority = 04)
+	////@Test(enabled = true, groups = { "regression" }, priority = 04)
 	public void validatePlayAudioInsideDocView() throws Exception {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -308,7 +308,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 05)
+	////@Test(enabled = true, groups = { "regression" }, priority = 05)
 	public void verifyPersistentHitsForAudioFiles() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -362,7 +362,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 06)
+	////@Test(enabled = true, groups = { "regression" }, priority = 06)
 	public void verifyPersistentHitNavigation() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -420,7 +420,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 7)
+	////@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void hitsCheckWithDvAudio() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -493,7 +493,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 8)
+	////@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void hitsCheckWithDvAudioM() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -567,7 +567,7 @@ public class DocViewAudio_IndiumRegression {
 	 *              Audio search [RPMXCON-46997]
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 9)
+	////@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyBulkAssign() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -645,7 +645,7 @@ public class DocViewAudio_IndiumRegression {
 	 *              search [RPMXCON-46996]
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 10)
+	////@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyBulkAssignFOrAudioAndMetadata() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -723,7 +723,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 */
 
-	//@Test(enabled = true, groups = { "regression" }, priority = 17)
+	////@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void validatePlayIconInMiniDocListChild() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51839");
 		baseClass.stepInfo("Verify that when mini doc list child window scrolled down and 'Loading' "
@@ -794,7 +794,7 @@ public class DocViewAudio_IndiumRegression {
 	 *              child window opened after completing audio document same as last prior 
 	 *              document is completed after applying stamp
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 18)
+	////@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void validatingConsoleErrorMiniDocListUsingStamp() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -883,7 +883,7 @@ public class DocViewAudio_IndiumRegression {
 	 *              _ChildMiniDoc. $ is not a function' when mini doc list child window opened 
 	 *              after completing audio document same as last prior document is completed
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 19)
+	////@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void validatingConsoleErrorMiniDocListUsingComplete() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -968,7 +968,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException 
 	 * 
 	 */
-	//@Test(enabled = true ,groups = { "regression" }, priority = 20)
+	////@Test(enabled = true ,groups = { "regression" }, priority = 20)
 	public void verifyAudioDocumentState() throws InterruptedException  {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -1031,7 +1031,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException 
 	 * 
 	 */
-	//@Test(enabled = true ,groups = { "regression" }, priority = 21 )
+	////@Test(enabled = true ,groups = { "regression" }, priority = 21 )
 	public void verifyAudioDocumentPlayEvenCfisSave() throws InterruptedException  {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -1093,7 +1093,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	//@Test(enabled = true, dataProvider = "RMUandREV", groups = { "regression" }, priority = 11)
+	////@Test(enabled = true, dataProvider = "RMUandREV", groups = { "regression" }, priority = 11)
 	public void VerifyAddedReviewerRemarkForAudioDocInBasicSearch(String username, String password, String fullName)
 			throws Exception {
 
@@ -1148,7 +1148,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	//@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 12)
+	////@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 12)
 	public void hitsCheckWithDvAudioMViaSearch(String username, String password, String fullName)
 			throws InterruptedException {
 		baseClass = new BaseClass(driver);
@@ -1207,7 +1207,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	//@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 13)
+	////@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 13)
 	public void hitsCheckWithMetaDataAudioViaSearch(String username, String password, String fullName)
 			throws InterruptedException {
 		baseClass = new BaseClass(driver);
@@ -1265,7 +1265,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 13)
+	////@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyOptionTranslationDocsInDocViewPage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50778");
@@ -1313,7 +1313,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 14)
+	////@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyAssignmentProgressBarInDocViewPage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50781");
@@ -1387,7 +1387,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 15)
+	////@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyReviewerRemarksTabInDocViewPageForReviewer() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51174");
@@ -1444,7 +1444,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 16)
+	////@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyReviewerRemarksTabInDocViewPageForProjectAdmin() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51175");
@@ -1489,7 +1489,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException 
 	 * 
 	 */
-	//@Test(enabled = true ,groups = { "regression" }, priority = 22 )
+	////@Test(enabled = true ,groups = { "regression" }, priority = 22 )
 	public void verifySameDifferentThresholdInSessionSearch() throws InterruptedException  {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -1600,7 +1600,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	//@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void validatePlayIconInCfChild() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51821");
 		baseClass.stepInfo("Verify that when audio file is playing and clicked "
@@ -1706,7 +1706,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	//@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void validatePlayIconCF() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51819");
 		baseClass.stepInfo("Verify that when audio file is playing and clicked to "
@@ -1803,7 +1803,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	//@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyAudioDocsScrollingMiniDocList() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51816");
@@ -1902,6 +1902,320 @@ public class DocViewAudio_IndiumRegression {
 		// logout
 		loginPage.logout();
 
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Doc View->If a audio document is added to an assignment with
+	 *              certain persistent search terms, those shouldn’t be removed
+	 *              unless the document is removed from the assignment [RPMXCON-51857]
+	 * @throws InterruptedException
+	 */
+	//@Test(enabled = true, groups = { "regression" }, priority = 26)
+	public void verifyPersistentForAudio() throws InterruptedException {
+		String assignmentName = "Assign" + Utility.dynamicNameAppender();
+		String audioSearch=Input.audioSearch.toUpperCase();
+		 docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass = new BaseClass(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		baseClass.stepInfo("Test case id :RPMXCON-51857");
+		baseClass.stepInfo(
+				"Doc View->If a audio document is added to an assignment with certain persistent search terms, those shouldn’t be removed unless the document is removed from the assignment");
+		System.out.println(audioSearch);
+
+		// audio search 1
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.bulkAssign_Persistant(true);
+		assignmentPage.assignDocstoNewAssgn(assignmentName);
+		assignmentPage.quickAssignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.saveAssignment(assignmentName, Input.codeFormName);
+
+		// audio search 2
+		baseClass.selectproject();
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.bulkAssignExisting(assignmentName);
+
+		// persistent
+		assignmentPage.selectAssignmentToViewinDocview(assignmentName);
+		String hitscount = docViewPage.getAudioPersistentHit(audioSearch);
+		baseClass.compareTextViaContains(hitscount, audioSearch, "persistent search term is present in panel", "persistent search terms is Removed");
+
+		loginPage.logout();
+	}
+	/**
+	 * Author : Brundha Created date: NA Modified date: NA Modified by:NA TestCase
+	 * id :RPMXCON- 51858 Description:Audio only - If user modified Search Term and
+	 * re-execute the same query then modified Term does not appear in Persistent
+	 * Search panel in DocView screen.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 28)
+
+	public void verifyModifiedStringInPersistPanel() throws Exception {
+
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("RPMXCON-51858 from docview/Audio Component");
+		baseClass.stepInfo(
+				"#### Audio only - If user modified Search Term and re-execute the same query then modified Term does not appear in Persistent Search panel in DocView screen. ####");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined user : "+Input.rmu1userName);
+		
+		
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+
+		baseClass.stepInfo("Navigate to docview page");
+		sessionSearch.ViewInDocView();
+
+		DocViewPage docView = new DocViewPage(driver);
+		baseClass.stepInfo("Verifying the Persistent panel search string and Visiblity");
+		docView.verifyingAudioPersistantHitPanel(Input.audioSearch);
+
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Modifying the search string");
+		sessionSearch.modifyAdvanceSearch("Yes", Input.audioSearchString1);
+		baseClass.waitForElement(sessionSearch.getRemoveAddBtn());
+		sessionSearch.getRemoveAddBtn().waitAndClick(10);
+
+		baseClass.waitForElement(sessionSearch.getPureHitAddBtn());
+		sessionSearch.getPureHitAddBtn().waitAndClick(10);
+
+		baseClass.stepInfo("Navigate to docview page");
+		sessionSearch.ViewInDocView();
+
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("Verifying the Persistent panel search string and Visiblity");
+		docView.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		
+		loginPage.logout();
+
+	}
+/**
+	 * Author :Aathith  date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51781 Description : Verify that audio hits should be displayed when documents searched with common terms and different/same threshold from session search
+	 * @throws InterruptedException 
+	 * 
+	 */
+	//@Test(enabled = true ,groups = { "regression" }, priority = 27 )
+	public void verifySameDifferentThresholdAndSearchTerms() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Test case id :RPMXCON-51781");
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with same term and different/same threshold from session search");
+		
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined user : "+Input.rmu1userName);
+		
+		// Performing advanced search with audio
+		int count1 = sessionSearch.audioSearch(Input.audioSearchString2 , Input.language);
+		baseClass.elementDisplayCheck(sessionSearch.getCurrentPureHitAddBtn());
+		baseClass.stepInfo("Search result is displayed");
+		
+		//add to shop cart
+		sessionSearch.addPureHit();
+		
+		// perform new search
+		sessionSearch.addNewSearch();
+		int count2 = sessionSearch.newAudioSearch(Input.audioSearchString2 ,Input.audioSearchString3 ,Input.audioSearchString4 , Input.language);
+		
+		//add to shop cart
+		sessionSearch.addPureHit();
+		
+		//view in docview
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		int sum = count1+count2;
+		// click eye icon and triangular arrow display check
+		docViewPage.trianglurArrowIconPositionVerification();
+		docViewPage.termDisplayCheck(Input.audioSearchString2, Input.audioSearchString3, sum);
+		
+		//remove purehit from shop cart
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.Removedocsfromresults();
+		driver.waitForPageToBeReady();
+		sessionSearch.Removedocsfromresults();
+		
+		//add new search with different threshold
+		sessionSearch.addNewSearch();
+		int count3 =sessionSearch.newAudioSearchThreshold(Input.audioSearchString2 , Input.language, "max");
+		sessionSearch.addPureHit();
+		
+		//add new search with different threshold
+		sessionSearch.addNewSearch();
+		int count4 = sessionSearch.newAudioSearchThreshold(Input.audioSearchString2 ,Input.audioSearchString3 ,Input.audioSearchString4 , Input.language,"min");
+		sessionSearch.addPureHit();
+		
+		//view in docview
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		
+		int sum1 = count3+count4;
+		// click eye icon and triangular arrow display check
+		docViewPage.trianglurArrowIconPositionVerification();
+		docViewPage.termDisplayCheck(Input.audioSearchString2, Input.audioSearchString3 , sum1);
+		
+		//remove purehit from shop cart
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.Removedocsfromresults();
+		driver.waitForPageToBeReady();
+		sessionSearch.Removedocsfromresults();
+				
+		sessionSearch.addNewSearch();
+		int searchCount1 = sessionSearch.newAudioSearchThreshold(Input.audioSearchString5 , Input.audioSearchString6 , Input.audioSearchString7 , Input.language,"80");
+		sessionSearch.addPureHit();
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString6 , Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString7 , Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.addNewSearch();
+		int searchCount4 = sessionSearch.newAudioSearch(Input.audioSearchString5 , Input.audioSearchString6 , Input.audioSearchString7 , Input.language);
+		sessionSearch.addPureHit();
+		
+		driver.waitForPageToBeReady();
+		boolean flag = searchCount1 < searchCount4;
+		if(searchCount1 < searchCount4) {
+			softAssertion.assertTrue(flag);
+			baseClass.passedStep("1st Search result count is less than the 4th search result count");
+			System.out.println("passed");
+		}else {
+			baseClass.failedStep("verification failed");
+			System.out.println("failed");
+		}
+		driver.scrollPageToTop();
+		//view in docview
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		
+		baseClass.passedStep("Verified that audio hits should be displayed when documents searched with common terms and different/same threshold from session search");
+		
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 09/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify that when last audio document is selected and played 
+	 *              then browser page should not scroll down automatically
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 63)
+	public void validatePullButtonAndWebPage(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51817");
+		baseClass.stepInfo("Verify that when last audio document "
+				+ "is selected and played then browser page should not scroll down automatically");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		// login as
+		loginPage.loginToSightLine(userName, password);
+
+		// session seach to docview
+		int audioPurehit=sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigating to docview with audio docs: " +audioPurehit+" document");
+
+		// clicking eye icon and validating
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		baseClass.waitForElement(docViewPage.getDocView_Audio_Hit());
+		String audioEyePersistent=docViewPage.getDocView_Audio_Hit().getText().toString();
+		softAssertion.assertTrue(audioEyePersistent.toLowerCase().contains(Input.audioSearchString1));
+		
+		// navigation to last docs using >>
+		docViewPage.verifyThatIsLastDoc();
+		
+		// validaing by using persistent hit pull button
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.audioPersistentForwardNavigate());
+		docViewPage.audioPersistentForwardNavigate().waitAndClick(10);
+		
+		// validating when clicking the pull button audio file is playing
+		baseClass.waitForElement(docViewPage.getAudioWaveForm());
+		boolean waveform=docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
+		softAssertion.assertTrue(waveform);
+		
+		// verifying webpage page should not scroll automatically
+		Long notToBeScroll = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return window.pageYOffset;");
+		softAssertion.assertEquals(Long.toString(notToBeScroll), "0");
+		baseClass.passedStep("Webpage not scrolled automatically when previous action done");
+		
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @Author : Baskar date: 09/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify that when last audio document is selected and played 
+	 *              then mini doc list should not scroll up automatically
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 63)
+	public void validatePlayAudioWebPageNotScrollUp(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51815");
+		baseClass.stepInfo("Verify that when last audio document is selected and "
+				+ "played then mini doc list should not scroll up automatically");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		// login as
+		loginPage.loginToSightLine(userName, password);
+
+		// session seach to docview
+		int audioPurehit=sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigating to docview with audio docs: " +audioPurehit+" document");
+
+		// clicking eye icon and validating
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		baseClass.waitForElement(docViewPage.getDocView_Audio_Hit());
+		String audioEyePersistent=docViewPage.getDocView_Audio_Hit().getText().toString();
+		softAssertion.assertTrue(audioEyePersistent.toLowerCase().contains(Input.audioSearchString1));
+		
+		// navigation to last docs using >>
+		docViewPage.verifyThatIsLastDoc();
+		
+		// validaing by using play audio button
+		driver.waitForPageToBeReady();
+		Long lastScrollEnd = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		baseClass.waitForElement(docViewPage.audioPlayPauseIcon());
+		docViewPage.audioPlayPauseIcon().waitAndClick(5);
+		
+		// validating when clicking the pull button audio file is playing
+		baseClass.waitForElement(docViewPage.getAudioWaveForm());
+		boolean waveform=docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
+		softAssertion.assertTrue(waveform);
+		
+		// verifying minidoclist page should not scroll up automatically
+		Long afterAction = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('.dataTables_scrollBody').scrollTop;");
+		softAssertion.assertEquals(Long.toString(lastScrollEnd), Long.toString(afterAction));
+		baseClass.passedStep("Minidoclist not scrolled automatically when previous action done");
+		
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+	}
+	
+	@DataProvider(name = "userDetails")
+	public Object[][] userLoginDetails() {
+		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
+				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
 	}
 
 	@AfterMethod(alwaysRun = true)

@@ -499,6 +499,10 @@ public class MiniDocListPage {
 	public Element getAvailableFieldsDisplay(String fields) {
 		return driver.FindElementByXPath("//ul[@id='sortable1PickColumns']//li[@customfield-name='" + fields + "']");
 	}
+	
+	public Element getHistoryClockDocs() {
+		return driver.FindElementByXPath("(//*[@id='ulDocViewHistory']/li/a[contains(text(),'ID')])[last()]");
+	}
 
 	/**
 	 * @author Indium Raghuram ] Description : To get the list of elements
@@ -3598,22 +3602,25 @@ public class MiniDocListPage {
 	}
 
 	/**
-	 * @Author Jeevitha
+	 * @Author Jeevitha @Modified BY Raghuram @Modified Date : 9/02/2022
 	 * @param name
 	 */
-	public void verifySelectedDocHighlight(String name) {
+	public boolean verifySelectedDocHighlight(String name) {
 
 		String bgColor = getCheckSelectedBgColor(name).GetCssValue("background-color");
 
 		bgColor = rgbTohexaConvertor(bgColor);
 		System.out.println(bgColor);
-		if (bgColor.equals("#3E65AC")) {
+		if (bgColor.equals(Input.docSelectionHighlight)) {
 			System.out.println("Document is Highlighted : " + bgColor);
 			baseClass.passedStep("Document is Highlighted : " + bgColor);
+			return true;
 		} else {
 			System.out.println("Document is Not highlighted");
 			baseClass.failedStep("Document is Not highlighted");
+			return false;
 		}
+		
 	}
 
 	/**
@@ -4212,6 +4219,103 @@ public class MiniDocListPage {
 			baseClass.failedStep("Not highlighted");
 
 		}
+	}
+	
+
+	/**
+	 * @author Sakthivel 07/02/22 NA Modified date: NA Modified by:NA
+	 * @throws Exception
+	 * @description : verify selected Docs view in PersistentHit panel on
+	 *              SearchString.
+	 */
+	public void verifyViewDocInPersistentHitPanel(String searchString, String searchString1) throws Exception {
+		driver.waitForPageToBeReady();
+		DocViewRedactions docviewRedactions = new DocViewRedactions(driver);
+		String persistenthits = docViewPage.getDocView_Audio_Hit().getText().toLowerCase();
+		System.out.println(persistenthits);
+		if (persistenthits.contains(searchString)) {
+			softAssertion.assertTrue(docViewPage.getDocView_Audio_Hit().isDisplayed(),
+					"view the doc is displayed on persistent hit panel");
+			baseClass.passedStep("view the document in single term persitent hits panel is successfully displayed");
+
+		} else {
+			baseClass.failedStep("failed");
+
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_MiniDocListIds(8));
+		docViewPage.getDocView_MiniDocListIds(8).waitAndClick(10);
+		baseClass.waitForElement(docviewRedactions.persistantHitBtnAudio());
+		docviewRedactions.persistantHitBtnAudio().waitAndClick(30);
+		baseClass.waitTime(5);
+		baseClass.waitForElement(docViewPage.getDocView_Audio_Hit());
+		String persistenthits1 = docViewPage.getDocView_Audio_Hit().getText().toLowerCase();
+		System.out.println(persistenthits1);
+		if (persistenthits1.contains(searchString1)) {
+			softAssertion.assertTrue(docViewPage.getDocView_Audio_Hit().isDisplayed(),
+					"view the doc is displayed on persistent hit panel");
+			baseClass.passedStep("view the document in multi term persitent hits panel is successfully displayed");
+
+		} else {
+			baseClass.failedStep("failed");
+
+		}
+	}
+
+	/**
+	 * @author Sakthivel 07/02/22 NA Modified date: NA Modified by:NA
+	 * @throws Exception
+	 * @description : verify selected Docs on ClockIcon is presently viewed in PersistentHit panel on
+	 *              SearchString.
+	 */
+
+	public void verifySelectedDocsInClockIcon(String searchString, String searchString1) throws Exception {
+		driver.waitForPageToBeReady();
+		DocViewRedactions docviewRedactions = new DocViewRedactions(driver);
+		String clockDocId = "ID00001213";
+		SelectaDocsFromHistoryDropDownInMiniDocList(clockDocId);
+		baseClass.waitForElement(docViewPage.getDocView_Audio_Hit());
+		String persistenthits1 = docViewPage.getDocView_Audio_Hit().getText().toLowerCase();
+		System.out.println(persistenthits1);
+		if (persistenthits1.contains(searchString)) {
+			softAssertion.assertTrue(docViewPage.getDocView_Audio_Hit().isDisplayed(),
+					"view the doc is displayed on persistent hit panel");
+			baseClass.passedStep(
+					"Selected doc on history dropdown is presently viewed on singleterm persistenthit panel is successfully displayed");
+
+		} else {
+			baseClass.failedStep("failed");
+
+		}
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		try {
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(getDocView_HistoryButton());
+			getDocView_HistoryButton().waitAndClick(5);
+			baseClass.waitTime(5);
+			baseClass.waitForElement(getHistoryClockDocs());
+			getHistoryClockDocs().WaitUntilPresent().waitAndClick(5);
+			baseClass.passedStep("DocId selected from history drop down");
+		} catch (Exception e) {
+			e.printStackTrace();
+			baseClass.failedStep("DocId is not selected from history drop down");
+		}
+		baseClass.waitTime(5);
+		baseClass.waitForElement(docViewPage.getDocView_Audio_Hit());
+		String persistenthits = docViewPage.getDocView_Audio_Hit().getText().toLowerCase();
+		System.out.println(persistenthits);
+		if (persistenthits.contains(searchString1)) {
+			softAssertion.assertTrue(docViewPage.getDocView_Audio_Hit().isDisplayed(),
+					"view the doc is displayed on persistent hit panel");
+			baseClass.passedStep(
+					"Selected doc on history dropdown is presently viewed on multiterm persistenthit panel is successfully displayed");
+
+		} else {
+			baseClass.failedStep("failed");
+
+		}
+
 	}
 
 }

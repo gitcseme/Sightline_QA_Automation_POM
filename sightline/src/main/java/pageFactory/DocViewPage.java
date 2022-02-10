@@ -2623,6 +2623,13 @@ public class DocViewPage {
 				.FindElementByXPath("(//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//p)[last()]");
 	}
 
+	public ElementCollection getHitPanels_audio() {
+		return driver.FindElementsByXPath("//div[@id='divAudioPersistentSearch']//div[@class='message-2 col-md-12']");
+	}
+	
+	public Element getAudioHit_persistent(int i) {
+		return driver.FindElementByXPath("//*[@id='divAudioPersistentSearch']/div/p["+i+"]");
+	}
 	// Added by Gopinath - 04/01/2022
 	public ElementCollection getTranslationDropdownOptions() {
 		return driver.FindElementsByXPath("//ul[@id='Tra-dropDown']//a");
@@ -3049,8 +3056,18 @@ public class DocViewPage {
 	public Element getAudioZoomBar() {
 		return driver.FindElementByXPath("//div[@class='jp-progress']");
 	}
+	
+	//Add by Aathith
+	public Element getAudioPlayerCurrentState() {
+		return driver.FindElementByXPath("//div[@class='jp-play-bar']");
+	}
+	public Element audioPersistentBackwardNavigate() {
+		return driver.FindElementByXPath("//i[@class='fa fa-chevron-left']");
+	}
 
-
+	public Element getAudioPersistentHits() {
+		return driver.FindElementByXPath("//div[@id='divAudioPersistentSearch']/div");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -3101,6 +3118,12 @@ public class DocViewPage {
 		return Phit;
 	}
 
+	/**@Modified By Jeevitha 
+	 * @Modified Date : 9/02/2022
+	 * @param searchString
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public String getAudioPersistentHit(String searchString) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3112,19 +3135,22 @@ public class DocViewPage {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getHitPanels().Visible();
+				return getHitPanels_audio().Visible() && getHitPanels_audio().Displayed();
 			}
 		}), Input.wait30);
 
-		int numOfPanels = getHitPanels().size();
+		int numOfPanels = getHitPanels_audio().size();
 		String Phit = "NULL";
-		System.out.println("numOfPanels" + (numOfPanels - 1));
+		System.out.println("numOfPanels : " + numOfPanels );
+		base.stepInfo("numOfPanels : " + numOfPanels );
 		Boolean flag = false;
 		for (int i = 1; i <= numOfPanels; i++) {
-			if (getTermInHitPanels(i).getText().contains(searchString)) {
+			String term=getAudioHit_persistent(i).getText();
+			if (term.contains(searchString)) {
 				System.out.println("Found " + searchString);
+				base.stepInfo("Found " + searchString);
 				flag = true;
-				Phit = getTermInHitPanels(i).getText();
+				Phit = term;
 				break;
 			}
 
@@ -3133,7 +3159,7 @@ public class DocViewPage {
 		// driver.getWebDriver().navigate().refresh();
 		return Phit;
 	}
-
+	
 	public void addCommentToNonAudioDoc(String comment) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -23983,6 +24009,7 @@ public class DocViewPage {
 		base.stepInfo("Audio file is played successfully");
 
 	}
+	
 
 	
 	/**
@@ -24047,6 +24074,83 @@ public class DocViewPage {
 			base.failedStep("Exception occcured while Keyword is highlighted on doc view" + e.getMessage());
 
 		}
+/**
+	 * @Author Brundha
+	 * @Description :Method to verify persistant hit panel for audio files
+	 * 
+	 */
+/*
+	 * @author Aathith.Senthilkumar
+	 */
+	public void trianglurArrowIconPositionVerification() {
+		driver.waitForPageToBeReady();
+		
+		//audio eye icon verification
+		base.waitForElement(getAudioPersistantHitEyeIcon());
+		getAudioPersistantHitEyeIcon().waitAndClick(10);
+		base.stepInfo("Audio eye icon is clicked");
+		base.elementDisplayCheck(getAudioPersistantHitEyeIcon());
+		base.stepInfo("Audio eye icon is displayed in docview");
+		
+		base.waitForElement(audioPersistentForwardNavigate());
+		audioPersistentForwardNavigate().waitAndClick(10);
+		base.stepInfo("clicked on hit next");
+		
+		base.elementDisplayCheck(getTriangularIcon());
+		base.stepInfo("Audio triangular arrow is displayed");
+		String start = getAudioPlayerCurrentState().GetAttribute("style").trim();
+		audioPersistentBackwardNavigate().waitAndClick(10);
+		base.stepInfo("clicked on hit Back");
+		String end = getAudioPlayerCurrentState().GetAttribute("style").trim();
+		softAssertion.assertEquals(start, end);
+		base.stepInfo("Audio triangular arrow position verified");
+		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param term1
+	 * @param term2
+	 * @param docCount
+	 */
+	public void termDisplayCheck(String term1, String term2 , int docCount) {
+		
+		for(int i=0;i<docCount;i++) {
+		driver.waitForPageToBeReady();
+		boolean flag1 = base.text("term1").isDisplayed();
+		boolean flag2 =base.text("term2").isDisplayed();
+		if(flag1&&flag2) {
+			softAssertion.assertTrue(flag1);
+			softAssertion.assertTrue(flag2);
+			base.stepInfo("Both terms are visible in the Document");
+			System.out.println("terms are visible");
+			break;
+		}else {
+			base.waitForElement(getDocView_Next());
+			getDocView_Next().waitAndClick(10);
+			driver.waitForPageToBeReady();
+		}
+		}
+	}
+
+
+	public void verifyingAudioPersistantHitPanel(String SearchString) {
+
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		base.waitTillElemetToBeClickable(getAudioPersistantHitEyeIcon());
+		getAudioPersistantHitEyeIcon().Click();
+		driver.waitForPageToBeReady();
+		getAudioPersistentHits().isElementAvailable(10);
+		if (getAudioPersistentHits().isDisplayed()) {
+			base.passedStep("Persistent hits panel is displayed as expected");
+		}else{base.failedStep("Persistent Hit panel is not displayed as expected");}
+		base.waitForElement(getDocView_Audio_Hit());
+		String StringInPanels = getDocView_Audio_Hit().getText().trim().toString().toLowerCase();
+		
+		System.out.println("expected text" + StringInPanels);
+		base.compareTextViaContains(StringInPanels, SearchString, "Search string is displayed as expected",
+				"Search string is not displayed as expected");
+		
 	}
 }
 
