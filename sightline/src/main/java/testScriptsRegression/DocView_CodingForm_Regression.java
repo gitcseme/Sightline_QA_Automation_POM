@@ -10101,6 +10101,159 @@ public class DocView_CodingForm_Regression {
 	softAssertion.assertAll();
 	loginPage.logout();
 	}
+	
+	/**
+	 * @Author : Brundha 
+	 * @Description:RPMXCON-51574 -Verify that when coding stamp is created/saved
+	 *                            using the coding of a completed document, then on
+	 *                            mouse hover tool tip should be displayed for the
+	 *                            stamp icon in coding form child window.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 210)
+	public void validateToolTipInDocViewCodingFormChildWindow() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		reusableDocView = new ReusableDocViewPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51574-DocView/Codingform");
+		baseClass.stepInfo(
+				"Verify that when coding stamp is created/saved using the coding of a completed document, then on mouse hover tool tip should be displayed for the stamp icon in coding form child window.");
+
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+		String assign = "AAsign" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assign, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+
+		// logout
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// opening coding form child window
+		driver.waitForPageToBeReady();
+
+		String prndoc = docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		docViewPage.switchToNewWindow(2);
+		docViewPage.editCodingForm(comment);
+		docViewPage.completeButton();
+		baseClass.stepInfo("Document completed successfully");
+
+		// viewing the completed document again
+		docViewPage.switchToNewWindow(1);
+		baseClass.waitForElement(docViewPage.getDociD(prndoc));
+		docViewPage.getDociD(prndoc).waitAndClick(5);
+		docViewPage.switchToNewWindow(2);
+
+		// saving the stamp as per completed docs
+		docViewPage.codingStampButton();
+		docViewPage.switchToNewWindow(1);
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		baseClass.stepInfo("coding stamp saved successfully");
+
+		// mouse over action over the tool tip
+		docViewPage.switchToNewWindow(2);
+		if (docViewPage.getCodingStampLastIcon(Input.stampSelection).Displayed()) {
+			Actions builder = new Actions(driver.getWebDriver());
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(docViewPage.getCodingStampLastIcon(Input.stampSelection));
+
+			builder.moveToElement(docViewPage.getCodingStampLastIcon(Input.stampSelection).getWebElement()).build()
+					.perform();
+			driver.waitForPageToBeReady();
+			String ActualText = docViewPage.getSavedCodingStamp(Input.stampSelection).getWebElement()
+					.getAttribute("title");
+			baseClass.textCompareEquals(ActualText, fieldText, "Mouseover Text is displayed as expected",
+					"Mouseover text is not displayed as expected");
+		} else {
+			baseClass.failedStep("Save this coding form as a new stamp not displayed");
+		}
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+
+		// overall assertion
+		softAssertion.assertAll();
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author : Brundha
+	 * @Description:RPMXCON-51573 -Verify that when coding stamp is created/saved
+	 *                            using the coding of a completed document, then on
+	 *                            mouse hover tool tip should be displayed for the
+	 *                            stamp icon.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 211)
+	public void validateToolTipInDocViewCodingForm() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		reusableDocView = new ReusableDocViewPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51573-DocView/CodingForm");
+		baseClass.stepInfo(
+				"Verify that when coding stamp is created/saved using the coding of a completed document, then on mouse hover tool tip should be displayed for the stamp icon.");
+
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+		String assign = "AAsign" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assign, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+
+		// logout
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		driver.waitForPageToBeReady();
+		String prndoc = docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.editCodingFormSave();
+
+		baseClass.waitForElement(docViewPage.getDociD(prndoc));
+		docViewPage.getDociD(prndoc).waitAndClick(5);
+
+		reusableDocView.stampColourSelection(fieldText, Input.stampColour);
+		// mouse over action over the tool tip
+		if (docViewPage.getCodingStampLastIcon(Input.stampColour).isDisplayed()) {
+			Actions builder = new Actions(driver.getWebDriver());
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(docViewPage.getCodingStampLastIcon(Input.stampColour));
+			builder.moveToElement(docViewPage.getCodingStampLastIcon(Input.stampColour).getWebElement()).build()
+					.perform();
+			driver.waitForPageToBeReady();
+			String ActualText = docViewPage.getSavedCodingStamp(Input.stampColour).getWebElement()
+					.getAttribute("title");
+			baseClass.textCompareEquals(fieldText, ActualText, "Mouseover Text is displayed as expected",
+					"Mouseover text is not displayed as expected");
+		} else {
+			baseClass.failedStep("Save this coding form as a new stamp not displayed");
+		}
+
+		loginPage.logout();
+
+	}
+
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {
 		return new Object[][] { { "pa", Input.pa1userName, Input.pa1password, "rmu" },

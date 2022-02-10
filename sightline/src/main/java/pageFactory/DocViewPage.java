@@ -3069,6 +3069,10 @@ public class DocViewPage {
 	public Element getAudioPersistentHits() {
 		return driver.FindElementByXPath("//div[@id='divAudioPersistentSearch']/div");
 	}
+	public Element getSavedCodingStamp(String icon) {
+		return driver.FindElementByXPath("//ul[@id='UserStamps']//li[@id='" + icon + "']//i");
+	}
+
 
 	public Element getWarningMessageForRemarkPanel() {
 		return driver.FindElementByXPath(
