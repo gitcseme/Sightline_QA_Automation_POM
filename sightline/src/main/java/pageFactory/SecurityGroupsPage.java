@@ -254,6 +254,20 @@ public class SecurityGroupsPage {
 	public Element getCommentBoard() {
 		return driver.FindElementById("commentJSTree");
 	}
+	
+	//Added by Gopinath - 09/02/2022
+	public Element getKeywordsLink() {
+		return driver.FindElementByXPath("//ul[@id='myTab1']//a[text()='Keywords']");
+	}
+	public Element getKeywordCheckBox(String name) {
+		return driver.FindElementByXPath("//div[@id='myTabContent1']//a[@data-content = '"+name+"']//i[@class='jstree-icon jstree-checkbox']");
+	}
+	public Element getKeywordRightShiftButton() {
+		return driver.FindElementByXPath("//a[@class='btn btn-primary' and contains(@onclick,'KeywordRightshift')]");
+	}
+	public Element getKeywordBoard() {
+		return driver.FindElementById("keywordJSTree");
+	}
 	public SecurityGroupsPage(Driver driver) {
 
 		this.driver = driver;
@@ -899,6 +913,56 @@ public class SecurityGroupsPage {
 
 		}
 	}
+	/**
+	 * @author : Gopinath Created date: 08-09-2021 Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for adding keyword to security field..
+	 * @param securityGroupName -- (securityGroupName is a string value that need to
+	 *                          add to security group).
+	 * @param keyword           -- (keyword is a string value that name of keyword)
+	 */
+	public void addKeywordToSecurityGroup(String securityGroupName, String keyword) {
+		try {
+			bc.waitForElement(getSelectSecurityGroup());
+			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getKeywordsLink());
+			bc.waitTillElemetToBeClickable(getKeywordsLink());
+			getKeywordsLink().isElementAvailable(10);
+			getKeywordsLink().Click();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getKeywordBoard());
+			getKeywordBoard().isElementAvailable(10);
+			getKeywordBoard().Click();
+			for (int i = 0; i < 20; i++) {
+				try {
+					bc.waitTime(2);
+					getKeywordCheckBox(keyword).isElementAvailable(10);
+					getKeywordCheckBox(keyword).getWebElement().click();
+					break;
+				} catch (Exception e) {
+					bc.waitForElement(getKeywordCheckBox(keyword));
+				}
+			}
+			bc.waitForElement(getKeywordRightShiftButton());
+			getKeywordRightShiftButton().isElementAvailable(10);
+			getKeywordRightShiftButton().Click();
+			driver.scrollingToBottomofAPage();
+			getProjectLevelEmailCheckBox().Click();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getSG_AnnSaveButton());
+			getSG_AnnSaveButton().isElementAvailable(10);
+			getSG_AnnSaveButton().Click();
+			bc.waitForElement(bc.getSuccessMsg());
+			bc.getSuccessMsg().waitAndFind(10);
+			Assert.assertEquals("Success message is not displayed", true,
+					bc.getSuccessMsg().getWebElement().isDisplayed());
+			bc.passedStep("Success message is displayed successfully");
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occcured while adding keyword to security group" + e.getMessage());
+
+		}
+	}
 
 }

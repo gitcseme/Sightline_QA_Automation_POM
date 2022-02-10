@@ -2243,7 +2243,304 @@ public class DocView_Regression3 {
 		loginPage.logout();
 	}
 	
+
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA
+	 * @TestCase id: 51037 - Verify keyword higlighting should be displayed on doc view when keyword groups are released to security group and mapped to the security group.
+	 * @Descrption : Verify keyword higlighting should be displayed on doc view when keyword groups are released to security group and mapped to the security group.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
+	public void verifyKeywordHighlightingReleasedToDifferentSecurityGroup() throws Exception {
+		namesg2 = Input.randomText + Utility.dynamicNameAppender();
+		namesg3 = Input.randomText + Utility.dynamicNameAppender();
+		String codingForm = Input.randomText + Utility.dynamicNameAppender();
+		String assignName1 = Input.randomText + Utility.dynamicNameAppender();
+		String keywordName1="key"+Utility.dynamicNameAppender();
+		String keyword = "es";
+		String rgbCode1 = "rgb(255, 215, 0)";
+		String HaxCode1 = "#ffd700";
+		String colour1 = "Gold";
+		docExp = new DocExplorerPage(driver);
+		baseClass = new BaseClass(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51037 of Sprint 12");
+		utility = new Utility(driver);
+		loginPage = new LoginPage(driver);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa2userName);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		baseClass.stepInfo(
+				"#####  Verify keyword higlighting should be displayed on doc view when keyword groups are released to security group and mapped to the security group. ######");
+
+		// creating two new security groups and adding annotation layer
+		baseClass.stepInfo("Navigate to security group URL");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		
+		baseClass.stepInfo("Add security groups");
+		securityGroupsPage.AddSecurityGroup(namesg2);
+		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
+		securityGroupsPage.AddSecurityGroup(namesg3);
+		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
+		sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("Navigate to session search");
+		sessionsearch.navigateToSessionSearchPageURL();
+		
+		baseClass.stepInfo("Basic content search");
+		sessionsearch.basicContentSearch(Input.searchString1);
+		
+		baseClass.stepInfo("Bulk release");
+		sessionsearch.bulkRelease(namesg2);
+		sessionsearch.bulkRelease(namesg3);
+		
+		baseClass.stepInfo("Assign Access to Security groups");
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu1userName);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Perform Redaction in SG1
+		baseClass.stepInfo("Select security group");
+		docViewRedact.selectsecuritygroup(namesg2);
+		
+		KeywordPage keywordPage = new KeywordPage(driver);
+		
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+		
+		baseClass.stepInfo("Add keyword group");
+		keywordPage.addKeywordWithoutFullScreen(keywordName1,keyword, colour1);
+		
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
+		
+		baseClass.stepInfo("Navigate to security group URL");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		
+		baseClass.stepInfo("add Keyword To Security Group ");
+		securityGroupsPage.addKeywordToSecurityGroup(namesg3, keywordName1);
+		baseClass.CloseSuccessMsgpopup();
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		baseClass.stepInfo("Select security group");
+		docViewRedact.selectsecuritygroup(namesg3);
+		
+		sessionsearch = new SessionSearch(driver);
+		DocExplorerPage docExplorer=new DocExplorerPage(driver);
+		
+		baseClass.stepInfo("Navigate To Doc Explorer Page");
+		docExplorer.navigateToDocExplorerPage();
+		
+		baseClass.stepInfo("Navigate To Doc list");
+		docExplorer.docExplorerToDocList();
+
+		DocListPage docList = new DocListPage(driver);
+		
+		baseClass.stepInfo("Select The Document in Doclistpage");
+		docList.documentSelection(4);
+		
+		baseClass.stepInfo("View in doc view");
+		baseClass.waitTime(3);
+		docList.docListToDocView();
 	
+		docView = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Verify persistant hit for keyword of first assignment");
+		docView.persistenHitWithSearchString(keyword);
+		
+		baseClass.stepInfo("verify highlight keyword in document for first assignment");
+		docView.verifyKeywordHighlightedOnDocViewwithKeywordColour(rgbCode1, HaxCode1);
+		
+		baseClass.stepInfo("Select security group");
+		docViewRedact.selectsecuritygroup(namesg3);
+		
+		CodingForm coding = new CodingForm(driver);
+		
+		baseClass.stepInfo("Navigate to coding form page");
+		coding.navigateToCodingFormPage();
+		
+		baseClass.stepInfo("Add coding form");
+		coding.createCodingFormWithoutObjects(codingForm);
+		
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		
+		baseClass.stepInfo("Navigate To Assignments Page");
+		assignmentPage.navigateToAssignmentsPage();
+		
+		baseClass.stepInfo("Create Assignment");
+		assignmentPage.createAssignment(assignName1, codingForm);
+		
+		baseClass.stepInfo("unmapping all keywords from first assignment");
+		assignmentPage.unmappingKeywordsFromEditedAssignment(assignName1);
+		
+		docExplorer.docExplorerToDocList();
+		
+		baseClass.stepInfo("Select The Document in Doclistpage");
+		docList.documentSelection(4);
+
+		baseClass.stepInfo("Bulk Assign the selected Document");
+		docList.bulkAssignWithPersistantHit(assignName1);
+		
+		baseClass.stepInfo("Navigate To Assignments Page");
+		assignmentPage.navigateToAssignmentsPage();
+		
+		baseClass.stepInfo("Select assignment to view in Doc view");
+		assignmentPage.viewSelectedAssgnUsingPagination(assignName1);
+		assignmentPage.Checkclickedstatus(assignName1);
+		assignmentPage.assgnViewInAllDocView();
+		
+		baseClass.stepInfo("Verify the search string is not displayed on persistent hit panal");
+		docView.persistenHitNotContainsWithSearchString(keyword);
+		
+		baseClass.stepInfo("Verify keywordis not highlighted on doc view.");
+		docView.verifyKeywordNotHighlightOnDocViewKeywordColour(rgbCode1, HaxCode1);
+		
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA 
+	 * @TestCase id : 51544 -Verify that when two different users under different security group sharing annotation layer adds/edit/delete reviewer remarks to the same record successfully.
+	 * @Description : Verify that when two different users under different security group sharing annotation layer adds/edit/delete reviewer remarks to the same record successfully.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
+	public void verifyRemarkDiffSecurityGroupsWhnSameAnnotationLayer() throws Exception {
+		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		namesg2 = Input.randomText + Utility.dynamicNameAppender();
+		namesg3 = Input.randomText + Utility.dynamicNameAppender();
+		String remark = Input.randomText + Utility.dynamicNameAppender();
+		String editRemark = Input.randomText + Utility.dynamicNameAppender();
+		docExp = new DocExplorerPage(driver);
+		baseClass = new BaseClass(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		sessionsearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51544 Sprint 12");
+		baseClass.stepInfo(
+				"Verify that when two different users under different security group sharing annotation layer adds/edit/delete reviewer remarks to the same record successfully");
+		utility = new Utility(driver);
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User : " + Input.pa1userName + " to create prerequisite SG's and annotation layer");
+
+		baseClass.stepInfo("Creation of Prerequisites");
+		baseClass.stepInfo("Creation of two different security groups");
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityGroupsPage.AddSecurityGroup(namesg2);
+		driver.scrollPageToTop();
+		securityGroupsPage.AddSecurityGroup(namesg3);
+
+		baseClass.stepInfo("Creation of annotation layer");
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+
+		baseClass.stepInfo("Sharing same annotation layer to different security groups");
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+		securityGroupsPage.selectSecurityGroup(namesg3);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+
+		baseClass.stepInfo("Docs are released to both security groups");
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkRelease(namesg2);
+		sessionsearch.bulkRelease(namesg3);
+
+		baseClass.stepInfo("Access has been given to RMU and Rev to these security groups");
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu1userName);
+
+		loginPage.logout();
+
+		baseClass.stepInfo("Adding annotation to document by RMU user as a prequisite");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		docViewRedact.selectsecuritygroup(namesg2);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		driver.waitForPageToBeReady();
+
+		String currentUrl = driver.getUrl();
+		
+		DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
+		
+		baseClass.stepInfo("Opening second tab");
+		docVIewMetaData.openDuplicateTabOfAlreadyOpenedTab();
+		
+		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+		
+		baseClass.stepInfo("Switching to second tab");
+		String parentWindowHandle = reusableDocView.switchTochildWindow();
+		
+		baseClass.stepInfo("Impersonate RMU to Reviewer");
+		docVIewMetaData.impersonateRMUtoReviewer(namesg2);
+		
+		baseClass.stepInfo(" Basic content search");
+		sessionsearch.basicContentSearch(Input.testData1);
+		
+		baseClass.stepInfo("view in docview");
+		sessionsearch.ViewInDocView();
+		
+		baseClass.stepInfo("Getting : "+currentUrl+" url in second tab");
+		driver.getWebDriver().get(currentUrl);
+		
+		baseClass.stepInfo("Adding remark to document");
+		docView.addRemarkToNonAudioDocument(56,134,remark);
+		
+		baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
+		docView.verifyRemarkIsAdded(remark);
+		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
+		baseClass.stepInfo("Edit already added remark");
+		docView.editRemark(editRemark);
+		
+		baseClass.stepInfo("Switch to parent window from child window");
+		reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+		
+		baseClass.stepInfo("Click on redaction icon");
+		docView.redactionIcon().Click();
+		
+		baseClass.stepInfo("Verify Disable Remark Warning Message");
+		docView.verifyDisableRemarkWarningMessage();
+		
+		baseClass.stepInfo("Verify weather delete and edit fields are not enabled.");
+		docView.verifyDeleteAndEditFieldsAreNotEnabled();
+		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
+		baseClass.stepInfo("verify visibility of edited remark after reload the document in first tab");
+		docView.verifyRemarkIsAdded(editRemark);
+			
+		baseClass.stepInfo("Log out");
+		loginPage.logout();
+		
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void close() throws ParseException, InterruptedException, IOException {
 		try {

@@ -363,6 +363,29 @@ public class DocExplorer_Regression1 {
 			loginPage.logout();
 		
 		 }
+		 
+		 /**
+			 * @author Gopinath
+			 * @TestCase Id:RPMXCON-54642 Verify the documents from list view
+			 * @Description:To Verify the documents from list view.
+			 */
+			@Test(groups={"regression"},priority = 8)
+			public void verifyDocExplorerDocList() {
+				String folderNumber="14";
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-54642 Sprint 12");
+				baseClass.stepInfo("###Verify the documents from list view###");
+				docexp = new DocExplorerPage(driver);
+				
+				baseClass.stepInfo("Navigating to DocExplorer page");
+				docexp.navigateToDocExplorerPage();
+				
+				baseClass.stepInfo("Select folder");
+				docexp.verifyDocList(folderNumber);
+				
+				loginPage.logout();
+				
+			}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
@@ -382,7 +405,7 @@ public class DocExplorer_Regression1 {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			loginPage.quitBrowser();
+			//loginPage.quitBrowser();
 		} finally {
 			loginPage.closeBrowser();
 			LoginPage.clearBrowserCache();
