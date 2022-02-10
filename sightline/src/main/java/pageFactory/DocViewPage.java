@@ -2135,6 +2135,7 @@ public class DocViewPage {
 	public Element getTermCardInPersistentPanel() {
 		return driver.FindElementByXPath("//span[contains(text(),'Term:')]//following::p");
 	}
+
 	public Element getDocFileTypeCheckbox() {
 		return driver.FindElementByXPath("//tr[contains(@class,'rowNumber_0')]//label[@class='checkbox']/i");
 	}
@@ -2580,7 +2581,7 @@ public class DocViewPage {
 
 	// Added By Vijaya.Rani
 	public Element getDocView_DocListPageDocs() {
-		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr/td[3]");
+		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr/td[contains(text(),'ID')]");
 	}
 
 	// Added by Aathith
@@ -2626,10 +2627,11 @@ public class DocViewPage {
 	public ElementCollection getHitPanels_audio() {
 		return driver.FindElementsByXPath("//div[@id='divAudioPersistentSearch']//div[@class='message-2 col-md-12']");
 	}
-	
+
 	public Element getAudioHit_persistent(int i) {
-		return driver.FindElementByXPath("//*[@id='divAudioPersistentSearch']/div/p["+i+"]");
+		return driver.FindElementByXPath("//*[@id='divAudioPersistentSearch']/div/p[" + i + "]");
 	}
+
 	// Added by Gopinath - 04/01/2022
 	public ElementCollection getTranslationDropdownOptions() {
 		return driver.FindElementsByXPath("//ul[@id='Tra-dropDown']//a");
@@ -3022,45 +3024,44 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//div[@class='jp-seek-bar']");
 	}
 
-
-	
 	public Element getDocView_centralPanel() {
 		return driver.FindElementById("tabs");
 	}
-	
-	//Add by Aathith
+
+	// Add by Aathith
 	public Element getTriangularIcon() {
 		return driver.FindElementByXPath("//i[@class='fa fa-caret-down']");
 	}
 
 	public Element docViewMenuPanel() {
-		return driver.FindElementByXPath(
-				"//div[@id='divAccusoftHeaderToolbar']");
+		return driver.FindElementByXPath("//div[@id='divAccusoftHeaderToolbar']");
 	}
 
 	public Element lastPageViewer() {
-		return driver.FindElementByXPath(
-				"//*[@id='lastPage_divDocViewer']");
+		return driver.FindElementByXPath("//*[@id='lastPage_divDocViewer']");
 	}
+
 	public Element firstPageViewer() {
-		return driver.FindElementByXPath(
-				"//*[@id='firstPage_divDocViewer']");
+		return driver.FindElementByXPath("//*[@id='firstPage_divDocViewer']");
 	}
-	
+
 	public Element getAudioDocZoom() {
 		return driver.FindElementByXPath("//i[@class='fa fa-search-plus']");
 	}
+
 	public Element getAudioWaveForm() {
 		return driver.FindElementByXPath("//div[@class='jp-play-bar' and contains(@style,'overflow: hidden')]");
 	}
+
 	public Element getAudioZoomBar() {
 		return driver.FindElementByXPath("//div[@class='jp-progress']");
 	}
-	
-	//Add by Aathith
+
+	// Add by Aathith
 	public Element getAudioPlayerCurrentState() {
 		return driver.FindElementByXPath("//div[@class='jp-play-bar']");
 	}
+
 	public Element audioPersistentBackwardNavigate() {
 		return driver.FindElementByXPath("//i[@class='fa fa-chevron-left']");
 	}
@@ -3068,6 +3069,22 @@ public class DocViewPage {
 	public Element getAudioPersistentHits() {
 		return driver.FindElementByXPath("//div[@id='divAudioPersistentSearch']/div");
 	}
+
+	public Element getWarningMessageForRemarkPanel() {
+		return driver.FindElementByXPath(
+				"//div[@id='disableRedactionWarningForRemarks' and normalize-space('" + Input.warningMessage + "')]");
+	}
+
+	public Element getWarningMessageForAnnotations() {
+		return driver.FindElementByXPath(
+				"//div[@id='divDuplicateAnnotationWarning' and normalize-space('" + Input.warningMessage + "')]");
+	}
+
+	public Element getWarningMessageForRedactions() {
+		return driver.FindElementByXPath(
+				"//div[@id='divDuplicateRedactionWarning' and normalize-space('" + Input.warningMessage + "')]");
+	}
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -3118,7 +3135,8 @@ public class DocViewPage {
 		return Phit;
 	}
 
-	/**@Modified By Jeevitha 
+	/**
+	 * @Modified By Jeevitha
 	 * @Modified Date : 9/02/2022
 	 * @param searchString
 	 * @return
@@ -3141,11 +3159,11 @@ public class DocViewPage {
 
 		int numOfPanels = getHitPanels_audio().size();
 		String Phit = "NULL";
-		System.out.println("numOfPanels : " + numOfPanels );
-		base.stepInfo("numOfPanels : " + numOfPanels );
+		System.out.println("numOfPanels : " + numOfPanels);
+		base.stepInfo("numOfPanels : " + numOfPanels);
 		Boolean flag = false;
 		for (int i = 1; i <= numOfPanels; i++) {
-			String term=getAudioHit_persistent(i).getText();
+			String term = getAudioHit_persistent(i).getText();
 			if (term.contains(searchString)) {
 				System.out.println("Found " + searchString);
 				base.stepInfo("Found " + searchString);
@@ -3159,7 +3177,7 @@ public class DocViewPage {
 		// driver.getWebDriver().navigate().refresh();
 		return Phit;
 	}
-	
+
 	public void addCommentToNonAudioDoc(String comment) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -6197,9 +6215,9 @@ public class DocViewPage {
 			;
 			driver.scrollingToBottomofAPage();
 			if (getDocView_Analytics_liDocumentThreadMap().Displayed()) {
-				baseClass.failedStep("Thread Map tab is visible and doc are present");
+				base.failedStep("Thread Map tab is visible and doc are present");
 			} else {
-				baseClass.passedStep("Thread Map tab is disabled and doesn't contains any doc");
+				base.passedStep("Thread Map tab is disabled and doesn't contains any doc");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -13751,6 +13769,7 @@ public class DocViewPage {
 	 */
 	public void addRemarkToNonAudioDocument(int off1, int off2, String remark) {
 		try {
+			base.waitTime(5);
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getNonAudioRemarkBtn().isElementAvailable(10);
@@ -18297,6 +18316,74 @@ public class DocViewPage {
 		}
 	}
 
+	/*
+	 * @author Steffy D Method to verify whether the sub menus of the redactions are
+	 * disabled
+	 */
+	public void verifyAppliedRedactionSubMenusAreDisabled() {
+		base.stepInfo("Verify redaction sub menus are disabled");
+		try {
+			getDocView_RedactThisPage().waitAndClick(2);
+			if (getDocView_RedactThisPage().Class().contains("active")) {
+				base.failedStep("Redaction sub menu: This Page are not disabled");
+			} else {
+				base.passedStep("Redaction sub menu: This Page are disabled");
+			}
+
+			getDocView_Text_redact().waitAndClick(2);
+			if (getDocView_Text_redact().Class().contains("active")) {
+				base.failedStep("Redaction sub menu: Text Redact are not disabled");
+			} else {
+				base.passedStep("Redaction sub menu: Text redact are disabled");
+			}
+
+			multiPageIcon().waitAndClick(2);
+			if (multiPageIcon().Class().contains("active")) {
+				base.failedStep("Redaction sub menu: Multi Page are not disabled");
+			} else {
+				base.passedStep("Redaction sub menu: Multi Page are disabled");
+			}
+
+			getDocView_Redact_Rectangle().waitAndClick(2);
+			if (getDocView_Redact_Rectangle().Class().contains("active")) {
+				base.failedStep("Redaction sub menu: Redact Rect are not disabled");
+			} else {
+				base.passedStep("Redaction sub menu: Redact Rect are disabled");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while Verifying applied redaction sub menus" + e.getLocalizedMessage());
+		}
+	}
+
+	/*
+	 * @author Steffy D Method to verify whether the sub menus of the annotation are
+	 * disabled
+	 */
+	public void verifyAppliedAnnotationSubMenusAreDisabled() {
+		base.stepInfo("Verify annotation sub menus are disabled");
+		try {
+			getDocView_Annotate_ThisPage().waitAndClick(2);
+			if (getDocView_Annotate_ThisPage().Class().contains("active")) {
+				base.failedStep("Redaction sub menu: This Page are not disabled");
+			} else {
+				base.passedStep("Redaction sub menu: This Page are disabled");
+			}
+
+			getDocView_Annotate_ThisPage().waitAndClick(2);
+			if (getDocView_Annotate_ThisPage().Class().contains("active")) {
+				base.failedStep("Annotation sub menu: Rect are not disabled");
+			} else {
+				base.passedStep("Annotation sub menu: Rect are disabled");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while Verifying applied annotation sub menus" + e.getLocalizedMessage());
+		}
+	}
+
 	/**
 	 * @author Gopinath
 	 * @description : Method to complete coding form and verify cursor navigated to
@@ -19195,8 +19282,9 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_DocListPageDocs());
 
-		if (getDocView_DocListPageDocs().Displayed()) {
+		if (getDocView_DocListPageDocs().isDisplayed()) {
 			softAssertion.assertTrue(getDocView_DocListPageDocs().getWebElement().isDisplayed());
+			softAssertion.assertAll();
 			base.passedStep("Selected document is display in Doc List ");
 		} else {
 			base.failedStep("Selected document is not display in Doc List");
@@ -23560,7 +23648,6 @@ public class DocViewPage {
 
 	}
 
-
 	/**
 	 * @author Raghuram 02/04/22 NA Modified date: NA Modified by:NA
 	 * @return
@@ -23816,16 +23903,16 @@ public class DocViewPage {
 		// Verify Remark Retained Datas
 		verifyResults(updatedremarkText, updatedremarkTime, updateddateAndTime, updatedremarkauthorName, "Updated");
 	}
-	
 
 	/**
-	 * @author 
-	 * @Description: methoad to download and verify the file for the document from docView panel
+	 * @author
+	 * @Description: methoad to download and verify the file for the document from
+	 *               docView panel
 	 * @param DownloadOption
 	 * @param downloadedFileExtension
 	 */
-	public void downloadFile(String DownloadOption,String downloadedFileExtension) {
-		
+	public void downloadFile(String DownloadOption, String downloadedFileExtension) {
+
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocViewDonload_Icon());
 		if (getDocViewDonload_Icon().isDisplayed()) {
@@ -23838,7 +23925,7 @@ public class DocViewPage {
 		base.waitForElement(getDOcViewDoc_DownloadOption(DownloadOption));
 		Actions actionsClass = new Actions(driver.getWebDriver());
 		actionsClass.moveToElement(getDOcViewDoc_DownloadOption(DownloadOption).getWebElement()).click().perform();
-				
+
 		base.waitTime(5);
 		File file = new File("C:\\BatchPrintFiles\\downloads");
 		File[] listoffiles = file.listFiles();
@@ -23857,8 +23944,7 @@ public class DocViewPage {
 			}
 			if (flag == false) {
 				System.out.println("unable to download" + DownloadOption + " for selected document");
-				base.failedStep(
-						"failed : unable to download" + DownloadOption + " for selected document");
+				base.failedStep("failed : unable to download" + DownloadOption + " for selected document");
 			}
 
 		} else {
@@ -23868,14 +23954,9 @@ public class DocViewPage {
 		}
 	}
 
-
-
-
-
-
-/**
+	/**
 	 * @author Gopinath.
-	 * @description : This method to click on text  tab and verify.
+	 * @description : This method to click on text tab and verify.
 	 */
 	public void clickOnTextTab() {
 		try {
@@ -23888,9 +23969,9 @@ public class DocViewPage {
 				base.failedMessage("Translation tab is not displayed");
 			}
 			getDocView_TextTab().waitAndClick(5);
-			if(getDocView_TextTab().GetAttribute("class").contains("active")) {
+			if (getDocView_TextTab().GetAttribute("class").contains("active")) {
 				base.passedStep("text Tab loaded successfully");
-			}else {
+			} else {
 				base.failedStep("Unable to load text tab");
 			}
 		} catch (Exception e) {
@@ -23899,82 +23980,77 @@ public class DocViewPage {
 
 		}
 	}
-	
+
 	/**
-	 * @author 
+	 * @author
 	 * @Description: method to click on default text tab and verify.
 	 */
 	public void clickOnDefaultTextTab() {
-		
+
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDefaultViewTab());
-		if(getDefaultViewTab().isElementAvailable(5)) {
+		if (getDefaultViewTab().isElementAvailable(5)) {
 			base.passedStep("Default view tab is displayed");
-		}else {
+		} else {
 			base.failedStep("Default view tab is not displayed");
 		}
 		getDefaultViewTab().waitAndClick(5);
-		if(getDefaultViewTab().GetAttribute("class").contains("active")) {
+		if (getDefaultViewTab().GetAttribute("class").contains("active")) {
 			base.passedStep("documemt loaded in default text");
-		}
-		else {
+		} else {
 			base.failedStep("unable to load the document on default text view ");
 		}
 	}
 
-	
 	/**
 	 * @author Arunkumar
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 * @description To verify menu bar menus in docview
 	 */
-	public void verifyMenuBarOptionFromDocviewPanel()  {
+	public void verifyMenuBarOptionFromDocviewPanel() {
 		DocViewRedactions docviewRedact = new DocViewRedactions(driver);
 		driver.waitForPageToBeReady();
 		base.waitForElement(docViewMenuPanel());
-		if(docViewMenuPanel().isDisplayed()) {
-			if(docviewRedact.docViewNextPage().isDisplayed()&& lastPageViewer().isDisplayed() && firstPageViewer().isDisplayed()
-					&& docviewRedact.docViewPreviousPage().isDisplayed() && docviewRedact.pageNumberBox().isDisplayed()) {
+		if (docViewMenuPanel().isDisplayed()) {
+			if (docviewRedact.docViewNextPage().isDisplayed() && lastPageViewer().isDisplayed()
+					&& firstPageViewer().isDisplayed() && docviewRedact.docViewPreviousPage().isDisplayed()
+					&& docviewRedact.pageNumberBox().isDisplayed()) {
 				base.passedStep("Document pagination menus are present");
-			}
-			else {
+			} else {
 				base.failedStep("Document pagination menus are not present");
-				}
-			
-			if(getDocView_Zoomout().isDisplayed() && getDocView_ZoomIn().isDisplayed() && getDocView_ResetZoom().isDisplayed()) {
-			base.passedStep("Zoomin/zoomout ,reset to original menus are present");
-		    }
-		    else {
-			base.failedStep("Zoomin/zoomout ,reset to original menus are not present");
-		    }
-		
-			if(getDocView_Rotateright().isDisplayed() && getDocView_Rotateleft().isDisplayed()) {
-			base.passedStep("Rotate clockwise and anticlockwise menus are present");
-			}else {
-			base.failedStep("Rotate clockwise and anticlockwise menus are not present");	
 			}
-		
-			if(getDocView_Print().isDisplayed() && getDocView_IconDownload().isDisplayed()) {
-			base.passedStep("Print PDF and download associate files menus are present");
-			}
-			else {
-			base.passedStep("Print PDF and download associate files menus are not present");	
-			}
-		
-			if(getDocView_RedactIcon().isDisplayed() && getDocView_AnnotateIcon().isDisplayed() && getDocView_AddRemarkIcon().isDisplayed()
-					&& getPersistantHitEyeIcon().isDisplayed()) {
-			base.passedStep("Redaction,highlighting,reviewer remarks and hit highlighting menus are present");
-			}else {
-			base.failedStep("Redaction,highlighting,reviewer remarks and hit highlighting menus are not present");
-			}
-		}
-		else {
-			base.failedStep("menu bar not present in docview page");
-	}
-					
- }
 
-	
+			if (getDocView_Zoomout().isDisplayed() && getDocView_ZoomIn().isDisplayed()
+					&& getDocView_ResetZoom().isDisplayed()) {
+				base.passedStep("Zoomin/zoomout ,reset to original menus are present");
+			} else {
+				base.failedStep("Zoomin/zoomout ,reset to original menus are not present");
+			}
+
+			if (getDocView_Rotateright().isDisplayed() && getDocView_Rotateleft().isDisplayed()) {
+				base.passedStep("Rotate clockwise and anticlockwise menus are present");
+			} else {
+				base.failedStep("Rotate clockwise and anticlockwise menus are not present");
+			}
+
+			if (getDocView_Print().isDisplayed() && getDocView_IconDownload().isDisplayed()) {
+				base.passedStep("Print PDF and download associate files menus are present");
+			} else {
+				base.passedStep("Print PDF and download associate files menus are not present");
+			}
+
+			if (getDocView_RedactIcon().isDisplayed() && getDocView_AnnotateIcon().isDisplayed()
+					&& getDocView_AddRemarkIcon().isDisplayed() && getPersistantHitEyeIcon().isDisplayed()) {
+				base.passedStep("Redaction,highlighting,reviewer remarks and hit highlighting menus are present");
+			} else {
+				base.failedStep("Redaction,highlighting,reviewer remarks and hit highlighting menus are not present");
+			}
+		} else {
+			base.failedStep("menu bar not present in docview page");
+		}
+
+	}
+
 	/**
 	 * 
 	 * @author Vijaya.Rani 08/02/22 NA Modified date: NA Modified by:NA
@@ -24008,7 +24084,6 @@ public class DocViewPage {
 		audioPlayPauseIcon().waitAndClick(10);
 		base.stepInfo("Audio file is played successfully");
 
-	}
 	
 
 	
@@ -24082,18 +24157,18 @@ public class DocViewPage {
 	 */
 	public void trianglurArrowIconPositionVerification() {
 		driver.waitForPageToBeReady();
-		
-		//audio eye icon verification
+
+		// audio eye icon verification
 		base.waitForElement(getAudioPersistantHitEyeIcon());
 		getAudioPersistantHitEyeIcon().waitAndClick(10);
 		base.stepInfo("Audio eye icon is clicked");
 		base.elementDisplayCheck(getAudioPersistantHitEyeIcon());
 		base.stepInfo("Audio eye icon is displayed in docview");
-		
+
 		base.waitForElement(audioPersistentForwardNavigate());
 		audioPersistentForwardNavigate().waitAndClick(10);
 		base.stepInfo("clicked on hit next");
-		
+
 		base.elementDisplayCheck(getTriangularIcon());
 		base.stepInfo("Audio triangular arrow is displayed");
 		String start = getAudioPlayerCurrentState().GetAttribute("style").trim();
@@ -24102,35 +24177,36 @@ public class DocViewPage {
 		String end = getAudioPlayerCurrentState().GetAttribute("style").trim();
 		softAssertion.assertEquals(start, end);
 		base.stepInfo("Audio triangular arrow position verified");
-		
+
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param term1
 	 * @param term2
 	 * @param docCount
 	 */
-	public void termDisplayCheck(String term1, String term2 , int docCount) {
-		
-		for(int i=0;i<docCount;i++) {
-		driver.waitForPageToBeReady();
-		boolean flag1 = base.text("term1").isDisplayed();
-		boolean flag2 =base.text("term2").isDisplayed();
-		if(flag1&&flag2) {
-			softAssertion.assertTrue(flag1);
-			softAssertion.assertTrue(flag2);
-			base.stepInfo("Both terms are visible in the Document");
-			System.out.println("terms are visible");
-			break;
-		}else {
-			base.waitForElement(getDocView_Next());
-			getDocView_Next().waitAndClick(10);
+	public void termDisplayCheck(String term1, String term2, int docCount) {
+
+		for (int i = 0; i < docCount; i++) {
 			driver.waitForPageToBeReady();
-		}
+			boolean flag1 = base.text("term1").isDisplayed();
+			boolean flag2 = base.text("term2").isDisplayed();
+			if (flag1 && flag2) {
+				softAssertion.assertTrue(flag1);
+				softAssertion.assertTrue(flag2);
+				base.stepInfo("Both terms are visible in the Document");
+				System.out.println("terms are visible");
+				break;
+			} else {
+				base.waitForElement(getDocView_Next());
+				getDocView_Next().waitAndClick(10);
+				driver.waitForPageToBeReady();
+			}
 		}
 	}
 
-	/**
+/*
 	 * @Author Brundha
 	 * @Description :Method to verify persistant hit panel for audio files
 	 * 
@@ -24145,15 +24221,18 @@ public class DocViewPage {
 		getAudioPersistentHits().isElementAvailable(10);
 		if (getAudioPersistentHits().isDisplayed()) {
 			base.passedStep("Persistent hits panel is displayed as expected");
-		}else{base.failedStep("Persistent Hit panel is not displayed as expected");}
+		} else {
+			base.failedStep("Persistent Hit panel is not displayed as expected");
+		}
 		base.waitForElement(getDocView_Audio_Hit());
 		String StringInPanels = getDocView_Audio_Hit().getText().trim().toString().toLowerCase();
-		
+
 		System.out.println("expected text" + StringInPanels);
 		base.compareTextViaContains(StringInPanels, SearchString, "Search string is displayed as expected",
 				"Search string is not displayed as expected");
-		
+
 	}
+
 	
 	/**
 	 * @author Arunkumar
@@ -24244,3 +24323,88 @@ public class DocViewPage {
 	
 }
 
+	/*
+	 * @author Steffy D This is method is to verify warning message which is getting
+	 * displayed when two users make changes to same document
+	 */
+	public void verifyWarningMessage(String highLightIcon) {
+		try {
+			base.stepInfo("Verifying warning message for " + highLightIcon);
+			switch (highLightIcon) {
+			case "Redaction":
+				base.waitForElement(getDocView_RedactIcon());
+				getDocView_RedactIcon().waitAndClick(9);
+				base.waitForElement(getWarningMessageForRedactions());
+				if (getWarningMessageForRedactions().isDisplayed()) {
+					base.passedStep("Expected warning message : " + getWarningMessageForRedactions().getText()
+							+ " is getting displayed for Redactions");
+				} else {
+					base.failedStep("Expected warning message : " + Input.warningMessage
+							+ " is not getting displayed for Redactions");
+				}
+				break;
+			case "Annotation":
+				base.waitForElement(getDocView_AnnotateIcon());
+				getDocView_AnnotateIcon().waitAndClick(9);
+				base.waitForElement(getWarningMessageForAnnotations());
+				if (getWarningMessageForAnnotations().isDisplayed()) {
+					base.passedStep("Expected warning message : " + getWarningMessageForAnnotations().getText()
+							+ " is getting displayed for Annotations");
+				} else {
+					base.failedStep("Expected warning message : " + Input.warningMessage
+							+ " is not getting displayed for Annotations");
+				}
+				break;
+			case "Remark":
+				base.waitForElement(getNonAudioRemarkBtn());
+				getNonAudioRemarkBtn().waitAndClick(9);
+				base.waitForElement(getWarningMessageForRemarkPanel());
+				if (getWarningMessageForRemarkPanel().isDisplayed()) {
+					base.passedStep("Expected warning message : " + getWarningMessageForRemarkPanel().getText()
+							+ " is getting displayed for Remark panel");
+				} else {
+					base.failedStep("Expected warning message : " + Input.warningMessage
+							+ " is not getting displayed for Remark panel");
+				}
+				break;
+			}
+		} catch (Exception e) {
+			UtilityLog.info("Warning message validation failed due to following exception " + e);
+		}
+	}
+
+	/*
+	 * @author Steffy D This method is to verify whether remark panel action iteams
+	 * are displayed or not
+	 * 
+	 */
+	public void verifyReviewRemarkActionPanel(String actionItem, String remarkValue) {
+		try {
+			switch (actionItem) {
+			case "Delete":
+				if (getRemarkDeletetIcon().isDisplayed()) {
+					base.failedStep("Delete icon is visible for the remarks");
+				} else {
+					base.passedStep("Delete icon is not visible for the remarks");
+				}
+				break;
+			case "Edit":
+				if (getRemarkEditIcon().isDisplayed()) {
+					base.failedStep("Edit icon is visible for the remarks");
+				} else {
+					base.passedStep("Edit icon is not visible for the remarks");
+				}
+				break;
+			case "Remark":
+				if (getRemarkPanelItems(remarkValue).isElementAvailable(1)) {
+					base.failedStep("Added remark is displayed");
+				} else {
+					base.passedStep("Added remark is not displayed");
+				}
+				break;
+			}
+		} catch (Exception e) {
+			UtilityLog.info("Review remark validation failed due to following exception " + e);
+		}
+	}
+}

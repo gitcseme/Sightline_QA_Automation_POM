@@ -36,6 +36,7 @@ import com.gargoylesoftware.htmlunit.javascript.host.html.Option;
 
 import configsAndTestData.ConfigLoader;
 import configsAndTestData.ConfigMain;
+import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 /// <summary>
@@ -504,6 +505,23 @@ public  class Driver  {
 		    driver.get(url);
 	   }
 
-	
+ 	public void switchToChildWindow() {
+		try {
+			Set<String> allWindowsId = WindowHandles();
+			for (String eachId : allWindowsId) {
+				driver.switchTo().window(eachId);
+			}
+		} catch (Exception e) {
+			UtilityLog.info("Switch to child window failed due to following exception " + e);
+		}
+	}
+
+	public void switchToWindow(String windowId) {
+		try {
+			driver.switchTo().window(windowId);
+		} catch (Exception e) {
+			UtilityLog.info("Switch to  window failed due to following exception " + e);
+		}
+	}
 	   
 	}
