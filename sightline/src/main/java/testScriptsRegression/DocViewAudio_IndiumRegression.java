@@ -2275,6 +2275,83 @@ public class DocViewAudio_IndiumRegression {
 		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
 		loginPage.logout();		
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param fullName
+	 * @throws Exception
+	 */
+	@Test(dataProvider = "AllTheUsers",groups = { "regression" }, priority = 30)
+	public void verifyPersistentHits_sameTerm(String username, String password, String fullName) throws Exception{
+		baseClass.stepInfo("Test case Id: RPMXCON-48788");
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with same term and different/same "
+				+ "threshold navigated to doc view from session search > DocList");
+		loginPage.loginToSightLine(username,password);
+		baseClass.stepInfo("Successfully login as '" + fullName);
+		
+		String searchString =Input.audioSearchString2;
+		
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocListPage docListPage=new DocListPage(driver);
+		DocViewPage  docViewPage = new DocViewPage(driver);
+		
+		 //First audio Search 
+		sessionSearch.audioSearch(searchString,Input.language);
+		sessionSearch.getPureHitAddButton().waitAndClick(10);
+		
+		// second audio search
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.audioSearchTwoTimesandAddingTwoPureHits(searchString,Input.language);
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+		
+		// view All audio Docs in DocList
+		sessionSearch.ViewInDocListWithOutPureHit();
+		
+		// selecting all documents in DocList
+		docListPage.selectingAllDocFromAllPagesAndAllChildren();
+		
+        // view selected documents in DocList
+		docListPage.viewSelectedDocumentsInDocView();
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with same term and "
+				+ "same threshold navigated to doc view from session search > DocList");
+		// verifying the audio hits and triangular arrow Icon
+		baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().Click();
+		docViewPage.verifyingThePresenceOfPersistentHit(true,searchString);
+		
+		// removing the pure Hits in Selected Result
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.removePureHitsFromSelectedResult();
+	
+		// First audio search term  with max threshold value
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(searchString, Input.language,"max");
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+		
+		// second audio search with same term and  min threshold value
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(searchString, Input.language,"min");
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+		
+		// view All audio Docs in DocList
+		sessionSearch.ViewInDocList();
+		
+		// selecting all documents in DocList
+       docListPage.selectingAllDocFromAllPagesAndAllChildren();
+		
+       baseClass.stepInfo("Verifying audio hits  displayed when documents searched with same term and different"
+       		+ "threshold navigated to doc view from session search > DocList");
+        // view selected documents in DocList
+        docListPage.viewSelectedDocumentsInDocView();
+    		
+       // verifying the audio hits and triangular arrow Icon
+        baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().Click();
+		docViewPage.verifyingThePresenceOfPersistentHit(true,searchString);
+		loginPage.logout();		
+		
+	}
 	
 
 	@AfterMethod(alwaysRun = true)
