@@ -24074,11 +24074,9 @@ public class DocViewPage {
 			base.failedStep("Exception occcured while Keyword is highlighted on doc view" + e.getMessage());
 
 		}
-/**
-	 * @Author Brundha
-	 * @Description :Method to verify persistant hit panel for audio files
-	 * 
-	 */
+		
+	}
+
 /*
 	 * @author Aathith.Senthilkumar
 	 */
@@ -24132,7 +24130,11 @@ public class DocViewPage {
 		}
 	}
 
-
+	/**
+	 * @Author Brundha
+	 * @Description :Method to verify persistant hit panel for audio files
+	 * 
+	 */
 	public void verifyingAudioPersistantHitPanel(String SearchString) {
 
 		driver.waitForPageToBeReady();
