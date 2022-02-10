@@ -6275,7 +6275,7 @@ public class DocView_Regression1 {
 		SoftAssert softAssertion = new SoftAssert();
 		DocListPage docListPage = new DocListPage(driver);
 
-		baseClass.stepInfo("Test case Id: RPMXCON-50947");
+		baseClass.stepInfo("Test case Id: RPMXCON-50957");
 		baseClass.stepInfo("To verify that user can redirect doc view page from Doc List->'Back to Source");
 		baseClass.stepInfo("Search the documents and Navigate to Docview Page");
 		sessionSearch.navigateToSessionSearchPageURL();
