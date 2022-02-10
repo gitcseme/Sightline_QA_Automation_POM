@@ -24088,7 +24088,7 @@ public class DocViewPage {
 		audioPlayPauseIcon().waitAndClick(10);
 		base.stepInfo("Audio file is played successfully");
 
-	
+	}
 
 	
 	/**
@@ -24325,7 +24325,7 @@ public class DocViewPage {
 		verifyDocumentDisplayedInTextView();
 	}
 	
-}
+
 
 	/*
 	 * @author Steffy D This is method is to verify warning message which is getting
