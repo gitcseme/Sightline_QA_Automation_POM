@@ -3440,6 +3440,57 @@ public class SavedSearchRegression_New_Set_04 {
 		login.logout();
 
 	}
+	 /*
+	 * @author Jayanthi A Date: 02/09/22 Modified date:N/A Modified by: Description
+	 *         :Verify that User can navigate Renamed search to DocView from Saved Search Screen- RPMXCON-48786 Sprint 11
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 53)
+	public void verifyRenamedSearchNavigatingToDocview(String username, String password) throws Exception {
+
+		// Login as USER
+		login.loginToSightLine(username, password);
+		base.stepInfo("Logged in as : " + username);
+
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String SearchRename="rename"+UtilityLog.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-48786 - Saved Search Sprint 11");
+		base.stepInfo("Verify that User can navigate Renamed search to DocView from Saved Search Screen.");
+
+		// add save search in node
+		int purehit = session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		
+		saveSearch.verifyRenamedsavsearch(searchName,SearchRename);
+		saveSearch.getToDocView().waitAndClick(5);
+        driver.waitForPageToBeReady();
+        miniDocListPage = new MiniDocListPage(driver);
+        base.waitForElement(miniDocListPage.getDocumentCountFromDocView());
+
+		String currentUrl = driver.getWebDriver().getCurrentUrl();
+		String expectedURL=Input.url + "DocumentViewer/DocView";
+				if(expectedURL.equals(currentUrl)) {
+		base.passedStep("Navigated to DocView Page : " + currentUrl);		
+		String sizeofList = miniDocListPage.getDocumentCountFromDocView().getText();
+		String documentSize = sizeofList.substring(sizeofList.indexOf("of") + 2, sizeofList.indexOf("Docs")).trim();
+		System.out.println("Size : " + documentSize);
+		base.stepInfo("Available documents in DocView page : " + sizeofList);
+		base.digitCompareEquals(purehit, Integer.parseInt(documentSize),
+				"Doc View page loaded with selected number of documents  ", "Count Mismatches with the Documents");
+		}
+		else {
+			base.failedStep("Not navigated to doc view page.");
+		}
+
+		// Delete Search
+		base.stepInfo("Initiating Delete Search");
+		saveSearch.deleteSearch(SearchRename, Input.mySavedSearch, "Yes");
+
+		login.logout();
+	}
+
+	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {

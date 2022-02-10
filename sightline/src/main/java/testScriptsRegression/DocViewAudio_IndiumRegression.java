@@ -2217,6 +2217,65 @@ public class DocViewAudio_IndiumRegression {
 				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws Exception
+	 * @Description:Verify that previously saved Persistent hits should be displayed on the audio doc view when same/different reviewer is unassigned from assignment 
+	 * and documents are distributed again
+	 */
+	@Test(groups = { "regression" }, priority = 29)
+	public void verifyPersistentHits() throws Exception{
+		baseClass.stepInfo("Test case Id: RPMXCON-51774");
+		baseClass.stepInfo("Verify that previously saved Persistent hits should be displayed on the audio doc view when same/different reviewer "
+				+ "is unassigned from assignment and documents are distributed again");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		
+		String assign = "Assignment" + Utility.dynamicNameAppender();
+		
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		// login as RMU    //Step 1 and step-2 
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		
+		// creating Assignment with Audio Document
+		sessionSearch.bulkAssign_Persistant(true);
+		assignmentPage.FinalizeAssignmentAfterBulkAssign();
+		assignmentPage.createAssignmentByBulkAssignOperation(assign, Input.codeFormName);	
+		//Assigning the Assignment to Reviewer
+		assignmentPage.editAssignment(assign);
+		assignmentPage.assignmentDistributingToReviewer();
+		baseClass.stepInfo(assign+" Assignment is Successfully assigned to the "+Input.rev1userName);
+		
+		//Verification of Persistent Hits Step-3
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.selectAssignmentToViewinDocView(assign);	
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		// Unassigning the Reviewer Step-4
+		assignmentPage.editAssignment(assign);
+		assignmentPage.UnassignedDocs(Input.rev1userName);
+		
+		// again assign the same Reviewer Step-5
+		assignmentPage.assignmentDistributingToReviewer();
+		baseClass.stepInfo(assign+" Assignment is Successfully assigned to the "+Input.rev1userName);
+		loginPage.logout();
+		
+		//login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer '" + Input.rmu1userName + "'");
+		
+		// navigating from Dashboard to DocView
+		baseClass.waitForElement(assignmentPage.dashBoardPageTitle());
+		assignmentPage.assgnInDashBoardPg(assign).waitAndClick(10);
+		
+		// verifying the Persistent Hits  Step-6
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		loginPage.logout();		
+	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
