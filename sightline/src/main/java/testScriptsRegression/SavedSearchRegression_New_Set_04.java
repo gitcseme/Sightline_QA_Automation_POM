@@ -3440,9 +3440,11 @@ public class SavedSearchRegression_New_Set_04 {
 		login.logout();
 
 	}
-	 /*
+
+	/*
 	 * @author Jayanthi A Date: 02/09/22 Modified date:N/A Modified by: Description
-	 *         :Verify that User can navigate Renamed search to DocView from Saved Search Screen- RPMXCON-48786 Sprint 11
+	 * :Verify that User can navigate Renamed search to DocView from Saved Search
+	 * Screen- RPMXCON-48786 Sprint 11
 	 */
 	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 53)
 	public void verifyRenamedSearchNavigatingToDocview(String username, String password) throws Exception {
@@ -3452,7 +3454,7 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo("Logged in as : " + username);
 
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
-		String SearchRename="rename"+UtilityLog.dynamicNameAppender();
+		String SearchRename = "rename" + UtilityLog.dynamicNameAppender();
 
 		base.stepInfo("Test case Id: RPMXCON-48786 - Saved Search Sprint 11");
 		base.stepInfo("Verify that User can navigate Renamed search to DocView from Saved Search Screen.");
@@ -3461,25 +3463,23 @@ public class SavedSearchRegression_New_Set_04 {
 		int purehit = session.basicContentSearch(Input.testData1);
 		session.saveSearch(searchName);
 
-		
-		saveSearch.verifyRenamedsavsearch(searchName,SearchRename);
+		saveSearch.verifyRenamedsavsearch(searchName, SearchRename);
 		saveSearch.getToDocView().waitAndClick(5);
-        driver.waitForPageToBeReady();
-        miniDocListPage = new MiniDocListPage(driver);
-        base.waitForElement(miniDocListPage.getDocumentCountFromDocView());
+		driver.waitForPageToBeReady();
+		miniDocListPage = new MiniDocListPage(driver);
+		base.waitForElement(miniDocListPage.getDocumentCountFromDocView());
 
 		String currentUrl = driver.getWebDriver().getCurrentUrl();
-		String expectedURL=Input.url + "DocumentViewer/DocView";
-				if(expectedURL.equals(currentUrl)) {
-		base.passedStep("Navigated to DocView Page : " + currentUrl);		
-		String sizeofList = miniDocListPage.getDocumentCountFromDocView().getText();
-		String documentSize = sizeofList.substring(sizeofList.indexOf("of") + 2, sizeofList.indexOf("Docs")).trim();
-		System.out.println("Size : " + documentSize);
-		base.stepInfo("Available documents in DocView page : " + sizeofList);
-		base.digitCompareEquals(purehit, Integer.parseInt(documentSize),
-				"Doc View page loaded with selected number of documents  ", "Count Mismatches with the Documents");
-		}
-		else {
+		String expectedURL = Input.url + "DocumentViewer/DocView";
+		if (expectedURL.equals(currentUrl)) {
+			base.passedStep("Navigated to DocView Page : " + currentUrl);
+			String sizeofList = miniDocListPage.getDocumentCountFromDocView().getText();
+			String documentSize = sizeofList.substring(sizeofList.indexOf("of") + 2, sizeofList.indexOf("Docs")).trim();
+			System.out.println("Size : " + documentSize);
+			base.stepInfo("Available documents in DocView page : " + sizeofList);
+			base.digitCompareEquals(purehit, Integer.parseInt(documentSize),
+					"Doc View page loaded with selected number of documents  ", "Count Mismatches with the Documents");
+		} else {
 			base.failedStep("Not navigated to doc view page.");
 		}
 
@@ -3490,7 +3490,358 @@ public class SavedSearchRegression_New_Set_04 {
 		login.logout();
 	}
 
-	
+	/**
+	 * @Author Raghuram @Date: 02/09/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : To verify as an RM user login, I will be able to search a
+	 *              saved query based on search status 'COMPLETED' under My Saved
+	 *              Search folder [RPMXCON-47562] sprint 12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 54)
+	public void searchFilterBasedOnStatus() throws InterruptedException, ParseException {
+
+		String SearchName = "SearchName" + Utility.dynamicNameAppender();
+		String SearchName1 = "SearchName" + Utility.dynamicNameAppender();
+		String statusToCheck = "COMPLETED";
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		base.stepInfo("Test case Id: RPMXCON-47562 Saved Search - Sprint 12");
+		base.stepInfo(
+				"To verify as an RM user login, I will be able to search a saved query based on search status 'COMPLETED' under My Saved Search folder");
+
+		// Perform create node - Search - SaveSearch in nodes
+		String nodeName = saveSearch.createSearchGroupAndReturn("", Input.rmu1FullName, "No");
+		session.navigateToSessionSearchPageURL();
+		session.basicContentSearchWithSaveChanges(Input.searchString2, "No", "First");
+		session.saveSearchInNewNode(SearchName, nodeName);
+		session.getNewSearch().waitAndClick(5);
+		session.multipleBasicContentSearch(Input.searchString1);
+		session.saveSearchInNewNode(SearchName1, nodeName);
+
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSSPage();
+		saveSearch.selectNode1(nodeName);
+		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", false);
+
+		// Delete created Node
+		base.stepInfo("Initiating delete nodes");
+		saveSearch.deleteNode(Input.mySavedSearch, nodeName);
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 02/09/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : To verify as a Reviewer user login, I will be able to search a
+	 *              saved query based on search status 'COMPLETED' under My Saved
+	 *              Search [RPMXCON-47563] sprint 12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 55)
+	public void searchFilterBasedOnStatusREV() throws InterruptedException, ParseException {
+
+		String SearchName = "SearchName" + Utility.dynamicNameAppender();
+		String SearchName1 = "SearchName" + Utility.dynamicNameAppender();
+		String statusToCheck = "COMPLETED";
+
+		// Login as RMU
+		login.loginToSightLine(Input.rev1userName, Input.rev1password);
+		base.stepInfo("Loggedin As : " + Input.rev1FullName);
+
+		base.stepInfo("Test case Id: RPMXCON-47563 Saved Search - Sprint 12");
+		base.stepInfo(
+				"To verify as a Reviewer user login, I will be able to search a saved query based on search status 'COMPLETED' under My Saved Search");
+
+		// Perform create node - Search - SaveSearch in nodes
+		String nodeName = saveSearch.createSearchGroupAndReturn("", Input.rev1FullName, "No");
+		session.navigateToSessionSearchPageURL();
+		session.basicContentSearchWithSaveChanges(Input.searchString2, "No", "First");
+		session.saveSearchInNewNode(SearchName, nodeName);
+		session.getNewSearch().waitAndClick(5);
+		session.multipleBasicContentSearch(Input.searchString1);
+		session.saveSearchInNewNode(SearchName1, nodeName);
+
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSSPage();
+		saveSearch.selectNode1(nodeName);
+		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", false);
+
+		// Delete created Node
+		base.stepInfo("Initiating delete nodes");
+		saveSearch.deleteNode(Input.mySavedSearch, nodeName);
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A @Date: 02/10/22 @Modified date:N/A @Modified by:N/A
+	 *         Description : Verify that application displays all documents that are
+	 *         in the aggregate results set of all child search groups "My Saved
+	 *         Search" and searches when User performs Refresh with Child Search
+	 *         groups (RPMXCON-48921 Sprint-12)
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 * @Stabilizaation - done
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 56)
+	public void refreshGridCheck() throws InterruptedException, ParseException {
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		Boolean inputValue = true;
+		int noOfNode = 4;
+		String specificHeaderName = "Search Name";
+		String nodeToSelect;
+		base.stepInfo("Test case Id: RPMXCON-48921 - Saved Search - Sprint 12");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of all child search groups \"My Saved Search\" and searches when User performs Refresh with Child Search groups");
+
+		// Login as PA
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+		// Navigate on Saved Search & Multiple Node Creation & save search in node
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("RMU", "No", noOfNode);
+		nodeToSelect = newNodeList.get(0);
+		System.out.println("Next adding searches to the created nodes");
+		base.stepInfo("Next adding searches to the created nodes");
+		session.navigateToSessionSearchPageURL();
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+
+		base.stepInfo("-------Pre-requesties completed--------");
+
+		saveSearch.navigateToSSPage();
+		base.stepInfo("Root node selected : " + nodeToSelect);
+		saveSearch.selectNode1(nodeToSelect);
+
+		saveSearch.methodTocheckHideandShowFunction(specificHeaderName);
+
+		// Delete created Node
+		base.stepInfo("Initiating delete nodes");
+		saveSearch.deleteNode(Input.mySavedSearch, nodeToSelect);
+
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A @Date: 02/10/22 @Modified date:N/A @Modified by:N/A
+	 *         Description : Verify that application displays all documents that are
+	 *         in the aggregate results set of all child search groups "My Saved
+	 *         Search" and searches when User Performs Bulk Tag from Child Search
+	 *         groups(RPMXCON-48917) - Sprint 12
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 57)
+	public void performBulkTagActionPC() throws InterruptedException, ParseException {
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+		int docCount, noOfNodesToCreate = 3;
+		String finalCountresult;
+		String executionCountSuccessMsg = "Aggregate tag result matches with the count.";
+		String executionCountFailureMsg = "Count Mismatches";
+		String TagName = "Tag" + Utility.dynamicNameAppender();
+		int latencyCheckTime = 5;
+		String executionCountWithTagSuccessMsg = "Document Count matches with the Execution count";
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		Boolean inputValue = true;
+		String nodeToSelect;
+
+		base.stepInfo("Test case Id: RPMXCON-48917 - Saved Search Sprint 12");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of all child search groups \"My Saved Search\" and searches when User Performs Bulk Tag from Child Search groups");
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// create folder and add save search in folder
+		tagsAndFolderPage.CreateTag(TagName, Input.securityGroup);
+
+		// Calculate the unique doc count for the respective searches
+		int aggregateHitCount = session.getDocCountBtwnTwoSearches(true, Input.searchString5, Input.searchString6);
+		base.stepInfo("Aggregate count : " + aggregateHitCount);
+		base.selectproject();
+
+		// Multiple Node Creation
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
+		nodeToSelect = newNodeList.get(0);
+		System.out.println("Next adding searches to the created nodes");
+		base.stepInfo("Next adding searches to the created nodes");
+
+		// add save search in node
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+
+		base.stepInfo("-------Pre-requesties completed--------");
+
+		saveSearch.navigateToSSPage();
+		base.stepInfo("Root node selected : " + newNodeList.get(1));
+		saveSearch.selectNode1(nodeToSelect);
+
+		// Bulk Tag
+		saveSearch.getSavedSearchToBulkTag().Click();
+		base.stepInfo("Clicked tag icon from Code");
+
+		// Load latency Verification
+		saveSearch.loadTimeCheck(latencyCheckTime);
+
+		finalCountresult = session.bulkTagExistingWithReturn(TagName);
+		base.digitCompareEquals(aggregateHitCount, Integer.parseInt(finalCountresult), executionCountSuccessMsg,
+				executionCountFailureMsg);
+		base.stepInfo("Completed Bulk Tag");
+		base.stepInfo(
+				"Navigating to Search >> Basic Search >> Advanced Search >> WorkProduct >> Tags (Select Same Tag which we have created in prerequesties.");
+		base.selectproject();
+		session.switchToWorkproduct();
+		session.selectTagInASwp(TagName);
+		int pureHit = session.serarchWP();
+		docCount = Integer.parseInt(finalCountresult);
+		base.digitCompareEquals(docCount, pureHit, executionCountWithTagSuccessMsg, executionCountFailureMsg);
+
+		// Delete created Node
+		base.stepInfo("Initiating delete nodes");
+		saveSearch.deleteNode(Input.mySavedSearch, nodeToSelect);
+
+		// Tag deletion
+		base.stepInfo("initiating tag deletion");
+		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.deleteAllTags(TagName);
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha @Date: 02/10/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that application displays all documents that are in the
+	 *              aggregate results set of all child search groups "My Saved
+	 *              Search" and searches when User Navigate Child Search groups to
+	 *              Report [RPMXCON-48918] - Sprint 12
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 58)
+	public void verifyReportForAggregateSearchHitCountInStrPageT() throws Exception {
+
+		SearchTermReportPage str = new SearchTermReportPage(driver);
+
+		int noOfNodesToCreate = 2;
+		String executionCountSuccessMsg = "Aggregate result matches with the count.";
+		String executionCountFailureMsg = "Count Mismatches";
+		int latencyCheckTime = 5;
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		Boolean inputValue = true;
+		String nodeToSelect;
+
+		base.stepInfo("Test case Id: RPMXCON-48918 - Saved Search - Sprint 12");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of all child search groups \"My Saved Search\" and searches when User Navigate Child Search groups to Report");
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Calculate the unique doc count for the respective searches
+		int aggregateHitCount = session.getDocCountBtwnTwoSearches(true, Input.searchString5, Input.searchString6);
+		base.stepInfo("Aggregate count : " + aggregateHitCount);
+		base.selectproject();
+
+		// Multiple Node Creation
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
+		nodeToSelect = newNodeList.get(0);
+		System.out.println("Next adding searches to the created nodes");
+		base.stepInfo("Next adding searches to the created nodes");
+
+		// add save search in node
+		session.navigateToSessionSearchPageURL();
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+
+		base.stepInfo("-------Pre-requesties completed--------");
+
+		saveSearch.navigateToSSPage();
+		base.stepInfo("Root node selected : " + newNodeList.get(0));
+		saveSearch.selectNode1(nodeToSelect);
+		saveSearch.checkButtonEnabled(saveSearch.getSavedSearchToTermReport(), "Should be Enabled", "Report");
+		saveSearch.getSavedSearchToTermReport().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		// Load latency Verification
+		saveSearch.loadTimeCheckWithPageSpinningWheel(latencyCheckTime);
+
+		str.verifyaggregateCount("HITS");
+		base.waitForElement(str.getHitsCount());
+		int expectedHitsCount = Integer.parseInt(str.getHitsCount().getText());
+		base.stepInfo("Hit Count of searhces is :  " + expectedHitsCount);
+		base.stepInfo("Aggregate count : " + aggregateHitCount);
+		base.digitCompareEquals(aggregateHitCount, expectedHitsCount, executionCountSuccessMsg,
+				executionCountFailureMsg);
+
+		// Delete created Node
+		base.stepInfo("Initiating delete nodes");
+		saveSearch.deleteNode(Input.mySavedSearch, nodeToSelect);
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha @Date: 02/10/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that error message against every execution for search
+	 *              group, where at least one search is referring to at least one
+	 *              other searches in the same search group [RPMXCON-48581] - Sprint
+	 *              12
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 59)
+	public void verifyErrorMsgOfSearchGroup() throws Exception {
+		String Search = "Search" + Utility.dynamicNameAppender();
+		String Search2 = "Search" + Utility.dynamicNameAppender();
+		String passMsg = "Search Errored out As Expected";
+		String failMSg = "Search is Not Errored As Expected";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48581 Saved Search - Sprint 12");
+		base.stepInfo(
+				"Verify that error message against every execution for search group, where at least one search is referring to at least one other searches in the same search group");
+
+		String node = saveSearch.createSearchGroupAndReturn(Search, "RMU", Input.yesButton);
+
+		session.advancedContentSearch(Input.searchString1);
+		session.saveSearchInNewNode(Search, node);
+
+		session.selectSavedsearchInASWp(Search);
+		session.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		session.saveSearchInNewNode(Search2, node);
+
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectNode1(node);
+		saveSearch.performExecute();
+
+		saveSearch.savedSearch_SearchandSelect(Search2, Input.yesButton);
+		String status = saveSearch.getLastStatus();
+		base.textCompareEquals(status, "ERROR", passMsg, failMSg);
+
+		// Delete created Node
+		base.stepInfo("Initiating delete nodes");
+		saveSearch.deleteNode(Input.mySavedSearch, node);
+
+		login.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
