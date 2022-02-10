@@ -2731,7 +2731,133 @@ public class SavedSearchRegression_New_Set_03 {
 		saveSearch.SaveSearchDelete(searchName1);
 		login.logout();
 	}
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that Save search group not have reference of saved
+	 *              search in same group will not show any error on \"Execute\"
+	 *              [RPMXCON-48621]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "Execute", groups = { "regression" }, priority = 40)
+	public void verifySearchesExecute(String username, String password) throws Exception {
+		String Search = "Search" + Utility.dynamicNameAppender();
+		String Search2 = "Search" + Utility.dynamicNameAppender();
+		String Search3 = "Search" + Utility.dynamicNameAppender();
+		String headerName = "Last Status";
+		String compareString = "COMPLETED";
+		String passMsg = "Execute operation is successfull";
+		String failMSg = "Error message is displayed";
+		List<String> list = new ArrayList<>();
 
+		// Login as PA
+		login.loginToSightLine(username, password);
+
+		base.stepInfo("Test case Id: RPMXCON-48621 Saved Search");
+		base.stepInfo(
+				"Verify that Save search group not have reference of saved search in same group will not show any error on \"Execute\"");
+
+		String node = saveSearch.createSearchGroupAndReturn(Search, "RMU", Input.yesButton);
+
+		session.basicContentSearch(Input.searchString5);
+		session.saveSearchInNewNode(Search, node);
+		session.saveSearchInNewNode(Search2, node);
+		session.saveSearchInNewNode(Search3, node);
+
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectNode1(node);
+		saveSearch.savedSearchExecute_SearchGRoup(Search, 0);
+
+		driver.Navigate().refresh();
+		list = saveSearch.getListFromSavedSearchTable(headerName);
+		base.compareListWithString(list, compareString, passMsg, failMSg);
+
+		// Delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, node);
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description:Verify that logged User Information gets updated in "Last
+	 *                     Submitted By" column in Saved Search screen
+	 *                     [RPMXCON-48588] Sprint 12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	public void verifyLastSubmittedBYAsRMU_User1() throws InterruptedException, ParseException {
+		String SearchName = "Search" + Utility.dynamicNameAppender();
+		String SearchName2 = "Search" + Utility.dynamicNameAppender();
+		String SearchName3 = "Search" + Utility.dynamicNameAppender();
+
+		String headername = "Last Submitted By";
+		List<String> list = new ArrayList<>();
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Test case Id: RPMXCON-48588 - Saved Search Sprint 11");
+		base.stepInfo(
+				"Verify that logged User Information gets updated in \"Last Submitted By\" column in Saved Search screen");
+		String pausername = login.getCurrentUserName();
+
+		// create Node AS PA
+		String node = saveSearch.createSearchGroupAndReturn(SearchName, "PA", Input.yesButton);
+
+		// saving the Search
+		session.basicContentSearch(Input.TallySearch);
+		session.saveSearchInNewNode(SearchName, node);
+
+		// SHare node to Security Group
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.shareSavedNodeWithDesiredGroup(node, Input.shareSearchDefaultSG);
+
+		login.logout();
+		// login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		String username = login.getCurrentUserName();
+		String passMsg = username + " : is the Last Submiited Name Displayed";
+		String failMsg = "Able to See other User Searches";
+		base.stepInfo("Logged in username : " + username);
+
+		// create Node as RMU
+		String node1 = saveSearch.createSearchGroupAndReturn(SearchName2, "RMU", Input.yesButton);
+
+		// save The Search in node and folder
+		session.navigateToSessionSearchPageURL();
+		int purehit = session.basicContentSearch(Input.TallySearch);
+		session.saveSearch(SearchName2);
+		session.saveSearchInNewNode(SearchName3, node1);
+
+		// verify Last Submitted Status For all the search under My saved Search
+		saveSearch.navigateToSavedSearchPage();
+		base.waitForElement(saveSearch.getSavedSearchGroupName(Input.mySavedSearch));
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(10);
+		list = saveSearch.getListFromSavedSearchTable(headername);
+		base.compareListWithString(list, username, passMsg, failMsg);
+
+		// verify Last Submitted For node After execute operation[My saved Search]
+		saveSearch.selectNode1(node1);
+		saveSearch.savedSearchExecute_SearchGRoup(SearchName3, purehit);
+		driver.Navigate().refresh();
+		saveSearch.selectNode1(node1);
+		String actualName = saveSearch.getListFromSavedSearchTable1(headername, SearchName3);
+		base.textCompareEquals(actualName, username, passMsg, failMsg);
+
+		// verify Last Submiited For node After execute operation [Security Group]
+		saveSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(10);
+		saveSearch.selectNode1(node);
+		saveSearch.savedSearchExecute_SearchGRoup(SearchName, purehit);
+		driver.Navigate().refresh();
+		saveSearch.selectNode1(node);
+		String actualName2 = saveSearch.getListFromSavedSearchTable1(headername, SearchName);
+		base.textCompareEquals(actualName2, username, passMsg, failMsg);
+
+		// Delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, node);
+		saveSearch.deleteNode(Input.shareSearchDefaultSG, node1);
+		login.logout();
+	}
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod)
 			throws IOException, ParseException, InterruptedException {
