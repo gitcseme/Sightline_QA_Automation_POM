@@ -23984,5 +23984,69 @@ public class DocViewPage {
 
 	}
 
+	
+	/**
+	 * @author Gopinath Description: Method for verifying the search string is
+	 *         not displayed on persistent hit panal
+	 * @param SearchString : SearchString is String value that search term.
+	 */
+	public void persistenHitNotContainsWithSearchString(String SearchString) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPersistantHitEyeIcon());
+		getPersistantHitEyeIcon().waitAndClick(5);
+		base.waitForElementCollection(getHitPanels());
+		int numOfPanels = getHitPanels().size();
+		boolean flag = false;
+		for (int i = 2; i <= numOfPanels; i++) {
+			String p = getTermInHitPanels(i).getText();
+			System.out.println(getTermInHitPanels(i).getText());
+			if (getTermInHitPanels(i).getText().contains(SearchString)) {
+				String hitCount = getTermInHitPanels(i).getText();
+
+				System.out.println("Search hit terms" + " '" + SearchString + "'"
+						+ " is displayed on persistent hits panel and the hit count of " + SearchString + " is"
+						+ hitCount.replace(SearchString, ""));
+				base.failedStep("Search hit terms" + " '" + SearchString + "'"
+						+ " is displayed on persistent hits panel and the hit count of " + SearchString + " is"
+						+ hitCount.replace(SearchString, ""));
+				flag = true;
+
+				break;
+			}
+
+		}
+		if (flag == false) {
+			System.out.println("Search hit term is not displayed on persistent hits panel");
+			base.passedStep(SearchString+" : Search hit term is not displayed on persistent hits panel");
+		}
+	}
+
+	
+	/**
+	 * @author Gopinath.
+	 * 
+	 * @description : This method to verify keywordis not highlighted on doc view.
+	 * @param rgbCode                         (selected keyword colour rgb code
+	 * @param expectedElementHexCode(selected keyword color hex code
+	 */
+	public void verifyKeywordNotHighlightOnDocViewKeywordColour(String rgbCode, String expectedElementHexCode) {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			List<WebElement> keyword = getHighlightedKeywordrgbCode(rgbCode).FindWebElements();
+			
+			if (keyword.size()!=0) {
+				base.failedStep("Keyword is highlighted on doc view");
+				System.out.println("Keyword is highlighted on doc view");
+			} else {
+				System.out.println("Keyword not highlighted on doc view ");
+				base.passedStep("Keyword not highlighted on doc view ");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while Keyword is highlighted on doc view" + e.getMessage());
+
+		}
+	}
 }
 
