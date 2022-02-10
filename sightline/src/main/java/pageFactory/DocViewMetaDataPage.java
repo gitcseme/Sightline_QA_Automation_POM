@@ -3033,5 +3033,40 @@ public class DocViewMetaDataPage {
 		getCloseButton().waitAndClick(2);
 		driver.waitForPageToBeReady();
 	}
+	
+	/**
+	 * @author Gopianth
+	 * @Description : This method used for impersonate rmu to reviewer.
+	 * @param securityGroup : securityGroup is String value that name of security group.
+	 */
+	public void impersonateRMUtoReviewer(String securityGroup) throws InterruptedException {
+		getSignoutMenu().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.getChangeRole().Visible();
+			}
+		}), Input.wait90);
+		base.getChangeRole().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.getSelectRole().Visible();
+			}
+		}), Input.wait60);
+		base.getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
+		base.waitTime(3);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.getAvlDomain().Visible();
+			}
+		}), Input.wait30);
+		base.getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+		base.waitTime(3);
+		base.getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
+		base.waitTime(3);
+		base.getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroup);
+		base.getSaveChangeRole().waitAndClick(5);
+		System.out.println("Impersnated from RMU to Reviewer");
+		UtilityLog.info("Impersnated from RMU to Reviewer");
+	}
 
 }

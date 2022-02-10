@@ -186,6 +186,24 @@ public class DocExplorerPage {
     public Element getMasterDatetextField(){return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']//thead//tr//th[@data-searchname='MasterDate']//input");}   
     public Element getDocListHeader(){return driver.FindElementByXPath("//h1[@class='page-title']");}   
      
+    //Added by Gopinath - 10/02/2022
+    public Element getfolderFromTreeByNumber(String folderNumber) {
+		return driver.FindElementByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a[@id='-1_anchor']/following-sibling::ul[@class='jstree-children']/li["+folderNumber+"]/a");
+	}
+
+
+	public Element getDocListCustodianName() {
+			return driver.FindElementByXPath("//table[@id='dtDocumentList']/tbody/tr[1]/td[4]/div");
+		}
+	public ElementCollection getDocListInPage() {
+			return driver.FindElementsByXPath("//table[@id='dtDocumentList']/tbody/tr");
+		}
+	public ElementCollection getDocLictPaginationCount() {
+			return driver.FindElementsByXPath("//ul[@class='pagination pagination-sm']/li/a");
+		}
+	public Element getDocLictPaginationNextButton() {
+			return driver.FindElementByXPath("//ul[@class='pagination pagination-sm']/li/a[text()='Next']");
+		}
     
     
     public DocExplorerPage(Driver driver){
@@ -1430,5 +1448,109 @@ public class DocExplorerPage {
          			e.printStackTrace();
             		bc.failedStep("Exception occured while entering file name in file name filter."+e.getMessage());
             	}
+         	}
+         	/**     
+             * @author Gopinath
+             * @Description : Method for navigating from doc explorer to doc list.
+             */ 
+         	 public void docExplorerToDocList()
+         	  {
+         	  	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
+         	  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         	  			getDocExp_SelectAllDocs().Visible()  ;}}), Input.wait30); 
+         	  	getDocExp_SelectAllDocs().waitAndClick(10);
+         	  	
+         	  	bc.waitTime(2);
+         	  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         	  			doclist.getPopUpOkBtn().Visible()  ;}}), Input.wait30); 
+         	  	doclist.getPopUpOkBtn().Click();
+         		bc.waitTime(3);
+         		getDocExp_actionButton().isElementAvailable(10);
+         	  	 getDocExp_actionButton().waitAndClick(10);
+         	  		
+         		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         				 getDocListAction().Visible()  ;}}), Input.wait60); 
+         		bc.waitTime(2);
+         		getDocListAction().isElementAvailable(10);
+         		 getDocListAction().waitAndClick(20);
+         		 try{
+         			 if(bc.getYesBtn().isDisplayed()) {
+         				bc.getYesBtn().waitAndClick(10);
+         			 }
+         			}catch (Exception e) {
+         				// TODO: handle exception
+         			}
+         		 System.out.println("Navigated to doclist, to view docslist");
+         		 UtilityLog.info("Navigated to doclist, to view docslist");
+         		
+         	  }
+         	 
+         	 
+         	/**
+         	 * @author Gopinath
+         	 * @Description:methoad to select folder from tree to view docs in doc list
+         	 * @param folderNumber
+         	 */
+         	public void selectFolder(String folderNumber) {
+         		try {
+         		driver.waitForPageToBeReady();
+         		bc.waitForElement(getfolderFromTreeByNumber(folderNumber));
+         		getfolderFromTreeByNumber(folderNumber).waitAndClick(3);
+         		if(getfolderFromTreeByNumber(folderNumber).GetAttribute("class").contains("clicked")) {
+         			bc.passedStep("folder selected successfully");
+         		}else {
+         			bc.failedStep("Unable to select the folder ");
+         		}
+         		}catch(Exception e) {
+         			e.printStackTrace();
+         			bc.failedStep("Exception occured while selecting the folder to view docs");
+         		}
+         		
+         	}
+
+         /**
+         	 * @author Gopinath
+         	 * @Description: method to verify docList displayed selected from folder in a tree
+         	 * @param folderNumber
+         	 */
+         	public void verifyDocList(String folderNumber) {
+         		try {
+         			selectFolder(folderNumber);
+
+         			driver.waitForPageToBeReady();
+         			String custodianNameInTable = getDocListCustodianName().getText();
+
+         			bc.waitForElement(getfolderFromTreeByNumber(folderNumber));
+         			String CustodianNameInTree = getfolderFromTreeByNumber(folderNumber).getText();
+         			String numberOfDocumentInFolder = CustodianNameInTree.substring(CustodianNameInTree.indexOf("(") + 1,CustodianNameInTree.indexOf(")"));
+         					
+         			bc.waitForElementCollection(getDocListInPage());
+         			int numberOfDocumentsInPage = getDocListInPage().FindWebElements().size();
+         			int PaginationCount = getDocLictPaginationCount().size();
+
+         			if (PaginationCount > 3) {
+         				for (int i = 1; i <= PaginationCount - 3; i++) {
+         					bc.waitForElement(getDocLictPaginationNextButton());
+         					getDocLictPaginationNextButton().waitAndClick(3);
+         					driver.waitForPageToBeReady();
+         					int numberOfDocumentsInNextPage = getDocListInPage().FindWebElements().size();
+         					numberOfDocumentsInPage = numberOfDocumentsInPage + numberOfDocumentsInNextPage;
+         				}
+
+         			}
+         			if (CustodianNameInTree.contains(custodianNameInTable)) {
+         				if (Integer.parseInt(numberOfDocumentInFolder) == numberOfDocumentsInPage) {
+         					bc.passedStep(
+         							"List View presents the documents corresponding to the folder(s) selected in the tree view");
+         				} else {
+         					bc.failedStep("All documents corresponding to the folder(s) are not displated in doc list");
+         				}
+         			} else {
+         				bc.failedStep("corresponding  folder document are not displayed in doc list");
+         			}
+         		} catch (Exception e) {
+         			e.printStackTrace();
+         			bc.failedStep("Exception occured while verifying docExplorer docList due to " + e.getMessage());
+         		}
          	}
  }
