@@ -10253,6 +10253,73 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 10/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify on click of 'Save and Next' button coding form should be validated as per the customized
+	 * coding form for tag element.'RPMXCON-52076' Sprint: 12
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 212)
+	public void verifyCodingFormvalidatedtagElement() throws InterruptedException, AWTException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52076");
+		baseClass.stepInfo("Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form for tag element.");
+		
+		String codingform = "CFTags"+Utility.dynamicNameAppender();
+	    String defaultAction="Make It Required";
+	   
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	codingForm.createCodingFormUsingTwoObjects(codingform, null, null, null, "tag");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.selectDefaultActions(0,defaultAction);
+	 	codingForm.enterErrorAndHelpMsg(0,"Yes","Help for testing","Error for testing");
+	 	String expectedFirstObjectName = codingForm.getCFObjectsLabel(0);
+	 	System.out.println(expectedFirstObjectName);
+	 	codingForm.saveCodingForm();
+	 	codingForm.assignCodingFormToSG(codingform);
+		
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		//verify tag names
+		docViewPage.verifyCodingFormTagNameInDocviewPg(0,expectedFirstObjectName);
+		
+		driver.waitForPageToBeReady();
+		docViewPage.popOutCodingFormPanel();
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		docViewPage.openChildWindowCodingFormInRadioGroup();
+
+		driver.switchTo().window(parentWindowID);
+		driver.Navigate().refresh();
+		
+		baseClass.passedStep("Verified on click of 'Save and Next' button coding form should be validated as per the customized coding form for comment element in context of security group.");
+		codingForm.assignCodingFormToSG(Input.codeFormName);
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.deleteCodingForm(codingform,codingform);	
+		codingForm.verifyCodingFormIsDeleted(codingform);
+		
+		// logout
+		loginPage.logout();
+	}
+	
+	
 
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {
