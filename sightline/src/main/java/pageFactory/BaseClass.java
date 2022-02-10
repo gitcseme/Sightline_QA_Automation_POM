@@ -2663,6 +2663,7 @@ public class BaseClass {
 			robot.keyPress(KeyEvent.VK_T); 
 			robot.keyRelease(KeyEvent.VK_CONTROL); 
 			robot.keyRelease(KeyEvent.VK_T);
+			passedStep("New tab is opened successfully");
 		} catch (Exception e) {
 			UtilityLog.info("Failed to open new tab due to following exception " + e);
 		}

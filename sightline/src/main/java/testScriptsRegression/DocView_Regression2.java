@@ -64,7 +64,6 @@ public class DocView_Regression2 {
 	AssignmentsPage assignPage;
 	KeywordPage keywordPage;
 	SavedSearch savedsearch;
-	
 
 	String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 
@@ -74,8 +73,8 @@ public class DocView_Regression2 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		 Input in = new Input();
-		 in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -320,20 +319,20 @@ public class DocView_Regression2 {
 		}
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51909
-	 * Verify Images tab when moved to last Doc
-	 * PA to RMU
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51909 Verify Images tab when moved to last Doc PA to RMU
 	 */
-	
+
 	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyImagesIconWhenMovedToLastDoc() throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case id : RPMXCON-51909");
-		baseClass.stepInfo("Verify that when user in on Images tab and navigates to last document then should be on Images tab for last document");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and navigates to last document then should be on Images tab for last document");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
@@ -341,34 +340,36 @@ public class DocView_Regression2 {
 		docViewRedact.clickingImagesTab();
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardToLastDoc());
-			actions.moveToElement(docViewRedact.forwardToLastDoc().getWebElement()).click();
-			actions.click().build().perform();	
+		actions.moveToElement(docViewRedact.forwardToLastDoc().getWebElement()).click();
+		actions.click().build().perform();
 		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
 		System.out.println(status);
-		if(status.equalsIgnoreCase("true")) {
+		if (status.equalsIgnoreCase("true")) {
 			baseClass.passedStep("The images tab is retained after moving to the last document");
-		}
-		else {
+		} else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
-		loginPage.logout();	
-		
+		loginPage.logout();
+
 	}
-	
+
 	/**
-	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51910
-	 * Verify that when user in on Images tab and navigates to first document then should be on Images tab for first document
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51910 Verify that when user in on Images tab and navigates to
+	 * first document then should be on Images tab for first document
 	 * 
 	 */
-	
-	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 9)
-	public void verifyImagesIconWhenMovedToFirstDoc(String fullName, String userName, String password) throws Exception {
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 9)
+	public void verifyImagesIconWhenMovedToFirstDoc(String fullName, String userName, String password)
+			throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("login as" + fullName);
 		baseClass.stepInfo("Test case id : RPMXCON-51910");
-		baseClass.stepInfo("Verify that when user in on Images tab and navigates to first document then should be on Images tab for first document");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and navigates to first document then should be on Images tab for first document");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
@@ -376,36 +377,38 @@ public class DocView_Regression2 {
 		docViewRedact.clickingImagesTab();
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardToLastDoc());
-			actions.moveToElement(docViewRedact.forwardToLastDoc().getWebElement()).click();
-			actions.click().build().perform();
-			baseClass.waitTillElemetToBeClickable(docViewRedact.backwardToFirstDoc());
-			actions.moveToElement(docViewRedact.backwardToFirstDoc().getWebElement()).click();
-			actions.click().build().perform();
-		
+		actions.moveToElement(docViewRedact.forwardToLastDoc().getWebElement()).click();
+		actions.click().build().perform();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.backwardToFirstDoc());
+		actions.moveToElement(docViewRedact.backwardToFirstDoc().getWebElement()).click();
+		actions.click().build().perform();
+
 		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
 		System.out.println(status);
-		if(status.equalsIgnoreCase("true")) {
+		if (status.equalsIgnoreCase("true")) {
 			baseClass.passedStep("The images tab is retained after moving to the last document");
-		}
-		else {
+		} else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51911
-	 * Verify that when user in on Images tab when navigated to doc by entering DocNumber
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51911 Verify that when user in on Images tab when navigated to doc
+	 * by entering DocNumber
 	 * 
 	 */
-	
-	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 10)
-	public void verifyImagesIconWhenMovedtoDocByEnteringNumber(String fullName, String userName, String password) throws Exception {
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 10)
+	public void verifyImagesIconWhenMovedtoDocByEnteringNumber(String fullName, String userName, String password)
+			throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("login as" + fullName);
 		baseClass.stepInfo("Test case id : RPMXCON-51911");
-		baseClass.stepInfo("Verify that when user in on Images tab and navigates to document after entering the document number then should be on Images tab for navigated document");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and navigates to document after entering the document number then should be on Images tab for navigated document");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search for text input completed");
@@ -421,29 +424,30 @@ public class DocView_Regression2 {
 		driver.waitForPageToBeReady();
 		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
 		System.out.println(status);
-		if(status.equalsIgnoreCase("true")) {
+		if (status.equalsIgnoreCase("true")) {
 			baseClass.passedStep("The images tab is retained after moving to the document using doucument number");
-		}
-		else {
+		} else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
 		loginPage.logout();
 	}
 
-	
 	/**
-	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51908
-	 * Verify that when user in on Images tab when navigated to doc by navigating previous Doc
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51908 Verify that when user in on Images tab when navigated to doc
+	 * by navigating previous Doc
 	 * 
 	 */
-	
-	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 11)
-	public void verifyImagesIconWhenNavigatingPriviousDoc(String fullName, String userName, String password) throws Exception {
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 11)
+	public void verifyImagesIconWhenNavigatingPriviousDoc(String fullName, String userName, String password)
+			throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("login as" + fullName);
 		baseClass.stepInfo("Test case id : RPMXCON-51908");
-		baseClass.stepInfo("Verify that when user in on Images tab and navigates to previous document then should be on Images tab for previous document");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and navigates to previous document then should be on Images tab for previous document");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search for text input completed");
@@ -458,26 +462,28 @@ public class DocView_Regression2 {
 		driver.waitForPageToBeReady();
 		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
 		System.out.println(status);
-		if(status.equalsIgnoreCase("true")) {
+		if (status.equalsIgnoreCase("true")) {
 			baseClass.passedStep("The images tab is retained after moving to the previous document ");
-		}
-		else {
+		} else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
 		loginPage.logout();
 	}
 
 	/**
-	 * Author :Jayanthi date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51566
+	 * Author :Jayanthi date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51566
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =12)
-	public void verifyDistinguishedHighlightedTextInDocView(String fullName, String userName, String password) throws Exception {
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 12)
+	public void verifyDistinguishedHighlightedTextInDocView(String fullName, String userName, String password)
+			throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51566");
-		baseClass.stepInfo("Verify user can distinguish this on-demand search highlights with the highlights from the keyword"
-				+ " group and persistent search hit highlights");
+		baseClass.stepInfo(
+				"Verify user can distinguish this on-demand search highlights with the highlights from the keyword"
+						+ " group and persistent search hit highlights");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("login as" + fullName);
@@ -502,15 +508,17 @@ public class DocView_Regression2 {
 	}
 
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51918
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51918
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =13)
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 13)
 	public void verifyImagesTabRetainedWhileSaving(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51918");
-		baseClass.stepInfo("Verify that when user in on Images tab and save the document then should be on Images tab for the same document");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and save the document then should be on Images tab for the same document");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("login as" + fullName);
@@ -523,27 +531,28 @@ public class DocView_Regression2 {
 		docviewpage.editingCodingFormWithSaveAndNextButton();
 		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
 		System.out.println(status);
-		if(status.equalsIgnoreCase("true")) {
+		if (status.equalsIgnoreCase("true")) {
 			baseClass.passedStep("The images tab is retained when document selected from Mini Doc List");
-		}
-		else {
+		} else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
 		loginPage.logout();
-		
+
 	}
-	
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51919
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51919
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =14)
-	public void verifyImagesTabRetainedFromMiniDocList(String fullName, String userName, String password) throws Exception {
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 14)
+	public void verifyImagesTabRetainedFromMiniDocList(String fullName, String userName, String password)
+			throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51919");
-		baseClass.stepInfo("Verify that when user in on Images tab and clicks the document to load from mini doc list then should be on Images tab for the same document");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and clicks the document to load from mini doc list then should be on Images tab for the same document");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("login as" + fullName);
@@ -556,25 +565,27 @@ public class DocView_Regression2 {
 		docviewpage.selectDocIdInMiniDocList("ID00001186");
 		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
 		System.out.println(status);
-		if(status.equalsIgnoreCase("true")) {
+		if (status.equalsIgnoreCase("true")) {
 			baseClass.passedStep("The images tab is retained when document selected from Mini Doc List");
-		}
-		else {
+		} else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51407
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51407
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =15)
-	public void verifyKeywordHighliteIsdisplayedOnHitofPersistentHitIcon(String fullName, String userName, String password) throws Exception {
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 15)
+	public void verifyKeywordHighliteIsdisplayedOnHitofPersistentHitIcon(String fullName, String userName,
+			String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51407");
-		baseClass.stepInfo("Verify on click of the \"eye\" icon, ALL highlighted terms - including those that are set from Manage > Keywords configured to the security group");
+		baseClass.stepInfo(
+				"Verify on click of the \"eye\" icon, ALL highlighted terms - including those that are set from Manage > Keywords configured to the security group");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("login as" + fullName);
@@ -583,7 +594,7 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Docs Viewed in Doc View");
 		docViewRedact.checkingPersistentHitPanel();
-		if(docViewRedact.getKeywordInPersistentHitPanel_test().isDisplayed()) {
+		if (docViewRedact.getKeywordInPersistentHitPanel_test().isDisplayed()) {
 			baseClass.passedStep("Keyword assigned to security group is present in the persistent hit panel");
 		} else {
 			baseClass.failedStep("Keyword assigned to security group is not present in the panel");
@@ -591,17 +602,19 @@ public class DocView_Regression2 {
 		loginPage.logout();
 	}
 
-
-/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51750
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51750
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =16)
-	public void verifyPersistentHitPanelRetainedWhenDocNumberEntered(String fullName, String userName, String password) throws Exception {
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 16)
+	public void verifyPersistentHitPanelRetainedWhenDocNumberEntered(String fullName, String userName, String password)
+			throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51750");
-		baseClass.stepInfo("Verify that on entering the document number when hits panel is open then enable/disable should be retained after loading the document");
+		baseClass.stepInfo(
+				"Verify that on entering the document number when hits panel is open then enable/disable should be retained after loading the document");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("login as" + fullName);
@@ -616,23 +629,25 @@ public class DocView_Regression2 {
 		docViewRedact.pageNumberTextBox().getWebElement().sendKeys(Input.pageNumber);
 		baseClass.stepInfo("Clicked on Analytics panel button and moved to other doc by entering page number");
 		driver.waitForPageToBeReady();
-		if(docViewRedact.persistantHitToggle().isDisplayed()) {
+		if (docViewRedact.persistantHitToggle().isDisplayed()) {
 			baseClass.passedStep("Persistent hit panel is retained after loding the new page by entering page number");
-		}
-		else {
-			baseClass.failedStep("Persistent hit panel is NOT retained after loding the new page by entering page number");
+		} else {
+			baseClass.failedStep(
+					"Persistent hit panel is NOT retained after loding the new page by entering page number");
 		}
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51114
-	 * @throws InterruptedException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51114
+	 * 
+	 * @throws InterruptedException
 	 * 
 	 */
-	
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority =15)
-	public void verifyDownloadDropdownDocViewAsSA() throws InterruptedException{
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
+	public void verifyDownloadDropdownDocViewAsSA() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.impersonateSAtoPA();
@@ -654,12 +669,12 @@ public class DocView_Regression2 {
 		docViewRedact.dropDownDownloadIcon().waitAndClick(5);
 		String getAttribute1 = docViewRedact.dropDownDownloadIcon().GetAttribute("onclick");
 		System.out.println(getAttribute1);
-		if(getAttribute1.contains("GetFilePathAndDownload")) {
+		if (getAttribute1.contains("GetFilePathAndDownload")) {
 			baseClass.passedStep("The download dropdown is clicked and doc is downloaded");
 		} else {
 			baseClass.failedStep("The dropdown for downloading is not present");
 		}
-		DocViewPage docviewpage = new DocViewPage(driver);	
+		DocViewPage docviewpage = new DocViewPage(driver);
 		docviewpage.selectDocIdInMiniDocList("ID00001069");
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.downloadIcon());
@@ -667,23 +682,25 @@ public class DocView_Regression2 {
 		docViewRedact.dropDownDownloadIcon().waitAndClick(5);
 		String getAttribute2 = docViewRedact.dropDownDownloadIcon().GetAttribute("onclick");
 		System.out.println(getAttribute2);
-		if(getAttribute1.contains("GetFilePathAndDownload")) {
+		if (getAttribute1.contains("GetFilePathAndDownload")) {
 			baseClass.passedStep("The download dropdown is clicked and doc is downloaded");
 		} else {
 			baseClass.failedStep("The dropdown for downloading is not present");
 		}
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50915
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50915
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority =16)
-	public void verifyNavigationToDocViewAsSAimpersonation() throws InterruptedException, AWTException{
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
+	public void verifyNavigationToDocViewAsSAimpersonation() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.impersonateSAtoPA();
@@ -701,11 +718,11 @@ public class DocView_Regression2 {
 			}
 		}), Input.wait30);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.textTab());
-		docViewRedact.textTab().waitAndClick(30);	
+		docViewRedact.textTab().waitAndClick(30);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardNextDocBtn());
-		docViewRedact.forwardNextDocBtn().waitAndClick(10);	
-        docViewRedact.verifyingActiveDocIdInDocView(Input.testSecondDocId);
-		baseClass.passedStep("Navigated to next doc in the list while on text tab");	
+		docViewRedact.forwardNextDocBtn().waitAndClick(10);
+		docViewRedact.verifyingActiveDocIdInDocView(Input.testSecondDocId);
+		baseClass.passedStep("Navigated to next doc in the list while on text tab");
 		driver.scrollPageToTop();
 		docViewRedact.pageNumberTextBox().waitAndClick(10);
 		docViewRedact.pageNumberTextBox().getWebElement().clear();
@@ -718,29 +735,29 @@ public class DocView_Regression2 {
 		baseClass.passedStep("Navigated to expected doc in the list while on text tab");
 		String status = docViewRedact.textTab().GetAttribute("aria-selected");
 		System.out.println(status);
-		if(status.equalsIgnoreCase("false")) {
+		if (status.equalsIgnoreCase("false")) {
 			baseClass.passedStep("The text tab is Not retained");
-		}
-		else {
+		} else {
 			baseClass.failedStep("The images tab is retained");
 		}
 		loginPage.logout();
 	}
-		
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51013
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51013
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 17)
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 17)
 	public void verifyImagesTabFromAssignmentAsSA() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.impersonateSAtoRMU();
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51013");
 		baseClass.stepInfo("To verify that after impersonating, system admin can view persistent search on doc view.");
@@ -753,88 +770,94 @@ public class DocView_Regression2 {
 		assignmentsPage.selectAssignmentToViewinDocview(assname);
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.checkingPersistentHitPanel();
-		if(docViewRedact.getKeywordInPersistentHitPanel_test().isDisplayed()) {
+		if (docViewRedact.getKeywordInPersistentHitPanel_test().isDisplayed()) {
 			baseClass.passedStep("Keyword assigned to security group is present in the persistent hit panel");
 		} else {
 			baseClass.failedStep("Keyword assigned to security group is not present in the panel");
 		}
-	
-	assignmentsPage.deleteAssgnmntUsingPagination(assname);
-	loginPage.logout();
+
+		assignmentsPage.deleteAssgnmntUsingPagination(assname);
+		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51113
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51113
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 17)
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 17)
 	public void verifyImagesTabDropDownAsSA() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51113");
-		baseClass.stepInfo("Verify user after impersonation can select any of the menu option from Images tab- Zoom in, Zoom out, rotation, Slider, Fit to Width");
+		baseClass.stepInfo(
+				"Verify user after impersonation can select any of the menu option from Images tab- Zoom in, Zoom out, rotation, Slider, Fit to Width");
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.impersonateSAtoRMU();
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.searchString1);
-	    sessionSearch.ViewInDocView();
-	    docViewRedact = new DocViewRedactions(driver);
+		sessionSearch.ViewInDocView();
+		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.clickingImagesTab();
-	    DocViewPage docviewpage = new DocViewPage(driver);	
-		docviewpage.selectDocIdInMiniDocList(Input.testTenthDocId);	
+		DocViewPage docviewpage = new DocViewPage(driver);
+		docviewpage.selectDocIdInMiniDocList(Input.testTenthDocId);
 		driver.scrollPageToTop();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesIconDocView());
-		if(docViewRedact.imagesTabDropDown().isDisplayed()) {
+		if (docViewRedact.imagesTabDropDown().isDisplayed()) {
 			baseClass.passedStep("images Tab drop down is Visible");
 		} else {
 			baseClass.failedStep("images Tab drop down is not visible");
 		}
 		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesTabZoomOut());
 		docViewRedact.imagesTabZoomOut().Click();
-		if(docViewRedact.imagesTabZoomOut().isDisplayed()) {
+		if (docViewRedact.imagesTabZoomOut().isDisplayed()) {
 			baseClass.passedStep("images Tab zomm out is Visible");
 		} else {
 			baseClass.failedStep("images Tab zoom out is not visible");
 		}
 		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesTabZoomIn());
 		docViewRedact.imagesTabZoomIn().Click();
-		if(docViewRedact.imagesTabZoomIn().isDisplayed()) {
+		if (docViewRedact.imagesTabZoomIn().isDisplayed()) {
 			baseClass.passedStep("images Tab zoom in is Visible");
 		} else {
 			baseClass.failedStep("images Tab zoom in is not visible");
 		}
 		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesTabZoomFitToScreen());
 		docViewRedact.imagesTabZoomFitToScreen().Click();
-		if(docViewRedact.imagesTabZoomIn().isDisplayed()) {
+		if (docViewRedact.imagesTabZoomIn().isDisplayed()) {
 			baseClass.passedStep("images Tab fit to screen option is avilablee");
 		} else {
 			baseClass.failedStep("images Tab fit to screen option is not avilable");
 		}
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-59994
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-59994
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 18)
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
 	public void verifyRedactionTagSelectionAsSA() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-49994");
-		baseClass.stepInfo("Verify the automatically selection of the redaction tag when System Admin impersonates as RMU/Reviewer");
+		baseClass.stepInfo(
+				"Verify the automatically selection of the redaction tag when System Admin impersonates as RMU/Reviewer");
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.impersonateSAtoRMU();
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.searchString1);
-	    sessionSearch.ViewInDocView();
-	    docViewRedact = new DocViewRedactions(driver);
-	    docViewRedact.clickingRedactionIcon();
-	    baseClass.waitForElement(docViewRedact.thisPageRedaction());
+		sessionSearch.ViewInDocView();
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.clickingRedactionIcon();
+		baseClass.waitForElement(docViewRedact.thisPageRedaction());
 		baseClass.waitTillElemetToBeClickable(docViewRedact.thisPageRedaction());
 		docViewRedact.thisPageRedaction().Click();
 		Robot robot = new Robot();
@@ -844,121 +867,125 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("First redaction tag on the list saved successfully");
 		loginPage.logout();
 	}
-	
-	
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51432
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51432
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true,dataProvider = "userDetails", alwaysRun = true , groups = { "regression" }, priority = 19)
+
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void verifySearchBoxNotPresent(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51432");
 		baseClass.stepInfo("Verify that search box is eliminated from presentation in DocView with no visible remnant");
 		loginPage.loginToSightLine(userName, password);
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.searchString1);
-	    sessionSearch.ViewInDocView();
-	    docViewRedact = new DocViewRedactions(driver);
-	    driver.WaitUntil((new Callable<Boolean>() {
+		sessionSearch.ViewInDocView();
+		docViewRedact = new DocViewRedactions(driver);
+		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return docViewRedact.getSearchIcon().Visible() && docViewRedact.HighliteIcon().Enabled();
 			}
 		}), Input.wait30);
-	    baseClass.waitTillElemetToBeClickable(docViewRedact.getSearchIcon());
-	    docViewRedact.getSearchIcon().waitAndFind(30);
-	    if(docViewRedact.getInputSearchBox().Visible()) {
-	    	baseClass.failedStep("The search box is present in the default view of DocView");
-	    } else {
-	    	baseClass.passedStep("The search box is not present in the default view of docview");
-	    } 
-	    loginPage.logout();	    
+		baseClass.waitTillElemetToBeClickable(docViewRedact.getSearchIcon());
+		docViewRedact.getSearchIcon().waitAndFind(30);
+		if (docViewRedact.getInputSearchBox().Visible()) {
+			baseClass.failedStep("The search box is present in the default view of DocView");
+		} else {
+			baseClass.passedStep("The search box is not present in the default view of docview");
+		}
+		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50849
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50849
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true,dataProvider = "userDetails2", alwaysRun = true , groups = { "regression" }, priority = 20)
+
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 20)
 	public void verifyAllObjectsDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-50849");
-		baseClass.stepInfo("To verify that when user navigates to doc view from the Basic search view, then all the objects on doc view are displayed.");
+		baseClass.stepInfo(
+				"To verify that when user navigates to doc view from the Basic search view, then all the objects on doc view are displayed.");
 		loginPage.loginToSightLine(userName, password);
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.searchString1);
-	    sessionSearch.ViewInDocView();
-	    docViewRedact = new DocViewRedactions(driver);
-	    driver.WaitUntil((new Callable<Boolean>() {
+		sessionSearch.ViewInDocView();
+		docViewRedact = new DocViewRedactions(driver);
+		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return docViewRedact.HighliteIcon().Visible() && docViewRedact.HighliteIcon().Enabled();
 			}
 		}), Input.wait30);
-	    baseClass.waitTillElemetToBeClickable(docViewRedact.HighliteIcon());
-	    docViewRedact.HighliteIcon().waitAndFind(30);
-	    if(docViewRedact.HighliteIcon().isDisplayed()) {
-	    	baseClass.passedStep("Highlite icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Highlite Icon not visible in DocView");
-	    }
-	    
-	    if(docViewRedact.redactionIcon().isDisplayed()) {
-	    	baseClass.passedStep("Redaction icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Redaction Icon not visible in DocView");
-	    }
-	    
-	    if(docViewRedact.getSearchIcon().isDisplayed()) {
-	    	baseClass.passedStep("Search icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Search Icon not visible in DocView");
-	    }
-	    
-	    if(docViewRedact.forwardNextDocBtn().isDisplayed()) {
-	    	baseClass.passedStep("doc navigation forward icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("doc navigation forwaard not visible in DocView");
-	    }
-	    
-	    if(docViewRedact.backwardPriviousDocBtn().isDisplayed()) {
-	    	baseClass.passedStep("Doc Navigation backward visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Doc Navigation Backward not visible in DocView");
-	    }
-	    
-	    if(docViewRedact.docViewNextPage().isDisplayed()) {
-	    	baseClass.passedStep("page Navigation forward visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Doc Navigation Backward not visible in DocView");
-	    }
-	    
-	    if(docViewRedact.docViewPreviousPage().isDisplayed()) {
-	    	baseClass.passedStep("page Navigation backward visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Doc Navigation Backward not visible in DocView");
-	    }
-	    
-	    if(docViewRedact.pageNumberTextBox().isDisplayed()) {
-	    	baseClass.passedStep("page Number box visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("page number box not visible in DocView");
-	    }
-	    loginPage.logout();
-	    
+		baseClass.waitTillElemetToBeClickable(docViewRedact.HighliteIcon());
+		docViewRedact.HighliteIcon().waitAndFind(30);
+		if (docViewRedact.HighliteIcon().isDisplayed()) {
+			baseClass.passedStep("Highlite icon visible in DocView");
+		} else {
+			baseClass.failedStep("Highlite Icon not visible in DocView");
+		}
+
+		if (docViewRedact.redactionIcon().isDisplayed()) {
+			baseClass.passedStep("Redaction icon visible in DocView");
+		} else {
+			baseClass.failedStep("Redaction Icon not visible in DocView");
+		}
+
+		if (docViewRedact.getSearchIcon().isDisplayed()) {
+			baseClass.passedStep("Search icon visible in DocView");
+		} else {
+			baseClass.failedStep("Search Icon not visible in DocView");
+		}
+
+		if (docViewRedact.forwardNextDocBtn().isDisplayed()) {
+			baseClass.passedStep("doc navigation forward icon visible in DocView");
+		} else {
+			baseClass.failedStep("doc navigation forwaard not visible in DocView");
+		}
+
+		if (docViewRedact.backwardPriviousDocBtn().isDisplayed()) {
+			baseClass.passedStep("Doc Navigation backward visible in DocView");
+		} else {
+			baseClass.failedStep("Doc Navigation Backward not visible in DocView");
+		}
+
+		if (docViewRedact.docViewNextPage().isDisplayed()) {
+			baseClass.passedStep("page Navigation forward visible in DocView");
+		} else {
+			baseClass.failedStep("Doc Navigation Backward not visible in DocView");
+		}
+
+		if (docViewRedact.docViewPreviousPage().isDisplayed()) {
+			baseClass.passedStep("page Navigation backward visible in DocView");
+		} else {
+			baseClass.failedStep("Doc Navigation Backward not visible in DocView");
+		}
+
+		if (docViewRedact.pageNumberTextBox().isDisplayed()) {
+			baseClass.passedStep("page Number box visible in DocView");
+		} else {
+			baseClass.failedStep("page number box not visible in DocView");
+		}
+		loginPage.logout();
+
 	}
 
-	
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51254
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51254
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
@@ -969,7 +996,8 @@ public class DocView_Regression2 {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.impersonateSAtoRMU();
 		baseClass.stepInfo("Test case Id: RPMXCON-51254");
-		baseClass.stepInfo("Verify user after impersonation can go to next/prvious highlight in doc view when there are multiple hits for each term in context of an assignment");
+		baseClass.stepInfo(
+				"Verify user after impersonation can go to next/prvious highlight in doc view when there are multiple hits for each term in context of an assignment");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
@@ -987,13 +1015,13 @@ public class DocView_Regression2 {
 		docViewRedact.nextKeywordTest().waitAndClick(3);
 		String getAttribute = docViewRedact.nextKeywordTest().GetAttribute("position");
 		System.out.println(getAttribute);
-		if(getAttribute.equalsIgnoreCase("1")) {
+		if (getAttribute.equalsIgnoreCase("1")) {
 			baseClass.passedStep("Sucsessfully moved forward on hits");
 		} else {
 			baseClass.failedStep("moving forward on hits unsuccessful");
 		}
 		loginPage.logout();
-		
+
 // 	checking hits as PA to RMU
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
@@ -1011,39 +1039,41 @@ public class DocView_Regression2 {
 		docViewRedact.nextKeywordTest().waitAndClick(3);
 		String getAttribute2 = docViewRedact.nextKeywordTest().GetAttribute("position");
 		System.out.println(getAttribute2);
-		if(getAttribute2.equalsIgnoreCase("1")) {
+		if (getAttribute2.equalsIgnoreCase("1")) {
 			baseClass.passedStep("Sucsessfully moved forward on hits");
 		} else {
 			baseClass.failedStep("moving forward on hits unsuccessful");
-		}	
+		}
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51079
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51079
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true,dataProvider = "userDetails2", alwaysRun = true , groups = { "regression" }, priority = 22)
+
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 22)
 	public void verifyAnnotationDelete(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case id : RPMXCON-51079");
 		baseClass.stepInfo("Verify that by default, the document is simply shows the search icon [magnifying]");
 		loginPage.loginToSightLine(userName, password);
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testTenthDocId);
-	    sessionSearch.ViewInDocView();
-	    docViewRedact = new DocViewRedactions(driver);
-	    docViewRedact.clickingRedactionIcon();
-	    docViewRedact.thisPageRedaction().waitAndClick(3);
-	    docViewRedact.selectingRectangleRedactionTag();
-	    Thread.sleep(3000);
-	    actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), -10, -10);
-	    actions.click();
+		sessionSearch.ViewInDocView();
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.clickingRedactionIcon();
+		docViewRedact.thisPageRedaction().waitAndClick(3);
+		docViewRedact.selectingRectangleRedactionTag();
+		Thread.sleep(3000);
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), -10, -10);
+		actions.click();
 		actions.build().perform();
 		if (docViewRedact.deleteRedactioBtn().Displayed()) {
 			docViewRedact.deleteRedactioBtn().waitAndClick(5);
@@ -1054,22 +1084,24 @@ public class DocView_Regression2 {
 		}
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51057
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51057
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 23)
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 23)
 	public void verifyRedactionOnImpersonationRMUtoREV() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51057");
 		baseClass.stepInfo("Verify user after impersonation can view highlighting and can annotate in a document");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		sessionSearch.basicContentSearch(Input.randomText);
 		sessionSearch.bulkAssign();
@@ -1080,64 +1112,71 @@ public class DocView_Regression2 {
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.clickingRedactionIcon();
 		docViewRedact.thisPageRedaction().waitAndClick(3);
-	    docViewRedact.selectingRectangleRedactionTag();
-	    baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
-	    loginPage.logout();	    
+		docViewRedact.selectingRectangleRedactionTag();
+		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
+		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51912
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51912
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true,dataProvider = "userDetails", alwaysRun = true , groups = { "regression" }, priority = 24)
-	public void verifyImagesTabRetainedFromHistoryDropdown(String fullName, String userName, String password) throws Exception {
+
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 24)
+	public void verifyImagesTabRetainedFromHistoryDropdown(String fullName, String userName, String password)
+			throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51912");
-		baseClass.stepInfo("Verify that when user in on Images tab and completes the document then should be on Images tab for next navigated document");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and completes the document then should be on Images tab for next navigated document");
 		loginPage.loginToSightLine(userName, password);
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.searchString1);
-	    sessionSearch.ViewInDocView();
-	    docViewRedact = new DocViewRedactions(driver);
-	    docViewRedact.clickingImagesTab();
-	    docViewRedact.miniDoclistTable(4);
-	    driver.scrollPageToTop();
-	    baseClass.waitTillElemetToBeClickable(docViewRedact.historyDrowDownBtn());
-	    docViewRedact.historyDrowDownBtn().waitAndClick(3);
-	    docViewRedact.historyDropDownDocSelect(Input.testSecondDocId).waitAndClick(3);
-	    String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
+		sessionSearch.ViewInDocView();
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.clickingImagesTab();
+		docViewRedact.miniDoclistTable(4);
+		driver.scrollPageToTop();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.historyDrowDownBtn());
+		docViewRedact.historyDrowDownBtn().waitAndClick(3);
+		docViewRedact.historyDropDownDocSelect(Input.testSecondDocId).waitAndClick(3);
+		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
 		System.out.println(status);
-		if(status.equalsIgnoreCase("true")) {
+		if (status.equalsIgnoreCase("true")) {
 			baseClass.passedStep("The images tab is retained when document selected from history DropDown");
-		}
-		else {
+		} else {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51348
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51348
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true,dataProvider = "userDetails2", alwaysRun = true , groups = { "regression" }, priority = 25)
-	public void verifyRemarksPanelRetainedOnDocNavigation(String fullName, String userName, String password) throws Exception {
+
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 25)
+	public void verifyRemarksPanelRetainedOnDocNavigation(String fullName, String userName, String password)
+			throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51348");
-		baseClass.stepInfo("Verify when Reviewer Remarks panel is selected from doc view and navigates to another document from mini doc list child window the selected panels/menus previously selected should remain.");
+		baseClass.stepInfo(
+				"Verify when Reviewer Remarks panel is selected from doc view and navigates to another document from mini doc list child window the selected panels/menus previously selected should remain.");
 		loginPage.loginToSightLine(userName, password);
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.searchString1);
-	    sessionSearch.ViewInDocView();
-	    docViewRedact = new DocViewRedactions(driver);
-	    docViewRedact.clickingRemarksIcon();
-	    ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
+		sessionSearch.ViewInDocView();
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.clickingRemarksIcon();
+		ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
 		reusabledocviewpage.clickGearIconOpenMiniDocList();
 		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
 		if (docViewRedact.addRemarksBtn().isDisplayed()) {
@@ -1147,34 +1186,37 @@ public class DocView_Regression2 {
 		} else {
 			assertTrue(false);
 		}
-		loginPage.logout();	    
+		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51927
-	 * Description :Verify that when performing doc-to-doc navigation the entry for the same document in mini-DocList
-	 *  must always present fully in the visible area of the mini-DocList (to the user).
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51927 Description :Verify that when performing doc-to-doc
+	 * navigation the entry for the same document in mini-DocList must always
+	 * present fully in the visible area of the mini-DocList (to the user).
+	 * 
+	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true,dataProvider = "userDetails", groups = {"regression" },priority = 24)
-	public void verifyDocumentPresentAfterDocToDocNavigation(String fullName, String userName, String password) throws InterruptedException {
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 24)
+	public void verifyDocumentPresentAfterDocToDocNavigation(String fullName, String userName, String password)
+			throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docView = new DocViewPage(driver);
 		docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51927");
 		baseClass.stepInfo("Verify the document in minidoclist after performing doc-to-doc navigation");
-		
+
 		// Login to the application
 		loginPage.loginToSightLine(userName, password);
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		
+
 		// Performing basic search
 		sessionSearch.basicContentSearch(Input.searchString1);
-		
+
 		// Adding search results and view in docview
 		sessionSearch.ViewInDocView();
-		
+
 		// Performing doc-to-doc navigation
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
@@ -1183,105 +1225,111 @@ public class DocView_Regression2 {
 		}), Input.wait30);
 		baseClass.waitTillElemetToBeClickable(docView.getDocView_Last());
 		docView.getDocView_Last().waitAndClick(30);
-		
+
 		driver.waitForPageToBeReady();
 		// getting the first available docid
 		String selectedId = docView.getDocView_SelectedDocID().getText();
-				
+
 		// getting doc id in minidoclist
-		
+
 		String activeDocumentId = docViewRedact.activeDocId().getText();
-		//Verifying the Docids
+		// Verifying the Docids
 		if (selectedId.equalsIgnoreCase(activeDocumentId)) {
 			baseClass.passedStep("Presently Viewed Document is present in visible area of the mini-doclist");
-		}
-		else {
+		} else {
 			baseClass.failedStep("Presently Viewed Document is not present in visible area of the mini-doclist");
-			}
+		}
 		loginPage.logout();
-				
+
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51353
-	 * Description :Verify after impersonation when Persistent Hit panel, Reviewer Remarks panel, Redactios menu, Highlights menu is selected
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51353 Description :Verify after impersonation when Persistent Hit
+	 * panel, Reviewer Remarks panel, Redactios menu, Highlights menu is selected
+	 * 
+	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true, groups = {"regression" },priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyMenuStatusAfterMovingToNextDoc() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docView = new DocViewPage(driver);
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51353");
-		baseClass.stepInfo("Verify when Persistent Hit panel, Reviewer Remarks panel, Redactios menu, Highlights menu is selected after moving to next document");
-		
+		baseClass.stepInfo(
+				"Verify when Persistent Hit panel, Reviewer Remarks panel, Redactios menu, Highlights menu is selected after moving to next document");
+
 		// Login to the application
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		
-		//Impersonate from SA to RMU and verifying status
+
+		// Impersonate from SA to RMU and verifying status
 		baseClass.impersonateSAtoRMU();
 		baseClass.stepInfo("Impersonated from SA to RMU");
 		docView.statusCheckAfterImpersonation();
-		
-		//Login back to the application as SA
+
+		// Login back to the application as SA
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-				
-		//Impersonate from SA to Reviewer and verifying status
+
+		// Impersonate from SA to Reviewer and verifying status
 		baseClass.impersonateSAtoReviewer();
 		baseClass.stepInfo("Impersonated from SA to Reviewer");
 		docView.statusCheckAfterImpersonation();
-		
-		//Login back to the application as PA
+
+		// Login back to the application as PA
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
-		//Impersonate from PA to RMU and verifying status
+
+		// Impersonate from PA to RMU and verifying status
 		baseClass.impersonatePAtoRMU();
 		baseClass.stepInfo("Impersonated from PA to RMU");
 		docView.statusCheckAfterImpersonation();
-		
-		//Login back to the application as PA
+
+		// Login back to the application as PA
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
-		//Impersonate from PA to Reviewer and verifying status
+
+		// Impersonate from PA to Reviewer and verifying status
 		baseClass.impersonatePAtoReviewer();
 		baseClass.stepInfo("Impersonated from PA to Reviewer");
 		docView.statusCheckAfterImpersonation();
-		
-		//Login back to the application as RMU
+
+		// Login back to the application as RMU
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		
-		//Impersonate from RMU to Reviewer and verifying status
+
+		// Impersonate from RMU to Reviewer and verifying status
 		baseClass.impersonateRMUtoReviewer();
 		baseClass.stepInfo("Impersonated from RMU to Reviewer");
 		docView.statusCheckAfterImpersonation();
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51347
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51347
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true,dataProvider = "userDetails", alwaysRun = true , groups = { "regression" }, priority = 24)
-	public void verifyPersistentPanelRetainedOnDocNavigation(String fullName, String userName, String password) throws Exception {
+
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 24)
+	public void verifyPersistentPanelRetainedOnDocNavigation(String fullName, String userName, String password)
+			throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51347");
-		baseClass.stepInfo("Verify Persistent Hit panel is selected from doc view and navigates to another document from mini doc list child window the selected panels/menus previously selected should remain.");
+		baseClass.stepInfo(
+				"Verify Persistent Hit panel is selected from doc view and navigates to another document from mini doc list child window the selected panels/menus previously selected should remain.");
 		loginPage.loginToSightLine(userName, password);
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.searchString1);
-	    sessionSearch.ViewInDocView();
-	    docViewRedact = new DocViewRedactions(driver);
-	    docViewRedact.checkingPersistentHitPanel();
-	    ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
+		sessionSearch.ViewInDocView();
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.checkingPersistentHitPanel();
+		ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
 		reusabledocviewpage.clickGearIconOpenMiniDocList();
 		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
 		if (docViewRedact.persistantHitToggle().isDisplayed()) {
@@ -1291,93 +1339,96 @@ public class DocView_Regression2 {
 		} else {
 			assertTrue(false);
 		}
-		loginPage.logout();	    
+		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51351
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51351
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 25)
-		public void verifyRemarksPanelRetained(String fullName, String userName, String password)throws Exception {
-			baseClass = new BaseClass(driver);
-			loginPage.loginToSightLine(userName, password);
-			baseClass.stepInfo("login as" + fullName);
-			DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-			ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
-			baseClass.stepInfo("Test case Id: RPMXCON-51351");
-			baseClass.stepInfo(
-					"Verify when Reviewer Remarks panel is selected from audio doc view and navigates to another document from mini doc list child window the selected panels/menus previously selected should remain.");
-			SessionSearch sessionsearch = new SessionSearch(driver);
-			sessionsearch.audioSearch("Morning", Input.language);
-			baseClass.stepInfo("Search for audio docs completed");
-			sessionsearch.ViewInDocView();
-			docViewRedact.clickingAudioRemarksIcon();
-			reusabledocviewpage.clickGearIconOpenMiniDocList();
-			docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
-			if (docViewRedact.addAudioRemarks().isDisplayed()) {
-				assertTrue(true);
-				baseClass.passedStep(
-						"The remarks panel is visible for audio documents After navigating from child window");
-			} else {
-				assertTrue(false);
-			}
-			loginPage.logout();
-		}
 
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 25)
+	public void verifyRemarksPanelRetained(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("login as" + fullName);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51351");
+		baseClass.stepInfo(
+				"Verify when Reviewer Remarks panel is selected from audio doc view and navigates to another document from mini doc list child window the selected panels/menus previously selected should remain.");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.audioSearch("Morning", Input.language);
+		baseClass.stepInfo("Search for audio docs completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.clickingAudioRemarksIcon();
+		reusabledocviewpage.clickGearIconOpenMiniDocList();
+		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
+		if (docViewRedact.addAudioRemarks().isDisplayed()) {
+			assertTrue(true);
+			baseClass.passedStep("The remarks panel is visible for audio documents After navigating from child window");
+		} else {
+			assertTrue(false);
+		}
+		loginPage.logout();
+	}
 
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51859
-	 * Description :Doc View: When users locale is German then on navigating to Doc View should not display warning message.
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51859 Description :Doc View: When users locale is German then on
+	 * navigating to Doc View should not display warning message.
+	 * 
+	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = {"regression" },priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyWarningMessageDisplay() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docView = new DocViewPage(driver);
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("Test case id :RPMXCON-51859");
-		baseClass.stepInfo("When users locale is German then on navigating to Doc View should not display warning message");
-		
+		baseClass.stepInfo(
+				"When users locale is German then on navigating to Doc View should not display warning message");
+
 		// Login to the application
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-		
-		//Changing local to german as pre-requisite
+
+		// Changing local to german as pre-requisite
 		loginPage.editProfile("German - Germany");
 		baseClass.stepInfo("Successfully selected German Language");
-		
+
 		// Performing basic search
 		sessionSearch.basicContentSearch(Input.testData1);
-		
+
 		// Adding search results and view in docview
 		sessionSearch.ViewInDocViewGerman();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Navigated to DocView");
-		
-		//verifying whether warning message displayed		
-		if(baseClass.getSuccessMsgHeader().isDisplayed()) {
+
+		// verifying whether warning message displayed
+		if (baseClass.getSuccessMsgHeader().isDisplayed()) {
 			String warningMessage = baseClass.getSuccessMsgHeader().getText().toString();
 			baseClass.stepInfo(warningMessage);
 			baseClass.failedStep("Warning Message Displayed");
-		}
-		else {
+		} else {
 			baseClass.passedStep("Warning Message Not Displayed");
 		}
-		
-		//setting back to default locale
+
+		// setting back to default locale
 		loginPage.editProfile("English - United States");
 		loginPage.logout();
 	}
-	
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51115
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51115
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 27)
@@ -1386,7 +1437,8 @@ public class DocView_Regression2 {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51115");
-		baseClass.stepInfo("Verify user after impersonation can go to next/prvious highlight in doc view when there are multiple hits for each term in context of an assignment");
+		baseClass.stepInfo(
+				"Verify user after impersonation can go to next/prvious highlight in doc view when there are multiple hits for each term in context of an assignment");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
@@ -1396,7 +1448,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo(
 				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
 		docViewRedact.DisablePrintToggleinAssignment();
-		assignmentspage.selectAssignmentToViewinDocview(assignmentName);	
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
 		if (docViewRedact.get_PrintIcon().isDisplayed()) {
 			assertTrue(true);
@@ -1419,12 +1471,12 @@ public class DocView_Regression2 {
 
 	}
 
-	
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-48810
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-48810
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =28)
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 28)
 	public void verifyTextRedactionFunctionDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -1454,9 +1506,11 @@ public class DocView_Regression2 {
 	}
 
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50774
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50774
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
@@ -1465,7 +1519,8 @@ public class DocView_Regression2 {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-50774");
-		baseClass.stepInfo("To verify that 'View All Doc in Doc View' option is disabled if assignment is not added in the list");
+		baseClass.stepInfo(
+				"To verify that 'View All Doc in Doc View' option is disabled if assignment is not added in the list");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
@@ -1475,8 +1530,8 @@ public class DocView_Regression2 {
 		baseClass.stepInfo(
 				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
 		String verifydocsCountInAssgnPage = assignmentspage.verifydocsCountInAssgnPage(assignmentName);
-	
-		if(verifydocsCountInAssgnPage.equalsIgnoreCase("201")) {
+
+		if (verifydocsCountInAssgnPage.equalsIgnoreCase("201")) {
 			baseClass.passedStep("The doc count has been verified");
 		} else {
 			baseClass.failedStep("The doc count is not verified");
@@ -1484,13 +1539,15 @@ public class DocView_Regression2 {
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		baseClass.passedStep("Assignment viewed in DocView Successfully");
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50776
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50776
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 14)
@@ -1498,7 +1555,8 @@ public class DocView_Regression2 {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-50776");
-		baseClass.stepInfo("To verify that 'View All Doc in Doc View' option is disabled if assignment is not added in the list");
+		baseClass.stepInfo(
+				"To verify that 'View All Doc in Doc View' option is disabled if assignment is not added in the list");
 		docViewRedact = new DocViewRedactions(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		assignmentspage.navigateToAssignmentsPage();
@@ -1512,28 +1570,32 @@ public class DocView_Regression2 {
 		Assert.assertTrue(assignmentspage.getAssgnAction_Export().isDisplayed());
 		String getAttribute = assignmentspage.getAssignmentAction_ViewinDocView().GetAttribute("disabled");
 		System.out.println(getAttribute);
-		if(getAttribute == null) {
+		if (getAttribute == null) {
 			assignmentspage.getAssignmentAction_ViewinDocView().waitAndClick(3);
 			baseClass.VerifyWarningMessage("Please select at least one assignment from the displayed assignment list");
-			
+
 		} else {
 			baseClass.passedStep("No assignments pre esist for the SG. The view in doc view Icon is disabled");
-		}	
+		}
 		loginPage.logout();
 	}
+
 	/**
-	 * Author : Iyappan.Kasinathan
-	 * Description : Verify on click of the reviewer remark respecive page should be scrolled in doc view when redirecting from basic search/saved search/doc list
+	 * Author : Iyappan.Kasinathan Description : Verify on click of the reviewer
+	 * remark respecive page should be scrolled in doc view when redirecting from
+	 * basic search/saved search/doc list
 	 */
-	@Test(enabled = true, dataProvider = "UsersWithoutPA",alwaysRun = true, groups = { "regression" }, priority = 29)
-	public void VerifyReviewerRemarksPageFromSearchPg(String userName, String password, String fullName) throws Exception {
+	@Test(enabled = true, dataProvider = "UsersWithoutPA", alwaysRun = true, groups = { "regression" }, priority = 29)
+	public void VerifyReviewerRemarksPageFromSearchPg(String userName, String password, String fullName)
+			throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51083");
-		baseClass.stepInfo(" Verify on click of the reviewer remark respecive page should be scrolled in doc view when redirecting from basic search/saved search/doc list");
+		baseClass.stepInfo(
+				" Verify on click of the reviewer remark respecive page should be scrolled in doc view when redirecting from basic search/saved search/doc list");
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		docView = new DocViewPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		String remarksName = "remarks"+Utility.dynamicNameAppender();
+		String remarksName = "remarks" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(userName, password);
 		sessionsearch.basicContentSearch("null");
 		baseClass.stepInfo("Search with text input is completed");
@@ -1545,10 +1607,10 @@ public class DocView_Regression2 {
 		docViewRedact.clickingRemarksIcon();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
 		Thread.sleep(4000);
-		//Thread sleep added for the page to adjust resolution
+		// Thread sleep added for the page to adjust resolution
 		Actions actions = new Actions(driver.getWebDriver());
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
-		.moveByOffset(200, 90).release().build().perform();
+				.moveByOffset(200, 90).release().build().perform();
 		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
 		actions.click().build().perform();
 		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
@@ -1556,48 +1618,52 @@ public class DocView_Regression2 {
 		actions.sendKeys(remarksName);
 		actions.build().perform();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.saveRemarksBtn());
-		docViewRedact.saveRemarksBtn().waitAndClick(10);	
+		docViewRedact.saveRemarksBtn().waitAndClick(10);
 		baseClass.stepInfo("Remarks added successfully");
 		baseClass.waitForElement(docView.getDocView_SelectRemarks(remarksName));
 		docView.getDocView_SelectRemarks(remarksName).waitAndClick(10);
-		String id= docView.getRemarksId(remarksName).GetAttribute("id");
-		if(docView.getRemarksInPg(id).isElementAvailable(5)) {
+		String id = docView.getRemarksId(remarksName).GetAttribute("id");
+		if (docView.getRemarksInPg(id).isElementAvailable(5)) {
 			baseClass.passedStep("The page is loaded sucessfully where the remarks is added");
-		}else {
+		} else {
 			baseClass.failedStep("The page is not loaded where the remarks is added");
 		}
 		docViewRedact.clickingRemarksIcon();
 		docView.deleteReamark(remarksName);
 		loginPage.logout();
 	}
+
 	/**
-	 * Author : Iyappan.Kasinathan
-	 * Description : Verify on click of the reviewer remark respective page should be scrolled in doc view when redirecting from my assignment
+	 * Author : Iyappan.Kasinathan Description : Verify on click of the reviewer
+	 * remark respective page should be scrolled in doc view when redirecting from
+	 * my assignment
 	 */
-	@Test(enabled = true, dataProvider = "UsersWithoutPA",alwaysRun = true, groups = { "regression" }, priority = 30)
-	public void VerifyReviewerRemarksPageFromAssignments(String userName, String password, String fullName) throws Exception {
+	@Test(enabled = true, dataProvider = "UsersWithoutPA", alwaysRun = true, groups = { "regression" }, priority = 30)
+	public void VerifyReviewerRemarksPageFromAssignments(String userName, String password, String fullName)
+			throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51082");
-		baseClass.stepInfo("Verify on click of the reviewer remark respective page should be scrolled in doc view when redirecting from my assignment");
+		baseClass.stepInfo(
+				"Verify on click of the reviewer remark respective page should be scrolled in doc view when redirecting from my assignment");
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		docView = new DocViewPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
-		String remarksName = "remarks"+Utility.dynamicNameAppender();
+		String remarksName = "remarks" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(userName, password);
-		//create assignment
-		if(fullName.contains("RMU")) {
-		sessionsearch.basicContentSearch("null");
-		sessionsearch.bulkAssign();
-		assignmentPage.assignmentCreation(assignmentName, Input.codeFormName);
-		assignmentPage.add2ReviewerAndDistribute();
-		//Impersonate to reviewer
-		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
-		assignmentPage.viewSelectedAssgnUsingPagination(assignmentName);
-		assignmentPage.assgnViewInAllDocView();
-		baseClass.stepInfo("Navigated to docview from assignment page successfully");
-		driver.waitForPageToBeReady();
-		}else {
+		// create assignment
+		if (fullName.contains("RMU")) {
+			sessionsearch.basicContentSearch("null");
+			sessionsearch.bulkAssign();
+			assignmentPage.assignmentCreation(assignmentName, Input.codeFormName);
+			assignmentPage.add2ReviewerAndDistribute();
+			// Impersonate to reviewer
+			driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+			assignmentPage.viewSelectedAssgnUsingPagination(assignmentName);
+			assignmentPage.assgnViewInAllDocView();
+			baseClass.stepInfo("Navigated to docview from assignment page successfully");
+			driver.waitForPageToBeReady();
+		} else {
 			assignmentPage.SelectAssignmentByReviewer(assignmentName);
 			baseClass.stepInfo("User on the doc view after selecting the assignment");
 		}
@@ -1607,10 +1673,10 @@ public class DocView_Regression2 {
 		docViewRedact.clickingRemarksIcon();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
 		Thread.sleep(4000);
-		//Thread sleep added for the page to adjust resolution
+		// Thread sleep added for the page to adjust resolution
 		Actions actions = new Actions(driver.getWebDriver());
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
-		.moveByOffset(200, 90).release().build().perform();
+				.moveByOffset(200, 90).release().build().perform();
 		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
 		actions.click().build().perform();
 		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
@@ -1618,51 +1684,55 @@ public class DocView_Regression2 {
 		actions.sendKeys(remarksName);
 		actions.build().perform();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.saveRemarksBtn());
-		docViewRedact.saveRemarksBtn().waitAndClick(10);	
+		docViewRedact.saveRemarksBtn().waitAndClick(10);
 		baseClass.stepInfo("Remarks added successfully");
 		baseClass.waitForElement(docView.getDocView_SelectRemarks(remarksName));
 		docView.getDocView_SelectRemarks(remarksName).waitAndClick(10);
-		String id= docView.getRemarksId(remarksName).GetAttribute("id");
-		if(docView.getRemarksInPg(id).isElementAvailable(5)) {
+		String id = docView.getRemarksId(remarksName).GetAttribute("id");
+		if (docView.getRemarksInPg(id).isElementAvailable(5)) {
 			baseClass.passedStep("The page is loaded sucessfully where the remarks is added");
-		}else {
+		} else {
 			baseClass.failedStep("The page is not loaded where the remarks is added");
 		}
 		docViewRedact.clickingRemarksIcon();
 		docView.deleteReamark(remarksName);
-		if(fullName.contains("REV")) {
+		if (fullName.contains("REV")) {
 			loginPage.logout();
 			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
 		}
 		loginPage.logout();
 	}
+
 	@DataProvider(name = "UsersWithoutPA")
 	public Object[][] UsersWithoutPA() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName }, { Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
 		return users;
-	}	
-	
-	
+	}
+
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51046
-	 * Description :Verify user can not see the keywords highlighted outside of an assignment when keyword groups assigned to the assignment only
-	 * @throws InterruptedException 
-	 * @throws AWTException 
-	 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51046 Description :Verify user can not see the keywords
+	 * highlighted outside of an assignment when keyword groups assigned to the
+	 * assignment only
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * 
 	 */
-	@Test(enabled = true, groups = {"regression" },priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyKeywordsHighlightingWhenMappedToAssignment() throws InterruptedException, AWTException {
-		
+
 		baseClass = new BaseClass(driver);
 		assignPage = new AssignmentsPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		keywordPage = new KeywordPage(driver);
-		
+
 		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
-		
-		//Pre-requisites
+
+		// Pre-requisites
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51046");
 		baseClass.stepInfo("Verify keywords highlighting after keywords mapped to the assignment");
@@ -1676,8 +1746,8 @@ public class DocView_Regression2 {
 		assignPage.getAssgn_Keywordsbutton().waitAndClick(10);
 		baseClass.waitForElement(assignPage.getAssgn_Keywordspopup());
 		driver.waitForPageToBeReady();
-		List<String> values =baseClass.availableListofElements(assignPage.getAssgn_AllKeywords());
-		baseClass.stepInfo("Mapped keywords for the assignment are " +values);
+		List<String> values = baseClass.availableListofElements(assignPage.getAssgn_AllKeywords());
+		baseClass.stepInfo("Mapped keywords for the assignment are " + values);
 		assignPage.getAssgn_Keywordokbutton().ScrollTo();
 		assignPage.getAssgn_Keywordokbutton().isElementAvailable(10);
 		assignPage.getAssgn_Keywordokbutton().Click();
@@ -1686,8 +1756,8 @@ public class DocView_Regression2 {
 		assignPage.addReviewerAndDistributeDocs();
 		baseClass.stepInfo("Added reviewer and distributed docs");
 		loginPage.logout();
-		
-		//Login as RMU and verify keyword Highlighting
+
+		// Login as RMU and verify keyword Highlighting
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logined as RMU");
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -1698,8 +1768,8 @@ public class DocView_Regression2 {
 		docView.getPersistentHit(Input.testData1);
 		docView.verifyKeywordHighlightedOnDocView();
 		loginPage.logout();
-		
-		//login as reviewer and verify keyword highlighting
+
+		// login as reviewer and verify keyword highlighting
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logined as Reviewer");
 		assignPage.SelectAssignmentByReviewer(assignmentName);
@@ -1710,24 +1780,27 @@ public class DocView_Regression2 {
 		docView.verifyKeywordHighlightedOnDocView();
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51045
-	 * Description :Verify user can not see the keywords highlighted in context of an assignment when keyword group assigned to the security group only
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51045 Description :Verify user can not see the keywords
+	 * highlighted in context of an assignment when keyword group assigned to the
+	 * security group only
+	 * 
+	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = {"regression" },priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyKeywordsHighlightingWhenUnMappedFromAssignment() throws InterruptedException {
-		
+
 		baseClass = new BaseClass(driver);
 		assignPage = new AssignmentsPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		keywordPage = new KeywordPage(driver);
-		
+
 		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
-		
-		//Pre-requisites
+
+		// Pre-requisites
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51045");
 		baseClass.stepInfo("Verify keywords highlighting when keywords are not mapped to the assignment");
@@ -1740,8 +1813,8 @@ public class DocView_Regression2 {
 		assignPage.getAssignmentSaveButton().Click();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
-			
-		//Login as RMU and verify keyword Highlighting
+
+		// Login as RMU and verify keyword Highlighting
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logined as RMU");
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -1757,17 +1830,15 @@ public class DocView_Regression2 {
 		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
 		docView.getPersistantHitEyeIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
-		
-		if(docView.getPersistentToogle().isDisplayed()) {
+
+		if (docView.getPersistentToogle().isDisplayed()) {
 			baseClass.failedStep("Keywprds are highlighted while checking as RMU");
-		}
-		else
-		{
+		} else {
 			baseClass.passedStep("Keywords are not highlighted while checking as RMU");
-		}	
+		}
 		loginPage.logout();
-				
-		//login as reviewer and verify keyword highlighting
+
+		// login as reviewer and verify keyword highlighting
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logined as Reviewer");
 		assignPage.SelectAssignmentByReviewer(assignmentName);
@@ -1779,25 +1850,25 @@ public class DocView_Regression2 {
 			public Boolean call() {
 				return docView.getPersistantHitEyeIcon().Displayed();
 			}
-		}), Input.wait30);		
+		}), Input.wait30);
 		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
 		docView.getPersistantHitEyeIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
-		if(docView.getPersistentToogle().isDisplayed()) {
+		if (docView.getPersistentToogle().isDisplayed()) {
 			baseClass.failedStep("Keywprds are highlighted while checking as reviewer");
-		}
-		else
-		{
+		} else {
 			baseClass.passedStep("Keywords are not highlighted while checking as reviewer");
 		}
 		loginPage.logout();
-		
+
 	}
-/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51557
+
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51557
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =28)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 28)
 	public void verifySearchIconGreyedForTiff(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -1818,7 +1889,8 @@ public class DocView_Regression2 {
 	}
 
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51267
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51267
 	 * 
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 29)
@@ -1882,154 +1954,179 @@ public class DocView_Regression2 {
 		baseClass.passedStep("Sucsessfully Viewed Uni code file - SA to RMU");
 		loginPage.logout();
 
-	}/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50787
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	}
+
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50787
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true,dataProvider = "userDetails2", alwaysRun = true , groups = { "regression" }, priority = 30)
+
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 30)
 	public void verifyDocViewOptions(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-50787");
 		baseClass.stepInfo("To verify options available on menu bar from document view panel of doc view page");
 		loginPage.loginToSightLine(userName, password);
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.searchString1);
-	    sessionSearch.ViewInDocView();
-	    docViewRedact = new DocViewRedactions(driver);
-	    driver.WaitUntil((new Callable<Boolean>() {
+		sessionSearch.ViewInDocView();
+		docViewRedact = new DocViewRedactions(driver);
+		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
-				return docViewRedact.thumbNailsIcon().Visible() && docViewRedact.thumbNailsIcon().Enabled();}
+				return docViewRedact.thumbNailsIcon().Visible() && docViewRedact.thumbNailsIcon().Enabled();
+			}
 		}), Input.wait30);
-	    baseClass.waitTillElemetToBeClickable(docViewRedact.thumbNailsIcon());
-	    docViewRedact.HighliteIcon().waitAndFind(30);
-	    if(docViewRedact.HighliteIcon().isDisplayed()) {
-	    	baseClass.passedStep("Thumbnails icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Thumbnails Icon not visible in DocView");  }    
-	    if(docViewRedact.zoomInDocView().isDisplayed()) {
-	    	baseClass.passedStep("Zoom in icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Zoom in Icon not visible in DocView");  }    
-	    if(docViewRedact.zoomOutDocView().isDisplayed()) {
-	    	baseClass.passedStep("Zoom out visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Zoom out Icon not visible in DocView"); }    
-	    if(docViewRedact.zoomFitToScreenDocView().isDisplayed()) {
-	    	baseClass.passedStep("Fit to screen icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Fit to screen forwaard not visible in DocView");} 
-	    if(docViewRedact.rotateClockWise().isDisplayed()) {
-	    	baseClass.passedStep("Rotate Clock wise visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Rotate clock wise not visible in DocView");} 
-	    if(docViewRedact.rotateAntiClockWise().isDisplayed()) {
-	    	baseClass.passedStep("Rotate AntiClock visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Rotate AntiClock not visible in DocView"); }
-	    loginPage.logout();
-	    
+		baseClass.waitTillElemetToBeClickable(docViewRedact.thumbNailsIcon());
+		docViewRedact.HighliteIcon().waitAndFind(30);
+		if (docViewRedact.HighliteIcon().isDisplayed()) {
+			baseClass.passedStep("Thumbnails icon visible in DocView");
+		} else {
+			baseClass.failedStep("Thumbnails Icon not visible in DocView");
+		}
+		if (docViewRedact.zoomInDocView().isDisplayed()) {
+			baseClass.passedStep("Zoom in icon visible in DocView");
+		} else {
+			baseClass.failedStep("Zoom in Icon not visible in DocView");
+		}
+		if (docViewRedact.zoomOutDocView().isDisplayed()) {
+			baseClass.passedStep("Zoom out visible in DocView");
+		} else {
+			baseClass.failedStep("Zoom out Icon not visible in DocView");
+		}
+		if (docViewRedact.zoomFitToScreenDocView().isDisplayed()) {
+			baseClass.passedStep("Fit to screen icon visible in DocView");
+		} else {
+			baseClass.failedStep("Fit to screen forwaard not visible in DocView");
+		}
+		if (docViewRedact.rotateClockWise().isDisplayed()) {
+			baseClass.passedStep("Rotate Clock wise visible in DocView");
+		} else {
+			baseClass.failedStep("Rotate clock wise not visible in DocView");
+		}
+		if (docViewRedact.rotateAntiClockWise().isDisplayed()) {
+			baseClass.passedStep("Rotate AntiClock visible in DocView");
+		} else {
+			baseClass.failedStep("Rotate AntiClock not visible in DocView");
+		}
+		loginPage.logout();
+
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50787
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50787
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
-	
-	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 31)
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
 	public void verifyDocViewOptions() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-50787");
 		baseClass.stepInfo("To verify options available on menu bar from document view panel of doc view page");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		SessionSearch sessionSearch = new SessionSearch(driver);	
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		sessionSearch.basicContentSearch(Input.randomText);
 		sessionSearch.bulkAssign();
 		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
 		baseClass.passedStep("Assignment viewed in DocView Successfully");
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
-	    docViewRedact = new DocViewRedactions(driver);
-	    driver.WaitUntil((new Callable<Boolean>() {
+		docViewRedact = new DocViewRedactions(driver);
+		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return docViewRedact.thumbNailsIcon().Visible() && docViewRedact.thumbNailsIcon().Enabled();
 			}
 		}), Input.wait30);
-	    baseClass.waitTillElemetToBeClickable(docViewRedact.thumbNailsIcon());
-	    docViewRedact.thumbNailsIcon().waitAndFind(30);
-	    if(docViewRedact.HighliteIcon().isDisplayed()) {
-	    	baseClass.passedStep("Thumbnails icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Thumbnails Icon not visible in DocView");  }    
-	    if(docViewRedact.zoomInDocView().isDisplayed()) {
-	    	baseClass.passedStep("Zoom in icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Zoom in Icon not visible in DocView");  }    
-	    if(docViewRedact.zoomOutDocView().isDisplayed()) {
-	    	baseClass.passedStep("Zoom out visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Zoom out Icon not visible in DocView"); }    
-	    if(docViewRedact.zoomFitToScreenDocView().isDisplayed()) {
-	    	baseClass.passedStep("Fit to screen icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Fit to screen forwaard not visible in DocView");} 
-	    if(docViewRedact.rotateClockWise().isDisplayed()) {
-	    	baseClass.passedStep("Rotate Clock wise visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Rotate clock wise not visible in DocView");} 
-	    if(docViewRedact.rotateAntiClockWise().isDisplayed()) {
-	    	baseClass.passedStep("Rotate AntiClock visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Rotate AntiClock not visible in DocView"); }   
-		
-	 if(docViewRedact.HighliteIcon().isDisplayed()) {
-	    	baseClass.passedStep("Highlite icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Highlite Icon not visible in DocView");
-	    }
-	    
-	    if(docViewRedact.redactionIcon().isDisplayed()) {
-	    	baseClass.passedStep("Redaction icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Redaction Icon not visible in DocView");
-	    }
-	    
-	    if(docViewRedact.getSearchIcon().isDisplayed()) {
-	    	baseClass.passedStep("Search icon visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Search Icon not visible in DocView");
-	    }
-		
-		 if(docViewRedact.remarksIcon().isDisplayed()) {
-	    	baseClass.passedStep("Remarks iocn visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Remarks icon not visible in DocView"); }
-	    
-	    if(docViewRedact.persistantHitBtn().isDisplayed()) {
-	    	baseClass.passedStep("Persistent hit button visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("persistent hit button not visible in DocView"); }
-	    
-	    if(docViewRedact.downloadIcon().isDisplayed()) {
-	    	baseClass.passedStep("Download iocn visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("Download icon not visible in DocView"); }
-		
-		 if(docViewRedact.printIcon().isDisplayed()) {
-	    	baseClass.passedStep("print iocn visible in DocView"); 	
-	    } else {
-	    	baseClass.failedStep("print icon not visible in DocView"); }
-		 loginPage.logout();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.thumbNailsIcon());
+		docViewRedact.thumbNailsIcon().waitAndFind(30);
+		if (docViewRedact.HighliteIcon().isDisplayed()) {
+			baseClass.passedStep("Thumbnails icon visible in DocView");
+		} else {
+			baseClass.failedStep("Thumbnails Icon not visible in DocView");
+		}
+		if (docViewRedact.zoomInDocView().isDisplayed()) {
+			baseClass.passedStep("Zoom in icon visible in DocView");
+		} else {
+			baseClass.failedStep("Zoom in Icon not visible in DocView");
+		}
+		if (docViewRedact.zoomOutDocView().isDisplayed()) {
+			baseClass.passedStep("Zoom out visible in DocView");
+		} else {
+			baseClass.failedStep("Zoom out Icon not visible in DocView");
+		}
+		if (docViewRedact.zoomFitToScreenDocView().isDisplayed()) {
+			baseClass.passedStep("Fit to screen icon visible in DocView");
+		} else {
+			baseClass.failedStep("Fit to screen forwaard not visible in DocView");
+		}
+		if (docViewRedact.rotateClockWise().isDisplayed()) {
+			baseClass.passedStep("Rotate Clock wise visible in DocView");
+		} else {
+			baseClass.failedStep("Rotate clock wise not visible in DocView");
+		}
+		if (docViewRedact.rotateAntiClockWise().isDisplayed()) {
+			baseClass.passedStep("Rotate AntiClock visible in DocView");
+		} else {
+			baseClass.failedStep("Rotate AntiClock not visible in DocView");
+		}
+
+		if (docViewRedact.HighliteIcon().isDisplayed()) {
+			baseClass.passedStep("Highlite icon visible in DocView");
+		} else {
+			baseClass.failedStep("Highlite Icon not visible in DocView");
+		}
+
+		if (docViewRedact.redactionIcon().isDisplayed()) {
+			baseClass.passedStep("Redaction icon visible in DocView");
+		} else {
+			baseClass.failedStep("Redaction Icon not visible in DocView");
+		}
+
+		if (docViewRedact.getSearchIcon().isDisplayed()) {
+			baseClass.passedStep("Search icon visible in DocView");
+		} else {
+			baseClass.failedStep("Search Icon not visible in DocView");
+		}
+
+		if (docViewRedact.remarksIcon().isDisplayed()) {
+			baseClass.passedStep("Remarks iocn visible in DocView");
+		} else {
+			baseClass.failedStep("Remarks icon not visible in DocView");
+		}
+
+		if (docViewRedact.persistantHitBtn().isDisplayed()) {
+			baseClass.passedStep("Persistent hit button visible in DocView");
+		} else {
+			baseClass.failedStep("persistent hit button not visible in DocView");
+		}
+
+		if (docViewRedact.downloadIcon().isDisplayed()) {
+			baseClass.passedStep("Download iocn visible in DocView");
+		} else {
+			baseClass.failedStep("Download icon not visible in DocView");
+		}
+
+		if (docViewRedact.printIcon().isDisplayed()) {
+			baseClass.passedStep("print iocn visible in DocView");
+		} else {
+			baseClass.failedStep("print icon not visible in DocView");
+		}
+		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50785
-	 * @throws InterruptedException 
-	 * @throws AWTException 
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50785
+	 * 
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 * 
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 32)
@@ -2038,32 +2135,37 @@ public class DocView_Regression2 {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-50785");
-		baseClass.stepInfo("To verify that on selecting 'View All Doc in Doc View' option when documents are not mapped to the assignment");
+		baseClass.stepInfo(
+				"To verify that on selecting 'View All Doc in Doc View' option when documents are not mapped to the assignment");
 		docViewRedact = new DocViewRedactions(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		assignmentspage.createAssignment(assignmentName, Input.codeFormName);
 		baseClass.stepInfo(
 				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
 		String verifydocsCountInAssgnPage = assignmentspage.verifydocsCountInAssgnPage(assignmentName);
-		if(verifydocsCountInAssgnPage.equalsIgnoreCase("0")) {
+		if (verifydocsCountInAssgnPage.equalsIgnoreCase("0")) {
 			baseClass.passedStep("The doc count has been verified");
 		} else {
 			baseClass.failedStep("The doc count is not verified");
 		}
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
-		baseClass.VerifyWarningMessage("Please select an assignment which contains documents assigned to it.");	
-		assignmentspage.deleteAssgnmntUsingPagination(assignmentName);	
+		baseClass.VerifyWarningMessage("Please select an assignment which contains documents assigned to it.");
+		assignmentspage.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51305
-	 * Description :Verify persistent Hit panel of DocView should present only content terms, not metadata terms when navigating from advance search 
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51305 Description :Verify persistent Hit panel of DocView should
+	 * present only content terms, not metadata terms when navigating from advance
+	 * search
+	 * 
+	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 30)
-	public void verifyMetaDataTermOnPersistentPanel(String fullName, String userName, String password) throws InterruptedException {
-		
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 30)
+	public void verifyMetaDataTermOnPersistentPanel(String fullName, String userName, String password)
+			throws InterruptedException {
+
 		baseClass = new BaseClass(driver);
 		assignPage = new AssignmentsPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -2077,38 +2179,44 @@ public class DocView_Regression2 {
 		docView.verifyMetaDataTermDisplayingOnPersistentPanel(Input.metaDataCustodianNameInput);
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51324
-	 * Description :Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from advance search
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51324 Description :Verify all hits of the document should be
+	 * highlighted without clicking the eye icon when user redirects to doc view
+	 * from advance search
+	 * 
+	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 31)
-	public void verifyHighlightingWhenNavigatingFromAdvancedSearch(String fullName, String userName, String password) throws InterruptedException {
-		
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 31)
+	public void verifyHighlightingWhenNavigatingFromAdvancedSearch(String fullName, String userName, String password)
+			throws InterruptedException {
+
 		baseClass = new BaseClass(driver);
 		assignPage = new AssignmentsPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		docViewRedact = new DocViewRedactions(driver);
-		loginPage.loginToSightLine(userName,password);
+		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51324");
 		baseClass.stepInfo("Verify keywords highlighting when navigating from advanced search");
 		sessionsearch.advancedContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Navigated to docView");
 		docView.verifyTermHitsHighlightingInDocumentWithoutClickingEyeIcon(Input.searchString1);
-		loginPage.logout();		
+		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51012
-	 * Description :To verify that persistent search should be displayed on doc view if user navigates from Saved Search-Doc View.
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51012 Description :To verify that persistent search should be
+	 * displayed on doc view if user navigates from Saved Search-Doc View.
+	 * 
+	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = {"regression" },priority = 32)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyHighlightingWhenNavigatingFromSavedSearch() throws InterruptedException {
-		
+
 		baseClass = new BaseClass(driver);
 		assignPage = new AssignmentsPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -2116,10 +2224,11 @@ public class DocView_Regression2 {
 		docViewRedact = new DocViewRedactions(driver);
 		savedsearch = new SavedSearch(driver);
 		String searchName = "Atestsearch" + Utility.dynamicNameAppender();
-		
+
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51012");
-		baseClass.stepInfo("verify that persistent search should be displayed on doc view if user navigates from Saved Search-Doc View");
+		baseClass.stepInfo(
+				"verify that persistent search should be displayed on doc view if user navigates from Saved Search-Doc View");
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.saveSearch(searchName);
 		savedsearch.savedSearchToDocView(searchName);
@@ -2127,19 +2236,19 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Navigated to docView");
 		docView.verifyTermHitsHighlightingInDocumentAfterClickingEyeIcon(Input.testData1);
 		int availableTermwithCount = docView.getPersistantNames().size();
-		if(availableTermwithCount>0) {
+		if (availableTermwithCount > 0) {
 			baseClass.passedStep("Hit terms with count displayed on the persistent panel");
-		}
-		else {
+		} else {
 			baseClass.failedStep("Hit terms with count not displayed on the persistent panel");
 		}
-		loginPage.logout();		
+		loginPage.logout();
 	}
-	
+
 	/**
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
-	 * RPMXCON-47878 To verify that when redaction control in red "on" state, if the icon is clicked again by the user, it must revert to an "off" state
-	 * DocView Page
+	 * RPMXCON-47878 To verify that when redaction control in red "on" state, if the
+	 * icon is clicked again by the user, it must revert to an "off" state DocView
+	 * Page
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 33)
 	public void VerifyOnColourChangeInRedactionMenu() throws Exception {
@@ -2148,7 +2257,8 @@ public class DocView_Regression2 {
 		Actions actions = new Actions(driver.getWebDriver());
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47878");
-		baseClass.stepInfo("To verify that when redaction control in red \"on\" state, if the icon is clicked again by the user, it must revert to an \"off\" state");
+		baseClass.stepInfo(
+				"To verify that when redaction control in red \"on\" state, if the icon is clicked again by the user, it must revert to an \"off\" state");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.searchBulletDocId);
 		baseClass.stepInfo("Search for document completed");
@@ -2166,18 +2276,20 @@ public class DocView_Regression2 {
 		String hex1 = Color.fromString(color1).asHex();
 		System.out.println(hex1);
 		if (hex1.equalsIgnoreCase(Input.IconOriginalColour)) {
-			baseClass.passedStep("The multipage icon turned back to normal colour on unselecting as expected- Successfully");
+			baseClass.passedStep(
+					"The multipage icon turned back to normal colour on unselecting as expected- Successfully");
 		} else {
 			baseClass.failedStep("The multipage icon NOT turned to normal  colour as expected");
 		}
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
-	 * RPMXCON-49974 
-	 * Part of 7.1: Verify that when enters only ‘Page Range’ from multi-page redactions pop up then for entered page range redaction should be applied
+	 * RPMXCON-49974 Part of 7.1: Verify that when enters only ‘Page Range’ from
+	 * multi-page redactions pop up then for entered page range redaction should be
+	 * applied
 	 * 
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
@@ -2186,7 +2298,8 @@ public class DocView_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49974");
-		baseClass.stepInfo("Part of 7.1: Verify that when enters only ‘Page Range’ from multi-page redactions pop up then for entered page range redaction should be applied");
+		baseClass.stepInfo(
+				"Part of 7.1: Verify that when enters only ‘Page Range’ from multi-page redactions pop up then for entered page range redaction should be applied");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search with text input is completed");
@@ -2205,15 +2318,16 @@ public class DocView_Regression2 {
 		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
 		loginPage.logout();
 	}
-	
-	
+
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51047
-	 * Description :Verify keyword highlighting color from doc view when mapped keywords are having same word with different color
-	 * @throws AWTException 
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51047 Description :Verify keyword highlighting color from doc view
+	 * when mapped keywords are having same word with different color
+	 * 
+	 * @throws AWTException
+	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = {"regression" },priority = 35)
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void verifyHighlightingWhenSameKeywordsHaveDifferentColor() throws AWTException, InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -2221,17 +2335,18 @@ public class DocView_Regression2 {
 		assignPage = new AssignmentsPage(driver);
 		savedsearch = new SavedSearch(driver);
 		keywordPage = new KeywordPage(driver);
-		
-		String keywordGroupName1 = "firstGroup"+utility.dynamicNameAppender();
-		String keywordGroupName2 = "secondGroup"+utility.dynamicNameAppender();
+
+		String keywordGroupName1 = "firstGroup" + utility.dynamicNameAppender();
+		String keywordGroupName2 = "secondGroup" + utility.dynamicNameAppender();
 		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
-	    String[] Color= {Input.keywordColor1,Input.KeyWordColour};
-		String[] keywordGroupName= {keywordGroupName1,keywordGroupName2};
-		
-		//Pre-requisite
+		String[] Color = { Input.keywordColor1, Input.KeyWordColour };
+		String[] keywordGroupName = { keywordGroupName1, keywordGroupName2 };
+
+		// Pre-requisite
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51047");
-		baseClass.stepInfo("Verify keyword highlighting color from doc view when mapped keywords are having same word with different color");
+		baseClass.stepInfo(
+				"Verify keyword highlighting color from doc view when mapped keywords are having same word with different color");
 		keywordPage.addTwoSameKeywordWithDifferentColor(keywordGroupName, Input.testData1, Color);
 		assignPage.createAssignment(assignmentName, Input.codeFormName);
 		sessionsearch.basicContentSearch(Input.testData1);
@@ -2245,7 +2360,7 @@ public class DocView_Regression2 {
 		baseClass.waitForElement(assignPage.getAssignmentSaveButton());
 		assignPage.getAssignmentSaveButton().Click();
 		loginPage.logout();
-		//Login as RMU and verify keyword color Highlighting
+		// Login as RMU and verify keyword color Highlighting
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logined as RMU");
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -2257,7 +2372,7 @@ public class DocView_Regression2 {
 		driver.waitForPageToBeReady();
 		docView.verifyKeywordHighlightedOnDocView();
 		loginPage.logout();
-		//Login as Reviewer and verify keyword color Highlighting
+		// Login as Reviewer and verify keyword color Highlighting
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logined as Reviewer");
 		assignPage.SelectAssignmentByReviewer(assignmentName);
@@ -2268,25 +2383,28 @@ public class DocView_Regression2 {
 		driver.waitForPageToBeReady();
 		docView.verifyKeywordHighlightedOnDocView();
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51461
-	 * Description :Verify that a  DocView functionality is working properly through assignments. like   - All Panels Verifications with child window / Complete
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51461 Description :Verify that a DocView functionality is working
+	 * properly through assignments. like - All Panels Verifications with child
+	 * window / Complete
+	 * 
+	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = {"regression" },priority = 36)
-	public void verifyDocviewFunctionalityThroughAssignments() throws InterruptedException  {
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	public void verifyDocviewFunctionalityThroughAssignments() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		assignPage = new AssignmentsPage(driver);
-		
+
 		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
 		String comment = "comment" + Utility.dynamicNameAppender();
-	    
-		//Pre-requisite
+
+		// Pre-requisite
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51461");
 		baseClass.stepInfo("Verify that a  DocView functionality is working properly through assignments");
@@ -2299,7 +2417,7 @@ public class DocView_Regression2 {
 		baseClass.waitForElement(assignPage.getAssignmentSaveButton());
 		assignPage.getAssignmentSaveButton().Click();
 		loginPage.logout();
-		//Login as reviewer and verify
+		// Login as reviewer and verify
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logined as Reviewer");
 		assignPage.SelectAssignmentByReviewer(assignmentName);
@@ -2316,12 +2434,12 @@ public class DocView_Regression2 {
 		docView.editCodingFormComplete();
 		baseClass.waitForElementCollection(docView.getCheckMarkIcon());
 		int checkMarkIconsAfterEditingCF = docView.getCheckMarkIcon().size();
-		if(checkMarkIconsAfterEditingCF>checkMarkIconCount) {
+		if (checkMarkIconsAfterEditingCF > checkMarkIconCount) {
 			baseClass.passedStep("Check mark icon displayed for completed document");
 		}
-		loginPage.logout();		
+		loginPage.logout();
 	}
-	
+
 	/**
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-49971
@@ -2333,7 +2451,8 @@ public class DocView_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49971");
-		baseClass.stepInfo("Verify that when applies ‘Rectangle’ redaction for the first time then application should automatically select the ‘Default Redaction Tag’");
+		baseClass.stepInfo(
+				"Verify that when applies ‘Rectangle’ redaction for the first time then application should automatically select the ‘Default Redaction Tag’");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search with text input is completed");
@@ -2341,22 +2460,23 @@ public class DocView_Regression2 {
 		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
-				return docViewRedact.rectangleRedactionTagSelect().Visible() && docViewRedact.rectangleRedactionTagSelect().Enabled();
+				return docViewRedact.rectangleRedactionTagSelect().Visible()
+						&& docViewRedact.rectangleRedactionTagSelect().Enabled();
 			}
 		}), Input.wait30);
 		docViewRedact.rectangleRedactionTagSelect().waitAndFind(10);
 		Select redactionTag = new Select(docViewRedact.rectangleRedactionTagSelect().getWebElement());
 		String attribute = redactionTag.getFirstSelectedOption().getAttribute("text");
 		System.out.println(attribute);
-		if(attribute.equalsIgnoreCase("Default Redaction Tag")) {
+		if (attribute.equalsIgnoreCase("Default Redaction Tag")) {
 			baseClass.passedStep("The first selected redaction tag is Default Redaction Tag");
 		} else {
 			baseClass.failedStep("The first selected redaction tag is NOT Default Redaction Tag");
 		}
 		loginPage.logout();
-	
+
 	}
-	
+
 	/**
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-49973
@@ -2370,7 +2490,8 @@ public class DocView_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49973");
-		baseClass.stepInfo("Part of 7.1: Verify that when applies ‘Multi Page’ redaction for the first time then application should automatically select the ‘Default Redaction Tag’");
+		baseClass.stepInfo(
+				"Part of 7.1: Verify that when applies ‘Multi Page’ redaction for the first time then application should automatically select the ‘Default Redaction Tag’");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search with text input is completed");
@@ -2391,25 +2512,25 @@ public class DocView_Regression2 {
 		docViewRedact.multiPageInputTextbox().SendKeys(Input.pageRange);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
-				return docViewRedact.multiPageRedactionTagSelect().Visible() && docViewRedact.multiPageRedactionTagSelect().Enabled();
+				return docViewRedact.multiPageRedactionTagSelect().Visible()
+						&& docViewRedact.multiPageRedactionTagSelect().Enabled();
 			}
 		}), Input.wait30);
 		docViewRedact.multiPageRedactionTagSelect().waitAndFind(10);
 		Select redactionTag = new Select(docViewRedact.multiPageRedactionTagSelect().getWebElement());
 		String attribute = redactionTag.getFirstSelectedOption().getAttribute("text");
 		System.out.println(attribute);
-		if(attribute.equalsIgnoreCase("Default Redaction Tag")) {
+		if (attribute.equalsIgnoreCase("Default Redaction Tag")) {
 			baseClass.passedStep("The first selected redaction tag is Default Redaction Tag");
 		} else {
 			baseClass.failedStep("The first selected redaction tag is NOT Default Redaction Tag");
 		}
 		loginPage.logout();
-		}
-		
-	
+	}
+
 	/**
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
-	 * RPMXCON-49972 
+	 * RPMXCON-49972
 	 * 
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 39)
@@ -2418,7 +2539,8 @@ public class DocView_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49972");
-		baseClass.stepInfo("Verify that when applies ‘This Page’ redaction for the first time then application should automatically select the ‘Default Redaction Tag’");
+		baseClass.stepInfo(
+				"Verify that when applies ‘This Page’ redaction for the first time then application should automatically select the ‘Default Redaction Tag’");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search with text input is completed");
@@ -2428,19 +2550,21 @@ public class DocView_Regression2 {
 		docViewRedact.thisPageRedaction().waitAndClick(5);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
-				return docViewRedact.rectangleRedactionTagSelect().Visible() && docViewRedact.rectangleRedactionTagSelect().Enabled();
+				return docViewRedact.rectangleRedactionTagSelect().Visible()
+						&& docViewRedact.rectangleRedactionTagSelect().Enabled();
 			}
 		}), Input.wait30);
 		docViewRedact.rectangleRedactionTagSelect().waitAndFind(10);
 		Select redactionTag = new Select(docViewRedact.rectangleRedactionTagSelect().getWebElement());
 		String attribute = redactionTag.getFirstSelectedOption().getAttribute("text");
 		System.out.println(attribute);
-		if(attribute.equalsIgnoreCase("Default Redaction Tag")) {
+		if (attribute.equalsIgnoreCase("Default Redaction Tag")) {
 			baseClass.passedStep("The first selected redaction tag is Default Redaction Tag");
 		} else {
 			baseClass.failedStep("The first selected redaction tag is NOT Default Redaction Tag");
-		}}
-		
+		}
+	}
+
 	/**
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-47725
@@ -2475,8 +2599,7 @@ public class DocView_Regression2 {
 		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Deleted successfully");
 
 	}
-	
-	
+
 	/**
 	 * @Author : Krishna date: 31/01/2021 Modified date: NA Modified by:
 	 * @Description:Verify assignment progress bar refresh after completing the
@@ -2569,7 +2692,7 @@ public class DocView_Regression2 {
 		docView.clickCodeSameAsLast();
 		docViewRedact.verifyAssignmentBarInSelectedDocs(assname);
 	}
-	
+
 	/**
 	 * @Author : Sai Krishna date: 02/02/2021 Modified date: NA Modified by:
 	 * @Description:Verify assignment progress bar refreshesh after completing the
@@ -2636,35 +2759,39 @@ public class DocView_Regression2 {
 		docViewRedact.verifyAssignmentBarInSelectedDocs(assname);
 
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51961
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51961
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =43)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 43)
 	public void verifyDocsWithHiddenProperties(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51961");
-		baseClass.stepInfo("Verify that document having any of the field value \"Hidden Properties\" \"ExcelProtectedSheets\" ExcelProtectedWorkbook should display alert message");
+		baseClass.stepInfo(
+				"Verify that document having any of the field value \"Hidden Properties\" \"ExcelProtectedSheets\" ExcelProtectedWorkbook should display alert message");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicMetaDataSearch("DocID", null, Input.DocIdWithHiddenContent, null);
 		sessionsearch.ViewInDocView();
-	    baseClass.VerifyWarningMessage("The document has the following hidden information that is presented in the Viewer.");
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is presented in the Viewer.");
 	}
-	
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51959
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51959
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =44)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 44)
 	public void verifyHiddenInfoIcon(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51959");
-		baseClass.stepInfo("Verify that a Hidden Info icon should not be presented in the action icon section of Doc View if the document being viewed has not any Hidden Content");
+		baseClass.stepInfo(
+				"Verify that a Hidden Info icon should not be presented in the action icon section of Doc View if the document being viewed has not any Hidden Content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.TextHidden);
@@ -2676,12 +2803,12 @@ public class DocView_Regression2 {
 		}), Input.wait30);
 		docViewRedact.doclistTable(2).waitAndFind(10);
 		docViewRedact.doclistTable(2).Click();
-		if(docViewRedact.hiddenInfoIcon().isDisplayed() == false) {
+		if (docViewRedact.hiddenInfoIcon().isDisplayed() == false) {
 			baseClass.passedStep("Hidden info icon is not visible for document without hidden content");
 		} else {
 			baseClass.failedStep("Hidden info Icon is visible for document with hidden content");
 		}
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return docViewRedact.doclistTable(3).Visible() && docViewRedact.doclistTable(3).Enabled();
@@ -2689,25 +2816,27 @@ public class DocView_Regression2 {
 		}), Input.wait30);
 		docViewRedact.doclistTable(3).waitAndFind(10);
 		docViewRedact.doclistTable(3).Click();
-		if(docViewRedact.hiddenInfoIcon().isDisplayed() == true) {
+		if (docViewRedact.hiddenInfoIcon().isDisplayed() == true) {
 			baseClass.passedStep("Hidden info Icon is visible for document with hidden content");
 		} else {
-			
+
 			baseClass.passedStep("Hidden info icon is not visible for document with hidden content");
 		}
 
-
 	}
+
 	/**
 	 * @Author : Iyappan.Kasinathan
-	 * @Description: Verify when navigation to the document with hidden content is done after completing the document, 
-	 *               should display the warning message to indicate that document is having hidden content
+	 * @Description: Verify when navigation to the document with hidden content is
+	 *               done after completing the document, should display the warning
+	 *               message to indicate that document is having hidden content
 	 * 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 45)
 	public void verifyWarningMsgOfHiddenDocs() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51957");
-		baseClass.stepInfo("Verify when navigation to the document with hidden content is done after completing the document, should display the warning message to indicate that document is having hidden content");
+		baseClass.stepInfo(
+				"Verify when navigation to the document with hidden content is done after completing the document, should display the warning message to indicate that document is having hidden content");
 
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
@@ -2739,59 +2868,67 @@ public class DocView_Regression2 {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
-		String docIdBeforeCompleteAction=docView.getDocView_CurrentDocId().getText();
+		String docIdBeforeCompleteAction = docView.getDocView_CurrentDocId().getText();
 		docView.editCodingForm(Input.searchString1);
 		baseClass.stepInfo("Coding form is edited successfully");
 		docView.stampColourSelection(filedText, Input.stampColour);
 		baseClass.CloseSuccessMsgpopup();
-		//validation after complete action
+		// validation after complete action
 		docView.completeButton();
 		baseClass.stepInfo("After editing the coding form complete action is performed");
-		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
-		String docIdAfterCompleteAction=docView.getDocView_CurrentDocId().getText();
+		String docIdAfterCompleteAction = docView.getDocView_CurrentDocId().getText();
 		softassertion.assertNotEquals(docIdBeforeCompleteAction, docIdAfterCompleteAction);
 		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");
-		//Validation after hidden info icon
+		// Validation after hidden info icon
 		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
 		docViewRedact.hiddenInfoIcon().waitAndClick(5);
 		baseClass.stepInfo("Hidden info action is performed");
-		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
 		baseClass.passedStep("Warning message is displayed as expected");
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
-		String docIdBeforeCodeSameAsLastAction=docView.getDocView_CurrentDocId().getText();
-		//Validation after code same as last action
+		String docIdBeforeCodeSameAsLastAction = docView.getDocView_CurrentDocId().getText();
+		// Validation after code same as last action
 		docView.clickCodeSameAsLast();
 		baseClass.stepInfo("Code same as last action is performed");
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
-		String docIdAfterCodeSameAsLastAction=docView.getDocView_CurrentDocId().getText();
+		String docIdAfterCodeSameAsLastAction = docView.getDocView_CurrentDocId().getText();
 		softassertion.assertNotEquals(docIdBeforeCodeSameAsLastAction, docIdAfterCodeSameAsLastAction);
 		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");
-		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
-		String docIdBeforeSavedStampAction=docView.getDocView_CurrentDocId().getText();
-		//Validation after saved stamp action
+		String docIdBeforeSavedStampAction = docView.getDocView_CurrentDocId().getText();
+		// Validation after saved stamp action
 		docView.lastAppliedStamp(Input.stampColour);
 		baseClass.stepInfo("Saved stamp is applied succesfully");
 		baseClass.waitTime(3);
-		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
-		String docIdAfterSavedStampAction=docView.getDocView_CurrentDocId().getText();
+		String docIdAfterSavedStampAction = docView.getDocView_CurrentDocId().getText();
 		softassertion.assertNotEquals(docIdBeforeSavedStampAction, docIdAfterSavedStampAction);
 		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");
 		softassertion.assertAll();
 		loginPage.logout();
 	}
+
 	/**
 	 * @Author : Iyappan.Kasinathan
-	 * @Description Verify when navigation to the document with hidden content is done after completing the document from coding form child window, 
-	 *                    should display the warning message to indicate that document is having hidden content
+	 * @Description Verify when navigation to the document with hidden content is
+	 *              done after completing the document from coding form child
+	 *              window, should display the warning message to indicate that
+	 *              document is having hidden content
 	 * 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 46)
 	public void verifyWarningMsgOfHiddenDocsInChildWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51958");
-		baseClass.stepInfo("Verify when navigation to the document with hidden content is done after completing the document from coding form child window, should display the warning message to indicate that document is having hidden content");
+		baseClass.stepInfo(
+				"Verify when navigation to the document with hidden content is done after completing the document from coding form child window, should display the warning message to indicate that document is having hidden content");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -2820,7 +2957,7 @@ public class DocView_Regression2 {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
-		String docIdBeforeCompleteAction=docView.getDocView_CurrentDocId().getText();		
+		String docIdBeforeCompleteAction = docView.getDocView_CurrentDocId().getText();
 		docView.editCodingForm(Input.searchString1);
 		baseClass.stepInfo("Coding form is edited successfully");
 		docView.stampColourSelection(filedText, Input.stampColour);
@@ -2828,74 +2965,80 @@ public class DocView_Regression2 {
 		docView.clickGearIconOpenCodingFormChildWindow();
 		baseClass.stepInfo("Child window of coding form is opened");
 		docView.switchToNewWindow(2);
-		//Validation after complete button
+		// Validation after complete button
 		docView.completeButton();
 		docView.switchToNewWindow(1);
 		baseClass.stepInfo("After editing the coding form complete action is performed in child window");
 		baseClass.handleAlert();
-		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
-		String docIdAfterCompleteAction=docView.getDocView_CurrentDocId().getText();
+		String docIdAfterCompleteAction = docView.getDocView_CurrentDocId().getText();
 		softassertion.assertNotEquals(docIdBeforeCompleteAction, docIdAfterCompleteAction);
 		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");
-		//Validation after hidden info icon
+		// Validation after hidden info icon
 		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
 		docViewRedact.hiddenInfoIcon().waitAndClick(5);
 		baseClass.stepInfo("Hidden info action is performed");
-		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
 		baseClass.passedStep("Warning message is displayed as expected");
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
-		String docIdBeforeCodeSameAsLastAction=docView.getDocView_CurrentDocId().getText();
+		String docIdBeforeCodeSameAsLastAction = docView.getDocView_CurrentDocId().getText();
 		docView.switchToNewWindow(2);
-		//Validation after code same as last
+		// Validation after code same as last
 		docView.clickCodeSameAsLast();
 		docView.switchToNewWindow(1);
 		baseClass.handleAlert();
 		baseClass.stepInfo("Code same as last action is performed in child window");
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
-		String docIdAfterCodeSameAsLastAction=docView.getDocView_CurrentDocId().getText();
+		String docIdAfterCodeSameAsLastAction = docView.getDocView_CurrentDocId().getText();
 		softassertion.assertNotEquals(docIdBeforeCodeSameAsLastAction, docIdAfterCodeSameAsLastAction);
-		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");		
-		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
-		String docIdBeforeSavedStampAction=docView.getDocView_CurrentDocId().getText();
+		String docIdBeforeSavedStampAction = docView.getDocView_CurrentDocId().getText();
 		docView.switchToNewWindow(2);
-		//validation after saved stamp
+		// validation after saved stamp
 		docView.lastAppliedStamp(Input.stampColour);
 		baseClass.handleAlert();
 		baseClass.stepInfo("Saved stamp is applied succesfully in child window");
 		docView.switchToNewWindow(1);
 		baseClass.handleAlert();
-		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
-		String docIdAfterSavedStampAction=docView.getDocView_CurrentDocId().getText();
+		String docIdAfterSavedStampAction = docView.getDocView_CurrentDocId().getText();
 		softassertion.assertNotEquals(docIdBeforeSavedStampAction, docIdAfterSavedStampAction);
 		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");
 		docView.closeWindow(1);
 		softassertion.assertAll();
 		loginPage.logout();
 	}
-	
 
-	
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50783
-	 * Description :To verify when user selects 'View All in Doc View' from Action drop down of Manage Assignments page when System Admin impersonates to RMU role
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50783 Description :To verify when user selects 'View All in Doc
+	 * View' from Action drop down of Manage Assignments page when System Admin
+	 * impersonates to RMU role
+	 * 
+	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = {"regression" },priority = 47)
-	public void verifyDocViewActionWhenSAImpersonateToRMU() throws InterruptedException  {
+	@Test(enabled = true, groups = { "regression" }, priority = 47)
+	public void verifyDocViewActionWhenSAImpersonateToRMU() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		assignPage = new AssignmentsPage(driver);
-		
+
 		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
-		
-		//Impersonate from SA to RMU and verify view all in doc view action
+
+		// Impersonate from SA to RMU and verify view all in doc view action
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-50783");
-		baseClass.stepInfo("To verify when user selects 'View All in Doc View' from Action drop down of Manage Assignments page when System Admin impersonates to RMU role");
+		baseClass.stepInfo(
+				"To verify when user selects 'View All in Doc View' from Action drop down of Manage Assignments page when System Admin impersonates to RMU role");
 		baseClass.impersonateSAtoRMU();
 		assignPage.createAssignment(assignmentName, Input.codeFormName);
 		sessionsearch.basicContentSearch(Input.testData1);
@@ -2903,34 +3046,37 @@ public class DocView_Regression2 {
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		assignPage.selectAssignmentToViewinDocView(assignmentName);
 		baseClass.stepInfo("Selected assignment and navigated to docview");
-		int documentsAvailable =docView.getDocumetCountMiniDocList().size();
-		if(documentsAvailable>0) {
+		int documentsAvailable = docView.getDocumetCountMiniDocList().size();
+		if (documentsAvailable > 0) {
 			baseClass.passedStep("List of documents present in the minidoclist panel");
-		}
-		else {
+		} else {
 			baseClass.failedStep("List of documents not present in the minidoclist panel");
 		}
-		
+
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50784
-	 * Description :To verify when user selects 'View All in Doc View' from Action drop down of Manage Assignments page when Project Admin impersonated to RMU role
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50784 Description :To verify when user selects 'View All in Doc
+	 * View' from Action drop down of Manage Assignments page when Project Admin
+	 * impersonated to RMU role
+	 * 
+	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = {"regression" },priority = 48)
-	public void verifyDocViewActionWhenPAImpersonateToRMU() throws InterruptedException  {
+	@Test(enabled = true, groups = { "regression" }, priority = 48)
+	public void verifyDocViewActionWhenPAImpersonateToRMU() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		assignPage = new AssignmentsPage(driver);
-		
+
 		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
-		
-		//Impersonate from PA to RMU and verify view all in doc view action
+
+		// Impersonate from PA to RMU and verify view all in doc view action
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-50784");
-		baseClass.stepInfo("To verify when user selects 'View All in Doc View' from Action drop down of Manage Assignments page when Project Admin impersonated to RMU role");
+		baseClass.stepInfo(
+				"To verify when user selects 'View All in Doc View' from Action drop down of Manage Assignments page when Project Admin impersonated to RMU role");
 		baseClass.impersonatePAtoRMU();
 		assignPage.createAssignment(assignmentName, Input.codeFormName);
 		sessionsearch.basicContentSearch(Input.testData1);
@@ -2938,20 +3084,21 @@ public class DocView_Regression2 {
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		assignPage.selectAssignmentToViewinDocView(assignmentName);
 		baseClass.stepInfo("Selected assignment and navigated to docview");
-		int documentsAvailable =docView.getDocumetCountMiniDocList().size();
-		if(documentsAvailable>0) {
+		int documentsAvailable = docView.getDocumetCountMiniDocList().size();
+		if (documentsAvailable > 0) {
 			baseClass.passedStep("List of documents present in the minidoclist panel");
-		}
-		else {
+		} else {
 			baseClass.failedStep("List of documents not present in the minidoclist panel");
-		}		
+		}
 	}
+
 	/**
 	 * @Author : Iyappan.Kasinathan
 	 * @Description: To verify Doc View page for RMU and Reviewer
 	 */
 	@Test(enabled = true, dataProvider = "UsersWithoutPA", groups = { "regression" }, priority = 49)
-	public void verifyDocViewPanels(String userName, String password, String fullName) throws InterruptedException, AWTException {
+	public void verifyDocViewPanels(String userName, String password, String fullName)
+			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50775");
 		baseClass.stepInfo("To verify Doc View page for RMU and Reviewer");
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -2960,66 +3107,67 @@ public class DocView_Regression2 {
 
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(userName, password);
-		if(fullName.contains("RMU")) {
+		if (fullName.contains("RMU")) {
 			baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-		// Basic Search and select the pure hit count
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.bulkAssign();
-		//create assignment and distribute the docs to reviewer
-		assignmentsPage.assignmentCreation(assignmentName, Input.codingFormName);
-		assignmentsPage.add2ReviewerAndDistribute();
-		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
-		assignmentsPage.viewSelectedAssgnUsingPagination(assignmentName);
-		baseClass.waitTillElemetToBeClickable(assignmentsPage.getAssignmentActionDropdown());
-		assignmentsPage.getAssignmentActionDropdown().waitAndClick(10);
-		assignmentsPage.assignmentActions("DocView");
-		baseClass.stepInfo("Navigated to docview page in the context of assignments");
-		}else {
+			// Basic Search and select the pure hit count
+			sessionsearch.basicContentSearch(Input.searchString1);
+			sessionsearch.bulkAssign();
+			// create assignment and distribute the docs to reviewer
+			assignmentsPage.assignmentCreation(assignmentName, Input.codingFormName);
+			assignmentsPage.add2ReviewerAndDistribute();
+			driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+			assignmentsPage.viewSelectedAssgnUsingPagination(assignmentName);
+			baseClass.waitTillElemetToBeClickable(assignmentsPage.getAssignmentActionDropdown());
+			assignmentsPage.getAssignmentActionDropdown().waitAndClick(10);
+			assignmentsPage.assignmentActions("DocView");
+			baseClass.stepInfo("Navigated to docview page in the context of assignments");
+		} else {
 			baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
 			baseClass.stepInfo("Logined as Reviewer");
-			assignmentsPage.SelectAssignmentByReviewer(assignmentName);			
+			assignmentsPage.SelectAssignmentByReviewer(assignmentName);
 		}
 		driver.waitForPageToBeReady();
-		//validations on displaying panels in docview page
+		// validations on displaying panels in docview page
 		baseClass.waitForElement(docView.getDocView_CodingFormPanel());
-		if(docView.getDocView_CodingFormPanel().isDisplayed()) {
+		if (docView.getDocView_CodingFormPanel().isDisplayed()) {
 			baseClass.passedStep("Codingform panel is displayed in docview page successfully");
-		}else {
+		} else {
 			baseClass.failedStep("Codingform panel is not displayed");
 		}
-		if(docView.getDocView_centralPanel().isDisplayed()) {
+		if (docView.getDocView_centralPanel().isDisplayed()) {
 			baseClass.passedStep("Document view panel is displayed in docview page successfully");
-		}else {
+		} else {
 			baseClass.failedStep("Document view panel is not displayed");
 		}
-		if(docView.getDocView_MiniDoclistPanel().isDisplayed()) {
+		if (docView.getDocView_MiniDoclistPanel().isDisplayed()) {
 			baseClass.passedStep("Minidoclist panel is displayed in docview page successfully");
-		}else {
+		} else {
 			baseClass.failedStep("Minidoclist panel is not displayed");
 		}
-		if(docView.getDocView_MetadataPanel().isDisplayed()) {
+		if (docView.getDocView_MetadataPanel().isDisplayed()) {
 			baseClass.passedStep("Metadata panel is displayed in docview page successfully");
-		}else {
+		} else {
 			baseClass.failedStep("Metadata panel is not displayed");
 		}
-		if(docView.getDocView_AnalyticsPanel().isDisplayed()) {
+		if (docView.getDocView_AnalyticsPanel().isDisplayed()) {
 			baseClass.passedStep("Analytics panel is displayed in docview page successfully");
-		}else {
+		} else {
 			baseClass.failedStep("Analytics panel is not displayed");
 		}
-		if(fullName.contains("REV")) {
+		if (fullName.contains("REV")) {
 			loginPage.logout();
 			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
 			loginPage.logout();
 		}
 
-		
-		
 	}
+
 	/**
 	 * @Author : Iyappan.Kasinathan
-	 * @Description: Verify that document having any of the field value "Hidden Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook viewed from analytics panel should display alert message
+	 * @Description: Verify that document having any of the field value "Hidden
+	 *               Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook
+	 *               viewed from analytics panel should display alert message
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 50)
 	public void verifyWarningMsgOfHiddenDocFromAnalyticsPanel(String fullName, String userName, String password)
@@ -3045,16 +3193,18 @@ public class DocView_Regression2 {
 		sessionsearch.basicContentSearch(Input.hiddenDocId);
 		sessionsearch.ViewInDocView();
 		baseClass.CloseSuccessMsgpopup();
-		//validations
+		// validations
 		docView.getDocView_DocId(Input.hiddenDocId).waitAndClick(10);
 		baseClass.VerifyWarningMessage(
 				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
-		softassertion.assertEquals(baseClass.getSecondLineOfWarningMsg().getText(), "Hidden Columns;Hidden Rows;Hidden Sheets");
-		baseClass.passedStep("Warning message is displayed for the document has hidden properties");		
+		softassertion.assertEquals(baseClass.getSecondLineOfWarningMsg().getText(),
+				"Hidden Columns;Hidden Rows;Hidden Sheets");
+		baseClass.passedStep("Warning message is displayed for the document has hidden properties");
 		docView.selectDocsFromFamilyMemberAndViewTheDocument();
 		baseClass.VerifyWarningMessage(
 				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
-		softassertion.assertEquals(baseClass.getSecondLineOfWarningMsg().getText(), "Hidden Columns;Hidden Rows;Hidden Sheets");
+		softassertion.assertEquals(baseClass.getSecondLineOfWarningMsg().getText(),
+				"Hidden Columns;Hidden Rows;Hidden Sheets");
 		baseClass.passedStep(
 				"Warning message is displayed successfully when the document is selected which contains hidden properties from analytics panel");
 		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
@@ -3062,27 +3212,30 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Hidden info action is performed");
 		baseClass.VerifyWarningMessage(
 				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
-		softassertion.assertEquals(baseClass.getSecondLineOfWarningMsg().getText(), "Hidden Columns;Hidden Rows;Hidden Sheets");
-		baseClass.passedStep("After performing hidden info action, Warning message is displayed for the document has hidden properties");	
+		softassertion.assertEquals(baseClass.getSecondLineOfWarningMsg().getText(),
+				"Hidden Columns;Hidden Rows;Hidden Sheets");
+		baseClass.passedStep(
+				"After performing hidden info action, Warning message is displayed for the document has hidden properties");
 		softassertion.assertAll();
 		loginPage.logout();
 	}
-	
-	
 
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51956
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51956
 	 * 
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 49)
-	public void verifyHiddenContentMessagewhilenavigatingFromDocNumber(String fullName, String userName, String password) throws Exception {
-		baseClass = new BaseClass(driver);	
+	public void verifyHiddenContentMessagewhilenavigatingFromDocNumber(String fullName, String userName,
+			String password) throws Exception {
+		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
 		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
 		String expectedMessage3 = "Protected Excel Workbook";
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51956");
-		baseClass.stepInfo("Verify that when document number is entered to view having hidden content then should display the warning message to indicate that document is having hidden content");
+		baseClass.stepInfo(
+				"Verify that when document number is entered to view having hidden content then should display the warning message to indicate that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch("Hidden");
@@ -3099,46 +3252,49 @@ public class DocView_Regression2 {
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
-		driver.waitForPageToBeReady();	
+		driver.waitForPageToBeReady();
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
 	}
 
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51946
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51946
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =50)
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 50)
 	public void verifyHiddenInfoIconinDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51946");
-		baseClass.stepInfo("Verify that a Hidden Info icon is presented in the action icon section of Doc View if the document being viewed has any Hidden Content");
+		baseClass.stepInfo(
+				"Verify that a Hidden Info icon is presented in the action icon section of Doc View if the document being viewed has any Hidden Content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.DocIdWithHiddenContent);
 		sessionsearch.ViewInDocView();
-		if(docViewRedact.hiddenInfoIcon().isDisplayed() == true) {
+		if (docViewRedact.hiddenInfoIcon().isDisplayed() == true) {
 			baseClass.passedStep("Hidden info Icon is visible for document with hidden content");
-		} else {		
+		} else {
 			baseClass.failedStep("Hidden info icon is not visible for document with hidden content");
-		}	
+		}
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50780
-	 * Description :To verify menu bar options from doc view page
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50780 Description :To verify menu bar options from doc view page
+	 * 
+	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = {"regression" },priority = 51)
+	@Test(enabled = true, groups = { "regression" }, priority = 51)
 	public void verifyMenuBarOptionsInDocView() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		assignPage = new AssignmentsPage(driver);
-		
+
 		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
-		
-		//Login as RMU and verify menu bar in docView
+
+		// Login as RMU and verify menu bar in docView
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-50780");
 		baseClass.stepInfo("To verify menu bar options from doc view page");
@@ -3153,8 +3309,9 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Selected assignment and navigated to docview");
 		// Verifying the menu bar option in docView page
 		docView.verifyMenuBarOptionFromDocviewPanel();
-  }
-  /*
+	}
+
+	/*
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-46860
 	 */
@@ -3168,7 +3325,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Verify user can delete the redaction in a document");
 		DocExplorerPage docexp = new DocExplorerPage(driver);
 		docexp.documentSelectionIteration();
-		docexp.docExpViewInDocView();	
+		docexp.docExpViewInDocView();
 		docViewRedact.redactRectangleUsingOffset(0, 0, 200, 100);
 		docViewRedact.selectingRectangleRedactionTag();
 		driver.waitForPageToBeReady();
@@ -3187,9 +3344,12 @@ public class DocView_Regression2 {
 		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Deleted successfully");
 
 	}
+
 	/**
 	 * @Author : Iyappan.Kasinathan
-	 * @Description: Verify that when viewing the document having the 'ExcelProtectedWorkbook' value should provide indicator in viewer to convey that document is having hidden content
+	 * @Description: Verify that when viewing the document having the
+	 *               'ExcelProtectedWorkbook' value should provide indicator in
+	 *               viewer to convey that document is having hidden content
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 52)
 	public void verifyExcelProtectWorkbookWarningMsg(String fullName, String userName, String password)
@@ -3199,7 +3359,8 @@ public class DocView_Regression2 {
 		SoftAssert softassertion = new SoftAssert();
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51952");
-		baseClass.stepInfo("Verify that when viewing the document having the 'ExcelProtectedWorkbook' value should provide indicator in viewer to convey that document is having hidden content");
+		baseClass.stepInfo(
+				"Verify that when viewing the document having the 'ExcelProtectedWorkbook' value should provide indicator in viewer to convey that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		if (fullName.contains("RMU")) {
@@ -3211,22 +3372,27 @@ public class DocView_Regression2 {
 		if (fullName.contains("REV")) {
 			baseClass.stepInfo("Successfully login as Reviewer'" + userName + "'");
 		}
-		//document searched and navigated to docview
+		// document searched and navigated to docview
 		sessionsearch.basicContentSearch(Input.excelProtectedHiddenDocId);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Navigated to docview page from search engine");
-		//validate the warning message contains hidden properties
+		// validate the warning message contains hidden properties
 		baseClass.VerifyWarningMessage(
 				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
-		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(1).getText(), "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...");
+		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(1).getText(),
+				"Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...");
 		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(2).getText(), "Protected Excel Workbook");
-		baseClass.passedStep("Warning message is displayed for the excel protect workbook as expected");			
+		baseClass.passedStep("Warning message is displayed for the excel protect workbook as expected");
 		softassertion.assertAll();
 		loginPage.logout();
 	}
+
 	/**
 	 * @Author : Iyappan.Kasinathan
-	 * @Description: Verify that when document with hidden content is clicked to view from mini doc list child window then should display the warning message to indicate that document is having hidden content
+	 * @Description: Verify that when document with hidden content is clicked to
+	 *               view from mini doc list child window then should display the
+	 *               warning message to indicate that document is having hidden
+	 *               content
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 53)
 	public void verifyWarningMsgFromMinidoclistChildWindow(String fullName, String userName, String password)
@@ -3236,7 +3402,8 @@ public class DocView_Regression2 {
 		SoftAssert softassertion = new SoftAssert();
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51955");
-		baseClass.stepInfo("Verify that when document with hidden content is clicked to view from mini doc list child window then should display the warning message to indicate that document is having hidden content");
+		baseClass.stepInfo(
+				"Verify that when document with hidden content is clicked to view from mini doc list child window then should display the warning message to indicate that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		if (fullName.contains("RMU")) {
@@ -3248,10 +3415,10 @@ public class DocView_Regression2 {
 		if (fullName.contains("REV")) {
 			baseClass.stepInfo("Successfully login as Reviewer :" + userName + "'");
 		}
-		//document searched and navigated to docview
+		// document searched and navigated to docview
 		sessionsearch.basicContentSearch(Input.excelProtectedHiddenDocId);
 		sessionsearch.ViewInDocView();
-		//open the child window and validate the warning message
+		// open the child window and validate the warning message
 		docView.clickGearIconOpenMiniDocList();
 		baseClass.stepInfo("Mini doc list child window is opened");
 		docView.switchToNewWindow(2);
@@ -3259,97 +3426,108 @@ public class DocView_Regression2 {
 		baseClass.waitTillElemetToBeClickable(docView.getDocView_DocId(Input.excelProtectedHiddenDocId));
 		docView.getDocView_DocId(Input.excelProtectedHiddenDocId).waitAndClick(10);
 		docView.switchToNewWindow(1);
-		baseClass.VerifyWarningMessage("The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
-		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(1).getText(), "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...");
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(1).getText(),
+				"Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...");
 		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(2).getText(), "Protected Excel Workbook");
-		baseClass.passedStep("Warning message is displayed successfully when the document is selected which contains hidden properties from minidoclist child window");		
-		//validate the warning message after click the hidden info icon
+		baseClass.passedStep(
+				"Warning message is displayed successfully when the document is selected which contains hidden properties from minidoclist child window");
+		// validate the warning message after click the hidden info icon
 		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
 		docViewRedact.hiddenInfoIcon().waitAndClick(10);
 		baseClass.stepInfo("Hidden info action is performed");
 		baseClass.VerifyWarningMessage(
 				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
-		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(1).getText(), "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...");
+		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(1).getText(),
+				"Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...");
 		softassertion.assertEquals(baseClass.getSecondLineSuccessMsg(2).getText(), "Protected Excel Workbook");
-		baseClass.passedStep("After performing hidden info action, Warning message is displayed for the document has hidden properties");	
-		softassertion.assertAll();		
+		baseClass.passedStep(
+				"After performing hidden info action, Warning message is displayed for the document has hidden properties");
+		softassertion.assertAll();
 		loginPage.logout();
 	}
-	
-	
+
 	/**
-	 * @author 
-	 * @TestCase Id:51965 Validate Search, Highlighling, PDF creation, and download of native, text and pdf
-	 * @Description:To Validate Search, Highlighling, PDF creation, and download of native, text and pdf
+	 * @author
+	 * @TestCase Id:51965 Validate Search, Highlighling, PDF creation, and download
+	 *           of native, text and pdf
+	 * @Description:To Validate Search, Highlighling, PDF creation, and download of
+	 *                 native, text and pdf
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true,groups={"regression"})
+	@Test(alwaysRun = true, groups = { "regression" })
 	public void verifySearchHighlighAndDownloadFiles() throws InterruptedException {
-		String metaDataField="DocFileExtension";
-		String fileExtensionName=".wmf";
-		String downloadOption="Native 1";
-		String searchTerm="enron";
+		String metaDataField = "DocFileExtension";
+		String fileExtensionName = ".wmf";
+		String downloadOption = "Native 1";
+		String searchTerm = "enron";
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51965 sprint 11");
 		baseClass.stepInfo("###Validate Search, Highlighling, PDF creation, and download of native, text and pdf###");
 		DocViewPage docView = new DocViewPage(driver);
-		SessionSearch session = new SessionSearch(driver);	
+		SessionSearch session = new SessionSearch(driver);
 		baseClass.stepInfo("basic metadata search");
 		session.basicMetaDataSearch(metaDataField, null, fileExtensionName, null);
 		baseClass.stepInfo("view in DocView");
 		session.ViewInDocView();
 		baseClass.stepInfo("Download and verify files ");
-		docView.downloadFile(downloadOption,fileExtensionName);
+		docView.downloadFile(downloadOption, fileExtensionName);
 		baseClass.stepInfo("verify images tab");
 		docView.clickOnImageTab();
 		baseClass.stepInfo("verify text Tab");
 		docView.clickOnTextTab();
 		baseClass.stepInfo("Navigate to search page");
-		driver.getWebDriver().get(Input.url + "Search/Searches");	
+		driver.getWebDriver().get(Input.url + "Search/Searches");
 		baseClass.stepInfo("remove docs from cart");
-	        session.Removedocsfromresults();
+		session.Removedocsfromresults();
 		baseClass.stepInfo("basic content serch ");
 		session.multipleBasicContentSearch(searchTerm);
 		baseClass.stepInfo("view in docView");
-		session.ViewInDocView();	
+		session.ViewInDocView();
 		baseClass.stepInfo("verify highlighting of search term");
 		docView.persistenHitWithSearchString(searchTerm);
 	}
-	
+
 	/**
-	 * @author 
-	 * @TestCase Id:51265 Verify user can view unicode files in near native view in context of an assignment
-	 * @Description:To Verify user can view unicode files in near native view in context of an assignment
+	 * @author
+	 * @TestCase Id:51265 Verify user can view unicode files in near native view in
+	 *           context of an assignment
+	 * @Description:To Verify user can view unicode files in near native view in
+	 *                 context of an assignment
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true,groups={"regression"})
+	@Test(alwaysRun = true, groups = { "regression" })
 	public void verifyUnicodeFilesInNearNativeView() throws InterruptedException {
 		String AssignmentName = Input.randomText + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51265 sprint 10");
-		baseClass.stepInfo("####Verify user can view unicode files in near native view in context of an assignment####");
+		baseClass
+				.stepInfo("####Verify user can view unicode files in near native view in context of an assignment####");
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
-		DocViewPage docView = new DocViewPage(driver);	
+		DocViewPage docView = new DocViewPage(driver);
 		baseClass.stepInfo(" Basic content search for UniCode Docs");
 		session.basicContentSearch(Input.UniCodeDocId);
 		baseClass.stepInfo("Create bulk assign with new assignment with persistant hit.");
-		session.bulkAssignWithNewAssignmentWithPersistantHit(AssignmentName, Input.codingFormName);	
+		session.bulkAssignWithNewAssignmentWithPersistantHit(AssignmentName, Input.codingFormName);
 		baseClass.stepInfo("view Assignment in docView");
-		assignmentPage.selectAssignmentToViewinDocview(AssignmentName);	
+		assignmentPage.selectAssignmentToViewinDocview(AssignmentName);
 		baseClass.stepInfo("verify files displayed in near native view");
 		docView.clickOnDefaultTextTab();
-		
+
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51266
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51266
 	 * 
 	 */
 	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 48)
-	public void verifyUniCodeFilesViewInDocViewforRMUandREV(String fullName, String userName, String password) throws Exception {
-		baseClass = new BaseClass(driver);	
+	public void verifyUniCodeFilesViewInDocViewforRMUandREV(String fullName, String userName, String password)
+			throws Exception {
+		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51266");
 		baseClass.stepInfo("Verify user can view unicode files in default view outside of an assignment");
@@ -3361,9 +3539,9 @@ public class DocView_Regression2 {
 		docViewRedact.verifyingActiveDocIdInDocView(Input.UniCodeDocId);
 		baseClass.passedStep("Sucsessfully Viewed Uni code file in DocView");
 		loginPage.logout();
-	
+
 	}
-	
+
 	/**
 	 * @Author date: 08/02/2022 Modified date: NA Modified by:
 	 * @Description:Verify that when document is viewed from history drop down
@@ -3394,20 +3572,23 @@ public class DocView_Regression2 {
 		miniDocList.verifyViewDocInPersistentHitPanel(Input.audioSearchString1, audioSearchString2);
 		miniDocList.verifySelectedDocsInClockIcon(audioSearchString2, Input.audioSearchString1);
 	}
-	
+
 	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51954
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51954
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =50)
-	public void verifyMessageForHiddenContentDocsExcelProtecTedWorkSheets(String fullName, String userName, String password) throws Exception {
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 50)
+	public void verifyMessageForHiddenContentDocsExcelProtecTedWorkSheets(String fullName, String userName,
+			String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
 		String expectedMessage2 = "Hidden Columns;Protected Sheets";
 		String expectedMessage3 = "Protected Excel Sheets";
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51954");
-		baseClass.stepInfo("Verify that when document with hidden content is clicked to view from mini doc list then should display the warning message to indicate that document is having hidden content");
+		baseClass.stepInfo(
+				"Verify that when document with hidden content is clicked to view from mini doc list then should display the warning message to indicate that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.TextHidden);
@@ -3415,9 +3596,9 @@ public class DocView_Regression2 {
 		DocViewPage docviewpage = new DocViewPage(driver);
 		docviewpage.selectDocIdInMiniDocList(Input.DocIdWithHiddenContent);
 		baseClass.stepInfo("Document with hidden content - excel protected worsheet selected from mini doclist");
-		driver.waitForPageToBeReady();	
+		driver.waitForPageToBeReady();
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
-		
+
 	}
 
 	@DataProvider(name = "userDetailss")
@@ -3443,117 +3624,79 @@ public class DocView_Regression2 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		loginPage = new LoginPage(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51540");
 		baseClass.stepInfo(
 				"Verify that when two different users deletes reviewer remarks to the same record successfully, and confirm that the XML nodes are all properly created/reflected in the XML");
+
 		baseClass.stepInfo("Creating Prerequisite Reviewer Remark");
 		baseClass.stepInfo("Adding new remark to document as a prerequisite one");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Perfrom non audio remark");
-		docView.addRemarkToNonAudioDocument(20, 40, remark);
+		docView.addRemarkToNonAudioDocument(10, 20, remark);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Perfrom non audio remark");
-		docView.addRemarkToNonAudioDocument(10, 20, remark1);
+		docViewMetaDataPage.performRemarkWithSaveOperation(30, 40, remark1);
 		loginPage.logout();
 		baseClass.stepInfo("Prerequisites creation completed");
 
+		baseClass.stepInfo("Login in to sightline using first user " + firstUserName);
 		loginPage.loginToSightLine(firstUserName, firstUserPassword);
-		baseClass.stepInfo("login as" + firstUserName);
+		baseClass.stepInfo("logged in as" + firstUserName);
+		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
-
 		String firstUserWindow = driver.CurrentWindowHandle();
-
+		baseClass.stepInfo("Opening a new tab");
 		baseClass.openNewTab();
-
 		driver.switchToChildWindow();
-
+		baseClass.stepInfo("Navigating to Sighline URL");
 		driver.Navigate().to(Input.url);
 		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Login in to sightline using second user " + secondUserName);
 		loginPage.loginToSightLine(secondUserName, secondUserPassword);
-		baseClass.stepInfo("login as" + secondUserName);
+		baseClass.stepInfo("logged in as" + secondUserName);
+		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
-
 		String secondUserWindow = driver.CurrentWindowHandle();
-
+		baseClass.stepInfo("Switching back to first window to delete remark");
 		driver.switchToWindow(firstUserWindow);
 		docView.deleteReamark(remark);
+		baseClass.stepInfo("Switching back to second window to warning message displayed in all 3 panels");
 		driver.switchToWindow(secondUserWindow);
-
-		baseClass.waitForElement(docView.getNonAudioRemarkBtn());
-		docView.getNonAudioRemarkBtn().waitAndClick(9);
-
-		baseClass.waitForElement(docView.getWarningMessageForRemarkPanel());
-		System.err.println("icon" + docView.getDocView_RedactThisPage().Enabled());
-		if (docView.getWarningMessageForRemarkPanel().isDisplayed()) {
-			baseClass.passedStep(
-					"Expected warning message : " + Input.warningMessage + " is getting displayed for Remark panel");
-		} else {
-			baseClass.failedStep("Expected warning message : " + Input.warningMessage
-					+ " is not getting displayed for Remark panel");
-		}
-
-		baseClass.waitForElement(docView.getDocView_AnnotateIcon());
-		docView.getDocView_AnnotateIcon().waitAndClick(9);
-		
+		docView.verifyWarningMessage("Annotation");
 		docView.verifyAppliedAnnotationSubMenusAreDisabled();
-
-		baseClass.waitForElement(docView.getWarningMessageForAnnotations());
-		if (docView.getWarningMessageForAnnotations().isDisplayed()) {
-			baseClass.passedStep(
-					"Expected warning message : " + Input.warningMessage + " is getting displayed for Annotations");
-		} else {
-			baseClass.failedStep(
-					"Expected warning message : " + Input.warningMessage + " is not getting displayed for Annotations");
-		}
-
-		baseClass.waitForElement(docView.getDocView_RedactIcon());
-		docView.getDocView_RedactIcon().waitAndClick(9);
-		
+		docView.verifyWarningMessage("Redaction");
 		docView.verifyAppliedRedactionSubMenusAreDisabled();
-
-		baseClass.waitForElement(docView.getWarningMessageForRedactions());
-		if (docView.getWarningMessageForRedactions().isDisplayed()) {
-			baseClass.passedStep(
-					"Expected warning message : " + Input.warningMessage + " is getting displayed for Redactions");
-		} else {
-			baseClass.failedStep(
-					"Expected warning message : " + Input.warningMessage + " is not getting displayed for Redactions");
-		}
-
-		if (docView.getRemarkDeletetIcon().isElementAvailable(1)) {
-			baseClass.failedStep("Delete icon is visible for the remarks");
-		} else {
-			baseClass.passedStep("Delete icon is not visible for the remarks");
-		}
-		
-		if (docView.getRemarkEditIcon().isElementAvailable(1)) {
-			baseClass.failedStep("Edit icon is visible for the remarks");
-		} else {
-			baseClass.passedStep("Edit icon is not visible for the remarks");
-		}
-		
+		docView.verifyWarningMessage("Remark");
+		baseClass.stepInfo("Verify remark edit is not displayed for existing remarks");
+		docView.verifyReviewRemarkActionPanel("Edit", remark);
+		baseClass.stepInfo("Verify remark delete is not displayed for existing remarks");
+		docView.verifyReviewRemarkActionPanel("Delete", remark);
+		baseClass.stepInfo("Verify deleted remark is not displayed after reloading the second window page");
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		
-		baseClass.stepInfo("Verify added remark is not displayed");
-		if (docView.getRemarkPanelItems(remark).isElementAvailable(1)) {
-			baseClass.failedStep("Added remark is displayed");
-		} else {
-			baseClass.passedStep("Added remark is not displayed");
-		}
-		
-		
+		docView.verifyReviewRemarkActionPanel("Remark", remark);
+		driver.switchToWindow(firstUserWindow);
+		baseClass.stepInfo("Verify deleted remark is not displayed after reloading the first window page");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docView.verifyReviewRemarkActionPanel("Remark", remark);
+		docView.deleteReamark(remark1);
+
 
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
