@@ -24149,8 +24149,10 @@ public class DocViewPage {
 			base.failedStep("Exception occcured while Keyword is highlighted on doc view" + e.getMessage());
 
 		}
+		
+	}
 
-	/*
+/*
 	 * @author Aathith.Senthilkumar
 	 */
 	public void trianglurArrowIconPositionVerification() {
@@ -24204,7 +24206,7 @@ public class DocViewPage {
 		}
 	}
 
-    /**
+/*
 	 * @Author Brundha
 	 * @Description :Method to verify persistant hit panel for audio files
 	 * 
@@ -24230,6 +24232,96 @@ public class DocViewPage {
 				"Search string is not displayed as expected");
 
 	}
+
+	
+	/**
+	 * @author Arunkumar
+	 * @throws InterruptedException 
+	 * @description To verify textview functionality when navigating to docview from different module for PA and reviewer
+	 */
+	public void verifyTextviewInDocviewFromDifferentModuleforPAandREV() throws InterruptedException {
+		
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		AssignmentsPage assignPage = new AssignmentsPage(driver);
+		
+		String searchName = "savedsearch"+Utility.dynamicNameAppender();
+		
+		// From basic search
+		int availableDocs= sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		base.stepInfo("Navigated to docView from basic search");
+		verifyDocumentDisplayedInTextView();
+		//From saved search
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionsearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+		base.stepInfo("Navigated to docView from saved search");
+		verifyDocumentDisplayedInTextView();
+		//From doclist
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionsearch.ViewInDocListWithOutPureHit();
+		driver.waitForPageToBeReady();
+		docList.documentSelection(availableDocs);
+		docList.docListToDocView();
+		driver.waitForPageToBeReady();
+		base.stepInfo("Navigated to docView from Doclist");
+		verifyDocumentDisplayedInTextView();
+		
+	}
+	
+	/**
+	 * @author Arunkumar
+	 * @throws InterruptedException 
+	 * @description To verify textview functionality when navigating to docview from different module for RMU
+	 */
+	public void verifyTextviewInDocviewFromDifferentModuleforRMU(String assignmentName) throws InterruptedException {
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		AssignmentsPage assignPage = new AssignmentsPage(driver);
+		
+		String searchName = "savedsearch"+Utility.dynamicNameAppender();
+		
+		// From basic search
+		int availableDocs= sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		base.stepInfo("Navigated to docView from basic search");
+		verifyDocumentDisplayedInTextView();
+		//From saved search
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionsearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+		base.stepInfo("Navigated to docView from saved search");
+		verifyDocumentDisplayedInTextView();
+		//From doclist
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionsearch.ViewInDocListWithOutPureHit();
+		driver.waitForPageToBeReady();
+		docList.documentSelection(availableDocs);
+		docList.docListToDocView();
+		driver.waitForPageToBeReady();
+		base.stepInfo("Navigated to docView from Doclist");
+		verifyDocumentDisplayedInTextView();
+		//From Manage-Assignments
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.selectAssignmentToViewinDocView(assignmentName);
+		driver.waitForPageToBeReady();
+		base.stepInfo("Navigated to docView from manage assignment");
+		verifyDocumentDisplayedInTextView();
+		//from edit assignment - docview
+		assignPage.editAssignment(assignmentName);
+		assignPage.Assignment_ManageRevtab_ViewinDocView();
+		base.stepInfo("Navigated to docView from edit assignment-manage reviewers tab");
+		verifyDocumentDisplayedInTextView();
+	}
+	
+}
 
 	/*
 	 * @author Steffy D This is method is to verify warning message which is getting
