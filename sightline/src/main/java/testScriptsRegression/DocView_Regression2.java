@@ -3763,6 +3763,35 @@ public class DocView_Regression2 {
 		
 	}
 	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51948
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =51)
+	public void verifyMouseHoverOfHiddenContentIconDocView(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+		baseClass.stepInfo("Test case Id: RPMXCON-51948");
+		baseClass.stepInfo("Verify that tool tip should be displayed on mouse hover of the hidden icon");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.hiddenDocId);
+		sessionsearch.ViewInDocView();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
+		
+		actions.moveToElement(docViewRedact.hiddenInfoIcon().getWebElement()).build().perform();
+		baseClass.waitForElement(docViewRedact.hiddenInfoIcon());
+		String text = docViewRedact.hiddenInfoIcon().GetAttribute("title");
+		System.out.println(text);
+		if(text.equalsIgnoreCase("Hidden properties")) {
+			baseClass.passedStep("The mouse hover is on hidden info icon and disply Hidden Properties");
+		} else {
+		baseClass.failedStep("The mouse hover is on hidden info icon and do not disply Hidden Properties");
+		}
+	}
+	
+	
 	
 	
 	@AfterMethod(alwaysRun = true)
