@@ -9497,4 +9497,42 @@ public class AssignmentsPage {
 		bc.stepInfo("Doc Count reflected in doc view page");
 		return docCount;
 	}
+	
+	/**
+	 * @author Gopinath
+	 * @throws InterruptedException
+	 * @description this method will unmap/unassign the keywords which assigned to
+	 *              the document.
+	 * 
+	 */
+	public void unmappingKeywordsFromEditedAssignment(String assignmentName) throws InterruptedException {
+		bc = new BaseClass(driver);
+		keywordPage = new KeywordPage(driver);
+		editAssignment(assignmentName);
+		driver.waitForPageToBeReady();
+		getAssgn_Keywordsbutton().ScrollTo();
+		getAssgn_Keywordsbutton().isElementAvailable(10);
+		getAssgn_Keywordsbutton().waitAndClick(10);
+		bc.waitForElement(getAssgn_Keywordspopup());
+		getAvailableKeywordCheckboxes();
+		List<WebElement> allvalues = getAvailableKeywordCheckboxes().FindWebElements();
+		List<String> expkey = new ArrayList<String>();
+
+		for (int j = 0; j <= allvalues.size() - 1; j++) {
+
+			allvalues.get(j).click();
+		}
+		driver.waitForPageToBeReady();
+		getAssgn_Keywordokbutton().ScrollTo();
+		getAssgn_Keywordokbutton().isElementAvailable(10);
+		getAssgn_Keywordokbutton().Click();
+		keywordPage.getYesButton().Click();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		getAssignmentSaveButton().isElementAvailable(10);
+		// getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+		getAssignmentSaveButton().waitAndClick(5);
+		bc.passedStep("Keywords unmapped from the assignment successfully");
+	}
 }

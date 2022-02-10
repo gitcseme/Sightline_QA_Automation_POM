@@ -270,6 +270,7 @@ public class Input {
 	public static String IconOriginalColour;
 	public static String DocIdWithHiddenContent;
 	public static String TextHidden;
+	public static String warningMessage;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -493,14 +494,14 @@ public class Input {
 	// Added by Gopinath - 05/01/2021
 	public static String downloadDocID;
 	public static String translationDocId;
-    public static String  TermOperator;
-    
-    //Added by Iyappan
+	public static String TermOperator;
+
+	// Added by Iyappan
 	public static String hiddenDocId;
 	// Added by Baskar
 	public static String oneHourAudio;
 	public static String excelProtectedHiddenDocId;
-	
+
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -672,7 +673,7 @@ public class Input {
 		tiffSearchQuery = testData.getTiffSearchQuery();
 		familyDocWhichIsNotInMiniDoc = testData.getFamilyDocWhichIsNotInMiniDoc();
 		bgColorOnMouseHover = testData.bgColorOnMouseHover;
-		nearDupePagination=testData.getNearDupePagination();
+		nearDupePagination = testData.getNearDupePagination();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
@@ -913,6 +914,7 @@ public class Input {
 		IconOriginalColour = testData.getIconOriginalColour();
 		DocIdWithHiddenContent = testData.getDocIdWithHiddenContent();
 		TextHidden = testData.getTextHidden();
+		warningMessage = testData.getWarningMessage();
 		// Added by Gopinath - 16/11/2021
 		signDocumentId = testData.getSignDocumentId();
 		technicalIssue = testData.getTechnicalIssue();
@@ -994,17 +996,16 @@ public class Input {
 
 		TallySearch = testData.getTallySearch();
 		TallyCN = testData.getTallyCN();
-		TermOperator=testData.getTermOperator();
+		TermOperator = testData.getTermOperator();
 		// Added by Gopinath 05/01/2021
 		downloadDocID = testData.getDownloadDocID();
 		translationDocId = testData.getTranslationDocId();
 
 		conceptualSearchString1 = testData.getConceptualSearchString1();
-		//Added by Iyappan
-				hiddenDocId = testData.getHiddenDocId();
+		// Added by Iyappan
+		hiddenDocId = testData.getHiddenDocId();
 		// Added by baskar
-		oneHourAudio=testData.getOneHourAudio();
-				
+		oneHourAudio = testData.getOneHourAudio();
 
 		hiddenDocId = testData.getHiddenDocId();
 		excelProtectedHiddenDocId = testData.getExcelProtectedHiddenDocId();
