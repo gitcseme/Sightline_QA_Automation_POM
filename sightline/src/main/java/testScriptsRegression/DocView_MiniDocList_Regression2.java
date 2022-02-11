@@ -798,6 +798,65 @@ public class DocView_MiniDocList_Regression2 {
 		baseClass.passedStep("The altered Sort order in previous session is not reflected in this session");
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author : Vijaya.Rani date: 11/02/2022 Modified date: NA Modified by: NA
+	 * @Description : Verify warning message is prompted to the user when user
+	 *              clicks browser back button without completing or saving action
+	 *              from mini doc list panel.'RPMXCON-50922' Sprint-12
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	public void verifyNavigatesToOtherPageUsingYesNoBtn() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50922");
+		baseClass.stepInfo(
+				"Verify warning message is prompted to the user when user clicks browser back button without completing or saving action from mini doc list panel");
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// search to Assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// Select Assignment in Manage Assignment to DocViewPage
+		driver.getWebDriver().navigate().back();
+		assignmentPage.manageAssignmentToDocViewAsRmu(Asssignment);
+
+		// MiniDocList CodeSame As and Brower back btn
+		docViewPage.performBrowerBackButton();
+		if(assignmentPage.ActionBtn().Displayed()) {
+			baseClass.passedStep("User Can View The SessionSearch Page Successfully");
+		} else {
+			baseClass.failedStep("User Can not View the SessionSearch Page");
+		}
+		
+		// logout
+		loginPage.logout();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+
+		docViewPage.selectAssignmentfromDashborad(Asssignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// MiniDocList CodeSame As and Brower back btn
+		docViewPage.performBrowerBackButton();
+		if(assignmentPage.getAssignmentsInreviewerPg().Displayed()) {
+			baseClass.passedStep("User Can View The DashBoard Page Successfully");
+		} else {
+			baseClass.failedStep("User Can not View the DashBoard Page");
+		}
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
