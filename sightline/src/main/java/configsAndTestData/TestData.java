@@ -154,6 +154,7 @@ public class TestData {
 	public  String Production;
 	public  String TIFFPageCount;
 	public String translationDocumentId;
+	public String parentDocument;
 
 	// Added by Sai Krishna
 	public String pageNumber;

@@ -846,6 +846,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element radioBtnInAdvancedNative_ForPrivRedactedDocs() {
+		return driver.FindElementByXPath("//ul[@class='list-inline']//label//input[@id='rdbExcludeNativesofparent']//..//span[contains(text(),'natives of the parents')]");
+	}
+	
 	public Element productionNameInHomePage() {
 		return driver.FindElementById("pName");
 	}

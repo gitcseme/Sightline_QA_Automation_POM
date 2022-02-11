@@ -7,7 +7,10 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FilenameUtils;
@@ -3906,6 +3909,155 @@ public class Production_Page_Regression {
 		}
 	}
 
+	/**
+	 * @Author sowndarya.velrajd
+	 * @Description :To verify that Family members having the same FamilyID must be
+	 *              produced, if 'Do not produce natives of the parents of
+	 *              privileged and redacted docs'' option is enabled[RPMXCON-49230]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 71)
+	public void verifyNativeWithFamilyMembers() throws Exception {
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		ProductionPage page = new ProductionPage(driver);
+
+		String tagname = "TAG" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		baseClass.stepInfo("Test case Id:RPMXCON-49230 Production Sprint 12");
+		baseClass.stepInfo(
+				"To verify that Family members having the same FamilyID must be produced, if 'Do not produce natives of the parents of privileged and redacted docs'' option is enabled");
+
+		// create tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		// search for folder
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+		baseClass.stepInfo(" Redacted documents are selected and preformed bulk tag action with classification as: privileged tag");
+		
+		baseClass.selectproject();
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.documentId);
+		sessionSearch.ViewInDocList();
+
+		docPage = new DocListPage(driver);
+		docPage.selectingParentDocument();
+		driver.scrollPageToTop();
+		docPage.bulkTagExistingFromDoclist(tagname);
+		baseClass.stepInfo("Parent document is selected from doclist and preformed bulk tag action with classification as: privileged tag");
+	
+		baseClass.stepInfo("Starting the production");
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		softAssertion.assertTrue(page.radioBtnInAdvancedNative_ForPrivRedactedDocs().Selected());
+		baseClass.passedStep("Do not produce natives of the parents of privileged and redacted docs is selected");
+		page.fillingTIFFSection(tagname);
+		baseClass.stepInfo("Privileged Tag is selected in TIFF");
+		page.fillingTextSection();
+		page.advancedProductionComponentsTranslations();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		BaseClass.unzip(Input.fileDownloadLocation, Input.fileDownloadLocation);
+		System.out.println("Unzipped the downloaded files");
+		
+		
+		String name = page.getProduction().getText().trim();
+		System.out.println(name);
+		page.isFileDownloaded(Input.fileDownloadLocation, name);
+
+		// Delete Tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+	}
+
+	/**
+	 * @author sowndarya.velraj
+	 * TESTCASE  No:RPMXCON-49059
+	 * @Description:To verify that "Production Start Date" should present the date when the production was started
+	 */
+	@Test(groups = { "regression" }, priority = 72)
+	public void startDateEndDateVarification() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	baseClass.stepInfo("RPMXCON-49059 -Production Sprint 12");
+	baseClass.stepInfo("To verify that Production Start Date should present the date when the production was started");
+	String testData1 = Input.testData1;
+	foldername = "FolderProd" + Utility.dynamicNameAppender();
+
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+	// search for folder
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	
+	page.navigateToProductionPage();
+	baseClass.waitForElement(page.getFilterByButton());
+	page.getFilterByButton().waitAndClick(10);
+	baseClass.waitForElement(page.getFilterByCOMPLETED());
+	page.getFilterByCOMPLETED().waitAndClick(10);
+	page.getRefreshButton().waitAndClick(10);
+	driver.waitForPageToBeReady();
+	page.getGridView().waitAndClick(10);
+	driver.waitForPageToBeReady();
+	baseClass.stepInfo("Nativated to production Grid View");
+	int startDateIndex =baseClass.getIndex(page.getGridWebTableHeader(), "START DATE");
+	String startDate =page.getGridProdValues(productionname, startDateIndex).getText();
+	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+	Date date = new Date();
+	String date1= dateFormat.format(date);
+	System.out.println("Current date " +date1);
+	boolean flag =startDate.contains(date1);
+	if(flag) {
+		baseClass.passedStep("Start date is displayed on production grid view");
+		System.out.println("date visible");
+	}else {
+		baseClass.failedStep("date is not contain in text");
+		System.out.println("date not visible");
+	}
+	
+	baseClass.passedStep("To Verify On grid view of the productions the start date for a production in grid view.");
+	
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+	}
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
