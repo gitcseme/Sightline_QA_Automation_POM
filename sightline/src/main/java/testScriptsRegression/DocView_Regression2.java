@@ -3763,6 +3763,77 @@ public class DocView_Regression2 {
 		
 	}
 	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51948
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =51)
+	public void verifyMouseHoverOfHiddenContentIconDocView(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+		baseClass.stepInfo("Test case Id: RPMXCON-51948");
+		baseClass.stepInfo("Verify that tool tip should be displayed on mouse hover of the hidden icon");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.hiddenDocId);
+		sessionsearch.ViewInDocView();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
+		
+		actions.moveToElement(docViewRedact.hiddenInfoIcon().getWebElement()).build().perform();
+		baseClass.waitForElement(docViewRedact.hiddenInfoIcon());
+		String text = docViewRedact.hiddenInfoIcon().GetAttribute("title");
+		System.out.println(text);
+		if(text.equalsIgnoreCase("Hidden properties")) {
+			baseClass.passedStep("The mouse hover is on hidden info icon and disply Hidden Properties");
+		} else {
+		baseClass.failedStep("The mouse hover is on hidden info icon and do not disply Hidden Properties");
+		}
+	}
+	
+	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-46954
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 54)
+	public void VerifyMultiPageRedactionTagDefaultSelection() throws Exception {
+		baseClass = new BaseClass(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-46954");
+		baseClass.stepInfo("Part of 7.1: Verify that when applies ‘Multi Page’ redaction for the first time then application should automatically select the ‘Default Redaction Tag’");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.clickingRedactionIcon();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
+		docViewRedact.multiPageIcon().waitAndClick(10);
+		baseClass.stepInfo("The Multipage icon is clicked Menu is Visible");
+		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
+		actions.click().build().perform();
+		docViewRedact.multiPageInputTextbox().waitAndClick(5);
+		docViewRedact.multiPageInputTextbox().Clear();
+		docViewRedact.multiPageInputTextbox().SendKeys(Input.pageRange);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.multiPageRedactionTagSelect().Visible() && docViewRedact.multiPageRedactionTagSelect().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.multiPageRedactionTagSelect().waitAndFind(10);
+		Select redactionTag = new Select(docViewRedact.multiPageRedactionTagSelect().getWebElement());
+		String attribute = redactionTag.getFirstSelectedOption().getAttribute("text");
+		System.out.println(attribute);
+		if(attribute.equalsIgnoreCase("Default Redaction Tag")) {
+			baseClass.passedStep("The first selected redaction tag is Default Redaction Tag");
+		} else {
+			baseClass.failedStep("The first selected redaction tag is NOT Default Redaction Tag");
+		}
+		loginPage.logout();
+		}
+	
 	
 	
 	@AfterMethod(alwaysRun = true)

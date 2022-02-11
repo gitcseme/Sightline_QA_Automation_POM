@@ -55,6 +55,7 @@ public class DocViewAudio_IndiumRegression {
 	SessionSearch sessionSearch;
 	KeywordPage keywordPage;
 	DocListPage docListPage;
+	SavedSearch savedSearch;
 	String keywordsArrayPT[] = { "test" };
 
 	@BeforeClass(alwaysRun = true)
@@ -2211,12 +2212,7 @@ public class DocViewAudio_IndiumRegression {
 
 	}
 	
-	@DataProvider(name = "userDetails")
-	public Object[][] userLoginDetails() {
-		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
-				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
-	}
+	
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws Exception
@@ -2275,7 +2271,178 @@ public class DocViewAudio_IndiumRegression {
 		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
 		loginPage.logout();		
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param fullName
+	 * @throws Exception
+	 */
+	@Test(dataProvider = "AllTheUsers",groups = { "regression" }, priority = 30)
+	public void verifyPersistentHits_sameTerm(String username, String password, String fullName) throws Exception{
+		baseClass.stepInfo("Test case Id: RPMXCON-48788");
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with same term and different/same "
+				+ "threshold navigated to doc view from session search > DocList");
+		loginPage.loginToSightLine(username,password);
+		baseClass.stepInfo("Successfully login as '" + fullName);
+		
+		String searchString =Input.audioSearchString2;
+		
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocListPage docListPage=new DocListPage(driver);
+		DocViewPage  docViewPage = new DocViewPage(driver);
+		
+		 //First audio Search 
+		sessionSearch.audioSearch(searchString,Input.language);
+		sessionSearch.getPureHitAddButton().waitAndClick(10);
+		
+		// second audio search
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.audioSearchTwoTimesandAddingTwoPureHits(searchString,Input.language);
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+		
+		// view All audio Docs in DocList
+		sessionSearch.ViewInDocListWithOutPureHit();
+		
+		// selecting all documents in DocList
+		docListPage.selectingAllDocFromAllPagesAndAllChildren();
+		
+        // view selected documents in DocList
+		docListPage.viewSelectedDocumentsInDocView();
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with same term and "
+				+ "same threshold navigated to doc view from session search > DocList");
+		// verifying the audio hits and triangular arrow Icon
+		baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().Click();
+		docViewPage.verifyingThePresenceOfPersistentHit(true,searchString);
+		
+		// removing the pure Hits in Selected Result
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.removePureHitsFromSelectedResult();
 	
+		// First audio search term  with max threshold value
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(searchString, Input.language,"max");
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+		
+		// second audio search with same term and  min threshold value
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(searchString, Input.language,"min");
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+		
+		// view All audio Docs in DocList
+		sessionSearch.ViewInDocList();
+		
+		// selecting all documents in DocList
+       docListPage.selectingAllDocFromAllPagesAndAllChildren();
+		
+       baseClass.stepInfo("Verifying audio hits  displayed when documents searched with same term and different"
+       		+ "threshold navigated to doc view from session search > DocList");
+        // view selected documents in DocList
+        docListPage.viewSelectedDocumentsInDocView();
+    		
+       // verifying the audio hits and triangular arrow Icon
+        baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().Click();
+		docViewPage.verifyingThePresenceOfPersistentHit(true,searchString);
+		loginPage.logout();		
+		
+	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 09/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify when loading is displayed in mini doc list after audio
+	 * doc-to-doc navigation then persistent hits should be
+	 * displayed.'RPMXCON-51866' Sprint: 12
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 70)
+	public void verifyLoadingDisplayInMiniDocListPersistentHit() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51866");
+		baseClass.stepInfo(
+				"Verify when loading is displayed in mini doc list after audio doc-to-doc navigation then persistent hits should be displayed.");
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		// Performing advanced search with audio
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		// view in docview
+		sessionSearch.ViewInDocView();
+		// loading display
+		driver.waitForPageToBeReady();
+		docViewPage.scrollingDocumentInMiniDocList();
+
+		// doc to doc navigate after persistent hit display
+		docViewPage.performEyeIconHighLightingNavDocToDoc();
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 09/02/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify that after scrolling the mini doc list, when ‘Loading’
+	 * is displayed then document list should be loaded immediately..'RPMXCON-51812'
+	 * Sprint: 12
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 71)
+	public void verifyLoadingDisplayInMiniDocListImmediately() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51812");
+		baseClass.stepInfo(
+				"To verify that after scrolling the mini doc list, when ‘Loading’ is displayed then document list should be loaded immediately.");
+
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		String BasicSearchName = "Savebtn" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		// Performing advanced search with audio
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		// view in docview
+		sessionSearch.ViewInDocView();
+
+		// loading display
+		driver.waitForPageToBeReady();
+		docViewPage.scrollingDocumentInMiniDocList();
+
+		// Basic Search
+		sessionSearch.saveSearch(BasicSearchName);
+		savedSearch.savedSearchToDocView(BasicSearchName);
+		
+
+		// loading display
+		driver.waitForPageToBeReady();
+		docViewPage.scrollingDocumentInMiniDocList();
+		baseClass.passedStep("MiniDocList document list is successfully loaded immediately");
+
+		// logout
+		loginPage.logout();
+	}
+	@DataProvider(name = "userDetails")
+	public Object[][] userLoginDetails() {
+		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
+				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

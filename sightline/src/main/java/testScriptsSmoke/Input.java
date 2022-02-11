@@ -189,6 +189,7 @@ public class Input {
 	public static String tiffSearchQuery;
 	public static String familyDocWhichIsNotInMiniDoc;
 	public static String bgColorOnMouseHover;
+	public static String fieldByValue;
 
 	public static String nearDupePagination;
 
@@ -459,6 +460,8 @@ public class Input {
 	public static String documentId;
 	public static String telecaSearchString;
 	public static String docFile;
+	public static String stampRed;
+	public static String stampGreen;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -674,6 +677,7 @@ public class Input {
 		familyDocWhichIsNotInMiniDoc = testData.getFamilyDocWhichIsNotInMiniDoc();
 		bgColorOnMouseHover = testData.bgColorOnMouseHover;
 		nearDupePagination = testData.getNearDupePagination();
+		fieldByValue=testData.getFieldByValue();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
@@ -965,6 +969,8 @@ public class Input {
 		documentId = testData.getDocumentID();
 		telecaSearchString = testData.getTelecaSearchString();
 		docFile = testData.getDocFile();
+		stampRed=testData.getStampRed();
+		stampGreen=testData.getStampGreen();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();

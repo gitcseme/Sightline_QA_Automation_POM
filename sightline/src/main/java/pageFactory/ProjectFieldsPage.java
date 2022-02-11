@@ -1,7 +1,10 @@
 package pageFactory;
 
+import java.util.List;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import testScriptsSmoke.Input;
 
 public class ProjectFieldsPage {
@@ -26,11 +29,16 @@ public class ProjectFieldsPage {
     public Element getProjectFieldInactiveButton(String projectFieldName){ return driver.FindElementByXPath("//td[text()='"+projectFieldName+"']//..//a[text()='Inactive']"); }
     public Element getConfirmOkButton(){ return driver.FindElementById("bot1-Msg1"); }
     public Element getReindexAlertOkButton(){ return driver.FindElementById("bot1-Msg2"); }
-    
-public Element getAllProductionBatesRanges() {	return driver.FindElementByXPath("//tr//td[text()='AllProductionBatesRanges']/following-sibling::td//a[text()='Edit']");}
+    public Element getAllProductionBatesRanges() {	return driver.FindElementByXPath("//tr//td[text()='AllProductionBatesRanges']/following-sibling::td//a[text()='Edit']");}
 	public Element getFieldName() {return driver.FindElementByXPath("//label[contains(text(),'Field Name')]/following-sibling::div//label//input");}
 	public Element getFieldGroupName() {	return driver.FindElementByXPath("//label[contains(text(),'Field Group Name')]/following-sibling::div//select");}
- 
+	
+	//Added by Mohan
+	public ElementCollection getProjectGridFieldNameValue(String textValue) {
+		return driver.FindElementsByXPath(
+				"//*[@id='ProjectFieldsDataTable']//tbody//td[contains(text(),'" + textValue + "')]");
+	}
+
     //Annotation Layer added successfully
     public ProjectFieldsPage(Driver driver){
 
@@ -229,6 +237,50 @@ public Element getAllProductionBatesRanges() {	return driver.FindElementByXPath(
 			base.failedStep("Exception occcured while verify is searchable bates range is selected."+e.getMessage());
 			
 		}
+	}
+	
+	
+	/**
+	 * @author Mohan Created Date: 10/02/2022 Modified Name: NA Modified by: NA
+	 * @description: Used to validate Filter Filed By using Apply button and verify the search filter applied behaves like 'Contains'
+	 * @param fieldByTextValue,textField
+	 */
+	public void validateFilterFieldsByContainsValueInTheGrid(ElementCollection fieldByTextValue, String textField) {
+
+		driver.waitForPageToBeReady();
+		List<String> availableListofElements = base.getAvailableListofElements(fieldByTextValue);
+		System.out.println(availableListofElements);
+		for(String avalValue : availableListofElements){
+			if(!avalValue.contains(textField)){
+				base.failedStep("The User is unable to enter the input in the textbox");
+			}
+		
+		}
+		base.passedStep("The user is able to enter the input in the textbox and apply filter button is working fine. The search filter applied behaves like 'Contains'. And the resulting fields from the filter is presented in the grid below");
+			
+		
+		}
+
+	
+	/**
+	 * @author Mohan Created Date: 10/02/2022 Modified Name: NA Modified by: NA
+	 * @description: Used to enter the value in the filter field by textbox and click enter button.
+	 * @param fieldByTextValue
+	 */
+	public void enterFilterFieldValueAndClickEnter(String fieldByTextValue) {
+		
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getFiltersByTextField());
+			getFiltersByTextField().Clear();
+			getFiltersByTextField().SendKeys(fieldByTextValue);
+			getFiltersByTextField().Enter();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("The Filter Filed by is unable to hit the Enter button");
+		}
+
 	}
 	
 }

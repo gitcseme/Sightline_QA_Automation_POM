@@ -1559,8 +1559,10 @@ public class SessionSearch {
 	public Element getCurrentPureHitAddBtn() {
 		return driver.FindElementByXPath("(//*[@id='001']//i[contains(@class,'addTile')])[last()]");
 	}
-
-	
+	public ElementCollection getRemovePureHits() {
+		return driver.FindElementsByXPath(
+				"//label[text()='Docs That Met Your Criteria']//..//..//..//i[@title='Remove from Selected Results']");
+	}
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -1828,7 +1830,7 @@ public class SessionSearch {
 		 */
 
 	}
-
+//Modified on 10/2/22 by jayanthi added one new message with number 13.
 	public void wrongQueryAlertAdvanceSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -1949,6 +1951,25 @@ public class SessionSearch {
 			String msg = "Search queries with wildcard characters within phrases are not supported. Alternatively, you could get the same results by performing a proximity search with a distance of zero. For example, a search \"trade contr*\" can be equivalently reconstructed as \"trade contr*\"~0! to get the same results. Please reach out to Support or your administrator for any additional help.";
 			Assert.assertEquals(msg.replaceAll(" ", ""),
 					getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n", ""));
+		}
+		if (MessageNumber == 13) {
+			base.stepInfo(SearchString+" is entered as proximity phrase in advanced search content search text box.");
+			String msg = "Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)Does your query reflect your intent?Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
+			System.out.println(getQueryAlertGetText().getText());
+			if(msg.replaceAll(" ", "").equals(getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""))) {
+				base.passedStep("Proximity query alert message displayed as expected.");
+				getTallyContinue().waitAndClick(10);
+				// verify counts for all the tiles
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+					}
+				}), Input.wait90);
+
+			}
+			else {
+				base.failedStep("Proximity query alert message not displayed as expected.");
+			}
 		}
 		// click on ok
 		/*
@@ -2767,11 +2788,12 @@ public class SessionSearch {
 	public void ViewInDocList() throws InterruptedException {
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		if (getPureHitAddButton().isElementAvailable(2)) {
-			getPureHitAddButton().waitAndClick(5);
-		} else {
+		if (getRemovePureHit().isElementAvailable(2)) {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
+		} else {
+			
+			getPureHitAddButton().waitAndClick(5);
 		}
 
 		getBulkActionButton().waitAndClick(5);
@@ -10175,7 +10197,7 @@ public String configureAudioSearchBlock(String SearchString1, String SearchStrin
 		// Enter search string
 		base.waitForElement(get_Current_As_AudioText());
 		get_Current_As_AudioText().SendKeys(SearchString);
-		base.stepInfo("Entered a text in search text box" + SearchString);
+		base.stepInfo("Entered a text in search text box " + SearchString);
 		base.waitForElement(getAdvanceSearch_btn_Current());
 		getAdvanceSearch_btn_Current().Click();
 
@@ -10392,5 +10414,51 @@ public int modifyAdvanceSearch(String option,String SearchString) throws Interru
 
 		return pureHit;
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param SearchString
+	 * @param language
+	 * @return
+	 */
+	public int audioSearchTwoTimesandAddingTwoPureHits(String SearchString, String language) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCurrentAudioButton());
+		getCurrentAudioButton().ScrollTo();
+		getCurrentAudioButton().waitAndClick(10);
+		base.waitForElement(getCurrentLanguageSelectButton());
+		getCurrentLanguageSelectButton().selectFromDropdown().selectByVisibleText(language);
+		base.stepInfo("Selected Language as " + language);
+		driver.waitForPageToBeReady();
+		
+		// Enter search string
+		base.waitForElement(get_Current_As_AudioText());
+		get_Current_As_AudioText().SendKeys(SearchString);
+		base.stepInfo("Entered a text in search text box " + SearchString);
+		base.waitForElement(getAdvanceSearch_btn_Current());
+		getAdvanceSearch_btn_Current().Click();
 
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCurrentPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+
+		base.waitForElement(getCurrentPureHitsCount());
+		base.waitTime(3);
+		int pureHit = Integer.parseInt(getCurrentPureHitsCount().getText());
+		System.out.println("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
+		UtilityLog.info("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
+
+		return pureHit;
+
+	}
+
+
+	public void removePureHitsFromSelectedResult() {
+		List<WebElement>PureHitsFromSelectedResult=getRemovePureHits().FindWebElements();
+		for(int i=0;i<PureHitsFromSelectedResult.size();i++) {
+			PureHitsFromSelectedResult.get(i).click();
+		}
+	}
 }

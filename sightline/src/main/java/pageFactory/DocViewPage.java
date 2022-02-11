@@ -3089,11 +3089,18 @@ public class DocViewPage {
 				"//div[@id='divDuplicateRedactionWarning' and normalize-space('" + Input.warningMessage + "')]");
 	}
 	
+
 	//Added by Gopinath 10/02/2022
 	public Element getImageTabOption(String option) {
 		return driver.FindElementByXPath("//ul[@id='AvailableImagesDropDown']//a[contains(text(),'"+option+"')]");
 	}
 	
+
+	//Added By Vijaya.Rani
+	public Element getDocView_NavigationBtn() {
+		return driver.FindElementByXPath("//i[@class='fa fa-angle-right']");
+	}
+
 
 	public DocViewPage(Driver driver) {
 
@@ -24417,6 +24424,7 @@ public class DocViewPage {
 			UtilityLog.info("Review remark validation failed due to following exception " + e);
 		}
 	}
+
 	
 	
 	/**
@@ -24442,5 +24450,219 @@ public class DocViewPage {
 
 		}
 		
+
+
+	public Element getNotchSymboInPersistentHits() {
+		return driver.FindElementByXPath("//span[text()='Term:']/parent::strong/parent::div/descendant::div[@class='pull-right']");
+	}
+	
+	public void verifyingThePresenceOfPersistentHit(boolean verifyNotchSymbol,String SearchString) {
+		driver.waitForPageToBeReady();
+		if(getDocView_Audio_Hit().isDisplayed()) {
+			base.passedStep("Persistent Hits is displayed");
+			base.waitForElement(getDocView_Audio_Hit());
+			String StringInPanels = getDocView_Audio_Hit().getText().trim().toString().toLowerCase();
+			
+			System.out.println("expected text" + StringInPanels);
+			base.compareTextViaContains(StringInPanels, SearchString, "Search string is displayed as expected",
+					"Search string is not displayed as expected");
+			
+		}else {
+			base.failedStep("Persistent Hits is Not displayed");
+		}
+		
+		if(verifyNotchSymbol) {
+			if(getTriangularIcon().isDisplayed()) {
+				base.passedStep("triangular Arrow icon in the Persistent Hits panel is Dislplayed");
+			}else {
+				base.failedStep("triangular Arrow icon in the Persistent Hits panel is Not Dislplayed");
+			}
+		}
+	}
+
+	
+	/**
+	 * 
+	 * @author Vijaya.Rani 09/02/22 NA Modified date: NA Modified by:NA
+	 * @description perform Eye Icon testcase id-51866
+	 */
+
+	public void performEyeIconHighLightingNavDocToDoc() throws InterruptedException {
+
+		base = new BaseClass(driver);
+		getDocView_MiniDoc_Selectdoc(1).waitAndClick(20);
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getEyeIcon().Visible() && HighliteIcon().Enabled();
+			}
+		}), Input.wait30);
+		getEyeIcon().waitAndClick(10);
+		base.stepInfo("docView Eye Icon Clicked Successfully");
+		base.waitForElement(getDocView_NumTextBox());
+		String pagenum1 = getDocView_NumTextBox().getText();
+		System.out.println(pagenum1);
+
+		base.waitForElement(getDocView_NavigationBtn());
+		getDocView_NavigationBtn().waitAndClick(10);
+
+		base.waitForElement(getDocView_NumTextBox());
+		String pagenum2 = getDocView_NumTextBox().getText();
+		System.out.println(pagenum2);
+
+		softAssertion.assertTrue(docViewEyeSearchTerm().Displayed());
+		base.passedStep("DocView EyeIcon persistent hit Is Displayed");
+
+		softAssertion.assertNotEquals(pagenum1, pagenum2);
+		base.passedStep("mini doc list after doc-to-doc navigation then persistent hits is displayed");
+	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 */
+	public void openChildWindowCodingFormInRadioGroup() {
+
+		getSaveAndNextButton().waitAndClick(5);
+		boolean flag = getDocView_ErrorMessage("Error Message").isDisplayed();
+		softAssertion.assertTrue(flag);
+		if (getDocView_ErrorMessage("Error Message").isDisplayed()) {
+			base.stepInfo("Coding form validation error text displayed");
+			base.passedStep("Child window error text displayed");
+		} else {
+			return;
+		}
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		boolean flagOne = getCodingFormValidErrorMeta().isDisplayed();
+		softAssertion.assertTrue(flagOne);
+		if (getCodingFormValidErrorMeta().isDisplayed()) {
+			base.stepInfo("Coding form validation error message displayed");
+			base.passedStep("Child window also not create doc without input text");
+		} else {
+			return;
+		}
+		reusableDocView.switchToNewWindow(2);
+		driver.close();
+		reusableDocView.switchToNewWindow(1);
+
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 11/02/2021 Modified date: N/A
+	 * @Description: Validation of non-date format using save and complete
+	 */
+	
+        public void nonDateFormatValidationUsingSaveAndComplete(String projectFieldName, String fieldValue, String colour)
+			throws InterruptedException, AWTException {
+		driver.waitForPageToBeReady();
+		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
+//		base.waitForElement(getReadOnlyTextBox(projectFieldName));
+		getDateFormat().SendKeys("11/10/2021");
+		codingFormSaveButton();
+		String errorText = getCodingFormValidErrorMeta().getText().trim();
+		String actual = "Coding Form validation failed";
+		base.stepInfo("Entering non-date format in dateTime datatype action using save button");
+		if (errorText.equals(actual)) {
+			base.passedStep("validation message Dispalyed for non-date format");
+		} else {
+			base.failedMessage("validation message not displayed for non-date format");
+		}
+		reusableDocView.clickGearIconOpenCodingFormChildWindow();
+		String parentWindow = reusableDocView.switchTochildWindow();
+		base.stepInfo("coding form child window opened");
+		getDateFormat().SendKeys("11/10/2021");
+		completeButton();
+		driver.close();
+		reusableDocView.switchToNewWindow(1);
+		String errorTextChild = getCodingFormValidErrorMeta().getText().trim();
+		String actualChild = "Coding Form validation failed";
+		base.stepInfo("Entering non-date format in dateTime datatype action using complete button");
+		if (errorTextChild.equals(actualChild)) {
+			base.passedStep("validation message Dispalyed for non-date format");
+		} else {
+			base.failedMessage("validation message not displayed for non-date format");
+		}
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @param comment
+	 * @param save
+	 * @param docs
+	 */
+	public void addCommentAndSave(String comment, boolean save, int docs) {
+		for (int i = 1; i <= docs; i++) {
+			getClickDocviewID(i).waitAndClick(5);
+			base.waitForElement(getResponsiveCheked());
+			getResponsiveCheked().waitAndClick(5);
+			base.waitForElement(getNonPrivilegeRadio());
+			getNonPrivilegeRadio().waitAndClick(5);
+			base.waitForElement(getDocument_CommentsTextBox());
+			getDocument_CommentsTextBox().SendKeys(comment);
+			base.stepInfo("Added Document Comment : " + comment);
+			if (save) {
+				driver.scrollPageToTop();
+				base.waitForElement(getCodingFormSaveBtn());
+				getCodingFormSaveBtn().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage("Document saved successfully");
+				base.CloseSuccessMsgpopup();
+			}
+		}
+	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 */
+	public void performBrowerBackButton() {
+
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 3; i++) {
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		reusableDocView.clickCodeSameAs();
+
+		// validation for back button(cancel)
+		driver.Navigate().back();
+		base.passedStep("Leave and cancel button displayed when navigation done through back button In cancel");
+		driver.switchTo().alert().dismiss();
+		if (getDocView_ImagesTab().Displayed()) {
+			base.passedStep("User Can View The DocView Page Successfully");
+		} else {
+			base.failedStep("User Can not View the DocView Page");
+		}
+
+		driver.waitForPageToBeReady();
+		for (int i = 4; i <= 5; i++) {
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		reusableDocView.clickCodeSameAs();
+		// validation for back button(Leave)
+		driver.Navigate().back();
+		base.passedStep("Leave and cancel button displayed when navigation done through back button in Leave");
+		driver.switchTo().alert().accept();
+/**
+	 * @Author Brundha
+	 * @Description :Method to verify Saved stamp tool tip
+	 * 
+	 */
+	
+	public void VerifySavedStampToolTip(String stampColour,String fieldText) {
+		   base.stepInfo("Verify tooltip in saved stamp");
+		   driver.waitForPageToBeReady();
+		   getCodingStampLastIcon(stampColour).isDisplayed(); 
+			Actions builder = new Actions(driver.getWebDriver());
+			driver.waitForPageToBeReady();
+			base.waitForElement(getCodingStampLastIcon(stampColour));
+			builder.moveToElement(getCodingStampLastIcon(stampColour).getWebElement()).build().perform();
+			driver.waitForPageToBeReady();
+			String ActualText =getSavedCodingStamp(stampColour).getWebElement()
+					.getAttribute("title");
+			base.textCompareEquals(fieldText, ActualText, "Mouseover Text for "+stampColour+" is displayed as expected",
+					"Mouseover text for "+stampColour+" is not displayed as expected");
+		
+
+
 	}
 }
+

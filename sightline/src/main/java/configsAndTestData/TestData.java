@@ -95,6 +95,7 @@ public class TestData {
 	public String familyDocWhichIsNotInMiniDoc;
 	public String bgColorOnMouseHover;
 	public String nearDupePagination;
+	public String fieldByValue;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;
@@ -382,6 +383,8 @@ public class TestData {
 		public String documentId;
 		public String telecaSearchString;
 		public String docFile;
+		public String stampRed;
+		public String stampGreen;
 		
 		//Added by gopinath - 08/12/2021
 		public String anotherRemarkMessage;

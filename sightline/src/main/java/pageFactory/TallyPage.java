@@ -407,6 +407,66 @@ public class TallyPage {
 	public Element getSubTallyViewinDocViewBtn() {
 		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[@id='idSubTallyViewInDocview']");
 	}
+	public Element clearingActiveFiltersInTallyBy() {
+		return driver.FindElementByXPath("//strong[text()='ACTIVE FILTERS:']/parent::div//i[@class='fa fa-times-circle']");
+	}
+
+	public Element metaDataFilterForTallyBy(String metaData) {
+		return driver.FindElementByXPath("//ul[@id='optionFilters']/li[text()='" + metaData + "']");
+	}
+
+	public Element IncludeRadioButtonForTallyBy() {
+		return driver.FindElementByXPath(
+				"//div[@class='popover bottom in']//div[@class='inline-group']//input[@id='Include']/parent::label/i");
+	}
+
+	public Element ExcludeRadioButtonForTallyBy() {
+		return driver.FindElementByXPath(
+				"//div[@class='popover bottom in']//div[@class='inline-group']//input[@id='Exclude']/parent::label/i");
+	}
+
+	public Element FilterInputTextBoxTallyBy() {
+		return driver.FindElementByXPath("//input[@class='select2-search__field']");
+	}
+
+	public Element FilterInputOptionTallyBy(String filterValue) {
+		return driver.FindElementByXPath("//ul[@role='tree']/li[@role='treeitem' and text()='" + filterValue + "']");
+	}
+
+	public Element ApplyFilterTallyBy() {
+		return driver
+				.FindElementByXPath("//div[@class='popover bottom in']//div[@class='row']//a[text()=' Add to Filter']");
+	}
+
+	public Element ActiveFiltersTallyBy(String FilteData) {
+		return driver.FindElementByXPath("//li[contains(text(),'" + FilteData + "')]");
+	}
+	public Element metaDataFilterForSubTallyBy(String metaData) {
+		return driver.FindElementByXPath("(//ul[@id='optionFilters'])[last()]/li[text()='" + metaData + "']");
+	}
+
+	public Element IncludeRadioButtonForSubTallyBy() {
+		return driver.FindElementByXPath(
+				"//div[@class='popover bottom in']//descendant::input[@id='Include']//following-sibling::i");
+	}
+
+	public Element ExcludeRadioButtonForSubTallyBy() {
+		return driver.FindElementByXPath(
+				"//div[@class='popover bottom in']//descendant::input[@id='Exclude']//following-sibling::i");
+	}
+
+	public Element ApplyFilterSubTallyBy() {
+		return driver.FindElementByXPath("//div[@class='popover bottom in']//descendant::a[text()=' Add to Filter']");
+	}
+
+	public Element ActiveFiltersSubTallyBy(String FilteData) {
+		return driver.FindElementByXPath("//div[@id='activeFilters']/li[contains(text(),'" + FilteData + "')]");
+	}
+
+
+	public ElementCollection ListOfMetaDataInSubTallyResults() {
+		return driver.FindElementsByXPath("//div[@id='subTallyChart']//td[@class='text-left rowlead formatDate']");
+	}
 	public TallyPage(Driver driver) {
 
 		this.driver = driver;
@@ -1570,4 +1630,147 @@ public class TallyPage {
 		}
 		return sum;
 	}
+
+/**
+ * @author Jayanthi.ganesan
+ * @param ListOfMetaData
+ * @param metaDataTally
+ * @param FilterType
+ * @return
+ */
+
+public String applyFilterToTallyBy(List<String> ListOfMetaData, String metaDataTally, String FilterType) {
+
+	driver.waitForPageToBeReady();
+	String ApplyFilterMetaData = null;
+	base.waitForElement(metaDataFilterForTallyBy(metaDataTally));
+	base.waitTillElemetToBeClickable(metaDataFilterForTallyBy(metaDataTally));
+	metaDataFilterForTallyBy(metaDataTally).waitAndClick(10);
+	if (FilterType.equalsIgnoreCase("Include")) {
+		IncludeRadioButtonForTallyBy().waitAndClick(10);
+	} else if (FilterType.equalsIgnoreCase("Exclude")) {
+		ExcludeRadioButtonForTallyBy().waitAndClick(10);
+	}
+	for (int i = 0; i < ListOfMetaData.size(); i++) {
+		if (ListOfMetaData.get(i) != null && ListOfMetaData.get(i) != "") {
+			ApplyFilterMetaData = ListOfMetaData.get(i);
+			break;
+		} else {
+			continue;
+		}
+	}
+	System.out.println(ApplyFilterMetaData + " filter tally by");
+	FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
+	FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
+	ApplyFilterTallyBy().waitAndClick(10);
+	base.waitForElement(ActiveFiltersTallyBy(ApplyFilterMetaData));
+	if (ActiveFiltersTallyBy(ApplyFilterMetaData).isElementAvailable(2)) {
+		base.passedStep("Selected Metadata is reflected in Active Filter under Tally by option .");
+		getTally_btnTallyApply().Click();
+		driver.waitForPageToBeReady();
+	} else {
+		base.failedStep("selected metadata is not reflected in active filters under tally  by option.");
+
+	}
+	return ApplyFilterMetaData;
+}
+
+/**
+ * @author Jayanthi.ganesan
+ * @param FilterType
+ * @param ApplyFilterMetaData
+ */
+
+public void verifyTallyChartAfterApplyingFilter(String FilterType, String ApplyFilterMetaData) {
+
+	List<String> ListOfMetaAfterApplyingFilter = verifyTallyChart();
+
+	if (FilterType.equalsIgnoreCase("Include")) {
+		if (ApplyFilterMetaData.equals(ListOfMetaAfterApplyingFilter.get(0))) {
+			base.passedStep(
+					"Include Filter applied worked and the value of metadata applied in the filter matches with the Result appeared on the chart");
+		} else {
+			base.failedStep(
+					"Include Filter applied is not worked and the value of metadata applied in the filter is not matches with the Result appeared on the chart");
+		}
+	} else if (FilterType.equalsIgnoreCase("Exclude")) {
+		if (!ListOfMetaAfterApplyingFilter.contains(ApplyFilterMetaData) || ListOfMetaAfterApplyingFilter.isEmpty()) {
+			base.passedStep(
+					"Exclude Filter applied worked and the value of metadata applied in the filter Exculed from the chart");
+		} else if (ListOfMetaAfterApplyingFilter.contains(ApplyFilterMetaData)) {
+			base.failedStep(
+					"Exclude Filter applied is not worked and the value of metadata applied in the filter is not Exculed from the chart");
+		}
+	}
+}
+
+/**
+ * @author Jayanthi.ganesan
+ * @param ListOfMetaData
+ * @param metaDataTally
+ * @param FilterType
+ * @return
+ */
+public String applyFilterToSubTallyBy(List<String> ListOfMetaData, String metaDataTally, String FilterType) {
+
+	driver.waitForPageToBeReady();
+	String ApplyFilterMetaData = null;
+	base.waitForElement(metaDataFilterForSubTallyBy(metaDataTally));
+	base.waitTillElemetToBeClickable(metaDataFilterForSubTallyBy(metaDataTally));
+	metaDataFilterForSubTallyBy(metaDataTally).waitAndClick(10);
+
+	if (FilterType.equalsIgnoreCase("Include")) {
+		IncludeRadioButtonForSubTallyBy().waitAndClick(10);
+	} else if (FilterType.equalsIgnoreCase("Exclude")) {
+		ExcludeRadioButtonForSubTallyBy().waitAndClick(10);
+	}
+	for (int i = 0; i < ListOfMetaData.size(); i++) {
+		if (ListOfMetaData.get(i) != null && ListOfMetaData.get(i) != "") {
+			ApplyFilterMetaData = ListOfMetaData.get(i);
+			break;
+		} else {
+			continue;
+		}
+	}
+	System.out.println("Subtaly filter " + ApplyFilterMetaData);
+	FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
+	FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
+	ApplyFilterSubTallyBy().waitAndClick(10);
+	base.waitForElement(ActiveFiltersSubTallyBy(ApplyFilterMetaData));
+	if (ActiveFiltersSubTallyBy(ApplyFilterMetaData).isElementAvailable(3)) {
+		base.passedStep(
+				"Selected metadata is reflected in active filter" + ApplyFilterMetaData + "under sub tally by.");
+		base.waitForElement(getTally_btnSubTallyApply());
+		getTally_btnSubTallyApply().Click();
+		driver.waitForPageToBeReady();
+	} else {
+		base.failedStep("Selected metadata not reflected in Active filter under sub tally by");
+	}
+	return ApplyFilterMetaData;
+}
+/**
+ * @author Jayanthi.ganesan
+ */
+public void verifySubTallyResultTableAfterApplyingFilter(String FilterType, String ApplyFilterMetaData) {
+
+	List<String> ListOfMetaAfterApplyingFilter = base.availableListofElements(ListOfMetaDataInSubTallyResults());
+
+	if (FilterType.equalsIgnoreCase("Include")) {
+		if (ApplyFilterMetaData.equals(ListOfMetaAfterApplyingFilter.get(0))) {
+			base.passedStep(
+					"Include Filter applied worked and the value of metadata applied in the filter matches with the Result appeared on the Sub-Tally By Table");
+		} else {
+			base.failedStep(
+					"Include Filter applied is not worked and the value of metadata applied in the filter is not matches with the Result appeared on the Sub-Tally By Table");
+		}
+	} else if (FilterType.equalsIgnoreCase("Exclude")) {
+		if (!ListOfMetaAfterApplyingFilter.contains(ApplyFilterMetaData) || ListOfMetaAfterApplyingFilter.isEmpty()) {
+			base.passedStep(
+					"Exclude Filter applied worked and the value of metadata applied in the filter Exculed from the Sub-Tally By Table");
+		} else if (ListOfMetaAfterApplyingFilter.contains(ApplyFilterMetaData)) {
+			base.failedStep(
+					"Exclude Filter applied is not worked and the value of metadata applied in the filter is not Exculed from the Sub-Tally By Table");
+		}
+	}
+}
 }

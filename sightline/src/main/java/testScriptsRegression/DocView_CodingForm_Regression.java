@@ -10049,14 +10049,7 @@ public class DocView_CodingForm_Regression {
 
 	}
 	
-	@DataProvider(name = "threeUser")
-	public Object[][] threeUser() {
-		return new Object[][] { { "rmu", Input.rmu1userName, Input.rmu1password, "rev" },
-				{ "sa", Input.sa1userName, Input.sa1password, "rmu" },
-				{ "sa", Input.sa1userName, Input.sa1password, "rev" },
-				{ "pa", Input.pa1userName, Input.pa1password, "rmu" },
-				{ "pa", Input.pa1userName, Input.pa1password, "rev" } };
-	}
+	
 	/**
 	* @Author : Brundha 
 	* @Description:To verify that message should be displayed if no coding form is
@@ -10253,6 +10246,433 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 10/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify on click of 'Save and Next' button coding form should be validated as per the customized
+	 * coding form for tag element.'RPMXCON-52076' Sprint: 12
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 212)
+	public void verifyCodingFormvalidatedtagElement() throws InterruptedException, AWTException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52076");
+		baseClass.stepInfo("Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form for tag element.");
+		
+		String codingform = "CFTags"+Utility.dynamicNameAppender();
+	    String defaultAction="Make It Required";
+	   
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	codingForm.createCodingFormUsingTwoObjects(codingform, null, null, null, "tag");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.selectDefaultActions(0,defaultAction);
+	 	codingForm.enterErrorAndHelpMsg(0,"Yes","Help for testing","Error for testing");
+	 	String expectedFirstObjectName = codingForm.getCFObjectsLabel(0);
+	 	System.out.println(expectedFirstObjectName);
+	 	codingForm.saveCodingForm();
+	 	codingForm.assignCodingFormToSG(codingform);
+		
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+
+		//verify tag names
+		docViewPage.verifyCodingFormTagNameInDocviewPg(0,expectedFirstObjectName);
+		
+		driver.waitForPageToBeReady();
+		docViewPage.popOutCodingFormPanel();
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		docViewPage.openChildWindowCodingFormInRadioGroup();
+
+		driver.switchTo().window(parentWindowID);
+		driver.Navigate().refresh();
+		
+		baseClass.passedStep("Verified on click of 'Save and Next' button coding form should be validated as per the customized coding form for comment element in context of security group.");
+		codingForm.assignCodingFormToSG(Input.codeFormName);
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.deleteCodingForm(codingform,codingform);	
+		codingForm.verifyCodingFormIsDeleted(codingform);
+		
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 11/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify user can apply the saved coding stamp to other documents 
+	 *              from mini doc list in context of security group
+	 */
+	@Test(enabled = true, dataProvider = "ContentAndAudio", groups = { "regression" }, priority = 214)
+	public void validateSavedStampInSG(String method) throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion=new SoftAssert();
+		
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String stampName = "st" + Utility.dynamicNameAppender();
+		
+		String childURL=Input.url+"DocumentViewer/CodingFormChildWindow+";
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52069");
+		baseClass.stepInfo("Verify user can apply the saved coding stamp to other documents "
+				+ "from mini doc list in context of security group");
+
+		// Basic Search
+		if (method.equals("Basic")) {
+			sessionSearch.basicContentSearch(Input.searchString2);
+			baseClass.stepInfo("User navigated to docview page from basic search");
+		} else if (method.equals("Audio")) {//Advanced audio search
+			sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+			baseClass.stepInfo("User navigated to docview page from advanced search");
+		}
+		sessionSearch.ViewInDocView();
+		
+		// editing the coding form and saving the stamp
+        docViewPage.editCodingForm(comment);
+        docViewPage.codingStampButton();
+        docViewPage.popUpAction(stampName, Input.stampSelection);
+        baseClass.stepInfo("Coding stamp saved with stamp colour and value");
+        
+        // verifying stamp saved with loaded value in different document
+        baseClass.waitForElement(docViewPage.getDocView_Next());
+        docViewPage.getDocView_Next().waitAndClick(5);
+        String activeID=docViewPage.getDocView_CurrentDocId().getText();
+        driver.waitForPageToBeReady();
+        String prnDoc=docViewPage.getVerifyPrincipalDocument().getText();
+        softAssertion.assertEquals(activeID, prnDoc);
+        
+        // Clicking the saved stamp
+        docViewPage.lastAppliedStamp(Input.stampSelection);
+        docViewPage.verifyingComments(comment);
+        baseClass.passedStep("While clicking the saved stamp value as per expected one in parent window");
+        
+        // navigating to other docs for coding from child window valiation
+        baseClass.waitForElement(docViewPage.getDocView_Next());
+        docViewPage.getDocView_Next().waitAndClick(5);
+        String activeTwo=docViewPage.getDocView_CurrentDocId().getText();
+        driver.waitForPageToBeReady();
+        String prnDocTwo=docViewPage.getVerifyPrincipalDocument().getText();
+        softAssertion.assertEquals(activeTwo, prnDocTwo);
+        
+        // validation from child window
+        docViewPage.clickGearIconOpenCodingFormChildWindow();
+        String parentWindow=docViewPage.switchTochildWindow();
+        if (driver.getUrl().equalsIgnoreCase(childURL)) {
+        	baseClass.stepInfo("Coding from child window opened");
+		}
+        
+        // Clicking the saved stamp from child window
+        docViewPage.lastAppliedStamp(Input.stampSelection);
+        docViewPage.verifyingComments(comment);
+        baseClass.passedStep("While clicking the saved stamp value as per expected one in child window");
+        docViewPage.childWindowToParentWindowSwitching(parentWindow);
+        
+        // house keeping activity
+        driver.Navigate().refresh();
+        driver.switchTo().alert().accept();
+        docViewPage.deleteStampColour(Input.stampSelection);
+       
+        
+        softAssertion.assertAll();
+        // logout
+        loginPage.logout();
+
+	}
+	
+	/**
+	 * @Author : Baskar date: 11/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify when 'Complete When Coding Stamp Applied' off at an 
+	 *              assignment group/assignment level
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 215)
+	public void validatingToggleCodingStampInAssign() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion=new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-51280");
+		baseClass.stepInfo("Verify when 'Complete When Coding Stamp Applied' "
+				+ "off at an assignment group/assignment level");
+
+		String assignment = "Assgn" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String stampName = "stamp" + Utility.dynamicNameAppender();
+
+		// login as rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+//	    searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignment, Input.codingFormName);
+		
+		// Toggle validation
+		driver.scrollingToBottomofAPage();
+		baseClass.waitForElement(assignmentPage.getAssgn_CodingStampAplliedToggle());
+		String stampToggleStatus = (assignmentPage.getAssgn_CodingStampAplliedToggle().GetAttribute("class")).toString();
+		if (stampToggleStatus.equalsIgnoreCase("false")) {
+			assignmentPage.getAssgn_CodingStampAplliedToggle().waitAndClick(5);
+		}
+		softAssertion.assertEquals(stampToggleStatus, "false");
+		baseClass.passedStep("Coding stamp toggle is disabled at assignment");
+		driver.scrollPageToTop();
+		assignmentPage.add2ReviewerAndDistribute();
+		System.out.println(assignment);
+
+		// logout
+		loginPage.logout();
+
+		// login as rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validation for coding stamp in assignment level
+		String prnDoc=docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(stampName, Input.stampSelection);
+		docViewPage.lastAppliedStamp(Input.stampSelection);
+		docViewPage.verifyComments(comment);
+		String prnSecDoc=docViewPage.getVerifyPrincipalDocument().getText();
+		softAssertion.assertEquals(prnDoc, prnSecDoc);
+		baseClass.stepInfo("Coding form object value loaded successfully");
+		boolean completeButton=docViewPage.getCompleteDocBtn().Displayed();
+		softAssertion.assertTrue(completeButton);
+		baseClass.passedStep("Document not completed and not navigated to next docs from minidoclist");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 11/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify coding stamp should not be applied to completed document in an assignment
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 216)
+	public void validatingSavedStampForCompletedDocs() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion=new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-51001");
+		baseClass.stepInfo("Verify coding stamp should not be applied to "
+				+ "completed document in an assignment");
+
+		String assignment = "Assgn" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String commentTwo = "commentTwo" + Utility.dynamicNameAppender();
+		String stampName = "stamp" + Utility.dynamicNameAppender();
+
+		// login as rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+        // searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignment, Input.codingFormName);
+		assignmentPage.add2ReviewerAndDistribute();
+		System.out.println(assignment);
+
+		// logout
+		loginPage.logout();
+
+		// login as rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting the assignment as reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validation for saved coding stamp for completed docs in assignment level
+		// saving the stamp
+		String prnDoc=docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(stampName, Input.stampSelection);
+		
+		// completing the docs
+		docViewPage.editCodingForm(commentTwo);
+		docViewPage.completeButton();
+		docViewPage.getDociD(prnDoc).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docViewPage.lastAppliedStamp(Input.stampSelection);
+		docViewPage.getDociD(prnDoc).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		
+		// verifying stamp loaded for completed docs
+		baseClass.waitForElement(docViewPage.getDocument_CommentsTextBox());
+		String text = docViewPage.getDocument_CommentsTextBox().GetAttribute("value");
+		softAssertion.assertNotEquals(text, comment);
+		baseClass.passedStep("Coding form stamp object value not updated");
+		boolean completeButton=docViewPage.getUnCompleteButton().Displayed();
+		softAssertion.assertTrue(completeButton);
+  }
+  /*
+	 * @Author : date: 10/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:To verify that comment should displayed on the document.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 213)
+	public void verifyCommentDisplayedOnTheDocument() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		String AssignStamp = "Assignment" + Utility.dynamicNameAppender();
+		String docComment = "documentcomment1234";
+		int count = 1;
+		baseClass.stepInfo("Test case Id: RPMXCON-50986");
+		baseClass.stepInfo("To verify that comment should displayed on the document.");
+
+		// Login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Perform search and View in DocView
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// Apply comments to document
+		String DocId = docViewPage.getClickDocviewID(1).getText();
+		System.out.println(DocId);
+		docViewPage.addCommentAndSave(docComment, true, count);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocument_CommentsTextBox());
+		String DocComments = docViewPage.getDocument_CommentsTextBox().getText();
+		System.out.println(DocComments);
+
+		// searching document for assignmnet creation
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(AssignStamp, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(AssignStamp);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		String DocId1 = docViewPage.getClickDocviewID(1).getText();
+		System.out.println(DocId1);
+		softAssertion.assertEquals(DocId, DocId1);
+		baseClass.stepInfo("Same documenId is displayed on Docview");
+		// verify last saved same docId is displayed
+		driver.waitForPageToBeReady();
+		String DocComments1 = docViewPage.getDocument_CommentsTextBox().getText();
+		System.out.println(DocComments1);
+		softAssertion.assertEquals(DocComments, DocComments1);
+		if (DocComments.equals(DocComments1)) {
+			baseClass.passedStep(DocComments + "...Previously saved documentId comment is displayed successfully"
+					+ "on same documentId..." + DocComments1);
+
+		} else {
+			baseClass.failedMessage("document comment is not displayed");
+		}
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+
+
+	@DataProvider(name = "ContentAndAudio")
+	public Object[][] ContentAndAudio() {
+		Object[][] ContentAndAudio = { { "Basic" }, { "Audio" }, };
+		return ContentAndAudio;
+	}
+
+	
+	
+	/**
+	 * @Author : Brundha
+	 * @Description:RPMXCON-51300 -Verify all of the stamp icons should be displayed
+	 *                            with tool tips when redirected from my assignment
+	 *                            and stamp are saved
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 213)
+	public void validateToolTipInStampIcons() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		reusableDocView = new ReusableDocViewPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51300-DocView/CodingForm");
+		baseClass.stepInfo(
+				"Verify all of the stamp icons should be displayed with tool tips when redirected from my assignment and stamp are saved");
+
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+		String assign = "AAsign" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assign, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+
+		// logout
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		driver.waitForPageToBeReady();
+		String prndoc = docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.editCodingFormSave();
+
+		baseClass.waitForElement(docViewPage.getDociD(prndoc));
+		docViewPage.getDociD(prndoc).waitAndClick(5);
+
+		// Verifying tool tip for blue color saved stamp
+		reusableDocView.stampColourSelection(fieldText, Input.stampColour);
+		docViewPage.VerifySavedStampToolTip(Input.stampColour, fieldText);
+
+		// Verifying tool tip for green color saved stamp
+		reusableDocView.stampColourSelection(fieldText, Input.stampGreen);
+		docViewPage.VerifySavedStampToolTip(Input.stampGreen, fieldText);
+
+		//Verifying tool tip for yellow color saved stamp
+		reusableDocView.stampColourSelection(fieldText, Input.stampSelection);
+		docViewPage.VerifySavedStampToolTip(Input.stampSelection, fieldText);
+
+		// Verifying tool tip for red color saved stamp
+		reusableDocView.stampColourSelection(fieldText,Input.stampRed);
+		docViewPage.VerifySavedStampToolTip(Input.stampRed, fieldText);
+
+		// Verifying tool tip for black color saved stamp
+		reusableDocView.stampColourSelection(fieldText, Input.stampColours);
+		docViewPage.VerifySavedStampToolTip(Input.stampColours, fieldText);
+
+		// overall assertion
+		softAssertion.assertAll();
+		loginPage.logout();
+
+	}
 
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {
@@ -10301,6 +10721,14 @@ public class DocView_CodingForm_Regression {
 		return new Object[][] { { "rmu", Input.rmu1userName, Input.rmu1password },
 				{ "rev", Input.rev1userName, Input.rev1password },
 				{ "assgnCf", Input.rmu1userName, Input.rmu1password } };
+	}
+	@DataProvider(name = "threeUser")
+	public Object[][] threeUser() {
+		return new Object[][] { { "rmu", Input.rmu1userName, Input.rmu1password, "rev" },
+				{ "sa", Input.sa1userName, Input.sa1password, "rmu" },
+				{ "sa", Input.sa1userName, Input.sa1password, "rev" },
+				{ "pa", Input.pa1userName, Input.pa1password, "rmu" },
+				{ "pa", Input.pa1userName, Input.pa1password, "rev" } };
 	}
 
 	@AfterMethod(alwaysRun = true)
