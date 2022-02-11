@@ -24577,6 +24577,36 @@ public class DocViewPage {
 	}
 	
 	/**
+	 * @author Vijaya.Rani
+	 */
+	public void performBrowerBackButton() {
+
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 3; i++) {
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		reusableDocView.clickCodeSameAs();
+
+		// validation for back button(cancel)
+		driver.Navigate().back();
+		base.passedStep("Leave and cancel button displayed when navigation done through back button In cancel");
+		driver.switchTo().alert().dismiss();
+		if (getDocView_ImagesTab().Displayed()) {
+			base.passedStep("User Can View The DocView Page Successfully");
+		} else {
+			base.failedStep("User Can not View the DocView Page");
+		}
+
+		driver.waitForPageToBeReady();
+		for (int i = 4; i <= 5; i++) {
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		reusableDocView.clickCodeSameAs();
+		// validation for back button(Leave)
+		driver.Navigate().back();
+		base.passedStep("Leave and cancel button displayed when navigation done through back button in Leave");
+		driver.switchTo().alert().accept();
+/**
 	 * @Author Brundha
 	 * @Description :Method to verify Saved stamp tool tip
 	 * 
@@ -24596,6 +24626,7 @@ public class DocViewPage {
 			base.textCompareEquals(fieldText, ActualText, "Mouseover Text for "+stampColour+" is displayed as expected",
 					"Mouseover text for "+stampColour+" is not displayed as expected");
 		
+
 	}
 }
 
