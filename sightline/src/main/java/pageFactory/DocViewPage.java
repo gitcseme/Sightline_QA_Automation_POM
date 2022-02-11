@@ -24442,7 +24442,7 @@ public class DocViewPage {
 				base.failedStep("triangular Arrow icon in the Persistent Hits panel is Not Dislplayed");
 			}
 		}
-
+	}
 	
 	/**
 	 * 
