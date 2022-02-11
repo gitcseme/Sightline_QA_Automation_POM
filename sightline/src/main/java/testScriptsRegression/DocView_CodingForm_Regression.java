@@ -10320,6 +10320,74 @@ public class DocView_CodingForm_Regression {
 	}
 	
 	
+	/**
+	 * @Author : Brundha
+	 * @Description:RPMXCON-51300 -Verify all of the stamp icons should be displayed
+	 *                            with tool tips when redirected from my assignment
+	 *                            and stamp are saved
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 213)
+	public void validateToolTipInStampIcons() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		reusableDocView = new ReusableDocViewPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51300-DocView/CodingForm");
+		baseClass.stepInfo(
+				"Verify all of the stamp icons should be displayed with tool tips when redirected from my assignment and stamp are saved");
+
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+		String assign = "AAsign" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assign, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+
+		// logout
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		driver.waitForPageToBeReady();
+		String prndoc = docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.editCodingFormSave();
+
+		baseClass.waitForElement(docViewPage.getDociD(prndoc));
+		docViewPage.getDociD(prndoc).waitAndClick(5);
+
+		// Verifying tool tip for blue color saved stamp
+		reusableDocView.stampColourSelection(fieldText, Input.stampColour);
+		docViewPage.VerifySavedStampToolTip(Input.stampColour, fieldText);
+
+		// Verifying tool tip for green color saved stamp
+		reusableDocView.stampColourSelection(fieldText, Input.stampGreen);
+		docViewPage.VerifySavedStampToolTip(Input.stampGreen, fieldText);
+
+		//Verifying tool tip for yellow color saved stamp
+		reusableDocView.stampColourSelection(fieldText, Input.stampSelection);
+		docViewPage.VerifySavedStampToolTip(Input.stampSelection, fieldText);
+
+		// Verifying tool tip for red color saved stamp
+		reusableDocView.stampColourSelection(fieldText,Input.stampRed);
+		docViewPage.VerifySavedStampToolTip(Input.stampRed, fieldText);
+
+		// Verifying tool tip for black color saved stamp
+		reusableDocView.stampColourSelection(fieldText, Input.stampColours);
+		docViewPage.VerifySavedStampToolTip(Input.stampColours, fieldText);
+
+		// overall assertion
+		softAssertion.assertAll();
+		loginPage.logout();
+
+	}
 
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {

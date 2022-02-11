@@ -383,6 +383,8 @@ public class TestData {
 		public String documentId;
 		public String telecaSearchString;
 		public String docFile;
+		public String stampRed;
+		public String stampGreen;
 		
 		//Added by gopinath - 08/12/2021
 		public String anotherRemarkMessage;
