@@ -92,7 +92,7 @@ public class AdvancedSearch_Regression3 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		lp.logout();
-		lp.quitBrowser();
+		lp.quitBrowser();  
 
 	}
 
@@ -704,6 +704,44 @@ public class AdvancedSearch_Regression3 {
 		assertion.assertAll();
 		baseClass.passedStep("Sucessfully Verified that result appears for proximity having phrase in Advanced Search Query Screen.");
 		lp.logout();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @throws InterruptedException
+	 */
+	@Test(dataProvider = "Users",groups = { "regression" }, priority = 14)
+	public void verifyEmailAllDomain(String username, String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id:47635 ");
+		baseClass.stepInfo("Verify that Advanced Search is"
+				+ " working properly for Email All Domain Metadata");
+		DocListPage DocList =new DocListPage(driver);
+		SoftAssert softAssert = new SoftAssert();
+		
+		lp.loginToSightLine(username,password);
+		SessionSearch search = new SessionSearch(driver);
+		
+		// To get expected count of Email All domains search in advanced search screen we are
+		//doing star search and viewing in doc list applying email all domains filter and getting docs count.
+		search.basicContentSearch(Input.searchStringStar);	
+		// view document in DocList page
+		search.ViewInDocList();
+		// applying filter and getting the document count
+		 DocList.getIncludeFilterEmailAllDomain(Input.MetaDataDomainName);
+		 SavedSearch ss=new SavedSearch(driver);
+		 int docCount =ss.docListPageFooterCountCheck();
+		 baseClass.stepInfo("Total number if documents available for metadata EmailAllDomain -"+Input.MetaDataDomainName+" is "+docCount);
+		
+		// performing metadata search and getting pureHit Count
+		 baseClass.selectproject();
+		search.advancedMetaDataSearch("EmailAllDomains", null,Input.MetaDataDomainName, null);
+		int pureHit =Integer.parseInt(search.verifyPureHitsCount());
+		 baseClass.stepInfo("Total number if documents available for metadata EmailAllDomain -"+Input.MetaDataDomainName+" when we perform metadata search in sdvanced saerch is "+pureHit);
+		// comparing the document count and pure Hit Count
+		softAssert.assertEquals(docCount, pureHit);
+		softAssert.assertAll();
+		baseClass.passedStep("Email All domains Functionality is working properly in advanced search screen.");
 	}
 
 	@BeforeMethod
