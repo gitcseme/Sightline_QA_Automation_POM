@@ -570,6 +570,64 @@ public class Tally_Regression1 {
 		}
 
 
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 14)
+		public void verifyFilterDocumentsBy(String username, String password, String role) throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56221");
+			bc.stepInfo("To Verify Admin/RMU on the Tally report page will be able to filter on multiple "
+					+ "metadata fields on both the Tally and Subtally areas");
+			String[][] subTally = { { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" },
+					{ "EmailAuthorName", "CustodianName", "DocFileType", "EmailAuthorAddress" },
+					{ "DocFileType", "EmailAuthorName", "CustodianName", "EmailAuthorAddress" } };
+			lp.loginToSightLine(username, password);
+			bc.stepInfo("Logged in as " + role);
+			TallyPage tp = new TallyPage(driver);
+			String[] sourceNames = new String[4];
+			String FilterType = "Include";
+			if (role == "RMU") {
+				sourceNames = sourceName_RMU;
+			}
+			if (role == "PA") {
+				sourceNames = sourceName_PA;
+			}
+			//iterating this for loop to change the source for every iteration of loop
+			for (int k = 0; k < sourceNames.length; k++) {
+				//iterating this for loop to change the tally by metadata value  for every iteration of loop
+				for (int i = 0; i < subTally.length; i++) {
+					String metadataTally = subTally[i][0];
+					tp.navigateTo_Tallypage();
+					tp.sourceSelectionUsers(role, sourceNames, k);
+					tp.verifySourceSelected();
+					tp.selectTallyByMetaDataField(metadataTally);
+					tp.validateMetaDataFieldName(metadataTally);
+					List<String> ListOfMetaData = tp.verifyTallyChart();
+					bc.stepInfo("**To Verify Tally Report filter documents by functionality  if Tally By Metadata as "
+							+ metadataTally + " **");
+					String ApplyFilterMetaData = tp.applyFilterToTallyBy(ListOfMetaData, metadataTally, FilterType); //Applying filter 'Include'
+					tp.verifyTallyChartAfterApplyingFilter(FilterType, ApplyFilterMetaData); //validating 'Include' filters functionality
+					tp.clearingActiveFiltersInTallyBy().waitAndClick(7);
+					tp.getTally_btnTallyApply().Click();
+					tp.tallyActions();
+					bc.waitTime(2);
+					tp.getTally_actionSubTally().Click();
+					//iterating this for loop to change the sub- tally by metadata value for every iteration of loop
+					for (int j = 1; j < subTally[i].length; j++) {
+						bc.stepInfo(
+								"**To Verify Sub Tally Report filter documents by functionality  if Tally By Metadata as "
+										+ metadataTally + " and Sub Tally By subMetaData as-" + subTally[i][j] + "**");
+						tp.selectMetaData_SubTally(subTally[i][j]);
+						tp.applyFilterToSubTallyBy(ListOfMetaData, metadataTally, FilterType); //Applying filter 'Include'
+						tp.verifySubTallyResultTableAfterApplyingFilter(FilterType, ApplyFilterMetaData); //validating 'Include' filters functionality
+						tp.clearingActiveFiltersInTallyBy().waitAndClick(7);
+					}
+
+				}
+			}
+		}
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
