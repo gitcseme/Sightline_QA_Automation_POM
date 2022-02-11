@@ -3792,6 +3792,48 @@ public class DocView_Regression2 {
 	}
 	
 	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-46954
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 54)
+	public void VerifyMultiPageRedactionTagDefaultSelection() throws Exception {
+		baseClass = new BaseClass(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-46954");
+		baseClass.stepInfo("Part of 7.1: Verify that when applies ‘Multi Page’ redaction for the first time then application should automatically select the ‘Default Redaction Tag’");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.clickingRedactionIcon();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
+		docViewRedact.multiPageIcon().waitAndClick(10);
+		baseClass.stepInfo("The Multipage icon is clicked Menu is Visible");
+		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
+		actions.click().build().perform();
+		docViewRedact.multiPageInputTextbox().waitAndClick(5);
+		docViewRedact.multiPageInputTextbox().Clear();
+		docViewRedact.multiPageInputTextbox().SendKeys(Input.pageRange);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.multiPageRedactionTagSelect().Visible() && docViewRedact.multiPageRedactionTagSelect().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.multiPageRedactionTagSelect().waitAndFind(10);
+		Select redactionTag = new Select(docViewRedact.multiPageRedactionTagSelect().getWebElement());
+		String attribute = redactionTag.getFirstSelectedOption().getAttribute("text");
+		System.out.println(attribute);
+		if(attribute.equalsIgnoreCase("Default Redaction Tag")) {
+			baseClass.passedStep("The first selected redaction tag is Default Redaction Tag");
+		} else {
+			baseClass.failedStep("The first selected redaction tag is NOT Default Redaction Tag");
+		}
+		loginPage.logout();
+		}
+	
 	
 	
 	@AfterMethod(alwaysRun = true)
