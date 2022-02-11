@@ -3088,6 +3088,12 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//div[@id='divDuplicateRedactionWarning' and normalize-space('" + Input.warningMessage + "')]");
 	}
+	
+	//Added by Gopinath 10/02/2022
+	public Element getImageTabOption(String option) {
+		return driver.FindElementByXPath("//ul[@id='AvailableImagesDropDown']//a[contains(text(),'"+option+"')]");
+	}
+	
 
 	public DocViewPage(Driver driver) {
 
@@ -24410,5 +24416,31 @@ public class DocViewPage {
 		} catch (Exception e) {
 			UtilityLog.info("Review remark validation failed due to following exception " + e);
 		}
+	}
+	
+	
+	/**
+	 * @author Gopinath.
+	 * @description : Method to verify completed production name displayed on image tab options.
+	 * @param productionName : productionName is String value that name of production.
+	 */
+	public void verifyCompletedProductionNameDispalyedOnImageTab(String productionName) {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getImageTab().isElementAvailable(10);
+			getImageTab().Click();
+			getImageTabOption(productionName).isElementAvailable(10);
+			if(getImageTabOption(productionName).isDisplayed()) {
+				base.passedStep(productionName+" - Production name displayed on image tab options successfully");
+			}else {
+				base.failedStep(productionName+" - Production name not displayed on image tab options");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying completed production name displayed on image tab options." + e.getMessage());
+
+		}
+		
 	}
 }

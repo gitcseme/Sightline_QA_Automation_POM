@@ -6311,6 +6311,114 @@ public class DocView_Regression1 {
 
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Gopinath created on:NA modified by:NA 
+	 * @TESTCASE No:RPMXCON-51268 : User can see the production option in the drop down selection of Images tab when document generated as part of production with/without redaction.
+	 * @Description: User can see the production option in the drop down selection of Images tab when document generated as part of production with/without redaction.
+	 */
+	@Test(groups = { "regression" }, priority = 46)
+	public void verifyProductionOptionFromImageTabDropDown() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		baseClass.stepInfo("RPMXCON-51268 -Production Sprint 12");
+		baseClass.stepInfo(
+				"User can see the production option in the drop down selection of Images tab when document generated as part of production with/without redaction");
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		
+		baseClass.stepInfo("Create Tag with Classification");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Basic Content Search");
+		sessionSearch.basicContentSearch(Input.telecaSearchString);
+		
+		baseClass.stepInfo("View in doc view");
+		sessionSearch.ViewInDocView();
+		
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		
+		baseClass.stepInfo("Click on reduction button ");
+		docViewMetaDataPage.clickOnRedactAndRectangle();
+
+		baseClass.stepInfo("Set rectangle reduct in doc");
+		docViewMetaDataPage.redactbyrectangle(10, 15, Input.defaultRedactionTag);
+		
+		baseClass.stepInfo("Navigate To Session Search Page URL");
+		sessionSearch.navigateToSessionSearchPageURL();
+		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
+		baseClass.stepInfo("Bulk Tag Existing");
+		sessionSearch.bulkTagExisting(tagname);
+		
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		
+		baseClass.stepInfo("Add New Production");
+		page.addANewProduction(productionname);
+		
+		baseClass.stepInfo("Filling DAT Section");
+		page.fillingDATSection();
+		
+		baseClass.stepInfo("Select Priv Docs In Tiff Section");
+		page.selectPrivDocsInTiffSection(tagname);
+		
+		baseClass.stepInfo("Navigate to next section");
+		page.navigateToNextSection();
+		
+		baseClass.stepInfo("Filling Numbering And Sorting Page");
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		
+		baseClass.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		baseClass.stepInfo("Filling Document Selection With Tag");
+		page.fillingDocumentSelectionWithTag(tagname);
+		
+		baseClass.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		baseClass.stepInfo("Filling Priv Guard Page");
+		page.fillingPrivGuardPage();
+		
+		baseClass.stepInfo("Verify Sub Folder Toggle");
+		page.verifySubFolderToggle();
+		
+		baseClass.stepInfo("Filling Production Location Page And Passing Text");
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		
+		baseClass.stepInfo("Navigate To Next Section");
+		page.navigateToNextSection();
+		
+		baseClass.stepInfo("Filling Summary And Preview");
+		page.fillingSummaryAndPreview();
+		
+		baseClass.stepInfo("Filling Generate Page With Continue Generation Popup");
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		String productionName = page.getGeneratedProductionName();
+		
+		baseClass.stepInfo("Navigate To Session Search Page URL");
+		sessionSearch.navigateToSessionSearchPageURL();
+		
+		baseClass.stepInfo("View in doc view");
+		sessionSearch.ViewInDocView();
+		
+		docView = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Verify Completed Production Name Dispalyed On Image Tab");
+		docView.verifyCompletedProductionNameDispalyedOnImageTab(productionName);
+		
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

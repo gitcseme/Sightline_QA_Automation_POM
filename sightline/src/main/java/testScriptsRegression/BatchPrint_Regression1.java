@@ -204,6 +204,47 @@ public class BatchPrint_Regression1 {
 		
 	}
 	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
+	 * @Testcase id : 48727 - To verify that user can view the total count of Media files is displayed.
+	 * @Description : To verify that user can view the total count of Media files is displayed.
+	 */
+	@Test(groups = { "regression" })
+	public void verifyTotalCountMediaFilesDisplayed() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48727 Sprint 12");
+
+		SessionSearch search = new SessionSearch(driver);
+		String searchname = Input.randomText + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("#### To verify that user can view the total count of Media files is displayed. ####");
+		
+		baseClass.stepInfo("Basic Search");
+		search.audioSearch(Input.audioSearch, Input.audioLanguage);
+
+		baseClass.stepInfo("Save searched content");
+		search.saveSearch(searchname);
+
+		batchPrint = new BatchPrintPage(driver);
+
+		baseClass.stepInfo("Perform batch print by saved search");
+		batchPrint.BatchPrintWithProduction(searchname);
+		
+		baseClass.stepInfo("Verify details displayed for media files.");
+		batchPrint.verifyDetailsDisplayedForMediaFiles();
+		
+		baseClass.stepInfo("Verify media files text field displayed by disabling toogle.");
+		batchPrint.verifyMediaFilesFieldsDisplayedByDisableToogle();
+		
+		baseClass.stepInfo("Verify media files text field displayed by enabling toogle.");
+		batchPrint.verifyMediaFilesFieldsDisplayedByEnablingToogle();
+		
+		baseClass.stepInfo("Insert metadata field for media files");
+		batchPrint.insertMetaDataFieldForMediaFiles(Input.metaDataName);
+		
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {

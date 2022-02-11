@@ -17212,6 +17212,21 @@ public class ProductionPage {
 		}
 	}
 
-	
-
+	/**
+	 * @author Gopinath
+	 * @Description :Method to get production name from completed production.
+	 * @return productionName : productionName is String value that returns name of completed production.
+	 */
+	public String getGeneratedProductionName(){
+		String productionName = null;
+		try {
+			getProduction().isElementAvailable(10);
+			base.waitTime(2);
+			productionName = getProduction().getText().trim();
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while getting production name from completed production."+e.getLocalizedMessage());
+		}
+		return productionName;
+	}
 }
