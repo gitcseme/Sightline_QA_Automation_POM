@@ -4269,6 +4269,85 @@ public class CreateCodingForm_New_Regression {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author : Baskar date: NA Modified date:11/02/2021 Modified by: Baskar 
+	 * @Description :Verify validation of coding form when coding form is created 
+	 *               with metadata field as DateTime on click of 'Complete'
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 70)
+	public void validationOfNonDateFormatINAssign() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51582");
+	    baseClass.stepInfo("Verify validation of coding form when coding form is "
+	    		+ "created with metadata field as DateTime on click of 'Complete'");
+	    
+	    String codingfrom = "CFDateTime"+Utility.dynamicNameAppender();
+	    String assgnName = "Assign"+Utility.dynamicNameAppender();
+	    String assgnColour = "ColourAssign"+Utility.dynamicNameAppender();
+	    String dateTime = "DateTime" + Utility.dynamicNameAppender();
+		UtilityLog.info("Started Execution for prerequisite");
+		
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+	
+		// Custom Field created with DateTime DataType
+		projectPage.addCustomFieldDataType(dateTime, "DATETIME");
+		baseClass.stepInfo("Custom meta data field created with DateTime datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(dateTime);
+		baseClass.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Creating Coding Form
+		codingForm.creatingCodingFormAndAssgnUsingParameter(codingfrom, dateTime,"Make it Optional");
+		baseClass.stepInfo("Project field added to coding form in Doc view");
+		
+		// Session search to doc view to create assignment
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assgnName, codingfrom);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.add2ReviewerAndDistribute();
+		
+		// logout
+		loginPage.logout();
+		
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assgnName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		
+		// verify the coding form panel
+		docViewPage.nonDateFormatValidationUsingSaveAndComplete(dateTime,assgnColour,Input.stampSelection);
+
+		// logout
+		loginPage.logout();
+		
+//		Doing house keeping activity
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		assignmentPage.deleteAssgnmntUsingPagination(assgnName);
+		codingForm.deleteCodingForm(codingfrom,codingfrom);
+		
+		// logout
+		loginPage.logout();
+
+	}
 
 		
 

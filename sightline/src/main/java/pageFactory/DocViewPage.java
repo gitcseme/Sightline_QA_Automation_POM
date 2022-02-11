@@ -24420,6 +24420,7 @@ public class DocViewPage {
 	public Element getNotchSymboInPersistentHits() {
 		return driver.FindElementByXPath("//span[text()='Term:']/parent::strong/parent::div/descendant::div[@class='pull-right']");
 	}
+	
 	public void verifyingThePresenceOfPersistentHit(boolean verifyNotchSymbol,String SearchString) {
 		driver.waitForPageToBeReady();
 		if(getDocView_Audio_Hit().isDisplayed()) {
@@ -24443,6 +24444,7 @@ public class DocViewPage {
 			}
 		}
 	}
+
 	
 	/**
 	 * 
@@ -24508,7 +24510,70 @@ public class DocViewPage {
 		driver.close();
 		reusableDocView.switchToNewWindow(1);
 
-
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 11/02/2021 Modified date: N/A
+	 * @Description: Validation of non-date format using save and complete
+	 */
+	
+        public void nonDateFormatValidationUsingSaveAndComplete(String projectFieldName, String fieldValue, String colour)
+			throws InterruptedException, AWTException {
+		driver.waitForPageToBeReady();
+		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
+//		base.waitForElement(getReadOnlyTextBox(projectFieldName));
+		getDateFormat().SendKeys("11/10/2021");
+		codingFormSaveButton();
+		String errorText = getCodingFormValidErrorMeta().getText().trim();
+		String actual = "Coding Form validation failed";
+		base.stepInfo("Entering non-date format in dateTime datatype action using save button");
+		if (errorText.equals(actual)) {
+			base.passedStep("validation message Dispalyed for non-date format");
+		} else {
+			base.failedMessage("validation message not displayed for non-date format");
+		}
+		reusableDocView.clickGearIconOpenCodingFormChildWindow();
+		String parentWindow = reusableDocView.switchTochildWindow();
+		base.stepInfo("coding form child window opened");
+		getDateFormat().SendKeys("11/10/2021");
+		completeButton();
+		driver.close();
+		reusableDocView.switchToNewWindow(1);
+		String errorTextChild = getCodingFormValidErrorMeta().getText().trim();
+		String actualChild = "Coding Form validation failed";
+		base.stepInfo("Entering non-date format in dateTime datatype action using complete button");
+		if (errorTextChild.equals(actualChild)) {
+			base.passedStep("validation message Dispalyed for non-date format");
+		} else {
+			base.failedMessage("validation message not displayed for non-date format");
+		}
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @param comment
+	 * @param save
+	 * @param docs
+	 */
+	public void addCommentAndSave(String comment, boolean save, int docs) {
+		for (int i = 1; i <= docs; i++) {
+			getClickDocviewID(i).waitAndClick(5);
+			base.waitForElement(getResponsiveCheked());
+			getResponsiveCheked().waitAndClick(5);
+			base.waitForElement(getNonPrivilegeRadio());
+			getNonPrivilegeRadio().waitAndClick(5);
+			base.waitForElement(getDocument_CommentsTextBox());
+			getDocument_CommentsTextBox().SendKeys(comment);
+			base.stepInfo("Added Document Comment : " + comment);
+			if (save) {
+				driver.scrollPageToTop();
+				base.waitForElement(getCodingFormSaveBtn());
+				getCodingFormSaveBtn().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage("Document saved successfully");
+				base.CloseSuccessMsgpopup();
+			}
+		}
 	}
 	
 	/**
