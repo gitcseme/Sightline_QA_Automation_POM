@@ -386,6 +386,41 @@ public class DocExplorer_Regression1 {
 				loginPage.logout();
 				
 			}
+			
+			/**
+			 * @author Gopinath
+			 * @TestCase Id:54695 Verify that “EmailRecipientDomains” Filter with "Exclude" functionality is working correctly on Doc Explorer list.
+			 * @Description:To Verify that “EmailRecipientDomains” Filter with "Exclude" functionality is working correctly on Doc Explorer list.
+			 */
+			@Test
+			public void verifyEmailDomainExclude() {
+				String functionality="exclude";
+				String domain1="aol.com";
+				String domain2="gmail.com";
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-54695");
+				baseClass.stepInfo("###Verify that “EmailRecipientDomains” Filter with 'Exclude' functionality is working correctly on Doc Explorer list.###");
+				docexp = new DocExplorerPage(driver);
+				
+				baseClass.stepInfo("Navigating to DocExplorer page");
+				docexp.navigateToDocExplorerPage();
+				
+				baseClass.stepInfo("filter EmailRecipientDomain Exclude of "+domain1);
+				docexp.emailRecipientDomainFiletr(functionality, domain1);
+				
+				baseClass.stepInfo("verifying document Exclude of domain"+domain1);
+				docexp.verifyDocumentsExcludeOfEmailReceipientDomain(domain1);
+				
+				baseClass.stepInfo("filter with multiple values");
+				docexp.UpdateFilter(domain2);
+				baseClass.waitForElement(docexp.getApplyFilter());
+				docexp.getApplyFilter().waitAndClick(5);
+				
+				baseClass.stepInfo("verifying document Exclude of domain"+domain2);
+				docexp.verifyDocumentsExcludeOfEmailReceipientDomain(domain2);
+				
+				
+			}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

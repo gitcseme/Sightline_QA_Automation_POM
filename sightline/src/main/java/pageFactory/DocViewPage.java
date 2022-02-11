@@ -3089,10 +3089,18 @@ public class DocViewPage {
 				"//div[@id='divDuplicateRedactionWarning' and normalize-space('" + Input.warningMessage + "')]");
 	}
 	
+
+	//Added by Gopinath 10/02/2022
+	public Element getImageTabOption(String option) {
+		return driver.FindElementByXPath("//ul[@id='AvailableImagesDropDown']//a[contains(text(),'"+option+"')]");
+	}
+	
+
 	//Added By Vijaya.Rani
 	public Element getDocView_NavigationBtn() {
 		return driver.FindElementByXPath("//i[@class='fa fa-angle-right']");
 	}
+
 
 	public DocViewPage(Driver driver) {
 
@@ -24417,6 +24425,33 @@ public class DocViewPage {
 		}
 	}
 
+	
+	
+	/**
+	 * @author Gopinath.
+	 * @description : Method to verify completed production name displayed on image tab options.
+	 * @param productionName : productionName is String value that name of production.
+	 */
+	public void verifyCompletedProductionNameDispalyedOnImageTab(String productionName) {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getImageTab().isElementAvailable(10);
+			getImageTab().Click();
+			getImageTabOption(productionName).isElementAvailable(10);
+			if(getImageTabOption(productionName).isDisplayed()) {
+				base.passedStep(productionName+" - Production name displayed on image tab options successfully");
+			}else {
+				base.failedStep(productionName+" - Production name not displayed on image tab options");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying completed production name displayed on image tab options." + e.getMessage());
+
+		}
+		
+
+
 	public Element getNotchSymboInPersistentHits() {
 		return driver.FindElementByXPath("//span[text()='Term:']/parent::strong/parent::div/descendant::div[@class='pull-right']");
 	}
@@ -24626,6 +24661,7 @@ public class DocViewPage {
 			base.textCompareEquals(fieldText, ActualText, "Mouseover Text for "+stampColour+" is displayed as expected",
 					"Mouseover text for "+stampColour+" is not displayed as expected");
 		
+
 
 	}
 }

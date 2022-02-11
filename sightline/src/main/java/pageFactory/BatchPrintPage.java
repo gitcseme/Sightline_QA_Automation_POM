@@ -308,6 +308,47 @@ public class BatchPrintPage {
 	public Element getExcelSkipMetaDataDropdown() {
 		return driver.FindElementById("excelfileMetaData");
 	}
+	
+	
+	//Added by Gopinath - 11/02/2022
+	public Element getMediaFilesPrintableText() {
+		return driver.FindElementByXPath("//div[@id='mediaFilePlaceHolderHtml']//p[contains(text(),'In your selected documents') and contains(text(),'docs are media files. These will be skipped, as they are not printable')]");
+	}
+	
+	public Element getIncludePlaceHolderText() {
+		return driver.FindElementByXPath("//div[@id='mediaFilePlaceHolderHtml']//p[text()='Do you want to include placeholder for these docs?']");
+	}
+	public Element getMediaFilesToogle() {
+		return driver.FindElementByXPath("//input[@id='includeMediaFileCheckBox']//..//i");
+	}
+	public Element getMediaFileEditor() {
+		return driver.FindElementByXPath("//textarea[@id='editorMediaFile']//..//div");
+	}
+	public Element getMediaFileMetaDataLink() {
+		return driver.FindElementById("mediaFileInsertMetadataLinkButton");
+	}
+	public Element getMediaFilFieldDropdown() {
+		return driver.FindElementById("mediaFileMetaData");
+	}
+	public Element getMediaFilFieldOkButton() {
+		return driver.FindElementById("mediaFileOk");
+	}
+	public Element getIncludeMediaCheckBox() {
+		return driver.FindElementByXPath("//input[@id='includeMediaFileCheckBox']");
+	}
+	public Element getExpectedMediaFileWarningMessage() {
+		return driver.FindElementByXPath("//div[@id='divbigBoxes']/div/descendant::span[text()='Warning !']/following-sibling::p[contains(text(),'Please include placeholder for excepted media files.')]");
+	}
+	
+	public Element getIncludeMediaFileCheckBox() {
+		return driver.FindElementByXPath("//input[@id='includeMediaFileCheckBox']/following-sibling::i");
+	}
+	public Element getIncludeMediaFileCheckBoxActive() {
+		return driver.FindElementByXPath("//input[@id='includeMediaFileCheckBox' and @class='encryp-check activeC']");
+	}
+	public Element getExceptionMediaSkippedMessage() {
+		return driver.FindElementByXPath("//div[@id='mediaFilePlaceHolderHtml']/div/p[contains(text(),'docs are media files. These will be skipped, as they are not printable')]");
+	}
 	public BatchPrintPage(Driver driver) {
 
 		this.driver = driver;
@@ -1746,4 +1787,160 @@ public class BatchPrintPage {
 					}
 					}
 		}
+		
+		/**
+		 * @author Gopinath
+		 * @Description: Verify details displayed for media files.
+		 */
+		public void verifyDetailsDisplayedForMediaFiles() {
+			try {
+				driver.scrollPageToTop();
+				driver.waitForPageToBeReady();
+				getExcelFilesText().isElementAvailable(10);
+				if(getMediaFilesPrintableText().isDisplayed()) {
+					base.passedStep("In your selected documents, 12 docs are media files. These will be skipped, as they are not printable -- text displayed succuessfully");
+				}else {
+					base.failedStep("In your selected documents, 12 docs are media files. These will be skipped, as they are not printable. -- text not displayed");
+					
+				}
+				if(getIncludePlaceHolderText().isDisplayed()) {
+					base.passedStep("Do you want to include placeholder for these docs? -- text displayed succuessfully");
+				}else {
+					base.failedStep("Do you want to include placeholder for these docs? -- text not displayed");
+					
+				}
+				if(getMediaFilesToogle().isDisplayed()) {
+					base.passedStep("Media files toogle is displayed successsfully");
+				}else {
+					base.failedStep("Media files file toogle is not displayed");
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while verify details displayed for media files."+e.getLocalizedMessage());
+			}
+		}
+		
+		/**
+		 * @author Gopinath
+		 * @Description: Verify media files text field displayed by enabling toogle.
+		 */
+		public void verifyMediaFilesFieldsDisplayedByEnablingToogle() {
+			try {
+				driver.scrollPageToTop();
+				driver.waitForPageToBeReady();
+				getMediaFilesToogle().isElementAvailable(10);
+				if(getMediaFilesToogle().isDisplayed()) {
+					base.passedStep("Media files toogle is displayed successsfully");
+				}else {
+					base.failedStep("Media files file toogle is not displayed");
+				}
+				if(getIncludeMediaCheckBox().GetAttribute("class").contains("active")){
+					base.passedStep("Media file toogle is enabled");
+				}else {
+					base.stepInfo("Media file toogle is not enabled");
+					getMediaFilesToogle().Click();
+				}
+				driver.waitForPageToBeReady();
+				getMediaFileEditor().isElementAvailable(10);
+				if(getMediaFileEditor().isDisplayed()) {
+					base.passedStep("Media files text field editor is displayed successfully");
+				}else {
+					base.failedStep("Media files text field editor is not displayed");
+				}
+				if(getMediaFileMetaDataLink().isDisplayed()) {
+					base.passedStep("Media files meta data link is displayed successfully");
+				}else {
+					base.failedStep("Media files meta data link is not displayed");
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while  Verify media files text field displayed by enabling toogle."+e.getLocalizedMessage());
+			}
+		}
+		/**
+		 * @author Gopinath
+		 * @Description: Verify media files text field displayed by disabling toogle.
+		 */
+		public void verifyMediaFilesFieldsDisplayedByDisableToogle() {
+			try {
+				driver.scrollPageToTop();
+				driver.waitForPageToBeReady();
+				getMediaFilesToogle().isElementAvailable(10);
+				if(getMediaFilesToogle().isDisplayed()) {
+					base.passedStep("Media files toogle is displayed successsfully");
+				}else {
+					base.failedStep("Media files file toogle is not displayed");
+				}
+				if(getIncludeMediaCheckBox().GetAttribute("class").contains("active")){
+					base.stepInfo("Media file toogle is enabled");
+					getMediaFilesToogle().Click();
+				}else {
+					base.stepInfo("Media file toogle is not enabled");
+				}
+				if(!getMediaFileEditor().isDisplayed()) {
+					base.passedStep("Media files text field editor is not displayed");
+				}else {
+					base.failedStep("Media files text field editor is displayed");
+				}
+				if(!getMediaFileMetaDataLink().isDisplayed()) {
+					base.passedStep("Media files meta data link is not displayed");
+				}else {
+					base.failedStep("Media files meta data link is displayed");
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while verify media files text field displayed by disabling toogle."+e.getLocalizedMessage());
+			}
+		}
+		
+		
+		/**
+		 * @author Gopinath
+		 * @Description: Method to insert metadata field for media files
+		 */
+		public void insertMetaDataFieldForMediaFiles(String metaData) {
+			try {
+				driver.scrollPageToTop();
+				driver.waitForPageToBeReady();
+				getMediaFilesToogle().isElementAvailable(10);
+				if(getMediaFilesToogle().isDisplayed()) {
+					base.passedStep("Media files toogle is displayed successsfully");
+				}else {
+					base.failedStep("Media files file toogle is not displayed");
+				}
+				if(getIncludeMediaCheckBox().GetAttribute("class").contains("active")){
+					base.passedStep("Media file toogle is enabled");
+				}else {
+					base.stepInfo("Media file toogle is not enabled");
+					getMediaFilesToogle().Click();
+				}
+				driver.waitForPageToBeReady();
+				getMediaFileMetaDataLink().isElementAvailable(10);
+				getMediaFileMetaDataLink().Click();
+				driver.waitForPageToBeReady();
+				getMediaFilFieldDropdown().isElementAvailable(10);
+				getMediaFilFieldDropdown().selectFromDropdown().selectByVisibleText(metaData);
+				getMediaFilFieldOkButton().Click();
+			}catch(Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while insert metadata field for media files"+e.getLocalizedMessage());
+			}		
+		}
+		/**
+		 * @author Gopinath
+		 * @Description method to navigate BatchPrint page
+		 */
+		public void navigateToBatchPrintPage() {
+			try {
+				driver.getWebDriver().get(Input.url + "BatchPrint/");
+			} catch (Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occcured while navigating BatchPrint page." + e.getMessage());
+
+			}
+		}
+			
 }

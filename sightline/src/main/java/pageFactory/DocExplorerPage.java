@@ -205,6 +205,16 @@ public class DocExplorerPage {
 			return driver.FindElementByXPath("//ul[@class='pagination pagination-sm']/li/a[text()='Next']");
 		}
     
+	//Added by Gopinath - 11/02/2022
+	public Element getEmailRecipientColumnTextField() {
+		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']/descendant::input[@id='EMAILRECIPIENTS']");
+	}
+	public Element getDocListInfo() {
+		return driver.FindElementByXPath("//div[@id='dtDocumentList_info' and text()='Showing 0 to 0 of 0 entries']");
+	}
+	public Element getQuaryReturnedNoDataMessage() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentList']/descendant::td[text()='Your query returned no data']");
+	}
     
     public DocExplorerPage(Driver driver){
 
@@ -1553,4 +1563,50 @@ public class DocExplorerPage {
          			bc.failedStep("Exception occured while verifying docExplorer docList due to " + e.getMessage());
          		}
          	}
+         	
+         	/**
+        	 * @author Gopinath
+        	 * @Description: method to verify EmailRecipient domain Exclude filter
+        	 * @param EmailReceipientDmain
+        	 */
+        	public void verifyDocumentsExcludeOfEmailReceipientDomain(String EmailReceipientDmain) {
+        		bc.waitForElement(getEmailRecipientColumnTextField());
+        		getEmailRecipientColumnTextField().SendKeys(EmailReceipientDmain);
+        		getEmailRecipientColumnTextField().Enter();
+        		bc.waitForElement(getQuaryReturnedNoDataMessage());
+        		if(getQuaryReturnedNoDataMessage().isElementAvailable(5)&&getDocListInfo().isElementAvailable(5)) {
+        			bc.passedStep(EmailReceipientDmain+ " EmailRecipient domain documents are not displayed  after Exclude filter");
+        		}else {
+        			bc.failedStep(EmailReceipientDmain+ " EmailRecipient domain documents are displayed even  after Exclude filter");
+        		}
+        		
+        		
+        	}
+
+
+        /**
+        	 * @author Gopinath
+        	 * @Description:methoad to filter for email recipient domain
+        	 * @param functionality(Type of filter)
+        	 * @param data(Domain name )
+        	 */
+        	public void emailRecipientDomainFiletr(String functionality,String data) {
+        		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+        		bc.waitForElement(getDocExp_EmailReciepientDomainFilter());
+        		getDocExp_EmailReciepientDomainFilter().waitAndClick(5);
+        		if (functionality.equalsIgnoreCase("include")) {
+        			doclist.include(data);
+        			bc.waitTime(2);
+        			doclist.getApplyFilter().waitAndClick(10);
+        			bc.waitTime(2);
+        			
+        		}
+        		if (functionality.equalsIgnoreCase("exclude")) {
+        			doclist.exclude(data);
+        			bc.waitTime(2);
+        			doclist.getApplyFilter().waitAndClick(10);
+        			bc.waitTime(2);
+        			
+        		}
+        	}
  }
