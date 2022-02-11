@@ -24442,6 +24442,8 @@ public class DocViewPage {
 				base.failedStep("triangular Arrow icon in the Persistent Hits panel is Not Dislplayed");
 			}
 		}
+	}
+		
 
 	
 	/**
@@ -24508,7 +24510,43 @@ public class DocViewPage {
 		driver.close();
 		reusableDocView.switchToNewWindow(1);
 
-
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 11/02/2021 Modified date: N/A
+	 * @Description: Validation of non-date format using save and complete
+	 */
+	
+        public void nonDateFormatValidationUsingSaveAndComplete(String projectFieldName, String fieldValue, String colour)
+			throws InterruptedException, AWTException {
+		driver.waitForPageToBeReady();
+		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
+//		base.waitForElement(getReadOnlyTextBox(projectFieldName));
+		getDateFormat().SendKeys("11/10/2021");
+		codingFormSaveButton();
+		String errorText = getCodingFormValidErrorMeta().getText().trim();
+		String actual = "Coding Form validation failed";
+		base.stepInfo("Entering non-date format in dateTime datatype action using save button");
+		if (errorText.equals(actual)) {
+			base.passedStep("validation message Dispalyed for non-date format");
+		} else {
+			base.failedMessage("validation message not displayed for non-date format");
+		}
+		reusableDocView.clickGearIconOpenCodingFormChildWindow();
+		String parentWindow = reusableDocView.switchTochildWindow();
+		base.stepInfo("coding form child window opened");
+		getDateFormat().SendKeys("11/10/2021");
+		completeButton();
+		driver.close();
+		reusableDocView.switchToNewWindow(1);
+		String errorTextChild = getCodingFormValidErrorMeta().getText().trim();
+		String actualChild = "Coding Form validation failed";
+		base.stepInfo("Entering non-date format in dateTime datatype action using complete button");
+		if (errorTextChild.equals(actualChild)) {
+			base.passedStep("validation message Dispalyed for non-date format");
+		} else {
+			base.failedMessage("validation message not displayed for non-date format");
+		}
 	}
 }
 
