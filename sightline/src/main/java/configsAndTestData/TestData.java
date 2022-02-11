@@ -95,6 +95,7 @@ public class TestData {
 	public String familyDocWhichIsNotInMiniDoc;
 	public String bgColorOnMouseHover;
 	public String nearDupePagination;
+	public String fieldByValue;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;
