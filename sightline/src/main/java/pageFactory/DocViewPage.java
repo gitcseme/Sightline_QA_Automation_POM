@@ -3088,6 +3088,11 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//div[@id='divDuplicateRedactionWarning' and normalize-space('" + Input.warningMessage + "')]");
 	}
+	
+	//Added By Vijaya.Rani
+	public Element getDocView_NavigationBtn() {
+		return driver.FindElementByXPath("//i[@class='fa fa-angle-right']");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -24411,6 +24416,7 @@ public class DocViewPage {
 			UtilityLog.info("Review remark validation failed due to following exception " + e);
 		}
 	}
+
 	public Element getNotchSymboInPersistentHits() {
 		return driver.FindElementByXPath("//span[text()='Term:']/parent::strong/parent::div/descendant::div[@class='pull-right']");
 	}
@@ -24436,5 +24442,73 @@ public class DocViewPage {
 				base.failedStep("triangular Arrow icon in the Persistent Hits panel is Not Dislplayed");
 			}
 		}
+
+	
+	/**
+	 * 
+	 * @author Vijaya.Rani 09/02/22 NA Modified date: NA Modified by:NA
+	 * @description perform Eye Icon testcase id-51866
+	 */
+
+	public void performEyeIconHighLightingNavDocToDoc() throws InterruptedException {
+
+		base = new BaseClass(driver);
+		getDocView_MiniDoc_Selectdoc(1).waitAndClick(20);
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getEyeIcon().Visible() && HighliteIcon().Enabled();
+			}
+		}), Input.wait30);
+		getEyeIcon().waitAndClick(10);
+		base.stepInfo("docView Eye Icon Clicked Successfully");
+		base.waitForElement(getDocView_NumTextBox());
+		String pagenum1 = getDocView_NumTextBox().getText();
+		System.out.println(pagenum1);
+
+		base.waitForElement(getDocView_NavigationBtn());
+		getDocView_NavigationBtn().waitAndClick(10);
+
+		base.waitForElement(getDocView_NumTextBox());
+		String pagenum2 = getDocView_NumTextBox().getText();
+		System.out.println(pagenum2);
+
+		softAssertion.assertTrue(docViewEyeSearchTerm().Displayed());
+		base.passedStep("DocView EyeIcon persistent hit Is Displayed");
+
+		softAssertion.assertNotEquals(pagenum1, pagenum2);
+		base.passedStep("mini doc list after doc-to-doc navigation then persistent hits is displayed");
+	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 */
+	public void openChildWindowCodingFormInRadioGroup() {
+
+		getSaveAndNextButton().waitAndClick(5);
+		boolean flag = getDocView_ErrorMessage("Error Message").isDisplayed();
+		softAssertion.assertTrue(flag);
+		if (getDocView_ErrorMessage("Error Message").isDisplayed()) {
+			base.stepInfo("Coding form validation error text displayed");
+			base.passedStep("Child window error text displayed");
+		} else {
+			return;
+		}
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		boolean flagOne = getCodingFormValidErrorMeta().isDisplayed();
+		softAssertion.assertTrue(flagOne);
+		if (getCodingFormValidErrorMeta().isDisplayed()) {
+			base.stepInfo("Coding form validation error message displayed");
+			base.passedStep("Child window also not create doc without input text");
+		} else {
+			return;
+		}
+		reusableDocView.switchToNewWindow(2);
+		driver.close();
+		reusableDocView.switchToNewWindow(1);
+
+
 	}
 }
+

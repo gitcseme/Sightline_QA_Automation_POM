@@ -82,21 +82,27 @@ public class LoginPage {
 		return driver.FindElementById("btnSaveEditProfile");
 	}
 
-	//Added by krishna to handle additional pop up in New build 
-	
-		public Element getGlobalMessagePopUp() {
-			return driver.FindElementById("globalMessageModal");
-		}
-		
-		public Element getGlobalMessagePopUpClose() {
-			return driver.FindElementById("btnDialogClose");
-		}
-		
-		//Added by Gopinath - 28/01/2022
-		public Element getWarningLogOutMessage() {
-			return driver.FindElementByXPath("//i[@id='botClose1']/following-sibling::p[contains(text(),'Your current session expired. Please log in again')]");
-		}
-		
+	// Added by krishna to handle additional pop up in New build
+
+	public Element getGlobalMessagePopUp() {
+		return driver.FindElementById("globalMessageModal");
+	}
+
+	public Element getGlobalMessagePopUpClose() {
+		return driver.FindElementById("btnDialogClose");
+	}
+
+	// Added by Gopinath - 28/01/2022
+	public Element getWarningLogOutMessage() {
+		return driver.FindElementByXPath(
+				"//i[@id='botClose1']/following-sibling::p[contains(text(),'Your current session expired. Please log in again')]");
+	}
+
+	// Added By Jeevitha
+	public Element getUsername() {
+		return driver.FindElementByXPath("//span[@class='clsUserName']");
+	}
+
 	public LoginPage(Driver driver) {
 
 		this.driver = driver;
@@ -164,11 +170,11 @@ public class LoginPage {
 		// Make sure sign out menu is visible post login
 		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
 			try {
-			getGlobalMessagePopUpClose().waitAndClick(5);
+				getGlobalMessagePopUpClose().waitAndClick(5);
 			} catch (Exception e) {
-			// TODO: handle exception
+				// TODO: handle exception
 			}
-			}
+		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSignoutMenu().Visible();
@@ -188,9 +194,10 @@ public class LoginPage {
 		Reporter.log("Login success!", true);
 
 	}
-	/* login method overloaded to handle new projects for data
-	 * for ingestion and additional req documents 
-	 * Added by Krishna
+
+	/*
+	 * login method overloaded to handle new projects for data for ingestion and
+	 * additional req documents Added by Krishna
 	 */
 	public void loginToSightLine(String strUserName, String strPasword, String projectName) {
 		driver.waitForPageToBeReady();
@@ -234,11 +241,11 @@ public class LoginPage {
 		// Make sure sign out menu is visible post login
 		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
 			try {
-			getGlobalMessagePopUpClose().waitAndClick(5);
+				getGlobalMessagePopUpClose().waitAndClick(5);
 			} catch (Exception e) {
-			// TODO: handle exception
+				// TODO: handle exception
 			}
-			}
+		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSignoutMenu().Visible();
@@ -246,7 +253,7 @@ public class LoginPage {
 		}), Input.wait30);
 		BaseClass bc = new BaseClass(driver);
 		try {
-				bc.selectproject(projectName);
+			bc.selectproject(projectName);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -344,6 +351,7 @@ public class LoginPage {
 		Assert.assertTrue(getEuserName().Visible());
 		UtilityLog.info("Logged out successfully!");
 	}
+
 	public void logoutWithoutAssert() {
 		if (getSignoutMenu().isElementAvailable(1)) {
 			driver.Navigate().refresh();
@@ -363,7 +371,6 @@ public class LoginPage {
 			}
 		}
 	}
-
 
 	public void logOutWithConfirmation() {
 
@@ -580,4 +587,15 @@ public class LoginPage {
 		getEditprofilesave().Click();
 	}
 
+	public String getCurrentUserName() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSignoutMenu());
+		getSignoutMenu().waitAndClick(10);
+		
+		base.waitForElement(getUsername());
+		String username = getUsername().getText();
+		System.out.println("Logged In Username : "+username);
+		getSignoutMenu().waitAndClick(10);
+        return username;
+	}
 }
