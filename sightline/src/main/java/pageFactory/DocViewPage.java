@@ -24420,6 +24420,7 @@ public class DocViewPage {
 	public Element getNotchSymboInPersistentHits() {
 		return driver.FindElementByXPath("//span[text()='Term:']/parent::strong/parent::div/descendant::div[@class='pull-right']");
 	}
+	
 	public void verifyingThePresenceOfPersistentHit(boolean verifyNotchSymbol,String SearchString) {
 		driver.waitForPageToBeReady();
 		if(getDocView_Audio_Hit().isDisplayed()) {
