@@ -24606,6 +24606,26 @@ public class DocViewPage {
 		driver.Navigate().back();
 		base.passedStep("Leave and cancel button displayed when navigation done through back button in Leave");
 		driver.switchTo().alert().accept();
+/**
+	 * @Author Brundha
+	 * @Description :Method to verify Saved stamp tool tip
+	 * 
+	 */
+	
+	public void VerifySavedStampToolTip(String stampColour,String fieldText) {
+		   base.stepInfo("Verify tooltip in saved stamp");
+		   driver.waitForPageToBeReady();
+		   getCodingStampLastIcon(stampColour).isDisplayed(); 
+			Actions builder = new Actions(driver.getWebDriver());
+			driver.waitForPageToBeReady();
+			base.waitForElement(getCodingStampLastIcon(stampColour));
+			builder.moveToElement(getCodingStampLastIcon(stampColour).getWebElement()).build().perform();
+			driver.waitForPageToBeReady();
+			String ActualText =getSavedCodingStamp(stampColour).getWebElement()
+					.getAttribute("title");
+			base.textCompareEquals(fieldText, ActualText, "Mouseover Text for "+stampColour+" is displayed as expected",
+					"Mouseover text for "+stampColour+" is not displayed as expected");
+		
 
 	}
 }

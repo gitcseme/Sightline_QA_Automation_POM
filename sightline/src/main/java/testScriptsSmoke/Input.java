@@ -460,6 +460,8 @@ public class Input {
 	public static String documentId;
 	public static String telecaSearchString;
 	public static String docFile;
+	public static String stampRed;
+	public static String stampGreen;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -967,6 +969,8 @@ public class Input {
 		documentId = testData.getDocumentID();
 		telecaSearchString = testData.getTelecaSearchString();
 		docFile = testData.getDocFile();
+		stampRed=testData.getStampRed();
+		stampGreen=testData.getStampGreen();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();

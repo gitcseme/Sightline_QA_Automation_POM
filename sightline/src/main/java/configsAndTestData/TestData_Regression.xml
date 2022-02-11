@@ -399,7 +399,9 @@
 	<documentID>ID00001333</documentID>
 	<telecaSearchString>teleca</telecaSearchString>
 	<docFile>ID00001493</docFile>
-
+    <stampRed>RED</stampRed>
+	<stampGreen>GREEN</stampGreen>
+	
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 

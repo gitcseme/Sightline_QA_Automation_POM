@@ -1153,6 +1153,9 @@ public class DocListPage {
 		return driver.FindElementsByXPath("//table[@id='dtDocList']//tbody//tr/td["+i+"]");
 		
 	}
+	public Element getEmailAllDomainsOption(String value) {
+		return driver.FindElementByXPath("//ul[@id='select2-EmailAllDomains-results']//li[text()='"+value+"']");
+	}
 
 	public DocListPage(Driver driver) {
 
@@ -4325,5 +4328,39 @@ Collections.sort(result_List);
 
 		base.waitForElement(getViewInDocView());
 		getViewInDocView().waitAndClick(5);
+	}
+	
+	public void getIncludeFilterEmailAllDomain(String Domain) {
+		base.waitForElement(getEmailAllDomainsBtn());
+		base.waitTillElemetToBeClickable(getEmailAllDomainsBtn());
+		getEmailAllDomainsBtn().waitAndClick(5);
+		base.waitForElement(getIncludeBtn());
+		base.waitTillElemetToBeClickable(getIncludeBtn());
+		getIncludeBtn().Click();
+		base.waitForElement(getClickToMakeSelection());
+		base.waitTillElemetToBeClickable(getClickToMakeSelection());
+		getClickToMakeSelection().Click();
+		base.waitForElement(getEmailAllDomainsOption(Domain));
+		base.waitTillElemetToBeClickable(getEmailAllDomainsOption(Domain));
+		getEmailAllDomainsOption(Domain).Click();
+		String emailDomainName = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.]", "");
+		System.out.println(emailDomainName);
+		base.waitForElement(getEmailAllDomainsApplyFilter());
+		base.waitTillElemetToBeClickable(getEmailAllDomainsApplyFilter());
+		getEmailAllDomainsApplyFilter().Click();
+		base.waitForElement(getApplyFilters());
+		getApplyFilters().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getActiveFilterInEmailALLDomain(emailDomainName));
+		base.waitTillElemetToBeClickable(getActiveFilterInEmailALLDomain(emailDomainName));
+		boolean activeFilter = getActiveFilterInEmailALLDomain(emailDomainName).isElementPresent();
+		if (activeFilter) {
+			base.passedStep(
+					"Active filter for email all domains by name: " + emailDomainName + " is Present as Expected");
+		} else {
+			base.failedStep("Active filter for email all domains by name: " + emailDomainName
+					+ " is not Present as Expected");
+		}
+
 	}
 }
