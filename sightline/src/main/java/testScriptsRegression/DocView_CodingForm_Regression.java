@@ -10527,6 +10527,69 @@ public class DocView_CodingForm_Regression {
 		baseClass.passedStep("Coding form stamp object value not updated");
 		boolean completeButton=docViewPage.getUnCompleteButton().Displayed();
 		softAssertion.assertTrue(completeButton);
+  }
+  /*
+	 * @Author : date: 10/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:To verify that comment should displayed on the document.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 213)
+	public void verifyCommentDisplayedOnTheDocument() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		String AssignStamp = "Assignment" + Utility.dynamicNameAppender();
+		String docComment = "documentcomment1234";
+		int count = 1;
+		baseClass.stepInfo("Test case Id: RPMXCON-50986");
+		baseClass.stepInfo("To verify that comment should displayed on the document.");
+
+		// Login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Perform search and View in DocView
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// Apply comments to document
+		String DocId = docViewPage.getClickDocviewID(1).getText();
+		System.out.println(DocId);
+		docViewPage.addCommentAndSave(docComment, true, count);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocument_CommentsTextBox());
+		String DocComments = docViewPage.getDocument_CommentsTextBox().getText();
+		System.out.println(DocComments);
+
+		// searching document for assignmnet creation
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(AssignStamp, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(AssignStamp);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		String DocId1 = docViewPage.getClickDocviewID(1).getText();
+		System.out.println(DocId1);
+		softAssertion.assertEquals(DocId, DocId1);
+		baseClass.stepInfo("Same documenId is displayed on Docview");
+		// verify last saved same docId is displayed
+		driver.waitForPageToBeReady();
+		String DocComments1 = docViewPage.getDocument_CommentsTextBox().getText();
+		System.out.println(DocComments1);
+		softAssertion.assertEquals(DocComments, DocComments1);
+		if (DocComments.equals(DocComments1)) {
+			baseClass.passedStep(DocComments + "...Previously saved documentId comment is displayed successfully"
+					+ "on same documentId..." + DocComments1);
+
+		} else {
+			baseClass.failedMessage("document comment is not displayed");
+		}
 		softAssertion.assertAll();
 
 		// logout
@@ -10539,6 +10602,7 @@ public class DocView_CodingForm_Regression {
 		Object[][] ContentAndAudio = { { "Basic" }, { "Audio" }, };
 		return ContentAndAudio;
 	}
+
 	
 	
 
