@@ -677,6 +677,34 @@ public class AdvancedSearch_Regression3 {
 						+ "and WorkProduct Block -Production) multiple times(twice)");
 		lp.logout();
 	}
+/**
+ * @author Jayanthi.ganesan
+ * @param username
+ * @param password
+ * @throws InterruptedException
+ */
+	@Test(dataProvider = "Users", groups = { "regression" }, priority = 13)
+	public void verifyProximityTildechar(String username, String password ) throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48795");
+		baseClass.stepInfo("Verify that result appears for proximity having phrase in Advanced Search Query Screen.");
+		lp.loginToSightLine(username, password);
+		SessionSearch search = new SessionSearch(driver);
+		SoftAssert assertion=new SoftAssert();
+		String[] searchInput= {"“iterative (“requirements evolve”)”~5","\"iterative (\"QA requirements evolve\")\"~5","\"iterative (\"requirements evolve Money\")\"~5"};
+		for(int i=0;i<searchInput.length;i++) {
+	    search.wrongQueryAlertAdvanceSaerch(searchInput[i], 13,"non fielded", null);	
+		int pureHit = Integer.parseInt(search.getPureHitsCount().getText());
+		assertion.assertNotNull(pureHit);
+		System.out.println(pureHit);
+		if(i!=2) {
+		baseClass.selectproject();
+		}
+		}
+		assertion.assertAll();
+		baseClass.passedStep("Sucessfully Verified that result appears for proximity having phrase in Advanced Search Query Screen.");
+		lp.logout();
+	}
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {

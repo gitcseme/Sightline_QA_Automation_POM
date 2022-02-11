@@ -24416,6 +24416,33 @@ public class DocViewPage {
 			UtilityLog.info("Review remark validation failed due to following exception " + e);
 		}
 	}
+
+	public Element getNotchSymboInPersistentHits() {
+		return driver.FindElementByXPath("//span[text()='Term:']/parent::strong/parent::div/descendant::div[@class='pull-right']");
+	}
+	public void verifyingThePresenceOfPersistentHit(boolean verifyNotchSymbol,String SearchString) {
+		driver.waitForPageToBeReady();
+		if(getDocView_Audio_Hit().isDisplayed()) {
+			base.passedStep("Persistent Hits is displayed");
+			base.waitForElement(getDocView_Audio_Hit());
+			String StringInPanels = getDocView_Audio_Hit().getText().trim().toString().toLowerCase();
+			
+			System.out.println("expected text" + StringInPanels);
+			base.compareTextViaContains(StringInPanels, SearchString, "Search string is displayed as expected",
+					"Search string is not displayed as expected");
+			
+		}else {
+			base.failedStep("Persistent Hits is Not displayed");
+		}
+		
+		if(verifyNotchSymbol) {
+			if(getTriangularIcon().isDisplayed()) {
+				base.passedStep("triangular Arrow icon in the Persistent Hits panel is Dislplayed");
+			}else {
+				base.failedStep("triangular Arrow icon in the Persistent Hits panel is Not Dislplayed");
+			}
+		}
+
 	
 	/**
 	 * 
@@ -24480,6 +24507,7 @@ public class DocViewPage {
 		reusableDocView.switchToNewWindow(2);
 		driver.close();
 		reusableDocView.switchToNewWindow(1);
+
 
 	}
 }

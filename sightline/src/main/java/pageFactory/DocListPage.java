@@ -4315,5 +4315,15 @@ Collections.sort(result_List);
 		
 		return elementNames;
 	}
-	
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void viewSelectedDocumentsInDocView() {
+		driver.scrollPageToTop();
+		base.waitForElement(getDocList_actionButton());
+		getDocList_actionButton().waitAndClick(5);
+
+		base.waitForElement(getViewInDocView());
+		getViewInDocView().waitAndClick(5);
+	}
 }
