@@ -2540,6 +2540,121 @@ public class DocView_Regression3 {
 		loginPage.logout();
 		
 	}
+	
+	/**
+	 * @Author : Steffy Created date: NA Modified date: NA Modified by:NA
+	 * @TestCase id : RPMXCON- 51543 -Verify that when two different users under
+	 *           different security group sharing annotation layer adds/edit/delete
+	 *           highlighting to the same record successfully, and confirm that the
+	 *           XML nodes are all properly created/reflected in the XML
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 23)
+	public void verifyRemarkPanelRemarkDetailsAfterAddingHighlightingBetweenTwoUsers() throws Exception {
+		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		namesg2 = Input.randomText + Utility.dynamicNameAppender();
+		namesg3 = Input.randomText + Utility.dynamicNameAppender();
+		String remark = Input.randomText + Utility.dynamicNameAppender();
+		docExp = new DocExplorerPage(driver);
+		baseClass = new BaseClass(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		sessionsearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51543");
+		baseClass.stepInfo(
+				"Verify that when two different users under different security group sharing annotation layer adds/edit/delete highlighting to the same record successfully, and confirm that the XML nodes are all properly created/reflected in the XML");
+		utility = new Utility(driver);
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User : " + Input.pa1userName + " to create prerequisite SG's and annotation layer");
+
+		baseClass.stepInfo("Creation of Prerequisites");
+		baseClass.stepInfo("Creation of two different security groups");
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityGroupsPage.AddSecurityGroup(namesg2);
+		driver.scrollPageToTop();
+		securityGroupsPage.AddSecurityGroup(namesg3);
+
+		baseClass.stepInfo("Creation of annotation layer");
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+
+		baseClass.stepInfo("Sharing same annotation layer to different security groups");
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+		securityGroupsPage.selectSecurityGroup(namesg3);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+
+		baseClass.stepInfo("Docs are released to both security groups");
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkRelease(namesg2);
+		sessionsearch.bulkRelease(namesg3);
+
+		baseClass.stepInfo("Access has been given to RMU and Rev to these security groups");
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu1userName);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
+		loginPage.logout();
+
+		baseClass.stepInfo("Adding annotation to document by RMU user as a prequisite");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		docViewRedact.selectsecuritygroup(namesg2);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Adding new remark to document as a prerequisite one");
+		baseClass.stepInfo("Perfrom non audio remark");
+		docView.addRemarkToNonAudioDocument(10, 20, remark);
+		loginPage.logout();
+		
+		baseClass.stepInfo("Login in to sightline using first user " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		docViewRedact.selectsecuritygroup(namesg2);
+		baseClass.stepInfo("logged in as" + Input.rmu1userName);
+		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		String firstUserWindow = driver.CurrentWindowHandle();
+		baseClass.stepInfo("Opening a new tab");
+		baseClass.openNewTab();
+		driver.switchToChildWindow();
+		baseClass.stepInfo("Navigating to Sighline URL");
+		driver.Navigate().to(Input.url);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Login in to sightline using second user " + Input.rmu2userName);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		docViewRedact.selectsecuritygroup(namesg3);
+		baseClass.stepInfo("logged in as" + Input.rmu2userName);
+		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		String secondUserWindow = driver.CurrentWindowHandle();
+		baseClass.stepInfo("Switching back to first window to delete remark");
+		driver.switchToWindow(firstUserWindow);
+		baseClass.stepInfo("Perfrom non audio annotation");
+		docView.performNonAudioAnnotation();
+		baseClass.stepInfo("Switching back to second window to warning message displayed in all 3 panels");
+		driver.switchToWindow(secondUserWindow);
+		docView.verifyWarningMessage("Annotation");
+		docView.verifyAppliedAnnotationSubMenusAreDisabled();
+		docView.verifyWarningMessage("Redaction");
+		docView.verifyAppliedRedactionSubMenusAreDisabled();
+		docView.verifyWarningMessage("Remark");
+		baseClass.stepInfo("Verify remark edit is not displayed for existing remarks");
+		docView.verifyReviewRemarkActionPanel("Edit", remark);
+		baseClass.stepInfo("Verify remark delete is not displayed for existing remarks");
+		docView.verifyReviewRemarkActionPanel("Delete", remark);
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void close() throws ParseException, InterruptedException, IOException {
