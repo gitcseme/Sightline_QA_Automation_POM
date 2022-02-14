@@ -1307,6 +1307,19 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath("//div[@class='pull-right']//div[@id='counterAll']");
 	}
 
+	
+	public Element textViewTab() {
+		return driver.FindElementById("liDocumentTxtView");
+	}
+	
+	public Element translationsViewTab() {
+		return driver.FindElementById("liDocumentTranslationsView");
+	}
+	
+	public Element defaultViewTab() {
+		return driver.FindElementById("liDocumentDefaultView");
+	}
+	
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements

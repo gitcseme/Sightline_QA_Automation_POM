@@ -24449,7 +24449,7 @@ public class DocViewPage {
 			base.failedStep("Exception occcured while verifying completed production name displayed on image tab options." + e.getMessage());
 
 		}
-		
+	}
 
 
 	public Element getNotchSymboInPersistentHits() {
@@ -24641,6 +24641,7 @@ public class DocViewPage {
 		driver.Navigate().back();
 		base.passedStep("Leave and cancel button displayed when navigation done through back button in Leave");
 		driver.switchTo().alert().accept();
+	}
 /**
 	 * @Author Brundha
 	 * @Description :Method to verify Saved stamp tool tip
