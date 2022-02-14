@@ -6419,7 +6419,124 @@ public class DocView_Regression1 {
 		
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Gopinath 
+	 * @TestCase Id: 51034 -Verify user can see the keywords highlighted in doc view based on the assigned keyword group and color to the security group.
+	 * @throws InterruptedException
+	 * @throws AWTException 
+	 */
+	@Test(groups = { "regression" }, priority = 47)
+	public void verifySearchTermAndAllKeywordsDisplayedOnPersistentPanal() throws InterruptedException, AWTException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51034");
+		String keyword = "es";
+		String colour1 = "Gold";
+		String rgbCode1 = "rgb(255, 215, 0)";
+		String HaxCode1 = "#ffd700";
+		String keywordName1 = "key" + Utility.dynamicNameAppender();
+		baseClass.stepInfo(
+				"#### Verify user can see the keywords highlighted in doc view based on the assigned keyword group and color to the security group ####");
 
+		KeywordPage keywordPage = new KeywordPage(driver);
+
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+
+		baseClass.stepInfo("Add keyword one");
+		keywordPage.addKeywordWithoutFullScreen(keywordName1, keyword, colour1);
+
+		baseClass.stepInfo("Get All Keywords in keywords lsit table");
+		List<String> keywords = keywordPage.getAllKeywords();
+
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		baseClass.stepInfo("Basic Basic content search");
+		session.basicContentSearch(Input.searchString1);
+
+		baseClass.stepInfo("Navigate to  DocView page");
+		session.ViewInDocView();
+
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(Input.searchString1);
+
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
+		baseClass.stepInfo("Verify Persistant Hits With Doc View");
+		docView.verifyPersistantHitsWithDocView(keywords);
+		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
+		baseClass.stepInfo("Verify persistant hit for keyword");
+		docView.persistenHitWithSearchString(keyword);
+
+		baseClass.stepInfo("verify highlight keyword in document");
+		docView.verifyKeywordHighlightedOnDocViewwithKeywordColour(rgbCode1, HaxCode1);
+		
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+
+		baseClass.stepInfo("Delete keyword");
+		keywordPage.deleteKeywordByName(keywordName1);
+		loginPage.logout();
+	}
+	/**
+	 * @author Gopinath 
+	 * @TestCase Id: 51552 - Verify highlighting with Persistent KW Groups as well as Ad Hoc Searching.
+	 * @throws InterruptedException
+	 * @throws AWTException 
+	 */
+	@Test(groups = { "regression" }, priority = 48)
+	public void verifySearchTermAndKeywordDisplayedOnPersistentPanal() throws InterruptedException, AWTException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51034");
+		String keyword = "es";
+		String colour1 = "Gold";
+		String rgbCode1 = "rgb(255, 215, 0)";
+		String HaxCode1 = "#ffd700";
+		String keywordName1 = "key" + Utility.dynamicNameAppender();
+		baseClass.stepInfo(
+				"#### Verify user can see the keywords highlighted in doc view based on the assigned keyword group and color to the security group ####");
+
+		KeywordPage keywordPage = new KeywordPage(driver);
+
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+
+		baseClass.stepInfo("Add keyword one");
+		keywordPage.addKeywordWithoutFullScreen(keywordName1, keyword, colour1);
+
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		baseClass.stepInfo("Basic Basic content search");
+		session.basicContentSearch(Input.searchString1);
+
+		baseClass.stepInfo("Navigate to  DocView page");
+		session.ViewInDocView();
+
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(Input.searchString1);
+		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
+		baseClass.stepInfo("Verify persistant hit for keyword");
+		docView.persistenHitWithSearchString(keyword);
+
+		baseClass.stepInfo("verify highlight keyword in document");
+		docView.verifyKeywordHighlightedOnDocViewwithKeywordColour(rgbCode1, HaxCode1);
+		
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+
+		baseClass.stepInfo("Delete keyword");
+		keywordPage.deleteKeywordByName(keywordName1);
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

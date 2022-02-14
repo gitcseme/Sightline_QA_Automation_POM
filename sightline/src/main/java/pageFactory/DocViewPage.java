@@ -3101,6 +3101,11 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//i[@class='fa fa-angle-right']");
 	}
 
+	
+	//Added by Gopinath - 14/02/2022
+	public Element selectRedactionTag() {
+		return driver.FindElementByXPath("//select[@id='ddlRedactionTagsForPopup']/option[@selected]");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -24449,6 +24454,7 @@ public class DocViewPage {
 			base.failedStep("Exception occcured while verifying completed production name displayed on image tab options." + e.getMessage());
 
 		}
+	}
 		
 
 
@@ -24641,6 +24647,7 @@ public class DocViewPage {
 		driver.Navigate().back();
 		base.passedStep("Leave and cancel button displayed when navigation done through back button in Leave");
 		driver.switchTo().alert().accept();
+	}
 /**
 	 * @Author Brundha
 	 * @Description :Method to verify Saved stamp tool tip
@@ -24664,5 +24671,28 @@ public class DocViewPage {
 
 
 	}
+	
+	/**
+	 * @author Gopinath
+	 * @description: method to verify first option of select redaction tag drop down.
+	 * @param redactionTag : redactionTag is String value that redaction tag from drop down.
+	 */
+	public void verifyFirstOptionOfRedactionFromDropdown(String redactionTag) {
+		try {
+			driver.waitForPageToBeReady();
+			selectRedactionTag().isElementAvailable(10);
+			String selectedRedactionTag = selectRedactionTag().getText().trim();
+			if(redactionTag.equalsIgnoreCase(selectedRedactionTag)) {
+				base.passedStep(redactionTag+" -- redaction tag first option from select redaction dropdown is selected successfully");
+			}else {
+				base.failedStep(redactionTag+" -- redaction tag first option from select redaction dropdown is not selected");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying first option of select redaction tag drop down." + e.getMessage());
+
+		}
+	}
+
 }
 

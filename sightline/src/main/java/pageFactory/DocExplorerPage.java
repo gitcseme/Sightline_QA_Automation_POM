@@ -216,6 +216,14 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//table[@id='dtDocumentList']/descendant::td[text()='Your query returned no data']");
 	}
     
+	//Added by Gopinath - 14/02/2022
+	public ElementCollection getDocExplorerSubFolders(String folderNumber) {
+		return driver.FindElementsByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a[@id='-1_anchor']/following-sibling::ul/li["+folderNumber+"]/ul/li/a");
+	}
+	public Element getFolderExpandButton(String folderNumber) {
+		return driver.FindElementByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a[@id='-1_anchor']/following-sibling::ul[@class='jstree-children']/li["+folderNumber+"]/i");
+	}
+	
     public DocExplorerPage(Driver driver){
 
         this.driver = driver;
@@ -1608,5 +1616,47 @@ public class DocExplorerPage {
         			bc.waitTime(2);
         			
         		}
+        	}
+        	
+        	/**
+        	 * @author Gopinath
+        	 * @Description:method to verify count of documents in folder
+        	 * @param folderNumber
+        	 */
+        	public void verifyDOcExplorerFolderDocCount(String folderNumber) {
+        		try {
+        			driver.waitForPageToBeReady();
+        			getfolderFromTreeByNumber(folderNumber).isElementAvailable(10);
+        			String CustodianNameInTree = getfolderFromTreeByNumber(folderNumber).getText();
+        			String numberOfDocumentInFolder = CustodianNameInTree.substring(CustodianNameInTree.indexOf("(") + 1,
+        					CustodianNameInTree.indexOf(")"));
+        			bc.stepInfo("numberOfDocumentInFolder" + numberOfDocumentInFolder);
+        			bc.waitForElement(getFolderExpandButton(folderNumber));
+        			getFolderExpandButton(folderNumber).isElementAvailable(10);
+        			getFolderExpandButton(folderNumber).ScrollTo();
+        			getFolderExpandButton(folderNumber).waitAndClick(5);
+        			driver.waitForPageToBeReady();
+        			getDocExplorerSubFolders(folderNumber).isElementAvailable(10);
+        			bc.waitForElementCollection(getDocExplorerSubFolders(folderNumber));
+        			List<WebElement> totalSubfolders = getDocExplorerSubFolders(folderNumber).FindWebElements();
+        			int totalCountForSubFolderDocs = 0;
+        			for (WebElement eachFolder : totalSubfolders) {
+        				String subFolderName = eachFolder.getText();
+        				String countOfEachFolderDocs = subFolderName.substring(subFolderName.indexOf("(") + 1,
+        						subFolderName.indexOf(")"));
+        				totalCountForSubFolderDocs = totalCountForSubFolderDocs + Integer.parseInt(countOfEachFolderDocs);
+        			}
+        			bc.stepInfo("totalCountForSubFolderDocs" + totalCountForSubFolderDocs);
+        			if (Integer.parseInt(numberOfDocumentInFolder) == totalCountForSubFolderDocs) {
+        				bc.passedStep(
+        						"Count of documents should be displayed for each folder  with the corresponding number of docs in the folder");
+        			} else {
+        				bc.failedStep("Count of documents for  folder is not displayed");
+        			}
+        		} catch (Exception e) {
+        			e.printStackTrace();
+        			bc.failedStep("Exception occured while verifying the document count due to " + e.getMessage());
+        		}
+
         	}
  }
