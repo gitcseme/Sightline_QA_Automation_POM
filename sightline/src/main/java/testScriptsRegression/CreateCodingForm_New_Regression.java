@@ -4348,6 +4348,96 @@ public class CreateCodingForm_New_Regression {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * @Author : Baskar date: NA Modified date:14/02/2022 Modified by: Baskar 
+	 * @Description :Verify on click of 'Save and Next' button coding form should be 
+	 *               validated as per the customized coding form using Tag/Comments/Metadata 
+	 *               objects along with Check/Radio Group and Check Item in context of security group
+	 */
+	@Test(enabled = true ,groups = { "regression" }, priority = 71)
+	public void validationUsingSaceAndNextForCheckItemsRequiredTag() throws InterruptedException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-52088");
+	    baseClass.stepInfo("Verify on click of 'Save and Next' button coding form should be "
+	    		+ "validated as per the customized coding form using Tag/Comments/Metadata objects "
+	    		+ "along with Check/Radio Group and Check Item in context of security group");
+	   
+	    String cfName = "CF"+Utility.dynamicNameAppender();
+	    String tagName = "tag"+Utility.dynamicNameAppender();
+		
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+	 	
+	 	 // create tag
+		tagsAndFoldersPage.CreateTag(tagName,"Default Security Group");
+		
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	driver.waitForPageToBeReady();
+	 	codingForm.addNewCodingFormButton();
+	 	baseClass.waitForElement(codingForm.getCodingForm_Tag(tagName));
+	 	codingForm.getCodingForm_Tag(tagName).waitAndClick(10);
+	 	codingForm.firstCheckBox(Input.comments);
+	 	codingForm.firstCheckBox(Input.metaData);
+	 	codingForm.specialObjectsBox(Input.staticText);
+	 	codingForm.specialObjectsBox(Input.radioGroup);
+	 	codingForm.specialObjectsBox(Input.checkGroup);
+	 	driver.scrollPageToTop();
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.getCF_TagTypes(0).selectFromDropdown().selectByVisibleText(Input.checkItem);
+	 	driver.waitForPageToBeReady();
+	 	codingForm.getCF_CheckGroup(0).selectFromDropdown().selectByIndex(1);
+	 	codingForm.selectDefaultActions(1, Input.hidden);
+	 	codingForm.selectDefaultActions(2, Input.notSelectable);
+	 	codingForm.selectDefaultActions(4, Input.optional);
+	 	codingForm.getCodingForm_ErrorMsg(4).SendKeys(Input.errorMsg);
+	 	codingForm.getCodingForm_HelpMsg(4).SendKeys(Input.helpText);
+	 	codingForm.selectDefaultActions(5, Input.required);
+	 	codingForm.getCodingForm_ErrorMsg(5).SendKeys(Input.errorMsg);
+	 	codingForm.getCodingForm_HelpMsg(5).SendKeys(Input.helpText);
+	 	driver.waitForPageToBeReady();
+	 	driver.scrollPageToTop();
+	 	codingForm.passingCodingFormName(cfName);
+	 	codingForm.saveCodingForm();
+	 	baseClass.stepInfo("Coding form created all object along with check item");
+		
+		// Assign to security group
+		codingForm.assignCodingFormToSG(cfName);
+		baseClass.stepInfo("Coding form assigned to security group");
+		
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		sessionSearch.ViewInDocViews();
+
+		// Edit coding Form and action using save and next buton
+		baseClass.stepInfo("Performing action for parent window");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getSaveAndNextButton());
+		docViewPage.getSaveAndNextButton().waitAndClick(5);
+		docViewPage.errorMessage();
+		baseClass.passedStep("Validation messgae displayed for checkbox required tag in parent window");
+		baseClass.stepInfo("Performing action for child window");
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		String parentwindow=docViewPage.switchTochildWindow();
+		baseClass.waitForElement(docViewPage.getSaveAndNextButton());
+		docViewPage.getSaveAndNextButton().waitAndClick(5);
+		docViewPage.childWindowToParentWindowSwitching(parentwindow);
+		docViewPage.errorMessage();
+		baseClass.passedStep("Validation messgae displayed for checkbox required tag in child window");
+
+		// Reassign default coding form again
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.assignCodingFormToSG(Input.codingFormName);
+		codingForm.deleteCodingForm(cfName, cfName);
+		
+		// logout
+		loginPage.logout();
+	}
 
 		
 
