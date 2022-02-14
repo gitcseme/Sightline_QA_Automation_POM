@@ -4355,7 +4355,7 @@ public class CreateCodingForm_New_Regression {
 	 *               validated as per the customized coding form using Tag/Comments/Metadata 
 	 *               objects along with Check/Radio Group and Check Item in context of security group
 	 */
-	@Test(enabled = true ,groups = { "regression" }, priority = 68)
+	@Test(enabled = true ,groups = { "regression" }, priority = 71)
 	public void validationUsingSaceAndNextForCheckItemsRequiredTag() throws InterruptedException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-52088");
 	    baseClass.stepInfo("Verify on click of 'Save and Next' button coding form should be "
