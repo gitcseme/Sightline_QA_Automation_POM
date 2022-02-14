@@ -4,6 +4,8 @@ import java.awt.AWTException;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 
 import org.openqa.selenium.support.Color;
@@ -8730,6 +8732,73 @@ public void ProductionGenerateForAudioFile() throws Exception {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		loginPage.logout();
+	}
+	/**
+	 * @author Brundha Test case id-RPMXCON-47966
+	 * @DescriptionTo Verify The OPT/LOG file generated in a production have all
+	 *                required information
+	 * 
+	 */
+@Test(groups = { "regression" }, priority =116)
+	public void verifyOPTInGeneratedProduction() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+
+		base.stepInfo("RPMXCON-47966-Production component");
+		base.stepInfo("To Verify The OPT/LOG file generated in a production have all required information.");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Utility.randomCharacterAppender(1);
+		String suffixID =  Utility.randomCharacterAppender(1);
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(4);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectGenerateOption(false);
+		page.fillingAdvancedInTiffSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID,suffixID,beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		String name = page.getProduction().getText().trim();
+		System.out.println(name);
+		String home = System.getProperty("user.home");
+				
+		page.unzipping(home+"/Downloads/"+name+".zip",home+"/Downloads");
+		System.out.println("Unzipped the downloaded files");
+		
+       driver.waitForPageToBeReady();
+	   for (String line : Files.readAllLines(Paths.get(home+"/Downloads/"+"VOL0001/Load Files/"+name+"_TIFF.OPT"))) {
+		    for (String part : line.split("\\s+")) {
+		    	
+		       System.out.println("the value is"+part);
+		       
+		       if(part.contains("Z:\\VOL0001\\Images")&&part.contains("tiff")) {
+		    	   System.out.println("Text is displayed as expected");
+		       }else { base.failedStep("the text is not displayed as expected");}
+		    }
+		}
+		base.passedStep("Text is displayed as expected");   
+		
 	}
 @AfterMethod(alwaysRun = true)
 public void takeScreenShot(ITestResult result) {
