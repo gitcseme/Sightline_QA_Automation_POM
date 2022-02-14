@@ -1494,7 +1494,11 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
-
+	public Element get_textHighlightedYellowColor() {
+		return driver.FindElementByCssSelector("#ig0level0surface1 > path:nth-child(39)");
+	}
+	
+	
 	public Element getDocView_Production_Image() {
 		return driver.FindElementByXPath("//*[@id='divViewerProductions']");
 	}
@@ -24449,6 +24453,7 @@ public class DocViewPage {
 			base.failedStep("Exception occcured while verifying completed production name displayed on image tab options." + e.getMessage());
 
 		}
+	}
 		
 
 
@@ -24641,6 +24646,7 @@ public class DocViewPage {
 		driver.Navigate().back();
 		base.passedStep("Leave and cancel button displayed when navigation done through back button in Leave");
 		driver.switchTo().alert().accept();
+	}
 /**
 	 * @Author Brundha
 	 * @Description :Method to verify Saved stamp tool tip
