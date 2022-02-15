@@ -8800,6 +8800,93 @@ public void ProductionGenerateForAudioFile() throws Exception {
 		base.passedStep("Text is displayed as expected");   
 		
 	}
+
+/**
+ * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-56054
+ * @Description: Verify that after Post Geneation is completed, it will displays
+ *               status on Production Grid View page as 'Post Generation QC
+ *               Check Complete'
+ */
+@Test(groups = { "regression" }, priority = 117)
+public void verifyPostGenCompleteStatusOnGridView() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-56054 - from Production component");
+	base.stepInfo(
+			"Verify that after Post Geneation is completed, it will displays status on Production Grid View page as 'Post Generation QC Check Complete'");
+
+	String testData1 = Input.testData1;
+	foldername = "FolderProd" + Utility.dynamicNameAppender();
+
+	// Pre-requisites
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+	// search for folder
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	// Verify archive status on Gen page
+	ProductionPage page = new ProductionPage(driver);
+	productionname = "p" + Utility.dynamicNameAppender();
+	String beginningBates = page.getRandomNumber(2);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID,suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.clickGenarateWithoutWait();
+	page.getbtnContinueGeneration().isElementAvailable(150);
+	page.getbtnContinueGeneration().isDisplayed();
+	base.waitForElement(page.getbtnContinueGeneration());
+	page.getbtnContinueGeneration().waitAndClick(10);
+	
+	this.driver.getWebDriver().get(Input.url + "Production/Home");
+	driver.Navigate().refresh();
+	driver.waitForPageToBeReady();
+	page.getGridView().waitAndClick(10);
+	driver.waitForPageToBeReady();
+	page.verifyProductionStatusInHomePageGridView("Post-Gen QC Checks Complete", productionname);
+	loginPage.logout();
+}
+
+/**
+ * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48876
+ * @Description:To verify that belly band message is displays if user map the
+ *                 one source field to multiple DAT fields
+ */
+@Test(groups = { "regression" }, priority = 118)
+public void verifyPreGenStatusOnGridView() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	base.stepInfo("RPMXCON-48876 - from Production component");
+	base.stepInfo(
+			"To verify that belly band message is displays if user map the one source field to multiple DAT fields");
+
+	String Batesnumber = "B" + Utility.dynamicNameAppender();
+	ProductionPage page = new ProductionPage(driver);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.addDATFieldAtSecondRow(Input.bates, Input.batesNumber, Batesnumber);
+	
+	base.stepInfo("Verifying belly band message in production component tab");
+	page.verifyingBellyBandMessageInDATSection(Batesnumber);
+	loginPage.logout();
+}
+
 @AfterMethod(alwaysRun = true)
 public void takeScreenShot(ITestResult result) {
 	if (ITestResult.FAILURE == result.getStatus()) {
