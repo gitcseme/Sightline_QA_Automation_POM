@@ -37,6 +37,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.RedactionPage;
+import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -3745,7 +3746,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify Removal of Priv Tag from a Document should get
 	 *                 Produced in Production for Native
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 68)
+	@Test(enabled = false, groups = { " regression" }, priority = 68)
 	public void verifyPrivilegedTagInNative() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48039- Production Sprint 11");
@@ -3819,7 +3820,7 @@ public class Production_Page_Regression {
 	 *              Translation LST & Translated document Produced [ RPMXCON-55680]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 69)
+	@Test(enabled = false, groups = { "regression" }, priority = 69)
 	public void verifyTranslation() throws Exception {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3877,7 +3878,7 @@ public class Production_Page_Regression {
 	 *              Native component should be disabled [ RPMXCON-56133]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 70)
+	@Test(enabled = false, groups = { "regression" }, priority = 70)
 	public void verifySavedTemplateForNative() throws Exception {
 
 		ProductionPage page = new ProductionPage(driver);
@@ -3942,7 +3943,7 @@ public class Production_Page_Regression {
 		
 		baseClass.selectproject();
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.documentId);
+		sessionSearch.basicContentSearch(Input.parentDocument);
 		sessionSearch.ViewInDocList();
 
 		docPage = new DocListPage(driver);
@@ -3974,14 +3975,13 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		
-		BaseClass.unzip(Input.fileDownloadLocation, Input.fileDownloadLocation);
-		System.out.println("Unzipped the downloaded files");
+//		String name = page.getProduction().getText().trim();
+//		System.out.println(name);
+//		page.isFileDownloaded(Input.fileDownloadLocation, name);
+//		
+//		BaseClass.unzip(Input.fileDownloadLocation,Input.fileDownloadLocation);
+//		System.out.println("Unzipped the downloaded files");
 		
-		
-		String name = page.getProduction().getText().trim();
-		System.out.println(name);
-		page.isFileDownloaded(Input.fileDownloadLocation, name);
-
 		// Delete Tag and folder
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
@@ -3992,8 +3992,8 @@ public class Production_Page_Regression {
 	 * TESTCASE  No:RPMXCON-49059
 	 * @Description:To verify that "Production Start Date" should present the date when the production was started
 	 */
-	@Test(groups = { "regression" }, priority = 72)
-	public void startDateEndDateVarification() throws Exception {
+	@Test(enabled = true,groups = { "regression" }, priority = 72)
+	public void verifyStartDateInGridView() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	baseClass.stepInfo("RPMXCON-49059 -Production Sprint 12");
 	baseClass.stepInfo("To verify that Production Start Date should present the date when the production was started");
@@ -4058,6 +4058,148 @@ public class Production_Page_Regression {
 	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 	}
+	
+	/**
+	 * @author sowndarya.velraj
+	 * TESTCASE  No:RPMXCON-47901
+	 * @Description:To Verify Priv Guard Section on the self production wizard for Run Categorization
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 73)
+	public void verifyPrivGuardForRunCategorization() throws Exception {
+		
+	UtilityLog.info(Input.prodPath);
+	baseClass.stepInfo("RPMXCON-47901 -Production Sprint 12");
+	baseClass.stepInfo("To Verify Priv Guard Section on the self production wizard for Run Categorization");
+	tagname = "Tag" + Utility.dynamicNameAppender();
+
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	// search for folder
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkTagExisting(tagname);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingSelectDocumentUsingTags(tagname);
+	page.navigateToNextSection();
+	page.priviledgeDocCheck(true, tagname);
+	page.runCategorizationBtn().waitAndClick(10);
+	baseClass.stepInfo("Redirected to Categorization page ");
+
+	softAssertion.assertTrue(page.identifyByProductionGuardSource_radioBtn().isDisplayed());
+	baseClass.passedStep("Identify By Production Guard Source radio button is displayed");
+
+	softAssertion.assertTrue(page.analyzeSelectProductionSets_radioBtn().isDisplayed());
+	baseClass.passedStep("Analyze Select Production Sets  radio button is displayed");
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+	}
+	
+	/**
+	 * @author sowndarya.velraj
+	 * TESTCASE  No:RPMXCON-47899
+	 * @Description:To Verify Document Selection Section on the self production wizard For Searches
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 74)
+	public void verifyDocumentSelectionOnSearches() throws Exception {
+		
+	UtilityLog.info(Input.prodPath);
+	baseClass.stepInfo("RPMXCON-47899 -Production Sprint 12");
+	baseClass.stepInfo("To Verify Document Selection Section on the self production wizard For Searches");
+	tagname = "Tag" + Utility.dynamicNameAppender();
+	String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	// search for folder
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	
+	driver.getWebDriver().get(Input.url + "Search/Searches");
+	int purehit = sessionSearch.advancedContentSearch(Input.testData1);
+	sessionSearch.saveSearchAdvanced_New(searchName,Input.shareSearchDefaultSG);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocuSelectionPage(searchName,null);
+	baseClass.waitForElement(page.getMarkCompleteLink());
+	page.getMarkCompleteLink().waitAndClick(10);
+
+	softAssertion.assertTrue(page.getDocumentSelectionLink().isDisplayed());
+	baseClass.passedStep("Total Document count is displayed");
+	
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+	tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+	}
+	
+	/**
+	 * @author sowndarya.velraj
+	 * TESTCASE  No:RPMXCON-48550
+	 * @Description:To verify that 'Bates Range' is displayed in Production Generate step
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 75)
+	public void verifyBatesRangeInGenerate() throws Exception {
+		
+	UtilityLog.info(Input.prodPath);
+	baseClass.stepInfo("RPMXCON-48550 -Production Sprint 12");
+	baseClass.stepInfo("To verify that 'Bates Range' is displayed in Production Generate step");
+	tagname = "Tag" + Utility.dynamicNameAppender();
+
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	// search for folder
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkTagExisting(tagname);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingSelectDocumentUsingTags(tagname);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	softAssertion.assertTrue(page.getProd_BatesRange().isDisplayed());
+	baseClass.passedStep("Bates Range is displayed in generate page");
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+	tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+	}
+	
+	
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },

@@ -848,6 +848,18 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	
+	public Element identifyByProductionGuardSource_radioBtn() {
+		return driver.FindElementByXPath("//a[@id='a-c-6']");
+	}
+	public Element analyzeSelectProductionSets_radioBtn() {
+		return driver.FindElementByXPath("//a[@id='a-c-2-4']");
+	}
+	
+	public Element runCategorizationBtn() {
+		return driver.FindElementByXPath("//button[contains(text(),'Run Categorization')]");
+	}
+	
 	public Element radioBtnInAdvancedNative_ForPrivRedactedDocs() {
 		return driver.FindElementByXPath("//ul[@class='list-inline']//label//input[@id='rdbExcludeNativesofparent']//..//span[contains(text(),'natives of the parents')]");
 	}
