@@ -2080,6 +2080,105 @@ public class BatchRedactionRegression3 {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that on click of 'Analyze Search for Redaction' button
+	 *              of the Saved Search(es), success message should be displayed
+	 *              [RPMXCON-53330]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
+	public void verifyAnalyzeSearchForSavedSearch() throws Exception {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		base.stepInfo("Test case Id:RPMXCON-53330 Batch Redaction");
+		base.stepInfo(
+				"Verify that on click of 'Analyze Search for Redaction' button of the Saved Search(es), success message should be displayed");
+
+		// Create saved search
+		int purehit = session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		batch.loadBatchRedactionPage(searchName);
+		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false);
+		batch.verifyViewReportBtn(searchName, null);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify the document history actions once Rollback is completed
+	 *              successfully [RPMXCON-53467]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
+	public void verifyDocumentHistoryAfterRollback() throws Exception {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		String redactionTag = "Redact" + Utility.dynamicNameAppender();
+		RedactionPage redact = new RedactionPage(driver);
+		DocViewPage docview = new DocViewPage(driver);
+		DocViewMetaDataPage docviewMetadata = new DocViewMetaDataPage(driver);
+
+		String passMsg = "Rollback operation is applied on Document";
+		String failMsg = "Redaction Count is still the same";
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		base.stepInfo("Test case Id:RPMXCON-53467 Batch Redaction");
+		base.stepInfo("Verify the document history actions once Rollback is completed successfully");
+
+		// add Redaction Tag
+		redact.AddRedaction(redactionTag, "RMU");
+
+		// Create saved search
+		int purehit = session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(redactionTag, "Yes");
+
+		// verify History status
+		batch.verifyBatchHistoryStatus(searchName);
+
+		//view docs in docview page
+		session.ViewInDocView();
+		docview.verifyRedactionPanel();
+
+		// getting the Batch Redaction total count
+		Element batchRedactCount = docview.getDocView_BatchRedactionCount();
+		int batchRedactionCount = docview.getRedactionCount(batchRedactCount, "Batch Redaction");
+
+		//perform ROLLBACK and view docs in DOCVIEW
+		batch.loadBatchRedactionPage(searchName);
+		batch.verifyRollback(searchName, Input.yesButton);
+		session.ViewInDocView();
+		docview.verifyRedactionPanel();
+
+		// getting the Batch Redaction total count After Rollback
+		Element batchRedactCount2 = docview.getDocView_BatchRedactionCount();
+		int batchRedactionCountAfter = docview.getRedactionCount(batchRedactCount, "Batch Redaction");
+
+		//compare count Before and After Rollback
+		base.textCompareNotEquals(String.valueOf(batchRedactionCountAfter), String.valueOf(batchRedactionCount),
+				passMsg, failMsg);
+
+		//verify History On docview page
+		docviewMetadata.verifyBrowseAllHistory_RedactionAddedStatus(true);
+
+		login.logout();
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
