@@ -2413,7 +2413,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocumentsCommentViewCoding() {
-		return driver.FindElementById("//div[@id='viewCodingStamp']//textarea[@id='1_textarea']");
+		return driver.FindElementByXPath("//div[@id='viewCodingStamp']//textarea[@id='1_textarea']");
 	}
 
 	public Element getDocListAllDocCheckBox() {
@@ -3109,6 +3109,15 @@ public class DocViewPage {
 	//Added by Gopinath - 14/02/2022
 	public Element selectRedactionTag() {
 		return driver.FindElementByXPath("//select[@id='ddlRedactionTagsForPopup']/option[@selected]");
+	}
+	// Added by Baskar -14/02/2022
+	// View coding stamp popup window
+	public Element getViewCodingStamp_PopUpWindow() {
+		return driver.FindElementByXPath("//span[text()='View Coding Stamp']");
+	}
+    // Edit coding stamp Popup window
+	public Element getEditCodingStamp_PopUpWindow() {
+		return driver.FindElementByXPath("//span[text()='Edit Coding Stamp']");
 	}
 
 	public DocViewPage(Driver driver) {
