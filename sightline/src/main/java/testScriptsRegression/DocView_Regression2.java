@@ -3834,6 +3834,45 @@ public class DocView_Regression2 {
 		loginPage.logout();
 		}
 	
+
+	/*  
+     *Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51729
+	 * Description :Verify that persistent hits should be highlighted when documents are assigned to existing assignment from Advanced Search > Doc List
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 55)
+	public void verifyPersistentHitsHighlightWhenAssigned() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		assignPage = new AssignmentsPage(driver);
+		DocListPage docList = new DocListPage(driver);
+		
+		String assignmentName = "Atestassignment"+utility.dynamicNameAppender();
+  	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51729");
+		baseClass.stepInfo("Verify that persistent hits should be highlighted when documents are assigned to existing assignment from Advanced Search");
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		int availableDocs =sessionsearch.advancedContentSearch(Input.testData1);
+		sessionsearch.ViewInDocList();
+		driver.waitForPageToBeReady();
+		docList.documentSelection(availableDocs);
+		docList.bulkAssignWithPersistantHit(assignmentName);
+		assignPage.editAssignment(assignmentName);
+		assignPage.addReviewerAndDistributeDocs();
+		driver.waitForPageToBeReady();
+		assignPage.Assignment_ManageRevtab_ViewinDocView();
+		docView.verifyDocsPresentWithPersistentHits(Input.testData1);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as Reviewer");
+		assignPage.SelectAssignmentByReviewer(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Select assigned assignment and Navigated to docview");
+		docView.verifyDocsPresentWithPersistentHits(Input.testData1);
+	}
+	
+
 	/**
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51960
 	 * 
@@ -3867,7 +3906,7 @@ public class DocView_Regression2 {
 	
 	
 
-	
+
 	
 	
 	@AfterMethod(alwaysRun = true)

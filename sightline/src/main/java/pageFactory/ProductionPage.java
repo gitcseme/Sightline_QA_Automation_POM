@@ -34,6 +34,8 @@ import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
 import testScriptsSmoke.Input;
 
 public class ProductionPage {
@@ -17232,5 +17234,16 @@ public class ProductionPage {
 			base.failedStep("Exception occured while getting production name from completed production."+e.getLocalizedMessage());
 		}
 		return productionName;
+	}
+	/**
+	 * @author Brundha
+	 * @Description :Method to unzip the zipped file
+	 * 
+	 */
+	public void unzipping(String source,String Destination) throws ZipException  {
+		
+		ZipFile zipFile = new ZipFile(source);
+	    zipFile.extractAll(Destination);
+		
 	}
 }

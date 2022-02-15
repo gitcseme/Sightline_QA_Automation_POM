@@ -24676,6 +24676,7 @@ public class DocViewPage {
 
 	}
 	
+
 	/**
 	 * @author Gopinath
 	 * @description: method to verify first option of select redaction tag drop down.
@@ -24695,6 +24696,17 @@ public class DocViewPage {
 			e.printStackTrace();
 			base.failedStep("Exception occured while verifying first option of select redaction tag drop down." + e.getMessage());
 
+		}
+	}
+
+
+	public void verifyDocsPresentWithPersistentHits(String searchstring) throws InterruptedException {
+		String persistentterm=getPersistentHit(searchstring);
+		if(persistentterm.contains(searchstring) && get_textHighlightedColor().isDisplayed()) {
+			base.passedStep("Documents are present with the persistent hits");
+		}
+		else {
+			base.failedStep("Documents are not present with the persistent hits");
 		}
 	}
 
