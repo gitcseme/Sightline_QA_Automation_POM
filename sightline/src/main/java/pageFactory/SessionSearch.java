@@ -994,7 +994,7 @@ public class SessionSearch {
 
 	public Element getSavedSearch_MySearchesNewNode1(String Node) {
 		return driver.FindElementByXPath(
-				"//a[@data-content='My Saved Search']//following-sibling::ul//li//a[contains(text(),'" + Node + "')]");
+				"//a[text()='My Saved Search']//following-sibling::ul//li//a[contains(text(),'" + Node + "')]");
 	}
 
 	// 9/29
@@ -1514,56 +1514,80 @@ public class SessionSearch {
 	}
 
 	public Element gettingAudioSearchTableRowValues(int i) {
-		return driver.FindElementByXPath("(//table[@class='table table-striped']//td/table[@class='table table-striped']/tbody/tr/td["+i+"]/span)[last()]");
+		return driver.FindElementByXPath(
+				"(//table[@class='table table-striped']//td/table[@class='table table-striped']/tbody/tr/td[" + i
+						+ "]/span)[last()]");
 	}
+
 	public ElementCollection getAudioSearchTableHeaders() {
-		return driver.FindElementsByXPath("//table[@class='table table-striped']//td/table[@class='table table-striped']/thead/tr/th/strong");
+		return driver.FindElementsByXPath(
+				"//table[@class='table table-striped']//td/table[@class='table table-striped']/thead/tr/th/strong");
 	}
+
 	public ElementCollection audioSearchTermResult() {
 		return driver.FindElementsByXPath("//td[text()='Audio']/parent::tr//span[@class='badge']");
 	}
+
 	public Element languagePackInSearchResult() {
 		return driver.FindElementByXPath("//span[@id='spnAudLang']");
 	}
+
 	public Element ConenetInSaerchResult() {
 		return driver.FindElementByXPath("//td[text()='Content & MetaData']/parent::tr//span[@class='badge']");
 	}
+
 	public Element gettingThresholdValue() {
 		return driver.FindElementByXPath("//span[@class='irs-single']");
 	}
-	
-	//Added by Aathith
+
+	// Added by Aathith
 	public Element getCurrentAudioButton() {
 		return driver.FindElementByXPath("(//button[@id='audio'])[last()]");
 	}
+
 	public Element getCurrentLanguageSelectButton() {
 		return driver.FindElementByXPath("(//select[@id='audioLanguage'])[last()]");
 	}
+
 	public Element get_Current_As_AudioText() {
 		return driver.FindElementByXPath("(//*[@id='xEdit']/li/input)[last()]");
 	}
+
 	public Element GetCurrentSliderConfidenceThreshold() {
 		return driver.FindElementByXPath("(//span[@class='irs-slider single'])[last()]");
 
 	}
+
 	public Element getCurrentPureHitsCount() {
 		return driver.FindElementByXPath("(//*[@id='001']/span/count)[last()]");
 	}
 
 	public Element getAdvancedSearchTextArea() {
-		return driver.FindElementByXPath("//textarea[@class='form-control input-large']");}
-	
+		return driver.FindElementByXPath("//textarea[@class='form-control input-large']");
+	}
+
 	public Element getRemoveAddBtn() {
-		return driver.FindElementByXPath("//i[@title='Remove from Selected Results']");}
+		return driver.FindElementByXPath("//i[@title='Remove from Selected Results']");
+	}
 
 	public Element getCurrentPureHitAddBtn() {
 		return driver.FindElementByXPath("(//*[@id='001']//i[contains(@class,'addTile')])[last()]");
 	}
+
+	public Element getSavedSearchNewGroupExpand() {
+		return driver.FindElementByXPath("// *[contains(@class,'clicked')]//preceding-sibling::i");
+	}
+
+	public Element getSavedSearchExpandStats() {
+		return driver.FindElementByXPath("//a[@class='jstree-anchor jstree-clicked']//parent::li");
+	}
+
 	public ElementCollection getRemovePureHits() {
 		return driver.FindElementsByXPath(
 				"//label[text()='Docs That Met Your Criteria']//..//..//..//i[@title='Remove from Selected Results']");
 	}
-	public SessionSearch(Driver driver) {
+
+  public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
 		base = new BaseClass(driver);
@@ -3942,7 +3966,7 @@ public class SessionSearch {
 	}
 
 	/**
-	 * @author Jayanthi.ganesan  Modidfied on-7/2/21
+	 * @author Jayanthi.ganesan Modidfied on-7/2/21
 	 * @param productionName
 	 * @throws InterruptedException
 	 * @description-This method selects the production under Work product-
@@ -5580,39 +5604,34 @@ public class SessionSearch {
 	 * @Stabilization - changes implemented
 	 */
 	public void saveSearchInNewNode(String searchName, String Node) throws InterruptedException {
+
 		// Stabilization changes
 		saveSearchAction();
 
 		// handle pop confirmation for regex and proximity queries
-		try {
-			if (getYesQueryAlert().isElementAvailable(8)) {
-				getYesQueryAlert().waitAndClick(8);
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
+		if (getYesQueryAlert().isElementAvailable(8)) {
+			getYesQueryAlert().waitAndClick(8);
 		}
 
+		// Radio button selection
 		try {
 			getSaveAsNewSearchRadioButton().waitAndClick(5);
 		} catch (Exception e) {
 			System.out.println("Radio button already selected");
 			base.stepInfo("Radio button already selected");
 		}
-		try {
-			if (getSavedSearch_MySearchesTabClosed().isElementAvailable(3)) {
-				getSavedSearch_MySearchesTabClosed().waitAndClick(3);
-			}
-		} catch (Exception e) {
+
+		// My saved search tab
+		if (getSavedSearch_MySearchesTabClosed().isElementAvailable(3)) {
+			getSavedSearch_MySearchesTabClosed().waitAndClick(3);
+		} else {
 			System.out.println("MY SavedSearch TAb dropdown Already CLicked");
-			base.stepInfo("MY SavedSearch TAb dropdown Already CLicked");
 		}
-		try {
-			if (getSavedSearch_MySearchesNewNode1(Node).isElementAvailable(3)) {
-				getSavedSearch_MySearchesNewNode1(Node).waitAndClick(3);
-			} else {
-				getSavedSearch_MySearchesTab().waitAndClick(10);
-			}
-		} catch (Exception e) {
+
+		// Node Selection
+		if (getSavedSearch_MySearchesNewNode1(Node).isElementAvailable(10)) {
+			getSavedSearch_MySearchesNewNode1(Node).waitAndClick(3);
+		} else {
 			getSavedSearch_MySearchesTab().waitAndClick(10);
 		}
 
@@ -6399,10 +6418,12 @@ public class SessionSearch {
 		}
 
 		if (getCreatedNode(nodeName).isElementAvailable(7)) {
+			System.out.println("On");
 			getCreatedNode(nodeName).waitAndClick(5);
 		} else {
-			getExpandCurrentNode().waitAndClick(5);
-			getCreatedNode(nodeName).Click();
+			System.out.println("To Expand");
+			getExpandCurrentNode().waitAndClick(20);
+			getCreatedNode(nodeName).waitAndClick(3);
 		}
 
 		driver.waitForPageToBeReady();
@@ -10063,8 +10084,8 @@ public class SessionSearch {
 		}
 	}
 
-public void advancedContentSearchConfigure(String SearchString) {
-		
+	public void advancedContentSearchConfigure(String SearchString) {
+
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -10081,89 +10102,99 @@ public void advancedContentSearchConfigure(String SearchString) {
 		getAdvancedContentSearchInputAudio().SendKeys(SearchString);
 
 	}
-public void validateAudioSearchResult(List<String>ExpectedResult,String ExpectedTermOperator,String ExpectedLanguagePack,String ExpectedLocationAudioFile,String ExpectedConfidenceThreshold) {
-		
+
+	public void validateAudioSearchResult(List<String> ExpectedResult, String ExpectedTermOperator,
+			String ExpectedLanguagePack, String ExpectedLocationAudioFile, String ExpectedConfidenceThreshold) {
+
 		driver.waitForPageToBeReady();
 		List<String> ActualResult = base.availableListofElements(audioSearchTermResult());
-		
-		for(int i=0;i<ExpectedResult.size();i++) {
-			
-		if(ActualResult.contains(ExpectedResult.get(i))) {
-			base.passedStep("The Expected Audio Search term '"+ExpectedResult.get(i)+"' is present in the Search Result");
-		}else {
-			base.failedMessage("The Expected Audio Search term '"+ExpectedResult.get(i)+"' is Not present in the Search Result");
+
+		for (int i = 0; i < ExpectedResult.size(); i++) {
+
+			if (ActualResult.contains(ExpectedResult.get(i))) {
+				base.passedStep("The Expected Audio Search term '" + ExpectedResult.get(i)
+						+ "' is present in the Search Result");
+			} else {
+				base.failedMessage("The Expected Audio Search term '" + ExpectedResult.get(i)
+						+ "' is Not present in the Search Result");
+			}
 		}
-		}
-		String actualTermOperator = gettingAudioSearchTableRowValues(base.getIndex(getAudioSearchTableHeaders(), "Term Operator".toUpperCase())).getText();
-		if(actualTermOperator.equalsIgnoreCase(ExpectedTermOperator)) {
-		base.passedStep("Term Operator displayed  in Search Result is "+actualTermOperator+" which is expected .");
-		}else {
+		String actualTermOperator = gettingAudioSearchTableRowValues(
+				base.getIndex(getAudioSearchTableHeaders(), "Term Operator".toUpperCase())).getText();
+		if (actualTermOperator.equalsIgnoreCase(ExpectedTermOperator)) {
+			base.passedStep(
+					"Term Operator displayed  in Search Result is " + actualTermOperator + " which is expected .");
+		} else {
 			base.failedStep("Term Operator in Search Result doesn't matches with the applied Term Operator");
 		}
-		String actualLanguagePack = gettingAudioSearchTableRowValues(base.getIndex(getAudioSearchTableHeaders(), "Language Pack / Dialect".toUpperCase())).getText();
-		
+		String actualLanguagePack = gettingAudioSearchTableRowValues(
+				base.getIndex(getAudioSearchTableHeaders(), "Language Pack / Dialect".toUpperCase())).getText();
+
 		softAssert.assertEquals(actualLanguagePack, ExpectedLanguagePack);
-		
-		String actualLocationAudioFile = gettingAudioSearchTableRowValues(base.getIndex(getAudioSearchTableHeaders(), "Location in Audio File".toUpperCase())).getText();
-		
+
+		String actualLocationAudioFile = gettingAudioSearchTableRowValues(
+				base.getIndex(getAudioSearchTableHeaders(), "Location in Audio File".toUpperCase())).getText();
+
 		softAssert.assertEquals(actualLocationAudioFile, ExpectedLocationAudioFile);
-		
-		String actualConfidenceThreshold = gettingAudioSearchTableRowValues(base.getIndex(getAudioSearchTableHeaders(), "Minimum Confidence Threshold".toUpperCase())).getText();
-		
+
+		String actualConfidenceThreshold = gettingAudioSearchTableRowValues(
+				base.getIndex(getAudioSearchTableHeaders(), "Minimum Confidence Threshold".toUpperCase())).getText();
+
 		softAssert.assertEquals(actualConfidenceThreshold, ExpectedConfidenceThreshold);
-		
+
 		softAssert.assertAll();
 		base.passedStep("Language pack in Search Result validated Successfully");
 		base.passedStep("Location in audio File in Search Result validated Successfully");
 		base.passedStep("Minimum Confidence Threshold in Search Result validated Successfully");
-		
-	}
-	
 
-public String configureAudioSearchBlock(String SearchString1, String SearchString2, String language, int threshold,
-		String operator,String location,String seconds) throws InterruptedException {
-	this.driver.getWebDriver().get(Input.url + "Search/Searches");
-	driver.waitForPageToBeReady();
-	getAdvancedSearchLink().Click();
-	base.waitForElement(getAs_Audio());	
-	getAs_Audio().waitAndClick(10);
-	base.waitForElement(getAs_AudioLanguage());
-	getAs_AudioLanguage().selectFromDropdown().selectByVisibleText(language);
-	// Enter search string
-	base.waitForElement( getAs_AudioText());
-	getAs_AudioText().SendKeys(SearchString1 + Keys.ENTER + SearchString2 + Keys.ENTER);
+	}
 
-	// Select term operator
-	getAudioTermOperator().selectFromDropdown().selectByVisibleText(operator);
-	// Select location
-	base.waitForElement(getAudioLocation());	
-	if(location.equalsIgnoreCase("Entire Audio File")) {
-	getAudioLocation().selectFromDropdown().selectByVisibleText(location);
-	}else if(location.equalsIgnoreCase("Within:")) {
-		getAudioLocation().selectFromDropdown().selectByVisibleText(location);
-		getAudioTimeDiff().SendKeys(seconds);
+	public String configureAudioSearchBlock(String SearchString1, String SearchString2, String language, int threshold,
+			String operator, String location, String seconds) throws InterruptedException {
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		getAdvancedSearchLink().Click();
+		base.waitForElement(getAs_Audio());
+		getAs_Audio().waitAndClick(10);
+		base.waitForElement(getAs_AudioLanguage());
+		getAs_AudioLanguage().selectFromDropdown().selectByVisibleText(language);
+		// Enter search string
+		base.waitForElement(getAs_AudioText());
+		getAs_AudioText().SendKeys(SearchString1 + Keys.ENTER + SearchString2 + Keys.ENTER);
+
+		// Select term operator
+		getAudioTermOperator().selectFromDropdown().selectByVisibleText(operator);
+		// Select location
+		base.waitForElement(getAudioLocation());
+		if (location.equalsIgnoreCase("Entire Audio File")) {
+			getAudioLocation().selectFromDropdown().selectByVisibleText(location);
+		} else if (location.equalsIgnoreCase("Within:")) {
+			getAudioLocation().selectFromDropdown().selectByVisibleText(location);
+			getAudioTimeDiff().SendKeys(seconds);
+		}
+		// select threshold
+		Actions action = new Actions(driver.getWebDriver());
+		action.clickAndHold(GetSliderConfidenceThreshold().getWebElement());
+		action.moveToElement(GetSliderConfidenceThreshold().getWebElement(), threshold, 0);
+		action.release();
+		action.build().perform();
+		GetSliderConfidenceThreshold().Click();
+		base.waitTime(2);
+		String[] thresholdValue = gettingThresholdValue().getText().split(" ");
+		String thresholdValue1 = thresholdValue[0];
+		return thresholdValue1;
 	}
-	// select threshold
-	Actions action = new Actions(driver.getWebDriver());
-	action.clickAndHold(GetSliderConfidenceThreshold().getWebElement());
-	action.moveToElement(GetSliderConfidenceThreshold().getWebElement(), threshold, 0);
-	action.release();
-	action.build().perform();
-	GetSliderConfidenceThreshold().Click();
-	base.waitTime(2);
-	String[] thresholdValue = gettingThresholdValue().getText().split(" ");
-	String thresholdValue1=thresholdValue[0];
-	return thresholdValue1;
-	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
 	public void addNewSearch() {
-	driver.scrollPageToTop();
-	base.waitTillElemetToBeClickable(getSelectNewSearchbtn());
-	getSelectNewSearchbtn().waitAndClick(10);
-	base.stepInfo("new search window is added");
+		driver.scrollPageToTop();
+		base.waitTillElemetToBeClickable(getSelectNewSearchbtn());
+		getSelectNewSearchbtn().waitAndClick(10);
+		base.stepInfo("new search window is added");
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param SearchString
@@ -10174,8 +10205,7 @@ public String configureAudioSearchBlock(String SearchString1, String SearchStrin
 	 */
 	public int newAudioSearchThreshold(String SearchString, String language, String ThresholdValue)
 			throws InterruptedException {
-		
-		
+
 		base.waitForElement(getCurrentAudioButton());
 		getCurrentAudioButton().ScrollTo();
 		getCurrentAudioButton().waitAndClick(10);
@@ -10207,9 +10237,9 @@ public String configureAudioSearchBlock(String SearchString1, String SearchStrin
 				return getCurrentPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait90);
-		
+
 		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
-		
+
 		String ActualThresholdValue = GetConfidenceThresholdInSearchResult().getText();
 		System.out.println(
 				"Audio Search is done for " + SearchString + " and Theshold value is : " + ActualThresholdValue);
@@ -10217,6 +10247,7 @@ public String configureAudioSearchBlock(String SearchString1, String SearchStrin
 
 		return pureHit;
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param SearchString
@@ -10225,7 +10256,6 @@ public String configureAudioSearchBlock(String SearchString1, String SearchStrin
 	 */
 	public int newAudioSearch(String SearchString, String language) {
 
-		
 		base.waitForElement(getCurrentAudioButton());
 		getCurrentAudioButton().waitAndClick(10);
 
@@ -10252,16 +10282,16 @@ public String configureAudioSearchBlock(String SearchString1, String SearchStrin
 		return pureHit;
 
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
 	public void ViewInDocViewWithoutPureHit() throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 
-		
-			System.out.println("Pure hit block already moved to action panel");
-			UtilityLog.info("Pure hit block already moved to action panel");
-			
+		System.out.println("Pure hit block already moved to action panel");
+		UtilityLog.info("Pure hit block already moved to action panel");
+
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -10279,14 +10309,15 @@ public String configureAudioSearchBlock(String SearchString1, String SearchStrin
 		UtilityLog.info("Navigated to docView to view docs");
 
 	}
-	/**
 
+	/**
+	 * 
 	 * @Author :Brundha
 	 * @Description :Method to modify audio search
 	 */
 
-public int modifyAdvanceSearch(String option,String SearchString) throws InterruptedException {
-	
+	public int modifyAdvanceSearch(String option, String SearchString) throws InterruptedException {
+
 		base.waitTillElemetToBeClickable(getModifyASearch());
 		getModifyASearch().waitAndClick(10);
 		base.waitTillElemetToBeClickable(getQueryFromTextBox());
@@ -10319,9 +10350,10 @@ public int modifyAdvanceSearch(String option,String SearchString) throws Interru
 		UtilityLog.info("Serach is done and PureHit is : " + pureHit);
 
 		return pureHit;
-	
-}
-/**
+
+	}
+
+	/**
 	 * @author Aathith.Senthilkumar
 	 */
 	public void addPureHit() {
@@ -10329,12 +10361,12 @@ public int modifyAdvanceSearch(String option,String SearchString) throws Interru
 		getCurrentPureHitAddBtn().waitAndClick(10);
 		base.stepInfo("purehit added to shop cart");
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
-	public int newAudioSearch(String SearchString1,String SearchString2,String SearchString3, String language) {
+	public int newAudioSearch(String SearchString1, String SearchString2, String SearchString3, String language) {
 
-		
 		base.waitForElement(getCurrentAudioButton());
 		getCurrentAudioButton().waitAndClick(10);
 
@@ -10342,7 +10374,7 @@ public int modifyAdvanceSearch(String option,String SearchString) throws Interru
 		getCurrentLanguageSelectButton().selectFromDropdown().selectByVisibleText(language);
 		// Enter seatch string
 		base.waitForElement(get_Current_As_AudioText());
-		get_Current_As_AudioText().SendKeys(SearchString1 + Keys.ENTER + SearchString2 + Keys.ENTER+ SearchString3);
+		get_Current_As_AudioText().SendKeys(SearchString1 + Keys.ENTER + SearchString2 + Keys.ENTER + SearchString3);
 
 		// Click on Search button
 		getAdvanceSearch_btn_Current().Click();
@@ -10355,16 +10387,18 @@ public int modifyAdvanceSearch(String option,String SearchString) throws Interru
 		}), Input.wait90);
 
 		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
-		System.out.println("Audio Search is done for " + SearchString1 +  SearchString2 + SearchString3+" and PureHit is : " + pureHit);
-		UtilityLog.info("Audio Search is done for " + SearchString1 +  SearchString2 + SearchString3+" and PureHit is : " + pureHit);
+		System.out.println("Audio Search is done for " + SearchString1 + SearchString2 + SearchString3
+				+ " and PureHit is : " + pureHit);
+		UtilityLog.info("Audio Search is done for " + SearchString1 + SearchString2 + SearchString3
+				+ " and PureHit is : " + pureHit);
 
 		return pureHit;
 
 	}
-	public int newAudioSearchThreshold(String SearchString1, String SearchString2 ,String SearchString3 ,String language, String ThresholdValue)
-			throws InterruptedException {
-		
-		
+
+	public int newAudioSearchThreshold(String SearchString1, String SearchString2, String SearchString3,
+			String language, String ThresholdValue) throws InterruptedException {
+
 		base.waitForElement(getCurrentAudioButton());
 		getCurrentAudioButton().ScrollTo();
 		getCurrentAudioButton().waitAndClick(10);
@@ -10394,8 +10428,9 @@ public int modifyAdvanceSearch(String option,String SearchString) throws Interru
 		GetCurrentSliderConfidenceThreshold().Click();
 		// Enter search string
 		base.waitForElement(get_Current_As_AudioText());
-		get_Current_As_AudioText().SendKeys(SearchString1 + Keys.ENTER + SearchString2 + Keys.ENTER + SearchString3 + Keys.ENTER);
-		base.stepInfo("Entered a text in search text box" + SearchString1+SearchString2+SearchString3);
+		get_Current_As_AudioText()
+				.SendKeys(SearchString1 + Keys.ENTER + SearchString2 + Keys.ENTER + SearchString3 + Keys.ENTER);
+		base.stepInfo("Entered a text in search text box" + SearchString1 + SearchString2 + SearchString3);
 		base.waitForElement(getAdvanceSearch_btn_Current());
 		getAdvanceSearch_btn_Current().Click();
 
@@ -10406,11 +10441,12 @@ public int modifyAdvanceSearch(String option,String SearchString) throws Interru
 			}
 		}), Input.wait90);
 		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
-		
+
 		String ActualThresholdValue = GetConfidenceThresholdInSearchResult().getText();
-		System.out.println(
-				"Audio Search is done for " + SearchString1 + SearchString2 + SearchString3 +" and Theshold value is : " + ActualThresholdValue);
-		base.stepInfo("Audio Search is done for " + SearchString1 + SearchString2 + SearchString3 +" and Threshold value is : " + ActualThresholdValue);
+		System.out.println("Audio Search is done for " + SearchString1 + SearchString2 + SearchString3
+				+ " and Theshold value is : " + ActualThresholdValue);
+		base.stepInfo("Audio Search is done for " + SearchString1 + SearchString2 + SearchString3
+				+ " and Threshold value is : " + ActualThresholdValue);
 
 		return pureHit;
 	}
