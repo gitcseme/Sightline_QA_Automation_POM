@@ -1138,7 +1138,8 @@ public class BatchRedactionPage {
 	}
 
 	/**
-	 * @author Jeevitha
+	 * @author Jeevitha    @Modified By jeevitha @Modified date : 14/2/2022
+	 * @Description : perform Rollback and verify Rollback Success
 	 * @param searchName
 	 * @param select
 	 */
@@ -1149,6 +1150,7 @@ public class BatchRedactionPage {
 		base.waitForElement(getRollbackbtn(searchName));
 		getRollbackbtn(searchName).waitAndClick(10);
 
+		base.waitTime(10);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getPopupYesBtn().Visible();
@@ -1160,7 +1162,7 @@ public class BatchRedactionPage {
 			base.passedStep(actual);
 		}
 
-		if (select == "Yes") {
+		if (select.equalsIgnoreCase("Yes") ){
 			getPopupYesBtn().waitAndClick(20);
 
 			String ExpectedMsg = "Your request to Roll Back this Batch Redaction has been added to the background.  Once it is complete, the \"bullhorn\" icon in the upper right hand corner will turn red to notify you of the results of your request.";
@@ -1177,7 +1179,7 @@ public class BatchRedactionPage {
 			}), Input.wait120);
 			System.out.println(getRollbackMsg(searchName).getText());
 			base.stepInfo(getRollbackMsg(searchName).getText());
-		} else if (select == "No") {
+		} else if (select.equalsIgnoreCase("No")) {
 			getPopupNoBtn().waitAndClick(20);
 			System.out.println("ROllback is not Perfomed");
 		}
