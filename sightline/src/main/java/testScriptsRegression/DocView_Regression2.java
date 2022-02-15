@@ -3904,6 +3904,33 @@ public class DocView_Regression2 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51953
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =56)
+	public void verifyMessageForHiddenContentDocsFromDocNavigation(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51953");
+		baseClass.stepInfo("Verify that on doc-to-doc navigation if document loads with hidden content then should display the warning message to indicate that document is having hidden content");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.TextHidden);
+		sessionsearch.ViewInDocView();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardNextDocBtn());
+		docViewRedact.forwardNextDocBtn().waitAndClick(5);
+		baseClass.stepInfo("navigated to Document with hidden content");
+		driver.waitForPageToBeReady();	
+		baseClass.VerifyWarningMessage(expectedMessage1);
+		if(docViewRedact.hiddenInfoIcon().isDisplayed()) {
+			baseClass.passedStep("The hidden info icon is present in the docViewr to indicate hidden content");
+		} else {
+			baseClass.failedStep("The hidden info icon is NOT present in the docViewr to indicate hidden content");
+		}
+	}
+	
 	
 
 
