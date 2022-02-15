@@ -57,7 +57,7 @@ public class CustomDocumentDataReport_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		// Input in = new Input();
+		//Input in = new Input();
 		// in.loadEnvConfig();
 
 		// Open browser
@@ -79,7 +79,39 @@ public class CustomDocumentDataReport_Regression1 {
 		lp.quitBrowser();
 
 	}
-
+/**
+ * @author Jayanthi.ganesan
+ * @param username
+ * @param password
+ * @param role
+ */
+	@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 0)
+	public void navigateToExportReport(String username, String password, String role) {
+		bc.stepInfo("Test case Id: RPMXCON-56390");
+		bc.stepInfo("To verify that User is able view Custom Document Data Report");
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(username, password);
+		bc.stepInfo("Logged in as -" + role);
+        driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+    	CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+        String expectedURL=Input.url+"Report/ExportData";
+        bc.waitForElement(cddr.getCustomDocumentDataReport());
+        SoftAssert    softAssertion = new SoftAssert();
+        if(cddr.getCustomDocumentDataReport().isDisplayed()) {
+        	bc.passedStep("Custom Document Data  Report link is displayed in reports landing Page");
+        	cddr.getCustomDocumentDataReport().Click();
+            driver.waitForPageToBeReady();
+            bc.stepInfo("Clicked on Custom Document Data  Report link.");
+            softAssertion.assertEquals(expectedURL,driver.getUrl());
+            softAssertion.assertAll();
+            bc.passedStep("***Sucessfully navigated to  Export Page***");   	
+        }
+        else
+        {
+        	bc.failedStep("Custom Document Data  Report link is not found in Reports landing page.");
+        }
+        
+    }
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param username
