@@ -2542,6 +2542,57 @@ public class DocView_Regression3 {
 	}
 	
 	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA 
+	 * @TestCase_id : 52000 - Verify the automatically selected redaction tag when shared annotation layer with unshared redaction tags in security groups and all propagated documents are not released to security groups.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 23)
+	public void verifySharedAnnotationLayerWithUnsharedRedactionTag() throws Exception {
+		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		namesg2 = Input.randomText + Utility.dynamicNameAppender();
+		namesg3 = Input.randomText + Utility.dynamicNameAppender();
+		String Redactiontag1 = Input.randomText + Utility.dynamicNameAppender();
+		docExp = new DocExplorerPage(driver);
+		docView = new DocViewPage(driver);
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52000");
+		utility = new Utility(driver);
+		loginPage = new LoginPage(driver);
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		Reporter.log("Logged in as User: " + Input.pa2userName);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		baseClass.stepInfo(
+				"#### Verify the automatically selected redaction tag when shared annotation layer with unshared redaction tags in security groups and all propagated documents are not released to security groups ####");
+
+		RedactionPage redactionpage = new RedactionPage(driver);
+		
+		baseClass.stepInfo("Navigate to redaction tag page");
+		redactionpage.navigateToRedactionsPageURL();
+		
+		baseClass.stepInfo("Create redaction tag");
+		redactionpage.manageRedactionTagsPage(Redactiontag1);
+
+		// creating two new security groups and adding annotation layer
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.AddSecurityGroup(namesg2);
+		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
+		driver.scrollPageToTop();
+		securityGroupsPage.AddSecurityGroup(namesg3);
+
+		// Creating annotation layer and assigning to newly created SGs
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+		
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+    
+/**
 	 * @Author : Steffy Created date: NA Modified date: NA Modified by:NA
 	 * @TestCase id : RPMXCON- 51543 -Verify that when two different users under
 	 *           different security group sharing annotation layer adds/edit/delete
@@ -2592,11 +2643,63 @@ public class DocView_Regression3 {
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 		baseClass.CloseSuccessMsgpopup();
 
+		
+		securityGroupsPage.selectSecurityGroup(namesg2);
+
+		securityGroupsPage.clickOnReductionTagAndSelectReduction(Redactiontag1);
+		baseClass.CloseSuccessMsgpopup();
+		securityGroupsPage.selectSecurityGroup(namesg3);
+		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+		baseClass.CloseSuccessMsgpopup();
+
+		sessionsearch = new SessionSearch(driver);
+
+
 		baseClass.stepInfo("Docs are released to both security groups");
+
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		docViewRedact.selectsecuritygroup(namesg2);
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		
+		baseClass.stepInfo("Click on Redaction Icon");
+		docViewRedact.clickingRedactionIcon();
+		driver.waitForPageToBeReady();
+		
+		baseClass.stepInfo("Perform This Page Redaction");
+		docViewRedact.performThisPageRedaction(Redactiontag1);
+
+		docViewRedact.selectsecuritygroup(namesg3);
+
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		
+		baseClass.stepInfo("Click on Redaction Icon");
+		docViewRedact.clickingRedactionIcon();
+		driver.waitForPageToBeReady();
+		
+		baseClass.stepInfo("Click on page redaction");
+		docViewRedact.thisPageRedaction().isElementAvailable(10);
+		docViewRedact.thisPageRedaction().Click();
+		
+		baseClass.stepInfo("Verify First Option Of Redaction From Dropdown");
+		docView.verifyFirstOptionOfRedactionFromDropdown(Input.defaultRedactionTag);
+
+		loginPage.logout();
+		loginPage.quitBrowser();
+		LoginPage.clearBrowserCache();
+	}
+
 
 		baseClass.stepInfo("Access has been given to RMU and Rev to these security groups");
 		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu1userName);
@@ -2655,6 +2758,7 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Verify remark delete is not displayed for existing remarks");
 		docView.verifyReviewRemarkActionPanel("Delete", remark);
 	}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void close() throws ParseException, InterruptedException, IOException {

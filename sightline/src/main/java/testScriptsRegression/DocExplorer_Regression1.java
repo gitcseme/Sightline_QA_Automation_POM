@@ -422,6 +422,26 @@ public class DocExplorer_Regression1 {
 				
 			}
 	
+			/**
+			 * @author Gopinath
+			 * @TestCase Id:RPMXCON-54593 Verify that correct count should be displayed for each node from the tree structure
+			 * @Description:To Verify that correct count should be displayed for each node from the tree structure
+			 */
+			@Test
+			public void verifyDocExplorerDocCount() {
+				String folderNumber="13";//having more docs for better verification
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-54593");
+				baseClass.stepInfo("###Verify that correct count should be displayed for each node from the tree structure###");
+				docexp = new DocExplorerPage(driver);
+				
+				baseClass.stepInfo("Navigating to DocExplorer page");
+				docexp.navigateToDocExplorerPage();
+				
+				baseClass.stepInfo("verifying the count of documents of folder in tree strecture");
+				docexp.verifyDOcExplorerFolderDocCount(folderNumber);
+				
+			}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

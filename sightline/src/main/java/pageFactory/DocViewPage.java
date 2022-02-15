@@ -3105,6 +3105,11 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//i[@class='fa fa-angle-right']");
 	}
 
+	
+	//Added by Gopinath - 14/02/2022
+	public Element selectRedactionTag() {
+		return driver.FindElementByXPath("//select[@id='ddlRedactionTagsForPopup']/option[@selected]");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -24671,6 +24676,30 @@ public class DocViewPage {
 
 	}
 	
+
+	/**
+	 * @author Gopinath
+	 * @description: method to verify first option of select redaction tag drop down.
+	 * @param redactionTag : redactionTag is String value that redaction tag from drop down.
+	 */
+	public void verifyFirstOptionOfRedactionFromDropdown(String redactionTag) {
+		try {
+			driver.waitForPageToBeReady();
+			selectRedactionTag().isElementAvailable(10);
+			String selectedRedactionTag = selectRedactionTag().getText().trim();
+			if(redactionTag.equalsIgnoreCase(selectedRedactionTag)) {
+				base.passedStep(redactionTag+" -- redaction tag first option from select redaction dropdown is selected successfully");
+			}else {
+				base.failedStep(redactionTag+" -- redaction tag first option from select redaction dropdown is not selected");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying first option of select redaction tag drop down." + e.getMessage());
+
+		}
+	}
+
+
 	public void verifyDocsPresentWithPersistentHits(String searchstring) throws InterruptedException {
 		String persistentterm=getPersistentHit(searchstring);
 		if(persistentterm.contains(searchstring) && get_textHighlightedColor().isDisplayed()) {
@@ -24680,5 +24709,6 @@ public class DocViewPage {
 			base.failedStep("Documents are not present with the persistent hits");
 		}
 	}
+
 }
 
