@@ -3834,6 +3834,7 @@ public class DocView_Regression2 {
 		loginPage.logout();
 		}
 	
+
 	/*  
      *Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51729
 	 * Description :Verify that persistent hits should be highlighted when documents are assigned to existing assignment from Advanced Search > Doc List
@@ -3848,8 +3849,7 @@ public class DocView_Regression2 {
 		DocListPage docList = new DocListPage(driver);
 		
 		String assignmentName = "Atestassignment"+utility.dynamicNameAppender();
-	
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+  	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51729");
 		baseClass.stepInfo("Verify that persistent hits should be highlighted when documents are assigned to existing assignment from Advanced Search");
 		assignPage.createAssignment(assignmentName, Input.codeFormName);
@@ -3871,6 +3871,43 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Select assigned assignment and Navigated to docview");
 		docView.verifyDocsPresentWithPersistentHits(Input.testData1);
 	}
+	
+
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51960
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =55)
+	public void verifyHiddenContentDocswhileSwitchingViews(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
+		String expectedMessage2 = "Hidden Rows;Protected Workbook";
+		String expectedMessage3 = "Protected Excel Workbook";
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51960");
+		baseClass.stepInfo("Verify that on tabs navigation if document loads with hidden content then should display the warning message to indicate that document is having hidden content");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.DocIdWithHiddenContent);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();	
+		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
+		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesIconDocView());
+		docViewRedact.imagesIconDocView().waitAndClick(2);
+		baseClass.stepInfo("Navigated to images tab");
+		docViewRedact.defaultViewTab().waitAndClick(3);
+		baseClass.stepInfo("Navigated back to default/Native tab");
+		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);	
+		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
+		docViewRedact.hiddenInfoIcon().waitAndClick(5);
+		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);	
+		loginPage.logout();
+	}
+	
+	
+
+
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
