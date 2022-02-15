@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.Set;
 
+import org.openqa.selenium.support.Color;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -104,7 +105,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @description: To verify that user can select document in the Threaded map panel and view in the doc list when redirects from Manage Assignment > Doc View.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = false, groups = { "regression" }, priority = 1)
 	public void verifyUserCanSelectDocsFromThreadMapAndViewInDocList() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -160,7 +161,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * or saving 'Code same as this' action from analytics panel > Thread map 'RPMXCON-50917' Sprint 9
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 2) 
+	@Test(enabled = false, groups = { "regression" }, priority = 2) 
 	public void verifyWarningMsgWhenUserClicksLeftMenuForThreadMap() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -329,7 +330,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * saving 'Code same as this' action from analytics panel > Family Members 'RPMXCON-50918' Sprint 9
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 3) 
+	@Test(enabled = false, groups = { "regression" }, priority = 3) 
 	public void verifyWarningMsgWhenUserClicksLeftMenuForFamilyMember() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -502,7 +503,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * saving 'Code same as this' action from analytics panel >Conceptual 'RPMXCON-50919' Sprint 9
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 4) 
+	@Test(enabled = false, groups = { "regression" }, priority = 4) 
 	public void verifyWarningMsgWhenUserClicksLeftMenuForConceptual() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -678,7 +679,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = false, groups = { "regression" }, priority = 5)
 	public void verifyNotViewAnalyticalPanelDocViewOffFromAssigment() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50859");
@@ -727,7 +728,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = false, groups = { "regression" }, priority = 6)
 	public void verifyAfterImpersonatingSelectDocInFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50813");
@@ -773,7 +774,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-    @Test(enabled = true, groups = { "regression" }, priority = 7)
+    @Test(enabled = false, groups = { "regression" }, priority = 7)
 	public void verifyProjectNoFamilyMemberTab() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50814");
@@ -833,7 +834,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 8)
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 8)
 	public void verifySelectDocsInFolderFromConceptalSimilarTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -873,7 +874,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = false, groups = { "regression" }, priority = 9)
 	public void verifySelectMultipleDocsCodeSameAsThreadMapTab() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51127");
@@ -949,7 +950,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 10)
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 10)
 	public void verifySelectDocsInFolderFromNearDupeTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -1004,7 +1005,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	@Test(enabled = false, groups = { "regression" }, priority = 11)
 	public void verifySelectMultipleDocsFolderFamilyMemberTab() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50818");
@@ -1053,7 +1054,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = false, groups = { "regression" }, priority = 12)
 	public void verifyThereAreNoDocsInConceptualSimilartab() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50830");
@@ -1115,7 +1116,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = false, groups = { "regression" }, priority = 13)
 	public void verifyAfterImpersonatingSelectDocsViewConceptualSimilarTab() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50829");
@@ -1207,7 +1208,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(enabled = false, groups = { "regression" }, priority = 14)
 	public void verifyAfterImpersonatingSelectDocsViewFamilyMemberTab() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50812");
@@ -1278,7 +1279,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 15)
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 15)
 	public void verifyPaginationInNearDupeChildWindow(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -1300,7 +1301,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
-		sessionSearch.basicContentSearch("DupeCount:[1 TO 10000]");
+		sessionSearch.basicContentSearch(Input.highlightedDocsQuery);
 		sessionSearch.ViewNearDupeDocumentsInDocView();
 		
 		//NearDupe Child Window Pagination
@@ -1308,6 +1309,537 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		
 		loginPage.logout();
 	}
+	
+
+	/**
+	 * Author : Mohan date: 14/02/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48778 
+	 * @description:Verify that the text difference in the Near Dupe window must always highlight differences from the original. 'RPMXCON-48778' Sprint 12
+	 */
+
+	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 16) 
+	public void verifyHighlightingTextInNearDupeComparisonWindowWithBasicSearch(String fullName, String userName, String password) throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		
+		// login 
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage  with " + fullName + "");
+		baseClass.stepInfo("Test case id : RPMXCON-48778");
+		baseClass.stepInfo("Verify that the text difference in the Near Dupe window must always highlight differences from the original.");
+		
+		String docId =Input.highlightDocId;
+		
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 3: Search for documents to get the near dupe documents and drag the result to shopping cart, select action as View in Doc View");
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.highlightedDocsQuery);
+		sessionSearch.ViewInDocView();
+		
+		
+		baseClass.stepInfo("Step 4: View the document from mini doc list having near dupe documents");
+		docView = new DocViewPage(driver);
+		docView.selectDocIdInMiniDocList(docId);
+		String parentWindowID  =driver.getWebDriver().getWindowHandle();
+		
+		
+		baseClass.stepInfo("Step 5: From Analytics panel > Near Dupe window click the icon");
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_NearDupeTab());
+		docView.getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_NearDupeIcon());
+		docView.getDocView_NearDupeIcon().waitAndClick(10);
+
+		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
+			driver.switchTo().window(winHandle);
+			driver.waitForPageToBeReady();
+		}
+
+		
+			
+			for (int i = 1; i <=3; i++) {
+				if (docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+					System.out.println("Comparison Window is Ready to perform next steps");
+					break;
+				}
+				else {
+					driver.Navigate().refresh();
+				}
+			}
+				
+		baseClass.stepInfo("Step 6: Verify the different highlighting from Original and Near Dupe panel of near dupe comparison window");;
+		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+		String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+		System.out.println(docidinchildwinodw);
+		
+		String color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
+		String hex2 = Color.fromString(color).asHex();
+		System.out.println(hex2);
+		baseClass.passedStep("Near Dupe comparison window is opened and the differences highlighted on the near dupe comparison window");
+		
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		
+		loginPage.logout();
+		
+		
+	}
+	
+	/**
+	 * Author : Mohan date: 14/02/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51102 
+	 * @description:Verify user will be able to see the differences in two documents in the near dupe window outside of an assignment 'RPMXCON-51102' Sprint 12
+	 */
+
+	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 17) 
+	public void verifyHighlightingTextInNearDupeComparisonWindowWithSavedSearch(String fullName, String userName, String password) throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		
+		
+		// login
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo("User successfully logged into slightline webpage  with " + fullName + "");
+		baseClass.stepInfo("Test case id : RPMXCON-51102");
+		baseClass.stepInfo(
+				"Verify user will be able to see the differences in two documents in the near dupe window outside of an assignment");
+		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
+		String docId =Input.highlightDocId;
+		
+		//Saved Search and select the pure hit count
+		baseClass.stepInfo(
+				"Step 2: Go to doc view from basic search/saved search/doc list   Note: Search for the document to get the near dupe result");
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.highlightedDocsQuery);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch = new SavedSearch(driver);
+		savedSearch.savedSearchToDocView(saveName);
+		baseClass.stepInfo("Saved query is selected and viewed in the Docview successfully");
+		
+		baseClass.stepInfo("Step 3: View the document from mini doc list having near dupe documents");
+		docView = new DocViewPage(driver);
+		docView.selectDocIdInMiniDocList(docId);
+		String parentWindowID  =driver.getWebDriver().getWindowHandle();
+		
+		
+		baseClass.stepInfo("Step 4&5: Click Near Dupe tab from analytical panel and Click the page icon to open the near dupe window");
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_NearDupeTab());
+		docView.getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_NearDupeIcon());
+		docView.getDocView_NearDupeIcon().waitAndClick(10);
+
+		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
+			driver.switchTo().window(winHandle);
+			driver.waitForPageToBeReady();
+		}
+
+		
+			
+			for (int i = 1; i <=3; i++) {
+				if (docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+					System.out.println("Comparison Window is Ready to perform next steps");
+					break;
+				}
+				else {
+					driver.Navigate().refresh();
+				}
+			}
+				
+		baseClass.stepInfo("Step 6: Verify the near dupe window");;
+		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+		String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+		System.out.println(docidinchildwinodw);
+		
+		String color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
+		String hex2 = Color.fromString(color).asHex();
+		System.out.println(hex2);
+		baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
+		
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		
+		loginPage.logout();
+		
+		
+	
+	
+	}
+	
+	/**
+	 * @Author : Mohan date: 14/02/2022 Modified date: NA Modified by: NA
+	 * @Description : Verify user after impersonation will be able to see the differences in two documents in the near dupe window outside of an assignment 'RPMXCON-51121'
+	 * @Stabilization - done
+	 */
+	
+	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 18)
+	public void verifyUserAfterImpersonationDifferenceInTwoDocs(String roll,String userName, String password,String impersonate) throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-51121");
+		baseClass.stepInfo("Verify user after impersonation will be able to see the differences in two documents in the near dupe window outside of an assignment");
+		
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(userName, password);
+		switch (impersonate) {
+		case "rmu":
+			if (roll.equalsIgnoreCase("sa")&& impersonate.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateSAtoRMU();
+			}
+			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonatePAtoRMU();
+			} 
+				
+		case "rev":
+			if (roll.equalsIgnoreCase("sa")&& impersonate.equalsIgnoreCase("rev")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateSAtoReviewer();
+			}
+			if (roll.equalsIgnoreCase("pa")&& impersonate.equalsIgnoreCase("rev")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonatePAtoReviewer();
+			} 
+			if (roll.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateRMUtoReviewer();
+			}
+		}
+		
+		if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")
+				|| roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")||roll.equalsIgnoreCase("rmu")) {
+			driver.waitForPageToBeReady();
+			String docId =Input.highlightDocId;
+			// Basic Search and select the pure hit count
+			baseClass.stepInfo("Step 3: Go to doc view from basic search/saved search/doc list   Note: Search for the document to get the near dupe result");
+			sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.highlightedDocsQuery);
+			sessionSearch.ViewInDocView();
+			
+			
+			baseClass.stepInfo("Step 4: View the document from mini doc list having near dupe documents");
+			docView = new DocViewPage(driver);
+			docView.selectDocIdInMiniDocList(docId);
+			String parentWindowID  =driver.getWebDriver().getWindowHandle();
+			
+			
+			baseClass.stepInfo("Step 5: Click Near Dupe tab from analytical panel");
+			Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+			for (String eachId : allWindowsId) {
+				if (!parentWindowID.equals(eachId)) {
+					driver.switchTo().window(eachId);
+				}
+			}
+			
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(docView.getDocView_Analytics_NearDupeTab());
+			docView.getDocView_Analytics_NearDupeTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(docView.getDocView_NearDupeIcon());
+			docView.getDocView_NearDupeIcon().waitAndClick(10);
+
+			for (String winHandle : driver.getWebDriver().getWindowHandles()) {
+				driver.switchTo().window(winHandle);
+				driver.waitForPageToBeReady();
+			}
+
+			
+				
+				for (int i = 1; i <=3; i++) {
+					if (docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+						System.out.println("Comparison Window is Ready to perform next steps");
+						break;
+					}
+					else {
+						driver.Navigate().refresh();
+					}
+				}
+					
+			baseClass.stepInfo("Step 6: Verify the near dupe window");;
+			docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+			String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+			System.out.println(docidinchildwinodw);
+			
+			String color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
+			String hex2 = Color.fromString(color).asHex();
+			System.out.println(hex2);
+			baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
+			
+			driver.getWebDriver().close();
+			driver.switchTo().window(parentWindowID);
+			
+			
+		}
+
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Mohan date: 14/02/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51122 
+	 * @description: Verify user will be able to see the differences in two documents in the near dupe window in context of an assignment 'RPMXCON-51122' Sprint 12
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 19) 
+	public void verifyDifferenceInTwoDocsNearDupeWindowInContextAnAssignment() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case id : RPMXCON-51122");
+		baseClass.stepInfo("Verify user will be able to see the differences in two documents in the near dupe window in context of an assignment");
+		
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String docId =Input.highlightDocId;
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		sessionSearch.basicContentSearch(Input.highlightedDocsQuery);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.assignmentDistributingToReviewer();
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		
+		baseClass.stepInfo("Step 4: View the document from mini doc list having near dupe documents");
+		docView = new DocViewPage(driver);
+		docView.selectDocIdInMiniDocList(docId);
+		String parentWindowID  =driver.getWebDriver().getWindowHandle();
+		
+		
+		baseClass.stepInfo("Step 5: Click Near Dupe tab from analytical panel");
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_NearDupeTab());
+		docView.getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_NearDupeIcon());
+		docView.getDocView_NearDupeIcon().waitAndClick(10);
+
+		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
+			driver.switchTo().window(winHandle);
+			driver.waitForPageToBeReady();
+		}
+
+		
+			
+			for (int i = 1; i <=3; i++) {
+				if (docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+					System.out.println("Comparison Window is Ready to perform next steps");
+					break;
+				}
+				else {
+					driver.Navigate().refresh();
+				}
+			}
+				
+		baseClass.stepInfo("Step 6: Verify the near dupe window");;
+		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+		String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+		System.out.println(docidinchildwinodw);
+		
+		String color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
+		String hex2 = Color.fromString(color).asHex();
+		System.out.println(hex2);
+		baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
+		
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		
+		loginPage.logout();
+		
+		// Login as REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
+		
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		
+		baseClass.stepInfo("Step 4: View the document from mini doc list having near dupe documents");
+		docView = new DocViewPage(driver);
+		docView.selectDocIdInMiniDocList(docId);
+		parentWindowID  =driver.getWebDriver().getWindowHandle();
+		
+		
+		baseClass.stepInfo("Step 5: Click Near Dupe tab from analytical panel");
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_NearDupeTab());
+		docView.getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_NearDupeIcon());
+		docView.getDocView_NearDupeIcon().waitAndClick(10);
+
+		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
+			driver.switchTo().window(winHandle);
+			driver.waitForPageToBeReady();
+		}
+
+		
+			
+			for (int i = 1; i <=3; i++) {
+				if (docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+					System.out.println("Comparison Window is Ready to perform next steps");
+					break;
+				}
+				else {
+					driver.Navigate().refresh();
+				}
+			}
+				
+		baseClass.stepInfo("Step 6: Verify the near dupe window");;
+		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+		docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+		System.out.println(docidinchildwinodw);
+		
+		color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
+		hex2 = Color.fromString(color).asHex();
+		System.out.println(hex2);
+		baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
+		
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		
+		loginPage.logout();
+
+		
+		
+	}
+	
+	
+	/**
+	 * Author : Mohan date: 14/02/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51173 
+	 * @description: Verify RMU after impersonation will be able to see the differences in two documents in the near dupe window in context of an assignment 'RPMXCON-51173' Sprint 12
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 20) 
+	public void verifyDifferenceInTwoDocsNearDupeWindowInContextAnAssignmentAndImpersonate() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case id : RPMXCON-51173");
+		baseClass.stepInfo("Verify RMU after impersonation will be able to see the differences in two documents in the near dupe window in context of an assignment");
+		
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String docId =Input.highlightDocId;
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		sessionSearch.basicContentSearch(Input.highlightedDocsQuery);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.add2ReviewerAndDistribute();
+		
+		baseClass.impersonateRMUtoReviewer();
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		
+		baseClass.stepInfo("Step 4: View the document from mini doc list having near dupe documents");
+		docView = new DocViewPage(driver);
+		docView.selectDocIdInMiniDocList(docId);
+		String parentWindowID  =driver.getWebDriver().getWindowHandle();
+		
+		
+		baseClass.stepInfo("Step 5: Click Near Dupe tab from analytical panel");
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_NearDupeTab());
+		docView.getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_NearDupeIcon());
+		docView.getDocView_NearDupeIcon().waitAndClick(10);
+
+		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
+			driver.switchTo().window(winHandle);
+			driver.waitForPageToBeReady();
+		}
+
+		
+			
+			for (int i = 1; i <=3; i++) {
+				if (docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+					System.out.println("Comparison Window is Ready to perform next steps");
+					break;
+				}
+				else {
+					driver.Navigate().refresh();
+				}
+			}
+				
+		baseClass.stepInfo("Step 6: Verify the near dupe window");;
+		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+		String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+		System.out.println(docidinchildwinodw);
+		
+		String color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
+		String hex2 = Color.fromString(color).asHex();
+		System.out.println(hex2);
+		baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
+		
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		
+		loginPage.logout();
+		
+		
+		
+	}
+	
+	
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {

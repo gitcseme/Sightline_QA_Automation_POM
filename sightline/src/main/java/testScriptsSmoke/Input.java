@@ -190,8 +190,9 @@ public class Input {
 	public static String familyDocWhichIsNotInMiniDoc;
 	public static String bgColorOnMouseHover;
 	public static String fieldByValue;
-
 	public static String nearDupePagination;
+	public static String highlightDocId;
+	public static String highlightedDocsQuery;
 
 	// DocView codingform Baskar Indium
 
@@ -679,6 +680,8 @@ public class Input {
 		bgColorOnMouseHover = testData.bgColorOnMouseHover;
 		nearDupePagination = testData.getNearDupePagination();
 		fieldByValue=testData.getFieldByValue();
+		highlightDocId=testData.getHighlightDocId();
+		highlightedDocsQuery=testData.getHighlightedDocsQuery();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();

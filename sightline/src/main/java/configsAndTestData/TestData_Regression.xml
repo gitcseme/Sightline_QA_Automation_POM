@@ -111,6 +111,8 @@
 	<tiffSearchQuery>.tif</tiffSearchQuery>
 	<nearDupePagination>ID00003939</nearDupePagination>
 	<fieldByValue>Custodian</fieldByValue>
+	<highlightDocId>ID00001490</highlightDocId>
+	<highlightedDocsQuery>DupeCount:[1 TO 10000]</highlightedDocsQuery>
 
 
 

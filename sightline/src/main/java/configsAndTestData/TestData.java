@@ -96,6 +96,8 @@ public class TestData {
 	public String bgColorOnMouseHover;
 	public String nearDupePagination;
 	public String fieldByValue;
+	public String highlightDocId;
+	public String highlightedDocsQuery;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;
