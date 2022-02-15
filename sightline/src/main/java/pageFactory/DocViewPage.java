@@ -1494,7 +1494,11 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
-
+	public Element get_textHighlightedYellowColor() {
+		return driver.FindElementByCssSelector("#ig0level0surface1 > path:nth-child(39)");
+	}
+	
+	
 	public Element getDocView_Production_Image() {
 		return driver.FindElementByXPath("//*[@id='divViewerProductions']");
 	}
@@ -24455,7 +24459,7 @@ public class DocViewPage {
 
 		}
 	}
-		
+
 
 
 	public Element getNotchSymboInPersistentHits() {
