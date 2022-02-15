@@ -24454,7 +24454,7 @@ public class DocViewPage {
 
 		}
 	}
-		
+
 
 
 	public Element getNotchSymboInPersistentHits() {

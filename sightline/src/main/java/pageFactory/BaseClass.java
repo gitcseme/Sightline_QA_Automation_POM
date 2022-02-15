@@ -238,13 +238,13 @@ public class BaseClass {
 		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div//li");
 	}
 
-	//Added by Krishna
+	// Added by Krishna
 	public Element getSecondLineSuccessMsg(int i) {
 		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//li[" + i + "]");
 
 	}
-	
-	//added by Aathith
+
+	// added by Aathith
 	public Element text(String text) {
 		return driver.FindElementByXPath("//*[contains(text()," + text + ")]");
 	}
@@ -2553,7 +2553,6 @@ public class BaseClass {
 		}
 	}
 
-	
 	public void VerifyWarningMessageAdditionalLine(String ExpectedMsg, String ExpectedMsg2, String ExpectedMsg3) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -2569,9 +2568,6 @@ public class BaseClass {
 		System.out.println(string3);
 		Assert.assertEquals(ExpectedMsg3, getSecondLineSuccessMsg(3).getText().toString());
 	}
-		
-		
-
 
 	/**
 	 * @author Jeevitha
@@ -2595,23 +2591,25 @@ public class BaseClass {
 		if (compare) {
 			passedStep(passMsg);
 		} else {
-			failedMessage(failMsg);
+			failedStep(failMsg);
 		}
 
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param element
 	 */
 	public void elementDisplayCheck(Element element) {
-		if(element.isDisplayed()) {
-			passedStep("Element is displayed :"+element);
+		if (element.isDisplayed()) {
+			passedStep("Element is displayed :" + element);
 			System.out.println("element is displayed");
-		}else {
-			failedStep("Element verification failed :"+element);
+		} else {
+			failedStep("Element verification failed :" + element);
 			System.out.println("element not is displayed");
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -2624,6 +2622,7 @@ public class BaseClass {
 			System.out.println(text + " is not visible");
 		}
 	}
+
 	/**
 	 * @author Raghuram.A
 	 * @param result
@@ -2655,16 +2654,16 @@ public class BaseClass {
 			}
 		}
 	}
-	
+
 	/*
 	 * @author Steffy D This method is to open a new tab
 	 */
 	public void openNewTab() {
 		try {
-			Robot robot = new Robot();                          
-			robot.keyPress(KeyEvent.VK_CONTROL); 
-			robot.keyPress(KeyEvent.VK_T); 
-			robot.keyRelease(KeyEvent.VK_CONTROL); 
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_CONTROL);
+			robot.keyPress(KeyEvent.VK_T);
+			robot.keyRelease(KeyEvent.VK_CONTROL);
 			robot.keyRelease(KeyEvent.VK_T);
 			passedStep("New tab is opened successfully");
 		} catch (Exception e) {
