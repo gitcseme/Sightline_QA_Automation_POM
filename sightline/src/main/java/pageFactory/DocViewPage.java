@@ -24449,7 +24449,7 @@ public class DocViewPage {
 			base.failedStep("Exception occcured while verifying completed production name displayed on image tab options." + e.getMessage());
 
 		}
-		
+	}
 
 
 	public Element getNotchSymboInPersistentHits() {
@@ -24641,6 +24641,7 @@ public class DocViewPage {
 		driver.Navigate().back();
 		base.passedStep("Leave and cancel button displayed when navigation done through back button in Leave");
 		driver.switchTo().alert().accept();
+	}
 /**
 	 * @Author Brundha
 	 * @Description :Method to verify Saved stamp tool tip
@@ -24663,6 +24664,16 @@ public class DocViewPage {
 		
 
 
+	}
+	
+	public void verifyDocsPresentWithPersistentHits(String searchstring) throws InterruptedException {
+		String persistentterm=getPersistentHit(searchstring);
+		if(persistentterm.contains(searchstring) && get_textHighlightedColor().isDisplayed()) {
+			base.passedStep("Documents are present with the persistent hits");
+		}
+		else {
+			base.failedStep("Documents are not present with the persistent hits");
+		}
 	}
 }
 
