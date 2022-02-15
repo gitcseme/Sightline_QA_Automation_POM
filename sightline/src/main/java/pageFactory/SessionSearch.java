@@ -4729,7 +4729,9 @@ public class SessionSearch {
 		// Click on Search button
 		base.waitForElement(getQuerySearchButton());
 		getQuerySearchButton().waitAndClick(3);
-		// two handle twosearch strings
+		if(getTallyContinue().isElementAvailable(2)){
+			getTallyContinue().Click();
+		}
 
 		base.waitForElement(getPureHitsCount());
 		// verify counts for all the tiles
