@@ -7136,6 +7136,158 @@ public class DocView_Redactions_Regression {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Case has a larger flow - using 2 different users and different projects
+	 * Id:RPMXCON-50782 To verify assignment progress bar should be displayed on doc
+	 * view page as per the selected assignment
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
+	public void verifyAssignmentProgressBarDisplayedOnDocView() throws Exception {
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		loginPage = new LoginPage(driver);
+		baseClass = new BaseClass(driver);
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String assnameonproject1 = "assgnment" + Utility.dynamicNameAppender();
+		String assnameonproject2 = "assgnment" + Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case id : RPMXCON-50782");
+		baseClass.stepInfo(
+				"To verify assignment progress bar should be displayed on doc view page as per the selected assigment");
+
+		// verify assignment ProgressBar on creating assignment
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentspage.add2ReviewerAndDistribute();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		softAssertion.assertTrue(docView.getDocView_AssignmentProgressBar().isDisplayed());
+		softAssertion.assertTrue(docView.getDocView_AssigmentName().isDisplayed());
+		softAssertion.assertAll();
+		String assName = docView.getDocView_AssigmentName().getText();
+		System.out.println(assName);
+		baseClass.passedStep(assName
+				+ "Assignment progress bar is displayed on doc view page the selected assignment completion status");
+		baseClass.stepInfo("Assignment1 name is also displayed above the assignment progress bar successfully");
+
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		assignmentspage.assignmentCreation(assname, Input.codeFormName);
+		assignmentspage.add2ReviewerAndDistribute();
+		assignmentspage.selectAssignmentToViewinDocview(assname);
+		softAssertion.assertTrue(docView.getDocView_AssignmentProgressBar().isDisplayed());
+		softAssertion.assertTrue(docView.getDocView_AssigmentName().isDisplayed());
+		softAssertion.assertAll();
+		String assName1 = docView.getDocView_AssigmentName().getText();
+		System.out.println(assName1);
+		baseClass.passedStep(assName1
+				+ "Assignment progress bar is displayed on doc view page the selected assignment completion status.");
+		baseClass.stepInfo(
+				assName1 + "Assignment2 name is also displayed above the assignment progress bar successfully");
+
+		// verify Assignment ProgressBar on different project
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		assignmentspage.assignmentCreation(assnameonproject1, Input.codeFormName);
+		assignmentspage.add2ReviewerAndDistribute();
+		baseClass.waitTime(10);
+		baseClass.selectproject("AutomationAdditionalDataProject");
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		assignmentspage.assignmentCreation(assnameonproject2, Input.codeFormName);
+		assignmentspage.add2ReviewerAndDistribute();
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentspage.selectAssignmentToViewinDocView(assnameonproject2);
+		baseClass.stepInfo("Rmu user assigned to different project on creating assignment");
+		softAssertion.assertTrue(docView.getDocView_AssignmentProgressBar().isDisplayed());
+		softAssertion.assertTrue(docView.getDocView_AssigmentName().isDisplayed());
+		softAssertion.assertAll();
+		String assName2 = docView.getDocView_AssigmentName().getText();
+		System.out.println(assName2);
+		baseClass.passedStep(assName2
+				+ "Assignment progress bar is displayed on doc view page the selected assignment completion status.");
+		baseClass.stepInfo(
+				assName2 + "Assignment name is also displayed above the assignment progress bar successfully");
+
+		driver.waitForPageToBeReady();
+		assignmentspage.selectAssignmentToViewinDocview(assnameonproject1);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Rmu user assigned to different project on creating assignment");
+		softAssertion.assertTrue(docView.getDocView_AssignmentProgressBar().isDisplayed());
+		softAssertion.assertTrue(docView.getDocView_AssigmentName().isDisplayed());
+		softAssertion.assertAll();
+		String assNameRmuProject1 = docView.getDocView_AssigmentName().getText();
+		System.out.println(assNameRmuProject1);
+		baseClass.passedStep(assNameRmuProject1
+				+ "Assignment progress bar is displayed on doc view page the selected assignment completion status.");
+		baseClass.stepInfo(assNameRmuProject1
+				+ "Assignment name is also displayed above the assignment progress bar successfully");
+		loginPage.logout();
+
+		// login as rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting the assignment as reviewer
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		softAssertion.assertTrue(docView.getDocView_AssignmentProgressBar().isDisplayed());
+		softAssertion.assertTrue(docView.getDocView_AssigmentName().isDisplayed());
+		softAssertion.assertAll();
+		String assNameRev1 = docView.getDocView_AssigmentName().getText();
+		System.out.println(assNameRev1);
+		baseClass.passedStep(assNameRev1
+				+ "Assignment1 progress bar is displayed on doc view page elected assignment completion status");
+		baseClass.stepInfo(
+				assNameRev1 + "Assignment name is also displayed above the assignment progress bar successfully");
+
+		assignmentspage.SelectAssignmentByReviewer(assname);
+		baseClass.passedStep("User on the doc view after selecting the assignment");
+		softAssertion.assertTrue(docView.getDocView_AssignmentProgressBar().isDisplayed());
+		softAssertion.assertTrue(docView.getDocView_AssigmentName().isDisplayed());
+		softAssertion.assertAll();
+		String assNameRev2 = docView.getDocView_AssigmentName().getText();
+		System.out.println(assNameRev2);
+		baseClass.passedStep(assNameRev2
+				+ "Assignment2 progress bar is displayed on doc view page selected assignment completion status..");
+		baseClass.stepInfo(
+				assNameRev2 + "Assignment name is also displayed above the assignment progress bar successfully");
+
+		// verify creating assignment progressBar on different project
+		driver.waitForPageToBeReady();
+		assignmentspage.SelectAssignmentByReviewer(assnameonproject1);
+		baseClass.stepInfo("Rev user assigned to different project on creating assignment");
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		softAssertion.assertTrue(docView.getDocView_AssignmentProgressBar().isDisplayed());
+		softAssertion.assertTrue(docView.getDocView_AssigmentName().isDisplayed());
+		softAssertion.assertAll();
+		String assNameRevProject1 = docView.getDocView_AssigmentName().getText();
+		System.out.println(assNameRevProject1);
+		baseClass.passedStep(assNameRevProject1
+				+ "Assignment progress bar is displayed on doc view page the selected assignment completion status..");
+		baseClass.stepInfo(assNameRevProject1
+				+ "Assignment name is also displayed above the assignment progress bar successfully");
+
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		baseClass.selectproject("AutomationAdditionalDataProject");
+		baseClass.stepInfo("Rev user assigned to different project on creating assignment");
+		assignmentspage.SelectAssignmentByReviewer(assnameonproject2);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		softAssertion.assertTrue(docView.getDocView_AssignmentProgressBar().isDisplayed());
+		softAssertion.assertTrue(docView.getDocView_AssigmentName().isDisplayed());
+		softAssertion.assertAll();
+		String assNameRevProject2 = docView.getDocView_AssigmentName().getText();
+		System.out.println(assNameRevProject2);
+		baseClass.passedStep(assNameRevProject2
+				+ "Assignment progress bar is displayed on doc view page  selected assignment completion status..");
+		baseClass.stepInfo(assNameRevProject2
+				+ "Assignment name is also displayed above the assignment progress bar successfully");
+	}
+
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

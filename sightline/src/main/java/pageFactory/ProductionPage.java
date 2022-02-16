@@ -2530,6 +2530,49 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//select[@id='dldPageRotatePreference']");
 	}
 	
+	//add by Aathith
+		public ElementCollection getProductionSate() {
+			return driver.FindElementsByXPath("//div[@class='col-md-12 font-xs']");
+		}
+		public Element getGridViewWebTable(int row, int col) {
+			return driver.FindElementByXPath("//*[@id='ProductionListGridViewTable']/tbody/tr["+row+"]/td["+col+"]");
+		}
+		public ElementCollection getGridViewWebTable(int col) {
+			return driver.FindElementsByXPath("//*[@id='ProductionListGridViewTable']/tbody/tr/td["+col+"]");
+		}
+		public Element getSlipSheetMetaData() {
+			return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='METADATA']");
+		}
+		public Element getSlipSheetWorkProduct() {
+			return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='WORKPRODUCT']");
+		}
+		public Element getSlipSheetMetaDataActiveCheck() {
+			return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='METADATA']/../..");
+		}
+		public Element getSlipSheetMetaDataTypeCheck() {
+			return driver.FindElementByXPath("//ul[@id='tiffMetadataList']//label");
+		}
+		public Element getSlipSheetWorkProductActiveCheck() {
+			return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='WORKPRODUCT']/../..");
+		}
+		public Element getSlipSheetWorkProductFolder() {
+			return driver.FindElementByXPath("//div[@id='tiffFolderTreeSlipSheets']");
+		}
+		public Element getSlipSheetWorkProductFolderProduction() {
+			return driver.FindElementByXPath("//a[text()='Productions']");
+		}
+		public Element getbtnAddToSelect() {
+			return driver.FindElementByXPath("//a[@class='btn btn-primary pull-right']");
+		}
+		public Element getSelectedFieldItems() {
+			return driver.FindElementByXPath("//div[@class='ddcf-content']");
+		}
+		public Element getAdvanceBtnOpenCloseCheck() {
+			return driver.FindElementByXPath("//div[@id='TIFFContainer']//div[@class='advanced-dd-toggle']/i");
+		}
+		public Element getTiffAdvanceBtn() {
+			return driver.FindElementByXPath("//div[@id='TIFFContainer']//div[@class='advanced-dd-toggle']");
+		}
 
 	public ProductionPage(Driver driver) {
 
@@ -17259,6 +17302,7 @@ public class ProductionPage {
 		
 	}
 	/**
+
 	 * @Author Brundha
 	 * Description:verifying the belly band message in DAT section .
 	 */
@@ -17276,4 +17320,92 @@ public class ProductionPage {
 		
 	}
 	
+/**
+	 * @author Aathith.Senthilkumar
+	 * @param element
+	 * @param text
+	 */
+	public void verifyProdctionState(ElementCollection element, String text) {
+		
+		List<WebElement> elementList = null;
+		try {
+			elementList = element.FindWebElements();
+			for (WebElement wenElementNames : elementList) {
+				
+				String elementName = wenElementNames.getText().trim();
+				softAssertion.assertEquals(elementName, text);
+				softAssertion.assertAll();
+				
+			}
+			
+			base.passedStep(text +" status is displayed all production");
+			
+		} catch (Exception E) {
+			base.failedStep("verification failed");
+			System.out.println(E);
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param col
+	 * @param text
+	 */
+	public void verifyProductionStateWebTableGridView(int col, String text) {
+		
+		try {
+			
+			for (int i = 1;i<=getGridViewWebTable(col).size();i++) {
+				
+				String elementName = getGridViewWebTable(i,col).getText().trim();
+				boolean flag = elementName.contains(text);
+				softAssertion.assertTrue(flag);
+				softAssertion.assertAll();
+				
+			}
+			
+			base.passedStep(text +" status is displayed all production in grid view page");
+			
+		} catch (Exception E) {
+			base.failedStep("verification failed");
+			System.out.println(E);
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param element
+	 */
+	public void toggleOnCheck(Element element) {
+		driver.waitForPageToBeReady();
+		
+		element.isDisplayed();
+		String color = element.GetCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor = "#a9c981";
+		if (ActualColor.equals(ExpectedColor)) {
+			base.passedStep("toggle is on :" + element);
+		} else {
+			base.failedStep("toggle off verifaction failed");
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void filterCompletedProduction() {
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getFilterByDRAFT().waitAndClick(5);
+		getFilterByINPROGRESS().waitAndClick(5);
+		getFilterByFAILED().waitAndClick(5);
+		getFilterByCOMPLETED().waitAndClick(5);
+		base.stepInfo("Filtered completed satus only");
+		driver.waitForPageToBeReady();
+		getRefreshButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+	}
+
 }

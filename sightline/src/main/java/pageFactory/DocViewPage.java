@@ -1497,8 +1497,7 @@ public class DocViewPage {
 	public Element get_textHighlightedYellowColor() {
 		return driver.FindElementByCssSelector("#ig0level0surface1 > path:nth-child(39)");
 	}
-	
-	
+
 	public Element getDocView_Production_Image() {
 		return driver.FindElementByXPath("//*[@id='divViewerProductions']");
 	}
@@ -1974,6 +1973,18 @@ public class DocViewPage {
 	}
 
 	// Added by Raghuram
+	public ElementCollection getAudioRedactionTableHeader() {
+		return driver.FindElementsByXPath("//div[@id='audioGrid_wrapper']//div[@class='dataTables_scrollHead']//th");
+	}
+
+	public Element getAudioRedactionColumnValue(int index) {
+		return driver.FindElementByXPath("//table[@id='audioGrid']//td[" + index + "]");
+	}
+
+	public Element getDocview_ButtonYes_D() {
+		return driver.FindElementByXPath("(//button[text()=' Yes'])[last()]");
+	}
+
 	public Element getDocView_RedactionPanel() {
 		return driver
 				.FindElementByXPath("//div[@class='sub-tab-2 active']//ul[@class='list-inline pull-right active']");
@@ -3073,10 +3084,10 @@ public class DocViewPage {
 	public Element getAudioPersistentHits() {
 		return driver.FindElementByXPath("//div[@id='divAudioPersistentSearch']/div");
 	}
+
 	public Element getSavedCodingStamp(String icon) {
 		return driver.FindElementByXPath("//ul[@id='UserStamps']//li[@id='" + icon + "']//i");
 	}
-
 
 	public Element getWarningMessageForRemarkPanel() {
 		return driver.FindElementByXPath(
@@ -3092,24 +3103,67 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//div[@id='divDuplicateRedactionWarning' and normalize-space('" + Input.warningMessage + "')]");
 	}
-	
 
-	//Added by Gopinath 10/02/2022
+	// Added by Gopinath 10/02/2022
 	public Element getImageTabOption(String option) {
-		return driver.FindElementByXPath("//ul[@id='AvailableImagesDropDown']//a[contains(text(),'"+option+"')]");
+		return driver.FindElementByXPath("//ul[@id='AvailableImagesDropDown']//a[contains(text(),'" + option + "')]");
 	}
-	
 
-	//Added By Vijaya.Rani
+	// Added By Vijaya.Rani
 	public Element getDocView_NavigationBtn() {
 		return driver.FindElementByXPath("//i[@class='fa fa-angle-right']");
 	}
 
-	
+
+
 	//Added by Gopinath - 14/02/2022
+
 	public Element selectRedactionTag() {
 		return driver.FindElementByXPath("//select[@id='ddlRedactionTagsForPopup']/option[@selected]");
 	}
+	
+
+	//Added by Gopinath - 15/02/2022
+	public Element showCompletedDocumentsToogle() {
+		return driver.FindElementByXPath("//input[@id='ShowCompletedDocs']//..//i");
+	}
+	public Element completedDocument(int row) {
+		return driver.FindElementByXPath("//div[@id='divMiniDocList']//tbody//tr["+row+"]//i[@class='fa fa-check-circle']");
+	}
+	public Element unCompletedDocumentCheckBox(int row) {
+		return driver.FindElementByXPath("//div[@id='divMiniDocList']//tbody//tr["+row+"]//i//..//input[@name='checkbox']/following-sibling::i");
+	}
+	public Element chainLink(int row) {
+		return driver.FindElementByXPath("//div[@id='divMiniDocList']//tbody//tr["+row+"]//i[@class='fa fa-link']");
+	}
+	public Element checkBoxMiniDocList(int row) {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr["+row+"]//label[@class='checkbox']//i");
+	}
+	public Element totalPageCount() {
+		return driver.FindElementById("lblTotalPageCount_divDocViewer");
+	}
+	public ElementCollection getDocViewBackGroundTasks() {
+		return driver.FindElementsByXPath("//ul[@class='notification-body']/descendant::a");
+		
+	}
+	public Element getBackgroundNotificationCountNew() {
+		return driver.FindElementByXPath("//span[@id='activity' and @class='activity-dropdown newRed']");
+	}
+	public Element getDocViewNotificationBellIcon() {
+		return driver.FindElementById("activity");
+	}
+
+	// Added by Baskar -14/02/2022
+	// View coding stamp popup window
+	public Element getViewCodingStamp_PopUpWindow() {
+		return driver.FindElementByXPath("//span[text()='View Coding Stamp']");
+	}
+    // Edit coding stamp Popup window
+	public Element getEditCodingStamp_PopUpWindow() {
+		return driver.FindElementByXPath("//span[text()='Edit Coding Stamp']");
+	}
+
+
 
 	public DocViewPage(Driver driver) {
 
@@ -9230,7 +9284,7 @@ public class DocViewPage {
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
 		getDocView_Analytics_NearDupeTab().ScrollTo();
-		base.waitForElement(getDocView_Analytics_NearDupe_Doc(3));
+		base.waitTillElemetToBeClickable(getDocView_Analytics_NearDupe_Doc(3));
 		getDocView_Analytics_NearDupe_Doc(3).waitAndClick(5);
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
 		getCodeSameAsNearDupe().waitAndClick(15);
@@ -9260,6 +9314,10 @@ public class DocViewPage {
 	public void completeDocsAndVerifyCheckMark() {
 
 		try {
+			base.waitForElement(getResponsiveCheked());
+			getResponsiveCheked().Click();
+			base.waitForElement(getNonPrivilegeRadio());
+			getNonPrivilegeRadio().Click();
 			base.waitForElement(getCompleteDocBtn());
 			getCompleteDocBtn().waitAndClick(10);
 
@@ -24112,10 +24170,9 @@ public class DocViewPage {
 
 	}
 
-	
 	/**
-	 * @author Gopinath Description: Method for verifying the search string is
-	 *         not displayed on persistent hit panal
+	 * @author Gopinath Description: Method for verifying the search string is not
+	 *         displayed on persistent hit panal
 	 * @param SearchString : SearchString is String value that search term.
 	 */
 	public void persistenHitNotContainsWithSearchString(String SearchString) {
@@ -24145,11 +24202,10 @@ public class DocViewPage {
 		}
 		if (flag == false) {
 			System.out.println("Search hit term is not displayed on persistent hits panel");
-			base.passedStep(SearchString+" : Search hit term is not displayed on persistent hits panel");
+			base.passedStep(SearchString + " : Search hit term is not displayed on persistent hits panel");
 		}
 	}
 
-	
 	/**
 	 * @author Gopinath.
 	 * 
@@ -24162,8 +24218,8 @@ public class DocViewPage {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			List<WebElement> keyword = getHighlightedKeywordrgbCode(rgbCode).FindWebElements();
-			
-			if (keyword.size()!=0) {
+
+			if (keyword.size() != 0) {
 				base.failedStep("Keyword is highlighted on doc view");
 				System.out.println("Keyword is highlighted on doc view");
 			} else {
@@ -24175,10 +24231,10 @@ public class DocViewPage {
 			base.failedStep("Exception occcured while Keyword is highlighted on doc view" + e.getMessage());
 
 		}
-		
+
 	}
 
-/*
+	/*
 	 * @author Aathith.Senthilkumar
 	 */
 	public void trianglurArrowIconPositionVerification() {
@@ -24232,8 +24288,9 @@ public class DocViewPage {
 		}
 	}
 
-/*
+	/*
 	 * @Author Brundha
+	 * 
 	 * @Description :Method to verify persistant hit panel for audio files
 	 * 
 	 */
@@ -24259,35 +24316,35 @@ public class DocViewPage {
 
 	}
 
-	
 	/**
 	 * @author Arunkumar
-	 * @throws InterruptedException 
-	 * @description To verify textview functionality when navigating to docview from different module for PA and reviewer
+	 * @throws InterruptedException
+	 * @description To verify textview functionality when navigating to docview from
+	 *              different module for PA and reviewer
 	 */
 	public void verifyTextviewInDocviewFromDifferentModuleforPAandREV() throws InterruptedException {
-		
+
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		DocListPage docList = new DocListPage(driver);
 		AssignmentsPage assignPage = new AssignmentsPage(driver);
-		
-		String searchName = "savedsearch"+Utility.dynamicNameAppender();
-		
+
+		String searchName = "savedsearch" + Utility.dynamicNameAppender();
+
 		// From basic search
-		int availableDocs= sessionsearch.basicContentSearch(Input.testData1);
+		int availableDocs = sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Navigated to docView from basic search");
 		verifyDocumentDisplayedInTextView();
-		//From saved search
+		// From saved search
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		sessionsearch.saveSearch(searchName);
 		savedSearch.savedSearchToDocView(searchName);
 		driver.waitForPageToBeReady();
 		base.stepInfo("Navigated to docView from saved search");
 		verifyDocumentDisplayedInTextView();
-		//From doclist
+		// From doclist
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		sessionsearch.ViewInDocListWithOutPureHit();
 		driver.waitForPageToBeReady();
@@ -24296,36 +24353,37 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Navigated to docView from Doclist");
 		verifyDocumentDisplayedInTextView();
-		
+
 	}
-	
+
 	/**
 	 * @author Arunkumar
-	 * @throws InterruptedException 
-	 * @description To verify textview functionality when navigating to docview from different module for RMU
+	 * @throws InterruptedException
+	 * @description To verify textview functionality when navigating to docview from
+	 *              different module for RMU
 	 */
 	public void verifyTextviewInDocviewFromDifferentModuleforRMU(String assignmentName) throws InterruptedException {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		DocListPage docList = new DocListPage(driver);
 		AssignmentsPage assignPage = new AssignmentsPage(driver);
-		
-		String searchName = "savedsearch"+Utility.dynamicNameAppender();
-		
+
+		String searchName = "savedsearch" + Utility.dynamicNameAppender();
+
 		// From basic search
-		int availableDocs= sessionsearch.basicContentSearch(Input.testData1);
+		int availableDocs = sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Navigated to docView from basic search");
 		verifyDocumentDisplayedInTextView();
-		//From saved search
+		// From saved search
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		sessionsearch.saveSearch(searchName);
 		savedSearch.savedSearchToDocView(searchName);
 		driver.waitForPageToBeReady();
 		base.stepInfo("Navigated to docView from saved search");
 		verifyDocumentDisplayedInTextView();
-		//From doclist
+		// From doclist
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		sessionsearch.ViewInDocListWithOutPureHit();
 		driver.waitForPageToBeReady();
@@ -24334,20 +24392,18 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Navigated to docView from Doclist");
 		verifyDocumentDisplayedInTextView();
-		//From Manage-Assignments
+		// From Manage-Assignments
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		assignPage.selectAssignmentToViewinDocView(assignmentName);
 		driver.waitForPageToBeReady();
 		base.stepInfo("Navigated to docView from manage assignment");
 		verifyDocumentDisplayedInTextView();
-		//from edit assignment - docview
+		// from edit assignment - docview
 		assignPage.editAssignment(assignmentName);
 		assignPage.Assignment_ManageRevtab_ViewinDocView();
 		base.stepInfo("Navigated to docView from edit assignment-manage reviewers tab");
 		verifyDocumentDisplayedInTextView();
 	}
-	
-
 
 	/*
 	 * @author Steffy D This is method is to verify warning message which is getting
@@ -24434,12 +24490,12 @@ public class DocViewPage {
 		}
 	}
 
-	
-	
 	/**
 	 * @author Gopinath.
-	 * @description : Method to verify completed production name displayed on image tab options.
-	 * @param productionName : productionName is String value that name of production.
+	 * @description : Method to verify completed production name displayed on image
+	 *              tab options.
+	 * @param productionName : productionName is String value that name of
+	 *                       production.
 	 */
 	public void verifyCompletedProductionNameDispalyedOnImageTab(String productionName) {
 		try {
@@ -24448,49 +24504,51 @@ public class DocViewPage {
 			getImageTab().isElementAvailable(10);
 			getImageTab().Click();
 			getImageTabOption(productionName).isElementAvailable(10);
-			if(getImageTabOption(productionName).isDisplayed()) {
-				base.passedStep(productionName+" - Production name displayed on image tab options successfully");
-			}else {
-				base.failedStep(productionName+" - Production name not displayed on image tab options");
+			if (getImageTabOption(productionName).isDisplayed()) {
+				base.passedStep(productionName + " - Production name displayed on image tab options successfully");
+			} else {
+				base.failedStep(productionName + " - Production name not displayed on image tab options");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occcured while verifying completed production name displayed on image tab options." + e.getMessage());
+			base.failedStep(
+					"Exception occcured while verifying completed production name displayed on image tab options."
+							+ e.getMessage());
 
 		}
+		
 	}
-
 
 
 	public Element getNotchSymboInPersistentHits() {
-		return driver.FindElementByXPath("//span[text()='Term:']/parent::strong/parent::div/descendant::div[@class='pull-right']");
+		return driver.FindElementByXPath(
+				"//span[text()='Term:']/parent::strong/parent::div/descendant::div[@class='pull-right']");
 	}
-	
-	public void verifyingThePresenceOfPersistentHit(boolean verifyNotchSymbol,String SearchString) {
+
+	public void verifyingThePresenceOfPersistentHit(boolean verifyNotchSymbol, String SearchString) {
 		driver.waitForPageToBeReady();
-		if(getDocView_Audio_Hit().isDisplayed()) {
+		if (getDocView_Audio_Hit().isDisplayed()) {
 			base.passedStep("Persistent Hits is displayed");
 			base.waitForElement(getDocView_Audio_Hit());
 			String StringInPanels = getDocView_Audio_Hit().getText().trim().toString().toLowerCase();
-			
+
 			System.out.println("expected text" + StringInPanels);
 			base.compareTextViaContains(StringInPanels, SearchString, "Search string is displayed as expected",
 					"Search string is not displayed as expected");
-			
-		}else {
+
+		} else {
 			base.failedStep("Persistent Hits is Not displayed");
 		}
-		
-		if(verifyNotchSymbol) {
-			if(getTriangularIcon().isDisplayed()) {
+
+		if (verifyNotchSymbol) {
+			if (getTriangularIcon().isDisplayed()) {
 				base.passedStep("triangular Arrow icon in the Persistent Hits panel is Dislplayed");
-			}else {
+			} else {
 				base.failedStep("triangular Arrow icon in the Persistent Hits panel is Not Dislplayed");
 			}
 		}
 	}
 
-	
 	/**
 	 * 
 	 * @author Vijaya.Rani 09/02/22 NA Modified date: NA Modified by:NA
@@ -24526,7 +24584,7 @@ public class DocViewPage {
 		softAssertion.assertNotEquals(pagenum1, pagenum2);
 		base.passedStep("mini doc list after doc-to-doc navigation then persistent hits is displayed");
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani
 	 */
@@ -24556,13 +24614,13 @@ public class DocViewPage {
 		reusableDocView.switchToNewWindow(1);
 
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 11/02/2021 Modified date: N/A
 	 * @Description: Validation of non-date format using save and complete
 	 */
-	
-        public void nonDateFormatValidationUsingSaveAndComplete(String projectFieldName, String fieldValue, String colour)
+
+	public void nonDateFormatValidationUsingSaveAndComplete(String projectFieldName, String fieldValue, String colour)
 			throws InterruptedException, AWTException {
 		driver.waitForPageToBeReady();
 		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
@@ -24593,7 +24651,7 @@ public class DocViewPage {
 			base.failedMessage("validation message not displayed for non-date format");
 		}
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @param comment
@@ -24620,7 +24678,7 @@ public class DocViewPage {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani
 	 */
@@ -24651,64 +24709,468 @@ public class DocViewPage {
 		driver.Navigate().back();
 		base.passedStep("Leave and cancel button displayed when navigation done through back button in Leave");
 		driver.switchTo().alert().accept();
+		
 	}
-/**
+
+	/**
 	 * @Author Brundha
 	 * @Description :Method to verify Saved stamp tool tip
 	 * 
 	 */
-	
-	public void VerifySavedStampToolTip(String stampColour,String fieldText) {
-		   base.stepInfo("Verify tooltip in saved stamp");
-		   driver.waitForPageToBeReady();
-		   getCodingStampLastIcon(stampColour).isDisplayed(); 
-			Actions builder = new Actions(driver.getWebDriver());
-			driver.waitForPageToBeReady();
-			base.waitForElement(getCodingStampLastIcon(stampColour));
-			builder.moveToElement(getCodingStampLastIcon(stampColour).getWebElement()).build().perform();
-			driver.waitForPageToBeReady();
-			String ActualText =getSavedCodingStamp(stampColour).getWebElement()
-					.getAttribute("title");
-			base.textCompareEquals(fieldText, ActualText, "Mouseover Text for "+stampColour+" is displayed as expected",
-					"Mouseover text for "+stampColour+" is not displayed as expected");
-		
 
+	public void VerifySavedStampToolTip(String stampColour, String fieldText) {
+		base.stepInfo("Verify tooltip in saved stamp");
+		driver.waitForPageToBeReady();
+		getCodingStampLastIcon(stampColour).isDisplayed();
+		Actions builder = new Actions(driver.getWebDriver());
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCodingStampLastIcon(stampColour));
+		builder.moveToElement(getCodingStampLastIcon(stampColour).getWebElement()).build().perform();
+		driver.waitForPageToBeReady();
+		String ActualText = getSavedCodingStamp(stampColour).getWebElement().getAttribute("title");
+		base.textCompareEquals(fieldText, ActualText, "Mouseover Text for " + stampColour + " is displayed as expected",
+				"Mouseover text for " + stampColour + " is not displayed as expected");
 
 	}
-	
+
 
 	/**
 	 * @author Gopinath
-	 * @description: method to verify first option of select redaction tag drop down.
-	 * @param redactionTag : redactionTag is String value that redaction tag from drop down.
+	 * @description: method to verify first option of select redaction tag drop
+	 *               down.
+	 * @param redactionTag : redactionTag is String value that redaction tag from
+	 *                     drop down.
 	 */
 	public void verifyFirstOptionOfRedactionFromDropdown(String redactionTag) {
 		try {
 			driver.waitForPageToBeReady();
 			selectRedactionTag().isElementAvailable(10);
 			String selectedRedactionTag = selectRedactionTag().getText().trim();
-			if(redactionTag.equalsIgnoreCase(selectedRedactionTag)) {
-				base.passedStep(redactionTag+" -- redaction tag first option from select redaction dropdown is selected successfully");
-			}else {
-				base.failedStep(redactionTag+" -- redaction tag first option from select redaction dropdown is not selected");
+			if (redactionTag.equalsIgnoreCase(selectedRedactionTag)) {
+				base.passedStep(redactionTag
+						+ " -- redaction tag first option from select redaction dropdown is selected successfully");
+			} else {
+				base.failedStep(
+						redactionTag + " -- redaction tag first option from select redaction dropdown is not selected");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while verifying first option of select redaction tag drop down." + e.getMessage());
+			base.failedStep("Exception occured while verifying first option of select redaction tag drop down."
+					+ e.getMessage());
 
 		}
 	}
+	
+	/**
+	 * @author Gopinath
+	 * @descrption : Method for enabling toogle to show completed documents in mini doc list.
+	 */
 
+	public void showCompletedDocumentsConfigureMiniDocList() {
+		try {
+			driver.waitForPageToBeReady();
+			getDocView_ConfigMinidoclist().isElementAvailable(10);
+			getDocView_ConfigMinidoclist().Click();
+			driver.waitForPageToBeReady();
+			String backgroundColor = showCompletedDocumentsToogle().GetCssValue("background-color").trim();
+			String hexCode = rgbTohexaConvertor(backgroundColor);
+			if(hexCode.equalsIgnoreCase("#FF9999")) {
+				base.passedStep("Already enabled toogle to show completed documents in mini doc list.");
+			}else {
+				showCompletedDocumentsToogle().isElementAvailable(10);
+				showCompletedDocumentsToogle().Click();
+				base.passedStep("Enabled toogle to show completed documents in mini doc list.");
+			}
+			driver.waitForPageToBeReady();
+			getDocView_MiniDocFields_ConfigSaveButton().isElementAvailable(10);
+			getDocView_MiniDocFields_ConfigSaveButton().Click();
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while enabling toogle to show completed documents in mini doc list."+e.getLocalizedMessage());
+		}
+			
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @descrption : Method for selecting uncompleted documents check boxes
+	 * @param documentCount : documentCount is intger value that number of documents need to be select check box.
+	 */
+
+	public void selectingUncompletedDocumetsCheckBoxes(int documentCount) {
+		try {
+			driver.waitForPageToBeReady();
+			int count=0;
+			base.waitForElementCollection(getDocView_MiniListDocuments());
+			base.waitTime(2);
+			List<WebElement> totalRows = getDocView_MiniListDocuments().FindWebElements();
+			for(int i=0;i<totalRows.size();i++) {
+				if(count==documentCount) {
+					break;
+				}
+				if(!completedDocument(i+1).isDisplayed()) {
+					driver.waitForPageToBeReady();
+					unCompletedDocumentCheckBox(i+1).isElementAvailable(10);
+					unCompletedDocumentCheckBox(i+1).Click();
+					count = count+1;
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while selecting uncompleted documents check boxes."+e.getLocalizedMessage());
+		}
+			
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @decsription : Method for performing code same as action. 
+	 */
+	public void performActionCodeSameAs() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElementCollection(getDocumetCountMiniDocList());
+			getDocView_Mini_ActionButton().isElementAvailable(10);
+			base.waitForElement(getDocView_Mini_ActionButton());
+			getDocView_Mini_ActionButton().waitAndClick(5);
+			getDocView__ChildWindow_Mini_CodeSameAs().isElementAvailable(10);
+			base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
+			getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while performing code same as action. "+e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @decsription : Method for verifying Chain Icon Is Displayed After Code Same As Operation.
+	 * @param documentCount : documentCount is intger value that number of documents need to be select check box.
+	 */
+	public void verifyChainIconIsDisplayedAfterCodeSameAsOperation(int documentCount) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTime(1);
+			for(int i=0;i<documentCount;i++) {
+				driver.waitForPageToBeReady();
+				if(!chainLink(i+2).isDisplayed()) {
+					base.failedStep("Chain link is not displayed for applied code same as document -- "+(i+1));
+				}
+			}
+			base.passedStep("Chain link is displayed for all applied code same as documents");
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while selecting uncompleted documents check boxes."+e.getLocalizedMessage());
+		}
+			
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @decsription : Method for selecting all documents from mini doc list.
+	 * @return totalDocumentCount: totalDocumentCount is integer value that returns total document count. 
+	 */
+	public int selectAllDocumentsInMiniDocList() {
+		int totalDocumentCount = 0;
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			base.waitForElementCollection(getDocView_MiniListDocuments());
+			List<WebElement> totalRows = getDocView_MiniListDocuments().FindWebElements();
+			totalDocumentCount = totalRows.size();
+			for(int i=0;i<totalRows.size();i++) {
+				checkBoxMiniDocList(i+1).isElementAvailable(10);
+				checkBoxMiniDocList(i+1).Click();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while selecting all documents from mini doc list."+e.getLocalizedMessage());
+		}
+		return totalDocumentCount;
+			
+	}
+	
+	/**
+	 * @author Gopinath.
+	 * @description : This method to verify keyword highlighted on doc view.
+	 * @param rgbCode                         (selected keyword colour rgb code
+	 * @param expectedElementHexCode(selected keyword color hex code
+	 */
+	public void verifyKeywordHighlightedwithKeywordColour(String rgbCode, String expectedElementHexCode) {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			List<WebElement> keyword = getHighlightedKeywordrgbCode(rgbCode).FindWebElements();
+			if(keyword.size()!=0) {
+				System.out.println(keyword.get(0).getCssValue("fill"));
+				String color = keyword.get(0).getCssValue("fill");
+				String hex = org.openqa.selenium.support.Color.fromString(color).asHex();
+				System.out.println(hex);
+				if (keyword.get(0).isDisplayed() && (hex.contentEquals(expectedElementHexCode))) {
+					System.out.println("Keyword highlighted on doc view successfully");
+					base.passedStep("Keyword highlighted on doc view successfully");
+					base.passedStep("Keyword highlighted on doc view with expected colour");
+				} else {
+					System.out.println("Keyword not highlighted on doc view ");
+					base.failedStep("Keyword not highlighted on doc view ");
+				}
+			}else {
+				base.stepInfo("Document selected is not able to highlight any keyword on doc view ");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while click on translation tab." + e.getMessage());
+
+		}
+	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * @decsription : Method for verifying total page count.
+	 */
+	public void verifyTotalPagesOfDocumentCountGreaterThan500() {
+		try {
+			driver.waitForPageToBeReady();
+			String pagesCount = totalPageCount().getText().trim();
+			String[] pageCnt =  pagesCount.split("of",2);
+			String[] pageCnt2 = pageCnt[1].split("pages",2);
+			int pagesCont = Integer.parseInt(pageCnt2[0].trim());
+			if(pagesCont<500) {
+				base.passedStep("Total pages greater than 500 pages is not loaded in docview");
+			}else {
+				base.failedStep("Total pages greater than 500 pages is loaded in docview");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while verifying total page count."+e.getLocalizedMessage());
+		}
+			
+	}
+	
+
+	/**
+	 * @author Gopinath
+	 * @decsription : Method for verifying document loaded successfully.
+	 */
+	public void verifyDocLoadedSuccessfully() {
+		try {
+			driver.waitForPageToBeReady();
+			getSelectedAreaElement().isElementAvailable(10);
+			if(getSelectedAreaElement().isDisplayed() && getSelectedAreaElement().getWebElement().isEnabled()) {
+				base.passedStep("Document loaded successfully.");
+			}else {
+				base.failedStep("Document not loaded properly.");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while verifying document loaded successfully."+e.getLocalizedMessage());
+		}
+			
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description method to scroll to document in mini doc list and click on it.
+	 * @param DocIdOrRwNo
+	 */
+	public void ScrollAndSelectDocument(String DocIdOrRwNo) {
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		jse.executeScript("arguments[0].scrollIntoView();", getDocView_MiniDoc_SelectDOcId(DocIdOrRwNo).getWebElement());
+		base.waitTime(3);
+		driver.scrollPageToTop();
+		selectDocToViewInDocViewPanal(DocIdOrRwNo);
+		
+	}
+	/**
+	 * @author Gopinath
+	 * methoad to open document from background notification and verify
+	 */
+	public void openDocumentFromBgNotifacation() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocViewNotificationBellIcon());
+			getDocViewNotificationBellIcon().waitAndClick(3);
+			base.waitTime(2);
+			base.waitForElementCollection(getDocViewBackGroundTasks());
+			getDocViewBackGroundTasks().FindWebElements().get(0).click();
+
+			String parentWindowId = reusableDocView.switchTochildWindow();
+			driver.waitForPageToBeReady();
+			String childWindowUrl = driver.getWebDriver().getCurrentUrl();
+			if (childWindowUrl.contains("PrintedDocument")) {
+				base.passedStep("printed document opened in new tab");
+			} else {
+				base.failedStep("failed to open document in new window");
+			}
+			reusableDocView.childWindowToParentWindowSwitching(parentWindowId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured wile opening documnet due to " + e.getMessage());
+		}
+		
+	}
+	/**
+	 * @author Gopinath
+	 * @Description: method to print the document and verify in background tasks
+	 * @param docId (docid to verify in background tasks)
+	 */
+	public void performPrintDocument(String docId) {
+		try {
+			base.waitForElement(getDocViewNotificationBellIcon());
+			getDocViewNotificationBellIcon().waitAndClick(10);
+			getDocViewNotificationBellIcon().waitAndClick(10);
+			base.waitForElement(getDocView_Print());
+			getDocView_Print().waitAndClick(10);
+			if (base.getSuccessMsg().getText().contains("Your document is being printed")) {
+				base.passedStep("Your document is being printed");
+			} else {
+				base.failedStep("failed to print the document");
+			}
+			base.waitForElementToBeGone(base.getSuccessMsgHeader(), 10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getBackgroundNotificationCountNew().Visible();
+				}
+			}), Input.wait30);
+			if (getBackgroundNotificationCountNew().isElementAvailable(7)) {
+				base.passedStep("Document print completed");
+				base.waitForElement(getDocViewNotificationBellIcon());
+				getDocViewNotificationBellIcon().waitAndClick(3);
+
+			} else {
+				base.failedStep("Document printing unsucessful");
+			}
+
+			String lastThreeDigitsOfDocId = docId.substring(docId.length() - 1, docId.length());
+			List<WebElement> listOfBackgroundTasks = getDocViewBackGroundTasks().FindWebElements();
+			boolean printedDocInNotification = false;
+			for (WebElement element : listOfBackgroundTasks) {
+
+
+				if (element.getText().contains(lastThreeDigitsOfDocId)) {
+					base.passedStep("Document printed and added into background tasks");
+					printedDocInNotification = true;
+					break;
+				}
+			}
+			if (printedDocInNotification == false) {
+				base.failedStep("printed doc ot added into background tasks");
+			}
+			getDocViewNotificationBellIcon().waitAndClick(3);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while print the document due to " + e.getMessage());
+		}
+		 
+	}
+	
+}
 
 	public void verifyDocsPresentWithPersistentHits(String searchstring) throws InterruptedException {
-		String persistentterm=getPersistentHit(searchstring);
-		if(persistentterm.contains(searchstring) && get_textHighlightedColor().isDisplayed()) {
+		String persistentterm = getPersistentHit(searchstring);
+		if (persistentterm.contains(searchstring) && get_textHighlightedColor().isDisplayed()) {
 			base.passedStep("Documents are present with the persistent hits");
-		}
-		else {
+		} else {
 			base.failedStep("Documents are not present with the persistent hits");
 		}
 	}
 
-}
+	/**
+	 * @author Raghuram.A
+	 * @modiedOn : 2/14/22
+	 * @param redactionTag
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	public void audioReduction(String redactionTag) throws InterruptedException, ParseException {
+		// adding redactions
+		driver.waitForPageToBeReady();
+		getDocview_RedactionsTab().waitAndClick(10);
 
+		// Audio Redaction Tag deletion
+		deleteAudioRedactionTag();
+
+		// click on + icon to add redactions
+		getDocview_RedactionsTab_Add().waitAndClick(10);
+
+		// Get Audio duration start and End time first
+		audioRedactionTimeConfig();
+
+		// Check Default Selection
+		String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
+		base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
+				"In default : Application automatically selected the ‘Default Redaction Tag’",
+				"In default : invalid redaction tag selected");
+
+		// select redaction tags
+		base.waitForElement(getDocview_AudioRedactions());
+		getDocview_AudioRedactions().selectFromDropdown().selectByVisibleText(redactionTag);
+		driver.waitForPageToBeReady();
+
+		// click on save button
+		getSaveButton().waitAndClick(20);
+
+		// verify success message
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Record added Successfully");
+		base.CloseSuccessMsgpopup();
+		System.out.println("Redaction added successfully");
+		UtilityLog.info("Redaction added successfully");
+	}
+
+	/**
+	 * @author Raghuram.A
+	 */
+	public void deleteAudioRedactionTag() {
+		if (getDocview_Redactionstags_Delete().isElementAvailable(5)) {
+			// Delete any existing redaction if any
+			getDocview_Redactionstags_Delete().waitAndClick(10);
+			driver.waitForPageToBeReady();
+
+			// click on yes button
+			getDocview_ButtonYes_D().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.VerifySuccessMessage("Record Deleted Successfully");
+			base.CloseSuccessMsgpopup();
+		} else {
+			System.out.println("No Redactions exist'");
+			UtilityLog.info("No Redactions exist'");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @throws ParseException
+	 */
+	public void audioRedactionTimeConfig() throws ParseException {
+		// Get Audio duration start and End time first
+		String Audiostarttime = getDocview_Audio_StartTime().getText();
+		System.out.println(Audiostarttime);
+		UtilityLog.info(Audiostarttime);
+		String Audioendtime = getDocview_Audio_EndTime().getText();
+		System.out.println(Audioendtime);
+		UtilityLog.info(Audioendtime);
+
+		DateFormat df = new SimpleDateFormat("HH:mm");
+		Date d = df.parse(Audiostarttime);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.MINUTE, 2);
+		String newTime = df.format(cal.getTime());
+		System.out.println(newTime);
+		UtilityLog.info(newTime);
+
+		cal.add(Calendar.MINUTE, 1);
+		String newTime1 = df.format(cal.getTime());
+		System.out.println(newTime1);
+		UtilityLog.info(newTime1);
+
+		// Enter time in start field
+		getDocview_AddRedactions_StartTime().SendKeys(newTime);
+
+		// Enter time in end field
+		getDocview_AddRedactions_EndTime().SendKeys(newTime1);
+	}
+
+}

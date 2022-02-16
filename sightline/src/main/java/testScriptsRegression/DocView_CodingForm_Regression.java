@@ -10528,11 +10528,12 @@ public class DocView_CodingForm_Regression {
 		boolean completeButton=docViewPage.getUnCompleteButton().Displayed();
 		softAssertion.assertTrue(completeButton);
   }
+	
   /*
 	 * @Author : date: 10/02/2022 Modified date: NA Modified by: Baskar
 	 * @Description:To verify that comment should displayed on the document.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 213)
+	@Test(enabled = true, groups = { "regression" }, priority = 216)
 	public void verifyCommentDisplayedOnTheDocument() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -10595,23 +10596,13 @@ public class DocView_CodingForm_Regression {
 		// logout
 		loginPage.logout();
 	}
-
-
-	@DataProvider(name = "ContentAndAudio")
-	public Object[][] ContentAndAudio() {
-		Object[][] ContentAndAudio = { { "Basic" }, { "Audio" }, };
-		return ContentAndAudio;
-	}
-
-	
-	
 	/**
 	 * @Author : Brundha
 	 * @Description:RPMXCON-51300 -Verify all of the stamp icons should be displayed
 	 *                            with tool tips when redirected from my assignment
 	 *                            and stamp are saved
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 213)
+	@Test(enabled = true, groups = { "regression" }, priority = 217)
 	public void validateToolTipInStampIcons() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -10673,7 +10664,370 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * @Author : Baskar date: 15/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify on click of the View Coding from edit coding stamp 
+	 *              saved coding form should be displayed
+	 */
 
+	@Test(enabled = true, groups = { "regression" }, priority = 218)
+	public void validateSavedStampFromViewCoding() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51263");
+		baseClass.stepInfo("Verify on click of the View Coding from edit coding "
+				+ "stamp saved coding form should be displayed");
+		String assign = "AAssgn" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Create New Assignment
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assign, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+		
+		// login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting assignment by reviewer
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(EditStamp);
+		docViewPage.clickViewCodingButton();
+		driver.waitForPageToBeReady();
+		
+		// validation from view coding stamp popup window
+		boolean viewCoding=docViewPage.getViewCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(viewCoding);
+		baseClass.stepInfo("ViewCoding stamp popup window opened");
+		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
+		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
+		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
+		softAssertion.assertEquals(comment, actual);
+		baseClass.passedStep("While View coding stamp window stamp saved value loaded successfully");
+		softAssertion.assertAll();
+		
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 15/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify on click of the View Coding from edit coding stamp saved coding 
+	 *              form should be displayed in context of security group
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 219)
+	public void validateViewCodingStampFromSG() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52054");
+		baseClass.stepInfo("Verify on click of the View Coding from edit coding stamp "
+				+ "saved coding form should be displayed in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		// stamp saving as Prerequisites
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		
+		// validation for edit coding stamp popup window
+		docViewPage.pencilGearicon(Input.stampSelection);
+		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(EditStamp);
+		docViewPage.clickViewCodingButton();
+		driver.waitForPageToBeReady();
+		
+		// validation from view coding stamp popup window
+		boolean viewCoding=docViewPage.getViewCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(viewCoding);
+		baseClass.stepInfo("ViewCoding stamp popup window opened");
+		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
+		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
+		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
+		softAssertion.assertEquals(comment, actual);
+		baseClass.passedStep("While View coding stamp window stamp saved value loaded successfully");
+		softAssertion.assertAll();
+		docViewPage.getViewCodingCloseButton().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getDeletePopUpAssignedColour());
+		docViewPage.getDeletePopUpAssignedColour().waitAndClick(10);
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Baskar date: 15/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Coding Form Child Window: Verify on click of the View Coding from edit 
+	 *              coding stamp saved coding form should be displayed in context of security group
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 220)
+	public void validateViewCodingButtonFromCW() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52055");
+		baseClass.stepInfo("Coding Form Child Window: Verify on click of the View Coding from "
+				+ "edit coding stamp saved coding form should be displayed in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		// stamp saving as Prerequisites
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		// opening child window(Coding form)
+		baseClass.stepInfo("performing action in coding form child window");
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		docViewPage.pencilGearIconCF(Input.stampSelection);
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+		driver.waitForPageToBeReady();
+		
+		// validation for edit coding stamp popup window
+		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(EditStamp);
+		docViewPage.clickViewCodingButton();
+		driver.waitForPageToBeReady();
+		
+		// validation for view coding button popup window from child window
+		boolean viewCoding=docViewPage.getViewCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(viewCoding);
+		baseClass.stepInfo("ViewCoding stamp popup window opened");
+		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
+		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
+		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
+		softAssertion.assertEquals(comment, actual);
+		baseClass.passedStep("While View coding stamp window stamp saved value loaded successfully in child window");
+		softAssertion.assertAll();
+		docViewPage.getViewCodingCloseButton().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getDeletePopUpAssignedColour());
+		docViewPage.getDeletePopUpAssignedColour().waitAndClick(10);
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 16/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify confirmation message should be displayed when overwriting 
+	 *               the stamp with already saved stamp in context of security group
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 221)
+	public void validateOverWriteMsgForSavedStampSG() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52057");
+		baseClass.stepInfo("Verify confirmation message should be displayed when "
+				+ "overwriting the stamp with already saved stamp in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Searching audio document and basic search
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+		
+		// saving the stamp as per Prerequisites
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		driver.waitForPageToBeReady();
+		
+		// validation for saved stamp displaying in edit popup window
+		docViewPage.getDrp_CodingEditStampColour().waitAndClick(5);
+		boolean assignedColour=docViewPage.getStampPopUpDrpDwnColur(Input.stampSelection).Displayed();
+		softAssertion.assertTrue(assignedColour);
+		baseClass.stepInfo("Assigned colour stamp displayed in the drop down");
+		
+		// changing the colour for already saved colour
+		docViewPage.getStampPopUpDrpDwnColur(Input.stampSelection).waitAndClick(5);
+		docViewPage.codingStampPopUpSaveButton();
+		String overWrite = docViewPage.getStampOverWriteMessage().getText().trim();
+		System.out.println(overWrite);
+		softAssertion.assertEquals(stampOverWrite, overWrite);
+		docViewPage.getNavigationButton("Yes").waitAndClick(5);
+		baseClass.passedStep("Confirmation message displayd when saving the already existing saved stamp");
+		driver.waitForPageToBeReady();
+		baseClass.VerifySuccessMessage("Coding stamp updated successfully");
+		docViewPage.deleteStampColour(Input.stampSelection);
+		softAssertion.assertAll();
+		
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 16/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify user can save the coding stamp with the stamp color which 
+	 *              is deleted in context of security group
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 222)
+	public void validateUsingSavingAndDeletingTheStamp() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52059");
+		baseClass.stepInfo("Verify user can save the coding stamp with the "
+				+ "stamp color which is deleted in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Searching audio document and basic search
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+		
+		// saving the stamp as per Prerequisites
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		driver.waitForPageToBeReady();
+		
+		// validation for saved stamp displaying in edit popup window
+		boolean assignedColour=docViewPage.getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed();
+		softAssertion.assertTrue(assignedColour);
+		baseClass.stepInfo("Assigned colour stamp displayed in the drop down");
+		baseClass.waitForElement(docViewPage.getDeletePopUpAssignedColour());
+		docViewPage.getDeletePopUpAssignedColour().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Coding stamp deleted successfully");
+		
+		// Reassign the same colour after deleting the stamp
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		baseClass.VerifySuccessMessage("Coding Stamp saved successfully");
+		docViewPage.deleteStampColour(Input.stampSelection);
+		baseClass.passedStep("After the deleting "+Input.stampSelection +"stamp, same "+Input.stampSelection +" stamp assigned again");
+		
+		// Performing same action in coding form child window as well
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		baseClass.stepInfo("Performing action from coding form child window");
+		docViewPage.switchToNewWindow(2);
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.switchToNewWindow(1);
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		docViewPage.pencilGearIconCF(Input.stampSelection);
+		
+		// validation for saved stamp displaying in edit popup window in child window
+		docViewPage.switchToNewWindow(1);
+		boolean assignedColourCF=docViewPage.getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed();
+		softAssertion.assertTrue(assignedColourCF);
+		baseClass.stepInfo("Assigned colour stamp displayed in the drop down");
+		baseClass.waitForElement(docViewPage.getDeletePopUpAssignedColour());
+		docViewPage.getDeletePopUpAssignedColour().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Coding stamp deleted successfully");
+		
+		// Reassign the same colour after deleting the stamp from child window
+		docViewPage.switchToNewWindow(2);
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.closeWindow(1);	
+		docViewPage.switchToNewWindow(1);
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		baseClass.VerifySuccessMessage("Coding Stamp saved successfully");
+		baseClass.passedStep("After the deleting "+Input.stampSelection +"stamp, same "+Input.stampSelection +" stamp assigned again from child window action");
+
+		// House Keeping activity
+		driver.Navigate().refresh();
+		driver.switchTo().alert().accept();
+		docViewPage.deleteStampColour(Input.stampSelection);
+		softAssertion.assertAll();
+		
+		// logout
+		loginPage.logout();
+	}
+
+	@DataProvider(name = "ContentAndAudio")
+	public Object[][] ContentAndAudio() {
+		Object[][] ContentAndAudio = { { "Basic" }, { "Audio" }, };
+		return ContentAndAudio;
+	}
+
+	
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {
 		return new Object[][] { { "pa", Input.pa1userName, Input.pa1password, "rmu" },

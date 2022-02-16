@@ -3692,13 +3692,16 @@ public class DocListPage {
 	 */
 	public void emailAuthorNameVerificationWithOutFilter(String emailAuthourName, boolean includeStatus) {
 		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectDropDown());
+		base.waitTillElemetToBeClickable(getSelectDropDown());
+		getSelectDropDown().Click();
+		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getRowCount());
 		String AssertAuthourName = null;
 		for (int D = 1; D <= getRowCount().size(); D++) {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getAssertEmailAuthorName(D));
 			AssertAuthourName = getAssertEmailAuthorName(D).getText();
-			System.out.println(AssertAuthourName);
 			if (includeStatus == true) {
 				if (!AssertAuthourName.toLowerCase().contains(emailAuthourName)) {
 					base.failedStep("The Filter AuthorName:" + AssertAuthourName + " and  Document AuthorName "
