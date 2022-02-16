@@ -1320,6 +1320,18 @@ public class DocViewRedactions {
 		return driver.FindElementById("liDocumentDefaultView");
 	}
 	
+	public Element imagesTabSlider() {
+		return driver.FindElementById("slider_divDocViewerImage");
+	}
+	
+	public Element ImagesTabRightRotate() {
+		return driver.FindElementById("rotateRight_divDocViewerImage");
+	}
+	
+	public Element ImagesTabLeftRotate() {
+		return driver.FindElementById("rotateLeft_divDocViewerImage");
+	}
+	
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements
