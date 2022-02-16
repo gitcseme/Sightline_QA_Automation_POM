@@ -73,6 +73,7 @@ public class CommunicationExplorer_Regression1 {
 		bc.stepInfo("Test case Id: RPMXCON-56969");
 		bc.stepInfo("Verify and generate Communications Explorer with source as Search");
 		lp.loginToSightLine(username, password);
+		SoftAssert softAssertion = new SoftAssert();
 		bc.stepInfo("Logged in as -" + role);
 		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		driver.waitForPageToBeReady();
@@ -89,6 +90,49 @@ public class CommunicationExplorer_Regression1 {
 
 		}
 
+	}
+	/**
+	 * @author Jayanthi
+	 * @throws InterruptedException
+	 * @description Verify that Exclude filter functionality works properly when TAG name 
+				contains word between on Communications Explorer screen
+	 */
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority =2 , enabled = true)
+	public void  VerifyExcludeFiltersFunctionality_ComMapExp(String username, String password, String role) throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-54955");
+		bc.stepInfo("Verify that Exclude filter functionality works properly when TAG name "
+				+ "contains word between on Communications Explorer screen");
+		lp.loginToSightLine(username, password);
+		bc.stepInfo("Logged in as -" + role);
+		search = new SessionSearch(driver);
+		TagsAndFoldersPage tagPage = new TagsAndFoldersPage(driver);
+		//Creating tag with name contains 'between' and buk tagging the docs obtained 
+		//from metadata search(Email author name-"Gouri dhavalikar")
+		String TagName1="Correspondence between the parties"+Utility.dynamicNameAppender();
+		String MetaSearch=Input.EmailAuthourName; 	
+		search.MetaDataSearchInAdvancedSearch( Input.MetaDataEAName,MetaSearch);
+	    search.bulkTag(TagName1);
+		bc.stepInfo("Created a Tag with name--"+TagName1);
+		//Generating Communication exp report with Def sec group as source
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		comExpPage.generateReportusingDefaultSG();
+		bc.stepInfo("Report Generated.");
+		//Applying Exclude filter for Tag  (if false it will perform as exclude filter)
+		comExpPage.include(TagName1, "Tags",null, false);
+		comExpPage.getCommunicationExplorer_ApplyBtn().waitAndClick(10);
+		bc.waitTime(3);
+		comExpPage.clickReport();
+		//selecting the docs from communication exp page report and viewing in doc list page
+		//to check whether the exclude functionality filtered the selcted  Tag  docs
+		comExpPage.viewinDoclist();
+		DocListPage DLPage = new DocListPage(driver);
+		DLPage.SelectColumnDisplay(	DLPage.getSelectEmailAuthorName());
+		DLPage.emailAuthorNameVerificationWithOutFilter(Input.EmailAuthourName,false);
+		if(role=="PA") {
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagPage.deleteAllTags("Correspondence between the parties");
+		}
 	}
 
 	@BeforeMethod
