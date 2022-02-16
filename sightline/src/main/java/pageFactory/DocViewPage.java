@@ -2413,7 +2413,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocumentsCommentViewCoding() {
-		return driver.FindElementByXPath("//div[@id='viewCodingStamp']//textarea[@id='1_textarea']");
+		return driver.FindElementById("//div[@id='viewCodingStamp']//textarea[@id='1_textarea']");
 	}
 
 	public Element getDocListAllDocCheckBox() {
@@ -3105,11 +3105,12 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//i[@class='fa fa-angle-right']");
 	}
 
-	
+
 	//Added by Gopinath - 14/02/2022
 	public Element selectRedactionTag() {
 		return driver.FindElementByXPath("//select[@id='ddlRedactionTagsForPopup']/option[@selected]");
 	}
+	
 	// Added by Baskar -14/02/2022
 	// View coding stamp popup window
 	public Element getViewCodingStamp_PopUpWindow() {
@@ -3119,6 +3120,7 @@ public class DocViewPage {
 	public Element getEditCodingStamp_PopUpWindow() {
 		return driver.FindElementByXPath("//span[text()='Edit Coding Stamp']");
 	}
+
 
 	public DocViewPage(Driver driver) {
 
@@ -9239,7 +9241,7 @@ public class DocViewPage {
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
 		getDocView_Analytics_NearDupeTab().ScrollTo();
-		base.waitForElement(getDocView_Analytics_NearDupe_Doc(3));
+		base.waitTillElemetToBeClickable(getDocView_Analytics_NearDupe_Doc(3));
 		getDocView_Analytics_NearDupe_Doc(3).waitAndClick(5);
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
 		getCodeSameAsNearDupe().waitAndClick(15);
@@ -9269,6 +9271,10 @@ public class DocViewPage {
 	public void completeDocsAndVerifyCheckMark() {
 
 		try {
+			base.waitForElement(getResponsiveCheked());
+			getResponsiveCheked().Click();
+			base.waitForElement(getNonPrivilegeRadio());
+			getNonPrivilegeRadio().Click();
 			base.waitForElement(getCompleteDocBtn());
 			getCompleteDocBtn().waitAndClick(10);
 
@@ -24467,9 +24473,9 @@ public class DocViewPage {
 			base.failedStep("Exception occcured while verifying completed production name displayed on image tab options." + e.getMessage());
 
 		}
+		
 	}
-
-
+		
 
 	public Element getNotchSymboInPersistentHits() {
 		return driver.FindElementByXPath("//span[text()='Term:']/parent::strong/parent::div/descendant::div[@class='pull-right']");
@@ -24660,6 +24666,7 @@ public class DocViewPage {
 		driver.Navigate().back();
 		base.passedStep("Leave and cancel button displayed when navigation done through back button in Leave");
 		driver.switchTo().alert().accept();
+		
 	}
 /**
 	 * @Author Brundha
@@ -24684,6 +24691,7 @@ public class DocViewPage {
 
 
 	}
+	
 	
 
 	/**

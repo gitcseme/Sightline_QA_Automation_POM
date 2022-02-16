@@ -57,7 +57,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description : To verify that Search text box should be REMOVED from both the
 	 *              Original and NearDupe windows of near dupe comparison window
 	 *              RPMXCON-51707
-	 * 
+	 * stabilization done
 	 */
 	@Test(priority = 1, enabled = true, groups = { "regression" })
 	public void verifySearchTextboxIsDisplayedInNearDupeComparisonWindow()
@@ -174,7 +174,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify whether the DocID is getting displayed in the near
 	 *              dupe comparison window. RPMXCON-51710
-	 * 
+	 * stabilization done
 	 */
 	@Test(priority = 2, enabled = true, groups = { "regression" })
 	public void verifyDocIdIsDisplayedInNearDupeComparisonWindow()
@@ -316,7 +316,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify that 'Apply Coding to this Near Dupe' is not be
 	 *              visible for Project Admin user. RPMXCON-51715
-	 * 
+	 * stabilization done
 	 */
 	@Test(priority = 3, enabled = true, groups = { "regression" })
 	public void verifyApplyCodingNearDupeNotvisibleForProjectAdminUser()
@@ -481,7 +481,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify 'View in doc list' action when no document in
 	 *              Threaded Map panel. RPMXCON-50868
-	 * 
+	 * stabilization done
 	 */
 	@Test(priority = 5, enabled = true, groups = { "regression" })
 	public void verifyViewInDoclistWhenNoDocumentSelected() {
@@ -758,6 +758,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Near Dupe child window and Save/Complete clicked from coding
 	 *              form child window 'RPMXCON-51381'
 	 * @throws InterruptedException
+	 * 
+	 * stabilization done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyCodeAsSameNearDupeSimilarChildWindow() throws InterruptedException {
@@ -1011,9 +1013,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Near Dupe and Save/Complete clicked from coding form child
 	 *              window'RPMXCON-51379'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
 
-	// Doc issue
+	
 	 @Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyCodeAsSameWithCodingFormChildWindow() throws InterruptedException {
 
@@ -1121,6 +1124,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Near Dupe child window and Save/Complete clicked from coding
 	 *              form parent window'RPMXCON-51380'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyCodeAsSameNearDupeSimilarParentWindow() throws InterruptedException {
@@ -1285,7 +1289,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	//@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyDocsCompletedApplyingStamp() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1386,7 +1390,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 12)
+	//@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyDocsCompletedApplyingStampAndCodeSameAsLast() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
