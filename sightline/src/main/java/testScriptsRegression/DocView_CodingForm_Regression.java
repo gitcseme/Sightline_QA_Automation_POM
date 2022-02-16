@@ -10866,7 +10866,7 @@ public class DocView_CodingForm_Regression {
 	}
 	
 	/**
-	 * @Author : Baskar date: 16/02/2021 Modified date: NA Modified by: Baskar
+	 * @Author : Baskar date: 16/02/2022 Modified date: NA Modified by: Baskar
 	 * @Description:Verify confirmation message should be displayed when overwriting 
 	 *               the stamp with already saved stamp in context of security group
 	 */
@@ -10927,7 +10927,7 @@ public class DocView_CodingForm_Regression {
 	}
 	
 	/**
-	 * @Author : Baskar date: 16/02/2021 Modified date: NA Modified by: Baskar
+	 * @Author : Baskar date: 16/02/2022 Modified date: NA Modified by: Baskar
 	 * @Description:Verify user can save the coding stamp with the stamp color which 
 	 *              is deleted in context of security group
 	 */
