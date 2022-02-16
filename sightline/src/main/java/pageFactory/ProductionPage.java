@@ -17408,4 +17408,86 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 	}
 
+	
+	/**
+	 * @author Brundha
+	 * @description :filling Document selection tab
+	 * 
+	 */
+	public void fillingDocumentSlectionTab(String foldername) {
+		base.waitForElement(getFolderRadioButton());
+		getFolderRadioButton().waitAndClick(10);
+		getSelectFolder(foldername).isElementAvailable(120);
+		getSelectFolder(foldername).isDisplayed();
+		getSelectFolder(foldername).waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		getIncludeFamilies().isDisplayed();
+		String color =(getIncludeFamilies()).GetCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor = "#a9c981";
+		base.textCompareEquals(ActualColor,ExpectedColor,"Include families toggle is on by default", "Include families members toggle is not on by default");
+		base.stepInfo("Filled document selection tab");
+	}
+	/**
+	 * @author Brundha
+	 * @description :method for filling burn redaction with redaction tags.
+	 * 
+	 */
+	public void burnRedactionWithRedactionTags(String Tag1,String Tag2) {
+		
+			base.waitForElement(getClkLink_selectingRedactionTags());
+			getClkLink_selectingRedactionTags().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClkBtn_selectingRedactionTags());
+			getClkBtn_selectingRedactionTags().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(BurnRedactionCheckBox(Tag1));
+			BurnRedactionCheckBox(Tag1).waitAndClick(10);
+			base.waitForElement(BurnRedactionCheckBox(Tag2));
+			BurnRedactionCheckBox(Tag2).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClk_selectBtn());
+			getClk_selectBtn().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(gettextRedactionPlaceHolder());
+			gettextRedactionPlaceHolder().Click();
+			gettextRedactionPlaceHolder().SendKeys(Input.searchString4);
+			base.stepInfo("Burn redaction  is filled successfully");
+		
+	}
+
+	
+	/**
+	 * @author Brundha
+	 * @description :verifying include families toggle
+	 * 
+	 */
+	
+	public void verifyingIncludeFamiliesToggleInDocumentSelectionPage() {
+		
+	   driver.scrollPageToTop();
+	   getMarkCompleteLink().waitAndClick(10);
+	   base.VerifySuccessMessage("Mark Complete successful");
+	   base.waitTillElemetToBeClickable(getMarkInCompleteBtn());
+	   getMarkInCompleteBtn().Click();
+	   driver.scrollingToBottomofAPage();
+	   getIncludeFamilies().waitAndClick(10); 
+	   driver.scrollingToBottomofAPage();
+	   base.waitForElement(getIncludeFamilies());
+	   getIncludeFamilies().Click();
+	   driver.waitForPageToBeReady();
+	   getMarkCompleteLink().waitAndClick(10);
+	   if(getMarkCompleteLink().isDisplayed()) {
+	      getMarkCompleteLink().waitAndClick(10);
+	      base.VerifySuccessMessage("Mark Complete successful");
+		  base.passedStep("There is no error message as expected");
+	  }else {base.failedStep("Error message is displayed");  }
+	}	   
+		    	
+		   
+	   
+	
+
 }
