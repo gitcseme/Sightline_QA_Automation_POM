@@ -3931,7 +3931,69 @@ public class DocView_Regression2 {
 		}
 	}
 	
-	/*  
+
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51106
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =57)
+	public void verifyDocViewOptionsInTiff(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51106");
+		baseClass.stepInfo("Verify user can select any of the menu option from Images tab- Zoom in, Zoom out, rotation, Slider, Fit to Width");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.TiffDocId);
+		sessionsearch.ViewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.imagesIconDocView().Visible() && docViewRedact.imagesIconDocView().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.imagesIconDocView().waitAndClick(5);
+		baseClass.stepInfo("Successfully navigated to images tab in DocView");
+		if(docViewRedact.imagesTabZoomOut().isDisplayed()) {
+			baseClass.passedStep("images Tab zomm out is Visible");
+		} else {
+			baseClass.failedStep("images Tab zoom out is not visible");
+		}
+		
+		if(docViewRedact.imagesTabZoomIn().isDisplayed()) {
+			baseClass.passedStep("images Tab zoom in is Visible");
+		} else {
+			baseClass.failedStep("images Tab zoom in is not visible");
+		}
+	
+		if(docViewRedact.imagesTabZoomFitToScreen().isDisplayed()) {
+			baseClass.passedStep("images Tab fit to screen option is avilablee");
+		} else {
+			baseClass.failedStep("images Tab fit to screen option is not avilable");
+		}
+		
+		if(docViewRedact.ImagesTabRightRotate().isDisplayed()) {
+			baseClass.passedStep("images Tab Rotate right option is avilablee");
+		} else {
+			baseClass.failedStep("images Tab Rotate right option is not avilable");
+		}
+		
+		if(docViewRedact.ImagesTabLeftRotate().isDisplayed()) {
+			baseClass.passedStep("images Tab Rotate left option is avilablee");
+		} else {
+			baseClass.failedStep("images Tab Rotate left option is not avilable");
+		}
+		
+		if(docViewRedact.imagesTabSlider().isDisplayed()) {
+			baseClass.passedStep("images Tab Slider option is avilablee");
+		} else {
+			baseClass.failedStep("images Tab Slider option is not avilable");
+		}
+		loginPage.logout();
+		
+	}
+
+  
+  	/*  
      *Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51306
 	 * Description :Verify persistent Hit panel of DocView should present only content terms, not work product when navigating from advance search
 	 */
