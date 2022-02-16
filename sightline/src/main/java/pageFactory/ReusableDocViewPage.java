@@ -477,6 +477,10 @@ public class ReusableDocViewPage {
 	 */
 //	Reusable method for click coding stamp button and text box filling & assign colour  
 	public void stampColourSelection(String fieldValue, String colour) {
+		base.waitForElement(getResponsiveCheked());
+		getResponsiveCheked().Click();
+		base.waitForElement(getNonPrivilegeRadio());
+		getNonPrivilegeRadio().Click();
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodingFormStampButton());
 		getCodingFormStampButton().waitAndClick(10);

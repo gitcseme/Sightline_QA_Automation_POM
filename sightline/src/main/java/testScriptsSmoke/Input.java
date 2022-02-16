@@ -274,6 +274,9 @@ public class Input {
 	public static String DocIdWithHiddenContent;
 	public static String TextHidden;
 	public static String warningMessage;
+	public static String HiddenContentExcelSheet;
+	public static String HiddenContentExcelBook;
+	public static String HiddenContentExternalLink;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -770,6 +773,9 @@ public class Input {
 		docNearDupeDocId = testData.getDocNearDupeDocId();
 		UniCodeDocId = testData.getUniCodeDocId();
 		TiffDocId = testData.getTiffDocId();
+		HiddenContentExcelSheet = testData.getHiddenContentExcelSheet();
+	    HiddenContentExcelBook = testData.getHiddenContentExcelBook();
+		HiddenContentExternalLink = testData.getHiddenContentExternalLink();
 
 		// Added by Arun
 		pageRange1 = testData.getPageRange1();

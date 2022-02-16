@@ -298,6 +298,10 @@ public class TestData {
 	public String docIdKeyWordTest;
 	public String keyWordHexCode;
 	public String docIdThumbnails;
+	public String HiddenContentExcelSheet;
+	public String HiddenContentExcelBook;
+	public String HiddenContentExternalLink;
+	
 	
 
 	
