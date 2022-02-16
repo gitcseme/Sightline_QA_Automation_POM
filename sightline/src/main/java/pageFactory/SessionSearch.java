@@ -10499,4 +10499,26 @@ public class SessionSearch {
 			PureHitsFromSelectedResult.get(i).click();
 		}
 	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 */
+	public void bulkAssignWithOutPureHit() {
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+
+		System.out.println("Pure hit block already moved to action panel");
+		UtilityLog.info("Pure hit block already moved to action panel");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkAssignAction().Visible();
+			}
+		}), Input.wait60);
+
+		getBulkAssignAction().waitAndClick(10);
+
+		base.stepInfo("performing bulk assign");
+		UtilityLog.info("performing bulk assign");
+
+	}
 }

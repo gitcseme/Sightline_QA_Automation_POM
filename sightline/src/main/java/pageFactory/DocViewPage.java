@@ -54,6 +54,7 @@ public class DocViewPage {
 	SavedSearch savedSearch;
 	AssignmentsPage assgnpage;
 	ReusableDocViewPage reusableDocView;
+	MiniDocListPage miniDocListpage;
 	public static String codeSameDocumentid;
 	List<String> docIDlist = new ArrayList<>();
 	List<String> completedDoc = new ArrayList<>();
@@ -61,6 +62,7 @@ public class DocViewPage {
 	List<String> completeStampList = new ArrayList<>();
 	String navigationConfirmationMsg = "This action will not save your edits, please save your changes before navigating away from Doc View. Do you want to still navigate away without saving your changes ?";
 	String backButtonMsg = "Changes that you made may not be saved.";
+	List<String> afterActionselectedFieldsList;
 
 	public Element getDocView_info() {
 		return driver.FindElementById("totalRecords");
@@ -25065,7 +25067,7 @@ public class DocViewPage {
 		 
 	}
 	
-}
+
 
 	public void verifyDocsPresentWithPersistentHits(String searchstring) throws InterruptedException {
 		String persistentterm = getPersistentHit(searchstring);
@@ -25201,4 +25203,39 @@ public class DocViewPage {
 		}
 	}
 
+	/**
+	 * @author Vijaya.Rani date: 16/02/2022 Modified date:N/A
+	 * @Description: This method used to verify manual Sort order
+	 * 
+	 */
+	public void verifyReviewModeSortOrder() {
+		miniDocListpage = new MiniDocListPage(driver);
+		softAssertion = new SoftAssert();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getReviewGearIcon());
+		getReviewGearIcon().waitAndClick(5);
+		base.stepInfo("Configure MiniDocList Popup window is open successfully");
+
+		softAssertion.assertTrue(getDocView_ConfigMinidoclist_ManualSort().Displayed());
+		softAssertion.assertAll();
+		base.passedStep("Manual Sort order is displayed successfully");
+		base.waitForElement(getDocView_ConfigMinidoclist_ManualSort());
+		getDocView_ConfigMinidoclist_ManualSort().waitAndClick(10);
+
+		base.waitForElement(getDocView_MiniDocFields_Remove());
+		getDocView_MiniDocFields_Remove().waitAndClick(10);
+		afterActionselectedFieldsList = miniDocListpage.verifyingWebFieldShouldNotMoreThanFourCustomData();
+		base.waitForElement(getConfigSvaeButton());
+		getConfigSvaeButton().waitAndClick(5);
+		String configureSelectedData = afterActionselectedFieldsList.toString().toUpperCase();
+		base.stepInfo("Configured MiniDocList WebField Value : " + configureSelectedData);
+		driver.waitForPageToBeReady();
+		String headerVlaueAfterConfig = reusableDocView.defaultHeaderValue();
+		base.stepInfo("MiniDocList configuration header value : " + headerVlaueAfterConfig);
+		softAssertion.assertEquals(configureSelectedData, headerVlaueAfterConfig);
+		System.out.println(configureSelectedData);
+		System.out.println(headerVlaueAfterConfig);
+		base.passedStep("Configure MiniDocliast Selected Fields is Display Successfully");
+
+	}
 }

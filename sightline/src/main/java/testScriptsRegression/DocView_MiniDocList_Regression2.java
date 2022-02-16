@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +20,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
@@ -857,6 +859,60 @@ public class DocView_MiniDocList_Regression2 {
 		}
 	}
 	
+	/**
+	 * @Author : Vijaya.Rani date: 16/02/2022 Modified date: NA Modified by: NA
+	 * @Description : To verify sorting criteria of manual mode is for that session of user only
+	 * and for that assignment only.'RPMXCON-50891' Sprint-12
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	public void verifySortingCriteriaMnualModeForAssignment() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50891");
+		baseClass.stepInfo(
+				"To verify sorting criteria of manual mode is for that session of user only and for that assignment only");
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+		String Assname = "Assigname" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// search to Assignment creation
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
+
+		// Select Assignment in Manage Assignment to DocViewPage
+		driver.getWebDriver().navigate().back();
+		assignmentPage.manageAssignmentToDocViewAsRmu(Asssignment);
+		
+		//MiniDocList Manual Sort order
+		docViewPage.verifyReviewModeSortOrder();
+		
+		//Rearrange the web fields
+		miniDocListpage.sortingVerifyAfterSelectedWebFields();
+		
+		sessionSearch.bulkAssignWithOutPureHit();
+		assignmentPage.assignmentCreation(Assname, Input.codingFormName);
+
+		// Select Assignment in Manage Assignment to DocViewPage
+		driver.getWebDriver().navigate().back();
+		assignmentPage.manageAssignmentToDocViewAsRmu(Assname);
+		ElementCollection docID = miniDocListpage.getListofDocIDinCW();
+		List<String> sortOrderAscending = miniDocListpage.availableListofElements(docID);
+		ElementCollection docIDs = miniDocListpage.getListofDocIDAfterInterchange();
+		List<String> sortOrderAscendings =miniDocListpage.availableListofElements(docIDs);
+		if (sortOrderAscending.equals(sortOrderAscendings)) {
+			baseClass.failedStep("Values are not in ascending order");
+			
+		} else {
+			baseClass.passedStep("Verified Before Assignment is manual mode sort sequence is not retain the new Assignment.");
+		}
+		
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
