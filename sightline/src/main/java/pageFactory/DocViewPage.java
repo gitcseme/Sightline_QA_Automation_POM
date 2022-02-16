@@ -24834,5 +24834,33 @@ public class DocViewPage {
 		// Enter time in end field
 		getDocview_AddRedactions_EndTime().SendKeys(newTime1);
 	}
+	
+	/**
+	 * @author Arunkumar
+	 * @description: method to verify work product term on persistent panel
+	 *             
+	 */
+	public void verifyWorkProductTermDisplayingOnPersistentPanel(String workproduct) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+		getPersistantHitEyeIcon().waitAndClick(30);
+
+		List<String> persistentNames = new ArrayList<String>();
+		List<WebElement> persistentElements = getPersistantNames().FindWebElements();
+		for (WebElement persistentNameElement : persistentElements) {
+			persistentNames.add(persistentNameElement.getAttribute("data-custom-id").trim());
+		}
+		System.out.println(persistentNames);
+		if (persistentNames.contains(workproduct)) {
+			base.failedStep("Work product terms are displaying on the persistent panel ");
+		} else {
+			base.passedStep("Work product terms are not displaying on the persistent panel");
+		}
+	}
 
 }

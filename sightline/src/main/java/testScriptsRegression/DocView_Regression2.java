@@ -3931,10 +3931,33 @@ public class DocView_Regression2 {
 		}
 	}
 	
+	/*  
+     *Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51306
+	 * Description :Verify persistent Hit panel of DocView should present only content terms, not work product when navigating from advance search
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 58)
+	public void verifyWorkProductDisplayOnPersistentPanel(String fullName, String userName, String password) throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+	
+		String searchName = "Asavedsearch"+utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(userName,password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51306");
+		baseClass.stepInfo("Verify persistent Hit panel of DocView should present only content terms, not work product when navigating from advance search");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.saveSearch(searchName);
+		driver.waitForPageToBeReady();
+		sessionsearch.selectSavedsearchInASWp(searchName);
+		sessionsearch.serarchWP();
+		sessionsearch.ViewInDocView();
+		docView.verifyWorkProductTermDisplayingOnPersistentPanel(searchName);
+		loginPage.logout();
+		
+	}
 	
 
-
-	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
