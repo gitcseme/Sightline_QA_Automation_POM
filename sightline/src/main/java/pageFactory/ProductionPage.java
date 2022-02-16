@@ -17302,6 +17302,25 @@ public class ProductionPage {
 		
 	}
 	/**
+
+	 * @Author Brundha
+	 * Description:verifying the belly band message in DAT section .
+	 */
+	public void verifyingBellyBandMessageInDATSection(String Batesnumber) {
+		driver.scrollPageToTop();
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+		String ActualBellyBandMsg=getErrorMsgPopupInDAT().getText();
+		String ExpectedMsg="In the DAT configuration, at least one of the project fields is mapped to multiple DAT fields. Do you want to continue with this same configuration?";
+		
+		base.textCompareEquals(ActualBellyBandMsg, ExpectedMsg,"Message is displayed as Expected","Mesaage is not displayed as expected");
+		base.waitForElement(getOkButton());
+		getOkButton().Click();
+		base.VerifySuccessMessage("Mark Complete successful");
+		
+	}
+	
+/**
 	 * @author Aathith.Senthilkumar
 	 * @param element
 	 * @param text
