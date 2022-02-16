@@ -318,7 +318,7 @@ public class SavedSearch {
 
 	// Added By Jeevitha
 	public Element getSavedSearchNewNode() {
-		return driver.FindElementByXPath("(//a[@data-content='My Saved Search']//following-sibling::ul//a)[last()]");
+		return driver.FindElementByXPath("(//a[text()='My Saved Search']//following-sibling::ul//a)[last()]");
 	}
 
 	public Element getRenameButton() {
@@ -871,6 +871,10 @@ public class SavedSearch {
 
 	public ElementCollection getList() {
 		return driver.FindElementsByXPath(".//*[@id='jsTreeSavedSearch']//a[contains(.,'New node')]");
+	}
+
+	public Element getSavedSearchExpandStats() {
+		return driver.FindElementByXPath("//a[@class='jstree-anchor jstree-clicked']//parent::li");
 	}
 
 	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
@@ -1891,19 +1895,16 @@ public class SavedSearch {
 	/**
 	 * @param searchName
 	 * @author Jeevitha Description: creates new search group
+	 * @modifiedBy : Raghuram @modifiedOn : 2/9/22
 	 */
 	public void createNewSearchGrp(String searchName) {
 
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSavedSearchNewGroupButton().Visible();
-			}
-		}), Input.wait60);
-		getSavedSearchNewGroupButton().Click();
+		navigateToSSPage();
+		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		getSavedSearchNewGroupButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
-
+		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		driver.waitForPageToBeReady();
 		base.VerifySuccessMessage("Save search tree node successfully created.");
 	}
 
@@ -2150,13 +2151,13 @@ public class SavedSearch {
 	/**
 	 * @param searchName
 	 * @author Raghuram Date : 9/21/21 Description: creates new search group
-	 *         Modified on : N/A modified by : N/A
+	 *         Modified on : 2/9/22 modified by : Raghuram - as per new
+	 *         implementation - still need to verify the impacted methods
 	 * @throws InterruptedException
 	 */
 	public String createSearchGroupAndReturn(String searchName, String role, String verifyNodeEmptyInitally)
 			throws InterruptedException {
 		createNewSearchGrp(searchName);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
 		String newNode = getSavedSearchNewNode().getText();
 		System.out.println("Via : " + role + " Created new node : " + newNode);
 		base.stepInfo("Via : " + role + " Created new node : " + newNode);
@@ -2565,28 +2566,34 @@ public class SavedSearch {
 	}
 
 	/**
-	 * @author Jeevitha Description: Selects created Node Modified on : 6/10/21 by :
-	 *         Jeevitha
+	 * @author Jeevitha Description: Selects created Node Modified on : 2/10/22 by :
+	 *         Raghuram
 	 */
 	public void selectNode1(String Node) {
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSavedSearchNewGroupExpand().Visible();
-				}
-			}), Input.wait60);
-			getSavedSearchNewGroupExpand().waitAndClick(20);
-		} catch (Exception e) {
 
+		if (getSavedSearchExpandStats().isElementAvailable(5)) {
+			sgExpansion();
+		} else {
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			sgExpansion();
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
 
-			public Boolean call() {
-				return getCreatedNode(Node).Visible();
-			}
-
-		}), Input.wait60);
+		base.waitForElement(getCreatedNode(Node));
 		getCreatedNode(Node).waitAndClick(20);
+	}
+
+	/**
+	 * @author Raghuram.A
+	 */
+	public void sgExpansion() {
+		String status = getSavedSearchExpandStats().GetAttribute("class");
+		if (status.contains("closed")) {
+			System.out.println("To be Expanded");
+			getSavedSearchNewGroupExpand().waitAndClick(10);
+		} else {
+			System.out.println("Already Expanded");
+		}
 	}
 
 	/**
@@ -3130,7 +3137,7 @@ public class SavedSearch {
 	/**
 	 * @param searchName
 	 * @author Raghuram A Date : 9/28/21 Description: creates multiple new search
-	 *         group - In-progress Modified on : N/A modified by : N/A
+	 *         group - In-progress Modified on : 2/10/22 modified by : Raghuram
 	 * @throws InterruptedException
 	 */
 	public List<String> createSGAndReturn(String role, String verifyNodeEmptyInitally, int size)
@@ -3141,6 +3148,8 @@ public class SavedSearch {
 			base.waitForElement(getSavedSearchNewGroupButton());
 			getSavedSearchNewGroupButton().Click();
 			Thread.sleep(2000);// to handle wait for observing the text
+//			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); //base on new implementation
+			getTermReportTitle().waitAndClick(5);
 			try {
 				if (getSuccessPopup().isElementAvailable(3)) {
 					base.VerifySuccessMessage("Save search tree node successfully created.");
@@ -3154,9 +3163,10 @@ public class SavedSearch {
 				break;
 			}
 			System.out.println("Clicked New SearchGroup");
-			Thread.sleep(3000);// to handle wait for observing the text
-			getSavedSearchNewGroupExpand().waitAndClick(10);
+			Thread.sleep(2000);// to handle wait for observing the text
+//			getSavedSearchNewGroupExpand().waitAndClick(10); //base on new implementation
 			driver.waitForPageToBeReady();
+			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);// for new implementation
 			String newNode = getCurrentNodeLastChild().getText();
 			newNodeList.add(newNode);
 			getCurrentNodeLastChild().waitAndClick(10);
@@ -5694,7 +5704,7 @@ public class SavedSearch {
 	 */
 	public void deleteNode(String GroupName, String Node) {
 
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		navigateToSSPage();
 		getSavedSearchGroupName(GroupName).waitAndClick(10);
 		selectNode1(Node);
 		base.waitForElement(getSavedSearchDeleteButton());
@@ -7168,12 +7178,19 @@ public class SavedSearch {
 
 		base.VerifySuccessMessage(
 				"Successfully added to background search. In the search group being executed, searches that are referring to other searches in the same search group will be errored out. You can select the errored searches and run them individually.");
+
+		String expected = "Successfully added to background search. In the search group being executed, searches that are referring to other searches in the same search group will be errored out. You can select the errored searches and run them individually.";
+		String actualMsg = getNotficationStatusMessage().getText();
+		softAssertion.assertEquals(actualMsg, expected);
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return bc.initialBgCount() == Bgcount + 1;
 			}
 		}), Input.wait60);
 		System.out.println("Got notification!");
+
+		softAssertion.assertAll();
 	}
 
 	/**
@@ -7183,7 +7200,7 @@ public class SavedSearch {
 	 */
 	public List<String> getListFromSavedSearchTable(String headerName) {
 		int i;
-		i = base.getIndex(gettableHeaders(headerName), headerName);
+		i = base.getIndex(gettableHeaders(), headerName);
 		System.out.println(i);
 
 		base.waitForElement(getNumberOfSavedSearchToBeShown());
@@ -7191,7 +7208,7 @@ public class SavedSearch {
 		driver.waitForPageToBeReady();
 		List<String> elementNames = new ArrayList<>();
 		List<WebElement> elementList = null;
-		elementList = getColumnValues(i + 1).FindWebElements();
+		elementList = getColumnValues(i).FindWebElements();
 		for (WebElement webElementNames : elementList) {
 			String elementName = webElementNames.getText();
 			elementNames.add(elementName);
@@ -7411,6 +7428,49 @@ public class SavedSearch {
 		getLastStatusAs(statusToCHeck).waitAndClick(2);
 		getSavedSearch_ApplyFilterButton().waitAndClick(2);
 		verifyExecutionStatusInSavedSearchPage(statusToCHeck);
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param statusToCHeck
+	 * @param column
+	 * @param multiPage
+	 * @throws InterruptedException
+	 */
+	public void verifyStatusFilterT(String statusToCHeck, String column, Boolean multiPage)
+			throws InterruptedException {
+		List<String> list = new ArrayList<>();
+		String passMsg = statusToCHeck + " : is the Status Displayed";
+		String failMsg = "Able to See other status";
+
+		System.out.println(statusToCHeck);
+		base.stepInfo("To verify " + column + " Status By applying filter");
+		getStatusDropDown().waitAndClick(2);
+		getLastStatusAs(statusToCHeck).waitAndClick(2);
+		getSavedSearch_ApplyFilterButton().waitAndClick(2);
+		driver.waitForPageToBeReady();
+		list = getListFromSavedSearchTable(column);
+		if (list.size() > 0) {
+			base.compareListWithString(list, statusToCHeck, passMsg, failMsg);
+		} else {
+			base.failedMessage("No data Available");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : N/A @modifiedby : N/A
+	 * @param time
+	 * @throws InterruptedException
+	 */
+	public void loadTimeCheckWithPageSpinningWheel(int time) throws InterruptedException {
+
+		int latencyCheckTime = time;
+		String passMessage = "Application not hang or shows latency more than " + latencyCheckTime + " seconds.";
+		String failureMsg = "Continues Loading more than " + latencyCheckTime + " seconds.";
+
+		// Load latency Verification
+		Element loadingElement = getspinningWheel();
+		loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
 	}
 
 }

@@ -61,10 +61,7 @@ public class Production_Test_Regression {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-		Input input = new Input();
-		input.loadEnvConfig();
-		base = new BaseClass(driver);
-		driver = new Driver();
+		
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -75,6 +72,10 @@ public class Production_Test_Regression {
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.info(testMethod.getName());
 		base = new BaseClass(driver);
+		Input input = new Input();
+		input.loadEnvConfig();
+		base = new BaseClass(driver);
+		driver = new Driver();
 
 		// Login as a PA
 		loginPage = new LoginPage(driver);
@@ -4181,7 +4182,257 @@ public class Production_Test_Regression {
 				//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 				loginPage.logout();
 				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-55627
+				 * @Description: To Verify  ordering sequence for production status for 'Filter By:' field. Verify for both Grid and Tile view.
+				 */
+				@Test(groups = { "regression" }, priority = 69)
+				public void verifyProductionState() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("Test Cases Id : RPMXCON-55627");
+				base.stepInfo("To Verify  ordering sequence for production status for 'Filter By:' field. Verify for both Grid and Tile view.");
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				String prefixID = "A_" + Utility.dynamicNameAppender();
+				String suffixID = "_P" + Utility.dynamicNameAppender();
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+
+				//completed state 
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPageAndPassingText(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
 				
+				//failed
+				page = new ProductionPage(driver);
+				//beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.navigateToNextSection();
+				//page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPageAndPassingText(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.clickGenarateWaitForRegenarate();
+				
+				//Draft state
+				page = new ProductionPage(driver);
+				beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.navigateToNextSection();
+				
+				//Inprogress state
+				page = new ProductionPage(driver);
+				beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPageAndPassingText(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.clickOnGenerateButton();
+				
+				//view all state
+				page = new ProductionPage(driver);
+				base.waitForElement(page.getFilterByButton());
+				page.getFilterByButton().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				page.getElementDisplayCheck(page.getFilterByDRAFT());
+				page.getElementDisplayCheck(page.getFilterByINPROGRESS());
+				page.getElementDisplayCheck(page.getFilterByFAILED());
+				page.getElementDisplayCheck(page.getFilterByCOMPLETED());
+				base.stepInfo("All option is available in the list");
+				base.waitForElement(page.getFilterByCOMPLETED());
+				page.getFilterByCOMPLETED().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				page.getRefreshButton().waitAndClick(10);
+				base.stepInfo("Filtered all options");
+				
+				//different state 
+				page.visibleCheck("DRAFT");
+				page.visibleCheck("FAILED");
+				page.visibleCheck("INPROGRESS");
+				page.visibleCheck("COMPLETED");
+				
+				//view completed status only
+				page.filterCompletedProduction();
+				page.verifyProdctionState(page.getProductionSate(), "COMPLETED");
+				
+				page.getGridView().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				
+				int status =base.getIndex(page.getGridWebTableHeader(), "STATUS");
+				driver.waitForPageToBeReady();
+				page.verifyProductionStateWebTableGridView(status, "COMPLETED");
+				
+				base.passedStep("Verified  ordering sequence for production status for 'Filter By:' field. Verify for both Grid and Tile view.");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				base.stepInfo("deleting created tags and folders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-55650
+				 * @Description: To Verify Admin will be able to select the metadata and work production information to be included in a slip sheet, similar to existing RPM
+				 */
+				@Test(groups = { "regression" }, priority = 70)
+				public void verifySlipSheetflow() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("Test Cases Id : RPMXCON-55650");
+				base.stepInfo("To Verify Admin will be able to select the metadata and work production information to be included in a slip sheet, similar to existing RPM");
+				
+				softAssertion = new SoftAssert();
+				ProductionPage page = new ProductionPage(driver);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				
+				page.getTIFFTab().Click();
+				page.getTiffAdvanceBtn().ScrollTo();
+				page.getTiffAdvanceBtn().waitAndClick(10);
+				
+				driver.waitForPageToBeReady();
+				page.toggleOffCheck(page.getSlipSheets());
+				page.getSlipSheets().waitAndClick(10);
+				page.toggleOnCheck(page.getSlipSheets());
+				base.stepInfo("Slip Sheet Section Toggle Button is work Accordingly");
+				
+				page.visibleCheck("METADATA");
+				page.visibleCheck("WORKPRODUCT");
+				page.visibleCheck("CALCULATED");
+				base.stepInfo(" Fields is Contain Following Section 'METADATA/WORKPRODUCT & CALCULATED'");
+				
+				//metadata verification
+				base.waitForElement(page.getSlipSheetMetaData());
+				page.getSlipSheetMetaData().waitAndClick(10);
+				boolean flag = page.getSlipSheetMetaDataActiveCheck().GetAttribute("class").contains("active");
+				if(flag) {
+					softAssertion.assertTrue(flag);
+					softAssertion.assertAll();
+					base.passedStep("Metadta tab is open");
+				}else {
+					base.failedStep("verification failed");
+				}
+				
+				boolean flag1 = page.getSlipSheetMetaDataTypeCheck().GetAttribute("class").contains("checkbox");
+				if(flag1) {
+					softAssertion.assertTrue(flag1);
+					softAssertion.assertAll();
+					base.passedStep("Metadata field is check box");
+				}else{
+					base.failedStep("verification failed");
+				}
+				base.stepInfo("Clicked on METADATA TAB it is Display the list of Metadata Fields with Check Box.");
+				
+				//workproduct verification
+				page.getSlipSheetWorkProduct().waitAndClick(10);
+				boolean flag3 =page.getSlipSheetWorkProductActiveCheck().GetAttribute("class").contains("active");
+				if(flag3) {
+					softAssertion.assertTrue(flag3);
+					softAssertion.assertAll();
+					base.passedStep("WorkProduct tab is open");
+				}else {
+					base.failedStep("verification failed");
+				}
+				driver.waitForPageToBeReady();
+				//driver.scrollingToBottomofAPage();
+				boolean flag4 =page.getSlipSheetWorkProductFolder().GetAttribute("class").contains("tree");
+				if(flag4) {
+					softAssertion.assertTrue(flag4);
+					softAssertion.assertAll();
+					base.passedStep("work product field type is tree");
+				}else{
+					base.failedStep("verification failed");
+				}
+				base.stepInfo("Clicked on WORKPRODUCTION TAB it is Display WorkProduct List with Tress Structure.");
+				
+				//add to select btn verification
+				page.getSlipSheetWorkProductFolderProduction().ScrollTo();
+				page.getSlipSheetWorkProductFolderProduction().waitAndClick(10);
+				base.waitForElement(page.getbtnAddToSelect());
+				page.getbtnAddToSelect().waitAndClick(10);
+				page.getElementDisplayCheck(page.getSelectedFieldItems());
+				base.stepInfo("Add to Selected Button should work as expected.(Selected Value should Get populated in Selected Fields");
+				
+				//adv btn open close verification
+				boolean flag5 = page.getAdvanceBtnOpenCloseCheck().GetAttribute("class").contains("down");
+				if(flag5) {
+					softAssertion.assertTrue(flag5);
+					softAssertion.assertAll();
+					base.passedStep("Advanced button is open");
+				}else{
+					base.failedStep("verification failed");
+				}
+				page.getTiffAdvanceBtn().ScrollTo();
+				page.getTiffAdvanceBtn().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				boolean flag6 = page.getAdvanceBtnOpenCloseCheck().GetAttribute("class").contains("right");
+				if(flag6) {
+					softAssertion.assertTrue(flag6);
+					softAssertion.assertAll();
+					base.passedStep("Advanced button is close");
+				}else{
+					base.failedStep("verification failed");
+				}
+				base.stepInfo("Advance Show/Hide Button should work as expected (show/Hide).");
+				
+				driver.waitForPageToBeReady();
+				page.getAdvancedTabInTIFF().ScrollTo();
+				page.getAdvancedTabInTIFF().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				page.visibleCheck("Generate Load File (LST)");
+				page.getElementDisplayCheck(page.getAdvancedLSTToggle());
+				base.stepInfo("Advance Section is contain 'Generate Load File (LST)' with Toggle button.");
+				
+				base.passedStep("To Verify Admin will be able to select the metadata and work production information to be included in a slip sheet, similar to existing RPM");
+				loginPage.logout();
+				
+				}
 				
 	
 	@AfterMethod(alwaysRun = true)

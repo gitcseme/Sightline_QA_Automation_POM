@@ -190,8 +190,9 @@ public class Input {
 	public static String familyDocWhichIsNotInMiniDoc;
 	public static String bgColorOnMouseHover;
 	public static String fieldByValue;
-
 	public static String nearDupePagination;
+	public static String highlightDocId;
+	public static String highlightedDocsQuery;
 
 	// DocView codingform Baskar Indium
 
@@ -273,6 +274,9 @@ public class Input {
 	public static String DocIdWithHiddenContent;
 	public static String TextHidden;
 	public static String warningMessage;
+	public static String HiddenContentExcelSheet;
+	public static String HiddenContentExcelBook;
+	public static String HiddenContentExternalLink;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -679,6 +683,8 @@ public class Input {
 		bgColorOnMouseHover = testData.bgColorOnMouseHover;
 		nearDupePagination = testData.getNearDupePagination();
 		fieldByValue=testData.getFieldByValue();
+		highlightDocId=testData.getHighlightDocId();
+		highlightedDocsQuery=testData.getHighlightedDocsQuery();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
@@ -767,6 +773,9 @@ public class Input {
 		docNearDupeDocId = testData.getDocNearDupeDocId();
 		UniCodeDocId = testData.getUniCodeDocId();
 		TiffDocId = testData.getTiffDocId();
+		HiddenContentExcelSheet = testData.getHiddenContentExcelSheet();
+	    HiddenContentExcelBook = testData.getHiddenContentExcelBook();
+		HiddenContentExternalLink = testData.getHiddenContentExternalLink();
 
 		// Added by Arun
 		pageRange1 = testData.getPageRange1();

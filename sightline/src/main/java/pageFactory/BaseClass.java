@@ -238,15 +238,19 @@ public class BaseClass {
 		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div//li");
 	}
 
-	//Added by Krishna
+	// Added by Krishna
 	public Element getSecondLineSuccessMsg(int i) {
 		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//li[" + i + "]");
 
 	}
-	
-	//added by Aathith
+
+	// added by Aathith
 	public Element text(String text) {
 		return driver.FindElementByXPath("//*[contains(text()," + text + ")]");
+	}
+
+	public Element getGlobalMessagePopUpClose() {
+		return driver.FindElementById("btnDialogClose");
 	}
 
 	public BaseClass(Driver driver) {
@@ -303,6 +307,14 @@ public class BaseClass {
 		this.stepInfo("Impersnated from PA to RMU");
 		UtilityLog.info("Impersnated from PA to RMU");
 
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+
 	}
 
 //  Modified by baskar
@@ -334,6 +346,14 @@ public class BaseClass {
 		getSaveChangeRole().waitAndClick(5);
 		System.out.println("Impersnated from RMU to Reviewer");
 		UtilityLog.info("Impersnated from RMU to Reviewer");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	}
 
 //  Modified by baskar
@@ -365,6 +385,14 @@ public class BaseClass {
 		getSaveChangeRole().waitAndClick(5);
 		System.out.println("Impersnated from RMU to Reviewer");
 		UtilityLog.info("Impersnated from RMU to Reviewer");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	}
 
 	public void impersonateSAtoDA(String domain) {
@@ -394,6 +422,14 @@ public class BaseClass {
 		getSaveChangeRole().waitAndClick(5);
 		System.out.println("Impersnated from RMU to Reviewer");
 		UtilityLog.info("Impersnated from RMU to Reviewer");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	}
 
 	public void impersonateSAtoPA() throws InterruptedException {
@@ -426,6 +462,14 @@ public class BaseClass {
 		getSaveChangeRole().waitAndClick(5);
 		System.out.println("Impersnated from SA to PA");
 		UtilityLog.info("Impersnated from SA to PA");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	}
 
 	public void selectproject() {
@@ -451,7 +495,10 @@ public class BaseClass {
 	}
 
 	/**
-	 * Over load the above method to get the project name as input parameter
+	 * Method is to select the project after logging in to application
+	 * 
+	 * @author iyyapan
+	 * @param projectName Name of the project which needs to be selected
 	 */
 	public void selectproject(String projectName) {
 		driver.scrollPageToTop();
@@ -496,12 +543,6 @@ public class BaseClass {
 	}
 
 	public void CloseSuccessMsgpopup() {
-
-//		driver.WaitUntil((new Callable<Boolean>() {
-//			public Boolean call() {
-//				return getCloseSucessmsg().Exists();
-//			}
-//		}), Input.wait30);
 		waitForElement(getCloseSucessmsg());
 		try {
 			getCloseSucessmsg().waitAndClick(5);
@@ -672,6 +713,14 @@ public class BaseClass {
 		getSaveChangeRole().waitAndClick(5);
 		System.out.println("Impersnated from DA to PA");
 		UtilityLog.info("Impersnated from DA to PA");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	}
 
 	public void selectdomain(final String domain) {
@@ -805,6 +854,14 @@ public class BaseClass {
 		System.out.println("Impersnated from PA to RMU");
 		UtilityLog.info("Impersnated from PA to RMU");
 
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+
 	}
 
 	public void impersonateSAtoRMU() throws InterruptedException {
@@ -835,6 +892,14 @@ public class BaseClass {
 		getSaveChangeRole().Click();
 		System.out.println("Impersnated from SA to RMU");
 		UtilityLog.info("Impersnated from SA to RMU");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	}
 
 	public void comparearraywithlist(String[] listarray, ElementCollection elelist) {
@@ -964,6 +1029,14 @@ public class BaseClass {
 		System.out.println("Impersnated from SA to Reviewer");
 		UtilityLog.info("Impersnated from SA to Reviewer");
 
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+
 		getSignoutMenu().waitAndClick(10);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -989,6 +1062,14 @@ public class BaseClass {
 
 		System.out.println("Impersnated back Reviewer to SA");
 		UtilityLog.info("Impersnated back Reviewer to SA");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	}
 
 	public void impersonateSAtoPAtoSA() throws InterruptedException {
@@ -1022,6 +1103,14 @@ public class BaseClass {
 		System.out.println("Impersnated from SA to PA");
 		UtilityLog.info("Impersnated from SA to PA");
 
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+
 		getSignoutMenu().waitAndClick(10);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1047,10 +1136,21 @@ public class BaseClass {
 
 		System.out.println("Impersnated back PA to SA");
 		UtilityLog.info("Impersnated back PA to SA");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	}
 
 	/**
-	 * @Author Indium-Sowndarya.Velraj
+	 * Method is to print the test step information in report in blue color
+	 * 
+	 * @author Sowndariya
+	 * @param message Message which needs to be printed in report
 	 */
 	public void stepInfo(String message) {
 		Reporter.log("<font color='blue'>" + message + "</font>");
@@ -1066,7 +1166,10 @@ public class BaseClass {
 	}
 
 	/**
-	 * @Author Indium-Sowndarya.Velraj
+	 * Method is to print the test step pass information in report in green color
+	 * 
+	 * @author Sowndariya
+	 * @param message Message which needs to be printed in report
 	 */
 	public void passedStep(String message) {
 		Reporter.log("<font color='green'>" + message + "</font>");
@@ -1075,9 +1178,11 @@ public class BaseClass {
 	}
 
 	/**
-	 * @Author Indium-Sowndarya.Velraj
+	 * Method is to print the test step fail information in report in blue color
+	 * 
+	 * @author Sowndariya
+	 * @param message Message which needs to be printed in report
 	 */
-
 	public void failedStep(String message) {
 		Reporter.log("<font color='red'>" + message + "</font>");
 		UtilityLog.info("Failed step: " + message);
@@ -1086,7 +1191,11 @@ public class BaseClass {
 	}
 
 	/**
-	 * @Author Indium-Sowndarya.Velraj
+	 * Method is to wait for the element until it is displayed,enabled and it is
+	 * present in DOM
+	 * 
+	 * @author Sowndariya
+	 * @param element Element locator for which needs to be waited
 	 */
 	public void waitForElement(Element element) {
 		try {
@@ -1102,7 +1211,10 @@ public class BaseClass {
 	}
 
 	/**
-	 * @Author Indium-Sowndarya.Velraj
+	 * Method is to wait for the element until it is clickable
+	 * 
+	 * @author Sowndariya
+	 * @param element Element locator for which needs to be waited
 	 */
 	public boolean waitTillElemetToBeClickable(Element element) {
 		boolean status = false;
@@ -1295,6 +1407,14 @@ public class BaseClass {
 			System.out.println("Impersnated from Reviewer to RMU");
 
 			UtilityLog.info("Impersnated from Reviewer to RMU");
+
+			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+				try {
+					getGlobalMessagePopUpClose().waitAndClick(5);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
 		} catch (Exception E) {
 			E.printStackTrace(pw);
 			UtilityLog.info(sw.toString());
@@ -1456,6 +1576,14 @@ public class BaseClass {
 			getSaveChangeRole().waitAndClick(10);
 			System.out.println("Impersnated from PA to RMU");
 			UtilityLog.info("Impersnated from PA to RMU");
+
+			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+				try {
+					getGlobalMessagePopUpClose().waitAndClick(5);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
 		} catch (Exception E) {
 			E.printStackTrace(pw);
 			UtilityLog.info(sw.toString());
@@ -1583,6 +1711,14 @@ public class BaseClass {
 			getSaveChangeRole().waitAndClick(5);
 			System.out.println("Impersnated from SA to Reviewer");
 			UtilityLog.info("Impersnated from SA to Reviewer");
+
+			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+				try {
+					getGlobalMessagePopUpClose().waitAndClick(5);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
 		} catch (Exception E) {
 			E.printStackTrace(pw);
 			UtilityLog.info(sw.toString());
@@ -1737,6 +1873,14 @@ public class BaseClass {
 			getSaveChangeRole().waitAndClick(10);
 			System.out.println("Impersnated from DA to RMU");
 			UtilityLog.info("Impersnated from DA to RMU");
+
+			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+				try {
+					getGlobalMessagePopUpClose().waitAndClick(5);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
 		} catch (Exception E) {
 			E.printStackTrace(pw);
 			UtilityLog.info(sw.toString());
@@ -1777,6 +1921,14 @@ public class BaseClass {
 			getSaveChangeRole().waitAndClick(5);
 			System.out.println("Impersnated from DA to Reviewer");
 			UtilityLog.info("Impersnated from DA to Reviewer");
+
+			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+				try {
+					getGlobalMessagePopUpClose().waitAndClick(5);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
 		} catch (Exception E) {
 			E.printStackTrace(pw);
 			UtilityLog.info(sw.toString());
@@ -2144,11 +2296,18 @@ public class BaseClass {
 		driver.Manage().timeouts().implicitlyWait(timeOut, TimeUnit.SECONDS);
 	}
 
+	/*
+	 * Method is to give static wait time value
+	 * 
+	 * @author Steffy
+	 * 
+	 * @param sec This is to denote the number of seconds needs to be waited
+	 */
 	public void waitTime(int sec) {
 		try {
 			Thread.sleep(sec * 1000);
 		} catch (InterruptedException e) {
-
+			UtilityLog.info("");
 		}
 	}
 
@@ -2355,8 +2514,11 @@ public class BaseClass {
 			UtilityLog.info(sw.toString());
 		}
 	}
+
 	/*
-	 * @author steffy.d Method is to handle the alert which is getting displayed
+	 * Method is to handle the alert which is getting displayed
+	 * 
+	 * @author steffy.d
 	 */
 
 	public void handleAlert() {
@@ -2537,13 +2699,18 @@ public class BaseClass {
 	}
 
 	/*
-	 * @author Steffy Description - This method is to verify the background color
+	 * This method is to verify the background color
+	 * 
+	 * @author Steffy
+	 * 
+	 * @param element The element for which BG color needs to be verified
+	 * 
+	 * @param expectedColor This the expected BG color value
 	 */
 	public void verifyBackGroundColor(Element element, String expectedColor) {
 		waitForElement(element);
 		try {
 			String actualColor = element.GetCssValue("background-color");
-			org.openqa.selenium.support.Color hex = org.openqa.selenium.support.Color.fromString(actualColor);
 			softAssertion.assertEquals(actualColor, expectedColor);
 			softAssertion.assertAll();
 			passedStep("Background color is changed as expected");
@@ -2553,7 +2720,6 @@ public class BaseClass {
 		}
 	}
 
-	
 	public void VerifyWarningMessageAdditionalLine(String ExpectedMsg, String ExpectedMsg2, String ExpectedMsg3) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -2569,9 +2735,6 @@ public class BaseClass {
 		System.out.println(string3);
 		Assert.assertEquals(ExpectedMsg3, getSecondLineSuccessMsg(3).getText().toString());
 	}
-		
-		
-
 
 	/**
 	 * @author Jeevitha
@@ -2599,19 +2762,21 @@ public class BaseClass {
 		}
 
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param element
 	 */
 	public void elementDisplayCheck(Element element) {
-		if(element.isDisplayed()) {
-			passedStep("Element is displayed :"+element);
+		if (element.isDisplayed()) {
+			passedStep("Element is displayed :" + element);
 			System.out.println("element is displayed");
-		}else {
-			failedStep("Element verification failed :"+element);
+		} else {
+			failedStep("Element verification failed :" + element);
 			System.out.println("element not is displayed");
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -2624,15 +2789,18 @@ public class BaseClass {
 			System.out.println(text + " is not visible");
 		}
 	}
+
 	/**
 	 * @author Raghuram.A
 	 * @param result
-	 * @param passMsg
-	 * @param failMsg
-	 * @param condition
-	 * @description Method to print result in report based on the bollean value -
-	 *              can be extended
-	 * @creadtedon : 2/8/22 @modifiedon NA @modifiedby NA
+	 * @param passMsg   Message which is to be printed in report when condition is
+	 *                  pass
+	 * @param failMsg   Message which is to be printed in report when condition is
+	 *                  fail
+	 * @param condition This is flag which says whether it is pass or fail or
+	 *                  warning Method to print result in report based on the
+	 *                  bollean value - can be extended
+	 * @createdon : 2/8/22 @modifiedon NA @modifiedby NA
 	 */
 	public void printResutInReport(Boolean result, String passMsg, String failMsg, String condition) {
 		if (condition.equalsIgnoreCase("Pass")) {
@@ -2655,59 +2823,69 @@ public class BaseClass {
 			}
 		}
 	}
-	
+
 	/*
-	 * @author Steffy D This method is to open a new tab
+	 * This method is to open a new empty tab
+	 * 
+	 * @author Steffy D
 	 */
 	public void openNewTab() {
 		try {
-			Robot robot = new Robot();                          
-			robot.keyPress(KeyEvent.VK_CONTROL); 
-			robot.keyPress(KeyEvent.VK_T); 
-			robot.keyRelease(KeyEvent.VK_CONTROL); 
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_CONTROL);
+			robot.keyPress(KeyEvent.VK_T);
+			robot.keyRelease(KeyEvent.VK_CONTROL);
 			robot.keyRelease(KeyEvent.VK_T);
 			passedStep("New tab is opened successfully");
 		} catch (Exception e) {
 			UtilityLog.info("Failed to open new tab due to following exception " + e);
 		}
 	}
+
 	/*
-	 * @author sowndarya.velraj This method is to open a unzip file
+	 * This method is to open a unzip file
+	 * 
+	 * @author sowndarya.velraj
+	 * 
+	 * @param zipFilePath [The path where the zip file is located]
+	 * 
+	 * @param destDir [The destination path where the zip file needs to extracted]
 	 */
-	public static void unzip(String zipFilePath, String destDir){
+	public static void unzip(String zipFilePath, String destDir) {
 		File dir = new File(destDir);
 		// create output directory if it doesn't exist
-		if(!dir.exists()) dir.mkdirs();
+		if (!dir.exists())
+			dir.mkdirs();
 		FileInputStream fis;
-		//buffer for read and write data to file
+		// buffer for read and write data to file
 		byte[] buffer = new byte[1024];
 		try {
-		fis = new FileInputStream(zipFilePath);
-		ZipInputStream zis = new ZipInputStream(fis);
-		ZipEntry ze = zis.getNextEntry();
-		while(ze != null){
-		String fileName = ze.getName();
-		File newFile = new File(destDir + File.separator + fileName);
-		System.out.println("Unzipping to "+newFile.getAbsolutePath());
-		//create directories for sub directories in zip
-		new File(newFile.getParent()).mkdirs();
-		FileOutputStream fos = new FileOutputStream(newFile);
-		int len;
-		while ((len = zis.read(buffer)) > 0) {
-		fos.write(buffer, 0, len);
-		}
-		fos.close();
-		//close this ZipEntry
-		zis.closeEntry();
-		ze = zis.getNextEntry();
-		}
-		//close last ZipEntry
-		zis.closeEntry();
-		zis.close();
-		fis.close();
+			fis = new FileInputStream(zipFilePath);
+			ZipInputStream zis = new ZipInputStream(fis);
+			ZipEntry ze = zis.getNextEntry();
+			while (ze != null) {
+				String fileName = ze.getName();
+				File newFile = new File(destDir + File.separator + fileName);
+				System.out.println("Unzipping to " + newFile.getAbsolutePath());
+				// create directories for sub directories in zip
+				new File(newFile.getParent()).mkdirs();
+				FileOutputStream fos = new FileOutputStream(newFile);
+				int len;
+				while ((len = zis.read(buffer)) > 0) {
+					fos.write(buffer, 0, len);
+				}
+				fos.close();
+				// close this ZipEntry
+				zis.closeEntry();
+				ze = zis.getNextEntry();
+			}
+			// close last ZipEntry
+			zis.closeEntry();
+			zis.close();
+			fis.close();
 		} catch (Exception e) {
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 
-		}
+	}
 }

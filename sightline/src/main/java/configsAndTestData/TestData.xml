@@ -89,7 +89,6 @@
 	<nearDupeDocumentForReviewer>ID00001191</nearDupeDocumentForReviewer>
 	<threadDocumentForReviewer>ID00001402</threadDocumentForReviewer>
 	<familyDocumentForReviewer>ID00001355</familyDocumentForReviewer>
-	<nearDupeDocId>ID00001158</nearDupeDocId>
 	<nearDupeCompletedDocIdReviewer>ID00001532
 	</nearDupeCompletedDocIdReviewer>
 	<newNearDupeDocId>ID00001531</newNearDupeDocId>
@@ -111,6 +110,8 @@
 	<tiffSearchQuery>.tif</tiffSearchQuery>
 	<nearDupePagination>ID00003939</nearDupePagination>
 	<fieldByValue>Custodian</fieldByValue>
+	<highlightDocId>ID00001490</highlightDocId>
+	<highlightedDocsQuery>DupeCount:[1 TO 10000]</highlightedDocsQuery>
 
 
 
@@ -142,7 +143,6 @@
 	<Production>Production</Production>
 	<TIFFPageCount>TIFFPageCount</TIFFPageCount>
 	<translationDocumentId>STC4_00000001</translationDocumentId>
-	<parentDocument>ID00001542</parentDocument>
 
 	<!-- Added by Gopinath -->
 	<historyTab>History</historyTab>
@@ -169,6 +169,7 @@
 	<tagNameTechnical>Technical_Issue</tagNameTechnical>
 	<documentID>ID00000018</documentID>
 	<orphanDocument>ID00000106</orphanDocument>
+	<parentDocument>ID00001542</parentDocument>
 
 	<!-- Added by Krishna -->
 	<pageNumber>10</pageNumber>
@@ -187,6 +188,9 @@
 	<IconOriginalColour>#444444</IconOriginalColour>
 	<DocIdWithHiddenContent>ID00000133</DocIdWithHiddenContent>
 	<TextHidden>Hidden</TextHidden>
+	<HiddenContentExcelSheet>ID00000161</HiddenContentExcelSheet>
+	<HiddenContentExcelBook>ID00000167</HiddenContentExcelBook>
+	<HiddenContentExternalLink>ID00000157</HiddenContentExternalLink>
 
 
 	<!-- Baskar Indium Audio Search to DocView MiniList - modify on 9/01/21 -->
@@ -400,7 +404,9 @@
 	<documentID>ID00001333</documentID>
 	<telecaSearchString>teleca</telecaSearchString>
 	<docFile>ID00001493</docFile>
-
+    <stampRed>RED</stampRed>
+	<stampGreen>GREEN</stampGreen>
+	
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 
@@ -449,6 +455,7 @@
 	<conceptualDocs1>ID00000941</conceptualDocs1>
 	<familyDocumentForReviewer>ID00003745</familyDocumentForReviewer>
 	<newNearDupeDocId>ID00005181</newNearDupeDocId>
+	<nearDupeDocId>ID00003801</nearDupeDocId>
 
 	<TermOperator>ALL</TermOperator>
 
