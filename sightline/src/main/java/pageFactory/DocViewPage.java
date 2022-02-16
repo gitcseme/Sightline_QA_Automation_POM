@@ -3122,6 +3122,37 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//select[@id='ddlRedactionTagsForPopup']/option[@selected]");
 	}
 	
+
+	//Added by Gopinath - 15/02/2022
+	public Element showCompletedDocumentsToogle() {
+		return driver.FindElementByXPath("//input[@id='ShowCompletedDocs']//..//i");
+	}
+	public Element completedDocument(int row) {
+		return driver.FindElementByXPath("//div[@id='divMiniDocList']//tbody//tr["+row+"]//i[@class='fa fa-check-circle']");
+	}
+	public Element unCompletedDocumentCheckBox(int row) {
+		return driver.FindElementByXPath("//div[@id='divMiniDocList']//tbody//tr["+row+"]//i//..//input[@name='checkbox']/following-sibling::i");
+	}
+	public Element chainLink(int row) {
+		return driver.FindElementByXPath("//div[@id='divMiniDocList']//tbody//tr["+row+"]//i[@class='fa fa-link']");
+	}
+	public Element checkBoxMiniDocList(int row) {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr["+row+"]//label[@class='checkbox']//i");
+	}
+	public Element totalPageCount() {
+		return driver.FindElementById("lblTotalPageCount_divDocViewer");
+	}
+	public ElementCollection getDocViewBackGroundTasks() {
+		return driver.FindElementsByXPath("//ul[@class='notification-body']/descendant::a");
+		
+	}
+	public Element getBackgroundNotificationCountNew() {
+		return driver.FindElementByXPath("//span[@id='activity' and @class='activity-dropdown newRed']");
+	}
+	public Element getDocViewNotificationBellIcon() {
+		return driver.FindElementById("activity");
+	}
+
 	// Added by Baskar -14/02/2022
 	// View coding stamp popup window
 	public Element getViewCodingStamp_PopUpWindow() {
@@ -3131,6 +3162,7 @@ public class DocViewPage {
 	public Element getEditCodingStamp_PopUpWindow() {
 		return driver.FindElementByXPath("//span[text()='Edit Coding Stamp']");
 	}
+
 
 
 	public DocViewPage(Driver driver) {
@@ -24728,6 +24760,312 @@ public class DocViewPage {
 
 		}
 	}
+	
+	/**
+	 * @author Gopinath
+	 * @descrption : Method for enabling toogle to show completed documents in mini doc list.
+	 */
+
+	public void showCompletedDocumentsConfigureMiniDocList() {
+		try {
+			driver.waitForPageToBeReady();
+			getDocView_ConfigMinidoclist().isElementAvailable(10);
+			getDocView_ConfigMinidoclist().Click();
+			driver.waitForPageToBeReady();
+			String backgroundColor = showCompletedDocumentsToogle().GetCssValue("background-color").trim();
+			String hexCode = rgbTohexaConvertor(backgroundColor);
+			if(hexCode.equalsIgnoreCase("#FF9999")) {
+				base.passedStep("Already enabled toogle to show completed documents in mini doc list.");
+			}else {
+				showCompletedDocumentsToogle().isElementAvailable(10);
+				showCompletedDocumentsToogle().Click();
+				base.passedStep("Enabled toogle to show completed documents in mini doc list.");
+			}
+			driver.waitForPageToBeReady();
+			getDocView_MiniDocFields_ConfigSaveButton().isElementAvailable(10);
+			getDocView_MiniDocFields_ConfigSaveButton().Click();
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while enabling toogle to show completed documents in mini doc list."+e.getLocalizedMessage());
+		}
+			
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @descrption : Method for selecting uncompleted documents check boxes
+	 * @param documentCount : documentCount is intger value that number of documents need to be select check box.
+	 */
+
+	public void selectingUncompletedDocumetsCheckBoxes(int documentCount) {
+		try {
+			driver.waitForPageToBeReady();
+			int count=0;
+			base.waitForElementCollection(getDocView_MiniListDocuments());
+			base.waitTime(2);
+			List<WebElement> totalRows = getDocView_MiniListDocuments().FindWebElements();
+			for(int i=0;i<totalRows.size();i++) {
+				if(count==documentCount) {
+					break;
+				}
+				if(!completedDocument(i+1).isDisplayed()) {
+					driver.waitForPageToBeReady();
+					unCompletedDocumentCheckBox(i+1).isElementAvailable(10);
+					unCompletedDocumentCheckBox(i+1).Click();
+					count = count+1;
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while selecting uncompleted documents check boxes."+e.getLocalizedMessage());
+		}
+			
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @decsription : Method for performing code same as action. 
+	 */
+	public void performActionCodeSameAs() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElementCollection(getDocumetCountMiniDocList());
+			getDocView_Mini_ActionButton().isElementAvailable(10);
+			base.waitForElement(getDocView_Mini_ActionButton());
+			getDocView_Mini_ActionButton().waitAndClick(5);
+			getDocView__ChildWindow_Mini_CodeSameAs().isElementAvailable(10);
+			base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
+			getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while performing code same as action. "+e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @decsription : Method for verifying Chain Icon Is Displayed After Code Same As Operation.
+	 * @param documentCount : documentCount is intger value that number of documents need to be select check box.
+	 */
+	public void verifyChainIconIsDisplayedAfterCodeSameAsOperation(int documentCount) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTime(1);
+			for(int i=0;i<documentCount;i++) {
+				driver.waitForPageToBeReady();
+				if(!chainLink(i+2).isDisplayed()) {
+					base.failedStep("Chain link is not displayed for applied code same as document -- "+(i+1));
+				}
+			}
+			base.passedStep("Chain link is displayed for all applied code same as documents");
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while selecting uncompleted documents check boxes."+e.getLocalizedMessage());
+		}
+			
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @decsription : Method for selecting all documents from mini doc list.
+	 * @return totalDocumentCount: totalDocumentCount is integer value that returns total document count. 
+	 */
+	public int selectAllDocumentsInMiniDocList() {
+		int totalDocumentCount = 0;
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			base.waitForElementCollection(getDocView_MiniListDocuments());
+			List<WebElement> totalRows = getDocView_MiniListDocuments().FindWebElements();
+			totalDocumentCount = totalRows.size();
+			for(int i=0;i<totalRows.size();i++) {
+				checkBoxMiniDocList(i+1).isElementAvailable(10);
+				checkBoxMiniDocList(i+1).Click();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while selecting all documents from mini doc list."+e.getLocalizedMessage());
+		}
+		return totalDocumentCount;
+			
+	}
+	
+	/**
+	 * @author Gopinath.
+	 * @description : This method to verify keyword highlighted on doc view.
+	 * @param rgbCode                         (selected keyword colour rgb code
+	 * @param expectedElementHexCode(selected keyword color hex code
+	 */
+	public void verifyKeywordHighlightedwithKeywordColour(String rgbCode, String expectedElementHexCode) {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			List<WebElement> keyword = getHighlightedKeywordrgbCode(rgbCode).FindWebElements();
+			if(keyword.size()!=0) {
+				System.out.println(keyword.get(0).getCssValue("fill"));
+				String color = keyword.get(0).getCssValue("fill");
+				String hex = org.openqa.selenium.support.Color.fromString(color).asHex();
+				System.out.println(hex);
+				if (keyword.get(0).isDisplayed() && (hex.contentEquals(expectedElementHexCode))) {
+					System.out.println("Keyword highlighted on doc view successfully");
+					base.passedStep("Keyword highlighted on doc view successfully");
+					base.passedStep("Keyword highlighted on doc view with expected colour");
+				} else {
+					System.out.println("Keyword not highlighted on doc view ");
+					base.failedStep("Keyword not highlighted on doc view ");
+				}
+			}else {
+				base.stepInfo("Document selected is not able to highlight any keyword on doc view ");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while click on translation tab." + e.getMessage());
+
+		}
+	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * @decsription : Method for verifying total page count.
+	 */
+	public void verifyTotalPagesOfDocumentCountGreaterThan500() {
+		try {
+			driver.waitForPageToBeReady();
+			String pagesCount = totalPageCount().getText().trim();
+			String[] pageCnt =  pagesCount.split("of",2);
+			String[] pageCnt2 = pageCnt[1].split("pages",2);
+			int pagesCont = Integer.parseInt(pageCnt2[0].trim());
+			if(pagesCont<500) {
+				base.passedStep("Total pages greater than 500 pages is not loaded in docview");
+			}else {
+				base.failedStep("Total pages greater than 500 pages is loaded in docview");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while verifying total page count."+e.getLocalizedMessage());
+		}
+			
+	}
+	
+
+	/**
+	 * @author Gopinath
+	 * @decsription : Method for verifying document loaded successfully.
+	 */
+	public void verifyDocLoadedSuccessfully() {
+		try {
+			driver.waitForPageToBeReady();
+			getSelectedAreaElement().isElementAvailable(10);
+			if(getSelectedAreaElement().isDisplayed() && getSelectedAreaElement().getWebElement().isEnabled()) {
+				base.passedStep("Document loaded successfully.");
+			}else {
+				base.failedStep("Document not loaded properly.");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			base.failedStep("Exception occred while verifying document loaded successfully."+e.getLocalizedMessage());
+		}
+			
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description method to scroll to document in mini doc list and click on it.
+	 * @param DocIdOrRwNo
+	 */
+	public void ScrollAndSelectDocument(String DocIdOrRwNo) {
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		jse.executeScript("arguments[0].scrollIntoView();", getDocView_MiniDoc_SelectDOcId(DocIdOrRwNo).getWebElement());
+		base.waitTime(3);
+		driver.scrollPageToTop();
+		selectDocToViewInDocViewPanal(DocIdOrRwNo);
+		
+	}
+	/**
+	 * @author Gopinath
+	 * methoad to open document from background notification and verify
+	 */
+	public void openDocumentFromBgNotifacation() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocViewNotificationBellIcon());
+			getDocViewNotificationBellIcon().waitAndClick(3);
+			base.waitTime(2);
+			base.waitForElementCollection(getDocViewBackGroundTasks());
+			getDocViewBackGroundTasks().FindWebElements().get(0).click();
+
+			String parentWindowId = reusableDocView.switchTochildWindow();
+			driver.waitForPageToBeReady();
+			String childWindowUrl = driver.getWebDriver().getCurrentUrl();
+			if (childWindowUrl.contains("PrintedDocument")) {
+				base.passedStep("printed document opened in new tab");
+			} else {
+				base.failedStep("failed to open document in new window");
+			}
+			reusableDocView.childWindowToParentWindowSwitching(parentWindowId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured wile opening documnet due to " + e.getMessage());
+		}
+		
+	}
+	/**
+	 * @author Gopinath
+	 * @Description: method to print the document and verify in background tasks
+	 * @param docId (docid to verify in background tasks)
+	 */
+	public void performPrintDocument(String docId) {
+		try {
+			base.waitForElement(getDocViewNotificationBellIcon());
+			getDocViewNotificationBellIcon().waitAndClick(10);
+			getDocViewNotificationBellIcon().waitAndClick(10);
+			base.waitForElement(getDocView_Print());
+			getDocView_Print().waitAndClick(10);
+			if (base.getSuccessMsg().getText().contains("Your document is being printed")) {
+				base.passedStep("Your document is being printed");
+			} else {
+				base.failedStep("failed to print the document");
+			}
+			base.waitForElementToBeGone(base.getSuccessMsgHeader(), 10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getBackgroundNotificationCountNew().Visible();
+				}
+			}), Input.wait30);
+			if (getBackgroundNotificationCountNew().isElementAvailable(7)) {
+				base.passedStep("Document print completed");
+				base.waitForElement(getDocViewNotificationBellIcon());
+				getDocViewNotificationBellIcon().waitAndClick(3);
+
+			} else {
+				base.failedStep("Document printing unsucessful");
+			}
+
+			String lastThreeDigitsOfDocId = docId.substring(docId.length() - 1, docId.length());
+			List<WebElement> listOfBackgroundTasks = getDocViewBackGroundTasks().FindWebElements();
+			boolean printedDocInNotification = false;
+			for (WebElement element : listOfBackgroundTasks) {
+
+
+				if (element.getText().contains(lastThreeDigitsOfDocId)) {
+					base.passedStep("Document printed and added into background tasks");
+					printedDocInNotification = true;
+					break;
+				}
+			}
+			if (printedDocInNotification == false) {
+				base.failedStep("printed doc ot added into background tasks");
+			}
+			getDocViewNotificationBellIcon().waitAndClick(3);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while print the document due to " + e.getMessage());
+		}
+		 
+	}
+	
+}
 
 	public void verifyDocsPresentWithPersistentHits(String searchstring) throws InterruptedException {
 		String persistentterm = getPersistentHit(searchstring);

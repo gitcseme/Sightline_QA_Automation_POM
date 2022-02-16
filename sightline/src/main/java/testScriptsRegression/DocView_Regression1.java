@@ -6426,7 +6426,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException 
 	 */
-	@Test(groups = { "regression" }, priority = 47)
+	@Test(groups = { "regression" }, priority = 1)
 	public void verifySearchTermAndAllKeywordsDisplayedOnPersistentPanal() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51034");
@@ -6489,10 +6489,10 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException 
 	 */
-	@Test(groups = { "regression" }, priority = 48)
+	@Test(groups = { "regression" }, priority = 2)
 	public void verifySearchTermAndKeywordDisplayedOnPersistentPanal() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-51034");
+		baseClass.stepInfo("Test case Id: RPMXCON-51552");
 		String keyword = "es";
 		String colour1 = "Gold";
 		String rgbCode1 = "rgb(255, 215, 0)";
@@ -6536,7 +6536,198 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("Delete keyword");
 		keywordPage.deleteKeywordByName(keywordName1);
 		loginPage.logout();
+	} 
+	
+	/**
+	 * @author Gopinath 
+	 * @TestCase_Id : 51878 - Verify that Action > Code Same As works fine when all records in the reviewer's batch are in mixed state but records that are in Completed state are also present. 
+	 * @description : Verify that Action > Code Same As works fine when all records in the reviewer's batch are in mixed state but records that are in Completed state are also present.
+	 * @throws InterruptedException
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 68)
+	public void verifyChainIconDisplayedByCodeSameAsForSelecedDoc() throws InterruptedException {
+		String AssignName = Input.randomText + Utility.dynamicNameAppender();
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51878 sprint 12");
+		baseClass.stepInfo(
+				"#### Verify that Action > Code Same As works fine when all records in the reviewer's batch are in mixed state but records that are in Completed state are also present ####");
+
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		
+		baseClass.stepInfo(" Basic content search");
+		session.basicContentSearch(Input.searchString1);
+
+		baseClass.stepInfo("Create bulk assign with new assignment with persistant hit.");
+		session.bulkAssignWithNewAssignmentWithPersistantHit(AssignName, Input.codingFormName);
+
+		baseClass.stepInfo("Edit assignment");
+		assignmentPage.editAssignment(AssignName);
+		
+		baseClass.stepInfo("Reviews adding and distributing to Reviewer");
+		assignmentPage.assignmentDistributingToReviewer();
+
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting the assignment
+		baseClass.stepInfo("Select Assignment By Reviewer");
+		assignmentPage.SelectAssignmentByReviewer(AssignName);
+		
+		baseClass.stepInfo("Enable toogle to show completed documents in mini doc list.");
+		docView.showCompletedDocumentsConfigureMiniDocList();
+		
+		baseClass.stepInfo("Select uncompleted documents check boxes");
+		docView.selectingUncompletedDocumetsCheckBoxes(3);
+		
+		baseClass.stepInfo("Performing code same as action.");
+		docView.performActionCodeSameAs();
+		
+		baseClass.stepInfo("Verify Chain Icon Is Displayed After Code Same As Operation.");
+		docView.verifyChainIconIsDisplayedAfterCodeSameAsOperation(3);
+
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		baseClass.stepInfo("Navigate To Assignments Page");
+		assignmentPage.navigateToAssignmentsPage();
+
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+		assignmentPage.deleteAssignment(AssignName);
+
 	}
+	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+	 * @TestCase id : 51979 - Verify that search term highlighting and keyword highlighting on Searchable PDF generated from the Stitched TIFF.
+	 * @Description : Verify that search term highlighting and keyword highlighting on Searchable PDF generated from the Stitched TIFF.
+	 */
+	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	public void verifySearchTermAndKeywordHighlightedOnDocView() throws Exception {		
+		baseClass=new BaseClass(driver);
+		String keyword = "es";
+		String colour1 = "Gold";
+		String rgbCode1 = "rgb(255, 215, 0)";
+		String HaxCode1 = "#ffd700";
+		String tiffDocId = "ID00005041";
+		String keywordName1 = "key" + Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case Id: RPMXCON-51979 Sprint 12");
+		utility = new Utility(driver);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("#### Verify that search term highlighting and keyword highlighting on Searchable PDF generated from the Stitched TIFF. ####");
+		
+		baseClass.selectproject("AutomationRegressionBackup");
+	
+		KeywordPage keywordPage = new KeywordPage(driver);
+
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+
+		baseClass.stepInfo("Add keyword one");
+		keywordPage.addKeywordWithoutFullScreen(keywordName1, keyword, colour1);
+
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		baseClass.stepInfo("Basic Basic content search");
+		session.basicContentSearch(tiffDocId);
+
+		baseClass.stepInfo("Navigate to  DocView page");
+		session.ViewInDocView();
+
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(tiffDocId);
+		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
+		baseClass.stepInfo("Verify persistant hit for keyword");
+		docView.persistenHitWithSearchString(keyword);
+
+		baseClass.stepInfo("verify highlight keyword in document");
+		docView.verifyKeywordHighlightedwithKeywordColour(rgbCode1, HaxCode1);
+		
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+
+		baseClass.stepInfo("Delete keyword");
+		keywordPage.deleteKeywordByName(keywordName1);
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+	 * @TestCase id : 51648 - Verify that if the file size is blank and # of pages > 500, then set NearNativeReady = 0 and error document should be displayed on doc view.
+	 * @Description : Verify that if the file size is blank and # of pages > 500, then set NearNativeReady = 0 and error document should be displayed on doc view.
+	 */
+	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	public void verifyDocPagesAreNotLoadedProperlyForAbove500PagesDoc() throws Exception {		
+		baseClass=new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51648 Sprint 12");
+		utility = new Utility(driver);
+		String above500PagesDocId = "ID00000268";
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("#### Verify that if the file size is blank and # of pages > 500, then set NearNativeReady = 0 and error document should be displayed on doc view. ####");
+		
+		baseClass.selectproject("AutomationAdditionalDataProject");
+	
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		baseClass.stepInfo("Basic Basic content search");
+		session.basicContentSearch(above500PagesDocId);
+
+		baseClass.stepInfo("Navigate to  DocView page");
+		session.ViewInDocView();
+
+		baseClass.stepInfo("Verify total page count.");
+		docView.verifyTotalPagesOfDocumentCountGreaterThan500();
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+	 * @TestCase id : 51647 - Verify that if # of pages is blank, THEN If file size is < 10MB, then nearNativeReady = 1 and document should be displayed successfully.
+	 * @Description : Verify that if # of pages is blank, THEN If file size is < 10MB, then nearNativeReady = 1 and document should be displayed successfully.
+	 */
+	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	public void verifyDocPagesAreLoadedProperlyByLessthan10MB() throws Exception {		
+		baseClass=new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51647 Sprint 12");
+		utility = new Utility(driver);
+		String lessthan10mbDocID = "ID00000206";
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("####Verify that if # of pages is blank, THEN If file size is < 10MB, then nearNativeReady = 1 and document should be displayed successfully ####");
+		
+		baseClass.selectproject("AutomationAdditionalDataProject");
+	
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		baseClass.stepInfo("Basic Basic content search");
+		session.basicContentSearch(lessthan10mbDocID);
+
+		baseClass.stepInfo("Navigate to  DocView page");
+		session.ViewInDocView();
+
+		baseClass.stepInfo("Verify document loaded successfully.");
+		docView.verifyDocLoadedSuccessfully();
+		
+		loginPage.logout();
+	}
+	
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

@@ -23,6 +23,7 @@ import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
 import pageFactory.SecurityGroupsPage;
+import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.TallyPage;
 import pageFactory.Utility;
@@ -427,7 +428,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:RPMXCON-54593 Verify that correct count should be displayed for each node from the tree structure
 			 * @Description:To Verify that correct count should be displayed for each node from the tree structure
 			 */
-			@Test
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 			public void verifyDocExplorerDocCount() {
 				String folderNumber="13";//having more docs for better verification
 				baseClass = new BaseClass(driver);
@@ -442,6 +443,115 @@ public class DocExplorer_Regression1 {
 				docexp.verifyDOcExplorerFolderDocCount(folderNumber);
 				
 			}
+			
+			/**
+			 * @author Gopinath
+			 * @TestCase Id:54978 Doc Explorer: Preview- Verify that on click of the print icon success message should be displayed to inform the user that it is processed in background task
+			 * @Description:To Doc Explorer: Preview- Verify that on click of the print icon success message should be displayed to inform the user that it is processed in background task
+			 * @throws InterruptedException 
+			 */
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 7)
+			public void verifyBackgroundProcessOfPrintDocument() throws InterruptedException {
+				String pdfDocId = "ID00004847";
+				String textDocId = "ID00004707";
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-54978 sprint 12");
+				baseClass.stepInfo("###Doc Explorer: Preview- Verify that on click of the print icon success message should be displayed to inform the user that it is processed in background task ###");
+				
+				DocViewPage docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				DocViewMetaDataPage docViewMetaData=new DocViewMetaDataPage(driver);
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+				
+				baseClass.stepInfo("Basic  content search ");
+				session.basicContentSearch(Input.testData1);
+				
+				baseClass.stepInfo("View serached dos in Docview");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Select pdf document");
+				docView.ScrollAndSelectDocument(pdfDocId);
+				
+				baseClass.stepInfo("add redaction");
+				docViewMetaData.clickOnRedactAndRectangle();
+				docViewMetaData.redactbyrectangle(5, 5, Input.defaultRedactionTag);
+				driver.scrollPageToTop();
+				
+				baseClass.waitForElementToBeGone(baseClass.getSuccessMsgHeader(), 10);
+				
+				baseClass.stepInfo("print pdf document");
+				docView.performPrintDocument(pdfDocId);
+				
+				baseClass.stepInfo("opening document from Background tasks");
+				docView.openDocumentFromBgNotifacation();
+				
+				driver.Navigate().refresh();//refresh to add redaction to second document 
+				baseClass.stepInfo("Select text document");
+				docView.selectDocToViewInDocViewPanal(textDocId);
+				
+				baseClass.stepInfo("add redaction");
+				docViewMetaData.clickOnRedactAndRectangle();
+				baseClass.waitTime(2);
+				docViewMetaData.redactbyrectangle(5, 5, Input.defaultRedactionTag);
+				driver.scrollPageToTop();
+				
+				baseClass.waitForElementToBeGone(baseClass.getSuccessMsgHeader(), 10);
+				
+				baseClass.stepInfo("print text document");
+				docView.performPrintDocument(textDocId);
+				
+				baseClass.stepInfo("opening document from Background tasks");
+				docView.openDocumentFromBgNotifacation();
+				
+				
+			} 
+			/**
+			 * @author Gopinath
+			 * @TestCase Id:54698 Verify that “Tags” Filter with "Exclude" functionality is working correctly on Doc Explorer list
+			 * @Description:To Verify that “Tags” Filter with "Exclude" functionality is working correctly on Doc Explorer list
+			 * @throws InterruptedException
+			 */
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
+			public void verifyTagFilterWithExclude() throws InterruptedException {
+				String tag1="Attorney_Client";
+				String tag2="Confidential";
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-54698 sprint 12");
+				baseClass.stepInfo("###Verify that “Tags” Filter with 'Exclude' functionality is working correctly on Doc Explorer list###");
+				SessionSearch session= new SessionSearch(driver);
+				docexp = new DocExplorerPage(driver);
+
+				baseClass.stepInfo("basic content search");
+				session.basicContentSearch(Input.translationDocument);
+				
+				baseClass.stepInfo("bulk tag");
+				session.bulkTagExisting(tag1);
+				driver.waitForPageToBeReady();
+				
+				baseClass.stepInfo("bulk tag");
+				
+				session.bulkTagExisting(tag2);
+				
+				baseClass.stepInfo("Navigating to DocExplorer page");
+				docexp.navigateToDocExplorerPage();
+				
+				baseClass.stepInfo("perform exclude filter for tag "+Input.atternoyClient);
+				docexp.performExculdeTagFilter(tag1);
+				
+				baseClass.stepInfo("verify documents exclude of tag "+Input.atternoyClient);
+				docexp.verifyExcludeDocumentsOfTag(Input.translationDocument);
+				
+				baseClass.stepInfo("perform exclude filter with multiple values");
+				docexp.UpdateFilter(tag2);
+				baseClass.waitForElement(docexp.getApplyFilter());
+				docexp.getApplyFilter().waitAndClick(5);
+				
+				baseClass.stepInfo("verify documents exclude of tag "+Input.confidential);
+				docexp.verifyExcludeDocumentsOfTag(Input.translationDocument);
+				
+			}
+			
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

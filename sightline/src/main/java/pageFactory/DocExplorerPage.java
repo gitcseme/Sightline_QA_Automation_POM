@@ -223,6 +223,9 @@ public class DocExplorerPage {
 	public Element getFolderExpandButton(String folderNumber) {
 		return driver.FindElementByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a[@id='-1_anchor']/following-sibling::ul[@class='jstree-children']/li["+folderNumber+"]/i");
 	}
+	public Element getDocIdColumnTextField() {
+		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']/descendant::input[@id='DOCID']");
+	}
 	
     public DocExplorerPage(Driver driver){
 
@@ -1656,7 +1659,74 @@ public class DocExplorerPage {
         		} catch (Exception e) {
         			e.printStackTrace();
         			bc.failedStep("Exception occured while verifying the document count due to " + e.getMessage());
-        		}
+        		}	
 
         	}
+        	/**
+        	 * @author Gopinath
+        	 * @Description:method to select all documents from current page.
+        	 */
+            public void selectAllDocumentsFromCurrentPage() {
+            	try {
+	    	    	driver.waitForPageToBeReady();
+	    	    	getDocExp_SelectAllDocs().isElementAvailable(10);
+	    	    	getDocExp_SelectAllDocs().Click();
+	    	    	driver.waitForPageToBeReady();
+	    	    	if(doclist.getPopUpOkBtn().isDisplayed()) {
+	    	    		doclist.getPopUpOkBtn().Click();
+	    	    	}
+            	} catch (Exception e) {
+        			e.printStackTrace();
+        			bc.failedStep("Exception occured while selecting all documents from current page." + e.getMessage());
+        		}	
+    	    	
+    	    }	
+        	
+        	
+            /**
+        	 * @author Gopinath
+        	 * @Description:Method to apply ingestion name filter.
+        	 * @param ingestionName : ingestionName is String value that name of ingestion.
+        	 * @param mode : mode is String value that the functionality need to perform like include or exclude.
+        	 */
+            public void applyIngestionNameFilter(String mode,String ingestionName) {
+            	try {
+            		bc.waitForElement(getDocExp_IngestionNameFilter());
+            		getDocExp_IngestionNameFilter().waitAndClick(5);
+            		if (mode.equalsIgnoreCase("include")) {
+            			doclist.include(ingestionName);
+            			bc.waitTime(2);
+            			doclist.getApplyFilter().waitAndClick(10);
+            			bc.waitTime(2);	
+            		}
+            		if (mode.equalsIgnoreCase("exclude")) {
+            			doclist.exclude(ingestionName);
+            			bc.waitTime(2);
+            			doclist.getApplyFilter().waitAndClick(10);
+            			bc.waitTime(2);
+            		}
+            	} catch (Exception e) {
+        			e.printStackTrace();
+        			bc.failedStep("Exception occured while applying ingestion name filter." + e.getMessage());
+        		}	
+    	    	
+    	    } 
+        	
+            /**
+        	 * @author Gopinath
+        	 * @Description: method to verify documents of tag with exclude filter 
+        	 * @param DocId : DocId is String value taht document id.
+        	 */
+        	public void verifyExcludeDocumentsOfTag(String DocId) {
+        		bc.waitForElement(getDocIdColumnTextField());
+        		getDocIdColumnTextField().SendKeys(DocId);
+        		getDocIdColumnTextField().Enter();
+        		bc.waitForElement(getQuaryReturnedNoDataMessage());
+        		if(getQuaryReturnedNoDataMessage().isElementAvailable(5)&&getDocListInfo().isElementAvailable(5)) {
+        			bc.passedStep(DocId+" is not displaayed after Exclude filter of tag");
+        		}else {
+        			bc.failedStep(DocId+" is  displaayed even after Exclude filter of tag");
+        		}
+        	}
+        	
  }
