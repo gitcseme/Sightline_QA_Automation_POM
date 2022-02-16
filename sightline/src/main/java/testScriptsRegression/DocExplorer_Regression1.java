@@ -505,7 +505,7 @@ public class DocExplorer_Regression1 {
 				docView.openDocumentFromBgNotifacation();
 				
 				
-			}
+			} 
 			/**
 			 * @author Gopinath
 			 * @TestCase Id:54698 Verify that “Tags” Filter with "Exclude" functionality is working correctly on Doc Explorer list

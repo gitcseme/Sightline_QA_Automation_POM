@@ -1710,7 +1710,7 @@ public class DocExplorerPage {
         			bc.failedStep("Exception occured while applying ingestion name filter." + e.getMessage());
         		}	
     	    	
-    	    }
+    	    } 
         	
             /**
         	 * @author Gopinath

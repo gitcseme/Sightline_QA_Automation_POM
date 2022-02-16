@@ -6536,7 +6536,7 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("Delete keyword");
 		keywordPage.deleteKeywordByName(keywordName1);
 		loginPage.logout();
-	}
+	} 
 	
 	/**
 	 * @author Gopinath 
