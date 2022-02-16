@@ -4433,6 +4433,162 @@ public class Production_Test_Regression {
 				loginPage.logout();
 				
 				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-48341
+				 * @Description: To verify that Tiff /PDF should burn Redactions even though file based or tag based placeholdering is exists in the document
+				 */
+				@Test(groups = { "regression" }, priority = 71)
+				public void verifyProductionTiffPdfRedactionTextWithAnnotation() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("Test case id : RPMXCON-48341 ");
+				base.stepInfo("To verify that Tiff /PDF should burn Redactions even though file based or tag based placeholdering is exists in the document");
+				String testData1 = Input.testData1;
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				//tagname = "Tag" + Utility.dynamicNameAppender();
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				//tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				//sessionSearch.bulkTagExisting(tagname);
+
+				//Verify 
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSectionwithBurnRedaction();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				
+				page = new ProductionPage(driver);
+				beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingPDFSectionwithBurnRedaction();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				base.passedStep("verified that Tiff /PDF should burn Redactions even though file based or tag based placeholdering is exists in the document");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				//tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-48072
+				 * @Description: To Verify Field EndingBates in Production
+				 */
+				@Test(groups = { "regression" }, priority = 72)
+				public void verifyEndBatesInProduction() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("Test case id : RPMXCON-48072 ");
+				base.stepInfo("To Verify Field EndingBates in Production");
+				String testData1 = Input.testData1;
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				int docno = sessionSearch.basicContentSearch(testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+
+				//Verify 
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				int number = Integer.parseInt(beginningBates);
+				int endingBates = docno +number -1;
+				String endingBates1 = Integer.toString(endingBates);
+				System.out.println(beginningBates);
+				System.out.println(endingBates);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.getDAT_AddField().waitAndClick(5);
+				page.addDatField(1, "Bates", "EndingBates");
+				page.fillingTIFFSection(tagname);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageAndVerfyingBatesRangeValue(endingBates1);
+				
+				// create export with TIFF
+				String exportname = "E" + Utility.dynamicNameAppender();
+				endingBates1 = Integer.toString(docno);
+				System.out.println(beginningBates);
+				System.out.println(endingBates);
+				page = new ProductionPage(driver);
+				page.selectingDefaultSecurityGroup();
+				page.selectExportSetFromDropDown();
+				page.addANewExport(exportname);
+				page.fillingDATSection();
+				page.getDAT_AddField().waitAndClick(5);
+				page.addDatField(1, "Bates", "EndingBates");
+				page.fillingTIFFSection(tagname);
+				page.navigateToNextSection();
+				page.fillingExportNumberingAndSortingPage(prefixID, suffixID);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingExportLocationPage(exportname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingExportGeneratePageAndVerfyingBatesRangeValue(endingBates1);
+				
+				base.passedStep("Verified Field EndingBates in Production");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				}
 				
 	
 	@AfterMethod(alwaysRun = true)
