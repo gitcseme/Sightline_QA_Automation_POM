@@ -89,7 +89,6 @@
 	<nearDupeDocumentForReviewer>ID00001191</nearDupeDocumentForReviewer>
 	<threadDocumentForReviewer>ID00001402</threadDocumentForReviewer>
 	<familyDocumentForReviewer>ID00001355</familyDocumentForReviewer>
-	<nearDupeDocId>ID00001158</nearDupeDocId>
 	<nearDupeCompletedDocIdReviewer>ID00001532
 	</nearDupeCompletedDocIdReviewer>
 	<newNearDupeDocId>ID00001531</newNearDupeDocId>
@@ -453,6 +452,7 @@
 	<conceptualDocs1>ID00000941</conceptualDocs1>
 	<familyDocumentForReviewer>ID00003745</familyDocumentForReviewer>
 	<newNearDupeDocId>ID00005181</newNearDupeDocId>
+	<nearDupeDocId>ID00003801</nearDupeDocId>
 
 	<TermOperator>ALL</TermOperator>
 
