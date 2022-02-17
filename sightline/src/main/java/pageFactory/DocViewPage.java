@@ -25238,4 +25238,61 @@ public class DocViewPage {
 		base.passedStep("Configure MiniDocliast Selected Fields is Display Successfully");
 
 	}
+	
+	/**
+	 * @author Arunkumar
+	 * @Description: This method used to verify whether the download  document is in pdf format
+	 * 
+	 */
+	public void verifyDocumentDownloadInPdfFormat() {
+		
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+
+		String currentDocId = getDocView_CurrentDocId().getText();
+		System.out.println(currentDocId);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.printIcon().Visible() && docViewRedact.printIcon().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.printIcon().Click();;
+		base.VerifySuccessMessage(
+				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
+		base.stepInfo("Success message has been verified");
+
+		base.waitForElement(docViewRedact.bullhornIconRedColour());
+		if (docViewRedact.bullhornIconRedColour().isDisplayed()) {
+			docViewRedact.bullhornIconRedColour().waitAndClick(10);
+		} else {
+
+			docViewRedact.bullhornIcon().waitAndClick(5);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.firstTaskInList().Visible() && docViewRedact.firstTaskInList().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.firstTaskInList().waitAndClick(10);
+		
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		String CurrentPageURL = driver.getUrl();
+		if(CurrentPageURL.contains(currentDocId +".pdf")) {
+			base.passedStep("Document which required to download is in DocID.pdf format");
+		}
+		else {
+			base.failedStep("Document which required to download is not in DocID.pdf format");
+		}
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		
+	}
+	
+	
 }
