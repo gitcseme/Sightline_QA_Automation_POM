@@ -3973,7 +3973,7 @@ public class DocView_CodingForm_Regression {
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
 
-		if (docViewPage.getCodeSameAsLast().isElementAvailable(1)) {
+		if (docViewPage.getCodeSameAsLast().isDisplayed()) {
 			baseClass.failedStep("Code same as last button is displayed");
 		} else {
 			baseClass.passedStep("Code same as last button is not displayed");
@@ -4915,6 +4915,8 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo(
 				"Step 4: Select document from analytics panel outside the reviewer batch but within the assignment and action as code same as this, complete the document");
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocView_DefaultViewTab());
 		baseClass.waitForElement(docViewPage.getDocView_NumTextBox());
 		docViewPage.getDocView_NumTextBox().Clear();
@@ -5028,8 +5030,6 @@ public class DocView_CodingForm_Regression {
 			}
 		}
 		docViewPage.editCodingFormSave();
-
-		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
 		driver.Navigate().refresh();
 
@@ -5338,6 +5338,8 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo(
 				"Step 4: Select document from analytics panel outside the reviewer batch but within the assignment and action as code same as this, complete the document");
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocView_DefaultViewTab());
 		baseClass.waitForElement(docViewPage.getDocView_NumTextBox());
 		docViewPage.getDocView_NumTextBox().Clear();
@@ -5472,7 +5474,7 @@ public class DocView_CodingForm_Regression {
 
 		driver.waitForPageToBeReady();
 		docViewPage.editCodingFormAndSaveWithStamp(filedText, Input.stampColour);
-		docViewPage.performCodeFormAndStampInDocView(Input.stampColour, Input.stampSelection, commands);
+		docViewPage.performCodeFormAndStampInDocView(Input.stampColour, Input.stampColour, commands);
 
 		loginPage.logout();
 
@@ -8648,6 +8650,7 @@ public class DocView_CodingForm_Regression {
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		docViewPage.selectPureHit();
 		baseClass.stepInfo("Searching Content documents based on search string");
+		docViewPage.selectPureHit();
 		sessionSearch.advancedNewContentSearch1(Input.testData1);
 		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
@@ -8690,6 +8693,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 		baseClass.stepInfo("Searching Content documents based on search string");
 		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		docViewPage.selectPureHit();
 		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		reusableDocView.editingCodingFormWithSaveAndNextButton();
@@ -9103,7 +9107,7 @@ public class DocView_CodingForm_Regression {
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
 		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
-		String actual = docViewPage.getDocumentsCommentViewCoding().GetAttribute("value");
+		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
 		softAssertion.assertEquals(comment, actual);
 		baseClass.stepInfo("verify viewcodingstamp popup saved value is successfully displayed ");
 		docViewPage.getViewCodingCloseButton().waitAndClick(5);

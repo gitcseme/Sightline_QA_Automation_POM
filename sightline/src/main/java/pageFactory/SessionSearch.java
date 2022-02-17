@@ -3497,7 +3497,7 @@ public class SessionSearch {
 	public void quickbatch() {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		if (getPureHitAddButton().isElementAvailable(2)) {
-			getPureHitAddButton().Click();
+			getPureHitAddButton().waitAndClick(5);
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");

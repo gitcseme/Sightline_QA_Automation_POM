@@ -691,8 +691,8 @@ public class ReusableDocViewPage {
 //	Reusable method for saving coding form with coding stamp with applying colour
     public void codingFormSavingWithCodingStamp(String fieldValue, String colourIcon) {
     	driver.waitForPageToBeReady();
-    	base.waitForElement(getResponsiveCheked());
-		getResponsiveCheked().Click();
+    	base.waitTillElemetToBeClickable(getResponsiveCheked());
+		getResponsiveCheked().waitAndClick(5);
 		base.waitForElement(getNonPrivilegeRadio());
 		getNonPrivilegeRadio().Click();
 		base.waitForElement(getDocument_CommentsTextBox());
@@ -1577,6 +1577,7 @@ public class ReusableDocViewPage {
 		getCodeSameAsLast().waitAndClick(10);
 		base.stepInfo("Code same as last icon clicked");
 		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_CurrentDocId());
 		String docId = getDocView_CurrentDocId().getText();
 		softAssertion.assertNotEquals(currentDocId, docId);
 		softAssertion.assertAll();
