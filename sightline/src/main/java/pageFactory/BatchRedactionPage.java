@@ -488,6 +488,16 @@ public class BatchRedactionPage {
 		return driver.FindElementByXPath("//table[@id='BatchRedactionsDataTable']//tbody//tr//td[text()='" + SearchName
 				+ "']//following::td[3]//p//a");
 	}
+	
+	public Element getCompletedToolTipMSg(String SearchName) {
+		return driver.FindElementByXPath("(//tr[@role='row']//td[text()='" + SearchName
+				+ "']//..//p[@class='CompWithError'])//a//following::div[@class='popover-content']");
+	}
+
+	public Element getCompletedToolTipIcon(String SearchName) {
+		return driver.FindElementByXPath(
+				"(//tr[@role='row']//td[text()='" + SearchName + "']//..//p[@class='CompWithError'])//a");
+	}
 
 	// Added by Raghuram
 	public Element getOptionDropdown(String type) {
@@ -1138,7 +1148,7 @@ public class BatchRedactionPage {
 	}
 
 	/**
-	 * @author Jeevitha    @Modified By jeevitha @Modified date : 14/2/2022
+	 * @author Jeevitha @Modified By jeevitha @Modified date : 14/2/2022
 	 * @Description : perform Rollback and verify Rollback Success
 	 * @param searchName
 	 * @param select
@@ -1162,7 +1172,7 @@ public class BatchRedactionPage {
 			base.passedStep(actual);
 		}
 
-		if (select.equalsIgnoreCase("Yes") ){
+		if (select.equalsIgnoreCase("Yes")) {
 			getPopupYesBtn().waitAndClick(20);
 
 			String ExpectedMsg = "Your request to Roll Back this Batch Redaction has been added to the background.  Once it is complete, the \"bullhorn\" icon in the upper right hand corner will turn red to notify you of the results of your request.";
@@ -2739,4 +2749,65 @@ public class BatchRedactionPage {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verifies completed with error icon and tooltip message
+	 * @param searchName : search query name
+	 * @param expected : expected tooltip Msg
+	 * @param passMsg : pass messsage
+	 * @param failMsg  : fail message
+	 */
+	public void verifyCompletedErrorToolTip(String searchName, String expected, String passMsg, String failMsg) {
+		String color = null;
+		if (getCompletedToolTipIcon(searchName).isElementAvailable(10)) {
+			color = "return window.getComputedStyle(document.querySelector('a.fa-question-circle-orange'),':before').getPropertyValue('color');";
+			String colorCode = driver.findAttributeValueViaJS(color);
+			System.out.println(colorCode);
+
+			String splitTerm = colorCode.substring(colorCode.indexOf("(") + 1, colorCode.indexOf(")"));
+			color = base.rgbTohexaConvertor_Optional(null, false, splitTerm);
+			System.out.println(color);
+		}
+
+		if (color.equals(Input.completedWithErrColorCodeBR)) {
+
+			getCompletedToolTipIcon(searchName).waitAndClick(5);
+			System.out.println(" Icon is Yellow color " + color);
+			base.passedStep(" Icon is Yellow color" + color);
+
+			String toolTipMsg = getCompletedToolTipMSg(searchName).getText();
+			base.compareTextViaContains(toolTipMsg, expected, passMsg, failMsg);
+		} else {
+			base.failedStep(" Colour Mismatch ");
+		}
+	}
+	
+	/**
+	 * @author Raghuram.A
+	 * @param searchName - Searchname to perform Rollback
+	 * @description : method to rollback
+	 */
+	public void rollBack(String searchName) {
+		// Rollback Saved Search
+		base.waitForElement(getRollbackbtn(searchName));
+		getRollbackbtn(searchName).waitAndClick(10);
+
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param condition - Yes / No
+	 * @Description : method to Confirm rollback
+	 */
+	public void rollBackActionConfirmation(String condition) {
+		if (condition.equalsIgnoreCase("Yes")) {
+			base.waitForElement(getPopupYesBtn());
+			String actual = getRollBackMsg().getText();
+			String ExpectedPopUp = "Are you sure you wish to roll back this completed Batch Redaction?";
+			if (actual.contains(ExpectedPopUp)) {
+				base.passedStep(actual);
+			}
+			getPopupYesBtn().waitAndClick(3);
+		}
+	}
 }
