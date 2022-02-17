@@ -21009,10 +21009,12 @@ public class DocViewPage {
 
 	/*
 	 * @author Jayanthi.ganesan
-	 * 
-	 * @param iterate
+	 *         This method will completed the documents distributed to users and verify
+	 *          whether check mark icon displayed for all docs completed
+	 * @param iterate(no of docs to be completed
+	 * @return return the Doc Ids of completed documents
 	 */
-	public void CompleteTheDocumentInMiniDocList(int iterate) {
+	public List<String> CompleteTheDocumentInMiniDocList(int iterate) {
 		List<WebElement> DocumenInMiniDocList = getDocumetCountMiniDocList().FindWebElements();
 
 		for (int i = 0; i < iterate; i++) {
@@ -21029,6 +21031,8 @@ public class DocViewPage {
 		softAssertion.assertEquals(iterate, getCheckMarkIcons().size());
 		softAssertion.assertAll();
 		base.passedStep("No of Checkmark icon displayed matches with no of completed document");
+		List<String> DocID = base.availableListofElements(DocIdsOfCompletedDocuments());
+		return DocID;
 	}
 
 	/**
@@ -25202,6 +25206,34 @@ public class DocViewPage {
 			base.passedStep("Work product terms are not displaying on the persistent panel");
 		}
 	}
+	public ElementCollection DocIdsOfCompletedDocuments() {
+		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']//../following-sibling::td[contains(text(),'ID')]");
+	}
+
+
+	
+
+	/**
+	 * This method will un complete the completed docs for given doc id's and 
+	 * verify whether check mark icon disappeared for all the un completed docs
+	 * @author Jayanthi.ganesan
+	 * @param DocID (list of DocIDs which we arae going to uncomplete )
+	 * @throws InterruptedException
+	 */
+	
+	public void UncompleteTheCompletedDocsandVerifyCheckMarkIcon(List<String>DocID) throws InterruptedException {
+		for(int i=0;i<DocID.size();i++) {
+			getMiniDocListText(DocID.get(i)).waitAndClick(10);
+			getUnCompleteButton().waitAndClick(10);
+			base.VerifySuccessMessageB("Document uncompleted successfully");
+
+			boolean flag = getDocViewMiniDocIdCheckBoxCircle(DocID.get(i)).isDisplayed();
+			if(flag==false) {
+				base.passedStep("The Document with '"+DocID.get(i)+"' is UnCompleted Successfully and Check  Mark icon is Disappeared");
+			}else {
+				base.failedMessage("The check Mark icon is still there even after Uncompleting the document");
+			}
+		}
 
 	/**
 	 * @author Vijaya.Rani date: 16/02/2022 Modified date:N/A
@@ -25236,6 +25268,7 @@ public class DocViewPage {
 		System.out.println(configureSelectedData);
 		System.out.println(headerVlaueAfterConfig);
 		base.passedStep("Configure MiniDocliast Selected Fields is Display Successfully");
+
 
 	}
 	
