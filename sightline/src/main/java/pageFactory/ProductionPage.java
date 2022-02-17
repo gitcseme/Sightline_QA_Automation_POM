@@ -17407,5 +17407,113 @@ public class ProductionPage {
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param Batesvalue
+	 * @throws InterruptedException
+	 */
+	public void fillingGeneratePageAndVerfyingBatesRangeValue(String Batesvalue) throws InterruptedException {
+		//generating production:
+				SoftAssert softAssertion = new SoftAssert();
+				String expectedText = "Success";
+
+				base.waitForElement(getbtnProductionGenerate());
+				getbtnProductionGenerate().waitAndClick(10);
+				
+				verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+
+				Reporter.log("Wait for generate to complete", true);
+				System.out.println("Wait for generate to complete");
+				UtilityLog.info("Wait for generate to complete");
+				driver.waitForPageToBeReady();
+				String Value = getBatesRange().getText();
+				System.out.println(Value);
+
+				if (Value.contains(Batesvalue)) {
+					base.passedStep("Batesrange is value is verified");
+				} else {
+					base.failedStep("verification failed");
+				}
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+					}
+				}), Input.wait120);
+				String actualText = getStatusSuccessTxt().getText();
+				System.out.println(actualText);
+
+				softAssertion.assertTrue(actualText.contains(expectedText));
+				base.passedStep("Documents Generated successfully");
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+					}
+				}), Input.wait60);
+
+				// added thread.sleep to avoid exception while executing in batch
+				Thread.sleep(2000);
+				getConfirmProductionCommit().waitAndClick(10);
+
+				String PDocCount = getProductionDocCount().getText();
+				// added thread.sleep to avoid exception while executing in batch
+				Thread.sleep(1000);
+				System.out.println(PDocCount);
+				int Doc = Integer.parseInt(PDocCount);
+
+				Reporter.log("Doc - " + Doc, true);
+				System.out.println(Doc);
+				UtilityLog.info(Doc);
+
+				base.waitForElement(getCopyPath());
+				getCopyPath().waitAndClick(10);
+
+				base.waitForElement(getQC_Download());
+
+				getQC_Download().waitAndClick(10);
+				getQC_Downloadbutton_allfiles().waitAndClick(10);
+				base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+				base.stepInfo("Generate production page is filled");
+			}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param Batesvalue
+	 * @throws InterruptedException
+	 */
+		public void fillingExportGeneratePageAndVerfyingBatesRangeValue(String Batesvalue) throws InterruptedException {
+				
+				SoftAssert softAssertion = new SoftAssert();
+				String expectedText = "Success";
+
+				base.waitForElement(getbtnProductionGenerate());
+				getbtnProductionGenerate().waitAndClick(10);
+				
+				verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+
+				Reporter.log("Wait for generate to complete", true);
+				System.out.println("Wait for generate to complete");
+				UtilityLog.info("Wait for generate to complete");
+				driver.waitForPageToBeReady();
+				String Value = getBatesRange().getText();
+				System.out.println(Value);
+
+				if (Value.contains(Batesvalue)) {
+					base.passedStep("Batesrange is value is verified");
+				} else {
+					base.failedStep("verification failed");
+				}
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+					}
+				}), Input.wait120);
+				String actualText = getStatusSuccessTxt().getText();
+				System.out.println(actualText);
+
+				softAssertion.assertTrue(actualText.contains(expectedText));
+				base.passedStep("Documents Generated successfully");
+
+				
+			}
 
 }
