@@ -227,6 +227,12 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']/descendant::input[@id='DOCID']");
 	}
 	
+	//Added by Gopinath - 17/02/2022
+	public Element getDocExplorerPageHeader() {
+		return driver.FindElementByXPath("//div[@id='leftPane']/descendant::h1[contains(text(),'Doc Explorer')]");
+	}
+
+	
     public DocExplorerPage(Driver driver){
 
         this.driver = driver;
@@ -1729,4 +1735,78 @@ public class DocExplorerPage {
         		}
         	}
         	
+
+/**
+	 * @author Gopinath
+	 * @Description: methoad to select multiple folders
+	 * @param numberOfFolders
+	 * @throws AWTException
+	 */
+	public void selectMultipleFoldersOfTree(int numberOfFolders) {
+		Actions ac = new Actions(driver.getWebDriver());
+		bc.waitForElement(getfolderFromTreeByNumber("2"));
+		getfolderFromTreeByNumber("2").waitAndClick(5);
+		for (int i = 2; i <= numberOfFolders + 1; i++) {
+			ac.keyDown(Keys.CONTROL).click(getfolderFromTreeByNumber(Integer.toString(i)).getWebElement())
+					.keyUp(Keys.CONTROL).build().perform();
+			bc.waitTime(1);
+		}
+
+	}
+
+
+	/**
+	 * @author Gopinath
+	 * @Description:method to select all the docs of current page to view in doc
+	 *                     list
+	 */
+	public void viewIndocListOfCurrentPageDocs() {
+		try {
+			bc.waitForElement(getDocExp_SelectAllDocs());
+			getDocExp_SelectAllDocs().waitAndClick(5);
+			bc.waitForElement(doclist.getPopUpOkBtn());
+			if (doclist.getPopUpOkBtn().isElementAvailable(5)) {
+				bc.passedStep("popup is appeared with ok and cancel button after select all docs");
+			} else {
+				bc.failedStep("popup is not displayed after click on check box to select all docs");
+			}
+			doclist.getPopUpOkBtn().waitAndClick(10);
+			bc.waitForElement(getDocExp_actionButton());
+			getDocExp_actionButton().waitAndClick(10);
+			bc.waitForElement(getDocListAction());
+			getDocListAction().waitAndClick(20);
+
+			bc.waitForElement(doclist.getDocListPageHeader());
+			if (doclist.getDocListPageHeader().isElementAvailable(5)) {
+				bc.passedStep("Navigated to doclist, to view docslist");
+			} else {
+				bc.failedStep("unable to Navigated to doclist, to view docslist");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while View in doc list due to " + e.getMessage());
+		}
+
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description:method to verify doc explorer page header is displayed.
+	 */
+	public void verifyDocExplorerPageHeader() {
+		try {
+			bc.waitForElement(getDocExplorerPageHeader());
+			if(getDocExplorerPageHeader().isDisplayed()) {
+				bc.passedStep("DocExplorer page is displayed as default menu for Project Administrator");
+			}else {
+				bc.stepInfo("DocExplorer page is not displayed as default menu for Project Administrator");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while verify doc explorer page header is displayed." + e.getMessage());
+		}
+
+	}
+	
  }

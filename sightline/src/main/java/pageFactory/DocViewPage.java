@@ -3165,8 +3165,25 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//span[text()='Edit Coding Stamp']");
 	}
 
-
-
+	//Added by Gopinath - 17/02/2022
+	public Element getMiniDocConfigSelectieldRomoveIcon(int rowNum) {
+		return driver.FindElementByXPath("//ul[@id='sortable2PickColumns']//li["+rowNum+"]//i[@class='fa fa-times-circle']");
+	}
+	public Element getminiDocListConfigField(String fieldName) {
+		return driver.FindElementByXPath("//ul[@id='sortable1PickColumns']//li//i[@value='"+fieldName+"']");
+	}
+	public Element getFirstRowEmailthreadedId() {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr[1]//td[contains(text(),'F')]");
+	}
+	public ElementCollection getDocIdByEmailThreadId(String emailThreadId) {
+		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//tbody//tr//td[contains(text(),'"+emailThreadId+"')]//..//td[2]");
+	}
+	public Element getDocIdFormThreadMap(int rowNum) {
+		return driver.FindElementByXPath("//table[@id='dtDocumentThreadedDocuments']//thead//tr["+rowNum+"]//th[contains(text(),'ID')]");
+	}
+	public ElementCollection getDocIdsFormThreadMap() {
+		return driver.FindElementsByXPath("//table[@id='dtDocumentThreadedDocuments']//thead//tr//th[contains(text(),'ID')]");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -25237,5 +25254,132 @@ public class DocViewPage {
 		System.out.println(headerVlaueAfterConfig);
 		base.passedStep("Configure MiniDocliast Selected Fields is Display Successfully");
 
+	}
+	
+	
+	/**
+	 * @author Gopinath 
+	 * @Description : Method for selecting email threaded id and family threaded id from mini config.
+	 */
+	public void selectEmailThreadedIdAndFamilyIdFromMiniCofig() {
+		try {
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			base.waitForElement(getDocView_ConfigMinidoclist());
+			getDocView_ConfigMinidoclist().isElementAvailable(10);
+			getDocView_ConfigMinidoclist().Click();
+			base.waitForElement(getminiDocListConfigFirstAvaliableField());
+			getminiDocListConfigFirstAvaliableField().isElementAvailable(10);
+			base.waitTime(3);
+			base.waitForElement(getMiniDocConfigSelectFieldRomoveIcon());
+			driver.waitForPageToBeReady();
+			getMiniDocConfigSelectieldRomoveIcon(2).isElementAvailable(10);
+			getMiniDocConfigSelectieldRomoveIcon(2).Click();;
+			getMiniDocConfigSelectieldRomoveIcon(2).Click();
+			Actions ac = new Actions(driver.getWebDriver());
+			base.waitTime(3);
+			ac.dragAndDrop(getminiDocListConfigField("EmailThreadID").getWebElement(),
+					getMiniDocConfigSelectedArea().getWebElement()).build().perform();
+			base.waitTime(3);
+			ac.dragAndDrop(getminiDocListConfigField("FamilyID").getWebElement(),
+					getMiniDocConfigSelectedArea().getWebElement()).build().perform();
+			getConfigSvaeButton().isElementAvailable(10);
+			getConfigSvaeButton().Click();
+	
+			try {
+				Alert al = driver.switchTo().alert();
+				al.accept();
+			} catch (Exception e) {
+				System.out.println(" not alert ,Saved the configration without any alert");
+				base.stepInfo("not alert ,Saved the configration without any alert");
+	
+			}
+			driver.Navigate().refresh();
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting email threaded id and family threaded id from mini config."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath 
+	 * @Description : Method for to get list of same email threaded ids.
+	 * @return emailThreadedIds : emailThreadedIds is list of String values that email threaded ids.
+	 */
+	public List<String> getListOfSameEmailThreadedIds() {
+		List<String> emailThreadedIds = new ArrayList<String>();
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			getFirstRowEmailthreadedId().isElementAvailable(10);;
+			String firstRowEmailThreadId = getFirstRowEmailthreadedId().getText().trim();
+			base.waitForElementCollection(getDocIdByEmailThreadId(firstRowEmailThreadId));
+			driver.waitForPageToBeReady();
+			List<WebElement> emailThreadedElements = getDocIdByEmailThreadId(firstRowEmailThreadId).FindWebElements();
+			for(WebElement emailThreadedElement : emailThreadedElements) {
+				String id = emailThreadedElement.getText().trim();
+				emailThreadedIds.add(id);
+			}
+			System.out.println("Email threaded id : "+emailThreadedIds);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while getting list of same email threaded ids."+e.getLocalizedMessage());
+		}
+		return emailThreadedIds;
+	}
+	
+	/**
+	 * @author Gopinath 
+	 * @Description : Method for verifying thread map ids with email thread ids.
+	 * @param emailThreadedIds : emailThreadedIds is list of String values that email threaded ids.
+	 */
+	public void verifyThreadMapIdsWithEmailThreadIds(List<String> emailThreadedIds) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			getDocIdFormThreadMap(1).ScrollTo();
+			driver.waitForPageToBeReady();
+			getDocIdFormThreadMap(1).isElementAvailable(10);
+			int threadmapDocIds = getDocIdsFormThreadMap().FindWebElements().size();
+			List<WebElement> threadMapDocIds = getDocIdsFormThreadMap().FindWebElements();
+			for(int i=0;i<threadmapDocIds;i++) {
+				String threadDocId = threadMapDocIds.get(i).getText().trim().substring(0, 10);
+				if(!emailThreadedIds.contains(threadDocId)) {
+					base.failedStep("Expected threaded id is not displayed in threaded map of id : "+threadDocId);
+				}
+			}
+			base.passedStep("Email threaded ids of combined similar ids displayed in thread map");
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying thread map ids with email thread ids."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath.
+	 * @description : This method verify traslation is avaliable in translation drop down.
+	 */
+	public void verifyTranslationDisplayedTranslationsDropdown() {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getTranslationDropdown().isElementAvailable(10);
+			if (getTranslationDropdown().isDisplayed()) {
+				base.passedStep("Translation drop down is displayed successfully");
+			} else {
+				base.failedMessage("Translation drop down is not displayed");
+			}
+			List<WebElement> options = getTranslationDropdownOptions().FindWebElements();
+			
+			if (options.get(0).isDisplayed()) {
+				base.passedStep("Translation is displayed in Translation drop down successfully");
+			} else {
+				base.failedMessage("Translation is not displayed in Translation drop down");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying traslation is avaliable in translation drop down." + e.getMessage());
+
+		}
 	}
 }

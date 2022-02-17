@@ -2,14 +2,23 @@ package pageFactory;
 
 import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
+import org.testng.asserts.SoftAssert;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import junit.framework.Assert;
+import testScriptsSmoke.Input;
 
 public class HomePage {
 
     Driver driver;
+    Element element;
+    BaseClass base;
+    SoftAssert assertion;
+    SessionSearch search;
+    DocListPage doclist;
+    
    
     //Menu and sub menus 
     public Element getManageMenu(){ return driver.FindElementByXPath("//a/label[contains(text(),'Manage')]"); }
@@ -36,16 +45,55 @@ public class HomePage {
     //Reviewer
     public ElementCollection getAssignmentsList(){ return driver.FindElementsByXPath("//strong[contains(text(),'')]"); }
     
-    
+    //Added by Gopinath - 17/02/2022
+  	public Element getDashBoardPage() {
+      	return driver.FindElementByXPath("//a[@name='Dashboard']/ancestor::li");
+      }
+      public Element getReviewManagerPageTitle() {
+      	return driver.FindElementByXPath("//h1[@class='page-title' and contains(text(),'Review Manager Dashboard')]");
+      }
+      
  
      
     
     public HomePage(Driver driver){
 
-        this.driver = driver;
+        this.driver = driver; 
+        base = new BaseClass(driver);
+        driver.waitForPageToBeReady();
+        assertion = new SoftAssert();
+        doclist = new DocListPage(driver);
+        search = new SessionSearch(driver);
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
 
     }
+    
+ 
+      
+  	
+  	/**
+  	 * @author Gopinath
+  	 * @Description:method to verify dashBoard page is displayed as default menu for Review manager
+  	 */
+  	public void verifyDashboardPageAsDefaultMenu() {
+  		try {
+  			base.waitForElement(getDashBoardPage());
+			if (getReviewManagerPageTitle().isDisplayed()) {
+				if (getDashBoardPage().GetAttribute("class").contains("active")) {
+					base.passedStep("DashBoard page is displayed as default menu for Review manager");
+
+				}else {
+					base.failedStep("DashBoard page is displayed as default menu for Review manager");
+				}
+			}else {
+				base.stepInfo("Review manager dashboard is not displayed");
+			}
+  		} catch (Exception e) {
+  			e.printStackTrace();
+  			base.failedStep("Exception occured while dashBoard page is displayed as default menu for Review manager" + e.getMessage());
+  		}
+
+  	}
 
     }
