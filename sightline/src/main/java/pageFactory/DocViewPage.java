@@ -25233,7 +25233,7 @@ public class DocViewPage {
 			}else {
 				base.failedMessage("The check Mark icon is still there even after Uncompleting the document");
 			}
-		}
+		}}
 
 	/**
 	 * @author Vijaya.Rani date: 16/02/2022 Modified date:N/A
