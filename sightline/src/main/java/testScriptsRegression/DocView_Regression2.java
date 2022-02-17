@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -4020,6 +4021,58 @@ public class DocView_Regression2 {
 	}
 	
 
+	/*  
+     *Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51107
+	 * Description :Verify user can download the redacted document from default view using print icon outside of an assignment.
+	 * validated the step of checking the format of Downloaded document in pdf for rectangle and current page redaction
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 59)
+	public void verifyDownloadDocsInPDF() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		
+		//pre-requisites- Rectangle redaction and current page redaction
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51107");
+		baseClass.stepInfo("Verify user can download the redacted document from default view using print icon outside of an assignment");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().Click();
+		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
+		baseClass.stepInfo("Current Page Redaction Completed");
+		driver.waitForPageToBeReady();
+		docViewRedact.addRectangleRedaction();
+		docViewRedact.selectingRectangleRedactionTag();
+		baseClass.stepInfo("Rectangle Redaction Completed");
+		loginPage.logout();
+		
+		//Login as RMU and verify the document download is in pdf format for rectangle and current page redaction
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		docView.verifyDocumentDownloadInPdfFormat();
+		loginPage.logout();
+		//Login as Reviewer and verify the document download in pdf format for rectangle and current page redaction
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as Reviewer");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		docView.verifyDocumentDownloadInPdfFormat();	
+		
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
