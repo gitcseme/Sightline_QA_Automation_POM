@@ -1495,7 +1495,8 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//span[text()='Static Text']");
 	}
 
-	// Added by Mohan
+	// 
+  
 	
 	public Element getDocView_Analytics_NearDupeViewAllDocsBtn() {
 		return driver.FindElementById("btnShowAllNearDupe");
@@ -25237,8 +25238,12 @@ public class DocViewPage {
 			}else {
 				base.failedMessage("The check Mark icon is still there even after Uncompleting the document");
 			}
+
 		}
 	}
+
+		}}
+
 
 	/**
 	 * @author Vijaya.Rani date: 16/02/2022 Modified date:N/A

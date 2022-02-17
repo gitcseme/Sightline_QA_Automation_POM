@@ -4073,6 +4073,45 @@ public class DocView_Regression2 {
 		
 	}
 	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51951
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =60)
+	public void verifyHiddenContentDocs(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
+		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
+		String expectedMessage3 = "Protected Excel Workbook";
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51951");
+		baseClass.stepInfo("Verify that when viewing the document having the 'Hidden Properties' value should provide indicator in viewer to convey that document is having hidden content");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.TextHidden);
+		sessionsearch.ViewInDocView();
+		DocViewPage docviewpage = new DocViewPage(driver);
+		
+//Selecting Doc with excel protected workbook
+		docviewpage.selectDocIdInMiniDocList(Input.HiddenContentExcelBook);
+		baseClass.stepInfo("Document with hidden content - excel protected workbook selected from mini doclist");
+		driver.waitForPageToBeReady();	
+		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
+		driver.waitForPageToBeReady();
+
+//Selecting Doc with excel protected worksheet		
+		String expectedMessage4 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
+		String expectedMessage5 = "Protected Excel Sheets";
+		docviewpage.selectDocIdInMiniDocList(Input.HiddenContentExcelSheet);
+		baseClass.stepInfo("Document with hidden content - excel protected worksheet selected from mini doclist");
+		driver.waitForPageToBeReady();	
+		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage4, expectedMessage5);	
+		loginPage.logout();
+		
+	}
+	
+	
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
