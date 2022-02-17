@@ -193,7 +193,10 @@ public class Input {
 	public static String nearDupePagination;
 	public static String highlightDocId;
 	public static String highlightedDocsQuery;
-
+	public static String ingestionQuery;
+	public static String ingestionDocIdFamilyMember;
+	public static String ingestionDocIdNearDupe;
+	
 	// DocView codingform Baskar Indium
 
 	public static String savedName;
@@ -685,6 +688,9 @@ public class Input {
 		fieldByValue=testData.getFieldByValue();
 		highlightDocId=testData.getHighlightDocId();
 		highlightedDocsQuery=testData.getHighlightedDocsQuery();
+		ingestionQuery=testData.getIngestionQuery();
+		ingestionDocIdFamilyMember=testData.getIngestionDocIdFamilyMember();
+		ingestionDocIdNearDupe=testData.getIngestionDocIdNearDupe();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();

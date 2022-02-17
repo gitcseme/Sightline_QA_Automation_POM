@@ -98,6 +98,9 @@ public class TestData {
 	public String fieldByValue;
 	public String highlightDocId;
 	public String highlightedDocsQuery;
+	public String ingestionQuery;
+	public String ingestionDocIdFamilyMember;
+	public String ingestionDocIdNearDupe;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;

@@ -112,6 +112,9 @@
 	<fieldByValue>Custodian</fieldByValue>
 	<highlightDocId>ID00001490</highlightDocId>
 	<highlightedDocsQuery>DupeCount:[1 TO 10000]</highlightedDocsQuery>
+	<ingestionQuery>B2F9_Automation_AllSources_20211130043120500</ingestionQuery>
+	<ingestionDocIdFamilyMember>ID00001156</ingestionDocIdFamilyMember>
+	<ingestionDocIdNearDupe>ID00001586</ingestionDocIdNearDupe>
 
 
 
