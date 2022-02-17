@@ -3054,6 +3054,7 @@ public class CodingForm {
 		getCodingForm_ErrorMsg().SendKeys("Error for testing");
 		base.waitForElement(getCodingForm_HelpText());
 		getCodingForm_HelpText().SendKeys("Help for testing");
+		driver.scrollPageToTop();
 		base.waitForElement(getSaveCFBtn());
 		getSaveCFBtn().waitAndClick(5);
 		base.waitForElement(getCodingForm_Validation_ButtonYes());

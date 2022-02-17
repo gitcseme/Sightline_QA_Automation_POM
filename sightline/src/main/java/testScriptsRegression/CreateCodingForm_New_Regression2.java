@@ -25,6 +25,7 @@ import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
+import pageFactory.MiniDocListPage;
 import pageFactory.ProjectPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
@@ -49,6 +50,8 @@ public class CreateCodingForm_New_Regression2 {
 	SessionSearch sessionSearch;
 	TagsAndFoldersPage  tagsAndFoldersPage;
 	ReusableDocViewPage reusableDocView;
+	MiniDocListPage miniDocList;
+	
 	String assgnCoding = "codingAssgn"+Utility.dynamicNameAppender();
 	String codingform = "CFTags"+Utility.dynamicNameAppender();
 	String assignment1 = "assignment"+Utility.dynamicNameAppender();
@@ -89,6 +92,7 @@ public class CreateCodingForm_New_Regression2 {
 		codingForm = new CodingForm(driver);
 		reusableDocView = new ReusableDocViewPage(driver);	
 		docViewPage = new DocViewPage(driver);
+		miniDocList = new MiniDocListPage(driver);
 	}
     
 	/**
@@ -911,6 +915,8 @@ public class CreateCodingForm_New_Regression2 {
 	public void verifyCfEditableOrNotBasedOnDocStatusWithDiffrentCodingForms(String userName, String password, String user) throws InterruptedException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-50971");
 	    baseClass.stepInfo("To verify custom coding form is editable or not when same document is assigned to two different assignments with different assigned coding form");	    
+	    System.out.println(assignment1);
+	    System.out.println(assignment2);
 	    // login as RMU
 	 	loginPage.loginToSightLine(userName, password);
 	 	baseClass.stepInfo("Successfully login as "+user);
@@ -940,9 +946,10 @@ public class CreateCodingForm_New_Regression2 {
 		baseClass.impersonateRMUtoReviewer();
  		baseClass.stepInfo("Impersonated to reviewer successfully");
 	 	}
-		assignmentPage.SelectAssignmentByReviewer(assignment1);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 		assignmentPage.completeAllDocsByReviewer(assignment1);	 	
+		driver.waitForPageToBeReady();
+		miniDocList.configureMiniDocListToShowCompletedDocs();
 		driver.waitForPageToBeReady();
 		if(reusableDocView.getUnCompleteButton().isElementAvailable(5)==true) {
 			baseClass.passedStep("Documents are completed as expected");		}

@@ -3951,7 +3951,6 @@ public class AssignmentsPage {
 			if (status == true) {
 				driver.scrollingToElementofAPage(getSelectAssignment(assignmentName));
 				if (!getSelectAssignmentHighlightCheck(assignmentName).isElementAvailable(5)) {
-					getSelectAssignment(assignmentName).waitAndClick(3);
 					getSelectAssignment(assignmentName).waitAndClick(5);
 				}
 				driver.scrollPageToTop();
@@ -4157,7 +4156,7 @@ public class AssignmentsPage {
 	public ArrayList<String> addReviewerAndDistributeDocs() throws InterruptedException {
 
 		bc.waitForElement(getAssignment_ManageReviewersTab());
-		getAssignment_ManageReviewersTab().Click();
+		getAssignment_ManageReviewersTab().waitAndClick(5);
 		getAddReviewersBtn().waitAndClick(10);
 		bc.waitForElement(getSelect2ndUserToAssign());
 		ArrayList<String> reviwersList = new ArrayList<String>();

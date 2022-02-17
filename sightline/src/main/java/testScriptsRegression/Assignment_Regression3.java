@@ -510,7 +510,7 @@ public class Assignment_Regression3 {
 	 *                     with Bulk Assign
 	 */
 
-	@Test(groups = { "regression" }, priority = 11)
+	@Test(enabled= true,groups = { "regression" }, priority = 11)
 	public void CreateAssgn_DocExp_VerifyToggle() throws InterruptedException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -558,7 +558,7 @@ public class Assignment_Regression3 {
 	 * @description:
 	 */
 
-	@Test(groups = { "regression" }, priority = 12)
+	@Test(enabled = true,groups = { "regression" }, priority = 12)
 	public void verifyDrawPoolToggle() throws InterruptedException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -582,7 +582,6 @@ public class Assignment_Regression3 {
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.getEmailThreadsTogetherBtnDisabled().ScrollTo();
 		softAssertion.assertEquals(agnmt.getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"), "false");
 		baseClass.ValidateElement_Presence(agnmt.getEmailThreadsTogetherBtnDisabled(),
 				"Disabled Email Threads Toggle Button ");
@@ -594,7 +593,6 @@ public class Assignment_Regression3 {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		baseClass.stepInfo("Logged Out and Logged in again as same RMU User to "
 				+ "check whether the updated setting are reflected or not");
-		agnmt.getEmailThreadsTogetherBtnDisabled().ScrollTo();
 		softAssertion.assertEquals(agnmt.getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"), "false");
 		baseClass.ValidateElement_Presence(agnmt.getEmailThreadsTogetherBtnDisabled(),
 				"Disabled Email Threads Toggle Button ");
