@@ -3262,10 +3262,12 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * @Author Indium-Baskar date: 10/8/2021 Modified date: 24/8/2021 Modified
-	 *         by:Baskar
+	 * @Author Indium-Baskar date: 10/8/2021 Modified date: 24/8/2021 Modified by:Baskar
 	 * @Description:Method created for create new assignment coding stamp applied
-	 *                     toggle should off
+	 *              toggle should off
+	 * @param assignmentName
+	 * @param codingForm
+	 * @throws InterruptedException
 	 */
 	public void createAssignmentCodingStampToggleOFF(String assignmentName, String codingForm)
 			throws InterruptedException {
@@ -3416,12 +3418,10 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * 
-	 * 
-	 * / * @author Indium-Baskar date: 18/8/2021 Modified date:30/9/2021 Modified
-	 * by:Baskar
-	 * 
+	 * @author Indium-Baskar date: 18/8/2021 Modified date:30/9/2021 Modified by:Baskar	 * 
 	 * @Description: Assignment creation
+	 * @param assignmentName
+	 * @param codingForm
 	 */
 	// Assignment creating and saving the assignment
 	// After Saving From action Drop down selecting the assignment with edit
@@ -3507,8 +3507,8 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * @author Indium-Baskar date: 24/8/2021 Modified date: NA Description: Toggle
-	 *         Enabled for CodingStamp and Save without complete
+	 * @author Indium-Baskar date: 24/8/2021 Modified date: NA
+	 * @description: Toggle Enabled for CodingStamp and Save without complete
 	 */
 //      permission for savewithoutcompleteingToggle
 	public void toggleSaveButton() {
@@ -3526,8 +3526,8 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * @author Indium-Baskar date: 18/8/2021 Modified date: NA Description: Toggle
-	 *         Enabled for CodingStamp and Save without complete
+	 * @author Indium-Baskar date: 18/8/2021 Modified date: NA <a>
+	 * @description: Toggle  Enabled for CodingStamp and Save without complete
 	 */
 
 	public void toggleCodingStampEnabled() {
@@ -3648,6 +3648,8 @@ public class AssignmentsPage {
 	 *         by:Baskar
 	 * @Description: Method created for create new assignment coding stamp applied
 	 *               toggle should ON context of assignment DocView/Coding Forms
+	 * @param assignmentName
+	 * @param codingForm
 	 */
 
 	public void createAssignmentNew(String assignmentName, String codingForm) {
@@ -3673,7 +3675,7 @@ public class AssignmentsPage {
 	 * @param cascadeSettings ---"Yes" for cascade group creation,"No" for non
 	 *                        cascade group creation.
 	 * @description This method will create cascade and non cascade assignment group
-	 * 
+	 * @throws InterruptedException 
 	 */
 	public void createCascadeNonCascadeAssgnGroup(String assgngrpName, String cascadeSettings)
 			throws InterruptedException {
@@ -3922,7 +3924,13 @@ public class AssignmentsPage {
 		bc.VerifySuccessMessage("Assignment deleted successfully");
 
 	}
-
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @param assignmentName
+	 * @throws InterruptedException
+	 * @description this method will edit assignment.Here I used pagination
+	 *              handling concept.
+	 */
 	public void editAssignmentUsingPaginationConcept(final String assignmentName) throws InterruptedException {
 		bc.selectproject();
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -4028,6 +4036,7 @@ public class AssignmentsPage {
 	/**
 	 * @author Jayanthi.Ganesan Modified Date-7/9/21
 	 * @param instruction
+	 * @param Type
 	 * @throws InterruptedException
 	 * @description This method will add instruction(using configure button)to the
 	 *              assignment.
@@ -4143,6 +4152,7 @@ public class AssignmentsPage {
 	 * @description this method will assign and distribute docs to reviewer.
 	 * @return Reviewers Available list in Assignment module.
 	 * @throws InterruptedException
+	 * @return it gives the list of reviewers.
 	 */
 	public ArrayList<String> addReviewerAndDistributeDocs() throws InterruptedException {
 
@@ -4210,6 +4220,7 @@ public class AssignmentsPage {
 	 * @Author Mohan Created on 26/08/2021
 	 * @Description To enable the Analytics panel and enabled thread map Toggle
 	 *              present in AssignPage 'RPMXCON-51845
+	 * @param assignmentName
 	 */
 	public void selectAssignmentToViewinDocviewThreadMap(final String assignmentName) {
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -4271,9 +4282,10 @@ public class AssignmentsPage {
 
 	/**
 	 * Author : Raghuram A date: 8/25/21 NA Modified date:N/A Modified by:N/A A
-	 * Description : Sort by Metadata Sequence
-	 * 
+	 * Description : Sort by Metadata Sequence	 * 
 	 * @throws InterruptedException
+	 * @param sortBy
+	 * @param sortType
 	 */
 	public void Assgnwithdocumentsequence(String sortBy, String sortType) throws InterruptedException {
 		bc.waitForElement(getAssgn_DocSequence_SortbyMetadata());
@@ -4291,8 +4303,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @Author : Mohan date: 28/8/2021 Modified date:N/A Modified by:N/A
-	 * @Description : After creating assignment distributing to Two reviewer account
-	 * 
+	 * @Description : After creating assignment distributing to Two reviewer account	 * 
 	 */
 
 	public void add2ReviewerAndDistribute() {
@@ -4320,7 +4331,9 @@ public class AssignmentsPage {
 	/**
 	 * @Author : Mohan date: 01/9/2021 Modified date:N/A Modified by:N/A
 	 * @Description : Create assignment for neardupe docs
-	 * 
+	 * @param assignmentName
+	 * @param codingForm
+	 * @param purehits
 	 */
 	public void assignNearDupeDocstoNewAssgn(final String assignmentName, String codingForm, int purehits) {
 
@@ -4514,6 +4527,7 @@ public class AssignmentsPage {
 	 * @param assignmentName
 	 * @param metaData
 	 * @description this method verify metadata sorting in reviewer page.
+	 * @throws InterruptedException
 	 */
 	public void verifyTheMetaDataSortingAsPerRMUUser(String assignmentName, String metaData)
 			throws InterruptedException {
@@ -4572,6 +4586,7 @@ public class AssignmentsPage {
 	 * @param assignmentName
 	 * @param metaData
 	 * @description this method verify metadata sorting in reviewer page.
+	 * @throws InterruptedException
 	 */
 	public void verifyTheMetaDataSortingAsPerRMUUserByAscending(String assignmentName, String metaData)
 			throws InterruptedException {
@@ -4629,6 +4644,7 @@ public class AssignmentsPage {
 	 *                                    Assignment)
 	 * @description this method will verify the configure button Display and selects
 	 *              select sorts by metadata option
+	 * @throws InterruptedException
 	 */
 	public void verifyConfigureBtnAndSelectSortBymetaData(String metadata, String EditAssignment_status)
 			throws InterruptedException {
@@ -4661,7 +4677,8 @@ public class AssignmentsPage {
 	 * @param assignmentName
 	 * @description this method will verify DocCountdisplay in Assignments grid view
 	 *              display in manage assignments page.
-	 * 
+	 * @throws InterruptedException
+	 * @return this method returns the document count of assignment 
 	 */
 
 	public String verifydocsCountInAssgnPage(String assignmentName) throws InterruptedException {
@@ -4698,7 +4715,7 @@ public class AssignmentsPage {
 	 * @param codingForm
 	 * @description this method will create assignment without clicking on save
 	 *              button.
-	 * 
+	 * @throws InterruptedException
 	 */
 
 	public void createAssignment_withoutSave(String assignmentName, String codingForm) throws InterruptedException {
@@ -4728,7 +4745,7 @@ public class AssignmentsPage {
 	 * @author Jayanthi.ganesan
 	 * @description this method will minimise the browser resolution from 100% to
 	 *              80%
-	 * 
+	 * @throws AWTException
 	 */
 	public void BrowserResolutionMin() throws AWTException {
 		Robot robot = new Robot();
@@ -4744,7 +4761,7 @@ public class AssignmentsPage {
 	 * @author Jayanthi.ganesan
 	 * @description this method will maximise the browser resolution from 80% to
 	 *              100%.
-	 * 
+	 * @throws AWTException
 	 */
 
 	public void BrowserResolutionMax() throws AWTException {
@@ -4762,7 +4779,9 @@ public class AssignmentsPage {
 	 * @description this method will verify the formatting tool bar display in
 	 *              instruction popup when we click on configure button in create
 	 *              assignment/edit assignment page.
-	 * 
+	 * @param optionTocheckElements
+	 * @throws InterruptedException 
+	 * @throws AWTException
 	 */
 	public void verifyFormattingToolBar_InstructionPopUp(String optionTocheckElements)
 			throws InterruptedException, AWTException {
@@ -4838,7 +4857,7 @@ public class AssignmentsPage {
 	 * @description this method will verify display of doc count in assignments
 	 *              group name when the DocCount Toggle button is OFF in Manage
 	 *              Assignments page.
-	 * 
+	 * @throws InterruptedException
 	 */
 	public void verifyDocCountDisplay() throws InterruptedException {
 		String AssgnGroupName = "AssgnGrp" + Utility.dynamicNameAppender();
@@ -4863,7 +4882,7 @@ public class AssignmentsPage {
 	 *         by:Jayanthi
 	 * @Description :This method will assign two reviewers but distribute document
 	 *              to one reviewer.
-	 * 
+	 * @return It returns distributed reviewer as string
 	 */
 
 	public String addMultipleReviewersAndDistributeToOnereviewer() throws InterruptedException {
@@ -4902,7 +4921,7 @@ public class AssignmentsPage {
 	 * @param Reviewer username
 	 * @Description :This method will return available Pending Assigned user to
 	 *              redistribute documents.
-	 * 
+	 * @return it returns the redistributed user
 	 */
 	public String VerifyUserNotInListAfterRedistributedDocs(String Username) throws InterruptedException {
 		System.out.println(Username);
@@ -4931,6 +4950,7 @@ public class AssignmentsPage {
 	 * @param Reviewer username
 	 * @Description :This method will return available Pending Assigned user to
 	 *              redistribute documents.
+	 * @return It returns the reviwer in redistributed popup            
 	 * 
 	 */
 	public String VerifyUserNotInListAfterRedistributedDocs() throws InterruptedException {
@@ -5049,6 +5069,7 @@ public class AssignmentsPage {
 	 * @author Jayanthi.ganesan
 	 * @param assignmentName
 	 * @description This method verify DocId's are sorting in reviewer page.
+	 * @throws InterruptedException
 	 */
 	public void verifyTheDocIdListInReviwerPgDocList(String assignmentName) throws InterruptedException {
 		bc.waitForElement(dashBoardPageTitle());
@@ -5082,6 +5103,7 @@ public class AssignmentsPage {
 	 * @param sortType - Ascending/Descending
 	 * @description This method validate the metadata and their sort type as
 	 *              expected.
+	 * @throws InterruptedException              
 	 */
 	public void validatedTheSortByAndSortType(String sortBy, String sortType) throws InterruptedException {
 		driver.scrollingToBottomofAPage();
@@ -5107,6 +5129,7 @@ public class AssignmentsPage {
 	 * @author Jayanthi.ganesan
 	 * @param option - metadata
 	 * @description This method validate the category options placed in as expected.
+	 * @throws InterruptedException
 	 */
 
 	public void validateTheAvailableCriteriaInCategory(String option) throws InterruptedException {
@@ -5126,7 +5149,7 @@ public class AssignmentsPage {
 	 * @author Jayanthi.ganesan
 	 * @Description-This method will verify display of sample methods drop down
 	 *                   options in in assign/unassign pop up in advanced search
-	 *                   page
+	 *                   page                   
 	 */
 	public void VerifySampleMethodDDOptions() {
 		String[] optionsArray = new String[] { "Count of Selected Docs", "Percent of Selected Docs",
@@ -5144,6 +5167,7 @@ public class AssignmentsPage {
 	/**
 	 * @author Jayanthi.ganesan
 	 * @Description-This method will calculate percentage of docs assigned
+	 * @return It returns the percentage value
 	 */
 	public long calculatePercentageOfDocAlloted() {
 		int TotalCount = Integer.parseInt(getStartingCount().getText());
@@ -5160,6 +5184,8 @@ public class AssignmentsPage {
 	 * @param assignmentName
 	 * @param assignmentName2 (this should be null for single assignment)
 	 * @param sampleMethod
+	 * @throws NumberFormatException
+	 * @throws InterruptedException
 	 */
 	public void assignAndVerifyDocsCountwithSamplemethod(final String assignmentName, String samplemethod,
 			final String assignmentName2) throws NumberFormatException, InterruptedException {
@@ -5263,6 +5289,7 @@ public class AssignmentsPage {
 	 * @param codingForm
 	 * @description This method for creating new assignment for bulk assign
 	 *              operation
+	 * @throws InterruptedException             
 	 */
 
 	public void createAssignmentByBulkAssignOperation(String assignmentName, String codingForm)
@@ -5298,6 +5325,7 @@ public class AssignmentsPage {
 	 * @param flag : (flag is a boolean value that weather redactions to enable or
 	 *             not).
 	 * @description This method for enabling redactions toogle in assignments page.
+	 *  @throws InterruptedException
 	 */
 
 	public void enableToogleToEnableRedactions(boolean flag) throws InterruptedException {
@@ -5402,6 +5430,8 @@ public class AssignmentsPage {
 	/**
 	 * @author Indium-Baskar date: 18/8/2021 Modified date:28/8/2021
 	 * @Description: Assignment creation with save button for rmu
+	 * @param assignmentName
+	 * @param codingForm
 	 */
 	// Assignment creating and saving the assignment
 	// After Saving From action Drop down selecting the assignment
@@ -5481,6 +5511,8 @@ public class AssignmentsPage {
 	/**
 	 * @author Krishna date: 24/9/2021 Modified date:28/8/2021
 	 * @Description: select assignment to view in docview
+	 * @param assignmentName
+	 * @param codingForm
 	 */
 
 	public void createNewquickBatchWithoutReviewer(final String assignmentName, String codingForm) {
@@ -5544,7 +5576,11 @@ public class AssignmentsPage {
 
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 	}
-
+	/**
+	 * @author Krishna 
+	 * @Description: Go to doc view from assignments
+	 * @param assignmentName
+	 */
 	public void ViewinDocviewFromAssignments(final String assignmentName) {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -5580,7 +5616,9 @@ public class AssignmentsPage {
 	/**
 	 * @Author : Mohan date: 28/8/2021 Modified date:N/A Modified by:Steffy
 	 * @Description : After creating assignment distributing to Two reviewer account
-	 * 
+	 * @param assignmentName
+	 * @param codingForm
+	 * @param purehits
 	 */
 
 	public void assignDocstoNewAssgnEnableAnalyticalPanel(final String assignmentName, String codingForm,
@@ -5835,7 +5873,9 @@ public class AssignmentsPage {
 	 * @Author : Mohan date: 01/10/2021 Modified date:25/10/2021 Modified by:Mohan
 	 * @Description : After creating assignment with Coding stamp enable
 	 *              distributing to Two reviewer account
-	 * 
+	 * @param assignmentName             
+	 * @param codingForm
+	 * @param purehits
 	 */
 	public void assignDocstoNewAssgnEnableCodingStamp(final String assignmentName, String codingForm, int purehits) {
 
@@ -6004,6 +6044,7 @@ public class AssignmentsPage {
 	/**
 	 * @author Indium-Baskar date: 10/4/2021 Modified date: NA
 	 * @Description: Assignment page pagination concept
+	 * @param filedValue
 	 */
 
 	public void assignmentPagination(String filedValue) {
@@ -6068,6 +6109,7 @@ public class AssignmentsPage {
 	 * @description this method will verify whether the pop up is displaying or not
 	 *              when we hover near the help icon near manage assignment in
 	 *              assignments page.
+	 * @throws InterruptedException             
 	 */
 	public void verifyHelpTextPopUpWhenHovering() throws InterruptedException {
 		bc.waitForElement(manageAssignmentHelpIcon());
@@ -6086,6 +6128,7 @@ public class AssignmentsPage {
 	 * @description This method will verifies whether Help text PopUp is appeared or
 	 *              not when we click on the help icon near manage assignment in
 	 *              assignments page
+	 * @throws InterruptedException             
 	 */
 	public void verifyHelpTextPopUpWhenClicking() throws InterruptedException {
 		bc.waitForElement(manageAssignmentHelpIcon());
@@ -6136,7 +6179,9 @@ public class AssignmentsPage {
 	/**
 	 * @Author : Steffy date: 09/10/2021 Modified date:N/A Modified by:Steffy
 	 * @Description : After creating assignment distributing to Two reviewer account
-	 * 
+	 * @param assignmentName
+	 * @param codingForm
+	 * @param purehits
 	 */
 	public void assignFamilyDocstoNewAssgnEnableAnalyticalPanel(final String assignmentName, String codingForm,
 			int purehits) {
@@ -6281,7 +6326,8 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @param assignmentName,Status
+	 * @param assignmentName
+	 * @param Status
 	 * @throws InterruptedException
 	 * @description this method will verify the color of completed and uncompleted
 	 *              status button
@@ -6370,7 +6416,7 @@ public class AssignmentsPage {
 	 * @description This method will assign documents from Assign Like documents
 	 *              PopUp after clicking finalize Button from assign/un-assign popup
 	 *              .
-	 * @return
+	 * @return assigned document counts
 	 */
 	public int assgn_LikeDocs(String assignmentName, Element LikeDocsCatogery_Tobeassigned, Element LikeDocsCount,
 			int alreadyAssignedDocsCount) {
@@ -6425,6 +6471,7 @@ public class AssignmentsPage {
 	 * @param assignmentName
 	 * @param metaData,metaData1
 	 * @description this method verify FamilyID sorting in reviewer page.
+	 * @throws InterruptedException
 	 */
 	public void verifyFamilyIdSorting(String assignmentName, String metaData, String metaData1)
 			throws InterruptedException {
@@ -6558,7 +6605,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 *
+	 * @description to verify the keyword popup. 
 	 */
 	public void verifyKeywordPopUp() {
 		// verify keywords PopUp
@@ -6569,8 +6616,10 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * Author : Raghuram A date: 10/12/21 NA Modified date:N/A Modified by:N/A A
-	 * Description :
+	 * @author Raghuram A date: 10/12/21 NA Modified date:N/A Modified by:N/A A
+	 * @description : to assign documents for the new assignment
+	 * @param assignmentName
+	 * @return count of docs
 	 */
 	public String assignDocstoNewAssgn(String assignmentName) {
 
@@ -6607,8 +6656,10 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * Author : Raghuram A date: 10/12/21 NA Modified date:N/A Modified by:N/A A
-	 * Description :
+	 * @author Raghuram A date: 10/12/21 NA Modified date:N/A Modified by:N/A A
+	 * @description To create assignment in the context of new assignment tab
+	 * @param assignmentName
+	 * @param codingForm
 	 */
 	public void quickAssignCreation(String assignmentName, String codingForm) {
 		try {
@@ -6639,8 +6690,10 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * Author : Raghuram A date: 10/12/21 NA Modified date:19/1/2022 Modified
-	 * by:Raghuram A Description :
+	 * @author Raghuram A date: 10/12/21 NA Modified date:19/1/2022 Modified by:Raghuram A 
+	 * @description To select an assignment from manage assignment and navigate to docview
+	 * @param assignmentName
+	 * @return document counts of an assignment
 	 */
 	public String selectAssignmentToViewinDocView(String assignmentName) {
 		String compareCount = null;
@@ -6686,6 +6739,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan Modified date-18/10/21
+	 * @description To finalize the assignment after bulk assigning the documents to assignment
 	 */
 	public void FinalizeAssignmentAfterBulkAssign() {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -6713,6 +6767,8 @@ public class AssignmentsPage {
 	 * @author Iyappan.Kasinathan
 	 * @param assignmentName
 	 * @description this method update details in existing assignment.
+	 * @throws InterruptedException
+	 * @return It return the status of draw pool toggle
 	 */
 	public String updateAssignmentDetails(String assignmentName) throws InterruptedException {
 		String status = null;
@@ -6755,8 +6811,11 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @param assignmentName,coding form
+	 * @param assignmentName
+	 * @param codingfrom
+	 * @param status
 	 * @description this method verify the details in copied assignment.
+	 * @throws InterruptedException
 	 */
 	public void verifyAgnmtDetailsInCopyAgnmt(String assignmentName, String codingfrom, String status)
 			throws InterruptedException {
@@ -6805,6 +6864,7 @@ public class AssignmentsPage {
 	 * @author Iyappan.Kasinathan
 	 * @param assignmentName
 	 * @description this method edit copy assignment using pagination concept.
+	 * @throws InterruptedException
 	 */
 	public void editCopyAssignmentUsingPaginationConcept(final String assignmentName) throws InterruptedException {
 		bc.selectproject();
@@ -6841,9 +6901,9 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @param assignmentName
+	 * @param cascadeSettings
 	 * @description this method verify the changes made by rmu user of cascading
-	 *              settings.
+	 *              settings
 	 */
 	public void validateCascadeSettingsChangesInAgnmt(String cascadeSettings) {
 		if (cascadeSettings == "Yes") {
@@ -6865,8 +6925,11 @@ public class AssignmentsPage {
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @param assignmentName
+	 * @param assignmentGrpName
+	 * @param cascadingSetting
 	 * @description this method validate the cascading and non-cascading settings in
 	 *              copy assignments.
+	 * @throws InterruptedException
 	 */
 	public void validateCopyAssgnCascadingNoncascadingSettings(String assignmentGrpName, String assignmentName,
 			String cascadingSettings) throws InterruptedException {
@@ -6918,7 +6981,7 @@ public class AssignmentsPage {
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @param assignmentName
-	 * @description this method navigated the assignement page using pagination.
+	 * @description this method navigated the assignment page using pagination.
 	 */
 	public void viewSelectedAssgnUsingPagination(String assignmentName) {
 		bc.waitForElement(getNumberOfAssignmentsToBeShown());
@@ -6944,6 +7007,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Iyappan.Kasinathan
+	 * @description To verify the displayed validations in success message popup.
 	 */
 	public void verifyDisplayedValidations() {
 		try {
@@ -7049,6 +7113,9 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Iyappan.Kasinathan
+	 * @description To verify the displayed validations of removed documents.
+	 * @param count
+	 * @throws InterruptedException
 	 */
 	public void verifyDisplayedValidationsOfRemovedDocs(int count) throws InterruptedException {
 		try {
@@ -7133,6 +7200,7 @@ public class AssignmentsPage {
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param AssignmentName
+	 * @param metaData
 	 * @throws InterruptedException
 	 * @description- this method will verify the System Define metadata sorting in
 	 *               DocList.
@@ -7194,6 +7262,7 @@ public class AssignmentsPage {
 	 * @author Jayanthi.ganesan
 	 * @param assignmentName
 	 * @param codingForm
+	 * @description Create new assignment from assgn and unassgn popup
 	 * @throws InterruptedException
 	 */
 	public void createAssignment_fromAssignUnassignPopup(String assignmentName, String codingForm)
@@ -7224,6 +7293,8 @@ public class AssignmentsPage {
 	 * @author Iyappan.Kasinathan
 	 * @param count - pureHits
 	 * @description this method distribute half the count of docs to reviewer.
+	 * @throws InterruptedException
+	 * @return it returns the unassigned document count 
 	 */
 	public int distributeHalfTheDocsToReviewer(int count) throws InterruptedException {
 
@@ -7270,6 +7341,8 @@ public class AssignmentsPage {
 	 * @author Iyappan.Kasinathan
 	 * @param assignmentGrpName
 	 * @description this method update assignment group and change drawpool toggle.
+	 * @throws InterruptedException
+	 * @return status of draw pool toggle
 	 */
 	public String updateAssgnGrpDetails(String assignmentGrpName) throws InterruptedException {
 		String status = null;
@@ -7293,6 +7366,7 @@ public class AssignmentsPage {
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @param assignmentGrpName
+	 * @param status
 	 * @description this method validate assignment group and and change drawpool
 	 *              toggle.
 	 */
@@ -7375,6 +7449,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 * @description to verify tag all option in assignments page
 	 */
 
 	public void VerifyTagAllOption() {
@@ -7395,6 +7470,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 * @description navigate to new or edit assignment based on option parameter
 	 * @param option
 	 */
 	public void NavigateToNewEditAssignmentPage(String option) {
@@ -7419,6 +7495,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Iyappan.Kasinathan
+	 * @description to verify the success message validation
 	 */
 	public void verifySuccessMsgValidations() {
 		try {
@@ -7478,6 +7555,8 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Iyappan.Kasinathan
+	 * @param  assignmentName
+	 * @description to verify the page navigated docview successfully
 	 */
 	public void validateNavigationOfDocViewPg(String assignmentName) {
 		bc.waitForElement(getAssignment_ManageReviewersTab());
@@ -7495,6 +7574,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Iyappan.Kasinathan
+	 * @description to verify the page navigated doclist successfully
 	 */
 	public void validateNavigationOfDocListPg() {
 		bc.waitForElement(getAssignment_ManageReviewersTab());
@@ -7512,6 +7592,8 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Iyappan.Kasinathan
+	 * @description To perform the action in manage reviewer tab based on parameter
+	 * @param actions
 	 */
 	public void selectActionsInManageRev(Element actions) {
 		// try {
@@ -7529,6 +7611,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Iyappan.Kasinathan
+	 * @description To verify the keywords are checked
 	 */
 	public void verifyKeywordsPopup() {
 		try {
@@ -7576,6 +7659,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 * @description To validate the cascade settings is enabled
 	 */
 
 	public void validateCascadeSettings() {
@@ -7596,6 +7680,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 * @description To validate the cascade settings is disabled
 	 */
 	public void validateNonCascadeSettings() {
 		String expectedMsg = "Cascade Settings is DISABLED for this Assignment";
@@ -7617,6 +7702,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 * @description To validate the toggles are enabled 
 	 */
 	public void verifyCascadeFunctionality_OFF() {
 		try {
@@ -7640,6 +7726,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 * @description  To validate the toggles are disabled 
 	 */
 	public void VerifyCascadefunctionality_ON() {
 		try {
@@ -7673,6 +7760,10 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 * @param parentAssgnGroupName
+	 * @param childAssgnGroupName
+	 * @param AssignmentName
+	 * @description to delete the assignment from assignment group
 	 */
 	public void deleteAssignmentFromAssgnGrp(String parentAssgnGroupName, String childAssgnGroupName,
 			String AssignmentName) {
@@ -7698,6 +7789,7 @@ public class AssignmentsPage {
 	 * @author Jayanthi.ganesan
 	 * @param noOfElements
 	 * @param index
+	 * @description to verify the all toggle buttons under presentation control is enabled
 	 */
 	public void ValidateEnabledToggleBtn_PresentationControl(int noOfElements, int index) {
 		for (int i = 1; i <= noOfElements; i++) {
@@ -7718,8 +7810,10 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * Author : Raghuram A date: 10/18/21 NA Modified date:N/A Modified by:N/A A
-	 * Description :
+	 * @author Raghuram A date: 10/18/21 NA Modified date:N/A Modified by:N/A A
+	 * @description to add reviewer and distribute documents to that reviewer
+	 * @param 	assignmentName
+	 * @throws InterruptedException 
 	 */
 	public void addReviewerAndDistributeDocsT(String assignmentName) throws InterruptedException {
 
@@ -7740,8 +7834,10 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * Author : Raghuram A date: 10/12/21 NA Modified date:N/A Modified by:N/A A
-	 * Description :
+	 * @author Raghuram A date: 10/12/21 NA Modified date:N/A Modified by:N/A A
+	 * @description To select an assignment from assignments
+	 * @param assignmentName
+	 * @return it returns the documents in assignments
 	 */
 	public String selectAssignmentToView(String assignmentName) {
 		String compareCount = null;
@@ -7781,8 +7877,10 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * Author : Raghuram A date: 10/18/21 NA Modified date:N/A Modified by:N/A A
-	 * Description :
+	 * @author Raghuram A date: 10/18/21 NA Modified date:N/A Modified by:N/A A
+	 * @description To create an assignment 
+	 * @param assignmentName
+	 * @param codingForm
 	 */
 	public void quickAssignmentCreation(String assignmentName, String codingForm) {
 		try {
@@ -7806,9 +7904,19 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * Author : Raghuram A date: 10/18/21 Description : Modified date: 11/15/21
+	 * @author : Raghuram A date: 10/18/21 Description : Modified date: 11/15/21
 	 * Modified by: Raghuram A getAssgn_OverrideOptimizedSortToggle( due to update
 	 * in the application
+	 * @param docHistorytoogle
+	 * @param withoutSaveCompToggle
+	 * @param completeCoddingStamtoggle
+	 * @param getAssgn_OverrideOptimizedSortToggle
+	 * @param toggle2
+	 * @param toggle3
+	 * @param toggle4
+	 * @param toggle5
+	 * @param toggle6
+	 * @description to perform the actions in quick assign toggled
 	 */
 	public void quickAssignToggles(Boolean docHistorytoogle, Boolean withoutSaveCompToggle,
 			Boolean completeCoddingStamtoggle, Boolean getAssgn_OverrideOptimizedSortToggle, Boolean toggle2,
@@ -7835,8 +7943,10 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * Author : Raghuram A date: 10/18/21 NA Modified date:N/A Modified by:N/A A
-	 * Description :
+	 * @author Raghuram A date: 10/18/21 NA Modified date:N/A Modified by:N/A A
+	 * @description To save an assignment
+	 * @param assignmentName
+	 * @param codingForm
 	 */
 	public void saveAssignment(String assignmentName, String codingForm) {
 		driver.scrollPageToTop();
@@ -7849,8 +7959,9 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * Author : Raghuram A date: 10/18/21 NA Modified date:N/A Modified by:N/A A
-	 * Description :
+	 * @author Raghuram A date: 10/18/21 NA Modified date:N/A Modified by:N/A A
+	 * @description To perform an assignment actions
+	 * @param type
 	 */
 	public void assignmentActions(String type) {
 		if (type.equals("DocView")) {
@@ -7866,7 +7977,9 @@ public class AssignmentsPage {
 	/**
 	 * @author Jayanthi.ganesan
 	 * @description this method will verify the display of DrawPool in Action column
-	 *              in reviwer page
+	 *              in reviewer page
+	 * @param assignmentName
+	 * @param type             
 	 */
 	public void verifyDrawPoolToggledisplay(String assignmentName, String type) {
 		if (type.equalsIgnoreCase("enabled")) {
@@ -7890,7 +8003,9 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @description this method will verify the TODO docs count in reviwer page
+	 * @description this method will verify the TODO docs count in reviewer page
+	 * @param assignmentName
+	 * @param TodoCount_Expected
 	 */
 	public void VerifyTodoCountInReviewerPg(String assignmentName, String TodoCount_Expected) {
 		bc.waitForElement(getAssignmentsInreviewerPg());
@@ -7954,6 +8069,9 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 * @description To delete an assignment from single assignment group
+	 * @param parentAssgnGroupName
+	 * @param AssignmentName
 	 */
 	public void deleteAssignmentFromSingleAssgnGrp(String parentAssgnGroupName, String AssignmentName) {
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -7978,6 +8096,9 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Iyappan.Kasinathan
+	 * @description This method un-assign the added reviewer
+	 * @param pureHits
+	 * @throws InterruptedException
 	 */
 	public void unassignTheAddedReviewer(int pureHits) throws InterruptedException {
 		try {
@@ -8019,6 +8140,8 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Iyappan.Kasinathan
+	 * @description This method verify the redistributed documents in another user
+	 * @param count
 	 */
 	public void verifyRedistributedDocsToAnotherUser(int count) {
 		try {
@@ -8084,6 +8207,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 * @description This method verifies the todo count in manage redistributed documents
 	 */
 	public void VerifyTodocountinManageRevTab_RedistributeDocs() {
 		bc.waitForElement(getAssignment_ManageReviewersTab());
@@ -8173,6 +8297,7 @@ public class AssignmentsPage {
 	/**
 	 * @Author Mohan Created on 15/11/2021
 	 * @Description To enable the Complete Coding Stamp Toggle present in AssignPage
+	 * @param assignmentName
 	 */
 	public void editAssignmentAndEnableToggleForCodingStamp(String assignmentName) {
 
@@ -8256,6 +8381,7 @@ public class AssignmentsPage {
 	 * @author Indium-Baskar date: 18/8/2021 Modified date:28/8/2021 Modified
 	 *         by:Baskar
 	 * @Description: This method used to manage assignment to docview page asRMU
+	 * @param assignmentName
 	 */
 
 	public void manageAssignmentToDocViewAsRmu(String assignmentName) {
@@ -8268,6 +8394,7 @@ public class AssignmentsPage {
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param assignmentName1
+	 * @description This method verifies the assignment is selected or not
 	 */
 	public void Checkclickedstatus(String assignmentName1) {
 
@@ -8280,7 +8407,8 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @param ele This method will check wether the toggle btn under control the
+	 * @param ele
+	 * @description This method will check wether the toggle btn under control the
 	 *            presentaion of doc view for reviewers while in this assignment is
 	 *            in enabled state
 	 */
@@ -8300,6 +8428,7 @@ public class AssignmentsPage {
 	 * @param KeywordName
 	 * @param list1
 	 * @param listToverify
+	 * @description This method verifies the keywords are displayed before and after deletion
 	 */
 	public void verifyKeywordsBeforeAndAfterDelete(String KeywordName, List<String> listToverify,
 			boolean verifyBeforeDelete) {
@@ -8329,8 +8458,9 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * 
+	 * @author Jayanthi.ganesan
 	 * @param AssName
+	 * @description This method delete all the assignments
 	 */
 
 	public void deleteAllAssignments(String AssName) {
@@ -8380,6 +8510,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 * @description This method verifies the live sequence
 	 */
 	public void VerifyLiveSequence() {
 		List<String> ElementNamesInOrder = Arrays.asList("Email Threads", "Family Members", "Near Duplicate Docs",
@@ -8397,7 +8528,8 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * @author Jayanthi.ganesan Verify Draw Pool Toggle is ON and Draw pool count is
+	 * @author Jayanthi.ganesan
+	 * @description Verify Draw Pool Toggle is ON and Draw pool count is
 	 *         "100" by default.
 	 */
 	public void VerifyDrawPoolToggleEnabled() {
@@ -8411,6 +8543,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 * @description This method verifies the draw pool toggle is disabled
 	 */
 	public void VerifyDrawPoolToggleDisabled() {
 		String s = getAssgnGrp_Create_DrawPooltoggle().GetAttribute("Class");
@@ -8419,7 +8552,8 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * @author Jayanthi.ganesan This method verify whether all toggles under
+	 * @author Jayanthi.ganesan 
+	 * @description This method verify whether all toggles under
 	 *         Presentation Control Block are Enabled and Disabled by default.
 	 */
 	public void verifyPresentationControlTogglesEnabledDisabled() {
@@ -8480,6 +8614,7 @@ public class AssignmentsPage {
 
 	/**
 	 * @author Aathith.Senthilkumar
+	 * @description This method is used to verify the allow reviewers to code enabled within assignment
 	 */
 	public void allowReviewer() {
 		SoftAssert softAssertion = new SoftAssert();
@@ -8505,8 +8640,8 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * @author Indium-Mohan date: 20/12/2021 Modified date: NA Description: Toggle
-	 *         Disable Code Outside Reviewer's Batch
+	 * @author Indium-Mohan date: 20/12/2021 Modified date: NA 
+	 * @description : Toggle disable Code Outside Reviewer's Batch
 	 */
 
 	public void toggleDisableCodeOutsideReviewersBatch() {
@@ -8527,8 +8662,8 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * @author Indium-Mohan date: 20/12/2021 Modified date: NA Description: Toggle
-	 *         Disable Code Outside Reviewer's Batch
+	 * @author Indium-Mohan date: 20/12/2021 Modified date: NA 
+	 * @description Toggle disable Code Outside Reviewer's Batch
 	 */
 
 	public void toggleEnableSaveWithoutCompletion() {
@@ -8547,7 +8682,11 @@ public class AssignmentsPage {
 		getAssignmentSaveButton().waitAndClick(5);
 		bc.CloseSuccessMsgpopup();
 	}
-
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @param comment
+	 * @description This method edit the coding form
+	 */
 	public void editCodingForm(String comment) {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getResponsiveCheked());
@@ -8560,7 +8699,8 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * Indium-Baskar
+	 * @author Indium-Baskar
+	 * @description This method verifies the toggle color
 	 */
 	public void VerifyToggleColour() {
 		SoftAssert assertion = new SoftAssert();
@@ -8863,7 +9003,9 @@ public class AssignmentsPage {
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param ele
-	 * @param EnableorDisable boolean value should be true if we want to enable the
+	 * @param EnableorDisable
+	 * @param name
+	 * @description boolean value should be true if we want to enable the
 	 *                        toggle and false if we want to disable
 	 */
 	public void toggleEnable_Disable(Element ele, boolean EnableorDisable, String name) {
@@ -8898,7 +9040,8 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * @author Gopinath Description : this mehtod will create new assignment with
+	 * @author Gopinath 
+	 * @description this mehtod will create new assignment with
 	 *         allow user to save without complete
 	 * @param assignmentName
 	 * @param codingForm
