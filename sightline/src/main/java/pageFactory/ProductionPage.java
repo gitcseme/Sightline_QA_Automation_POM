@@ -17594,7 +17594,38 @@ public class ProductionPage {
 	  }else {base.failedStep("Error message is displayed");  }
 	}	   
 		    	
-		   
+
+	
+	
+	/**
+	 * @author Brundha
+	 * @description :filling natively produced docs with file type and verifying the warning message.
+	 * 
+	 */
+	public void fillingTIFFWithNativelyProducedDocsFileType(String Test) {
+		
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitForElement(getTiff_NativeDoc());
+			getTiff_NativeDoc().Click();
+			base.waitTillElemetToBeClickable(getFileTypeNativelyProducedDocs());
+			getFileTypeNativelyProducedDocs().Click();
+			base.waitForElement(getNativeDocsPlaceholder());
+			getNativeDocsPlaceholder().SendKeys(Test);
+			base.waitForElement(getTiff_NativeDoc());
+			getTiff_NativeDoc().Click();
+			driver.scrollPageToTop();
+			getMarkCompleteLink().waitAndClick(10);
+			base.VerifyWarningMessage("In the TIFF / PDF section, no values are specified in the placeholder configuration for the docs produced natively. Please check.");
+	}
+
 	   
 	
 
