@@ -11024,6 +11024,160 @@ public class DocView_CodingForm_Regression {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author : Baskar date: 17/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify confirmation message to overwrite should be displayed
+	 *                     when user clicks 'Save' button without changing stamp
+	 *                     color and name in context of security group
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 223)
+	public void validateOverWriteMsgForRenamingStampName() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52060");
+		baseClass.stepInfo("Verify confirmation message to overwrite should be displayed when user "
+				+ "clicks 'Save' button without changing stamp color and name in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+		String stampTextTwo = "stamp2" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Searching audio document and basic search
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		// saving the stamp as per Prerequisites
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		driver.waitForPageToBeReady();
+
+		// validation for saved stamp displaying in edit popup window
+		docViewPage.getDrp_CodingEditStampColour().waitAndClick(5);
+		boolean assignedColour = docViewPage.getStampPopUpDrpDwnColur(Input.stampSelection).Displayed();
+		softAssertion.assertTrue(assignedColour);
+		baseClass.stepInfo("Assigned colour stamp displayed in the drop down");
+
+		// Renaming the stamp Name
+		String stampName = docViewPage.getCodingEditStampTextBox().GetAttribute("value");
+		docViewPage.getCodingEditStampTextBox().SendKeys(stampTextTwo);
+		String reNamingStamp = docViewPage.getCodingEditStampTextBox().GetAttribute("value");
+		softAssertion.assertNotEquals(stampName, reNamingStamp);
+		baseClass.stepInfo("Stamp renamed successfully");
+
+		// validation after renaming the stamp name
+		docViewPage.codingStampPopUpSaveButton();
+		baseClass.passedStep("Confirmation message displayd for renaming stamp name with YES and NO button");
+		baseClass.waitForElement(docViewPage.getStampOverWriteMessage());
+		String overWriteNO = docViewPage.getStampOverWriteMessage().getText().trim();
+		System.out.println(overWriteNO);
+		softAssertion.assertEquals(stampOverWrite, overWriteNO);
+
+		// Using No button
+		docViewPage.getNavigationButton("No").waitAndClick(5);
+		boolean notOverWrited = baseClass.VerifySuccessMessageB("Coding stamp updated successfully");
+		softAssertion.assertFalse(notOverWrited);
+
+		// Using Yes button
+		docViewPage.codingStampPopUpSaveButton();
+		baseClass.passedStep("Confirmation message displayd for renaming stamp name with YES and NO button");
+		baseClass.waitForElement(docViewPage.getStampOverWriteMessageLast());
+		String overWriteYES = docViewPage.getStampOverWriteMessageLast().getText().trim();
+		System.out.println(overWriteYES);
+		softAssertion.assertEquals(stampOverWrite, overWriteYES);
+		docViewPage.getNavigationButton("Yes").waitAndClick(5);
+		boolean overWrited = baseClass.VerifySuccessMessageB("Coding stamp updated successfully");
+		softAssertion.assertTrue(overWrited);
+
+		// House Keeping activity
+		docViewPage.deleteStampColour(Input.stampSelection);
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 17/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify tool tip should be displayed for the stamp icons on mouse
+	 *                     over after editing the stamp in context of security group
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 224)
+	public void validatToolTipForStampIcon() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52063");
+		baseClass.stepInfo("Verify tool tip should be displayed for the stamp icons on mouse "
+				+ "over after editing the stamp in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+		String stampTextTwo = "stamp2" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Searching audio document and basic search
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		// saving the stamp as per Prerequisites
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		driver.waitForPageToBeReady();
+
+		// validation for edit coding stamp with different colour
+		docViewPage.getDrp_CodingEditStampColour().waitAndClick(5);
+		docViewPage.getEditAssignedColour(Input.stampColour).waitAndClick(5);
+		docViewPage.getCodingEditStampTextBox().SendKeys(stampTextTwo);
+		docViewPage.codingStampPopUpSaveButton();
+		boolean stampSave = baseClass.VerifySuccessMessageB("Coding stamp updated successfully");
+		softAssertion.assertTrue(stampSave);
+
+		// mouser over at the saved stamp
+		docViewPage.VerifySavedStampToolTip(Input.stampColour, stampTextTwo);
+
+		// performing action from coding form child window
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		String parentWindow = docViewPage.switchTochildWindow();
+		baseClass.stepInfo("Performing action from coding form child window");
+		
+		// mouser over at the saved stamp from child window
+		docViewPage.VerifySavedStampToolTip(Input.stampColour, stampTextTwo);
+		docViewPage.childWindowToParentWindowSwitching(parentWindow);
+
+		// House Keeping activity
+		driver.Navigate().refresh();
+		driver.switchTo().alert().accept();
+		docViewPage.deleteStampColour(Input.stampColour);
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
 
 	@DataProvider(name = "ContentAndAudio")
 	public Object[][] ContentAndAudio() {
