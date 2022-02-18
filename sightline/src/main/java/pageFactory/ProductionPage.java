@@ -849,6 +849,35 @@ public class ProductionPage {
 
 	// added by sowndariya
 	
+	public Element fieldMappingtTextInDAT() {
+		return driver.FindElementByXPath("//label[contains(text(),'Field Mapping:')]");
+	}
+	
+	public Element dateFormatDdInDAT() {
+		return driver.FindElementByXPath("//select[@name='DATComponentModelData.DateFormatID']");
+	}
+	
+	public Element dateFormatTextInDAT() {
+		return driver.FindElementByXPath("//label[contains(text(),'Date Format:')]");
+	}
+	public Element fieldSeperatorDdInDAT() {
+		return driver.FindElementByXPath("//select[@id='lstFieldSeparator']");
+	}
+	public Element fieldDelimitersTextInDAT() {
+		return driver.FindElementByXPath("//div[@class='form-group required']//label[contains(text(),'Field Delimiters:')]");
+	}
+	
+	public Element radioBtnANSIInDAT() {
+		return driver.FindElementByXPath("//div[@class='form-group required']//label[@class='radio']//input[@id='rdbANSI']//..//i");
+	}
+	
+	public Element FormatTextInDAT() {
+		return driver.FindElementByXPath("//div[@class='form-group required']//label[contains(text(),'Format:')]");
+	}
+	public Element gridAndTileViewProdCount() {
+		return driver.FindElementByXPath("//div[@id='cardGrid']//span[@id='totalProductionCount']");
+	}
+	
 	public Element identifyByProductionGuardSource_radioBtn() {
 		return driver.FindElementByXPath("//a[@id='a-c-6']");
 	}
