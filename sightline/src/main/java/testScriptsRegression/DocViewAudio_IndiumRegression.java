@@ -2853,7 +2853,73 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
 
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	public void verifyPersistentHits_unCompleteDocs() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-46921");
+		baseClass.stepInfo("Verify that previously saved Persistent hits should be displayed on the audio doc view "
+				+ "when documents are uncompleted from edit assignment. ");
+		
+		// Login as Reviewer Manager 
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		String assign = "Assignment" + Utility.dynamicNameAppender();
+		String savedSearch = "Search1" + Utility.dynamicNameAppender();
+		
+        // creating new node	
+		String nodeName = this.savedSearch.createSearchGroupAndReturn(savedSearch,Input.rmu1userName,"yes");
+		
+        // configuring and saving the audio search in credated node		
+		int pureHit = sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.saveAdvanceSearchInNode(savedSearch,nodeName);
+		
+		// selecting the saved search group 
+		this.savedSearch.navigateToSSPage();
+		this.savedSearch.selectNode1(nodeName);
+		this.savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		
+		// creating assignment 
+		assignmentPage.FinalizeAssignmentAfterBulkAssign();
+		assignmentPage.createAssignmentByBulkAssignOperation(assign, Input.codeFormName);
+		
+		// adding Reviewer and distributing the documents to reviewer 
+		assignmentPage.editAssignment(assign);
+		assignmentPage.add2ReviewerAndDistribute();	
+		
+		// completing the Documents in the assignement 
+		assignmentPage.editAssignmentUsingPaginationConcept(assign);
+		assignmentPage.completeDocs(Input.rev1userName);
+				
+		// verifying the Persistent Hits as RMU 
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.selectAssignmentToViewinDocView(assign);
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		baseClass.stepInfo("Previously saved Persistent hits  displayed on "
+						+ "the doc view when documents are completed from edit assignment.");
+		
+		// Un-completing the Documents in the assignement 
+		assignmentPage.editAssignmentUsingPaginationConcept(assign);
+		assignmentPage.UnCompleteDocs(Input.rmu1userName);
+		
+		//// verifying the Persistent Hits as RMU
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.selectAssignmentToViewinDocView(assign);
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+	
+		assignmentPage.deleteAssgnmntUsingPagination(assign);
+		// logout
+		loginPage.logout();
+	}
 
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
