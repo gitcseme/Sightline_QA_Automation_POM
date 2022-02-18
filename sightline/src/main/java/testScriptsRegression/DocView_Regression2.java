@@ -4110,6 +4110,196 @@ public class DocView_Regression2 {
 		
 	}
 	
+	/**
+	 * Author :Vijaya.Rani date: 17/02/2022  Modified date: NA Modified by: NA Description
+	 * :Verify user after impersonation user can see the keywords highlighted in doc
+	 * view based on the assigned keyword group and color to the security group.
+	 * 'RPMXCON-51035' Sprint-12
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 61)
+	public void verifyImpersonationKeyWordsHighLightingDocView() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51035 sprint 12");
+		SessionSearch search = new SessionSearch(driver);
+		String keywordname = Input.randomText + Utility.dynamicNameAppender();
+		String keyword = Input.randomText + Utility.dynamicNameAppender();
+		KeywordPage keywordPage = new KeywordPage(driver);
+		docView = new DocViewPage(driver);
+
+		baseClass.stepInfo(
+				"Verify user after impersonation user can see the keywords highlighted in doc view based on the assigned keyword group and color to the security group");
+
+		// login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+		driver.Manage().window().fullscreen();
+		baseClass.stepInfo("Add keyword");
+		keywordPage.AddKeyword(keywordname, keyword);
+		driver.Manage().window().maximize();
+		baseClass.stepInfo("Get All Keywords in keywords lsit table");
+		keywordPage.getAllKeywords();
+		baseClass.stepInfo("Basic Search");
+		search.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("View In Doc View");
+		search.ViewInDocView();
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		// login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Step 1: Impersonating SA to Reviewer");
+		baseClass.impersonateSAtoReviewer();
+		baseClass.stepInfo("Basic Search");
+		search.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("View In Doc View");
+		search.ViewInDocView();
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		// login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("Basic Search");
+		search.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("View In Doc View");
+		search.ViewInDocView();
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		// login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("Basic Search");
+		search.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("View In Doc View");
+		search.ViewInDocView();
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Basic Search");
+		search.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("View In Doc View");
+		search.ViewInDocView();
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+
+		baseClass.stepInfo("Delete keyword");
+		keywordPage.deleteKeywordByName(keyword);
+
+	}
+
+	/**
+	 * Author :Vijaya.Rani date: 17/02/2022 Modified date: NA Modified by: NA Description:
+	 * Verify user after impersonation can see the keywords highlighted in doc view
+	 * based on the assigned keyword group and color to the assignment in context of
+	 * assignment.'RPMXCON-51036' Sprint-12
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 62)
+	public void verifyImpersonationKeyWordsHighLightingAssignmentDocView() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51036 sprint 12");
+		AssignmentsPage assgnPage = new AssignmentsPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+		String Assname = "Assigname" + Utility.dynamicNameAppender();
+		String keywordname = Input.randomText + Utility.dynamicNameAppender();
+		String keyword = Input.randomText + Utility.dynamicNameAppender();
+		KeywordPage keywordPage = new KeywordPage(driver);
+		docView = new DocViewPage(driver);
+
+		baseClass.stepInfo(
+				"Verify user after impersonation can see the keywords highlighted in doc view based on the assigned keyword group and color to the assignment in context of assignment");
+
+		// login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+		driver.Manage().window().fullscreen();
+		baseClass.stepInfo("Add keyword");
+		keywordPage.AddKeyword(keywordname, keyword);
+		driver.Manage().window().maximize();
+		baseClass.stepInfo("Get All Keywords in keywords lsit table");
+		keywordPage.getAllKeywords();
+		baseClass.stepInfo("Basic Search");
+		search.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Bulk Assign");
+		search.bulkAssign();
+		baseClass.stepInfo("Assignment Creation");
+		assgnPage.assignDocstoNewAssgnEnableAnalyticalPanel(Assname,  Input.codingFormName, SessionSearch.pureHit);
+		baseClass.stepInfo(" Go to doc view from my assignment");
+		assgnPage.selectAssignmentToViewinDocview(Assname);
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		// login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
+		baseClass.impersonatePAtoRMU();
+		assgnPage.selectAssignmentToViewinDocview(Assname);
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+		// selecting the assignment
+		baseClass.stepInfo("Selecting the assignment");
+		assgnPage.SelectAssignmentByReviewer(Assname);
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+		baseClass.stepInfo("Delete keyword");
+		keywordPage.deleteKeywordByName(keyword);
+
+	}
+	
+	
 	
 	
 	
