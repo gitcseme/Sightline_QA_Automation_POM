@@ -514,6 +514,35 @@ public class Input {
 	// Added by Baskar
 	public static String oneHourAudio;
 	public static String excelProtectedHiddenDocId;
+	
+	// Added by Mohan (Ingestion Datasets)
+	public static String H1369Folder;
+	public static String MultiPTIFFFolder;
+	public static String SinglePageTIFFFolder;
+	public static String CJK_FrenchAudioTestDataFolder;
+	public static String EmailConcatenatedDataFolder;
+	public static String SSAudioSpeechFolder;
+	public static String GD994NativeTextForProductionFolder;
+	public static String GNonsearchablePDFLoadfileFolder;
+	public static String HiddenPropertiesFolder;
+	public static String UniCodeFilesFolder;
+	public static String IngestionEmailDataFolder;
+	public static String DATFile;
+	public static String TextFile;
+	public static String NativeFile;
+	public static String TIFFFile;
+	public static String TIFFFile1;
+	public static String TranslationFile;
+	public static String PDFFile;
+	public static String TranscriptFile;
+	public static String MP3File;
+	public static String DATGermanFile;
+	public static String DATJapneseFile;
+	public static String TranscriptGermanFile;
+	public static String MP3GermanFile;
+	public static String TranscriptJapneseFile;
+	public static String MP3JapneseFile;
+	public static String SourceDatFieldCustom;
 
 	@BeforeSuite(alwaysRun = true)
 
@@ -1035,6 +1064,36 @@ public class Input {
 
 		hiddenDocId = testData.getHiddenDocId();
 		excelProtectedHiddenDocId = testData.getExcelProtectedHiddenDocId();
+		
+
+		//Ingestion DataSet
+		
+		H1369Folder =testData.getH1369Folder(); 
+		MultiPTIFFFolder  =testData.getMultiPTIFFFolder();
+		SinglePageTIFFFolder = testData.getSinglePageTIFFFolder();
+		CJK_FrenchAudioTestDataFolder =testData.getCJK_FrenchAudioTestDataFolder();
+		EmailConcatenatedDataFolder = testData.getEmailConcatenatedDataFolder();
+		SSAudioSpeechFolder =testData.getSSAudioSpeechFolder();
+		GD994NativeTextForProductionFolder =testData.getGD994NativeTextForProductionFolder();
+		GNonsearchablePDFLoadfileFolder =testData.getGNonsearchablePDFLoadfileFolder();
+		HiddenPropertiesFolder =testData.getHiddenPropertiesFolder();
+		UniCodeFilesFolder =testData.getUniCodeFilesFolder();
+		IngestionEmailDataFolder =testData.getIngestionEmailDataFolder();
+		DATFile = testData.getDATFile();
+		TextFile = testData.getTextFile();
+		NativeFile= testData.getNativeFile();
+		TIFFFile = testData.getTIFFFile();
+		TIFFFile1 = testData.getTIFFFile1();
+		TranslationFile = testData.getTranslationFile();
+		PDFFile= testData.getPDFFile();
+		TranscriptFile = testData.getTranscriptFile();
+		MP3File = testData.getMP3File();
+		DATGermanFile = testData.getDATGermanFile();
+		DATJapneseFile = testData.getDATJapneseFile();
+		TranscriptGermanFile = testData.getTranscriptGermanFile();
+		MP3GermanFile =testData.getMP3GermanFile();
+		TranscriptJapneseFile = testData.getTranscriptJapneseFile();
+		MP3JapneseFile = testData.getMP3JapneseFile();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
