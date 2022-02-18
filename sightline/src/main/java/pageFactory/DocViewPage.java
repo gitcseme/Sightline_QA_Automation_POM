@@ -3169,7 +3169,10 @@ public class DocViewPage {
 	public Element getEditCodingStamp_PopUpWindow() {
 		return driver.FindElementByXPath("//span[text()='Edit Coding Stamp']");
 	}
-
+	public Element getStampOverWriteMessageLast() {
+		return driver.FindElementByXPath(
+				"(//p[text()[normalize-space()='The Stamp you selected is already in use. Do you want to overwrite this Stamp with the new selections?']])[last()]");
+	}
 
 
 	public DocViewPage(Driver driver) {
