@@ -49,6 +49,7 @@
 	<pageRange4>2-13</pageRange4>
 	<searchPhraseWithQuote>"is required"</searchPhraseWithQuote>
 	<keywordColor1>Cyan</keywordColor1>
+	<multiwordText>will be</multiwordText>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
