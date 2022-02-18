@@ -9071,6 +9071,73 @@ public class Production_Regression1 {
 	}
 	
 	
+
+	/**
+	 * @author Brundha Test case id-RPMXCON-48632
+	 * @Description To verify that exported CSV should be sorted by BegBates
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 123)
+	public void verifyExportCSVFileSorted() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-48632 - from Production-sprint 11");
+		base.stepInfo("To verify that exported CSV should be sorted by BegBates");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID,suffixID,beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.getbtnProductionGenerate().waitAndClick(10);
+		page.verifyProductionStatusInGenPage("Pre-Generation Checks Completed");
+		base.waitTillElemetToBeClickable(page.getExportBatesButton());
+		page.verifyExportBatesButtonIsEnabled();
+		page.getExportBatesButton().Click();
+		BaseClass base = new BaseClass(driver);
+		driver.waitForPageToBeReady();
+		page.getNotificationLink().isDisplayed();
+		page.getNotificationLink().waitAndClick(5);
+		page.getViewAll().waitAndClick(10);
+		for (int i = 0; i < 10; i++) {
+				if (page.getDownloadLinkforExport().isDisplayed()) {
+					page.getDownloadLinkforExport().Click();
+					break;
+				}else {
+					driver.Navigate().refresh();}}
+		
+		base.VerifyingCSVFileDownloadedAndSorted();
+		base.passedStep("verified the exported CSV is sorted by BegBates");
+		loginPage.logout();
+	}
+	
+	
+	
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

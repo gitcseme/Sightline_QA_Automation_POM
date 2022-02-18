@@ -2997,4 +2997,38 @@ public class BaseClass {
 		}
 		return hash_Set;
 	}
+	
+	
+	/**
+	 * @author @Brundha
+	 * @throws AWTException 
+	 *@Description:Method to verify downloaded csv file and its sorting order
+	 * 
+	 */
+	public void VerifyingCSVFileDownloadedAndSorted() throws IOException, InterruptedException, AWTException {
+		//Method to verify the downloaded file:
+		String fileName=GetFileName();
+		List<String> lines = new ArrayList<>();
+		String line = null;
+        List<String>Values=new ArrayList<>();
+		FileReader file = null;
+		file = new FileReader(fileName);
+
+		BufferedReader br = new BufferedReader(file);
+		while ((line = br.readLine()) != null) {
+		lines.add(line);
+		}
+		
+        System.out.println(lines.size());
+		for (int i = 1; i < lines.size()-1; i++) {
+		String value = lines.get(i);
+		String[] arrOfStr = value.split(",");
+	 
+	   System.out.println(arrOfStr[1]);
+	   Values.add(arrOfStr[1]);
+	}
+		//Method to verify the sorting order
+		 verifyOriginalSortOrder(Values,Values,"Ascending",true);
+}
+	
 }
