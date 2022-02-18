@@ -11031,9 +11031,9 @@ public class DocView_CodingForm_Regression {
 	 *                     when user clicks 'Save' button without changing stamp
 	 *                     color and name in context of security group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 223)
+    @Test(enabled = true, groups = { "regression" }, priority = 223)
 	public void validateOverWriteMsgForRenamingStampName() throws InterruptedException, AWTException {
-		docViewPage = new DocViewPage(driver);
+    	docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		softAssertion = new SoftAssert();
@@ -11178,7 +11178,185 @@ public class DocView_CodingForm_Regression {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author : Baskar date: 18/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify on click of the gear icon of the coding stamp saved stamp 
+	 *              color should be clickable in context of security group
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 225)
+	public void validatSavedStampShouldClickable() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
 
+		baseClass.stepInfo("Test case Id: RPMXCON-52064");
+		baseClass.stepInfo("Verify on click of the gear icon of the coding stamp "
+				+ "saved stamp color should be clickable in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Searching audio document and basic search
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		// saving the stamp as per Prerequisites
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		boolean editMode=docViewPage.getStampInEditMode().Displayed();
+		softAssertion.assertTrue(editMode);
+		baseClass.stepInfo("coding stamp in edit mode");
+		driver.waitForPageToBeReady();
+
+		// validation for edit coding stamp popup
+		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(EditStamp);
+		String stampName = docViewPage.getCodingEditStampTextBox().GetAttribute("value");
+		softAssertion.assertEquals(stampName, fieldText);
+		boolean stampColour=docViewPage.getCodingStampPopUpColurVerify(Input.stampSelection).Displayed();
+		softAssertion.assertTrue(stampColour);
+		baseClass.waitForElement(docViewPage.getCodingStampCancel());
+		docViewPage.getCodingStampCancel().waitAndClick(5);
+		baseClass.passedStep("Coding stamp popup window opened while clicking the saved stamp");
+		baseClass.stepInfo("Assigned stamp name and assigned stamp colour displayed in popup window");
+		
+		// Validation for coding form child window
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		String parentWinodw=docViewPage.switchTochildWindow();
+		baseClass.stepInfo("performing action for coding form child window");
+		docViewPage.pencilGearIconCF(Input.stampSelection);
+		docViewPage.childWindowToParentWindowSwitching(parentWinodw);
+		boolean EditStampCF=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(EditStampCF);
+		String stampNameCF = docViewPage.getCodingEditStampTextBox().GetAttribute("value");
+		softAssertion.assertEquals(stampNameCF, fieldText);
+		boolean stampColourCF=docViewPage.getCodingStampPopUpColurVerify(Input.stampSelection).Displayed();
+		softAssertion.assertTrue(stampColourCF);
+		
+		// House Keeping activity
+		driver.Navigate().refresh();
+		driver.switchTo().alert().accept();
+		docViewPage.deleteStampColour(Input.stampSelection);
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 18/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:[Covered Coding form child window]Verify user can edit the coding 
+	 *              stamp with the different color in context of security group
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 226)
+	public void validatWithoutChangingObjectUsingStamp() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52065");
+		baseClass.stepInfo("[Covered Coding form child window]Verify user can edit the "
+				+ "coding stamp with the different color in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+		String stampTextTwo = "stamp2" + Utility.dynamicNameAppender();
+		String commentCf = "commentcf" + Utility.dynamicNameAppender();
+		String fieldTextCf = "stampcf" + Utility.dynamicNameAppender();
+		String stampTextTwoCf = "stamp2cf" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Searching audio document and basic search
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		// saving the stamp as per Prerequisites
+		String prnDoc=docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		boolean editMode=docViewPage.getStampInEditMode().Displayed();
+		softAssertion.assertTrue(editMode);
+		baseClass.stepInfo("coding stamp in edit mode");
+		driver.waitForPageToBeReady();
+
+		// validation for edit coding stamp with different colour
+		docViewPage.getDrp_CodingEditStampColour().waitAndClick(5);
+		docViewPage.getEditAssignedColour(Input.stampColour).waitAndClick(5);
+		docViewPage.getCodingEditStampTextBox().SendKeys(stampTextTwo);
+		docViewPage.codingStampPopUpSaveButton();
+		boolean stampSave = baseClass.VerifySuccessMessageB("Coding stamp updated successfully");
+		softAssertion.assertTrue(stampSave);
+		docViewPage.lastAppliedStamp(Input.stampColour);
+		
+		// validation for without edit coding form object just rename the stamp colour
+		docViewPage.verifyingComments(comment);
+		baseClass.passedStep("Coding form stamp object as per the expected value");
+		docViewPage.deleteStampColour(Input.stampColour);
+
+		// performing action from coding form child window
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		String parentWindow = docViewPage.switchTochildWindow();
+		baseClass.stepInfo("Performing action from coding form child window");
+		docViewPage.editCodingForm(commentCf);
+		docViewPage.codingStampButton();
+		docViewPage.switchToNewWindow(1);
+		docViewPage.popUpAction(fieldTextCf, Input.stampSelection);
+		docViewPage.switchToNewWindow(2);
+		docViewPage.pencilGearIconCF(Input.stampSelection);
+		boolean editModecf=docViewPage.getStampInEditMode().Displayed();
+		softAssertion.assertTrue(editModecf);
+		baseClass.stepInfo("coding stamp in edit mode from child window");
+		driver.waitForPageToBeReady();
+		
+		// validation for edit coding stamp with different colour from child window
+		docViewPage.switchToNewWindow(1);
+		docViewPage.getDrp_CodingEditStampColour().waitAndClick(5);
+		docViewPage.getEditAssignedColour(Input.stampColour).waitAndClick(5);
+		docViewPage.getCodingEditStampTextBox().SendKeys(stampTextTwoCf);
+		docViewPage.codingStampPopUpSaveButton();
+		boolean stampSavecf = baseClass.VerifySuccessMessageB("Coding stamp updated successfully");
+		softAssertion.assertTrue(stampSavecf);
+		docViewPage.switchToNewWindow(2);
+		docViewPage.lastAppliedStamp(Input.stampColour);
+
+		// validation for without edit coding form object just rename the stamp colour in child window
+		docViewPage.verifyingComments(commentCf);
+		baseClass.passedStep("Coding form stamp object as per the expected value from child window");
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+		
+		// House Keeping activity
+		driver.Navigate().refresh();
+		driver.switchTo().alert().accept();
+		docViewPage.deleteStampColour(Input.stampColour);
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+	
 	@DataProvider(name = "ContentAndAudio")
 	public Object[][] ContentAndAudio() {
 		Object[][] ContentAndAudio = { { "Basic" }, { "Audio" }, };
@@ -11192,6 +11370,7 @@ public class DocView_CodingForm_Regression {
 				{ "pa", Input.pa1userName, Input.pa1password, "rev" } };
 	}
 
+	
 	@DataProvider(name = "rmuRevLogin")
 	public Object[][] userRmuRev() {
 		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
