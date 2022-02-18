@@ -280,6 +280,8 @@ public class Input {
 	public static String HiddenContentExcelSheet;
 	public static String HiddenContentExcelBook;
 	public static String HiddenContentExternalLink;
+	public static String audioString1;
+	public static String audioString2;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -782,6 +784,8 @@ public class Input {
 		HiddenContentExcelSheet = testData.getHiddenContentExcelSheet();
 	    HiddenContentExcelBook = testData.getHiddenContentExcelBook();
 		HiddenContentExternalLink = testData.getHiddenContentExternalLink();
+		audioString1=testData.getAudioString1();
+		audioString2=testData.getAudioString2();
 
 		// Added by Arun
 		pageRange1 = testData.getPageRange1();
