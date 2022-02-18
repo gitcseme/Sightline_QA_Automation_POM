@@ -25272,9 +25272,6 @@ public class DocViewPage {
 		}
 	}
 
-		}}
-
-
 	/**
 	 * @author Vijaya.Rani date: 16/02/2022 Modified date:N/A
 	 * @Description: This method used to verify manual Sort order
