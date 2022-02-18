@@ -179,6 +179,8 @@ public class TestData {
 	public String DocIdWithHiddenContent;
 	public String TextHidden;
 	public String warningMessage;
+	public String audioString1;
+	public String audioString2;
 
 	//Added by arunkumar
 	public String pageRange1;

@@ -3200,7 +3200,11 @@ public class DocViewPage {
 				"(//p[text()[normalize-space()='The Stamp you selected is already in use. Do you want to overwrite this Stamp with the new selections?']])[last()]");
 	}
 
-
+	//Added by Vijaya.Rani
+	public ElementCollection getDocView_Analytics_ThreadedMapParticipantDocs() {
+		return driver
+				.FindElementsByXPath("//tbody[@id='threadedEmailRow']//tr");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -25571,6 +25575,25 @@ public class DocViewPage {
 				+ "which is more than 20 docs");
 	}
 	
-	
+	/**
+	 * @author Vijaya.Rani 18/02/22 NA Modified date: NA Modified by:NA
+	 * @description To verify thread docs more than 20 emails
+	 */
+	public void selectDocsFromMiniDocsListChechThreadMapEmails() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+		
+		base.waitForElementCollection(getDocView_Analytics_ThreadedDocs());
+
+		base.passedStep("The Threaed Documents having Columns are : " + getDocView_Analytics_ThreadedDocs().size()
+				+ " docs");
+		
+		base.waitForElementCollection(getDocView_Analytics_ThreadedMapParticipantDocs());
+		
+		base.passedStep("The Threaed Documents having Row are : " + getDocView_Analytics_ThreadedMapParticipantDocs().size()
+				+ "docs");
+		
+	}
 
 }
