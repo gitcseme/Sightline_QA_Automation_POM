@@ -1839,6 +1839,730 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		
 	}
 	
+	/**
+	 * Author : Mohan date: 17/02/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51322 
+	 * @description: Verify after impersonation on click of 'View All Documents' all the documents should be 
+	 * displayed on Analytics panel > family member, Near Dupe, Conceptual child window 'RPMXCON-51322' Sprint 12
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 21) 
+	public void verifyViewAllDocsEnabledInAnFamilyNearDupeConceptualChildWindow() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		baseClass.stepInfo("Test case id : RPMXCON-51322");
+		baseClass.stepInfo("Verify after impersonation on click of 'View All Documents' all the documents should be displayed on Analytics panel > family member, Near Dupe, Conceptual child window");
+		
+		
+		// Login as USER
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
+		baseClass.stepInfo("Loggedin As : " + Input.pa1FullName);
+		
+		
+		String saveSearch = "SaveSearch" + Utility.dynamicNameAppender();
+		String folderName = "FolderName"+ Utility.dynamicNameAppender();
+		String docId= Input.ingestionDocIdFamilyMember;
+		String docId1= Input.ingestionDocIdNearDupe;
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery, "IngestionName");
+		sessionSearch.saveSearchAtAnyRootGroup(saveSearch, Input.shareSearchDefaultSG);
+
+		loginPage.logout();
+		// Login as USER
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		savedSearch = new SavedSearch(driver);
+		savedSearch.selectWithDefaultSecurityGroupAndFolder(saveSearch, folderName);
+		loginPage.logout();
+		
+		 //login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
+		
+		baseClass.impersonateSAtoPA();
+		baseClass.stepInfo("Impersonate from SA to PA");
+		
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+		
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+		docView.selectDocIdInMiniDocList(docId);
+		
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		
+		String childWindow= driver.getWebDriver().getWindowHandle();
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+		
+		driver.switchTo().window(parentWindowID);
+		
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+		
+		driver.switchTo().window(childWindow);
+		
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+		
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		
+		loginPage.logout();
+
+		// login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
+		
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Impersonate from SA to RMU");
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+		
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+		
+		docView.selectDocIdInMiniDocList(docId);
+		
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		
+		childWindow= driver.getWebDriver().getWindowHandle();
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+		
+		driver.switchTo().window(parentWindowID);
+		
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+		
+		driver.switchTo().window(childWindow);
+		
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+		
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		
+		loginPage.logout();
+		
+		// login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
+		
+		baseClass.impersonateSAtoReviewer();
+		baseClass.stepInfo("Impersonate from SA to Reveiwer");
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+		
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+		
+		docView.selectDocIdInMiniDocList(docId);
+		
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		
+		childWindow= driver.getWebDriver().getWindowHandle();
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+		
+		driver.switchTo().window(parentWindowID);
+		
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+		
+		driver.switchTo().window(childWindow);
+		
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+		
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		
+		loginPage.logout();
+		
+		
+		// login as DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		UtilityLog.info("Logged in as User: " + Input.da1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.da1userName);
+
+		baseClass.impersonateDAtoPA();
+		baseClass.stepInfo("Impersonate from DA to PA");
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+
+		docView.selectDocIdInMiniDocList(docId);
+
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		childWindow = driver.getWebDriver().getWindowHandle();
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+
+		driver.switchTo().window(parentWindowID);
+
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+
+		driver.switchTo().window(childWindow);
+
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		loginPage.logout();
+		
+		// login as DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		UtilityLog.info("Logged in as User: " + Input.da1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.da1userName);
+
+		baseClass.impersonateDAtoRMU();
+		baseClass.stepInfo("Impersonate from DA to RMU");
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+
+		docView.selectDocIdInMiniDocList(docId);
+
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		childWindow = driver.getWebDriver().getWindowHandle();
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+
+		driver.switchTo().window(parentWindowID);
+
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+
+		driver.switchTo().window(childWindow);
+
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		loginPage.logout();
+		
+		// login as DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		UtilityLog.info("Logged in as User: " + Input.da1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.da1userName);
+
+		baseClass.impersonateDAtoReviewer();
+		baseClass.stepInfo("Impersonate from DA to Reviewer");
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+
+		docView.selectDocIdInMiniDocList(docId);
+
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		childWindow = driver.getWebDriver().getWindowHandle();
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+
+		driver.switchTo().window(parentWindowID);
+
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+
+		driver.switchTo().window(childWindow);
+
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		loginPage.logout();
+		
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.pa1userName);
+
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("Impersonate from PA to RMU");
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+
+		docView.selectDocIdInMiniDocList(docId);
+
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		childWindow = driver.getWebDriver().getWindowHandle();
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+
+		driver.switchTo().window(parentWindowID);
+
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+
+		driver.switchTo().window(childWindow);
+
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		loginPage.logout();
+		
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.pa1userName);
+
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("Impersonate from PA to Reviewer");
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+
+		docView.selectDocIdInMiniDocList(docId);
+
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.popOutAnalyticsPanel();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		childWindow = driver.getWebDriver().getWindowHandle();
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+
+		driver.switchTo().window(parentWindowID);
+
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+
+		driver.switchTo().window(childWindow);
+
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author : Mohan date: 17/02/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51320 
+	 * @description:Verify user after impersonation can see the 'View All Documents' as enabled from Family Members, 
+	 * Near Dupes, Conceptually Similar when more than 20 documents exist'RPMXCON-51320' Sprint 12
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 22) 
+	public void verifyViewAllDocsEnabledInAnFamilyNearDupeConceptual() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		baseClass.stepInfo("Test case id : RPMXCON-51320");
+		baseClass.stepInfo("Verify user after impersonation can see the 'View All Documents' as enabled from Family Members, Near Dupes, Conceptually Similar when more than 20 documents exist");
+		
+		
+		// Login as USER
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
+		baseClass.stepInfo("Loggedin As : " + Input.pa1FullName);
+		
+		
+		String saveSearch = "SaveSearch" + Utility.dynamicNameAppender();
+		String folderName = "FolderName"+ Utility.dynamicNameAppender();
+		String docId=Input.ingestionDocIdFamilyMember;
+		String docId1=Input.ingestionDocIdNearDupe;
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		sessionSearch.basicSearchWithMetaDataQuery("Input.ingestionQuery", "IngestionName");
+		sessionSearch.saveSearchAtAnyRootGroup(saveSearch, Input.shareSearchDefaultSG);
+
+		loginPage.logout();
+		// Login as USER
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		savedSearch = new SavedSearch(driver);
+		savedSearch.selectWithDefaultSecurityGroupAndFolder(saveSearch, folderName);
+		loginPage.logout();
+		
+		 //login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
+		
+		baseClass.impersonateSAtoPA();
+		baseClass.stepInfo("Impersonate from SA to PA");
+		
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+		
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+		docView.selectDocIdInMiniDocList(docId);
+		
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+		
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+		
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+		
+		loginPage.logout();
+
+		// login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
+		
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Impersonate from SA to RMU");
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+		
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+		
+		docView.selectDocIdInMiniDocList(docId);
+		
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+		
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+		
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+		
+		loginPage.logout();
+		
+		// login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
+		
+		baseClass.impersonateSAtoReviewer();
+		baseClass.stepInfo("Impersonate from SA to Reveiwer");
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+		
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+		
+		docView.selectDocIdInMiniDocList(docId);
+		
+		
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+		
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+		
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+		
+		loginPage.logout();
+		
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.pa1userName);
+
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("Impersonate from PA to RMU");
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+
+		docView.selectDocIdInMiniDocList(docId);
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+
+		loginPage.logout();
+
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.pa1userName);
+
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("Impersonate from PA to Reviewer");
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+
+		docView.selectDocIdInMiniDocList(docId);
+
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+
+		loginPage.logout();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Impersonate from RMU to Reviewer");
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+
+		docView.selectDocIdInMiniDocList(docId);
+
+		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+
+		docView.verifyNearDupeTabWithMoreDocs();
+		docView.verifyConceptualTabWithMoreDocs();
+
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author : Mohan date: 17/02/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51318 
+	 * @description: Verify 'View All Documents' button should be displayed on Analytics Panel Child Window > Near Dupe tab 
+	 * when more than 20 documents exists 'RPMXCON-51318' Sprint 12
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 23) 
+	public void verifyViewAllDocsEnabledInNearDupeParentAndChildWindow() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		baseClass.stepInfo("Test case id : RPMXCON-51318");
+		baseClass.stepInfo("Verify 'View All Documents' button should be displayed on Analytics Panel Child Window > Near Dupe tab when more than 20 documents exists");
+		
+		
+		// Login as USER
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
+		baseClass.stepInfo("Loggedin As : " + Input.pa1FullName);
+		
+		
+		String saveSearch = "SaveSearch" + Utility.dynamicNameAppender();
+		String folderName = "FolderName"+ Utility.dynamicNameAppender();
+		String docId1=Input.ingestionDocIdNearDupe;
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		sessionSearch.basicSearchWithMetaDataQuery("Input.ingestionQuery", "IngestionName");
+		sessionSearch.saveSearchAtAnyRootGroup(saveSearch, Input.shareSearchDefaultSG);
+
+		loginPage.logout();
+		// Login as USER
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		savedSearch = new SavedSearch(driver);
+		savedSearch.selectWithDefaultSecurityGroupAndFolder(saveSearch, folderName);
+		loginPage.logout();
+		
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+		docView.verifyNearDupeTabWithMoreDocs();
+		
+		driver.waitForPageToBeReady();
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		
+		docView.verifyNearDupeTabWithMoreDocs();
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		loginPage.logout();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+		docView.verifyNearDupeTabWithMoreDocs();
+
+		driver.waitForPageToBeReady();
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+		docView.popOutAnalyticsPanel();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		docView.verifyNearDupeTabWithMoreDocs();
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		loginPage.logout();
+		
+		
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo("Loggedin As : " + Input.rev1FullName);
+
+		docView.selectAdvancedSearch(folderName);
+		baseClass.stepInfo("Doc is searched by Advanced Search");
+
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Navigated to DocView successfully");
+
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docId1);
+		docView.verifyNearDupeTabWithMoreDocs();
+
+		driver.waitForPageToBeReady();
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+		docView.popOutAnalyticsPanel();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		docView.verifyNearDupeTabWithMoreDocs();
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		loginPage.logout();
+		
+		
+		
+	}
+	
 	
 	
 	@AfterMethod(alwaysRun = true)
