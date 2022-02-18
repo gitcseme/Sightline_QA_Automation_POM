@@ -85,7 +85,6 @@
 	<sourceDocId3>T2545D</sourceDocId3>
 	<sourceDocId4>T2552D</sourceDocId4>
 	<sourceDocId5>T2554D</sourceDocId5>
-	<nearDupeDocument>ID00001162</nearDupeDocument>
 	<nearDupeDocumentForReviewer>ID00001191</nearDupeDocumentForReviewer>
 	<threadDocumentForReviewer>ID00001402</threadDocumentForReviewer>
 	<familyDocumentForReviewer>ID00001355</familyDocumentForReviewer>
@@ -461,6 +460,7 @@
 	<familyDocumentForReviewer>ID00003745</familyDocumentForReviewer>
 	<newNearDupeDocId>ID00005181</newNearDupeDocId>
 	<nearDupeDocId>ID00003801</nearDupeDocId>
+	<nearDupeDocument>ID00004474</nearDupeDocument>
 
 	<TermOperator>ALL</TermOperator>
 
