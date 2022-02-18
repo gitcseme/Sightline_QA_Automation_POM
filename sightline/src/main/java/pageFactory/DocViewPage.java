@@ -1495,7 +1495,12 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//span[text()='Static Text']");
 	}
 
-	// Added by Mohan
+	// 
+  
+	
+	public Element getDocView_Analytics_NearDupeViewAllDocsBtn() {
+		return driver.FindElementById("btnShowAllNearDupe");
+	}
 	public Element get_textHighlightedYellowColor() {
 		return driver.FindElementByCssSelector("#ig0level0surface1 > path:nth-child(39)");
 	}
@@ -3168,7 +3173,10 @@ public class DocViewPage {
 	public Element getEditCodingStamp_PopUpWindow() {
 		return driver.FindElementByXPath("//span[text()='Edit Coding Stamp']");
 	}
-
+	public Element getStampOverWriteMessageLast() {
+		return driver.FindElementByXPath(
+				"(//p[text()[normalize-space()='The Stamp you selected is already in use. Do you want to overwrite this Stamp with the new selections?']])[last()]");
+	}
 
 
 	public DocViewPage(Driver driver) {
@@ -25237,7 +25245,12 @@ public class DocViewPage {
 			}else {
 				base.failedMessage("The check Mark icon is still there even after Uncompleting the document");
 			}
+
+		}
+	}
+
 		}}
+
 
 	/**
 	 * @author Vijaya.Rani date: 16/02/2022 Modified date:N/A
@@ -25330,6 +25343,7 @@ public class DocViewPage {
 		driver.switchTo().window(parentWindowID);
 		
 	}
+
 	
 	/**
 	 * @author Raghuram.A
@@ -25367,5 +25381,47 @@ public class DocViewPage {
 		return commonDocName;
 	}
 
+
+
+	
+	/**
+	 * @author Mohan 16/11/22 NA Modified date: NA Modified by:NA
+	 * @description To verify conceptual tab having more than 20 docs
+	 */
+	public void verifyConceptualTabWithMoreDocs() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_ConceptViewAllDocsBtn());
+		getDocView_Analytics_ConceptViewAllDocsBtn().waitAndClick(5);
+		base.passedStep(" 'View All Documents' button is enable in the Conceptual tab");
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocView_Analytics_Concept_Docs());
+		base.passedStep("When documents are more than 20 then 'View All Documents' is enable from Conceptually Similar tab:" + getDocView_Analytics_Concept_Docs().size()
+				+ "which is more than 20 docs");
+	}
+	
+	/**
+	 * @author Mohan 16/11/22 NA Modified date: NA Modified by:NA
+	 * @description To verify NearDupe tab having more than 20 docs
+	 */
+	public void verifyNearDupeTabWithMoreDocs() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_NearDupeViewAllDocsBtn());
+		getDocView_Analytics_NearDupeViewAllDocsBtn().waitAndClick(5);
+		base.passedStep(" 'View All Documents' button is enable in the NearDupe tab");
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocView_Analytics_NearDupes_Docs());
+		base.passedStep("When documents are more than 20 then 'View All Documents' is enable from NearDupe tab:" + getDocView_Analytics_NearDupes_Docs().size()
+				+ "which is more than 20 docs");
+	}
+	
+	
 
 }
