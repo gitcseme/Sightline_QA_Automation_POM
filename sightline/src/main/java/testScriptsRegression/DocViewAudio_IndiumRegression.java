@@ -2761,6 +2761,98 @@ public class DocViewAudio_IndiumRegression {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA Test Case
+	 *         Id:RPMXCON-46922 Description : Verify when audio document present in
+	 *         two different save searches with common term, then on navigating to
+	 *         doc view with selection of search group it should not display
+	 *         repetitive search term on persistent hits panel Sprint 12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	public void audioMulti() throws InterruptedException, ParseException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+		String commonDocName = "";
+		Set<String> hash_Set = new HashSet<String>();
+		List<String> docIDlist = new ArrayList<>();
+		List<String> docIDlistT = new ArrayList<>();
+		String audioSearchInput = Input.audioSearch;
+		String audioSearchInput1 = Input.audioSearchString1;
+		String[] stringDatas = { audioSearchInput, audioSearchInput1 };
+		String SearchName = "SearchName" + Utility.dynamicNameAppender();
+		String SearchName1 = "SearchName" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case id :RPMXCON-46922 Sprint 12");
+		baseClass.stepInfo(
+				"Verify when audio document present in two different save searches with common term, then on navigating to doc view with selection of search group it should not display repetitive search term on persistent hits panel");
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as : " + Input.rmu1FullName);
+
+		// Perform create node - Search - SaveSearch in nodes
+		String nodeName = saveSearch.createSearchGroupAndReturn("", Input.rmu1FullName, "No");
+
+		// Audio Search
+		sessionSearch.audioSearch(audioSearchInput, Input.language);
+		sessionSearch.saveSearchInNewNode(SearchName, nodeName);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		hash_Set = baseClass.addListIntoSet(docIDlist);
+		baseClass.selectproject();
+
+		// Audio Search
+		sessionSearch.audioSearch(audioSearchInput1, Input.language);
+		sessionSearch.saveSearchInNewNode(SearchName1, nodeName);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+
+		// Main method
+		docIDlistT = miniDocListpage.getDocListDatas();
+		baseClass.stepInfo("Select a document present in both the searches ");
+		commonDocName = docViewPage.pickFirstDuplicate(docIDlistT, hash_Set);
+
+		// Launch DocVia via Saved Search
+		saveSearch.navigateToSSPage();
+		saveSearch.selectNode1(nodeName);
+		driver.waitForPageToBeReady();
+		saveSearch.getToDocView().waitAndClick(5);
+
+		//Persistant data to check
+		miniDocListpage.getDocListDatas();
+		miniDocListpage.getDociD(commonDocName).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		String docID = docViewPage.getDocView_CurrentDocId().getText();
+		baseClass.stepInfo("Current viewed document : " + docID);
+		baseClass.textCompareEquals(commonDocName, docID,
+				"User on audio doc view and selected document is same as on audio doc view", "Audio DocView failed");
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		// verifySearchTermlist
+		docViewPage.verifySearchTermlist(stringDatas, "equalsP", 1,
+				"earch term not been displayed repetitively on persistent hit panel",
+				"search term displayed repetitively on persistent hit panel");
+
+		// Delete created Node
+		baseClass.stepInfo("Initiating delete nodes");
+		saveSearch.deleteNode(Input.mySavedSearch, nodeName);
+
+		loginPage.logout();
+
+	}
 
 
 	@DataProvider(name = "userDetails")

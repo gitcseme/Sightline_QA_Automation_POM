@@ -1980,6 +1980,10 @@ public class DocViewPage {
 	}
 
 	// Added by Raghuram
+	public ElementCollection getSearchTermList(String searchString) {
+		return driver.FindElementsByXPath("//p[contains(text(),' \"" + searchString + "\" - ')]");
+	}
+
 	public ElementCollection getAudioRedactionTableHeader() {
 		return driver.FindElementsByXPath("//div[@id='audioGrid_wrapper']//div[@class='dataTables_scrollHead']//th");
 	}
@@ -25339,7 +25343,46 @@ public class DocViewPage {
 		driver.switchTo().window(parentWindowID);
 		
 	}
+
 	
+	/**
+	 * @author Raghuram.A
+	 * @description : To verify Search term List
+	 * @param datas          - search term datas to verify
+	 * @param condition      - '<' or '=' or '>'
+	 * @param conditionValue - limit to check
+	 * @param passMsg        - "Pass Message"
+	 * @param failMsg        - "Fail Message"
+	 */
+	public void verifySearchTermlist(String[] datas, String condition, int conditionValue, String passMsg,
+			String failMsg) {
+		for (String dataString : datas) {
+			base.stepInfo("Verify Search term : " + dataString);
+			base.verifyListSizeWithCondition(getSearchTermList(dataString.toUpperCase()), condition, passMsg, failMsg,
+					conditionValue);
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description : to pick first duplicate from list
+	 * @param docIDlistT - List to compare
+	 * @param hash_Set   - Set used to check common data
+	 * @return - firsrCommonDocName
+	 */
+	public String pickFirstDuplicate(List<String> docIDlistT, Set<String> hash_Set) {
+		String commonDocName = "";
+		for (String fieldNames : docIDlistT) {
+			commonDocName = fieldNames;
+			if (!hash_Set.add(fieldNames)) {
+				break;
+			}
+		}
+		return commonDocName;
+	}
+
+
+
 	
 	/**
 	 * @author Mohan 16/11/22 NA Modified date: NA Modified by:NA
@@ -25380,4 +25423,5 @@ public class DocViewPage {
 	}
 	
 	
+
 }

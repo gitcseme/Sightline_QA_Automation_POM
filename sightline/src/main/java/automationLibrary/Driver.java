@@ -524,4 +524,15 @@ public  class Driver  {
 		}
 	}
 	   
+	/**
+	 * @author Jeevitha
+	 * @Description : method to return attribute value of a tag using javascript
+	 * @param attribute : attribute value to pick
+	 * @return attributeValue : return attribute value
+	 */
+	public String findAttributeValueViaJS(String attribute) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		String attributeValue = (String) js.executeScript(attribute);
+		return attributeValue;
+	}
 	}
