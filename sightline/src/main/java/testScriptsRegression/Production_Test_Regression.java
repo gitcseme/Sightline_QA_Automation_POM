@@ -4664,6 +4664,163 @@ public class Production_Test_Regression {
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 				loginPage.logout();
 			}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-49361
+				 * @Description: Verify if PA Select the Production using a template that has Native Files and Tags selected in the native components, then Component tab should Complete without any error.
+				 */
+				@Test(groups = { "regression" }, priority = 74)
+				public void verifiyProdTempInComponentTabWithoutAnyError() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("Test case Id : RPMXCON-49361");
+				base.stepInfo("Verify if PA Select the Production using a template that has Native Files and Tags selected in the native components, then Component tab should Complete without any error.");
+				String testData1 = Input.testData1;
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				TempName ="Templete" + Utility.dynamicNameAppender();
+				base = new BaseClass(driver);
+				
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+				
+				//Verify archive status on Gen page
+				ProductionPage page = new ProductionPage(driver);
+				productionname = "p" + Utility.dynamicNameAppender();
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSectionWithTags(tagname);
+				page.fillingTIFFSection(tagname);
+				page.navigateToNextSection();
+				page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname,beginningBates);
+				
+				page.filterCompletedProduction();
+				page.getprod_ActionButton_Reusable(productionname).waitAndClick(10);
+				driver.waitForPageToBeReady();
+				page.getprod_Action_SaveTemplate_Reusable(productionname).waitAndClick(10);
+
+				page.saveTemple(TempName);
+				
+				page = new ProductionPage(driver);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.getAddNewProductionbutton().waitAndClick(10);
+				page.getProductionName().SendKeys(productionname);
+				String loadfile=TempName+" (Production)";
+				page.getprod_LoadTemplate().selectFromDropdown().selectByVisibleText(loadfile);
+				driver.waitForPageToBeReady();
+				page.getBasicInfoMarkComplete().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				page.getDATTab().waitAndClick(10);
+				page.getElementDisplayCheck(page.getDAT_FieldClassification1());
+				base.waitTillElemetToBeClickable(page.getMarkCompleteLink());
+				page.getMarkCompleteLink().waitAndClick(10);
+				base.VerifySuccessMessage("Mark Complete successful");
+				base.passedStep("It should be completed without any error.");
+				base.passedStep("Verified if PA Select the Production using a template that has Native Files and Tags selected in the native components, then Component tab should Complete without any error.");
+				
+				//delete tags and folders
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+			}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-47903
+				 * @Description: To Verify regenerate Option in Production
+				 */
+				@Test(groups = { "regression" }, priority = 75)
+				public void verifyRegenerationOptions() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("Test Case ID : RPMXCON-47903");
+				base.stepInfo("To Verify regenerate Option in Production");
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+
+				//production 
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingTIFFSection(tagname);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPageAndPassingText(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.clickOnGenerateButton();
+				
+				//open exiting production and Status
+				page.openExistingProduction(productionname);
+				page.verifyProductionGenerateSuccussfully();
+				driver.waitForPageToBeReady();
+				page.getBackButton().waitAndClick(5);
+				driver.waitForPageToBeReady();
+				page.verifyProductionStatusInGenPage("Post-Generation QC checks Complete");
+				
+				//regenerate
+				base.waitForElement(page.getbtnGenMarkIncomplete());
+				page.getbtnGenMarkIncomplete().waitAndClick(5);
+				base.waitForElement(page.getbtnReGenerateMarkComplete());
+				page.getbtnReGenerateMarkComplete().waitAndClick(5);
+				base.stepInfo("Clicked on Regenerate button");
+				
+				//verification
+				page.visibleCheck("Regenerate Production");
+				page.visibleCheck("You have run this production earlier with errors. Select the below option to continue with Regenerate");
+				page.visibleCheck("Restart the Production From the Beginning (Removes all previously generated files)");
+				page.visibleCheck("Restart the production from where it left off (Keeps any previously successfully generated files)");
+				page.visibleCheck("Cancel");
+				page.visibleCheck("Continue");
+				
+				page.getRegenerateAllRadioBtn().waitAndClick(5);
+				base.stepInfo("Clicked on  'Restart the Production From the Beginning (Removes all previously generated files)  ' option and click on Continue");
+				
+				page.getbtnRegenerateContinue().waitAndClick(5);
+				page.verifyProductionGenerateSuccussfully();
+				
+				base.passedStep("Verified regenerate Option in Production");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				base.stepInfo("deleting created tags and folders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				}
 				
 	
 	@AfterMethod(alwaysRun = true)
