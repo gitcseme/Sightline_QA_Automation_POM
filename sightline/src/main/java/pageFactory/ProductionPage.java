@@ -2573,6 +2573,9 @@ public class ProductionPage {
 		public Element getTiffAdvanceBtn() {
 			return driver.FindElementByXPath("//div[@id='TIFFContainer']//div[@class='advanced-dd-toggle']");
 		}
+		public Element getRegenerateAllRadioBtn() {
+			return driver.FindElementByXPath("//input[@id='RegenerateAll']/../i");
+		}
 
 	public ProductionPage(Driver driver) {
 
@@ -17624,6 +17627,35 @@ public class ProductionPage {
 			driver.scrollPageToTop();
 			getMarkCompleteLink().waitAndClick(10);
 			base.VerifyWarningMessage("In the TIFF / PDF section, no values are specified in the placeholder configuration for the docs produced natively. Please check.");
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param prodName
+	 */
+	public void openExistingProduction(String prodName) {
+		
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		base.waitForElement(getGearIconForProdName(prodName));
+		getGearIconForProdName(prodName).waitAndClick(5);
+
+		base.waitForElement(getOpenWizard());
+		getOpenWizard().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.stepInfo("Opened Existing production : "+prodName);
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void verifyProductionGenerateSuccussfully() {
+		
+		getDocumentGeneratetext().isElementAvailable(180);
+		String actualText = getStatusSuccessTxt().getText();
+		String expectedText = "Success";
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+		base.stepInfo("Generation completed");
 	}
 
 	   
