@@ -4303,10 +4303,10 @@ Collections.sort(result_List);
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @param ele
+	 * @param IndexElement
 	 * @return
 	 */
-	public List<String> getColumnValue(String IndexElement) {
+	public List<String> getColumnValue(String IndexElement,boolean lowerCase) {
 		base.waitForElement(getSelectDropDown());
 		base.waitTillElemetToBeClickable(getSelectDropDown());
 		getSelectDropDown().Click();
@@ -4319,7 +4319,11 @@ Collections.sort(result_List);
 		elementList = getTableRowText(i).FindWebElements();
 		for (WebElement webElementNames : elementList) {
 			String elementName = webElementNames.getText();
+			if(lowerCase) {
 			elementNames.add(elementName.toLowerCase());
+			}else {
+				elementNames.add(elementName);
+			}
 		}
 		System.out.println(elementNames);
 		Collections.sort(elementNames);

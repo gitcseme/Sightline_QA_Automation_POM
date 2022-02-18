@@ -8607,7 +8607,6 @@ public class AssignmentsPage {
 		bc.waitTillElemetToBeClickable(bc.getYesBtn());
 		bc.getYesBtn().waitAndClick(5);
 		bc.VerifySuccessMessage("Documents successfully completed for user.");
-		bc.stepInfo("Removed all the assigned document from the " + user);
 		bc.passedStep("Documents are completed successfully for the " + user);
 	}
 
@@ -9676,5 +9675,25 @@ public class AssignmentsPage {
 		// getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
 		getAssignmentSaveButton().waitAndClick(5);
 		bc.passedStep("Keywords unmapped from the assignment successfully");
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param user [user to which the completed docs  need to be un completed].
+	 * Thia method will uncomplete the completed documents for a particular user via edit assignment page
+	 */
+public void UnCompleteDocs(String user) {
+		
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		getAssgn_ManageRev_selectReviewer(user).waitAndClick(20);
+		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
+		getAssgn_ManageRev_Action().waitAndClick(10);
+		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action_UnCompleteAllDocs());
+		getAssgn_ManageRev_Action_UnCompleteAllDocs().waitAndClick(10);
+		bc.waitTillElemetToBeClickable(bc.getYesBtn());
+		bc.getYesBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Documents successfully un-completed for user.");
+		bc.passedStep("Documents are un-completed successfully for the " + user);
+		
 	}
 }
