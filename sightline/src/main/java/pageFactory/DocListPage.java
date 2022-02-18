@@ -1157,6 +1157,11 @@ public class DocListPage {
 		return driver.FindElementByXPath("//ul[@id='select2-EmailAllDomains-results']//li[text()='"+value+"']");
 	}
 
+	//Added by Gopinath - 17/02/2022
+	public Element getDocListPageHeader() {
+		return driver.FindElementByXPath("//h1[@class='page-title' and contains(text(),'DocList')]");
+	}
+	
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;

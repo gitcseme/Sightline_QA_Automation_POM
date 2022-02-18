@@ -20,6 +20,7 @@ import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
+import pageFactory.HomePage;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
 import pageFactory.SecurityGroupsPage;
@@ -549,6 +550,73 @@ public class DocExplorer_Regression1 {
 				
 				baseClass.stepInfo("verify documents exclude of tag "+Input.confidential);
 				docexp.verifyExcludeDocumentsOfTag(Input.translationDocument);
+				
+			}
+			
+			/**
+			 * @author Gopinath
+			 * @TestCase Id:54610 Verify that user can select all documents from page from List view, 
+			 *                     and select action as View in DocList from Actions drop down
+			 * @Description:To Verify that user can select all documents from page from List view, 
+			 *               and select action as View in DocList from Actions drop down
+			 * @throws AWTException
+			 */
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
+			public void verifyViewInDocListForSelectedDocs() throws AWTException {
+				int numberOfFolders=14;
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-54610 Sprint 12");
+				baseClass.stepInfo("###Verify that user can select all documents from page from List view, and select action as View in DocList from Actions drop down");
+				docexp = new DocExplorerPage(driver);
+				
+				baseClass.stepInfo("Navigating to DocExplorer page");
+				docexp.navigateToDocExplorerPage();
+				
+				baseClass.stepInfo("select folder and verify in doclist");
+				docexp.verifyDocList(Integer.toString(numberOfFolders));
+				
+				baseClass.stepInfo("Select all current page docs and view in doc list");
+				docexp.viewIndocListOfCurrentPageDocs();
+				
+				baseClass.stepInfo("Navigating to DocExplorer page");
+				docexp.navigateToDocExplorerPage();
+				
+				baseClass.stepInfo("select multiple folders");
+				docexp.selectMultipleFoldersOfTree(numberOfFolders);
+				
+				baseClass.stepInfo("Select all current page docs and view in doc list");
+				docexp.viewIndocListOfCurrentPageDocs();
+				
+				
+			}
+			
+			/**
+			 * @author Gopinath
+			 * @TestCase Id:54589 Verify the default menu for the PA and RMU after login
+			 * @Description:To Verify the default menu for the PA and RMU after login
+			 */
+			@Test
+			public void verfifyDefaultMenuForPAandRMU() {
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-54589 sprint 12");
+				baseClass.stepInfo("###Verify the default menu for the PA and RMU after login###");
+				docexp = new DocExplorerPage(driver);
+				HomePage homePage= new HomePage(driver);
+				loginPage.logout();
+				
+				baseClass.stepInfo("Login as Project Administrator");
+				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+				
+				baseClass.stepInfo("verify default menu for Project Administrator");
+				docexp.verifyDocExplorerPageHeader();
+				
+				loginPage.logout();
+				
+				baseClass.stepInfo("Login as Review manager");
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				
+				baseClass.stepInfo("verify default menu for Review manager");
+				homePage.verifyDashboardPageAsDefaultMenu();
 				
 			}
 			

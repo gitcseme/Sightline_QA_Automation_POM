@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.mockito.internal.configuration.injection.filter.NameBasedCandidateFilter;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -6726,7 +6727,182 @@ public class DocView_Regression1 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+	 * @TestCase id : 52265 - Verify that uploaded documents should be threaded into families.
+	 * @Description : Verify that uploaded documents should be threaded into families.
+	 */
+	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	public void verifyUplodedDocumentsShouldBeThearedIntoFamilies() throws Exception {		
+		baseClass=new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52265 Sprint 12");
+		String metaDataField = "IngestionName";
+		String ingestionName = "RPMXCON44861";
+		utility = new Utility(driver);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("#### Verify that uploaded documents should be threaded into families. ####");
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		
+		baseClass.selectproject("AutomationAdditionalDataProject");
 	
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		baseClass.stepInfo("Navigate To Session Search Page URL");
+		session.navigateToSessionSearchPageURL();
+		
+		baseClass.stepInfo("Basic meta data search");
+		session.basicMetaDataSearch(metaDataField,null,ingestionName,null);
+
+		baseClass.stepInfo("Navigate to  DocView page");
+		session.ViewInDocView();
+		
+		baseClass.stepInfo("Select email threaded id and family threaded id from mini config.");
+		docView.selectEmailThreadedIdAndFamilyIdFromMiniCofig();
+		
+		baseClass.stepInfo("Get list of same email threaded ids");
+		List<String> emailThreadedIds= docView.getListOfSameEmailThreadedIds();
+		
+		baseClass.stepInfo("Email threaded ids : "+emailThreadedIds);
+		
+		baseClass.stepInfo("Verify thread map ids with email thread ids.");
+		docView.verifyThreadMapIdsWithEmailThreadIds(emailThreadedIds);
+		
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Gopinath 
+	 * @TestCase Id:51090-Verify on click of the Translations tab, presence of a translated version of the document
+	 * @Description :Verify on click of the Translations tab, presence of a translated version of the document.
+	 * @throws InterruptedException
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 37)
+	public void verifyTranslationTabPresenceOfTranlationVersion() throws InterruptedException {
+
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51090 of Sprint 12");
+
+		baseClass.stepInfo(
+				"#### Verify on click of the Translations tab, presence of a translated version of the document ####");
+
+		DocViewPage docView = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("searching document for assignmnet creation");
+		sessionSearch.basicContentSearch(Input.translationDocId);
+
+		baseClass.stepInfo("View searched for audio docs in Doc view");
+		sessionSearch.ViewInDocView();
+
+		baseClass.stepInfo("Click On Translation Tab");
+		docView.clickOnTranslationTab();
+
+		baseClass.stepInfo("Verify traslation is avaliable in translation drop down.");
+		docView.verifyTranslationDisplayedTranslationsDropdown();
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+	 * @TestCase id : 48796 - Verify Search Term highlighting is working for Searchable PDF.
+	 * @Description : Verify Search Term highlighting is working for Searchable PDF.
+	 */
+	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	public void verifySearchTermInPersistatHitPanelOnDocView() throws Exception {		
+		baseClass=new BaseClass(driver);
+		String pdfDocId = "ID00001464";
+		baseClass.stepInfo("Test case Id: RPMXCON-48796 Sprint 12");
+		utility = new Utility(driver);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("#### Verify Search Term highlighting is working for Searchable PDF ####");
+
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		baseClass.stepInfo("Basic Basic content search");
+		session.basicContentSearch(pdfDocId);
+
+		baseClass.stepInfo("Navigate to  DocView page");
+		session.ViewInDocView();
+		
+		baseClass.stepInfo("Select the document from minidoc list with docId or row number to load on docview panal");
+		docView.selectDocToViewInDocViewPanal(pdfDocId);
+
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(pdfDocId);
+		
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+	 * @TestCase id : 51983 - Verify Keyword highlighting is working for Searchable PDF.
+	 * @Description : Verify Keyword highlighting is working for Searchable PDF
+	 */
+	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	public void verifySearchTermAndKeywordHighlightedOnPersistPanel() throws Exception {		
+		baseClass=new BaseClass(driver);
+		String keyword = "es";
+		String colour1 = "Gold";
+		String rgbCode1 = "rgb(255, 215, 0)";
+		String HaxCode1 = "#ffd700";
+		String pdfDocId = "ID00001464";
+		String keywordName1 = "key" + Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case Id: RPMXCON-51983 Sprint 12");
+		utility = new Utility(driver);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("#### Verify Keyword highlighting is working for Searchable PDF ####");
+	
+		KeywordPage keywordPage = new KeywordPage(driver);
+
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+
+		baseClass.stepInfo("Add keyword one");
+		keywordPage.addKeywordWithoutFullScreen(keywordName1, keyword, colour1);
+
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		baseClass.stepInfo("Basic Basic content search");
+		session.basicContentSearch(pdfDocId);
+
+		baseClass.stepInfo("Navigate to  DocView page");
+		session.ViewInDocView();
+		
+		baseClass.stepInfo("Select the document from minidoc list with docId or row number to load on docview panal");
+		docView.selectDocToViewInDocViewPanal(pdfDocId);
+
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(pdfDocId);
+		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
+		baseClass.stepInfo("Select the document from minidoc list with docId or row number to load on docview panal");
+		docView.selectDocToViewInDocViewPanal(pdfDocId);
+		
+		baseClass.stepInfo("Verify persistant hit for keyword");
+		docView.persistenHitWithSearchString(keyword);
+
+		baseClass.stepInfo("verify highlight keyword in document");
+		docView.verifyKeywordHighlightedwithKeywordColour(rgbCode1, HaxCode1);
+		
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+
+		baseClass.stepInfo("Delete keyword");
+		keywordPage.deleteKeywordByName(keywordName1);
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
