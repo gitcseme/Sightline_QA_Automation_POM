@@ -8996,7 +8996,82 @@ public class Production_Regression1 {
 		page.verifyingIncludeFamiliesToggleInDocumentSelectionPage();
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-47750
+	 * @Description:Admin able to view and enter production guard information on the self production wizard.
+	 */
+	@Test(groups = { "regression" }, priority = 121)
+	public void verifyProductionGuardInformationinProduction() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-47750-Production component");
 
+		base.stepInfo("Admin able to view and enter production guard information on the self production wizard.");
+		String testData1 = Input.testData1;
+		String tagname = Input.randomText + Utility.dynamicNameAppender();
+
+		
+		// create tag
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for Tag
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		int purehit = sessionSearch.basicContentSearch(testData1);
+		sessionSearch.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.getTIFFChkBox().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		page.getTIFFTab().waitAndClick(10);
+		page.fillingPrivledgedDocForPDFSection(tagname, Input.tagNamePrev);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID,suffixID,beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.priviledgeDocCheck(true,tagname);
+		String DocCount = page.getDocumentSelectionLink().getText();
+		base.digitCompareEquals(purehit, Integer.parseInt(DocCount), "Document count is displayed correctly as expected",
+				"Document count is not displayed correctly as expected");
+		loginPage.logout();
+	}
+	
+	
+	
+	/**
+	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48206
+	 * @Description:To Verify In Productions, the validation of specific file types when entering placeholder text for TIFF/PDF.
+	 */
+	@Test(groups = { "regression" }, priority =122)
+	public void verifyingWarningMessageInProductionComponentTab() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		base.stepInfo("RPMXCON-48206-Production component");
+		base.stepInfo("To Verify In Productions, the validation of specific file types when entering placeholder text for TIFF/PDF.");
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFWithNativelyProducedDocsFileType(Input.randomText);
+		loginPage.logout();
+		
+	}
+	
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

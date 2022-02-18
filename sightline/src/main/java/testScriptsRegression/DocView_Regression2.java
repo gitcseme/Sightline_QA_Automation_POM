@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -4020,6 +4021,97 @@ public class DocView_Regression2 {
 	}
 	
 
+	/*  
+     *Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51107
+	 * Description :Verify user can download the redacted document from default view using print icon outside of an assignment.
+	 * validated the step of checking the format of Downloaded document in pdf for rectangle and current page redaction
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 59)
+	public void verifyDownloadDocsInPDF() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		
+		//pre-requisites- Rectangle redaction and current page redaction
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51107");
+		baseClass.stepInfo("Verify user can download the redacted document from default view using print icon outside of an assignment");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().Click();
+		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
+		baseClass.stepInfo("Current Page Redaction Completed");
+		driver.waitForPageToBeReady();
+		docViewRedact.addRectangleRedaction();
+		docViewRedact.selectingRectangleRedactionTag();
+		baseClass.stepInfo("Rectangle Redaction Completed");
+		loginPage.logout();
+		
+		//Login as RMU and verify the document download is in pdf format for rectangle and current page redaction
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		docView.verifyDocumentDownloadInPdfFormat();
+		loginPage.logout();
+		//Login as Reviewer and verify the document download in pdf format for rectangle and current page redaction
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as Reviewer");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		docView.verifyDocumentDownloadInPdfFormat();	
+		
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51951
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =60)
+	public void verifyHiddenContentDocs(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
+		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
+		String expectedMessage3 = "Protected Excel Workbook";
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51951");
+		baseClass.stepInfo("Verify that when viewing the document having the 'Hidden Properties' value should provide indicator in viewer to convey that document is having hidden content");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.TextHidden);
+		sessionsearch.ViewInDocView();
+		DocViewPage docviewpage = new DocViewPage(driver);
+		
+//Selecting Doc with excel protected workbook
+		docviewpage.selectDocIdInMiniDocList(Input.HiddenContentExcelBook);
+		baseClass.stepInfo("Document with hidden content - excel protected workbook selected from mini doclist");
+		driver.waitForPageToBeReady();	
+		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
+		driver.waitForPageToBeReady();
+
+//Selecting Doc with excel protected worksheet		
+		String expectedMessage4 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
+		String expectedMessage5 = "Protected Excel Sheets";
+		docviewpage.selectDocIdInMiniDocList(Input.HiddenContentExcelSheet);
+		baseClass.stepInfo("Document with hidden content - excel protected worksheet selected from mini doclist");
+		driver.waitForPageToBeReady();	
+		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage4, expectedMessage5);	
+		loginPage.logout();
+		
+	}
+	
+	
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

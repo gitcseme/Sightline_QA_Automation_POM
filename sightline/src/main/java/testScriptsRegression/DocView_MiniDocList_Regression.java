@@ -3207,7 +3207,62 @@ public class DocView_MiniDocList_Regression {
 		// logout
 		loginPage.logout();
 	}
-	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws Exception
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 63)
+	public void verifyCheckMarkDisappearence() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51025");
+		baseClass.stepInfo("To Verify icon should not be displayed for uncompleted "
+				+ "documents in assignment.");
+		
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+		
+		// creating And Distributing the Assignment
+		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, "Default Project Coding Form");
+		assignmentPage.add2ReviewerAndDistribute();
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+		
+		// navigating from Dashboard to DocView
+		driver.waitForPageToBeReady();
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+		
+		// Completing the documents
+		driver.waitForPageToBeReady();
+		List<String>DocID = docViewPage.CompleteTheDocumentInMiniDocList(3);
+		
+		// uncompleting the completed documents
+		docViewPage.UncompleteTheCompletedDocsandVerifyCheckMarkIcon(DocID);
+		
+		// logout
+		loginPage.logout();
+		
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Loggedin As Reviewer: " + Input.rev1userName);
+		
+		// navigating from Dashboard to DocView
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+		
+		// Completing the documents
+		driver.waitForPageToBeReady();
+		List<String>DocID1 = docViewPage.CompleteTheDocumentInMiniDocList(3);
+		
+		// uncompleting the completed documents
+		docViewPage.UncompleteTheCompletedDocsandVerifyCheckMarkIcon(DocID1);
+		
+		// logout
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

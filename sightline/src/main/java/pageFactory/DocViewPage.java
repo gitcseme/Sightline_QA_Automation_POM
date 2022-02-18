@@ -1495,7 +1495,12 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//span[text()='Static Text']");
 	}
 
-	// Added by Mohan
+	// 
+  
+	
+	public Element getDocView_Analytics_NearDupeViewAllDocsBtn() {
+		return driver.FindElementById("btnShowAllNearDupe");
+	}
 	public Element get_textHighlightedYellowColor() {
 		return driver.FindElementByCssSelector("#ig0level0surface1 > path:nth-child(39)");
 	}
@@ -3165,6 +3170,7 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//span[text()='Edit Coding Stamp']");
 	}
 
+
 	//Added by Gopinath - 17/02/2022
 	public Element getMiniDocConfigSelectieldRomoveIcon(int rowNum) {
 		return driver.FindElementByXPath("//ul[@id='sortable2PickColumns']//li["+rowNum+"]//i[@class='fa fa-times-circle']");
@@ -3184,6 +3190,14 @@ public class DocViewPage {
 	public ElementCollection getDocIdsFormThreadMap() {
 		return driver.FindElementsByXPath("//table[@id='dtDocumentThreadedDocuments']//thead//tr//th[contains(text(),'ID')]");
 	}
+
+	public Element getStampOverWriteMessageLast() {
+		return driver.FindElementByXPath(
+				"(//p[text()[normalize-space()='The Stamp you selected is already in use. Do you want to overwrite this Stamp with the new selections?']])[last()]");
+	}
+
+
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -21026,10 +21040,12 @@ public class DocViewPage {
 
 	/*
 	 * @author Jayanthi.ganesan
-	 * 
-	 * @param iterate
+	 *         This method will completed the documents distributed to users and verify
+	 *          whether check mark icon displayed for all docs completed
+	 * @param iterate(no of docs to be completed
+	 * @return return the Doc Ids of completed documents
 	 */
-	public void CompleteTheDocumentInMiniDocList(int iterate) {
+	public List<String> CompleteTheDocumentInMiniDocList(int iterate) {
 		List<WebElement> DocumenInMiniDocList = getDocumetCountMiniDocList().FindWebElements();
 
 		for (int i = 0; i < iterate; i++) {
@@ -21046,6 +21062,8 @@ public class DocViewPage {
 		softAssertion.assertEquals(iterate, getCheckMarkIcons().size());
 		softAssertion.assertAll();
 		base.passedStep("No of Checkmark icon displayed matches with no of completed document");
+		List<String> DocID = base.availableListofElements(DocIdsOfCompletedDocuments());
+		return DocID;
 	}
 
 	/**
@@ -25219,6 +25237,39 @@ public class DocViewPage {
 			base.passedStep("Work product terms are not displaying on the persistent panel");
 		}
 	}
+	public ElementCollection DocIdsOfCompletedDocuments() {
+		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']//../following-sibling::td[contains(text(),'ID')]");
+	}
+
+
+	
+
+	/**
+	 * This method will un complete the completed docs for given doc id's and 
+	 * verify whether check mark icon disappeared for all the un completed docs
+	 * @author Jayanthi.ganesan
+	 * @param DocID (list of DocIDs which we arae going to uncomplete )
+	 * @throws InterruptedException
+	 */
+	
+	public void UncompleteTheCompletedDocsandVerifyCheckMarkIcon(List<String>DocID) throws InterruptedException {
+		for(int i=0;i<DocID.size();i++) {
+			getMiniDocListText(DocID.get(i)).waitAndClick(10);
+			getUnCompleteButton().waitAndClick(10);
+			base.VerifySuccessMessageB("Document uncompleted successfully");
+
+			boolean flag = getDocViewMiniDocIdCheckBoxCircle(DocID.get(i)).isDisplayed();
+			if(flag==false) {
+				base.passedStep("The Document with '"+DocID.get(i)+"' is UnCompleted Successfully and Check  Mark icon is Disappeared");
+			}else {
+				base.failedMessage("The check Mark icon is still there even after Uncompleting the document");
+			}
+
+		}
+	}
+
+		}}
+
 
 	/**
 	 * @author Vijaya.Rani date: 16/02/2022 Modified date:N/A
@@ -25254,8 +25305,85 @@ public class DocViewPage {
 		System.out.println(headerVlaueAfterConfig);
 		base.passedStep("Configure MiniDocliast Selected Fields is Display Successfully");
 
+
 	}
 	
+	/**
+	 * @author Arunkumar
+	 * @Description: This method used to verify whether the download  document is in pdf format
+	 * 
+	 */
+	public void verifyDocumentDownloadInPdfFormat() {
+		
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+
+		String currentDocId = getDocView_CurrentDocId().getText();
+		System.out.println(currentDocId);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.printIcon().Visible() && docViewRedact.printIcon().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.printIcon().Click();;
+		base.VerifySuccessMessage(
+				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
+		base.stepInfo("Success message has been verified");
+
+		base.waitForElement(docViewRedact.bullhornIconRedColour());
+		if (docViewRedact.bullhornIconRedColour().isDisplayed()) {
+			docViewRedact.bullhornIconRedColour().waitAndClick(10);
+		} else {
+
+			docViewRedact.bullhornIcon().waitAndClick(5);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.firstTaskInList().Visible() && docViewRedact.firstTaskInList().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.firstTaskInList().waitAndClick(10);
+		
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		String CurrentPageURL = driver.getUrl();
+		if(CurrentPageURL.contains(currentDocId +".pdf")) {
+			base.passedStep("Document which required to download is in DocID.pdf format");
+		}
+		else {
+			base.failedStep("Document which required to download is not in DocID.pdf format");
+		}
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		
+	}
+	
+	
+	/**
+	 * @author Mohan 16/11/22 NA Modified date: NA Modified by:NA
+	 * @description To verify conceptual tab having more than 20 docs
+	 */
+	public void verifyConceptualTabWithMoreDocs() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_ConceptViewAllDocsBtn());
+		getDocView_Analytics_ConceptViewAllDocsBtn().waitAndClick(5);
+		base.passedStep(" 'View All Documents' button is enable in the Conceptual tab");
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocView_Analytics_Concept_Docs());
+		base.passedStep("When documents are more than 20 then 'View All Documents' is enable from Conceptually Similar tab:" + getDocView_Analytics_Concept_Docs().size()
+				+ "which is more than 20 docs");
+	}
+	
+
 	
 	/**
 	 * @author Gopinath 
@@ -25382,4 +25510,26 @@ public class DocViewPage {
 
 		}
 	}
+
+	/**
+	 * @author Mohan 16/11/22 NA Modified date: NA Modified by:NA
+	 * @description To verify NearDupe tab having more than 20 docs
+	 */
+	public void verifyNearDupeTabWithMoreDocs() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_NearDupeViewAllDocsBtn());
+		getDocView_Analytics_NearDupeViewAllDocsBtn().waitAndClick(5);
+		base.passedStep(" 'View All Documents' button is enable in the NearDupe tab");
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocView_Analytics_NearDupes_Docs());
+		base.passedStep("When documents are more than 20 then 'View All Documents' is enable from NearDupe tab:" + getDocView_Analytics_NearDupes_Docs().size()
+				+ "which is more than 20 docs");
+	}
+	
+	
+
 }

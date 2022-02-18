@@ -7472,5 +7472,39 @@ public class SavedSearch {
 		Element loadingElement = getspinningWheel();
 		loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
 	}
+	
+	/**
+	 * @author Mohan.Venugopal Modified by: NA Modified date: NA
+	 * @description used to select default security grp tab and select savesearch and clickon folder icon
+	 * @param searchName
+	 */
+	public void selectWithDefaultSecurityGroupAndFolder(String searchName, String folderNam) throws InterruptedException {
+
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		
+		base.waitForElement(getSavedSearchGroupName(Input.shareSearchDefaultSG));
+		getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(5);
+		base.waitForElement(getSavedSearch_SearchName());
+		getSavedSearch_SearchName().SendKeys(searchName);
+
+		base.waitTime(3);
+		getSavedSearch_ApplyFilterButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectWithName(searchName).Visible();
+			}
+		}), Input.wait30);
+
+		base.waitTime(3);
+		getSelectWithName(searchName).waitAndClick(10);
+		
+		base.waitForElement(getSavedSearchToBulkFolder());
+		getSavedSearchToBulkFolder().waitAndClick(5);
+		search = new SessionSearch(driver);
+		search.BulkActions_Folder(folderNam);
+		
+		
+	}
 
 }

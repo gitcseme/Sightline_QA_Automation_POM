@@ -4589,6 +4589,81 @@ public class Production_Test_Regression {
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 				loginPage.logout();
 				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-49062
+				 * @Description: To verify that the 'Production End Date' should contain and present the date when the post-gen checks are completed
+				 */
+				@Test(groups = { "regression" }, priority = 73)
+				public void verifyEndDateafterPostGenCheckCompleted() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("Test case Id : RPMXCON-49062");
+				base.stepInfo("To verify that the 'Production End Date' should contain and present the date when the post-gen checks are completed");
+				String testData1 = Input.testData1;
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+				
+				//Verify archive status on Gen page
+				ProductionPage page = new ProductionPage(driver);
+				productionname = "p" + Utility.dynamicNameAppender();
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingTIFFSection(tagname);
+				page.navigateToNextSection();
+				page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname,beginningBates);
+				
+				softAssertion =new SoftAssert();
+				page.filterCompletedProduction();
+				driver.waitForPageToBeReady();
+				page.getGridView().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				base.stepInfo("Nativated to production Grid View");
+				int endDateIndex =base.getIndex(page.getGridWebTableHeader(), "END DATE");
+				String EndDate =page.getGridProdValues(productionname, endDateIndex).getText();
+				System.out.println("Sightline show date and time : "+EndDate);
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				Date date = new Date();
+				String date1= dateFormat.format(date);
+				System.out.println("Current date and time : " +date1);
+				base.stepInfo("current date : "+date1);
+				
+				boolean flag =EndDate.contains(date1);
+				if(flag) {
+					softAssertion.assertTrue(flag);
+					softAssertion.assertAll();
+					base.passedStep("End date is displayed on production grid view");
+					System.out.println("date visible");
+				}else {
+					base.failedStep("date is not contain in text");
+					System.out.println("date not visible");
+				}
+				
+				base.passedStep("verified that the 'Production End Date' should contain and present the date when the post-gen checks are completed");
+				
+				//delete tags and folders
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+			}
 				
 	
 	@AfterMethod(alwaysRun = true)
