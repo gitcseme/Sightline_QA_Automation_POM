@@ -1011,7 +1011,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// Session search to doc view Coding Form
-		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewNearDupeDocumentsInDocView();
 
 		docViewPage.analyticalDocsPartOfMiniDocList();
@@ -3947,7 +3947,7 @@ public class DocView_CodingForm_Regression {
 
 		assignmentPage.SelectAssignmentByReviewer(assign);
 
-		docViewPage.completeDocumentRandom(3, comment);
+		docViewPage.completeDocumentRandom(2, comment);
 		docViewPage.unCompleteButtonDisplay();
 		docViewPage.unCompleteButtonToCompleteBtn();
 
@@ -4190,7 +4190,7 @@ public class DocView_CodingForm_Regression {
 
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.bulkAssign();
+		sessionsearch.bulkAssignFamilyMemberDocuments();
 		baseClass.stepInfo("Search with text input for docs completed");
 
 		// Creating Assignment from Basic search
@@ -4208,7 +4208,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
 		// perform code same as Conceptual Documents
-		docViewPage.performCodeSameForFamilyMembersDocuments();
+		docViewPage.performCodeSameForFamilyMembersDocumentsReviewer();
 
 		// Edit coding Form and complete Action
 		docViewPage.editCodingFormComplete();
@@ -5188,12 +5188,10 @@ public class DocView_CodingForm_Regression {
 		assignmentPage = new AssignmentsPage(driver);
 		miniDocListPage = new MiniDocListPage(driver);
 		softAssertion = new SoftAssert();
-
 		baseClass.stepInfo("Test case Id: RPMXCON-50992");
 		baseClass.stepInfo("To verify that if document is completed by RMU, "
-				+ "then same document should not be modified on the doc view by Reviewer");
+		+ "then same document should not be modified on the doc view by Reviewer");
 		String assignmentName = "assignment" + Utility.dynamicNameAppender();
-
 		// Login as a Rmu
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		driver.waitForPageToBeReady();
@@ -5213,23 +5211,21 @@ public class DocView_CodingForm_Regression {
 		baseClass.VerifySuccessMessage("All Documents successfully completed.");
 		baseClass.stepInfo("Completing all document from assignment");
 		// selecting assignment
+		baseClass.impersonateRMUtoReviewer();
 		assignmentPage.SelectAssignmentByReviewer(assignmentName);
-		baseClass.stepInfo("User on the docview page after selecting the  Assignment");
+		baseClass.CloseSuccessMsgpopup();
+		baseClass.stepInfo("User on the docview page after selecting the Assignment");
 		driver.waitForPageToBeReady();
 		miniDocListPage.configureMiniDocListToShowCompletedDocs();
 		driver.waitForPageToBeReady();
-		if (docViewPage.getCompleteDocBtn().isElementAvailable(1)) {
-			baseClass.failedStep("Complete button displayed");
-		} else {
-			baseClass.passedStep("Complete button not displayed");
-		}
-		boolean flag = assignmentPage.unCompleteBtn().isDisplayed();
+		boolean completeButton = docViewPage.getCompleteDocBtn().Displayed();
+		softAssertion.assertFalse(completeButton);
+		baseClass.passedStep("Complete button not displayed");
+		baseClass.waitForElement(assignmentPage.unCompleteBtn());
+		boolean flag = assignmentPage.unCompleteBtn().Displayed();
 		softAssertion.assertTrue(flag);
-		boolean flagOne = docViewPage.getDocument_CommentsTextBox().Enabled();
-		softAssertion.assertTrue(flagOne);
 		softAssertion.assertAll();
 		baseClass.passedStep("Coding form is not editable");
-
 		loginPage.logout();
 	}
 
@@ -6969,12 +6965,15 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Searching Content documents based on search string");
 
 		// Session search to doc view Coding Form
-		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 
 		// To view the NearDupe Doc in the DocView
 		sessionSearch.ViewNearDupeDocumentsInDocView();
 		docViewPage.verifyNotPartofDocViewAnalyticalPanelNearDupeTab();
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+		driver.waitForPageToBeReady();
 
 		// DocViewCodingform edit and saved
 		docViewPage.editingCodingFormWithSaveAndNextButton();
@@ -6984,6 +6983,7 @@ public class DocView_CodingForm_Regression {
 		softAssertion.assertAll();
 		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
 	}
+	
 
 	/**
 	 * @Author : Sakthivel date:30/12/2021 Modified date:NA
@@ -7044,7 +7044,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description :Verify when user clicks saved stamp when document not part of
 	 *              mini doc list is viewed from analytics panel
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 160)
+	@Test(enabled = false, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 160)
 	public void verifySavedStampDocNotPartInDocList(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -7061,7 +7061,7 @@ public class DocView_CodingForm_Regression {
 				+ "not part of mini doc list is viewed from analytics panel");
 
 		// Session search to doc view Coding Form
-		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewNearDupeDocumentsInDocView();
 
 		// DocViewCodingform edit and and stamp saved
@@ -7069,10 +7069,14 @@ public class DocView_CodingForm_Regression {
 		docViewPage.editCodingFormAndSaveWithStamp(filedText, Input.stampColour);
 		baseClass.stepInfo("Editing coding form and saving with a stamp colour has been done");
 		docViewPage.verifyNotPartofDocViewAnalyticalPanelNearDupeTab();
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+		driver.waitForPageToBeReady();
 
 		// DocViewCodingform saved stamplastIcon click and saved doc
 		docViewPage.getCodingFormStampClickAndSave(Input.stampColour);
 		docViewPage.deleteStampColour(Input.stampColour);
+		driver.Navigate().refresh();
 		loginPage.logout();
 		softAssertion.assertAll();
 		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
@@ -7671,7 +7675,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// searching document for assignment creation
-		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
 		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
 		assignmentPage.toggleCodingStampEnabled();
@@ -7949,7 +7953,7 @@ public class DocView_CodingForm_Regression {
 				+ "not part of mini doc list is viewed from analytics panel child window");
 
 		// Session search to doc view Coding Form
-		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 
 		// To view the NearDupe Doc in the DocView
@@ -8012,7 +8016,7 @@ public class DocView_CodingForm_Regression {
 	 *              validated when coding form customized for all objects along with
 	 *              all condition and Check Item.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 177)
+	@Test(enabled = false, groups = { "regression" }, priority = 177)
 	public void verifySaveBtnValidateCfCheckItem() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51186");
 		baseClass.stepInfo("Verify on click of 'Save' button coding form should be validated when coding form"
@@ -8027,7 +8031,7 @@ public class DocView_CodingForm_Regression {
 
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// create new coding form
 		codingForm.verifyCodingFormObjectSaved(cfName);
@@ -8088,13 +8092,6 @@ public class DocView_CodingForm_Regression {
 		docViewPage.errorMessage();
 		baseClass.CloseSuccessMsgpopup();
 
-		// validate Coding Form saved object is passed
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docViewPage.getCfCheckBox());
-		docViewPage.getCfCheckBox().waitAndClick(10);
-		docViewPage.getSaveDoc().waitAndClick(10);
-		baseClass.VerifySuccessMessage("Document saved successfully");
-		softAssertion.assertAll();
 
 		// Logout as Reviewer manager
 		loginPage.logout();
@@ -8138,14 +8135,6 @@ public class DocView_CodingForm_Regression {
 		docViewPage.getSaveDoc().waitAndClick(10);
 		docViewPage.errorMessage();
 		baseClass.CloseSuccessMsgpopup();
-
-		// validate Coding Form saved object is passed
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docViewPage.getCfCheckBox());
-		docViewPage.getCfCheckBox().waitAndClick(10);
-		docViewPage.getSaveDoc().waitAndClick(10);
-		baseClass.VerifySuccessMessage("Document saved successfully");
-		softAssertion.assertAll();
 
 		// logout as reviewer
 		loginPage.logout();
