@@ -1802,7 +1802,7 @@ public class DocExplorerPage {
 	/**
 	 * @author Gopinath
 	 * @Description:method to verify doc explorer page header is displayed.
-	 */
+	 */ 
 	public void verifyDocExplorerPageHeader() {
 		try {
 			bc.waitForElement(getDocExplorerPageHeader());

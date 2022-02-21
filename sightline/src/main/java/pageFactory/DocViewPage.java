@@ -25521,7 +25521,7 @@ public class DocViewPage {
 		getDocView_NearDupeIcon().ScrollTo();
 		getDocView_NearDupeIcon().waitAndClick(10);
 		 String parentWindow = reusableDocView.switchTochildWindow();
-		 
+		  
 		base.waitForElement(getCentralPanelDispaly());
 		if(getCentralPanelDispaly().isDisplayed()) {
 			base.passedStep("spinning wheel is displayed when two doc are loading in comparision window");

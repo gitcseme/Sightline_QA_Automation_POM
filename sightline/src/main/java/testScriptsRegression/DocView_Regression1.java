@@ -6942,7 +6942,7 @@ public class DocView_Regression1 {
 		
 	}
 	
-	/**
+	/** 
 	 * @author Gopinath
 	 * @TestCase Id:51732 Verify that the spinning wheel is gone when the two docs having large number of pages being compared are presented in the viewer in near dupe comparison window
 	 * @Description:To Verify that the spinning wheel is gone when the two docs having large number of pages being compared are presented in the viewer in near dupe comparison window

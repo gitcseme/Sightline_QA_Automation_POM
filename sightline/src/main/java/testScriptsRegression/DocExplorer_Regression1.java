@@ -620,7 +620,7 @@ public class DocExplorer_Regression1 {
 				
 			}
 			
-			/**
+			/**  
 			 * @author Gopinath
 			 * @TestCase id:54594 Verify the display of folder name when name is too long
 			 * @Description:To Verify the display of folder name when name is too long
