@@ -2111,6 +2111,9 @@ public class DocViewPage {
 	}
 
 	public Element getCodingFormTag(int i) {
+		return driver.FindElementByXPath("//label[@id='l_it_" + i + "']/input[@disabled='disabled']");
+	}
+	public Element getCodingFormTagInPreview(int i) {
 		return driver.FindElementByXPath("//label[@id='l_it_" + i + "']/input[@disabled='']");
 	}
 
@@ -2435,7 +2438,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocumentsCommentViewCoding() {
-		return driver.FindElementById("//div[@id='viewCodingStamp']//textarea[@id='1_textarea']");
+		return driver.FindElementByXPath("//div[@id='viewCodingStamp']//textarea[@id='1_textarea']");
 	}
 
 	public Element getDocListAllDocCheckBox() {
@@ -2782,6 +2785,9 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']//..//..//td[2][text()='" + text + "']");
 	}
+	public Element getDocViewAnaliticalFamilTab() {
+		return driver.FindElementByXPath("//li[@id='liDocumentFamilyMember']");
+		}
 
 	// Added by Gopinath - 17/01/2022
 	public ElementCollection getRemarkHighlightedText() {
@@ -13254,7 +13260,7 @@ public class DocViewPage {
 		base.waitForElement(getDociD(docId));
 		getDociD(docId).waitAndClick(5);
 		driver.waitForPageToBeReady();
-		if (getDocument_CommentsTextBox().isElementPresent() == false) {
+		if (getDocument_CommentsTextBox().isElementAvailable(5) == false) {
 			base.stepInfo("Search done via outside of an assignment");
 			base.passedStep("Coding form values are not same when different coding form is applied");
 
@@ -14884,13 +14890,14 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			reusableDocView.editCodingForm(comment);
 			base.waitForElement(getCompleteDocBtn());
-			getCompleteDocBtn().waitAndClick(5);
+			getCompleteDocBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
 			System.out.println("Completed Document : " + name);
 			base.stepInfo("Completed Document : " + name);
 			completedDoc.add(name);
-			driver.waitForPageToBeReady();
-		}
-		return completedDoc;
+
+			}
+			return completedDoc;
 	}
 
 	/**
@@ -14963,9 +14970,10 @@ public class DocViewPage {
 		base.waitForElementCollection(getMiniDocListDocIdText());
 		driver.waitForPageToBeReady();
 		for (String docId : completedDoc) {
-			getDociD(docId).ScrollTo();
-			getDociD(docId).waitAndClick(5);
-			softAssertion.assertTrue(getUnCompleteButton().Displayed());
+		getDociD(docId).ScrollTo();
+		getDociD(docId).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getUnCompleteButton().Displayed());
 		}
 		base.passedStep("Uncomplete button displayed for completed document");
 		driver.waitForPageToBeReady();
@@ -16374,20 +16382,22 @@ public class DocViewPage {
 	public void unCompleteButtonToCompleteBtn() {
 		driver.waitForPageToBeReady();
 		for (String docId : completedDoc) {
-			base.waitForElement(getDociD(docId));
-			getDociD(docId).waitAndClick(5);
-			base.waitForElement(getUnCompleteButton());
-			getUnCompleteButton().waitAndClick(5);
-			softAssertion.assertTrue(getCompleteDocBtn().isDisplayed());
+		base.waitForElement(getDociD(docId));
+		getDociD(docId).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getUnCompleteButton());
+		getUnCompleteButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getCompleteDocBtn().Displayed());
 		}
 		driver.waitForPageToBeReady();
 		if (getverifyCodeSameAsLast().isElementAvailable(5)) {
-			base.failedStep("Tick mark icon not displayed");
+		base.failedStep("Tick mark icon not displayed");
 		} else {
-			base.passedStep("Tick mark removed for document after clicking the uncomplete button");
+		base.passedStep("Tick mark removed for document after clicking the uncomplete button");
 		}
 		softAssertion.assertAll();
-	}
+		}
 
 	/**
 	 * @author Indium-Baskar
@@ -16737,26 +16747,23 @@ public class DocViewPage {
 	 * @author Aathith.Senthilkumar
 	 */
 	public void performCodeSameForFamilyMembersDocumentsReviewer() throws InterruptedException {
-
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocFileType());
-		getDocFileType().waitAndClick(5);
-		// driver.scrollingToBottomofAPage();
-		base.waitForElement(getDocView_Analytics_FamilyTab());
-		// driver.scrollingToElementofAPage(getDocView_Analytics_FamilyTab());
-		// getDocView_Analytics_FamilyTab().ScrollTo();
-		getDocView_Analytics_FamilyTab().waitAndClick(10);
-
+		getDocFileType().waitAndClick(15);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocViewAnaliticalFamilTab());
+		//driver.scrollingToElementofAPage(getDocViewAnaliticalFamilTab());
+		getDocViewAnaliticalFamilTab().ScrollTo();
+		getDocViewAnaliticalFamilTab().waitAndClick(15);
 		base.waitForElement(getDocView_Analytics_ChildWindow_FamilyTab_doc(2));
-		getDocView_Analytics_ChildWindow_FamilyTab_doc(2).waitAndClick(10);
-
+		getDocView_Analytics_ChildWindow_FamilyTab_doc(2).ScrollTo();
+		getDocView_Analytics_ChildWindow_FamilyTab_doc(2).waitAndClick(15);
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
-
 		getDocView_Analytics_Family_Member_CodeSameAs().waitAndClick(15);
-
 		base.VerifySuccessMessage("Code same performed successfully.");
-
-	}
+		}
+	
 
 	/**
 	 * @author Aathith.Senthilkumar
@@ -18706,6 +18713,7 @@ public class DocViewPage {
 	public void editCodingFormScrollComplete() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		getClickDocviewID(3).waitAndClick(5);
+		String prnDoc=getVerifyPrincipalDocument().getText();
 		base.waitForElement(getResponsiveCheked());
 		getResponsiveCheked().waitAndClick(5);
 		base.waitForElement(getNonPrivilegeRadio());
@@ -18715,24 +18723,25 @@ public class DocViewPage {
 		StringBuilder sb = new StringBuilder(400);
 		Random random = new Random();
 		for (int i = 0; i < 500; i++) {
-			char c = chars[random.nextInt(chars.length)];
-			sb.append(c);
+		char c = chars[random.nextInt(chars.length)];
+		sb.append(c);
 		}
 		String output = sb.toString();
 		getDocument_CommentsTextBox().SendKeys(output);
 		completeButton();
 		base.VerifySuccessMessage("Document completed successfully");
 		driver.waitForPageToBeReady();
+		getDociD(prnDoc).waitAndClick(5);
+		driver.waitForPageToBeReady();
 		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
 		boolean flag = (boolean) jse
-				.executeScript("return document.querySelector(\"textarea[id='1_textarea']\").scrollHeight>"
-						+ "document.querySelector(\"textarea[id='1_textarea']\").clientHeight;");
+		.executeScript("return document.querySelector(\"textarea[id='1_textarea']\").scrollHeight>"
+		+ "document.querySelector(\"textarea[id='1_textarea']\").clientHeight;");
 		System.out.println(flag);
 		softAssertion.assertTrue(flag);
 		softAssertion.assertAll();
 		base.passedStep("Scrolling displayed for comment when large text entered");
 	}
-
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -19058,11 +19067,6 @@ public class DocViewPage {
 		String actual = getDocView_CurrentDocId().getText();
 		softAssertion.assertEquals(expect, actual);
 		base.stepInfo(" selected document successfully displayed in parent window");
-		reusableDocView.closeWindow(1);
-		reusableDocView.switchToNewWindow(1);
-		driver.Navigate().refresh();
-		driver.switchTo().alert().accept();
-		driver.waitForPageToBeReady();
 	}
 
 	/**
@@ -25596,4 +25600,17 @@ public class DocViewPage {
 		
 	}
 
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description: To verify tags of coding form name in docview page
+	 */
+	public void verifyTagsAreDisabledInPreviewBox(int objectNo) {
+		// base.waitForElement(getCodingFormTag(objectNo));
+		driver.waitForPageToBeReady();
+		if (getCodingFormTagInPreview(objectNo).isElementAvailable(5) == true) {
+			base.passedStep("The added tags are checked and disabled");
+		} else {
+			base.failedStep("The added tags are not checked and disabled");
+		}
+	}
 }
