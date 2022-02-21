@@ -25613,4 +25613,31 @@ public class DocViewPage {
 			base.failedStep("The added tags are not checked and disabled");
 		}
 	}
+	
+	/**
+	 * @author Krishna 16/02/22 NA Modified date: NA Modified by:NA
+	 * @description to select docs and remove code as same in child window
+	 */
+	public void selectDocsFromMiniDocsAndRemoveCodeAsSameInChildWindow() {
+
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		for (int i = 1; i <= 2; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+		}
+
+		base.waitForElement(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(10);
+		base.waitForElement(getDocView__ChildWindow_Mini_RemoveCodeSameAs());
+		getDocView__ChildWindow_Mini_RemoveCodeSameAs().waitAndClick(10);
+		base.passedStep("Expected message : Code Same has been successfully removed");
+		driver.waitForPageToBeReady();
+		if (geDocView_MiniList_CodeSameAsIcon().isElementAvailable(1)) {
+			base.failedStep("CodeSameAs icon is displayed for the selected docs in child window");
+		} else {
+			base.passedStep("CodeSameAs icon is not displayed for the selected docs in child window");
+
+		}
+	}
 }
