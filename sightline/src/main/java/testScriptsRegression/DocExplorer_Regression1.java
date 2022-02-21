@@ -561,7 +561,7 @@ public class DocExplorer_Regression1 {
 			 *               and select action as View in DocList from Actions drop down
 			 * @throws AWTException
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 			public void verifyViewInDocListForSelectedDocs() throws AWTException {
 				int numberOfFolders=14;
 				baseClass = new BaseClass(driver);
@@ -595,7 +595,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:54589 Verify the default menu for the PA and RMU after login
 			 * @Description:To Verify the default menu for the PA and RMU after login
 			 */
-			@Test
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 			public void verfifyDefaultMenuForPAandRMU() {
 				baseClass = new BaseClass(driver);
 				baseClass.stepInfo("Test case Id: RPMXCON-54589 sprint 12");
@@ -617,6 +617,26 @@ public class DocExplorer_Regression1 {
 				
 				baseClass.stepInfo("verify default menu for Review manager");
 				homePage.verifyDashboardPageAsDefaultMenu();
+				
+			}
+			
+			/**
+			 * @author Gopinath
+			 * @TestCase id:54594 Verify the display of folder name when name is too long
+			 * @Description:To Verify the display of folder name when name is too long
+			 */
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+			public void verifyLongfolderName() {
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-54594 Sprint 12");
+				baseClass.stepInfo("### Verify the display of folder name when name is too long###");
+				docexp = new DocExplorerPage(driver);
+				
+				baseClass.stepInfo("Navigating to DocExplorer page");
+				docexp.navigateToDocExplorerPage();
+				
+				baseClass.stepInfo("verify long folder name is displayed on tooltip");
+				docexp.verifyFolderName();
 				
 			}
 			

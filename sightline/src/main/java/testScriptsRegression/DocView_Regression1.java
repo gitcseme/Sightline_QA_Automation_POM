@@ -6904,6 +6904,69 @@ public class DocView_Regression1 {
 		loginPage.logout();
 	}
 	
+	
+	/**
+	 * @author Gopinath
+	 * @throws InterruptedException 
+	 * @TestCase Id:50808 verify when user clicks document pagination option from document view panel of doc view page
+	 * @Description:To To verify when user clicks document pagination option from document view panel of doc view page
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	public void verifyDocViewDocPagnation() throws InterruptedException {
+		baseClass=new BaseClass(driver);
+		String rowNumber="2";
+		baseClass.stepInfo("RPMXCON-50808 Sprint 12");
+		baseClass.stepInfo("#### To verify when user clicks document pagination option from document view panel of doc view page");
+		SessionSearch session = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Basic Content Search");
+		session.basicContentSearch(Input.searchString1);
+		
+		baseClass.stepInfo("view doc in docView");
+		session.ViewInDocView();
+		
+		docView.selectDocToViewInDocViewPanal(rowNumber);
+		baseClass.stepInfo("Verify docView page next(>) navigation");
+		docView.clickOnPageNextButton();
+		docView.clickOnPageNextButton();
+		
+		baseClass.stepInfo("verify document page last(>>) button");
+		docView.clickOnPageLastButton();
+		
+		baseClass.stepInfo("verify document page previous(<) button");
+		docView.clickOnDocPagePreviousButton();
+		
+		baseClass.stepInfo("verify document page first(<<) button");
+		docView.clickOnDocPageFirstButton();
+		
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @TestCase Id:51732 Verify that the spinning wheel is gone when the two docs having large number of pages being compared are presented in the viewer in near dupe comparison window
+	 * @Description:To Verify that the spinning wheel is gone when the two docs having large number of pages being compared are presented in the viewer in near dupe comparison window
+	 * @throws InterruptedException
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+	public void verifyComparisonWindowLoadingStatus() throws InterruptedException {
+		baseClass=new BaseClass(driver);
+		baseClass.stepInfo("###Verify that the spinning wheel is gone when the two docs having large number of pages being compared are presented in the viewer in near dupe comparison window###");
+		baseClass.stepInfo("Test case Id: RPMXCON-51732 Sprint 12");
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+
+		baseClass.stepInfo("Basic Basic content search");
+		session.basicContentSearch(Input.searchString1);
+
+		baseClass.stepInfo("select near dupe docs and Navigate to  DocView page ");
+		docView.selectNearDupePureHit();
+		session.ViewNearDupeDocumentsInDocView();
+		
+		baseClass.stepInfo("verifying comparison window neardupe spinnig wheel");
+		docView.nearDupeComparisonWindowLodingVerification();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
