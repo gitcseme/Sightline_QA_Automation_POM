@@ -215,8 +215,9 @@ public class TagCountbyTagReport {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 *         This method will generate Tag Count by Tag report
 	 * @param tagname
-	 * @param flag
+	 * @param flag[if given 'true'it will redirect to export page and verify download]
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
@@ -255,6 +256,7 @@ public class TagCountbyTagReport {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 *         This method will perform Reset Functionality is working.
 	 * @throws InterruptedException
 	 */
 
@@ -295,6 +297,7 @@ public class TagCountbyTagReport {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 *         This method will generate report when input gioven is  Two tags.
 	 * @param tagname
 	 * @param tagname1
 	 * @throws InterruptedException
@@ -327,6 +330,7 @@ public class TagCountbyTagReport {
 
 	/**
 	 * @author Jayanthi.ganesan
+	 * This method will verify whether the tags are reflected in report or not.
 	 * @return
 	 */
 
@@ -345,12 +349,15 @@ public class TagCountbyTagReport {
 		}
 		return elementNames;
 	}
-
-	/**
-	 * @author Jayanthi.ganesan
-	 * @param tagName,Count,i
-	 * @return
-	 */
+/**
+ * @author Jayanthi.ganesan
+ * This method will verify Doc Count for given Tags displayed in report table
+ * @param tagName[Name of Tag whose doc count to be validated from report]
+ * @param Count[Doc coun to be verified in Report table]
+ * @param i[Index Value of Table Header Element]
+ * @return
+ */
+	
 	public boolean verifyTagDocCount(String tagName, String Count, int i) {
 		String docCount = null;
 		boolean status = false;
