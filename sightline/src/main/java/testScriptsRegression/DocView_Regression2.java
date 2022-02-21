@@ -4300,7 +4300,25 @@ public class DocView_Regression2 {
 	}
 	
 	
-	
+	/*  
+     *Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51561
+	 * Description :Verify that if the text is a multi-word text (e.g. Hello there), it is considered a phrase and highlights only the phrases "Hello there".
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 63)
+	public void verifyMultiwordTextHighlightAsPhrase(String fullName, String userName, String password) throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		
+		loginPage.loginToSightLine(userName,password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51561");
+		baseClass.stepInfo("Verify that if the text is a multi-word text, it is considered a phrase and highlights only the phrases.");
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		//verifying the multi word text highlight
+		docView.verifyMultiwordTextHighlightOnDocview(Input.multiwordText);
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)

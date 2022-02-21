@@ -302,6 +302,7 @@ public class Input {
 	public static String pageRange4;
 	public static String searchPhraseWithQuote;
 	public static String keywordColor1;
+	public static String multiwordText;
 
 	// Added by Raghuram - Modified 02/02/21
 	public static String docHighlightColor;
@@ -823,6 +824,7 @@ public class Input {
 		pageRange4 = testData.getPageRange4();
 		searchPhraseWithQuote = testData.getSearchPhraseWithQuote();
 		keywordColor1 = testData.getKeywordColor1();
+		multiwordText = testData.getMultiwordText();
 
 		// Added by Raghuram 02/02/21
 		docSelectionHighlight=testData.getDocSelectionHighlight();

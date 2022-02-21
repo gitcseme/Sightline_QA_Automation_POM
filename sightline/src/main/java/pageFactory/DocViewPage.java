@@ -3211,6 +3211,23 @@ public class DocViewPage {
 		return driver
 				.FindElementsByXPath("//tbody[@id='threadedEmailRow']//tr");
 	}
+	
+	//Added by arunkumar
+	public Element searchTextBox() {
+		return driver.FindElementById("sodTextBox");
+	}
+	
+	public Element searchIcon() {
+		return driver.FindElementByXPath("//*[@class='searchIcon']");
+	}
+	
+	public Element closeIcon() {
+		return driver.FindElementByXPath("//*[@class='close']");
+	}
+	
+	public Element searchResult() {
+		return driver.FindElementByXPath("//*[@class='count']");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -25597,6 +25614,41 @@ public class DocViewPage {
 		
 		base.passedStep("The Threaed Documents having Row are : " + getDocView_Analytics_ThreadedMapParticipantDocs().size()
 				+ "docs");
+		
+	}
+	
+	/**
+	 * @author Arunkumar
+	 * @Description: This method used to verify whether the multiword text is considered as phrase and highlighting
+	 * 
+	 */
+	public void verifyMultiwordTextHighlightOnDocview(String multiwordText) {
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getDocView_SearchButton().Visible() && getDocView_SearchButton().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getDocView_SearchButton());
+		getDocView_SearchButton().Click();
+		if(!getDocView_SearchButton().isDisplayed()  && searchTextBox().isDisplayed() && closeIcon().isDisplayed()) {
+			base.passedStep("After clicking magnifying icon it is replaced by search box text field and X presentation");
+		}
+		else {
+			base.failedStep("After clicking magnifying icon it is not replaced by search box text field and X presentation");
+		}
+		base.waitForElement(searchTextBox());
+		searchTextBox().Click();
+		searchTextBox().SendKeys(multiwordText);
+		searchIcon().Click();		
+		String searchResult =searchResult().getText();
+		base.stepInfo("Highlighted multiword text search result:"+searchResult);
+		if(searchResult.contains("1 of")) {
+			base.passedStep("Multi word text considered as phrase and highlighted");
+		}
+		else {
+			base.failedStep("Multi word text are not highlighted");
+		}
 		
 	}
 
