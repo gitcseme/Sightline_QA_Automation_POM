@@ -9138,6 +9138,108 @@ public class Production_Regression1 {
 	
 	
 	
+	/**
+	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48167
+	 * @Description:To Verify All MP3 Files info should get loaded when using (Saved
+	 *                 )Template for Production.
+	 */
+	@Test(groups = { "regression" }, priority = 124)
+	public void verifySaveTemplateAndRetainedValueInComponentTab() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-48167 -Production component");
+		base.stepInfo("To Verify All MP3 Files info should get loaded when using (Saved )Template for Production.");
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.selectGenerateOption(false);
+		page.fillingMP3FileWithBurnRedaction();
+		page.navigateToNextSection();
+
+		ProductionPage Page = new ProductionPage(driver);
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		String Templatename = Input.randomText + Utility.dynamicNameAppender();
+
+		driver.Navigate().refresh();
+		Page.savedTemplateAndNewProdcution(productionname, Templatename);
+		Page.baseInfoLoadTemplate(productionname1, Templatename);
+
+		// Method to verify the retained value in Mp3 File
+		page.verifyingMP3FileBurnRedaction(Input.defaultRedactionTag);
+		page.getCheckBoxCheckedVerification(page.getMP3FileSelectRedactionTags());
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha Test case id-RPMXCON-48006
+	 * @Description To Verify Produced PDFs are being presented in the DocView for
+	 *              the document
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 125)
+	public void PDFDocumentDisplayedInDocViewPage() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-48006 -Production Component");
+		base.stepInfo("To Verify Produced PDFs are being presented in the DocView for the document");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingPDFSection(tagname, Input.searchString4);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		base.stepInfo("Navigate to docview");
+		sessionsearch.ViewInDocView();
+
+		driver.waitForPageToBeReady();
+		DocViewPage doc = new DocViewPage(driver);
+		doc.clickOnImageTab();
+		driver.waitForPageToBeReady();
+		doc.verifyProductionNameForPDFFileInDocView(productionname);
+		driver.waitForPageToBeReady();
+		doc.getSelectedAreaElement().isElementAvailable(10);
+		if (doc.getSelectedAreaElement().isDisplayed()) {
+			base.passedStep("Produced PDFs  is presented in the DocView for the document");
+		} else {
+			base.failedStep("Produced PDFs is not presented in the DocView for the document");
+		}
+		loginPage.logout();
+	}
+
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
