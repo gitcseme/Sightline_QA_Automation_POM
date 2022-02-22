@@ -2970,8 +2970,9 @@ public class CodingForm {
 
 	public String addCodingFormWithAllTabsMetaDataError(String cfName, String tag, String comment)
 			throws InterruptedException {
-		basedOnCodingFormParameter(cfName, tag, "comment", null, "metadata");
-		String text = getCFMetaFirstText().getText();
+		addNewCodingFormButton();
+		firstCheckBox("metadata");
+		String MetaDatatext = getCFMetaFirstText().getText();
 		addcodingFormAddButton();
 		getCodingForm_DefaultAction(0).ScrollTo();
 		getCodingForm_DefaultAction(0).selectFromDropdown().selectByVisibleText("Make It Required");
@@ -2980,14 +2981,14 @@ public class CodingForm {
 		base.waitForElement(getCodingForm_HelpText());
 		getCodingForm_HelpText().SendKeys("Help for testing");
 		driver.scrollPageToTop();
+		passingCodingFormName(cfName);
 		base.waitForElement(getSaveCFBtn());
 		getSaveCFBtn().waitAndClick(5);
 		base.waitForElement(getCodingForm_Validation_ButtonYes());
 		getCodingForm_Validation_ButtonYes().waitAndClick(5);
 		base.VerifySuccessMessage("Coding Form Saved successfully");
 		base.CloseSuccessMsgpopup();
-		return text;
-
+		return MetaDatatext;
 	}
 
 	/**

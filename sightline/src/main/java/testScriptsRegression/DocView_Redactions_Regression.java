@@ -7286,6 +7286,76 @@ public class DocView_Redactions_Regression {
 		baseClass.stepInfo(assNameRevProject2
 				+ "Assignment name is also displayed above the assignment progress bar successfully");
 	}
+	
+	/**
+	 * @author krishna TestCase Id:51874 Verify that Action > Remove Code Same As
+	 *         works fine when all records in the reviewers batch are in an
+	 *         Uncompleted state, and the user selects only some/select records
+	 * @throws InterruptedException
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 57)
+	public void verifyCodeSameAsMiniDocListAndChildWindow() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51874");
+		String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
+		baseClass.stepInfo(
+				"Verify that Action > Remove Code Same As works fine when all records in the reviewers batch are in an Uncompleted state, and the user selects only some/select records");
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softAssert = new SoftAssert();
+
+		// searching document for assignmnet creation
+		baseClass.stepInfo("bascic contant search");
+		sessionSearch.basicContentSearch(Input.searchString2);
+		baseClass.stepInfo("performing bulk assign");
+		sessionSearch.bulkAssign();
+		baseClass.stepInfo("Create assignment WIth allow user to save with out complete option");
+
+		// create new assignment with allow user to save without complete
+		assignmentPage.createAssignmentWithAllowUserToSave(AssignStamp, Input.codingFormName);
+		baseClass.stepInfo("editing assignment");
+		assignmentPage.editAssignment(AssignStamp);
+		baseClass.stepInfo("Reviewers added and distributed to Reviewer");
+		assignmentPage.assignmentDistributingToReviewer();
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout RUM '" + Input.rev1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting the assignment
+		baseClass.stepInfo("select the assignment and view in docview");
+		assignmentPage.SelectAssignmentByReviewer(AssignStamp);
+        
+		//verify CodeSameAs icon is displayed in selected doc
+		baseClass.stepInfo("performing Code sameas for min doc list documents");
+		docView.selectDocsFromMiniDocsAndCodeSameAs();
+		docView.selectDocsFromMiniDocsAndRemoveCodeAsSame();
+		driver.waitForPageToBeReady();
+		softAssert.assertFalse(docView.geDocView_MiniList_CodeSameAsIcon().isDisplayed());
+		if (docView.geDocView_MiniList_CodeSameAsIcon().isElementAvailable(1)) {
+			baseClass.failedStep("CodeSameAs icon is displayed for the selected docs ");
+		} else {
+			baseClass.passedStep("CodeSameAs icon is not displayed for the selected docs");
+		}
+
+		baseClass.stepInfo("save the configuration");
+		docView.saveConfigFromChildWindow();
+		docView.popOutMiniDocList();
+		
+		//verify CodeSameAs icon is displayed in selected doc in childWindow
+		driver.waitForPageToBeReady();
+		docView.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 2; i++) {
+			baseClass.waitForElement(docView.getDocView_MiniDoc_SelectRow(i));
+			docView.getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+		}
+		docView.clickCodeSameAs();
+		docView.selectDocsFromMiniDocsAndRemoveCodeAsSameInChildWindow();
+		docView.closeWindow(1);
+		softAssert.assertAll();
+	}
 
 	
 	@AfterMethod(alwaysRun = true)

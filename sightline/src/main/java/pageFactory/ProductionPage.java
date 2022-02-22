@@ -849,6 +849,35 @@ public class ProductionPage {
 
 	// added by sowndariya
 	
+	public Element fieldMappingtTextInDAT() {
+		return driver.FindElementByXPath("//label[contains(text(),'Field Mapping:')]");
+	}
+	
+	public Element dateFormatDdInDAT() {
+		return driver.FindElementByXPath("//select[@name='DATComponentModelData.DateFormatID']");
+	}
+	
+	public Element dateFormatTextInDAT() {
+		return driver.FindElementByXPath("//label[contains(text(),'Date Format:')]");
+	}
+	public Element fieldSeperatorDdInDAT() {
+		return driver.FindElementByXPath("//select[@id='lstFieldSeparator']");
+	}
+	public Element fieldDelimitersTextInDAT() {
+		return driver.FindElementByXPath("//div[@class='form-group required']//label[contains(text(),'Field Delimiters:')]");
+	}
+	
+	public Element radioBtnANSIInDAT() {
+		return driver.FindElementByXPath("//div[@class='form-group required']//label[@class='radio']//input[@id='rdbANSI']//..//i");
+	}
+	
+	public Element FormatTextInDAT() {
+		return driver.FindElementByXPath("//div[@class='form-group required']//label[contains(text(),'Format:')]");
+	}
+	public Element gridAndTileViewProdCount() {
+		return driver.FindElementByXPath("//div[@id='cardGrid']//span[@id='totalProductionCount']");
+	}
+	
 	public Element identifyByProductionGuardSource_radioBtn() {
 		return driver.FindElementByXPath("//a[@id='a-c-6']");
 	}
@@ -2572,6 +2601,9 @@ public class ProductionPage {
 		}
 		public Element getTiffAdvanceBtn() {
 			return driver.FindElementByXPath("//div[@id='TIFFContainer']//div[@class='advanced-dd-toggle']");
+		}
+		public Element getRegenerateAllRadioBtn() {
+			return driver.FindElementByXPath("//input[@id='RegenerateAll']/../i");
 		}
 
 	public ProductionPage(Driver driver) {
@@ -17594,7 +17626,67 @@ public class ProductionPage {
 	  }else {base.failedStep("Error message is displayed");  }
 	}	   
 		    	
-		   
+
+	
+	
+	/**
+	 * @author Brundha
+	 * @description :filling natively produced docs with file type and verifying the warning message.
+	 * 
+	 */
+	public void fillingTIFFWithNativelyProducedDocsFileType(String Test) {
+		
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitForElement(getTiff_NativeDoc());
+			getTiff_NativeDoc().Click();
+			base.waitTillElemetToBeClickable(getFileTypeNativelyProducedDocs());
+			getFileTypeNativelyProducedDocs().Click();
+			base.waitForElement(getNativeDocsPlaceholder());
+			getNativeDocsPlaceholder().SendKeys(Test);
+			base.waitForElement(getTiff_NativeDoc());
+			getTiff_NativeDoc().Click();
+			driver.scrollPageToTop();
+			getMarkCompleteLink().waitAndClick(10);
+			base.VerifyWarningMessage("In the TIFF / PDF section, no values are specified in the placeholder configuration for the docs produced natively. Please check.");
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param prodName
+	 */
+	public void openExistingProduction(String prodName) {
+		
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		base.waitForElement(getGearIconForProdName(prodName));
+		getGearIconForProdName(prodName).waitAndClick(5);
+
+		base.waitForElement(getOpenWizard());
+		getOpenWizard().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.stepInfo("Opened Existing production : "+prodName);
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void verifyProductionGenerateSuccussfully() {
+		
+		getDocumentGeneratetext().isElementAvailable(180);
+		String actualText = getStatusSuccessTxt().getText();
+		String expectedText = "Success";
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+		base.stepInfo("Generation completed");
+	}
+
 	   
 	
 

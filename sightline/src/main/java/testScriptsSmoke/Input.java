@@ -193,7 +193,10 @@ public class Input {
 	public static String nearDupePagination;
 	public static String highlightDocId;
 	public static String highlightedDocsQuery;
-
+	public static String ingestionQuery;
+	public static String ingestionDocIdFamilyMember;
+	public static String ingestionDocIdNearDupe;
+	
 	// DocView codingform Baskar Indium
 
 	public static String savedName;
@@ -277,6 +280,8 @@ public class Input {
 	public static String HiddenContentExcelSheet;
 	public static String HiddenContentExcelBook;
 	public static String HiddenContentExternalLink;
+	public static String audioString1;
+	public static String audioString2;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -297,6 +302,7 @@ public class Input {
 	public static String pageRange4;
 	public static String searchPhraseWithQuote;
 	public static String keywordColor1;
+	public static String multiwordText;
 
 	// Added by Raghuram - Modified 02/02/21
 	public static String docHighlightColor;
@@ -509,6 +515,35 @@ public class Input {
 	// Added by Baskar
 	public static String oneHourAudio;
 	public static String excelProtectedHiddenDocId;
+	
+	// Added by Mohan (Ingestion Datasets)
+	public static String H1369Folder;
+	public static String MultiPTIFFFolder;
+	public static String SinglePageTIFFFolder;
+	public static String CJK_FrenchAudioTestDataFolder;
+	public static String EmailConcatenatedDataFolder;
+	public static String SSAudioSpeechFolder;
+	public static String GD994NativeTextForProductionFolder;
+	public static String GNonsearchablePDFLoadfileFolder;
+	public static String HiddenPropertiesFolder;
+	public static String UniCodeFilesFolder;
+	public static String IngestionEmailDataFolder;
+	public static String DATFile;
+	public static String TextFile;
+	public static String NativeFile;
+	public static String TIFFFile;
+	public static String TIFFFile1;
+	public static String TranslationFile;
+	public static String PDFFile;
+	public static String TranscriptFile;
+	public static String MP3File;
+	public static String DATGermanFile;
+	public static String DATJapneseFile;
+	public static String TranscriptGermanFile;
+	public static String MP3GermanFile;
+	public static String TranscriptJapneseFile;
+	public static String MP3JapneseFile;
+	public static String SourceDatFieldCustom;
 
 	@BeforeSuite(alwaysRun = true)
 
@@ -685,6 +720,9 @@ public class Input {
 		fieldByValue=testData.getFieldByValue();
 		highlightDocId=testData.getHighlightDocId();
 		highlightedDocsQuery=testData.getHighlightedDocsQuery();
+		ingestionQuery=testData.getIngestionQuery();
+		ingestionDocIdFamilyMember=testData.getIngestionDocIdFamilyMember();
+		ingestionDocIdNearDupe=testData.getIngestionDocIdNearDupe();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
@@ -776,6 +814,8 @@ public class Input {
 		HiddenContentExcelSheet = testData.getHiddenContentExcelSheet();
 	    HiddenContentExcelBook = testData.getHiddenContentExcelBook();
 		HiddenContentExternalLink = testData.getHiddenContentExternalLink();
+		audioString1=testData.getAudioString1();
+		audioString2=testData.getAudioString2();
 
 		// Added by Arun
 		pageRange1 = testData.getPageRange1();
@@ -784,6 +824,7 @@ public class Input {
 		pageRange4 = testData.getPageRange4();
 		searchPhraseWithQuote = testData.getSearchPhraseWithQuote();
 		keywordColor1 = testData.getKeywordColor1();
+		multiwordText = testData.getMultiwordText();
 
 		// Added by Raghuram 02/02/21
 		docSelectionHighlight=testData.getDocSelectionHighlight();
@@ -1025,6 +1066,36 @@ public class Input {
 
 		hiddenDocId = testData.getHiddenDocId();
 		excelProtectedHiddenDocId = testData.getExcelProtectedHiddenDocId();
+		
+
+		//Ingestion DataSet
+		
+		H1369Folder =testData.getH1369Folder(); 
+		MultiPTIFFFolder  =testData.getMultiPTIFFFolder();
+		SinglePageTIFFFolder = testData.getSinglePageTIFFFolder();
+		CJK_FrenchAudioTestDataFolder =testData.getCJK_FrenchAudioTestDataFolder();
+		EmailConcatenatedDataFolder = testData.getEmailConcatenatedDataFolder();
+		SSAudioSpeechFolder =testData.getSSAudioSpeechFolder();
+		GD994NativeTextForProductionFolder =testData.getGD994NativeTextForProductionFolder();
+		GNonsearchablePDFLoadfileFolder =testData.getGNonsearchablePDFLoadfileFolder();
+		HiddenPropertiesFolder =testData.getHiddenPropertiesFolder();
+		UniCodeFilesFolder =testData.getUniCodeFilesFolder();
+		IngestionEmailDataFolder =testData.getIngestionEmailDataFolder();
+		DATFile = testData.getDATFile();
+		TextFile = testData.getTextFile();
+		NativeFile= testData.getNativeFile();
+		TIFFFile = testData.getTIFFFile();
+		TIFFFile1 = testData.getTIFFFile1();
+		TranslationFile = testData.getTranslationFile();
+		PDFFile= testData.getPDFFile();
+		TranscriptFile = testData.getTranscriptFile();
+		MP3File = testData.getMP3File();
+		DATGermanFile = testData.getDATGermanFile();
+		DATJapneseFile = testData.getDATJapneseFile();
+		TranscriptGermanFile = testData.getTranscriptGermanFile();
+		MP3GermanFile =testData.getMP3GermanFile();
+		TranscriptJapneseFile = testData.getTranscriptJapneseFile();
+		MP3JapneseFile = testData.getMP3JapneseFile();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

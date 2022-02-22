@@ -44,7 +44,7 @@ public class Tally_Regression1 {
 	String securityGrpName="Tally"+Utility.dynamicNameAppender(); 
 	String projectName=Input.projectName;
 	String[] sourceName_RMU = { assgnName, folderName,SearchName,"Default Security Group"};
-	String[] sourceName_PA = {projectName, folderName,SearchName,securityGrpName};
+	String[] sourceName_PA = {projectName, folderName,SearchName,"Default Security Group"};
 	String expectedCusName;
 	String expectedEAName;
 	String expectedDocFileType;
@@ -77,12 +77,13 @@ public class Tally_Regression1 {
 		bc.stepInfo("Created a assignment " + assgnName);
 		driver.waitForPageToBeReady();
 		DocListPage dp = new DocListPage(driver);
+		ss.ViewInDocListWithOutPureHit();
 		dp.SelectColumnDisplayByRemovingExistingOnes();  
 		//getting  metadata list for search term so that we can use this list as expected value when we generate tally report(Bar chart).
-		expectedCusName = dp.duplicateCheckList1(dp.getColumnValue(Input.metaDataName));
-		expectedEAName = dp.duplicateCheckList1(dp.getColumnValue(Input.MetaDataEAName));
-		expectedDocFileType = dp.duplicateCheckList1(dp.getColumnValue(Input.docFileType));
-		expectedEAAdress = dp.duplicateCheckList1(dp.getColumnValue("EmailAuthorAddress"));
+		expectedCusName = dp.duplicateCheckList1(dp.getColumnValue(Input.metaDataName,true));
+		expectedEAName = dp.duplicateCheckList1(dp.getColumnValue(Input.MetaDataEAName,true));
+		expectedDocFileType = dp.duplicateCheckList1(dp.getColumnValue(Input.docFileType,true));
+		expectedEAAdress = dp.duplicateCheckList1(dp.getColumnValue("EmailAuthorAddress",true));
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		ss.bulkFolderWithOutHitADD(folderName);
 		lp.logout();

@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -4020,6 +4021,305 @@ public class DocView_Regression2 {
 	}
 	
 
+	/*  
+     *Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51107
+	 * Description :Verify user can download the redacted document from default view using print icon outside of an assignment.
+	 * validated the step of checking the format of Downloaded document in pdf for rectangle and current page redaction
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 59)
+	public void verifyDownloadDocsInPDF() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		
+		//pre-requisites- Rectangle redaction and current page redaction
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51107");
+		baseClass.stepInfo("Verify user can download the redacted document from default view using print icon outside of an assignment");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
+		docView.getDocView_RedactIcon().Click();
+		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
+		baseClass.stepInfo("Current Page Redaction Completed");
+		driver.waitForPageToBeReady();
+		docViewRedact.addRectangleRedaction();
+		docViewRedact.selectingRectangleRedactionTag();
+		baseClass.stepInfo("Rectangle Redaction Completed");
+		loginPage.logout();
+		
+		//Login as RMU and verify the document download is in pdf format for rectangle and current page redaction
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		docView.verifyDocumentDownloadInPdfFormat();
+		loginPage.logout();
+		//Login as Reviewer and verify the document download in pdf format for rectangle and current page redaction
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as Reviewer");
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		docView.verifyDocumentDownloadInPdfFormat();	
+		
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51951
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =60)
+	public void verifyHiddenContentDocs(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
+		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
+		String expectedMessage3 = "Protected Excel Workbook";
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51951");
+		baseClass.stepInfo("Verify that when viewing the document having the 'Hidden Properties' value should provide indicator in viewer to convey that document is having hidden content");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.TextHidden);
+		sessionsearch.ViewInDocView();
+		DocViewPage docviewpage = new DocViewPage(driver);
+		
+//Selecting Doc with excel protected workbook
+		docviewpage.selectDocIdInMiniDocList(Input.HiddenContentExcelBook);
+		baseClass.stepInfo("Document with hidden content - excel protected workbook selected from mini doclist");
+		driver.waitForPageToBeReady();	
+		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
+		driver.waitForPageToBeReady();
+
+//Selecting Doc with excel protected worksheet		
+		String expectedMessage4 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
+		String expectedMessage5 = "Protected Excel Sheets";
+		docviewpage.selectDocIdInMiniDocList(Input.HiddenContentExcelSheet);
+		baseClass.stepInfo("Document with hidden content - excel protected worksheet selected from mini doclist");
+		driver.waitForPageToBeReady();	
+		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage4, expectedMessage5);	
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Vijaya.Rani date: 17/02/2022  Modified date: NA Modified by: NA Description
+	 * :Verify user after impersonation user can see the keywords highlighted in doc
+	 * view based on the assigned keyword group and color to the security group.
+	 * 'RPMXCON-51035' Sprint-12
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 61)
+	public void verifyImpersonationKeyWordsHighLightingDocView() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51035 sprint 12");
+		SessionSearch search = new SessionSearch(driver);
+		String keywordname = Input.randomText + Utility.dynamicNameAppender();
+		String keyword = Input.randomText + Utility.dynamicNameAppender();
+		KeywordPage keywordPage = new KeywordPage(driver);
+		docView = new DocViewPage(driver);
+
+		baseClass.stepInfo(
+				"Verify user after impersonation user can see the keywords highlighted in doc view based on the assigned keyword group and color to the security group");
+
+		// login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+		driver.Manage().window().fullscreen();
+		baseClass.stepInfo("Add keyword");
+		keywordPage.AddKeyword(keywordname, keyword);
+		driver.Manage().window().maximize();
+		baseClass.stepInfo("Get All Keywords in keywords lsit table");
+		keywordPage.getAllKeywords();
+		baseClass.stepInfo("Basic Search");
+		search.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("View In Doc View");
+		search.ViewInDocView();
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		// login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Step 1: Impersonating SA to Reviewer");
+		baseClass.impersonateSAtoReviewer();
+		baseClass.stepInfo("Basic Search");
+		search.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("View In Doc View");
+		search.ViewInDocView();
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		// login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("Basic Search");
+		search.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("View In Doc View");
+		search.ViewInDocView();
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		// login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("Basic Search");
+		search.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("View In Doc View");
+		search.ViewInDocView();
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Basic Search");
+		search.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("View In Doc View");
+		search.ViewInDocView();
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+
+		baseClass.stepInfo("Delete keyword");
+		keywordPage.deleteKeywordByName(keyword);
+
+	}
+
+	/**
+	 * Author :Vijaya.Rani date: 17/02/2022 Modified date: NA Modified by: NA Description:
+	 * Verify user after impersonation can see the keywords highlighted in doc view
+	 * based on the assigned keyword group and color to the assignment in context of
+	 * assignment.'RPMXCON-51036' Sprint-12
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 62)
+	public void verifyImpersonationKeyWordsHighLightingAssignmentDocView() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51036 sprint 12");
+		AssignmentsPage assgnPage = new AssignmentsPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+		String Assname = "Assigname" + Utility.dynamicNameAppender();
+		String keywordname = Input.randomText + Utility.dynamicNameAppender();
+		String keyword = Input.randomText + Utility.dynamicNameAppender();
+		KeywordPage keywordPage = new KeywordPage(driver);
+		docView = new DocViewPage(driver);
+
+		baseClass.stepInfo(
+				"Verify user after impersonation can see the keywords highlighted in doc view based on the assigned keyword group and color to the assignment in context of assignment");
+
+		// login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+		driver.Manage().window().fullscreen();
+		baseClass.stepInfo("Add keyword");
+		keywordPage.AddKeyword(keywordname, keyword);
+		driver.Manage().window().maximize();
+		baseClass.stepInfo("Get All Keywords in keywords lsit table");
+		keywordPage.getAllKeywords();
+		baseClass.stepInfo("Basic Search");
+		search.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Bulk Assign");
+		search.bulkAssign();
+		baseClass.stepInfo("Assignment Creation");
+		assgnPage.assignDocstoNewAssgnEnableAnalyticalPanel(Assname,  Input.codingFormName, SessionSearch.pureHit);
+		baseClass.stepInfo(" Go to doc view from my assignment");
+		assgnPage.selectAssignmentToViewinDocview(Assname);
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		// login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
+		baseClass.impersonatePAtoRMU();
+		assgnPage.selectAssignmentToViewinDocview(Assname);
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+		// selecting the assignment
+		baseClass.stepInfo("Selecting the assignment");
+		assgnPage.SelectAssignmentByReviewer(Assname);
+		baseClass.stepInfo("Persistent Hit With search string");
+		docView.persistenHitWithSearchString(keyword);
+		baseClass.stepInfo("Verify keyword highlighted on doc view.");
+		docView.verifyKeywordHighlightedOnDocView();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Navigate to keyword page");
+		keywordPage.navigateToKeywordPage();
+		baseClass.stepInfo("Delete keyword");
+		keywordPage.deleteKeywordByName(keyword);
+
+	}
+	
+	
+	/*  
+     *Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51561
+	 * Description :Verify that if the text is a multi-word text (e.g. Hello there), it is considered a phrase and highlights only the phrases "Hello there".
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 63)
+	public void verifyMultiwordTextHighlightAsPhrase(String fullName, String userName, String password) throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		
+		loginPage.loginToSightLine(userName,password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51561");
+		baseClass.stepInfo("Verify that if the text is a multi-word text, it is considered a phrase and highlights only the phrases.");
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		//verifying the multi word text highlight
+		docView.verifyMultiwordTextHighlightOnDocview(Input.multiwordText);
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

@@ -49,6 +49,7 @@
 	<pageRange4>2-13</pageRange4>
 	<searchPhraseWithQuote>"is required"</searchPhraseWithQuote>
 	<keywordColor1>Cyan</keywordColor1>
+	<multiwordText>will be</multiwordText>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
@@ -85,7 +86,6 @@
 	<sourceDocId3>T2545D</sourceDocId3>
 	<sourceDocId4>T2552D</sourceDocId4>
 	<sourceDocId5>T2554D</sourceDocId5>
-	<nearDupeDocument>ID00001162</nearDupeDocument>
 	<nearDupeDocumentForReviewer>ID00001191</nearDupeDocumentForReviewer>
 	<threadDocumentForReviewer>ID00001402</threadDocumentForReviewer>
 	<familyDocumentForReviewer>ID00001355</familyDocumentForReviewer>
@@ -112,6 +112,9 @@
 	<fieldByValue>Custodian</fieldByValue>
 	<highlightDocId>ID00001490</highlightDocId>
 	<highlightedDocsQuery>DupeCount:[1 TO 10000]</highlightedDocsQuery>
+	<ingestionQuery>B2F9_Automation_AllSources_20211130043120500</ingestionQuery>
+	<ingestionDocIdFamilyMember>ID00001156</ingestionDocIdFamilyMember>
+	<ingestionDocIdNearDupe>ID00001586</ingestionDocIdNearDupe>
 
 
 
@@ -191,6 +194,8 @@
 	<HiddenContentExcelSheet>ID00000161</HiddenContentExcelSheet>
 	<HiddenContentExcelBook>ID00000167</HiddenContentExcelBook>
 	<HiddenContentExternalLink>ID00000157</HiddenContentExternalLink>
+	<audioString1>THE THE</audioString1>
+	<audioString2>"THE THE"</audioString2>
 
 
 	<!-- Baskar Indium Audio Search to DocView MiniList - modify on 9/01/21 -->
@@ -456,6 +461,7 @@
 	<familyDocumentForReviewer>ID00003745</familyDocumentForReviewer>
 	<newNearDupeDocId>ID00005181</newNearDupeDocId>
 	<nearDupeDocId>ID00003801</nearDupeDocId>
+	<nearDupeDocument>ID00004474</nearDupeDocument>
 
 	<TermOperator>ALL</TermOperator>
 
@@ -465,4 +471,41 @@
 	<hiddenDocId>ID00000206</hiddenDocId>
 	<excelProtectedHiddenDocId>ID00000159</excelProtectedHiddenDocId>
 	<warningMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup because that would overwrite the markup work done by the other user. Please reload the document.</warningMessage>
+	
+	 <!-- Ingetion Related data Start -->
+    <Collection1KFolder>Automation_Collection1K_Tally</Collection1KFolder>
+    <FamilyFolder>Automation_20Family_20Threaded</FamilyFolder>
+    <AllSourcesFolder>Automation_AllSources</AllSourcesFolder>
+    <H1369Folder>0002_H13696_1_Latest</H1369Folder>
+    <MultiPTIFFFolder>16JanMultiPTIFF</MultiPTIFFFolder>
+    <SinglePageTIFFFolder>27Mar_SinglePageTIFF</SinglePageTIFFFolder>
+    <CJK_FrenchAudioTestDataFolder>CJK_FrenchAudioTestData</CJK_FrenchAudioTestDataFolder>
+    <EmailConcatenatedDataFolder>QA_EmailConcatenatedData_SS</EmailConcatenatedDataFolder>
+    <SSAudioSpeechFolder>SSAudioSpeech_Transcript</SSAudioSpeechFolder>
+    <GD994NativeTextForProductionFolder>GD_994_Native_Text_ForProduction</GD994NativeTextForProductionFolder>
+    <GNonsearchablePDFLoadfileFolder>GNon searchable PDF Load file</GNonsearchablePDFLoadfileFolder>
+    <HiddenPropertiesFolder>HiddenProperties_IngestionData</HiddenPropertiesFolder>
+    <UniCodeFilesFolder>UniCodeFiles</UniCodeFilesFolder>
+    <IngestionEmailDataFolder>IngestionEmailData</IngestionEmailDataFolder>
+    
+    <DATFile>RegressionAllDataset.dat</DATFile>
+    <TextFile>RegressionAllDatasetText.lst</TextFile>
+    <NativeFile>RegressionAllDatasetNatives.lst</NativeFile> 
+    <TIFFFile>RegressionAllDatasetTIFFImages.lst</TIFFFile>
+    <TIFFFile1> RegressionAllDatasetTIFFImages.OPT</TIFFFile1>
+    <TranslationFile>RegressionAllDatasetTranslation.lst</TranslationFile>
+    <PDFFile>RegressionAllDatasetPDFs.lst</PDFFile>
+    <TranscriptFile>RegressionAllDatasetTranscript.lst</TranscriptFile>
+    <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.lst</MP3File> 
+    
+   <!--    <NativeFile>RegressionAllDatasetNatives.LST</NativeFile> 
+     <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.LST</MP3File>-->
+     <DATGermanFile>RegressionAllDatasetGerman.dat</DATGermanFile>
+     <DATJapneseFile>RegressionAllDatasetJapnese.dat</DATJapneseFile>
+     <MP3GermanFile>RegressionAllDatasetTrimmedAudioMP3German.LST</MP3GermanFile>
+     <MP3JapneseFile>RegressionAllDatasetTrimmedAudioMP3Japnese.LST</MP3JapneseFile>
+      <TranscriptJapneseFile>RegressionAllDatasetTranscriptJapnese.lst</TranscriptJapneseFile>
+       <TranscriptGermanFile>RegressionAllDatasetTranscriptGerman.lst</TranscriptGermanFile>
+    
+     <!-- Ingestion Related data END -->
 </TestData>

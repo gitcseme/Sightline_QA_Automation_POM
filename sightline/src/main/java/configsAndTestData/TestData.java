@@ -98,6 +98,9 @@ public class TestData {
 	public String fieldByValue;
 	public String highlightDocId;
 	public String highlightedDocsQuery;
+	public String ingestionQuery;
+	public String ingestionDocIdFamilyMember;
+	public String ingestionDocIdNearDupe;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;
@@ -176,6 +179,8 @@ public class TestData {
 	public String DocIdWithHiddenContent;
 	public String TextHidden;
 	public String warningMessage;
+	public String audioString1;
+	public String audioString2;
 
 	//Added by arunkumar
 	public String pageRange1;
@@ -184,6 +189,7 @@ public class TestData {
 	public String pageRange4;
 	public String searchPhraseWithQuote;
 	public String keywordColor1;
+	public String multiwordText;
 	
 
 	// Added by Raghuram - Last Modified 02/02/21 
@@ -426,4 +432,36 @@ public class TestData {
 		//Added by Iyappan
 		public String hiddenDocId;
 		public String excelProtectedHiddenDocId;
+		
+		// Added by Mohan (Ingestion DataSets)
+
+		public String Collection1KFolder;
+		public String FamilyFolder;
+		public String AllSourcesFolder;
+		public String H1369Folder;
+		public String MultiPTIFFFolder;
+		public String SinglePageTIFFFolder;
+		public String CJK_FrenchAudioTestDataFolder;
+		public String EmailConcatenatedDataFolder;
+		public String SSAudioSpeechFolder;
+		public String GD994NativeTextForProductionFolder;
+		public String GNonsearchablePDFLoadfileFolder;
+		public String HiddenPropertiesFolder;
+		public String UniCodeFilesFolder;
+		public String IngestionEmailDataFolder;
+		public String DATFile;
+		public String TextFile;
+		public String NativeFile;
+		public String TIFFFile;
+		public String TIFFFile1;
+		public String TranslationFile;
+		public String PDFFile;
+		public String TranscriptFile;
+		public String MP3File;
+		public String DATGermanFile;
+		public String DATJapneseFile;
+		public String TranscriptGermanFile;
+		public String MP3GermanFile;
+		public String TranscriptJapneseFile;
+		public String MP3JapneseFile;
 }

@@ -98,8 +98,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 	/**
 	 * Author : Mohan date: 24/11/21 NA Modified date: NA Modified by:NA Description
 	 * :Verify tool tip should be displayed for each column on thread
-	 * map'RPMXCON-51358' Sprint : 6
-	 * Stabilized - done
+	 * map'RPMXCON-51358' Sprint : 6 Stabilized - done
+	 * 
 	 * @throws InterruptedException
 	 * 
 	 */
@@ -154,8 +154,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	/**
 	 * @Author: Mohan Created date: 24/11/2021 Modified date: NA Modified by: NA
 	 * @Description : Verify system doc id is displayed in near dupe child window
-	 *              RPMXCON-51257
-	 * Stabilized - done
+	 *              RPMXCON-51257 Stabilized - done
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 2)
 	public void verifySystemDocIdDisplayedInNearDupeChildWindow(String fullName, String userName, String password)
@@ -211,8 +210,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @author Vijaya.Rani date: 24/11/21 NA Modified date: NA Modified by:NA
 	 *         Description :Verify the inclusive email docs should be identified on
 	 *         thread map panel'RPMXCON-51357' Sprint : 6
-	 * @throws InterruptedException
-	 * Stabilized - done
+	 * @throws InterruptedException Stabilized - done
 	 */
 	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
 	public void VerifyInclusiveEmailDocsOnThreadMapPanel(String fullName, String userName, String password)
@@ -284,10 +282,10 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *         Description :Verify "More data exists" message should be displayed
 	 *         when more than 20 records to display on thread map'RPMXCON-51363'
 	 *         Sprint : 6
-	 * @throws InterruptedException
-	 * Stabilized - not done
+	 * @throws InterruptedException Stabilized - not done
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 4)
+	// @Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
+	// }, priority = 4)
 	public void VerifyMoreDataExistsRecordsToDisplayOnThreadMap(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51363");
@@ -456,7 +454,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              member RPMXCON-51224
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" },priority = 7)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 7)
 	public void verifyFamilyMemberTabWhenUserSelectsDocsWhicAreNotMarkedAsCodeSameAs(String fullName, String userName,
 			String password) throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51224");
@@ -522,8 +520,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 		docView = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected =Input.newNearDupeDocId;
-		String revDocToBeSelected =Input.threadDocId;
+		String docsToBeSelected = Input.newNearDupeDocId;
+		String revDocToBeSelected = Input.threadDocId;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		// Basic Search and select the pure hit count
@@ -589,7 +587,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Author: Mohan Created date: 26/11/2021 Modified date: NA Modified by: NA
 	 * @Description : To verify user can select Multiple documents in mini doc list
 	 *              and Select Action as 'Remove Code Same as this' RPMXCON-51217
-	 * stabilized - done
+	 *              stabilized - done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyWhenUserSelectsMiniDocListMulitiDocsAndPerformRemoveCodeSameAs()
@@ -680,10 +678,11 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 26/11/21 NA Modified date: NA Modified by:NA
 	 * Description : Verify Zoom in/ Zoom out is working from near dupe child
 	 * window.'RPMXCON-51256' Sprint : 6
+	 * 
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression"}, priority = 10)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 10)
 	public void verifyZoomInZoomOutForNearDupeDocuments(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -736,7 +735,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression"}, priority = 11)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 11)
 	public void verifyWhenNavigatingFromThreadMapToNearDupeTabLoadMoreDocsLinkToBeNotDisplayed(String fullName,
 			String userName, String password) throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51571");
@@ -819,8 +818,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		loginPage.logout();
 
 	}
-	
-	
+
 	/**
 	 * @Author: Mohan Created date: 29/11/2021 Modified date: NA Modified by: NA
 	 * @Description : Verify that on navigating to thread map tab from Conceptual
@@ -828,7 +826,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              RPMXCON-51572
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression"}, priority = 12)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 12)
 	public void verifyWhenNavigatingFromThreadMapToConceptualTabLoadMoreDocsLinkToBeNotDisplayed(String fullName,
 			String userName, String password) throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51572");
@@ -845,7 +843,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected =Input.threadDocId;
+		String docsToBeSelected = Input.threadDocId;
 
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 2: Searching documents based on search string and Navigate to DocView");
@@ -916,10 +914,11 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 29/11/21 NA Modified date: NA Modified by:NA
 	 * Description : Verify that on navigating to thread map tab from Family member
 	 * tab link to view more data should not be displayed.'RPMXCON-51570' Sprint : 7
+	 * 
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression"}, priority = 13)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 13)
 	public void verifyNavigatingToThreadMapTabFamilyMemberTabNotBeDisplayed(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -999,12 +998,12 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 30/11/21 NA Modified date: NA Modified by:NA
 	 * Description : Verify check mark icon should be displayed when document is
 	 * completed after selecting 'Code same as this' action' from Analytics Panel >
-	 * Near Dupe.'RPMXCON-51058' Sprint : 7
-	 *  [Near dupe]
+	 * Near Dupe.'RPMXCON-51058' Sprint : 7 [Near dupe]
+	 * 
 	 * @throws Exception
 	 * @Stabilization - not done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 14)
+	// @Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyCheckMarkIconDisplayedTheNearDupe() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51058");
@@ -1018,7 +1017,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo("Logged in as User: " + Input.rmu1FullName);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 
-		String documentToBeSelected =Input.nearDupeDocId;
+		String documentToBeSelected = Input.nearDupeDocId;
 		String revDocToBeSelected = Input.nearDupeCompletedDocId;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
@@ -1098,10 +1097,11 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description : Verify check mark icon should be displayed when document is
 	 * completed after selecting 'Code same as this' action' from Analytics Panel >
 	 * Conceptual'RPMXCON-51059' Sprint : 7
+	 * 
 	 * @Stabilization - not done
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 15)
+	// @Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyCheckMarkIconDisplayedTheConceptuallySimilar() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51059");
@@ -1195,10 +1195,11 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 1/12/21 NA Modified date: NA Modified by:NA
 	 * Description :Verify user can select 'Remove Code Same' from analytics panel
 	 * child window'RPMXCON-51232' Sprint : 7
-	 * @Stabilization - done 
+	 * 
+	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16) 
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16)
 	public void verifyUserCanSelectRemoveCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1394,10 +1395,11 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Mohan date: 03/12/2021 Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51028 To verify that after impersonation user can see remarks for
 	 * selected document
+	 * 
 	 * @Stabilization - not done
 	 */
 
-	//@Test(enabled = true, groups = { "regression" }, priority = 18) 
+	// @Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyRemarksForSelectedDocsAfterImpersonating() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1471,6 +1473,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Mohan date: 13/12/2021 Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-50973 To verify that action should be disable 'View Document'
 	 * without selecting document.
+	 * 
 	 * @Stabilization - done
 	 */
 
@@ -1505,6 +1508,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	/**
 	 * Author : Mohan date: 13/12/2021 Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51364
+	 * 
 	 * @description: To Verify coding form, metadata from parent and child window
 	 *               when document is viewed from analytics panel
 	 * @Stabilization - done
@@ -1538,8 +1542,10 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
 		baseClass.impersonateRMUtoReviewer();
 		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Step 3: View the document from analytics panel which is part of assignment");
+		docViewPage.selectDocIdInMiniDocList(Input.newNearDupeDocId);
 		docViewPage.performViewDocumentFromThreadMapTab();
 
 		baseClass.stepInfo("Step 4: Once document is loaded check the Coding Form/ metadata from respective panels");
@@ -1637,6 +1643,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 13/12/21 NA Modified date: NA Modified by:NA
 	 * Description :To verify that Project Admin cannot view the action 'Code Same
 	 * as This' in Analytics panel.'RPMXCON-50941' Sprint : 8
+	 * 
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
@@ -1693,6 +1700,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 13/12/21 NA Modified date: NA Modified by:NA
 	 * Description :To verify 'Code same as this' action without selecting document
 	 * from family member should be disable.'RPMXCON-50910' Sprint : 8
+	 * 
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
@@ -1736,11 +1744,12 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 14/12/21 NA Modified date: NA Modified by:NA
 	 * Description :To verify user will be able to see all the threaded documents in
 	 * the analytics panel of the main selected document in the Doc
-	 * view.'RPMXCON-50951' Sprint : 8
-	 * Stabilized
+	 * view.'RPMXCON-50951' Sprint : 8 Stabilized
+	 * 
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 23)
+	// @Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
+	// }, priority = 23)
 	public void verifySeeAllTheThreadedDocsInAnalyticsPanelSelectedDocInDocView(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -1777,13 +1786,13 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 	}
 
-
 	/**
 	 * Author : Vijaya.Rani date: 14/12/21 NA Modified date: NA Modified by:NA
 	 * Description :To verify when user edits the coding form of main document and
 	 * after saving selects action 'Code same as this' from family members on same
 	 * documents.'RPMXCON-50909' Sprint : 8
-	 * @Stabilization - done 
+	 * 
+	 * @Stabilization - done
 	 * @throws Exception
 	 */
 	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 24)
@@ -1816,15 +1825,14 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		driver.waitForPageToBeReady();
 		docView.performCodeSameForFamilyMembersDocuments();
-		
+
 		docView.selectDocsMiniDocListAndCodingFormSaveButton();
 
 		// logout
 		loginPage.logout();
 
 	}
-	
-	
+
 	/**
 	 * @Author: Mohan Created date: 14/12/2021 Modified date: NA Modified by: NA
 	 * @Description : To verify after impersonation document opened in default
@@ -1833,7 +1841,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              RPMXCON-50956
 	 * @Stabilization - done
 	 */
-	//@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 25)
+	// @Test(enabled = true, dataProvider = "userDetailss", groups = { "regression"
+	// }, priority = 25)
 	public void verifyCompareSimilarDocumentIsDisplayedOnceTheIconIsClicked(String roll, String userName,
 			String password, String impersonate) throws InterruptedException {
 
@@ -1903,14 +1912,15 @@ public class DocView_AnalyticsPanel_NewRegression {
 	}
 
 	/**
-	 * Author : Mohan date: 14/12/2021 Modified date: NA Modified by: NA 
+	 * Author : Mohan date: 14/12/2021 Modified date: NA Modified by: NA
+	 * 
 	 * @description: Verify check mark icon should be displayed when coding stamp
 	 *               applied after selecting 'Code same as this' action' from
 	 *               Analytics Panel > Conceptual RPMXCON-51062
 	 * @Stabilization - done
 	 */
 
-	//@Test(enabled = true, groups = { "regression" }, priority = 26)
+	// @Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyCheckMarkIconCodingStampAppliedToSelectedDocs() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1986,9 +1996,11 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * : Verify that sender of each email doc should be identified with the
 	 * designated dot marker from thread map Test CaseId: 'RPMXCON-51359' Sprint : 8
 	 * Stabilized
+	 * 
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
+	// @Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
+	// }, priority = 27)
 	public void verifyDesignatedDotMarkerInThreadMapTab(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -2033,11 +2045,12 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description :Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
 	 * preceding document is completed by selecting 'Code same as this' action from
 	 * analytics panel > conceptual.'RPMXCON-51071' Sprint : 8
+	 * 
 	 * @Stabilization - done
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 28)
+	// @Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyCompleteLastDocsAndCodeSameAsActionConceptual() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51071");
@@ -2143,11 +2156,12 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description :Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
 	 * preceding document is completed by selecting 'Code same as this' action from
 	 * analytics panel > family member.'RPMXCON-51070' Sprint : 8
+	 * 
 	 * @Stabilization - not done
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 29)
+	// @Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyCompleteLastDocsAndCodeSameAsActionFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51070");
@@ -2251,17 +2265,17 @@ public class DocView_AnalyticsPanel_NewRegression {
 		loginPage.logout();
 	}
 
-	
 	/**
 	 * Author : Vijaya.Rani date: 24/12/21 NA Modified date: NA Modified by:NA
 	 * Description :Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
 	 * preceding document is completed by selecting 'Code same as this' action from
 	 * analytics panel > Near Dupe.'RPMXCON-51072' Sprint : 8
+	 * 
 	 * @Stabilization - not done
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 30)
+	// @Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifyCompleteLastDocsAndCodeSameAsActionNearDupe() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51072");
@@ -2377,6 +2391,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description :To verify that user can view documents in ''Compare Similar
 	 * Documents',if clicks on the icon in Analytical Panel->Near
 	 * Dupes..'RPMXCON-50900' Sprint : 9
+	 * 
 	 * @Stabilization - done
 	 * @throws AWTException
 	 * @throws Exception
@@ -2425,11 +2440,12 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Description :To verify that if user navigates to doc view from the Save
 	 * search, then he can view the documents in the doc list from Doc View->Thread
 	 * Map..'RPMXCON-50875' Sprint : 9
+	 * 
 	 * @Stabilization - done
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 32)
+	// @Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyDocViewFromSaveSearchDocViewThreadMap() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50875");
@@ -2490,6 +2506,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Vijaya.Rani date: 24/12/21 NA Modified date: NA Modified by:NA
 	 * Description :To verify that if user select any document on Child Window then
 	 * same document will displayed on Doc View page.'RPMXCON-50947' Sprint : 9
+	 * 
 	 * @Stabilization - done
 	 * @throws AWTException
 	 * @throws Exception
@@ -2559,6 +2576,13 @@ public class DocView_AnalyticsPanel_NewRegression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		String folderName = "AnalyticalPanel" + Utility.dynamicNameAppender();
 
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 		// Login As RMU
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		baseClass.stepInfo("Test case Id: RPMXCON- 51133");
@@ -2570,6 +2594,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// To view the NearDupe Doc in the DocView
 		sessionSearch.ViewNearDupeDocumentsInDocView();
+		docView.selectDocIdInMiniDocList(Input.nearDupeDocument);
 		driver.waitForPageToBeReady();
 		docView.popOutAnalyticsPanel();
 		driver.waitForPageToBeReady();
@@ -2604,7 +2629,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.passedStep("Documents removed from the selected folder same folder is not displayed for documents");
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * 
 	 * @Author: Steffy Created date: NA Modified date: NA Modified by: NA
@@ -2651,30 +2676,36 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		baseClass.stepInfo("Select the document from mini doc list which has family member documents");
 		docView.selectDocIdInMiniDocList(Input.familyDocumentForReviewer);
-		
-		baseClass.stepInfo("Verify the background color of the code same docment from family member tab on mouse hover");
+
+		baseClass
+				.stepInfo("Verify the background color of the code same docment from family member tab on mouse hover");
 		docView.performCodeSameForFamilyMembersDocuments();
 		docView.getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().ScrollTo();
-		baseClass.verifyBackGroundColor(docView.getDocView_AnalyticsDocIdFamilyTabBG(docView.getDocView_Analytics_ChildWindow_FamilyTab_Istdoc().getText()), Input.bgColorOnMouseHover);
+		baseClass.verifyBackGroundColor(
+				docView.getDocView_AnalyticsDocIdFamilyTabBG(
+						docView.getDocView_Analytics_ChildWindow_FamilyTab_Istdoc().getText()),
+				Input.bgColorOnMouseHover);
 
-		baseClass.stepInfo("Verify the background color of the completed document from family member tab on mouse hover");
+		baseClass.stepInfo(
+				"Verify the background color of the completed document from family member tab on mouse hover");
 		docView.editCodingFormComplete();
 		docView.getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().ScrollTo();
-		baseClass.verifyBackGroundColor(docView.getDocView_AnalyticsDocIdFamilyTabBG(docView.getDocView_Analytics_ChildWindow_FamilyTab_Istdoc().getText()), Input.bgColorOnMouseHover);
+		baseClass.verifyBackGroundColor(
+				docView.getDocView_AnalyticsDocIdFamilyTabBG(
+						docView.getDocView_Analytics_ChildWindow_FamilyTab_Istdoc().getText()),
+				Input.bgColorOnMouseHover);
 
 		baseClass.stepInfo(
 				"Verify the background color of the viewed document on mouse hover from family member tab which is not part of mini doc list ");
 		docView.selectDocsFromFamilyTabUsingDocIdAndViewInDocview(Input.familyDocWhichIsNotInMiniDoc);
 		docView.getDocView_AnalyticsDocIdFamilyTab(Input.familyDocWhichIsNotInMiniDoc).ScrollTo();
-		baseClass.verifyBackGroundColor(docView.getDocView_AnalyticsDocIdFamilyTabBG(Input.familyDocWhichIsNotInMiniDoc),
+		baseClass.verifyBackGroundColor(
+				docView.getDocView_AnalyticsDocIdFamilyTabBG(Input.familyDocWhichIsNotInMiniDoc),
 				Input.bgColorOnMouseHover);
 
-	
 		loginPage.logout();
 	}
 
-
-	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
@@ -2696,7 +2727,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		try {
 			loginPage.quitBrowser();
 		} finally {
-			//loginPage.clearBrowserCache();
+			// loginPage.clearBrowserCache();
 		}
 
 	}

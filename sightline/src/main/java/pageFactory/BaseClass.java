@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -2888,4 +2889,146 @@ public class BaseClass {
 		}
 
 	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Converts rgb to hexa 
+	 * @param bgColor : string contains rgba
+	 * @param select : if true then rgba else rgb
+	 * @param splitTern : string contains rgb
+	 * @return hexa value 
+	 */
+	public String rgbTohexaConvertor_Optional(String bgColor, boolean select, String splitTern) {
+		try {
+			StringTokenizer st;
+			if (select) {
+				String s1 = bgColor.substring(4);
+				bgColor = s1.replace(')', ' ');
+				bgColor = s1.replace('(', ' ');
+				st = new StringTokenizer(bgColor);
+			} else {
+				splitTern = splitTern + ",";
+				st = new StringTokenizer(splitTern);
+
+			}
+			int r = Integer.parseInt(st.nextToken(",").trim());
+			int g = Integer.parseInt(st.nextToken(",").trim());
+			int b = Integer.parseInt(st.nextToken(",").trim());
+			Color c = new Color(r, g, b);
+			String hex = "#" + Integer.toHexString(c.getRGB()).substring(2).toUpperCase();
+			return hex;
+		} catch (Exception E) {
+			E.printStackTrace(pw);
+			UtilityLog.info(sw.toString());
+			return null;
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description : duplicate Tab using Robot Class
+	 */
+	public void openDuplicateTab() {
+		try {
+			Robot robot = new Robot();
+
+			// Key Press
+			robot.keyPress(KeyEvent.VK_ALT);
+			robot.keyPress(KeyEvent.VK_D);
+			robot.delay(2000);
+			robot.keyPress(KeyEvent.VK_ENTER);
+
+			// Key Release
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_D);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+
+			passedStep("Duplicate TAB is Opened Successfully");
+		} catch (Exception e) {
+			failedStep("Failed to duplicate due to following exception " + e);
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @param ExpectedMsg  : expected Error Msg
+	 * @Description : Verify Error message in German
+	 */
+	public void VerifyErrorMessageInGerman(String ExpectedMsg) {
+		waitForElement(getSuccessMsgHeader());
+		Assert.assertEquals("Fehler !", getSuccessMsgHeader().getText().toString());
+		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+		UtilityLog.info("Expected message - " + ExpectedMsg);
+		Reporter.log("Expected message - " + ExpectedMsg, true);
+	}
+	
+	/**
+	 * @author Indium Raghuram Description: verifyListSizeWithCondition
+	 *         Date:02/16/21 Modified date:N/A* Modified by:N/A
+	 * @description : method to verify list size based on condition value
+	 * @param listToCheck    - List to compare
+	 * @param condition      - Condition to check
+	 * @param passMsg        - Pass message to display in result
+	 * @param failMsg        - Fail message to display in result
+	 * @param conditionValue - Condition Value to check
+	 */
+
+	public void verifyListSizeWithCondition(ElementCollection listToCheck, String condition, String passMsg,
+			String failMsg, int conditionValue) {
+		if (condition.equalsIgnoreCase("equalsP")) {
+			if (listToCheck.size() == conditionValue) {
+				passedStep(passMsg);
+			} else {
+				failedStep(failMsg);
+			}
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description : method to add a list into set
+	 * @param datas - List of datas to be added into a Set
+	 * @return - a new Set
+	 */
+	public HashSet<String> addListIntoSet(List<String> datas) {
+		HashSet<String> hash_Set = new HashSet<String>();
+		for (String fieldNames : datas) {
+			hash_Set.add(fieldNames);
+		}
+		return hash_Set;
+	}
+	
+	
+	/**
+	 * @author @Brundha
+	 * @throws AWTException 
+	 *@Description:Method to verify downloaded csv file and its sorting order
+	 * 
+	 */
+	public void VerifyingCSVFileDownloadedAndSorted() throws IOException, InterruptedException, AWTException {
+		//Method to verify the downloaded file:
+		String fileName=GetFileName();
+		List<String> lines = new ArrayList<>();
+		String line = null;
+        List<String>Values=new ArrayList<>();
+		FileReader file = null;
+		file = new FileReader(fileName);
+
+		BufferedReader br = new BufferedReader(file);
+		while ((line = br.readLine()) != null) {
+		lines.add(line);
+		}
+		
+        System.out.println(lines.size());
+		for (int i = 1; i < lines.size()-1; i++) {
+		String value = lines.get(i);
+		String[] arrOfStr = value.split(",");
+	 
+	   System.out.println(arrOfStr[1]);
+	   Values.add(arrOfStr[1]);
+	}
+		//Method to verify the sorting order
+		 verifyOriginalSortOrder(Values,Values,"Ascending",true);
+}
+	
 }

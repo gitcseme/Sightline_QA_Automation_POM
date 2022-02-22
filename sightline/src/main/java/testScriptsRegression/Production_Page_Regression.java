@@ -3997,7 +3997,6 @@ public class Production_Page_Regression {
 	UtilityLog.info(Input.prodPath);
 	baseClass.stepInfo("RPMXCON-49059 -Production Sprint 12");
 	baseClass.stepInfo("To verify that Production Start Date should present the date when the production was started");
-	String testData1 = Input.testData1;
 	foldername = "FolderProd" + Utility.dynamicNameAppender();
 
 	// create tag and folder
@@ -4007,7 +4006,7 @@ public class Production_Page_Regression {
 	// search for folder
 	SessionSearch sessionSearch = new SessionSearch(driver);
 	sessionSearch = new SessionSearch(driver);
-	sessionSearch.basicContentSearch(testData1);
+	sessionSearch.basicContentSearch(Input.searchString5);
 	sessionSearch.bulkFolderExisting(foldername);
 
 	ProductionPage page = new ProductionPage(driver);
@@ -4199,7 +4198,150 @@ public class Production_Page_Regression {
 	tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
 	
+	/**
+	 * @author sowndarya.velraj
+	 * TESTCASE  No:RPMXCON-47990
+	 * @Description:To Verify in Generated Production DAT will always have one row for each document
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 76)
+	public void verifyDATWithFilenameForProduction() throws Exception {
+		
+	UtilityLog.info(Input.prodPath);
+	baseClass.stepInfo("RPMXCON-47990 -Production Sprint 12");
+	baseClass.stepInfo("To Verify in Generated Production DAT will always have one row for each document");
+	tagname = "Tag" + Utility.dynamicNameAppender();
+
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	// search for folder
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkTagExisting(tagname);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.getAddFieldButtonInDAT().waitAndClick(10);
 	
+	baseClass.waitForElement(page.getDAT_FieldClassification2());
+	page.getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText(Input.fldClassification);
+
+	baseClass.waitForElement(page.getDAT_SourceField2());
+	page.getDAT_SourceField2().selectFromDropdown().selectByVisibleText(Input.docFileName);
+
+	baseClass.waitForElement(page.getDAT_DATField2());
+	page.getDAT_DATField2().SendKeys(Input.docFileName + Utility.dynamicNameAppender());
+	
+	baseClass.stepInfo("Filled DAT component with file name");
+	
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingSelectDocumentUsingTags(tagname);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.navigateToTagsAndFolderPage();
+	tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+	}
+	
+	
+	/**
+	 * @author sowndarya.velraj
+	 * TESTCASE  No:RPMXCON-47984
+	 * @Description:To Verify On Productions landing page, Count of productions in the tile view should match with grid view,
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 77)
+	public void verifyProductionCountInTileAndGrid() throws Exception {
+		
+	UtilityLog.info(Input.prodPath);
+	baseClass.stepInfo("RPMXCON-47984 -Production Sprint 12");
+	baseClass.stepInfo("To Verify On Productions landing page, Count of productions in the tile view should match with grid view,");
+
+	ProductionPage page = new ProductionPage(driver);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	String tileViewCount = page.getProductionItemsTileItems().getText();
+	page.getGridView().waitAndClick(10);
+	String gridViewCount = page.gridAndTileViewProdCount().getText();
+	softAssertion.assertEquals(tileViewCount,gridViewCount);
+	softAssertion.assertAll();
+	baseClass.passedStep("Verified On Productions landing page, Count of productions in the tile view should match with grid view");
+	
+	
+	}
+	
+
+	/**
+	 * @author sowndarya.velraj
+	 * TESTCASE  No:RPMXCON-47883
+	 * @Description:To Verify DAT Section with various Options (Show Hide/Add Field/Advance Field Toggle and All Dropdown)
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 78)
+	public void verifyDATSectionWithVariousOption() throws Exception {
+		
+	UtilityLog.info(Input.prodPath);
+	baseClass.stepInfo("RPMXCON-47883 -Production Sprint 12");
+	baseClass.stepInfo("To Verify DAT Section with various Options (Show Hide/Add Field/Advance Field Toggle and All Dropdown)");
+	tagname = "Tag" + Utility.dynamicNameAppender();
+
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	// search for folder
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkTagExisting(tagname);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	
+	page.FormatTextInDAT().isDisplayed();
+	page.fieldDelimitersTextInDAT().isDisplayed();
+	page.fieldMappingtTextInDAT().isDisplayed();
+	page.dateFormatTextInDAT().isDisplayed();
+	baseClass.stepInfo(" 1>Format  2>Field Delimiters  3>Date Format  4>Field Mapping are displayed in DAT ");
+	
+	baseClass.waitForElement(page.fieldSeperatorDdInDAT());
+	page.fieldSeperatorDdInDAT().selectFromDropdown().selectByIndex(2);
+	
+	baseClass.waitForElement(page.dateFormatDdInDAT());
+	page.dateFormatDdInDAT().selectFromDropdown().selectByIndex(2);
+	baseClass.stepInfo("Selected  Format, Field Delimiters and Date Format other than default");
+
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingSelectDocumentUsingTags(tagname);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	
+	baseClass.waitTime(3);
+	String name = page.getProduction().getText().trim();
+	System.out.println(name);
+	String downloadsHome = "C:\\BatchPrintFiles\\downloads";
+	page.isFileDownloaded(downloadsHome, name);
+	
+	}
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },

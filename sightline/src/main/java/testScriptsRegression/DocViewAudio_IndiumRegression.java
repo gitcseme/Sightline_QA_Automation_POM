@@ -2687,6 +2687,239 @@ public class DocViewAudio_IndiumRegression {
 
 		loginPage.logout();
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
+	public void verifyPersistentHits_editAndComplete() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51772");
+		baseClass.stepInfo("Verify that previously saved Persistent hits displayed on the audio doc view when documents assigned to"
+				+ " same/another reviewer are completed from edit assignment.");
+		// Login as Reviewer Manager step 1 and Step 2
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		String assign = "Assignment" + Utility.dynamicNameAppender();
+		String savedSearch = "Search1" + Utility.dynamicNameAppender();
+		
+        // creating new node	
+		String nodeName = this.savedSearch.createSearchGroupAndReturn(savedSearch,Input.rmu1userName,"yes");
+		
+        // configuring and saving the audio search in credated node		
+		int pureHit = sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.saveAdvanceSearchInNode(savedSearch,nodeName);
+		
+		// selecting the saved search group step-3
+		this.savedSearch.navigateToSSPage();
+		this.savedSearch.selectNode1(nodeName);
+		this.savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		
+		// creating assignment step-4
+		assignmentPage.FinalizeAssignmentAfterBulkAssign();
+		assignmentPage.createAssignmentByBulkAssignOperation(assign, Input.codeFormName);
+		
+		// adding Reviewer and distributing the documents to reviewer step-5
+		assignmentPage.editAssignment(assign);
+		assignmentPage.add2ReviewerAndDistribute();	
+		
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logedout as  Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		
+		// navigating from Dashboard to DocView step-6
+		baseClass.waitForElement(assignmentPage.dashBoardPageTitle());
+		assignmentPage.assgnInDashBoardPg(assign).waitAndClick(10);
+				
+		// verifying the Persistent Hits  Step-7
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		loginPage.logout();		
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully logged in as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		// completing the Documents in the assignement step-8
+		assignmentPage.editAssignment(assign);
+		assignmentPage.completeDocs(Input.rev1userName);
+		
+		// verifying the Persistent Hits as RMU Step-9
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.selectAssignmentToViewinDocView(assign);
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		baseClass.stepInfo("Previously saved Persistent hits  displayed on "
+				+ "the doc view when documents are completed from edit assignment.   ");
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA Test Case
+	 *         Id:RPMXCON-46922 Description : Verify when audio document present in
+	 *         two different save searches with common term, then on navigating to
+	 *         doc view with selection of search group it should not display
+	 *         repetitive search term on persistent hits panel Sprint 12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	public void audioMulti() throws InterruptedException, ParseException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+		String commonDocName = "";
+		Set<String> hash_Set = new HashSet<String>();
+		List<String> docIDlist = new ArrayList<>();
+		List<String> docIDlistT = new ArrayList<>();
+		String audioSearchInput = Input.audioSearch;
+		String audioSearchInput1 = Input.audioSearchString1;
+		String[] stringDatas = { audioSearchInput, audioSearchInput1 };
+		String SearchName = "SearchName" + Utility.dynamicNameAppender();
+		String SearchName1 = "SearchName" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case id :RPMXCON-46922 Sprint 12");
+		baseClass.stepInfo(
+				"Verify when audio document present in two different save searches with common term, then on navigating to doc view with selection of search group it should not display repetitive search term on persistent hits panel");
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as : " + Input.rmu1FullName);
+
+		// Perform create node - Search - SaveSearch in nodes
+		String nodeName = saveSearch.createSearchGroupAndReturn("", Input.rmu1FullName, "No");
+
+		// Audio Search
+		sessionSearch.audioSearch(audioSearchInput, Input.language);
+		sessionSearch.saveSearchInNewNode(SearchName, nodeName);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		hash_Set = baseClass.addListIntoSet(docIDlist);
+		baseClass.selectproject();
+
+		// Audio Search
+		sessionSearch.audioSearch(audioSearchInput1, Input.language);
+		sessionSearch.saveSearchInNewNode(SearchName1, nodeName);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+
+		// Main method
+		docIDlistT = miniDocListpage.getDocListDatas();
+		baseClass.stepInfo("Select a document present in both the searches ");
+		commonDocName = docViewPage.pickFirstDuplicate(docIDlistT, hash_Set);
+
+		// Launch DocVia via Saved Search
+		saveSearch.navigateToSSPage();
+		saveSearch.selectNode1(nodeName);
+		driver.waitForPageToBeReady();
+		saveSearch.getToDocView().waitAndClick(5);
+
+		//Persistant data to check
+		miniDocListpage.getDocListDatas();
+		miniDocListpage.getDociD(commonDocName).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		String docID = docViewPage.getDocView_CurrentDocId().getText();
+		baseClass.stepInfo("Current viewed document : " + docID);
+		baseClass.textCompareEquals(commonDocName, docID,
+				"User on audio doc view and selected document is same as on audio doc view", "Audio DocView failed");
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		// verifySearchTermlist
+		docViewPage.verifySearchTermlist(stringDatas, "equalsP", 1,
+				"earch term not been displayed repetitively on persistent hit panel",
+				"search term displayed repetitively on persistent hit panel");
+
+		// Delete created Node
+		baseClass.stepInfo("Initiating delete nodes");
+		saveSearch.deleteNode(Input.mySavedSearch, nodeName);
+
+		loginPage.logout();
+
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	public void verifyPersistentHits_unCompleteDocs() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-46921");
+		baseClass.stepInfo("Verify that previously saved Persistent hits should be displayed on the audio doc view "
+				+ "when documents are uncompleted from edit assignment. ");
+		
+		// Login as Reviewer Manager 
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		String assign = "Assignment" + Utility.dynamicNameAppender();
+		String savedSearch = "Search1" + Utility.dynamicNameAppender();
+		
+        // creating new node	
+		String nodeName = this.savedSearch.createSearchGroupAndReturn(savedSearch,Input.rmu1userName,"yes");
+		
+        // configuring and saving the audio search in credated node		
+		int pureHit = sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.saveAdvanceSearchInNode(savedSearch,nodeName);
+		
+		// selecting the saved search group 
+		this.savedSearch.navigateToSSPage();
+		this.savedSearch.selectNode1(nodeName);
+		this.savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		
+		// creating assignment 
+		assignmentPage.FinalizeAssignmentAfterBulkAssign();
+		assignmentPage.createAssignmentByBulkAssignOperation(assign, Input.codeFormName);
+		
+		// adding Reviewer and distributing the documents to reviewer 
+		assignmentPage.editAssignment(assign);
+		assignmentPage.add2ReviewerAndDistribute();	
+		
+		// completing the Documents in the assignement 
+		assignmentPage.editAssignmentUsingPaginationConcept(assign);
+		assignmentPage.completeDocs(Input.rev1userName);
+				
+		// verifying the Persistent Hits as RMU 
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.selectAssignmentToViewinDocView(assign);
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		baseClass.stepInfo("Previously saved Persistent hits  displayed on "
+						+ "the doc view when documents are completed from edit assignment.");
+		
+		// Un-completing the Documents in the assignement 
+		assignmentPage.editAssignmentUsingPaginationConcept(assign);
+		assignmentPage.UnCompleteDocs(Input.rmu1userName);
+		
+		//// verifying the Persistent Hits as RMU
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.selectAssignmentToViewinDocView(assign);
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+	
+		assignmentPage.deleteAssgnmntUsingPagination(assign);
+		// logout
+		loginPage.logout();
+	}
 
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {

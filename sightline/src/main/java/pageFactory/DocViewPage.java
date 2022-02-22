@@ -1495,7 +1495,12 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//span[text()='Static Text']");
 	}
 
-	// Added by Mohan
+	// 
+  
+	
+	public Element getDocView_Analytics_NearDupeViewAllDocsBtn() {
+		return driver.FindElementById("btnShowAllNearDupe");
+	}
 	public Element get_textHighlightedYellowColor() {
 		return driver.FindElementByCssSelector("#ig0level0surface1 > path:nth-child(39)");
 	}
@@ -1975,6 +1980,10 @@ public class DocViewPage {
 	}
 
 	// Added by Raghuram
+	public ElementCollection getSearchTermList(String searchString) {
+		return driver.FindElementsByXPath("//p[contains(text(),' \"" + searchString + "\" - ')]");
+	}
+
 	public ElementCollection getAudioRedactionTableHeader() {
 		return driver.FindElementsByXPath("//div[@id='audioGrid_wrapper']//div[@class='dataTables_scrollHead']//th");
 	}
@@ -2102,6 +2111,9 @@ public class DocViewPage {
 	}
 
 	public Element getCodingFormTag(int i) {
+		return driver.FindElementByXPath("//label[@id='l_it_" + i + "']/input[@disabled='disabled']");
+	}
+	public Element getCodingFormTagInPreview(int i) {
 		return driver.FindElementByXPath("//label[@id='l_it_" + i + "']/input[@disabled='']");
 	}
 
@@ -2426,7 +2438,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocumentsCommentViewCoding() {
-		return driver.FindElementById("//div[@id='viewCodingStamp']//textarea[@id='1_textarea']");
+		return driver.FindElementByXPath("//div[@id='viewCodingStamp']//textarea[@id='1_textarea']");
 	}
 
 	public Element getDocListAllDocCheckBox() {
@@ -2773,6 +2785,9 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']//..//..//td[2][text()='" + text + "']");
 	}
+	public Element getDocViewAnaliticalFamilTab() {
+		return driver.FindElementByXPath("//li[@id='liDocumentFamilyMember']");
+		}
 
 	// Added by Gopinath - 17/01/2022
 	public ElementCollection getRemarkHighlightedText() {
@@ -3165,6 +3180,7 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//span[text()='Edit Coding Stamp']");
 	}
 
+
 	//Added by Gopinath - 17/02/2022
 	public Element getMiniDocConfigSelectieldRomoveIcon(int rowNum) {
 		return driver.FindElementByXPath("//ul[@id='sortable2PickColumns']//li["+rowNum+"]//i[@class='fa fa-times-circle']");
@@ -3184,6 +3200,7 @@ public class DocViewPage {
 	public ElementCollection getDocIdsFormThreadMap() {
 		return driver.FindElementsByXPath("//table[@id='dtDocumentThreadedDocuments']//thead//tr//th[contains(text(),'ID')]");
 	}
+
 	
 	
 	
@@ -3212,6 +3229,37 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//div[@id='divNearDupeDocViewer']/descendant::div[@class='igViewerScroller']");
 		
 	}
+
+
+	public Element getStampOverWriteMessageLast() {
+		return driver.FindElementByXPath(
+				"(//p[text()[normalize-space()='The Stamp you selected is already in use. Do you want to overwrite this Stamp with the new selections?']])[last()]");
+	}
+
+	//Added by Vijaya.Rani
+	public ElementCollection getDocView_Analytics_ThreadedMapParticipantDocs() {
+		return driver
+				.FindElementsByXPath("//tbody[@id='threadedEmailRow']//tr");
+	}
+	
+	//Added by arunkumar
+	public Element searchTextBox() {
+		return driver.FindElementById("sodTextBox");
+	}
+	
+	public Element searchIcon() {
+		return driver.FindElementByXPath("//*[@class='searchIcon']");
+	}
+	
+	public Element closeIcon() {
+		return driver.FindElementByXPath("//*[@class='close']");
+	}
+	
+	public Element searchResult() {
+		return driver.FindElementByXPath("//*[@class='count']");
+	}
+
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -13260,7 +13308,7 @@ public class DocViewPage {
 		base.waitForElement(getDociD(docId));
 		getDociD(docId).waitAndClick(5);
 		driver.waitForPageToBeReady();
-		if (getDocument_CommentsTextBox().isElementPresent() == false) {
+		if (getDocument_CommentsTextBox().isElementAvailable(5) == false) {
 			base.stepInfo("Search done via outside of an assignment");
 			base.passedStep("Coding form values are not same when different coding form is applied");
 
@@ -14890,13 +14938,14 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			reusableDocView.editCodingForm(comment);
 			base.waitForElement(getCompleteDocBtn());
-			getCompleteDocBtn().waitAndClick(5);
+			getCompleteDocBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
 			System.out.println("Completed Document : " + name);
 			base.stepInfo("Completed Document : " + name);
 			completedDoc.add(name);
-			driver.waitForPageToBeReady();
-		}
-		return completedDoc;
+
+			}
+			return completedDoc;
 	}
 
 	/**
@@ -14969,9 +15018,10 @@ public class DocViewPage {
 		base.waitForElementCollection(getMiniDocListDocIdText());
 		driver.waitForPageToBeReady();
 		for (String docId : completedDoc) {
-			getDociD(docId).ScrollTo();
-			getDociD(docId).waitAndClick(5);
-			softAssertion.assertTrue(getUnCompleteButton().Displayed());
+		getDociD(docId).ScrollTo();
+		getDociD(docId).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getUnCompleteButton().Displayed());
 		}
 		base.passedStep("Uncomplete button displayed for completed document");
 		driver.waitForPageToBeReady();
@@ -16380,20 +16430,22 @@ public class DocViewPage {
 	public void unCompleteButtonToCompleteBtn() {
 		driver.waitForPageToBeReady();
 		for (String docId : completedDoc) {
-			base.waitForElement(getDociD(docId));
-			getDociD(docId).waitAndClick(5);
-			base.waitForElement(getUnCompleteButton());
-			getUnCompleteButton().waitAndClick(5);
-			softAssertion.assertTrue(getCompleteDocBtn().isDisplayed());
+		base.waitForElement(getDociD(docId));
+		getDociD(docId).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getUnCompleteButton());
+		getUnCompleteButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(getCompleteDocBtn().Displayed());
 		}
 		driver.waitForPageToBeReady();
 		if (getverifyCodeSameAsLast().isElementAvailable(5)) {
-			base.failedStep("Tick mark icon not displayed");
+		base.failedStep("Tick mark icon not displayed");
 		} else {
-			base.passedStep("Tick mark removed for document after clicking the uncomplete button");
+		base.passedStep("Tick mark removed for document after clicking the uncomplete button");
 		}
 		softAssertion.assertAll();
-	}
+		}
 
 	/**
 	 * @author Indium-Baskar
@@ -16743,26 +16795,23 @@ public class DocViewPage {
 	 * @author Aathith.Senthilkumar
 	 */
 	public void performCodeSameForFamilyMembersDocumentsReviewer() throws InterruptedException {
-
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocFileType());
-		getDocFileType().waitAndClick(5);
-		// driver.scrollingToBottomofAPage();
-		base.waitForElement(getDocView_Analytics_FamilyTab());
-		// driver.scrollingToElementofAPage(getDocView_Analytics_FamilyTab());
-		// getDocView_Analytics_FamilyTab().ScrollTo();
-		getDocView_Analytics_FamilyTab().waitAndClick(10);
-
+		getDocFileType().waitAndClick(15);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocViewAnaliticalFamilTab());
+		//driver.scrollingToElementofAPage(getDocViewAnaliticalFamilTab());
+		getDocViewAnaliticalFamilTab().ScrollTo();
+		getDocViewAnaliticalFamilTab().waitAndClick(15);
 		base.waitForElement(getDocView_Analytics_ChildWindow_FamilyTab_doc(2));
-		getDocView_Analytics_ChildWindow_FamilyTab_doc(2).waitAndClick(10);
-
+		getDocView_Analytics_ChildWindow_FamilyTab_doc(2).ScrollTo();
+		getDocView_Analytics_ChildWindow_FamilyTab_doc(2).waitAndClick(15);
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
-
 		getDocView_Analytics_Family_Member_CodeSameAs().waitAndClick(15);
-
 		base.VerifySuccessMessage("Code same performed successfully.");
-
-	}
+		}
+	
 
 	/**
 	 * @author Aathith.Senthilkumar
@@ -18712,6 +18761,7 @@ public class DocViewPage {
 	public void editCodingFormScrollComplete() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		getClickDocviewID(3).waitAndClick(5);
+		String prnDoc=getVerifyPrincipalDocument().getText();
 		base.waitForElement(getResponsiveCheked());
 		getResponsiveCheked().waitAndClick(5);
 		base.waitForElement(getNonPrivilegeRadio());
@@ -18721,24 +18771,25 @@ public class DocViewPage {
 		StringBuilder sb = new StringBuilder(400);
 		Random random = new Random();
 		for (int i = 0; i < 500; i++) {
-			char c = chars[random.nextInt(chars.length)];
-			sb.append(c);
+		char c = chars[random.nextInt(chars.length)];
+		sb.append(c);
 		}
 		String output = sb.toString();
 		getDocument_CommentsTextBox().SendKeys(output);
 		completeButton();
 		base.VerifySuccessMessage("Document completed successfully");
 		driver.waitForPageToBeReady();
+		getDociD(prnDoc).waitAndClick(5);
+		driver.waitForPageToBeReady();
 		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
 		boolean flag = (boolean) jse
-				.executeScript("return document.querySelector(\"textarea[id='1_textarea']\").scrollHeight>"
-						+ "document.querySelector(\"textarea[id='1_textarea']\").clientHeight;");
+		.executeScript("return document.querySelector(\"textarea[id='1_textarea']\").scrollHeight>"
+		+ "document.querySelector(\"textarea[id='1_textarea']\").clientHeight;");
 		System.out.println(flag);
 		softAssertion.assertTrue(flag);
 		softAssertion.assertAll();
 		base.passedStep("Scrolling displayed for comment when large text entered");
 	}
-
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -19064,11 +19115,6 @@ public class DocViewPage {
 		String actual = getDocView_CurrentDocId().getText();
 		softAssertion.assertEquals(expect, actual);
 		base.stepInfo(" selected document successfully displayed in parent window");
-		reusableDocView.closeWindow(1);
-		reusableDocView.switchToNewWindow(1);
-		driver.Navigate().refresh();
-		driver.switchTo().alert().accept();
-		driver.waitForPageToBeReady();
 	}
 
 	/**
@@ -21054,10 +21100,12 @@ public class DocViewPage {
 
 	/*
 	 * @author Jayanthi.ganesan
-	 * 
-	 * @param iterate
+	 *         This method will completed the documents distributed to users and verify
+	 *          whether check mark icon displayed for all docs completed
+	 * @param iterate(no of docs to be completed
+	 * @return return the Doc Ids of completed documents
 	 */
-	public void CompleteTheDocumentInMiniDocList(int iterate) {
+	public List<String> CompleteTheDocumentInMiniDocList(int iterate) {
 		List<WebElement> DocumenInMiniDocList = getDocumetCountMiniDocList().FindWebElements();
 
 		for (int i = 0; i < iterate; i++) {
@@ -21074,6 +21122,8 @@ public class DocViewPage {
 		softAssertion.assertEquals(iterate, getCheckMarkIcons().size());
 		softAssertion.assertAll();
 		base.passedStep("No of Checkmark icon displayed matches with no of completed document");
+		List<String> DocID = base.availableListofElements(DocIdsOfCompletedDocuments());
+		return DocID;
 	}
 
 	/**
@@ -25247,6 +25297,36 @@ public class DocViewPage {
 			base.passedStep("Work product terms are not displaying on the persistent panel");
 		}
 	}
+	public ElementCollection DocIdsOfCompletedDocuments() {
+		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']//../following-sibling::td[contains(text(),'ID')]");
+	}
+
+
+	
+
+	/**
+	 * This method will un complete the completed docs for given doc id's and 
+	 * verify whether check mark icon disappeared for all the un completed docs
+	 * @author Jayanthi.ganesan
+	 * @param DocID (list of DocIDs which we arae going to uncomplete )
+	 * @throws InterruptedException
+	 */
+	
+	public void UncompleteTheCompletedDocsandVerifyCheckMarkIcon(List<String>DocID) throws InterruptedException {
+		for(int i=0;i<DocID.size();i++) {
+			getMiniDocListText(DocID.get(i)).waitAndClick(10);
+			getUnCompleteButton().waitAndClick(10);
+			base.VerifySuccessMessageB("Document uncompleted successfully");
+
+			boolean flag = getDocViewMiniDocIdCheckBoxCircle(DocID.get(i)).isDisplayed();
+			if(flag==false) {
+				base.passedStep("The Document with '"+DocID.get(i)+"' is UnCompleted Successfully and Check  Mark icon is Disappeared");
+			}else {
+				base.failedMessage("The check Mark icon is still there even after Uncompleting the document");
+			}
+
+		}
+	}
 
 	/**
 	 * @author Vijaya.Rani date: 16/02/2022 Modified date:N/A
@@ -25282,8 +25362,124 @@ public class DocViewPage {
 		System.out.println(headerVlaueAfterConfig);
 		base.passedStep("Configure MiniDocliast Selected Fields is Display Successfully");
 
+
 	}
 	
+	/**
+	 * @author Arunkumar
+	 * @Description: This method used to verify whether the download  document is in pdf format
+	 * 
+	 */
+	public void verifyDocumentDownloadInPdfFormat() {
+		
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+
+		String currentDocId = getDocView_CurrentDocId().getText();
+		System.out.println(currentDocId);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.printIcon().Visible() && docViewRedact.printIcon().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.printIcon().Click();;
+		base.VerifySuccessMessage(
+				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
+		base.stepInfo("Success message has been verified");
+
+		base.waitForElement(docViewRedact.bullhornIconRedColour());
+		if (docViewRedact.bullhornIconRedColour().isDisplayed()) {
+			docViewRedact.bullhornIconRedColour().waitAndClick(10);
+		} else {
+
+			docViewRedact.bullhornIcon().waitAndClick(5);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.firstTaskInList().Visible() && docViewRedact.firstTaskInList().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.firstTaskInList().waitAndClick(10);
+		
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		String CurrentPageURL = driver.getUrl();
+		if(CurrentPageURL.contains(currentDocId +".pdf")) {
+			base.passedStep("Document which required to download is in DocID.pdf format");
+		}
+		else {
+			base.failedStep("Document which required to download is not in DocID.pdf format");
+		}
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		
+	}
+
+	
+	/**
+	 * @author Raghuram.A
+	 * @description : To verify Search term List
+	 * @param datas          - search term datas to verify
+	 * @param condition      - '<' or '=' or '>'
+	 * @param conditionValue - limit to check
+	 * @param passMsg        - "Pass Message"
+	 * @param failMsg        - "Fail Message"
+	 */
+	public void verifySearchTermlist(String[] datas, String condition, int conditionValue, String passMsg,
+			String failMsg) {
+		for (String dataString : datas) {
+			base.stepInfo("Verify Search term : " + dataString);
+			base.verifyListSizeWithCondition(getSearchTermList(dataString.toUpperCase()), condition, passMsg, failMsg,
+					conditionValue);
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description : to pick first duplicate from list
+	 * @param docIDlistT - List to compare
+	 * @param hash_Set   - Set used to check common data
+	 * @return - firsrCommonDocName
+	 */
+	public String pickFirstDuplicate(List<String> docIDlistT, Set<String> hash_Set) {
+		String commonDocName = "";
+		for (String fieldNames : docIDlistT) {
+			commonDocName = fieldNames;
+			if (!hash_Set.add(fieldNames)) {
+				break;
+			}
+		}
+		return commonDocName;
+	}
+
+
+
+	
+	/**
+	 * @author Mohan 16/11/22 NA Modified date: NA Modified by:NA
+	 * @description To verify conceptual tab having more than 20 docs
+	 */
+	public void verifyConceptualTabWithMoreDocs() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		
+		base.waitForElement(getDocView_Analytics_liDocumentConceptualSimilarab());
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_ConceptViewAllDocsBtn());
+		getDocView_Analytics_ConceptViewAllDocsBtn().waitAndClick(5);
+		base.passedStep(" 'View All Documents' button is enable in the Conceptual tab");
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocView_Analytics_Concept_Docs());
+		base.passedStep("When documents are more than 20 then 'View All Documents' is enable from Conceptually Similar tab:" + getDocView_Analytics_Concept_Docs().size()
+				+ "which is more than 20 docs");
+	}
+	
+
 	
 	/**
 	 * @author Gopinath 
@@ -25411,10 +25607,6 @@ public class DocViewPage {
 		}
 	}
 	
-	
-	
-	
-	
 	/**
 	 * @author Gopinath
 	 * @Description method to get the count of pages in document in docView panal
@@ -25540,6 +25732,122 @@ public class DocViewPage {
 			base.failedStep("Near dupe is not loaded on comparison window");
 		}
 		reusableDocView.childWindowToParentWindowSwitching(parentWindow);
+	
+
+	/**
+	 * @author Mohan 16/11/22 NA Modified date: NA Modified by:NA
+	 * @description To verify NearDupe tab having more than 20 docs
+	 */
+	public void verifyNearDupeTabWithMoreDocs() throws InterruptedException {
+		driver.waitForPageToBeReady();
 		
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_NearDupeViewAllDocsBtn());
+		getDocView_Analytics_NearDupeViewAllDocsBtn().waitAndClick(5);
+		base.passedStep(" 'View All Documents' button is enable in the NearDupe tab");
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocView_Analytics_NearDupes_Docs());
+		base.passedStep("When documents are more than 20 then 'View All Documents' is enable from NearDupe tab:" + getDocView_Analytics_NearDupes_Docs().size()
+				+ "which is more than 20 docs");
+	}
+	
+	/**
+	 * @author Vijaya.Rani 18/02/22 NA Modified date: NA Modified by:NA
+	 * @description To verify thread docs more than 20 emails
+	 */
+	public void selectDocsFromMiniDocsListChechThreadMapEmails() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+		
+		base.waitForElementCollection(getDocView_Analytics_ThreadedDocs());
+
+		base.passedStep("The Threaed Documents having Columns are : " + getDocView_Analytics_ThreadedDocs().size()
+				+ " docs");
+		
+		base.waitForElementCollection(getDocView_Analytics_ThreadedMapParticipantDocs());
+		
+		base.passedStep("The Threaed Documents having Row are : " + getDocView_Analytics_ThreadedMapParticipantDocs().size()
+				+ "docs");
+		
+	}
+	
+	/**
+	 * @author Arunkumar
+	 * @Description: This method used to verify whether the multiword text is considered as phrase and highlighting
+	 * 
+	 */
+	public void verifyMultiwordTextHighlightOnDocview(String multiwordText) {
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getDocView_SearchButton().Visible() && getDocView_SearchButton().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getDocView_SearchButton());
+		getDocView_SearchButton().Click();
+		if(!getDocView_SearchButton().isDisplayed()  && searchTextBox().isDisplayed() && closeIcon().isDisplayed()) {
+			base.passedStep("After clicking magnifying icon it is replaced by search box text field and X presentation");
+		}
+		else {
+			base.failedStep("After clicking magnifying icon it is not replaced by search box text field and X presentation");
+		}
+		base.waitForElement(searchTextBox());
+		searchTextBox().Click();
+		searchTextBox().SendKeys(multiwordText);
+		searchIcon().Click();		
+		String searchResult =searchResult().getText();
+		base.stepInfo("Highlighted multiword text search result:"+searchResult);
+		if(searchResult.contains("1 of")) {
+			base.passedStep("Multi word text considered as phrase and highlighted");
+		}
+		else {
+			base.failedStep("Multi word text are not highlighted");
+		}
+		
+	}
+
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description: To verify tags of coding form name in docview page
+	 */
+	public void verifyTagsAreDisabledInPreviewBox(int objectNo) {
+		// base.waitForElement(getCodingFormTag(objectNo));
+		driver.waitForPageToBeReady();
+		if (getCodingFormTagInPreview(objectNo).isElementAvailable(5) == true) {
+			base.passedStep("The added tags are checked and disabled");
+		} else {
+			base.failedStep("The added tags are not checked and disabled");
+		}
+	}
+	
+	/**
+	 * @author Krishna 16/02/22 NA Modified date: NA Modified by:NA
+	 * @description to select docs and remove code as same in child window
+	 */
+	public void selectDocsFromMiniDocsAndRemoveCodeAsSameInChildWindow() {
+
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		for (int i = 1; i <= 2; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+		}
+
+		base.waitForElement(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(10);
+		base.waitForElement(getDocView__ChildWindow_Mini_RemoveCodeSameAs());
+		getDocView__ChildWindow_Mini_RemoveCodeSameAs().waitAndClick(10);
+		base.passedStep("Expected message : Code Same has been successfully removed");
+		driver.waitForPageToBeReady();
+		if (geDocView_MiniList_CodeSameAsIcon().isElementAvailable(1)) {
+			base.failedStep("CodeSameAs icon is displayed for the selected docs in child window");
+		} else {
+			base.passedStep("CodeSameAs icon is not displayed for the selected docs in child window");
+
+		}
+
 	}
 }

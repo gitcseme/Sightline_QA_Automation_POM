@@ -5234,6 +5234,95 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Vijaya.Rani date: 18/02/2022 Modified date: NA Modified by: NA
+	 * Description :Verify to ensure that multiple terms submitted, one with a space
+	 * and other without are also handled. 'RPMXCON-51613' Sprint-12
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 78)
+	public void verifyMultipleTermsSubmittedAndHandled() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51613  sprint 12");
+		SessionSearch search = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo(
+				"Verify to ensure that multiple terms submitted, one with a space and other without are also handled");
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		// First audio Search
+		search.audioSearch(Input.audioString1, Input.language);
+		String firstStringCount = search.getPureHitsCount().getText();
+		System.out.println(firstStringCount);
+		baseClass.stepInfo("First String persistent hit count is : " + firstStringCount);
+		loginPage.logout();
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		// second audio search
+		search.audioSearch(Input.audioString2, Input.language);
+		String secondStringCount = search.getPureHitsCount().getText();
+		System.out.println(secondStringCount);
+		baseClass.stepInfo("Second String persistent hit count is : " + secondStringCount);
+
+		softAssertion.assertEquals(firstStringCount, secondStringCount);
+		softAssertion.assertAll();
+		baseClass.passedStep("persistent hit count is matched successfully");
+	}
+
+	/**
+	 * Author :Vijaya.Rani date: 18/02/2022 Modified date: NA Modified by: NA
+	 * Description :Verify- Docview for threaded map with 25 emails, 50
+	 * participants. 'RPMXCON-51638' Sprint-12
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	public void verifyDocViewThreadMapEmailsParticipants() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51638  sprint 12");
+		SessionSearch search = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		docView = new DocViewPage(driver);
+
+		baseClass.stepInfo("Verify- Docview for threaded map with 25 emails, 50 participants");
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and go to DocView");
+		search.basicContentSearch(Input.ThreadQuery);
+		search.ViewInDocView();
+
+		// size of emails and participant before clicking the More data btn
+		docView.selectDocsFromMiniDocsListChechThreadMapEmails();
+		int beforeEmailCount= docView.getDocView_Analytics_ThreadedDocs().size();
+		int beforePartcipantCount=docView.getDocView_Analytics_ThreadedMapParticipantDocs().size();
+
+		baseClass.waitForElement(docView.getDocView_Analytics_LoadMoreButton());
+		docView.getDocView_Analytics_LoadMoreButton().waitAndClick(10);
+		baseClass.stepInfo("More data exists than displayed all data link is clicked successfully");
+
+		// size of emails and participant After clicking the More data btn
+		docView.selectDocsFromMiniDocsListChechThreadMapEmails();
+		int afterEmailCount= docView.getDocView_Analytics_ThreadedDocs().size();
+		int afterPartcipantCount=docView.getDocView_Analytics_ThreadedMapParticipantDocs().size();
+		
+		softAssertion.assertNotEquals(beforeEmailCount, afterEmailCount);
+		softAssertion.assertAll();
+		baseClass.passedStep("After Click Read More Button the Eamils Are increased successfully" );
+		
+		softAssertion.assertNotEquals(beforePartcipantCount, afterPartcipantCount);
+		softAssertion.assertAll();
+		baseClass.passedStep("After Click Read More Button the Partcipant Are increased successfully" );
+
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
