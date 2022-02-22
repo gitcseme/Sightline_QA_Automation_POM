@@ -231,7 +231,17 @@ public class DocExplorerPage {
 	public Element getDocExplorerPageHeader() {
 		return driver.FindElementByXPath("//div[@id='leftPane']/descendant::h1[contains(text(),'Doc Explorer')]");
 	}
-
+	
+	//Added by Gopinath - 21/02/2022
+	public Element getFolderToolTip() {
+		return driver.FindElementByXPath("//div[@class='popover fade top in']/descendant::h3/following-sibling::div");
+	}
+	public Element getfolderFromTreeByName(String folderName) {
+		return driver.FindElementByXPath("//ul[@class='jstree-children']/li/i/following-sibling::a[text()='"+folderName+"']");
+	}
+	public ElementCollection getFolderOfMoreCharacters() {
+		return driver.FindElementsByXPath("//div[@id='divNodeTree']//ul//ul//li//a");
+	}
 	
     public DocExplorerPage(Driver driver){
 
@@ -1792,7 +1802,7 @@ public class DocExplorerPage {
 	/**
 	 * @author Gopinath
 	 * @Description:method to verify doc explorer page header is displayed.
-	 */
+	 */ 
 	public void verifyDocExplorerPageHeader() {
 		try {
 			bc.waitForElement(getDocExplorerPageHeader());
@@ -1807,6 +1817,49 @@ public class DocExplorerPage {
 			bc.failedStep("Exception occured while verify doc explorer page header is displayed." + e.getMessage());
 		}
 
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description:methoad to verify long folder name in tooltip.
+	 * @param folderName(name of the folder to verify in tooltip)
+	 */
+	public void verifyFolderName() {
+		try {
+			driver.waitForPageToBeReady();
+			bc.waitTime(3);
+			bc.waitForElementCollection(getFolderOfMoreCharacters());
+			List<WebElement> folders = getFolderOfMoreCharacters().FindWebElements();
+			for(int i =0;i<folders.size();i++) {
+			String foldername = folders.get(i).getText();
+				if(foldername.length()>18) {
+					Actions ac= new Actions(driver.getWebDriver());
+					ac.moveToElement(folders.get(i)).perform();
+					ac.moveByOffset(50,50).perform();
+					ac.moveToElement(folders.get(i)).perform();
+					bc.passedStep("after mouse hover to the folder full name "+foldername+" is displayed in tool tip");
+					if(getFolderToolTip().isDisplayed()) {
+						String folderNameInToolTip = getFolderToolTip().getText();
+						System.out.println(folderNameInToolTip);
+						if(foldername.equals(folderNameInToolTip)) {
+							bc.passedStep("after mouse hover to the folder full name "+folderNameInToolTip+" is displayed in tool tip");
+						}else {
+							bc.failedStep("folder name is "+folderNameInToolTip+" not displayed in tool tip");
+						}
+					}else {
+						bc.failedStep("folder tool tip is not displayed");
+					}
+					
+					break;
+				}else if(i==folders.size()-1) {
+					bc.failedStep("folder name is not displayed in tool tip for full name with long name");
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while verify long folder name in tooltip." + e.getMessage());
+		}
+		
 	}
 	
  }
