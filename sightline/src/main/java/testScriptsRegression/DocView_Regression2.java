@@ -4320,6 +4320,26 @@ public class DocView_Regression2 {
 		docView.verifyMultiwordTextHighlightOnDocview(Input.multiwordText);
 	}
 	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-47230
+	 * @throws Exception 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 64)
+	public void verifyDocViewScreenNavigationFromBasicSearch(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		loginPage.loginToSightLine(userName,password);
+		baseClass.stepInfo("Test case Id: RPMXCON-47230");
+		baseClass.stepInfo("Shared Steps: Navigating to DocView Screen through Basic Search");
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Navigated to docView");
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Navigated to DocView page from basic search successfully");
+		
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
