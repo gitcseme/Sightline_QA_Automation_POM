@@ -214,38 +214,31 @@
 	<docHighlightColor>#CDD9E1</docHighlightColor>
 	<sortDataBy>DocID</sortDataBy>
 	<sortType>Ascending</sortType>
-	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads
-	</fileDownloadLocation>
+	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads</fileDownloadLocation>
 	<completedWithErrColorCodeBR>#F88C00</completedWithErrColorCodeBR>
 	<shareSearchPA>Shared With Project Administrator</shareSearchPA>
-	<shareSearchDefaultSG>Shared with Default Security Group
-	</shareSearchDefaultSG>
+	<shareSearchDefaultSG>Shared with Default Security Group</shareSearchDefaultSG>
 	<mySavedSearch>My Saved Search</mySavedSearch>
 	<zeroPureHitString>#$%^</zeroPureHitString>
-	<invalidBatchFileNewLocation>\Misc\InvalidBatchFiles\
-	</invalidBatchFileNewLocation>
+	<invalidBatchFileNewLocation>\Misc\InvalidBatchFiles\</invalidBatchFileNewLocation>
 	<xlsBatchFile>Invalid_xlx_BatchSearchTemplate.xls</xlsBatchFile>
-	<invalidBatchFileFormatErrMsg>Please select a valid file of
-		typexls/xlsx
-	</invalidBatchFileFormatErrMsg>
+	<invalidBatchFileFormatErrMsg>Please select a valid file of typexls/xlsx</invalidBatchFileFormatErrMsg>
 	<metaDataCustodianNameInput>Andrew</metaDataCustodianNameInput>
 	<selectionHighlightColor>#B0BED9</selectionHighlightColor>
 	<searchString7>term</searchString7>
-	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is
-		in progress, you cannot overwrite it. Please wait until SavedSearch is
-		completed.
-	</errMsgSinceExecutionInProgress>
+	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is in progress, you cannot overwrite it. Please wait until SavedSearch is completed.</errMsgSinceExecutionInProgress>
 	<validBatchFileLocation>\Misc\ValidBatchFiles\</validBatchFileLocation>
 	<fileDataErrMsg>Error in file saving</fileDataErrMsg>
-	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error
-	</batchColumnHeaderErrorFileName>
-	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet
-	</BatchFileWithMultiplesheetFile>
+	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error</batchColumnHeaderErrorFileName>
+	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet</BatchFileWithMultiplesheetFile>
 	<savedSearchColor>#FFFFFF</savedSearchColor>
 	<searchString8>XLS OR XLSX OR CSV</searchString8>
 	<specialString1>"##U\}C Tester"</specialString1>
 	<specialString2>"##U\"C Tester"</specialString2>
 	<specialString3>"##U\{C Tester"</specialString3>
+	<batchFileWithMultiSheetColumnMissing>Batch_columnHeader_Error - MS</batchFileWithMultiSheetColumnMissing>
+	<batchFileWithMultiSheetColumnDuplicate>Batch_columnHeader_Error - MS - Duplicate</batchFileWithMultiSheetColumnDuplicate>
+	
     
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
@@ -471,7 +464,6 @@
 	<hiddenDocId>ID00000206</hiddenDocId>
 	<excelProtectedHiddenDocId>ID00000159</excelProtectedHiddenDocId>
 	<warningMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup because that would overwrite the markup work done by the other user. Please reload the document.</warningMessage>
-	
 	
 	 <!-- Ingetion Related data Start -->
     <Collection1KFolder>Automation_Collection1K_Tally</Collection1KFolder>

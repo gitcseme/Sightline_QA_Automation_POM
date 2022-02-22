@@ -1,5 +1,6 @@
 package pageFactory;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -884,6 +885,10 @@ public class SavedSearch {
 
 	public Element getSavedSearchExpandStats() {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor jstree-clicked']//parent::li");
+	}
+
+	public Element currentClickedNode() {
+		return driver.FindElementByXPath("//a[@class='jstree-anchor jstree-clicked']");
 	}
 
 	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
@@ -3167,7 +3172,7 @@ public class SavedSearch {
 	/**
 	 * @param searchName
 	 * @author Raghuram A Date : 9/28/21 Description: creates multiple new search
-	 *         group - In-progress Modified on : 2/10/22 modified by : Raghuram
+	 *         group - In-progress Modified on : 2/22/22 modified by : Raghuram
 	 * @throws InterruptedException
 	 */
 	public List<String> createSGAndReturn(String role, String verifyNodeEmptyInitally, int size)
@@ -3177,11 +3182,10 @@ public class SavedSearch {
 			// Create SearchGroup
 			base.waitForElement(getSavedSearchNewGroupButton());
 			getSavedSearchNewGroupButton().Click();
-			Thread.sleep(2000);// to handle wait for observing the text
-//			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); //base on new implementation
-			getTermReportTitle().waitAndClick(5);
+			base.waitTime(2);// to handle wait for observing the text
+			base.hitKey(KeyEvent.VK_ENTER);// base on new implementation
 			try {
-				if (getSuccessPopup().isElementAvailable(3)) {
+				if (getSuccessPopup().isElementAvailable(2)) {
 					base.VerifySuccessMessage("Save search tree node successfully created.");
 					base.CloseSuccessMsgpopup();
 				} else if (getErrorPopup().isElementAvailable(3)) {
@@ -3192,14 +3196,14 @@ public class SavedSearch {
 			} catch (Exception e) {
 				break;
 			}
-			System.out.println("Clicked New SearchGroup");
-			Thread.sleep(2000);// to handle wait for observing the text
-//			getSavedSearchNewGroupExpand().waitAndClick(10); //base on new implementation
+//			getSavedSearchNewGroupExpand().waitAndClick(10); //base on new implementation - backup
+//			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);// for new implementation
+//			String newNode = getCurrentNodeLastChild().getText();
+//			getCurrentNodeLastChild().waitAndClick(10);
+			base.waitTime(2);// to handle wait for observing the text
 			driver.waitForPageToBeReady();
-			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);// for new implementation
-			String newNode = getCurrentNodeLastChild().getText();
+			String newNode = currentClickedNode().getText();
 			newNodeList.add(newNode);
-			getCurrentNodeLastChild().waitAndClick(10);
 			System.out.println("Via : " + role + " Created new node : " + newNode);
 			base.stepInfo("Via : " + role + " Created new node : " + newNode);
 
