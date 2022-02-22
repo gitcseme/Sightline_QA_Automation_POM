@@ -17686,6 +17686,117 @@ public class ProductionPage {
 		base.passedStep("Documents Generated successfully");
 		base.stepInfo("Generation completed");
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param Batesvalue
+	 * @param Prefix
+	 * @param suffix
+	 * @throws InterruptedException
+	 */
+	public void fillingGeneratePageAndVerfyingBatesRangeValue(String Batesvalue,String Prefix ,String suffix) throws InterruptedException {
+		//generating production:
+				SoftAssert softAssertion = new SoftAssert();
+				String expectedText = "Success";
+
+				base.waitForElement(getbtnProductionGenerate());
+				getbtnProductionGenerate().waitAndClick(10);
+				
+				verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+
+				Reporter.log("Wait for generate to complete", true);
+				System.out.println("Wait for generate to complete");
+				UtilityLog.info("Wait for generate to complete");
+				driver.waitForPageToBeReady();
+				String Value = getBatesRange().getText();
+				System.out.println(Value);
+
+				if (Value.contains(Batesvalue)) {
+					base.passedStep("Batesrange is value is verified");
+				} else {
+					base.failedStep("verification failed");
+				}
+				if (Value.contains(Prefix)) {
+					base.passedStep("Prefix value is verified");
+				} else {
+					base.failedStep("verification failed");
+				}
+				if (Value.contains(suffix)) {
+					base.passedStep("suffix value is verified");
+				} else {
+					base.failedStep("verification failed");
+				}
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+					}
+				}), Input.wait120);
+				String actualText = getStatusSuccessTxt().getText();
+				System.out.println(actualText);
+
+				softAssertion.assertTrue(actualText.contains(expectedText));
+				base.passedStep("Documents Generated successfully");
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+					}
+				}), Input.wait60);
+
+				// added thread.sleep to avoid exception while executing in batch
+				Thread.sleep(2000);
+				getConfirmProductionCommit().waitAndClick(10);
+
+				String PDocCount = getProductionDocCount().getText();
+				// added thread.sleep to avoid exception while executing in batch
+				Thread.sleep(1000);
+				System.out.println(PDocCount);
+				int Doc = Integer.parseInt(PDocCount);
+
+				Reporter.log("Doc - " + Doc, true);
+				System.out.println(Doc);
+				UtilityLog.info(Doc);
+
+				base.waitForElement(getCopyPath());
+				getCopyPath().waitAndClick(10);
+
+				base.waitForElement(getQC_Download());
+
+				getQC_Download().waitAndClick(10);
+				getQC_Downloadbutton_allfiles().waitAndClick(10);
+				base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+				base.stepInfo("Generate production page is filled");
+		}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException
+	 */
+	public void fillingMP3FileWithBurnRedaction() throws InterruptedException {	
+		
+		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
+		base.clickButton(getAdvancedProductionComponent());
+		base.waitForElement(getMP3CheckBox());
+		getMP3CheckBox().Click();
+		base.clickButton(getMP3CheckBoxToggle());
+		base.clickButton(getMP3CheckReductionBoxEnable());
+		getMP3CheckReductionBoxEnable().Enabled();
+		base.clickButton(getMP3RatiobtnRedactiontag());
+		
+		driver.waitForPageToBeReady();
+		getMP3FilesRedactionTag().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		getSelect_RedactionStyle_Dropdown().Click();
+		base.clickButton(getSelect_Beep_RedactionStyle_Dropdown());
+		base.clickButton(getAdvancedInMP3Files());
+		String color = driver.FindElement(By.xpath("//label//input[@id='chkMP3ProduceLoadFile']//following-sibling::i"))
+				.GetCssValue("background-color");
+		String ExpectedColor = Color.fromString(color).asHex();
+		String ActualColor = "#a9c981";
+		base.textCompareEquals(ActualColor, ExpectedColor, "lst files toggle is enabled by default",
+				"lst files toggle is not enabled by default");
+		driver.scrollPageToTop();
+	}
 
 	   
 	

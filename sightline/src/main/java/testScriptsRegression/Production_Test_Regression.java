@@ -4821,6 +4821,146 @@ public class Production_Test_Regression {
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 				loginPage.logout();
 				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-48166
+				 * @Description: To Verify  All the Parameters configured for MP3 is saved for the production on save Production as Template.
+				 */
+				@Test(groups = { "regression" }, priority = 76)
+				public void verifyProductionTempSaveSuccessfully() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("Test case Id : RPMXCON-48166");
+				base.stepInfo("To Verify  All the Parameters configured for MP3 is saved for the production on save Production as Template.");
+				String testData1 = Input.testData1;
+				//foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				TempName ="Templete" + Utility.dynamicNameAppender();
+				base = new BaseClass(driver);
+				
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+				//tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(testData1);
+				//sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+				
+				//Verify archive status on Gen page
+				ProductionPage page = new ProductionPage(driver);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSection(tagname);
+				page.fillingMP3FileWithBurnRedaction();
+				page.navigateToNextSection();
+				
+				this.driver.getWebDriver().get(Input.url + "Production/Home");
+				page.getprod_ActionButton_Reusable(productionname).waitAndClick(10);
+				driver.waitForPageToBeReady();
+				page.getprod_Action_SaveTemplate_Reusable(productionname).waitAndClick(10);
+
+				page.saveTemple(TempName);
+				base.passedStep("To Verify  All the Parameters configured for MP3 is saved for the production on save Production as Template.");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				//tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				
+				}
+				/**
+				 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+				 *         No:RPMXCON-48573
+				 * @Description: To verify that PA creates new production using continue with last bates range of last production, which is completed with only pre-gen check
+				 */
+				@Test(groups = { "regression" }, priority = 77)
+				public void verifyNextBatesRage() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("Test case id : RPMXCON-48573 ");
+				base.stepInfo("To verify that PA creates new production using continue with last bates range of last production, which is completed with only pre-gen check");
+				String testData1 = Input.testData1;
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				String prefixID = Utility.randomCharacterAppender(1);
+				String suffixID = Utility.randomCharacterAppender(1);
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				int docno = sessionSearch.basicContentSearch(testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+
+				//Verify 
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				int number = Integer.parseInt(beginningBates);
+				int endingBates = docno +number;
+				String nextBates = Integer.toString(endingBates);
+				System.out.println(beginningBates);
+				System.out.println(endingBates);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSection(tagname);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				System.out.println(prefixID+beginningBates+suffixID);
+				page.fillingGeneratePageAndVerfyingBatesRangeValue(beginningBates,prefixID,suffixID);
+				
+				//next bates
+				page = new ProductionPage(driver);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSection(tagname);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,nextBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				
+				base = new BaseClass(driver);
+				base.CloseSuccessMsgpopup();
+				page.clickOnGenerateButton();
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage("Generation Started Successfully");
+				
+				base.passedStep("To verify that PA creates new production using continue with last bates range of last production, which is completed with only pre-gen check");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				}
 				
 	
 	@AfterMethod(alwaysRun = true)
