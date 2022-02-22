@@ -317,6 +317,14 @@ public class SavedSearch {
 	}
 
 	// Added By Jeevitha
+	public Element getLastNodeFromTab(String GroupName) {
+		return driver.FindElementByXPath("(//a[text()='" + GroupName + "']//following-sibling::ul//a)[last()]");
+	}
+
+	public Element getNodeFromTab(String name, String GroupName) {
+		return driver.FindElementByXPath("//a[@data-content='" + GroupName + "']//..//li//a[text()='" + name + "']");
+	}
+
 	public Element getSavedSearchNewNode() {
 		return driver.FindElementByXPath("(//a[text()='My Saved Search']//following-sibling::ul//a)[last()]");
 	}
@@ -479,6 +487,7 @@ public class SavedSearch {
 	}
 
 	// only when MySavedsearch is selected and not expanded
+
 	public ElementCollection getAvailableShareListfromMenu() {
 		return driver.FindElementsByXPath(
 				"//div[@class='panel-body']//div[@id='jsTreeSavedSearch']//li[@role='treeitem' and @aria-selected='false']//a");
@@ -1897,15 +1906,24 @@ public class SavedSearch {
 	 * @author Jeevitha Description: creates new search group
 	 * @modifiedBy : Raghuram @modifiedOn : 2/9/22
 	 */
-	public void createNewSearchGrp(String searchName) {
+	public void createNewSearchGrp(String groupName) {
 
 		navigateToSSPage();
 		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		System.out.println("Clicked MY saved Search Tab");
+
+		selectRootGroupTab(groupName);
+
 		getSavedSearchNewGroupButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		System.out.println("Clicked MY saved Search Tab");
+
+		selectRootGroupTab(groupName);
+
 		driver.waitForPageToBeReady();
 		base.VerifySuccessMessage("Save search tree node successfully created.");
+		base.CloseSuccessMsgpopup();
 	}
 
 	/**
@@ -2155,14 +2173,25 @@ public class SavedSearch {
 	 *         implementation - still need to verify the impacted methods
 	 * @throws InterruptedException
 	 */
-	public String createSearchGroupAndReturn(String searchName, String role, String verifyNodeEmptyInitally)
+	public String createSearchGroupAndReturn(String groupName, String role, String verifyNodeEmptyInitally)
 			throws InterruptedException {
-		createNewSearchGrp(searchName);
-		String newNode = getSavedSearchNewNode().getText();
+		createNewSearchGrp(groupName);
+		String newNode = null;
+
+		if (getSavedSearchNewNode().isElementAvailable(2)) {
+			newNode = getSavedSearchNewNode().getText();
+		} else if (getLastNodeFromTab(groupName).isElementAvailable(2)) {
+			newNode = getLastNodeFromTab(groupName).getText();
+		}
 		System.out.println("Via : " + role + " Created new node : " + newNode);
 		base.stepInfo("Via : " + role + " Created new node : " + newNode);
 		if (verifyNodeEmptyInitally.equals("Yes")) {
-			getSelectAnode(newNode).waitAndClick(10);
+			if (getSelectAnode(newNode).isElementAvailable(1)) {
+				getSelectAnode(newNode).waitAndClick(10);
+			} else if (getNodeFromTab(newNode, groupName).isElementAvailable(1)) {
+				getNodeFromTab(newNode, groupName).waitAndClick(10);
+				System.out.println(newNode + " : is clicked");
+			}
 			driver.waitForPageToBeReady();
 			verifySavedSearch_isEmpty();
 		}
@@ -2895,6 +2924,7 @@ public class SavedSearch {
 		getRenameSearchGroupNode(newNode).SendKeys(SearchGroupRenamed);
 		getTermReportTitle().Click();
 		base.VerifySuccessMessage("Save search tree node successfully updated.");
+		base.CloseSuccessMsgpopup();
 		base.stepInfo(newNode + "Renamed as : " + SearchGroupRenamed);
 
 		return SearchGroupRenamed;
@@ -6014,6 +6044,9 @@ public class SavedSearch {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		base.stepInfo("Navigated to SavedSearch Page");
 		driver.waitForPageToBeReady();
+//		base.waitTillElemetToBeClickable(getSavedSearchGroupName(Input.mySavedSearch));
+//		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(10);
+
 	}
 
 	/**
@@ -7472,16 +7505,18 @@ public class SavedSearch {
 		Element loadingElement = getspinningWheel();
 		loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal Modified by: NA Modified date: NA
-	 * @description used to select default security grp tab and select savesearch and clickon folder icon
+	 * @description used to select default security grp tab and select savesearch
+	 *              and clickon folder icon
 	 * @param searchName
 	 */
-	public void selectWithDefaultSecurityGroupAndFolder(String searchName, String folderNam) throws InterruptedException {
+	public void selectWithDefaultSecurityGroupAndFolder(String searchName, String folderNam)
+			throws InterruptedException {
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		
+
 		base.waitForElement(getSavedSearchGroupName(Input.shareSearchDefaultSG));
 		getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(5);
 		base.waitForElement(getSavedSearch_SearchName());
@@ -7498,13 +7533,25 @@ public class SavedSearch {
 
 		base.waitTime(3);
 		getSelectWithName(searchName).waitAndClick(10);
-		
+
 		base.waitForElement(getSavedSearchToBulkFolder());
 		getSavedSearchToBulkFolder().waitAndClick(5);
 		search = new SessionSearch(driver);
 		search.BulkActions_Folder(folderNam);
-		
-		
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Select Security Group From Saved Search Table
+	 */
+	public void selectRootGroupTab(String groupName) {
+
+		if (groupName.equals(Input.shareSearchDefaultSG) || groupName.equals(Input.shareSearchPA)
+				|| groupName.contains("Shared with ")) {
+			getSavedSearchGroupName(groupName).waitAndClick(5);
+			System.out.println("Clicked :" + groupName);
+		}
 	}
 
 }
