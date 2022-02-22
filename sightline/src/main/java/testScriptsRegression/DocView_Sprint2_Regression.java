@@ -5282,7 +5282,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 79)
 	public void verifyDocViewThreadMapEmailsParticipants() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51638  sprint 12");
@@ -5323,6 +5323,56 @@ public class DocView_Sprint2_Regression {
 		baseClass.passedStep("After Click Read More Button the Partcipant Are increased successfully" );
 
 	}
+	
+	/**
+	 * Author :Vijaya.Rani date: 22/02/2022 Modified date: NA Modified by: NA
+	 * Description :Verify that redaction/annotations/remarks icons should be displayed on doc view though the System Admin 
+	 * user who created project is in-activeVerify that redaction/annotations/remarks icons should be displayed 
+	 * on doc view though the System Admin user who created project is in-active. 'RPMXCON-57088' Sprint-12
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 80)
+	public void verifyDocViewRedactionAnnotationsRemarksIconDisplay() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-57088  sprint 12");
+		SessionSearch search = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		docView = new DocViewPage(driver);
+
+		baseClass.stepInfo(
+				"Verify that redaction/annotations/remarks icons should be displayed on doc view though the System Admin user who created project is in-active");
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and go to DocView");
+		search.basicContentSearch(Input.searchString1);
+		search.ViewInDocView();
+
+		// verify redaction icon
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.redactionIcon());
+		softAssertion.assertTrue(docView.redactionIcon().Displayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Redaction Icon is Displayed Succesfully");
+
+		// verify annotation icon
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_AnnotateIcon());
+		softAssertion.assertTrue(docView.getDocView_AnnotateIcon().Displayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("DocView Annotation Icon is Displayed Succesfully");
+
+		// verify Remark icon
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_AddRemarkIcon());
+		softAssertion.assertTrue(docView.getDocView_AddRemarkIcon().Displayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("DocView Reviewer Remark Icon is Displayed Succesfully");
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
