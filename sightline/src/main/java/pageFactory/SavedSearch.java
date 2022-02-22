@@ -6044,9 +6044,6 @@ public class SavedSearch {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		base.stepInfo("Navigated to SavedSearch Page");
 		driver.waitForPageToBeReady();
-//		base.waitTillElemetToBeClickable(getSavedSearchGroupName(Input.mySavedSearch));
-//		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(10);
-
 	}
 
 	/**
