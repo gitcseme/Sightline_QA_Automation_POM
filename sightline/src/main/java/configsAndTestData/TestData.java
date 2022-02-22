@@ -66,6 +66,8 @@ public class TestData {
 	public String sourceDocId3;
 	public String sourceDocId4;
 	public String sourceDocId5;
+	public String sourceDocId7;
+	public String sourceDocIdSearch;
 	public String nearDupeCompletedDocId;
 	public String nearDupeCompletedDocIdReviewer;
 	public String nearDupeDocId;

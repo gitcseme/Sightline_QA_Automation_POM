@@ -162,6 +162,7 @@ public class Input {
 	public static String sourceDocId3;
 	public static String sourceDocId4;
 	public static String sourceDocId5;
+	public static String sourceDocId7;
 	public static String nearDupeCompletedDocId;
 	public static String nearDupeDocument;
 	public static String familyDocument;
@@ -282,6 +283,7 @@ public class Input {
 	public static String HiddenContentExternalLink;
 	public static String audioString1;
 	public static String audioString2;
+	public static String sourceDocIdSearch;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -981,7 +983,9 @@ public class Input {
 		MetaDataEAName = testData.getMetaDataEAName();
 		MetaDataDomainName = testData.getMetaDataDomainName();
 		MetaDataReciepientsDomain = testData.getMetaDataReciepientsDomain();
+		sourceDocIdSearch = testData.getSourceDocIdSearch();
 		KeyWordColour = testData.getKeyWordColour();
+		sourceDocId7 = testData.getSourceDocId7();
 		// Added By jeevitha
 		performaceBatchFile = testData.getPerformaceBatchFile();
 

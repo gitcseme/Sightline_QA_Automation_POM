@@ -2756,6 +2756,45 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		
 		
 	}
+	
+	/**
+	 * @throws InterruptedException
+	 * @Author Krishna Created date: NA Modified date: NA Modified by:NA
+	 * @Description Verify that on thread map tab when the principal document is F1,
+	 *              the thread map should not present any emails. 'RPMXCON-51521'
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	public void verifyThreadMapPrincipalDocIsF1NotPresentAnyEmails() throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		docView = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		DocViewPage docViewAnalytics = new DocViewPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51521");
+		String docId = Input.sourceDocId7;
+		baseClass.stepInfo(
+				"Verify that on thread map tab when the principal document is F1, the thread map should not present any emails.");
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully Logged into slightline webpage as PA with " + Input.pa1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocId7, Input.sourceDocIdSearch);
+		sessionSearch.addPureHit();
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo(Input.sourceDocId7+"..Document searched in metadata sourcedocid with ingestion name");
+		driver.waitForPageToBeReady();
+		miniDocListpage.selectSourceDocIdInAvailableField();
+
+		// view the doc From MiniDocList and ThreadMap Tab
+		docViewAnalytics.selectTextBoxInDocView(docId, docId);
+
+		// verify Thread map should not present any other emails
+		docViewAnalytics.verifyThreadMapWithNoEmailDocs();
+		loginPage.logout();
+
+	}
 
 	
 	
