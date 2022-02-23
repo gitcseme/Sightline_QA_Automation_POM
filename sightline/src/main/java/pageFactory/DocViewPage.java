@@ -11803,7 +11803,7 @@ public class DocViewPage {
 	public void clickOnSavedStamp(String textBox, String colour, String projectFieldName)
 			throws InterruptedException, AWTException {
 		driver.waitForPageToBeReady();
-		reusableDocView.stampColourSelection(textBox, colour);
+		reusableDocView.codingStampPopUpWindow(textBox, colour);
 		base.waitForElement(getCodingStampLastIcon(colour));
 		getCodingStampLastIcon(colour).waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -11864,7 +11864,7 @@ public class DocViewPage {
 	public void viewCodingPopUp(String textBox, String colour, String projectFieldName)
 			throws InterruptedException, AWTException {
 		driver.waitForPageToBeReady();
-		reusableDocView.stampColourSelection(textBox, colour);
+		reusableDocView.codingStampPopUpWindow(textBox, colour);
 		driver.waitForPageToBeReady();
 		driver.getWebDriver().navigate().refresh();
 		reusableDocView.pencilGearicon(colour);
@@ -12386,7 +12386,7 @@ public class DocViewPage {
 		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
 //		base.waitForElement(getReadOnlyTextBox(projectFieldName));
 		getDateFormat().SendKeys("11/10/2021");
-		reusableDocView.stampColourSelection(fieldValue, colour);
+		reusableDocView.codingStampPopUpWindow(fieldValue, colour);
 		String errorText = getCodingFormValidErrorMeta().getText().trim();
 		String actual = "Coding Form validation failed";
 		base.stepInfo("Save using stamp on non-date format and verify error message");
@@ -12647,6 +12647,7 @@ public class DocViewPage {
 	 * @description: To verify the given tag coding form name in docview page
 	 */
 	public void verifyCodingFormTagNameInDocviewPg(int objectNo, String expectedObjectName) {
+		softAssertion = new SoftAssert();
 		try {
 			base.waitForElement(getCodingFormTaglabel(objectNo));
 			String actualObjectName = getCodingFormTaglabel(objectNo).getText();
@@ -13573,7 +13574,7 @@ public class DocViewPage {
 			String average, String bit, String huge) {
 		base.stepInfo("Performing from parent window");
 		passingAlphaIntergerMetaData(alpha, tiny, small, average, bit, huge);
-		reusableDocView.stampColourSelection(stamp, colour);
+		reusableDocView.codingStampPopUpWindow(stamp, colour);
 		getCodingStampCancel().waitAndClick(5);
 		if (getCodingFormValidErrorMeta().Displayed()) {
 			base.stepInfo("Alpha and numeric character are not entered in integer metadata field");
@@ -13582,7 +13583,7 @@ public class DocViewPage {
 			base.stepInfo("Alpha and numeric value entering in interger metadata fields");
 		}
 		passingOutsideRangeIntergerMetaData(tiny, small, average, bit, huge);
-		reusableDocView.stampColourSelection(stamp, colour);
+		reusableDocView.codingStampPopUpWindow(stamp, colour);
 		getCodingStampCancel().waitAndClick(5);
 		if (getCodingFormValidErrorMeta().Displayed()) {
 			base.passedStep("Validation message displayed for when values entered in outside of range ");
@@ -14256,7 +14257,7 @@ public class DocViewPage {
 		base.stepInfo("Performing action from parent window");
 		base.waitForElement(getDocView_CodingFormComments());
 		getDocView_CodingFormComments().Clear();
-		reusableDocView.stampColourSelection(fieldText, Input.stampSelection);
+		reusableDocView.codingStampPopUpWindow(fieldText, Input.stampSelection);
 		boolean flag = getCodingFormValidErrorMeta().Displayed();
 		softAssertion.assertTrue(flag);
 		if (getCodingFormValidErrorMeta().Displayed()) {
@@ -15574,6 +15575,7 @@ public class DocViewPage {
 	 * @Description: Validation of non-date format using save
 	 */
 	public void nonDateFormatValidationUsingSave(String projectFieldName) throws InterruptedException, AWTException {
+		softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
 		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
 //		base.waitForElement(getReadOnlyTextBox(projectFieldName));
@@ -15754,6 +15756,7 @@ public class DocViewPage {
 	 */
 	public void nonDateFormatAndAlphaValidationUsingSave(String date, String dateTime, String intData)
 			throws InterruptedException, AWTException {
+		softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Peforming action in parent window");
 		base.waitForElement(getReadOnlyTextBox(date));
@@ -15802,6 +15805,7 @@ public class DocViewPage {
 	 * @Description: Validation of Required comment without passing value
 	 */
 	public void validateErrorMsgRequiredComment() {
+		softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Performing action from parent window");
 		base.waitForElement(getDocView_CodingFormComments());
@@ -25732,6 +25736,7 @@ public class DocViewPage {
 			base.failedStep("Near dupe is not loaded on comparison window");
 		}
 		reusableDocView.childWindowToParentWindowSwitching(parentWindow);
+	}
 	
 
 	/**

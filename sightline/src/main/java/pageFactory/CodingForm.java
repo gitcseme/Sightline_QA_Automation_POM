@@ -4698,10 +4698,7 @@ public class CodingForm {
 	 */
 	public void verifyCodingFormObjectSaved(String cfName) throws InterruptedException {
 		// create new coding form
-		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		driver.waitForPageToBeReady();
-		addNewCodingFormButton();
-		firstCheckBox(Input.tag);
 		firstCheckBox(Input.comments);
 		firstCheckBox(Input.metaData);
 		specialObjectsBox("staticText");
