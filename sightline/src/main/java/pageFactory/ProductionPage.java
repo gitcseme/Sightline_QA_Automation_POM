@@ -2608,6 +2608,7 @@ public class ProductionPage {
 		public Element getRegenerateAllRadioBtn() {
 			return driver.FindElementByXPath("//input[@id='RegenerateAll']/../i");
 		}
+
 		public Element getProductionOutputLocation_VolumeName() {
 			return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_VolumeName']");
 		}
@@ -2628,6 +2629,17 @@ public class ProductionPage {
 		}
 		
 		
+
+		
+     //added by Brundha
+		public Element GetVolumeName() {
+			return driver.FindElementById("ProductionOutputLocation_VolumeName");
+		}
+		
+		public Element GetVolumeLocation() {
+			return driver.FindElementById("lstVolumeLocation");
+		}
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
