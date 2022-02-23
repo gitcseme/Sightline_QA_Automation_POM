@@ -2920,6 +2920,88 @@ public class DocViewAudio_IndiumRegression {
 		// logout
 		loginPage.logout();
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 42)
+	public void verifyPersistentHits_RemoveAudioDocs() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51769");
+		baseClass.stepInfo("Verify When remove audio docs from a user/reviewer in an assignment, displays persistent search hits in the assignment, when reassigning these audio docs to another/same reviewer in the assignment");
+		
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		String assign = "Assignment" + Utility.dynamicNameAppender();
+		String savedSearch = "Search1" + Utility.dynamicNameAppender();
+		
+        // creating new node	
+		String nodeName = this.savedSearch.createSearchGroupAndReturn(savedSearch,Input.rmu1userName,"yes");
+		
+        // configuring and saving the audio search in credated node		
+		int pureHit = sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.saveAdvanceSearchInNode(savedSearch,nodeName);
+		
+		// selecting the saved search group 
+		this.savedSearch.navigateToSSPage();
+		this.savedSearch.selectNode1(nodeName);
+		this.savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		
+		// creating assignment 
+		assignmentPage.FinalizeAssignmentAfterBulkAssign();
+		assignmentPage.createAssignmentByBulkAssignOperation(assign, Input.codeFormName);
+		
+		// adding Reviewer and distributing the documents to reviewer
+		assignmentPage.editAssignment(assign);
+		assignmentPage.add2ReviewerAndDistribute();	
+		
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logedout as  Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		
+		// navigating from Dashboard to DocView
+		baseClass.waitForElement(assignmentPage.dashBoardPageTitle());
+		assignmentPage.assgnInDashBoardPg(assign).waitAndClick(10);
+				
+		// verifying the Persistent Hits
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		loginPage.logout();		
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully logged in as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		// removing and reassigning the Documents in the assignement 
+		assignmentPage.editAssignment(assign);
+		assignmentPage.removeDocs(Input.rev1userName);
+		assignmentPage.reassignDocs(Input.rev1userName);
+		
+		loginPage.logout();
+		
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+				
+		// navigating from Dashboard to DocView 
+		baseClass.waitForElement(assignmentPage.dashBoardPageTitle());
+		assignmentPage.assgnInDashBoardPg(assign).waitAndClick(10);
+						
+		// verifying the Persistent Hits  
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		
+		// logout
+		loginPage.logout();
+	}
 
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {

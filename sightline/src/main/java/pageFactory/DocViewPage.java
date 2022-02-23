@@ -2111,9 +2111,6 @@ public class DocViewPage {
 	}
 
 	public Element getCodingFormTag(int i) {
-		return driver.FindElementByXPath("//label[@id='l_it_" + i + "']/input[@disabled='disabled']");
-	}
-	public Element getCodingFormTagInPreview(int i) {
 		return driver.FindElementByXPath("//label[@id='l_it_" + i + "']/input[@disabled='']");
 	}
 
@@ -2438,7 +2435,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocumentsCommentViewCoding() {
-		return driver.FindElementByXPath("//div[@id='viewCodingStamp']//textarea[@id='1_textarea']");
+		return driver.FindElementById("//div[@id='viewCodingStamp']//textarea[@id='1_textarea']");
 	}
 
 	public Element getDocListAllDocCheckBox() {
@@ -2785,9 +2782,6 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//table[@id='SearchDataTable']//i[@class='fa fa-check-circle']//..//..//td[2][text()='" + text + "']");
 	}
-	public Element getDocViewAnaliticalFamilTab() {
-		return driver.FindElementByXPath("//li[@id='liDocumentFamilyMember']");
-		}
 
 	// Added by Gopinath - 17/01/2022
 	public ElementCollection getRemarkHighlightedText() {
@@ -3201,36 +3195,6 @@ public class DocViewPage {
 		return driver.FindElementsByXPath("//table[@id='dtDocumentThreadedDocuments']//thead//tr//th[contains(text(),'ID')]");
 	}
 
-	
-	
-	
-	//Added by Gopinath - 21/02/2022
-	public Element getDocViewPageNextButton() {
-		return driver.FindElementByXPath("//li[@id='nextPage_divDocViewer']/a");
-	}
-	
-	public Element getDocViewLastPageNavigationButton() {
-		return driver.FindElementByXPath("//li[@id='lastPage_divDocViewer']/a");
-	}
-	public Element getDocPreviousPageButton() {
-		return driver.FindElementByXPath("//li[@id='previousPage_divDocViewer']/a");
-	}
-	
-	public Element getDocViewDocPageFirstButton() {
-		return driver.FindElementByXPath("//li[@id='firstPage_divDocViewer']/a");
-	}
-	public Element getPageNumberInputTextField() {
-		return driver.FindElementById("PageNumber_divDocViewer");
-	}
-	public Element getdocViewDocPageCount() {
-		return driver.FindElementById("lblTotalPageCount_divDocViewer");
-	}
-	public Element getComparisonNearDupeView() {
-		return driver.FindElementByXPath("//div[@id='divNearDupeDocViewer']/descendant::div[@class='igViewerScroller']");
-		
-	}
-
-
 	public Element getStampOverWriteMessageLast() {
 		return driver.FindElementByXPath(
 				"(//p[text()[normalize-space()='The Stamp you selected is already in use. Do you want to overwrite this Stamp with the new selections?']])[last()]");
@@ -3241,24 +3205,6 @@ public class DocViewPage {
 		return driver
 				.FindElementsByXPath("//tbody[@id='threadedEmailRow']//tr");
 	}
-	
-	//Added by arunkumar
-	public Element searchTextBox() {
-		return driver.FindElementById("sodTextBox");
-	}
-	
-	public Element searchIcon() {
-		return driver.FindElementByXPath("//*[@class='searchIcon']");
-	}
-	
-	public Element closeIcon() {
-		return driver.FindElementByXPath("//*[@class='close']");
-	}
-	
-	public Element searchResult() {
-		return driver.FindElementByXPath("//*[@class='count']");
-	}
-
 
 	public DocViewPage(Driver driver) {
 
@@ -11803,7 +11749,7 @@ public class DocViewPage {
 	public void clickOnSavedStamp(String textBox, String colour, String projectFieldName)
 			throws InterruptedException, AWTException {
 		driver.waitForPageToBeReady();
-		reusableDocView.codingStampPopUpWindow(textBox, colour);
+		reusableDocView.stampColourSelection(textBox, colour);
 		base.waitForElement(getCodingStampLastIcon(colour));
 		getCodingStampLastIcon(colour).waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -11864,7 +11810,7 @@ public class DocViewPage {
 	public void viewCodingPopUp(String textBox, String colour, String projectFieldName)
 			throws InterruptedException, AWTException {
 		driver.waitForPageToBeReady();
-		reusableDocView.codingStampPopUpWindow(textBox, colour);
+		reusableDocView.stampColourSelection(textBox, colour);
 		driver.waitForPageToBeReady();
 		driver.getWebDriver().navigate().refresh();
 		reusableDocView.pencilGearicon(colour);
@@ -12386,7 +12332,7 @@ public class DocViewPage {
 		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
 //		base.waitForElement(getReadOnlyTextBox(projectFieldName));
 		getDateFormat().SendKeys("11/10/2021");
-		reusableDocView.codingStampPopUpWindow(fieldValue, colour);
+		reusableDocView.stampColourSelection(fieldValue, colour);
 		String errorText = getCodingFormValidErrorMeta().getText().trim();
 		String actual = "Coding Form validation failed";
 		base.stepInfo("Save using stamp on non-date format and verify error message");
@@ -12647,7 +12593,6 @@ public class DocViewPage {
 	 * @description: To verify the given tag coding form name in docview page
 	 */
 	public void verifyCodingFormTagNameInDocviewPg(int objectNo, String expectedObjectName) {
-		softAssertion = new SoftAssert();
 		try {
 			base.waitForElement(getCodingFormTaglabel(objectNo));
 			String actualObjectName = getCodingFormTaglabel(objectNo).getText();
@@ -13309,7 +13254,7 @@ public class DocViewPage {
 		base.waitForElement(getDociD(docId));
 		getDociD(docId).waitAndClick(5);
 		driver.waitForPageToBeReady();
-		if (getDocument_CommentsTextBox().isElementAvailable(5) == false) {
+		if (getDocument_CommentsTextBox().isElementPresent() == false) {
 			base.stepInfo("Search done via outside of an assignment");
 			base.passedStep("Coding form values are not same when different coding form is applied");
 
@@ -13574,7 +13519,7 @@ public class DocViewPage {
 			String average, String bit, String huge) {
 		base.stepInfo("Performing from parent window");
 		passingAlphaIntergerMetaData(alpha, tiny, small, average, bit, huge);
-		reusableDocView.codingStampPopUpWindow(stamp, colour);
+		reusableDocView.stampColourSelection(stamp, colour);
 		getCodingStampCancel().waitAndClick(5);
 		if (getCodingFormValidErrorMeta().Displayed()) {
 			base.stepInfo("Alpha and numeric character are not entered in integer metadata field");
@@ -13583,7 +13528,7 @@ public class DocViewPage {
 			base.stepInfo("Alpha and numeric value entering in interger metadata fields");
 		}
 		passingOutsideRangeIntergerMetaData(tiny, small, average, bit, huge);
-		reusableDocView.codingStampPopUpWindow(stamp, colour);
+		reusableDocView.stampColourSelection(stamp, colour);
 		getCodingStampCancel().waitAndClick(5);
 		if (getCodingFormValidErrorMeta().Displayed()) {
 			base.passedStep("Validation message displayed for when values entered in outside of range ");
@@ -14257,7 +14202,7 @@ public class DocViewPage {
 		base.stepInfo("Performing action from parent window");
 		base.waitForElement(getDocView_CodingFormComments());
 		getDocView_CodingFormComments().Clear();
-		reusableDocView.codingStampPopUpWindow(fieldText, Input.stampSelection);
+		reusableDocView.stampColourSelection(fieldText, Input.stampSelection);
 		boolean flag = getCodingFormValidErrorMeta().Displayed();
 		softAssertion.assertTrue(flag);
 		if (getCodingFormValidErrorMeta().Displayed()) {
@@ -14939,14 +14884,13 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			reusableDocView.editCodingForm(comment);
 			base.waitForElement(getCompleteDocBtn());
-			getCompleteDocBtn().waitAndClick(10);
-			driver.waitForPageToBeReady();
+			getCompleteDocBtn().waitAndClick(5);
 			System.out.println("Completed Document : " + name);
 			base.stepInfo("Completed Document : " + name);
 			completedDoc.add(name);
-
-			}
-			return completedDoc;
+			driver.waitForPageToBeReady();
+		}
+		return completedDoc;
 	}
 
 	/**
@@ -15019,10 +14963,9 @@ public class DocViewPage {
 		base.waitForElementCollection(getMiniDocListDocIdText());
 		driver.waitForPageToBeReady();
 		for (String docId : completedDoc) {
-		getDociD(docId).ScrollTo();
-		getDociD(docId).waitAndClick(5);
-		driver.waitForPageToBeReady();
-		softAssertion.assertTrue(getUnCompleteButton().Displayed());
+			getDociD(docId).ScrollTo();
+			getDociD(docId).waitAndClick(5);
+			softAssertion.assertTrue(getUnCompleteButton().Displayed());
 		}
 		base.passedStep("Uncomplete button displayed for completed document");
 		driver.waitForPageToBeReady();
@@ -15575,7 +15518,6 @@ public class DocViewPage {
 	 * @Description: Validation of non-date format using save
 	 */
 	public void nonDateFormatValidationUsingSave(String projectFieldName) throws InterruptedException, AWTException {
-		softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
 		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
 //		base.waitForElement(getReadOnlyTextBox(projectFieldName));
@@ -15756,7 +15698,6 @@ public class DocViewPage {
 	 */
 	public void nonDateFormatAndAlphaValidationUsingSave(String date, String dateTime, String intData)
 			throws InterruptedException, AWTException {
-		softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Peforming action in parent window");
 		base.waitForElement(getReadOnlyTextBox(date));
@@ -15805,7 +15746,6 @@ public class DocViewPage {
 	 * @Description: Validation of Required comment without passing value
 	 */
 	public void validateErrorMsgRequiredComment() {
-		softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Performing action from parent window");
 		base.waitForElement(getDocView_CodingFormComments());
@@ -16434,22 +16374,20 @@ public class DocViewPage {
 	public void unCompleteButtonToCompleteBtn() {
 		driver.waitForPageToBeReady();
 		for (String docId : completedDoc) {
-		base.waitForElement(getDociD(docId));
-		getDociD(docId).waitAndClick(5);
-		driver.waitForPageToBeReady();
-		base.waitForElement(getUnCompleteButton());
-		getUnCompleteButton().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		softAssertion.assertTrue(getCompleteDocBtn().Displayed());
+			base.waitForElement(getDociD(docId));
+			getDociD(docId).waitAndClick(5);
+			base.waitForElement(getUnCompleteButton());
+			getUnCompleteButton().waitAndClick(5);
+			softAssertion.assertTrue(getCompleteDocBtn().isDisplayed());
 		}
 		driver.waitForPageToBeReady();
 		if (getverifyCodeSameAsLast().isElementAvailable(5)) {
-		base.failedStep("Tick mark icon not displayed");
+			base.failedStep("Tick mark icon not displayed");
 		} else {
-		base.passedStep("Tick mark removed for document after clicking the uncomplete button");
+			base.passedStep("Tick mark removed for document after clicking the uncomplete button");
 		}
 		softAssertion.assertAll();
-		}
+	}
 
 	/**
 	 * @author Indium-Baskar
@@ -16799,23 +16737,26 @@ public class DocViewPage {
 	 * @author Aathith.Senthilkumar
 	 */
 	public void performCodeSameForFamilyMembersDocumentsReviewer() throws InterruptedException {
-		driver.waitForPageToBeReady();
+
 		base.waitForElement(getDocFileType());
-		getDocFileType().waitAndClick(15);
-		driver.waitForPageToBeReady();
-		base.waitForElement(getDocViewAnaliticalFamilTab());
-		//driver.scrollingToElementofAPage(getDocViewAnaliticalFamilTab());
-		getDocViewAnaliticalFamilTab().ScrollTo();
-		getDocViewAnaliticalFamilTab().waitAndClick(15);
+		getDocFileType().waitAndClick(5);
+		// driver.scrollingToBottomofAPage();
+		base.waitForElement(getDocView_Analytics_FamilyTab());
+		// driver.scrollingToElementofAPage(getDocView_Analytics_FamilyTab());
+		// getDocView_Analytics_FamilyTab().ScrollTo();
+		getDocView_Analytics_FamilyTab().waitAndClick(10);
+
 		base.waitForElement(getDocView_Analytics_ChildWindow_FamilyTab_doc(2));
-		getDocView_Analytics_ChildWindow_FamilyTab_doc(2).ScrollTo();
-		getDocView_Analytics_ChildWindow_FamilyTab_doc(2).waitAndClick(15);
+		getDocView_Analytics_ChildWindow_FamilyTab_doc(2).waitAndClick(10);
+
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+
 		getDocView_Analytics_Family_Member_CodeSameAs().waitAndClick(15);
+
 		base.VerifySuccessMessage("Code same performed successfully.");
-		}
-	
+
+	}
 
 	/**
 	 * @author Aathith.Senthilkumar
@@ -18765,7 +18706,6 @@ public class DocViewPage {
 	public void editCodingFormScrollComplete() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		getClickDocviewID(3).waitAndClick(5);
-		String prnDoc=getVerifyPrincipalDocument().getText();
 		base.waitForElement(getResponsiveCheked());
 		getResponsiveCheked().waitAndClick(5);
 		base.waitForElement(getNonPrivilegeRadio());
@@ -18775,25 +18715,24 @@ public class DocViewPage {
 		StringBuilder sb = new StringBuilder(400);
 		Random random = new Random();
 		for (int i = 0; i < 500; i++) {
-		char c = chars[random.nextInt(chars.length)];
-		sb.append(c);
+			char c = chars[random.nextInt(chars.length)];
+			sb.append(c);
 		}
 		String output = sb.toString();
 		getDocument_CommentsTextBox().SendKeys(output);
 		completeButton();
 		base.VerifySuccessMessage("Document completed successfully");
 		driver.waitForPageToBeReady();
-		getDociD(prnDoc).waitAndClick(5);
-		driver.waitForPageToBeReady();
 		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
 		boolean flag = (boolean) jse
-		.executeScript("return document.querySelector(\"textarea[id='1_textarea']\").scrollHeight>"
-		+ "document.querySelector(\"textarea[id='1_textarea']\").clientHeight;");
+				.executeScript("return document.querySelector(\"textarea[id='1_textarea']\").scrollHeight>"
+						+ "document.querySelector(\"textarea[id='1_textarea']\").clientHeight;");
 		System.out.println(flag);
 		softAssertion.assertTrue(flag);
 		softAssertion.assertAll();
 		base.passedStep("Scrolling displayed for comment when large text entered");
 	}
+
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -19119,6 +19058,11 @@ public class DocViewPage {
 		String actual = getDocView_CurrentDocId().getText();
 		softAssertion.assertEquals(expect, actual);
 		base.stepInfo(" selected document successfully displayed in parent window");
+		reusableDocView.closeWindow(1);
+		reusableDocView.switchToNewWindow(1);
+		driver.Navigate().refresh();
+		driver.switchTo().alert().accept();
+		driver.waitForPageToBeReady();
 	}
 
 	/**
@@ -21129,6 +21073,7 @@ public class DocViewPage {
 		List<String> DocID = base.availableListofElements(DocIdsOfCompletedDocuments());
 		return DocID;
 	}
+	
 
 	/**
 	 * @author Gopinath
@@ -25611,133 +25556,6 @@ public class DocViewPage {
 		}
 	}
 	
-	/**
-	 * @author Gopinath
-	 * @Description method to get the count of pages in document in docView panal
-	 * @return
-	 */
-	public int docViewDocPageCount() {
-		driver.waitForPageToBeReady();
-		base.waitForElement(getdocViewDocPageCount());
-		String pageCountText = getdocViewDocPageCount().getText().trim();
-		int pageCount = Integer.parseInt(pageCountText.substring(pageCountText.indexOf(" ")+1,pageCountText.indexOf("p")-1 ));
-		base.stepInfo("Number of pages in document:"+pageCount);
-		return pageCount;
-	}
-	/**
-	 * @author Gopinath
-	 * @Description:Methoad to click on page next button and verify navigated to next page or not.
-	 * @param rowNo
-	 */
-	public void clickOnPageNextButton() {
-		
-		int pageNumberBefore=0;
-		try {
-			base.waitForElement(getPageNumberInputTextField());
-			 pageNumberBefore=Integer.parseInt(getPageNumberInputTextField().GetAttribute("value"));
-		}catch(Exception e) {
-		base.waitForElement(getPageNumberInputTextField());
-		 pageNumberBefore=Integer.parseInt(getPageNumberInputTextField().GetAttribute("placeholder"));//default 1
-		}
-		int numberOfPages = docViewDocPageCount();
-		if(numberOfPages<2) {
-			base.failedStep("document should have more then one page ");
-		}
-		base.waitForElement(getDocViewPageNextButton());
-		getDocViewPageNextButton().waitAndClick(5);
-		base.waitForElement(getPageNumberInputTextField());
-		String pageNumberafter = getPageNumberInputTextField().GetAttribute("value");
-		if(Integer.parseInt(pageNumberafter)>pageNumberBefore) {
-			base.passedStep("After click on next button, page is navigated to next page "+pageNumberafter+" from page "+pageNumberBefore);
-		}else {
-			base.failedStep("failed to navigated to next page after click on next button");
-		}
-	}
-	/**
-	 * @author Gopinath
-	 * @Description methoad to click on page last button and verify navigated to last page od document
-	 */
-	public void clickOnPageLastButton() {
-		int numberOfPages=docViewDocPageCount();
-		base.waitForElement(getDocViewLastPageNavigationButton());
-		getDocViewLastPageNavigationButton().waitAndClick(5);
-		base.waitForElement(getPageNumberInputTextField());
-		String lastPageNumber = getPageNumberInputTextField().GetAttribute("value");
-		if(Integer.parseInt(lastPageNumber)==numberOfPages) {
-			base.passedStep("After click on last page button, page navigated to last page " +lastPageNumber);
-		}else {
-			base.failedStep("last page of document is not displayed");
-		}
-		
-		
-	}
-	/**
-	 * @author Gopinath
-	 * @Description Method to click on page previous button and verify navigated previous page or not.
-	 */
-	public void clickOnDocPagePreviousButton() {
-		base.waitForElement(getPageNumberInputTextField());
-		String pageNumberBefore = getPageNumberInputTextField().GetAttribute("value");
-		base.waitForElement(getDocPreviousPageButton());
-		getDocPreviousPageButton().waitAndClick(5);
-		base.waitForElement(getPageNumberInputTextField());
-		String pageNumberAfter = getPageNumberInputTextField().GetAttribute("value");
-		if(Integer.parseInt(pageNumberAfter)<Integer.parseInt(pageNumberBefore)) {
-			base.passedStep("After click on previous page button,page navigated to previous page "+pageNumberAfter+" from page"+pageNumberBefore);
-		}else {
-			base.failedStep("failed to navigated to previous  page after click on previous page button");
-		}
-	}
-	/**
-	 * @author Gopinath
-	 * @Description methoad to click on doc page first button(<<) and verify
-	 */
-	public void clickOnDocPageFirstButton() {
-		base.waitForElement(getDocViewDocPageFirstButton());
-		getDocViewDocPageFirstButton().waitAndClick(5);
-		base.waitForElement(getPageNumberInputTextField());
-		if(getPageNumberInputTextField().GetAttribute("value").equals("1")) {
-			base.passedStep("After click on document page first button, page navigated to first document");
-		}else {
-			base.failedStep("failed to navigated to first  page after click on  page first button");
-		}
-		
-	}
-	
-	/**
-	 * @author Gopianth
-	 * @Description:method to verify spinning wheel in neardupe comparison window.
-	 */
-	public void nearDupeComparisonWindowLodingVerification() {
-		base.waitForElement(getDocView_Analytics_NearDupeTab());
-		getDocView_Analytics_NearDupeTab().ScrollTo();
-		driver.scrollPageToTop();
-		getDocView_Analytics_NearDupeTab().waitAndClick(10);
-		base.waitForElement(getDocView_NearDupeIcon());
-		getDocView_NearDupeIcon().ScrollTo();
-		getDocView_NearDupeIcon().waitAndClick(10);
-		 String parentWindow = reusableDocView.switchTochildWindow();
-		  
-		base.waitForElement(getCentralPanelDispaly());
-		if(getCentralPanelDispaly().isDisplayed()) {
-			base.passedStep("spinning wheel is displayed when two doc are loading in comparision window");
-		}else {
-			base.failedStep("spinning wheel is not displayed when two doc are loading in comparision window");
-		}
-		base.waitForElement(getComparisonNearDupeView());
-		base.waitTime(3);
-		if(getComparisonNearDupeView().isElementAvailable(10)) {
-			if(getCentralPanelDispaly().getWebElement().isDisplayed()) {
-				base.failedStep("spinning wheel is not gone after near dupe is loaded");
-			}else {
-				base.passedStep("Ater near dupe is loaded spinning wheel is disappear from the pge ");
-			}
-		}else {
-			base.failedStep("Near dupe is not loaded on comparison window");
-		}
-		reusableDocView.childWindowToParentWindowSwitching(parentWindow);
-	}
-	
 
 	/**
 	 * @author Mohan 16/11/22 NA Modified date: NA Modified by:NA
@@ -25778,81 +25596,22 @@ public class DocViewPage {
 				+ "docs");
 		
 	}
-	
 	/**
-	 * @author Arunkumar
-	 * @Description: This method used to verify whether the multiword text is considered as phrase and highlighting
-	 * 
+	 * @author Jayanthi.ganesan
+	 * This method will complete the particular document based on Doc ID given
+	 * @param DocID[Doc ID of Document needs to be completed]
 	 */
-	public void verifyMultiwordTextHighlightOnDocview(String multiwordText) {
-		
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return getDocView_SearchButton().Visible() && getDocView_SearchButton().Enabled();
-			}
-		}), Input.wait30);
-		base.waitTillElemetToBeClickable(getDocView_SearchButton());
-		getDocView_SearchButton().Click();
-		if(!getDocView_SearchButton().isDisplayed()  && searchTextBox().isDisplayed() && closeIcon().isDisplayed()) {
-			base.passedStep("After clicking magnifying icon it is replaced by search box text field and X presentation");
-		}
-		else {
-			base.failedStep("After clicking magnifying icon it is not replaced by search box text field and X presentation");
-		}
-		base.waitForElement(searchTextBox());
-		searchTextBox().Click();
-		searchTextBox().SendKeys(multiwordText);
-		searchIcon().Click();		
-		String searchResult =searchResult().getText();
-		base.stepInfo("Highlighted multiword text search result:"+searchResult);
-		if(searchResult.contains("1 of")) {
-			base.passedStep("Multi word text considered as phrase and highlighted");
-		}
-		else {
-			base.failedStep("Multi word text are not highlighted");
-		}
-		
-	}
-
-	/**
-	 * @author Iyappan.Kasinathan
-	 * @description: To verify tags of coding form name in docview page
-	 */
-	public void verifyTagsAreDisabledInPreviewBox(int objectNo) {
-		// base.waitForElement(getCodingFormTag(objectNo));
+	public void completeDocsBasedOnDocID(String DocID) {
 		driver.waitForPageToBeReady();
-		if (getCodingFormTagInPreview(objectNo).isElementAvailable(5) == true) {
-			base.passedStep("The added tags are checked and disabled");
-		} else {
-			base.failedStep("The added tags are not checked and disabled");
-		}
-	}
-	
-	/**
-	 * @author Krishna 16/02/22 NA Modified date: NA Modified by:NA
-	 * @description to select docs and remove code as same in child window
-	 */
-	public void selectDocsFromMiniDocsAndRemoveCodeAsSameInChildWindow() {
-
+		base.waitForElement(getDociD(DocID));
+		getDociD(DocID).waitAndClick(5);
+		editCodingFormComplete();
 		driver.waitForPageToBeReady();
-		driver.scrollPageToTop();
-		for (int i = 1; i <= 2; i++) {
-			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
-			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+		base.waitForElement(getCheckMarkText(DocID));
+		if(getCheckMarkText(DocID).isElementAvailable(2)) {
+		base.passedStep(" Checkmark icon displayed for Completed Document .");
+		}else {
+			base.failedStep("Check mark icon not displayed for document with doc Id "+DocID+"  which is expected.");
 		}
-
-		base.waitForElement(getDocView_Mini_ActionButton());
-		getDocView_Mini_ActionButton().waitAndClick(10);
-		base.waitForElement(getDocView__ChildWindow_Mini_RemoveCodeSameAs());
-		getDocView__ChildWindow_Mini_RemoveCodeSameAs().waitAndClick(10);
-		base.passedStep("Expected message : Code Same has been successfully removed");
-		driver.waitForPageToBeReady();
-		if (geDocView_MiniList_CodeSameAsIcon().isElementAvailable(1)) {
-			base.failedStep("CodeSameAs icon is displayed for the selected docs in child window");
-		} else {
-			base.passedStep("CodeSameAs icon is not displayed for the selected docs in child window");
-
-		}
-
 	}
 }

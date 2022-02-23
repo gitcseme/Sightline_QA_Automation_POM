@@ -8043,8 +8043,8 @@ public class AssignmentsPage {
 		bc.VerifySuccessMessage("Record saved successfully");
 		bc.stepInfo("Removed all the assigned document from the RMU reviewer.");
 		bc.passedStep("Documents are removed successfully for the reviewer");
-	}
-
+		bc.CloseSuccessMsgpopup();
+		}
 	/**
 	 * @author Steffy
 	 * @description this method will the reassign docs to the specific user.
@@ -8061,11 +8061,11 @@ public class AssignmentsPage {
 		bc.waitForElement(getDistributeBtn());
 		bc.waitTillElemetToBeClickable(getDistributeBtn());
 		getDistributeBtn().waitAndClick(3);
+		bc.VerifySuccessMessage("Record saved successfully");
 		bc.stepInfo("Documents are distributed to reviewer successfully");
 		bc.passedStep("Documents are reassigned successfully for the reviewer");
 		bc.CloseSuccessMsgpopup();
-	}
-
+		}
 	/**
 	 * @author Jayanthi.ganesan
 	 * @description To delete an assignment from single assignment group
@@ -9376,7 +9376,7 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * @Authro Jeevitha
+	 * @Authro Jeevitha ( Modified by Jayanthi)
 	 * @Description : Can Enable or Disable Toggles
 	 * @param enableToggle
 	 * @param DisableToggle
@@ -9393,6 +9393,9 @@ public class AssignmentsPage {
 			if (keepFMToggleStatus.equals("true")) {
 				System.out.println(ELementName + " : Toggle is Already Enabled ");
 				bc.stepInfo(ELementName + " : Toggle is Already Enabled ");
+				if (ELementName.equalsIgnoreCase("Draw From Pool")) {
+					getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
+				}
 
 			} else if (keepFMToggleStatus.equals(Input.TextEmpty) || keepFMToggleStatus.equalsIgnoreCase("false")) {
 				toggleEle.waitAndClick(5);
@@ -9696,4 +9699,36 @@ public void UnCompleteDocs(String user) {
 		bc.passedStep("Documents are un-completed successfully for the " + user);
 		
 	}
+/**
+ * @author Jayanthi
+ * @param count - NO of Docs to assigned to user
+ * @description This method will distribute the given count of docs to reviewer.
+ */
+public String distributeTheGivenDocCountToReviewer(String count) throws InterruptedException {
+
+	bc.waitForElement(getAssignment_ManageReviewersTab());
+	getAssignment_ManageReviewersTab().waitAndClick(10);
+	bc.waitForElement(getAddReviewersBtn());
+	getAddReviewersBtn().waitAndClick(10);
+	getSelect2ndUserToAssign().ScrollTo();
+	bc.waitForElement(getSelect2ndUserToAssign());
+	getSelect2ndUserToAssign().waitAndClick(5);
+	bc.waitForElement(getAdduserBtn());
+	getAdduserBtn().waitAndClick(5);
+	bc.VerifySuccessMessage("Record saved successfully");
+	bc.waitForElement(getDistributeTab());
+	getDistributeTab().waitAndClick(5);
+	bc.waitForElement(getSelect2ndUserInDistributeTab());
+	getSelect2ndUserInDistributeTab().waitAndClick(5);
+	bc.CloseSuccessMsgpopup();	
+	getAssgn_docsToDistribute().SendKeys(count);
+	getDistributeBtn().waitAndClick(3);
+	bc.stepInfo(count+" Documents are distributed to reviewer successfully");
+	bc.CloseSuccessMsgpopup();
+	bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+	bc.getCloseSucessmsg().waitAndClick(10);
+	bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+
+	return count;
+}
 }
