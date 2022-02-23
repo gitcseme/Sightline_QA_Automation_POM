@@ -848,6 +848,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+
+	public Element redactedTextInRedaction() {
+		return driver.FindElementByXPath("//p[text()='REDACTED']");
+	}
 	
 	public Element fieldMappingtTextInDAT() {
 		return driver.FindElementByXPath("//label[contains(text(),'Field Mapping:')]");
