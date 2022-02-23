@@ -848,10 +848,6 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
-
-	public Element redactedTextInRedaction() {
-		return driver.FindElementByXPath("//p[text()='REDACTED']");
-	}
 	
 	public Element fieldMappingtTextInDAT() {
 		return driver.FindElementByXPath("//label[contains(text(),'Field Mapping:')]");
@@ -2609,7 +2605,26 @@ public class ProductionPage {
 		public Element getRegenerateAllRadioBtn() {
 			return driver.FindElementByXPath("//input[@id='RegenerateAll']/../i");
 		}
-
+		public Element getProductionOutputLocation_VolumeName() {
+			return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_VolumeName']");
+		}
+		public Element getProductionComponentsFolderDetails_FolderName_LoadFiles() {
+			return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_LoadFiles']");
+		}
+		public Element getProductionOutputLocation_DriveText() {
+			return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_DriveText']");
+		}
+		public Element getProductionComponentsFolderDetails_FolderName_Images() {
+			return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_Images']");
+		}
+		public Element getProductionComponentsFolderDetails_FolderName_Text() {
+			return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_Text']");
+		}
+		public Element getProductionComponentsFolderDetails_FolderName_Natives() {
+			return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_Natives']");
+		}
+		
+		
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;

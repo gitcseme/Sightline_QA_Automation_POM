@@ -1,7 +1,10 @@
 package testScriptsRegression;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -4961,7 +4964,173 @@ public class Production_Test_Regression {
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 				loginPage.logout();
 				}
-				
+				/**
+				 * @author Aathith Test case id-RPMXCON-47912
+				 * @DescriptionTo To Verify generated Generate Load File Should point to respective Directories.(Eg.Native Load File Should point to Native Directory).
+				 * 
+				 */
+				@Test(groups = { "regression" }, priority = 78)
+				public void verifyProductionDirectory() throws Exception {
+
+					UtilityLog.info(Input.prodPath);
+
+					base.stepInfo("RPMXCON-47912-Production component");
+					base.stepInfo("To Verify generated Generate Load File Should point to respective Directories.(Eg.Native Load File Should point to Native Directory).");
+
+					String foldername = "Folder" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					String productionname = "p" + Utility.dynamicNameAppender();
+					String prefixID = Utility.randomCharacterAppender(1);
+					String suffixID = Utility.randomCharacterAppender(1);
+
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(Input.testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					sessionSearch.bulkTagExisting(tagname);
+
+					ProductionPage page = new ProductionPage(driver);
+					page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(4);
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSection();
+					page.fillingTIFFSection(tagname);
+					page.fillingTextSection();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					driver.scrollPageToTop();
+					base.waitForElement(page.getMarkCompleteLink());
+					page.getMarkCompleteLink().waitAndClick(10);
+					driver.waitForPageToBeReady();
+					
+					String location = page.getProductionOutputLocation_VolumeName().GetAttribute("value");
+					String loadfile = page.getProductionComponentsFolderDetails_FolderName_LoadFiles().GetAttribute("value");
+					String directory = page.getProductionOutputLocation_DriveText().GetAttribute("value");
+					String image = page.getProductionComponentsFolderDetails_FolderName_Images().GetAttribute("value");
+					String Text = page.getProductionComponentsFolderDetails_FolderName_Text().GetAttribute("value");
+					String Native = page.getProductionComponentsFolderDetails_FolderName_Natives().GetAttribute("value");
+					
+					driver.waitForPageToBeReady();
+					base.waitForElement(page.getNextButton());
+					page.getNextButton().Enabled();
+					page.getNextButton().waitAndClick(10);
+					
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePage();
+					
+					String name = page.getProduction().getText().trim();
+					System.out.println(name);
+					String home = System.getProperty("user.home");
+					
+					driver.waitForPageToBeReady();
+					
+					page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+					System.out.println("Unzipped the downloaded files");
+					
+					File f = new File(home + "/Downloads/" + location +"/"+loadfile+"/");
+					File dat = new File(home + "/Downloads/" + location +"/"+loadfile+"/"+name+"_DAT.dat");
+					File tiff = new File(home + "/Downloads/" + location +"/"+loadfile+"/"+name+"_TIFF.OPT");
+					File text = new File(home + "/Downloads/" + location +"/"+loadfile+"/"+name+"_Text.lst");
+					File NativeLST = new File(home + "/Downloads/" + location +"/"+loadfile+"/"+name+"_Native.lst");
+					driver.waitForPageToBeReady();
+					
+					 if (f.exists()) {
+				            System.out.println("load file is Exists in pointed directory");
+				            base.passedStep("load file is Exists in pointed directory");
+				            }
+				        else {
+				            System.out.println("Does not Exists");
+				            base.failedStep("Does not Exists");
+				    }
+					 if (dat.exists()) {
+				            System.out.println("dat file is Exists in pointed directory");
+				            base.passedStep("dat file is Exists");
+				            }
+				        else {
+				            System.out.println("Does not Exists");
+				            base.failedStep("Dat does not Exists");
+				    }
+					 if (tiff.exists()) {
+				            System.out.println("tiff file is Exists in pointed directory");
+				            base.passedStep("tiff loadfile exists");
+				            
+				            driver.waitForPageToBeReady();
+							for (String line : Files
+									.readAllLines(Paths.get(home + "/Downloads/" + location +"/"+loadfile+"/" + name + "_TIFF.OPT"))) {
+									
+									if (line.contains(directory+location+"\\"+image+"\\")) {
+										System.out.println("tiff is displayed as expected");
+										base.passedStep("Tiff load file point Image directory");
+									} else {
+										base.failedStep("tiff verification failed");
+									}
+							}
+				            }
+				        else {
+				            System.out.println("Tiff Does not Exists");
+				            base.stepInfo("Tiff load file is not generated");
+				    }
+					 if (text.exists()) {
+				            System.out.println("text file is Exists in pointed directory");
+				            base.passedStep("text loadfile is exists");
+				            driver.waitForPageToBeReady();
+				            for (String line : Files
+									.readAllLines(Paths.get(home + "/Downloads/"  + location +"/"+loadfile+"/" + name + "_Text.lst"))) {
+
+									if (line.contains(directory+location+"\\"+Text+"\\")) {
+										System.out.println("Text is displayed as expected");
+										base.passedStep("Text load file point text directory");
+									} else {
+										base.failedStep("Text load file not displayed");
+									}
+							}
+				            }
+				        else {
+				            System.out.println("Does not Exists");
+				            base.stepInfo("Text load file is not generated");
+				    }
+					 if (NativeLST.exists()) {
+				            System.out.println("Native file is Exists in pointed directory");
+				            base.passedStep("Native loadfile exists");
+				            
+				            driver.waitForPageToBeReady();
+				            for (String line : Files
+									.readAllLines(Paths.get(home + "/Downloads/"  + location +"/"+loadfile+"/" + name + "_Native.lst"))) {
+
+									if (line.contains(directory+location+"\\"+Native+"\\")) {
+										System.out.println("native is displayed as expected");
+										base.passedStep("Native load file point Native directory");
+									} else {
+										base.failedStep("the text is not displayed as expected");
+									}
+							}
+				            }
+				        else {
+				            System.out.println("Does not Exists");
+				            base.stepInfo("Native load file is not generated");
+				    }
+					
+					
+					base.passedStep("Text is displayed as expected");
+					base.passedStep("Verified generated Generate Load File Should point to respective Directories.(Eg.Native Load File Should point to Native Directory).");
+					
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+					loginPage.logout();
+
+				}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
