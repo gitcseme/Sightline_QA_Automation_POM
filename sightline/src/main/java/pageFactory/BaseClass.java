@@ -1759,7 +1759,7 @@ public class BaseClass {
 	}
 
 	/**
-	 * @author Raghuram A Modified on : 11/12/21 by Raghuram A Description : TO
+	 * @author Raghuram A Modified on : 23/2/22 by Jeevitha Description : TO
 	 *         handle all impersonate dynamically in one method with "FROM" and "TO"
 	 *         parameter - can be extended based on the requirement
 	 * 
@@ -1786,10 +1786,12 @@ public class BaseClass {
 			} else if (fromRole.equalsIgnoreCase("DA") && toRole.equalsIgnoreCase("REV")) {// impersonate to REV
 				impersonateDAtoReviewer();
 			} else if (fromRole.equalsIgnoreCase("RMU") && toRole.equalsIgnoreCase("PA")) {// impersonate to PA
-				impersonateDAtoPA();
+				impersonateSAtoPA();
 			} else if (fromRole.equalsIgnoreCase("REV") && toRole.equalsIgnoreCase("PA")) {// impersonate to PA
-				impersonateDAtoPA();
-			}
+				impersonateSAtoPA();
+			} else if (fromRole.equalsIgnoreCase("PA") && toRole.equalsIgnoreCase("REV")) {// impersonate to PA
+				impersonatePAtoReviewer();
+			} 
 			stepInfo("Impersonated to " + toRole + " from " + fromRole + "");
 		} catch (Exception E) {
 			E.printStackTrace(pw);
