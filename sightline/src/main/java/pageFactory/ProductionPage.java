@@ -2558,7 +2558,10 @@ public class ProductionPage {
 	public Element getRotationDropDown() {
 		return driver.FindElementByXPath("//select[@id='dldPageRotatePreference']");
 	}
-	
+	//add by sowndarya
+	public Element redactedTextInRedaction() {
+		return driver.FindElementByXPath("//p[text()='REDACTED']");
+	}
 	//add by Aathith
 		public ElementCollection getProductionSate() {
 			return driver.FindElementsByXPath("//div[@class='col-md-12 font-xs']");
