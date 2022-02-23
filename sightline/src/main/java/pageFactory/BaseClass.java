@@ -2892,11 +2892,11 @@ public class BaseClass {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description : Converts rgb to hexa 
-	 * @param bgColor : string contains rgba
-	 * @param select : if true then rgba else rgb
+	 * @Description : Converts rgb to hexa
+	 * @param bgColor   : string contains rgba
+	 * @param select    : if true then rgba else rgb
 	 * @param splitTern : string contains rgb
-	 * @return hexa value 
+	 * @return hexa value
 	 */
 	public String rgbTohexaConvertor_Optional(String bgColor, boolean select, String splitTern) {
 		try {
@@ -2951,7 +2951,7 @@ public class BaseClass {
 
 	/**
 	 * @Author Jeevitha
-	 * @param ExpectedMsg  : expected Error Msg
+	 * @param ExpectedMsg : expected Error Msg
 	 * @Description : Verify Error message in German
 	 */
 	public void VerifyErrorMessageInGerman(String ExpectedMsg) {
@@ -2961,7 +2961,7 @@ public class BaseClass {
 		UtilityLog.info("Expected message - " + ExpectedMsg);
 		Reporter.log("Expected message - " + ExpectedMsg, true);
 	}
-	
+
 	/**
 	 * @author Indium Raghuram Description: verifyListSizeWithCondition
 	 *         Date:02/16/21 Modified date:N/A* Modified by:N/A
@@ -2997,38 +2997,57 @@ public class BaseClass {
 		}
 		return hash_Set;
 	}
-	
-	
+
 	/**
 	 * @author @Brundha
-	 * @throws AWTException 
-	 *@Description:Method to verify downloaded csv file and its sorting order
+	 * @throws AWTException
+	 * @Description:Method to verify downloaded csv file and its sorting order
 	 * 
 	 */
 	public void VerifyingCSVFileDownloadedAndSorted() throws IOException, InterruptedException, AWTException {
-		//Method to verify the downloaded file:
-		String fileName=GetFileName();
+		// Method to verify the downloaded file:
+		String fileName = GetFileName();
 		List<String> lines = new ArrayList<>();
 		String line = null;
-        List<String>Values=new ArrayList<>();
+		List<String> Values = new ArrayList<>();
 		FileReader file = null;
 		file = new FileReader(fileName);
 
 		BufferedReader br = new BufferedReader(file);
 		while ((line = br.readLine()) != null) {
-		lines.add(line);
+			lines.add(line);
 		}
-		
-        System.out.println(lines.size());
-		for (int i = 1; i < lines.size()-1; i++) {
-		String value = lines.get(i);
-		String[] arrOfStr = value.split(",");
-	 
-	   System.out.println(arrOfStr[1]);
-	   Values.add(arrOfStr[1]);
+
+		System.out.println(lines.size());
+		for (int i = 1; i < lines.size() - 1; i++) {
+			String value = lines.get(i);
+			String[] arrOfStr = value.split(",");
+
+			System.out.println(arrOfStr[1]);
+			Values.add(arrOfStr[1]);
+		}
+		// Method to verify the sorting order
+		verifyOriginalSortOrder(Values, Values, "Ascending", true);
 	}
-		//Method to verify the sorting order
-		 verifyOriginalSortOrder(Values,Values,"Ascending",true);
-}
-	
+
+	/**
+	 * @author Raghuram.A
+	 * @param key - Key to Press
+	 * @description : method to hit keyboard key and release
+	 */
+	public void hitKey(int key) {
+		try {
+			Robot robot = new Robot();
+
+			// Key Press
+			robot.keyPress(key);
+			// Key Release
+			robot.keyRelease(key);
+
+			System.out.println(key + ": Pressed");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

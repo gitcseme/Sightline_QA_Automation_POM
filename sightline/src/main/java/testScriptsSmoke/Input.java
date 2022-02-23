@@ -197,7 +197,7 @@ public class Input {
 	public static String ingestionQuery;
 	public static String ingestionDocIdFamilyMember;
 	public static String ingestionDocIdNearDupe;
-	
+
 	// DocView codingform Baskar Indium
 
 	public static String savedName;
@@ -334,7 +334,9 @@ public class Input {
 	public static String specialString1;
 	public static String specialString2;
 	public static String specialString3;
-    public static String docSelectionHighlight;
+	public static String docSelectionHighlight;
+	public static String batchFileWithMultiSheetColumnMissing;
+	public static String batchFileWithMultiSheetColumnDuplicate;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -517,7 +519,7 @@ public class Input {
 	// Added by Baskar
 	public static String oneHourAudio;
 	public static String excelProtectedHiddenDocId;
-	
+
 	// Added by Mohan (Ingestion Datasets)
 	public static String H1369Folder;
 	public static String MultiPTIFFFolder;
@@ -719,12 +721,12 @@ public class Input {
 		familyDocWhichIsNotInMiniDoc = testData.getFamilyDocWhichIsNotInMiniDoc();
 		bgColorOnMouseHover = testData.bgColorOnMouseHover;
 		nearDupePagination = testData.getNearDupePagination();
-		fieldByValue=testData.getFieldByValue();
-		highlightDocId=testData.getHighlightDocId();
-		highlightedDocsQuery=testData.getHighlightedDocsQuery();
-		ingestionQuery=testData.getIngestionQuery();
-		ingestionDocIdFamilyMember=testData.getIngestionDocIdFamilyMember();
-		ingestionDocIdNearDupe=testData.getIngestionDocIdNearDupe();
+		fieldByValue = testData.getFieldByValue();
+		highlightDocId = testData.getHighlightDocId();
+		highlightedDocsQuery = testData.getHighlightedDocsQuery();
+		ingestionQuery = testData.getIngestionQuery();
+		ingestionDocIdFamilyMember = testData.getIngestionDocIdFamilyMember();
+		ingestionDocIdNearDupe = testData.getIngestionDocIdNearDupe();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
@@ -753,8 +755,8 @@ public class Input {
 		ChildBates = testData.getChildBates();
 		Production = testData.getProduced();
 		TIFFPageCount = testData.getPageCount();
-		translationDocumentId=testData.getTranslationDocId();
-		parentDocument=testData.getParentDocument();
+		translationDocumentId = testData.getTranslationDocId();
+		parentDocument = testData.getParentDocument();
 		/**
 		 * @author Aathith.Senthilkumar
 		 */
@@ -814,10 +816,10 @@ public class Input {
 		UniCodeDocId = testData.getUniCodeDocId();
 		TiffDocId = testData.getTiffDocId();
 		HiddenContentExcelSheet = testData.getHiddenContentExcelSheet();
-	    HiddenContentExcelBook = testData.getHiddenContentExcelBook();
+		HiddenContentExcelBook = testData.getHiddenContentExcelBook();
 		HiddenContentExternalLink = testData.getHiddenContentExternalLink();
-		audioString1=testData.getAudioString1();
-		audioString2=testData.getAudioString2();
+		audioString1 = testData.getAudioString1();
+		audioString2 = testData.getAudioString2();
 
 		// Added by Arun
 		pageRange1 = testData.getPageRange1();
@@ -829,7 +831,7 @@ public class Input {
 		multiwordText = testData.getMultiwordText();
 
 		// Added by Raghuram 02/02/21
-		docSelectionHighlight=testData.getDocSelectionHighlight();
+		docSelectionHighlight = testData.getDocSelectionHighlight();
 		docHighlightColor = testData.getDocHighlightColor();
 		sortDataBy = testData.getSortDataBy();
 		sortType = testData.getSortType();
@@ -857,6 +859,8 @@ public class Input {
 		specialString1 = testData.getSpecialString1();
 		specialString2 = testData.getSpecialString2();
 		specialString3 = testData.getSpecialString3();
+		batchFileWithMultiSheetColumnMissing = testData.getBatchFileWithMultiSheetColumnMissing();
+		batchFileWithMultiSheetColumnDuplicate = testData.getBatchFileWithMultiSheetColumnDuplicate();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
@@ -1024,8 +1028,8 @@ public class Input {
 		documentId = testData.getDocumentID();
 		telecaSearchString = testData.getTelecaSearchString();
 		docFile = testData.getDocFile();
-		stampRed=testData.getStampRed();
-		stampGreen=testData.getStampGreen();
+		stampRed = testData.getStampRed();
+		stampGreen = testData.getStampGreen();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();
@@ -1070,34 +1074,33 @@ public class Input {
 
 		hiddenDocId = testData.getHiddenDocId();
 		excelProtectedHiddenDocId = testData.getExcelProtectedHiddenDocId();
-		
 
-		//Ingestion DataSet
-		
-		H1369Folder =testData.getH1369Folder(); 
-		MultiPTIFFFolder  =testData.getMultiPTIFFFolder();
+		// Ingestion DataSet
+
+		H1369Folder = testData.getH1369Folder();
+		MultiPTIFFFolder = testData.getMultiPTIFFFolder();
 		SinglePageTIFFFolder = testData.getSinglePageTIFFFolder();
-		CJK_FrenchAudioTestDataFolder =testData.getCJK_FrenchAudioTestDataFolder();
+		CJK_FrenchAudioTestDataFolder = testData.getCJK_FrenchAudioTestDataFolder();
 		EmailConcatenatedDataFolder = testData.getEmailConcatenatedDataFolder();
-		SSAudioSpeechFolder =testData.getSSAudioSpeechFolder();
-		GD994NativeTextForProductionFolder =testData.getGD994NativeTextForProductionFolder();
-		GNonsearchablePDFLoadfileFolder =testData.getGNonsearchablePDFLoadfileFolder();
-		HiddenPropertiesFolder =testData.getHiddenPropertiesFolder();
-		UniCodeFilesFolder =testData.getUniCodeFilesFolder();
-		IngestionEmailDataFolder =testData.getIngestionEmailDataFolder();
+		SSAudioSpeechFolder = testData.getSSAudioSpeechFolder();
+		GD994NativeTextForProductionFolder = testData.getGD994NativeTextForProductionFolder();
+		GNonsearchablePDFLoadfileFolder = testData.getGNonsearchablePDFLoadfileFolder();
+		HiddenPropertiesFolder = testData.getHiddenPropertiesFolder();
+		UniCodeFilesFolder = testData.getUniCodeFilesFolder();
+		IngestionEmailDataFolder = testData.getIngestionEmailDataFolder();
 		DATFile = testData.getDATFile();
 		TextFile = testData.getTextFile();
-		NativeFile= testData.getNativeFile();
+		NativeFile = testData.getNativeFile();
 		TIFFFile = testData.getTIFFFile();
 		TIFFFile1 = testData.getTIFFFile1();
 		TranslationFile = testData.getTranslationFile();
-		PDFFile= testData.getPDFFile();
+		PDFFile = testData.getPDFFile();
 		TranscriptFile = testData.getTranscriptFile();
 		MP3File = testData.getMP3File();
 		DATGermanFile = testData.getDATGermanFile();
 		DATJapneseFile = testData.getDATJapneseFile();
 		TranscriptGermanFile = testData.getTranscriptGermanFile();
-		MP3GermanFile =testData.getMP3GermanFile();
+		MP3GermanFile = testData.getMP3GermanFile();
 		TranscriptJapneseFile = testData.getTranscriptJapneseFile();
 		MP3JapneseFile = testData.getMP3JapneseFile();
 

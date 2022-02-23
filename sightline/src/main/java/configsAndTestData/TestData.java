@@ -223,6 +223,8 @@ public class TestData {
 	public String specialString2;
 	public String specialString3;
     public String docSelectionHighlight;
+    public String batchFileWithMultiSheetColumnMissing;
+    public String batchFileWithMultiSheetColumnDuplicate;
     
 	// Added by jeevitha
 	public String colorCodeOfRed;
