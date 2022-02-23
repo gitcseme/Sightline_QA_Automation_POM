@@ -1910,7 +1910,7 @@ public class CreateCodingForm_New_Regression {
 	    baseClass.waitTillElemetToBeClickable(codingForm.getCF_PreviewButton());
 	    codingForm.getCF_PreviewButton().waitAndClick(10);
 	    //verify preview validation
-	    docViewPage.verifyTagsAreDisabled(0);
+	    docViewPage.verifyTagsAreDisabledInPreviewBox(0);
 	    baseClass.ValidateElement_Absence(codingForm.getCFPreviewObjectName(expectedSecondObjectName), "Expected tag name is not present");
 	    baseClass.passedStep("Expected tag name is not present");
 	    codingForm.validatePreviewSuccessMsg();

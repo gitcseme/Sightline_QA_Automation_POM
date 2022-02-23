@@ -748,7 +748,7 @@ public class CreateCodingForm_New_Regression2 {
 		reusableDocView.saveButton();
 		docViewPage.verifyCodingFormName(codingform);
 		//verify tags are disbled
-		docViewPage.verifyTagsAreDisabled(0);
+		docViewPage.verifyTagsAreDisabledInPreviewBox(0);
 		//verify tag names
 		docViewPage.verifyCodingFormTagNameInDocviewPg(0,expectedFirstObjectName);		
 		loginPage.logout();
@@ -759,7 +759,7 @@ public class CreateCodingForm_New_Regression2 {
 		reusableDocView.completeButton();
 		docViewPage.verifyCodingFormName(codingform);
 		//verify tags are disbled
-		docViewPage.verifyTagsAreDisabled(0);
+		docViewPage.verifyTagsAreDisabledInPreviewBox(0);
 		//verify tag names
 		docViewPage.verifyCodingFormTagNameInDocviewPg(0,expectedFirstObjectName);
 		loginPage.logout();
@@ -809,7 +809,7 @@ public class CreateCodingForm_New_Regression2 {
 		reusableDocView.completeButton();
 		docViewPage.verifyCodingFormName(codingform);
 		//verify tags are disbled
-		docViewPage.verifyTagsAreDisabled(0);
+		docViewPage.verifyTagsAreDisabledInPreviewBox(0);
 		//verify tag names
 		docViewPage.verifyCodingFormTagNameInDocviewPg(0,expectedFirstObjectName);
 		baseClass.passedStep("The validations of codingform objects after the complete action works as expected");
@@ -833,9 +833,10 @@ public class CreateCodingForm_New_Regression2 {
 		loginPage.loginToSightLine(userName, password);
 		if(user=="rmu") {
 			baseClass.impersonatePAtoRMU();
+			codingForm.assignCodingFormToSG("Default Project Coding Form");
 		}else {
 			baseClass.impersonatePAtoReviewer();
-		}
+		}		
 	    sessionSearch.basicContentSearch("null");
 		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
