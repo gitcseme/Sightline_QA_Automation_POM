@@ -2609,7 +2609,15 @@ public class ProductionPage {
 		public Element getRegenerateAllRadioBtn() {
 			return driver.FindElementByXPath("//input[@id='RegenerateAll']/../i");
 		}
-
+		
+     //added by Brundha
+		public Element GetVolumeName() {
+			return driver.FindElementById("ProductionOutputLocation_VolumeName");
+		}
+		
+		public Element GetVolumeLocation() {
+			return driver.FindElementById("lstVolumeLocation");
+		}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;

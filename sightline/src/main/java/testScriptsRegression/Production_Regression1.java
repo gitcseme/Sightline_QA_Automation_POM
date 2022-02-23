@@ -1,7 +1,7 @@
 package testScriptsRegression;
 
 import java.awt.AWTException;
-
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
@@ -9240,6 +9240,88 @@ public class Production_Regression1 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Brundha Test case id-RPMXCON-47993
+	 * @Description To Verify The Volume specified in the Production output step
+	 *              should be created where it is specified,
+	 * 
+	 */
+	 @Test(groups = { "regression" }, priority = 126)
+	public void VerifyingVolumeInProductionOutput() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-47993 -Production Component");
+		base.stepInfo(
+				"To Verify The Volume specified in the Production output step should be created where it is specified,");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String VolumeName = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSection(tagname, Input.searchString4);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID,suffixID,beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.GetVolumeName().Click();
+		page.GetVolumeName().SendKeys(VolumeName);
+		page.GetVolumeLocation().isDisplayed();
+		page.GetVolumeLocation().selectFromDropdown().selectByVisibleText("In Delivery Folder");
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		String name = page.getProduction().getText().trim();
+		String home = System.getProperty("user.home");
+		page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+		System.out.println("Unzipped the downloaded files");
+
+		driver.waitForPageToBeReady();
+		File file = new File(home + "/Downloads/" + VolumeName + "/Natives/0001");
+		File Textfile = new File(home + "/Downloads/" + VolumeName + "/Text/0001");
+		File loadfile = new File(home + "/Downloads/" + VolumeName + "/Load Files");
+
+		if (file.exists()) {
+			base.passedStep("Volume is displayed in  the given production directory");
+		} else {base.failedStep("Volume is displayed  not in the given production directory");}
+
+		if (Textfile.exists()) {
+			base.passedStep("Volume is displayed in  the given production directory");
+		} else {base.failedStep("Volume is displayed  not in the given production directory");}
+
+		if (loadfile.exists()) {
+			base.passedStep("Volume is displayed in  the given production directory");
+		} else {base.failedStep("Volume is displayed  not in the given production directory");}
+			
+		loginPage.logout();
+
+	}
+	
+	
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
