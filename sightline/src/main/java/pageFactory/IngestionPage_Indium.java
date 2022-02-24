@@ -9,6 +9,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -21,6 +23,7 @@ public class IngestionPage_Indium {
 	Driver driver;
 	public String IngestionName;
 	BaseClass base;
+	SoftAssert softAssertion;
 
 	// ID's
 	public Element getSpecifySourceSystem() {
@@ -677,6 +680,30 @@ public class IngestionPage_Indium {
 
 	public Element getInprogressIngestionStatus() {
 		return driver.FindElementByXPath("//strong[contains(.,'In Progress')]");
+	}
+
+	public Element getIngestionWizardDateFormate() {
+		return driver.FindElementByXPath("//div[@style='padding-right:0px;']//div[@class='formatDate']");
+	}
+
+	public Element getIngestion_SaveAsDraft() {
+		return driver.FindElementById("SaveIngestion");
+	}
+
+	public Element getIngestionSettingGearIcon() {
+		return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn']");
+	}
+
+	public Element getDraftIngestionStatus() {
+		return driver.FindElementByXPath("//strong[contains(.,'Draft')]");
+	}
+
+	public Element getIngestionRollbackbutton() {
+		return driver.FindElementByXPath("//dt[contains(.,'Rollback')]");
+	}
+	
+	public Element copyTableDataName(String term) {
+		return driver.FindElementByXPath("//*[@id='Copyingblock']//td[contains(text(),'" + term + "')]");
 	}
 
 	public IngestionPage_Indium(Driver driver) {
@@ -1629,255 +1656,294 @@ public class IngestionPage_Indium {
 	}
 
 	public void IngestionCatlogtoIndexing(String dataset) throws InterruptedException {
-	    	
-			driver.scrollPageToTop();
-	    	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getPreviewRun().Visible()  ;}}), Input.wait30); 
-	    	getPreviewRun().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
-	    	getApproveMessageOKButton().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
-	    	getbtnRunIngestion().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-	    	getFilterByButton().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-	    	getFilterByFAILED().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-	    	getFilterByCATALOGED().waitAndClick(10);
-	    	
-	    	//catlogging
-	    	for (int i = 0; i < 40; i++)
-			{
-				try{	
-					if (getInprogressIngestionStatus().isDisplayed()) {
-						base.waitTime(6);
-						for (int j = 0; j <= 3; j++) {
-							getRefreshButton().waitAndClick(10);
-						}
-						
-						getCatalogedIngestionStatus().isDisplayed();
-						base.passedStep("Cataloged completed");
-					}else {
-						base.waitForElement(getCatalogedIngestionStatus());
-						getCatalogedIngestionStatus().isDisplayed();
-						base.passedStep("Cataloged completed");
-					}
-					break;
-				}catch (Exception e) {
-							
-						try
-						{
-							Thread.sleep(5000);
-							getRefreshButton().waitAndClick(10);
-						   if(getFailedIngestionStatus().Displayed()){ 
-							    System.out.println("Execution aborted!");
-								UtilityLog.info("Execution aborted!");
-								System.out.println(dataset+" is failed in catalog stage. Take a look and continue!");
-								UtilityLog.info(dataset+" is failed in catalog stage. Take a look and continue!");
-								System.exit(1);
-							
-								}
-						}
-						catch (Throwable e1)
-						{
-							System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
-						}
-				}
-		}
-	    	
-	    	//copy
-	    	getRefreshButton().waitAndClick(10);
-	    	    		
-	        getIngestionName().waitAndClick(Input.wait30);
-	    
-	       
-	    	driver.scrollingToElementofAPage(getRunCopying());
-	    	base.waitForElement(getRunCopying());
-	        getRunCopying().waitAndClick(10);
-	        
-	        base.VerifySuccessMessage("Ingestion copy has Started.");
-	        UtilityLog.info(dataset+"'s copying is started.");
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getCloseButton().Enabled()  ;}}), Input.wait30); 
-	    	getCloseButton().waitAndClick(10);	
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-	    	getFilterByButton().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByCOPIED().Visible()  ;}}), Input.wait30); 
-	    	getFilterByCOPIED().waitAndClick(10);
-	    	
-	    	
-	    	for (int i = 0; i < 120; i++)
-			{
-					try{
-						
-							if (getInprogressIngestionStatus().isDisplayed()||getCatalogedIngestionStatus().isDisplayed()) {
-								base.waitTime(6);
-								getRefreshButton().waitAndClick(10);
-								getCopiedIngestionStatus().isDisplayed();
-								base.passedStep("Copied completed");
-							}else {
-								base.waitForElement(getCopiedIngestionStatus());
-								getCopiedIngestionStatus().isDisplayed();
-								base.passedStep("Copied completed");
-							}
-						break;
-					}catch (Exception e) {
-					
-					
-						
-				try
-					{
-						Thread.sleep(5000);
-						getRefreshButton().waitAndClick(10);
-						if(getFailedIngestionStatus().Displayed()){
-							    System.out.println("Execution aborted!");
-								UtilityLog.info("Execution aborted!");
-								System.out.println(dataset+" is failed in copying stage. Take a look and continue!");
-								UtilityLog.info(dataset+" is failed in copying stage. Take a look and continue!");
-								System.exit(1);
-					
-						}
-					}
-					catch (Throwable e1)
-					{
-						System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
-					}
-				
-					}
-			
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPreviewRun().Visible();
 			}
-	    	//Indexing
-	    	getRefreshButton().waitAndClick(10);
-	    	    		
-	       getIngestionName().waitAndClick(Input.wait30);
-	       
-	       driver.scrollingToElementofAPage(getMP3Count());
-	       
-	       if(dataset.contains("AllSources") || dataset.contains("SSAudioSpeech_Transcript")) {
-	       
-	       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    		   getIsAudioCheckbox().Visible()  ;}}),Input.wait60); 
-	        getIsAudioCheckbox().waitAndClick(10);
-	    	
-	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getLanguage().Visible()  ;}}),Input.wait60); 
-	        getLanguage().selectFromDropdown().selectByVisibleText("North American English");
-	       }
-	       else if(dataset.contains("CJK_GermanAudioTestData")) {
-	           
-	           driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		   getIsAudioCheckbox().Visible()  ;}}),Input.wait60); 
-	            getIsAudioCheckbox().waitAndClick(10);
-	        	
-	            driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	            		getLanguage().Visible()  ;}}),Input.wait60); 
-	            getLanguage().selectFromDropdown().selectByVisibleText("German");
-	           }
-	         else if(dataset.contains("CJK_JapaneseAudioTestData")) {
-	           
-	           driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		   getIsAudioCheckbox().Visible()  ;}}),Input.wait60); 
-	            getIsAudioCheckbox().waitAndClick(10);
-	        	
-	            driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	            		getLanguage().Visible()  ;}}),Input.wait60); 
-	            getLanguage().selectFromDropdown().selectByVisibleText("Japanese");
-	           }
-	         else if(dataset.contains("0002_H13696_1_Latest")) {
-	             
-	             driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	          		   getIsAudioCheckbox().Visible()  ;}}),Input.wait60); 
-	              getIsAudioCheckbox().waitAndClick(10);
-	          	
-	              driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	              		getLanguage().Visible()  ;}}),Input.wait60); 
-	              getLanguage().selectFromDropdown().selectByVisibleText("International English");
-	             }
-	         else {
-	        	   System.out.println("No need to select for other datasets");
-	           }
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getRunIndexing().Visible()  ;}}),Input.wait60); 
-	        getRunIndexing().waitAndClick(10);
-	        
-	        base.VerifySuccessMessage("Ingestion Indexing has Started.");
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getCloseButton().Enabled()  ;}}), Input.wait30); 
-	    	getCloseButton().waitAndClick(10);	
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-	    	getFilterByButton().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByINDEXED().Visible()  ;}}), Input.wait30); 
-	    	getFilterByINDEXED().waitAndClick(10);
-	    	
-	    	
-	    	for (int i = 0; i < 120; i++)
-			{
-				
-	    		try{
-	    			
-	    			if (getInprogressIngestionStatus().isDisplayed()||getCopiedIngestionStatus().isDisplayed()) {
-						base.waitTime(6);
+		}), Input.wait30);
+		getPreviewRun().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getApproveMessageOKButton().Visible();
+			}
+		}), Input.wait30);
+		getApproveMessageOKButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnRunIngestion().Visible();
+			}
+		}), Input.wait30);
+		getbtnRunIngestion().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByFAILED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByFAILED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCATALOGED().waitAndClick(10);
+
+		// catlogging
+		for (int i = 0; i < 40; i++) {
+			try {
+				if (getInprogressIngestionStatus().isDisplayed()) {
+					base.waitTime(6);
+					for (int j = 0; j <= 3; j++) {
 						getRefreshButton().waitAndClick(10);
-						getIndexedIngestionStatus().isDisplayed();
-						base.passedStep("Indexing completed");
-						UtilityLog.info(dataset+" indexed.");
-					}else {
-						base.waitForElement(getIndexedIngestionStatus());
-						getIndexedIngestionStatus().isDisplayed();
-						base.passedStep("Indexing completed");
 					}
-	    			
-					break;
-	    		}catch (Exception e) {
-					
-				try
-				{
+
+					getCatalogedIngestionStatus().isDisplayed();
+					base.passedStep("Cataloged completed");
+				} else {
+					base.waitForElement(getCatalogedIngestionStatus());
+					getCatalogedIngestionStatus().isDisplayed();
+					base.passedStep("Cataloged completed");
+				}
+				break;
+			} catch (Exception e) {
+
+				try {
+					Thread.sleep(5000);
+					getRefreshButton().waitAndClick(10);
+					if (getFailedIngestionStatus().Displayed()) {
+						System.out.println("Execution aborted!");
+						UtilityLog.info("Execution aborted!");
+						System.out.println(dataset + " is failed in catalog stage. Take a look and continue!");
+						UtilityLog.info(dataset + " is failed in catalog stage. Take a look and continue!");
+						System.exit(1);
+
+					}
+				} catch (Throwable e1) {
+					System.out.println("Task in Progress : " + i);
+					UtilityLog.info("Task in Progress : " + i);
+				}
+			}
+		}
+
+		// copy
+		getRefreshButton().waitAndClick(10);
+
+		getIngestionName().waitAndClick(Input.wait30);
+
+		driver.scrollingToElementofAPage(getRunCopying());
+		base.waitForElement(getRunCopying());
+		getRunCopying().waitAndClick(10);
+
+		base.VerifySuccessMessage("Ingestion copy has Started.");
+		UtilityLog.info(dataset + "'s copying is started.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCOPIED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCOPIED().waitAndClick(10);
+
+		for (int i = 0; i < 120; i++) {
+			try {
+
+				if (getInprogressIngestionStatus().isDisplayed() || getCatalogedIngestionStatus().isDisplayed()) {
+					base.waitTime(6);
+					getRefreshButton().waitAndClick(10);
+					getCopiedIngestionStatus().isDisplayed();
+					base.passedStep("Copied completed");
+				} else {
+					base.waitForElement(getCopiedIngestionStatus());
+					getCopiedIngestionStatus().isDisplayed();
+					base.passedStep("Copied completed");
+				}
+				break;
+			} catch (Exception e) {
+
+				try {
+					Thread.sleep(5000);
+					getRefreshButton().waitAndClick(10);
+					if (getFailedIngestionStatus().Displayed()) {
+						System.out.println("Execution aborted!");
+						UtilityLog.info("Execution aborted!");
+						System.out.println(dataset + " is failed in copying stage. Take a look and continue!");
+						UtilityLog.info(dataset + " is failed in copying stage. Take a look and continue!");
+						System.exit(1);
+
+					}
+				} catch (Throwable e1) {
+					System.out.println("Task in Progress : " + i);
+					UtilityLog.info("Task in Progress : " + i);
+				}
+
+			}
+
+		}
+		// Indexing
+		getRefreshButton().waitAndClick(10);
+
+		getIngestionName().waitAndClick(Input.wait30);
+
+		driver.scrollingToElementofAPage(getMP3Count());
+
+		if (dataset.contains("AllSources") || dataset.contains("SSAudioSpeech_Transcript")) {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIsAudioCheckbox().Visible();
+				}
+			}), Input.wait60);
+			getIsAudioCheckbox().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getLanguage().Visible();
+				}
+			}), Input.wait60);
+			getLanguage().selectFromDropdown().selectByVisibleText("North American English");
+		} else if (dataset.contains("CJK_GermanAudioTestData")) {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIsAudioCheckbox().Visible();
+				}
+			}), Input.wait60);
+			getIsAudioCheckbox().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getLanguage().Visible();
+				}
+			}), Input.wait60);
+			getLanguage().selectFromDropdown().selectByVisibleText("German");
+		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIsAudioCheckbox().Visible();
+				}
+			}), Input.wait60);
+			getIsAudioCheckbox().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getLanguage().Visible();
+				}
+			}), Input.wait60);
+			getLanguage().selectFromDropdown().selectByVisibleText("Japanese");
+		} else if (dataset.contains("0002_H13696_1_Latest")) {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIsAudioCheckbox().Visible();
+				}
+			}), Input.wait60);
+			getIsAudioCheckbox().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getLanguage().Visible();
+				}
+			}), Input.wait60);
+			getLanguage().selectFromDropdown().selectByVisibleText("International English");
+		} else {
+			System.out.println("No need to select for other datasets");
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getRunIndexing().Visible();
+			}
+		}), Input.wait60);
+		getRunIndexing().waitAndClick(10);
+
+		base.VerifySuccessMessage("Ingestion Indexing has Started.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByINDEXED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByINDEXED().waitAndClick(10);
+
+		for (int i = 0; i < 120; i++) {
+
+			try {
+
+				if (getInprogressIngestionStatus().isDisplayed() || getCopiedIngestionStatus().isDisplayed()) {
+					base.waitTime(6);
+					getRefreshButton().waitAndClick(10);
+					getIndexedIngestionStatus().isDisplayed();
+					base.passedStep("Indexing completed");
+					UtilityLog.info(dataset + " indexed.");
+				} else {
+					base.waitForElement(getIndexedIngestionStatus());
+					getIndexedIngestionStatus().isDisplayed();
+					base.passedStep("Indexing completed");
+				}
+
+				break;
+			} catch (Exception e) {
+
+				try {
 					Thread.sleep(10000);
 					getRefreshButton().waitAndClick(10);
-					if(getFailedIngestionStatus().Displayed()){
-						    System.out.println("Execution aborted!");
-							UtilityLog.info("Execution aborted!");
-							System.out.println(dataset+" is failed in indexing stage. Take a look and continue!");
-							UtilityLog.info(dataset+" is failed in indexing stage. Take a look and continue!");
-							System.exit(1);
-					
+					if (getFailedIngestionStatus().Displayed()) {
+						System.out.println("Execution aborted!");
+						UtilityLog.info("Execution aborted!");
+						System.out.println(dataset + " is failed in indexing stage. Take a look and continue!");
+						UtilityLog.info(dataset + " is failed in indexing stage. Take a look and continue!");
+						System.exit(1);
+
 					}
-				}
-					catch (Throwable e1)
-				{
-					System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
+				} catch (Throwable e1) {
+					System.out.println("Task in Progress : " + i);
+					UtilityLog.info("Task in Progress : " + i);
 				}
 			}
-	}
-	    	
-	    	
+		}
 
-	    	 
-	    	
-	    	
-	    	
-	    }
+	}
 
 	public void MetadataOverlay(String dataset) throws InterruptedException {
 
@@ -2033,24 +2099,24 @@ public class IngestionPage_Indium {
 			}
 		}), Input.wait30);
 		int count = ((getIngestionPaginationCount().size()) - 2);
-		Boolean status =false;
+		Boolean status = false;
 		for (int i = 0; i < count; i++) {
 			// driver.waitForPageToBeReady();
 			if (getAllIngestionName(dataset).isElementAvailable(5)) {
 				String publishedDataSet = getAllIngestionName(dataset).getText();
 				if (publishedDataSet.contains(dataset)) {
-					status=true;
+					status = true;
 					base.passedStep("The Ingestion " + dataset + " is already done for this project");
 				}
 				break;
-			} else{
-				status=false;
+			} else {
+				status = false;
 				driver.scrollingToBottomofAPage();
 				getIngestionPaginationNextButton().waitAndClick(3);
 				base.stepInfo("Expected Ingestion not found in the page " + i);
-				
+
 			}
-			
+
 		}
 		if (status == false) {
 			base.stepInfo("Click on add new ingestion button");
@@ -2294,13 +2360,11 @@ public class IngestionPage_Indium {
 			getNextButton().waitAndClick(20);
 			base.passedStep("Clicked on Next button");
 
-			
-				base.stepInfo("Pop up messgae for Ingestion without text file");
-				if (getApproveMessageOKButton().isElementAvailable(5)) {
-					getApproveMessageOKButton().waitAndClick(10);
-					base.passedStep("Clicked on OK button to continue without text files");
-				}
-				
+			base.stepInfo("Pop up messgae for Ingestion without text file");
+			if (getApproveMessageOKButton().isElementAvailable(5)) {
+				getApproveMessageOKButton().waitAndClick(10);
+				base.passedStep("Clicked on OK button to continue without text files");
+			}
 
 			base.waitForElement(getMappingSOURCEFIELD2());
 			if (dataset.contains("Collection1K_Tally")) {
@@ -2584,85 +2648,95 @@ public class IngestionPage_Indium {
 			// publish!
 			IngestionCatlogtoIndexing(dataset);
 
-			
-
 		}
 
 	}
 
 	public void approveAndPublishIngestion(String dataset) throws InterruptedException {
-		
+
 		Thread.sleep(5000);
-    	//Approve
-    	getIngestionName().waitAndClick(Input.wait30);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getActionDropdownArrow().Visible()  ;}}),Input.wait60); 
-    	getActionDropdownArrow().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getActionApprove().Visible()  ;}}),Input.wait60); 
-    	getActionApprove().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
-    	getApproveMessageOKButton().waitAndClick(10);
-    	
-    	base.VerifySuccessMessage("Approve started successfully");
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getCloseButton().Visible()  ;}}), Input.wait30); 
-    	getCloseButton().waitAndClick(10);	
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-    	getFilterByButton().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByAPPROVED().Visible()  ;}}), Input.wait30); 
-    	getFilterByAPPROVED().waitAndClick(10);
-    	
-    	
-    	for (int i = 0; i < 30; i++)
-		{
-			try
-			{if (getInprogressIngestionStatus().isDisplayed()) {
-				base.waitTime(6);
-				getRefreshButton().waitAndClick(10);
-				getApproveIngestionStatus().isDisplayed();
-				base.passedStep("Approved completed");
-				UtilityLog.info(dataset+" approved.");
-			}else {
-				base.waitForElement(getApproveIngestionStatus());
-				getApproveIngestionStatus().isDisplayed();
-				base.passedStep("Approved completed");
-				UtilityLog.info(dataset+" approved.");
+		// Approve
+		getIngestionName().waitAndClick(Input.wait30);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getActionDropdownArrow().Visible();
 			}
+		}), Input.wait60);
+		getActionDropdownArrow().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getActionApprove().Visible();
+			}
+		}), Input.wait60);
+		getActionApprove().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getApproveMessageOKButton().Visible();
+			}
+		}), Input.wait30);
+		getApproveMessageOKButton().waitAndClick(10);
+
+		base.VerifySuccessMessage("Approve started successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Visible();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByAPPROVED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByAPPROVED().waitAndClick(10);
+
+		for (int i = 0; i < 30; i++) {
+			try {
+				if (getInprogressIngestionStatus().isDisplayed()) {
+					base.waitTime(6);
+					getRefreshButton().waitAndClick(10);
+					getApproveIngestionStatus().isDisplayed();
+					base.passedStep("Approved completed");
+					UtilityLog.info(dataset + " approved.");
+				} else {
+					base.waitForElement(getApproveIngestionStatus());
+					getApproveIngestionStatus().isDisplayed();
+					base.passedStep("Approved completed");
+					UtilityLog.info(dataset + " approved.");
+				}
 				break;
-				
-			}
-			catch (Exception e)
-			{
-				try
-				{
+
+			} catch (Exception e) {
+				try {
 					Thread.sleep(5000);
 					getRefreshButton().waitAndClick(10);
-					if(getFailedIngestionStatus().Displayed()){
-						    System.out.println("Execution aborted!");
-							UtilityLog.info("Execution aborted!");
-							System.out.println(dataset+" is failed in approving stage. Take a look and continue!");
-							UtilityLog.info(dataset+" is failed in approving stage. Take a look and continue!");
-							System.exit(1);
-					
-						}
+					if (getFailedIngestionStatus().Displayed()) {
+						System.out.println("Execution aborted!");
+						UtilityLog.info("Execution aborted!");
+						System.out.println(dataset + " is failed in approving stage. Take a look and continue!");
+						UtilityLog.info(dataset + " is failed in approving stage. Take a look and continue!");
+						System.exit(1);
+
+					}
+				} catch (Throwable e1) {
+					System.out.println("Task in Progress : " + i);
+					UtilityLog.info("Task in Progress : " + i);
 				}
-				catch (Throwable e1)
-				{
-					System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
-				}
-	
+
 			}
-}
+		}
 
 		// Analytics run
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Analytics");
@@ -2758,12 +2832,11 @@ public class IngestionPage_Indium {
 					System.out.println("Task in Progress : " + i);
 					UtilityLog.info("Task in Progress : " + i);
 				}
-			
 
 			}
 
 		}
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getIngestionName().Visible();
@@ -2786,26 +2859,1477 @@ public class IngestionPage_Indium {
 		}), Input.wait30);
 		getCloseButton().waitAndClick(10);
 	}
-	
-	
+
 	/**
 	 * @author: Mohan Created Date: 17/02/2022 Modified by: NA Modified Date: NA
-	 * @description: verify Source System tobe disabled when we add overlay in the Ingestion
+	 * @description: verify Source System tobe disabled when we add overlay in the
+	 *               Ingestion
 	 */
 	public void verifySourceSystemDisabledWhenOverylayIsAddedAsIngestionType() {
-		
+
 		base.waitForElement(getAddanewIngestionButton());
 		getAddanewIngestionButton().waitAndClick(10);
-		
+
 		base.waitForElement(getIngestion_IngestionType());
 		getIngestion_IngestionType().selectFromDropdown().selectByVisibleText("Overlay Only");
-		
+
 		if (getSpecifySourceSystem().Enabled()) {
 			base.failedStep("Sorce System is Enabled");
-			
-		}else {
+
+		} else {
 			base.passedStep("'Source System' is disabled on add new Ingestion");
 		}
 	}
+
+	/**
+	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
+	 * @description: verify Source System tobe disabled when we add overlay in the
+	 *               Ingestion
+	 */
+	public void validateDateAndTimeFormateWhenIngestionIsSaveAsDraft(String dataset, String dateFormate)
+			throws InterruptedException {
+
+		base.stepInfo("Click on add new ingestion button");
+		base.waitForElement(getAddanewIngestionButton());
+		getAddanewIngestionButton().waitAndClick(10);
+
+		base.stepInfo("Select Source system");
+		base.waitForElement(getSpecifySourceSystem());
+		getSpecifySourceSystem().selectFromDropdown().selectByVisibleText("TRUE");
+
+		base.stepInfo("Select Location");
+		base.waitForElement(getSpecifyLocation());
+		Thread.sleep(2000);
+		getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
+
+		base.waitForElement(getSpecifySourceFolder());
+		Thread.sleep(2000);
+		base.stepInfo("Select Folder");
+		for (int i = 0; i < 30; i++) {
+
+			if (dataset.contains("Collection1K_Tally")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.Collection1KFolder);
+			} else if (dataset.contains("20Family_20Threaded")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.FamilyFolder);
+			} else if (dataset.contains("AllSources")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.AllSourcesFolder);
+			} else if (dataset.contains("0002_H13696_1_Latest")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.H1369Folder);
+			} else if (dataset.contains("16JanMultiPTIFF")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.MultiPTIFFFolder);
+			} else if (dataset.contains("27MarSinglePageTIFF")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SinglePageTIFFFolder);
+			} else if (dataset.contains("CJK_FrenchAudioTestData")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+			} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.EmailConcatenatedDataFolder);
+			} else if (dataset.contains("SSAudioSpeech_Transcript")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SSAudioSpeechFolder);
+			} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
+				getSpecifySourceFolder().selectFromDropdown()
+						.selectByVisibleText(Input.GD994NativeTextForProductionFolder);
+			} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
+				getSpecifySourceFolder().selectFromDropdown()
+						.selectByVisibleText(Input.GNonsearchablePDFLoadfileFolder);
+			} else if (dataset.contains("HiddenProperties_IngestionData")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.HiddenPropertiesFolder);
+			} else if (dataset.contains("UniCodeFiles")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.UniCodeFilesFolder);
+			} else if (dataset.contains("IngestionEmailData")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.IngestionEmailDataFolder);
+			} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+			}
+		}
+		Thread.sleep(2000);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getSourceSelectionDATLoadFile());
+		if (dataset.contains("CJK_GermanAudioTestData")) {
+			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATGermanFile);
+		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
+			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATJapneseFile);
+		} else if (dataset.contains("HiddenProperties_IngestionData")) {
+			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.YYYYMMDDHHMISSDat);
+		} else {
+			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATFile);
+		}
+		base.waitForElement(getSourceSelectionDATKey());
+		Thread.sleep(2000);
+
+		if (dataset.contains("Collection1K_Tally")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("20Family_20Threaded")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("AllSources")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("ProdBeg");
+		} else if (dataset.contains("0002_H13696_1_Latest")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DOCID");
+		} else if (dataset.contains("16JanMultiPTIFF")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
+		} else if (dataset.contains("27MarSinglePageTIFF")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
+		} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BatesNumber");
+		} else if (dataset.contains("SSAudioSpeech_Transcript")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
+		} else if (dataset.contains("HiddenProperties_IngestionData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
+		} else if (dataset.contains("UniCodeFiles")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("IngestionEmailData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocumentID");
+		} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		}
+
+		if (dataset.contains("20Family_20Threaded") || dataset.contains("AllSources")
+				|| dataset.contains("16JanMultiPTIFF") || dataset.contains("QA_EmailConcatenatedData_SS")
+				|| dataset.contains("GD_994_Native_Text_ForProduction")
+				|| dataset.contains("GNon_searchable_PDF_Load_file") || dataset.contains("IngestionEmailData")) {
+			base.stepInfo("*******Selecing text files***************");
+			base.waitForElement(getSourceSelectionText());
+			getSourceSelectionText().waitAndClick(20);
+			base.waitForElement(getSourceSelectionTextLoadFile());
+			getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(Input.TextFile);
+
+			base.stepInfo("*******Selecing Native files***************");
+			base.waitForElement(getNativeCheckBox());
+			getNativeCheckBox().waitAndClick(10);
+			base.waitForElement(getNativeLST());
+			getNativeLST().selectFromDropdown().selectByVisibleText(Input.NativeFile);
+		}
+
+		if (dataset.contains("Collection1K_Tally") || dataset.contains("UniCodeFiles")) {
+			base.stepInfo("*******Selecing text files***************");
+			base.waitForElement(getSourceSelectionText());
+			getSourceSelectionText().waitAndClick(20);
+			base.waitForElement(getSourceSelectionTextLoadFile());
+			getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(Input.TextFile);
+		}
+
+		if (dataset.contains("0002_H13696_1_Latest")) {
+			base.stepInfo("*******Selecing Native files***************");
+			base.waitForElement(getNativeCheckBox());
+			getNativeCheckBox().waitAndClick(10);
+			base.waitForElement(getNativeLST());
+			getNativeLST().selectFromDropdown().selectByVisibleText(Input.NativeFile);
+		}
+		if (dataset.contains("HiddenProperties_IngestionData")) {
+			base.stepInfo("*******Selecing Native files***************");
+			base.waitForElement(getNativeCheckBox());
+			getNativeCheckBox().waitAndClick(10);
+			base.waitForElement(getNativeLST());
+			getNativeLST().selectFromDropdown().selectByVisibleText(Input.YYYYMMDDHHMISSLst);
+		}
+
+		if (dataset.contains("AllSources")) {
+			base.stepInfo("*******Selecing PDF files***************");
+			base.waitForElement(getPDFCheckBoxstionButton());
+			getPDFCheckBoxstionButton().waitAndClick(20);
+			base.waitForElement(getPDFLST());
+			getPDFLST().selectFromDropdown().selectByVisibleText(Input.PDFFile);
+		}
+
+		driver.scrollingToBottomofAPage();
+
+		if (dataset.contains("AllSources") || dataset.contains("16JanMultiPTIFF")) {
+			base.stepInfo("*******Selecing TIFF files***************");
+			base.waitForElement(getTIFFCheckBox());
+			getTIFFCheckBox().waitAndClick(20);
+			base.waitForElement(getSourceSelectionTextLoadFile());
+			getTIFFLST().selectFromDropdown().selectByVisibleText(Input.TIFFFile);
+		}
+
+		/*
+		 * if( dataset.contains("27MarSinglePageTIFF")) {
+		 * base.stepInfo("*******Selecing TIFF files***************");
+		 * base.waitForElement(getTIFFCheckBox()); getTIFFCheckBox().waitAndClick(20);
+		 * base.waitForElement(getSourceSelectionTextLoadFile());
+		 * getTIFFLST().selectFromDropdown().selectByVisibleText(Input.TIFFFile1); }
+		 */
+		driver.scrollingToBottomofAPage();
+
+		if (dataset.contains("0002_H13696_1_Latest") || dataset.contains("SSAudioSpeech_Transcript")
+				|| dataset.contains("AllSources")) {
+			base.stepInfo("*******Selecing MP3 files***************");
+			base.waitForElement(getMP3CheckBoxstionButton());
+			getMP3CheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getMP3LST());
+			getMP3LST().selectFromDropdown().selectByVisibleText(Input.MP3File);
+		}
+
+		if (dataset.contains("CJK_GermanAudioTestData")) {
+			base.stepInfo("*******Selecing MP3 files***************");
+			base.waitForElement(getMP3CheckBoxstionButton());
+			getMP3CheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getMP3LST());
+			getMP3LST().selectFromDropdown().selectByVisibleText(Input.MP3GermanFile);
+		}
+
+		if (dataset.contains("CJK_JapaneseAudioTestData")) {
+			base.stepInfo("*******Selecing MP3 files***************");
+			base.waitForElement(getMP3CheckBoxstionButton());
+			getMP3CheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getMP3LST());
+			getMP3LST().selectFromDropdown().selectByVisibleText(Input.MP3JapneseFile);
+		}
+
+		if (dataset.contains("AllSources")) {
+			base.stepInfo("*******Selecing Audio Transcript files***************");
+			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
+			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getAudioTranscriptLST());
+			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(Input.TranscriptFile);
+		}
+
+		if (dataset.contains("CJK_GermanAudioTestData")) {
+			base.stepInfo("*******Selecing Audio Transcript files***************");
+			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
+			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getAudioTranscriptLST());
+			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(Input.TranscriptGermanFile);
+		}
+
+		if (dataset.contains("CJK_JapaneseAudioTestData")) {
+			base.stepInfo("*******Selecing Audio Transcript files***************");
+			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
+			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getAudioTranscriptLST());
+			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(Input.TranscriptJapneseFile);
+		}
+		driver.scrollingToBottomofAPage();
+
+		if (dataset.contains("AllSources")) {
+			base.stepInfo("*******Selecing Other files***************");
+			base.waitForElement(getOtherCheckBox());
+			getOtherCheckBox().waitAndClick(15);
+			base.waitForElement(getOtherLoadFile());
+			getOtherLoadFile().selectFromDropdown().selectByVisibleText(Input.TranslationFile);
+		}
+
+		base.stepInfo("Select Date Format");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText(dateFormate);
+
+		driver.scrollPageToTop();
+
+		base.waitForElement(getIngestion_SaveAsDraft());
+		getIngestion_SaveAsDraft().waitAndClick(20);
+		base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
+		base.passedStep("Clicked on SaveAsDraft");
+	}
+
+	/**
+	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
+	 * @description: verify Date Formate in Draft section
+	 */
+	public void verifyDateFormateInCatalogeAndDraft() {
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByDRAFT().Visible();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByFAILED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByFAILED().waitAndClick(10);
+
+		for (int i = 0; i < 5; i++) {
+			if (getDraftIngestionStatus().isElementAvailable(5)) {
+				base.passedStep("Draft completed");
+				break;
+			} else if (getFailedIngestionStatus().isElementAvailable(5)) {
+				System.out.println("Execution aborted!");
+				UtilityLog.info("Execution aborted!");
+				System.out.println("dataset is failed in catalog stage. Take a look and continue!");
+				UtilityLog.info("dataset is failed in catalog stage. Take a look and continue!");
+				System.exit(1);
+			} else {
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(10);
+			}
+
+			String dateFormate1 = getIngestionWizardDateFormate().getText();
+			System.out.println(dateFormate1);
+			if (dateFormate1.length() > 11) {
+				base.passedStep(
+						"When Ingestion in draft mode is opened Ingestion Wizard is retain with the selected 'Date & Time Format'");
+			} else {
+				base.failedStep("Date & time formate is not valid");
+			}
+
+		}
+
+	}
+	
+	/**
+	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Add new ingestion with selecting Date Formate
+	 */
+	public void IngestionRegressionForDateFormate(String dataset,String dateFormate) throws InterruptedException {
+		
+		base.stepInfo("Click on add new ingestion button");
+		base.waitForElement(getAddanewIngestionButton());
+		getAddanewIngestionButton().waitAndClick(10);
+
+		base.stepInfo("Select Source system");
+		base.waitForElement(getSpecifySourceSystem());
+		getSpecifySourceSystem().selectFromDropdown().selectByVisibleText("TRUE");
+
+		base.stepInfo("Select Location");
+		base.waitForElement(getSpecifyLocation());
+		Thread.sleep(2000);
+		getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
+
+		base.waitForElement(getSpecifySourceFolder());
+		Thread.sleep(2000);
+		base.stepInfo("Select Folder");
+		for (int i = 0; i < 30; i++) {
+
+			if (dataset.contains("Collection1K_Tally")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.Collection1KFolder);
+			} else if (dataset.contains("20Family_20Threaded")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.FamilyFolder);
+			} else if (dataset.contains("AllSources")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.AllSourcesFolder);
+			} else if (dataset.contains("0002_H13696_1_Latest")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.H1369Folder);
+			} else if (dataset.contains("16JanMultiPTIFF")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.MultiPTIFFFolder);
+			} else if (dataset.contains("27MarSinglePageTIFF")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SinglePageTIFFFolder);
+			} else if (dataset.contains("CJK_FrenchAudioTestData")) {
+				getSpecifySourceFolder().selectFromDropdown()
+						.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+			} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
+				getSpecifySourceFolder().selectFromDropdown()
+						.selectByVisibleText(Input.EmailConcatenatedDataFolder);
+			} else if (dataset.contains("SSAudioSpeech_Transcript")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SSAudioSpeechFolder);
+			} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
+				getSpecifySourceFolder().selectFromDropdown()
+						.selectByVisibleText(Input.GD994NativeTextForProductionFolder);
+			} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
+				getSpecifySourceFolder().selectFromDropdown()
+						.selectByVisibleText(Input.GNonsearchablePDFLoadfileFolder);
+			} else if (dataset.contains("HiddenProperties_IngestionData")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.HiddenPropertiesFolder);
+			} else if (dataset.contains("UniCodeFiles")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.UniCodeFilesFolder);
+			} else if (dataset.contains("IngestionEmailData")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.IngestionEmailDataFolder);
+			} else if (dataset.contains("CJK_GermanAudioTestData")
+					|| dataset.contains("CJK_JapaneseAudioTestData")) {
+				getSpecifySourceFolder().selectFromDropdown()
+						.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+			}
+		}
+		Thread.sleep(2000);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getSourceSelectionDATLoadFile());
+		if (dataset.contains("CJK_GermanAudioTestData")) {
+			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATGermanFile);
+		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
+			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATJapneseFile);
+		}else if (dataset.contains("HiddenProperties_IngestionData")) {
+			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.YYYYMMDDHHMISSDat);
+		}
+		else {
+			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATFile);
+		}
+		base.waitForElement(getSourceSelectionDATKey());
+		Thread.sleep(2000);
+
+		if (dataset.contains("Collection1K_Tally")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("20Family_20Threaded")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("AllSources")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("ProdBeg");
+		} else if (dataset.contains("0002_H13696_1_Latest")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DOCID");
+		} else if (dataset.contains("16JanMultiPTIFF")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
+		} else if (dataset.contains("27MarSinglePageTIFF")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
+		} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BatesNumber");
+		} else if (dataset.contains("SSAudioSpeech_Transcript")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
+		} else if (dataset.contains("HiddenProperties_IngestionData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
+		} else if (dataset.contains("UniCodeFiles")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("IngestionEmailData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocumentID");
+		} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		}
+
+		if (dataset.contains("20Family_20Threaded") || dataset.contains("AllSources")
+				|| dataset.contains("16JanMultiPTIFF") || dataset.contains("QA_EmailConcatenatedData_SS")
+				|| dataset.contains("GD_994_Native_Text_ForProduction")
+				|| dataset.contains("GNon_searchable_PDF_Load_file") || dataset.contains("IngestionEmailData")) {
+			base.stepInfo("*******Selecing text files***************");
+			base.waitForElement(getSourceSelectionText());
+			getSourceSelectionText().waitAndClick(20);
+			base.waitForElement(getSourceSelectionTextLoadFile());
+			getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(Input.TextFile);
+
+			base.stepInfo("*******Selecing Native files***************");
+			base.waitForElement(getNativeCheckBox());
+			getNativeCheckBox().waitAndClick(10);
+			base.waitForElement(getNativeLST());
+			getNativeLST().selectFromDropdown().selectByVisibleText(Input.NativeFile);
+		}
+
+		if (dataset.contains("Collection1K_Tally") || dataset.contains("UniCodeFiles")) {
+			base.stepInfo("*******Selecing text files***************");
+			base.waitForElement(getSourceSelectionText());
+			getSourceSelectionText().waitAndClick(20);
+			base.waitForElement(getSourceSelectionTextLoadFile());
+			getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(Input.TextFile);
+		}
+
+		if (dataset.contains("0002_H13696_1_Latest") ) {
+			base.stepInfo("*******Selecing Native files***************");
+			base.waitForElement(getNativeCheckBox());
+			getNativeCheckBox().waitAndClick(10);
+			base.waitForElement(getNativeLST());
+			getNativeLST().selectFromDropdown().selectByVisibleText(Input.NativeFile);
+		}
+		if (dataset.contains("HiddenProperties_IngestionData")) {
+			base.stepInfo("*******Selecing Native files***************");
+			base.waitForElement(getNativeCheckBox());
+			getNativeCheckBox().waitAndClick(10);
+			base.waitForElement(getNativeLST());
+			getNativeLST().selectFromDropdown().selectByVisibleText(Input.YYYYMMDDHHMISSLst);
+		}
+		if (dataset.contains("AllSources")) {
+			base.stepInfo("*******Selecing PDF files***************");
+			base.waitForElement(getPDFCheckBoxstionButton());
+			getPDFCheckBoxstionButton().waitAndClick(20);
+			base.waitForElement(getPDFLST());
+			getPDFLST().selectFromDropdown().selectByVisibleText(Input.PDFFile);
+		}
+
+		driver.scrollingToBottomofAPage();
+
+		if (dataset.contains("AllSources") || dataset.contains("16JanMultiPTIFF")) {
+			base.stepInfo("*******Selecing TIFF files***************");
+			base.waitForElement(getTIFFCheckBox());
+			getTIFFCheckBox().waitAndClick(20);
+			base.waitForElement(getSourceSelectionTextLoadFile());
+			getTIFFLST().selectFromDropdown().selectByVisibleText(Input.TIFFFile);
+		}
+
+		/*
+		 * if( dataset.contains("27MarSinglePageTIFF")) {
+		 * base.stepInfo("*******Selecing TIFF files***************");
+		 * base.waitForElement(getTIFFCheckBox()); getTIFFCheckBox().waitAndClick(20);
+		 * base.waitForElement(getSourceSelectionTextLoadFile());
+		 * getTIFFLST().selectFromDropdown().selectByVisibleText(Input.TIFFFile1); }
+		 */
+		driver.scrollingToBottomofAPage();
+
+		if (dataset.contains("0002_H13696_1_Latest") || dataset.contains("SSAudioSpeech_Transcript")
+				|| dataset.contains("AllSources")) {
+			base.stepInfo("*******Selecing MP3 files***************");
+			base.waitForElement(getMP3CheckBoxstionButton());
+			getMP3CheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getMP3LST());
+			getMP3LST().selectFromDropdown().selectByVisibleText(Input.MP3File);
+		}
+
+		if (dataset.contains("CJK_GermanAudioTestData")) {
+			base.stepInfo("*******Selecing MP3 files***************");
+			base.waitForElement(getMP3CheckBoxstionButton());
+			getMP3CheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getMP3LST());
+			getMP3LST().selectFromDropdown().selectByVisibleText(Input.MP3GermanFile);
+		}
+
+		if (dataset.contains("CJK_JapaneseAudioTestData")) {
+			base.stepInfo("*******Selecing MP3 files***************");
+			base.waitForElement(getMP3CheckBoxstionButton());
+			getMP3CheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getMP3LST());
+			getMP3LST().selectFromDropdown().selectByVisibleText(Input.MP3JapneseFile);
+		}
+
+		if (dataset.contains("AllSources")) {
+			base.stepInfo("*******Selecing Audio Transcript files***************");
+			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
+			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getAudioTranscriptLST());
+			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(Input.TranscriptFile);
+		}
+
+		if (dataset.contains("CJK_GermanAudioTestData")) {
+			base.stepInfo("*******Selecing Audio Transcript files***************");
+			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
+			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getAudioTranscriptLST());
+			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(Input.TranscriptGermanFile);
+		}
+
+		if (dataset.contains("CJK_JapaneseAudioTestData")) {
+			base.stepInfo("*******Selecing Audio Transcript files***************");
+			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
+			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getAudioTranscriptLST());
+			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(Input.TranscriptJapneseFile);
+		}
+		driver.scrollingToBottomofAPage();
+
+		if (dataset.contains("AllSources")) {
+			base.stepInfo("*******Selecing Other files***************");
+			base.waitForElement(getOtherCheckBox());
+			getOtherCheckBox().waitAndClick(15);
+			base.waitForElement(getOtherLoadFile());
+			getOtherLoadFile().selectFromDropdown().selectByVisibleText(Input.TranslationFile);
+		}
+
+		base.stepInfo("Select Date Format");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText(dateFormate);
+
+		driver.scrollPageToTop();
+
+		base.waitForElement(getNextButton());
+		getNextButton().waitAndClick(20);
+		base.passedStep("Clicked on Next button");
+
+		
+			base.stepInfo("Pop up messgae for Ingestion without text file");
+			if (getApproveMessageOKButton().isElementAvailable(5)) {
+				getApproveMessageOKButton().waitAndClick(10);
+				base.passedStep("Clicked on OK button to continue without text files");
+			}
+			
+
+		base.waitForElement(getMappingSOURCEFIELD2());
+		if (dataset.contains("Collection1K_Tally")) {
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+		}
+
+		else if (dataset.contains("20Family_20Threaded")) {
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdEnd");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT9());
+			getMappingFIELDCAT9().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+
+			base.waitForElement(getMappingFIELDCAT10());
+			getMappingFIELDCAT10().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+
+			base.waitForElement(getMappingFIELDCAT13());
+			getMappingFIELDCAT13().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("FAMILY");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("FamilyRelationship");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT29());
+			getMappingFIELDCAT29().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD29().selectFromDropdown().selectByVisibleText("DocFileType");
+
+			base.waitForElement(getMappingFIELDCAT31());
+			getMappingFIELDCAT31().selectFromDropdown().selectByVisibleText("FAMILY");
+			getMappingDESTINATIONFIELD31().selectFromDropdown().selectByVisibleText("FamilyID");
+
+			base.waitForElement(getMappingFIELDCAT49());
+			getMappingFIELDCAT49().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD49().selectFromDropdown().selectByVisibleText("EmailReceivedDate");
+
+			base.waitForElement(getMappingFIELDCAT51());
+			getMappingFIELDCAT51().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+		}
+
+		else if (dataset.contains("AllSources")) {
+
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+		}
+
+		else if (dataset.contains("0002_H13696_1_Latest")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DOCID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DOCID");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DOCID");
+		} else if (dataset.contains("16JanMultiPTIFF")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
+		}
+
+		else if (dataset.contains("27MarSinglePageTIFF")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
+			getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+			getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+		}
+
+		else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BatesNumber");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DataSource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustodianName");
+
+		}
+
+		else if (dataset.contains("SSAudioSpeech_Transcript")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+
+		}
+
+		else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DocID");
+
+			base.waitForElement(getMappingFIELDCAT5());
+			getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+			getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+
+			getAddButton().waitAndClick(15);
+			Thread.sleep(2000);
+
+			base.waitForElement(getMappingFIELDCAT6());
+			getMappingSOURCEFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
+			getMappingFIELDCAT6().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+
+			getAddButton().waitAndClick(15);
+			Thread.sleep(2000);
+
+			base.waitForElement(getMappingFIELDCAT7());
+			getMappingSOURCEFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
+			getMappingFIELDCAT7().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+
+			getAddButton().waitAndClick(15);
+			Thread.sleep(2000);
+
+			base.waitForElement(getMappingFIELDCAT8());
+			getMappingSOURCEFIELD8().selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
+			getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+		}
+
+		else if (dataset.contains("GNon searchable PDF Load file")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+		}
+
+		else if (dataset.contains("HiddenProperties_IngestionData")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+		}
+
+		else if (dataset.contains("UniCodeFiles")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+		}
+
+		else if (dataset.contains("IngestionEmailData")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocumentID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocumentID");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustID");
+
+			base.waitForElement(getMappingFIELDCAT76());
+			getMappingFIELDCAT76().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD76().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT73());
+			getMappingFIELDCAT73().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD73().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT75());
+			getMappingFIELDCAT75().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD75().selectFromDropdown().selectByVisibleText("DocFileType");
+		} else if (dataset.contains("CJK_GermanAudioTestData")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+
+		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+		}
+	
+	
+	driver.scrollPageToTop();
+	
+	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getPreviewRun().Visible()  ;}}), Input.wait30); 
+	getPreviewRun().waitAndClick(10);
+	
+	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
+	getApproveMessageOKButton().waitAndClick(10);
+	
+	base.stepInfo("'Preview Documents' pop up is opened successfully");
+	
+	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
+	getbtnRunIngestion().waitAndClick(10);
+	
+	softAssertion = new SoftAssert();
+	softAssertion.assertTrue(getAddanewIngestionButton().isElementAvailable(5));
+	base.passedStep("Run Ingestion done successfully");
+	
+	
+	}
+	
+	/**
+	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
+	 * @description: To roll back an Ingestion
+	 */
+	public void rollBackIngestion() {
+		
+		driver.waitForPageToBeReady();
+		
+		Actions actions = new Actions(driver.getWebDriver());
+		actions.moveToElement(getIngestionSettingGearIcon().getWebElement());
+		actions.click().build().perform();
+		base.waitForElement(getIngestionRollbackbutton());
+		getIngestionRollbackbutton().waitAndClick(5);
+		getApproveMessageOKButton().isElementAvailable(5);
+		getApproveMessageOKButton().waitAndClick(5);
+		base.waitTime(5);
+		base.VerifySuccessMessage("Rollback of this ingestion has been started. Refresh the page to view for updated status.");
+		}
+	
+	/**
+	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Verify ingestion at catalog status
+	 */
+	public void ingestionAtCatlogState(String dataset) {
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+    	getFilterByButton().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
+    	getFilterByFAILED().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
+    	getFilterByCATALOGED().waitAndClick(10);
+    	
+    	//catlogging
+    	for (int i = 0; i < 5; i++) {
+			if (getCatalogedIngestionStatus().isElementAvailable(5)) {
+				base.passedStep("Cataloged completed");
+				break;
+			}else if (getFailedIngestionStatus().isElementAvailable(5)) {
+				System.out.println("Execution aborted!");
+				UtilityLog.info("Execution aborted!");
+				System.out.println(dataset+" is failed in catalog stage. Take a look and continue!");
+				UtilityLog.info(dataset+" is failed in catalog stage. Take a look and continue!");
+				System.exit(1);
+			}else{
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(10);
+			}
+		}
+    }
+	
+	
+	/**
+	 * @author: Arunkumar Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform ingestion with Dat file
+	 */
+	public void IngestionOnlyForDatFile(String dataset,String DATFile) throws InterruptedException {
+		base.stepInfo("Click on add new ingestion button");
+		base.waitForElement(getAddanewIngestionButton());
+		getAddanewIngestionButton().waitAndClick(10);
+
+		base.stepInfo("Select Source system");
+		base.waitForElement(getSpecifySourceSystem());
+		getSpecifySourceSystem().selectFromDropdown().selectByVisibleText("TRUE");
+
+		base.stepInfo("Select Location");
+		base.waitForElement(getSpecifyLocation());
+		Thread.sleep(2000);
+		getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
+
+		base.waitForElement(getSpecifySourceFolder());
+		Thread.sleep(2000);
+		base.stepInfo("Select Folder");
+		if (dataset.contains("Collection1K_Tally")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.Collection1KFolder);
+		} else if (dataset.contains("20Family_20Threaded")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.FamilyFolder);
+		} else if (dataset.contains("AllSources")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.AllSourcesFolder);
+		} else if (dataset.contains("0002_H13696_1_Latest")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.H1369Folder);
+		} else if (dataset.contains("16JanMultiPTIFF")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.MultiPTIFFFolder);
+		} else if (dataset.contains("27MarSinglePageTIFF")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SinglePageTIFFFolder);
+		} else if (dataset.contains("CJK_FrenchAudioTestData")) {
+			getSpecifySourceFolder().selectFromDropdown()
+					.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+		} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
+			getSpecifySourceFolder().selectFromDropdown()
+					.selectByVisibleText(Input.EmailConcatenatedDataFolder);
+		} else if (dataset.contains("SSAudioSpeech_Transcript")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SSAudioSpeechFolder);
+		} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
+			getSpecifySourceFolder().selectFromDropdown()
+					.selectByVisibleText(Input.GD994NativeTextForProductionFolder);
+		} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
+			getSpecifySourceFolder().selectFromDropdown()
+					.selectByVisibleText(Input.GNonsearchablePDFLoadfileFolder);
+		} else if (dataset.contains("HiddenProperties_IngestionData")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.HiddenPropertiesFolder);
+		} else if (dataset.contains("UniCodeFiles")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.UniCodeFilesFolder);
+		} else if (dataset.contains("IngestionEmailData")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.IngestionEmailDataFolder);
+		} else if (dataset.contains("CJK_GermanAudioTestData")
+				|| dataset.contains("CJK_JapaneseAudioTestData")) {
+			getSpecifySourceFolder().selectFromDropdown()
+					.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+		}
+		Thread.sleep(2000);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getSourceSelectionDATLoadFile());
+		getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(DATFile);
+		base.waitForElement(getSourceSelectionDATKey());
+		Thread.sleep(2000);
+		if (dataset.contains("Collection1K_Tally")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("20Family_20Threaded")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("AllSources")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("ProdBeg");
+		} else if (dataset.contains("0002_H13696_1_Latest")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DOCID");
+		} else if (dataset.contains("16JanMultiPTIFF")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
+		} else if (dataset.contains("27MarSinglePageTIFF")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
+		} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BatesNumber");
+		} else if (dataset.contains("SSAudioSpeech_Transcript")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
+		} else if (dataset.contains("HiddenProperties_IngestionData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
+		} else if (dataset.contains("UniCodeFiles")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("IngestionEmailData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocumentID");
+		} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		}
+
+		driver.scrollingToBottomofAPage();
+
+		base.stepInfo("Select Date Format");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+
+		driver.scrollPageToTop();
+
+		base.waitForElement(getNextButton());
+		getNextButton().waitAndClick(20);
+		base.passedStep("Clicked on Next button");
+
+		base.stepInfo("Pop up messgae for Ingestion without text file");
+		if (getApproveMessageOKButton().isElementAvailable(5)) {
+			getApproveMessageOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to continue without text files");
+		}
+
+		base.waitForElement(getMappingSOURCEFIELD2());
+		if (dataset.contains("Collection1K_Tally")) {
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+		}
+
+		else if (dataset.contains("20Family_20Threaded")) {
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdEnd");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT9());
+			getMappingFIELDCAT9().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+
+			base.waitForElement(getMappingFIELDCAT10());
+			getMappingFIELDCAT10().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+
+			base.waitForElement(getMappingFIELDCAT13());
+			getMappingFIELDCAT13().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("FAMILY");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("FamilyRelationship");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT29());
+			getMappingFIELDCAT29().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD29().selectFromDropdown().selectByVisibleText("DocFileType");
+
+			base.waitForElement(getMappingFIELDCAT31());
+			getMappingFIELDCAT31().selectFromDropdown().selectByVisibleText("FAMILY");
+			getMappingDESTINATIONFIELD31().selectFromDropdown().selectByVisibleText("FamilyID");
+
+			base.waitForElement(getMappingFIELDCAT49());
+			getMappingFIELDCAT49().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD49().selectFromDropdown().selectByVisibleText("EmailReceivedDate");
+
+			base.waitForElement(getMappingFIELDCAT51());
+			getMappingFIELDCAT51().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+		}
+
+		else if (dataset.contains("AllSources")) {
+
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+		}
+
+		else if (dataset.contains("0002_H13696_1_Latest")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DOCID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DOCID");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DOCID");
+		} else if (dataset.contains("16JanMultiPTIFF")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
+		}
+
+		else if (dataset.contains("27MarSinglePageTIFF")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
+			getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+			getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+		}
+
+		else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BatesNumber");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DataSource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustodianName");
+
+		}
+
+		else if (dataset.contains("SSAudioSpeech_Transcript")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+
+		}
+
+		else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DocID");
+
+			base.waitForElement(getMappingFIELDCAT5());
+			getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+			getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+
+			getAddButton().waitAndClick(15);
+			Thread.sleep(2000);
+
+			base.waitForElement(getMappingFIELDCAT6());
+			getMappingSOURCEFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
+			getMappingFIELDCAT6().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+
+			getAddButton().waitAndClick(15);
+			Thread.sleep(2000);
+
+			base.waitForElement(getMappingFIELDCAT7());
+			getMappingSOURCEFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
+			getMappingFIELDCAT7().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+
+			getAddButton().waitAndClick(15);
+			Thread.sleep(2000);
+
+			base.waitForElement(getMappingFIELDCAT8());
+			getMappingSOURCEFIELD8().selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
+			getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+		}
+
+		else if (dataset.contains("GNon searchable PDF Load file")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+		}
+
+		else if (dataset.contains("HiddenProperties_IngestionData")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+		}
+
+		else if (dataset.contains("UniCodeFiles")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+		}
+
+		else if (dataset.contains("IngestionEmailData")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocumentID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocumentID");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustID");
+
+			base.waitForElement(getMappingFIELDCAT76());
+			getMappingFIELDCAT76().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD76().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT73());
+			getMappingFIELDCAT73().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD73().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT75());
+			getMappingFIELDCAT75().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD75().selectFromDropdown().selectByVisibleText("DocFileType");
+		} else if (dataset.contains("CJK_GermanAudioTestData")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+
+		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+
+		}
+		driver.scrollPageToTop();
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getPreviewRun().Visible()  ;}}), Input.wait30); 
+    	getPreviewRun().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
+    	getApproveMessageOKButton().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
+    	getbtnRunIngestion().waitAndClick(10);
+
+	}
+	
+	/**
+	 * @author: Arunkumar Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will validate the term which present in the copying table column
+	 */
+	public void verifyDataPresentInCopyColumn(String term) {
+		getRefreshButton().waitAndClick(10);	
+        getIngestionName().waitAndClick(Input.wait30);
+       
+    	driver.scrollingToElementofAPage(getRunIndexing());
+    	base.waitForElement(getRunIndexing());
+    	if(copyTableDataName(term).isDisplayed()) {
+    		base.passedStep(term+ " is displayed in the copying table column");
+    	}
+    	else {
+    		base.failedStep(term+"is not displayed in the copying table column");
+    	}
+    	
+		
+	}
+
+/**
+	 * @author: Arunkumar Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform the ingestion process of catalog ad copying
+	 */
+public void IngestionCatlogtoCopying(String dataset) throws InterruptedException {
+    	
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+    	getFilterByButton().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
+    	getFilterByFAILED().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
+    	getFilterByCATALOGED().waitAndClick(10);
+    	
+    	//catlogging
+    	for(int i=0;i<10;i++) {
+    		if(getCatalogedIngestionStatus().isElementAvailable(5)) {
+    			base.passedStep("Cataloged completed");
+    			break;
+    		}
+    		else if (getFailedIngestionStatus().isElementAvailable(5)) {
+    			base.failedStep("Ingestion failed");
+    		}
+    		else{
+    			base.waitTime(40);
+    			getRefreshButton().waitAndClick(10);
+    		}
+    	}
+	
+    	
+    	//copy
+    	getRefreshButton().waitAndClick(10);
+    	    		
+        getIngestionName().waitAndClick(Input.wait30);
+    
+       
+    	driver.scrollingToElementofAPage(getRunCopying());
+    	base.waitForElement(getRunCopying());
+        getRunCopying().waitAndClick(10);
+        
+        base.VerifySuccessMessage("Ingestion copy has Started.");
+        UtilityLog.info(dataset+"'s copying is started.");
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getCloseButton().Enabled()  ;}}), Input.wait30); 
+    	getCloseButton().waitAndClick(10);	
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+    	getFilterByButton().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByCOPIED().Visible()  ;}}), Input.wait30); 
+    	getFilterByCOPIED().waitAndClick(10);
+    	
+    	for(int i=0;i<10;i++) {
+    		if(getCopiedIngestionStatus().isElementAvailable(5)) {
+    			base.passedStep("Copied completed");
+    			break;
+    		}
+    		else if (getFailedIngestionStatus().isElementAvailable(5)) {
+    			base.failedStep("Ingestion failed");
+    		}
+    		else{
+    			base.waitTime(40);
+    			getRefreshButton().waitAndClick(10);
+    		}
+    	}
+    	
+		
+	}
+
 
 }

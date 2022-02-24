@@ -552,7 +552,11 @@ public class Input {
 	public static String TranscriptJapneseFile;
 	public static String MP3JapneseFile;
 	public static String SourceDatFieldCustom;
-
+	public static String YYYYMMDDHHMISSDat;
+	public static String YYYYMMDDHHMISSLst;
+	public static String DATFile1;
+	public static String StitchedTIFF;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1111,6 +1115,10 @@ public class Input {
 		MP3GermanFile = testData.getMP3GermanFile();
 		TranscriptJapneseFile = testData.getTranscriptJapneseFile();
 		MP3JapneseFile = testData.getMP3JapneseFile();
+		YYYYMMDDHHMISSDat=testData.getYYYYMMDDHHMISSDat();
+		YYYYMMDDHHMISSLst=testData.getYYYYMMDDHHMISSLst();
+		StitchedTIFF = testData.getStitchedTIFF();
+		DATFile1 = testData.getDATFile1();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

@@ -505,6 +505,10 @@
      <MP3JapneseFile>RegressionAllDatasetTrimmedAudioMP3Japnese.LST</MP3JapneseFile>
       <TranscriptJapneseFile>RegressionAllDatasetTranscriptJapnese.lst</TranscriptJapneseFile>
        <TranscriptGermanFile>RegressionAllDatasetTranscriptGerman.lst</TranscriptGermanFile>
+       <YYYYMMDDHHMISSDat>DAT_YYYYMMDD HHMISS.dat</YYYYMMDDHHMISSDat>
+       <YYYYMMDDHHMISSLst>Natives_YYYYMMDD HHMISS.lst</YYYYMMDDHHMISSLst>
+       <StitchedTIFF>Stitched TIFFs</StitchedTIFF>
+	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat</DATFile1>
     
      <!-- Ingestion Related data END -->
 </TestData>
