@@ -2639,7 +2639,9 @@ public class ProductionPage {
 		public Element GetVolumeLocation() {
 			return driver.FindElementById("lstVolumeLocation");
 		}
-
+		public Element getNativeFileType() {
+			return driver.FindElementByXPath("//table[@id='native-table']//tbody//tr//td[contains(text(),'Database')]/..//i");
+		}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -17833,6 +17835,37 @@ public class ProductionPage {
 	}
 
 	   
+	/**
+	 * @Author Brundha
+	 * Description:Method to fill prefix and suffix in sorting tab
+	 */
+	public void fillingNumberingAndSortingTab(String prefixId, String suffixId,String begBate){
+
+	       base.waitForElement(getBeginningBates());
+			driver.waitForPageToBeReady();
+			getBeginningBates().SendKeys(begBate);
+			base.waitForElement(gettxtBeginningBatesIDPrefix());
+			gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
+			base.waitForElement(gettxtBeginningBatesIDSuffix());
+			gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
+			base.stepInfo("Filled numbering and sorting tab");
+	}
 	
+	
+	/**
+	 * @author Brundha
+	 * @description :filling natively Section with filetype in component tab
+	 * 
+	 */
+	public void selectingNativeFileType() {
+			base.waitForElement(getNativeChkBox());
+			getNativeChkBox().Click();
+			base.waitForElement(getNativeTab());
+			getNativeTab().Click();
+			base.waitForElement(getNativeFileType());
+			getNativeFileType().ScrollTo();
+			getNativeFileType().Click();
+			base.stepInfo("Filled native section with file type");
+	}
 
 }

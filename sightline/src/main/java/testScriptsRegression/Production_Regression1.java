@@ -20,6 +20,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
@@ -9322,6 +9323,150 @@ public class Production_Regression1 {
 	}
 	
 	
+	 /**
+		 * @author Brundha Test case id-RPMXCON-48032
+		 * @Description To Verify file group type (.mdb/.mdf) selection under Native for
+		 *              Production Should work fine.
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 127)
+		public void verifyingNativeFileType() throws Exception {
+
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-48032 -Production Component");
+			base.stepInfo("To Verify file group type (.mdb/.mdf) selection under Native for Production Should work fine.");
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.SearchMetaData("SourceDocID", "STC4_00000992");
+			sessionSearch.bulkTagExisting(tagname);
+
+			ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+			
+			String beginningBates = page.getRandomNumber(2);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.selectingNativeFileType();
+			page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionWithTag(tagname);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			driver.waitForPageToBeReady();
+			String name = page.getProduction().getText().trim();
+			String home = System.getProperty("user.home");
+			page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+			System.out.println("Unzipped the downloaded files");
+
+			driver.waitForPageToBeReady();
+			File file = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".mdb");
+
+			if (file.exists()) {
+				base.passedStep("Volume is displayed in  the given production directory");
+			} else {
+				base.failedStep("Volume is displayed  not in the given production directory");
+			}
+			loginPage.logout();
+		}
+
+		/**
+		 * @author Brundha Test case id-RPMXCON-49539
+		 * @Description Validate Production with tiff and text options
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 128)
+		public void verifyingNativeFileTyp() throws Exception {
+
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-49539 -Production Component");
+			base.stepInfo("Validate Production with tiff and text options");
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			DataSets dataset = new DataSets(driver);
+			base.stepInfo("Navigating to dataset page");
+			dataset.navigateToDataSetsPage();
+			base.stepInfo("Selecting uploadedset and navigating to doclist page");
+			dataset.SelectingUploadedDataSet();
+			DocListPage doc = new DocListPage(driver);
+			driver.waitForPageToBeReady();
+
+			doc.documentSelection(3);
+			doc.bulkTagExisting(tagname);
+
+			ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+			page.fillingTextSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionWithTag(tagname);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			driver.waitForPageToBeReady();
+			String name = page.getProduction().getText().trim();
+			String home = System.getProperty("user.home");
+			page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+			System.out.println("Unzipped the downloaded files");
+			
+			driver.waitForPageToBeReady();
+			File file = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".docx");
+			File Textfile = new File(home + "/Downloads/VOL0001/Text/0001/" + prefixID + beginningBates + suffixID + ".txt");
+			File TiffFile = new File(home + "/Downloads/" + "VOL0001/Load Files/" + name + "_TIFF.OPT");
+			System.out.println("BATES" + prefixID + beginningBates + suffixID);
+			
+			if (file.exists()) {base.passedStep("filetype is displayed as expected");
+			} else {	base.failedStep("filetype is not displayed as expected");}
+
+			if (Textfile.exists()) {base.passedStep("Text is generated successfully");
+			} else {base.failedStep("Text is not generated successfully");}
+
+			if (TiffFile.exists()) {base.passedStep("Tiff is generated successfully");
+			} else {base.failedStep("Tiff is not generated successfully");}
+			
+			loginPage.logout();
+		}
+
+
+		
+		
+		
+		
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
