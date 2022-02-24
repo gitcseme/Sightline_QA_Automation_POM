@@ -20,6 +20,7 @@ import pageFactory.DocExplorerPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
+import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
 import pageFactory.SecurityGroupsPage;
@@ -182,7 +183,93 @@ public class Ingestion_Regression {
 		dataSets.verifyFieldDisplayedOfDownlodedExcelFile(location,sheetName2,errorTypeFieldType);
 	}
 	
-	
+	/**  
+	 * @author Gopinath
+	 * @TestCase id:50771 : Verify that after Re-run the copy process without ignoring the errors, copy should continues.
+	 * @Description: Verify that after Re-run the copy process without ignoring the errors, copy should continues
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	public void verifyRerunCopyProcessWithoutIgnoringErrors() {
+		baseClass = new BaseClass(driver);
+		String projectName = "AutomationIngestionProject";
+		String ingestionType = "Add Only";
+		String sourceSystem = "TRUE";
+		String sourceLocation =  "IngestionTestData\\Automation";
+		String sourceFolder =  "SSAudioSpeech_Transcript";
+		String fieldSeperator = "ASCII(20)";
+		String textQualifier = "ASCII(254)";
+		String multiValue = "ASCII(174)";
+		String datLoadFile = "DAT4_STC_newdateformat.dat";
+		String documentKey = "DocID";
+		String mp3LoadFile = "MP3 Files.LST";
+		String dateFormat = "YYYY/MM/DD HH:MM:SS";
+		String docId = "DocID";
+		String dataSource = "Datasource";
+		String custodian = "Custodian";
+		String fileExt = "FileExt";
+		String fileName = "FileName";
+		String fileSize = "FileSize";
+		String fileType = "FileType";
+		String docBasic = "DOCBASIC";
+		String docFileExt = "DocFileExtension";
+		String docFileName = "DocFileName";
+		String docFileSize = "DocFileSize";
+		String docFileType = "DocFileType";
+		baseClass.stepInfo("Test case Id: RPMXCON-50771 Sprint 12");
+		baseClass.stepInfo("### Verify that after Re-run the copy process without ignoring the errors, copy should continues ###");
+		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
+		
+		baseClass.stepInfo("Select project");
+		baseClass.selectproject(projectName);
+		
+		baseClass.stepInfo("Navigate to ingestion page.");
+		ingetion.navigateToIngestionPage();
+		
+		baseClass.stepInfo("Select ingestion type and specify source loaction.");
+		ingetion.selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, sourceLocation,sourceFolder);
+		
+		baseClass.stepInfo("Select DAT delimiters.");
+		ingetion.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+		
+		baseClass.stepInfo("Select DAT source.");
+		ingetion.selectDATSource(datLoadFile, documentKey);
+		
+		baseClass.stepInfo("Select MP3 varient source.");
+		ingetion.selectMP3VarientSource(mp3LoadFile, false);
+		
+		baseClass.stepInfo("Select Date and Time format.");
+		ingetion.selectDateAndTimeForamt(dateFormat);
+		
+		baseClass.stepInfo("Click on next button.");
+		ingetion.clickOnNextButton();
+		
+		baseClass.stepInfo("Select value from first three source DAT fields");
+		ingetion.selectValueFromEnabledFirstThreeSourceDATFields(docId,dataSource, custodian);
+		
+		baseClass.stepInfo(" select field catagory and destination field by using source DAT field.");
+		ingetion.selectFieldCatagoryDestinationFields(fileExt, docBasic, docFileExt);
+		
+		ingetion.selectFieldCatagoryDestinationFields(fileName, docBasic, docFileName);
+		
+		ingetion.selectFieldCatagoryDestinationFields(fileSize, docBasic, docFileSize);
+		
+		ingetion.selectFieldCatagoryDestinationFields(fileType, docBasic, docFileType);
+		
+		baseClass.stepInfo("Click on preview and run button.");
+		ingetion.clickOnPreviewAndRunButton();
+		
+		baseClass.stepInfo("Select all options from filter by dropdown.");
+		ingetion.selectAllOptionsFromFilterByDropdown();
+		
+		baseClass.stepInfo("Create ingestion to cataloged stage");
+		String ingestionName = ingetion.ingestionCreationToCatalogedStage();
+		
+		baseClass.stepInfo("Process to click on copied state without ignoring errors.");
+		ingetion.clickOnCopiedStateWithoutIgnoringErrors(ingestionName);
+		
+	}
+
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
