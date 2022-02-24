@@ -129,6 +129,12 @@ public class SavedSearchRegression_New_Set_05 {
 		return users;
 	}
 
+	@DataProvider(name = "rmuAndRev")
+	public Object[][] rmuAndRev() {
+		Object[][] users = { { "RMU", "" }, { "REV", "RMU" } };
+		return users;
+	}
+	
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod)
 			throws IOException, ParseException, InterruptedException {
@@ -268,6 +274,191 @@ public class SavedSearchRegression_New_Set_05 {
 		login.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : PAU impersonates down to the RMU and Reviewer level - Verify
+	 *              that appropriate Search Group appears under the respective
+	 *              Security Group on Saved Search Screen. [RPMXCON-48123]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "rmuAndRev", groups = { "regression" }, priority = 4)
+	public void verifyAppropriateSearchGroupAppears(String user, String addImp) throws Exception {
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48123 Saved Search");
+		base.stepInfo(
+				"PAU impersonates down to the RMU and Reviewer level - Verify that appropriate Search Group appears under the respective Security Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// impersonate pa to rmu
+		base.rolesToImp("PA", user);
+
+		// select Other SG and create Search group
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Select Security Group : " + securityGroup);
+		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, user, "");
+
+		base.rolesToImp(user, addImp);
+		
+		// select default SG and create Search group
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Select Security Group : " + Input.securityGroup);
+		String node2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		// verify Other SG ABsence in Default SG
+		String passMsg = node1 + " : is Not Available As RMU in Default SG";
+		Element otherSGNode = saveSearch.getSavedSearchNodeWithRespectiveSG(Input.mySavedSearch, node1);
+		base.ValidateElement_Absence(otherSGNode, passMsg);
+
+		// impersonate rmu to pa
+		base.rolesToImp("RMU", "PA");
+		String node3 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", Input.yesButton);
+
+		// verify default SG search Group Absence in PA
+		String passMsgOfPa = node2 + " : is Not Available As PA ";
+		Element nodeOfRmu = saveSearch.getSavedSearchNodeWithRespectiveSG(Input.mySavedSearch, node2);
+		base.ValidateElement_Absence(nodeOfRmu, passMsgOfPa);
+
+		// delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, node3);
+
+		// Delete SG
+		security.deleteSecurityGroups(securityGroup);
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : SAU impersonates down to the RMU and Reviewer level - Verify
+	 *              that appropriate Search Group appears under the respective
+	 *              Security Group on Saved Search Screen. [RPMXCON-48124]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "rmuAndRev", groups = { "regression" }, priority = 5)
+	public void verifySearchGroupAsSA(String user , String addImp) throws Exception {
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+
+		// Login as SA
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48124 Saved Search");
+		base.stepInfo(
+				"SAU impersonates down to the RMU and Reviewer level - Verify that appropriate Search Group appears under the respective Security Group on Saved Search Screen.");
+
+		base.rolesToImp("SA", "PA");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// impersonate pa to rmu
+		base.rolesToImp("PA", user);
+
+		// select default SG and create Search group
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Select Security Group : " + Input.securityGroup);
+		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, user, Input.yesButton);
+
+		// select Other SG and create Search group
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Select Security Group : " + securityGroup);
+		String node2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, user, "");
+
+		// verify default SG search Group Absence in Other SG
+		String passMsgOfOtherSG = node1 + " : is Not Available In Other Security Group ";
+		Element nodeOfOtherSG = saveSearch.getSavedSearchNodeWithRespectiveSG(Input.mySavedSearch, node2);
+		base.ValidateElement_Absence(nodeOfOtherSG, passMsgOfOtherSG);
+
+		// verify Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		saveSearch.verifyNodePresentInSG(Input.mySavedSearch, node1);
+
+		// delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, node1);
+
+		// Delete SG
+		base.rolesToImp(user, "PA");
+		security.deleteSecurityGroups(securityGroup);
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Reviewer User - Verify that appropriate Search Group appears
+	 *              under the respective Security Group on Saved Search Screen.
+	 *              [RPMXCON-48122]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	public void verifySearchGroupAsRev() throws Exception {
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48122 Saved Search");
+		base.stepInfo(
+				"Reviewer User - Verify that appropriate Search Group appears under the respective Security Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to REV
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+
+		login.logout();
+
+		login.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// select default SG and create Search group
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Select Security Group : " + Input.securityGroup);
+		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", Input.yesButton);
+
+		// select Other SG and create Search group
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Select Security Group : " + securityGroup);
+		String node2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", "");
+
+		// verify default SG search Group Absence in Other SG
+		String passMsgOfOtherSG = node1 + " : is Not Available in Other Security Group";
+		Element nodeOfOtherSG = saveSearch.getSavedSearchNodeWithRespectiveSG(Input.mySavedSearch, node2);
+		base.ValidateElement_Absence(nodeOfOtherSG, passMsgOfOtherSG);
+
+		// verify Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		saveSearch.verifyNodePresentInSG(Input.mySavedSearch, node1);
+
+		// delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, node1);
+
+		login.logout();
+
+		// Delete Other SG
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		login.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
