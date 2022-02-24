@@ -472,4 +472,11 @@ public class TestData {
 		public String MP3GermanFile;
 		public String TranscriptJapneseFile;
 		public String MP3JapneseFile;
+		public String YYYYMMDDHHMISSDat;
+		public String YYYYMMDDHHMISSLst;
+		public String DATFile1;
+		public String StitchedTIFF;
+
+		
+		
 }
