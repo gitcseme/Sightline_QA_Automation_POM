@@ -56,7 +56,11 @@ public class DataSets {
 		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[1]//td//a[text()='Download File']");
 	
 	}
+	//added by brundha
+	public Element getDataSetTypeList() {
+		return driver.FindElementById("DatasetTypeList");
 	
+	}
 	public DataSets(Driver driver) {
 
 		this.driver = driver;
@@ -224,7 +228,22 @@ public class DataSets {
 			base.failedStep("Exception occcured while download exported file."+e.getMessage());
 		}
 	}
+	
+	/**
+	*@author Brundha
+	*@description : Method to select dataset.
+	*/
+	public void SelectingUploadedDataSet() {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDataSetTypeList());
+			getDataSetTypeList().selectFromDropdown().selectByVisibleText("Only Uploaded Sets");
+			base.waitForElement(getSelectAction());
+			getSelectAction().Click();
+			base.waitForElement(getSelectDocList());
+			getSelectDocList().waitAndClick(10);
 			
+		}
+	
 }
 
 
