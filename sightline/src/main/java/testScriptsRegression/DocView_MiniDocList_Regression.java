@@ -101,8 +101,6 @@ public class DocView_MiniDocList_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void miniDocListConfigurations() throws InterruptedException, Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51804");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
 		baseClass.stepInfo(
 				"Verify that when assignment saved with a manual sort order, then the optimized sort order should be presented with the default fields in mini doc list when navigating through any other assignment");
 
@@ -129,8 +127,6 @@ public class DocView_MiniDocList_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void miniDocListConfigurationsViaChildWindow() throws InterruptedException, Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51805");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
 		baseClass.stepInfo(
 				"Verify that when assignment saved with a manual sort order, then the optimized sort order should be presented with the default fields in mini doc list child window when navigating through any other assignment");
 
@@ -239,7 +235,7 @@ public class DocView_MiniDocList_Regression {
 		int documentIdNum = Input.documentIdNum;
 
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		baseClass.stepInfo(
@@ -1049,7 +1045,6 @@ public class DocView_MiniDocList_Regression {
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyDocsFromMiniDoclistAndChildWindow() throws InterruptedException {
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass.stepInfo("Test case Id: RPMXCON-51390");
 		String searchString = Input.searchString1;
 
@@ -1628,7 +1623,7 @@ public class DocView_MiniDocList_Regression {
 
 		docViewPage.performFolderAction(folderName, 1);
 //		verify code same as icon should not present in minidoclist for folder performed
-		boolean flag = docViewPage.geDocView_MiniList_CodeSameAsIcon().isElementPresent();
+		boolean flag = docViewPage.geDocView_MiniList_CodeSameAsIcon().isElementAvailable(5);
 		Assert.assertFalse(flag);
 		baseClass.passedStep("Code same as icon not displayed in minidoclist after performing folder action");
 		loginPage.logout();
@@ -2432,7 +2427,6 @@ public class DocView_MiniDocList_Regression {
 		miniDocListpage.verifyOriginalSortOrderInChildWindow(assignmentName);
 
 		loginPage.logout();
-		loginPage.logout();
 	}
 
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 61)
@@ -2506,7 +2500,6 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Successfully logout as Reviewer'" + Input.rev1userName + "'");
 		baseClass.passedStep("Verify on click of 'Save' button coding form should be validated when coding form+"
 				+ "customized for all objects along with all condition and Check Item");
-		loginPage.logout();
 	}
 
 	/**
@@ -2585,7 +2578,6 @@ public class DocView_MiniDocList_Regression {
 		baseClass.passedStep(
 				"Verify that when mini doclist child window reloads by adding additional docs then for completed documents"
 						+ " checkmark with light blue highlighting should be displayed when Show Completed Docs is ON");
-		loginPage.logout();
 
 	}
 
@@ -3018,7 +3010,7 @@ public class DocView_MiniDocList_Regression {
 	 * @Description :To verify user can select Multiple documents in Mini Doc List
 	 *              from dockout screens and Select Action as 'Code Same as this'
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 68)
+	@Test(enabled = true, groups = { "regression" }, priority = 68)
 	public void validateCodeSameIconForSelectedDocs() throws InterruptedException, Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51131");
 		baseClass.stepInfo("To verify user can select Multiple documents in Mini Doc List from dockout screens "
@@ -3080,8 +3072,10 @@ public class DocView_MiniDocList_Regression {
 		String prnDoc = docViewPage.getVerifyPrincipalDocument().getText();
 		docViewPage.clickCheckBoxMiniDocListActionCodeSameAs(2);
 		driver.getWebDriver().navigate().refresh();
+		baseClass.handleAlert();
 		
 //		validation for codesame as icon
+		driver.waitForPageToBeReady();
 		boolean flag = docViewPage.getMiniDocList_CodeSameIcon(prnDoc).Displayed();
 		softAssertion.assertTrue(flag);
 		baseClass.passedStep("Small icon displayed for selected document in minidoclist for code same as");
@@ -3276,7 +3270,7 @@ public class DocView_MiniDocList_Regression {
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
-			LoginPage.clearBrowserCache();
+//			LoginPage.clearBrowserCache();
 		}
 	}
 
@@ -3285,7 +3279,7 @@ public class DocView_MiniDocList_Regression {
 	public void close() {
 		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
 		try {
-			loginPage.clearBrowserCache();
+//			loginPage.clearBrowserCache();
 		} catch (Exception e) {
 			// no session avilable
 

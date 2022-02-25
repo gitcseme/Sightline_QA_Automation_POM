@@ -4,6 +4,7 @@ package testScriptsRegression;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -75,6 +76,14 @@ public class DocView_MiniDocList_DataProvider {
 		// Open browser
 		Input in = new Input();
 		in.loadEnvConfig();
+		
+
+	}
+
+	@BeforeMethod
+	public void beforeTestMethod(Method testMethod) {
+		System.out.println("Executing method : " + testMethod.getName());
+		UtilityLog.info("Executing method : " + testMethod.getName());
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -89,13 +98,6 @@ public class DocView_MiniDocList_DataProvider {
 		softAssertion = new SoftAssert();
 		projectPage = new ProjectPage(driver);
 		securityGroupPage=new SecurityGroupsPage(driver);
-
-	}
-
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) {
-		System.out.println("Executing method : " + testMethod.getName());
-		UtilityLog.info("Executing method : " + testMethod.getName());
 	}
 
 	@DataProvider(name = "userDetails")
@@ -141,7 +143,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * is clicked multiple times then repetitive 'Selected Fields' should not be
 	 * displayed on optimized Sort order tab Id:RPMXCON-51889 Sprint : 1
 	 */
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 1)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 1)
 	public void repeatativeFieldsCheckonOptimizedSortTab(String fullName, String userName, String password)
 			throws InterruptedException, Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51889");
@@ -191,7 +193,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * displayed on Manual Sort order tab Id:RPMXCON-51890 Sprint : 1
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 2)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 2)
 	public void repeatativeFieldsonManualSortTab(String fullName, String userName, String password) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51890");
 		driver.Manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
@@ -252,7 +254,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * @Description : Verify the default columns from mini doc list of doc view
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
 	public void verifyDefaultHeaderValue(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51429");
@@ -286,7 +288,7 @@ public class DocView_MiniDocList_DataProvider {
 				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
 	}
 
-	@Test(enabled = false, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 4)
+	@Test(enabled = true, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 4)
 	public void basicSearchToDocViewToSelect4WebFields(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50881");
@@ -314,7 +316,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              mini doc list in the manual mode
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetailss", groups = { "regression" }, priority = 5)
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 5)
 	public void verifyAfterImpersonateToSelect4WebFieldsManualMode(String roll, String userName, String password,
 			String impersonate) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50880");
@@ -385,7 +387,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              to display in the panel of mini doc list in manual mode
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 6)
+	@Test(enabled = true, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 6)
 	public void savedSearchToDocViewToSelect4WebFields(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50882");
@@ -416,7 +418,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              of an assignment
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 7)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 7)
 	public void repeatativeFieldsCheckonOptimizedSortTa(String fullName, String userName, String password)
 			throws InterruptedException, Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51336");
@@ -442,7 +444,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              child window
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 8)
+	@Test(enabled = true, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 8)
 	public void removeCodeSameAsFromChildWindow(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51231");
@@ -469,7 +471,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              same as this' on document selection from mini doc list
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetailss", groups = { "regression" }, priority = 9)
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 9)
 	public void removeCodeSameAsAfterImpersonate(String roll, String userName, String password, String impersonate)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51228");
@@ -524,7 +526,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              optimized mode
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetailss", groups = { "regression" }, priority = 10)
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 10)
 	public void verifyAfterImpersonateToSelect4WebFields(String roll, String userName, String password,
 			String impersonate) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50887");
@@ -593,7 +595,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              from Optimized Sort Order of Configure mini doc list pop up
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 11)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 11)
 	public void verifySelectdFieldsToRemove(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51653");
@@ -619,7 +621,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              from mini doc list child window
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 12)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 12)
 	public void verifySelectedFieldInChildWindow(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51742");
@@ -650,7 +652,7 @@ public class DocView_MiniDocList_DataProvider {
 		return new Object[][] { { "rmu", Input.rmu1userName, Input.rmu1password, "rev" } };
 	}
 
-	@Test(enabled = false, dataProvider = "revImpersoante", groups = { "regression" }, priority = 13)
+	@Test(enabled = true, dataProvider = "revImpersoante", groups = { "regression" }, priority = 13)
 	public void verifySwitchedFromCustomToOptimizedSortRemoval(String roll, String userName, String password,
 			String impersonate) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51738");
@@ -692,7 +694,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              in context of an assignment
 	 */
 
-	@Test(enabled = false, dataProvider = "revImpersoante", groups = { "regression" }, priority = 14)
+	@Test(enabled = true, dataProvider = "revImpersoante", groups = { "regression" }, priority = 14)
 	public void verifySwitchedFromCustomToOptimizedSort(String roll, String userName, String password,
 			String impersonate) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51737");
@@ -733,7 +735,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              fields set in the Optimized Sort are displayed for custom sort
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 15)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 15)
 	public void verifySwitchedFromOptimizedSortToCustom(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51736");
@@ -759,7 +761,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              will be presented in the field selection tab
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 16)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 16)
 	public void verifyDefaultValueInOptimizedSort(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51739");
@@ -785,7 +787,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              order
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 17)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 17)
 	public void verifyCurrentSortOrderInMiniDocList(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51740");
@@ -811,7 +813,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              honors t hose new selections
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 18)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 18)
 	public void verifyChangesColumnPresentation(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51741");
@@ -842,7 +844,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              previous document
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 19)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 19)
 	public void verifyTranslationsTab(String fullName, String userName, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51683");
 		baseClass.stepInfo("Verify that document should be loaded successfully when document viewed "
@@ -869,7 +871,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              doc list
 	 */
 
-	@Test(enabled = false, dataProvider = "twoLogins", groups = { "regression" }, priority = 20)
+	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 20)
 	public void verifyWarningCodeSameAs(String fullName, String userName, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51223");
 		baseClass.stepInfo("To verify when user select action as 'Remove code same' for "
@@ -896,7 +898,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              with having some rules on work product
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 21)
+	@Test(enabled = true, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 21)
 	public void savedSearchAndBasicToDocView(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50904");
@@ -933,7 +935,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              list in the manual mode
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 22)
+	@Test(enabled = true, dataProvider = "userDetailTwoLogin", groups = { "regression" }, priority = 22)
 	public void verifySavedSearchToSortSequence(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50894");
@@ -964,7 +966,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              list in the manual mode
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 23)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 23)
 	public void verifyBasicSearchToSortSequence(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50893");
@@ -994,7 +996,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              redirects from Manage Assignment page
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetailss", groups = { "regression" }, priority = 25)
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 25)
 	public void afterImpSortSequenceFromAssignment(String roll, String userName, String password, String impersonate)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50892");
@@ -1063,7 +1065,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              from doc list page
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
 	public void verifySortSequenceDocListToDocView(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50895");
@@ -1095,7 +1097,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              number of documents
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
 	public void scrollDownWithLessDocument(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51610");
@@ -1125,7 +1127,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              document
 	 */
 
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
 	public void verifyTextTab(String fullName, String userName, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51682");
 		baseClass.stepInfo("Verify that document should be loaded successfully when document "
@@ -1152,7 +1154,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
 	public void verifyEmailAuthorNameAndAddressField(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1212,7 +1214,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 30)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 30)
 	public void verifyMiniDoclistWebFieldAfterChangingThem(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1244,10 +1246,11 @@ public class DocView_MiniDocList_DataProvider {
 		driver.waitForPageToBeReady();
 		driver.scrollingToElementofAPage(miniDocListPage.getDocView_MiniDoclist_Header_Webfields(fieldName));
 		softAssertion.assertTrue(miniDocListPage.getDocView_MiniDoclist_Header_Webfields(fieldName).isDisplayed());
-		softAssertion.assertAll();
+		
 		baseClass.passedStep("Mini doc list is displayed with the selected fields for Set Document Sorting");
-
+		softAssertion.assertAll();
 		loginPage.logout();
+		
 
 	}
 
@@ -2043,29 +2046,26 @@ public class DocView_MiniDocList_DataProvider {
 	}
 	
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
-		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
+	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
-			try { // if any tc failed and dint logout!
-				loginPage.logout();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
+//			loginPage.logoutWithoutAssert();
 		}
-		UtilityLog.info("Executed :" + result.getMethod().getMethodName());
+	
+			loginPage.quitBrowser();
+		
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
+		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
 		try {
-			loginPage.quitBrowser();
-		} finally {
-			loginPage.clearBrowserCache();
+//			loginPage.clearBrowserCache();
+		} catch (Exception e) {
+			// no session avilable
+
 		}
-
 	}
-
 }

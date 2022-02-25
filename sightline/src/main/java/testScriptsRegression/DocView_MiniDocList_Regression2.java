@@ -92,7 +92,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyToClickGearIconInMiniDocListPopupClosed() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51333");
@@ -153,7 +153,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifySortingFromMiniDocListRedirectedToDocView() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51431");
@@ -215,7 +215,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyToClickGearIconInMiniListDisplayOptimizedSort() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51334");
@@ -276,7 +276,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 4)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyEmailAuthorAndAddressNotDisplayInOptimizedSortTab() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51524");
@@ -337,7 +337,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyMiniDocListChkCheckMarkAndBlueHighlighting() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51643");
@@ -434,7 +434,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifySortFromMiniDocListRedirectedToDocViewAnAssignment() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51430");
@@ -492,7 +492,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyPrincipalDocsNotHideUnderMiniDocList() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51640");
@@ -554,7 +554,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifySelectmultipleDocsMiniDocListCodeSameAndSave() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50945");
@@ -601,7 +601,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyCodeSameAsThisInPrecedingDocMiniDocList() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51069");

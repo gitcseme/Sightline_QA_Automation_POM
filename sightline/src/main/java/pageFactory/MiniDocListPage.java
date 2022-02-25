@@ -3376,7 +3376,7 @@ public class MiniDocListPage {
 		saveConfigureMiniDocList();
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getMetaDataText(text));
-		Boolean flag = getMetaDataText(text).Displayed();
+		Boolean flag = getMetaDataText(text).isDisplayed();
 		softAssertion.assertTrue(flag);
 		System.out.println(flag);
 		baseClass.passedStep("Upadated metadata value displayed in minidoclist");

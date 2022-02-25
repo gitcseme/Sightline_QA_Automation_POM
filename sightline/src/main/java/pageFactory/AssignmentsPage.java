@@ -3614,8 +3614,8 @@ public class AssignmentsPage {
 		getSelectUserToAssigReviewerManager().waitAndClick(10);
 		bc.waitForElement(getAdduserBtn());
 		getAdduserBtn().waitAndClick(10);
-		bc.VerifySuccessMessage("Record saved successfully");
-		bc.CloseSuccessMsgpopup();
+//		bc.VerifySuccessMessage("Record saved successfully");
+//		bc.CloseSuccessMsgpopup();
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(10);
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
@@ -4188,8 +4188,11 @@ public class AssignmentsPage {
 	public void toggleEnableAnalyticsPanel() {
 		driver.waitForPageToBeReady();
 		driver.scrollingToBottomofAPage();
-		bc.waitForElement(getAssgnGrp_Create_DisplayAnalyticstoggle());
-		getAssgnGrp_Create_DisplayAnalyticstoggle().waitAndClick(5);
+		String analyticalPanelFlag = getAssgn_AnalyticsPanelToggle().GetAttribute("class");
+
+		if (!analyticalPanelFlag.contains("true")) {
+			getAssgn_AnalyticsPanelToggle().Click();
+		}
 		driver.scrollPageToTop();
 		bc.waitForElement(getAssignmentSaveButton());
 		getAssignmentSaveButton().waitAndClick(5);
@@ -8357,22 +8360,6 @@ public class AssignmentsPage {
 		bc.waitForElement(getDistributeBtn());
 		bc.waitTillElemetToBeClickable(getDistributeBtn());
 		getDistributeBtn().waitAndClick(10);
-		try {
-			String disWarngTxt = getWarningTxtDis().getText().trim();
-			String actual = "Please enter a valid number to distribute";
-			if (disWarngTxt.equals(actual)) {
-				driver.getWebDriver().navigate().refresh();
-				driver.waitForPageToBeReady();
-				bc.waitForElement(getDistributeBtn());
-				getDistributeBtn().waitAndClick(10);
-				bc.waitForElement(getSelectUserInDistributeTabs());
-				getSelectUserInDistributeTabs().waitAndClick(10);
-				bc.waitForElement(getDistributeBtn());
-				getDistributeBtn().waitAndClick(10);
-			}
-		} catch (org.openqa.selenium.NoSuchElementException e) {
-			e.printStackTrace();
-		}
 		driver.waitForPageToBeReady();
 	}
 
