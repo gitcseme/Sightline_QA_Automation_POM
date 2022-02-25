@@ -97,7 +97,7 @@ public class WorkFlow_IndiumRegression {
 
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
-		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, assgn, false);
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, assgn, false,1);
 		workflow.selectWorkFlowUsingPagination(wfName);
 		
 		// Running workflow
@@ -172,7 +172,7 @@ public class WorkFlow_IndiumRegression {
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
 		baseClass.stepInfo("Creating workflow using save search,assignmnet and first family options");
-		workflow.newWorkFlowCreation(wfName, wfDesc, Id, true, folderName, false, assgn, true);
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, true, folderName, false, assgn, true,1);
 		workflow.selectWorkFlowUsingPagination(wfName);
 		
 		// Running workflow
@@ -309,7 +309,7 @@ public class WorkFlow_IndiumRegression {
 
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
-		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, assgn, false);
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, assgn, false,1);
 		workflow.selectWorkFlowUsingPagination(wfName);
 		
 		// Running workflow
@@ -377,7 +377,7 @@ public class WorkFlow_IndiumRegression {
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
 		baseClass.stepInfo("Creating workflow using save search,assignmnet and first family options");
-		workflow.newWorkFlowCreation(wfName, wfDesc, Id, true, folderName, false, assgn, true);
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, true, folderName, false, assgn, true,1);
 		workflow.selectWorkFlowUsingPagination(wfName);
 		// Running workflow
 		int workFlowId = workflow.gettingWorkFlowId(wfName);
