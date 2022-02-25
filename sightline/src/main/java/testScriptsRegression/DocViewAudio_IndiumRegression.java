@@ -57,6 +57,15 @@ public class DocViewAudio_IndiumRegression {
 	DocListPage docListPage;
 	SavedSearch savedSearch;
 	String keywordsArrayPT[] = { "test" };
+	String nodeName = null;
+	String savedSearch1 = "Search1" + Utility.dynamicNameAppender();
+	String savedSearch2 = "Search2" + Utility.dynamicNameAppender();
+	String searchString1 = "interview";
+	String searchString2 = "six";
+	List<String> DocIdsWithBothSearchTerm = new ArrayList<String>();
+	List<String> UniqueSearchString1 = new ArrayList<String>();
+	List<String> UniqueSearchString2 = new ArrayList<String>();
+	List<String> audioSearchTerms = new ArrayList<String>();
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -3002,6 +3011,130 @@ public class DocViewAudio_IndiumRegression {
 		// logout
 		loginPage.logout();
 	}
+
+
+@DataProvider(name = "userDetailsAndRole")
+	public Object[][] userLoginDetailsAndRole() {
+		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password,"PA" },
+				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password,"RMU" },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password,"REV" } };
+	}
+
+
+/**
+ * @author Jayanthi.ganesan
+ * @param fullName
+ * @param userName
+ * @param password
+ * @param role
+ * @throws InterruptedException
+ */
+@Test(enabled = true,dataProvider = "userDetailsAndRole", groups = { "regression" }, priority = 39)
+	public void verifyPersistentHit_DifferentSearch(String fullName, String userName, String password, String role) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51848");
+		baseClass.stepInfo("Verify that when document present in different searches with term then, should display search term on persistent hits panel on"
+				+ " document navigation options [<<, <, >, >>, enter document number]");
+		
+		// Login as PA/RMU/REV 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as "+role+" " +fullName+ "'");
+		
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		docListPage = new DocListPage(driver);
+		
+		
+		
+		if(role.equals("PA")) {
+		audioSearchTerms.add(searchString1);
+		audioSearchTerms.add(searchString2);
+        // creating new node as PA	
+        nodeName=savedSearch.createSearchGroupAndReturn(Input.shareSearchDefaultSG, "PA", Input.yesButton);
+	
+        // configuring and saving the audio search term 1 in credated node		
+		sessionSearch.audioSearch(searchString1, Input.language);
+		sessionSearch.saveSearchInNodeUnderGroup(savedSearch1,nodeName,Input.shareSearchDefaultSG);
+		driver.scrollPageToTop();
+		sessionSearch.ViewInDocList();
+		List<String> DocIdsWithSearchString1 = docListPage.gettingAllDocIDs();
+		
+		// configuring and saving the audio search term 2 in credated node
+		baseClass.selectproject();
+		sessionSearch.audioSearch(searchString2, Input.language);
+		sessionSearch.saveSearchInNodeUnderGroup(savedSearch2,nodeName,Input.shareSearchDefaultSG);
+		driver.scrollPageToTop();
+		sessionSearch.ViewInDocList();
+		List<String> DocIdsWithSearchString2 = docListPage.gettingAllDocIDs();	
+		
+		// collecting the DocId common to both audio searchString1
+		baseClass.selectproject();
+		sessionSearch.audioSearchWithOperator(searchString1, searchString2, Input.language, 0,"ALL");
+		sessionSearch.ViewInDocList();
+		DocIdsWithBothSearchTerm = docListPage.gettingAllDocIDs();
+		
+		// collecting the DocId having only searchString1  
+		UniqueSearchString1 = baseClass.getUniqueValues_FromTwoList(DocIdsWithBothSearchTerm, DocIdsWithSearchString1);
+		
+		// collecting the DocId having only searchString2
+		UniqueSearchString2 = baseClass.getUniqueValues_FromTwoList(DocIdsWithBothSearchTerm, DocIdsWithSearchString2);
+		}
+		// viewing the Documents in DocView from SavedSearch page
+		savedSearch.selectNodeUnderSpecificSearchGroup(Input.securityGroup, nodeName);
+		driver.scrollPageToTop();
+		savedSearch.getToDocView().waitAndClick(5);
+		
+		// verifying the AudioPersistantHitPanel for document having only searchString1
+		baseClass.stepInfo("verifying the AudioPersistantHitPanel for document having audio search term '"+searchString1+"'");
+		docViewPage.getDociD(UniqueSearchString1.get(1)).waitAndClick(10);
+		String DocIDSearchString1 = docViewPage.getSelectedDocIdMiniDocList().getText();
+		softAssertion.assertEquals(DocIDSearchString1, UniqueSearchString1.get(1));
+		baseClass.stepInfo("Document with DocID '"+DocIDSearchString1+"' is selected in MiniDocList panel in DocView Page");
+		docViewPage.verifyingAudioPersistantHitPanel(searchString1);
+		
+		// verifying the AudioPersistantHitPanel for document having only searchString2
+		driver.Navigate().refresh();
+		baseClass.stepInfo("verifying the AudioPersistantHitPanel for document having audio search term '"+searchString2+"'");
+		docViewPage.getDociD(UniqueSearchString2.get(1)).waitAndClick(10);
+		String DocIDSearchString2 = docViewPage.getSelectedDocIdMiniDocList().getText();
+		softAssertion.assertEquals(DocIDSearchString2, UniqueSearchString2.get(1));
+		baseClass.stepInfo("Document with DocID '"+DocIDSearchString2+"' is selected in MiniDocList panel in DocView Page");
+		docViewPage.verifyingAudioPersistantHitPanel(searchString2);
+		
+		// verifying the AudioPersistantHitPanel for document having both audio searchString
+		driver.Navigate().refresh();
+		baseClass.stepInfo("verifying the AudioPersistantHitPanel for document having both audio search term '"+searchString1+"' and '"+searchString2+"'");
+		docViewPage.getDociD(DocIdsWithBothSearchTerm.get(1)).waitAndClick(10);	
+		String DocIdsWithBothSearchTerm1 = docViewPage.getSelectedDocIdMiniDocList().getText();
+		softAssertion.assertEquals(DocIdsWithBothSearchTerm1, DocIdsWithBothSearchTerm.get(1));
+		baseClass.stepInfo("Document with DocID '"+DocIdsWithBothSearchTerm1+"' is selected in MiniDocList panel in DocView Page");
+		docViewPage.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(audioSearchTerms);
+		
+	   // verifying the AudioPersistantHitPanel for random document selected using the NumTextBox
+		driver.Navigate().refresh();
+		baseClass.stepInfo("verifying the AudioPersistantHitPanel for random document selected using the NumTextBox");
+		docViewPage.searchDocumentBasedOnId(5);
+		String DocId1 = docViewPage.getSelectedDocIdMiniDocList().getText();
+		baseClass.stepInfo("Document with DocID '"+DocId1+"' is selected in MiniDocList panel in DocView Page");
+		List<String> searchTerm1 = docViewPage.selectingTheAudioSearchTermBasedOnDocId(UniqueSearchString1, UniqueSearchString2, DocIdsWithBothSearchTerm, searchString1, searchString2, DocId1);
+		docViewPage.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm1);
+		
+		// verifying the AudioPersistantHitPanel for random document selected using the navigation option
+		driver.Navigate().refresh();
+		baseClass.stepInfo("verifying the AudioPersistantHitPanel for random document selected by using the navigation Arrow symbol");
+		docViewPage.performNextNavigation(2);
+		String DocId2 = docViewPage.getSelectedDocIdMiniDocList().getText();
+		baseClass.stepInfo("Document with DocID '"+DocId2+"' is selected in MiniDocList panel in DocView Page");
+		List<String> searchTerm2 = docViewPage.selectingTheAudioSearchTermBasedOnDocId(UniqueSearchString1, UniqueSearchString2, DocIdsWithBothSearchTerm, searchString1, searchString2, DocId1);
+		docViewPage.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm2);
+		
+		softAssertion.assertAll();
+		
+		loginPage.logout();
+	}
+	
+	
 
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {

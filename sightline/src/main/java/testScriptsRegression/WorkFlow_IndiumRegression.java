@@ -3,6 +3,7 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.ITestResult;
@@ -427,8 +428,110 @@ public class WorkFlow_IndiumRegression {
 		// logout
 		loginPage.logout();
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	public void verifyFilter_WorkflowID() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52650");
+		baseClass.stepInfo("To verify that RMU can filter by Workflow ID");
+		
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "work" + Utility.dynamicNameAppender();
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		workflow=new WorkflowPage(driver);
+		workflow.workFlow_Draft(wfName,wfDesc);
+		baseClass.stepInfo("Draft Work Flow Created with name "+wfName);
+		workflow.selectWorkFlowUsingPagination(wfName);
+		int wfID=workflow.gettingWorkFlowId(wfName);
+		String WF_id=String.valueOf(wfID);
+		workflow.filterByWF_ID(WF_id);
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		baseClass.stepInfo("Work flow Filter for WorkflowID "+wfID+" is apllied.");
+		List<String> WfID_AfterFilter=workflow.getTableCoumnValue("Workflow ID");
+		if(WfID_AfterFilter.size()==1 && WfID_AfterFilter.get(0).equals(wfID)) {
+			baseClass.passedStep("Work flow filter functionality working properly "
+					+ "if RMU apllied Work flow filter for WorkflowID.");
+		}
+		else {
+			baseClass.failedStep("Work flow filter/Work flow ID functionality not  working properly.");
+		}
+		
+		loginPage.logout();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	public void verifyHistoryBtn() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52645");
+		baseClass.stepInfo("To verify that RMU can view the action 'View History'.");
+		
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "work" + Utility.dynamicNameAppender();
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
+		workflow=new WorkflowPage(driver);
+		workflow.workFlow_Draft(wfName,wfDesc);
+		baseClass.stepInfo("Draft Work Flow Created with name "+wfName);
+		workflow.selectWorkFlowUsingPagination(wfName);
+		workflow.getWorkFlow_ActionDropdown().waitAndClick(5);
+		baseClass.stepInfo("Clicked on Action button.");
+		if(workflow.getEnabledHistoryBtn().isDisplayed()) {
+			baseClass.passedStep("Sucessfully verified that RMU can view the action 'View History' Button.");
+		}
+		else {
+			baseClass.failedStep("View History Button not displayed.");
+		}
+		
+		loginPage.logout();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	public void verifyFilter_CreatedUser() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52657");
+		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected 'Created By' user.");
+		
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "work flow description " + Utility.dynamicNameAppender();
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
+		workflow=new WorkflowPage(driver);
+		workflow.workFlow_Draft(wfName,wfDesc);
+		baseClass.stepInfo("Draft Work Flow Created with name "+wfName);
+		workflow.filterByCreatedByUSer(Input.rmu1FullName);
+		baseClass.stepInfo("Work flow Filter for created by user name "+Input.rmu1userName+" is apllied.");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		List<String> WfCreatedUSer_AfterFilter=workflow.getTableCoumnValue("Created By");
+		System.out.println(WfCreatedUSer_AfterFilter);
+		if(WfCreatedUSer_AfterFilter.size()!=0 ) {
+			for(int i=0;i<WfCreatedUSer_AfterFilter.size();i++) {
+			if( WfCreatedUSer_AfterFilter.get(i).equals(Input.rmu1FullName)) {
+				if(i==(WfCreatedUSer_AfterFilter.size()-1))
+			baseClass.passedStep("Work flow filter for 'created  by user' functionality working properly");
+			}else {
+				baseClass.failedStep("Work flow filter displayed different user name "+WfCreatedUSer_AfterFilter.get(i)+" which is not applied in filter");
+			}
+			}
+		}
+		else {
+			baseClass.failedStep("Work flow filter functionality not  working properly");
+		}
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

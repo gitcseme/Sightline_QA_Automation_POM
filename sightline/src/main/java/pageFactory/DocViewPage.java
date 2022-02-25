@@ -3207,7 +3207,13 @@ public class DocViewPage {
 		return driver
 				.FindElementsByXPath("//tbody[@id='threadedEmailRow']//tr");
 	}
-
+	public ElementCollection getAudioPersistentHitsPanels() {
+		return driver.FindElementsByXPath("//div[@id='divAudioPersistentSearch']/div");
+	}
+	
+	public ElementCollection getDocView_Audio_HitTerms(int i) {
+		return driver.FindElementsByXPath("//*[@id='divAudioPersistentSearch']/div/p["+i+"]");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -25625,4 +25631,70 @@ public class DocViewPage {
 			base.failedStep("The added tags are not checked and disabled");
 		}
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param DocIDsSearchTerm1
+	 * @param DocIDsSearchTerm2
+	 * @param DocIDsSearchTerm3
+	 * @param AudioSearchTerm1
+	 * @param AudioSearchTerm2
+	 * @param DocId
+	 * @return
+	 */
+		public List<String> selectingTheAudioSearchTermBasedOnDocId(List<String>DocIDsSearchTerm1,List<String>DocIDsSearchTerm2,List<String>DocIDsSearchTerm3,String AudioSearchTerm1,
+				String AudioSearchTerm2, String DocId) {
+			
+			List<String> selectedSearchTerm = new ArrayList<String>();
+			if(DocIDsSearchTerm1.contains(DocId)) {
+				selectedSearchTerm.add(AudioSearchTerm1);
+			}else if(!DocIDsSearchTerm2.equals(null)) {
+				if(DocIDsSearchTerm2.contains(DocId)) {
+					selectedSearchTerm.add(AudioSearchTerm2);
+				}
+			}else if(!DocIDsSearchTerm3.equals(null)) {
+				if(DocIDsSearchTerm3.contains(DocId)) {
+					selectedSearchTerm.add(AudioSearchTerm1);
+					selectedSearchTerm.add(AudioSearchTerm2);
+				}
+			}
+			return selectedSearchTerm;
+		}
+	    /**
+		 * @author Jayanthi.ganesan
+		 * @param searchTerms(Audio hit to be verified in persistent hit panel)
+		 */
+
+		
+		
+		public void verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(List<String>searchTerms) {
+			
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			base.waitTillElemetToBeClickable(getAudioPersistantHitEyeIcon());
+			getAudioPersistantHitEyeIcon().Click();
+			driver.waitForPageToBeReady();
+			List<WebElement> AudioPersistentHitsPanels = getAudioPersistentHitsPanels().FindWebElements();
+			List<WebElement> AudioSearchTerms = getDocView_Audio_HitTerms(1).FindWebElements();
+			
+			if(AudioPersistentHitsPanels.size()==searchTerms.size() && AudioSearchTerms.size()==searchTerms.size()) {
+			getAudioPersistentHits().isElementAvailable(10);
+			for(int i=0; i<AudioPersistentHitsPanels.size();i++) {
+			if (AudioPersistentHitsPanels.get(i).isDisplayed()) {
+				base.passedStep("Persistent hits panel is displayed as expected");
+			} else {
+				base.failedStep("Persistent Hit panel is not displayed as expected");
+			}
+			base.waitForElement(getDocView_Audio_Hit());
+			String StringInPanels = AudioSearchTerms.get(i).getText().trim().toString().toLowerCase();
+
+			System.out.println("expected text" + StringInPanels);
+			base.compareTextViaContains(StringInPanels, searchTerms.get(i), "Search string is displayed as expected",
+					"Search string is not displayed as expected");
+			}
+			
+			} else {
+				base.failedStep("The Count of Audio Search Terms passed as parameter is not match with the count of Audio search Term Present in the AudioPersistantHitPanel for selected Document");
+			}
+		
+		}
 }
