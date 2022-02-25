@@ -682,6 +682,75 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath("//strong[contains(.,'In Progress')]");
 	}
 
+
+	//Added by Gopinath - 23/02/2022
+	public Element getNativeLoadFileCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkNative']//..//i");
+	}
+	public Element getNativePathInDATFileCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkLoadNativeFileDAT']//..//i");
+	}
+	public Element getTextPathInDATFileCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkLoadTextFileDAT']//..//i");
+	}
+	public Element getPDFPathInDATFileCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkLoadPDFFileDAT']//..//i");
+	}
+	public Element getTIFFPathInDATFileCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkLoadTIFFfileDAT']//..//i");
+	}
+	public Element getTIFFSearchablePDFCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkGenerateSearchablePDFforTIFFs']//..//i");
+	}
+	public Element getMP3PathInDATFileCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkLoadMP3VariantfileDAT']//..//i");
+	}
+	public Element getAudioTransistPathInDATFileCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkLoadTranscriptfileDAT']/following-sibling::i");
+	}
+	public Element getOtherPathInDATFileCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkLoadOtherfileDAT']/following-sibling::i");
+	}
+	public Element getEnabledFirstDropDown() {
+		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[2]//td[1]//select");
+	}
+	public Element getEnabledSecondDropDown() {
+		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[3]//td[1]//select");
+	}
+	public Element getEnabledThirdDropDown() {
+		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[4]//td[1]//select");
+	}
+	public Element getFilterINPROGRESS() {
+		return driver.FindElementByXPath(
+				".//*[@class='multiselect-container dropdown-menu']//label/input[@value='INPROGRESS']//..//..//..//..//li[2]");
+	}
+	public Element getStatus() {
+		return driver.FindElementByXPath("//div[@id='cardCanvas']//li[1]//strong[contains(text(),'Status')]");
+	}
+	public Element getIngestionTitle() {
+		return driver.FindElementByXPath("//div[@id='cardCanvas']//li[1]//a//span");
+	}
+	public Element getFieldCatagoryBySourceDat(String sourceDATField) {
+		return driver.FindElementByXPath("//tbody[@id='tblBody']//option[text()='"+sourceDATField+"' and @selected='selected']//../self::select//..//following-sibling::td[1]//select[not(contains(@disabled,'disabled'))]");
+	}
+	public Element getDestinationFieldBySourceDat(String sourceDATField) {
+		return driver.FindElementByXPath("//tbody[@id='tblBody']//option[text()='"+sourceDATField+"' and @selected='selected']//../self::select//..//following-sibling::td[2]//select[not(contains(@disabled,'disabled'))]");
+	}
+	public Element getIngestionTitle(int row) {
+		return driver.FindElementByXPath("//div[@id='cardCanvas']//li["+row+"]//a//span");
+	}
+	public Element getStatus(int row) {
+		return driver.FindElementByXPath("//div[@id='cardCanvas']//li["+row+"]//strong[contains(text(),'Status')]");
+	}
+	public Element getStatusByingestionName(String ingestionName) {
+		return driver.FindElementByXPath("//span[@title='"+ingestionName+"']//..//..//div[2]//strong[1]");
+	}
+	public Element getIngestionLinkByName(String ingestionName) {
+		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']");
+	}
+	public Element getStartCopy() {
+		return driver.FindElementByXPath("//strong[text()='Copying']//..//..//..//i[@class='fa fa-play-circle-o']");
+
 	public Element getIngestionWizardDateFormate() {
 		return driver.FindElementByXPath("//div[@style='padding-right:0px;']//div[@class='formatDate']");
 	}
@@ -704,6 +773,7 @@ public class IngestionPage_Indium {
 	
 	public Element copyTableDataName(String term) {
 		return driver.FindElementByXPath("//*[@id='Copyingblock']//td[contains(text(),'" + term + "')]");
+
 	}
 
 	public IngestionPage_Indium(Driver driver) {
@@ -742,6 +812,7 @@ public class IngestionPage_Indium {
 			for (int i = 0; i < 30; i++) {
 				try {
 					getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
+					break;
 				} catch (Exception e) {
 					Thread.sleep(1000);
 				}
@@ -2880,8 +2951,569 @@ public class IngestionPage_Indium {
 			base.passedStep("'Source System' is disabled on add new Ingestion");
 		}
 	}
+	
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select ingestion type and specify source loaction.
+	 * @param ingestionType : ingestionType is String value need to select type of ingestion need to perform.
+	 * @param sourceSystem : sourceSystem is String value that name of source system.
+	 * @param sourceLocation : sourceLocation is String value that location of source.
+	 * @param sourceFolder : sourceFolder is String value that folder of source.
+	 */
+	public void selectIngestionTypeAndSpecifySourceLocation(String ingestionType,String sourceSystem,String sourceLocation,String sourceFolder) {
+		try {
+			driver.getWebDriver().get(Input.url + "Ingestion/Home");
+			driver.waitForPageToBeReady();
+			base.waitForElement(getAddanewIngestionButton());
+			getAddanewIngestionButton().isElementAvailable(10);
+			getAddanewIngestionButton().Click();
+			base.waitForElement(getIngestion_IngestionType());
+			getIngestion_IngestionType().isElementAvailable(10);
+			getIngestion_IngestionType().selectFromDropdown().selectByVisibleText(ingestionType);
+			if(!ingestionType.trim().equalsIgnoreCase("Overlay Only")) {
+				base.waitForElement(getSpecifySourceSystem());
+				getSpecifySourceSystem().isElementAvailable(10);
+				getSpecifySourceSystem().selectFromDropdown().selectByVisibleText(sourceSystem);
+			}
+			base.waitForElement(getSpecifyLocation());
+			getSpecifyLocation().isElementAvailable(10);
+			for (int i = 0; i < 30; i++) {
+				try {
+					getSpecifyLocation().selectFromDropdown().selectByVisibleText(sourceLocation);
+					break;
+				} catch (Exception e) {
+					base.waitTime(1);
+				}
+			}
+			base.waitForElement(getSpecifySourceFolder());
+			getSpecifySourceFolder().isElementAvailable(10);
+			for (int i = 0; i < 30; i++) {
+				try {
+					getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
+					break;
+				} catch (Exception e) {
+					base.waitTime(1);
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting ingestion type and specify source loaction"+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select DAT delimiters.
+	 * @param fieldSeperator : fieldSeperator is String value that field seperator .
+	 * @param textQualifier : textQualifier is String value that name of text qualifier.
+	 * @param multiValue : multiValue is String value that multi value.
+	 */
+	public void addDelimitersInIngestionWizard(String fieldSeperator,String textQualifier,String multiValue) {
+		try {
+			driver.scrollPageToTop();
+			base.waitForElement(getDATDelimitersFieldSeparator());
+			getDATDelimitersFieldSeparator().isElementAvailable(15);
+			for (int i = 0; i < 30; i++) {
+				try {
+					getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(fieldSeperator);
+					break;
+				} catch (Exception e) {
+					base.waitTime(1);
+				}
+			}
+			base.waitForElement(getDATDelimitersTextQualifier());
+			getDATDelimitersTextQualifier().isElementAvailable(15);
+			getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(textQualifier);
+			base.waitForElement(getDATDelimitersNewLine());
+			getDATDelimitersNewLine().isElementAvailable(15);
+			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(multiValue);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting DAT delimiters."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select DAT source.
+	 * @param loadFile : loadFile is String value that load file value.
+	 * @param documentKey : documentKey is String value that document key.
+	 */
+	public void selectDATSource(String loadFile,String documentKey) {
+		try {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getSourceSelectionDATLoadFile().ScrollTo();
+			base.waitForElement(getSourceSelectionDATLoadFile());
+			getSourceSelectionDATLoadFile().isElementAvailable(15);
+			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(loadFile);
+			driver.waitForPageToBeReady();
+			getSourceSelectionDATKey().ScrollTo();
+			base.waitForElement(getSourceSelectionDATKey());
+			getSourceSelectionDATKey().isElementAvailable(15);
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(documentKey);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting DAT source."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select native source.
+	 * @param loadFile : loadFile is String value that load file value.
+	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
+	 */
+	public void selectNativeSource(String loadFile,boolean pathInDATFileflag) {
+		try {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getNativeLoadFileCheckBox().ScrollTo();
+			getNativeLoadFileCheckBox().isElementAvailable(15);
+			getNativeLoadFileCheckBox().Click();
+			getNativeLST().ScrollTo();
+			base.waitForElement(getNativeLST());
+			getNativeLST().isElementAvailable(15);
+			getNativeLST().selectFromDropdown().selectByVisibleText(loadFile);
+			if(pathInDATFileflag) {
+				getNativePathInDATFileCheckBox().isElementAvailable(10);
+				getNativePathInDATFileCheckBox().Click();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting Native source."+e.getLocalizedMessage());
+		}
+	}
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select text source.
+	 * @param loadFile : loadFile is String value that load file value.
+	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
+	 */
+	public void selectTextSource(String loadFile,boolean pathInDATFileflag) {
+		try {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getTextCheckBox().ScrollTo();
+			getTextCheckBox().isElementAvailable(15);
+			getTextCheckBox().Click();
+			getSourceSelectionTextLoadFile().ScrollTo();
+			base.waitForElement(getSourceSelectionTextLoadFile());
+			getSourceSelectionTextLoadFile().isElementAvailable(15);
+			getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(loadFile);
+			if(pathInDATFileflag) {
+				getTextPathInDATFileCheckBox().isElementAvailable(10);
+				getTextPathInDATFileCheckBox().Click();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting text source."+e.getLocalizedMessage());
+		}
+	}
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select PDF source.
+	 * @param loadFile : loadFile is String value that load file value.
+	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
+	 */
+	public void selectPDFSource(String loadFile,boolean pathInDATFileflag) {
+		try {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getPDFCheckBoxstionButton().ScrollTo();
+			getPDFCheckBoxstionButton().isElementAvailable(15);
+			getPDFCheckBoxstionButton().Click();
+			getPDFLST().ScrollTo();
+			base.waitForElement(getPDFLST());
+			getPDFLST().isElementAvailable(15);
+			getPDFLST().selectFromDropdown().selectByVisibleText(loadFile);
+			if(pathInDATFileflag) {
+				getPDFPathInDATFileCheckBox().isElementAvailable(10);
+				getPDFPathInDATFileCheckBox().Click();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting PDF source."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select TIFF source.
+	 * @param loadFile : loadFile is String value that load file value.
+	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
+	 * @param genSearchPDFCheckBoxFlag : genSearchPDFCheckBoxFlag is boolean value that weather generate searchable pdf check box need to enable or not.
+	 */
+	public void selectTIFFSource(String loadFile,boolean pathInDATFileflag,boolean genSearchPDFCheckBoxFlag) {
+		try {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getTIFFCheckBox().ScrollTo();
+			getTIFFCheckBox().isElementAvailable(15);
+			getTIFFCheckBox().Click();
+			getTIFFLST().ScrollTo();
+			base.waitForElement(getTIFFLST());
+			getTIFFLST().isElementAvailable(15);
+			getTIFFLST().selectFromDropdown().selectByVisibleText(loadFile);
+			if(pathInDATFileflag) {
+				getTIFFPathInDATFileCheckBox().isElementAvailable(10);
+				getTIFFPathInDATFileCheckBox().Click();
+			}
+			if(genSearchPDFCheckBoxFlag) {
+				getTIFFSearchablePDFCheckBox().isElementAvailable(10);
+				getTIFFSearchablePDFCheckBox().Click();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting TIFF source."+e.getLocalizedMessage());
+		}
+	}
+	
+/**
+ * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+ * @description: Method to select MP3 varient source.
+ * @param loadFile : loadFile is String value that load file value.
+ * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
+ */
+public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
+	try {
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		getMP3CheckBoxstionButton().ScrollTo();
+		getMP3CheckBoxstionButton().isElementAvailable(15);
+		getMP3CheckBoxstionButton().Click();
+		getMP3LST().ScrollTo();
+		base.waitForElement(getMP3LST());
+		getMP3LST().isElementAvailable(15);
+		getMP3LST().selectFromDropdown().selectByVisibleText(loadFile);
+		if(pathInDATFileflag) {
+			getMP3PathInDATFileCheckBox().isElementAvailable(10);
+			getMP3PathInDATFileCheckBox().Click();
+		}
+	}catch(Exception e) {
+		e.printStackTrace();
+		base.failedStep("Exception occured while selecting MP3 varient source."+e.getLocalizedMessage());
+	}
+}
 
 	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select Audio Transcript source.
+	 * @param loadFile : loadFile is String value that load file value.
+	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
+	 */
+	public void selectAudioTranscriptSource(String loadFile,boolean pathInDATFileflag) {
+		try {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getAudioTranscriptCheckBoxstionButton().ScrollTo();
+			getAudioTranscriptCheckBoxstionButton().isElementAvailable(15);
+			getAudioTranscriptCheckBoxstionButton().Click();
+			getAudioTranscriptLST().ScrollTo();
+			base.waitForElement(getAudioTranscriptLST());
+			getAudioTranscriptLST().isElementAvailable(15);
+			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(loadFile);
+			if(pathInDATFileflag) {
+				getAudioTransistPathInDATFileCheckBox().isElementAvailable(10);
+				getAudioTransistPathInDATFileCheckBox().Click();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting Audio Transcript source."+e.getLocalizedMessage());
+		}
+	}
+	
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select Other source.
+	 * @param loadFile : loadFile is String value that load file value.
+	 * @param linkType : linkType is String value that link type value.
+	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
+	 */
+	public void selectOtherSource(String linkType,String loadFile,boolean pathInDATFileflag) {
+		try {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getOtherCheckBox().ScrollTo();
+			getOtherCheckBox().isElementAvailable(15);
+			getOtherCheckBox().Click();
+			getOtherLinkType().ScrollTo();
+			base.waitForElement(getOtherLinkType());
+			getOtherLinkType().isElementAvailable(15);
+			getOtherLinkType().selectFromDropdown().selectByVisibleText(linkType);
+			driver.waitForPageToBeReady();
+			getOtherLoadFile().selectFromDropdown().selectByVisibleText(loadFile);
+			if(pathInDATFileflag) {
+				getOtherPathInDATFileCheckBox().isElementAvailable(10);
+				getOtherPathInDATFileCheckBox().Click();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting other source."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select Date and Time format.
+	 * @param format : format is String value that date format.
+	 */
+	public void selectDateAndTimeForamt(String format) {
+		try {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getDateFormat().isElementAvailable(15);
+			getDateFormat().selectFromDropdown().selectByVisibleText(format);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting Date and Time format."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to click on next button.
+	 */
+	public void clickOnNextButton() {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getNextButton().isElementAvailable(15);
+			getNextButton().Click();
+			driver.waitForPageToBeReady();
+			if(getApproveMessageOKButton().isDisplayed()) {
+				getApproveMessageOKButton().isElementAvailable(15);
+				getApproveMessageOKButton().Click();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while click on next button."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select value from first three source DAT fields
+	 */
+	public void selectValueFromEnabledFirstThreeSourceDATFields(String firstDropDown,String secondDropDown,String thirdDropDown) {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getEnabledFirstDropDown().isElementAvailable(15);
+			getEnabledFirstDropDown().selectFromDropdown().selectByVisibleText(firstDropDown);
+			getEnabledSecondDropDown().isElementAvailable(15);
+			getEnabledSecondDropDown().selectFromDropdown().selectByVisibleText(secondDropDown);
+			getEnabledThirdDropDown().isElementAvailable(15);
+			getEnabledThirdDropDown().selectFromDropdown().selectByVisibleText(thirdDropDown);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while select value from first three source DAT fields."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to click on preview and run button.
+	 */
+	public void clickOnPreviewAndRunButton() {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getPreviewRun().isElementAvailable(15);
+			getPreviewRun().Click();
+			driver.waitForPageToBeReady();
+			getApproveMessageOKButton().isElementAvailable(15);
+			getApproveMessageOKButton().Click();
+			driver.waitForPageToBeReady();
+			getbtnRunIngestion().isElementAvailable(15);
+			getbtnRunIngestion().Click();
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while click on preview and run button."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select all options from filter by dropdown.
+	 */
+	public void selectAllOptionsFromFilterByDropdown() {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getFilterByButton().isElementAvailable(15);
+			getFilterByButton().Click();
+			driver.waitForPageToBeReady();
+			getFilterByDRAFT().isElementAvailable(10);
+			getFilterByDRAFT().Click();
+			getFilterByFAILED().isElementAvailable(10);
+			getFilterByFAILED().Click();
+			getFilterINPROGRESS().isElementAvailable(10);
+			if(!getFilterINPROGRESS().GetAttribute("class").contains("active")) {
+				getFilterByINPROGRESS().isElementAvailable(10);
+				getFilterByINPROGRESS().Click();
+			}
+			getFilterByCATALOGED().isElementAvailable(10);
+			getFilterByCATALOGED().Click();
+			getFilterByCOPIED().isElementAvailable(10);
+			getFilterByCOPIED().Click();
+			getFilterByINDEXED().isElementAvailable(10);
+			getFilterByINDEXED().Click();
+			getFilterByAPPROVED().isElementAvailable(10);
+			getFilterByAPPROVED().Click();
+			getFilterByPUBLISHED().isElementAvailable(10);
+			getFilterByPUBLISHED().Click();
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting all options from filter by dropdown."+e.getLocalizedMessage());
+		}
+	}
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to navigate to ingestion page.
+	 */
+	public void navigateToIngestionPage() {
+		try {
+			driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while navigating to ingestion page."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to create ingestion to cataloged stage
+	 */
+	public String ingestionCreationToCatalogedStage() {
+		String title = null;
+		try {
+			String titleCar = null;
+			int count = 0;
+			driver.waitForPageToBeReady();
+			base.waitForElement(getStatus());
+			for(int i=1;i<500;i++) {
+				driver.waitForPageToBeReady();
+				getIngestionTitle(count+1).ScrollTo();
+				getIngestionTitle(count+1).isElementAvailable(15);
+				title = getIngestionTitle(count+1).GetAttribute("title").trim();
+				getStatus(count+1).isElementAvailable(15);
+				String status = getStatus(count+1).getText().trim();
+				driver.waitForPageToBeReady();
+				for(int j=1;j<50;j++) {
+					titleCar = getIngestionTitle(j).GetAttribute("title").trim();
+					getIngestionTitle(j).ScrollTo();
+					if(titleCar.equalsIgnoreCase(title)) {
+						if(j!=1) {
+							count=j-1;
+						}
+						break;
+					}else {
+						driver.scrollingToBottomofAPage();
+					}
+				}
+				if(status.contains("In Progress")) {
+					driver.scrollPageToTop();
+					getRefreshButton().isElementAvailable(15);
+					getRefreshButton().Click();
+				}
+				if(status.contains("Cataloged") && titleCar.equalsIgnoreCase(title)) {
+					base.passedStep("Ingestion completed till cataloged stage");
+					break;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while navigating to ingestion page."+e.getLocalizedMessage());
+		}
+		return title;
+	}
+	
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select field catagory and destination field by using source DAT field.
+	 * @param sourceDATField : sourceDATField is String value that source DAT field selected in drop down.
+	 * @param fieldCatagory : fieldCatagory is String value that field catagory need to select sibling drop down of sourceDATField.
+	 * @param destinationField : destinationField is String value that destination Field need to select sibling drop down of sourceDATField.
+	 */
+	public void selectFieldCatagoryDestinationFields(String sourceDATField,String fieldCatagory,String destinationField) {
+		try {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getFieldCatagoryBySourceDat(sourceDATField).ScrollTo();
+			getFieldCatagoryBySourceDat(sourceDATField).isElementAvailable(15);
+			getFieldCatagoryBySourceDat(sourceDATField).selectFromDropdown().selectByVisibleText(fieldCatagory);
+			driver.waitForPageToBeReady();
+			getDestinationFieldBySourceDat(sourceDATField).ScrollTo();
+			getDestinationFieldBySourceDat(sourceDATField).isElementAvailable(15);
+			getDestinationFieldBySourceDat(sourceDATField).selectFromDropdown().selectByVisibleText(destinationField);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting field catagory and destination field by using source DAT field."+e.getLocalizedMessage());
+		}
+	}
+	
+	
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to process to click on copied state without ignoring errors.
+	 */
+	public void clickOnCopiedStateWithoutIgnoringErrors(String ingestionName) {
+		try {
+			driver.scrollPageToTop();
+			String status = null;
+			for(int i=0;i<30;i++) {
+				if(getStatusByingestionName(ingestionName).isDisplayed()) {
+					status = getStatusByingestionName(ingestionName).getText().trim();
+					break;
+				}else {
+					driver.scrollingToBottomofAPage();
+				}
+			}
+			if(status.contains("Cataloged")) {
+				driver.waitForPageToBeReady();
+				getIngestionLinkByName(ingestionName).isElementAvailable(15);
+				getIngestionLinkByName(ingestionName).Click();
+				driver.waitForPageToBeReady();
+				getStartCopy().ScrollTo();
+				getStartCopy().isElementAvailable(15);
+				getStartCopy().Click();
+				driver.scrollPageToTop();
+				getCloseButton().isElementAvailable(15);
+				getCloseButton().Click();
+				getRefreshButton().isElementAvailable(15);
+				getRefreshButton().Click();
+			}
+			
+			for(int i=0;i<2000;i++) {
+				for(int j=0;j<30;j++) {
+					if(getStatusByingestionName(ingestionName).isDisplayed()) {
+						status = getStatusByingestionName(ingestionName).getText().trim();
+						break;
+					}else {
+						driver.scrollingToBottomofAPage();
+					}
+				}
+				if(status.contains("In Progress")) {
+					driver.scrollPageToTop();
+					getRefreshButton().isElementAvailable(15);
+					getRefreshButton().Click();
+				}
+				if(status.contains("Failed")) {
+					base.passedStep("Ingestion entered to failed state if copied state starts without ignoring errors");
+					break;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting field catagory and destination field by using source DAT field."+e.getLocalizedMessage());
+		}
+	}
+/**
 	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
 	 * @description: verify Source System tobe disabled when we add overlay in the
 	 *               Ingestion
@@ -4330,6 +4962,7 @@ public void IngestionCatlogtoCopying(String dataset) throws InterruptedException
     	
 		
 	}
+
 
 
 }
