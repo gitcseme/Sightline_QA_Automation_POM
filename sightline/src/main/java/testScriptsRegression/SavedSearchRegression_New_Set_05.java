@@ -90,9 +90,10 @@ public class SavedSearchRegression_New_Set_05 {
 
 	@DataProvider(name = "AllTheUsers")
 	public Object[][] AllTheUsers() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } };
-		return users;
+	Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
+	{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+	{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+	return users;
 	}
 
 	@DataProvider(name = "PaAndRmuUser")
@@ -614,6 +615,403 @@ public class SavedSearchRegression_New_Set_05 {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description :Reviewer User - Verify that User can renames existing search
+	 *              Group under the respective Security Group on Saved Search
+	 *              Screen. [RPMXCON-48135]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	public void verifyRenamedAsRev() throws Exception {
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48135 Saved Search");
+		base.stepInfo(
+				"Reviewer User - Verify that User can renames existing search Group under the respective Security Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to REV
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+
+		login.logout();
+
+		login.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// select default SG and create Search group
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Select Security Group : " + Input.securityGroup);
+		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", Input.yesButton);
+
+		String renamedNode = saveSearch.renameSearchGroup(node1);
+
+		// select Other SG and create Search group
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Select Security Group : " + securityGroup);
+		String node2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", "");
+
+		// verify default SG search Group Absence in Other SG
+		String passMsgOfOtherSG = renamedNode + " : is Not Available in Other Security Group";
+		Element nodeOfDefSG = saveSearch.getSavedSearchNodeWithRespectiveSG(Input.mySavedSearch, renamedNode);
+		base.ValidateElement_Absence(nodeOfDefSG, passMsgOfOtherSG);
+
+		// verify Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		saveSearch.verifyNodePresentInSG(Input.mySavedSearch, renamedNode);
+
+		// delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, renamedNode);
+
+		login.logout();
+
+		// Delete Other SG
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :RMU User - Verify that executed search groups appears under the
+	 *              respective Security Group on Saved Search Screen.
+	 *              [RPMXCON-48129]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void verifyExecutedSearchGroup() throws Exception {
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String searchName = "Search" + Utility.dynamicNameAppender();
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA And assign SG access
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48129 Saved Search");
+		base.stepInfo(
+				"RMU User - Verify that executed search groups appears under the respective Security Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to REV
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+
+		login.logout();
+
+		// Login AS RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// select default SG and create Search group
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Select Security Group : " + Input.securityGroup);
+		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		int purehit = session.basicContentSearch(Input.searchString1);
+		session.saveSearchInNewNode(searchName, node1);
+
+		// execute search group
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.savedSearchExecute_SearchGRoup(searchName, purehit);
+
+		// select Other SG and create Search group
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Select Security Group : " + securityGroup);
+		String node2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "");
+
+		// verify default SG search Group Absence in Other SG
+		String passMsgOfOtherSG = node1 + " : is Not Available in Other Security Group";
+		Element nodeOfDefSG = saveSearch.getSavedSearchNodeWithRespectiveSG(Input.mySavedSearch, node1);
+		base.ValidateElement_Absence(nodeOfDefSG, passMsgOfOtherSG);
+
+		// delete Node
+		base.selectsecuritygroup(Input.securityGroup);
+		saveSearch.deleteNode(Input.mySavedSearch, node1);
+
+		login.logout();
+
+		// Delete Other SG
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :RMU User - Verify that User can Share Query under the
+	 *              respective Security Group on Saved Search Screen.
+	 *              [RPMXCON-48131]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	public void verifySharedQueryInSG() throws Exception {
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String securityTab = "Shared with " + securityGroup;
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48131 Saved Search");
+		base.stepInfo(
+				"RMU User - Verify that User can Share Query under the respective Security Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to RMU
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+
+		login.logout();
+
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// select default SG and create Search group
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Select Security Group : " + Input.securityGroup);
+		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		saveSearch.shareSavedNodeWithDesiredGroup(node1, Input.shareSearchDefaultSG);
+		session.saveSearchAtAnyRootGroup(securityTab, node1);
+
+		// select Other SG and create Search group
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Select Security Group : " + securityGroup);
+		String node2 = saveSearch.createSearchGroupAndReturn(securityTab, "RMU", "");
+
+		// verify default SG search Group Absence in Other SG
+		String passMsgOfOtherSG = node1 + " : is Not Available in Other Security Group";
+		Element nodeOfDefSG = saveSearch.getSavedSearchNodeWithRespectiveSG(securityTab, node1);
+		base.ValidateElement_Absence(nodeOfDefSG, passMsgOfOtherSG);
+
+		// verify Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		saveSearch.verifyNodePresentInSG(Input.shareSearchDefaultSG, node1);
+
+		// delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, node1);
+		saveSearch.deleteNode(Input.shareSearchDefaultSG, node1);
+
+		login.logout();
+
+		// Delete Other SG
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that BLANK \"Count\" gets display in conceptual Search
+	 *              in Saved Search Column when user saved a Background Advanced
+	 *              search Query [RPMXCON-48488]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	public void verifyConceptuallYColumn() throws Exception {
+		String Search1 = "Search" + Utility.dynamicNameAppender();
+		String conceptually = "Conceptually Similar Count";
+		String nearDupe = "Near Duplicate Count";
+		String passMsg = "Conceptual Column Count is BLANK";
+		String failMsg = "Conceptual Column Count is Not BLANK";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48488 Saved Search");
+		base.stepInfo(
+				"Verify that BLANK \"Count\" gets display in conceptual Search in Saved Search Column when user saved a Background Advanced search Query");
+
+		// Basic Search
+		session.advancedMetaDataForDraft(Input.metaDataName, null, Input.metaDataCN, null);
+		session.SearchBtnAction();
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		int purehit = session.returnPurehitCount();
+		session.saveSearchadvanced(Search1);
+
+		// Verify Conceptually Column
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getDocCountAndStatusOfBatch(Search1, nearDupe, true);
+		String count = saveSearch.ApplyShowAndHideFilter(conceptually, Search1);
+		base.textCompareEquals(count, Input.TextEmpty, passMsg, failMsg);
+
+		// Delete Search
+		saveSearch.deleteSearch(Search1, Input.mySavedSearch, "Yes");
+
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 02/25/22 Modified date:N/A Modified by: Description
+	 *         : Verify that user is not able to save a session search (Draft Query)
+	 *         onto an existing saved search that is progress. RPMXCON-48912 Sprint
+	 *         12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	public void executionErrorInProgressDraft() throws InterruptedException, ParseException {
+
+		String savedSearchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String highVolumeProject = Input.highVolumeProject;
+
+		base.stepInfo("Test case Id: RPMXCON-48912 - Saved Search Sprint 12");
+		base.stepInfo(
+				"Verify that user is not able to save a session search (Draft Query) onto an existing saved search that is progress.");
+		base.stepInfo("Flow can only be done for inputs with bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Perform Search and SaveSearch
+		session.basicContentSearch(Input.searchString9);
+		session.saveSearch(savedSearchName);
+
+		// Execute
+		base.stepInfo("Select an existing saved search that is progress and try to Save it");
+		saveSearch.savedSearch_Searchandclick(savedSearchName);
+		base.waitForElement(saveSearch.getSearchStatus(savedSearchName, "COMPLETED"));
+		saveSearch.getSavedSearchExecuteButton().Click();
+
+		// Verify Overwrite
+		session.navigateToSessionSearchPageURL();
+		session.getNewSearch().waitAndClick(5);
+		session.basicContentSearchWithSaveChanges(Input.searchString1, "No", "Third");
+		
+		session.saveAsOverwrittenSearch(Input.mySavedSearch, savedSearchName, "First", "ExecutionErrorInProgress", "",
+				null);
+
+		// Delete Search
+		saveSearch.deleteSearch(savedSearchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A Date: 2/25/22 Modified date:N/A Modified by: Description :
+	 *         Verify on selecting saved search with In Progress status and Doc View
+	 *         option warning message should be displayed RPMXCON-48611 Sprint 12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 15)
+	public void verifyWarningMessageForInProgressSStoDocView(String username, String password, String fullName)
+			throws InterruptedException, ParseException {
+
+		String savedSearchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String highVolumeProject = Input.highVolumeProject;
+		String statusToCheck = "INPROGRESS";
+		String warningMessage = "The selected search is not yet completed successfully. Please select a valid completed search.";
+
+		base.stepInfo("Test case Id: RPMXCON-48611 - Saved Search Sprint 12");
+		base.stepInfo(
+				"Verify on selecting saved search with In Progress status and Doc View option warning message should be displayed");
+		base.stepInfo("Flow can only be done for inputs with bulk data");
+
+		// Login as USER
+		login.loginToSightLine(username, password);
+		base.stepInfo("Loggedin as : " + fullName);
+		base.selectproject(highVolumeProject);
+
+		// Perform Search and SaveSearch
+		session.basicContentSearch(Input.searchString9);
+		session.saveSearch(savedSearchName);
+
+		// Execute
+		base.stepInfo("Select an existing saved search that is progress and try to Save it");
+		saveSearch.savedSearch_Searchandclick(savedSearchName);
+		saveSearch.verifyStatusByReSearch(savedSearchName, "COMPLETED", 5);
+		saveSearch.getSavedSearchExecuteButton().Click();
+		driver.waitForPageToBeReady();
+		base.CloseSuccessMsgpopup();
+
+		// DocVIew
+		saveSearch.savedSearch_SearchandSelect(savedSearchName, "Yes");
+		base.waitForElement(saveSearch.getSearchStatus(savedSearchName, statusToCheck));
+		base.stepInfo("Search is in " + statusToCheck + " status before clicking DocView");
+		saveSearch.getToDocView().waitAndClick(5);
+		base.stepInfo("Clicked DocView button");
+		driver.waitForPageToBeReady();
+		base.VerifyWarningMessage(warningMessage);
+
+		// Delete Search
+		saveSearch.deleteSearch(savedSearchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A Date: 2/25/22 Modified date:N/A Modified by: Description :
+	 *         Verify on selecting saved search with Error status and Doc View
+	 *         option warning message should be displayed RPMXCON-48612 Sprint 12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 16)
+	public void validateErrorSearchViaBatchUpload(String username, String password, String fullName) throws Exception {
+		String file = saveSearch.renameFile(Input.errorQueryFileLocation);
+		String statusToCheck = "ERROR";
+		String warningMessage = "The selected search is not yet completed successfully. Please select a valid completed search.";
+		int Bgcount;
+
+		// Login as USER
+		login.loginToSightLine(username, password);
+		base.stepInfo("Loggedin as : " + fullName);
+		base.stepInfo("Test case Id: RPMXCON-48612 Sprint 12");
+		base.stepInfo(
+				"Verify on selecting saved search with Error status and Doc View option warning message should be displayed");
+
+		// Initial Notification count
+		Bgcount = base.initialBgCount();
+
+		// Upload Error Query Through Batch File
+		saveSearch.navigateToSSPage();
+		saveSearch.uploadBatchFile_D(Input.errorQueryFileLocation, file, true);
+		saveSearch.getSubmitToUpload().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.CloseSuccessMsgpopup();
+
+		// Check NotificationCount
+		base.checkNotificationCount(Bgcount, 1);
+
+		// Select Batch file uploaded
+		driver.waitForPageToBeReady();
+		saveSearch.sgExpansion();
+		saveSearch.getSavedSearchNewNode().waitAndClick(5);
+
+		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", false);
+		base.stepInfo("Search is in " + statusToCheck + " status before clicking DocView");
+		saveSearch.getLastStatusSelectionFromGrid(statusToCheck).waitAndClick(5);
+		saveSearch.getToDocView().waitAndClick(5);
+		base.stepInfo("Clicked DocView button");
+		driver.waitForPageToBeReady();
+		base.VerifyWarningMessage(warningMessage);
+
+		// Delete Uploaded File
+		saveSearch.deleteUploadedBatchFile(file, Input.mySavedSearch, false, null);
+		softAssertion.assertAll();
+
+		login.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);

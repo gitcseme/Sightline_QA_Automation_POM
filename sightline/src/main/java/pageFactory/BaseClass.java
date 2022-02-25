@@ -280,7 +280,8 @@ public class BaseClass {
 
 	public void impersonatePAtoRMU() throws InterruptedException {
 		waitForElement(getSignoutMenu());
-		getSignoutMenu().waitAndClick(5);
+		waitTillElemetToBeClickable(getSignoutMenu());
+		getSignoutMenu().waitAndClick(10);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getChangeRole().Visible();
@@ -3052,4 +3053,20 @@ public class BaseClass {
 		}
 	}
 
-}
+	/**
+	 * @author Raghuram.A
+	 * @param Bgcount - Initial Notification count
+	 * @param toCount - Expected Notification Count
+	 */
+	public void checkNotificationCount(int Bgcount, int toCount) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return initialBgCount() == Bgcount + toCount;
+			}
+		}), Input.wait60);
+	}
+
+
+	}
+
+
