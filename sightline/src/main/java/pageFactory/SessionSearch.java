@@ -10521,6 +10521,7 @@ public class SessionSearch {
 		UtilityLog.info("performing bulk assign");
 
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * This method will save the search under node created under default security group.
@@ -10562,5 +10563,31 @@ public class SessionSearch {
 		base.VerifySuccessMessage("Saved search saved successfully");
 		Reporter.log("Saved the search with name '" + searchName + "'", true);
 		UtilityLog.info("Saved search with name - " + searchName);
+=======
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : Performs Search In Session Search 
+	 */
+	public void SearchBtnAction() {
+		driver.waitForPageToBeReady();
+		if (getSearchButton().isDisplayed()) {
+			getSearchButton().waitAndClick(10);
+			System.out.println("Basic Search");
+		} else if (getSearchButtonSec().isDisplayed()) {
+			getSearchButtonSec().waitAndClick(10);
+			System.out.println("Basic Search2");
+		} else if (getQuerySearchButton().isDisplayed()) {
+			getQuerySearchButton().waitAndClick(10);
+			System.out.println("Advance Search");
+		} else if (GetAdvSaveBtn_New().isDisplayed()) {
+			getAdvanceSearch_btn_Current().waitAndClick(10);
+			System.out.println("Advance Search2");
+		}
+		
+		if (getYesQueryAlert().isElementAvailable(2)) {
+				getYesQueryAlert().waitAndClick(8);
+			}
+
 	}
 }

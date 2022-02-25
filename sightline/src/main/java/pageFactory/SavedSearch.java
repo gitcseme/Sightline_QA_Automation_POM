@@ -294,6 +294,11 @@ public class SavedSearch {
 	}
 
 	// modified on 11/17/21 - Raghuram
+	public Element getLastStatusSelectionFromGrid(String status) {
+		return driver.FindElementByXPath(
+				"(//*[@id='SavedSearchGrid']/tbody//tr[td='" + status + "']//following::i)[last()]");
+	}
+
 	public Element getSelectSearchWithID(String serachName) {
 		return driver
 				.FindElementByXPath("(//*[@id='SavedSearchGrid']/tbody//tr[td='" + serachName + "']/td[2])[last()]");
@@ -6495,24 +6500,22 @@ public class SavedSearch {
 	}
 
 	/**
-	 * @Author Jeevitha
-	 * @param file
-	 * @param groupName
-	 * @param Node
-	 * @param newNode
-	 */
+	* @Author Jeevitha
+	* @param file
+	* @param groupName
+	* @param Node
+	* @param newNode
+	*/
 	public void deleteUploadedBatchFile(String file, String groupName, boolean Node, String newNode) {
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		driver.Navigate().refresh();
-		getSavedSearchGroupName(groupName).waitAndClick(10);
-		if (Node) {
-			selectNode1(newNode);
-		}
-		base.waitForElement(getSavedSearchNewGroupExpand());
-		getSavedSearchNewGroupExpand().waitAndClick(20);
-		base.waitForElement(getSelectUploadedFile(file));
-		getSelectUploadedFile(file).waitAndClick(20);
-		deleteFunctionality();
+	navigateToSSPage();
+	getSavedSearchGroupName(groupName).waitAndClick(10);
+	if (Node) {
+	selectNode1(newNode);
+	}
+	rootGroupExpansion();
+	base.waitForElement(getSelectUploadedFile(file));
+	getSelectUploadedFile(file).waitAndClick(20);
+	deleteFunctionality();
 	}
 
 	/**
@@ -7574,4 +7577,39 @@ public void selectNodeUnderSpecificSearchGroup(String searchGroup, String NodeNa
 	
 }
 
+	/**
+	 * @author Raghuram.A
+	 * @param savedSearchName - Saved Search to select
+	 * @param status          - SavedSearch status to check
+	 * @param attempts        - no.of attempts to try
+	 * @throws InterruptedException
+	 */
+	public void verifyStatusByReSearch(String savedSearchName, String status, int attempts)
+			throws InterruptedException {
+
+		for (int i = 0; i <= attempts; i++) {
+			if (!getSearchStatus(savedSearchName, status).isElementAvailable(3)) {
+				System.out.println(i + status);
+				savedSearch_SearchandSelect(savedSearchName, "Yes");
+			} else {
+				System.out.println(i + status);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description - Expanding the selected rootGroup
+	 */
+	public void rootGroupExpansion() {
+
+		if (getSavedSearchExpandStats().isElementAvailable(5)) {
+			sgExpansion();
+		} else {
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			sgExpansion();
+		}
+	}
 }

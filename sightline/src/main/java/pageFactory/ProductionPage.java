@@ -2644,6 +2644,11 @@ public class ProductionPage {
 		public Element getNativeFileType() {
 			return driver.FindElementByXPath("//table[@id='native-table']//tbody//tr//td[contains(text(),'Database')]/..//i");
 		}
+		
+      //added by Brundha
+		public Element getWorkProductFolderName(String FolderName) {
+			return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'"+FolderName+"')]");
+		}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -17939,5 +17944,25 @@ public class ProductionPage {
 			getNativeFileType().Click();
 			base.stepInfo("Filled native section with file type");
 	}
-
+	/**
+	 * @author Brundha
+	 * @description :filling Workproduct in tiff section
+	 * 
+	 */
+	
+	public void FillingWorkProductInTiffSection(String FolderName) {
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTiffAdvanceBtn());
+		getTiffAdvanceBtn().Click();
+		getSlipSheets().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getSlipSheetWorkProduct());
+		getSlipSheetWorkProduct().Click();
+		base.waitForElement(getWorkProductFolderName(FolderName));
+		getWorkProductFolderName(FolderName).Click();
+		base.waitForElement(getAddSelected());
+		getAddSelected().Click();
+		
+	}
+	
 }

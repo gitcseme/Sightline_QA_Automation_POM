@@ -16,6 +16,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.asprise.ocr.Ocr;
+
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
@@ -9463,6 +9465,79 @@ public class Production_Regression1 {
 		}
 
 
+		/**
+		 * @author Brundha Test case id-RPMXCON-47997
+		 * @Description To Verify In Productions, the workproduct fields for slip sheets
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 129)
+		public void verifyingWorkProductFieldInProduction() throws Exception {
+
+			UtilityLog.info(Input.prodPath);
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+			base.stepInfo("RPMXCON-47997 -Production Component");
+			base.stepInfo("To Verify In Productions, the workproduct fields for slip sheets");
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+	        String BatesNumber="B"+Utility.dynamicNameAppender();
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.addDATFieldAtSecondRow("Doc Basic","DocID",BatesNumber);
+			page.fillingNativeSection();
+			page.selectGenerateOption(false);
+			page.FillingWorkProductInTiffSection(foldername);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			driver.waitForPageToBeReady();
+			String name = page.getProduction().getText().trim();
+			String home = System.getProperty("user.home");
+			page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+			System.out.println("Unzipped the downloaded files");
+			driver.waitForPageToBeReady();
+			Ocr.setUp();
+			Ocr ocr = new Ocr();
+			ocr.startEngine("eng", Ocr.SPEED_FASTEST); 
+			
+			String Tifffile = ocr.recognize(new File[] { new File(home+"/Downloads/VOL0001/Images/0001/"+prefixID+beginningBates+suffixID+".SS.tiff") },
+					Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
+			System.out.println(Tifffile);
+			
+			if (Tifffile.contains(foldername)) {
+				base.passedStep("Workproduct  is displayed as expected");
+			} else {
+				base.failedStep("Workproduct is not displayed as expected");
+			}
+			ocr.stopEngine(); 
+			loginPage.logout();
+		}
+		
+		
+		
 		
 		
 		
