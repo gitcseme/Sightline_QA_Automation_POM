@@ -3052,6 +3052,24 @@ public class BaseClass {
 			e.printStackTrace();
 		}
 	}
+/**
+ * @author Jayanthi.ganesan
+ * @param BaseList
+ * @param CompareList[List to be compared]
+ * This method will remove the duplicated elements 
+ * in the given list by comparing with another base list. 
+ * @return
+ */
+public List<String> getUniqueValues_FromTwoList(List<String>BaseList, List<String>CompareList){
+		List<String> UniqueValues = new ArrayList<String>();
+		
+		for(int i=0;i<CompareList.size();i++) {
+			if(!BaseList.contains(CompareList.get(i))){
+				UniqueValues.add(CompareList.get(i));
+			}
+		}
+		return UniqueValues;
+	}
 
 	/**
 	 * @author Raghuram.A

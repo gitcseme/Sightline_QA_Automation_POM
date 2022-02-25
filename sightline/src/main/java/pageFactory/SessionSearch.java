@@ -10521,6 +10521,49 @@ public class SessionSearch {
 		UtilityLog.info("performing bulk assign");
 
 	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * This method will save the search under node created under default security group.
+	 * @param searchName
+	 * @param nodeName
+	 * @throws InterruptedException
+	 */
+	public void saveSearchInNodeUnderGroup(String searchName, String nodeName,String groupName) throws InterruptedException {
+		// SaveSearch
+		saveSearchAction();
+
+		try {
+			getSaveAsNewSearchRadioButton().waitAndClick(5);
+		} catch (Exception e) {
+			System.out.println("Radio button already selected");
+			UtilityLog.info("Radio button already selected");
+		}
+
+		if(getSaveSearchPopupFolderName(groupName).isElementAvailable(3)) {
+        base.stepInfo(groupName + " : is present");
+        getSaveSearchPopupFolderName(groupName).waitAndClick(10);
+	}
+	else {
+		 base.stepInfo(groupName + " : is not present");
+	}
+
+		if (getCreatedNode(nodeName).isElementAvailable(7)) {
+			System.out.println("On");
+			getCreatedNode(nodeName).waitAndClick(5);
+		} else {
+			System.out.println("To Expand");
+			getExpandCurrentNode().waitAndClick(20);
+			getCreatedNode(nodeName).waitAndClick(3);
+		}
+
+		driver.waitForPageToBeReady();
+		getSaveSearch_Name().SendKeys(searchName);
+		getSaveSearch_SaveButton().Click();
+		base.VerifySuccessMessage("Saved search saved successfully");
+		Reporter.log("Saved the search with name '" + searchName + "'", true);
+		UtilityLog.info("Saved search with name - " + searchName);
+=======
 	
 	/**
 	 * @Author Jeevitha

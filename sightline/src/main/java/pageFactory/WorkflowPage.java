@@ -141,7 +141,33 @@ public class WorkflowPage {
 		return driver.FindElementByXPath("//*[@id='dt_basic']/thead/tr/th[1]");
 	}
     
-    
+	public Element getBackTOManageBtn() {
+		return driver.FindElementByXPath("//a[text()='Go Back to Manage Workflows']");
+	}
+	public Element getSaveBtn() {
+		return driver.FindElementByXPath("//a[text()='Save']");
+	}
+	public Element getCreatedByUserDropDown() {
+		return driver.FindElementByXPath("//select[@id='WorkFlowCreatedBy']");
+		
+	}
+		
+		public ElementCollection getTableColumnData(int i) {
+			return driver.FindElementsByXPath("//table[@id='dt_basic']/tbody//td["+i+"]");
+			
+	}
+		public Element getFiltertextbox_WFid() {
+			return driver.FindElementByXPath("//input[@id='txtWorkflowid']");
+			
+	}
+		public Element getApplyFilterBtn() {
+			return driver.FindElementByXPath("//a[@id='btnworkflowfilter']");
+			
+	}
+		public Element getEnabledHistoryBtn() {
+			return driver.FindElementByXPath("//a[@id='lnkviewhistory' and @class='']");
+			
+	}
     public WorkflowPage(Driver driver){
 
         this.driver = driver;
@@ -812,6 +838,52 @@ public class WorkflowPage {
 			baseClass.failedStep("Sorting order failed");
 		}
 
+	}
+	
+	
+		/**
+		 * @author Jayanthi.ganesan
+		 * This method will perform filter based on work flow id
+		 * @param ID
+		 */
+	public void filterByWF_ID(String ID) {
+		driver.scrollPageToTop();
+		baseClass.waitForElement(getFiltertextbox_WFid());
+		getFiltertextbox_WFid().SendKeys(ID);
+		getApplyFilterBtn().waitAndClick(2);
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * This method will get Values from work flow table particular column based on index passed. 
+	 * @param eleName[Name of coulmn from which value needs to be extracted.]
+	 * @return
+	 */
+	public List<String> getTableCoumnValue(String eleName) {
+		int index=baseClass.getIndex(getTableHeader(), eleName);
+		List<String> tableValue=baseClass.availableListofElements(getTableColumnData(index));		
+		return tableValue;
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * This method will filter the work flow table using 'created by user'
+	 * @param user
+	 */
+	public void filterByCreatedByUSer(String user) {
+		driver.scrollPageToTop();
+		getCreatedByUserDropDown().selectFromDropdown().selectByVisibleText(user);
+		getApplyFilterBtn().waitAndClick(2);
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param wfName[work flow name]
+	 * @param wfDesc[work flow description]
+	 */
+	public void workFlow_Draft(String wfName,String wfDesc) {
+		createNewWorkFlow();
+		descriptionTab(wfName,wfDesc);
+		getSaveBtn().Click();
+		getBackTOManageBtn().Click();
+		baseClass.getYesBtn().Click();
 	}
 
 }

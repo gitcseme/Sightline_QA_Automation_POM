@@ -4375,4 +4375,17 @@ Collections.sort(result_List);
 		}
 
 	}
+/**
+ * @author Jayanthi.ganesan
+ * This method will return the doc id's of all doc displayed.
+ * @return
+ */
+public List<String> gettingAllDocIDs(){
+		driver.waitForPageToBeReady();
+		List<String>docIDs = new ArrayList<String>();
+		getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText("500");
+		base.waitTime(2);
+		docIDs = base.availableListofElements(getDocIds());
+		return docIDs;
+	}
 }

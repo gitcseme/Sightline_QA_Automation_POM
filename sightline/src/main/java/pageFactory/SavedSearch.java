@@ -895,6 +895,9 @@ public class SavedSearch {
 	public Element currentClickedNode() {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor jstree-clicked']");
 	}
+	public Element getLastCreatedSearchGroup(String rtFolder) {
+		return driver.FindElementByXPath("(//a[contains(text(),'"+ rtFolder +"')]//following-sibling::ul//a)[last()]");
+	}
 
 	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();
@@ -7557,6 +7560,22 @@ public class SavedSearch {
 			System.out.println("Clicked :" + groupName);
 		}
 	}
+	
+/**
+ * @author Jayanthi.ganesan
+ * This method will select the node under specified search group.
+ * @param searchGroup[Search group under which node needs to be selected]
+ * @param NodeName[Name of node needs to be selected]
+ */
+public void selectNodeUnderSpecificSearchGroup(String searchGroup, String NodeName ) {
+	
+	driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+	getSavedSearchGroupName(searchGroup).waitAndClick(10);
+	getSavedSearchNewGroupExpand().waitAndClick(20);
+	base.waitForElement(getCreatedNode(NodeName));
+	getCreatedNode(NodeName).waitAndClick(20);
+	
+}
 
 	/**
 	 * @author Raghuram.A
