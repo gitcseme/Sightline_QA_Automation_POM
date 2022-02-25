@@ -333,6 +333,7 @@ public class WorkFlow_IndiumRegression {
 		loginPage.logout();
 	}
 	
+
 	/**
 	 * Author :Vijaya.Rani date: 25/02/2022 Modified date: NA Modified by: NA
 	 * Description:To verify that workflow should be deleted if clicks on Yes.
@@ -426,6 +427,7 @@ public class WorkFlow_IndiumRegression {
 		// logout
 		loginPage.logout();
 	}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
