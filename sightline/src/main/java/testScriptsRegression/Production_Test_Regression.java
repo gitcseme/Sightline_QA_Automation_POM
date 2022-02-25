@@ -25,6 +25,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
@@ -5330,6 +5331,170 @@ public class Production_Test_Regression {
 			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 			tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 			loginPage.logout();
+			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-49334
+			 * @Description To verify that Production should generate successfully with ICE data
+			 * 
+			 */
+			@Test(groups = { "regression" }, priority = 81)
+			public void verifyIceDataGenerateSuccesfully() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-49334 -Production Component");
+				base.stepInfo("To verify that Production should generate successfully with ICE data");
+
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				int doccount = 3;
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+				DataSets dataset = new DataSets(driver);
+				base.stepInfo("Navigating to dataset page");
+				dataset.navigateToDataSetsPage();
+				base.stepInfo("Selecting uploadedset and navigating to doclist page");
+				dataset.SelectingUploadedDataSet();
+				DocListPage doc = new DocListPage(driver);
+				driver.waitForPageToBeReady();
+
+				doc.documentSelection(doccount);
+				doc.bulkTagExistingFromDoclist(tagname);
+
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+				page.fillingTextSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				driver.waitForPageToBeReady();
+				String name = page.getProduction().getText().trim();
+				String home = System.getProperty("user.home");
+				driver.waitForPageToBeReady();
+				
+				page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+				System.out.println("Unzipped the downloaded files");					
+				driver.waitForPageToBeReady();
+			
+				File Native = new File(home + "/Downloads/VOL0001/Natives");
+				
+				if (Native.exists()) {base.passedStep("Native folder exist for generated IcE data");
+				} else {	base.failedStep("filetype is not displayed as expected");}
+				
+				base.passedStep("verified that Production should generate successfully with ICE data");
+				loginPage.logout();
+				
+			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-49373
+			 * @Description To verify that all produced Natives files should be provided by file types for ICE processed data.
+			 * 
+			 */
+			@Test(groups = { "regression" }, priority = 82)
+			public void verifyIceDatafilesGenerateSuccesfully() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-49373 -Production Component");
+				base.stepInfo("To verify that all produced Natives files should be provided by file types for ICE processed data.");
+
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				int doccount = 3;
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+				DataSets dataset = new DataSets(driver);
+				base.stepInfo("Navigating to dataset page");
+				dataset.navigateToDataSetsPage();
+				base.stepInfo("Selecting uploadedset and navigating to doclist page");
+				dataset.SelectingUploadedDataSet();
+				DocListPage doc = new DocListPage(driver);
+				driver.waitForPageToBeReady();
+
+				doc.documentSelection(doccount);
+				doc.bulkTagExistingFromDoclist(tagname);
+
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				int number = Integer.parseInt(beginningBates);
+				int lastfile = number + doccount;
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+				page.fillingTextSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				driver.waitForPageToBeReady();
+				String name = page.getProduction().getText().trim();
+				String home = System.getProperty("user.home");
+				
+				page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads/");
+				System.out.println("Unzipped the downloaded files");					
+				driver.waitForPageToBeReady();
+			
+				for(int i=number; i<lastfile ;i++) {
+					File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".docx");
+					File Textfile = new File(home + "/Downloads/VOL0001/Text/0001/" + prefixID + i + suffixID + ".txt");
+					File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" +  prefixID + i + suffixID + ".tiff");
+					if(Native.exists()) {
+						base.passedStep("Native file are generated correctly");
+						System.out.println("passeed");
+					}else {
+						base.failedStep("verification failed");
+						System.out.println("failed");
+					}
+					if(Textfile.exists()) {
+						base.passedStep("Text file are generated correctly");
+						System.out.println("passeed");
+					}else {
+						base.failedStep("verification failed");
+						System.out.println("failed");
+					}
+					if(TiffFile.exists()) {
+						base.passedStep("Tiff file are generated coreectly");
+						System.out.println("passeed");
+					}else {
+						base.failedStep("verification failed");
+						System.out.println("failed");
+					}
+				}
+				base.passedStep("verifid that all produced Natives files should be provided by file types for ICE processed data.");
+				loginPage.logout();
+				
 			}
 	
 	@AfterMethod(alwaysRun = true)

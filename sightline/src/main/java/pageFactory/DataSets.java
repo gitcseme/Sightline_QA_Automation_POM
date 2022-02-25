@@ -234,15 +234,16 @@ public class DataSets {
 	*@description : Method to select dataset.
 	*/
 	public void SelectingUploadedDataSet() {
-			driver.waitForPageToBeReady();
-			base.waitForElement(getDataSetTypeList());
-			getDataSetTypeList().selectFromDropdown().selectByVisibleText("Only Uploaded Sets");
-			base.waitForElement(getSelectAction());
-			getSelectAction().Click();
-			base.waitForElement(getSelectDocList());
-			getSelectDocList().waitAndClick(10);
-			
-		}
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDataSetTypeList());
+		getDataSetTypeList().selectFromDropdown().selectByVisibleText("Only Uploaded Sets");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectAction());
+		getSelectAction().waitAndClick(10);
+		base.waitForElement(getSelectDocList());
+		getSelectDocList().waitAndClick(10);
+		
+	}
 	
 }
 
