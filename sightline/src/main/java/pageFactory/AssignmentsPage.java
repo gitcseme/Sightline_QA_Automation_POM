@@ -1421,6 +1421,10 @@ public class AssignmentsPage {
 				".//*[@id='dt_basic']//td[contains(.,'" + userNAme + "')]/following-sibling::td[" + index + "]");
 	}
 
+public Element getFamilyMembersCount() {
+	return driver.FindElementByXPath("//span[@id='CountTextFamilyMem']");
+}
+
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -9730,5 +9734,66 @@ public String distributeTheGivenDocCountToReviewer(String count) throws Interrup
 	bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
 
 	return count;
+}
+
+
+/**
+ * @author Indium-Baskar
+ * @param assignmentName passing to create assignmnet
+ * @param codingForm 
+ * Thia method will uncomplete the completed documents for a particular user via edit assignment page
+ */
+
+public int assignmentCreationFamilyCount(String assignmentName, String codingForm) {
+	bc.waitForElement(getAssgn_NewAssignmnet());
+	bc.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
+	getAssgn_NewAssignmnet().waitAndClick(5);
+	bc.waitForElement(getbulkassgnpopup());
+	assertion.assertTrue(getbulkassgnpopup().isDisplayed());
+	try {
+		bc.waitForElement(getContinueBulkAssign());
+		bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+		getContinueBulkAssign().waitAndClick(10);
+	} catch (Exception e) {
+		bc.waitForElement(getContinueBulkAssign());
+		bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+		getContinueBulkAssign().waitAndClick(10);
+	}
+	bc.waitForElement(getFamilyMembersCount());
+	int familyCount = Integer.parseInt(getFamilyMembersCount().getText());
+	bc.waitForElement(getAssgn_TotalCount());
+	bc.waitForElement(getFinalizeButton());
+	bc.waitTillElemetToBeClickable(getFinalizeButton());
+	getFinalizeButton().waitAndClick(10);
+	driver.waitForPageToBeReady();
+	try {
+		bc.waitForElement(getAssignmentName());
+		getAssignmentName().SendKeys(assignmentName);
+	} catch (Exception e) {
+		bc.waitForElement(getAssignmentName());
+		getAssignmentName().Clear();
+		getAssignmentName().SendKeys(assignmentName);
+	}
+	getParentAssignmentGroupName().isDisplayed();
+	bc.waitForElement(getSelectedClassification());
+	getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+	bc.waitForElement(getAssignmentCodingFormDropDown());
+	getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+	bc.waitForElement(getAssignmentSaveButton());
+	bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
+	getAssignmentSaveButton().waitAndClick(5);
+	try {
+		if (getAssignmentErrorText().isElementAvailable(5)) {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAssignmentName());
+			getAssignmentName().SendKeys(assignmentName);
+			bc.waitForElement(getAssignmentSaveButton());
+			getAssignmentSaveButton().waitAndClick(5);
+		}
+	} catch (org.openqa.selenium.NoSuchElementException e) {
+		e.printStackTrace();
+
+	}
+	return familyCount;
 }
 }
