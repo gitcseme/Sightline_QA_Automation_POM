@@ -333,6 +333,102 @@ public class WorkFlow_IndiumRegression {
 		loginPage.logout();
 	}
 	
+
+	/**
+	 * Author :Vijaya.Rani date: 25/02/2022 Modified date: NA Modified by: NA
+	 * Description:To verify that workflow should be deleted if clicks on Yes.
+	 * 'RPMXCON-52630' Sprint-13
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 06)
+	public void verifyWorkFlowDeleteClickOnYes() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52630");
+		baseClass.stepInfo("To verify that workflow should be deleted if clicks on Yes.");
+
+		workflow = new WorkflowPage(driver);
+		int Id;
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		String assgn = "Assgn" + Utility.dynamicNameAppender();
+		assignmentPage = new AssignmentsPage(driver);
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		// Search for any string
+		search = new SessionSearch(driver);
+		int count = search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Thread.sleep(2000);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id);
+		UtilityLog.info(Id);
+
+		// assignment creation
+		search.bulkAssign();
+		assignmentPage.assignmentCreation(assgn, Input.codingFormName);
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		baseClass.stepInfo("Creating workflow using save search,assignmnet and first family options");
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, true, folderName, false, assgn, true);
+		workflow.selectWorkFlowUsingPagination(wfName);
+		// Running workflow
+		int workFlowId = workflow.gettingWorkFlowId(wfName);
+
+		//Selecet DropDown And Delete
+		baseClass.waitForElement(workflow.getWorkFlow_ActionDropdown());
+		workflow.getWorkFlow_ActionDropdown().waitAndClick(10);
+		baseClass.stepInfo("Action DropDown is selected");
+
+		baseClass.waitForElement(workflow.getWorkFlow_ActionDeleteWorkFlow());
+		workflow.getWorkFlow_ActionDeleteWorkFlow().waitAndClick(10);
+		baseClass.stepInfo("Action DropDown Delete Button is Clicked");
+		baseClass.waitForElement(workflow.getWorkFlow_RunWorkflowNow_YesButton());
+		workflow.getWorkFlow_RunWorkflowNow_YesButton().waitAndClick(10);
+		baseClass.stepInfo("workFlow Docs Deleted Successfully");
+		
+		// validating count in workflow list
+		workflow.workFlowIdPassing(workFlowId);
+		workflow.applyFilter();
+
+		//verify Deleted Docs
+		boolean workFlowid =workflow.getWorkFlowIdPassing().Displayed();
+		softAssertion.assertFalse(workFlowid);
+		baseClass.passedStep("Deleted Work Flow Document is Not Displayed");
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author :Vijaya.Rani date: 25/02/2022 Modified date: NA Modified by: NA
+	 * Description:To verify that RMU can sort all coulmn. 'RPMXCON-52648' Sprint-13
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 07)
+	public void verifyRMUCanSortAllCoulmn() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52648");
+		baseClass.stepInfo("To verify that RMU can sort all coulmn.");
+
+		workflow = new WorkflowPage(driver);
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		workflow.applyAscandingorder();
+
+		// logout
+		loginPage.logout();
+	}
+
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
