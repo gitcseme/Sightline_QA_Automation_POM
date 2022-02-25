@@ -4340,6 +4340,75 @@ public class DocView_Regression2 {
 		
 	}
 	
+	/**
+	 * @throws Exception
+	 * @Author : Sai Krishna date: 24/02/2021 Modified date: NA Modified by:
+	 * @Description:Verify RMU/Reviewer can see persistent search on doc view page
+	 *                     for audio file in context of an assignment.
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 65)
+	public void verifyCanSeePersistentSearchOnDocViewAudioFile() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-51056");
+		baseClass.stepInfo(
+				"Verify RMU/Reviewer can see persistent search on doc view page for audio file in context of an assignment");
+
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String assignmentname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// search to Assignment creation on audio
+		sessionsearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionsearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		baseClass.passedStep("persistent hits is enabled while creating the assignment");
+		loginPage.logout();
+
+		// select assignment on DocView
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		docViewRedact.checkingPersistentHitPanelAudio();
+		baseClass.passedStep("Persistent search is displayed on audio doc");
+
+		// search to Assignment creation on audio
+		sessionsearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionsearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assignmentname, codingForm, SessionSearch.pureHit);
+		baseClass.stepInfo("persistent hits is enabled while creating the assignment");
+		driver.waitForPageToBeReady();
+		assignmentsPage.selectAssignmentToViewinDocview(assignmentname);
+		docViewRedact.checkingPersistentHitPanelAudio();
+		if (docViewRedact.persistantHitRightNavigate().Displayed()
+				&& docViewRedact.persistantHitRightNavigate().Enabled()) {
+			assertTrue(true);
+			baseClass.passedStep(
+					assignmentname + "Audio doc is highlighted on doc view and show on the persistent hits panel");
+		} else {
+			assertTrue(false);
+		}
+
+		// verify another AudioDoc is highlighted on DocView
+		driver.waitForPageToBeReady();
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		docViewRedact.checkingPersistentHitPanelAudio();
+		if (docViewRedact.persistantHitRightNavigate().Displayed()
+				&& docViewRedact.persistantHitRightNavigate().Enabled()) {
+			assertTrue(true);
+			baseClass
+					.passedStep(assname + "Audio doc is highlighted on doc view and show on the persistent hits panel");
+		} else {
+			assertTrue(false);
+		}
+
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
