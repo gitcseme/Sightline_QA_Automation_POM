@@ -10505,9 +10505,9 @@ public class SessionSearch {
 	 */
 	public void bulkAssignWithOutPureHit() {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-
 		System.out.println("Pure hit block already moved to action panel");
 		UtilityLog.info("Pure hit block already moved to action panel");
+		getBulkActionButton().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {

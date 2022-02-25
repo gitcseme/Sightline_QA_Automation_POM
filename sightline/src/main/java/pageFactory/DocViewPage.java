@@ -2111,9 +2111,8 @@ public class DocViewPage {
 	}
 
 	public Element getCodingFormTag(int i) {
-		return driver.FindElementByXPath("//label[@id='l_it_" + i + "']/input[@disabled='']");
+		return driver.FindElementByXPath("//label[@id='l_it_" + i + "']/input[@disabled='disabled']");
 	}
-
 	public Element getCodingFormTaglabel(int i) {
 		return driver.FindElementByXPath("//span[@id='l_it_" + i + "']");
 	}
@@ -2921,6 +2920,9 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//div[@id='disableRedactionWarningForRemarks']/span[contains(text(),'Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.')]");
 
+	}
+	public Element getCodingFormTagInPreview(int i) {
+		return driver.FindElementByXPath("//label[@id='l_it_" + i + "']/input[@disabled='']");
 	}
 
 	public Element getCodingForm_PA() {
@@ -17333,26 +17335,21 @@ public class DocViewPage {
 	 * 
 	 */
 	public void performGearIconChildWindowSymbol() {
-
 		driver.waitForPageToBeReady();
 		boolean flag = getDocView_ChildWindowPopOut().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep(" Analytical panel Child window displayed for parent window");
-
 		boolean flag1 = getDocView_CodingFormPopOut().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep("Coding form Child window displayed for parent window");
-
 		boolean flag2 = getDocView_MiniDocListPopOut().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep("Mini Doc List Child window displayed for parent window");
-
 		boolean flag3 = getDocView_MetaDataPopOut().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep("MetaData Child window displayed for parent window");
 		softAssertion.assertAll();
-
-	}
+		}
 
 	/**
 	 * @author Vijaya.Rani date: 22/12/2021 Modified date: NA
@@ -22845,6 +22842,7 @@ public class DocViewPage {
 		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
 		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+		softAssertion.assertAll();;
 
 	}
 
@@ -25612,6 +25610,19 @@ public class DocViewPage {
 		base.passedStep(" Checkmark icon displayed for Completed Document .");
 		}else {
 			base.failedStep("Check mark icon not displayed for document with doc Id "+DocID+"  which is expected.");
+		}
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description: To verify tags of coding form name in docview page
+	 */
+	public void verifyTagsAreDisabledInPreviewBox(int objectNo) {
+		// base.waitForElement(getCodingFormTag(objectNo));
+		driver.waitForPageToBeReady();
+		if (getCodingFormTagInPreview(objectNo).isElementAvailable(5) == true) {
+			base.passedStep("The added tags are checked and disabled");
+		} else {
+			base.failedStep("The added tags are not checked and disabled");
 		}
 	}
 }
