@@ -306,7 +306,7 @@ public class Input {
 	public static String keywordColor1;
 	public static String multiwordText;
 
-	// Added by Raghuram - Modified 02/02/21
+	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
 	public static String sortDataBy;
 	public static String sortType;
@@ -337,6 +337,10 @@ public class Input {
 	public static String docSelectionHighlight;
 	public static String batchFileWithMultiSheetColumnMissing;
 	public static String batchFileWithMultiSheetColumnDuplicate;
+	public static String searchString9;
+	public static String batchFileWithColumnOrderChange;
+	public static String batchFileWithMultiSheetColumnOrderChange;
+	public static String highVolumeProject;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -548,7 +552,11 @@ public class Input {
 	public static String TranscriptJapneseFile;
 	public static String MP3JapneseFile;
 	public static String SourceDatFieldCustom;
-
+	public static String YYYYMMDDHHMISSDat;
+	public static String YYYYMMDDHHMISSLst;
+	public static String DATFile1;
+	public static String StitchedTIFF;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -830,7 +838,7 @@ public class Input {
 		keywordColor1 = testData.getKeywordColor1();
 		multiwordText = testData.getMultiwordText();
 
-		// Added by Raghuram 02/02/21
+		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
 		docHighlightColor = testData.getDocHighlightColor();
 		sortDataBy = testData.getSortDataBy();
@@ -861,6 +869,10 @@ public class Input {
 		specialString3 = testData.getSpecialString3();
 		batchFileWithMultiSheetColumnMissing = testData.getBatchFileWithMultiSheetColumnMissing();
 		batchFileWithMultiSheetColumnDuplicate = testData.getBatchFileWithMultiSheetColumnDuplicate();
+		searchString9 = testData.getSearchString9();
+		batchFileWithColumnOrderChange = testData.getBatchFileWithColumnOrderChange();
+		batchFileWithMultiSheetColumnOrderChange = testData.getBatchFileWithMultiSheetColumnOrderChange();
+		highVolumeProject = testData.getHighVolumeProject();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
@@ -1103,6 +1115,10 @@ public class Input {
 		MP3GermanFile = testData.getMP3GermanFile();
 		TranscriptJapneseFile = testData.getTranscriptJapneseFile();
 		MP3JapneseFile = testData.getMP3JapneseFile();
+		YYYYMMDDHHMISSDat=testData.getYYYYMMDDHHMISSDat();
+		YYYYMMDDHHMISSLst=testData.getYYYYMMDDHHMISSLst();
+		StitchedTIFF = testData.getStitchedTIFF();
+		DATFile1 = testData.getDATFile1();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

@@ -194,7 +194,7 @@ public class TestData {
 	public String multiwordText;
 	
 
-	// Added by Raghuram - Last Modified 02/02/21 
+	// Added by Raghuram - Last Modified 02/24/22 
 	public String docHighlightColor;
 	public String sortType;
 	public String sortDataBy;
@@ -225,6 +225,10 @@ public class TestData {
     public String docSelectionHighlight;
     public String batchFileWithMultiSheetColumnMissing;
     public String batchFileWithMultiSheetColumnDuplicate;
+    public String searchString9;
+    public String batchFileWithColumnOrderChange;
+    public String batchFileWithMultiSheetColumnOrderChange;
+    public String highVolumeProject;
     
 	// Added by jeevitha
 	public String colorCodeOfRed;
@@ -468,4 +472,11 @@ public class TestData {
 		public String MP3GermanFile;
 		public String TranscriptJapneseFile;
 		public String MP3JapneseFile;
+		public String YYYYMMDDHHMISSDat;
+		public String YYYYMMDDHHMISSLst;
+		public String DATFile1;
+		public String StitchedTIFF;
+
+		
+		
 }

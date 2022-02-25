@@ -78,6 +78,60 @@ public class Regression_Ingestion01 {
 		}
 	
 	
+	/**
+	 * Author : Mohan date:24/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify if Ingestion is saved as draft then on Ingestion page, it should retain the selected Date & Time format'RPMXCON-49549' 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	public void verifyDateFormateForIngestionWithSameDATFile() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49549");
+		baseClass.stepInfo("Verify if Ingestion is saved as draft then on Ingestion page, it should retain the selected Date & Time format");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Login as Project Admin Go to Ingestion and click to Add new ingestion  Prerequisites: Date & time format in DAT file should be 'YYYY/DD/MM' Select Source System  Select Ingestion Type: Add Only  Select 'Date & Time Format as 'YYYY/DD/MM'  and click on Next  Configure field mapping and click 'Preview & Run'");
+		ingestionPage.validateDateAndTimeFormateWhenIngestionIsSaveAsDraft(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS");
+		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		ingestionPage.verifyDateFormateInCatalogeAndDraft();
+		
+	}
+	
+	
+	/**
+	 * Author : Mohan date:24/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify if Ingestion is rollbacked and open in the wizard,On Ingestion page, it should display the default Date & Time format'RPMXCON-49548' 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	public void verifyDateFormateForIngestionWithSameDATFileAndRollBack() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49548");
+		baseClass.stepInfo("Verify if Ingestion is rollbacked and open in the wizard,On Ingestion page, it should display the default Date & Time format");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Login as Project Admin Go to Ingestion and click to Add new ingestion  Prerequisites: Date & time format in DAT file should be 'YYYY/DD/MM' Select Source System  Select Ingestion Type: Add Only  Select 'Date & Time Format as 'YYYY/DD/MM'  and click on Next  Configure field mapping and click 'Preview & Run'");
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS");
+		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+		ingestionPage.rollBackIngestion();
+		ingestionPage.verifyDateFormateInCatalogeAndDraft();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 24/02/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49702
+	 * Description :Verify that if document has multipage TIFF then in Copying stage of Ingestion ,it should displays the 'Stitched TIFFs' under the Copy column.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 4)
+	public void verifyStitchedTiffTermUnderCopyColumn() throws InterruptedException  {
+		ingestionPage = new IngestionPage_Indium(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49702");
+		baseClass.stepInfo("Verify that if document has multipage TIFF then in Copying stage of Ingestion ,it should displays the 'Stitched TIFFs' under the Copy column");
+		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
+		ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
+		ingestionPage.verifyDataPresentInCopyColumn(Input.StitchedTIFF);
+		
+		}
 	
 	
 	

@@ -2558,7 +2558,10 @@ public class ProductionPage {
 	public Element getRotationDropDown() {
 		return driver.FindElementByXPath("//select[@id='dldPageRotatePreference']");
 	}
-	
+	//add by sowndarya
+	public Element redactedTextInRedaction() {
+		return driver.FindElementByXPath("//p[text()='REDACTED']");
+	}
 	//add by Aathith
 		public ElementCollection getProductionSate() {
 			return driver.FindElementsByXPath("//div[@class='col-md-12 font-xs']");
@@ -2606,6 +2609,41 @@ public class ProductionPage {
 			return driver.FindElementByXPath("//input[@id='RegenerateAll']/../i");
 		}
 
+		public Element getProductionOutputLocation_VolumeName() {
+			return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_VolumeName']");
+		}
+		public Element getProductionComponentsFolderDetails_FolderName_LoadFiles() {
+			return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_LoadFiles']");
+		}
+		public Element getProductionOutputLocation_DriveText() {
+			return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_DriveText']");
+		}
+		public Element getProductionComponentsFolderDetails_FolderName_Images() {
+			return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_Images']");
+		}
+		public Element getProductionComponentsFolderDetails_FolderName_Text() {
+			return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_Text']");
+		}
+		public Element getProductionComponentsFolderDetails_FolderName_Natives() {
+			return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_Natives']");
+		}
+		public Element getProductionOutputLocationProductionDirectory() {
+			return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_ProductionDirectory']");
+		}
+		
+
+		
+     //added by Brundha
+		public Element GetVolumeName() {
+			return driver.FindElementById("ProductionOutputLocation_VolumeName");
+		}
+		
+		public Element GetVolumeLocation() {
+			return driver.FindElementById("lstVolumeLocation");
+		}
+		public Element getNativeFileType() {
+			return driver.FindElementByXPath("//table[@id='native-table']//tbody//tr//td[contains(text(),'Database')]/..//i");
+		}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -17797,8 +17835,109 @@ public class ProductionPage {
 				"lst files toggle is not enabled by default");
 		driver.scrollPageToTop();
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param tag
+	 * @param tag1
+	 */
+	public void AddRuleAndRemoveRuleTagAndRedaction(String tag, String tag1) {
+		base.waitForElement(getAddRule());
+		getAddRule().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getTags().isDisplayed();
+		getTags().waitAndClick(10);
+		base.waitForElement(getTagsCheckbox(tag));
+		getTagsCheckbox(tag).Click();
+		getInsertQueryBtnInPrivGaurd().Click();
+		
+		base.waitForElement(getRedactions());
+		getRedactions().waitAndClick(10);
+		base.waitForElement(getTagsCheckbox(tag1));
+		getTagsCheckbox(tag1).Click();
+		getInsertQueryBtnInPrivGaurd().Click();
+		
+		driver.waitForPageToBeReady();
+		getDocumentMatchesButton().waitAndClick(10);
 
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param prefixId
+	 * @param suffixId
+	 * @param beginningBates
+	 * @throws InterruptedException
+	 */
+	public void fillingNumberingAndSorting(String prefixId, String suffixId, String beginningBates)
+			throws InterruptedException {
+
+		base.waitForElement(getBeginningBates());
+		driver.waitForPageToBeReady();
+		getBeginningBates().waitAndClick(10);
+		getBeginningBates().SendKeys(beginningBates);
+		num = getRandomNumber(2);
+
+		base.waitForElement(gettxtBeginningBatesIDPrefix());
+		gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
+
+		base.waitForElement(gettxtBeginningBatesIDSuffix());
+		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
+		
+		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
+		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
+		gettxtBeginningBatesIDMinNumLength().SendKeys("2");
+		
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getlstSortingMetaData());
+		getlstSortingMetaData().selectFromDropdown().selectByVisibleText("DocID");
+
+		base.waitForElement(getlstSortingOrder());
+		getlstSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
+
+		base.waitForElement(getlstSubSortingMetaData());
+		getlstSubSortingMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
+
+		base.waitForElement(getlstSubSortingOrder());
+		getlstSubSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
+
+		base.waitForElement(getKeepFamiliesTogether());
+		getKeepFamiliesTogether().waitAndClick(10);
+		driver.scrollPageToTop();
+		base.stepInfo("Numbering and sorting section is filled");
+
+	}
 	   
+	/**
+	 * @Author Brundha
+	 * Description:Method to fill prefix and suffix in sorting tab
+	 */
+	public void fillingNumberingAndSortingTab(String prefixId, String suffixId,String begBate){
+
+	       base.waitForElement(getBeginningBates());
+			driver.waitForPageToBeReady();
+			getBeginningBates().SendKeys(begBate);
+			base.waitForElement(gettxtBeginningBatesIDPrefix());
+			gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
+			base.waitForElement(gettxtBeginningBatesIDSuffix());
+			gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
+			base.stepInfo("Filled numbering and sorting tab");
+	}
 	
+	
+	/**
+	 * @author Brundha
+	 * @description :filling natively Section with filetype in component tab
+	 * 
+	 */
+	public void selectingNativeFileType() {
+			base.waitForElement(getNativeChkBox());
+			getNativeChkBox().Click();
+			base.waitForElement(getNativeTab());
+			getNativeTab().Click();
+			base.waitForElement(getNativeFileType());
+			getNativeFileType().ScrollTo();
+			getNativeFileType().Click();
+			base.stepInfo("Filled native section with file type");
+	}
 
 }
