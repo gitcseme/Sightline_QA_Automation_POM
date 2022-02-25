@@ -24,6 +24,7 @@ import testScriptsSmoke.Input;
 public class WorkflowPage {
 
 	Driver driver;
+	BaseClass baseClass;
     
 	public Element getWorkFlow_CreateNewWorkFlowBtn(){ return driver.FindElementById("btnCreate"); }
     public Element getWorkFlow_WorkFlowName(){ return driver.FindElementByCssSelector("input#workflowName"); }
@@ -65,7 +66,65 @@ public class WorkflowPage {
     public ElementCollection getWorkflowNames(){ return driver.FindElementsByXPath("//*[@id='dt_basic']/tbody/tr/td[2]"); }
     
     public Element getStatus(int row){ return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr["+row+"]/td[3]"); }
-    
+    public Element getWorkFlowPaginationNextButton() {
+		return driver.FindElementByCssSelector("li[class='paginate_button next'] a");
+	}
+	public Element getWorkFlowIdPassing() {
+		return driver.FindElementByCssSelector("#txtWorkflowid");
+	}
+	public Element getApplyFilter() {
+		return driver.FindElementByCssSelector("#btnworkflowfilter");
+	}
+
+	public Element getStatusDropDown() {
+		return driver.FindElementByCssSelector("#WorkFlowStatus");
+	}
+	public Element getResetButton() {
+		return driver.FindElementByCssSelector("#btnworkflowfilterreset");
+	}
+	
+	public ElementCollection getTableHeader() {
+		return driver.FindElementsByXPath("//table[@id='dt_basic']/thead/tr/th");
+	}
+
+	public Element getTableRowData(String WFName, int i) {
+		return driver.FindElementByXPath(
+				"//td[contains(.,'" + WFName + "')]/ancestor::table[@id='dt_basic']/tbody//td[" + i + "]");
+
+	}
+
+	public Element getFirstFamilyOptions() {
+		return driver.FindElementByXPath("//input[@id='FirstFamily']//parent::label");
+	}
+	public Element getHistoryButton() {
+		return driver.FindElementByCssSelector("#lnkviewhistory");
+	}
+
+	public Element getFolderSelector(String folderName) {
+		return driver.FindElementByXPath(".//*[@id='jsTreeFolder']//a[contains(.,'" + folderName + "')]");
+	}
+	public Element getNextLinkButton() {
+		return driver.FindElementByXPath("//a[text()='Next']");
+	}
+	public ElementCollection getAssgnPaginationCount() {
+		return driver.FindElementsByCssSelector("li[class*='paginate_button '] a");
+	}
+	public Element getDocCount(String wfName) {
+		return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//tr[contains(.,'"+wfName+"')]//td[6]");
+	}
+	public Element getActionDocCount(String wfName) {
+		return driver.FindElementByXPath(".//*[@id='dt_workflowhistory']/tbody//tr[contains(.,'"+wfName+"')]//td[7]");
+	}
+	public Element getHistoryPopUpClose() {
+		return driver.FindElementByCssSelector(".ui-dialog-titlebar-close");
+	}
+	public Element getSaveLinkButton() {
+		return driver.FindElementByXPath("//a[text()='Save']");
+	}
+	
+	public Element getDeletePopUpMessage() {
+		return driver.FindElementByXPath("//p[@class='pText']");
+	}
     
     
     public WorkflowPage(Driver driver){
@@ -293,13 +352,411 @@ public class WorkflowPage {
 		System.out.println(DocsinAssgn);
     	
 		Assert.assertEquals(DocsinAssgn,purehit );*/
-    	
-    	
-    	
-    	
-		
     				
     }
 
+    /**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for create new workflow button link tab
+	 */
+	// Reusable method
+	public void createNewWorkFlow() {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getWorkFlow_CreateNewWorkFlowBtn());
+		getWorkFlow_CreateNewWorkFlowBtn().waitAndClick(5);
+	}
+
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for Next button link tab for all pages tabs
+	 */
+	// Reusable method
+	public void nextButton() {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getNextLinkButton());
+		getNextLinkButton().waitAndClick(10);
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for save button link tab for all pages tabs
+	 */
+	// Reusable method
+	public void saveButton() {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getSaveLinkButton());
+		getSaveLinkButton().waitAndClick(10);
+	}
+
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for description tab
+	 * @param wfName : wfName for passing workflow name
+	 * @param wfDesc : wfDesc for passing description name
+	 */
+	// Reusable method
+	public void descriptionTab(String wfName, String wfDesc) {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getWorkFlow_WorkFlowName());
+		getWorkFlow_WorkFlowName().SendKeys(wfName);
+		baseClass.waitForElement(getWorkFlow_Desc());
+		getWorkFlow_Desc().SendKeys(wfDesc);
+
+	}
+
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for sources tab passing saved search id
+	 * @param savedSearchID : savedSearchID from session search to saved search id
+	 */
+	// Reusable method
+	public void sourcesTab(int savedSearchID) {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getWorkFlow_SourceID());
+		getWorkFlow_SourceID().SendKeys(Integer.toString(savedSearchID));
+
+	}
+
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @throws AWTException 
+	 * @Description : Method for family option tab for clicking first family options
+	 */
+	// Reusable method for clicking first family options
+	public void familyOptions(boolean flag) {
+		driver.waitForPageToBeReady();
+		if (flag==true) {
+			baseClass.waitTillElemetToBeClickable(getFirstFamilyOptions());
+			getFirstFamilyOptions().ScrollTo();
+			boolean flg2=getFirstFamilyOptions().isDisplayed();
+			System.out.println(flg2);
+			getFirstFamilyOptions().waitAndClick(40);
+		}
+		else {
+			System.out.println("No need this action");
+		}
+	}
+
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for action tab to select folder which created
+	 * @param folderName : folderName is passed to select checkbox
+	 */
+	// Reusable method for select folder
+	public void actionTabToSelectFolder(String folderName, boolean flag) {
+		driver.waitForPageToBeReady();
+		if (flag == true) {
+			baseClass.waitForElement(getWorkFlow_FolderSelector1());
+			getWorkFlow_FolderSelector1().waitAndClick(5);
+			driver.scrollingToElementofAPage(getFolderSelector(folderName));
+			baseClass.waitForElement(getFolderSelector(folderName));
+			getFolderSelector(folderName).waitAndClick(5);
+		} else {
+			System.out.println("No need this action to select folder checkbox");
+		}
+	}
+
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for action tab to select assignment which created
+	 * @param assgnName : assgnName is passed to select checkbox
+	 */
+	// Reusable method for select assignment
+	public void actionTabToSelectAssignment(String assgnName, boolean flag) {
+		driver.waitForPageToBeReady();
+		if (flag == true) {
+			baseClass.waitForElement(getWorkFlow_AssignmentsSelector());
+			getWorkFlow_AssignmentsSelector().waitAndClick(5);
+			driver.scrollingToElementofAPage(getWorkFlow_SelectAssignment(assgnName));
+			baseClass.waitForElement(getWorkFlow_SelectAssignment(assgnName));
+			getWorkFlow_SelectAssignment(assgnName).waitAndClick(5);
+		} else {
+			System.out.println("No need this action to select assignment checbox");
+		}
+	}
+
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for schedules tab to fix timings
+	 * @throws ParseException
+	 */
+	// Reusable method for schedule time to run workflow
+	public void schedulesTab() throws ParseException {
+		driver.waitForPageToBeReady();
+		// Time in GMT
+		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+		// Local time zone
+		SimpleDateFormat dateFormatLocal = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		System.out.println(dateFormatLocal.parse(dateFormatGmt.format(new Date())));
+		UtilityLog.info(dateFormatLocal.parse(dateFormatGmt.format(new Date())));
+
+		String Time = dateFormatGmt.format(new Date()).toString();
+		System.out.println(Time);
+		UtilityLog.info(Time);
+
+		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		Date d = df.parse(Time);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.MINUTE, 1);
+
+		DateFormatSymbols dfs = new DateFormatSymbols(Locale.getDefault());
+		String weekdays[] = dfs.getWeekdays();
+		int day = cal.get(Calendar.DAY_OF_WEEK);
+		String nameOfDay = weekdays[day];
+		System.out.println(nameOfDay);
+		UtilityLog.info(nameOfDay);
+
+		// get next day date
+		cal.add(Calendar.DATE, 1);
+		String newTime = df.format(cal.getTime());
+		System.out.println(newTime);
+		UtilityLog.info(newTime);
+		String s[] = newTime.split(" ");
+		System.out.println(s[0]); // next day date
+		UtilityLog.info(s[0]);
+		System.out.println(s[1]); // current time + 1 min
+		UtilityLog.info(s[01]);
+		System.out.println();
+
+		// passing work flow time
+		baseClass.waitForElement(getWorkFlow_Time1());
+		getWorkFlow_Time1().SendKeys(s[1]);
+
+		// Select days for schedules -
+		getWorkFlow_day(nameOfDay).Click();
+
+		// stop work flow time
+		getWorkFlow_StopDateOfCurrentWorkFlow().SendKeys(s[0]);
+
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for notification tab passing all user
+	 */
+	// Reusable method for notification tab
+	public void notificationTab() {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getWorkFlow_Notification_AddAllUsers());
+		getWorkFlow_Notification_AddAllUsers().waitAndClick(5);
+
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for summary tab to save
+	 */
+	// Reusable method for summary tab
+	public void summaryTab() {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(geWorkFlow_Summary_Save());
+		geWorkFlow_Summary_Save().waitAndClick(5);
+
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @throws ParseException 
+	 * @Description : Method for creating new workflow
+	 */
+	// Reusable method for summary tab
+	public void newWorkFlowCreation(String wfName,String wfDesc,int savedSearch,boolean familyFlag,
+			String folder,boolean folderFlag,String assgn,boolean assgnFlag) throws ParseException {
+		createNewWorkFlow();
+		descriptionTab(wfName,wfDesc);
+		nextButton();
+		sourcesTab(savedSearch);
+		nextButton();
+		nextButton();
+		familyOptions(familyFlag);
+		nextButton();
+		actionTabToSelectFolder(folder,folderFlag);
+		actionTabToSelectAssignment(assgn,assgnFlag);
+		nextButton();
+		schedulesTab();
+		nextButton();
+		notificationTab();
+		nextButton();
+		summaryTab();
+	}
+	
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for creating workflow using pagination
+	 * @param wfName
+	 */
+	//Reusable method for pagination in worlflow page
+	public void selectWorkFlowUsingPagination(String wfName) {
+		driver.scrollingToBottomofAPage();
+//		baseClass.waitForElementCollection(getAssgnPaginationCount());
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			driver.waitForPageToBeReady();
+			Boolean status = getWorkFlow_SelectWorkflow(wfName).isElementAvailable(5);
+			if (status == true) {
+				driver.scrollingToElementofAPage(getWorkFlow_SelectWorkflow(wfName));
+				getWorkFlow_SelectWorkflow(wfName).waitAndClick(5);
+				driver.scrollPageToTop();
+				baseClass.stepInfo("Expected workflow found in the page " + i);
+				break;
+			} else {
+				driver.scrollingToBottomofAPage();
+				baseClass.waitForElement(getWorkFlowPaginationNextButton());
+				getWorkFlowPaginationNextButton().waitAndClick(5);
+				baseClass.stepInfo("Expected workflow not found in the page " + i);
+			}
+		}
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Action to run workflow
+	 */
+	//Reusable method to run workflow
+	public void actionToRunWorkFlow() {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getWorkFlow_ActionDropdown());
+		getWorkFlow_ActionDropdown().waitAndClick(10);
+		baseClass.waitForElement(getWorkFlow_RunWorkflowNow());
+		getWorkFlow_RunWorkflowNow().waitAndClick(10);
+		baseClass.waitForElement(getWorkFlow_RunWorkflowNow_YesButton());
+		getWorkFlow_RunWorkflowNow_YesButton().waitAndClick(10);
+		baseClass.waitTime(10);
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : getting workflow id using workflow name
+	 * @param wfName
+	 */
+	//Reusable method to get work flow id
+	public int gettingWorkFlowId(String wfName) {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getWorkFlow_WorkFlowID(wfName));
+		int workFlowId = Integer.parseInt(getWorkFlow_WorkFlowID(wfName).getText());
+		return workFlowId;
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : passing workflow Id 
+	 * @param workFlowId
+	 */
+	// Reusable method for passing work flow id
+	public void workFlowIdPassing(int workFlowId) {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getWorkFlowIdPassing());
+		getWorkFlowIdPassing().SendKeys(Integer.toString(workFlowId));
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : apply filter method
+	 */
+//	Reusable method for apply filter
+	public void applyFilter() {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getApplyFilter());
+		getApplyFilter().waitAndClick(10);
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : docs count 
+	 * @param wfName
+	 */
+	// Reusable method for getting doc count 
+	public int gettingWorkFlowListDocCount(String wfName) {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getDocCount(wfName));
+		int docCount = Integer.parseInt(getDocCount(wfName).getText());
+		return docCount;
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : action to view history popup window 
+	 * @param wfName
+	 */
+	// Reusable method for action to view history
+	public void actionToHistory(String wfName) {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getWorkFlow_SelectWorkflow(wfName));
+		getWorkFlow_SelectWorkflow(wfName).waitAndClick(5);
+		baseClass.waitForElement(getWorkFlow_ActionDropdown());
+		getWorkFlow_ActionDropdown().waitAndClick(10);
+		baseClass.waitForElement(getHistoryButton());
+		getHistoryButton().waitAndClick(10);
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : action to view history popup window to doc count
+	 * @param wfName
+	 */
+	// Reusable method for getting action doc count
+	public int gettingActionDocCount(String wfName) {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getActionDocCount(wfName));
+		int actiondocCount = Integer.parseInt(getActionDocCount(wfName).getText());
+		return actiondocCount;
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : close history window
+	 */
+    // Reusable method for close history window
+	public void closeHistoryPopUpWindow() {
+		baseClass.waitForElement(getHistoryPopUpClose());
+		getHistoryPopUpClose().waitAndClick(10);
+	}
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : page Refresh
+	 */
+	public void refreshingThePage() {
+		driver.Navigate().refresh();
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Action to delete workflow
+	 * @param wfName
+	 * @param workFlowId
+	 */
+	// Reusable method for delete workflow
+	public String actionToDelete(String wfName, int workFlowId) {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getWorkFlow_SelectWorkflow(wfName));
+		getWorkFlow_SelectWorkflow(wfName).waitAndClick(5);
+		baseClass.waitForElement(getWorkFlow_ActionDropdown());
+		getWorkFlow_ActionDropdown().waitAndClick(10);
+		baseClass.waitForElement(getWorkFlow_ActionDeleteWorkFlow());
+		getWorkFlow_ActionDeleteWorkFlow().waitAndClick(10);
+		baseClass.waitForElement(getDeletePopUpMessage());
+		String popUpDelete=getDeletePopUpMessage().getText();
+		System.out.println(popUpDelete);
+		baseClass.waitForElement(getWorkFlow_RunWorkflowNow_YesButton());
+		getWorkFlow_RunWorkflowNow_YesButton().waitAndClick(10);
+		return popUpDelete;
+	}
+	
+	
+	/**
+	 * @author Indium-Jayanthi Modified Date:24/2/2022
+	 * @Description : method for webtable handling
+	 * @param eleName
+	 * @param WGName
+	 */
+	public String getTableValue(String eleName, String WGName) {
+		int index = baseClass.getIndex(getTableHeader(), eleName);
+		String tableValue = getTableRowData(WGName, index).getText();
+		return tableValue;
+	}
      
 }
