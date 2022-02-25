@@ -11337,8 +11337,8 @@ public class DocView_CodingForm_Regression {
 		docViewPage.popUpAction(fieldTextCf, Input.stampSelection);
 		docViewPage.switchToNewWindow(2);
 		docViewPage.pencilGearIconCF(Input.stampSelection);
-	//	boolean editModecf=docViewPage.getStampInEditMode().Displayed();
-	//	softAssertion.assertTrue(editModecf);
+//		boolean editModecf=docViewPage.getStampInEditMode().Displayed();
+//		softAssertion.assertTrue(editModecf);
 		baseClass.stepInfo("coding stamp in edit mode from child window");
 		driver.waitForPageToBeReady();
 		
@@ -11368,6 +11368,69 @@ public class DocView_CodingForm_Regression {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author : Baskar date: 25/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify coding form objects should be displayed on edit coding stamp
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 227)
+	public void validateViewCodingPopUp() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51262");
+		baseClass.stepInfo("Verify coding form objects should be displayed on edit coding stamp");
+		String assign = "AAssgn" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Create New Assignment
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assign, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+		
+		// login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting assignment by reviewer
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(EditStamp);
+		docViewPage.clickViewCodingButton();
+		driver.waitForPageToBeReady();
+		
+		// validation from view coding stamp popup window
+		boolean viewCoding=docViewPage.getViewCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(viewCoding);
+		baseClass.stepInfo("ViewCoding stamp popup window opened");
+		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
+		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
+		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
+		softAssertion.assertEquals(comment, actual);
+		baseClass.passedStep("While View coding stamp window stamp saved value loaded successfully");
+		softAssertion.assertAll();
+		
+		// logout
+		loginPage.logout();
+	}
+	
+	
 	
 	@DataProvider(name = "ContentAndAudio")
 	public Object[][] ContentAndAudio() {

@@ -428,6 +428,7 @@ public class WorkFlow_IndiumRegression {
 		// logout
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
@@ -477,6 +478,62 @@ public class WorkFlow_IndiumRegression {
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 24/02/2022 Modified by: Baskar
+	 * Description:To verify that CONFIGURED status is displayed in the list if 
+	 *             user save the workflow.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	public void validateConfiguredStatus() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52620");
+		baseClass.stepInfo("To verify that CONFIGURED status is displayed in the list "
+				+ "if user save the workflow.");
+		int Id;
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		String assgn = "Assgn" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		page = new TagsAndFoldersPage(driver);
+		page.CreateFolder(folderName, "Default Security Group");
+
+		// Search for any string
+		search = new SessionSearch(driver);
+		int count = search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id);
+		UtilityLog.info(Id);
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		workflow.newWorkFlowCreation(wfName, wfDesc, 2, false, folderName, true, assgn, false,3);
+		workflow.selectWorkFlowUsingPagination(wfName);
+		
+		// validation configured status after saving the workflow
+		driver.waitForPageToBeReady();
+		String expectedComplete="Configured";
+		String actualCompleted=workflow.getTableValue("STATUS", wfName);
+		System.out.println(actualCompleted);
+		softAssertion.assertEquals(expectedComplete, actualCompleted);
+		baseClass.passedStep("After saving the workflow Configured status displayed for "+wfName+"");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+
 
 		workflow=new WorkflowPage(driver);
 		workflow.workFlow_Draft(wfName,wfDesc);
