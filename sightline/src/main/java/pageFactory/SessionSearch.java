@@ -10563,8 +10563,7 @@ public class SessionSearch {
 		base.VerifySuccessMessage("Saved search saved successfully");
 		Reporter.log("Saved the search with name '" + searchName + "'", true);
 		UtilityLog.info("Saved search with name - " + searchName);
-=======
-	
+	}	
 	/**
 	 * @Author Jeevitha
 	 * @Description : Performs Search In Session Search 
