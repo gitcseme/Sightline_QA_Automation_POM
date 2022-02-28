@@ -750,7 +750,7 @@ public class IngestionPage_Indium {
 	}
 	public Element getStartCopy() {
 		return driver.FindElementByXPath("//strong[text()='Copying']//..//..//..//i[@class='fa fa-play-circle-o']");
-
+	}
 	public Element getIngestionWizardDateFormate() {
 		return driver.FindElementByXPath("//div[@style='padding-right:0px;']//div[@class='formatDate']");
 	}

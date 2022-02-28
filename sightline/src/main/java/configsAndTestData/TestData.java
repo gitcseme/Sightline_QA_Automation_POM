@@ -183,6 +183,8 @@ public class TestData {
 	public String warningMessage;
 	public String audioString1;
 	public String audioString2;
+	public String DocIdWithComments;
+	public String DocIdWithTrackChanges;
 
 	//Added by arunkumar
 	public String pageRange1;
