@@ -11430,6 +11430,134 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @Author : Baskar date: 18/01/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Verify user can view the coding for the stamp on click of the 
+	 *              'View Coding' button from edit coding stamp pop up in 
+	 *              context of security group
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 228)
+	public void validateFromSgViewCoding() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52058");
+		baseClass.stepInfo("Verify user can view the coding for the stamp on click of the "
+				+ "'View Coding' button from edit coding stamp pop up in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		// stamp saving as Prerequisites
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(EditStamp);
+		baseClass.stepInfo("Edit coding stamp popup window opened to re-edit the stamp");
+		docViewPage.clickViewCodingButton();
+		driver.waitForPageToBeReady();
+		
+		// validation for saved stamp in view coding popup
+		boolean viewCoding=docViewPage.getViewCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(viewCoding);
+		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
+		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
+		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
+		softAssertion.assertEquals(comment, actual);
+		baseClass.stepInfo("verify viewcodingstamp popup saved stamp value is successfully displayed ");
+		docViewPage.getViewCodingCloseButton().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getDeletePopUpAssignedColour());
+		docViewPage.getDeletePopUpAssignedColour().waitAndClick(10);
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 18/01/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Verify coding form objects should be displayed on edit coding 
+	 *               stamp in context of security group
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 229)
+	public void validateCodingFormObject() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52052");
+		baseClass.stepInfo("Verify coding form objects should be "
+				+ "displayed on edit coding stamp in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		// stamp saving as Prerequisites
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(EditStamp);
+		if (docViewPage.getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()) {
+			baseClass.passedStep("Coding stamp applied colour displayed in popup");
+		} else {
+			baseClass.failedStep("Coding stamp applied colour not displayed in popup");
+		}
+		docViewPage.clickViewCodingButton();
+		driver.waitForPageToBeReady();
+		
+		// validation for coding form saved object
+		boolean viewCoding=docViewPage.getViewCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(viewCoding);
+		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
+		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
+		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
+		softAssertion.assertEquals(comment, actual);
+		baseClass.stepInfo("Coding form saved object values displayed in viewcoding popup window");
+		docViewPage.getViewCodingCloseButton().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getDeletePopUpAssignedColour());
+		docViewPage.getDeletePopUpAssignedColour().waitAndClick(10);
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	
 	
 	
 	@DataProvider(name = "ContentAndAudio")

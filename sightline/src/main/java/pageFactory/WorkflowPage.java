@@ -168,6 +168,11 @@ public class WorkflowPage {
 			return driver.FindElementByXPath("//a[@id='lnkviewhistory' and @class='']");
 			
 	}
+		
+		public ElementCollection getActionHeader() {
+			return driver.FindElementsByXPath("//div[@class='dataTables_scrollHead']//tr/th[@class='sorting']");
+			
+	}
     public WorkflowPage(Driver driver){
 
         this.driver = driver;

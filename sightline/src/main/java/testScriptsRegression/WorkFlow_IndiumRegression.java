@@ -3,9 +3,11 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -589,6 +591,55 @@ public class WorkFlow_IndiumRegression {
 		}
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 28/02/2022 Modified by: Baskar
+	 * Description:To verify that all details displayed on history.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void validationActionHederValues() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52647");
+		baseClass.stepInfo("To verify that all details displayed on history.");
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		softAssertion = new SoftAssert();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		workflow.createNewWorkFlow();
+		workflow.descriptionTab(wfName,wfDesc);
+		baseClass.waitForElement(workflow.getSaveLinkButton());
+		workflow.getSaveLinkButton().waitAndClick(10);
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		workflow.selectWorkFlowUsingPagination(wfName);
+		
+		// action to viewhistory
+		baseClass.waitForElement(workflow.getWorkFlow_ActionDropdown());
+		workflow.getWorkFlow_ActionDropdown().waitAndClick(10);
+		baseClass.waitForElement(workflow.getHistoryButton());
+		workflow.getHistoryButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		
+		// validating header count
+		String expectedHeader="Workflow ID,Workflow Name,Run Start,Run End,Action,Status,Total Object Promoted";
+		List<String> allHeader = new ArrayList<String>();
+		List<WebElement> persistantNames =workflow.getActionHeader().FindWebElements();
+		for (int i = 0; i < persistantNames.size(); i++) {
+			allHeader.add(persistantNames.get(i).getText());
+		}
+		String actualHeaderActual = String.join(",", allHeader);
+		softAssertion.assertEquals(expectedHeader.toUpperCase(), actualHeaderActual.toUpperCase());
+		baseClass.passedStep("Header value as per the expected onces in action history popup window");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
