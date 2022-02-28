@@ -589,6 +589,60 @@ public class WorkFlow_IndiumRegression {
 		}
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Vijaya.Rani date: 28/02/2022 Modified date: NA Modified by: NA
+	 * Description:To verify that RMU can save the record.
+	 * 'RPMXCON-52591' Sprint-13
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void verifyRMUCanSaveTheReport() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52591");
+		baseClass.stepInfo("To verify that RMU can save the record.");
+
+		workflow = new WorkflowPage(driver);
+		int Id;
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		String assgn = "Assgn" + Utility.dynamicNameAppender();
+		assignmentPage = new AssignmentsPage(driver);
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		// Search for any string
+		search = new SessionSearch(driver);
+		int count = search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Thread.sleep(2000);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id);
+		UtilityLog.info(Id);
+
+		// assignment creation
+		search.bulkAssign();
+		assignmentPage.assignmentCreation(assgn, Input.codingFormName);
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		baseClass.stepInfo("Creating workflow using save search,assignmnet and first family options");
+		workflow.newWorkFlowCreationAssignUser(wfName, wfDesc, Id, true, folderName, false, assgn, true,1);
+	    
+		softAssertion.assertTrue(workflow.getWorkFlow_AssignedUsers().Displayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("All existing users is displayed in the list and record saved Successfully");
+	
+		loginPage.logout();
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
