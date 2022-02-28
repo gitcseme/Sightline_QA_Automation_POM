@@ -464,20 +464,6 @@ public class WorkFlow_IndiumRegression {
 		
 		loginPage.logout();
 	}
-	/**
-	 * @author Jayanthi.ganesan
-	 * @throws InterruptedException
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
-	public void verifyHistoryBtn() throws InterruptedException {
-		baseClass.stepInfo("Test case Id: RPMXCON-52645");
-		baseClass.stepInfo("To verify that RMU can view the action 'View History'.");
-		
-		String wfName = "work" + Utility.dynamicNameAppender();
-		String wfDesc = "work" + Utility.dynamicNameAppender();
-		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 	
 	/**
@@ -533,7 +519,21 @@ public class WorkFlow_IndiumRegression {
 		// logout
 		loginPage.logout();
 	}
-
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	public void verifyHistoryBtn() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52645");
+		baseClass.stepInfo("To verify that RMU can view the action 'View History'.");
+		
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "work" + Utility.dynamicNameAppender();
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		workflow=new WorkflowPage(driver);
 		workflow.workFlow_Draft(wfName,wfDesc);
