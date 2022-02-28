@@ -55,7 +55,7 @@ public class WorkflowPage {
     public Element geWorkFlow_Summary_Save(){ return driver.FindElementByCssSelector("div#divCentralPanel a[onclick='SaveWorkFlow()']"); }
     public Element getWorkFlow_SelectWorkflow(String WFName){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'"+WFName+"')]"); }
     public Element getWorkFlow_SelectWorkStatus(String WFName,int i){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'"+WFName+"')]//following-sibling::td//..//td["+i+"]"); }
-    public Element getWorkFlow_WorkFlowID(String WFName){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'"+WFName+"'')]//td[1]"); }
+    public Element getWorkFlow_WorkFlowID(String WFName){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'"+WFName+"'')]/preceding-sibling::td"); }
     public Element getWorkFlow_WorkFlowNotificationStatus(){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody/tr[1]/td[8]"); }
     
     public Element getWorkFlow_ActionDropdown(){ return driver.FindElementByCssSelector("div.clearfix button[type='button'][data-toggle='dropdown']"); }
@@ -167,6 +167,9 @@ public class WorkflowPage {
 		public Element getEnabledHistoryBtn() {
 			return driver.FindElementByXPath("//a[@id='lnkviewhistory' and @class='']");
 			
+	}
+	public Element getEmptyTableMEssage() {
+		return driver.FindElementByXPath("//tbody/tr/td[@class='dataTables_empty']");
 	}
     public WorkflowPage(Driver driver){
 
@@ -884,6 +887,25 @@ public class WorkflowPage {
 		getSaveBtn().Click();
 		getBackTOManageBtn().Click();
 		baseClass.getYesBtn().Click();
+	}
+	
+	/**
+	 * @author Jayanthi.Ganesan
+	 * This method will launch the Work flow page URL.
+	 */
+	public void getWorkFlowPage() {
+		  this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		  driver.waitForPageToBeReady();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * This method will filter the work flow table using 'status'
+	 * @param statusTOFilter
+	 */
+	public void filterByStatus(String statusTOFilter) {
+		driver.scrollPageToTop();
+		getStatusDropDown().selectFromDropdown().selectByVisibleText(statusTOFilter);
+		getApplyFilterBtn().waitAndClick(2);
 	}
 
 }
