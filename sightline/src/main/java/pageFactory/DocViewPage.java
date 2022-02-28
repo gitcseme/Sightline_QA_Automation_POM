@@ -3214,6 +3214,11 @@ public class DocViewPage {
 	public ElementCollection getDocView_Audio_HitTerms(int i) {
 		return driver.FindElementsByXPath("//*[@id='divAudioPersistentSearch']/div/p["+i+"]");
 	}
+	
+	public ElementCollection getSentDateValueFromToolTip() {
+		return driver.FindElementsByXPath(
+				"//div[@id='tooltip']/div//div//label[contains(text(),'Date')]//following-sibling::span");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -25696,5 +25701,64 @@ public class DocViewPage {
 				base.failedStep("The Count of Audio Search Terms passed as parameter is not match with the count of Audio search Term Present in the AudioPersistantHitPanel for selected Document");
 			}
 		
+		}
+		
+		/**
+		 * @author Arun Modified by: NA Modified date: NA
+		 * @description used to select default security grp tab and select savesearch and move to docview
+		 * @param searchName
+		 */
+		public void selectSavedSearchInDefaultSecurityGroupAndGotoDocview(String searchName) throws InterruptedException {
+			SavedSearch savedSearch = new SavedSearch(driver);
+			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+			
+			base.waitForElement(savedSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG));
+			savedSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(5);
+			base.waitForElement(savedSearch.getSavedSearch_SearchName());
+			savedSearch.getSavedSearch_SearchName().SendKeys(searchName);
+			savedSearch.getSavedSearch_ApplyFilterButton().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return savedSearch.getSelectWithName(searchName).Visible();
+				}
+			}), Input.wait30);
+			savedSearch.getSelectWithName(searchName).waitAndClick(10);
+			
+			base.waitForElement(savedSearch.getToDocView());
+			savedSearch.getToDocView().waitAndClick(5);
+
+			
+		}
+		
+		/**
+		 * @author Arunkumar  Modified date: NA Modified by:NA
+		 * @description To verify thread docs display documents in chronological order           
+		 */
+		public void verifyThreadDocsOnChronologicalOrder() {
+			DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+			selectDocIdInMiniDocList(Input.miniDocListID);
+			List<Integer> year = new ArrayList<Integer>();
+			try {
+				List<WebElement> date = getSentDateValueFromToolTip().FindWebElements();
+				
+				for (int i = 0; i < date.size(); i++) {
+					String sentdate[] = date.get(i).getAttribute("innerText").split("/");
+					year.add(Integer.parseInt(sentdate[0]));
+				}
+				int firstSentDate=year.get(0);
+				int i=1;
+				if(firstSentDate<=year.get(i) && firstSentDate<=year.get(i+1)) {
+					base.passedStep("docs are in chronological order");
+				}
+				else {
+					base.failedStep("docs are not in chronological order");
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				base.stepInfo("Threaded Documents not loaded properly");
+			}
+			
 		}
 }

@@ -305,6 +305,8 @@ public class Input {
 	public static String searchPhraseWithQuote;
 	public static String keywordColor1;
 	public static String multiwordText;
+	public static String query;
+	public static String miniDocListID;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -837,7 +839,9 @@ public class Input {
 		searchPhraseWithQuote = testData.getSearchPhraseWithQuote();
 		keywordColor1 = testData.getKeywordColor1();
 		multiwordText = testData.getMultiwordText();
-
+		query = testData.getQuery();
+		miniDocListID = testData.getMiniDocListID();
+		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
 		docHighlightColor = testData.getDocHighlightColor();

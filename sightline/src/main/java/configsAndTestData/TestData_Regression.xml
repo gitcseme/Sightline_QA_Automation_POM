@@ -50,6 +50,10 @@
 	<searchPhraseWithQuote>"is required"</searchPhraseWithQuote>
 	<keywordColor1>Cyan</keywordColor1>
 	<multiwordText>will be</multiwordText>
+	<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
+	<miniDocListID>ID00001350</miniDocListID>
+	
+	
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf

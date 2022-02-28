@@ -2564,6 +2564,45 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	}
 	
 	
+	/**
+     *Author :Arunkumar date: 28/02/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51515
+	 * Description :Verify that documents on thread map should be in chronological order (oldest email first) by SentDate.
+	 */
+	@Test(enabled = true, groups = {"regression" },priority = 24)
+	public void verifyChronologicalOrderBySentDate() throws InterruptedException  {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		
+		String savedSearchName ="AChronosearch"+ Utility.dynamicNameAppender();
+
+		//Login as PA and verify
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51515");
+		baseClass.stepInfo("Verify that documents on thread map should be in chronological order (oldest email first) by SentDate");
+		sessionsearch.basicSearchWithMetaDataQuery(Input.query, "IngestionName");
+		sessionsearch.saveSearchAtAnyRootGroup(savedSearchName, Input.shareSearchDefaultSG);
+		docView.selectSavedSearchInDefaultSecurityGroupAndGotoDocview(savedSearchName);
+		driver.waitForPageToBeReady();
+		docView.verifyThreadDocsOnChronologicalOrder();
+		loginPage.logout();
+		//Login as RMU and verify chronological order by sentdate
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		docView.selectSavedSearchInDefaultSecurityGroupAndGotoDocview(savedSearchName);
+		driver.waitForPageToBeReady();
+		docView.verifyThreadDocsOnChronologicalOrder();
+		loginPage.logout();
+		//Login as reviewer and verify chronological order by sentdate
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as Reviewer");
+		docView.selectSavedSearchInDefaultSecurityGroupAndGotoDocview(savedSearchName);
+		driver.waitForPageToBeReady();
+		docView.verifyThreadDocsOnChronologicalOrder();
+		loginPage.logout();
+		
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {

@@ -192,6 +192,8 @@ public class TestData {
 	public String searchPhraseWithQuote;
 	public String keywordColor1;
 	public String multiwordText;
+	public String query;
+	public String miniDocListID;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22 
@@ -476,6 +478,7 @@ public class TestData {
 		public String YYYYMMDDHHMISSLst;
 		public String DATFile1;
 		public String StitchedTIFF;
+		
 
 		
 		
