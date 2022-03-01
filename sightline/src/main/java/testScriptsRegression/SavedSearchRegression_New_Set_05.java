@@ -1200,9 +1200,9 @@ public class SavedSearchRegression_New_Set_05 {
 		// Login as SA
 		login.loginToSightLine(Input.sa1userName, Input.sa1password);
 
-		//impersonate SA to RMU
+		// impersonate SA to RMU
 		base.rolesToImp("SA", "RMU");
-		
+
 		String username = login.getCurrentUserName();
 		String passMsg = username + " : is the Last Submiited Name Displayed";
 		String failMsg = "The Last Submitted name is Incorrect";
@@ -1212,11 +1212,109 @@ public class SavedSearchRegression_New_Set_05 {
 		saveSearch.selectSavedSearchTAb(searchName, Input.shareSearchDefaultSG, Input.yesButton);
 		saveSearch.savedSearchExecute_Draft(searchName, 0);
 		String actualName = saveSearch.getListFromSavedSearchTable1(headername, searchName);
-		
+
 		base.textCompareEquals(actualName, username, passMsg, failMsg);
-		
-		//delete Search
+
+		// delete Search
 		saveSearch.deleteSearch(searchName, Input.shareSearchDefaultSG, Input.yesButton);
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 02/28/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : To verify as a RM user login, I will be able to search a saved
+	 *              query based on search status 'In Progress' under My Saved Search
+	 *              folder [RPMXCON-47564] sprint 12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	public void searchFilterBasedOnStatus() throws InterruptedException, ParseException {
+
+		String SearchName = "SearchName" + Utility.dynamicNameAppender();
+		String SearchName1 = "SearchName" + Utility.dynamicNameAppender();
+		String statusToCheck = "INPROGRESS";
+		String highVolumeProject = Input.highVolumeProject;
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+		base.selectproject(highVolumeProject);
+
+		base.stepInfo("Test case Id: RPMXCON-47564 Saved Search - Sprint 12");
+		base.stepInfo(
+				"To verify as a RM user login, I will be able to search a saved query based on search status 'In Progress' under My Saved Search folder");
+
+		// Perform create node - Search - SaveSearch in nodes
+		String nodeName = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, Input.rmu1FullName,
+				Input.yesButton);
+
+		session.basicContentSearch(Input.searchString9);
+		session.saveSearchInNewNode(SearchName, nodeName);
+		session.saveSearchInNewNode(SearchName1, nodeName);
+
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSSPage();
+		saveSearch.selectNode1(nodeName);
+		saveSearch.getSavedSearchExecuteButton().waitAndClick(10);
+		saveSearch.getExecuteContinueBtn().waitAndClick(10);
+		saveSearch.verifyStatusByReSearch(SearchName, statusToCheck, 5);
+		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", false);
+
+		// Delete created Node
+		base.stepInfo("Initiating delete nodes");
+		saveSearch.deleteNode(Input.mySavedSearch, nodeName);
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 02/28/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : To verify as a Reviewer user login, I will be able to search a
+	 *              saved query based on search status 'In Progress' under My Saved
+	 *              Search folder[RPMXCON-47565] sprint 12
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	public void searchFilterBasedOnStatusAsRev() throws InterruptedException, ParseException {
+
+		String SearchName = "SearchName" + Utility.dynamicNameAppender();
+		String SearchName1 = "SearchName" + Utility.dynamicNameAppender();
+		String statusToCheck = "INPROGRESS";
+		String highVolumeProject = Input.highVolumeProject;
+
+		// Login as RMU
+		login.loginToSightLine(Input.rev1userName, Input.rev1password);
+		base.stepInfo("Loggedin As : " + Input.rev1FullName);
+		base.selectproject(highVolumeProject);
+
+		base.stepInfo("Test case Id: RPMXCON-47565 Saved Search - Sprint 12");
+		base.stepInfo(
+				"To verify as a Reviewer user login, I will be able to search a saved query based on search status 'In Progress' under My Saved Search folder");
+
+		// Perform create node - Search - SaveSearch in nodes
+		String nodeName = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, Input.rev1FullName,
+				Input.yesButton);
+
+		session.basicContentSearch(Input.searchString9);
+		session.saveSearchInNewNode(SearchName, nodeName);
+		session.saveSearchInNewNode(SearchName1, nodeName);
+
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSSPage();
+		saveSearch.selectNode1(nodeName);
+		saveSearch.getSavedSearchExecuteButton().waitAndClick(10);
+		saveSearch.getExecuteContinueBtn().waitAndClick(10);
+		saveSearch.verifyStatusByReSearch(SearchName, statusToCheck, 5);
+		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", false);
+
+		// Delete created Node
+		base.stepInfo("Initiating delete nodes");
+		saveSearch.deleteNode(Input.mySavedSearch, nodeName);
+
 		login.logout();
 
 	}
