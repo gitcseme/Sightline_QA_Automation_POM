@@ -8491,7 +8491,7 @@ public class SessionSearch {
 		}
 	}
 
-	public void basicContentSearchForTwoItems(String SearchString, String SearchString2) {
+	public int basicContentSearchForTwoItems(String SearchString, String SearchString2) {
 		try {
 			// To make sure we are in basic search page
 			driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -8528,15 +8528,18 @@ public class SessionSearch {
 			}), Input.wait120);
 
 			int pureHit = Integer.parseInt(getPureHitsCount().getText());
+			
 			// System.out.println("Search is done for "+SearchString+" and PureHit is :
 			// "+pureHit);
 			UtilityLog.info("Search is done for " + SearchString + " and PureHit is : " + pureHit);
 			Reporter.log("Search is done for " + SearchString + " and PureHit is : " + pureHit, true);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception while performing advanced search by folder." + e.getMessage());
 
 		}
+		return pureHit;
 	}
 
 	/**

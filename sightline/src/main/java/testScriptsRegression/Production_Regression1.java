@@ -9534,15 +9534,162 @@ public class Production_Regression1 {
 			}
 			ocr.stopEngine(); 
 			loginPage.logout();
+				}
+		
+		
+		/**
+		 * @author Brundha Test case id-RPMXCON-48646
+		 * @Description To verify that if "Do Not Produce TIFFs for Natively Produced Docs" is Enabled, then only Native should be produced
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 130)
+		public void verifyingNativelyProducedDocumentInProduction() throws Exception {
+
+			UtilityLog.info(Input.prodPath);
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+			base.stepInfo("RPMXCON-48646 -Production Component");
+			base.stepInfo("To verify that if 'Do Not Produce TIFFs for Natively Produced Docs' is Enabled, then only Native should be produced");
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+	       
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			int pureHit=sessionSearch.basicContentSearchForTwoItems(Input.telecaSearchString,Input.TiffDocId);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.selectGenerateOption(false);
+			driver.scrollPageToTop();
+			page.getDoNotProduceFullContentTiff().waitAndClick(10);;
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			driver.waitForPageToBeReady();
+			String name = page.getProduction().getText().trim();
+			String home = System.getProperty("user.home");
+			page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+			System.out.println("Unzipped the downloaded files");
+			driver.waitForPageToBeReady();
+			File dir = new File(home+"/Downloads/VOL0001/Natives/0001/");
+			File[] dir_contents = dir.listFiles();
+			System.out.println(dir_contents.length);
+			int nativefile=dir_contents.length;
+			
+			if(pureHit!=nativefile) {
+				base.passedStep("Natively produced document is generated successfully as expected");
+			}else {
+				base.failedStep("Natively produced document is not generated successfully as expected");
+			}
+			
+			loginPage.logout();
+				}
+		
+		
+		
+		/**
+		 * @author Brundha Test case id-RPMXCON-49868
+		 * @Description Verify that Production for redacted PDF should generated successfully if PDF documents are ICE processed with Mapped set
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 131)
+		public void verifyingTheGenerationOfProduction() throws Exception {
+
+			UtilityLog.info(Input.prodPath);
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			base.stepInfo("RPMXCON-49868 -Production Component");
+			base.stepInfo("Verify that Production for redacted PDF should generated successfully if PDF documents are ICE processed with Mapped set");
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			DataSets dataset = new DataSets(driver);
+			base.stepInfo("Navigating to dataset page");
+			dataset.navigateToDataSetsPage();
+			dataset.selectDataSetWithName(Input.pdfDataSet);
+			DocListPage doc = new DocListPage(driver);
+			driver.waitForPageToBeReady();
+			doc.documentSelection(3);
+			doc.bulkTagExistingFromDoclist(tagname);
+			
+			String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+			RedactionPage redactionpage = new RedactionPage(driver);
+			driver.waitForPageToBeReady();
+			redactionpage.selectDefaultSecurityGroup();
+			redactionpage.manageRedactionTagsPage(Redactiontag1);
+			System.out.println("First Redaction Tag is created" + Redactiontag1);
+
+			driver.scrollPageToTop();
+			base = new BaseClass(driver);
+			driver.Navigate().refresh();
+			base.impersonatePAtoRMU();
+			SessionSearch session = new SessionSearch(driver);
+			session.switchToWorkproduct();
+			session.selectTagInASwp(tagname);
+			driver.waitForPageToBeReady();
+			session.getQuerySearchButton().waitAndClick(10);
+			driver.scrollingToBottomofAPage();
+			session.getPureHitAddButton().waitAndClick(10);
+			session.ViewInDocView();
+			
+			DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+			docViewRedactions.selectDoc1();
+			driver.waitForPageToBeReady();
+			docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+			driver.waitForPageToBeReady();
+			docViewRedactions.selectingRedactionTag2(Redactiontag1);
+
+			ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.selectGenerateOption(false);
+			page.getClk_burnReductiontoggle().waitAndClick(10);
+			page.burnRedactionWithRedactionTag(Redactiontag1);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionWithTag(tagname);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			loginPage.logout();
 		}
 		
-		
-		
-		
-		
-		
-		
-	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
