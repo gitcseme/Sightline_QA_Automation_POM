@@ -5496,6 +5496,129 @@ public class Production_Test_Regression {
 				loginPage.logout();
 				
 			}
+			/**
+			 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+			 *         No:RPMXCON-49337
+			 * @Description: To verify that document should produced with 'Tech Issues Docs' placeholdering by selecting more than one Tag
+			 */
+			@Test(groups = { "regression" }, priority = 83)
+			public void verifyTeccIssueDocPlaceholdering() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case id : RPMXCON-49337 ");
+			base.stepInfo("To verify that document should produced with 'Tech Issues Docs' placeholdering by selecting more than one Tag");
+			String testData1 = Input.testData1;
+			foldername = "FolderProd" + Utility.dynamicNameAppender();
+			tagname = "Tag" + Utility.dynamicNameAppender();
+			String tagname1 ="tag"+ Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+			
+			// Pre-requisites
+			// create tag and folder
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.technicalIssue);
+			tagsAndFolderPage.createNewTagwithClassification(tagname1, Input.technicalIssue);
+
+			// search for folder
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			int docno = sessionSearch.basicContentSearch(testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+			sessionSearch.bulkTagExisting(tagname);
+			sessionSearch.bulkTagExisting(tagname1);
+
+			//Verify 
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			int firstFile = Integer.parseInt(beginningBates);
+			int lastFile = docno +firstFile;
+			productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingTiffSectionTechIssueWithEnteringText(tagname, tagname1, Input.technicalIssue);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSorting(prefixID, suffixID,beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			
+			page.extractFile();
+			page.OCR_Verification_In_Generated_Tiff(firstFile, lastFile, prefixID, suffixID, Input.technicalIssue);
+			
+			base.passedStep("Verified that document should produced with 'Tech Issues Docs' placeholdering by selecting more than one Tag");
+			
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+			tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+			loginPage.logout();
+			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-49867
+			 * @Description Verify that Production should be generated successfully if PDF documents are  ICE processed with Mapped set
+			 * @Hint : test case run on the project Regression_AllDataset_Consilio1 in UAT environment
+			 */
+			@Test(groups = { "regression" }, priority = 84)
+			public void verifyPdfIceMappedSetProdGenSuccesfully() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-49867 -Production Component");
+				base.stepInfo("Verify that Production should be generated successfully if PDF documents are  ICE processed with Mapped set");
+
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+				DataSets dataset = new DataSets(driver);
+				base.stepInfo("Navigating to dataset page");
+				dataset.navigateToDataSetsPage();
+				base.stepInfo("Selecting uploadedset and navigating to doclist page");
+				dataset.selectDataSetWithName(Input.pdfDataSet);
+				DocListPage doc = new DocListPage(driver);
+				driver.waitForPageToBeReady();
+
+				doc.selectAllDocs();
+				doc.bulkTagExistingFromDoclist(tagname);
+
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				
+				base.passedStep("Verified that Production should be generated successfully if PDF documents are  ICE processed with Mapped set");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				
+			}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

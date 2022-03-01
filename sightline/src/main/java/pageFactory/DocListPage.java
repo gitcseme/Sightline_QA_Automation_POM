@@ -4388,4 +4388,13 @@ public List<String> gettingAllDocIDs(){
 		docIDs = base.availableListofElements(getDocIds());
 		return docIDs;
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void selectAllDocs() {
+		base.waitForElement(getSelectAll());
+		getSelectAll().waitAndClick(10);
+		base.waitForElement(getPopUpOkBtn());
+		getPopUpOkBtn().waitAndClick(10);
+	}
 }

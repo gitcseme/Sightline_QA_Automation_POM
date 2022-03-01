@@ -30,6 +30,8 @@ import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
 
+import com.asprise.ocr.Ocr;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -17963,6 +17965,101 @@ public class ProductionPage {
 		base.waitForElement(getAddSelected());
 		getAddSelected().Click();
 		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param tagname
+	 * @param tagname1
+	 * @param placeholder
+	 * @throws InterruptedException
+	 * @Description : selecting 2 technical issue tag and enter placeholder
+	 */
+	public void fillingTiffSectionTechIssueWithEnteringText(String tagname, String tagname1 , String placeholder) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().waitAndClick(5);
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().waitAndClick(5);
+
+		driver.scrollPageToTop();
+
+		base.waitForElement(getTIFF_CenterHeaderBranding());
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(5);
+
+		base.waitForElement(getTechissue_toggle());
+		getTechissue_toggle().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(getTechissue_SelectTagButton());
+		getTechissue_SelectTagButton().waitAndClick(10);
+
+		base.waitForElement(getPriveldge_TagTree(tagname));
+		getPriveldge_TagTree(tagname).waitAndClick(10);
+		
+		base.waitForElement(getPriveldge_TagTree(tagname1));
+		getPriveldge_TagTree(tagname1).waitAndClick(10);
+
+		base.waitForElement(getPriveldge_TagTree_SelectButton());
+		getPriveldge_TagTree_SelectButton().waitAndClick(15);
+
+		driver.waitForPageToBeReady();
+		getTechIssuePlaceHolder().ScrollTo();
+		base.waitForElement(getTechIssuePlaceHolder());
+		getTechIssuePlaceHolder().Click();
+		getTechIssuePlaceHolder().SendKeys(placeholder);
+
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @throws ZipException
+	 * @Description Extract downloaded file
+	 */
+	public void extractFile() throws ZipException {
+		driver.waitForPageToBeReady();
+		String name = getProduction().getText().trim();
+		String home = System.getProperty("user.home");
+		
+		unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads/");
+		System.out.println("Unzipped the downloaded files");					
+		driver.waitForPageToBeReady();
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @param verificationText
+	 * @description Verifing placeholder text using ocr in downloaded image file
+	 */
+	public void OCR_Verification_In_Generated_Tiff(int firstFile, int lastFile, String prefixID, String suffixID, String verificationText) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		Ocr.setUp();
+		Ocr ocr = new Ocr();
+		ocr.startEngine("eng", Ocr.SPEED_FASTEST); 
+		
+		for(int i=firstFile; i<lastFile ;i++) {
+		String Tifffile = ocr.recognize(new File[] { new File(home+"/Downloads/VOL0001/Images/0001/"+prefixID+i+suffixID+".tiff") },
+				Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
+		System.out.println(Tifffile);
+		
+		if (Tifffile.contains(verificationText)) {
+			base.passedStep(verificationText+" is displayed in "+i+" file expected");
+		} else {
+			base.failedStep(verificationText+" verification failed");
+		}
+		}
+		ocr.stopEngine();
 	}
 	
 }

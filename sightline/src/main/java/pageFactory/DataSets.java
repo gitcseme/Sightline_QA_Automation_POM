@@ -59,8 +59,17 @@ public class DataSets {
 	//added by brundha
 	public Element getDataSetTypeList() {
 		return driver.FindElementById("DatasetTypeList");
-	
 	}
+	
+	//Added by Aathith
+	public Element getDataSetActionBtn(String DataSet) {
+		return driver.FindElementByXPath("//a[contains(@title,'"+DataSet+"')]/../..//button");
+	}
+	public Element getDataSetViewInDocList(String DataSet) {
+		return driver.FindElementByXPath("//a[contains(@title,'"+DataSet+"')]/../..//a[text()='DocList']");
+	}
+	
+	
 	public DataSets(Driver driver) {
 
 		this.driver = driver;
@@ -243,6 +252,35 @@ public class DataSets {
 		base.waitForElement(getSelectDocList());
 		getSelectDocList().waitAndClick(10);
 		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param DataSet
+	 */
+	public void selectDataSetWithName(String DataSet) {
+		driver.waitForPageToBeReady();
+		int i = 1;
+		try {
+		while(!getDataSetActionBtn(DataSet).isElementAvailable(1)){
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			if(i==10) {
+				System.out.println("DataSet not in the project");
+				base.failedStep("DataSet is not in project");
+				break;
+			}
+			i++;
+		}
+		getDataSetActionBtn(DataSet).ScrollTo();
+		driver.waitForPageToBeReady();
+		getDataSetActionBtn(DataSet).waitAndClick(10);
+		base.waitForElement(getDataSetViewInDocList(DataSet));
+		getDataSetViewInDocList(DataSet).waitAndClick(10);
+		base.stepInfo("DataSet is selected and viewed in DocList.");
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("failed"+e.getMessage());
+		}
 	}
 	
 }

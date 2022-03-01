@@ -393,6 +393,7 @@ public class TestData {
 		public String audioSearchString5;
 		public String audioSearchString6;
 		public String audioSearchString7;
+		public String pdfDataSet;
 	
 		//Added by Gopinath - 30/11/2021
 		public String postGenQcChecks;
