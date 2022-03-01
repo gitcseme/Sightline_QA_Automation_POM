@@ -2434,7 +2434,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocumentsCommentViewCoding() {
-		return driver.FindElementById("//div[@id='viewCodingStamp']//textarea[@id='1_textarea']");
+		return driver.FindElementByXPath("//div[@id='viewCodingStamp']//textarea[@id='1_textarea']");
 	}
 
 	public Element getDocListAllDocCheckBox() {
