@@ -913,6 +913,66 @@ public class DocView_MiniDocList_Regression2 {
 		}
 		
 	}
+	
+	/**
+	 * @throws AWTException 
+	 * @Author : Vijaya.Rani date: 28/02/2022 Modified date: NA Modified by: NA
+	 * @Description : Verify check mark icon should be displayed when coding stamp
+	 *              applied after selecting 'Code same as' action from mini doc
+	 *              list.'RPMXCON-48715' Sprint-12
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	public void verifyCheckMarkIconCodingStampAndCodeSameAsMiniDocList() throws InterruptedException, AWTException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48715");
+		baseClass.stepInfo(
+				"Verify check mark icon should be displayed when coding stamp applied after selecting 'Code same as' action from mini doc list.");
+		
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		reusableDocViewPage = new ReusableDocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String fieldValue = "reyol" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// search to Assignment creation
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Assignment is selected from dashboard and viewed in DocView successfully");
+		
+		//MiniDocList Code Same As
+		docViewPage.performMiniDocListCodeSameAsIcon();
+		
+		//Apply coding Stamp
+		docViewPage.stampColourSelection(fieldValue,Input.stampColours);
+		
+		//Complete And Check Checkmarkicon
+		docViewPage.completeDocsAndVerifyCheckMark();
+
+		loginPage.logout();
+		
+		}
+
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

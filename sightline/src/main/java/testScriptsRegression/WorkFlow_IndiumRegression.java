@@ -556,7 +556,7 @@ public class WorkFlow_IndiumRegression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyFilter_CreatedUser() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52657");
 		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected 'Created By' user.");
@@ -593,6 +593,24 @@ public class WorkFlow_IndiumRegression {
 	}
 	
 	/**
+	 * Author :Vijaya.Rani date: 28/02/2022 Modified date: NA Modified by: NA
+	 * Description:To verify that RMU can save the record.
+	 * 'RPMXCON-52591' Sprint-13
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void verifyRMUCanSaveTheReport() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52591");
+		baseClass.stepInfo("To verify that RMU can save the record.");
+
+		workflow = new WorkflowPage(driver);
+		int Id;
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		String assgn = "Assgn" + Utility.dynamicNameAppender();
+		assignmentPage = new AssignmentsPage(driver);
+
 	 * Author : Baskar date: NA Modified date: 28/02/2022 Modified by: Baskar
 	 * Description:To verify that all details displayed on history.
 	 */
@@ -604,9 +622,43 @@ public class WorkFlow_IndiumRegression {
 		String wfDesc = "Desc" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		
+		// Search for any string
+		search = new SessionSearch(driver);
+		int count = search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Thread.sleep(2000);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id);
+		UtilityLog.info(Id);
+
+		// assignment creation
+		search.bulkAssign();
+		assignmentPage.assignmentCreation(assgn, Input.codingFormName);
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		baseClass.stepInfo("Creating workflow using save search,assignmnet and first family options");
+		workflow.newWorkFlowCreationAssignUser(wfName, wfDesc, Id, true, folderName, false, assgn, true,1);
+	    
+		softAssertion.assertTrue(workflow.getWorkFlow_AssignedUsers().Displayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("All existing users is displayed in the list and record saved Successfully");
+	
+		loginPage.logout();
+	}
+	
+	
+
 
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
@@ -640,6 +692,7 @@ public class WorkFlow_IndiumRegression {
 		loginPage.logout();
 	}
 	
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

@@ -32,53 +32,155 @@ public class WorkflowPage {
 	MiniDocListPage miniDocList;
 	List<String> originalOrderedList;
 	List<String> afterSortList;
-    
-	public Element getWorkFlow_CreateNewWorkFlowBtn(){ return driver.FindElementById("btnCreate"); }
-    public Element getWorkFlow_WorkFlowName(){ return driver.FindElementByCssSelector("input#workflowName"); }
-    public Element getWorkFlow_Desc(){ return driver.FindElementByCssSelector("textarea#workflowDesc"); }
-    public Element getWorkFlow_DescPage_Next(){ return driver.FindElementByCssSelector("a#btnDescNext"); }
-    public Element getWorkFlow_Source_Next(){ return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)"); }
-    public Element getWorkFlow_SourceID(){ return driver.FindElementByCssSelector("input#SavedSearchID"); }
-    public Element getWorkFlow_Filters_Next(){ return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)"); }
-    public Element getWorkFlow_Family_Next(){ return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)"); }
-    public Element getWorkFlow_FolderSelector1(){ return driver.FindElementByCssSelector("input#id_radio1 + i"); }
-    public Element getWorkFlow_AssignmentsSelector(){ return driver.FindElementByCssSelector("input#id_radio2 + i"); }
-    public Element getWorkFlow_SelectAssignment(String AssName){ return driver.FindElementByXPath(".//*[@id='jsTreeAssignment']//a[contains(.,'"+AssName+"')]"); }
-    public Element getWorkFlow_SelectAssignment(){ return driver.FindElementByXPath(".//*[@id='jsTreeAssignment']//a"); }
-    public Element getWorkFlow_Actions_Next(){ return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)"); }
-    public Element getWorkFlow_Time1(){ return driver.FindElementByCssSelector("input#txtTime1"); }
-    public Element getWorkFlow_day(String day){ return driver.FindElementByCssSelector("input[name*='"+day+"'][type='hidden'] + i"); }
-    public Element getWorkFlow_StopDateOfCurrentWorkFlow(){ return driver.FindElementByCssSelector("input#StopDateOfCurrentWorkFlow"); }
-    public Element getWorkFlow_Schedules_Next(){ return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)"); }
-    public Element getWorkFlow_Notification_AddAllUsers(){ return driver.FindElementByCssSelector("a#btnAllRightMapping"); }
-    public Element getWorkFlow_Notifications_Next(){ return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)"); }
-    public Element geWorkFlow_Summary_Save(){ return driver.FindElementByCssSelector("div#divCentralPanel a[onclick='SaveWorkFlow()']"); }
-    public Element getWorkFlow_SelectWorkflow(String WFName){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'"+WFName+"')]"); }
-    public Element getWorkFlow_SelectWorkStatus(String WFName,int i){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'"+WFName+"')]//following-sibling::td//..//td["+i+"]"); }
-    public Element getWorkFlow_WorkFlowID(String WFName){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'"+WFName+"'')]//td[1]"); }
-    public Element getWorkFlow_WorkFlowNotificationStatus(){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody/tr[1]/td[8]"); }
-    
-    public Element getWorkFlow_ActionDropdown(){ return driver.FindElementByCssSelector("div.clearfix button[type='button'][data-toggle='dropdown']"); }
-    public Element getWorkFlow_RunWorkflowNow(){ return driver.FindElementByCssSelector("a#lnkRunWorkflow"); }
-    public Element getWorkFlow_RunWorkflowNow_YesButton(){ return driver.FindElementByCssSelector("button#bot1-Msg1"); }
-    public Element getWorkFlow_ActionDeleteWorkFlow(){ return driver.FindElementByCssSelector("a#lnkDeleteWorkflow"); }
-    public Element getWorkFlow_ActionDeleteWorkFlow_YesButton(){ return driver.FindElementByCssSelector("button#bot1-Msg1"); }
-    public Element getWorkFlow_NextFilters(){ return driver.FindElementByXPath(".//*[@id='divCentralPanel']//a[contains(.,'Next')]"); }
-  //  public Element getWorkFlow_Desc(){ return driver.FindElementByCssSelector("textarea#workflowDesc"); }
-    public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
-   
-    
-    //Check status
-    public Element getStatusTable(){ return driver.FindElementByXPath("//*[@id='dt_basic']"); }
-    public ElementCollection getWorkflowNames(){ return driver.FindElementsByXPath("//*[@id='dt_basic']/tbody/tr/td[2]"); }
-    
-    public Element getStatus(int row){ return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr["+row+"]/td[3]"); }
-    public Element getWorkFlowPaginationNextButton() {
+
+	public Element getWorkFlow_CreateNewWorkFlowBtn() {
+		return driver.FindElementById("btnCreate");
+	}
+
+	public Element getWorkFlow_WorkFlowName() {
+		return driver.FindElementByCssSelector("input#workflowName");
+	}
+
+	public Element getWorkFlow_Desc() {
+		return driver.FindElementByCssSelector("textarea#workflowDesc");
+	}
+
+	public Element getWorkFlow_DescPage_Next() {
+		return driver.FindElementByCssSelector("a#btnDescNext");
+	}
+
+	public Element getWorkFlow_Source_Next() {
+		return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)");
+	}
+
+	public Element getWorkFlow_SourceID() {
+		return driver.FindElementByCssSelector("input#SavedSearchID");
+	}
+
+	public Element getWorkFlow_Filters_Next() {
+		return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)");
+	}
+
+	public Element getWorkFlow_Family_Next() {
+		return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)");
+	}
+
+	public Element getWorkFlow_FolderSelector1() {
+		return driver.FindElementByCssSelector("input#id_radio1 + i");
+	}
+
+	public Element getWorkFlow_AssignmentsSelector() {
+		return driver.FindElementByCssSelector("input#id_radio2 + i");
+	}
+
+	public Element getWorkFlow_SelectAssignment(String AssName) {
+		return driver.FindElementByXPath(".//*[@id='jsTreeAssignment']//a[contains(.,'" + AssName + "')]");
+	}
+
+	public Element getWorkFlow_SelectAssignment() {
+		return driver.FindElementByXPath(".//*[@id='jsTreeAssignment']//a");
+	}
+
+	public Element getWorkFlow_Actions_Next() {
+		return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)");
+	}
+
+	public Element getWorkFlow_Time1() {
+		return driver.FindElementByCssSelector("input#txtTime1");
+	}
+
+	public Element getWorkFlow_day(String day) {
+		return driver.FindElementByCssSelector("input[name*='" + day + "'][type='hidden'] + i");
+	}
+
+	public Element getWorkFlow_StopDateOfCurrentWorkFlow() {
+		return driver.FindElementByCssSelector("input#StopDateOfCurrentWorkFlow");
+	}
+
+	public Element getWorkFlow_Schedules_Next() {
+		return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)");
+	}
+
+	public Element getWorkFlow_Notification_AddAllUsers() {
+		return driver.FindElementByCssSelector("a#btnAllRightMapping");
+	}
+
+	public Element getWorkFlow_Notifications_Next() {
+		return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)");
+	}
+
+	public Element geWorkFlow_Summary_Save() {
+		return driver.FindElementByCssSelector("div#divCentralPanel a[onclick='SaveWorkFlow()']");
+	}
+
+	public Element getWorkFlow_SelectWorkflow(String WFName) {
+		return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'" + WFName + "')]");
+	}
+
+	public Element getWorkFlow_SelectWorkStatus(String WFName, int i) {
+		return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'" + WFName
+				+ "')]//following-sibling::td//..//td[" + i + "]");
+	}
+
+	public Element getWorkFlow_WorkFlowID(String WFName) {
+		return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'" + WFName + "'')]//td[1]");
+	}
+
+	public Element getWorkFlow_WorkFlowNotificationStatus() {
+		return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody/tr[1]/td[8]");
+	}
+
+	public Element getWorkFlow_ActionDropdown() {
+		return driver.FindElementByCssSelector("div.clearfix button[type='button'][data-toggle='dropdown']");
+	}
+
+	public Element getWorkFlow_RunWorkflowNow() {
+		return driver.FindElementByCssSelector("a#lnkRunWorkflow");
+	}
+
+	public Element getWorkFlow_RunWorkflowNow_YesButton() {
+		return driver.FindElementByCssSelector("button#bot1-Msg1");
+	}
+
+	public Element getWorkFlow_ActionDeleteWorkFlow() {
+		return driver.FindElementByCssSelector("a#lnkDeleteWorkflow");
+	}
+
+	public Element getWorkFlow_ActionDeleteWorkFlow_YesButton() {
+		return driver.FindElementByCssSelector("button#bot1-Msg1");
+	}
+
+	public Element getWorkFlow_NextFilters() {
+		return driver.FindElementByXPath(".//*[@id='divCentralPanel']//a[contains(.,'Next')]");
+	}
+
+	// public Element getWorkFlow_Desc(){ return
+	// driver.FindElementByCssSelector("textarea#workflowDesc"); }
+	public ElementCollection getElements() {
+		return driver.FindElementsByXPath("//*[@class='a-menu']");
+	}
+
+	// Check status
+	public Element getStatusTable() {
+		return driver.FindElementByXPath("//*[@id='dt_basic']");
+	}
+
+	public ElementCollection getWorkflowNames() {
+		return driver.FindElementsByXPath("//*[@id='dt_basic']/tbody/tr/td[2]");
+	}
+
+	public Element getStatus(int row) {
+		return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[" + row + "]/td[3]");
+	}
+
+	public Element getWorkFlowPaginationNextButton() {
 		return driver.FindElementByCssSelector("li[class='paginate_button next'] a");
 	}
+
 	public Element getWorkFlowIdPassing() {
 		return driver.FindElementByCssSelector("#txtWorkflowid");
 	}
+
 	public Element getApplyFilter() {
 		return driver.FindElementByCssSelector("#btnworkflowfilter");
 	}
@@ -86,10 +188,11 @@ public class WorkflowPage {
 	public Element getStatusDropDown() {
 		return driver.FindElementByCssSelector("#WorkFlowStatus");
 	}
+
 	public Element getResetButton() {
 		return driver.FindElementByCssSelector("#btnworkflowfilterreset");
 	}
-	
+
 	public ElementCollection getTableHeader() {
 		return driver.FindElementsByXPath("//table[@id='dt_basic']/thead/tr/th");
 	}
@@ -103,6 +206,7 @@ public class WorkflowPage {
 	public Element getFirstFamilyOptions() {
 		return driver.FindElementByXPath("//input[@id='FirstFamily']//parent::label");
 	}
+
 	public Element getHistoryButton() {
 		return driver.FindElementByCssSelector("#lnkviewhistory");
 	}
@@ -110,29 +214,36 @@ public class WorkflowPage {
 	public Element getFolderSelector(String folderName) {
 		return driver.FindElementByXPath(".//*[@id='jsTreeFolder']//a[contains(.,'" + folderName + "')]");
 	}
+
 	public Element getNextLinkButton() {
 		return driver.FindElementByXPath("//a[text()='Next']");
 	}
+
 	public ElementCollection getAssgnPaginationCount() {
 		return driver.FindElementsByCssSelector("li[class*='paginate_button '] a");
 	}
+
 	public Element getDocCount(String wfName) {
-		return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//tr[contains(.,'"+wfName+"')]//td[6]");
+		return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//tr[contains(.,'" + wfName + "')]//td[6]");
 	}
+
 	public Element getActionDocCount(String wfName) {
-		return driver.FindElementByXPath(".//*[@id='dt_workflowhistory']/tbody//tr[contains(.,'"+wfName+"')]//td[7]");
+		return driver
+				.FindElementByXPath(".//*[@id='dt_workflowhistory']/tbody//tr[contains(.,'" + wfName + "')]//td[7]");
 	}
+
 	public Element getHistoryPopUpClose() {
 		return driver.FindElementByCssSelector(".ui-dialog-titlebar-close");
 	}
+
 	public Element getSaveLinkButton() {
 		return driver.FindElementByXPath("//a[text()='Save']");
 	}
-	
+
 	public Element getDeletePopUpMessage() {
 		return driver.FindElementByXPath("//p[@class='pText']");
 	}
-	
+
 	public ElementCollection getWorkFlowIds() {
 		return driver.FindElementsByXPath("// *[@id='dt_basic']//tr['row']/td[1]");
 	}
@@ -140,15 +251,85 @@ public class WorkflowPage {
 	public Element getWorkFlowIdTab() {
 		return driver.FindElementByXPath("//*[@id='dt_basic']/thead/tr/th[1]");
 	}
-    
+
 	public Element getBackTOManageBtn() {
 		return driver.FindElementByXPath("//a[text()='Go Back to Manage Workflows']");
 	}
+
 	public Element getSaveBtn() {
 		return driver.FindElementByXPath("//a[text()='Save']");
 	}
+
 	public Element getCreatedByUserDropDown() {
 		return driver.FindElementByXPath("//select[@id='WorkFlowCreatedBy']");
+
+
+	}
+
+	public ElementCollection getTableColumnData(int i) {
+		return driver.FindElementsByXPath("//table[@id='dt_basic']/tbody//td[" + i + "]");
+
+	}
+
+	public Element getFiltertextbox_WFid() {
+		return driver.FindElementByXPath("//input[@id='txtWorkflowid']");
+
+	}
+
+	public Element getApplyFilterBtn() {
+		return driver.FindElementByXPath("//a[@id='btnworkflowfilter']");
+
+	}
+
+	public Element getEnabledHistoryBtn() {
+		return driver.FindElementByXPath("//a[@id='lnkviewhistory' and @class='']");
+
+	}
+	
+	public Element getWorkFlow_AssignedUsers() {
+		return driver.FindElementById("AssignedUser");
+	}
+
+	public WorkflowPage(Driver driver) {
+
+		this.driver = driver;
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		baseClass = new BaseClass(driver);
+		// This initElements method will create all WebElements
+		// PageFactory.initElements(driver.getWebDriver(), this);
+	}
+
+	public boolean checkStatusComplete(final String workflowName) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getStatusTable().Visible();
+			}
+		}), Input.wait30);
+
+		boolean nextPage = true;
+		boolean found = false;
+
+		while (nextPage) {
+			int row = 1;
+
+			for (WebElement ele : getWorkflowNames().FindWebElements()) {
+
+				if (ele.getText().trim().equals(workflowName)) {
+					nextPage = false;
+					found = true;
+					System.out.println(row);
+					if (getStatus(row).getText().trim().equalsIgnoreCase("COMPLETE"))
+						;
+					{
+						System.out.println(workflowName + " Scheduled run is completed with the status 'COMPLETE'!");
+						return true;
+					}
+				}
+
+				row++;
+
+			}
+
 		
 	}
 		
@@ -356,53 +537,260 @@ public class WorkflowPage {
     	
     	
     	for (int i = 0; i < 30; i++) {
+
 			try {
-				if(checkStatusComplete(WFName))
-				break;
-			//	getWorkFlow_SelectWorkStatus(WFName).Displayed();
+				driver.scrollingToBottomofAPage();
+				driver.getWebDriver().findElement(By.xpath("//li[@class='paginate_button next disabled']/a"))
+						.isDisplayed();
+				nextPage = false;
+				// System.out.println("Not found!!!!!!");
+			} catch (Exception e) {
+				driver.getWebDriver().findElement(By.linkText("Next")).click();
+			}
+
+		}
+		return false;
+
+	}
+
+	public void CreateWFwithAssignments(int SavedSearchID, final String WFName, String WFDesc,
+			final String AssignmentName, int purehit) throws ParseException, InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_CreateNewWorkFlowBtn().Visible();
+			}
+		}), Input.wait60);
+
+		getWorkFlow_CreateNewWorkFlowBtn().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_WorkFlowName().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_WorkFlowName().SendKeys(WFName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_Desc().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_Desc().SendKeys(WFDesc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_DescPage_Next().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_DescPage_Next().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_SourceID().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_SourceID().SendKeys(Integer.toString(SavedSearchID));
+
+		Thread.sleep(10000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_Source_Next().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_Source_Next().Click();
+
+		Thread.sleep(10000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_Filters_Next().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_Filters_Next().Click();
+
+		Thread.sleep(10000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_Family_Next().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_Family_Next().Click();
+
+		Thread.sleep(5000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_AssignmentsSelector().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_AssignmentsSelector().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		Thread.sleep(5000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_SelectAssignment().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_SelectAssignment(AssignmentName).Click();
+
+		Thread.sleep(5000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_Actions_Next().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_Actions_Next().Click();
+
+		// ******* Schedules tab *************************************
+		// Time in GMT
+		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+		// Local time zone
+		SimpleDateFormat dateFormatLocal = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		System.out.println(dateFormatLocal.parse(dateFormatGmt.format(new Date())));
+		UtilityLog.info(dateFormatLocal.parse(dateFormatGmt.format(new Date())));
+
+		String Time = dateFormatGmt.format(new Date()).toString();
+		System.out.println(Time);
+		UtilityLog.info(Time);
+
+		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		Date d = df.parse(Time);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.MINUTE, 1);
+
+		DateFormatSymbols dfs = new DateFormatSymbols(Locale.getDefault());
+		String weekdays[] = dfs.getWeekdays();
+		int day = cal.get(Calendar.DAY_OF_WEEK);
+		String nameOfDay = weekdays[day];
+		System.out.println(nameOfDay);
+		UtilityLog.info(nameOfDay);
+
+		// get next day date
+		cal.add(Calendar.DATE, 1);
+		String newTime = df.format(cal.getTime());
+		System.out.println(newTime);
+		UtilityLog.info(newTime);
+		String s[] = newTime.split(" ");
+		System.out.println(s[0]); // next day date
+		UtilityLog.info(s[0]);
+		System.out.println(s[1]); // current time + 1 min
+		UtilityLog.info(s[01]);
+		System.out.println();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_Time1().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_Time1().SendKeys(s[1]);
+
+		// get day of week
+
+		// Select days for schedules -
+		getWorkFlow_day(nameOfDay).Click();
+
+		getWorkFlow_StopDateOfCurrentWorkFlow().SendKeys(s[0]);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_Schedules_Next().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_Schedules_Next().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_Notification_AddAllUsers().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_Notification_AddAllUsers().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_Notifications_Next().Visible();
+			}
+		}), Input.wait30);
+		getWorkFlow_Notifications_Next().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return geWorkFlow_Summary_Save().Visible();
+			}
+		}), Input.wait30);
+		geWorkFlow_Summary_Save().Click();
+
+		/*
+		 * BaseClass bc = new BaseClass(driver); int Bgcount = bc.initialBgCount();
+		 * System.out.println(Bgcount);
+		 */
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getWorkFlow_SelectWorkflow(WFName).Visible();
+			}
+		}), Input.wait30);
+
+		for (int i = 0; i < 30; i++) {
+			try {
+				if (checkStatusComplete(WFName))
+					break;
+				// getWorkFlow_SelectWorkStatus(WFName).Displayed();
 			} catch (Exception e) {
 				Thread.sleep(5000);
 				driver.Navigate().refresh();
 			}
 		}
-    	
-    	/*String WrkflowID = getWorkFlow_WorkFlowID(WFName).getText();
-		System.out.println(WrkflowID);*/
-		
-		/*  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait120+Input.wait60);  
-	 	   System.out.println(bc.initialBgCount());*/
-	 	   
-	 	 /* BaseClass base = new BaseClass(driver);
-	 	  base.BckTaskClick();
-    	
-    	Assert.assertEquals(getWorkFlow_WorkFlowNotificationStatus().getText().toString(), "Completed");*/
-    	
-    	/*//verify documents in assignment
-    	Thread.sleep(25000);
-    	 AssignmentsPage asspage = new AssignmentsPage(driver);
-    	
-    	
-        driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			asspage.getNumberOfAssignmentsToBeShown().Visible()  ;}}), Input.wait60);
-    	
-    	asspage.getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
-    	
-    	driver.scrollingToBottomofAPage();
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			asspage.getSelectAssignment(AssignmentName).Visible()  ;}}), Input.wait60);
-    	
-    	int DocsinAssgn = Integer.parseInt(asspage.getSelectAssignmentDocCount(AssignmentName).getText());
-		System.out.println(DocsinAssgn);
-    	
-		Assert.assertEquals(DocsinAssgn,purehit );*/
-    				
-    }
 
-    /**
+		/*
+		 * String WrkflowID = getWorkFlow_WorkFlowID(WFName).getText();
+		 * System.out.println(WrkflowID);
+		 */
+
+		/*
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * bc.initialBgCount() == Bgcount+1 ;}}), Input.wait120+Input.wait60);
+		 * System.out.println(bc.initialBgCount());
+		 */
+
+		/*
+		 * BaseClass base = new BaseClass(driver); base.BckTaskClick();
+		 * 
+		 * Assert.assertEquals(getWorkFlow_WorkFlowNotificationStatus().getText().
+		 * toString(), "Completed");
+		 */
+
+		/*
+		 * //verify documents in assignment Thread.sleep(25000); AssignmentsPage asspage
+		 * = new AssignmentsPage(driver);
+		 * 
+		 * 
+		 * driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+		 * 
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * asspage.getNumberOfAssignmentsToBeShown().Visible() ;}}), Input.wait60);
+		 * 
+		 * asspage.getNumberOfAssignmentsToBeShown().selectFromDropdown().
+		 * selectByVisibleText("100");
+		 * 
+		 * driver.scrollingToBottomofAPage();
+		 * 
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * asspage.getSelectAssignment(AssignmentName).Visible() ;}}), Input.wait60);
+		 * 
+		 * int DocsinAssgn =
+		 * Integer.parseInt(asspage.getSelectAssignmentDocCount(AssignmentName).getText(
+		 * )); System.out.println(DocsinAssgn);
+		 * 
+		 * Assert.assertEquals(DocsinAssgn,purehit );
+		 */
+
+	}
+
+	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
 	 * @Description : Method for create new workflow button link tab
 	 */
@@ -423,7 +811,7 @@ public class WorkflowPage {
 		baseClass.waitForElement(getNextLinkButton());
 		getNextLinkButton().waitAndClick(10);
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
 	 * @Description : Method for save button link tab for all pages tabs
@@ -466,20 +854,19 @@ public class WorkflowPage {
 
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
-	 * @throws AWTException 
+	 * @throws AWTException
 	 * @Description : Method for family option tab for clicking first family options
 	 */
 	// Reusable method for clicking first family options
 	public void familyOptions(boolean flag) {
 		driver.waitForPageToBeReady();
-		if (flag==true) {
+		if (flag == true) {
 			baseClass.waitTillElemetToBeClickable(getFirstFamilyOptions());
 			getFirstFamilyOptions().ScrollTo();
-			boolean flg2=getFirstFamilyOptions().isDisplayed();
+			boolean flg2 = getFirstFamilyOptions().isDisplayed();
 			System.out.println(flg2);
 			getFirstFamilyOptions().waitAndClick(40);
-		}
-		else {
+		} else {
 			System.out.println("No need this action");
 		}
 	}
@@ -579,7 +966,7 @@ public class WorkflowPage {
 		getWorkFlow_StopDateOfCurrentWorkFlow().SendKeys(s[0]);
 
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
 	 * @Description : Method for notification tab passing all user
@@ -591,7 +978,7 @@ public class WorkflowPage {
 		getWorkFlow_Notification_AddAllUsers().waitAndClick(5);
 
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
 	 * @Description : Method for summary tab to save
@@ -603,25 +990,25 @@ public class WorkflowPage {
 		geWorkFlow_Summary_Save().waitAndClick(5);
 
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
-	 * @throws ParseException 
+	 * @throws ParseException
 	 * @Description : Method for creating new workflow
 	 */
 	// Reusable method for summary tab
-	public void newWorkFlowCreation(String wfName,String wfDesc,int savedSearch,boolean familyFlag,
-			String folder,boolean folderFlag,String assgn,boolean assgnFlag,int number) throws ParseException {
+	public void newWorkFlowCreation(String wfName, String wfDesc, int savedSearch, boolean familyFlag, String folder,
+			boolean folderFlag, String assgn, boolean assgnFlag, int number) throws ParseException {
 		createNewWorkFlow();
-		descriptionTab(wfName,wfDesc);
+		descriptionTab(wfName, wfDesc);
 		nextButton();
 		sourcesTab(savedSearch);
 		nextButton();
 		nextButton();
 		familyOptions(familyFlag);
 		nextButton();
-		actionTabToSelectFolder(folder,folderFlag);
-		actionTabToSelectAssignment(assgn,assgnFlag);
+		actionTabToSelectFolder(folder, folderFlag);
+		actionTabToSelectAssignment(assgn, assgnFlag);
 		nextButton();
 		schedulesTab(number);
 		nextButton();
@@ -629,14 +1016,13 @@ public class WorkflowPage {
 		nextButton();
 		summaryTab();
 	}
-	
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
 	 * @Description : Method for creating workflow using pagination
 	 * @param wfName
 	 */
-	//Reusable method for pagination in worlflow page
+	// Reusable method for pagination in worlflow page
 	public void selectWorkFlowUsingPagination(String wfName) {
 		driver.scrollingToBottomofAPage();
 //		baseClass.waitForElementCollection(getAssgnPaginationCount());
@@ -658,12 +1044,12 @@ public class WorkflowPage {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
 	 * @Description : Action to run workflow
 	 */
-	//Reusable method to run workflow
+	// Reusable method to run workflow
 	public void actionToRunWorkFlow() {
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getWorkFlow_ActionDropdown());
@@ -674,23 +1060,23 @@ public class WorkflowPage {
 		getWorkFlow_RunWorkflowNow_YesButton().waitAndClick(10);
 		baseClass.waitTime(10);
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
 	 * @Description : getting workflow id using workflow name
 	 * @param wfName
 	 */
-	//Reusable method to get work flow id
+	// Reusable method to get work flow id
 	public int gettingWorkFlowId(String wfName) {
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getWorkFlow_WorkFlowID(wfName));
 		int workFlowId = Integer.parseInt(getWorkFlow_WorkFlowID(wfName).getText());
 		return workFlowId;
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
-	 * @Description : passing workflow Id 
+	 * @Description : passing workflow Id
 	 * @param workFlowId
 	 */
 	// Reusable method for passing work flow id
@@ -699,7 +1085,7 @@ public class WorkflowPage {
 		baseClass.waitForElement(getWorkFlowIdPassing());
 		getWorkFlowIdPassing().SendKeys(Integer.toString(workFlowId));
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
 	 * @Description : apply filter method
@@ -710,23 +1096,23 @@ public class WorkflowPage {
 		baseClass.waitForElement(getApplyFilter());
 		getApplyFilter().waitAndClick(10);
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
-	 * @Description : docs count 
+	 * @Description : docs count
 	 * @param wfName
 	 */
-	// Reusable method for getting doc count 
+	// Reusable method for getting doc count
 	public int gettingWorkFlowListDocCount(String wfName) {
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getDocCount(wfName));
 		int docCount = Integer.parseInt(getDocCount(wfName).getText());
 		return docCount;
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
-	 * @Description : action to view history popup window 
+	 * @Description : action to view history popup window
 	 * @param wfName
 	 */
 	// Reusable method for action to view history
@@ -739,7 +1125,7 @@ public class WorkflowPage {
 		baseClass.waitForElement(getHistoryButton());
 		getHistoryButton().waitAndClick(10);
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
 	 * @Description : action to view history popup window to doc count
@@ -752,16 +1138,17 @@ public class WorkflowPage {
 		int actiondocCount = Integer.parseInt(getActionDocCount(wfName).getText());
 		return actiondocCount;
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
 	 * @Description : close history window
 	 */
-    // Reusable method for close history window
+	// Reusable method for close history window
 	public void closeHistoryPopUpWindow() {
 		baseClass.waitForElement(getHistoryPopUpClose());
 		getHistoryPopUpClose().waitAndClick(10);
 	}
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
 	 * @Description : page Refresh
@@ -769,7 +1156,7 @@ public class WorkflowPage {
 	public void refreshingThePage() {
 		driver.Navigate().refresh();
 	}
-	
+
 	/**
 	 * @author Indium-Baskar Modified Date:24/2/2022
 	 * @Description : Action to delete workflow
@@ -786,13 +1173,13 @@ public class WorkflowPage {
 		baseClass.waitForElement(getWorkFlow_ActionDeleteWorkFlow());
 		getWorkFlow_ActionDeleteWorkFlow().waitAndClick(10);
 		baseClass.waitForElement(getDeletePopUpMessage());
-		String popUpDelete=getDeletePopUpMessage().getText();
+		String popUpDelete = getDeletePopUpMessage().getText();
 		System.out.println(popUpDelete);
 		baseClass.waitForElement(getWorkFlow_RunWorkflowNow_YesButton());
 		getWorkFlow_RunWorkflowNow_YesButton().waitAndClick(10);
 		return popUpDelete;
 	}
-	
+
 	/**
 	 * @author Indium-Jayanthi Modified Date:24/2/2022
 	 * @Description : method for webtable handling
@@ -804,12 +1191,12 @@ public class WorkflowPage {
 		String tableValue = getWorkFlow_SelectWorkStatus(WGName, index).getText();
 		return tableValue;
 	}
-	
+
 	/**
-	* @author Vijaya.Rani Modified Date:24/2/2022
-	* @throws ParseException
-	* @Description :apply Ascanding/descending order
-	*/
+	 * @author Vijaya.Rani Modified Date:24/2/2022
+	 * @throws ParseException
+	 * @Description :apply Ascanding/descending order
+	 */
 	public void applyAscandingorder() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		miniDocList = new MiniDocListPage(driver);
@@ -844,33 +1231,34 @@ public class WorkflowPage {
 		}
 
 	}
-	
-	
-		/**
-		 * @author Jayanthi.ganesan
-		 * This method will perform filter based on work flow id
-		 * @param ID
-		 */
+
+	/**
+	 * @author Jayanthi.ganesan This method will perform filter based on work flow
+	 *         id
+	 * @param ID
+	 */
 	public void filterByWF_ID(String ID) {
 		driver.scrollPageToTop();
 		baseClass.waitForElement(getFiltertextbox_WFid());
 		getFiltertextbox_WFid().SendKeys(ID);
 		getApplyFilterBtn().waitAndClick(2);
 	}
+
 	/**
-	 * @author Jayanthi.ganesan
-	 * This method will get Values from work flow table particular column based on index passed. 
+	 * @author Jayanthi.ganesan This method will get Values from work flow table
+	 *         particular column based on index passed.
 	 * @param eleName[Name of coulmn from which value needs to be extracted.]
 	 * @return
 	 */
 	public List<String> getTableCoumnValue(String eleName) {
-		int index=baseClass.getIndex(getTableHeader(), eleName);
-		List<String> tableValue=baseClass.availableListofElements(getTableColumnData(index));		
+		int index = baseClass.getIndex(getTableHeader(), eleName);
+		List<String> tableValue = baseClass.availableListofElements(getTableColumnData(index));
 		return tableValue;
 	}
+
 	/**
-	 * @author Jayanthi.ganesan
-	 * This method will filter the work flow table using 'created by user'
+	 * @author Jayanthi.ganesan This method will filter the work flow table using
+	 *         'created by user'
 	 * @param user
 	 */
 	public void filterByCreatedByUSer(String user) {
@@ -878,17 +1266,43 @@ public class WorkflowPage {
 		getCreatedByUserDropDown().selectFromDropdown().selectByVisibleText(user);
 		getApplyFilterBtn().waitAndClick(2);
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param wfName[work flow name]
 	 * @param wfDesc[work flow description]
 	 */
-	public void workFlow_Draft(String wfName,String wfDesc) {
+	public void workFlow_Draft(String wfName, String wfDesc) {
 		createNewWorkFlow();
-		descriptionTab(wfName,wfDesc);
+		descriptionTab(wfName, wfDesc);
 		getSaveBtn().Click();
 		getBackTOManageBtn().Click();
 		baseClass.getYesBtn().Click();
 	}
 
+	/**
+	 * @author Vijaya.Rani Modified Date:28/2/2022
+	 * @throws ParseException
+	 * @Description : Method for creating new workflow in Assign User
+	 */
+	// Reusable method for notification tab
+	public void newWorkFlowCreationAssignUser(String wfName, String wfDesc, int savedSearch, boolean familyFlag,
+			String folder, boolean folderFlag, String assgn, boolean assgnFlag, int number) throws ParseException {
+		createNewWorkFlow();
+		descriptionTab(wfName, wfDesc);
+		nextButton();
+		sourcesTab(savedSearch);
+		nextButton();
+		nextButton();
+		familyOptions(familyFlag);
+		nextButton();
+		actionTabToSelectFolder(folder, folderFlag);
+		actionTabToSelectAssignment(assgn, assgnFlag);
+		nextButton();
+		schedulesTab(number);
+		nextButton();
+		notificationTab();
+		saveButton();
+		baseClass.VerifySuccessMessage("Record saved successfully");
+	}
 }
