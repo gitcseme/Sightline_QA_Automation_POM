@@ -476,7 +476,8 @@ public class Input {
 	public static String audioSearchString5;
 	public static String audioSearchString6;
 	public static String audioSearchString7;
-
+	public static String pdfDataSet;
+	
 	// Added by Brundha-1/12/2021
 	public static String documentId;
 	public static String telecaSearchString;
@@ -788,6 +789,7 @@ public class Input {
 		audioSearchString5 = testData.getAudioSearchString5();
 		audioSearchString6 = testData.getAudioSearchString6();
 		audioSearchString7 = testData.getAudioSearchString7();
+		pdfDataSet = testData.getPdfDataSet();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.

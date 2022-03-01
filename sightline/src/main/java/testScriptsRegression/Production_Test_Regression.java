@@ -5585,7 +5585,7 @@ public class Production_Test_Regression {
 				base.stepInfo("Navigating to dataset page");
 				dataset.navigateToDataSetsPage();
 				base.stepInfo("Selecting uploadedset and navigating to doclist page");
-				dataset.selectDataSetWithName("B2F9_27Mar_SinglePageTIFF_20211214121006023");
+				dataset.selectDataSetWithName(Input.pdfDataSet);
 				DocListPage doc = new DocListPage(driver);
 				driver.waitForPageToBeReady();
 
