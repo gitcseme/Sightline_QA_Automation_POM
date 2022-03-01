@@ -3,9 +3,11 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -554,7 +556,7 @@ public class WorkFlow_IndiumRegression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyFilter_CreatedUser() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52657");
 		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected 'Created By' user.");
@@ -589,6 +591,7 @@ public class WorkFlow_IndiumRegression {
 		}
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
@@ -644,17 +647,48 @@ public class WorkFlow_IndiumRegression {
 				+ "selected Status.");
 		int Id;
 		int Id1;
+
+	
+	/**
+	 * Author :Vijaya.Rani date: 28/02/2022 Modified date: NA Modified by: NA
+	 * Description:To verify that RMU can save the record.
+	 * 'RPMXCON-52591' Sprint-13
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void verifyRMUCanSaveTheReport() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52591");
+		baseClass.stepInfo("To verify that RMU can save the record.");
+
+		workflow = new WorkflowPage(driver);
+		int Id;
 		String folderName = "folder" + Utility.dynamicNameAppender();
 		String SearchName = "WF" + Utility.dynamicNameAppender();
 		String wfName = "work" + Utility.dynamicNameAppender();
 		String wfDesc = "Desc" + Utility.dynamicNameAppender();
 
+
 		String wfDesc_Draft = "Desc" + Utility.dynamicNameAppender();
 		String wfName_Draft = "work" + Utility.dynamicNameAppender();
+		String assgn = "Assgn" + Utility.dynamicNameAppender();
+		assignmentPage = new AssignmentsPage(driver);
+
+	 * Author : Baskar date: NA Modified date: 28/02/2022 Modified by: Baskar
+	 * Description:To verify that all details displayed on history.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void validationActionHederValues() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52647");
+		baseClass.stepInfo("To verify that all details displayed on history.");
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		softAssertion = new SoftAssert();
+
+
 
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
 
 		page = new TagsAndFoldersPage(driver);
 		page.CreateFolder(folderName, Input.securityGroup);
@@ -663,10 +697,17 @@ public class WorkFlow_IndiumRegression {
 		search = new SessionSearch(driver);
 		search.basicContentSearch(Input.searchString1);
 
+		
+		// Search for any string
+		search = new SessionSearch(driver);
+		int count = search.basicContentSearch(Input.searchString1);
+
+
 		// Save the search
 		search.saveSearch(SearchName);
 		SavedSearch ss = new SavedSearch(driver);
 		ss.getSaveSearchID(SearchName);
+
 		Id = Integer.parseInt(ss.getSavedSearchID().getText());
 
 		// creating new work flow in configured state 
@@ -728,9 +769,63 @@ public class WorkFlow_IndiumRegression {
 			}
 		}
 
+		Thread.sleep(2000);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id);
+		UtilityLog.info(Id);
+
+		// assignment creation
+		search.bulkAssign();
+		assignmentPage.assignmentCreation(assgn, Input.codingFormName);
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		baseClass.stepInfo("Creating workflow using save search,assignmnet and first family options");
+		workflow.newWorkFlowCreationAssignUser(wfName, wfDesc, Id, true, folderName, false, assgn, true,1);
+	    
+		softAssertion.assertTrue(workflow.getWorkFlow_AssignedUsers().Displayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("All existing users is displayed in the list and record saved Successfully");
+	
+		loginPage.logout();
+	}
+	
+	
+
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		workflow.createNewWorkFlow();
+		workflow.descriptionTab(wfName,wfDesc);
+		baseClass.waitForElement(workflow.getSaveLinkButton());
+		workflow.getSaveLinkButton().waitAndClick(10);
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		workflow.selectWorkFlowUsingPagination(wfName);
+		
+		// action to viewhistory
+		baseClass.waitForElement(workflow.getWorkFlow_ActionDropdown());
+		workflow.getWorkFlow_ActionDropdown().waitAndClick(10);
+		baseClass.waitForElement(workflow.getHistoryButton());
+		workflow.getHistoryButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		
+		// validating header count
+		String expectedHeader="Workflow ID,Workflow Name,Run Start,Run End,Action,Status,Total Object Promoted";
+		List<String> allHeader = new ArrayList<String>();
+		List<WebElement> persistantNames =workflow.getActionHeader().FindWebElements();
+		for (int i = 0; i < persistantNames.size(); i++) {
+			allHeader.add(persistantNames.get(i).getText());
+		}
+		String actualHeaderActual = String.join(",", allHeader);
+		softAssertion.assertEquals(expectedHeader.toUpperCase(), actualHeaderActual.toUpperCase());
+		baseClass.passedStep("Header value as per the expected onces in action history popup window");
+		softAssertion.assertAll();
+
+
 		// logout
 		loginPage.logout();
 	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
