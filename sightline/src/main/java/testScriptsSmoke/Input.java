@@ -284,6 +284,8 @@ public class Input {
 	public static String audioString1;
 	public static String audioString2;
 	public static String sourceDocIdSearch;
+	public static String DocIdWithComments;
+	public static String DocIdWithTrackChanges;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -988,6 +990,8 @@ public class Input {
 		DocIdWithHiddenContent = testData.getDocIdWithHiddenContent();
 		TextHidden = testData.getTextHidden();
 		warningMessage = testData.getWarningMessage();
+		DocIdWithComments = testData.getDocIdWithComments();
+		DocIdWithTrackChanges = testData.getDocIdWithTrackChanges();
 		// Added by Gopinath - 16/11/2021
 		signDocumentId = testData.getSignDocumentId();
 		technicalIssue = testData.getTechnicalIssue();
