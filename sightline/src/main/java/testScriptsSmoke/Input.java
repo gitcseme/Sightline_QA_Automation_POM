@@ -307,6 +307,8 @@ public class Input {
 	public static String searchPhraseWithQuote;
 	public static String keywordColor1;
 	public static String multiwordText;
+	public static String query;
+	public static String miniDocListID;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -343,6 +345,7 @@ public class Input {
 	public static String batchFileWithColumnOrderChange;
 	public static String batchFileWithMultiSheetColumnOrderChange;
 	public static String highVolumeProject;
+	public static String bulkSearchSting1;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -477,7 +480,7 @@ public class Input {
 	public static String audioSearchString6;
 	public static String audioSearchString7;
 	public static String pdfDataSet;
-	
+
 	// Added by Brundha-1/12/2021
 	public static String documentId;
 	public static String telecaSearchString;
@@ -559,7 +562,7 @@ public class Input {
 	public static String YYYYMMDDHHMISSLst;
 	public static String DATFile1;
 	public static String StitchedTIFF;
-	
+
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -841,6 +844,8 @@ public class Input {
 		searchPhraseWithQuote = testData.getSearchPhraseWithQuote();
 		keywordColor1 = testData.getKeywordColor1();
 		multiwordText = testData.getMultiwordText();
+		query = testData.getQuery();
+		miniDocListID = testData.getMiniDocListID();
 
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
@@ -877,6 +882,7 @@ public class Input {
 		batchFileWithColumnOrderChange = testData.getBatchFileWithColumnOrderChange();
 		batchFileWithMultiSheetColumnOrderChange = testData.getBatchFileWithMultiSheetColumnOrderChange();
 		highVolumeProject = testData.getHighVolumeProject();
+		bulkSearchSting1 = testData.getBulkSearchSting1();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
@@ -1121,8 +1127,8 @@ public class Input {
 		MP3GermanFile = testData.getMP3GermanFile();
 		TranscriptJapneseFile = testData.getTranscriptJapneseFile();
 		MP3JapneseFile = testData.getMP3JapneseFile();
-		YYYYMMDDHHMISSDat=testData.getYYYYMMDDHHMISSDat();
-		YYYYMMDDHHMISSLst=testData.getYYYYMMDDHHMISSLst();
+		YYYYMMDDHHMISSDat = testData.getYYYYMMDDHHMISSDat();
+		YYYYMMDDHHMISSLst = testData.getYYYYMMDDHHMISSLst();
 		StitchedTIFF = testData.getStitchedTIFF();
 		DATFile1 = testData.getDATFile1();
 
@@ -1307,4 +1313,3 @@ public class Input {
 	}
 
 }
-

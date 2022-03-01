@@ -895,8 +895,10 @@ public class SavedSearch {
 	public Element currentClickedNode() {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor jstree-clicked']");
 	}
+
 	public Element getLastCreatedSearchGroup(String rtFolder) {
-		return driver.FindElementByXPath("(//a[contains(text(),'"+ rtFolder +"')]//following-sibling::ul//a)[last()]");
+		return driver
+				.FindElementByXPath("(//a[contains(text(),'" + rtFolder + "')]//following-sibling::ul//a)[last()]");
 	}
 
 	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
@@ -6500,22 +6502,22 @@ public class SavedSearch {
 	}
 
 	/**
-	* @Author Jeevitha
-	* @param file
-	* @param groupName
-	* @param Node
-	* @param newNode
-	*/
+	 * @Author Jeevitha
+	 * @param file
+	 * @param groupName
+	 * @param Node
+	 * @param newNode
+	 */
 	public void deleteUploadedBatchFile(String file, String groupName, boolean Node, String newNode) {
-	navigateToSSPage();
-	getSavedSearchGroupName(groupName).waitAndClick(10);
-	if (Node) {
-	selectNode1(newNode);
-	}
-	rootGroupExpansion();
-	base.waitForElement(getSelectUploadedFile(file));
-	getSelectUploadedFile(file).waitAndClick(20);
-	deleteFunctionality();
+		navigateToSSPage();
+		getSavedSearchGroupName(groupName).waitAndClick(10);
+		if (Node) {
+			selectNode1(newNode);
+		}
+		rootGroupExpansion();
+		base.waitForElement(getSelectUploadedFile(file));
+		getSelectUploadedFile(file).waitAndClick(20);
+		deleteFunctionality();
 	}
 
 	/**
@@ -7560,22 +7562,22 @@ public class SavedSearch {
 			System.out.println("Clicked :" + groupName);
 		}
 	}
-	
-/**
- * @author Jayanthi.ganesan
- * This method will select the node under specified search group.
- * @param searchGroup[Search group under which node needs to be selected]
- * @param NodeName[Name of node needs to be selected]
- */
-public void selectNodeUnderSpecificSearchGroup(String searchGroup, String NodeName ) {
-	
-	driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-	getSavedSearchGroupName(searchGroup).waitAndClick(10);
-	getSavedSearchNewGroupExpand().waitAndClick(20);
-	base.waitForElement(getCreatedNode(NodeName));
-	getCreatedNode(NodeName).waitAndClick(20);
-	
-}
+
+	/**
+	 * @author Jayanthi.ganesan This method will select the node under specified
+	 *         search group.
+	 * @param searchGroup[Search group under which node needs to be selected]
+	 * @param NodeName[Name      of node needs to be selected]
+	 */
+	public void selectNodeUnderSpecificSearchGroup(String searchGroup, String NodeName) {
+
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		getSavedSearchGroupName(searchGroup).waitAndClick(10);
+		getSavedSearchNewGroupExpand().waitAndClick(20);
+		base.waitForElement(getCreatedNode(NodeName));
+		getCreatedNode(NodeName).waitAndClick(20);
+
+	}
 
 	/**
 	 * @author Raghuram.A
@@ -7589,10 +7591,13 @@ public void selectNodeUnderSpecificSearchGroup(String searchGroup, String NodeNa
 
 		for (int i = 0; i <= attempts; i++) {
 			if (!getSearchStatus(savedSearchName, status).isElementAvailable(3)) {
-				System.out.println(i + status);
+				System.out.println(i + " - " + status);
+				if (i == attempts) {
+					base.failedStep("Expected status not present");
+				}
 				savedSearch_SearchandSelect(savedSearchName, "Yes");
 			} else {
-				System.out.println(i + status);
+				base.stepInfo(" Actual Status - " + status);
 				break;
 			}
 		}
@@ -7612,4 +7617,27 @@ public void selectNodeUnderSpecificSearchGroup(String searchGroup, String NodeNa
 			sgExpansion();
 		}
 	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param savedSearchName - Respective SavedSearh name
+	 * @param additional      - additional parameter for future use
+	 * @param additionalInt   - additional parameter for future use
+	 * @throws InterruptedException
+	 */
+	public void verifyStatusBasedOnCount(String savedSearchName, String additional, int additionalInt)
+			throws InterruptedException {
+
+		String docCount = docResultCOuntCHeck(savedSearchName);
+		if (docCount.isBlank()) {
+			if (getSearchStatus(savedSearchName, "INPROGRESS").isElementAvailable(1)) {
+				base.passedStep("DocCount is : " + docCount + " and Status is in Inprogress");
+			} else {
+				base.failedStep("Status failed");
+			}
+		} else {
+			base.stepInfo("Doc Count : " + docCount + " is present");
+		}
+	}
+
 }
