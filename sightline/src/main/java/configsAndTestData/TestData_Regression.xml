@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- REGRESSION TEST DATA -->
 
@@ -514,4 +515,520 @@
        <StitchedTIFF>Stitched TIFFs</StitchedTIFF>
 	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat</DATFile1>
      <!-- Ingestion Related data END -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- REGRESSION TEST DATA -->
+
+<TestData>
+	<!-- Serach strings and expected pure hit counts -->
+	<searchString1>test</searchString1>
+	<searchString2>comments</searchString2>
+	<pureHitSeachString1>48</pureHitSeachString1>
+	<pureHitSeachString2>52</pureHitSeachString2>
+	<searchString1ANDsearchString2>16</searchString1ANDsearchString2>
+	<searchString1ORsearchString2>85</searchString1ORsearchString2>
+	<searchString1NOTsearchString2>33</searchString1NOTsearchString2>
+	<searchString2NOTsearchString1>37</searchString2NOTsearchString1>
+	<audioSearchString1>right</audioSearchString1>
+	<audioSearchString1pureHit>3</audioSearchString1pureHit>
+	<conceptualSearchString1>field report</conceptualSearchString1>
+	<conceptualSearchString1PureHit>2</conceptualSearchString1PureHit>
+	<metaDataCN>P Allen</metaDataCN>
+	<metaDataCNcount>1135</metaDataCNcount>
+	<totalNumberOfDocs>1202</totalNumberOfDocs>
+	<totalNumberOfDocsincludeadvoption>103
+	</totalNumberOfDocsincludeadvoption>
+	<historyTab>History</historyTab>
+	<documentConceptualTab>liDocumentConceptualSimilar
+	</documentConceptualTab>
+	<randomText>Test</randomText>
+	<metaDataName>CustodianName</metaDataName>
+	<is_Or_Range>range</is_Or_Range>
+	<second_Input>CustodianName</second_Input>
+	<defaultRedactionTag>Default Redaction Tag</defaultRedactionTag>
+	<fldClassification>Doc Basic</fldClassification>
+	<fldDescription>test</fldDescription>
+	<fieldType>NVARCHAR</fieldType>
+	<fieldLength>Small - 50 Characters</fieldLength>
+	<codeFormName>Default Project Coding Form</codeFormName>
+	<securityGroup>Default Security Group</securityGroup>
+
+
+	<!-- Added by Gopinath -->
+	<actionColumnName>Action</actionColumnName>
+	<nameColumnName>Name</nameColumnName>
+	<userColumnName>User</userColumnName>
+	<timeStampColumnName>Time Stamp</timeStampColumnName>
+
+	<!-- Added by Arunkumar -->
+	<pageRange1>4-7</pageRange1>
+	<pageRange2>3</pageRange2>
+	<pageRange3>1,2,8,10,11,12,13</pageRange3>
+	<pageRange4>2-13</pageRange4>
+	<searchPhraseWithQuote>"is required"</searchPhraseWithQuote>
+	<keywordColor1>Cyan</keywordColor1>
+	<multiwordText>will be</multiwordText>
+
+	<!-- Production path for redaction master doc -->
+	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
+	</MasterPDF1location>
+	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf
+	</MasterPDF2location>
+
+	<!-- Docview Analytics -->
+	<Panel>Conceptually Similar</Panel>
+	<AssgnName>TDM54178</AssgnName>
+	<pureHitCount>29</pureHitCount>
+	<FolderName>01Prod</FolderName>
+	<TextValue>ajinkya.gangdhar@symphonyteleca....</TextValue>
+	<TextEmpty></TextEmpty>
+	<SavedSearch>TDM54178</SavedSearch>
+	<pureHitCount1>267</pureHitCount1>
+	<docName>DocID</docName>
+	<MiniDocId>ID00000102</MiniDocId>
+	<ThreadQuery>"testing the same"</ThreadQuery>
+	<NewDocId>ID00001178</NewDocId>
+	<documentToBeScrolled>ID00001352-I</documentToBeScrolled>
+	<conceptualDocument>ID00004389</conceptualDocument>
+	<conceptualDocs1>ID00000703</conceptualDocs1>
+	<principalDocId>5168</principalDocId>
+	<principalDocId1>5138</principalDocId1>
+	<principalDocId2>5161</principalDocId2>
+	<principalDocId3>5167</principalDocId3>
+	<principalDocId4>5170</principalDocId4>
+	<principalDocId5>5171</principalDocId5>
+	<principalDocId6>5169</principalDocId6>
+	<sourceDocId>T2548D</sourceDocId>
+	<sourceDocId1>T2392D</sourceDocId1>
+	<sourceDocId2>T2529D</sourceDocId2>
+	<sourceDocId3>T2545D</sourceDocId3>
+	<sourceDocId4>T2552D</sourceDocId4>
+	<sourceDocId5>T2554D</sourceDocId5>
+	<nearDupeDocumentForReviewer>ID00001191</nearDupeDocumentForReviewer>
+	<threadDocumentForReviewer>ID00001402</threadDocumentForReviewer>
+	<familyDocumentForReviewer>ID00001355</familyDocumentForReviewer>
+	<nearDupeCompletedDocIdReviewer>ID00001532
+	</nearDupeCompletedDocIdReviewer>
+	<newNearDupeDocId>ID00001531</newNearDupeDocId>
+	<warningDocId>ID00001304</warningDocId>
+	<threadData1>ID00005182</threadData1>
+	<nearDupeBulkAssign>ID00003719</nearDupeBulkAssign>
+	<nearDupeBulkAssignId>ID00003729</nearDupeBulkAssignId>
+	<nearDupeBulkAssignReviewer>ID00005182</nearDupeBulkAssignReviewer>
+	<nearDupeBulkAssignReviewId>ID00004969</nearDupeBulkAssignReviewId>
+	<theardMapViewId>ID00001129</theardMapViewId>
+	<nearDupeViewDocId>ID00001404</nearDupeViewDocId>
+	<threadMapNewId>ID00000703</threadMapNewId>
+	<conceptualDocId1>ID00003840</conceptualDocId1>
+	<nearDupeDocId1>ID00000896</nearDupeDocId1>
+	<nearDupeImageDoc>ID00001072</nearDupeImageDoc>
+	<analyticsConceptualDocId1>ID00001475</analyticsConceptualDocId1>
+	<analyticsConceptualDocId2>ID00000271</analyticsConceptualDocId2>
+	<miniConceptualNoDoc>ID00004800</miniConceptualNoDoc>
+	<tiffSearchQuery>.tif</tiffSearchQuery>
+	<nearDupePagination>ID00003939</nearDupePagination>
+	<fieldByValue>Custodian</fieldByValue>
+	<highlightDocId>ID00001490</highlightDocId>
+	<highlightedDocsQuery>DupeCount:[1 TO 10000]</highlightedDocsQuery>
+	<ingestionQuery>B2F9_Automation_AllSources_20211130043120500</ingestionQuery>
+	<ingestionDocIdFamilyMember>ID00001156</ingestionDocIdFamilyMember>
+	<ingestionDocIdNearDupe>ID00001586</ingestionDocIdNearDupe>
+
+
+
+	<!-- DocView Coding Form -->
+	<savedName>AttachData</savedName>
+	<codingFormName>Default Project Coding Form</codingFormName>
+	<assignmentSelection>DemoAssignment</assignmentSelection>
+	<stampColour>BLUE</stampColour>
+	<assignmentLevelStampOFF>codingstampoff</assignmentLevelStampOFF>
+	<searchText>Test</searchText>
+	<reviewerName>MalayalaBaskar</reviewerName>
+	<stampColours>BLACK</stampColours>
+	<stampSelection>YELLOW</stampSelection>
+	<oneHourAudio>ID00001113</oneHourAudio>
+	
+
+	<!-- Sowndariya Indium -->
+
+	<searchString3></searchString3>
+	<searchString4>testing</searchString4>
+	<tagNameTechnical> Technical_Issue</tagNameTechnical>
+	<signatureDocumentID>ID00005088</signatureDocumentID>
+	<searchString20Docs>conceptually</searchString20Docs>
+	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation
+	</prodPathUAT>
+	<bates>Bates</bates>
+	<batesNumber>BatesNumber</batesNumber>
+	<ChildBates>ChildBates</ChildBates>
+	<Production>Production</Production>
+	<TIFFPageCount>TIFFPageCount</TIFFPageCount>
+	<translationDocumentId>STC4_00000001</translationDocumentId>
+
+	<!-- Added by Gopinath -->
+	<historyTab>History</historyTab>
+	<documentConceptualTab>liDocumentConceptualSimilar
+	</documentConceptualTab>
+	<randomText>Test</randomText>
+	<metaDataName>CustodianName</metaDataName>
+	<is_Or_Range>range</is_Or_Range>
+	<second_Input>CustodianName</second_Input>
+	<defaultRedactionTag>Default Redaction Tag</defaultRedactionTag>
+	<fldClassification>Doc Basic</fldClassification>
+	<fldDescription>test</fldDescription>
+	<fieldType>NVARCHAR</fieldType>
+	<fieldLength>Small - 50 Characters</fieldLength>
+	<codeFormName>Default Project Coding Form</codeFormName>
+	<securityGroup>Default Security Group</securityGroup>
+	<actionColumnName>Action</actionColumnName>
+	<nameColumnName>Name</nameColumnName>
+	<userColumnName>User</userColumnName>
+	<timeStampColumnName>Time Stamp</timeStampColumnName>
+
+	<testData1>crammer</testData1>
+	<tagNamePrev>Privileged</tagNamePrev>
+	<tagNameTechnical>Technical_Issue</tagNameTechnical>
+	<documentID>ID00000018</documentID>
+	<orphanDocument>ID00000106</orphanDocument>
+	<parentDocument>ID00001542</parentDocument>
+
+	<!-- Added by Krishna -->
+	<pageNumber>10</pageNumber>
+	<searchDocId>ID00000179</searchDocId>
+	<searchBulletDocId>ID00004518</searchBulletDocId>
+	<searchTestSG>TestingSG</searchTestSG>
+	<duplicateDocId>ID00000673</duplicateDocId>
+	<pageRange>1-2</pageRange>
+	<fullPageRange>1-4</fullPageRange>
+	<iconColor>#E64634</iconColor>
+	<testSecondDocId>ID00000104</testSecondDocId>
+	<testTenthDocId>ID00000667</testTenthDocId>
+	<docNearDupeDocId>ID00001329</docNearDupeDocId>
+	<TiffDocId>ID00001075</TiffDocId>
+	<UniCodeDocId>ID00005206</UniCodeDocId>
+	<IconOriginalColour>#444444</IconOriginalColour>
+	<DocIdWithHiddenContent>ID00000133</DocIdWithHiddenContent>
+	<TextHidden>Hidden</TextHidden>
+	<HiddenContentExcelSheet>ID00000161</HiddenContentExcelSheet>
+	<HiddenContentExcelBook>ID00000167</HiddenContentExcelBook>
+	<HiddenContentExternalLink>ID00000157</HiddenContentExternalLink>
+	<audioString1>THE THE</audioString1>
+	<audioString2>"THE THE"</audioString2>
+	 <sourceDocId7>331ID00000220</sourceDocId7>
+	 <sourceDocIdSearch>SourceDocID</sourceDocIdSearch>
+	  <DocIdWithComments>ID00000061</DocIdWithComments>
+	 <DocIdWithTrackChanges>ID00000084</DocIdWithTrackChanges>
+
+
+	<!-- Baskar Indium Audio Search to DocView MiniList - modify on 9/01/21 -->
+	<language>North American English</language>
+
+
+	<!-- Added by Gopinath Modified date - 01/09/2021 -->
+	<betweenTagName>06 Correspondence between the parties</betweenTagName>
+
+
+	<documentIdNum>5</documentIdNum>
+	<searchStringStar>*</searchStringStar>
+	<docIDs>ID0000</docIDs>
+
+	<!-- Raghuram Indium modified on 02/24/22 -->
+	<docHighlightColor>#CDD9E1</docHighlightColor>
+	<sortDataBy>DocID</sortDataBy>
+	<sortType>Ascending</sortType>
+	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads</fileDownloadLocation>
+	<completedWithErrColorCodeBR>#F88C00</completedWithErrColorCodeBR>
+	<shareSearchPA>Shared With Project Administrator</shareSearchPA>
+	<shareSearchDefaultSG>Shared with Default Security Group</shareSearchDefaultSG>
+	<mySavedSearch>My Saved Search</mySavedSearch>
+	<zeroPureHitString>#$%^</zeroPureHitString>
+	<invalidBatchFileNewLocation>\Misc\InvalidBatchFiles\</invalidBatchFileNewLocation>
+	<xlsBatchFile>Invalid_xlx_BatchSearchTemplate.xls</xlsBatchFile>
+	<invalidBatchFileFormatErrMsg>Please select a valid file of typexls/xlsx</invalidBatchFileFormatErrMsg>
+	<metaDataCustodianNameInput>Andrew</metaDataCustodianNameInput>
+	<selectionHighlightColor>#B0BED9</selectionHighlightColor>
+	<searchString7>term</searchString7>
+	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is in progress, you cannot overwrite it. Please wait until SavedSearch is completed.</errMsgSinceExecutionInProgress>
+	<validBatchFileLocation>\Misc\ValidBatchFiles\</validBatchFileLocation>
+	<fileDataErrMsg>Error in file saving</fileDataErrMsg>
+	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error</batchColumnHeaderErrorFileName>
+	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet</BatchFileWithMultiplesheetFile>
+	<savedSearchColor>#FFFFFF</savedSearchColor>
+	<searchString8>XLS OR XLSX OR CSV</searchString8>
+	<specialString1>"##U\}C Tester"</specialString1>
+	<specialString2>"##U\"C Tester"</specialString2>
+	<specialString3>"##U\{C Tester"</specialString3>
+	<batchFileWithMultiSheetColumnMissing>Batch_columnHeader_Error - MS</batchFileWithMultiSheetColumnMissing>
+	<batchFileWithMultiSheetColumnDuplicate>Batch_columnHeader_Error - MS - Duplicate</batchFileWithMultiSheetColumnDuplicate>
+	<searchString9>document</searchString9>
+	<batchFileWithColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange</batchFileWithColumnOrderChange>
+	<batchFileWithMultiSheetColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange_MS</batchFileWithMultiSheetColumnOrderChange>
+	<highVolumeProject>AutomationHighVolumeProject</highVolumeProject>
+	
+    
+
+	<!-- Added by Gopinath Modified date - 03/09/2021 -->
+
+	<orderCriteria>DocID</orderCriteria>
+	<orderType>Asc</orderType>
+
+	<!-- Added by Gopinath Modified date - 08/09/2021 -->
+	<savedPageTitle>Sightline by Consilio</savedPageTitle>
+
+	<!-- Added by Gopinath Modified date - 17/09/2021 -->
+	<comment>testing</comment>
+
+
+	<!-- Added by Gopinath Modified date - 21/09/2021 -->
+	<codeSameAsLastMsg>Code this document the same as the last coded
+		document
+	</codeSameAsLastMsg>
+
+	<!-- Added by Jeevitha -->
+	<colorCodeOfRed>#FF0000</colorCodeOfRed>
+	<crammerdocumentID>ID00001191</crammerdocumentID>
+	<batchFileNewLocation>\BatchFiles\</batchFileNewLocation>
+	<performaceBatchFile>\performance BatchFile\</performaceBatchFile>
+	<bullHornIconColor>#E74735</bullHornIconColor>
+	<progresBarColor>#3276B1</progresBarColor>
+	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error
+	</BatchFileduplicateHeader>
+
+	<!-- Added by Gopinath Created date - 23/09/2021 -->
+	<startTime>00:00:00</startTime>
+	<endTime>00:00:01</endTime>
+
+	<!-- Added by Jagadeesh.jana -->
+	<colorCodeHighlight>#dc5252</colorCodeHighlight>
+
+
+	<!-- Added by Gopinath Created date - 27/09/2021 -->
+	<pageLength>500</pageLength>
+
+	<!-- Added by Gopinath Created date - 30/09/2021 -->
+	<date>21/May/2012</date>
+
+	<!-- Added by Gopinath Created date - 05/10/2021 -->
+	<docFileSize>60000</docFileSize>
+	<docFileName>DocFileName</docFileName>
+
+
+
+	<!-- Added by Gopinath Created date - 06/10/2021 -->
+	<docFileType>DocFileType</docFileType>
+
+	<!-- Added by Sai Krishna Created date - 07/10/2021 -->
+	<docIdRemarks>ID00000773</docIdRemarks>
+
+	<!-- Raghuram Indium modified on 10/06/21 -->
+	<searchString5>commit</searchString5>
+	<searchString6>welcome</searchString6>
+	<docIdRemarks2>ID00000012</docIdRemarks2>
+    <docSelectionHighlight>#3E65AC</docSelectionHighlight>
+    
+	<!-- Added by Gopinath Created date - 11/10/2021 -->
+	<atternoyClient>Atternoy_client</atternoyClient>
+	<confidential>Confidential</confidential>
+	<reviewed>Reviewed</reviewed>
+	<documentComments>Document_Comments</documentComments>
+
+	<!-- Added by Gopinath Created date - 25/10/2021 -->
+	<audioSearch>morning</audioSearch>
+	<audioLanguage>International English</audioLanguage>
+
+	<!-- Added by Gopinath Created date - 27/10/2021 -->
+	<excelFileDocument>ID00000619</excelFileDocument>
+	<mp3FileDocument>ID00005076</mp3FileDocument>
+
+	<!-- Added by Iyappan.Kasinathan Created date - 01/11/2021 -->
+	<WPbatchFile>/WP_BatchFile/</WPbatchFile>
+
+
+	<!-- Added by Gopinath Created date - 02/11/2021 -->
+	<fileExtDiffDocument>ID00000275</fileExtDiffDocument>
+	<fileExtBlankDocument>ID00000022</fileExtBlankDocument>
+	<translationDocument>ID00000035</translationDocument>
+
+	<!-- Added by Krishna Created -->
+	<docIdKeyWordTest>ID00000004</docIdKeyWordTest>
+	<keyWordHexCode>#00ffff</keyWordHexCode>
+	<docIdThumbnails>ID00000012</docIdThumbnails>
+
+	<!-- Added by Gopinath Created date - 16/11/2021 -->
+	<signDocumentId>ID00000013</signDocumentId>
+	<technicalIssue>Technical Issue</technicalIssue>
+	<crammerDocId>ID00000067</crammerDocId>
+	<produced>Produced</produced>
+	<producedDeleted>Production Deleted</producedDeleted>
+
+
+	<!-- Added by Gopinath Created date - 22/11/2021 -->
+	<batesDocumentId>ID00000182</batesDocumentId>
+
+
+	<EmailAuthourName>gouri dhavalikar</EmailAuthourName>
+	<MetaDataEAName>EmailAuthorName</MetaDataEAName>
+	<MetaDataDomainName>gmail.com</MetaDataDomainName>
+	<MetaDataReciepientsDomain>EmailRecipientDomains
+	</MetaDataReciepientsDomain>
+	<KeyWordColour>Blue</KeyWordColour>
+
+	<!-- Added by Baskar Created date - 24/11/2021 -->
+	<tinyInt>Tiny - 20 Characters</tinyInt>
+	<smallInt>Small - 50 Characters</smallInt>
+	<averageInt>Average - 400 Characters</averageInt>
+	<bigInt>Big - 4000 Characters</bigInt>
+	<hugeInt>Huge - 2GB</hugeInt>
+	<docBasic>Doc Basic</docBasic>
+
+	<!-- Added by Gopinath Created date - 25/11/2021 -->
+	<exText>The configured format is applicable only to OCRed text and
+		production generated text, and not to ingested text.
+	</exText>
+
+	<!-- Added by Gopinath Created date - 29/11/2021 -->
+	<paginationDocId>ID00000196</paginationDocId>
+
+	<!-- Added by Baskar Created date - 24/11/2021 -->
+	<hidden>Make It Hidden</hidden>
+	<notSelectable>Make It Display But Not Selectable</notSelectable>
+	<optional>Make It Optional</optional>
+	<required>Make It Required</required>
+	<tag>tag</tag>
+	<comments>comment</comments>
+	<metaData>metadata</metaData>
+	<checkItem>check item</checkItem>
+	<staticText>staticText</staticText>
+	<radioGroup>radio</radioGroup>
+	<checkGroup>check</checkGroup>
+	<yesButton>Yes</yesButton>
+
+	<!-- Added by Aathith -->
+	<pageCount>1</pageCount>
+	<errorMsg>Error Message</errorMsg>
+	<helpText>Help Text</helpText>
+	<thisHidden>Make this Hidden</thisHidden>
+	<thisReadOnly>Make this Read Only</thisReadOnly>
+	<thisOptional>Make this Optional</thisOptional>
+	<thisRequired>Make this Required</thisRequired>
+	<select>Selected</select>
+	<notSelect>Not Selected</notSelect>
+	<securityGroup_sg47>SG1134047</securityGroup_sg47>
+	<regressionConsilio>Regression_AllDataset_Consilio</regressionConsilio>
+	<regressionConsilio1>Regression_AllDataset_Consilio1</regressionConsilio1>
+	<audioSearchString2>interview</audioSearchString2>
+	<audioSearchString3>six</audioSearchString3>
+	<audioSearchString4>"Phrase"</audioSearchString4>
+	<audioSearchString5>evidence</audioSearchString5>
+	<audioSearchString6>market</audioSearchString6>
+	<audioSearchString7>transaction</audioSearchString7>
+
+
+	<!-- Added by Brundha -->
+	<documentID>ID00001333</documentID>
+	<telecaSearchString>teleca</telecaSearchString>
+	<docFile>ID00001493</docFile>
+    <stampRed>RED</stampRed>
+	<stampGreen>GREEN</stampGreen>
+	
+	<!-- Added by Baskar Created date - 30/11/2021 -->
+	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
+
+	<!-- Added by Gopinath Created date - 03/12/2021 -->
+	<thankyouText>thank you</thankyouText>
+
+	<!-- Added by Gopinath Created date - 08/12/2021 -->
+	<anotherRemarkMessage>Another user has applied redactions, annotations
+		or Reviewer Remarks to this document since you presented it in
+		DocView.
+	</anotherRemarkMessage>
+
+	<!-- Added by Gopinath Created date - 09/12/2021 -->
+	<familyMembersDocId>ID00001251</familyMembersDocId>
+
+	<!-- Added by Gopinath Created date - 15/12/2021 -->
+	<proximity>Proximity</proximity>
+	<masterDate>2019/08/05</masterDate>
+
+	<!-- Added by Gopinath Created date - 16/12/2021 -->
+	<productionText>Production</productionText>
+	<tiffPageCountNam>TIFFPageCount</tiffPageCountNam>
+	<tiffPageCountText>TIFFPAGECOUNT</tiffPageCountText>
+
+	<!-- Added by Gopinath Created date - 27/12/2021 -->
+	<errorQueryFileLocation>\BatchFiles\InvalidQuery\
+	</errorQueryFileLocation>
+	<invalidNameText>Invalid Name</invalidNameText>
+	<threadDocWithToolTip>ID00000703</threadDocWithToolTip>
+	<conceptualDoc>ID00000001</conceptualDoc>
+	<TallySearch>null</TallySearch>
+	<TallyCN>auto</TallyCN>
+
+	<!-- Added by Gopinath Created date - 05/01/2022 -->
+	<downloadDocID>ID00001069</downloadDocID>
+	<translationDocId>STC4_00000001</translationDocId>
+
+	<!-- DocView Analytical Panel PT environment -->
+
+	<historyClockIconDocId>ID00000350</historyClockIconDocId>
+	<nearDupeCompletedDocId>ID00004707</nearDupeCompletedDocId>
+	<familyDocument>ID00003711</familyDocument>
+	<MetaDataId>ID00003739</MetaDataId>
+	<conceptualDocumentReviewer>ID00004989</conceptualDocumentReviewer>
+	<threadDocId>ID00004943</threadDocId>
+	<conceptualDocs1>ID00000941</conceptualDocs1>
+	<familyDocumentForReviewer>ID00003745</familyDocumentForReviewer>
+	<newNearDupeDocId>ID00005181</newNearDupeDocId>
+	<nearDupeDocId>ID00003801</nearDupeDocId>
+	<nearDupeDocument>ID00004474</nearDupeDocument>
+
+	<TermOperator>ALL</TermOperator>
+
+	<familyDocWhichIsNotInMiniDoc>ID00003763</familyDocWhichIsNotInMiniDoc>
+	<bgColorOnMouseHover>rgba(212, 230, 237, 1)</bgColorOnMouseHover>
+
+	<hiddenDocId>ID00000206</hiddenDocId>
+	<excelProtectedHiddenDocId>ID00000159</excelProtectedHiddenDocId>
+	<warningMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup because that would overwrite the markup work done by the other user. Please reload the document.</warningMessage>
+	
+	 <!-- Ingetion Related data Start -->
+    <Collection1KFolder>Automation_Collection1K_Tally</Collection1KFolder>
+    <FamilyFolder>Automation_20Family_20Threaded</FamilyFolder>
+    <AllSourcesFolder>Automation_AllSources</AllSourcesFolder>
+    <H1369Folder>0002_H13696_1_Latest</H1369Folder>
+    <MultiPTIFFFolder>16JanMultiPTIFF</MultiPTIFFFolder>
+    <SinglePageTIFFFolder>27Mar_SinglePageTIFF</SinglePageTIFFFolder>
+    <CJK_FrenchAudioTestDataFolder>CJK_FrenchAudioTestData</CJK_FrenchAudioTestDataFolder>
+    <EmailConcatenatedDataFolder>QA_EmailConcatenatedData_SS</EmailConcatenatedDataFolder>
+    <SSAudioSpeechFolder>SSAudioSpeech_Transcript</SSAudioSpeechFolder>
+    <GD994NativeTextForProductionFolder>GD_994_Native_Text_ForProduction</GD994NativeTextForProductionFolder>
+    <GNonsearchablePDFLoadfileFolder>GNon searchable PDF Load file</GNonsearchablePDFLoadfileFolder>
+    <HiddenPropertiesFolder>HiddenProperties_IngestionData</HiddenPropertiesFolder>
+    <UniCodeFilesFolder>UniCodeFiles</UniCodeFilesFolder>
+    <IngestionEmailDataFolder>IngestionEmailData</IngestionEmailDataFolder>
+    
+    <DATFile>RegressionAllDataset.dat</DATFile>
+    <TextFile>RegressionAllDatasetText.lst</TextFile>
+    <NativeFile>RegressionAllDatasetNatives.lst</NativeFile> 
+    <TIFFFile>RegressionAllDatasetTIFFImages.lst</TIFFFile>
+    <TIFFFile1> RegressionAllDatasetTIFFImages.OPT</TIFFFile1>
+    <TranslationFile>RegressionAllDatasetTranslation.lst</TranslationFile>
+    <PDFFile>RegressionAllDatasetPDFs.lst</PDFFile>
+    <TranscriptFile>RegressionAllDatasetTranscript.lst</TranscriptFile>
+    <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.lst</MP3File> 
+    
+   <!--    <NativeFile>RegressionAllDatasetNatives.LST</NativeFile> 
+     <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.LST</MP3File>-->
+     <DATGermanFile>RegressionAllDatasetGerman.dat</DATGermanFile>
+     <DATJapneseFile>RegressionAllDatasetJapnese.dat</DATJapneseFile>
+     <MP3GermanFile>RegressionAllDatasetTrimmedAudioMP3German.LST</MP3GermanFile>
+     <MP3JapneseFile>RegressionAllDatasetTrimmedAudioMP3Japnese.LST</MP3JapneseFile>
+      <TranscriptJapneseFile>RegressionAllDatasetTranscriptJapnese.lst</TranscriptJapneseFile>
+       <TranscriptGermanFile>RegressionAllDatasetTranscriptGerman.lst</TranscriptGermanFile>
+    <YYYYMMDDHHMISSDat>DAT_YYYYMMDD HHMISS.dat</YYYYMMDDHHMISSDat>
+       <YYYYMMDDHHMISSLst>Natives_YYYYMMDD HHMISS.lst</YYYYMMDDHHMISSLst>
+       <StitchedTIFF>Stitched TIFFs</StitchedTIFF>
+	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat</DATFile1>
+     <!-- Ingestion Related data END -->
+
 </TestData>

@@ -90,10 +90,10 @@ public class SavedSearchRegression_New_Set_05 {
 
 	@DataProvider(name = "AllTheUsers")
 	public Object[][] AllTheUsers() {
-	Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
-	{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
-	{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
-	return users;
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
 	}
 
 	@DataProvider(name = "PaAndRmuUser")
@@ -786,7 +786,6 @@ public class SavedSearchRegression_New_Set_05 {
 		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
 
 		saveSearch.shareSavedNodeWithDesiredGroup(node1, Input.shareSearchDefaultSG);
-		session.saveSearchAtAnyRootGroup(securityTab, node1);
 
 		// select Other SG and create Search group
 		base.selectsecuritygroup(securityGroup);
@@ -894,7 +893,7 @@ public class SavedSearchRegression_New_Set_05 {
 		session.navigateToSessionSearchPageURL();
 		session.getNewSearch().waitAndClick(5);
 		session.basicContentSearchWithSaveChanges(Input.searchString1, "No", "Third");
-		
+
 		session.saveAsOverwrittenSearch(Input.mySavedSearch, savedSearchName, "First", "ExecutionErrorInProgress", "",
 				null);
 
@@ -1012,6 +1011,216 @@ public class SavedSearchRegression_New_Set_05 {
 
 		login.logout();
 	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :RMU User - Verify that User can Exports Search Group under the
+	 *              respective Security Group on Saved Search Screen.
+	 *              [RPMXCON-48132]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	public void verifySearchGroupAfterExport() throws Exception {
+		String savedSearchName = "SEARCH" + Utility.dynamicNameAppender();
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String securityTab = "Shared with " + securityGroup;
+		String StyletoChoose = "CSV";
+		String fieldTypeToChoose = "[,] 044";
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48132 Saved Search");
+		base.stepInfo(
+				"RMU User - Verify that User can Exports Search Group under the respective Security Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to RMU
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+
+		login.logout();
+
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// create Search group
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Select Security Group : " + Input.securityGroup);
+		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		// Basic Search
+		session.basicContentSearch(Input.searchString4);
+		session.saveSearchInNewNode(savedSearchName, node1);
+
+		// Export Search Group
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.verifyExportpopup(StyletoChoose, fieldTypeToChoose);
+
+		// select Other SG and create Search group
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Select Security Group : " + securityGroup);
+		String node2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "");
+
+		// verify default SG search Group Absence in Other SG
+		String passMsgOfOtherSG = node1 + " : is Not Available in Other Security Group";
+		Element nodeOfDefSG = saveSearch.getSavedSearchNodeWithRespectiveSG(Input.mySavedSearch, node1);
+		base.ValidateElement_Absence(nodeOfDefSG, passMsgOfOtherSG);
+
+		// verify Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectNode1(node1);
+		base.ValidateElement_Presence(nodeOfDefSG, node1);
+
+		// delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, node1);
+
+		login.logout();
+
+		// Delete Other SG
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :RMU User - Verify that documents are Assigned correctly under
+	 *              the respective Security Group on Saved Search Screen.
+	 *              [RPMXCON-48130]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	public void verifyAssignmnetInOtherSG() throws Exception {
+		String savedSearchName = "SEARCH" + Utility.dynamicNameAppender();
+		String assignment = "Assign" + Utility.dynamicNameAppender();
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String securityTab = "Shared with " + securityGroup;
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+		AssignmentsPage assgnpage = new AssignmentsPage(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48130 Saved Search");
+		base.stepInfo(
+				"RMU User - Verify that User can Exports Search Group under the respective Security Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to RMU
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+
+		login.logout();
+
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// create Search group
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Select Security Group : " + Input.securityGroup);
+		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		// Basic Search
+		int pureHit = session.basicContentSearch(Input.searchString4);
+		session.saveSearchInNewNode(savedSearchName, node1);
+
+		// Perform Bulk Assign
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectNode1(node1);
+		saveSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		assgnpage.FinalizeAssignmentAfterBulkAssign();
+		assgnpage.createAssignment_fromAssignUnassignPopup(assignment, Input.codeFormName);
+		assgnpage.getAssignmentSaveButton().waitAndClick(5);
+		base.stepInfo("Created a assignment " + assignment);
+
+		// validate doc count assigned
+		String docCount = assgnpage.verifydocsCountInAssgnPage(assignment);
+
+		String passMsg = "The number of Documents assigned to Assignments Is  : " + docCount;
+		String failMsg = "The Document Count is Incorrect";
+		base.digitCompareEquals(Integer.parseInt(docCount), pureHit, passMsg, failMsg);
+
+		// validate assignment absence in other SG
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Select Security Group : " + securityGroup);
+		assgnpage.navigateToAssignmentsPage();
+		Element createdAssign = assgnpage.getSelectAssignment(assignment);
+
+		String passMsgOfAssign = assignment + " : Created Assignment is not present";
+		base.ValidateElement_Absence(createdAssign, passMsgOfAssign);
+
+		// delete Created Assignment
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Select Security Group : " + Input.securityGroup);
+		assgnpage.deleteAssgnmntUsingPagination(assignment);
+
+		login.logout();
+
+		// Delete Other SG
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that - After impersonation (SysAdmin to RMU) - logged
+	 *              User Information gets updated in \"Last Submitted By\" column in
+	 *              Saved Search screen [RPMXCON-48590]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	public void verifyLastSubmittedAfterExecute() throws Exception {
+		String searchName = "SEARCH" + Utility.dynamicNameAppender();
+		String headername = "Last Submitted By";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48590 Saved Search");
+		base.stepInfo(
+				"Verify that - After impersonation (SysAdmin to RMU) - logged User Information gets updated in \"Last Submitted By\" column in Saved Search screen");
+
+		// Basic Search
+		int pureHit = session.basicContentSearch(Input.searchString4);
+		session.saveSearchAtAnyRootGroup(searchName, Input.shareSearchDefaultSG);
+
+		login.logout();
+
+		// Login as SA
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		//impersonate SA to RMU
+		base.rolesToImp("SA", "RMU");
+		
+		String username = login.getCurrentUserName();
+		String passMsg = username + " : is the Last Submiited Name Displayed";
+		String failMsg = "The Last Submitted name is Incorrect";
+		base.stepInfo("Logged in username : " + username);
+
+		// verify Last Submitted Status For the search
+		saveSearch.selectSavedSearchTAb(searchName, Input.shareSearchDefaultSG, Input.yesButton);
+		saveSearch.savedSearchExecute_Draft(searchName, 0);
+		String actualName = saveSearch.getListFromSavedSearchTable1(headername, searchName);
+		
+		base.textCompareEquals(actualName, username, passMsg, failMsg);
+		
+		//delete Search
+		saveSearch.deleteSearch(searchName, Input.shareSearchDefaultSG, Input.yesButton);
+		login.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);

@@ -4409,6 +4409,69 @@ public class DocView_Regression2 {
 
 	}
 	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51994
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =67)
+	public void verifyHiddenContentContainsComments(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
+		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
+		String expectedMessage3 = "Protected Excel Sheets";
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51994");
+		baseClass.stepInfo("Verify that for hidden property \"contains comments\", the message should be modified that should ask the user to \"download the native\" to review");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.TextHidden);
+		sessionsearch.ViewInDocView();
+		DocViewPage docviewpage = new DocViewPage(driver);	
+//Selecting Doc that contains comments
+		docviewpage.selectDocIdInMiniDocList(Input.DocIdWithComments);
+		baseClass.stepInfo("Document with hidden content -Contains comments selected from mini doclist");
+		driver.waitForPageToBeReady();	
+		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
+		baseClass.passedStep("The document contains comments and displays download the native to review");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51993
+	 * 
+	 */
+	
+	
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =68)
+	public void verifyHiddenContentContainsTrackChanges(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
+		String expectedMessage2 = "Track Changes;Contains Comments;Hidden Text";
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51993");
+		baseClass.stepInfo("Verify that for hidden property \"track changes\", the message should be modified that should not ask the user to download the native to review");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.TextHidden);
+		sessionsearch.ViewInDocView();
+		DocViewPage docviewpage = new DocViewPage(driver);	
+//Selecting Doc that contains Track changes
+		docviewpage.selectDocIdInMiniDocList(Input.DocIdWithTrackChanges);
+		baseClass.stepInfo("Document with hidden content - Track changesselected from mini doclist");
+		driver.waitForPageToBeReady();	
+	driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+			return baseClass.getSuccessMsgHeader().Visible();
+		}
+	}), Input.wait30);
+	Assert.assertEquals("Warning !", baseClass.getSuccessMsgHeader().getText().toString());
+	Assert.assertEquals(expectedMessage1, baseClass.getSuccessMsg().getText().toString());
+	Assert.assertEquals(expectedMessage2, baseClass.getSecondLineSuccessMsg(1).getText().toString());
+	baseClass.passedStep("The document contains comments and displays download the native to review");
+	loginPage.logout();
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
