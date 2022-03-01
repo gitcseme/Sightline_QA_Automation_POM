@@ -456,7 +456,7 @@ public class WorkFlow_IndiumRegression {
 		baseClass.waitTime(2);
 		baseClass.stepInfo("Work flow Filter for WorkflowID "+wfID+" is apllied.");
 		List<String> WfID_AfterFilter=workflow.getTableCoumnValue("Workflow ID");
-		if(WfID_AfterFilter.size()==1 && WfID_AfterFilter.get(0).equals(wfID)) {
+		if(WfID_AfterFilter.size()==1 && WfID_AfterFilter.get(0).equals(WF_id)) {
 			baseClass.passedStep("Work flow filter functionality working properly "
 					+ "if RMU apllied Work flow filter for WorkflowID.");
 		}
@@ -591,6 +591,63 @@ public class WorkFlow_IndiumRegression {
 		}
 		loginPage.logout();
 	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	public void verifyHistoryBtnEnabled() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52646");
+		baseClass.stepInfo("To verify that 'View History' action should be enabled only if Workflow is selected.");
+		
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "work" + Utility.dynamicNameAppender();
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		workflow=new WorkflowPage(driver);
+		workflow.workFlow_Draft(wfName,wfDesc);
+		baseClass.stepInfo("Draft Work Flow Created with name "+wfName);
+		//selecting workflow
+		workflow.selectWorkFlowUsingPagination(wfName);
+		workflow.getWorkFlow_ActionDropdown().waitAndClick(5);
+		baseClass.stepInfo("Clicked on Action button.");
+		//validation for display of enabled History button
+		if(workflow.getEnabledHistoryBtn().isDisplayed()) {
+			baseClass.passedStep("Sucessfully verified that RMU can view the action Enabled "
+					+ "'View History' Button if we select any work flow.");
+		}
+		else {
+			baseClass.failedStep("Enabled View History Button not displayed.");
+		}
+		//validation for display of disabled history button if we dint select any work flow.
+		
+		workflow.getWorkFlow_ActionDropdown().waitAndClick(5);
+		baseClass.stepInfo("Clicked on Action button.");
+		//here we are validating display of disabled History button with absence of enabled history button.
+		if(!workflow.getEnabledHistoryBtn().isDisplayed()) {
+			baseClass.passedStep("History button is in disabled state if we dint select any work flow");
+		}
+		else {
+			baseClass.failedStep("History button is in enabled state if we dint select any work flow which is not expected.");
+		}
+		loginPage.logout();
+	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	public void validatestatus() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52655");
+		baseClass.stepInfo("To verify that Workflow details should be filtered as per the "
+				+ "selected Status.");
+		int Id;
+		int Id1;
+
 	
 	/**
 	 * Author :Vijaya.Rani date: 28/02/2022 Modified date: NA Modified by: NA
@@ -608,6 +665,10 @@ public class WorkFlow_IndiumRegression {
 		String SearchName = "WF" + Utility.dynamicNameAppender();
 		String wfName = "work" + Utility.dynamicNameAppender();
 		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+
+
+		String wfDesc_Draft = "Desc" + Utility.dynamicNameAppender();
+		String wfName_Draft = "work" + Utility.dynamicNameAppender();
 		String assgn = "Assgn" + Utility.dynamicNameAppender();
 		assignmentPage = new AssignmentsPage(driver);
 
@@ -623,19 +684,91 @@ public class WorkFlow_IndiumRegression {
 		softAssertion = new SoftAssert();
 
 
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+
+		page = new TagsAndFoldersPage(driver);
+		page.CreateFolder(folderName, Input.securityGroup);
+
+		// Search for any string
+		search = new SessionSearch(driver);
+		search.basicContentSearch(Input.searchString1);
 
 		
 		// Search for any string
 		search = new SessionSearch(driver);
 		int count = search.basicContentSearch(Input.searchString1);
 
+
 		// Save the search
 		search.saveSearch(SearchName);
 		SavedSearch ss = new SavedSearch(driver);
 		ss.getSaveSearchID(SearchName);
+
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+
+		// creating new work flow in configured state 
+		workflow = new WorkflowPage(driver);
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, null, false, 3);
+
+		// creating new work flow in draft state
+		workflow.getWorkFlowPage();
+		workflow.workFlow_Draft(wfName_Draft, wfDesc_Draft);
+
+		String folderName_Complete = "folder" + Utility.dynamicNameAppender();
+		String SearchName_Complete = "WF" + Utility.dynamicNameAppender();
+		String wfName_Complete = "work" + Utility.dynamicNameAppender();
+		String wfDesc_Complete = "Desc" + Utility.dynamicNameAppender();
+
+		baseClass.selectproject();
+		page.CreateFolder(folderName_Complete, Input.securityGroup);
+		search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName_Complete);
+		ss.getSaveSearchID(SearchName_Complete);
+		Id1 = Integer.parseInt(ss.getSavedSearchID().getText());
+
+		// creating new work flow Completed status
+		workflow.getWorkFlowPage();
+		workflow.newWorkFlowCreation(wfName_Complete, wfDesc_Complete, Id1, false, folderName_Complete, true, null,
+				false, 3);
+		workflow.selectWorkFlowUsingPagination(wfName_Complete);
+
+		// Running workflow
+		int workFlowId = workflow.gettingWorkFlowId(wfName_Complete);
+		workflow.actionToRunWorkFlow();
+		// Page refresh
+		workflow.refreshingThePage();
+		baseClass.waitTime(10);
+		String[] status = { "Completed", "Configured", "Draft" };
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		for (int i = 0; i < status.length; i++) {
+			workflow.filterByStatus(status[i]);
+			baseClass.stepInfo("Work flow Filter for status " + status[i] + " is apllied.");
+			driver.waitForPageToBeReady();
+			baseClass.waitTime(2);
+			List<String> WfStatus_AfterFilter = workflow.getTableCoumnValue("STATUS");
+			System.out.println(WfStatus_AfterFilter);
+			if (!workflow.getEmptyTableMEssage().isElementAvailable(2)) {
+				for (int j = 0; j < WfStatus_AfterFilter.size(); j++) {
+					if (WfStatus_AfterFilter.get(j).equals(status[i])) {
+						if (j == (WfStatus_AfterFilter.size() - 1))
+							baseClass.passedStep("Work flow filter for 'status' functionality working properly"
+									+ " when we apply status as" + status[i]);
+					} else {
+						baseClass.failedStep("Work flow filter displayed different statud "
+								+ WfStatus_AfterFilter.get(i) + " which is not applied in filter");
+					}
+				}
+			} else {
+				baseClass.stepInfo("No data present for this status " + status[i]);
+			}
+		}
+
 		Thread.sleep(2000);
 		Id = Integer.parseInt(ss.getSavedSearchID().getText());
 		System.out.println(Id);
@@ -688,10 +821,10 @@ public class WorkFlow_IndiumRegression {
 		baseClass.passedStep("Header value as per the expected onces in action history popup window");
 		softAssertion.assertAll();
 
+
 		// logout
 		loginPage.logout();
 	}
-	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

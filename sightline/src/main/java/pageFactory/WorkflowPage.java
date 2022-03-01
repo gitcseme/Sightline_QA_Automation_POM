@@ -33,6 +33,50 @@ public class WorkflowPage {
 	List<String> originalOrderedList;
 	List<String> afterSortList;
 
+    
+	public Element getWorkFlow_CreateNewWorkFlowBtn(){ return driver.FindElementById("btnCreate"); }
+    public Element getWorkFlow_WorkFlowName(){ return driver.FindElementByCssSelector("input#workflowName"); }
+    public Element getWorkFlow_Desc(){ return driver.FindElementByCssSelector("textarea#workflowDesc"); }
+    public Element getWorkFlow_DescPage_Next(){ return driver.FindElementByCssSelector("a#btnDescNext"); }
+    public Element getWorkFlow_Source_Next(){ return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)"); }
+    public Element getWorkFlow_SourceID(){ return driver.FindElementByCssSelector("input#SavedSearchID"); }
+    public Element getWorkFlow_Filters_Next(){ return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)"); }
+    public Element getWorkFlow_Family_Next(){ return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)"); }
+    public Element getWorkFlow_FolderSelector1(){ return driver.FindElementByCssSelector("input#id_radio1 + i"); }
+    public Element getWorkFlow_AssignmentsSelector(){ return driver.FindElementByCssSelector("input#id_radio2 + i"); }
+    public Element getWorkFlow_SelectAssignment(String AssName){ return driver.FindElementByXPath(".//*[@id='jsTreeAssignment']//a[contains(.,'"+AssName+"')]"); }
+    public Element getWorkFlow_SelectAssignment(){ return driver.FindElementByXPath(".//*[@id='jsTreeAssignment']//a"); }
+    public Element getWorkFlow_Actions_Next(){ return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)"); }
+    public Element getWorkFlow_Time1(){ return driver.FindElementByCssSelector("input#txtTime1"); }
+    public Element getWorkFlow_day(String day){ return driver.FindElementByCssSelector("input[name*='"+day+"'][type='hidden'] + i"); }
+    public Element getWorkFlow_StopDateOfCurrentWorkFlow(){ return driver.FindElementByCssSelector("input#StopDateOfCurrentWorkFlow"); }
+    public Element getWorkFlow_Schedules_Next(){ return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)"); }
+    public Element getWorkFlow_Notification_AddAllUsers(){ return driver.FindElementByCssSelector("a#btnAllRightMapping"); }
+    public Element getWorkFlow_Notifications_Next(){ return driver.FindElementByCssSelector("div#divCentralPanel>div>div>a:nth-child(2)"); }
+    public Element geWorkFlow_Summary_Save(){ return driver.FindElementByCssSelector("div#divCentralPanel a[onclick='SaveWorkFlow()']"); }
+    public Element getWorkFlow_SelectWorkflow(String WFName){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'"+WFName+"')]"); }
+    public Element getWorkFlow_SelectWorkStatus(String WFName,int i){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'"+WFName+"')]//following-sibling::td//..//td["+i+"]"); }
+    public Element getWorkFlow_WorkFlowID(String WFName){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'"+WFName+"'')]/preceding-sibling::td"); }
+    public Element getWorkFlow_WorkFlowNotificationStatus(){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody/tr[1]/td[8]"); }
+    
+    public Element getWorkFlow_ActionDropdown(){ return driver.FindElementByCssSelector("div.clearfix button[type='button'][data-toggle='dropdown']"); }
+    public Element getWorkFlow_RunWorkflowNow(){ return driver.FindElementByCssSelector("a#lnkRunWorkflow"); }
+    public Element getWorkFlow_RunWorkflowNow_YesButton(){ return driver.FindElementByCssSelector("button#bot1-Msg1"); }
+    public Element getWorkFlow_ActionDeleteWorkFlow(){ return driver.FindElementByCssSelector("a#lnkDeleteWorkflow"); }
+    public Element getWorkFlow_ActionDeleteWorkFlow_YesButton(){ return driver.FindElementByCssSelector("button#bot1-Msg1"); }
+    public Element getWorkFlow_NextFilters(){ return driver.FindElementByXPath(".//*[@id='divCentralPanel']//a[contains(.,'Next')]"); }
+  //  public Element getWorkFlow_Desc(){ return driver.FindElementByCssSelector("textarea#workflowDesc"); }
+    public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
+   
+    
+    //Check status
+    public Element getStatusTable(){ return driver.FindElementByXPath("//*[@id='dt_basic']"); }
+    public ElementCollection getWorkflowNames(){ return driver.FindElementsByXPath("//*[@id='dt_basic']/tbody/tr/td[2]"); }
+    
+    public Element getStatus(int row){ return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr["+row+"]/td[3]"); }
+    public Element getWorkFlowPaginationNextButton() {
+
+
 	public Element getWorkFlow_CreateNewWorkFlowBtn() {
 		return driver.FindElementById("btnCreate");
 	}
@@ -349,10 +393,14 @@ public class WorkflowPage {
 			return driver.FindElementByXPath("//a[@id='lnkviewhistory' and @class='']");
 			
 	}
+
+	public Element getEmptyTableMEssage() {
+		return driver.FindElementByXPath("//tbody/tr/td[@class='dataTables_empty']");
+  }
 		
 		public ElementCollection getActionHeader() {
 			return driver.FindElementsByXPath("//div[@class='dataTables_scrollHead']//tr/th[@class='sorting']");
-			
+
 	}
     public WorkflowPage(Driver driver){
 
@@ -1278,6 +1326,25 @@ public class WorkflowPage {
 		getSaveBtn().Click();
 		getBackTOManageBtn().Click();
 		baseClass.getYesBtn().Click();
+	}
+	
+	/**
+	 * @author Jayanthi.Ganesan
+	 * This method will launch the Work flow page URL.
+	 */
+	public void getWorkFlowPage() {
+		  this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		  driver.waitForPageToBeReady();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * This method will filter the work flow table using 'status'
+	 * @param statusTOFilter
+	 */
+	public void filterByStatus(String statusTOFilter) {
+		driver.scrollPageToTop();
+		getStatusDropDown().selectFromDropdown().selectByVisibleText(statusTOFilter);
+		getApplyFilterBtn().waitAndClick(2);
 	}
 
 	/**
