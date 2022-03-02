@@ -371,7 +371,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              this' RPMXCON-51216
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	//@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyWhenUserSelectsMulitiDocsAndPerformRemoveCodeSameAs() throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51216");
 		baseClass.stepInfo(
@@ -501,7 +501,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              this' RPMXCON-51218
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	//@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyWhenUserSelectsThreadMapMulitiDocsAndPerformRemoveCodeSameAs()
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51218");
@@ -589,7 +589,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              and Select Action as 'Remove Code Same as this' RPMXCON-51217
 	 *              stabilized - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	//@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyWhenUserSelectsMiniDocListMulitiDocsAndPerformRemoveCodeSameAs()
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51217");
@@ -918,7 +918,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 13)
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 13)
 	public void verifyNavigatingToThreadMapTabFamilyMemberTabNotBeDisplayed(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -1199,7 +1199,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16)
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16)
 	public void verifyUserCanSelectRemoveCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1341,7 +1341,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              this' RPMXCON-51222
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
 	public void verifyUserEditCodingFormMainDocAndActionCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51222");
@@ -1514,7 +1514,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	//@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyCodingFormAndMetaDataFromParentAndChildWindow() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -2048,7 +2048,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyCompleteLastDocsAndCodeSameAsActionConceptual() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51071");
@@ -2570,7 +2570,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * stabilization done
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
+	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
 	public void verifyRemoveAssignedFolderDockoutAnalyticalNearDupe() throws Exception {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
@@ -2641,7 +2641,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	//@Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void verifyBGColorOnMousehoverInFamilyMemBerTabAnalyticalPanel() throws InterruptedException {
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
@@ -2729,9 +2729,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 	public void close() {
 		try {
 			loginPage.quitBrowser();
-		} catch (
-		Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			UtilityLog.info("Failed due to this exception"+e);
 		} finally {
 			// loginPage.clearBrowserCache();
 		}
