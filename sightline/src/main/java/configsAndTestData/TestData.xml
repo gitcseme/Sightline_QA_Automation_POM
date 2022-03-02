@@ -150,6 +150,7 @@
 	<Production>Production</Production>
 	<TIFFPageCount>TIFFPageCount</TIFFPageCount>
 	<translationDocumentId>STC4_00000001</translationDocumentId>
+	<masterDateText>MasterDate</masterDateText>
 
 	<!-- Added by Gopinath -->
 	<historyTab>History</historyTab>
