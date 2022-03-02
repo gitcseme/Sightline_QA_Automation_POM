@@ -5619,6 +5619,153 @@ public class Production_Test_Regression {
 				loginPage.logout();
 				
 			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-49046
+			 * @Description Verify in Productions, when there is no document with multiple tags it should provide the message that there is 0 "Documents with Multiple Branding Tags"
+			 * 
+			 */
+			@Test(groups = { "regression" }, priority = 85)
+			public void verifyMultipleDocumentCountisZero() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-49046 -Production Component");
+				base.stepInfo("Verify in Productions, when there is no document with multiple tags it should provide the message that there is 0 \"Documents with Multiple Branding Tags\"");
+
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String tagname1 = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				String text = Input.telecaSearchString;
+				String value = "0";
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+				tagsAndFolderPage.createNewTagwithClassification(tagname1, Input.technicalIssue);
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				int docno = sessionSearch.basicContentSearch(text);
+				base.stepInfo("total number of document : "+docno);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.ViewInDocListWithOutPureHit();
+				
+				DocListPage doc = new DocListPage(driver);
+				driver.waitForPageToBeReady();
+
+				doc.documentSelectionIncludeChildDoc(5);
+				doc.bulkTagExistingFromDoclist(tagname);
+				
+				doc.documentSelectionIncludeChildDoc(5);
+				doc.documentSelectionIncludeChildDoc(10);
+				driver.scrollPageToTop();
+				doc.bulkTagExistingFromDoclist(tagname1);
+
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.specifyBrandingInTiffSection(tagname, tagname1, text);
+				
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.clickOnGenerateButton();
+				page.verifyProductionStatusInGenPage("Pre-Generation Checks In Progress");
+				
+				page.verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+				page.getbtnContinueGeneration().isElementAvailable(30);
+				page.getDocumentWithMultipleBrandingTagsOnGenerationPage().isElementAvailable(10);
+				String count = page.getDocumentWithMultipleBrandingTagsOnGenerationPage().getText().trim();
+				
+				if(value.equals(count)) {
+					base.passedStep("Multiple branding tags, here it should displayed 0");
+					System.out.println("pass");
+				}else {
+					base.failedStep("verificatioin failed");
+					System.out.println("failed");
+				}
+				
+				base.passedStep("Verified in Productions, when there is no document with multiple tags it should provide the message that there is 0 \"Documents with Multiple Branding Tags\"");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				
+			}
+			/**
+			 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+			 *         No:RPMXCON-48034
+			 * @Description: To Verify "Enable Placeholders by Selecting File Types" for  (.mdb/.mdf) under TIFF /PDF Should works for Production.
+			 */
+			@Test(groups = { "regression" }, priority = 86)
+			public void verifyPlaceholderForMDB() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case id : RPMXCON-48034 ");
+			base.stepInfo("To Verify \"Enable Placeholders by Selecting File Types\" for  (.mdb/.mdf) under TIFF /PDF Should works for Production.");
+			
+			//foldername = "FolderProd" + Utility.dynamicNameAppender();
+			tagname = "Tag" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+			String testing = Input.comment;
+			
+			// Pre-requisites
+			// create tag and folder
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			//tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.technicalIssue);
+			
+			// search for folder
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			int docno = sessionSearch.MetaDataSearchInBasicSearch(Input.sourceDocIdSearch, Input.sourceDocIdDB992);
+			//sessionSearch.bulkFolderExisting(foldername);
+			sessionSearch.bulkTagExisting(tagname);
+
+			//Verify 
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			int firstFile = Integer.parseInt(beginningBates);
+			int lastFile = docno +firstFile;
+			productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingTIFFWithNativelyProducedDocs(Input.dbFile, testing);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSorting(prefixID, suffixID,beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionWithTag(tagname);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			
+			page.extractFile();
+			page.OCR_Verification_In_Generated_Tiff(firstFile, lastFile, prefixID, suffixID, testing);
+			
+			base.passedStep("Verified \"Enable Placeholders by Selecting File Types\" for  (.mdb/.mdf) under TIFF /PDF Should works for Production.");
+			
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			//tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+			tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+			loginPage.logout();
+			}
+			
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
