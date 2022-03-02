@@ -4473,6 +4473,82 @@ public class DocView_Regression2 {
 	}
 	
 	
+
+
+
+/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51987
+	 * 
+	 */
+	
+	
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority =69)
+	public void verifyHiddenContentFromIngestionName() throws Exception {
+		baseClass = new BaseClass(driver);
+		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.additionalDataProject);
+		baseClass.stepInfo("Test case Id: RPMXCON-51987");
+		baseClass.stepInfo("Verify Warning message for hidden content if document is processed by NUIX <TBD>");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicMetaDataSearch("IngestionName", null, Input.HiddenIngestionName, null);
+		sessionsearch.ViewInDocView();
+		DocViewPage docviewpage = new DocViewPage(driver);	
+		docviewpage.selectDocIdInMiniDocList(Input.HiddenIngestionDocId);
+		baseClass.stepInfo("Document with hidden content selected from mini doclist");
+		driver.waitForPageToBeReady();	
+		baseClass.VerifyWarningMessage(expectedMessage1);
+		loginPage.logout();
+		
+// Verifying as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		sessionsearch.basicContentSearch(Input.HiddenIngestionDocId);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Document with hidden content selected from mini doclist");
+		driver.waitForPageToBeReady();	
+		docviewpage.selectDocIdInMiniDocList(Input.HiddenIngestionDocId);
+		baseClass.VerifyWarningMessage(expectedMessage1);
+		loginPage.logout();
+		
+// Verifying as Rev
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+				sessionsearch.basicContentSearch(Input.HiddenIngestionDocId);
+				sessionsearch.ViewInDocView();
+				baseClass.stepInfo("Document with hidden content selected from mini doclist");
+				driver.waitForPageToBeReady();	
+				docviewpage.selectDocIdInMiniDocList(Input.HiddenIngestionDocId);
+				baseClass.VerifyWarningMessage(expectedMessage1);
+				loginPage.logout();
+		
+		
+	}
+	
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51949
+	 * 
+	 */
+	
+	
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =70)
+	public void verifyHiddenContentExternalLink(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+		baseClass.stepInfo("Test case Id: RPMXCON-51949");
+		baseClass.stepInfo("Verify that when document is having external link as hidden then should not display the warning message and also should not display the icon to indicate hidden content");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+//Searching for ducument with external link hidden		
+		sessionsearch.basicContentSearch(Input.HiddenLinkDocId);
+		sessionsearch.ViewInDocView();
+		if(baseClass.getSuccessMsgHeader().isDisplayed()) {
+			baseClass.failedStep("The document having external link hidden - displayed warning message");
+		} else { 
+			baseClass.passedStep("The warning message is not displayed for the document having external link as hidden content");
+		}
+	loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

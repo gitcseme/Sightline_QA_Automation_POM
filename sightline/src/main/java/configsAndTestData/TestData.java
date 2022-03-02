@@ -320,6 +320,9 @@ public class TestData {
 	public String HiddenContentExcelSheet;
 	public String HiddenContentExcelBook;
 	public String HiddenContentExternalLink;
+	public String HiddenIngestionDocId;
+	public String HiddenIngestionName;
+	public String HiddenLinkDocId;
 	
 	
 
