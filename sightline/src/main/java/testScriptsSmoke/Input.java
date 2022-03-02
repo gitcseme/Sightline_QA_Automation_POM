@@ -487,6 +487,7 @@ public class Input {
 	public static String docFile;
 	public static String stampRed;
 	public static String stampGreen;
+	public static String fileGroup;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -1066,6 +1067,7 @@ public class Input {
 		docFile = testData.getDocFile();
 		stampRed = testData.getStampRed();
 		stampGreen = testData.getStampGreen();
+		fileGroup=testData.getFileGroup();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();

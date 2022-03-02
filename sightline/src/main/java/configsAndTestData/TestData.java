@@ -411,6 +411,7 @@ public class TestData {
 		public String docFile;
 		public String stampRed;
 		public String stampGreen;
+		public String fileGroup;
 		
 		//Added by gopinath - 08/12/2021
 		public String anotherRemarkMessage;
