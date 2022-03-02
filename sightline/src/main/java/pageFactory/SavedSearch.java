@@ -323,6 +323,14 @@ public class SavedSearch {
 	}
 
 	// Added By Jeevitha
+	public ElementCollection getPageNumCount() {
+		return driver.FindElementsByXPath("//ul[@class='pagination pagination-sm']//li");
+	}
+
+	public Element getPageNextBtn() {
+		return driver.FindElementByXPath("//li[@class='paginate_button next']//a");
+	}
+
 	public Element getLastNodeFromTab(String GroupName) {
 		return driver.FindElementByXPath("(//a[text()='" + GroupName + "']//following-sibling::ul//a)[last()]");
 	}
@@ -1919,26 +1927,31 @@ public class SavedSearch {
 	/**
 	 * @param searchName
 	 * @author Jeevitha Description: creates new search group
-	 * @modifiedBy : Raghuram @modifiedOn : 2/9/22
+	 * @return
+	 * @modifiedBy : Raghuram @modifiedOn : 03/02/22
 	 */
-	public void createNewSearchGrp(String groupName) {
+	public String createNewSearchGrp(String groupName) {
 
 		navigateToSSPage();
 		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 		System.out.println("Clicked MY saved Search Tab");
 
+		// Select specified Root group
 		selectRootGroupTab(groupName);
 
 		getSavedSearchNewGroupButton().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
-		System.out.println("Clicked MY saved Search Tab");
-
-		selectRootGroupTab(groupName);
+		base.waitTime(2);// to handle wait for observing the text
+		base.hitKey(KeyEvent.VK_ENTER);// base on new implementation
 
 		driver.waitForPageToBeReady();
 		base.VerifySuccessMessage("Save search tree node successfully created.");
 		base.CloseSuccessMsgpopup();
+
+		// Get created node text
+		String newNode = currentClickedNode().getText();
+		System.out.println("Created new node : " + newNode);
+
+		return newNode;
 	}
 
 	/**
@@ -2184,22 +2197,18 @@ public class SavedSearch {
 	/**
 	 * @param searchName
 	 * @author Raghuram Date : 9/21/21 Description: creates new search group
-	 *         Modified on : 2/9/22 modified by : Raghuram - as per new
+	 *         Modified on : 03/02/22 modified by : Raghuram - as per new
 	 *         implementation - still need to verify the impacted methods
 	 * @throws InterruptedException
 	 */
 	public String createSearchGroupAndReturn(String groupName, String role, String verifyNodeEmptyInitally)
 			throws InterruptedException {
-		createNewSearchGrp(groupName);
-		String newNode = null;
 
-		if (getSavedSearchNewNode().isElementAvailable(2)) {
-			newNode = getSavedSearchNewNode().getText();
-		} else if (getLastNodeFromTab(groupName).isElementAvailable(2)) {
-			newNode = getLastNodeFromTab(groupName).getText();
-		}
-		System.out.println("Via : " + role + " Created new node : " + newNode);
+		// Create SG and Get created node text
+		String newNode = createNewSearchGrp(groupName);
 		base.stepInfo("Via : " + role + " Created new node : " + newNode);
+
+		// To check Empty
 		if (verifyNodeEmptyInitally.equals("Yes")) {
 			if (getSelectAnode(newNode).isElementAvailable(1)) {
 				getSelectAnode(newNode).waitAndClick(10);
@@ -7473,7 +7482,7 @@ public class SavedSearch {
 	}
 
 	/**
-	 * @author Raghuram.A
+	 * @author Raghuram.A @Modified By Jeevitha @Modified On 2/03/2022
 	 * @param statusToCHeck
 	 * @param column
 	 * @param multiPage
@@ -7487,16 +7496,47 @@ public class SavedSearch {
 
 		System.out.println(statusToCHeck);
 		base.stepInfo("To verify " + column + " Status By applying filter");
-		getStatusDropDown().waitAndClick(2);
-		getLastStatusAs(statusToCHeck).waitAndClick(2);
-		getSavedSearch_ApplyFilterButton().waitAndClick(2);
+
+		int count = 0;
+		if (multiPage) {
+			base.waitForElement(getNumberOfSavedSearchToBeShown());
+
+			getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
+		} else {
+			getStatusDropDown().waitAndClick(2);
+			getLastStatusAs(statusToCHeck).waitAndClick(2);
+			getSavedSearch_ApplyFilterButton().waitAndClick(2);
+		}
+		driver.scrollingToBottomofAPage();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPageNumCount().Visible();
+			}
+		}), Input.wait30);
+		count = ((getPageNumCount().size()) - 2);
+		System.out.println("Number of Pages Available : " + count);
+		base.stepInfo("Number of Pages Available : " + count);
+
+		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
-		list = getListFromSavedSearchTable(column);
+		for (int i = 1; i <= count; i++) {
+			list = getListFromSavedSearchTable(column);
+			driver.scrollingToBottomofAPage();
+
+			if (getPageNextBtn().isElementAvailable(3)) {
+				getPageNextBtn().waitAndClick(3);
+			}
+			System.out.println("Page Number : " + i);
+			base.stepInfo("Page Number : " + i);
+			driver.scrollPageToTop();
+
+		}
 		if (list.size() > 0) {
 			base.compareListWithString(list, statusToCHeck, passMsg, failMsg);
 		} else {
 			base.failedMessage("No data Available");
 		}
+
 	}
 
 	/**
@@ -7557,7 +7597,7 @@ public class SavedSearch {
 	public void selectRootGroupTab(String groupName) {
 
 		if (groupName.equals(Input.shareSearchDefaultSG) || groupName.equals(Input.shareSearchPA)
-				|| groupName.contains("Shared with ")) {
+				|| groupName.contains("Shared with ") || (groupName.equals(Input.mySavedSearch))) {
 			getSavedSearchGroupName(groupName).waitAndClick(5);
 			System.out.println("Clicked :" + groupName);
 		}
@@ -7568,14 +7608,14 @@ public class SavedSearch {
 	 *         search group.
 	 * @param searchGroup[Search group under which node needs to be selected]
 	 * @param NodeName[Name      of node needs to be selected]
+	 * 
+	 * @Modified By Jeevitha @Modified On 2/03/2022
 	 */
-	public void selectNodeUnderSpecificSearchGroup(String searchGroup, String NodeName) {
+	public void selectNodeUnderSpecificSearchGroup(String GroupName, String NodeName) {
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		getSavedSearchGroupName(searchGroup).waitAndClick(10);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
-		base.waitForElement(getCreatedNode(NodeName));
-		getCreatedNode(NodeName).waitAndClick(20);
+		getSavedSearchGroupName(GroupName).waitAndClick(10);
+		selectNode1(NodeName);
 
 	}
 

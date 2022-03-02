@@ -1487,6 +1487,260 @@ public class SavedSearchRegression_New_Set_05 {
 		login.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that spreadsheets uploaded to the project database (even
+	 *              in different Security Groups) with the same name will throw an
+	 *              error message in the UI[RPMXCON-48297]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	public void verifyUploadingSameBatchFileWillThrowError() throws Exception {
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String file = saveSearch.renameFile(Input.WPbatchFile);
+		String fileName = file.substring(file.indexOf(""), file.indexOf("."));
+		String batchNodeToCheck = fileName + "_" + 1 + "_Sheet" + 1;
+		String fileFormat = ".xlsx";
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48297 Saved Search");
+		base.stepInfo(
+				"Verify that spreadsheets uploaded to the project database (even in different Security Groups) with the same name will throw an error message in the UIVerify that spreadsheets uploaded to the project database (even in different Security Groups) with the same name will throw an error message in the UI");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to REV
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+
+		login.logout();
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected SG : " + Input.securityGroup);
+
+		// Upload batch File succesfully
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.uploadWPBatchFile_New(file, Input.WPbatchFile);
+
+		softAssertion.assertTrue(saveSearch.verifyNodePresent(batchNodeToCheck),
+				"Searches uploaded in Saved search screen.");
+		softAssertion.assertAll();
+
+		// Error when you try uploading same file
+		saveSearch.uploadBatchFile_D(Input.WPbatchFile, file, false);
+		saveSearch.getSubmitToUpload().waitAndClick(10);
+		saveSearch.verifyBatchUploadMessage("SameFile", false);
+
+		// Other SG
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected SG : " + securityGroup);
+
+		// Error when you try uploading same file in Other SG
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectRootGroupTab(Input.mySavedSearch);
+		saveSearch.uploadBatchFile_D(Input.WPbatchFile, file, false);
+		saveSearch.getSubmitToUpload().waitAndClick(10);
+		saveSearch.verifyBatchUploadMessage("SameFile", false);
+
+		// Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected SG : " + Input.securityGroup);
+
+		// Delete uploaded batch file
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.deleteUplodedBatchFile(file);
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : RMU User - Verify that User can renames existing search Group
+	 *              under the respective Security Group on Saved Search Screen.
+	 *              [RPMXCON-48126]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	public void verifyRenameExistingSearchGroupAsRmu() throws Exception {
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String securityTab = "Shared with " + securityGroup;
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48126 Saved Search");
+		base.stepInfo(
+				"RMU User - Verify that User can renames existing search Group under the respective Security Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to Rmu
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+
+		login.logout();
+
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// create Node In Other SG
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected Security Group : " + securityGroup);
+		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		// create Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		String node2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		// Rename Node In Default SG
+		String renamedNode = saveSearch.renameSearchGroup(node2);
+
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected Security Group : " + securityGroup);
+		String passMsg = renamedNode + " : is Not Available";
+
+		// verify Renamed Node In Other SG
+		saveSearch.navigateToSavedSearchPage();
+		base.waitTillElemetToBeClickable(saveSearch.getSavedSearchGroupName(Input.mySavedSearch));
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		saveSearch.selectNode1(node1);
+
+		Element RenamedNodeInDef = saveSearch.getSavedSearchNodeWithRespectiveSG(securityTab, renamedNode);
+		base.ValidateElement_Absence(RenamedNodeInDef, passMsg);
+
+		// verify Renamed Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		saveSearch.verifyNodePresentInSG(Input.mySavedSearch, renamedNode);
+
+		// Delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, renamedNode);
+
+		login.logout();
+
+		// Delete Other SG
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that after the spreadsheet is parsed and search groups
+	 *              are created per the spec, that all newly provisioned search
+	 *              groups are executed (all new saved searches will be run)
+	 *              [RPMXCON-48300]
+	 * @param username
+	 * @param password
+	 * @param fullname
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 27)
+	public void verifyAllSearchGroupsAreExecuted(String username, String password, String fullname) throws Exception {
+		String file = saveSearch.renameFile(Input.WPbatchFile);
+		String fileName = file.substring(file.indexOf(""), file.indexOf("."));
+		String batchNodeToCheck = fileName + "_" + 1 + "_Sheet" + 1;
+		String statusToCheck = "COMPLETED";
+
+		// Login
+		login.loginToSightLine(username, password);
+
+		base.stepInfo("Test case Id: RPMXCON-48300 Saved Search");
+		base.stepInfo(
+				"Verify that after the spreadsheet is parsed and search groups are created per the spec, that all newly provisioned search groups are executed (all new saved searches will be run)");
+
+		// Upload batch File succesfully
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.uploadWPBatchFile_New(file, Input.WPbatchFile);
+
+		// verify FileName
+		softAssertion.assertTrue(saveSearch.verifyNodePresent(batchNodeToCheck),
+				"Searches uploaded in Saved search screen.");
+		softAssertion.assertAll();
+
+		// verify search execution
+		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", true);
+
+		// Delete uploaded batch file
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.deleteUplodedBatchFile(file);
+
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : TC07_Verify that application does not display any warnings
+	 *              when a user executes a search group under "Shared with <Security
+	 *              Group>" which contains only Basic Search(es) in Draft state on
+	 *              Saved Search Screen.[RPMXCON-49827]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "SavedSearchwithRMUandREV", groups = { "regression" }, priority = 28)
+	public void verifyAppDoesnotDisplayWarning(String username, String password, String fullname) throws Exception {
+
+		String Search1 = "search" + Utility.dynamicNameAppender();
+		String failMsg = "Last Status of Search is Not as Expected";
+
+		// Login as PA
+		login.loginToSightLine(username, password);
+
+		base.stepInfo("Test case Id: RPMXCON-49827  Saved Search");
+		base.stepInfo(
+				"TC07_Verify that application does not display any warnings when a user executes a search group under \"Shared with <Security Group>\" which contains only Basic Search(es) in Draft state on Saved Search Screen.");
+
+		// create new searchgroup
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		// Draft Query
+		session.navigateToSessionSearchPageURL();
+		int purehit = session.basicContentSearchWithSaveChanges(Input.searchString1, "No", "First");
+		session.saveSearchInNewNode(Search1, newNode);
+
+		// Share Search group to Default SG
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectNode1(newNode);
+		saveSearch.shareSavedNodeWithDesiredGroup(newNode, Input.shareSearchDefaultSG);
+
+		// verify Search Status In Default
+		saveSearch.selectNodeUnderSpecificSearchGroup(Input.shareSearchDefaultSG, newNode);
+		base.waitForElement(saveSearch.getSavedSearchStatus(Search1));
+		String searchStatus = saveSearch.getSavedSearchStatus(Search1).getText();
+
+		String passMsg = "Last Status of Search is : " + searchStatus;
+		base.textCompareEquals(searchStatus, "DRAFT", passMsg, failMsg);
+
+		// execute Search group from default TAb
+		saveSearch.savedSearchExecute_SearchGRoup(Search1, purehit);
+		base.waitForElement(saveSearch.getSavedSearchStatus(Search1));
+		String searchStatusafter = saveSearch.getSavedSearchStatus(Search1).getText();
+
+		// verify status After execute
+		String passMsgAfter = "Last Status of Search is : " + searchStatusafter;
+		base.textCompareEquals(searchStatusafter, "COMPLETED", searchStatusafter, failMsg);
+
+		// deleting the searches
+		saveSearch.deleteNode(Input.mySavedSearch, newNode);
+		saveSearch.deleteNode(Input.shareSearchDefaultSG, newNode);
+
+		login.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
