@@ -562,6 +562,34 @@ public class Input {
 	public static String DATFile1;
 	public static String StitchedTIFF;
 	
+	
+	//Added by Gopinath - 02/03/2022
+	public static String ingestionProjectName;
+	public static String ingestionType ;
+	public static String sourceSystem;
+	public static String sourceLocation ;
+	public static String sourceFolder;
+	public static String fieldSeperator ;
+	public static String textQualifier ;
+	public static String multiValue ;
+	public static String datLoadFile ;
+	public static String documentKey ;
+	public static String mp3LoadFile ;
+	public static String dateFormat ;
+	public static String docId ;
+	public static String dataSource ;
+	public static String custodian ;
+	public static String fileExt ;
+	public static String fileName ;
+	public static String fileSize ;
+	public static String fileType ;
+	public static String ingDocBasic ;
+	public static String docFileExt ;
+	public static String ingDocFileName ;
+	public static String ingDocFileSize ;
+	public static String ingDocFileType ;
+	public static String lessThan500PagesDocId;
+	public static String d500PagesDocId;
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1130,6 +1158,35 @@ public class Input {
 		StitchedTIFF = testData.getStitchedTIFF();
 		DATFile1 = testData.getDATFile1();
 
+		//Added by Gopinath - 02/03/2022
+		ingestionProjectName = testData.getIngestionProjectName();
+		ingestionType = testData.getIngestionType();
+	 	sourceSystem = testData.getSourceSystem();
+	    sourceLocation =  testData.getSourceLocation();
+	    sourceFolder =  testData.getSourceFolder();
+	    fieldSeperator = testData.getFieldSeperator();
+	    textQualifier = testData.getTextQualifier();
+	    multiValue = testData.getMultiValue();
+	    datLoadFile = testData.getDatLoadFile();
+	    documentKey = testData.getDocumentKey();
+	    mp3LoadFile = testData.getMp3LoadFile();
+	    dateFormat = testData.getDateFormat();
+	    docId = testData.getDocId();
+	    dataSource = testData.getDataSource();
+	    custodian = testData.getCustodian();
+	    fileExt = testData.getFileExt();
+		fileName =testData.getFileName();
+		fileSize = testData.getFileSize();
+		fileType = testData.getFileType();
+		ingDocBasic = testData.getIngDocBasic();
+		docFileExt = testData.getDocFileExt();
+		ingDocFileName =testData.getIngDocFileName();
+		ingDocFileSize = testData.getIngDocFileSize();
+		ingDocFileType = testData.getIngDocFileType();
+		lessThan500PagesDocId =testData.getLessThan500PagesDocId();
+		d500PagesDocId = testData.getD500PagesDocId();
+		
+		
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 

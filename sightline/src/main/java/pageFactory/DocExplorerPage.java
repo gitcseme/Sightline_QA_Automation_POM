@@ -242,6 +242,20 @@ public class DocExplorerPage {
 	public ElementCollection getFolderOfMoreCharacters() {
 		return driver.FindElementsByXPath("//div[@id='divNodeTree']//ul//ul//li//a");
 	}
+	//Added by Gopinath - 02/03/2022
+	public Element getDocExplorerSubFolder() {
+		return driver.FindElementByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a[@id='-1_anchor']/following-sibling::ul/li/ul/li");
+	}
+
+	public Element getDocExpFolderExpandbutton(String folderName) {
+		return driver.FindElementByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a/following-sibling::ul/li/a[text()='"+folderName+"']/../i");
+	}
+	public Element getDocExpSubFolderName(String folderName,int subFolderNumber) {
+		return driver.FindElementByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a/following-sibling::ul/li/a[text()='"+folderName+"']/../ul/descendant::li["+subFolderNumber+"]/i/following-sibling::a");
+	}
+	public Element getDoxExpSubFoldarExpandbutton(String folderName,int subFolderNumber) {
+		return driver.FindElementByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a/following-sibling::ul/li/a[text()='"+folderName+"']/../ul/descendant::li["+subFolderNumber+"]/i");
+	}
 	
     public DocExplorerPage(Driver driver){
 
@@ -1862,4 +1876,90 @@ public class DocExplorerPage {
 		
 	}
 	
+	/**
+	 * @author Gopinath
+	 * @Description:method to verify doc Explorer folder level
+	 * @param folderName
+	 * @param folderLevel
+	 */
+	public void verifyDocExpFolderLevel(String folderName, int folderLevel) {
+		try {
+			driver.waitForPageToBeReady();;
+			getfolderFromTreeByName(folderName).ScrollTo();
+			bc.waitForElement(getDocExpFolderExpandbutton(folderName));
+			getDocExpFolderExpandbutton(folderName).waitAndClick(5);
+			Actions ac = new Actions(driver.getWebDriver());
+
+			for (int i = 1; i <= folderLevel - 1; i++) {
+				bc.waitForElement(getDoxExpSubFoldarExpandbutton(folderName, i));
+				ac.moveToElement(getDoxExpSubFoldarExpandbutton(folderName, i).getWebElement()).click().build()
+						.perform();
+				bc.waitTime(1);
+			}
+			bc.waitForElement(getDocExpSubFolderName(folderName, folderLevel));
+			if (getDocExpSubFolderName(folderName, folderLevel).isElementAvailable(5)
+					&& getDocExpSubFolderName(folderName, folderLevel).isDisplayed()) {
+				bc.passedStep("folders are displayed upto " + (folderLevel) + " level without horizontal scroll");
+			} else {
+				bc.failedStep("folder is not displayed at " + (folderLevel) + " level");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while verifying doc explorer folders due to " + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopianth
+	 * @Description:methoad to verify doc explorer default tree structure
+	 * @param folderName
+	 */
+	public void verrifyDocExpDefaultTreeStructure(String folderName) {
+		try {
+			bc.waitForElement(getfolderFromTreeByNumber("1"));
+			if (getfolderFromTreeByNumber("1").isDisplayed()) {
+				if (getDocExplorerSubFolder().isElementAvailable(3)) {
+					bc.failedStep("by default sub folders are expanded from tree structure");
+				} else {
+					bc.passedStep("By default tree structure is expanded presents by default  level 1 expanded");
+
+				}
+			} else {
+				bc.failedStep("folders from tree structure are not displayed");
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while verifying tree strecture");
+		}
+
+	}
+	/**
+	 * @author Gopinath
+	 * @Description method to verify doc explore doc folder count separated by comma(,)
+	 * @param folderNumber
+	 */
+	public void verifyDocExpFolderCountFormat(String folderNumber) {
+		try {
+			bc.waitForElement(getfolderFromTreeByNumber(folderNumber));
+			String folderName = getfolderFromTreeByNumber(folderNumber).getText();
+			String folderCount = folderName.substring(folderName.indexOf("(") + 1, folderName.indexOf(")"));
+			if (folderCount.length() < 4) {
+				if (folderCount.contains(",")) {
+					bc.failedStep("folder count is seperated by ',' for below thousand documents");
+				} else {
+					bc.failedStep("folder count should be more then 1000");
+				}
+			}
+			if (folderCount.contains(",")) {
+				bc.passedStep("folder count having " + folderCount + " documents are separated by comma(,) ");
+			} else {
+				bc.failedStep("comma(,) is not used to separate the count having " + folderCount + " documents");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+
+	}
  }

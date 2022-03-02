@@ -276,5 +276,34 @@ public class RedactionPage {
      		bc.failedStep("Exception occured while navigating to redaction page is failed"+e.getMessage());
      	}
      }
+     
+     
+     /** 
+      * @author Gopinath
+      * @Description : Method for verifying weather error message is displayed by deleting applied redaction tag.
+      */ 
+     public void verifyErrorMessageByDeletingAppliedRedactionTag(String redactName) {
+         try {
+	         this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
+	         driver.waitForPageToBeReady();    
+	         getSelectredaction(redactName).isElementAvailable(15);
+	         getSelectredaction(redactName).waitAndClick(10);
+	         driver.waitForPageToBeReady();
+	         getactionDropDown().isElementAvailable(15);
+	         getactionDropDown().Click();
+	         bc.waitForElement(getRedactionDelete());
+	         getRedactionDelete().isElementAvailable(15);
+	         getRedactionDelete().waitAndClick(10);
+	         bc.getYesBtn().isElementAvailable(15);
+	         bc.getYesBtn().waitAndClick(10);
+	        
+	         bc.VerifyErrorMessage("81001000001 : This redaction tag is used in one or more applied redactions. Please delete them before deleting the redaction tag.");
+	         bc.CloseSuccessMsgpopup();
+         }catch(Exception e) {
+        	 e.printStackTrace();
+        	 bc.failedStep("Exception occured by verifying weather error message is displayed by deleting applied redaction tag."+e.getLocalizedMessage());
+        	 
+         }
+     } 
 
  }

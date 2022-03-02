@@ -775,6 +775,14 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath("//*[@id='Copyingblock']//td[contains(text(),'" + term + "')]");
 
 	}
+	
+	//Added by Gopinath - 28/02/2022
+	public Element getRollBack(String ingestionName) {
+		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[text()='Rollback']");
+	}
+	public Element getIngestionGearIcon(String ingestionName) {
+		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[@class='dropdown-toggle']//i");
+	}
 
 	public IngestionPage_Indium(Driver driver) {
 
@@ -4962,7 +4970,105 @@ public void IngestionCatlogtoCopying(String dataset) throws InterruptedException
     	
 		
 	}
+/**
+ * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+ * @description: Method to process to click on copied state without ignoring errors by over lay.
+ */
+public void clickOnCopiedStateWithoutIgnoringErrorsByOverlay(String ingestionName) {
+	try {
+		driver.scrollPageToTop();
+		String status = null;
+		for(int i=0;i<30;i++) {
+			if(getStatusByingestionName(ingestionName).isDisplayed()) {
+				status = getStatusByingestionName(ingestionName).getText().trim();
+				break;
+			}else {
+				driver.scrollingToBottomofAPage();
+			}
+		}
+		if(status.contains("Cataloged")) {
+			driver.waitForPageToBeReady();
+			getIngestionLinkByName(ingestionName).isElementAvailable(15);
+			getIngestionLinkByName(ingestionName).Click();
+			driver.waitForPageToBeReady();
+			getStartCopy().ScrollTo();
+			getStartCopy().isElementAvailable(15);
+			getStartCopy().Click();
+			driver.scrollPageToTop();
+			getCloseButton().isElementAvailable(15);
+			getCloseButton().Click();
+			getRefreshButton().isElementAvailable(15);
+			getRefreshButton().Click();
+		}
+		
+		for(int i=0;i<2000;i++) {
+			for(int j=0;j<30;j++) {
+				if(getStatusByingestionName(ingestionName).isDisplayed()) {
+					status = getStatusByingestionName(ingestionName).getText().trim();
+					break;
+				}else {
+					driver.scrollingToBottomofAPage();
+				}
+			}
+			if(status.contains("In Progress")) {
+				driver.scrollPageToTop();
+				getRefreshButton().isElementAvailable(15);
+				getRefreshButton().Click();
+			}
+			if(status.contains("Passed")) {
+				base.passedStep("Ingestion entered to failed state if copied state starts without ignoring errors");
+				break;
+			}
+		}
+	}catch(Exception e) {
+		e.printStackTrace();
+		base.failedStep("Exception occured while selecting field catagory and destination field by using source DAT field."+e.getLocalizedMessage());
+	}
+}
 
+
+/**
+ * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+ * @description: Method to process to click on roll back from catalog stage and verify status changed is inprogress.
+ */
+public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
+	try {
+		driver.scrollPageToTop();
+		String status = null;
+		for(int i=0;i<30;i++) {
+			if(getStatusByingestionName(ingestionName).isDisplayed()) {
+				status = getStatusByingestionName(ingestionName).getText().trim();
+				break;
+			}else {
+				driver.scrollingToBottomofAPage();
+			}
+		}
+		
+		if(status.contains("Cataloged")) {
+			driver.waitForPageToBeReady();
+			getIngestionLinkByName(ingestionName).isElementAvailable(15);
+			driver.waitForPageToBeReady();
+			getIngestionGearIcon(ingestionName).isElementAvailable(15);
+			getIngestionGearIcon(ingestionName).Click();
+			driver.waitForPageToBeReady();
+			getRollBack(ingestionName).isElementAvailable(15);
+			getRollBack(ingestionName).Click();
+			driver.waitForPageToBeReady();
+			getApproveMessageOKButton().isElementAvailable(10);
+			getApproveMessageOKButton().Click();
+			driver.scrollPageToTop();
+			getRefreshButton().isElementAvailable(15);
+			getRefreshButton().Click();
+		}
+		status = getStatusByingestionName(ingestionName).getText().trim();
+		if(status.contains("In Progress")) {
+			base.passedStep( " Got Ingestion : "+ingestionName+" status is in progess successfully");
+		}
+	}catch(Exception e) {
+		e.printStackTrace();
+		base.failedStep("Exception occured while process to click on roll back from catalog stage and verify status changed is inprogress.."+e.getLocalizedMessage());
+	}
+}
 
 
 }
