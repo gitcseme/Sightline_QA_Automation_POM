@@ -562,7 +562,19 @@ public class Input {
 	public static String YYYYMMDDHHMISSLst;
 	public static String DATFile1;
 	public static String StitchedTIFF;
-
+	public static String DATFile2;
+	public static String TiffImagesFolder;
+	public static String DAT_MMDDYYYY;
+	public static String Natives_MMDDYYYY;
+	public static String DAT_YYYYDDMM_Slash;
+	public static String Natives_YYYYDDMM_Slash;
+	public static String DAT_YYYYMMDD_Slash;
+	public static String Natives_YYYYMMDD_Slash;
+	public static String DAT_DDMMYYYY_Slash;
+	public static String Natives_DDMMYYYY_Slash;
+	public static String DAT_MMDDYYYY_Slash;
+	public static String Natives_MMDDYYYY_Slash;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1131,6 +1143,18 @@ public class Input {
 		YYYYMMDDHHMISSLst = testData.getYYYYMMDDHHMISSLst();
 		StitchedTIFF = testData.getStitchedTIFF();
 		DATFile1 = testData.getDATFile1();
+		DATFile2 = testData.getDATFile2();
+		TiffImagesFolder = testData.getTiffImagesFolder();
+		DAT_MMDDYYYY=testData.getDAT_MMDDYYYY();
+		Natives_MMDDYYYY=testData.getNatives_MMDDYYYY();
+		DAT_YYYYDDMM_Slash=testData.getDAT_YYYYDDMM_Slash();
+		Natives_YYYYDDMM_Slash=testData.getNatives_YYYYDDMM_Slash();
+		DAT_YYYYMMDD_Slash=testData.getDAT_YYYYMMDD_Slash();
+		Natives_YYYYMMDD_Slash=testData.getNatives_YYYYMMDD_Slash();
+		DAT_DDMMYYYY_Slash = testData.getDAT_DDMMYYYY_Slash();
+		Natives_DDMMYYYY_Slash = testData.getNatives_DDMMYYYY_Slash();
+		DAT_MMDDYYYY_Slash = testData.getDAT_MMDDYYYY_Slash();
+		Natives_MMDDYYYY_Slash = testData.getNatives_MMDDYYYY_Slash();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

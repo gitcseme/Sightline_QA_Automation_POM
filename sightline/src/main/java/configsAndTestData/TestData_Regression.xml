@@ -514,6 +514,18 @@
        <YYYYMMDDHHMISSLst>Natives_YYYYMMDD HHMISS.lst</YYYYMMDDHHMISSLst>
        <StitchedTIFF>Stitched TIFFs</StitchedTIFF>
 	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat</DATFile1>
+	<DATFile2>DAT4_STC_NewDateFormat.dat</DATFile2>
+	<TiffImagesFolder>Tiff_Images</TiffImagesFolder>
+	<DAT_MMDDYYYY>DAT_MMDDYYYY.dat</DAT_MMDDYYYY>
+	<Natives_MMDDYYYY>Natives_MMDDYYYY.lst</Natives_MMDDYYYY>
+	<DAT_YYYYDDMM_Slash>DAT_YYYYDDMM_Slash.dat</DAT_YYYYDDMM_Slash>
+	<Natives_YYYYDDMM_Slash>Natives_YYYYDDMM_Slash.lst</Natives_YYYYDDMM_Slash>
+	<DAT_YYYYMMDD_Slash>DAT_YYYYMMDD_Slash.dat</DAT_YYYYMMDD_Slash>
+	<Natives_YYYYMMDD_Slash>DAT_YYYYMMDD_Slash.dat</Natives_YYYYMMDD_Slash>
+	<DAT_DDMMYYYY_Slash>DAT_DDMMYYYY_Slash.dat</DAT_DDMMYYYY_Slash>
+    <Natives_DDMMYYYY_Slash>Natives_DDMMYYYY_Slash.lst</Natives_DDMMYYYY_Slash>
+    <DAT_MMDDYYYY_Slash>DAT_MMDDYYYY_Slash.dat</DAT_MMDDYYYY_Slash>
+    <Natives_MMDDYYYY_Slash>Natives_MMDDYYYY_Slash.lst</Natives_MMDDYYYY_Slash>
      <!-- Ingestion Related data END -->
 
 <query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>

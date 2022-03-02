@@ -681,6 +681,15 @@ public class IngestionPage_Indium {
 	public Element getInprogressIngestionStatus() {
 		return driver.FindElementByXPath("//strong[contains(.,'In Progress')]");
 	}
+	
+	public Element getIngestionErrorNumber() {
+		return driver.FindElementByXPath("//div[@class='col-md-7 form-group']//a[@data-toggle='tab']");
+	}
+
+	public Element getIngestionErrorMessage() {
+		return driver.FindElementByXPath(
+				"//*[@id='myDataTable']//td[contains(text(),'Date format selected in the ingestion is not matching')]");
+	}
 
 
 	//Added by Gopinath - 23/02/2022
@@ -751,6 +760,7 @@ public class IngestionPage_Indium {
 	public Element getStartCopy() {
 		return driver.FindElementByXPath("//strong[text()='Copying']//..//..//..//i[@class='fa fa-play-circle-o']");
 	}
+
 	public Element getIngestionWizardDateFormate() {
 		return driver.FindElementByXPath("//div[@style='padding-right:0px;']//div[@class='formatDate']");
 	}
@@ -774,6 +784,22 @@ public class IngestionPage_Indium {
 	public Element copyTableDataName(String term) {
 		return driver.FindElementByXPath("//*[@id='Copyingblock']//td[contains(text(),'" + term + "')]");
 
+	}
+	
+	public Element errorCountCatalogingStage() {
+		return driver.FindElementByXPath("//*[@id='Catalogingblock']//tbody//tr//td//a");
+	}
+	
+	public Element ignoreAllButton() {
+		return driver.FindElementById("btnignoreall");
+	}
+	
+	public Element copyTableDataValue(String term,int row) {
+		return driver.FindElementByXPath("//*[@id='Copyingblock']//table//td[contains(text(),'" + term + "')]/following-sibling::td["+row+"]");
+	}
+	
+	public Element doneButton() {
+		return driver.FindElementById("Catalogdone");
 	}
 
 	public IngestionPage_Indium(Driver driver) {
@@ -3828,8 +3854,9 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Add new ingestion with selecting Date Formate
 	 */
-	public void IngestionRegressionForDateFormate(String dataset,String dateFormate) throws InterruptedException {
-		
+	public void IngestionRegressionForDateFormate(String dataset, String dateFormate, String datDateFormate,
+			String nativeDateFormate) throws InterruptedException {
+
 		base.stepInfo("Click on add new ingestion button");
 		base.waitForElement(getAddanewIngestionButton());
 		getAddanewIngestionButton().waitAndClick(10);
@@ -3861,11 +3888,9 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			} else if (dataset.contains("27MarSinglePageTIFF")) {
 				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SinglePageTIFFFolder);
 			} else if (dataset.contains("CJK_FrenchAudioTestData")) {
-				getSpecifySourceFolder().selectFromDropdown()
-						.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
 			} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
-				getSpecifySourceFolder().selectFromDropdown()
-						.selectByVisibleText(Input.EmailConcatenatedDataFolder);
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.EmailConcatenatedDataFolder);
 			} else if (dataset.contains("SSAudioSpeech_Transcript")) {
 				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SSAudioSpeechFolder);
 			} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
@@ -3880,10 +3905,8 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.UniCodeFilesFolder);
 			} else if (dataset.contains("IngestionEmailData")) {
 				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.IngestionEmailDataFolder);
-			} else if (dataset.contains("CJK_GermanAudioTestData")
-					|| dataset.contains("CJK_JapaneseAudioTestData")) {
-				getSpecifySourceFolder().selectFromDropdown()
-						.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+			} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
 			}
 		}
 		Thread.sleep(2000);
@@ -3903,10 +3926,9 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATGermanFile);
 		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
 			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATJapneseFile);
-		}else if (dataset.contains("HiddenProperties_IngestionData")) {
-			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.YYYYMMDDHHMISSDat);
-		}
-		else {
+		} else if (dataset.contains("HiddenProperties_IngestionData")) {
+			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(datDateFormate);
+		} else {
 			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATFile);
 		}
 		base.waitForElement(getSourceSelectionDATKey());
@@ -3967,7 +3989,7 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(Input.TextFile);
 		}
 
-		if (dataset.contains("0002_H13696_1_Latest") ) {
+		if (dataset.contains("0002_H13696_1_Latest")) {
 			base.stepInfo("*******Selecing Native files***************");
 			base.waitForElement(getNativeCheckBox());
 			getNativeCheckBox().waitAndClick(10);
@@ -3979,7 +4001,7 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			base.waitForElement(getNativeCheckBox());
 			getNativeCheckBox().waitAndClick(10);
 			base.waitForElement(getNativeLST());
-			getNativeLST().selectFromDropdown().selectByVisibleText(Input.YYYYMMDDHHMISSLst);
+			getNativeLST().selectFromDropdown().selectByVisibleText(nativeDateFormate);
 		}
 		if (dataset.contains("AllSources")) {
 			base.stepInfo("*******Selecing PDF files***************");
@@ -4080,13 +4102,11 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 		getNextButton().waitAndClick(20);
 		base.passedStep("Clicked on Next button");
 
-		
-			base.stepInfo("Pop up messgae for Ingestion without text file");
-			if (getApproveMessageOKButton().isElementAvailable(5)) {
-				getApproveMessageOKButton().waitAndClick(10);
-				base.passedStep("Clicked on OK button to continue without text files");
-			}
-			
+		base.stepInfo("Pop up messgae for Ingestion without text file");
+		if (getApproveMessageOKButton().isElementAvailable(5)) {
+			getApproveMessageOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to continue without text files");
+		}
 
 		base.waitForElement(getMappingSOURCEFIELD2());
 		if (dataset.contains("Collection1K_Tally")) {
@@ -4365,29 +4385,36 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
 			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
 		}
-	
-	
-	driver.scrollPageToTop();
-	
-	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getPreviewRun().Visible()  ;}}), Input.wait30); 
-	getPreviewRun().waitAndClick(10);
-	
-	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
-	getApproveMessageOKButton().waitAndClick(10);
-	
-	base.stepInfo("'Preview Documents' pop up is opened successfully");
-	
-	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
-	getbtnRunIngestion().waitAndClick(10);
-	
-	softAssertion = new SoftAssert();
-	softAssertion.assertTrue(getAddanewIngestionButton().isElementAvailable(5));
-	base.passedStep("Run Ingestion done successfully");
-	
-	
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPreviewRun().Visible();
+			}
+		}), Input.wait30);
+		getPreviewRun().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getApproveMessageOKButton().Visible();
+			}
+		}), Input.wait30);
+		getApproveMessageOKButton().waitAndClick(10);
+
+		base.stepInfo("'Preview Documents' pop up is opened successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnRunIngestion().Visible();
+			}
+		}), Input.wait30);
+		getbtnRunIngestion().waitAndClick(10);
+
+		softAssertion = new SoftAssert();
+		softAssertion.assertTrue(getAddanewIngestionButton().isElementAvailable(5));
+		base.passedStep("Run Ingestion done successfully");
+
 	}
 	
 	/**
@@ -4397,17 +4424,19 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 	public void rollBackIngestion() {
 		
 		driver.waitForPageToBeReady();
+		base.waitForElement(getIngestionSettingGearIcon());
+		getIngestionSettingGearIcon().waitAndClick(10);
 		
-		Actions actions = new Actions(driver.getWebDriver());
-		actions.moveToElement(getIngestionSettingGearIcon().getWebElement());
-		actions.click().build().perform();
 		base.waitForElement(getIngestionRollbackbutton());
 		getIngestionRollbackbutton().waitAndClick(5);
-		getApproveMessageOKButton().isElementAvailable(5);
+		base.waitTime(2);
+		if(getApproveMessageOKButton().isElementAvailable(5)) {
 		getApproveMessageOKButton().waitAndClick(5);
-		base.waitTime(5);
+		}
+		
 		base.VerifySuccessMessage("Rollback of this ingestion has been started. Refresh the page to view for updated status.");
 		}
+	
 	
 	/**
 	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
@@ -4437,7 +4466,7 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 				UtilityLog.info("Execution aborted!");
 				System.out.println(dataset+" is failed in catalog stage. Take a look and continue!");
 				UtilityLog.info(dataset+" is failed in catalog stage. Take a look and continue!");
-				System.exit(1);
+				break;
 			}else{
 				base.waitTime(5);
 				getRefreshButton().waitAndClick(10);
@@ -4467,7 +4496,9 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 		base.waitForElement(getSpecifySourceFolder());
 		Thread.sleep(2000);
 		base.stepInfo("Select Folder");
-		if (dataset.contains("Collection1K_Tally")) {
+		if (dataset.contains("Tiff_Images")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.TiffImagesFolder);
+		} else if (dataset.contains("Collection1K_Tally")) {
 			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.Collection1KFolder);
 		} else if (dataset.contains("20Family_20Threaded")) {
 			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.FamilyFolder);
@@ -4503,7 +4534,7 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 				|| dataset.contains("CJK_JapaneseAudioTestData")) {
 			getSpecifySourceFolder().selectFromDropdown()
 					.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
-		}
+		} 
 		Thread.sleep(2000);
 		base.waitForElement(getDATDelimitersFieldSeparator());
 		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
@@ -4547,6 +4578,8 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 		} else if (dataset.contains("IngestionEmailData")) {
 			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocumentID");
 		} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("Tiff_Images")) {
 			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
 		}
 
@@ -4849,7 +4882,14 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
 			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
 
+		}else if (dataset.contains("Tiff_Images")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
 		}
+		
 		driver.scrollPageToTop();
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -4963,6 +5003,46 @@ public void IngestionCatlogtoCopying(String dataset) throws InterruptedException
 		
 	}
 
+	/**
+	 * @author: Mohan Created Date: 25/02/2022 Modified by: NA Modified Date: NA
+	 * @description: To verify cataloging error with selected DateFormate
+	 */
+	public void verifyCatalogigErrorForDatSelectDateFormate() {
 
+		driver.waitForPageToBeReady();
+
+		getIngestionName().waitAndClick(10);
+		base.waitForElement(getIngestionErrorNumber());
+		getIngestionErrorNumber().waitAndClick(5);
+
+		if (getIngestionErrorMessage().isElementAvailable(5)) {
+			base.passedStep(
+					"Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. Please provide the matching date format. Is displayed Successfully");
+
+		} else {
+			base.failedStep("The expected error message is not displayed");
+		}
+		base.waitForElement(getCloseButton());
+		getCloseButton().waitAndClick(5);
+
+}
+	
+	/**
+	 * @author: Mohan Created Date: 25/02/2022 Modified by: NA Modified Date: NA
+	 * @description: To verify Dateformate in the Ingestion wizard
+	 */
+	public void verifyDateFormateInIngestionField() {
+		
+		driver.waitForPageToBeReady();
+		String dateFormate1 = getIngestionWizardDateFormate().getText();
+		System.out.println(dateFormate1);
+		if (dateFormate1.length() > 11) {
+			base.passedStep(
+					"When Ingestion in draft mode is opened Ingestion Wizard is retain with the selected 'Date & Time Format'");
+		} else {
+			base.failedStep("Date & time formate is not valid");
+		}
+		
+	}
 
 }
