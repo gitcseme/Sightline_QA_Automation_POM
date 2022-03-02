@@ -482,5 +482,18 @@ public class TestData {
 		public String query;
 		public String miniDocListID;
 		
+		public String DATFile2;
+		public String TiffImagesFolder;
+		public String DAT_MMDDYYYY;
+		public String Natives_MMDDYYYY;
+		public String DAT_YYYYDDMM_Slash;
+		public String Natives_YYYYDDMM_Slash;
+		public String DAT_YYYYMMDD_Slash;
+		public String Natives_YYYYMMDD_Slash;
+		public String DAT_DDMMYYYY_Slash;
+		public String Natives_DDMMYYYY_Slash;
+		public String DAT_MMDDYYYY_Slash;
+		public String Natives_MMDDYYYY_Slash;
+		
 }
 
