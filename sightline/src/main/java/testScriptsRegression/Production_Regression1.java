@@ -9690,6 +9690,165 @@ public class Production_Regression1 {
 			loginPage.logout();
 		}
 		
+		
+		/**
+		 * @author Brundha Test case id-RPMXCON-48647
+		 * @Description To verify that if "Do not produce full content TIFF / PDFs or
+		 *              placeholder TIFF / PDFs for Natively Produced Docs" is enabled,
+		 *              then TIFFs with Placeholder should not produced, It should
+		 *              export only Natives.
+		 * 
+		 */
+		 @Test(groups = { "regression" }, priority = 132)
+		public void verifyingNativelyProducedDocInProducedFile() throws Exception {
+
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-48647 -Production Component");
+			base.stepInfo(
+					"To verify that if 'Do not produce full content TIFF / PDFs or placeholder TIFF / PDFs for Natively Produced Docs' is enabled, then TIFFs with Placeholder should not produced, It should export only Natives.");
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			int pureHit = sessionSearch.basicContentSearchForTwoItems(Input.telecaSearchString, Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+
+			String beginningBates = page.getRandomNumber(2);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingTIFFWithNativelyProducedDocs(Input.tagNameTechnical);
+			driver.scrollPageToTop();
+			page.getDoNotProduceFullContentTiff().waitAndClick(10);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			driver.waitForPageToBeReady();
+			String name = page.getProduction().getText().trim();
+			String home = System.getProperty("user.home");
+			page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+			System.out.println("Unzipped the downloaded files");
+			driver.waitForPageToBeReady();
+			File dir = new File(home + "/Downloads/VOL0001/Natives/0001/");
+			File[] dir_contents = dir.listFiles();
+			System.out.println(dir_contents.length);
+			int nativefile = dir_contents.length;
+
+			if (pureHit != nativefile) {
+				base.passedStep("Natively produced document is generated successfully as expected");
+			} else {
+				base.failedStep("Natively produced document is not generated successfully as expected");
+			}
+
+			loginPage.logout();
+		}
+
+		/**
+		 * @author Brundha Test case id-RPMXCON-48179
+		 * @DescriptionTo Verify For Multimedia file group Production Generation with
+		 *                some doc having Priv Tag Classification.
+		 * 
+		 */
+		 @Test(groups = { "regression" }, priority = 133)
+		public void verifyTheGenerationOfPrroductionWithNativeWithoutPrivFile() throws Exception {
+
+			UtilityLog.info(Input.prodPath);
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			base.stepInfo("RPMXCON-48179 -Production Component");
+			base.stepInfo(
+					"To Verify For Multimedia file group Production Generation with some doc having Priv Tag Classification");
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+			String VolumeName = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.SearchMetaData("SourceDocID",Input.fileGroup);
+			sessionSearch.bulkFolderExisting(foldername);
+			sessionSearch.bulkTagExisting(tagname);
+
+			ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.fillingTIFFSection(tagname, Input.tagNameTechnical);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.GetVolumeName().Click();
+			page.GetVolumeName().SendKeys(VolumeName);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+
+			String name = page.getProduction().getText().trim();
+			String home = System.getProperty("user.home");
+			page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+			System.out.println("Unzipped the downloaded files");
+
+			driver.waitForPageToBeReady();
+			File file = new File(home + "/Downloads/" + VolumeName + "/Natives/0001");
+			File TiffFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/"+productionname+"_TIFF.OPT");
+			File DatFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/"+productionname+"_DAT.dat");
+			File NativeFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/"+productionname+"_Native.lst");
+
+			if (!file.exists()) {
+				base.passedStep("Native file is not copied to priv file as expected");
+			} else {
+				base.failedStep("Native file is  copied to priv file ");}
+
+			if (TiffFile.exists()) {
+				base.passedStep("Tiff file is generated as expected");
+			} else {
+				base.failedStep("Tiff file is not generated as expected");}
+
+			if (DatFile.exists()) {
+				base.passedStep("Dat file is generated as expected");
+			} else {
+				base.failedStep("Dat file is not generated as expected");}
+			
+			if (NativeFile.exists()) {
+				base.passedStep("Native file is generated as expected");
+			} else {
+				base.failedStep("Native file is not generated as expected");}
+			loginPage.logout();
+
+		}
+
+		 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
