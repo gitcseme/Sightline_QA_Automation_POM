@@ -7356,6 +7356,108 @@ public class DocView_Redactions_Regression {
 		docView.closeWindow(1);
 		softAssert.assertAll();
 	}
+	
+	/**
+	 * @author Krishna TestCase Id:51881 C3B: Verify that Action > Folder works
+	 *         fine when all records in the reviewers batch are in mixed state but
+	 *         records that are in Completed state are also present along with
+	 *         records in an Uncompleted state in Mini DocList
+	 * @throws InterruptedException
+	 *
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 58)
+	public void verifyFolderWorksFineInCompleteAndUnCompleteSateInMiniDocList() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51881");
+		baseClass.stepInfo(
+				"C3B: Verify that Action > Folder works fine when all records in the reviewers batch are in mixed state but records that are in Completed state are also present along with records in an Uncompleted state in Mini DocList");
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		MiniDocListPage miniDocList = new MiniDocListPage(driver);
+
+		// searching document for assignmnet creation
+		baseClass.stepInfo("bascic contant search");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+
+		// create assignment
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		baseClass.stepInfo("Create assignment With allow user to save with complete option");
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+		loginPage.logout();
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting the assignment
+		baseClass.stepInfo("select the assignment and view in docview");
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		miniDocList.configureMiniDocListToShowCompletedDocs();
+
+		// To perform Folder MiniDocList
+		docView.performFloderMiniDocListForReviewer();
+	}
+	
+	/**
+	 * @author Krishna TestCase Id:51880 C2B: Verify that Action > Remove Code
+	 *         Same works fine when all records in the reviewer's batch are in mixed
+	 *         state but records that are in Completed state are also present along
+	 *         with records in an Uncompleted state in Mini DocList
+	 *
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 59)
+	public void verifyRemoveCodeSameInCompleteandUncompleteStateInMiniDocList() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51880");
+		baseClass.stepInfo(
+				"C2B: Verify that Action > Remove Code Same works fine when all records in the reviewer's batch are in mixed state but records that are in Completed state are also present along with records in an Uncompleted state in Mini DocList");
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		MiniDocListPage miniDocList = new MiniDocListPage(driver);
+		SoftAssert softAssert = new SoftAssert();
+
+		// searching document for assignmnet creation
+		baseClass.stepInfo("bascic contant search");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+
+		// create assignment
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		baseClass.stepInfo("Create assignment With allow user to save with complete option");
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+		loginPage.logout();
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting the assignment
+		baseClass.stepInfo("select the assignment and view in docview");
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		miniDocList.configureMiniDocListToShowCompletedDocs();
+		baseClass.stepInfo("Mini doc list is configured to show completed documents");
+
+		// verify to select docs and CodeSameAs
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsAndCodeSameAs();
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 2; i++) {
+
+			docView.getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(10);
+		}
+		miniDocList.configureMiniDocListToShowCompletedDocs();
+		baseClass.stepInfo("Mini doc list is not be configured to show completed documents");
+		baseClass.handleAlert();
+
+		// verify to select docs and remove code as same
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsAndRemoveCodeAsSame();
+		driver.waitForPageToBeReady();
+		softAssert.assertFalse(docView.geDocView_MiniList_CodeSameAsIcon().isDisplayed());
+		baseClass.passedStep("chain link icon removed for the documents after Remove code same");
+
+	}
 
 	
 	@AfterMethod(alwaysRun = true)
