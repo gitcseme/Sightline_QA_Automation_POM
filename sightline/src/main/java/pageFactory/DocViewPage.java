@@ -25877,4 +25877,191 @@ public class DocViewPage {
 		}
 
 		}
+		
+		/**
+		 * @author Gopinath
+		 * @Description:Methoad to click on page next button and verify navigated to next page or not.
+		 * @param rowNo
+		 */
+		public void clickOnPageNextButton() {
+			
+			int pageNumberBefore=0;
+			try {
+				base.waitForElement(getPageNumberInputTextField());
+				 pageNumberBefore=Integer.parseInt(getPageNumberInputTextField().GetAttribute("value"));
+			}catch(Exception e) {
+			base.waitForElement(getPageNumberInputTextField());
+			 pageNumberBefore=Integer.parseInt(getPageNumberInputTextField().GetAttribute("placeholder"));//default 1
+			}
+			int numberOfPages = docViewDocPageCount();
+			if(numberOfPages<2) {
+				base.failedStep("document should have more then one page ");
+			}
+			base.waitForElement(getDocViewPageNextButton());
+			getDocViewPageNextButton().waitAndClick(5);
+			base.waitForElement(getPageNumberInputTextField());
+			String pageNumberafter = getPageNumberInputTextField().GetAttribute("value");
+			if(Integer.parseInt(pageNumberafter)>pageNumberBefore) {
+				base.passedStep("After click on next button, page is navigated to next page "+pageNumberafter+" from page "+pageNumberBefore);
+			}else {
+				base.failedStep("failed to navigated to next page after click on next button");
+			}
+		}
+
+
+
+
+
+	/**
+		 * @author Gopinath
+		 * @Description methoad to click on page last button and verify navigated to last page od document
+		 */
+		public void clickOnPageLastButton() {
+			int numberOfPages=docViewDocPageCount();
+			base.waitForElement(getDocViewLastPageNavigationButton());
+			getDocViewLastPageNavigationButton().waitAndClick(5);
+			base.waitForElement(getPageNumberInputTextField());
+			String lastPageNumber = getPageNumberInputTextField().GetAttribute("value");
+			if(Integer.parseInt(lastPageNumber)==numberOfPages) {
+				base.passedStep("After click on last page button, page navigated to last page " +lastPageNumber);
+			}else {
+				base.failedStep("last page of document is not displayed");
+			}
+			
+			
+		}
+		/**
+		 * @author Gopinath
+		 * @Description Method to click on page previous button and verify navigated previous page or not.
+		 */
+		public void clickOnDocPagePreviousButton() {
+			base.waitForElement(getPageNumberInputTextField());
+			String pageNumberBefore = getPageNumberInputTextField().GetAttribute("value");
+			base.waitForElement(getDocPreviousPageButton());
+			getDocPreviousPageButton().waitAndClick(5);
+			base.waitForElement(getPageNumberInputTextField());
+			String pageNumberAfter = getPageNumberInputTextField().GetAttribute("value");
+			if(Integer.parseInt(pageNumberAfter)<Integer.parseInt(pageNumberBefore)) {
+				base.passedStep("After click on previous page button,page navigated to previous page "+pageNumberAfter+" from page"+pageNumberBefore);
+			}else {
+				base.failedStep("failed to navigated to previous  page after click on previous page button");
+			}
+		}
+
+		/**
+		 * @author Gopinath
+		 * @Description methoad to click on doc page first button(<<) and verify
+		 */
+		public void clickOnDocPageFirstButton() {
+			base.waitForElement(getDocViewDocPageFirstButton());
+			getDocViewDocPageFirstButton().waitAndClick(5);
+			base.waitForElement(getPageNumberInputTextField());
+			if(getPageNumberInputTextField().GetAttribute("value").equals("1")) {
+				base.passedStep("After click on document page first button, page navigated to first document");
+			}else {
+				base.failedStep("failed to navigated to first  page after click on  page first button");
+			}
+			
+		}
+
+		/**
+		 * @author Gopianth
+		 * @Description:method to verify spinning wheel in neardupe comparison window.
+		 */
+		public void nearDupeComparisonWindowLodingVerification() {
+			base.waitForElement(getDocView_Analytics_NearDupeTab());
+			getDocView_Analytics_NearDupeTab().ScrollTo();
+			driver.scrollPageToTop();
+			getDocView_Analytics_NearDupeTab().waitAndClick(10);
+			base.waitForElement(getDocView_NearDupeIcon());
+			getDocView_NearDupeIcon().ScrollTo();
+			getDocView_NearDupeIcon().waitAndClick(10);
+			 String parentWindow = reusableDocView.switchTochildWindow();
+			  
+			base.waitForElement(getCentralPanelDispaly());
+			if(getCentralPanelDispaly().isDisplayed()) {
+				base.passedStep("spinning wheel is displayed when two doc are loading in comparision window");
+			}else {
+				base.failedStep("spinning wheel is not displayed when two doc are loading in comparision window");
+			}
+			base.waitForElement(getComparisonNearDupeView());
+			base.waitTime(3);
+			if(getComparisonNearDupeView().isElementAvailable(10)) {
+				if(getCentralPanelDispaly().getWebElement().isDisplayed()) {
+					base.failedStep("spinning wheel is not gone after near dupe is loaded");
+				}else {
+					base.passedStep("Ater near dupe is loaded spinning wheel is disappear from the pge ");
+				}
+			}else {
+				base.failedStep("Near dupe is not loaded on comparison window");
+			}
+			reusableDocView.childWindowToParentWindowSwitching(parentWindow);
+		}
+			/**
+		 * @author Gopinath
+		 * @Description method to get the count of pages in document in docView panal
+		 * @return
+		 */
+		public int docViewDocPageCount() {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getdocViewDocPageCount());
+			String pageCountText = getdocViewDocPageCount().getText().trim();
+			int pageCount = Integer.parseInt(pageCountText.substring(pageCountText.indexOf(" ")+1,pageCountText.indexOf("p")-1 ));
+			base.stepInfo("Number of pages in document:"+pageCount);
+			return pageCount;
+		}
+
+
+		public Element getDocViewPageNextButton() {
+				return driver.FindElementByXPath("//li[@id='nextPage_divDocViewer']/a");
+			}
+			
+			public Element getDocViewLastPageNavigationButton() {
+				return driver.FindElementByXPath("//li[@id='lastPage_divDocViewer']/a");
+			}
+			public Element getDocPreviousPageButton() {
+				return driver.FindElementByXPath("//li[@id='previousPage_divDocViewer']/a");
+			}
+			
+			public Element getDocViewDocPageFirstButton() {
+				return driver.FindElementByXPath("//li[@id='firstPage_divDocViewer']/a");
+			}
+			public Element getPageNumberInputTextField() {
+				return driver.FindElementById("PageNumber_divDocViewer");
+			}
+			public Element getdocViewDocPageCount() {
+				return driver.FindElementById("lblTotalPageCount_divDocViewer");
+			}
+			public Element getComparisonNearDupeView() {
+				return driver.FindElementByXPath("//div[@id='divNearDupeDocViewer']/descendant::div[@class='igViewerScroller']");
+				
+			}
+			
+			/**
+			 * @author Sakthivel 16/02/22 NA Modified date: NA Modified by:NA
+			 * @description to select docs and remove code as same in child window
+			 */
+			public void selectDocsFromMiniDocsAndRemoveCodeAsSameInChildWindow() {
+
+				driver.waitForPageToBeReady();
+				driver.scrollPageToTop();
+				for (int i = 1; i <= 2; i++) {
+					base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+					getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+				}
+
+				base.waitForElement(getDocView_Mini_ActionButton());
+				getDocView_Mini_ActionButton().waitAndClick(10);
+				base.waitForElement(getDocView__ChildWindow_Mini_RemoveCodeSameAs());
+				getDocView__ChildWindow_Mini_RemoveCodeSameAs().waitAndClick(10);
+				base.passedStep("Expected message : Code Same has been successfully removed");
+				driver.waitForPageToBeReady();
+				if (geDocView_MiniList_CodeSameAsIcon().isElementAvailable(1)) {
+					base.failedStep("CodeSameAs icon is displayed for the selected docs in child window");
+				} else {
+					base.passedStep("CodeSameAs icon is not displayed for the selected docs in child window");
+
+				}
+			}
+
 }
