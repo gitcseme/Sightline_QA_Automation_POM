@@ -282,10 +282,9 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *         Description :Verify "More data exists" message should be displayed
 	 *         when more than 20 records to display on thread map'RPMXCON-51363'
 	 *         Sprint : 6
-	 * @throws InterruptedException Stabilized - not done
+	 * @throws InterruptedException Stabilized - not done [We need thread docs more than 20 records]
 	 */
-	// @Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
-	// }, priority = 4)
+//	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 4)
 	public void VerifyMoreDataExistsRecordsToDisplayOnThreadMap(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51363");
@@ -371,7 +370,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              this' RPMXCON-51216
 	 * @Stabilization - done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyWhenUserSelectsMulitiDocsAndPerformRemoveCodeSameAs() throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51216");
 		baseClass.stepInfo(
@@ -501,7 +500,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              this' RPMXCON-51218
 	 * @Stabilization - done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyWhenUserSelectsThreadMapMulitiDocsAndPerformRemoveCodeSameAs()
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51218");
@@ -589,7 +588,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              and Select Action as 'Remove Code Same as this' RPMXCON-51217
 	 *              stabilized - done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyWhenUserSelectsMiniDocListMulitiDocsAndPerformRemoveCodeSameAs()
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51217");
@@ -918,7 +917,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 13)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 13)
 	public void verifyNavigatingToThreadMapTabFamilyMemberTabNotBeDisplayed(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -1199,7 +1198,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16)
 	public void verifyUserCanSelectRemoveCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1341,7 +1340,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              this' RPMXCON-51222
 	 * @Stabilization - done
 	 */
-	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
 	public void verifyUserEditCodingFormMainDocAndActionCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51222");
@@ -1514,7 +1513,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 */
 
-	//@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyCodingFormAndMetaDataFromParentAndChildWindow() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1998,7 +1997,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
 	public void verifyDesignatedDotMarkerInThreadMapTab(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -2021,6 +2020,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewThreadedDocsInDocViews();
+		docView.selectDocIdInMiniDocList(Input.threadDocWithToolTip);
 
 		baseClass.stepInfo("Step 4 : Check for the sender from thread map tab");
 		driver.waitForPageToBeReady();
@@ -2046,9 +2046,9 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @Stabilization - not done
 	 * @throws AWTException
-	 * @throws Exception
+	 * @throws Exception [Code same as last is not clickable]
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	//@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyCompleteLastDocsAndCodeSameAsActionConceptual() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51071");
@@ -2063,7 +2063,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = Input.nearDupeCompletedDocId;
+		String documentToBeSelected = "ID00005169";
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
@@ -2155,7 +2155,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * preceding document is completed by selecting 'Code same as this' action from
 	 * analytics panel > family member.'RPMXCON-51070' Sprint : 8
 	 * 
-	 * @Stabilization - not done
+	 * @Stabilization - not done [code same as last icon is not clickable]
 	 * @throws AWTException
 	 * @throws Exception
 	 */
@@ -2269,7 +2269,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * preceding document is completed by selecting 'Code same as this' action from
 	 * analytics panel > Near Dupe.'RPMXCON-51072' Sprint : 8
 	 * 
-	 * @Stabilization - done
+	 * @Stabilization - done [code same as last icon is disabled]
 	 * @throws AWTException
 	 * @throws Exception
 	 */
@@ -2440,7 +2440,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * search, then he can view the documents in the doc list from Doc View->Thread
 	 * Map..'RPMXCON-50875' Sprint : 9
 	 * 
-	 * @Stabilization - done
+	 * @Stabilization - done [Thread doc issue]
 	 * @throws AWTException
 	 * @throws Exception
 	 */
@@ -2570,7 +2570,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * stabilization done
 	 */
-	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
 	public void verifyRemoveAssignedFolderDockoutAnalyticalNearDupe() throws Exception {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
@@ -2641,7 +2641,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 35)
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void verifyBGColorOnMousehoverInFamilyMemBerTabAnalyticalPanel() throws InterruptedException {
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
@@ -2728,7 +2728,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			loginPage.quitBrowser();
+			loginPage.closeBrowser();
 		} catch (Exception e) {
 			UtilityLog.info("Failed due to this exception"+e);
 		} finally {
