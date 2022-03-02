@@ -235,6 +235,7 @@ public class Input {
 	public static String TIFFPageCount;
 	public static String translationDocumentId;
 	public static String parentDocument;
+	public static String masterDateText;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -783,6 +784,7 @@ public class Input {
 		TIFFPageCount = testData.getPageCount();
 		translationDocumentId = testData.getTranslationDocId();
 		parentDocument = testData.getParentDocument();
+		masterDateText=testData.getMasterDate();
 		/**
 		 * @author Aathith.Senthilkumar
 		 */

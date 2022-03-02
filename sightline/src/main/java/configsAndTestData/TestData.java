@@ -161,6 +161,7 @@ public class TestData {
 	public  String TIFFPageCount;
 	public String translationDocumentId;
 	public String parentDocument;
+	public String masterDateText;
 
 	// Added by Sai Krishna
 	public String pageNumber;
@@ -480,6 +481,11 @@ public class TestData {
 		public String YYYYMMDDHHMISSDat;
 		public String YYYYMMDDHHMISSLst;
 		public String DATFile1;
+
+
+//		public String query;
+//		public String miniDocListID;
+
 		public String StitchedTIFF;		
 		public String DATFile2;
 		public String TiffImagesFolder;

@@ -18062,4 +18062,54 @@ public class ProductionPage {
 		ocr.stopEngine();
 	}
 	
+	/**
+	 * @author sowndarya.velraj
+	 * @param prefixId
+	 * @param suffixId
+	 * @param beginningBates
+	 *  @param sortData1
+	 *   @param sortData2
+	 * @throws InterruptedException
+	 */
+	public void fillingNumberingAndSortingWithSortingByMetaData(String prefixId, String suffixId, String beginningBates,String sortData1,String sortData2)
+			throws InterruptedException {
+
+		base.waitForElement(getBeginningBates());
+		driver.waitForPageToBeReady();
+		getBeginningBates().waitAndClick(10);
+		getBeginningBates().SendKeys(beginningBates);
+		num = getRandomNumber(2);
+
+		base.waitForElement(gettxtBeginningBatesIDPrefix());
+		gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
+
+		base.waitForElement(gettxtBeginningBatesIDSuffix());
+		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
+		
+		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
+		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
+		num1 = getRandomNumber(1);
+		System.out.println("Beginning BatesID Min Num Length=" + num1);
+		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getlstSortingMetaData());
+		getlstSortingMetaData().selectFromDropdown().selectByVisibleText(sortData1);
+
+		base.waitForElement(getlstSortingOrder());
+		getlstSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
+
+		base.waitForElement(getlstSubSortingMetaData());
+		getlstSubSortingMetaData().selectFromDropdown().selectByVisibleText(sortData2);
+
+		base.waitForElement(getlstSubSortingOrder());
+		getlstSubSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
+
+		base.waitForElement(getKeepFamiliesTogether());
+		getKeepFamiliesTogether().waitAndClick(10);
+		driver.scrollPageToTop();
+		base.stepInfo("Numbering and sorting section is filled");
+
+	}
 }
