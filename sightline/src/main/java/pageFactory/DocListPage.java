@@ -4397,4 +4397,27 @@ public List<String> gettingAllDocIDs(){
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().waitAndClick(10);
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param noOfDocuments
+	 * @throws InterruptedException
+	 * @Description selecting document with child document
+	 */
+	public void documentSelectionIncludeChildDoc(int noOfDocuments) throws InterruptedException {
+		try {
+			for (int row = 0; row < noOfDocuments; row++) {
+
+				driver.waitForPageToBeReady();
+				base.waitForElement(getselectDoc(row + 1));
+				getselectDoc(row + 1).waitAndClick(10);
+				if(getPopUpOkBtn().isElementAvailable(1)) {
+					getPopUpOkBtn().waitAndClick(5);
+				}
+				base.stepInfo("Document is selected in doc list");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Failed to download selection documents" + e.getMessage());
+		}
+	}
 }

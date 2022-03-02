@@ -2610,7 +2610,6 @@ public class ProductionPage {
 		public Element getRegenerateAllRadioBtn() {
 			return driver.FindElementByXPath("//input[@id='RegenerateAll']/../i");
 		}
-
 		public Element getProductionOutputLocation_VolumeName() {
 			return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_VolumeName']");
 		}
@@ -2632,8 +2631,13 @@ public class ProductionPage {
 		public Element getProductionOutputLocationProductionDirectory() {
 			return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_ProductionDirectory']");
 		}
+		public Element getDocumentWithMultipleBrandingTagsOnGenerationPage() {
+			return driver.FindElementByXPath("//*[text()='Documents with Multiple Branding Tags ']/following-sibling::td/span[@class='text-success']");
+		}
+		public Element getSelectFileTypeInTifffNative(String fileType) {
+			return driver.FindElementByXPath("//div[@id='divImageTIFFPHImage_0']/..//option[contains(text(),'"+fileType+"')]");
+		}
 		
-
 		
      //added by Brundha
 		public Element GetVolumeName() {
@@ -18060,6 +18064,40 @@ public class ProductionPage {
 		}
 		}
 		ocr.stopEngine();
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param fileType
+	 * @param placeholderText
+	 * @Description selecting only file type in tiff Native docs
+	 */
+	public void fillingTIFFWithNativelyProducedDocs(String fileType ,String placeholderText) {
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitForElement(getTiff_NativeDoc());
+			getTiff_NativeDoc().Click();
+			base.waitTillElemetToBeClickable(getSelectFileTypeInTifffNative(fileType));
+			getSelectFileTypeInTifffNative(fileType).Click();
+			base.waitForElement(getNativeDocsPlaceholder());
+			getNativeDocsPlaceholder().SendKeys(placeholderText);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while filling tiff section with natively produced documents." + e.getMessage());
+		}
 	}
 	
 	/**

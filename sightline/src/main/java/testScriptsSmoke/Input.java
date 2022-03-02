@@ -481,6 +481,8 @@ public class Input {
 	public static String audioSearchString6;
 	public static String audioSearchString7;
 	public static String pdfDataSet;
+	public static String dbFile;
+	public static String sourceDocIdDB992;
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
@@ -807,6 +809,8 @@ public class Input {
 		audioSearchString6 = testData.getAudioSearchString6();
 		audioSearchString7 = testData.getAudioSearchString7();
 		pdfDataSet = testData.getPdfDataSet();
+		dbFile = testData.getDbFile();
+		sourceDocIdDB992 = testData.getSourceDocIdDB992();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
