@@ -481,11 +481,12 @@ public class TestData {
 		public String YYYYMMDDHHMISSDat;
 		public String YYYYMMDDHHMISSLst;
 		public String DATFile1;
-		public String StitchedTIFF;
+
 
 //		public String query;
 //		public String miniDocListID;
-		
+
+		public String StitchedTIFF;		
 		public String DATFile2;
 		public String TiffImagesFolder;
 		public String DAT_MMDDYYYY;
