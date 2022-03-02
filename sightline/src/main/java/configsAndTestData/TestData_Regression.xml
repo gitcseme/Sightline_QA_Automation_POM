@@ -447,7 +447,6 @@
 	<errorQueryFileLocation>\BatchFiles\InvalidQuery\
 	</errorQueryFileLocation>
 	<invalidNameText>Invalid Name</invalidNameText>
-	<threadDocWithToolTip>ID00000703</threadDocWithToolTip>
 	<conceptualDoc>ID00000001</conceptualDoc>
 	<TallySearch>null</TallySearch>
 	<TallyCN>auto</TallyCN>
@@ -469,7 +468,7 @@
 	<newNearDupeDocId>ID00005181</newNearDupeDocId>
 	<nearDupeDocId>ID00003801</nearDupeDocId>
 	<nearDupeDocument>ID00004474</nearDupeDocument>
-
+	<threadDocWithToolTip>ID00004514</threadDocWithToolTip>
 	<TermOperator>ALL</TermOperator>
 
 	<familyDocWhichIsNotInMiniDoc>ID00003763</familyDocWhichIsNotInMiniDoc>
