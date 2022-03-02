@@ -515,6 +515,8 @@
 	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat</DATFile1>
      <!-- Ingestion Related data END -->
 
+<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
+<miniDocListID>ID00001350</miniDocListID>
 
 <!-- REGRESSION TEST DATA -->
 

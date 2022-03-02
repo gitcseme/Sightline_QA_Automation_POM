@@ -479,7 +479,8 @@ public class TestData {
 		public String DATFile1;
 		public String StitchedTIFF;
 
-	
+		public String query;
+		public String miniDocListID;
 		
 }
 
