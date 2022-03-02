@@ -367,6 +367,10 @@ public class SessionSearch {
 		return driver.FindElementByXPath("(//*[@id='advancedswitch'])[last()]");
 	}
 
+	public ElementCollection gettTileSpinningList() {
+		return driver.FindElementsByXPath("//span//count[contains(@id,'tilecount-')]");
+	}
+
 	public Element getContentAndMetaDatabtnCurrent() {
 		return driver.FindElementByXPath("(//button[@id='contentmetadata'])[last()]");
 	}
@@ -1587,7 +1591,7 @@ public class SessionSearch {
 				"//label[text()='Docs That Met Your Criteria']//..//..//..//i[@title='Remove from Selected Results']");
 	}
 
-  public SessionSearch(Driver driver) {
+	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
 		base = new BaseClass(driver);
@@ -1854,6 +1858,7 @@ public class SessionSearch {
 		 */
 
 	}
+
 //Modified on 10/2/22 by jayanthi added one new message with number 13.
 	public void wrongQueryAlertAdvanceSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
 
@@ -1977,10 +1982,11 @@ public class SessionSearch {
 					getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n", ""));
 		}
 		if (MessageNumber == 13) {
-			base.stepInfo(SearchString+" is entered as proximity phrase in advanced search content search text box.");
+			base.stepInfo(SearchString + " is entered as proximity phrase in advanced search content search text box.");
 			String msg = "Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)Does your query reflect your intent?Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
 			System.out.println(getQueryAlertGetText().getText());
-			if(msg.replaceAll(" ", "").equals(getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""))) {
+			if (msg.replaceAll(" ", "")
+					.equals(getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""))) {
 				base.passedStep("Proximity query alert message displayed as expected.");
 				getTallyContinue().waitAndClick(10);
 				// verify counts for all the tiles
@@ -1990,8 +1996,7 @@ public class SessionSearch {
 					}
 				}), Input.wait90);
 
-			}
-			else {
+			} else {
 				base.failedStep("Proximity query alert message not displayed as expected.");
 			}
 		}
@@ -2816,7 +2821,7 @@ public class SessionSearch {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 		} else {
-			
+
 			getPureHitAddButton().waitAndClick(5);
 		}
 
@@ -4729,7 +4734,7 @@ public class SessionSearch {
 		// Click on Search button
 		base.waitForElement(getQuerySearchButton());
 		getQuerySearchButton().waitAndClick(3);
-		if(getTallyContinue().isElementAvailable(2)){
+		if (getTallyContinue().isElementAvailable(2)) {
 			getTallyContinue().Click();
 		}
 
@@ -8528,12 +8533,12 @@ public class SessionSearch {
 			}), Input.wait120);
 
 			int pureHit = Integer.parseInt(getPureHitsCount().getText());
-			
+
 			// System.out.println("Search is done for "+SearchString+" and PureHit is :
 			// "+pureHit);
 			UtilityLog.info("Search is done for " + SearchString + " and PureHit is : " + pureHit);
 			Reporter.log("Search is done for " + SearchString + " and PureHit is : " + pureHit, true);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception while performing advanced search by folder." + e.getMessage());
@@ -10455,6 +10460,7 @@ public class SessionSearch {
 
 		return pureHit;
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param SearchString
@@ -10470,7 +10476,7 @@ public class SessionSearch {
 		getCurrentLanguageSelectButton().selectFromDropdown().selectByVisibleText(language);
 		base.stepInfo("Selected Language as " + language);
 		driver.waitForPageToBeReady();
-		
+
 		// Enter search string
 		base.waitForElement(get_Current_As_AudioText());
 		get_Current_As_AudioText().SendKeys(SearchString);
@@ -10495,14 +10501,13 @@ public class SessionSearch {
 
 	}
 
-
 	public void removePureHitsFromSelectedResult() {
-		List<WebElement>PureHitsFromSelectedResult=getRemovePureHits().FindWebElements();
-		for(int i=0;i<PureHitsFromSelectedResult.size();i++) {
+		List<WebElement> PureHitsFromSelectedResult = getRemovePureHits().FindWebElements();
+		for (int i = 0; i < PureHitsFromSelectedResult.size(); i++) {
 			PureHitsFromSelectedResult.get(i).click();
 		}
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani
 	 */
@@ -10526,13 +10531,14 @@ public class SessionSearch {
 	}
 
 	/**
-	 * @author Jayanthi.ganesan
-	 * This method will save the search under node created under default security group.
+	 * @author Jayanthi.ganesan This method will save the search under node created
+	 *         under default security group.
 	 * @param searchName
 	 * @param nodeName
 	 * @throws InterruptedException
 	 */
-	public void saveSearchInNodeUnderGroup(String searchName, String nodeName,String groupName) throws InterruptedException {
+	public void saveSearchInNodeUnderGroup(String searchName, String nodeName, String groupName)
+			throws InterruptedException {
 		// SaveSearch
 		saveSearchAction();
 
@@ -10543,13 +10549,12 @@ public class SessionSearch {
 			UtilityLog.info("Radio button already selected");
 		}
 
-		if(getSaveSearchPopupFolderName(groupName).isElementAvailable(3)) {
-        base.stepInfo(groupName + " : is present");
-        getSaveSearchPopupFolderName(groupName).waitAndClick(10);
-	}
-	else {
-		 base.stepInfo(groupName + " : is not present");
-	}
+		if (getSaveSearchPopupFolderName(groupName).isElementAvailable(3)) {
+			base.stepInfo(groupName + " : is present");
+			getSaveSearchPopupFolderName(groupName).waitAndClick(10);
+		} else {
+			base.stepInfo(groupName + " : is not present");
+		}
 
 		if (getCreatedNode(nodeName).isElementAvailable(7)) {
 			System.out.println("On");
@@ -10566,10 +10571,11 @@ public class SessionSearch {
 		base.VerifySuccessMessage("Saved search saved successfully");
 		Reporter.log("Saved the search with name '" + searchName + "'", true);
 		UtilityLog.info("Saved search with name - " + searchName);
-	}	
+	}
+
 	/**
 	 * @Author Jeevitha
-	 * @Description : Performs Search In Session Search 
+	 * @Description : Performs Search In Session Search
 	 */
 	public void SearchBtnAction() {
 		driver.waitForPageToBeReady();
@@ -10586,10 +10592,28 @@ public class SessionSearch {
 			getAdvanceSearch_btn_Current().waitAndClick(10);
 			System.out.println("Advance Search2");
 		}
-		
-		if (getYesQueryAlert().isElementAvailable(2)) {
-				getYesQueryAlert().waitAndClick(8);
-			}
 
+		if (getYesQueryAlert().isElementAvailable(2)) {
+			getYesQueryAlert().waitAndClick(8);
+		}
+
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description - verify tile spinning in session search page
+	 */
+	public void verifyTileSpinning() {
+		List<String> spinningTileList = new ArrayList<>();
+
+		spinningTileList = base.getAvailableListofElements(gettTileSpinningList());
+		for (String a : spinningTileList) {
+			if (a.isBlank()) {
+				base.stepInfo(" Yes - one or more related tiles are still spinning ");
+				break;
+			} else {
+				System.out.println(" one or more related tiles are not still spinning ");
+			}
+		}
 	}
 }
