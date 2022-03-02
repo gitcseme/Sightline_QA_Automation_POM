@@ -23714,9 +23714,10 @@ public class DocViewPage {
 			base.waitForElement(getDocView_Analytics_FamilyTab());
 			getDocView_Analytics_FamilyTab().waitAndClick(10);
 			base.waitForElement(getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected));
+			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).ScrollTo();
 			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).waitAndClick(5);
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
-			getDocView_ChildWindow_ActionButton().waitAndClick(5);
+			getDocView_ChildWindow_ActionButton().waitAndClick(6);
 
 			base.waitForElement(getAnalyticalDropDown());
 			softAssertion.assertTrue(getAnalyticalDropDown().isDisplayed());
@@ -23726,6 +23727,7 @@ public class DocViewPage {
 			base.stepInfo("'View Document' action is displayed on family member tab successfully");
 
 			driver.scrollPageToTop();
+			base.waitTime(10);
 
 			base.waitForElement(getDocView_CurrentDocId());
 			System.err.println(getDocView_CurrentDocId().getText());
@@ -23739,7 +23741,7 @@ public class DocViewPage {
 			System.out.println("Doc are verified successfully");
 		}
 	}
-
+	
 	/*
 	 * 
 	 * @author Vijaya.Rani 04/02/22 NA Modified date: NA Modified by:NA
