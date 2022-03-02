@@ -1841,8 +1841,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              RPMXCON-50956
 	 * @Stabilization - done
 	 */
-	// @Test(enabled = true, dataProvider = "userDetailss", groups = { "regression"
-	// }, priority = 25)
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 25)
 	public void verifyCompareSimilarDocumentIsDisplayedOnceTheIconIsClicked(String roll, String userName,
 			String password, String impersonate) throws InterruptedException {
 
@@ -1920,7 +1919,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 */
 
-	// @Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyCheckMarkIconCodingStampAppliedToSelectedDocs() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1999,8 +1998,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	// @Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
-	// }, priority = 27)
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
 	public void verifyDesignatedDotMarkerInThreadMapTab(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -2046,11 +2044,11 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * preceding document is completed by selecting 'Code same as this' action from
 	 * analytics panel > conceptual.'RPMXCON-51071' Sprint : 8
 	 * 
-	 * @Stabilization - done
+	 * @Stabilization - not done
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 28)
+	//@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyCompleteLastDocsAndCodeSameAsActionConceptual() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51071");
@@ -2161,7 +2159,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 29)
+	//@Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyCompleteLastDocsAndCodeSameAsActionFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51070");
@@ -2271,11 +2269,11 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * preceding document is completed by selecting 'Code same as this' action from
 	 * analytics panel > Near Dupe.'RPMXCON-51072' Sprint : 8
 	 * 
-	 * @Stabilization - not done
+	 * @Stabilization - done
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 30)
+	//@Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifyCompleteLastDocsAndCodeSameAsActionNearDupe() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51072");
@@ -2316,7 +2314,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.NewDocId);
+		docView.selectDocIdInMiniDocList(Input.nearDupeDocId);
 
 		// select docs from NearDupe and action as code same as
 		docView.performCodeSameForNearDupeDocuments(1);
@@ -2326,10 +2324,11 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.NewDocId);
+		docView.selectDocIdInMiniDocList(Input.nearDupeDocId);
 
 		// select docs from family member and action as code same as
-		docView.performCodeSameAsForNearDupeDocumentsThirdDocs();
+		docView.performCodeSameForNearDupeDocuments(2);
+//		docView.performCodeSameAsForNearDupeDocumentsThirdDocs();
 
 		// Edit coding Form and complete Action
 		docView.editCodingFormComplete();
@@ -2445,7 +2444,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 32)
+	//@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyDocViewFromSaveSearchDocViewThreadMap() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50875");
@@ -2472,7 +2471,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.theardMapViewId);
+		docView.selectDocIdInMiniDocList(Input.threadDocId);
 
 		// threadmap tab View in DocList
 		driver.scrollPageToTop();
@@ -2494,7 +2493,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.theardMapViewId);
+		docView.selectDocIdInMiniDocList(Input.threadDocId);
 
 		// threadmap tab View in DocList
 		driver.scrollPageToTop();
@@ -2568,6 +2567,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-51133 To verify user can remove assigned folder from Dockout
 	 * screen->Analytics-Near Dupes
+	 * 
+	 * stabilization done
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
 	public void verifyRemoveAssignedFolderDockoutAnalyticalNearDupe() throws Exception {
@@ -2637,6 +2638,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              color treatment for completed, code same, currently viewed
 	 *              document Test Case Id: RPMXCON-51388
 	 * @throws InterruptedException
+	 * 
+	 * stabilization done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void verifyBGColorOnMousehoverInFamilyMemBerTabAnalyticalPanel() throws InterruptedException {
@@ -2726,6 +2729,9 @@ public class DocView_AnalyticsPanel_NewRegression {
 	public void close() {
 		try {
 			loginPage.quitBrowser();
+		} catch (
+		Exception e) {
+			e.printStackTrace();
 		} finally {
 			// loginPage.clearBrowserCache();
 		}
