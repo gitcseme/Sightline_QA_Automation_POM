@@ -5752,7 +5752,7 @@ public class Production_Test_Regression {
 			} else {
 				base.failedStep("verification failed");
 				System.out.println("failed");
-			}
+      }
 		}
 		base.passedStep(
 				"verifid that all produced Natives files should be provided by file types for ICE processed data.");
@@ -6121,6 +6121,157 @@ public class Production_Test_Regression {
 
 	}
 
+/**
+			 * @author Aathith Test case id-RPMXCON-49374
+			 * @Description To verify that all produced Natives files should be provided by file types for NUIX processed data.
+			 * 
+			 */
+			@Test(groups = { "regression" }, priority = 87)
+			public void verifyNuixDatafilesGenerateSuccesfully() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-49374 -Production Component");
+				base.stepInfo("To verify that all produced Natives files should be provided by file types for NUIX processed data.");
+
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				int doccount = 3;
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+				DataSets dataset = new DataSets(driver);
+				base.stepInfo("Navigating to dataset page");
+				dataset.navigateToDataSetsPage();
+				base.stepInfo("Selecting uploadedset and navigating to doclist page");
+				dataset.SelectingUploadedDataSet();
+				DocListPage doc = new DocListPage(driver);
+				driver.waitForPageToBeReady();
+
+				doc.documentSelection(doccount);
+				doc.bulkTagExistingFromDoclist(tagname);
+
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				int firstFile = Integer.parseInt(beginningBates);
+				int lastfile = firstFile + doccount;
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+				page.fillingTextSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				
+				page.extractFile();
+				page.isImageFileExist(firstFile, lastfile, prefixID, suffixID);
+				page.isTextFileExist(firstFile, lastfile, prefixID, suffixID);
+				page.isNativeDocxFileExist(firstFile, lastfile, prefixID, suffixID);
+				
+				base.passedStep("verified that all produced Natives files should be provided by file types for NUIX processed data.");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-48255
+			 * @Description To Verify Placeholder for Privilege Doc at Priv Guard section on Mark complete.
+			 * 
+			 */
+			@Test(groups = { "regression" }, priority = 88)
+			public void verifyPlaceholderPrivDocAtPrivGuard() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48255 -Production Component");
+				base.stepInfo("To Verify Placeholder for Privilege Doc at Priv Guard section on Mark complete.");
+
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				int docno = sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = "1";
+				int firstFile = Integer.parseInt(beginningBates);
+				int lastfile = firstFile + docno;
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTiffSectionDisablePrivilegedDocs();
+				page.getDoNotProduceFullContentTiff().ScrollTo();
+				page.getDoNotProduceFullContentTiff().waitAndClick(10);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.getMarkCompleteLink().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				
+				String text = Integer.toString(docno);
+				page.verifyText(page.getDocumentSelectionLink(), text);
+				
+				driver.waitForPageToBeReady();
+				base.waitForElement(page.getNextButton());
+				page.getNextButton().Enabled();
+				page.getNextButton().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				page.fillingPrivGuardPageWithPrivPlaceHolder(tagname);
+				page.clickElementNthtime(page.getBackButton(), 4);
+				page.getTIFFTab().waitAndClick(10);
+				page.toggleOnCheck(page.getTIFF_EnableforPrivilegedDocs());
+				page.visibleCheck(Input.searchString2);
+				driver.scrollPageToTop();
+				page.clickElementNthtime(page.getNextButton(), 4);
+				driver.waitForPageToBeReady();
+				
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.verifyText(page.getPrivDocCountInSummaryPage(), text);
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageAndVerfyingBatesRangeValue(beginningBates);
+				
+				page.extractFile();
+				page.isImageFileExist(firstFile, lastfile, prefixID, suffixID);
+				
+				base.passedStep("Verified Placeholder for Privilege Doc at Priv Guard section on Mark complete.");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+			}
+			
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
