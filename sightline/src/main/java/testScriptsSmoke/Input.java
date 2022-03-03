@@ -235,6 +235,7 @@ public class Input {
 	public static String TIFFPageCount;
 	public static String translationDocumentId;
 	public static String parentDocument;
+	public static String masterDateText;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -345,6 +346,7 @@ public class Input {
 	public static String batchFileWithColumnOrderChange;
 	public static String batchFileWithMultiSheetColumnOrderChange;
 	public static String highVolumeProject;
+	public static String bulkSearchSting1;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -479,13 +481,16 @@ public class Input {
 	public static String audioSearchString6;
 	public static String audioSearchString7;
 	public static String pdfDataSet;
-	
+	public static String dbFile;
+	public static String sourceDocIdDB992;
+
 	// Added by Brundha-1/12/2021
 	public static String documentId;
 	public static String telecaSearchString;
 	public static String docFile;
 	public static String stampRed;
 	public static String stampGreen;
+	public static String fileGroup;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -561,6 +566,18 @@ public class Input {
 	public static String YYYYMMDDHHMISSLst;
 	public static String DATFile1;
 	public static String StitchedTIFF;
+	public static String DATFile2;
+	public static String TiffImagesFolder;
+	public static String DAT_MMDDYYYY;
+	public static String Natives_MMDDYYYY;
+	public static String DAT_YYYYDDMM_Slash;
+	public static String Natives_YYYYDDMM_Slash;
+	public static String DAT_YYYYMMDD_Slash;
+	public static String Natives_YYYYMMDD_Slash;
+	public static String DAT_DDMMYYYY_Slash;
+	public static String Natives_DDMMYYYY_Slash;
+	public static String DAT_MMDDYYYY_Slash;
+	public static String Natives_MMDDYYYY_Slash;
 	
 	
 	//Added by Gopinath - 02/03/2022
@@ -798,6 +815,7 @@ public class Input {
 		TIFFPageCount = testData.getPageCount();
 		translationDocumentId = testData.getTranslationDocId();
 		parentDocument = testData.getParentDocument();
+		masterDateText=testData.getMasterDate();
 		/**
 		 * @author Aathith.Senthilkumar
 		 */
@@ -820,6 +838,8 @@ public class Input {
 		audioSearchString6 = testData.getAudioSearchString6();
 		audioSearchString7 = testData.getAudioSearchString7();
 		pdfDataSet = testData.getPdfDataSet();
+		dbFile = testData.getDbFile();
+		sourceDocIdDB992 = testData.getSourceDocIdDB992();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -909,6 +929,7 @@ public class Input {
 		batchFileWithColumnOrderChange = testData.getBatchFileWithColumnOrderChange();
 		batchFileWithMultiSheetColumnOrderChange = testData.getBatchFileWithMultiSheetColumnOrderChange();
 		highVolumeProject = testData.getHighVolumeProject();
+		bulkSearchSting1 = testData.getBulkSearchSting1();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
@@ -1080,6 +1101,7 @@ public class Input {
 		docFile = testData.getDocFile();
 		stampRed = testData.getStampRed();
 		stampGreen = testData.getStampGreen();
+		fileGroup=testData.getFileGroup();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();
@@ -1153,10 +1175,22 @@ public class Input {
 		MP3GermanFile = testData.getMP3GermanFile();
 		TranscriptJapneseFile = testData.getTranscriptJapneseFile();
 		MP3JapneseFile = testData.getMP3JapneseFile();
-		YYYYMMDDHHMISSDat=testData.getYYYYMMDDHHMISSDat();
-		YYYYMMDDHHMISSLst=testData.getYYYYMMDDHHMISSLst();
+		YYYYMMDDHHMISSDat = testData.getYYYYMMDDHHMISSDat();
+		YYYYMMDDHHMISSLst = testData.getYYYYMMDDHHMISSLst();
 		StitchedTIFF = testData.getStitchedTIFF();
 		DATFile1 = testData.getDATFile1();
+		DATFile2 = testData.getDATFile2();
+		TiffImagesFolder = testData.getTiffImagesFolder();
+		DAT_MMDDYYYY=testData.getDAT_MMDDYYYY();
+		Natives_MMDDYYYY=testData.getNatives_MMDDYYYY();
+		DAT_YYYYDDMM_Slash=testData.getDAT_YYYYDDMM_Slash();
+		Natives_YYYYDDMM_Slash=testData.getNatives_YYYYDDMM_Slash();
+		DAT_YYYYMMDD_Slash=testData.getDAT_YYYYMMDD_Slash();
+		Natives_YYYYMMDD_Slash=testData.getNatives_YYYYMMDD_Slash();
+		DAT_DDMMYYYY_Slash = testData.getDAT_DDMMYYYY_Slash();
+		Natives_DDMMYYYY_Slash = testData.getNatives_DDMMYYYY_Slash();
+		DAT_MMDDYYYY_Slash = testData.getDAT_MMDDYYYY_Slash();
+		Natives_MMDDYYYY_Slash = testData.getNatives_MMDDYYYY_Slash();
 
 		//Added by Gopinath - 02/03/2022
 		ingestionProjectName = testData.getIngestionProjectName();
@@ -1368,4 +1402,3 @@ public class Input {
 	}
 
 }
-

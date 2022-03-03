@@ -939,6 +939,7 @@ public class SavedSearchRegression_New_Set_05 {
 		saveSearch.savedSearch_Searchandclick(savedSearchName);
 		saveSearch.verifyStatusByReSearch(savedSearchName, "COMPLETED", 5);
 		saveSearch.getSavedSearchExecuteButton().Click();
+		base.stepInfo("Clicked Execute button");
 		driver.waitForPageToBeReady();
 		base.CloseSuccessMsgpopup();
 
@@ -1317,6 +1318,173 @@ public class SavedSearchRegression_New_Set_05 {
 
 		login.logout();
 
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/01/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify status on Saved Search Screen when user saves an Basic
+	 *              search query[RPMXCON-48475] sprint 13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	public void saveSearchScreenOnBasicQueryWithBulkDatas() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "COMPLETED";
+		String searchString = Input.bulkSearchSting1;
+		int Bgcount;
+
+		base.stepInfo("Test case Id: RPMXCON-48475  Saved Search Sprint 13");
+		base.stepInfo("Verify status on Saved Search Screen when user saves an Basic search query");
+		base.stepInfo("Flow can only be done for inputs/projects with 6L - 7L bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Switch to HighVolume Project
+		base.selectproject(highVolumeProject);
+
+		// Initial Notification count
+		Bgcount = base.initialBgCount();
+
+		// Basic Search
+		session.navigateToSessionSearchPageURL();
+		session.basicContentSearchWithSaveChanges(searchString, "No", "First");
+		session.getSecondSearchBtn().waitAndClick(5);
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		session.returnPurehitCount();
+
+		// Verify Tile Spinning
+		base.stepInfo("Verifying for one or more related tiles are still spinning .");
+		session.verifyTileSpinning();
+
+		// Save Search
+		session.saveSearch(searchName);
+
+		// Verify Status based on Count
+		base.stepInfo("Verifying status to be In Progress until all counts are  available for the Basic search.");
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.verifyStatusBasedOnCount(searchName, "flow-1", 0);
+
+		// Check NotificationCount
+		base.checkNotificationCount(Bgcount, 1);
+
+		// Verify SavedSearch Status once notification arises
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.docResultCOuntCHeck(searchName);
+		base.stepInfo(
+				"Verifing the status on Saved Search Screen for the above saved Search after receiving task completion notification");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/01/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify status on Saved Search Screen when user saves an Basic
+	 *              search query[RPMXCON-48452] sprint 13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	public void verifyInprogressStatusWithTileSpinningForBasicSearch() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "INPROGRESS";
+		String searchString = Input.bulkSearchSting1;
+		int Bgcount;
+
+		base.stepInfo("Test case Id: RPMXCON-48452  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that In Progress status appears in Saved Search Screen when user saved a Basic search, for which only pure hits are available on the Basic search.");
+		base.stepInfo("Flow can only be done for inputs/projects with 6L - 7L bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Switch to HighVolume Project
+		base.selectproject(highVolumeProject);
+
+		// Initial Notification count
+		Bgcount = base.initialBgCount();
+
+		// Basic Search
+		session.navigateToSessionSearchPageURL();
+		session.basicContentSearchWithSaveChanges(searchString, "No", "First");
+		session.getSecondSearchBtn().waitAndClick(5);
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		session.returnPurehitCount();
+
+		// Verify Tile Spinning
+		base.stepInfo("Verifying for one or more related tiles are still spinning .");
+		session.verifyTileSpinning();
+
+		// Save Search
+		session.saveSearch(searchName);
+
+		// Verify Status based on Count
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+
+		base.stepInfo(
+				"Verifing that In Progress status appears in Saved Search Screen when user saved a Basic search, for which only pure hits are available on the Basic search.");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jayanthi
+	 * @Description :Verify that "Count" display as BLANK in conceptual column in
+	 *              Saved Search Screen when user is not triggered Conceptually
+	 *              Similar count but the Basic search is saved as a saved search.
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	public void verifyConceptuallYColumn_BasicSearch() throws Exception {
+		String Search1 = "Search" + Utility.dynamicNameAppender();
+		String conceptually = "Conceptually Similar Count";
+		String passMsg = "Conceptual Column Count is BLANK which is expected.";
+		String failMsg = "Conceptual Column Count is Not BLANK";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.selectproject(Input.highVolumeProject);
+		base.stepInfo("Test case Id: RPMXCON-48901 Saved Search");
+		base.stepInfo(
+				"Verify that \"Count\" display as BLANK in conceptual column in Saved Search Screen when user is not triggered Conceptually "
+						+ "Similar count but the Basic search is saved as a saved search.");
+
+		// Basic Search
+		session.basicContentDraftSearch(Input.searchString9);
+		session.SearchBtnAction();
+		// Handling when Search goes background
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		session.returnPurehitCount();
+		session.saveSearch(Search1);
+
+		// Verify Conceptually Column
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.verifyStatusByReSearch(Search1, "COMPLETED", 2);
+		base.stepInfo("Verifying whehter conceptually similar column in saved search result table"
+				+ " is displayed and if not displayed Adding the column using Show And Hide filter.");
+		String count = saveSearch.ApplyShowAndHideFilter(conceptually, Search1);
+		base.textCompareEquals(count, Input.TextEmpty, passMsg, failMsg);
+
+		// Delete Search
+		saveSearch.deleteSearch(Search1, Input.mySavedSearch, "Yes");
+
+		login.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)

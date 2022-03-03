@@ -150,6 +150,7 @@
 	<Production>Production</Production>
 	<TIFFPageCount>TIFFPageCount</TIFFPageCount>
 	<translationDocumentId>STC4_00000001</translationDocumentId>
+	<masterDateText>MasterDate</masterDateText>
 
 	<!-- Added by Gopinath -->
 	<historyTab>History</historyTab>
@@ -248,6 +249,7 @@
 	<batchFileWithColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange</batchFileWithColumnOrderChange>
 	<batchFileWithMultiSheetColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange_MS</batchFileWithMultiSheetColumnOrderChange>
 	<highVolumeProject>AutomationHighVolumeProject</highVolumeProject>
+	<bulkSearchSting1>s</bulkSearchSting1>
 	
     
 
@@ -407,6 +409,8 @@
 	<audioSearchString6>market</audioSearchString6>
 	<audioSearchString7>transaction</audioSearchString7>
 	<pdfDataSet>B2F9_27Mar_SinglePageTIFF_20211214121006023</pdfDataSet>
+	<dbFile>Database Files (.mdb, .mdf, etc.)</dbFile>
+	<sourceDocIdDB992>STC4_00000992</sourceDocIdDB992>
 
 	<!-- Added by Brundha -->
 	<documentID>ID00001333</documentID>
@@ -414,7 +418,7 @@
 	<docFile>ID00001493</docFile>
     <stampRed>RED</stampRed>
 	<stampGreen>GREEN</stampGreen>
-	
+	<fileGroup>ICE000054-12-00000851 STC4_00001008 STC4_00001009 STC4_00001016</fileGroup>
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 
@@ -443,7 +447,6 @@
 	<errorQueryFileLocation>\BatchFiles\InvalidQuery\
 	</errorQueryFileLocation>
 	<invalidNameText>Invalid Name</invalidNameText>
-	<threadDocWithToolTip>ID00000703</threadDocWithToolTip>
 	<conceptualDoc>ID00000001</conceptualDoc>
 	<TallySearch>null</TallySearch>
 	<TallyCN>auto</TallyCN>
@@ -465,7 +468,7 @@
 	<newNearDupeDocId>ID00005181</newNearDupeDocId>
 	<nearDupeDocId>ID00003801</nearDupeDocId>
 	<nearDupeDocument>ID00004474</nearDupeDocument>
-
+	<threadDocWithToolTip>ID00004514</threadDocWithToolTip>
 	<TermOperator>ALL</TermOperator>
 
 	<familyDocWhichIsNotInMiniDoc>ID00003763</familyDocWhichIsNotInMiniDoc>
@@ -513,6 +516,18 @@
        <YYYYMMDDHHMISSLst>Natives_YYYYMMDD HHMISS.lst</YYYYMMDDHHMISSLst>
        <StitchedTIFF>Stitched TIFFs</StitchedTIFF>
 	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat</DATFile1>
+	<DATFile2>DAT4_STC_NewDateFormat.dat</DATFile2>
+	<TiffImagesFolder>Tiff_Images</TiffImagesFolder>
+	<DAT_MMDDYYYY>DAT_MMDDYYYY.dat</DAT_MMDDYYYY>
+	<Natives_MMDDYYYY>Natives_MMDDYYYY.lst</Natives_MMDDYYYY>
+	<DAT_YYYYDDMM_Slash>DAT_YYYYDDMM_Slash.dat</DAT_YYYYDDMM_Slash>
+	<Natives_YYYYDDMM_Slash>Natives_YYYYDDMM_Slash.lst</Natives_YYYYDDMM_Slash>
+	<DAT_YYYYMMDD_Slash>DAT_YYYYMMDD_Slash.dat</DAT_YYYYMMDD_Slash>
+	<Natives_YYYYMMDD_Slash>DAT_YYYYMMDD_Slash.dat</Natives_YYYYMMDD_Slash>
+	<DAT_DDMMYYYY_Slash>DAT_DDMMYYYY_Slash.dat</DAT_DDMMYYYY_Slash>
+    <Natives_DDMMYYYY_Slash>Natives_DDMMYYYY_Slash.lst</Natives_DDMMYYYY_Slash>
+    <DAT_MMDDYYYY_Slash>DAT_MMDDYYYY_Slash.dat</DAT_MMDDYYYY_Slash>
+    <Natives_MMDDYYYY_Slash>Natives_MMDDYYYY_Slash.lst</Natives_MMDDYYYY_Slash>
      <!-- Ingestion Related data END -->
 
 <query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>

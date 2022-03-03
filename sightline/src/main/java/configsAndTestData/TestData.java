@@ -161,6 +161,7 @@ public class TestData {
 	public  String TIFFPageCount;
 	public String translationDocumentId;
 	public String parentDocument;
+	public String masterDateText;
 
 	// Added by Sai Krishna
 	public String pageNumber;
@@ -193,6 +194,8 @@ public class TestData {
 	public String searchPhraseWithQuote;
 	public String keywordColor1;
 	public String multiwordText;
+	public String query;
+	public String miniDocListID;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22 
@@ -230,6 +233,7 @@ public class TestData {
     public String batchFileWithColumnOrderChange;
     public String batchFileWithMultiSheetColumnOrderChange;
     public String highVolumeProject;
+    public String bulkSearchSting1;
     
 	// Added by jeevitha
 	public String colorCodeOfRed;
@@ -394,6 +398,8 @@ public class TestData {
 		public String audioSearchString6;
 		public String audioSearchString7;
 		public String pdfDataSet;
+		public String dbFile;
+		public String sourceDocIdDB992;
 	
 		//Added by Gopinath - 30/11/2021
 		public String postGenQcChecks;
@@ -408,6 +414,7 @@ public class TestData {
 		public String docFile;
 		public String stampRed;
 		public String stampGreen;
+		public String fileGroup;
 		
 		//Added by gopinath - 08/12/2021
 		public String anotherRemarkMessage;
@@ -477,10 +484,24 @@ public class TestData {
 		public String YYYYMMDDHHMISSDat;
 		public String YYYYMMDDHHMISSLst;
 		public String DATFile1;
-		public String StitchedTIFF;
 
-		public String query;
-		public String miniDocListID;
+
+//		public String query;
+//		public String miniDocListID;
+
+		public String StitchedTIFF;		
+		public String DATFile2;
+		public String TiffImagesFolder;
+		public String DAT_MMDDYYYY;
+		public String Natives_MMDDYYYY;
+		public String DAT_YYYYDDMM_Slash;
+		public String Natives_YYYYDDMM_Slash;
+		public String DAT_YYYYMMDD_Slash;
+		public String Natives_YYYYMMDD_Slash;
+		public String DAT_DDMMYYYY_Slash;
+		public String Natives_DDMMYYYY_Slash;
+		public String DAT_MMDDYYYY_Slash;
+		public String Natives_MMDDYYYY_Slash;
 		
 		//Added by Gopinath - 02/03/2022
 		public String ingestionProjectName;

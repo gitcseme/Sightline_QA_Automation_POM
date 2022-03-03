@@ -32,6 +32,7 @@ import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import pageFactory.CodingForm;
@@ -51,6 +52,7 @@ public class CreateCodingForm_New_Regression2 {
 	TagsAndFoldersPage  tagsAndFoldersPage;
 	ReusableDocViewPage reusableDocView;
 	MiniDocListPage miniDocList;
+	UserManagement userManagementPage;
 	
 	String assgnCoding = "codingAssgn"+Utility.dynamicNameAppender();
 	String codingform = "CFTags"+Utility.dynamicNameAppender();
@@ -93,6 +95,7 @@ public class CreateCodingForm_New_Regression2 {
 		reusableDocView = new ReusableDocViewPage(driver);	
 		docViewPage = new DocViewPage(driver);
 		miniDocList = new MiniDocListPage(driver);
+		userManagementPage = new UserManagement(driver);
 	}
     
 	/**
@@ -1043,6 +1046,104 @@ public class CreateCodingForm_New_Regression2 {
 		
 	}
 	
+	/**
+	 * Author : Vijaya.Rani date: 02/03/22 NA Modified date: NA Modified by:NA
+	 * Description :To verify custom coding form is editable or not when same
+	 * document is assigned to two different assignments with assigned coding form
+	 * in different security group. 'RPMXCON-50972' Sprint : 13
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "rmuAndrev", groups = { "regression" }, priority = 17)
+	public void verifyCfEditableOrNotBasedOnDocStatusWithDiffrentCodingFormsWithSecurityGruop(String userName,
+			String password, String user) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-50972");
+		baseClass.stepInfo(
+				"To verify custom coding form is editable or not when same document is assigned to two different assignments with assigned coding form in different security group");
+
+		String securityGroup = "Security" + Utility.dynamicNameAppender();
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Create security group
+		securityGroupPage.navigateToSecurityGropusPageURL();
+		securityGroupPage.AddSecurityGroup(securityGroup);
+
+		// access to security group to REV
+		userManagementPage.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+		userManagementPage.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+
+		sessionSearch.basicContentSearch("null");
+		sessionSearch.bulkRelease(securityGroup);
+
+		loginPage.logout();
+		
+		// login as RMU
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as " + user);
+		
+		System.out.println(assignment1);
+		System.out.println(assignment2);
+		// create new coding form
+		if (user == "RMU") {
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			codingForm.createCodingFormUsingTwoObjects(cfName1, null, null, null, "tag");
+			codingForm.addcodingFormAddButton();
+			codingForm.enterErrorAndHelpMsg(0, "Yes", "Help for testing", "Error for testing");
+			String expectedFirstObjectName = codingForm.getCFObjectsLabel(0);
+			System.out.println(expectedFirstObjectName);
+			codingForm.saveCodingForm();
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			codingForm.createCodingFormUsingTwoObjects(cfName2, null, null, null, "tag");
+			codingForm.addcodingFormAddButton();
+			codingForm.enterErrorAndHelpMsg(0, "Yes", "Help for testing", "Error for testing");
+			codingForm.saveCodingForm();
+			// create assignment
+			sessionSearch.basicContentSearch("null");
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assignment1, cfName1);
+			assignmentPage.add2ReviewerAndDistribute();
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			sessionSearch.bulkAssignWithOutPureHit();
+			assignmentPage.assignmentCreation(assignment2, cfName2);
+			assignmentPage.add2ReviewerAndDistribute();
+			baseClass.impersonateRMUtoReviewer();
+			baseClass.stepInfo("Impersonated to reviewer successfully");
+		}
+		assignmentPage.SelectAssignmentByReviewer(assignment1);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		assignmentPage.completeAllDocsByReviewer(assignment1);
+		driver.waitForPageToBeReady();
+		if (reusableDocView.getUnCompleteButton().isElementAvailable(5) == true) {
+			baseClass.passedStep("Documents are completed as expected");
+		}
+		docViewPage.verifyCodingFormName(codingform);
+		baseClass.passedStep(
+				"Coding form is non editable once all the docs are completed with diffrent assigned coding form");
+		baseClass.selectproject();
+		assignmentPage.SelectAssignmentByReviewer(assignment2);
+		if (reusableDocView.getUnCompleteButton().isElementAvailable(5) == false) {
+			baseClass.passedStep("Documents are not completed as expected with diffrent assigned coding form");
+		}
+		docViewPage.verifyCodingFormName(codingform);
+		docViewPage.verifyTagsAreEnabled(0);
+		docViewPage.verifyTagsAreEnabled(1);
+		baseClass.passedStep("Coding form is editable for uncompleted docs");
+		if (user == "REV") {
+			loginPage.logout();
+			// delete assignment and codinform
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			assignmentPage.deleteAssgnmntUsingPagination(assignment1);
+			assignmentPage.deleteAssgnmntUsingPagination(assignment2);
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			codingForm.deleteCodingForm(cfName1, cfName1);
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			codingForm.deleteCodingForm(cfName2, cfName2);
+			loginPage.logout();
+		}
+
+	}
 	@DataProvider(name = "ImpersonationOfUsers")
 	public Object[][] ImpersonationOfUsers() {
 		Object[][] users = { { Input.sa1userName, Input.sa1password, "SA" }, { Input.pa1userName, Input.pa1password, "PA" }, { Input.rmu1userName, Input.rmu1password, "RMU" } };

@@ -282,10 +282,9 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *         Description :Verify "More data exists" message should be displayed
 	 *         when more than 20 records to display on thread map'RPMXCON-51363'
 	 *         Sprint : 6
-	 * @throws InterruptedException Stabilized - not done
+	 * @throws InterruptedException Stabilized - not done [We need thread docs more than 20 records]
 	 */
-	// @Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
-	// }, priority = 4)
+//	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 4)
 	public void VerifyMoreDataExistsRecordsToDisplayOnThreadMap(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51363");
@@ -1998,7 +1997,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
 	public void verifyDesignatedDotMarkerInThreadMapTab(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -2021,6 +2020,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewThreadedDocsInDocViews();
+		docView.selectDocIdInMiniDocList(Input.threadDocWithToolTip);
 
 		baseClass.stepInfo("Step 4 : Check for the sender from thread map tab");
 		driver.waitForPageToBeReady();
@@ -2046,7 +2046,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @Stabilization - not done
 	 * @throws AWTException
-	 * @throws Exception
+	 * @throws Exception [Code same as last is not clickable]
 	 */
 	//@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyCompleteLastDocsAndCodeSameAsActionConceptual() throws InterruptedException {
@@ -2063,7 +2063,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = Input.nearDupeCompletedDocId;
+		String documentToBeSelected = "ID00005169";
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
@@ -2155,7 +2155,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * preceding document is completed by selecting 'Code same as this' action from
 	 * analytics panel > family member.'RPMXCON-51070' Sprint : 8
 	 * 
-	 * @Stabilization - not done
+	 * @Stabilization - not done [code same as last icon is not clickable]
 	 * @throws AWTException
 	 * @throws Exception
 	 */
@@ -2269,7 +2269,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * preceding document is completed by selecting 'Code same as this' action from
 	 * analytics panel > Near Dupe.'RPMXCON-51072' Sprint : 8
 	 * 
-	 * @Stabilization - done
+	 * @Stabilization - done [code same as last icon is disabled]
 	 * @throws AWTException
 	 * @throws Exception
 	 */
@@ -2440,7 +2440,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * search, then he can view the documents in the doc list from Doc View->Thread
 	 * Map..'RPMXCON-50875' Sprint : 9
 	 * 
-	 * @Stabilization - done
+	 * @Stabilization - done [Thread doc issue]
 	 * @throws AWTException
 	 * @throws Exception
 	 */
@@ -2728,10 +2728,9 @@ public class DocView_AnalyticsPanel_NewRegression {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			loginPage.quitBrowser();
-		} catch (
-		Exception e) {
-			e.printStackTrace();
+			loginPage.closeBrowser();
+		} catch (Exception e) {
+			UtilityLog.info("Failed due to this exception"+e);
 		} finally {
 			// loginPage.clearBrowserCache();
 		}
