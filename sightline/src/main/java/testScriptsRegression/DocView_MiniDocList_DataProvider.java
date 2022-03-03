@@ -2031,6 +2031,7 @@ public class DocView_MiniDocList_DataProvider {
 			docviewPanelDocId.add(activeDocId);
 		}
 		for (String docId : docviewPanelDocId) {
+			
 			docViewPage.getDociD(docId).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			String pnDocs = docViewPage.getVerifyPrincipalDocument().getText();
