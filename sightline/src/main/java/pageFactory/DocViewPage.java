@@ -26026,6 +26026,70 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//li[@id='previousPage_divDocViewer']/a");
 	}
 
+		
+			/**
+			 * @author Gopinath
+			 * @decsription : Method for verifying total page count which is less than 500 and doc view document is loaded proper or not.
+			 */
+			public void verifyTotalPagesOfDocumentCountLessThan500() {
+				try {
+					driver.waitForPageToBeReady();
+					int pagesCont = 0;
+					for(int i=0;i<20;i++) {
+						try {
+							totalPageCount().isElementAvailable(15);
+							String pagesCount = totalPageCount().getText().trim();
+							String[] pageCnt = pagesCount.split("of", 2);
+							String[] pageCnt2 = pageCnt[1].split("pages", 2);
+							pagesCont = Integer.parseInt(pageCnt2[0].trim());
+							break;
+						}catch(Exception e) {
+							base.waitTime(1);
+						}
+					}
+					if (pagesCont < 500 && getSelectedAreaElement().isDisplayed()) {
+						base.passedStep("Total pages less than 500 pages is loaded in docview");
+					} else {
+						base.failedStep("Total pages less than 500 pages is not loaded in docview");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					base.failedStep("Exception occred while verifying total page count  which is less than 500 and doc view document is loaded proper or not." + e.getLocalizedMessage());
+				}
+
+			}
+			
+			/**
+			 * @author Gopinath
+			 * @decsription : Method for verifying total page count which is less than or equal to 500 and doc view document is loaded proper or not.
+			 */
+			public void verifyTotalPagesOfDocumentCountLessThanOrEqualTo500() {
+				try {
+					driver.waitForPageToBeReady();
+					int pagesCont = 0;
+					for(int i=0;i<20;i++) {
+						try {
+							totalPageCount().isElementAvailable(15);
+							String pagesCount = totalPageCount().getText().trim();
+							String[] pageCnt = pagesCount.split("of", 2);
+							String[] pageCnt2 = pageCnt[1].split("pages", 2);
+							pagesCont = Integer.parseInt(pageCnt2[0].trim());
+							break;
+						}catch(Exception e) {
+							base.waitTime(1);
+						}
+					}
+					if (pagesCont <= 500 && getSelectedAreaElement().isDisplayed()) {
+						base.passedStep("Total pages less than or equal to 500 pages is loaded in docview");
+					} else {
+						base.failedStep("Total pages less than or equal to 500 pages is not loaded in docview");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					base.failedStep("Exception occred while verifying total page count which is less than or equal to 500 and doc view document is loaded proper or not." + e.getLocalizedMessage());
+				}
+      }
+
 	public Element getDocViewDocPageFirstButton() {
 		return driver.FindElementByXPath("//li[@id='firstPage_divDocViewer']/a");
 	}

@@ -640,6 +640,52 @@ public class DocExplorer_Regression1 {
 				
 			}
 			
+			/**
+			 * @author Gopinath
+			 * @TestCase Id:54598 Verify when folder count is with the groups of thousands
+			 * @Description:To Verify when folder count is with the groups of thousands.
+			 */
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+			public void verifyDocExplorerFolderCountFormat() {
+				String folderNumber="1";
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("###Verify when folder count is with the groups of thousands###");
+				baseClass.stepInfo("Test case Id: RPMXCON-54598 ");
+				docexp = new DocExplorerPage(driver);
+				
+				baseClass.stepInfo("Navigating to DocExplorer page");
+				docexp.navigateToDocExplorerPage();
+				
+				baseClass.stepInfo("verify folder count format");
+				docexp.verifyDocExpFolderCountFormat(folderNumber);
+				
+			}
+			
+			/**
+			 * @author Gopinath
+			 * @TestCase Id:54592 Verify the default structure of the Tree View and the document list from right panel
+			 * @Description:To Verify the default structure of the Tree View and the document list from right panel
+			 */
+			@Test (alwaysRun = true, groups = { "regression" }, priority = 1)
+			public void verifyDefaultStructureOfTreeView() {
+				String folderName="Enron Data (23)";
+				int folderLevel=5;
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("###Verify the default structure of the Tree View and the document list from right panel###");
+				baseClass.stepInfo("Test case Id: RPMXCON-54592 Sprint 12");
+				docexp = new DocExplorerPage(driver);
+				
+				baseClass.stepInfo("Navigating to DocExplorer page");
+				docexp.navigateToDocExplorerPage();
+				
+				baseClass.stepInfo("verify docexplorer default tree structure");
+				docexp.verrifyDocExpDefaultTreeStructure(folderName);
+				
+				baseClass.stepInfo("verify docexplorer folder level structure");
+				docexp.verifyDocExpFolderLevel(folderName, folderLevel);
+				
+			}
+			
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

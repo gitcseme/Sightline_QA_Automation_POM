@@ -506,5 +506,32 @@ public class TestData {
 		public String DAT_MMDDYYYY_Slash;
 		public String Natives_MMDDYYYY_Slash;
 		
+		//Added by Gopinath - 02/03/2022
+		public String ingestionProjectName;
+		public String ingestionType ;
+		public String sourceSystem;
+		public String sourceLocation ;
+		public String sourceFolder;
+		public String fieldSeperator ;
+		public String textQualifier ;
+		public String multiValue ;
+		public String datLoadFile ;
+		public String documentKey ;
+		public String mp3LoadFile ;
+		public String dateFormat ;
+		public String docId ;
+		public String dataSource ;
+		public String custodian ;
+		public String fileExt ;
+		public String fileName ;
+		public String fileSize ;
+		public String fileType ;
+		public String ingDocBasic ;
+		public String docFileExt ;
+		public String ingDocFileName ;
+		public String ingDocFileSize ;
+		public String ingDocFileType ;
+		public String lessThan500PagesDocId;
+		public String d500PagesDocId;
 }
 
