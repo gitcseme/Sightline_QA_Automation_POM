@@ -2650,6 +2650,9 @@ public class ProductionPage {
 		public Element getNativeFileType() {
 			return driver.FindElementByXPath("//table[@id='native-table']//tbody//tr//td[contains(text(),'Database')]/..//i");
 		}
+		public Element getPrivDocCountInSummaryPage() {
+			return driver.FindElementByXPath("//label[text()='Privileged Documents: ']/following-sibling::label");
+		}
 		
       //added by Brundha
 		public Element getWorkProductFolderName(String FolderName) {
@@ -18035,6 +18038,7 @@ public class ProductionPage {
 		unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads/");
 		System.out.println("Unzipped the downloaded files");					
 		driver.waitForPageToBeReady();
+		base.stepInfo("Downloaded zip file was extracted");
 	}
 	/**
 	 * @author Aathith.Senthilkumar
@@ -18150,4 +18154,93 @@ public class ProductionPage {
 		base.stepInfo("Numbering and sorting section is filled");
 
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @Description verify Image file is exist in downloaded file
+	 */
+	public void isImageFileExist(int firstFile, int lastFile, String prefixID, String suffixID) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		for(int i=firstFile; i<lastFile ;i++) {
+		File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" +  prefixID + i + suffixID + ".tiff");
+		
+		if(TiffFile.exists()) {
+			base.passedStep("Tiff file are generated coreectly : "+prefixID + i + suffixID+".tiff");
+			System.out.println("passeed");
+		}else {
+			base.failedStep("verification failed");
+			System.out.println("failed");
+		}
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @Description verify Text is generated in Production
+	 */
+		public void isTextFileExist(int firstFile, int lastFile, String prefixID, String suffixID) {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			for(int i=firstFile; i<lastFile ;i++) {
+				File Textfile = new File(home + "/Downloads/VOL0001/Text/0001/" + prefixID + i + suffixID + ".txt");
+			
+				if(Textfile.exists()) {
+					base.passedStep("Text file are generated correctly : "+prefixID + i + suffixID+".txt");
+					System.out.println("passeed");
+				}else {
+					base.failedStep("verification failed");
+					System.out.println("failed");
+				}
+			}
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param firstFile
+		 * @param lastFile
+		 * @param prefixID
+		 * @param suffixID
+		 * @Description Native Docx file is Generated in production
+		 */
+		public void isNativeDocxFileExist(int firstFile, int lastFile, String prefixID, String suffixID) {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			for(int i=firstFile; i<lastFile ;i++) {
+				File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".docx");
+			
+				if(Native.exists()) {
+					base.passedStep("Native file are generated correctly : "+prefixID + i + suffixID+".docx");
+					System.out.println("passeed");
+				}else {
+					base.failedStep("verification failed");
+					System.out.println("failed");
+				}
+			}
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param element
+		 * @param text
+		 * @Description verify values using get text in element
+		 */
+		public void verifyText(Element element , String text) {
+			driver.waitForPageToBeReady();
+			String value = element.getText().trim();
+			
+			if(value.equals(text)) {
+			softAssertion.assertEquals(value, text);
+			base.passedStep(text+"value is displayed correcly");
+			System.out.println("passed");
+			}else {
+				System.out.println("actual value : "+value);
+				System.out.println("passed value : "+ text);
+				base.failedStep("verification failed");
+			}
+		}
 }
