@@ -287,6 +287,9 @@ public class Input {
 	public static String sourceDocIdSearch;
 	public static String DocIdWithComments;
 	public static String DocIdWithTrackChanges;
+	public static String HiddenIngestionDocId;
+	public static String HiddenIngestionName;
+	public static String HiddenLinkDocId;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -854,6 +857,10 @@ public class Input {
 		HiddenContentExternalLink = testData.getHiddenContentExternalLink();
 		audioString1 = testData.getAudioString1();
 		audioString2 = testData.getAudioString2();
+		HiddenIngestionDocId = testData.getHiddenIngestionDocId();
+		HiddenIngestionName = testData.getHiddenIngestionName();
+		HiddenLinkDocId = testData.getHiddenLinkDocId();
+		
 
 		// Added by Arun
 		pageRange1 = testData.getPageRange1();
