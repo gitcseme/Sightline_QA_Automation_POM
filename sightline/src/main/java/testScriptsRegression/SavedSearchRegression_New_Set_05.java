@@ -1488,6 +1488,129 @@ public class SavedSearchRegression_New_Set_05 {
 	}
 
 	/**
+	 * @Author Raghuram @Date: 03/02/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify status on Saved Search Screen when user saves an
+	 *              Advanced search query[RPMXCON-48476] sprint 13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	public void saveSearchScreenOnAdvancedQueryWithBulkDatas() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "COMPLETED";
+		String searchString = Input.bulkSearchSting1;
+		int Bgcount;
+
+		base.stepInfo("Test case Id: RPMXCON-48476  Saved Search Sprint 13");
+		base.stepInfo("Verify status on Saved Search Screen when user saves an Advanced search query");
+		base.stepInfo("Flow can only be done for inputs/projects with 6L - 7L bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Switch to HighVolume Project
+		base.selectproject(highVolumeProject);
+
+		// Initial Notification count
+		Bgcount = base.initialBgCount();
+
+		// Basic Search
+		session.navigateToSessionSearchPageURL();
+		session.advancedContentSearchWithSearchChanges(searchString, "No");
+		session.SearchBtnAction();
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		session.returnPurehitCount();
+
+		// Verify Tile Spinning
+		base.stepInfo("Verifying for one or more related tiles are still spinning .");
+		session.verifyTileSpinning();
+
+		// Save Search
+		session.saveSearch(searchName);
+
+		// Verify Status based on Count
+		base.stepInfo("Verifying status to be In Progress until all counts are  available for the Advanced search.");
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.verifyStatusBasedOnCount(searchName, "flow-1", 0);
+
+		// Check NotificationCount
+		base.checkNotificationCount(Bgcount, 1);
+
+		// Verify SavedSearch Status once notification arises
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.docResultCOuntCHeck(searchName);
+		base.stepInfo(
+				"Verifing the status on Saved Search Screen for the above saved Search after receiving task completion notification");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/02/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that "In Progress" status appears in Saved Search
+	 *              Screen when user saved a Advanced search, for which only pure
+	 *              hits are available on the Advanced search.[RPMXCON-48453] sprint
+	 *              13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	public void verifyInprogressStatusWithTileSpinningForAdvancedSearch() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "INPROGRESS";
+		String searchString = Input.bulkSearchSting1;
+		int Bgcount;
+
+		base.stepInfo("Test case Id: RPMXCON-48453  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that In Progress status appears in Saved Search Screen when user saved a Advanced search, for which only pure hits are available on the Advanced search.");
+		base.stepInfo("Flow can only be done for inputs/projects with 6L - 7L bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Switch to HighVolume Project
+		base.selectproject(highVolumeProject);
+
+		// Initial Notification count
+		Bgcount = base.initialBgCount();
+
+		// Basic Search
+		session.navigateToSessionSearchPageURL();
+		session.advancedContentSearchWithSearchChanges(searchString, "No");
+		session.SearchBtnAction();
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		session.returnPurehitCount();
+
+		// Verify Tile Spinning
+		base.stepInfo("Verifying for one or more related tiles are still spinning .");
+		session.verifyTileSpinning();
+
+		// Save Search
+		session.saveSearch(searchName);
+
+		// Verify Status based on Count
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+
+		base.stepInfo(
+				"Verifing that In Progress status appears in Saved Search Screen when user saved a Advanced search, for which only pure hits are available on the Advanced search.");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+  /**
 	 * @Author Jeevitha
 	 * @Description :Verify that spreadsheets uploaded to the project database (even
 	 *              in different Security Groups) with the same name will throw an
@@ -1739,6 +1862,7 @@ public class SavedSearchRegression_New_Set_05 {
 		saveSearch.deleteNode(Input.shareSearchDefaultSG, newNode);
 
 		login.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)
