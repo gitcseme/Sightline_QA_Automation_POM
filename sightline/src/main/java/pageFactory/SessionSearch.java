@@ -1590,7 +1590,40 @@ public class SessionSearch {
 		return driver.FindElementsByXPath(
 				"//label[text()='Docs That Met Your Criteria']//..//..//..//i[@title='Remove from Selected Results']");
 	}
+	
+	public Element getWhenAllResultsAreReadyPopUpDynamic() {
+		return driver.FindElementByXPath(
+				"(//div[@class='MessageBoxButtonSection']//button[text()=' When all results are ready'])[last()]");
+	}
 
+	public Element getWhenAllResultsAreReadyIDDynamic() {
+		return driver.FindElementByXPath("(//div[@class='modal-body ui-dialog-content ui-widget-content']//b)[last()]");
+	}
+	public Element getBulkTagConfirmationBtnDynamic() {
+		return driver.FindElementByXPath("(//button[contains(text(),'Ok')])[last()]");
+	}
+	public Element getspinningPurehit(int i) {
+		return driver.FindElementByXPath("(//i[@class='fa fa-spinner fa-spin']/ancestor::li[@data-tile='purehit'])["+i+"]");
+	}
+	public Element getspinningfamilyHit(int i) {
+		return driver.FindElementByXPath("(//i[@class='fa fa-spinner fa-spin']/ancestor::li[@data-tile='family'])["+i+"]");
+	}
+	public Element getspinningThreadedCount(int i) {
+		return driver.FindElementByXPath("(//i[@class='fa fa-spinner fa-spin']/ancestor::li[@data-tile='thread'])["+i+"]");
+	}
+	public Element getspinningNearDupeCount(int i) {
+		return driver.FindElementByXPath("(//i[@class='fa fa-spinner fa-spin']/ancestor::li[@data-tile='neardupe'])["+i+"]");
+	}
+	public Element getSessionSearchList(String searchId) {
+		return driver.FindElementByXPath("//span[@id='SearchCnt' and contains(text(),'"+searchId+"')]");
+	}
+	public Element getEnteredSearchText(String searchText) {
+		return driver.FindElementByXPath("//span[text()='"+searchText+"']");
+	}
+
+	public ElementCollection getAllTilesResult(String searchNO) {
+		return driver.FindElementsByXPath("(//span[@id='divSearchCnt' and contains(text(),'"+searchNO+"')])[last()]//..//..//..//..//span//count");
+	}
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -10616,4 +10649,79 @@ public class SessionSearch {
 			}
 		}
 	}
+
+/**
+ * @author Jayanthi.Ganesan
+ * This method will handle when all results are ready pop up when search goes back ground
+ * @return
+ */
+public String handleWhenAllResultsPopUpDynamic() {
+	String ID=null;
+
+	if (getWhenAllResultsAreReadyPopUpDynamic().isElementAvailable(20)) {
+		getWhenAllResultsAreReadyPopUpDynamic().waitAndClick(3);
+		base.waitTime(1);
+		ID = getWhenAllResultsAreReadyIDDynamic().getText();
+		base.stepInfo("When All Results Tab Clicked And Seach is in back ground with "
+				+ "Generated ID is: " + ID);
+		getBulkTagConfirmationBtnDynamic().ScrollTo();
+		getBulkTagConfirmationBtnDynamic().waitAndClick(10);
+	} else {
+		base.stepInfo("Page Loaded and PopUp Didnot Appear");
+	}
+	return ID;
+}
+/**
+ * @author Jayanthi.Ganesan
+ * This method will perform Advanced search when search goes background
+ * @param SearchString
+ * @param select
+ * @param i[represents nth number of search performed]
+ * @return
+ */
+public String advancedContentBGSearch(String SearchString,int i) {
+	base. waitForElement( getContentAndMetaDatabtnCurrent());
+	getContentAndMetaDatabtnCurrent().Click();
+	// Enter search string
+	base.waitForElement( getAdvancedContentSearchInputCurrent());
+	getAdvancedContentSearchInputCurrent().SendKeys(SearchString);
+	getAdvanceSearch_btn_Current().waitAndClick(15);
+	driver.waitForPageToBeReady();
+	String id=handleWhenAllResultsPopUpDynamic();
+	if(getspinningPurehit(i).isElementAvailable(2) &&
+	getspinningfamilyHit(i).isElementAvailable(2)&&
+	getspinningThreadedCount(i).isElementAvailable(2)&&
+	getspinningThreadedCount(i).isElementAvailable(2)) {
+		base.passedStep("All tiles are spinning when search is in back ground.");
+	}else {
+		base.failedStep("All tiles are  not spinning when search is in back ground.");
+	}
+	getNewSearchButton().waitAndClick(5);
+	return id;
+}
+
+/**
+ * @author Jayanthi.Ganesan
+ * This method will verify display of search results after a background search without refresh.
+ * @param searchText[search Term]
+ * @param searchNO[Number of saerch term as per the session search list displayed in right side]
+ */
+
+public void verifySearchDisplayWithoutRefresh(String searchText, String searchNO) {
+	getSessionSearchList(searchNO).Click();
+	if (getEnteredSearchText(searchText).isElementAvailable(2)) {
+		base.waitTime(2);
+		List<String> tileResults = base.availableListofElements(getAllTilesResult(searchNO));
+		System.out.println(tileResults);
+		int size = tileResults.size();
+		int limit = size - 2;
+		SoftAssert assertion = new SoftAssert();
+		for (int j = 0; j < limit; j++) {
+			assertion.assertNotNull(tileResults.get(j));
+		}
+		assertion.assertAll();
+		base.passedStep("Search Result should appeared "
+				+ "without Refresh  on Advanced Search Result Screen");
+	}
+}
 }
