@@ -1162,6 +1162,16 @@ public class DocListPage {
 		return driver.FindElementByXPath("//h1[@class='page-title' and contains(text(),'DocList')]");
 	}
 	
+	
+	//Added by Brundha
+	public ElementCollection getChildTableRow(int i) {
+		return driver.FindElementsByXPath("//table[contains(@id,'childlist')]//tbody//tr/td["+i+"]");
+	}
+	
+	public ElementCollection getChildHeader() {
+		return driver.FindElementsByXPath("//table[contains(@id,'childlist')]//tr/th");
+		
+	}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -4419,5 +4429,27 @@ public List<String> gettingAllDocIDs(){
 			e.printStackTrace();
 			base.failedStep("Failed to download selection documents" + e.getMessage());
 		}
+	}
+	
+	
+	
+	/**
+	 * @author Brundha.T
+	 * Method for getting child document in doclist page 
+	 * 
+	 */
+	public ArrayList<String> GettingChildDocumentInDocListPage(int doc) {
+		ArrayList<String> arList = null;
+		int j;
+		
+			 arList = new ArrayList<String>();
+			 List<WebElement> RowCount = getChildTableRow(doc).FindWebElements();
+				for (j = 0; j < RowCount.size(); j++) {
+					driver.waitForPageToBeReady();
+					String row = RowCount.get(j).getText();
+					arList.add(row);
+					System.out.println(row);
+				}
+			 return arList;
 	}
 }
