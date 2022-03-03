@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import org.openqa.selenium.support.Color;
 import org.testng.ITestResult;
@@ -9785,7 +9786,7 @@ public class Production_Regression1 {
 			String VolumeName = Input.randomText + Utility.dynamicNameAppender();
 
 			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
 			SessionSearch sessionSearch = new SessionSearch(driver);
@@ -9849,6 +9850,87 @@ public class Production_Regression1 {
 		}
 
 		 
+		 
+		 /**
+			 * @author Brundha Test case id-RPMXCON-49079
+			 * @DescriptionProduction Document Selection to DocList with Child Documents
+			 * 
+			 */
+			 @Test(groups = { "regression" }, priority = 134)
+			public void verifyingTheParentAndChildDocumentInDoclistPage() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+				base.stepInfo("RPMXCON-49079 -Production Component");
+				base.stepInfo(
+						"Production Document Selection to DocList with Child Documents");
+				
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateTagwithClassification(tagname,"Select Tag Classification");
+
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.searchStringStar);
+				driver.waitForPageToBeReady();
+				sessionSearch.ViewInDocList();
+				DocListPage doc=new DocListPage(driver);
+				doc.selectingParentDocument();
+				doc.bulkTagExistingFromDoclist(tagname);
+				driver.waitForPageToBeReady();
+				doc.getSelectDropDown().waitAndClick(10);
+				doc.getSelectParentDocument().waitAndClick(10);
+				int DocumentId=base.getIndex(doc.getChildHeader(),"DOCID");
+				doc.getChildTableRow(DocumentId);
+				System.out.println(DocumentId);
+				ArrayList<String> DocumentIdInDoclist = doc.GettingChildDocumentInDocListPage(DocumentId);
+
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.getIncludeFamilies().waitAndClick(10);
+				String Document=page.navigatingToDocViewPage();
+				doc.getSelectParentDocument().isElementAvailable(1);
+				if(doc.getSelectParentDocument().isDisplayed()) {
+					doc.getSelectParentDocument().waitAndClick(10);
+					ArrayList<String> selectedDocs = doc.GettingChildDocumentInDocListPage(DocumentId);
+					if(DocumentIdInDoclist.equals(selectedDocs)) {
+						base.passedStep("Parent And Child document is displayed as expected");
+					}else {
+						base.failedStep("Parent and child document is not displayed as expected");}
+				}else {
+					base.failedStep("Parent and child document is not displayed as expected");}
+				doc.getBackToSourceBtn().waitAndClick(10);
+				page.getBackButton().waitAndClick(10);
+				page.getMarkIncompleteButton().Click();
+				page.getIncludeFamilies().waitAndClick(10);
+				String DocCount=page.navigatingToDocViewPage();
+				if(Integer.valueOf(Document)<=Integer.valueOf(DocCount)) {
+					driver.waitForPageToBeReady();
+					doc.getSelectParentDocument().waitAndClick(10);
+					ArrayList<String> IncludeFamilyMembDocs = doc.GettingChildDocumentInDocListPage(DocumentId);
+					if(DocumentIdInDoclist.equals(IncludeFamilyMembDocs)) {
+						base.passedStep("Include family member doc is displayed as expected");
+					}else {
+						base.failedStep("Include family member doc is not displayed as expected");}
+				}else {
+						base.failedStep("Document is not displayed as expected");}
+				loginPage.logout();
+				
+				
+			 }
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
