@@ -334,9 +334,9 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : Verify that PCC-Fitcontent/Reset Zoom icon should be 
 	 * functional from 'Original' and 'Near Dupe' document panel of near dupe comparison'RPMXCON-51704' Sprint : 5
 	 * @throws InterruptedException 
-	 *  @Stabilization - Not done [Test Data updated]
+	 *  @Stabilization - done [Test Data updated]
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 5)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 5)
 	public void verifyResetZoomIconInNearDupeComparisonWindow(String fullName, String userName, String password) throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -392,9 +392,9 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : Verify that Zoom-in, Zoom-out should work from the 
 	 * Original document panel of near dupe comparison window'RPMXCON-51705' Sprint : 5
 	 * @throws InterruptedException 
-	 *  @Stabilization - not done [Test Data updated]
+	 *  @Stabilization - done [Test Data updated]
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 6)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 6)
 	public void verifyZoomInZoomOutIconInNearDupeComparisonWindow(String fullName, String userName, String password) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -822,7 +822,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @throws InterruptedException
 	 * @Stabilization - not done   [Docs need to be ingested]
 	 */
-	//@Test(enabled = true,  groups = { "regression" }, priority = 12)
+	@Test(enabled = true,  groups = { "regression" }, priority = 12)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForNearDupe() throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -897,7 +897,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.performCodeSameForNearDupeDocuments(1);
+		docViewPage.performCodeSameForNearDupeDocuments(2);
 
 		// Edit Coding Stamp and Apply Coding Stamp
 		docViewPage.editCodingFormComplete();
@@ -973,9 +973,9 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : Verify that Near dupe window to see the differences should open,
 	 *  on click of the icon from Analytics Panel > Near Dupe child window'RPMXCON-51709' Sprint : 9
 	 * @throws InterruptedException
-	 * @Stabilization - not done 
+	 * @Stabilization - not done [We need doc with highlighted]
 	 */ 
-	//@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 14) // Doc are need to be ingested
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 14) // Doc are need to be ingested
 	public void verifyNearDupeWindowToSeeDifferenceInTheDocs(String fullName, String userName, String password) throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -993,7 +993,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 		
-		String docToBeSelected = Input.threadData1;
+		String docToBeSelected = Input.nearDupeCompletedDocId;
 		baseClass.stepInfo("Step 2 : Search for documents to get the near dupe documents and drag the result to shopping cart, select action as View in Doc View");
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -1192,7 +1192,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
 			try { // if any tc failed and dint logout!
-				loginPage.logout();
+				loginPage.logoutWithoutAssert();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -1203,7 +1203,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			loginPage.quitBrowser();
+			loginPage.closeBrowser();
 		} finally {
 			//LoginPage.clearBrowserCache();
 		}
