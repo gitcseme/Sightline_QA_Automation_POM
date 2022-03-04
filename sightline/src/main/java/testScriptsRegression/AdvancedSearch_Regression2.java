@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -1002,6 +1003,55 @@ public class AdvancedSearch_Regression2 {
 		loginPage.logout();		
 		}
 	
+	
+	/**
+	 * @author jayanthi 
+	 * @throws InterruptedException
+	 */
+	@Test(dataProvider = "Users",enabled = true, groups = { "regression" }, priority = 23)  
+	public void verifyBGAdvancesearch(String username, String password) throws InterruptedException {
+		
+		SessionSearch search = new SessionSearch(driver);
+		SavedSearch ss = new SavedSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-57202");
+		baseClass.stepInfo("Verify that Search Result appears without"
+				+ " Refresh  on Advanced Search Result Screen");
+		loginPage.loginToSightLine(username, password);
+		baseClass.selectproject(Input.highVolumeProject);
+		String searchText1 = "s";
+		String searchText3 = "2";
+		search.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		search.getAdvancedSearchLinkCurrent().Click();
+		driver.waitForPageToBeReady();
+		int Bgcount = baseClass.initialBgCount();
+
+		search.advancedContentBGSearch(searchText1, 1);
+		search.advancedContentBGSearch(Input.searchString9, 2);
+		search.advancedContentBGSearch(searchText3, 3);
+		ss.navigateToSavedSearchPage();
+		search.navigateToSessionSearchPageURL();
+		search.getNewSearchButton().waitAndClick(5);
+		baseClass.stepInfo("Navigated back to session search page and clicked on  new search button." );
+		// checking for notification for BG search completed status.
+		for (int i = 0; i < 2; i++) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return baseClass.initialBgCount() == Bgcount + 3;
+				}
+			}), Input.wait120);
+			if (baseClass.initialBgCount() == Bgcount + 3) {
+				break;
+			}
+		}
+		baseClass.stepInfo("Notifications are notified for BG Search completion.");
+		search.verifySearchDisplayWithoutRefresh(searchText1, "3");
+		search.verifySearchDisplayWithoutRefresh(Input.searchString9, "2");
+		search.verifySearchDisplayWithoutRefresh(searchText3, "1");
+		loginPage.logout();
+
+	}
+
 	@DataProvider(name = "Export")
 	public Object[][] Export() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, true },
