@@ -125,7 +125,7 @@ public class WorkflowPage {
 	}
 
 	public Element getWorkFlow_WorkFlowID(String WFName) {
-		return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'" + WFName + "'')]//td[1]");
+		return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'" + WFName + "')]//preceding-sibling::td");
 	}
 
 	public Element getWorkFlow_WorkFlowNotificationStatus() {
@@ -300,6 +300,9 @@ public class WorkflowPage {
 		
 		public Element getTableHeader(int i) {
 			return driver.FindElementByXPath("(//table[@id='dt_basic']/thead/tr/th)["+ i +"]");
+		}
+		public Element getEmptyTableMEssage() {
+			return driver.FindElementByXPath("//tbody/tr/td[@class='dataTables_empty']");
 		}
     public WorkflowPage(Driver driver){
 
@@ -1103,7 +1106,23 @@ public class WorkflowPage {
 		saveButton();
 		baseClass.VerifySuccessMessage("Record saved successfully");
 	}
-	
+	/**
+	 * @author Jayanthi.Ganesan
+	 */
+	public void getWorkFlowPage() {
+		  this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		  driver.waitForPageToBeReady();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * This method will filter the work flow table using 'status'
+	 * @param statusTOFilter
+	 */
+	public void filterByStatus(String statusTOFilter) {
+		driver.scrollPageToTop();
+		getStatusDropDown().selectFromDropdown().selectByVisibleText(statusTOFilter);
+		getApplyFilterBtn().waitAndClick(2);
+	}
 	/**
 	 * @author Jayanthi.Ganesan
 	 * This Method will return all values present under respective column across all pages.
