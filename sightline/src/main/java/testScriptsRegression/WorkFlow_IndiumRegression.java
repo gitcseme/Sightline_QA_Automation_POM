@@ -1,5 +1,6 @@
 package testScriptsRegression;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -687,6 +688,90 @@ public class WorkFlow_IndiumRegression {
 		// logout
 		loginPage.logout();
 	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 * @throws AWTException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	public void verifyAllColumnSorting() throws InterruptedException, ParseException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52618");
+		baseClass.stepInfo("To verify that RMU can sort by ascending and descending on all columns");
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		workflow = new WorkflowPage(driver);
+		
+		//verifying Enabled state column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listEnabled = workflow.getTableHeaderValuesPagination("ENABLED STATE", true);
+		workflow.applySorting(true, false, true, "ENABLED STATE");
+		workflow.verifyHeaderSort("ENABLED STATE", true, listEnabled, "Ascending");
+		workflow.applySorting(false, true, true, "ENABLED STATE");
+		workflow.verifyHeaderSort("ENABLED STATE", true, listEnabled, "Descending");
+		
+		//verifying status column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listStatus = workflow.getTableHeaderValuesPagination("STATUS", false);
+		workflow.applySorting(true, false, true, "STATUS");
+		workflow.verifyHeaderSort("STATUS", false, listStatus, "Ascending");
+		workflow.applySorting(false, true, true, "STATUS");
+		workflow.verifyHeaderSort("STATUS", false, listStatus, "Descending");
+		
+		//verifying  Workflow ID column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listWFID = workflow.getTableHeaderValuesPagination("Workflow ID", false);
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		workflow.verifyHeaderSort("Workflow ID", false, listWFID, "Ascending");
+		workflow.applySorting(false, true, true, "Workflow ID");
+		workflow.verifyHeaderSort("Workflow ID", false, listWFID, "Descending");
+		
+		//verifying  Last Modified Date column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listLMF = workflow.getTableHeaderValuesPagination("LAST MODIFIED DATE", false);
+		workflow.applySorting(true, false, true, "LAST MODIFIED DATE");
+		workflow.verifyHeaderSort("LAST MODIFIED DATE", false, listLMF, "Ascending");
+		workflow.applySorting(false, true, true, "LAST MODIFIED DATE");
+		workflow.verifyHeaderSort("LAST MODIFIED DATE", false, listLMF, "Descending");
+		
+		//verifying  Workflow Name column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listWFName = workflow.getTableHeaderValuesPagination("Workflow Name", false);
+		workflow.applySorting(true, false, true, "Workflow Name");
+		workflow.verifyHeaderSort("Workflow Name", false, listWFName, "Ascending");
+		workflow.applySorting(false, true, true, "Workflow Name");
+		workflow.verifyHeaderSort("Workflow Name", false, listWFName, "Descending");
+		
+		//verifying Next Triggered Date column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listTrigger = workflow.getTableHeaderValuesPagination("NEXT TRIGGER DATE", false);
+		workflow.applySorting(true, false, true, "NEXT TRIGGER DATE");
+		workflow.verifyHeaderSort("NEXT TRIGGER DATE", false, listTrigger, "Ascending");
+		workflow.applySorting(false, true, true, "NEXT TRIGGER DATE");
+		workflow.verifyHeaderSort("NEXT TRIGGER DATE", false, listTrigger, "Descending");
+		
+		//verifying Last run actioned doc count  column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listRunCount = workflow.getTableHeaderValuesPagination("LAST RUN ACTIONED DOC COUNT", false);
+		workflow.applySorting(true, false, true, "LAST RUN ACTIONED DOC COUNT");
+		workflow.verifyHeaderSort("LAST RUN ACTIONED DOC COUNT", false, listRunCount, "Ascending");
+		workflow.applySorting(false, true, true, "LAST RUN ACTIONED DOC COUNT");
+		workflow.verifyHeaderSort("LAST RUN ACTIONED DOC COUNT", false, listRunCount, "Descending");
+		
+		//verifying  Created by user column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listCreatedBy = workflow.getTableHeaderValuesPagination("Created By", false);
+		workflow.applySorting(true, false, true, "Created By");
+		workflow.verifyHeaderSort("Created By", false, listCreatedBy, "Ascending");
+		workflow.applySorting(false, true, true, "Created By");
+		workflow.verifyHeaderSort("Created By", false, listCreatedBy, "Descending");
+
+		// logout
+		loginPage.logout();
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

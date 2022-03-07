@@ -2,9 +2,11 @@ package pageFactory;
 
 import static org.testng.Assert.assertTrue;
 
+import java.awt.AWTException;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -292,6 +294,13 @@ public class WorkflowPage {
 			return driver.FindElementsByXPath("//div[@class='dataTables_scrollHead']//tr/th[@class='sorting']");
 			
 	}
+		public Element getSelectedEnabledStateRadioBtn(int j,int headerIndex,int enabledIndex) {
+			return driver.FindElementByXPath("(//tr["+j+"]//td["+headerIndex+"]//label["+enabledIndex+"]/input[@checked=''])");
+		}
+		
+		public Element getTableHeader(int i) {
+			return driver.FindElementByXPath("(//table[@id='dt_basic']/thead/tr/th)["+ i +"]");
+		}
     public WorkflowPage(Driver driver){
 
         this.driver = driver;
@@ -1093,5 +1102,120 @@ public class WorkflowPage {
 		notificationTab();
 		saveButton();
 		baseClass.VerifySuccessMessage("Record saved successfully");
+	}
+	
+	/**
+	 * @author Jayanthi.Ganesan
+	 * This Method will return all values present under respective column across all pages.
+	 * @param eleName [Name of Column ]
+	 * @param EnabledState[it should be true if we want to take value from enabled state
+	 * column else it should be false.]
+	 * @return  List of values under particular column.
+	 */
+	public List<String> getTableHeaderValuesPagination(String eleName,boolean EnabledState) {
+		driver.scrollingToBottomofAPage();
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		int index=baseClass.getIndex(getTableHeader(), eleName);
+		List<String> tableValue = new ArrayList<>();
+		for (int i = 0; i < count; i++) {
+			driver.waitForPageToBeReady();
+			int k=1;
+			List<WebElement> elementList = null;
+			elementList = getTableColumnData(index).FindWebElements();
+			if(EnabledState) {
+				for (WebElement wenElementNames : elementList) {
+					String data = wenElementNames.getText();
+					if(data.equals(" ")) {
+					tableValue.add(data);
+					}			
+					else {
+						if(getSelectedEnabledStateRadioBtn(k,index,1).isElementAvailable(2)) {
+					
+					tableValue.add("Enabled");
+					}
+						if(getSelectedEnabledStateRadioBtn(k,index,2).isElementAvailable(2)) {
+							
+							tableValue.add("Disabled");
+							}				
+			}
+					k++;}
+			}
+			else {	
+			 for (WebElement wenElementNames : elementList) {
+					String data = wenElementNames.getText();
+					tableValue.add(data);
+			}
+			}
+			System.out.println(tableValue);
+			System.out.println(tableValue.size());
+				driver.scrollingToBottomofAPage();
+				if(i!=count-1) {
+				baseClass.waitForElement(getWorkFlowPaginationNextButton());
+				getWorkFlowPaginationNextButton().waitAndClick(5);
+				}		
+		}
+		return tableValue;
+		
+	}
+/**
+ * @author Jayanthi.Ganesan
+ * This method will perform column ascending or descending order sorting.
+ * @param ascending[True if we want to do ascending order sort]
+ * @param descending[True if we want to do descending order sort]
+ * @param URL
+ * @param eleName[Name of column in which ascending sort to be performed]
+ */
+	public void applySorting(boolean ascending, boolean descending,boolean URL,String eleName) {
+		if(URL){
+			this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+			driver.waitForPageToBeReady();
+		}
+		String sortOrder;
+		int index=baseClass.getIndex(getTableHeader(), eleName);
+		if(descending) {
+			baseClass.waitForElement(getTableHeader(index));
+			getTableHeader(index).ScrollTo();
+			getTableHeader(index).Click();
+			baseClass.waitTime(1);
+			if(!eleName.equals("Workflow ID")) {
+			getTableHeader(index).Click();
+			}
+			baseClass.waitTime(1);
+			 sortOrder=getTableHeader(index).GetAttribute("aria-sort");
+			if (sortOrder.equalsIgnoreCase("descending")) {	
+				baseClass.stepInfo(getTableHeader(index).getText() + " column is sorted in descending order");
+			}
+		
+		else {
+			baseClass.stepInfo(getTableHeader(index).getText() + " column is not  sorted in descending order");
+		}
+		}
+		if(ascending) {
+			getTableHeader(index).ScrollTo();
+			getTableHeader(index).Click();
+			driver.waitForPageToBeReady();
+			sortOrder=getTableHeader(index).GetAttribute("aria-sort");
+			if(sortOrder.equalsIgnoreCase("ascending") ){
+				baseClass.stepInfo(getTableHeader(index).getText() + " column is sorted in ascending order");
+			}
+			else {
+				baseClass.stepInfo(getTableHeader(index).getText() + " column is not  sorted in ascending order");
+			}
+		}
+	}
+	/***
+	 * @author Jayanthi.Ganesan
+	 * This method verify whether a column sorted correctly based on the order applied
+	 * @param eleName[Name of column]
+	 * @param EnabledState[it should be true if we want to take value from enabled state
+	 * column else it should be false.]
+	 * @param expectedList[List of values under the column before applying sorting]
+	 * @param sortType[Type of sort applied on the column]
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 */
+	public void verifyHeaderSort(String eleName,boolean enabled,List<String> expectedList,String sortType) throws InterruptedException, AWTException {
+		List<String> listAfterSort= getTableHeaderValuesPagination(eleName,enabled);
+		baseClass.verifyOriginalSortOrder(listAfterSort,expectedList, sortType, true);
 	}
 }
