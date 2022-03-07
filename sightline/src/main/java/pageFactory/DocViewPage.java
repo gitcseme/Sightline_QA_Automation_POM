@@ -3254,6 +3254,10 @@ public class DocViewPage {
 	public Element searchResult() {
 		return driver.FindElementByXPath("//*[@class='count']");
 	}
+	
+	public ElementCollection getDocViewDownload_Options() {
+		return driver.FindElementsByXPath("//ul[@id='documentTypeDropDown']/li/a");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -26133,6 +26137,37 @@ public class DocViewPage {
 			base.passedStep("CodeSameAs icon is not displayed for the selected docs in child window");
 
 		}
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
+	 * @Description:This method used for download icon validation
+	 * @param downloadFalse 
+	 * @param downloadTrue
+	 */
+	
+	public void verifyNativeFile(boolean downloadFalse,boolean downloadTrue) {
+		driver.waitForPageToBeReady();
+		if (downloadFalse==false) {
+			base.waitForElement(getDocView_IconDownload());
+			boolean notPresent=getDocView_IconDownload().Displayed();
+			softAssertion.assertFalse(notPresent);
+			base.passedStep("Download icon not displayed in docview page");
+		}
+		else if (downloadTrue==true) {
+			base.waitForElement(getDocView_IconDownload());
+			boolean flag=getDocView_IconDownload().Displayed();
+			softAssertion.assertTrue(flag);
+			base.passedStep("Download icon displayed in docview page");
+			getDocView_IconDownload().waitAndClick(5);
+			boolean enabledFlag=getDocView_IconDownload().Enabled();
+			softAssertion.assertTrue(enabledFlag);
+			base.waitForElementCollection(getDocViewDownload_Options());
+			int count=getDocViewDownload_Options().size();
+			base.stepInfo("Download option count: "+count);
+			base.passedStep("User can able to download the txt.file");
+		}
+		softAssertion.assertAll();
 	}
 
 }
