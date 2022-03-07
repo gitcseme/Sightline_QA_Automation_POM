@@ -2087,17 +2087,19 @@ public class DocViewMetaDataPage {
 			String presentDocID1 = getPresentDocumentSelectedID().getText().trim();
 			String nextDocIDToPresentDoc = getNextDocumentIdToSelectedDoc().getText().trim();
 			getSaveAndNextLink().Click();
-			base.VerifySuccessMessage("Document saved successfully");
-			driver.waitForPageToBeReady();
-			driver.scrollPageToTop();
-			getPresentDocumentSelectedID().isElementAvailable(15);
-			String presentDocID2 = getPresentDocumentSelectedID().getText().trim();
-			if (nextDocIDToPresentDoc.contentEquals(presentDocID2) && !(presentDocID1.contentEquals(presentDocID2))) {
-				base.passedStep("Navigated to next document of Id :: " + presentDocID2
-						+ " from present document of ID :: " + presentDocID1 + " successfully");
-			} else {
-				base.failedStep("Navigating to next document of Id :: " + presentDocID2
-						+ " from present document of ID :: " + presentDocID1 + " is failed");
+			if(base.getSuccessMsgHeader().getText().toString().contains("Success")) {
+				base.VerifySuccessMessage("Document saved successfully");
+				driver.waitForPageToBeReady();
+				driver.scrollPageToTop();
+				getPresentDocumentSelectedID().isElementAvailable(15);
+				String presentDocID2 = getPresentDocumentSelectedID().getText().trim();
+				if (nextDocIDToPresentDoc.contentEquals(presentDocID2) && !(presentDocID1.contentEquals(presentDocID2))) {
+					base.passedStep("Navigated to next document of Id :: " + presentDocID2
+							+ " from present document of ID :: " + presentDocID1 + " successfully");
+				} else {
+					base.failedStep("Navigating to next document of Id :: " + presentDocID2
+							+ " from present document of ID :: " + presentDocID1 + " is failed");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -3069,4 +3071,51 @@ public class DocViewMetaDataPage {
 		UtilityLog.info("Impersnated from RMU to Reviewer");
 	}
 
+
+	/**
+	 * @author Gopinath Modified by : Gopinath Modified date : NA
+	 * @Description : Method for verifying Remark Actions To History .
+	 */
+	public void verifyRemarkActionsToHistory() {
+		try {
+			String remarkHistory = null;
+			String remarkHistory2 = null;
+
+			driver.scrollingToElementofAPage(getFieldNameTableColumnHeader());
+			getFieldNameTableColumnHeader().ScrollTo();
+			getFieldNameTableColumnHeader().isElementAvailable(15);
+			base.waitForElement(getFieldNameTableColumnHeader());
+			driver.scrollingToBottomofAPage();
+			Actions actions = new Actions(driver.getWebDriver());
+			driver.scrollingToElementofAPage(getHistoryTab());
+			getHistoryTab().ScrollTo();
+			getHistoryTab().isElementAvailable(15);
+			actions.moveToElement(getHistoryTab().getWebElement()).click().perform();
+
+			for (int count = 0; count < 2; count++) {
+				Thread.sleep(Input.wait30 / 10);
+				getTimeStamp().isElementAvailable(15);
+				base.waitForElement(getTimeStamp());
+				getTimeStamp().waitAndClick(15);
+			}
+			getActionByRowInHistory(2).isElementAvailable(15);
+			actions.moveToElement(getActionByRowInHistory(2).getWebElement()).build().perform();
+			Thread.sleep(Input.wait30 / 10);
+
+			remarkHistory = getActionByRowInHistory(2).getText().toLowerCase().trim();
+			getActionByRowInHistory(1).isElementAvailable(15);
+			remarkHistory2 = getActionByRowInHistory(1).getText().toLowerCase().trim();
+
+			if (remarkHistory.equalsIgnoreCase("remarksadded") || remarkHistory2.equalsIgnoreCase("remarksadded")) {
+				base.passedStep("Remarked history displayed in history table successfully");
+			} else {
+				base.failedStep("Remarked history not displayed in history table");
+			}
+
+		} catch (Exception e) {
+			base.failedStep("Hidden properties in history table is not blank" + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
 }

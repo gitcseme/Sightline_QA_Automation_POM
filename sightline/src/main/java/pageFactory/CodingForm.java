@@ -2810,10 +2810,13 @@ public class CodingForm {
 	public void searchAndEditCodeForm(String codeFormName, String projectFieldName) {
 		try {
 			driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			base.waitTime(3);
 			base.waitForElement(getCodingForm_SearchBox());
 			getCodingForm_SearchBox().SendKeys(codeFormName);
 			// getCodingForm_SearchButton().Click();
+			driver.waitForPageToBeReady();
 			base.waitForElement(getCodingForm_EditButton(codeFormName));
+			getCodingForm_EditButton(codeFormName).isElementAvailable(15);
 			getCodingForm_EditButton(codeFormName).Click();
 			driver.waitForPageToBeReady();
 			base.waitForElement(getCodingForm_EDITABLE_METADATA_Tab());
