@@ -18243,4 +18243,52 @@ public class ProductionPage {
 				base.failedStep("verification failed");
 			}
 		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param prefixID
+		 * @param suffixID
+		 * @param beginningBates
+		 * @throws IOException
+		 * @Description generated file pdf annotation verification 
+		 */
+		public void pdf_Verification_In_Generated_Pdf(String prefixID, String suffixID, String beginningBates) throws IOException {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			PDDocument document = PDDocument.load(new File(home+"/Downloads/VOL0001/PDF/0001/"+prefixID+beginningBates+suffixID+".pdf"));
+			if (!document.isEncrypted()) {
+			    PDFTextStripper stripper = new PDFTextStripper();
+			    String text = stripper.getText(document);
+			    System.out.println("Text:" + text);
+			    if(text != null) {
+			    	base.passedStep("Documents is produced with annotations");
+			    }
+			}
+			document.close();
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param firstFile
+		 * @param lastFile
+		 * @param prefixID
+		 * @param suffixID
+		 * @param verificationText
+		 * @throws IOException
+		 * @Description Downloaded pdf file verification
+		 */
+		public void pdf_Verification_In_Generated_PlaceHolder(int firstFile, int lastFile, String prefixID, String suffixID, String verificationText) throws IOException {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			for(int i=firstFile; i<lastFile ;i++) {
+			PDDocument document = PDDocument.load(new File(home+"/Downloads/VOL0001/PDF/0001/"+prefixID+i+suffixID+".pdf"));
+			if (!document.isEncrypted()) {
+			    PDFTextStripper stripper = new PDFTextStripper();
+			    String text = stripper.getText(document);
+			    System.out.println("Text:" + text);
+			    if(text.contains(verificationText)) {
+			    	base.passedStep("Documents is produced with annotations");
+			    }
+			}
+			document.close();
+			}
+		}
 }
