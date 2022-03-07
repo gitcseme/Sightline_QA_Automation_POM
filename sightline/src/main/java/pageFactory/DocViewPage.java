@@ -10030,7 +10030,9 @@ public class DocViewPage {
 
 	public void openNearDupeComparisonWindowForDocumentWhichHasMorePages(String documentId)
 			throws InterruptedException {
-
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().ScrollTo();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDocView_Analytics_NearDupeTab().Displayed();
