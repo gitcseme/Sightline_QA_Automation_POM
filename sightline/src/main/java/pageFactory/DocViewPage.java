@@ -3255,8 +3255,8 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@class='count']");
 	}
 	
-	public Element getDocViewDownload_Options() {
-		return driver.FindElementByXPath("//ul[@id='documentTypeDropDown']/li");
+	public ElementCollection getDocViewDownload_Options() {
+		return driver.FindElementsByXPath("//ul[@id='documentTypeDropDown']/li/a");
 	}
 
 	public DocViewPage(Driver driver) {
@@ -26162,8 +26162,9 @@ public class DocViewPage {
 			getDocView_IconDownload().waitAndClick(5);
 			boolean enabledFlag=getDocView_IconDownload().Enabled();
 			softAssertion.assertTrue(enabledFlag);
-			base.waitForElement(getDocViewDownload_Options());
-			getDocViewDownload_Options().waitAndClick(5);
+			base.waitForElementCollection(getDocViewDownload_Options());
+			int count=getDocViewDownload_Options().size();
+			base.stepInfo("Download option count: "+count);
 			base.passedStep("User can able to download the txt.file");
 		}
 		softAssertion.assertAll();
