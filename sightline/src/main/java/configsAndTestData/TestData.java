@@ -418,6 +418,8 @@ public class TestData {
 		public String stampRed;
 		public String stampGreen;
 		public String fileGroup;
+		public String document;
+		public String fileTypeInNativeDocs;
 		
 		//Added by gopinath - 08/12/2021
 		public String anotherRemarkMessage;
