@@ -304,6 +304,9 @@ public class WorkflowPage {
 		public Element getEmptyTableMEssage() {
 			return driver.FindElementByXPath("//tbody/tr/td[@class='dataTables_empty']");
 		}
+		public Element getStateDropDown() {
+			return driver.FindElementByXPath("//select[@id='WorkFlowState']");
+		}
     public WorkflowPage(Driver driver){
 
         this.driver = driver;
@@ -1236,5 +1239,15 @@ public class WorkflowPage {
 	public void verifyHeaderSort(String eleName,boolean enabled,List<String> expectedList,String sortType) throws InterruptedException, AWTException {
 		List<String> listAfterSort= getTableHeaderValuesPagination(eleName,enabled);
 		baseClass.verifyOriginalSortOrder(listAfterSort,expectedList, sortType, true);
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * This method will filter the work flow table using 'Enabled state'
+	 * @param stateTOFilter
+	 */
+	public void filterByState(String stateTOFilter) {
+		driver.scrollPageToTop();
+		getStateDropDown().selectFromDropdown().selectByVisibleText(stateTOFilter);
+		getApplyFilterBtn().waitAndClick(2);
 	}
 }

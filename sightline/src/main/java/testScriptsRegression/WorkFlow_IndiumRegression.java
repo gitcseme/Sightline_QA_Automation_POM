@@ -707,7 +707,7 @@ public class WorkFlow_IndiumRegression {
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-		
+		 
 	    page = new TagsAndFoldersPage(driver);
 		page.CreateFolder(folderName,Input.securityGroup);
 
@@ -920,8 +920,80 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		// logout
 		loginPage.logout();
 	}
+/**
+ * @author Jayanthi.Ganesan
+ * @throws InterruptedException
+ * @throws ParseException
+ * @throws AWTException
+ */
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	public void verifyEnabledStateFilter() throws InterruptedException, ParseException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52656");
+		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected 'Enabled State'.");
+		int Id;
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		String assgn = "Assgn" + Utility.dynamicNameAppender();
 
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
+		page = new TagsAndFoldersPage(driver);
+		page.CreateFolder(folderName, Input.securityGroup);
+
+		// Search for any string
+		search = new SessionSearch(driver);
+	    search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		
+
+		// creating new work flow wirh enabled state.
+		workflow = new WorkflowPage(driver);
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, assgn, false, 1);
+		workflow.selectWorkFlowUsingPagination(wfName);
+
+		// Running workflow
+		workflow.actionToRunWorkFlow();
+		// Page refresh
+		workflow.refreshingThePage();
+		baseClass.waitTime(10);
+		
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		//getting List Of Enabled state column before applying filter using Pagination.
+		List<String> listEnabled = workflow.getTableHeaderValuesPagination("ENABLED STATE", true);
+		//taking count of Enabled state work flows
+		int occurence = baseClass.findNoOfOccurences(listEnabled, "ENABLED");
+		//applying filter for  EnabledState.
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		workflow.filterByState("Enabled");
+		//taking count of Enabled state work flows after applying enabled state filter.
+		List<String> listEnabledAfterFilter = workflow.getTableHeaderValuesPagination("ENABLED STATE", true);
+		SoftAssert assertion=new SoftAssert();
+		
+		//Validation part 
+		//Verifying filtered list Count
+		if (listEnabledAfterFilter.size() == occurence) {
+			//Verifying filtered list contains  only enabled state
+			for(int i=0;i<listEnabledAfterFilter.size();i++) {
+				assertion.assertTrue( listEnabledAfterFilter.get(i).equalsIgnoreCase("ENABLED")) ;
+			}
+			assertion.assertAll();
+			baseClass.passedStep("Sucessfully verified that Workflow details  filtered as per the selected 'Enabled State'.");
+		} else {
+			baseClass.failedStep(" Workflow details not filtered as per the selected 'Enabled State'.");
+		}
+
+		// logout
+		loginPage.logout();
+		}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
