@@ -2658,6 +2658,18 @@ public class ProductionPage {
 		public Element getWorkProductFolderName(String FolderName) {
 			return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'"+FolderName+"')]");
 		}
+
+		public Element getDocPages() {
+			return driver.FindElementByXPath("//label[contains(text(),'Number of Natives:')]/..//label[2]");
+		}
+		
+		public Element getRedactDATCheckBox(int i) {
+			return driver.FindElementByXPath("//input[@id='ChkRedacted_"+i+"']/following-sibling:: i");
+			
+		}
+		public Element getPrivledgedDATCheckBox(int i) {
+			return driver.FindElementByXPath("//input[@id='ChkPrev_"+i+"']/following-sibling:: i");
+		}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -18242,5 +18254,19 @@ public class ProductionPage {
 				System.out.println("passed value : "+ text);
 				base.failedStep("verification failed");
 			}
+		}
+		
+		
+		/**
+		 * @author Brundha
+		 * @description :Selecting CheckBox In Dat section
+		 * 
+		 */
+		public void selectingCheckboxInDatSection(int i) {
+			base.waitForElement(getRedactDATCheckBox(i));
+			getRedactDATCheckBox(i).Click();
+			base.waitForElement(getPrivledgedDATCheckBox(i));
+			getPrivledgedDATCheckBox(i).Click();
+			
 		}
 }

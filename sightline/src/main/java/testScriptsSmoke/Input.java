@@ -494,6 +494,9 @@ public class Input {
 	public static String stampRed;
 	public static String stampGreen;
 	public static String fileGroup;
+	public static String document;
+	public static String fileTypeInNativeDocs;
+	
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -1109,6 +1112,8 @@ public class Input {
 		stampRed = testData.getStampRed();
 		stampGreen = testData.getStampGreen();
 		fileGroup=testData.getFileGroup();
+		document=testData.getDocument();
+		fileTypeInNativeDocs=testData.getFileTypeInNativeDocs();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();

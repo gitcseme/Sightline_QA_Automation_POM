@@ -1,8 +1,11 @@
 package testScriptsRegression;
 
 import java.awt.AWTException;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9931,6 +9934,186 @@ public class Production_Regression1 {
 				
 				
 			 }
+			 
+			 
+			 /**
+				 * @author Brundha.T created on:NA modified by:NA TESTCASE No:RPMXCON-48063
+				 * @Description:To Verify placeholders of the docs of the selected file types
+				 *                 are produced in Production.
+				 */
+				@Test(groups = { "regression" }, priority = 135)
+				public void verifyTheFileTypeInProduction() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					loginPage.logout();
+					loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+					base.stepInfo("Test case id : RPMXCON-48063-production component ");
+					base.stepInfo("To Verify placeholders of the docs of the selected file types are produced in Production.");
+
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					String prefixID = Input.randomText + Utility.dynamicNameAppender();
+					String suffixID = Input.randomText + Utility.dynamicNameAppender();
+					String Text = Input.searchString2;
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(Input.testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					sessionSearch.bulkTagExisting(tagname);
+				
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(2);
+					int firstFile = Integer.parseInt(beginningBates);
+
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSection();
+					page.fillingTIFFWithNativelyProducedDocs(Input.fileTypeInNativeDocs, Text);
+					page.navigateToNextSection();
+					page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					String DocPages = page.getDocPages().getText();
+					String[] doccount = DocPages.split(" ");
+					String DocumentCount = doccount[0];
+					int DocCount = Integer.parseInt(DocumentCount);
+					int lastFile = DocCount;
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					page.extractFile();
+					
+					String home = System.getProperty("user.home");
+					Ocr.setUp();
+					Ocr ocr = new Ocr();
+					ocr.startEngine("eng", Ocr.SPEED_FASTEST);
+
+					for (int i = firstFile; i < lastFile; i++) {
+						String Tifffile = ocr.recognize(
+								new File[] {
+										new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff") },
+								Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
+						System.out.println(Tifffile);
+						if (Tifffile.contains(Text)) {
+							base.passedStep("Placeholder Text is displayed for particular document");
+						} else {
+							base.failedStep(" verification failed");}}
+
+					ocr.stopEngine();
+					for (int i = firstFile; i < lastFile; i++) {
+						File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".doc");
+
+						if (Native.exists()) {
+							base.passedStep("Native file are generated correctly : " + prefixID + i + suffixID + ".doc");
+							System.out.println("passeed");
+						} else {
+							base.failedStep("verification failed");}
+					}
+					loginPage.logout();
+				}
+
+				/**
+				 * @authorBrundha created on:NA modified by:NA TESTCASE No:RPMXCON-49102
+				 * @Description:To verify that In DAT file, Email metadata should not be
+				 *                 displayed if document is redacted and privileged
+				 */
+				@Test(groups = { "regression" }, priority = 136)
+				public void verifyEndBatesInProduction() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					
+					base.stepInfo("Test case id : RPMXCON-49102 Production component");
+					base.stepInfo(
+							"To verify that In DAT file, Email metadata should not be displayed if document is redacted and privileged");
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearchForTwoItems(testData1,Input.document);
+					sessionSearch.bulkTagExisting(tagname);
+					sessionSearch.ViewInDocView();
+
+					DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+					docViewRedactions.selectDoc1();
+					driver.waitForPageToBeReady();
+					docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+					driver.waitForPageToBeReady();
+					docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
+
+					loginPage.logout();
+					loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+					
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates = page.getRandomNumber(2);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.getDAT_AddField().waitAndClick(5);
+					page.addDatField(1, "Email", "EmailAuthorNameAndAddress");
+					page.selectingCheckboxInDatSection(1);
+					page.addNewFieldOnDAT();
+					page.addDatField(2, "Email", "EmailToNamesAndAddresses");
+					page.selectingCheckboxInDatSection(2);
+					page.addNewFieldOnDAT();
+					page.addDatField(3, "Email", "EmailCCNamesAndAddresses");
+					page.selectingCheckboxInDatSection(3);
+					page.addNewFieldOnDAT();
+					page.addDatField(4, "Email", "EmailBCCNamesAndAddresses");
+					page.selectingCheckboxInDatSection(4);
+					page.navigateToNextSection();
+					page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionWithTag(tagname);
+					page.getIncludeFamilies().waitAndClick(10);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					page.extractFile();
+					driver.waitForPageToBeReady();
+					String home = System.getProperty("user.home");
+					String name = page.getProduction().getText().trim();
+					driver.waitForPageToBeReady();
+					File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
+					if (DatFile.exists()) {
+						base.passedStep("Dat file is displayed as expected");
+					} else {
+						base.failedStep("Dat file is not displayed as expected");
+					}
+					BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(DatFile), "UTF16"));
+						StringBuilder sb = new StringBuilder();
+						String line = br.readLine();
+						while (line != null) {
+							sb.append(line);
+							sb.append(System.lineSeparator());
+							line = br.readLine();}
+						String everything = sb.toString();
+						System.out.println(everything);
+						String valueString=Input.metaDataCN;
+						if(!everything.contains(valueString)) {
+							base.passedStep("Dat Value is displayed as expected");
+						}else {
+							base.failedStep("Dat value is not displayed as expected");}
+						br.close();
+					
+					loginPage.logout();
+				}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
