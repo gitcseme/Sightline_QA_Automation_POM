@@ -2660,7 +2660,7 @@ public class ProductionPage {
 		}
 
 		public Element getDocPages() {
-			return driver.FindElementByXPath("//label[contains(text(),'Number of Natives:')]/..//label[2]");
+			return driver.FindElementByXPath("//label[contains(text(),'Number of Natives:')]/following-sibling:: i");
 		}
 		
 		public Element getRedactDATCheckBox(int i) {
