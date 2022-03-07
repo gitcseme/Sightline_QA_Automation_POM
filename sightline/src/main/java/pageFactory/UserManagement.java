@@ -110,6 +110,14 @@ public class UserManagement {
 	 	 public Element getRowByFirstName(int rowNum){ return driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr["+rowNum+"]/td[1]"); }
 	 	 public Element getDeleteButtonByRow(int rowNum){ return driver.FindElementByXPath("//table[@id='dtUserList']//tr["+rowNum+"]/td[8]/a[contains(text(),'Delete')] | //table[@id='dtUserList']//tr["+rowNum+"]/td[9]/a[contains(text(),'Delete')]"); }	   
 	 	 
+	 	 // Added by baskar
+	 	 public Element getSelectUserToEdit(String projectName){ return driver.FindElementByXPath("//table[@id='dtUserList']//tr//td[text()='"+projectName+"']//..//a[contains(text(),'Edit')]"); }
+	 	 public Element getNativeDownLoadCheck(){ return driver.FindElementByXPath("//input[@id='UserRights_CanDownloadNative']//parent::label//i"); }
+	     public Element getSaveEditUser(){ return driver.FindElementByXPath("//button[normalize-space()='Save']"); }
+	     public Element getLoginUserEdit(){ return driver.FindElementByXPath("//table[@id='dtUserList']//tr//td//a[text()='Edit']"); }
+	 	 public Element getIngestion(){ return driver.FindElementByXPath("//input[@id='UserRights_CanIngestions']//parent::label//i"); }
+	 	 public Element getIngestionTab(){ return driver.FindElementByXPath("//label[text()='Ingestions']//parent::a"); }
+
 	 	 
 	 	 
 	 	 public UserManagement(Driver driver){
@@ -707,6 +715,106 @@ public void setPassword(String pwd) {
 				 e.printStackTrace();
 				 bc.failedStep("Exception occured while deleting added user"+e.getLocalizedMessage());
 			 }
-
 		}
+		 
+		 /**
+			 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
+			 * @Description:Methods for passing user name
+			 * @param username
+			 */
+			public void passingUserName(String username) throws Exception {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getUserNameFilter());
+				getUserNameFilter().SendKeys(username);
+			}
+			
+			/**
+			 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
+			 * @Description:Methods for apply filter button
+			 */
+			public void applyFilter() throws Exception {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getFilerApplyBtn());
+				getFilerApplyBtn().waitAndClick(5);
+			}
+			
+			/**
+			 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
+			 * @Description:Methods for Edit user
+			 */
+			public void editSelectedUser(String project) throws Exception {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getSelectUserToEdit(project));
+				getSelectUserToEdit(project).waitAndClick(5);
+			}
+			
+			/**
+			 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
+			 * @Description:Methods for Edit functionality
+			 */
+			public void editFunctionality(String project) throws Exception {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getSelectUserToEdit(project));
+				getSelectUserToEdit(project).waitAndClick(5);
+			}
+			
+			/**
+			 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
+			 * @Description:Methods for Edit functionality
+			 */
+			public void editLoginUser() throws Exception {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getLoginUserEdit());
+				getLoginUserEdit().waitAndClick(5);
+			}
+			
+			/**
+			 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
+			 * @Description:Methods Native download checkbox
+			 */
+			public void nativeDownload() throws Exception {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getNativeDownLoadCheck());
+				getNativeDownLoadCheck().waitAndClick(5);
+				bc.waitForElement(getSaveEditUser());
+				getSaveEditUser().waitAndClick(10);
+			}
+			
+			/**
+			 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
+			 * @Description:Methods Ingestion checkbox
+			 */
+			public void verifyIngestion() throws Exception {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getIngestion());
+				getIngestion().waitAndClick(5);
+				bc.waitForElement(getSaveEditUser());
+				getSaveEditUser().waitAndClick(10);
+			}
+			
+			/**
+			 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
+			 * @Description:Methods for ingestion validation icon
+			 */
+			
+			public void verifyIngestionIcon(boolean downloadFalse,boolean downloadTrue) {
+				driver.waitForPageToBeReady();
+				if (downloadFalse==false) {
+					if (getIngestionTab().isElementAvailable(4)) {
+						bc.failedStep("Ingestion tab icon available");
+					}
+					else {
+						bc.passedStep("Ingestion tab icon not present in left of the menu");
+					}
+				}
+				else if (downloadTrue==true) {
+					if (getIngestionTab().isElementAvailable(4)) {
+						bc.passedStep("Ingestion tab icon not present in left of the menu");
+					}
+					else {
+						bc.failedStep("Ingestion tab icon available");
+					}
+				}
+				softAssertion.assertAll();
+			}
 }
