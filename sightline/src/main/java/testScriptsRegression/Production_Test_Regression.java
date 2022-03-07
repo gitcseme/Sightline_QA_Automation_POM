@@ -6271,6 +6271,142 @@ public class Production_Test_Regression {
 				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 				loginPage.logout();
 			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-60902
+			 * @Description Verify Production should be generated successfully for the documents with annotation 
+			 * 
+			 */
+			@Test(groups = { "regression" }, priority = 90)
+			public void verifyProdGenDocumentWithAnnotation() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-60902 -Production Component");
+				base.stepInfo("Verify Production should be generated successfully for the documents with annotation ");
+				
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+				BaseClass base = new BaseClass(driver);
+				base.selectproject("AutomationAdditionalDataProject");
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+				DataSets dataset = new DataSets(driver);
+				base.stepInfo("Navigating to dataset page");
+				dataset.navigateToDataSetsPage();
+				base.stepInfo("Selecting uploadedset and navigating to doclist page");
+				dataset.selectDataSetWithName("PDF Annotations");
+				DocListPage doc = new DocListPage(driver);
+				driver.waitForPageToBeReady();
+
+				doc.selectAllDocs();
+				doc.docListToBulkRelease(Input.securityGroup);
+				doc.bulkTagExistingFromDoclist(tagname);
+
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingPDFSectionwithNativelyPlaceholder(tagname);
+				page.fillingTextSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				page.extractFile();
+				page.pdf_Verification_In_Generated_Pdf(prefixID, suffixID, beginningBates);
+				
+				base.passedStep("Verified Production should be generated successfully for the documents with annotation ");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");	
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				
+			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-56146
+			 * @Description Verify that if problem docs is assigned as Priv doc then Production should generated with Priv Placeholder for the same document 
+			 * 
+			 */
+			@Test(groups = { "regression" }, priority = 91)
+			public void verifyPrivPlaceholderGenerateSuccessfully() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-56146 -Production Component");
+				base.stepInfo("Verify that if problem docs is assigned as Priv doc then Production should generated with Priv Placeholder for the same document");
+				
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+				BaseClass base = new BaseClass(driver);
+				base.selectproject("AutomationAdditionalDataProject");
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				int docno = sessionSearch.MetaDataSearchInBasicSearch(Input.docName, "ID00002051");
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				int firstFile = Integer.parseInt(beginningBates);
+				int lastfile = firstFile + docno;
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingPDFSection(tagname);
+				page.fillingTextSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				page.extractFile();
+				page.pdf_Verification_In_Generated_PlaceHolder(firstFile, lastfile, prefixID, suffixID, Input.tagNameTechnical);
+				
+				base.passedStep("Verified that if problem docs is assigned as Priv doc then Production should generated with Priv Placeholder for the same document");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");	
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+				
+			}
+			
+			
+			
+			
 			
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
