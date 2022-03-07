@@ -323,6 +323,10 @@ public class SavedSearch {
 	}
 
 	// Added By Jeevitha
+	public Element getExecutePopMSg() {
+		return driver.FindElementByXPath("//p[@class='pText']");
+	}
+
 	public ElementCollection getPageNumCount() {
 		return driver.FindElementsByXPath("//ul[@class='pagination pagination-sm']//li");
 	}
@@ -4938,7 +4942,7 @@ public class SavedSearch {
 		getSavedSearch_ApplyFilterButton().waitAndClick(10);
 		base.waitForElement(getSavedSearchCB(searchName));
 		base.waitTillElemetToBeClickable(getSavedSearchCB(searchName));
-		if (getSavedSearchCB(searchName).Displayed() == true) {
+		if (getSavedSearchCB(searchName).isElementAvailable(3)) {
 			softAssertion.assertTrue(true);
 			base.stepInfo("Search Found :" + searchName);
 		} else {
@@ -6690,7 +6694,7 @@ public class SavedSearch {
 	}
 
 	/**
-	 * @Author Jeevitha
+	 * @Author Jeevitha @Modified By jeevitha @Modified On 4/03/2022
 	 * @param SGtoShare
 	 * @param newNodeList
 	 * @param selectIndex
@@ -6698,8 +6702,11 @@ public class SavedSearch {
 	 */
 	public void verifyStatusAndCountInAllChildNode(String SGtoShare, List<String> newNodeList, int selectIndex,
 			HashMap<String, String> nodeSearchpair) {
+		List<String> list = new ArrayList<>();
+
 		getSavedSearchGroupName(SGtoShare).waitAndClick(10);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
+
+		rootGroupExpansion();
 		String node = null, searchiD;
 		for (int i = 0; i <= nodeSearchpair.size() - 1; i++) {
 			node = newNodeList.get(i);
@@ -6712,27 +6719,31 @@ public class SavedSearch {
 				base.passedStep(node + " : Search group is Present in " + SGtoShare);
 				getSavedSearchGroupName(node).Click();
 				if (i >= selectIndex) {
-					savedSearch_SearchandSelect(nodeSearchpair.get(node), "No");
-					driver.waitForPageToBeReady();
 
-					// GetStatus
-					String searchStatus = getLastStatus();
-					base.stepInfo(nodeSearchpair.get(node) + " Status : " + searchStatus);
-					softAssertion.assertEquals(searchStatus, "COMPLETED");
+					list = getListFromSavedSearchTable("Search Name");
+					for (String searchNames : list) {
+						savedSearch_SearchandSelect(searchNames, "No");
+						driver.waitForPageToBeReady();
 
-					// Result count
-					String resultCount = getSelectSearchWithResultCount(nodeSearchpair.get(node)).getText();
-					if (resultCount.length() > 0) {
-						base.stepInfo("Count Of Doc is : " + resultCount);
-					} else {
-						base.stepInfo("Count Of Doc is Empty : " + resultCount);
+						// GetStatus
+						String searchStatus = getLastStatus();
+						base.stepInfo(nodeSearchpair.get(node) + " Status : " + searchStatus);
+						softAssertion.assertEquals(searchStatus, "COMPLETED");
+
+						// Result count
+						String resultCount = getSelectSearchWithResultCount(searchNames).getText();
+
+						if (resultCount.length() > 0) {
+							base.stepInfo("Count Of Doc is : " + resultCount);
+						} else {
+							base.stepInfo("Count Of Doc is Empty : " + resultCount);
+						}
 					}
-
 				} else {
 					verifySavedSearch_isEmpty();
 					base.passedStep("Not the selected search group");
 				}
-				getSavedSearchNewGroupExpand().waitAndClick(20);
+				sgExpansion();
 			} catch (Exception e) {
 				System.out.println(node + " : Search group is not Present in " + SGtoShare);
 				base.failedStep(node + " : Search group is not Present in " + SGtoShare);
@@ -7213,6 +7224,12 @@ public class SavedSearch {
 		getSavedSearchExecuteButton().Click();
 
 		if (getExecuteContinueBtn().isElementAvailable(10)) {
+
+			String executeActualMSg = getExecutePopMSg().getText();
+			String executeExpectedMsg = "All child searches in all child groups will be submitted to the search engine for execution";
+			base.textCompareEquals(executeActualMSg, executeExpectedMsg, executeActualMSg,
+					"Popup Msg is Not As Expected");
+
 			getExecuteContinueBtn().waitAndClick(10);
 		} else {
 			System.out.println("Saved Search Execute Popup is Not Dispalyed ");

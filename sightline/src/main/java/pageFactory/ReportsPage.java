@@ -357,13 +357,15 @@ public class ReportsPage {
 			getMetaDataChoose(Input.sortDataBy).Click();
 			System.out.println(Input.sortDataBy + "clicked");
 
-			base.waitForElement(getAvailableObjectsTab("WORKPRODUCT"));
-			getAvailableObjectsTab("WORKPRODUCT").Click();
-			System.out.println("WORKPRODUCT tab selected");
+			if (!folderName.equalsIgnoreCase("")) {
+				base.waitForElement(getAvailableObjectsTab("WORKPRODUCT"));
+				getAvailableObjectsTab("WORKPRODUCT").waitAndClick(5);
+				System.out.println("WORKPRODUCT tab selected");
 
-			System.out.println(folderName);
-			Thread.sleep(5000);
-			getChooseWorkProduct(folderName).waitAndClick(4);
+				System.out.println(folderName);
+				Thread.sleep(5000);
+				getChooseWorkProduct(folderName).waitAndClick(4);
+			}
 
 			// driver.scrollingToBottomofAPage();
 			base.waitForElement(getAddToSelectedBtn());
