@@ -529,6 +529,68 @@ public class UsersAndRoleManagement_Regression {
 
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 08/03/2022 Modified date:NA Modified by:NA
+	 * Description :To Verify User can not access to 'RunAnalytics' and 'Unpublish'
+	 * even though 'INGESTIONS' right is unchecked. 'RPMXCON-52689' sprint-13
+	 */
+
+	@Test(alwaysRun = true, dataProvider = "saAndPa", groups = { "regression" }, priority = 8)
+	public void validatingIngestionInLeftMenu(String roll, String userName, String password, String userNameTwo,
+			String passWordTwo) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52689");
+		baseClass.stepInfo(
+				"To Verify User can not access to 'RunAnalytics' and 'Unpublish' even though 'INGESTIONS' right is unchecked.");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+
+		// login
+		loginPage.loginToSightLine(userName, password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(userNameTwo);
+		userManage.applyFilter();
+		if (roll == "sa") {
+			userManage.editFunctionality(Input.projectName);
+			userManage.editLoginUser();
+		}
+
+		// Ingestion uncheckbox
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyIngestion();
+
+		// logout
+		loginPage.logout();
+
+		// Login As SA
+		loginPage.loginToSightLine(userName, password);
+
+		// impersonate SA to PA
+		baseClass.impersonateSAtoPA();
+
+		// validating ingestion icon
+		userManage.verifyIngestionIcon(false, false);
+		// logout
+		loginPage.logout();
+
+		// login
+		loginPage.loginToSightLine(userNameTwo, passWordTwo);
+		driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(userNameTwo);
+		userManage.applyFilter();
+		if (roll == "sa") {
+			userManage.editFunctionality(Input.projectName);
+			userManage.editLoginUser();
+		}
+
+		// Ingestion uncheckbox
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyIngestion();
+
+		// logout
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
