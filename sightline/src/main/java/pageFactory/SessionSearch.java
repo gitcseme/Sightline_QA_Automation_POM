@@ -380,6 +380,12 @@ public class SessionSearch {
 		return driver.FindElementsByXPath("//span//count[contains(@id,'tilecount-')]");
 	}
 
+	public ElementCollection gettTileSpinningList(String searchName, int num) {
+		return driver.FindElementsByXPath("//span[@style=\"margin-bottom:3px;\" and text()='" + searchName
+				+ " ']//span[@id='divSearchCnt' and text()='" + num
+				+ "']//..//..//..//..//..//span//count[contains(@id,'tilecount-')]");
+	}
+
 	public Element getContentAndMetaDatabtnCurrent() {
 		return driver.FindElementByXPath("(//button[@id='contentmetadata'])[last()]");
 	}
@@ -10751,6 +10757,26 @@ public class SessionSearch {
 			}
 			assertion.assertAll();
 			base.passedStep("Search Result should appeared " + "without Refresh  on Advanced Search Result Screen");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description - verify tile spinning in session search page dynamic
+	 * @param searchName - Search name to pick (or) current search
+	 * @param Index      - search index
+	 */
+	public void verifyTileSpinning(String searchName, int Index) {
+		List<String> spinningTileList = new ArrayList<>();
+
+		spinningTileList = base.getAvailableListofElements(gettTileSpinningList(searchName, Index));
+		for (String a : spinningTileList) {
+			if (a.isBlank()) {
+				base.stepInfo(" Yes - one or more related tiles are still spinning ");
+				break;
+			} else {
+				System.out.println(" one or more related tiles are not still spinning ");
+			}
 		}
 	}
 }
