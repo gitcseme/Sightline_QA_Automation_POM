@@ -11,6 +11,7 @@ import java.util.concurrent.Callable;
 
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -22,6 +23,7 @@ import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CustomDocumentDataReport;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.RedactionPage;
@@ -293,43 +295,38 @@ public class AdvancedSearch_Regression2 {
 	 * @description Verify that Term Operator - Any is working properly on Advanced
 	 *              Search screen
 	 */
-	// @Test(groups = { "regression" }, priority = 6,enabled = false)
-
-	public void verifyTermOperator() throws InterruptedException {
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	 @Test(groups = { "regression" },dataProvider = "Users", priority = 6,enabled = true)
+	public void verifyTermOperator(String username, String password) throws InterruptedException {
+		loginPage.loginToSightLine(username, password);
 		baseClass.selectproject();
+		DocListPage dlPage= new DocListPage(driver);
 		baseClass.stepInfo("Verify that Term Operator - All is working properly on Advanced Search screen");
 		baseClass.stepInfo("Test case Id: RPMXCON-47728");
-
-		baseClass.stepInfo("Verify that Term Operator - Any is working properly on Advanced Search screen");
-		baseClass.stepInfo("Test case Id: RPMXCON-47729");
-
-		int Expected1 = search.VerifyaudioSearchAndSetThreshold("morning", "International English", -34);
+		search.VerifyaudioSearchAndSetThreshold(Input.audioSearch, Input.audioLanguage, -34);
+		driver.scrollPageToTop();
+		search.ViewInDocList();
+		//getting doc id's after saerch with 'morning'
+		List<String> DocIdsWithSearchString1 = dlPage.gettingAllDocIDs();
 		baseClass.selectproject();
-		int Expected2 = search.VerifyaudioSearchAndSetThreshold("well", "International English", -34);
-		baseClass.selectproject();
-		int ActualAll = search.audioSearchWithOperator("morning", "well", "International English", -34, "ALL");
-		baseClass.selectproject();
-		int ActualAny = search.audioSearchWithOperator("morning", "well", "International English", -34, "ANY");
-		try {
-			if (Expected1 >= Expected2) {
-				softAssertion.assertEquals(Expected1, ActualAny);
-				softAssertion.assertEquals(Expected2, ActualAll);
-				softAssertion.assertAll();
-			} else {
-				softAssertion.assertEquals(Expected2, ActualAny);
-				softAssertion.assertEquals(Expected1, ActualAll);
-				softAssertion.assertAll();
-			}
-			baseClass.passedStep("All and Any Operator is working properly on Advanced Search screen");
+		search.VerifyaudioSearchAndSetThreshold("well",Input.audioLanguage, -34);
+		driver.scrollPageToTop();
+		search.ViewInDocList();
+		//getting doc id's after saerch with 'well'
+		List<String> DocIdsWithSearchString2 = dlPage.gettingAllDocIDs();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			baseClass.failedStep("All and Any Operator is not working properly on Advanced Search screen");
-		}
+		//getting list of common docs with both search terms --expected result after performing search with both terms and ALL operator.
+		DocIdsWithSearchString2.retainAll(DocIdsWithSearchString1);
+		baseClass.selectproject();
+		int ActualAny = search.audioSearchWithOperator(Input.audioSearch, "well", Input.audioLanguage, -34, "ALL");
+		softAssertion.assertEquals(DocIdsWithSearchString2.size(), ActualAny);
+		softAssertion.assertAll();
+		baseClass.passedStep("All Operator is working properly on Advanced Search screen");
 		loginPage.logout();
+		}
 
-	}
+
+
+	
 
 	/**
 	 * @author Iyappan.Kasinathan
@@ -683,7 +680,7 @@ public class AdvancedSearch_Regression2 {
 		String actualPH2 = search.verifyPureHitsCount();
 		try {
 			softAssertion.assertEquals(actualPH1, "2");
-			softAssertion.assertEquals(actualPH2, "4");
+			softAssertion.assertEquals(actualPH2, "3");
 			softAssertion.assertAll();
 			baseClass.passedStep(
 					"Audio Search is done using german language PureHit is displayed as expected : " + actualPH1 + "");
@@ -1089,6 +1086,7 @@ public class AdvancedSearch_Regression2 {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);

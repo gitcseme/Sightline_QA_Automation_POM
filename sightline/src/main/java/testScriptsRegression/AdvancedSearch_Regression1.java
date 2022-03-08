@@ -64,11 +64,11 @@ public class AdvancedSearch_Regression1 {
 		tagPage = new TagsAndFoldersPage(driver);
 		softAssertion = new SoftAssert();
 		searchText = Input.searchString1;
-
 	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
@@ -90,7 +90,7 @@ public class AdvancedSearch_Regression1 {
 	 *                       Assignment workproduct RPMXCON-57267
 	 */
 
-//	@Test(groups = { "regression" }, priority = 1)
+	@Test(groups = { "regression" }, priority = 1)
 	public void validateDistributedAssignmentsToReviewer() throws InterruptedException, ParseException, IOException {
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -99,7 +99,7 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-57267");
 		search = new SessionSearch(driver);
 		assgnPage = new AssignmentsPage(driver);
-		assgnPage.createAssignment(assignmentName, "Default Project Coding Form");
+		assgnPage.createAssignment(assignmentName, Input.codeFormName);
 		baseClass.selectproject();
 		search.basicContentSearch(Input.testData1);
 		search.bulkAssignExisting(assignmentName);
@@ -136,7 +136,7 @@ public class AdvancedSearch_Regression1 {
 	 *              RPMXCON-57580
 	 */
 
-//	@Test(groups = { "regression" }, priority = 2)
+	@Test(groups = { "regression" }, priority = 2)
 	public void validateCustodianNameAutosuggestSearch() throws InterruptedException {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -161,16 +161,16 @@ public class AdvancedSearch_Regression1 {
 	 *              DocFileName more than 50 characters in Basic Search Screen.
 	 *              RPMXCON-57579
 	 */
-//	@Test(groups = { "regression" }, priority = 3)
+	@Test(groups = { "regression" }, priority = 3)
 	public void validateAutosuggestSearchDocfileName() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-57579");
 		baseClass.stepInfo(
 				"Verify that Auto suggest functionality is working fine having  CustodianName more than 50 characters in Basic Search Screen.");
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		String metaDataFileName = "\"Yes the services are down because of Fire- and othâ€¦\"";
-		String expectedFileDisplayInQuerySelection = "\"Yes the services are down because of Fire- and oth*\"";
-		String expectedFileDisplay = "DocFileName: (\"Yes the services are down because of Fire- and oth*\")";
+		String metaDataFileName = "\"Yesterday's Consultants Meeting - My Task\"";
+		String expectedFileDisplayInQuerySelection = "\"Yesterday's Consultants Meeting - My Task*\"";
+		String expectedFileDisplay = "DocFileName: (\"Yesterday's Consultants Meeting - My Task*\")";
 		String Value = "Yes ";
 		String metadataFieldLabel = "DocFileName";
 		baseClass.selectproject();
