@@ -9802,7 +9802,7 @@ public class DocViewPage {
 
 			base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
 			getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
-
+			driver.waitForPageToBeReady();
 			for (int i = 2; i <= 3; i++) {
 				base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
 				getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);

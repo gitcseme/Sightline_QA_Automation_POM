@@ -540,5 +540,41 @@ public class TestData {
 		public String ingDocFileType ;
 		public String lessThan500PagesDocId;
 		public String d500PagesDocId;
+		
+		
+		//Added by Mohan (PT Env DocIDs)
+		public String conceptualDocId01; 
+		public String conceptualDocId02;
+		public String conceptualDocId03;
+		public String conceptualDocId04;
+		public String conceptualDocIdForReviewer01;
+		public String conceptualDocIdForReviewer02;
+		public String conceptualDocIdForReviewer03;
+		public String familyDocId01; 
+		public String familyDocId02;
+		public String familyDocId03;
+		public String familyDocIdForReviewer01;
+		public String familyDocIdForReviewer02;
+		public String familyDocIdForReviewer03;
+		public String nearDupeDocId01; 
+		public String nearDupeDocId02;
+		public String nearDupeDocId03;
+		public String nearDupeDocIdForReviewer01;
+		public String nearDupeDocIdForReviewer02;
+		public String nearDupeDocIdForReviewer03;
+		public String threadMapDocId01;
+		public String threadMapWithNonEmailAttachment;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }
 
