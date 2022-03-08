@@ -1280,7 +1280,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @throws ParseException
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 21)
-	public void searchFilterBasedOnStatusAsRev() throws InterruptedException, ParseException {
+	public void searchBasedOnStatusAsRev() throws InterruptedException, ParseException {
 
 		String SearchName = "SearchName" + Utility.dynamicNameAppender();
 		String SearchName1 = "SearchName" + Utility.dynamicNameAppender();
@@ -2374,6 +2374,147 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// Verify Search Status And Count in all nodes
 		saveSearch.verifyStatusAndCountInAllChildNode(Input.mySavedSearch, newNodeList, 0, nodeSearchpair);
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/08/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that status and count gets updated in saved search
+	 *              where a session search is still spinning for one or more related
+	 *              tiles, then the user saves it, and logs out before the queries
+	 *              are complete. [RPMXCON-48908] sprint 13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
+	public void statusAndCountBasedonAdvSessionSavedSearch() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "searchAdv" + Utility.dynamicNameAppender();
+		String expectedStatus = "COMPLETED";
+		String nearDupe = "Near Duplicate Count";
+		String searchString = Input.bulkSearchSting1;
+
+		base.stepInfo("Test case Id: RPMXCON-48908  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that status and count gets updated in saved search where a session search is still spinning for one or more related tiles, then the user saves it, and logs out before the queries are complete.");
+		base.stepInfo("Flow can only be done for inputs/projects with bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Search and Overwrite SavedSearch
+		session.navigateToSessionSearchPageURL();
+		session.advancedContentSearchWithSearchChanges(searchString, "No");
+		session.SearchBtnAction();
+
+		// Handling when Search goes background
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		int pureHit = session.returnPurehitCount();
+		base.stepInfo("Purehit : " + pureHit);
+
+		// Verify Tile Spinning and Save Search
+		session.verifyTileSpinning();
+		session.saveSearchadvanced(searchName);
+
+		// logout
+		login.logout();
+		base.stepInfo("Logged out from current user");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("re-Logged in as : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Verify Status and Count
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "No");
+
+		base.stepInfo("Verify that status and count the saved search");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+		String updatedDocCount = session.getSavedSearchCount(searchName).getText();
+		base.stepInfo("Updated Count from SavedSearch : " + updatedDocCount);
+		base.textCompareEquals(Integer.toString(pureHit), updatedDocCount, "SavedSearch count updated", "count failed");
+		saveSearch.getDocCountAndStatusOfBatch(searchName, nearDupe, true);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram A @Date: 03/08/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that status and count gets updated(Modified) in saved
+	 *              search When User Saved the In Progress Search execution and User
+	 *              log out and relogin to Saved Search Screen[RPMXCON-48907] sprint
+	 *              13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	public void statusAndCountBasedonEditSessionSavedSearch() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "COMPLETED";
+		String searchString = Input.searchString1;
+		String modifyString = Input.bulkSearchSting1;
+		String nearDupe = "Near Duplicate Count";
+
+		base.stepInfo("Test case Id: RPMXCON-48907  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that status and count gets updated(Modified) in saved search When User Saved the In Progress Search execution and User log out and relogin to Saved Search Screen");
+		base.stepInfo("Flow can only be done for inputs/projects with bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Search and Save Search
+		session.basicContentSearch(searchString);
+		session.saveSearch(searchName);
+
+		// Verify Status and Count
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.getSavedSearchEditButton().waitAndClick(5);
+		session.modifySearchTextArea(1, searchString, modifyString, "Save");
+		session.SearchBtnAction();
+
+		// Handling when Search goes background
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		int pureHit = session.returnPurehitCount();
+		base.stepInfo("Purehit : " + pureHit);
+
+		// Verify Tile Spinning and Save Search
+		session.verifyTileSpinning("Search", 3);
+		session.saveAsOverwrittenSearch(Input.mySavedSearch, searchName, "First", "Success", "", null);
+
+		// logout
+		login.logout();
+		base.stepInfo("Logged out from current user");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("re-Logged in as : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Verify Status and Count
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "No");
+
+		base.stepInfo("Verify that status and count the saved search");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+		String updatedDocCount = session.getSavedSearchCount(searchName).getText();
+		base.stepInfo("Updated Count from SavedSearch : " + updatedDocCount);
+		base.textCompareEquals(Integer.toString(pureHit), updatedDocCount, "SavedSearch count updated", "count failed");
+		saveSearch.getDocCountAndStatusOfBatch(searchName, nearDupe, true);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 
 		login.logout();
 
