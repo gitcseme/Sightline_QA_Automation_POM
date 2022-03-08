@@ -12052,6 +12052,7 @@ public class DocViewPage {
 //			getDocView_Analytics_FamilyTab().ScrollTo();
 			getDocView_Analytics_FamilyTab().waitAndClick(10);
 
+			driver.waitForPageToBeReady();
 			for (int i = 1; i <= 2; i++) {
 				base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(i));
 				getDocView_Analytics_FamilyMember_DocCheckBox(i).waitAndClick(10);
