@@ -74,6 +74,7 @@ public class ProductionPage_Regression {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
+		softAssertion = new SoftAssert();
 
 		// Login as a PA
 		loginPage = new LoginPage(driver);
@@ -87,7 +88,7 @@ public class ProductionPage_Regression {
 	 *              Template along with Slip sheets
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifySlipSheetDisplayed() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-56117- Production Sprint 02");
 		UtilityLog.info(Input.prodPath);
@@ -135,9 +136,9 @@ public class ProductionPage_Regression {
 		driver.getWebDriver().navigate().refresh();
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
-		loginPage.logout();
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 
 	}
 
@@ -147,7 +148,7 @@ public class ProductionPage_Regression {
 	 *              Preview button is not available on 'Summary and Preview' tab
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyPreviewButtonShouldNotDisplayWhileDatOnlySelection() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-56116- Production Sprint 02");
 		UtilityLog.info(Input.prodPath);
@@ -173,21 +174,21 @@ public class ProductionPage_Regression {
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
-		page.afterCompletingNavigatingToNextPage();
+		page.navigateToNextSection();
 		baseClass.passedStep("Production components completed and navigated to numbering and sorting page");
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-		page.afterCompletingNavigatingToNextPage();
+		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
-		page.afterCompletingNavigatingToNextPage();
+		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
 		page.fillingProductionLocationPage(productionname);
-		page.afterCompletingNavigatingToNextPage();
+		page.navigateToNextSection();
 		page.viewingPreviewButtonInSummaryTab();
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
-		loginPage.logout();
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
 
 	/**
@@ -197,7 +198,7 @@ public class ProductionPage_Regression {
 	 *              Preview' tab
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyPreviewButtonShouldNotDisplayWhileDatAndMp3OnlySelection() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-56116- Production Sprint 02");
 
@@ -224,22 +225,22 @@ public class ProductionPage_Regression {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.advancedProductionComponentsMP3();
-		page.afterCompletingNavigatingToNextPage();
+		page.navigateToNextSection();
 		baseClass.passedStep("Production components completed and navigated to numbering and sorting page");
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-		page.afterCompletingNavigatingToNextPage();
+		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.afterCompletingNavigatingToNextPage();
 		page.fillingPrivGuardPage();
 		page.fillingProductionLocationPage(productionname);
-		page.afterCompletingNavigatingToNextPage();
+		page.navigateToNextSection();
 		baseClass.passedStep("Preview button is not displayed while selecting DAT and MP3 Files only selection");
 		page.viewingPreviewButtonInSummaryTab();
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
-		loginPage.logout();
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
 
 	/**
@@ -248,7 +249,7 @@ public class ProductionPage_Regression {
 	 *              files
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 4)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyConfigurationFormat() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-56080- Production Sprint 02");
 
@@ -278,24 +279,24 @@ public class ProductionPage_Regression {
 		page.tiffPrivilegeDocumentSelection(tagname);
 		page.fillingTextSection();
 		page.selectFormatInTextFile();
-		page.afterCompletingNavigatingToNextPage();
+		page.navigateToNextSection();
 		baseClass.passedStep("Production components completed and navigated to numbering and sorting page");
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-		page.afterCompletingNavigatingToNextPage();
+		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
-		page.afterCompletingNavigatingToNextPage();
+		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
 		page.fillingProductionLocationPage(productionname);
-		page.afterCompletingNavigatingToNextPage();
-		page.afterCompletingNavigatingToNextPage();
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
 		baseClass.stepInfo("Completed summary and preview tab");
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		baseClass.passedStep("OCRed text files verified according to ansi text configuration");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
-		loginPage.logout();
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
 
 	/**
@@ -304,7 +305,7 @@ public class ProductionPage_Regression {
 	 *              Production-Text components
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyingPageLevelOptionsOnTextComponents() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-56117- Production Sprint 02");
 		UtilityLog.info(Input.prodPath);
@@ -323,7 +324,6 @@ public class ProductionPage_Regression {
 			baseClass
 					.passedStep("Page level options not displayed in production component when clicking the  Text tab");
 		}
-		loginPage.logout();
 	}
 
 	/**
@@ -335,7 +335,7 @@ public class ProductionPage_Regression {
 	 *                     Documents' Placeholder for the problem document
 	 * 
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyProductionForPDFWithNativelyPlaceholder() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56147- Production Sprint 05");
@@ -346,8 +346,8 @@ public class ProductionPage_Regression {
 
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -374,10 +374,8 @@ public class ProductionPage_Regression {
 				"Verified that Production is generated with 'Natively Produced Documents' Placeholder for the problem document");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
-		loginPage.logout();
-
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
 
 	/**
@@ -389,7 +387,7 @@ public class ProductionPage_Regression {
 	 *                     document if user select TIFF Or PDF with Naitvely
 	 *                     Placeholder and Redaction is not enabled.
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 7)
+	@Test(enabled = true, groups = { " regression" }, priority = 7)
 	public void verifyProductionForNativelyPlaceholderAndRedactionNotEnabled() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56152- Production Sprint 05");
@@ -397,10 +395,10 @@ public class ProductionPage_Regression {
 		UtilityLog.info(Input.prodPath);
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-		// create folder and tag
-		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		sessionSearch = new SessionSearch(driver);
 		// testData string contains redacted documents as per Pre-requisites
@@ -426,10 +424,9 @@ public class ProductionPage_Regression {
 				"Verified that Production generate successfully for redacted document if user select TIFF Or PDF with Naitvely Placeholder and Redaction is not enabled.");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
-		loginPage.logout();
-
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
 
 	/**
@@ -534,7 +531,7 @@ public class ProductionPage_Regression {
 		page.navigateToNextSection();
 		page.fillingSelectDocumentUsingTags(tagname);
 		page.navigateToNextSection();
-		page.priviledgeDocCheck(true,tagname);
+		page.priviledgeDocCheck(true, tagname);
 		page.fillingPrivGuardPage();
 		driver.waitForPageToBeReady();
 		page.fillingProductionLocationPage(productionname);
@@ -1454,6 +1451,7 @@ public class ProductionPage_Regression {
 		baseClass.stepInfo("RPMXCON_48317 Production- Sprint 06");
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
@@ -1464,7 +1462,7 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.audioSearch("Morning", "North American English");
+		sessionSearch.audioSearch(Input.audioSearch, Input.audioLanguage);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		sessionSearch.ViewInDocView();
@@ -1790,13 +1788,12 @@ public class ProductionPage_Regression {
 		System.out.println(docCount);
 		softAssertion.assertNotEquals(docCount, "0");
 		softAssertion.assertAll();
-		
-		//delete Folder
+
+		// delete Folder
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		loginPage.logout();
 	}
 
-	
 	/**
 	 * @Author Jeevitha
 	 * @Description : To Verify Document Selection Section on the self production
@@ -1835,24 +1832,24 @@ public class ProductionPage_Regression {
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		driver.waitForPageToBeReady();
-		String docCount=page.navigatingToDocViewPage();
+		String docCount = page.navigatingToDocViewPage();
 		System.out.println(docCount);
 		softAssertion.assertNotEquals(docCount, "0");
 		softAssertion.assertAll();
-		
-		//Delete TAG
+
+		// Delete TAG
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * Author : Baskar date: NA Modified date:19/01/2021 Modified by: Baskar
 	 * Description : Verify that read only custom metadata field value should be
 	 * retained on click of saved stamp in context of security group
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 34)
+	@Test(enabled = false, groups = { "regression" }, priority = 34)
 	public void verifyProductionCreationDateMarkComplete() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		baseClass.stepInfo("Test case Id: RPMXCON-49041");
@@ -1889,13 +1886,14 @@ public class ProductionPage_Regression {
 		}
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * Author : Baskar date: NA Modified date:19/01/2021 Modified by: Baskar
-	 * Description : Verify that if PA selects the Export with Production and has Native Files and Tags 
-	 *              selected in the native components section, then Component tab should Complete without any error.
+	 * Description : Verify that if PA selects the Export with Production and has
+	 * Native Files and Tags selected in the native components section, then
+	 * Component tab should Complete without any error.
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 35)
+	@Test(enabled = false, groups = { "regression" }, priority = 35)
 	public void verifyProductionCreationDateMarkComp() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		baseClass.stepInfo("Test case Id: RPMXCON-49360");
@@ -1920,9 +1918,9 @@ public class ProductionPage_Regression {
 		productionname = "p" + Utility.dynamicNameAppender();
 		String text = page.getProdExport_ProductionSets().getText();
 		if (text.contains("Export Set")) {
-		page.selectExportSetFromDropDown();
+			page.selectExportSetFromDropDown();
 		} else {
-		page.createNewExport(newExport);
+			page.createNewExport(newExport);
 		}
 		page.addANewExport(productionname);
 		page.fillingDATSection();
@@ -1934,8 +1932,6 @@ public class ProductionPage_Regression {
 		baseClass.passedStep("Componenet tab completed without any error");
 		loginPage.logout();
 	}
-	
-
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
@@ -1952,6 +1948,7 @@ public class ProductionPage_Regression {
 			loginPage.quitBrowser();
 //			LoginPage.clearBrowserCache();
 		}
+
 	}
 
 	@AfterClass(alwaysRun = true)
