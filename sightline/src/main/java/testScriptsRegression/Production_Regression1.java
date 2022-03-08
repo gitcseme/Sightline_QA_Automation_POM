@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.openqa.selenium.support.Color;
 import org.testng.ITestResult;
@@ -95,13 +96,12 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author : Gopinath created on:NA modified by:NA @Testcase_ID :
-	 *         RPMXCON_56134 - Verify that for the saved template under TIFF/PDF
-	 *         component.
+	 * @author : Gopinath created on:NA modified by:NA @Testcase_ID : RPMXCON_56134
+	 *         - Verify that for the saved template under TIFF/PDF component.
 	 * @Description : Verify that for the saved template under TIFF/PDF component
 	 *              and Available Fields in Slip Sheets should be disabled.
 	 */
-	////////@Test(groups = { "regression" }, priority = 1)
+	//////// @Test(groups = { "regression" }, priority = 1)
 	public void verifyingTiffComponentsInManageTemplate() throws InterruptedException, AWTException {
 		UtilityLog.info(Input.prodPath);
 
@@ -117,13 +117,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_ID :
-	 *         RPMXCON_56102 - Verify the error message for TIFF/PDF component when
-	 *         'Enable Tech issue doc without tag or text'
+	 * @author Gopinath created on:NA modified by:NA @Testcase_ID : RPMXCON_56102 -
+	 *         Verify the error message for TIFF/PDF component when 'Enable Tech
+	 *         issue doc without tag or text'
 	 * @Description: Verify the error message for TIFF/PDF component when 'Enable
 	 *               Tech issue doc without tag or text'.
 	 */
-	////////@Test(groups = { "regression" }, priority = 2)
+	//////// @Test(groups = { "regression" }, priority = 2)
 	public void verifyingTiffComponentsWithoutTagOrText() throws InterruptedException, AWTException {
 
 		ProductionPage page = new ProductionPage(driver);
@@ -152,13 +152,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_ID :
-	 *         RPMXCON_56107 - Verify the error message for TIFF/PDF component when
-	 *         'don't add any text in specify redaction text section'.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_ID : RPMXCON_56107 -
+	 *         Verify the error message for TIFF/PDF component when 'don't add any
+	 *         text in specify redaction text section'.
 	 * @Description : Verify the error message for TIFF/PDF component when 'don't
 	 *              add any text in specify redaction text section'.
 	 */
-	////////@Test(groups = { "regression" }, priority = 3)
+	//////// @Test(groups = { "regression" }, priority = 3)
 	public void verifyingTiffComponentsWithoutTextInSpecifyRedactionSection()
 			throws InterruptedException, AWTException {
 		ProductionPage page = new ProductionPage(driver);
@@ -188,13 +188,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_ID :
-	 *         RPMXCON_56106 - Verify the error message for TIFF/PDF component when
-	 *         'Enable redaction without selecting redaction tag'.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_ID : RPMXCON_56106 -
+	 *         Verify the error message for TIFF/PDF component when 'Enable
+	 *         redaction without selecting redaction tag'.
 	 * @Description : Verify the error message for TIFF/PDF component when 'Enable
 	 *              redaction without selecting redaction tag'.
 	 */
-	////////@Test(groups = { "regression" }, priority = 4)
+	//////// @Test(groups = { "regression" }, priority = 4)
 	public void verifyingTiffComponentsWithoutTagInSpecifyRedactionSection() throws InterruptedException, AWTException {
 		base.stepInfo("Test case Id: No:RPMXCON_56106 -Production Sprint 04");
 		base.stepInfo(
@@ -222,13 +222,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author : Gopinath created on:NA modified by:NA @TestCase ID :
-	 *         RPMXCON_56105 - Verify the error message for TIFF/PDF component when
-	 *         'Specify branding without tag and with text'.
+	 * @author : Gopinath created on:NA modified by:NA @TestCase ID : RPMXCON_56105
+	 *         - Verify the error message for TIFF/PDF component when 'Specify
+	 *         branding without tag and with text'.
 	 * @Description : Verify the error message for TIFF/PDF component when 'Specify
 	 *              branding without tag and with text' .
 	 */
-	////////@Test(groups = { "regression" }, priority =5 )
+	//////// @Test(groups = { "regression" }, priority =5 )
 	public void verifyTiffSectionSpecifyBrandingWithoutTag() throws Exception {
 
 		base.stepInfo("Test case Id: No:RPMXCON_56105 -Production Sprint 04");
@@ -250,13 +250,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase ID :
-	 *         RPMXCON_56104 - Verify the error message for TIFF/PDF component when
-	 *         'Specify branding with tag and without text'.
+	 * @author Gopinath created on:NA modified by:NA @Testcase ID : RPMXCON_56104 -
+	 *         Verify the error message for TIFF/PDF component when 'Specify
+	 *         branding with tag and without text'.
 	 * @Description : Verify the error message for TIFF/PDF component when 'Specify
 	 *              branding with tag and without text'.
 	 */
-	////////@Test(groups = { "regression" }, priority =6 )
+	//////// @Test(groups = { "regression" }, priority =6 )
 	public void verifyTiffSectionSpecifyBrandingWithoutText() throws Exception {
 
 		base.stepInfo("Test case Id: No:RPMXCON_56104 -Production Sprint 04");
@@ -286,13 +286,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @TestCase Id :
-	 *         RPMXCON_56103 - Verify the error message for TIFF/PDF component when
-	 *         'Specify branding without tag and text'.
+	 * @author Gopinath created on:NA modified by:NA @TestCase Id : RPMXCON_56103 -
+	 *         Verify the error message for TIFF/PDF component when 'Specify
+	 *         branding without tag and text'.
 	 * @Description : Verify the error message for TIFF/PDF component when 'Specify
 	 *              branding without tag and text'.
 	 */
-	////////@Test(groups = { "regression" }, priority =7 )
+	//////// @Test(groups = { "regression" }, priority =7 )
 	public void TiffSectionSpecifyBrandingWithoutTagAndText() throws Exception {
 
 		base.stepInfo("Test case Id: No:RPMXCON_56103 -Production Sprint 04");
@@ -315,15 +315,15 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase ID :
-	 *         RPMXCON_56131 - Verify that if Tag is already specified with
-	 *         'Natively Produced Documents' placeholder then that Tag will
-	 *         available again to select for branding.
+	 * @author Gopinath created on:NA modified by:NA @Testcase ID : RPMXCON_56131 -
+	 *         Verify that if Tag is already specified with 'Natively Produced
+	 *         Documents' placeholder then that Tag will available again to select
+	 *         for branding.
 	 * @Description : Verify that if Tag is already specified with 'Natively
 	 *              Produced Documents' placeholder then that Tag will available
 	 *              again to select for branding.
 	 */
-	////////@Test(groups = { "regression" }, priority =8 )
+	//////// @Test(groups = { "regression" }, priority =8 )
 	public void verifyTiffSectionSelectingNativeProducedDocsAndBrandingTag() throws Exception {
 
 		base.stepInfo("Test case Id: No:RPMXCON_56131 -Production Sprint 04");
@@ -351,14 +351,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase ID :
-	 *         RPMXCON_56127 - Verify that if Tag is already specified with
-	 *         Placeholder then that Tag will available again to select for
-	 *         branding.
+	 * @author Gopinath created on:NA modified by:NA @Testcase ID : RPMXCON_56127 -
+	 *         Verify that if Tag is already specified with Placeholder then that
+	 *         Tag will available again to select for branding.
 	 * @Description : Verify that if Tag is already specified with Placeholder then
 	 *              that Tag will available again to select for branding
 	 */
-	////////@Test(groups = { "regression" }, priority =9 )
+	//////// @Test(groups = { "regression" }, priority =9 )
 	public void verifyTagSelectedPrivilegedTagEnableBandingTag() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON_56127 -Production Sprint 04");
@@ -389,13 +388,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase ID :
-	 *         RPMXCON_56108 - Verify the error message for MP3 component when
-	 *         'Enable burn redaction without selecting redaction tag'.
+	 * @author Gopinath created on:NA modified by:NA @Testcase ID : RPMXCON_56108 -
+	 *         Verify the error message for MP3 component when 'Enable burn
+	 *         redaction without selecting redaction tag'.
 	 * @Description : Verify the error message for MP3 component when 'Enable burn
 	 *              redaction without selecting redaction tag'.
 	 */
-	////////@Test(groups = { "regression" }, priority =10 )
+	//////// @Test(groups = { "regression" }, priority =10 )
 	public void VerifyMsgByEnableBurnRedactionWithoutSelectRedactionTag() throws Exception {
 
 		base.stepInfo("Test case Id: No:RPMXCON_56108 -Production Sprint 04");
@@ -418,15 +417,15 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID :
-	 *         RPMXCON_48500 : To verify that if annotation layer option is selected
-	 *         in Tiff section and document is redacted then selected Metadata
-	 *         should not be displayed on DAT.
+	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON_48500 :
+	 *         To verify that if annotation layer option is selected in Tiff section
+	 *         and document is redacted then selected Metadata should not be
+	 *         displayed on DAT.
 	 * @Description : Verify that if annotation layer option is selected in Tiff
 	 *              section and document is redacted then selected Metadata should
 	 *              not be displayed on DAT.
 	 */
-	////////@Test(groups = { "regression" }, priority = 11)
+	//////// @Test(groups = { "regression" }, priority = 11)
 	public void generateProductionWithoutSelectedMetadata() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -507,13 +506,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID :
-	 *         RPMXCON_48491 : To verify that if annotation layer option is selected
-	 *         and non audio document is redacted then native should not copied.
+	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON_48491 :
+	 *         To verify that if annotation layer option is selected and non audio
+	 *         document is redacted then native should not copied.
 	 * @Description : Verify that if annotation layer option is selected and non
 	 *              audio document is redacted then native should not copied.
 	 */
-	////////@Test(groups = { "regression" }, priority = 12)
+	//////// @Test(groups = { "regression" }, priority = 12)
 	public void generateProductionWithNonAudioDocument() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -589,13 +588,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID :
-	 *         RPMXCON-48312 : To verify that redaction text should be printed on
-	 *         burned redaction if user selects Tiff.
+	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-48312 :
+	 *         To verify that redaction text should be printed on burned redaction
+	 *         if user selects Tiff.
 	 * @Description : Verify that redaction text should be printed on burned
 	 *              redaction if user selects Tiff.
 	 */
-	////////@Test(groups = { "regression" }, priority = 13)
+	//////// @Test(groups = { "regression" }, priority = 13)
 	public void verifyingRedactedTextPrintedOnBurnRedactionSelectingTIFF() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -676,13 +675,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID :
-	 *         RPMXCON-48310 : To verify that redaction text should be printed on
-	 *         burned redaction if user selects only PDF.
+	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-48310 :
+	 *         To verify that redaction text should be printed on burned redaction
+	 *         if user selects only PDF.
 	 * @Description : Verify that redaction text should be printed on burned
 	 *              redaction if user selects only PDF.
 	 */
-	////////@Test(groups = { "regression" }, priority = 14)
+	//////// @Test(groups = { "regression" }, priority = 14)
 	public void verifyingRedactedTextPrintedOnSelectingPDF() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -762,13 +761,12 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID :
-	 *         RPMXCON-48600 : To verify that user can export only after pre-gen
-	 *         check is completed.
+	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-48600 :
+	 *         To verify that user can export only after pre-gen check is completed.
 	 * @Description :Verify that user can export only after pre-gen check is
 	 *              completed.
 	 */
-	////////@Test(groups = { "regression" }, priority = 15)
+	//////// @Test(groups = { "regression" }, priority = 15)
 	public void verifyExportButtonEnabledAfterPreGenCompletion() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -856,13 +854,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID :
-	 *         RPMXCON-49218 : To verify that in Advanced Search, search against
-	 *         uncommit Production should not display any results.
+	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-49218 :
+	 *         To verify that in Advanced Search, search against uncommit Production
+	 *         should not display any results.
 	 * @Description : Verify that in Advanced Search, search against uncommit
 	 *              Production should not display any results.
 	 */
-	////////@Test(groups = { "regression" }, priority = 16)
+	//////// @Test(groups = { "regression" }, priority = 16)
 	public void verifyCommitAndUnCommitProductionResults() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -978,15 +976,14 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID :
-	 *         RPMXCON-49998 : Verify if user included only default branding text
-	 *         then branding text should display on 'Preview' document and on
-	 *         produced documents also.
+	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-49998 :
+	 *         Verify if user included only default branding text then branding text
+	 *         should display on 'Preview' document and on produced documents also.
 	 * @Description : Verify if user included only default branding text then
 	 *              branding text should display on 'Preview' document and on
 	 *              produced documents also.
 	 */
-	////////@Test(groups = { "regression" }, priority = 17)
+	//////// @Test(groups = { "regression" }, priority = 17)
 	public void defaultBrandingTextDisplayedInPrieviewDocs() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1056,14 +1053,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID :
-	 *         RPMXCON-50016 : Verify that if 'AllProductionBatesRanges' is
-	 *         non-searchable for existing project, user cannot make it as
-	 *         Searchable field.
+	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-50016 :
+	 *         Verify that if 'AllProductionBatesRanges' is non-searchable for
+	 *         existing project, user cannot make it as Searchable field.
 	 * @Description :Verify that if 'AllProductionBatesRanges' is non-searchable for
 	 *              existing project, user cannot make it as Searchable field.
 	 */
-	////////@Test(groups = { "regression" }, priority = 18)
+	//////// @Test(groups = { "regression" }, priority = 18)
 	public void verifyingTheSearchableFieldInAllProductionBatesRanges() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1086,15 +1082,15 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID :
-	 *         RPMXCON-49242 : To verify that Project Admin can modify the populated
-	 *         the bates number fields and production should generated with modified
-	 *         bates number.
+	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-49242 :
+	 *         To verify that Project Admin can modify the populated the bates
+	 *         number fields and production should generated with modified bates
+	 *         number.
 	 * @Description : To verify that Project Admin can modify the populated the
 	 *              bates number fields and production should generated with
 	 *              modified bates number.
 	 */
-	////////@Test(groups = { "regression" }, priority = 19)
+	//////// @Test(groups = { "regression" }, priority = 19)
 	public void SelectBateNumberInNumberingAndShorting() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1177,7 +1173,7 @@ public class Production_Regression1 {
 	 *              selected redactions or selected PRIV tags.
 	 */
 
-	////////@Test(groups = { "regression" }, priority = 20)
+	//////// @Test(groups = { "regression" }, priority = 20)
 	public void generateTheProductionAfterNativeSectionIsSelectedWithTags() throws InterruptedException, AWTException {
 
 		UtilityLog.info(Input.prodPath);
@@ -1261,14 +1257,14 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON-48022 : To Verify In Productions, TIFF/ PDF generation is
-	 *         failing for the SAME document while it is working fine sometimes.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON-48022 :
+	 *         To Verify In Productions, TIFF/ PDF generation is failing for the
+	 *         SAME document while it is working fine sometimes.
 	 * @Description : Verify In Productions, TIFF/ PDF generation is failing for the
 	 *              SAME document while it is working fine sometimes
 	 */
 
-	////////@Test(groups = { "regression" }, priority = 21)
+	//////// @Test(groups = { "regression" }, priority = 21)
 	public void verifyingProductionWithExcelFileDocuments() throws InterruptedException, AWTException {
 
 		UtilityLog.info(Input.prodPath);
@@ -1355,14 +1351,14 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase ID :
-	 *         RPMXCON-49114 - To verify that the value of 'Number of MP3 Files' on
+	 * @author Gopinath created on:NA modified by:NA @Testcase ID : RPMXCON-49114 -
+	 *         To verify that the value of 'Number of MP3 Files' on
 	 *         Production-Summary tab if MP3 Files component is selected.
 	 * @Description : verify that the value of 'Number of MP3 Files' on
 	 *              Production-Summary tab if MP3 Files component is selected.
 	 */
 
-	////////@Test(groups = { "regression" }, priority = 22)
+	//////// @Test(groups = { "regression" }, priority = 22)
 	public void assertionOnGenerateProdctionPageByErrorDocuments() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1433,13 +1429,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON-49227 : Verify that in Production, if sorting option is Sort
-	 *         by MetaData and 'Keep Families Together' check box is selected.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON-49227 :
+	 *         Verify that in Production, if sorting option is Sort by MetaData and
+	 *         'Keep Families Together' check box is selected.
 	 * @Description : verify that in Production, if sorting option is Sort by
 	 *              MetaData and 'Keep Families Together' check box is selected.
 	 */
-	////////@Test(groups = { "regression" }, priority = 23)
+	//////// @Test(groups = { "regression" }, priority = 23)
 	public void verifyingTheSortingOfProducedDocuments() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-49227 -Production Sprint 05");
@@ -1523,14 +1519,14 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON-55700 : Verify file group type (.mdb/.mdf) option on
-	 *         selection in Translations section
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON-55700 :
+	 *         Verify file group type (.mdb/.mdf) option on selection in
+	 *         Translations section
 	 * @Description : Verify file group type (.mdb/.mdf) option on selection in
 	 *              Translations section.
 	 */
 
-	////////@Test(groups = { "regression" }, priority = 24)
+	//////// @Test(groups = { "regression" }, priority = 24)
 	public void verifyingTheTranslationnInProductionComponent() throws InterruptedException, AWTException {
 
 		UtilityLog.info(Input.prodPath);
@@ -1605,13 +1601,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON-55679 : To Verify On the Summary step of a production, the
-	 *         counts under the OCR/TIFF should Display Count.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON-55679 :
+	 *         To Verify On the Summary step of a production, the counts under the
+	 *         OCR/TIFF should Display Count.
 	 * @Description : Verify On the Summary step of a production, the counts under
 	 *              the OCR/TIFF should Display Count.
 	 */
-	////////@Test(groups = { "regression" }, priority = 25)
+	//////// @Test(groups = { "regression" }, priority = 25)
 	public void verifyingTheCountOfOCRAndTiffInSummarySection() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-55679 -Production Sprint 05");
@@ -1702,13 +1698,12 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON-49237 : To verify that link should be available on Numbering
-	 *         and Sorting tab
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON-49237 :
+	 *         To verify that link should be available on Numbering and Sorting tab
 	 * @Description : Verify that link should be available on Numbering and Sorting
 	 *              tab
 	 */
-	////////@Test(groups = { "regression" }, priority = 26)
+	//////// @Test(groups = { "regression" }, priority = 26)
 	public void verifyingLinkInNumberingAndSorting() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1737,13 +1732,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author : Gopinath created on:NA modified by:NA @Testcase id :
-	 *         RPMXCON_49221 : To verify that after uncommit if user regenerate the
-	 *         production , it should generate successfully
+	 * @author : Gopinath created on:NA modified by:NA @Testcase id : RPMXCON_49221
+	 *         : To verify that after uncommit if user regenerate the production ,
+	 *         it should generate successfully
 	 * @Description : Verify that after uncommit if user regenerate the production ,
 	 *              it should generate successfully.
 	 */
-	////////@Test(groups = { "regression" }, priority =27 )
+	//////// @Test(groups = { "regression" }, priority =27 )
 	public void ProductionGenerateSuccessfullyAfterUnCommit() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1824,13 +1819,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON_50033 : To verify that PDF should burn multiple redactions
-	 *         and display the correct text for each redaction.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON_50033 :
+	 *         To verify that PDF should burn multiple redactions and display the
+	 *         correct text for each redaction.
 	 * @Description : To verify that PDF should burn multiple redactions and display
 	 *              the correct text for each redaction.
 	 */
-	////////@Test(groups = { "regression" }, priority =28 )
+	//////// @Test(groups = { "regression" }, priority =28 )
 	public void SelectingRedactionTagsInPDFSection() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1925,13 +1920,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID :
-	 *         RPMXCON_56007 : Verify that user can download the production by using
-	 *         the Shareable link for 'All Files'.
+	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON_56007 :
+	 *         Verify that user can download the production by using the Shareable
+	 *         link for 'All Files'.
 	 * @Description :Verify that user can download the production by using the
 	 *              Shareable link for 'All Files'.
 	 */
-@Test(groups = { "regression" }, priority = 29)
+	@Test(groups = { "regression" }, priority = 29)
 	public void verifyDownloadProductionUsingSharableLink() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2006,15 +2001,15 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON-49224 : To verify that after uncommit, if user change the
-	 *         source in Document Selection tab, it should regenerate and commit
-	 *         Production successfully.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON-49224 :
+	 *         To verify that after uncommit, if user change the source in Document
+	 *         Selection tab, it should regenerate and commit Production
+	 *         successfully.
 	 * @Description : Verify that after uncommit, if user change the source in
 	 *              Document Selection tab, it should regenerate and commit
 	 *              Production successfully
 	 */
-@Test(groups = { "regression" }, priority = 30)
+	@Test(groups = { "regression" }, priority = 30)
 	public void modifyingTheDocumentSelectionTabAndGenerateTheProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-49224 -Production Sprint 05");
@@ -2102,13 +2097,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON_56010 : Verify that even after Uncommit the producion user
-	 *         can download the Production.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56010 :
+	 *         Verify that even after Uncommit the producion user can download the
+	 *         Production.
 	 * @Description : Verify that even after Uncommit the producion user can
 	 *              download the Production.
 	 */
-@Test(groups = { "regression" }, priority = 31)
+	@Test(groups = { "regression" }, priority = 31)
 	public void productionGeneratedSuccessfullyAfterUnCommit() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2190,15 +2185,14 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON-56085 : Verify that Production should generate successfully
-	 *         by selecting only DAT and 'Generate TIFF' option with Priv
-	 *         Placholder.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON-56085 :
+	 *         Verify that Production should generate successfully by selecting only
+	 *         DAT and 'Generate TIFF' option with Priv Placholder.
 	 * @Description : Verify that Production should generate successfully by
 	 *              selecting only DAT and 'Generate TIFF' option with Priv
 	 *              Placholder.
 	 */
-@Test(groups = { "regression" }, priority = 32)
+	@Test(groups = { "regression" }, priority = 32)
 	public void TiffWithPrivPlaceholderAndGenerateProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56085 -Production Sprint 05");
@@ -2279,13 +2273,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON_56084 : Verify that Production should generate successfully
-	 *         by selecting only DAT and 'Generate PDF' option.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56084 :
+	 *         Verify that Production should generate successfully by selecting only
+	 *         DAT and 'Generate PDF' option.
 	 * @Description : Verify that Production should generate successfully by
 	 *              selecting only DAT and 'Generate PDF' option.
 	 */
-@Test(groups = { "regression" }, priority = 33)
+	@Test(groups = { "regression" }, priority = 33)
 	public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2364,14 +2358,14 @@ public class Production_Regression1 {
 
 	/**
 	 * 
-	 * @author Gopinath created on:NA modified by:NA TESTCASE @Testcase No
-	 *         : RPMXCON-56128 : Verify that if Redaction Tag/s is already specified
+	 * @author Gopinath created on:NA modified by:NA TESTCASE @Testcase No :
+	 *         RPMXCON-56128 : Verify that if Redaction Tag/s is already specified
 	 *         with Redaction Text then that Redaction Tag.
 	 * @Description : Verify that if Redaction Tag/s is already specified with
 	 *              Redaction Text then that Redaction Tag.
 	 */
 
-	////////@Test(groups = { "regression" }, priority = 34)
+	//////// @Test(groups = { "regression" }, priority = 34)
 	public void verifyClickMarkIncompleteDisablesALreadyRedactedTags() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56128 Production");
@@ -2421,14 +2415,14 @@ public class Production_Regression1 {
 
 	/**
 	 * 
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON_56062 : Verify Production should generate successfully with
-	 *         page counting if user selects PDF and TEXT.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56062 :
+	 *         Verify Production should generate successfully with page counting if
+	 *         user selects PDF and TEXT.
 	 * @Description : Verify Production should generate successfully with page
 	 *              counting if user selects PDF and TEXT.
 	 */
 
-	////////@Test(groups = { "regression" }, priority = 35)
+	//////// @Test(groups = { "regression" }, priority = 35)
 	public void generateProductionByFillingDATAndPDFAndTextSection() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56062 -Production");
@@ -2514,14 +2508,14 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON-55717 : To Verify in Productions, for a document with
-	 *         AudioPlayReady, only the MP3 file variant is produced as MP3 files.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON-55717 :
+	 *         To Verify in Productions, for a document with AudioPlayReady, only
+	 *         the MP3 file variant is produced as MP3 files.
 	 * @Description : To Verify in Productions, for a document with AudioPlayReady,
 	 *              only the MP3 file variant is produced as MP3 files.
 	 */
 
-	////////@Test(groups = { "regression" }, priority = 36)
+	//////// @Test(groups = { "regression" }, priority = 36)
 	public void selectAudioSearchAndGenerateProdcution() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-55717 -Production");
@@ -2593,13 +2587,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON_56126 : Verify that if Tag is already specified with
-	 *         Privileged Placeholder then that Tag should not be available.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56126 :
+	 *         Verify that if Tag is already specified with Privileged Placeholder
+	 *         then that Tag should not be available.
 	 * @Description : Verify that if Tag is already specified with Privileged
 	 *              Placeholder then that Tag should not be available.
 	 */
-	////////@Test(groups = { "regression" }, priority = 37)
+	//////// @Test(groups = { "regression" }, priority = 37)
 	public void verifyTagIsEnabledForAllDocsEnabledforPrivTag() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2640,13 +2634,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON_56125 : Verify that if Tag is already specified with Right
-	 *         Branding then that Tag should not be available.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56125 :
+	 *         Verify that if Tag is already specified with Right Branding then that
+	 *         Tag should not be available.
 	 * @Description : Verify that if Tag is already specified with Right Branding
 	 *              then that Tag should not be available.
 	 */
-	////////@Test(groups = { "regression" }, priority =38)
+	//////// @Test(groups = { "regression" }, priority =38)
 	public void tiffSectionRightBranding() throws Exception {
 		base.stepInfo("Test case Id: No:RPMXCON_56125 -Production");
 		base.stepInfo(
@@ -2688,15 +2682,15 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_id :
-	 *         RPMXCON-55923 : Verify that in Production, DocFileExtensionCorrected
-	 *         should be used in the file name as Native, when DocFileExtension and
+	 * @author Gopinath created on:NA modified by:NA @Testcase_id : RPMXCON-55923 :
+	 *         Verify that in Production, DocFileExtensionCorrected should be used
+	 *         in the file name as Native, when DocFileExtension and
 	 *         DocFileExtensionCorrected is having different value.
 	 * @Description : Verify that in Production, DocFileExtensionCorrected should be
 	 *              used in the file name as Native, when DocFileExtension and
 	 *              DocFileExtensionCorrected is having different value.
 	 */
-	////////@Test(groups = { "regression" }, priority = 39)
+	//////// @Test(groups = { "regression" }, priority = 39)
 	public void generatingProductionForCorrectedExtesionFile() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-55923 -Production Sprint 05");
@@ -2778,15 +2772,14 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-55924 : Verify that in Production Native file will have no
-	 *         extension, when file extension and file extension corrected as blank
-	 *         values.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-55924 :
+	 *         Verify that in Production Native file will have no extension, when
+	 *         file extension and file extension corrected as blank values.
 	 * @Description : Verify that in Production Native file will have no extension,
 	 *              when file extension and file extension corrected as blank
 	 *              values.
 	 */
-	////////@Test(groups = { "regression" }, priority = 40)
+	//////// @Test(groups = { "regression" }, priority = 40)
 	public void generatingProductionWithoutExtesionFile() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-55923 -Production Sprint 05");
@@ -2868,13 +2861,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-49138 : Verify that when text is exported for file group type
-	 *         then it should export the actual text file and not the placeholder.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-49138 :
+	 *         Verify that when text is exported for file group type then it should
+	 *         export the actual text file and not the placeholder.
 	 * @Description : Verify that when text is exported for file group type then it
 	 *              should export the actual text file and not the placeholder.
 	 */
-	////////@Test(groups = { "regression" }, priority = 41)
+	//////// @Test(groups = { "regression" }, priority = 41)
 	public void selectTextFileInNativeProducedDocsAndGenerateProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-49138 -Production Sprint 05");
@@ -2958,15 +2951,14 @@ public class Production_Regression1 {
 
 	/**
 	 * 
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-55775 : To verify that If user select PrivTag and if
-	 *         translations document is associated to that tag then Native should
-	 *         not produced.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-55775 :
+	 *         To verify that If user select PrivTag and if translations document is
+	 *         associated to that tag then Native should not produced.
 	 * @Description : Verify that If user select PrivTag and if translations
 	 *              document is associated to that tag then Native should not
 	 *              produced
 	 */
-	////////@Test(groups = { "regression" }, priority =42)
+	//////// @Test(groups = { "regression" }, priority =42)
 	public void fillingPrivPlaceholderAndGenerateProduction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3047,13 +3039,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author : Gopinath Created on:NA Modified by:NA @Testcase_Id :
-	 *         RPMXCON_55941 : Verify that in Doc View, images tab should displayed
-	 *         with produced documents having comments/signautre.
+	 * @author : Gopinath Created on:NA Modified by:NA @Testcase_Id : RPMXCON_55941
+	 *         : Verify that in Doc View, images tab should displayed with produced
+	 *         documents having comments/signautre.
 	 * @Description: Verify that in Doc View, images tab should displayed with
 	 *               produced documents having comments/signautre.
 	 */
-	////////@Test(groups = { "regression" },priority = 43)
+	//////// @Test(groups = { "regression" },priority = 43)
 	public void verifyDocViewImagesTabForCommentsAndSignautre() throws Exception {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -3141,15 +3133,14 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON_56088 : Verify that Production should generate successfully
-	 *         by selecting only DAT and 'Generate PDF' option with TechIssue
-	 *         Placholder.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56088 :
+	 *         Verify that Production should generate successfully by selecting only
+	 *         DAT and 'Generate PDF' option with TechIssue Placholder.
 	 * @Description : Verify that Production should generate successfully by
 	 *              selecting only DAT and 'Generate PDF' option with TechIssue
 	 *              Placholder.
 	 */
-	////////@Test(groups = { "regression" }, priority = 44)
+	//////// @Test(groups = { "regression" }, priority = 44)
 	public void pdfSecionWithTechIssueDocAndGenratingProdcution() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3230,15 +3221,15 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id :
-	 *         RPMXCON_56090 : Verify that Production should generate successfully
-	 *         by selecting only DAT and 'Generate PDF' option with Natively
-	 *         Produced Documents Placholder.
+	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56090 :
+	 *         Verify that Production should generate successfully by selecting only
+	 *         DAT and 'Generate PDF' option with Natively Produced Documents
+	 *         Placholder.
 	 * @Description : Verify that Production should generate successfully by
 	 *              selecting only DAT and 'Generate PDF' option with Natively
 	 *              Produced Documents Placholder.
 	 */
-	////////@Test(groups = { "regression" }, priority = 45)
+	//////// @Test(groups = { "regression" }, priority = 45)
 	public void pdfSectionWithNativelyProdcuedDocAndGenratingProdcution() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3314,13 +3305,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-49222 : To verify that after uncommit the production, Action
-	 *         "Production Deleted" should be displayed in 'Document Audit Report'.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-49222 :
+	 *         To verify that after uncommit the production, Action "Production
+	 *         Deleted" should be displayed in 'Document Audit Report'.
 	 * @Description : Verify that after uncommit the production, Action "Production
 	 *              Deleted" should be displayed in 'Document Audit Report'.
 	 */
-	////////@Test(groups = { "regression" }, priority = 46)
+	//////// @Test(groups = { "regression" }, priority = 46)
 	public void verifyingTheAuditReportInGeneratedDocument() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3424,13 +3415,13 @@ public class Production_Regression1 {
 
 	/**
 	 * 
-	 * @author Gopinath created on:NA modified by:NA @TestCase_id :
-	 *         RPMXCON-56082 : Verify that in Production components, TIFF/PDF
-	 *         section displays options for Generating TIFF or Generating PDF
+	 * @author Gopinath created on:NA modified by:NA @TestCase_id : RPMXCON-56082 :
+	 *         Verify that in Production components, TIFF/PDF section displays
+	 *         options for Generating TIFF or Generating PDF
 	 * @Description: Verify that in Production components, TIFF/PDF section displays
 	 *               options for Generating TIFF or Generating PDF.
 	 */
-	////////@Test(groups = { "regression" }, priority =47)
+	//////// @Test(groups = { "regression" }, priority =47)
 	public void verifyingGenerateTIFFandPDF() throws Exception {
 		UtilityLog.info(Input.prodPath);
 
@@ -3455,13 +3446,13 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Gopinath created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-55986 : Verify that after Post
-	 *         Geneation is completed, it will displays status on Production
-	 *         Generation page as 'Post Generation QC Check Complete'
+	 * @Testcase_Id:RPMXCON-55986 : Verify that after Post Geneation is completed,
+	 *                            it will displays status on Production Generation
+	 *                            page as 'Post Generation QC Check Complete'
 	 * @Description : Verify that after Post Geneation is completed, it will
 	 *              displays status on Production Generation page.
 	 */
-	////////@Test(groups = { "regression" }, priority = 48)
+	//////// @Test(groups = { "regression" }, priority = 48)
 	public void verifyTheProductionStatusInProducedGeneration() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-55986 -Production Sprint 06");
@@ -3544,13 +3535,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-48874 : To verify that Production should generate
-	 *         successfully if user map the one source field to multiple DAT fields.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-48874 :
+	 *         To verify that Production should generate successfully if user map
+	 *         the one source field to multiple DAT fields.
 	 * @Description : To verify that Production should generate successfully if user
 	 *              map the one source field to multiple DAT fields.
 	 */
-	////////@Test(groups = { "regression" }, priority = 49)
+	//////// @Test(groups = { "regression" }, priority = 49)
 	public void addDifferentDATFieldAndGenerateProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-48874 -Production Sprint 06");
@@ -3627,15 +3618,15 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-49970 : Verify that after updating the placeholder text on
-	 *         uncompleting the production, production should generate with the
-	 *         updated redaction text.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-49970 :
+	 *         Verify that after updating the placeholder text on uncompleting the
+	 *         production, production should generate with the updated redaction
+	 *         text.
 	 * @Description : Verify that after updating the placeholder text on
 	 *              uncompleting the production, production should generate with the
 	 *              updated redaction text.
 	 */
-	////////@Test(groups = { "regression" }, priority = 50)
+	//////// @Test(groups = { "regression" }, priority = 50)
 	public void updatingtextInBurnRedactionAndGeneratingProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-49970 -Production Sprint 06");
@@ -3724,13 +3715,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-48951 : To verify that user can load the template in New
-	 *         Production and Generate for TIFF file.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-48951 :
+	 *         To verify that user can load the template in New Production and
+	 *         Generate for TIFF file.
 	 * @Description : Verify that user can load the template in New Production and
 	 *              Generate for TIFF file.
 	 */
-	////////@Test(groups = { "regression" }, priority = 51)
+	//////// @Test(groups = { "regression" }, priority = 51)
 	public void verifyingTIFFSectionInManageTemplate() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-48951 -Production Sprint 06");
@@ -3819,13 +3810,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-48953 : To verify that after loading the template PA can
-	 *         change the configuration in any of the steps.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-48953 :
+	 *         To verify that after loading the template PA can change the
+	 *         configuration in any of the steps.
 	 * @Description : Verify that after loading the template PA can change the
 	 *              configuration in any of the steps.
 	 */
-	////////@Test(groups = { "regression" }, priority = 52)
+	//////// @Test(groups = { "regression" }, priority = 52)
 	public void verifyingPDFSectionInManageTemplate() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-48953 -Production Sprint 06");
@@ -3935,13 +3926,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-48952 : To verify that user can load the template in New
-	 *         Production and Generate PDF files.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-48952 :
+	 *         To verify that user can load the template in New Production and
+	 *         Generate PDF files.
 	 * @Description : Verify that user can load the template in New Production and
 	 *              Generate PDF files
 	 */
-	////////@Test(groups = { "regression" }, priority = 53)
+	//////// @Test(groups = { "regression" }, priority = 53)
 	public void verifyingPDFFilesGeneratedOnManageTemplate() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-48952 -Production Sprint 06");
@@ -4029,11 +4020,11 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-48000 : Verify Branding Bates number
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-48000 :
+	 *         Verify Branding Bates number
 	 * @Description: Verify Branding Bates number
 	 */
-	////////@Test(groups = { "regression" }, priority = 54)
+	//////// @Test(groups = { "regression" }, priority = 54)
 	public void fillingTIFFSectionWithBatesNumberAndGenerateProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-48000 -Production Sprint 06");
@@ -4115,14 +4106,14 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-49999 : Verify if multiple tag-based brandings are specified
-	 *         then first matching tab-based branding should be display on 'Preview'
-	 *         document and on produced documents also.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-49999 :
+	 *         Verify if multiple tag-based brandings are specified then first
+	 *         matching tab-based branding should be display on 'Preview' document
+	 *         and on produced documents also.
 	 * @Description : Verify if multiple tag-based brandings are specified then
 	 *              first matching tab-based branding should be display.
 	 */
-	////////@Test(groups = { "regression" }, priority = 55)
+	//////// @Test(groups = { "regression" }, priority = 55)
 	public void generateTheProductionBySelectingTags() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-49999 -Production Sprint 06");
@@ -4211,14 +4202,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-55957 : Verify that if 'Volume Included' toggle is OFF then
-	 *         "Archive for FTP" should archive everything in the Production
-	 *         Directory.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-55957 :
+	 *         Verify that if 'Volume Included' toggle is OFF then "Archive for FTP"
+	 *         should archive everything in the Production Directory.
 	 * @Description : Verify that if 'Volume Included' toggle is OFF then "Archive
 	 *              for FTP" should archive everything in the Production Directory.
 	 */
-	////////@Test(groups = { "regression" }, priority = 56)
+	//////// @Test(groups = { "regression" }, priority = 56)
 	public void verifyingProductionAfterAudioIncludedToggleDisabled() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-55957 -Production Sprint 06");
@@ -4301,14 +4291,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-48496 : To verify that the selected metadata is not displayed
-	 *         in DAT.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-48496 :
+	 *         To verify that the selected metadata is not displayed in DAT.
 	 * @Description : Verify that the selected metadata is not displayed in DAT if
 	 *              the document has at least one of the selected PRIV tags in PRIV
 	 *              placeholdering for PDF.
 	 */
-	////////@Test(groups = { "regression" }, priority = 57)
+	//////// @Test(groups = { "regression" }, priority = 57)
 	public void fillingPDFPrivDocsAndGenerateProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-48496 -Production Sprint 06");
@@ -4393,15 +4382,14 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-56138 : Verify that Count displays correctly on Priv Guard if
-	 *         few of the parents and few child of other parents marked as Priv
-	 *         document.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-56138 :
+	 *         Verify that Count displays correctly on Priv Guard if few of the
+	 *         parents and few child of other parents marked as Priv document.
 	 * @Description : Verify that Count displays correctly on Priv Guard if few of
 	 *              the parents and few child of other parents marked as Priv
 	 *              document.
 	 */
-	////////@Test(groups = { "regression" }, priority = 58)
+	//////// @Test(groups = { "regression" }, priority = 58)
 	public void selectingPrivTagAndGenerateProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56138 -Production Sprint 06");
@@ -4508,12 +4496,11 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-56074 : Verify the static text in Production-Text component
-	 *         section.
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-56074 :
+	 *         Verify the static text in Production-Text component section.
 	 * @Description : Verify the static text in Production-Text component section.
 	 */
-	////////@Test(groups = { "regression" }, priority = 59)
+	//////// @Test(groups = { "regression" }, priority = 59)
 	public void verifyTextSection() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56074 -Production Sprint 06");
@@ -4533,13 +4520,13 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-56068 :Verify if TIFF selecting for
-	 *         Priv Placeholdering file then PageCount is always 1 and it will skip
-	 *         the 'DOCPGCOUNTUPDT'
+	 * @Testcase_Id:RPMXCON-56068 :Verify if TIFF selecting for Priv Placeholdering
+	 *                            file then PageCount is always 1 and it will skip
+	 *                            the 'DOCPGCOUNTUPDT'
 	 * @Description : Verify that after selecting tiffpagecount in DAT section, it
 	 *              will generate the production.
 	 */
-	////////@Test(groups = { "regression" }, priority = 49)
+	//////// @Test(groups = { "regression" }, priority = 49)
 	public void selectTiffPageCountAndGenerateProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56068 -Production Sprint 06");
@@ -4630,13 +4617,13 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-56069 :Verify if TIFF selecting for
-	 *         Tech Placeholdering file then PageCount is always 1 and it will skip
-	 *         the 'DOCPGCOUNTUPDT'
+	 * @Testcase_Id:RPMXCON-56069 :Verify if TIFF selecting for Tech Placeholdering
+	 *                            file then PageCount is always 1 and it will skip
+	 *                            the 'DOCPGCOUNTUPDT'
 	 * @Description : Verify that after selecting tiffpagecount in DAT section, it
 	 *              will generate the production.
 	 */
-	////////@Test(groups = { "regression" }, priority = 50)
+	//////// @Test(groups = { "regression" }, priority = 50)
 	public void selectTiffPageCountAndTechPlaceholderGenerateProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56069 -Production Sprint 06");
@@ -4727,11 +4714,11 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-56067 :Verify page counting is not
-	 *         skipped if Production exports only Natives,text(not ingested)
+	 * @Testcase_Id:RPMXCON-56067 :Verify page counting is not skipped if Production
+	 *                            exports only Natives,text(not ingested)
 	 * @Description :generate the production on filling native and text section.
 	 */
-	////////@Test(groups = { "regression" }, priority = 51)
+	//////// @Test(groups = { "regression" }, priority = 51)
 	public void generateProductionWithNativeAndTextSection() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56067 -Production Sprint 06");
@@ -4818,11 +4805,11 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-56065 :Verify page counting is skipped
-	 *         if Production exports only Text (If text ingested)
+	 * @Testcase_Id:RPMXCON-56065 :Verify page counting is skipped if Production
+	 *                            exports only Text (If text ingested)
 	 * @Description :generate the production on filling text section.
 	 */
-	////////@Test(groups = { "regression" }, priority = 51)
+	//////// @Test(groups = { "regression" }, priority = 51)
 	public void generateProductionWithTextSection() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56065 -Production Sprint 06");
@@ -4906,11 +4893,12 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-56059 :Verify page counting is skipped
-	 *         if Production exports only Natives,text (Text is ingested) with DAT
+	 * @Testcase_Id:RPMXCON-56059 :Verify page counting is skipped if Production
+	 *                            exports only Natives,text (Text is ingested) with
+	 *                            DAT
 	 * @Description :generate the production on filling text section.
 	 */
-	////////@Test(groups = { "regression" }, priority = 52)
+	//////// @Test(groups = { "regression" }, priority = 52)
 	public void generateProductionWithDATNativeAndTextSection() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56059 -Production Sprint 06");
@@ -4990,14 +4978,14 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id :
-	 *         RPMXCON-55942 :Verify that Production should generated successfully
-	 *         and PDF/TIFF should produced with Comments/Signautre (Documents
-	 *         processed through ICE)
+	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-55942
+	 *         :Verify that Production should generated successfully and PDF/TIFF
+	 *         should produced with Comments/Signautre (Documents processed through
+	 *         ICE)
 	 * @Description : Verify that after loading the template PA can change the
 	 *              configuration in any of the steps.
 	 */
-	////////@Test(groups = { "regression" }, priority = 53)
+	//////// @Test(groups = { "regression" }, priority = 53)
 	public void fillingPDFSectionGeneratingTheProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-55942 -Production Sprint 07");
@@ -5025,12 +5013,12 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-56057 : Verify page counting is
-	 *         skipped if Production exports only Natives.
+	 * @Testcase_Id:RPMXCON-56057 : Verify page counting is skipped if Production
+	 *                            exports only Natives.
 	 * @Description : Verify page counting is skipped if Production exports only
 	 *              Natives.
 	 */
-	////////@Test(groups = { "regression" }, priority = 53)
+	//////// @Test(groups = { "regression" }, priority = 53)
 	public void selectDATAndNativeSectionsForProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56057 -Production Sprint 06");
@@ -5123,14 +5111,14 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-56053 : Verify that once Post
-	 *         Geneation is in progress, it will displays status on ProductionGrid
-	 *         View as 'Post-Gen QC Checks In Progress'.
+	 * @Testcase_Id:RPMXCON-56053 : Verify that once Post Geneation is in progress,
+	 *                            it will displays status on ProductionGrid View as
+	 *                            'Post-Gen QC Checks In Progress'.
 	 * @Description : Verify that once Post Geneation is in progress, it will
 	 *              displays status on ProductionGrid View as 'Post-Gen QC Checks In
 	 *              Progress'.
 	 */
-	////////@Test(groups = { "regression" }, priority = 54)
+	//////// @Test(groups = { "regression" }, priority = 54)
 	public void verifyPostGenProgressStatusonProductionHomePage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56053 -Production Sprint 06");
@@ -5220,13 +5208,13 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-55974 : Verify that after Pre-gen
-	 *         checks is in progress, it will displays status on Production
-	 *         Generation page
+	 * @Testcase_Id:RPMXCON-55974 : Verify that after Pre-gen checks is in progress,
+	 *                            it will displays status on Production Generation
+	 *                            page
 	 * @Description : Verify that after Pre-gen checks is in progress, it will
 	 *              displays status on Production Generation page.
 	 */
-	////////@Test(groups = { "regression" }, priority = 55)
+	//////// @Test(groups = { "regression" }, priority = 55)
 	public void verifyPreGenChecksStatusonProductionPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-55974 -Production Sprint 06");
@@ -5305,12 +5293,12 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-49815 :To verify that Production
-	 *         should generate successfully if Prefix is up to 50 characters
+	 * @Testcase_Id:RPMXCON-49815 :To verify that Production should generate
+	 *                            successfully if Prefix is up to 50 characters
 	 * @Description :verify the generation of production when prefix with 50
 	 *              character.
 	 */
-	////////@Test(groups = { "regression" }, priority = 52)
+	//////// @Test(groups = { "regression" }, priority = 52)
 	public void generationOfProductionWithalphabetinPrefix() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-49815 -Production Sprint 07");
@@ -5396,12 +5384,12 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-49814 :To verify that Production
-	 *         should generate successfully if Suffix is up to 50 characters
+	 * @Testcase_Id:RPMXCON-49814 :To verify that Production should generate
+	 *                            successfully if Suffix is up to 50 characters
 	 * @Description :verify the generation of production when suffix with 50
 	 *              character.
 	 */
-	////////@Test(groups = { "regression" }, priority = 52)
+	//////// @Test(groups = { "regression" }, priority = 52)
 	public void generationOfProductionWithalphabetinSuffix() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-49814 -Production Sprint 07");
@@ -5489,13 +5477,13 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-49813 :To verify that Production
-	 *         should generate successfully if prefix and Suffix is less than 50
-	 *         characters
+	 * @Testcase_Id:RPMXCON-49813 :To verify that Production should generate
+	 *                            successfully if prefix and Suffix is less than 50
+	 *                            characters
 	 * @Description :verify the generation of production when prefix and suffix is
 	 *              less than 50 character.
 	 */
-	//////@Test(groups = { "regression" }, priority = 58)
+	////// @Test(groups = { "regression" }, priority = 58)
 	public void generationOfProductionWithPrefixAndSuffix() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-49813 -Production Sprint 07");
@@ -5583,12 +5571,13 @@ public class Production_Regression1 {
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
-	 *         @Testcase_Id:RPMXCON-49812 :To verify that Production using
-	 *         template should generate with Prefix and Suffix having 50 characters
+	 * @Testcase_Id:RPMXCON-49812 :To verify that Production using template should
+	 *                            generate with Prefix and Suffix having 50
+	 *                            characters
 	 * @Description :verify the generation of production when prefix and suffix 50
 	 *              character with template.
 	 */
-	//////@Test(groups = { "regression" }, priority = 1)
+	////// @Test(groups = { "regression" }, priority = 1)
 	public void generationOfProductionWithPrefixAndSuffixWithTemplate() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-49812 -Production Sprint 07");
@@ -5726,7 +5715,7 @@ public class Production_Regression1 {
 	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-55336
 	 * @Description: To verify the DAT check box is selectable and show/hide works.
 	 */
-	////@Test(groups = { "regression" }, priority = 60)
+	//// @Test(groups = { "regression" }, priority = 60)
 	public void verifyingShowAndHideOfDATCheckBox() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55336 -Production Sprint 08");
@@ -5746,7 +5735,7 @@ public class Production_Regression1 {
 	 *               'Completed' status on Progress bar in Tile View on Production
 	 *               Home page
 	 */
-	////@Test(groups = { "regression" }, priority = 61)
+	//// @Test(groups = { "regression" }, priority = 61)
 	public void completedStatusVerificationOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56021 -Production Sprint 08");
@@ -5800,7 +5789,7 @@ public class Production_Regression1 {
 	 *               placeholder TIFF / PDFs for Natively Produced Docs" is disabled
 	 *               , then PDFs is generated with Placeholder
 	 */
-	//@Test(groups = { "regression" }, priority = 62)
+	// @Test(groups = { "regression" }, priority = 62)
 	public void verifyThatNativelyProducedDocsWithoutPlaceholder() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48650 -Production Sprint 08");
@@ -5852,7 +5841,7 @@ public class Production_Regression1 {
 	 * @Description:To verify that on PDF section, 'Do Not Produce PDFs for Natively
 	 *                 Produced Docs' option is disabled by default
 	 */
-	//@Test(groups = { "regression" }, priority = 63)
+	// @Test(groups = { "regression" }, priority = 63)
 	public void verifyingNativelyProducedDocsToggle() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48643 -Production Sprint 08");
@@ -8921,19 +8910,19 @@ public class Production_Regression1 {
 		docExp.docExpViewInDocView();
 
 		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
-         // doc1
+		// doc1
 		docViewRedactions.selectDoc1();
 		driver.waitForPageToBeReady();
 		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Redactiontag1);
 
-        //create folder
+		// create folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
-        // Adding folder to bulkfolder
+		// Adding folder to bulkfolder
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
 		docExplorer.documentSelectionIteration();
 		docExplorer.bulkFolderExisting(foldername);
@@ -9003,10 +8992,11 @@ public class Production_Regression1 {
 		page.verifyingIncludeFamiliesToggleInDocumentSelectionPage();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-47750
-	 * @Description:Admin able to view and enter production guard information on the self production wizard.
+	 * @Description:Admin able to view and enter production guard information on the
+	 *                    self production wizard.
 	 */
 	@Test(groups = { "regression" }, priority = 121)
 	public void verifyProductionGuardInformationinProduction() throws Exception {
@@ -9019,7 +9009,6 @@ public class Production_Regression1 {
 		String testData1 = Input.testData1;
 		String tagname = Input.randomText + Utility.dynamicNameAppender();
 
-		
 		// create tag
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
@@ -9041,31 +9030,32 @@ public class Production_Regression1 {
 		page.getTIFFTab().waitAndClick(10);
 		page.fillingPrivledgedDocForPDFSection(tagname, Input.tagNamePrev);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID,suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
-		page.priviledgeDocCheck(true,tagname);
+		page.priviledgeDocCheck(true, tagname);
 		String DocCount = page.getDocumentSelectionLink().getText();
-		base.digitCompareEquals(purehit, Integer.parseInt(DocCount), "Document count is displayed correctly as expected",
+		base.digitCompareEquals(purehit, Integer.parseInt(DocCount),
+				"Document count is displayed correctly as expected",
 				"Document count is not displayed correctly as expected");
 		loginPage.logout();
 	}
-	
-	
-	
+
 	/**
 	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48206
-	 * @Description:To Verify In Productions, the validation of specific file types when entering placeholder text for TIFF/PDF.
+	 * @Description:To Verify In Productions, the validation of specific file types
+	 *                 when entering placeholder text for TIFF/PDF.
 	 */
-	@Test(groups = { "regression" }, priority =122)
+	@Test(groups = { "regression" }, priority = 122)
 	public void verifyingWarningMessageInProductionComponentTab() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
+
 		base.stepInfo("RPMXCON-48206-Production component");
-		base.stepInfo("To Verify In Productions, the validation of specific file types when entering placeholder text for TIFF/PDF.");
+		base.stepInfo(
+				"To Verify In Productions, the validation of specific file types when entering placeholder text for TIFF/PDF.");
 
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
@@ -9074,10 +9064,8 @@ public class Production_Regression1 {
 		page.fillingDATSection();
 		page.fillingTIFFWithNativelyProducedDocsFileType(Input.randomText);
 		loginPage.logout();
-		
+
 	}
-	
-	
 
 	/**
 	 * @author Brundha Test case id-RPMXCON-48632
@@ -9113,7 +9101,7 @@ public class Production_Regression1 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID,suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -9132,19 +9120,19 @@ public class Production_Regression1 {
 		page.getNotificationLink().waitAndClick(5);
 		page.getViewAll().waitAndClick(10);
 		for (int i = 0; i < 10; i++) {
-				if (page.getDownloadLinkforExport().isDisplayed()) {
-					page.getDownloadLinkforExport().Click();
-					break;
-				}else {
-					driver.Navigate().refresh();}}
-		
+			if (page.getDownloadLinkforExport().isDisplayed()) {
+				page.getDownloadLinkforExport().Click();
+				break;
+			} else {
+				driver.Navigate().refresh();
+			}
+		}
+
 		base.VerifyingCSVFileDownloadedAndSorted();
 		base.passedStep("verified the exported CSV is sorted by BegBates");
 		loginPage.logout();
 	}
-	
-	
-	
+
 	/**
 	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48167
 	 * @Description:To Verify All MP3 Files info should get loaded when using (Saved
@@ -9218,7 +9206,7 @@ public class Production_Regression1 {
 		page.fillingPDFSection(tagname, Input.searchString4);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -9253,7 +9241,7 @@ public class Production_Regression1 {
 	 *              should be created where it is specified,
 	 * 
 	 */
-	 @Test(groups = { "regression" }, priority = 126)
+	@Test(groups = { "regression" }, priority = 126)
 	public void VerifyingVolumeInProductionOutput() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -9288,7 +9276,7 @@ public class Production_Regression1 {
 		page.fillingTIFFSection(tagname, Input.searchString4);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID,suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -9314,805 +9302,844 @@ public class Production_Regression1 {
 
 		if (file.exists()) {
 			base.passedStep("Volume is displayed in  the given production directory");
-		} else {base.failedStep("Volume is displayed  not in the given production directory");}
+		} else {
+			base.failedStep("Volume is displayed  not in the given production directory");
+		}
 
 		if (Textfile.exists()) {
 			base.passedStep("Volume is displayed in  the given production directory");
-		} else {base.failedStep("Volume is displayed  not in the given production directory");}
+		} else {
+			base.failedStep("Volume is displayed  not in the given production directory");
+		}
 
 		if (loadfile.exists()) {
 			base.passedStep("Volume is displayed in  the given production directory");
-		} else {base.failedStep("Volume is displayed  not in the given production directory");}
-			
+		} else {
+			base.failedStep("Volume is displayed  not in the given production directory");
+		}
+
 		loginPage.logout();
 
 	}
-	
-	
-	 /**
-		 * @author Brundha Test case id-RPMXCON-48032
-		 * @Description To Verify file group type (.mdb/.mdf) selection under Native for
-		 *              Production Should work fine.
-		 * 
-		 */
-		@Test(groups = { "regression" }, priority = 127)
-		public void verifyingNativeFileType() throws Exception {
 
-			UtilityLog.info(Input.prodPath);
-			base.stepInfo("RPMXCON-48032 -Production Component");
-			base.stepInfo("To Verify file group type (.mdb/.mdf) selection under Native for Production Should work fine.");
+	/**
+	 * @author Brundha Test case id-RPMXCON-48032
+	 * @Description To Verify file group type (.mdb/.mdf) selection under Native for
+	 *              Production Should work fine.
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 127)
+	public void verifyingNativeFileType() throws Exception {
 
-			String foldername = "Folder" + Utility.dynamicNameAppender();
-			String tagname = "Tag" + Utility.dynamicNameAppender();
-			String productionname = "p" + Utility.dynamicNameAppender();
-			String prefixID = Input.randomText + Utility.dynamicNameAppender();
-			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-48032 -Production Component");
+		base.stepInfo("To Verify file group type (.mdb/.mdf) selection under Native for Production Should work fine.");
 
-			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-			tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
-			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
-			SessionSearch sessionSearch = new SessionSearch(driver);
-			sessionSearch.SearchMetaData("SourceDocID", "STC4_00000992");
-			sessionSearch.bulkTagExisting(tagname);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
-			ProductionPage page = new ProductionPage(driver);
-			page = new ProductionPage(driver);
-			
-			String beginningBates = page.getRandomNumber(2);
-			page.selectingDefaultSecurityGroup();
-			page.addANewProduction(productionname);
-			page.fillingDATSection();
-			page.selectingNativeFileType();
-			page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
-			page.navigateToNextSection();
-			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
-			page.navigateToNextSection();
-			page.fillingDocumentSelectionWithTag(tagname);
-			page.navigateToNextSection();
-			page.fillingPrivGuardPage();
-			page.fillingProductionLocationPage(productionname);
-			page.navigateToNextSection();
-			page.fillingSummaryAndPreview();
-			page.fillingGeneratePageWithContinueGenerationPopup();
-			driver.waitForPageToBeReady();
-			String name = page.getProduction().getText().trim();
-			String home = System.getProperty("user.home");
-			page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
-			System.out.println("Unzipped the downloaded files");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.SearchMetaData("SourceDocID", "STC4_00000992");
+		sessionSearch.bulkTagExisting(tagname);
 
-			driver.waitForPageToBeReady();
-			File file = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".mdb");
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
 
-			if (file.exists()) {
-				base.passedStep("Volume is displayed in  the given production directory");
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.selectingNativeFileType();
+		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		driver.waitForPageToBeReady();
+		String name = page.getProduction().getText().trim();
+		String home = System.getProperty("user.home");
+		page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+		System.out.println("Unzipped the downloaded files");
+
+		driver.waitForPageToBeReady();
+		File file = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".mdb");
+
+		if (file.exists()) {
+			base.passedStep("Volume is displayed in  the given production directory");
+		} else {
+			base.failedStep("Volume is displayed  not in the given production directory");
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha Test case id-RPMXCON-49539
+	 * @Description Validate Production with tiff and text options
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 128)
+	public void verifyingNativeFileTyp() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49539 -Production Component");
+		base.stepInfo("Validate Production with tiff and text options");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		DataSets dataset = new DataSets(driver);
+		base.stepInfo("Navigating to dataset page");
+		dataset.navigateToDataSetsPage();
+		base.stepInfo("Selecting uploadedset and navigating to doclist page");
+		dataset.SelectingUploadedDataSet();
+		DocListPage doc = new DocListPage(driver);
+		driver.waitForPageToBeReady();
+
+		doc.documentSelection(3);
+		doc.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		driver.waitForPageToBeReady();
+		String name = page.getProduction().getText().trim();
+		String home = System.getProperty("user.home");
+		page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+		System.out.println("Unzipped the downloaded files");
+
+		driver.waitForPageToBeReady();
+		File file = new File(
+				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".docx");
+		File Textfile = new File(
+				home + "/Downloads/VOL0001/Text/0001/" + prefixID + beginningBates + suffixID + ".txt");
+		File TiffFile = new File(home + "/Downloads/" + "VOL0001/Load Files/" + name + "_TIFF.OPT");
+		System.out.println("BATES" + prefixID + beginningBates + suffixID);
+
+		if (file.exists()) {
+			base.passedStep("filetype is displayed as expected");
+		} else {
+			base.failedStep("filetype is not displayed as expected");
+		}
+
+		if (Textfile.exists()) {
+			base.passedStep("Text is generated successfully");
+		} else {
+			base.failedStep("Text is not generated successfully");
+		}
+
+		if (TiffFile.exists()) {
+			base.passedStep("Tiff is generated successfully");
+		} else {
+			base.failedStep("Tiff is not generated successfully");
+		}
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha Test case id-RPMXCON-47997
+	 * @Description To Verify In Productions, the workproduct fields for slip sheets
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 129)
+	public void verifyingWorkProductFieldInProduction() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-47997 -Production Component");
+		base.stepInfo("To Verify In Productions, the workproduct fields for slip sheets");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String BatesNumber = "B" + Utility.dynamicNameAppender();
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.addDATFieldAtSecondRow("Doc Basic", "DocID", BatesNumber);
+		page.fillingNativeSection();
+		page.selectGenerateOption(false);
+		page.FillingWorkProductInTiffSection(foldername);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		driver.waitForPageToBeReady();
+		String name = page.getProduction().getText().trim();
+		String home = System.getProperty("user.home");
+		page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+		System.out.println("Unzipped the downloaded files");
+		driver.waitForPageToBeReady();
+		Ocr.setUp();
+		Ocr ocr = new Ocr();
+		ocr.startEngine("eng", Ocr.SPEED_FASTEST);
+
+		String Tifffile = ocr.recognize(
+				new File[] { new File(
+						home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".SS.tiff") },
+				Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
+		System.out.println(Tifffile);
+
+		if (Tifffile.contains(foldername)) {
+			base.passedStep("Workproduct  is displayed as expected");
+		} else {
+			base.failedStep("Workproduct is not displayed as expected");
+		}
+		ocr.stopEngine();
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha Test case id-RPMXCON-48646
+	 * @Description To verify that if "Do Not Produce TIFFs for Natively Produced
+	 *              Docs" is Enabled, then only Native should be produced
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 130)
+	public void verifyingNativelyProducedDocumentInProduction() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-48646 -Production Component");
+		base.stepInfo(
+				"To verify that if 'Do Not Produce TIFFs for Natively Produced Docs' is Enabled, then only Native should be produced");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		int pureHit = sessionSearch.basicContentSearchForTwoItems(Input.telecaSearchString, Input.TiffDocId);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectGenerateOption(false);
+		driver.scrollPageToTop();
+		page.getDoNotProduceFullContentTiff().waitAndClick(10);
+		;
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		driver.waitForPageToBeReady();
+		String name = page.getProduction().getText().trim();
+		String home = System.getProperty("user.home");
+		page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+		System.out.println("Unzipped the downloaded files");
+		driver.waitForPageToBeReady();
+		File dir = new File(home + "/Downloads/VOL0001/Natives/0001/");
+		File[] dir_contents = dir.listFiles();
+		System.out.println(dir_contents.length);
+		int nativefile = dir_contents.length;
+
+		if (pureHit != nativefile) {
+			base.passedStep("Natively produced document is generated successfully as expected");
+		} else {
+			base.failedStep("Natively produced document is not generated successfully as expected");
+		}
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha Test case id-RPMXCON-49868
+	 * @Description Verify that Production for redacted PDF should generated
+	 *              successfully if PDF documents are ICE processed with Mapped set
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 131)
+	public void verifyingTheGenerationOfProduction() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-49868 -Production Component");
+		base.stepInfo(
+				"Verify that Production for redacted PDF should generated successfully if PDF documents are ICE processed with Mapped set");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		DataSets dataset = new DataSets(driver);
+		base.stepInfo("Navigating to dataset page");
+		dataset.navigateToDataSetsPage();
+		dataset.selectDataSetWithName(Input.pdfDataSet);
+		DocListPage doc = new DocListPage(driver);
+		driver.waitForPageToBeReady();
+		doc.documentSelection(3);
+		doc.bulkTagExistingFromDoclist(tagname);
+
+		String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+		RedactionPage redactionpage = new RedactionPage(driver);
+		driver.waitForPageToBeReady();
+		redactionpage.selectDefaultSecurityGroup();
+		redactionpage.manageRedactionTagsPage(Redactiontag1);
+		System.out.println("First Redaction Tag is created" + Redactiontag1);
+
+		driver.scrollPageToTop();
+		base = new BaseClass(driver);
+		driver.Navigate().refresh();
+		base.impersonatePAtoRMU();
+		SessionSearch session = new SessionSearch(driver);
+		session.switchToWorkproduct();
+		session.selectTagInASwp(tagname);
+		driver.waitForPageToBeReady();
+		session.getQuerySearchButton().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		session.getPureHitAddButton().waitAndClick(10);
+		session.ViewInDocView();
+
+		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+		docViewRedactions.selectDoc1();
+		driver.waitForPageToBeReady();
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+		driver.waitForPageToBeReady();
+		docViewRedactions.selectingRedactionTag2(Redactiontag1);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectGenerateOption(false);
+		page.getClk_burnReductiontoggle().waitAndClick(10);
+		page.burnRedactionWithRedactionTag(Redactiontag1);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha Test case id-RPMXCON-48647
+	 * @Description To verify that if "Do not produce full content TIFF / PDFs or
+	 *              placeholder TIFF / PDFs for Natively Produced Docs" is enabled,
+	 *              then TIFFs with Placeholder should not produced, It should
+	 *              export only Natives.
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 132)
+	public void verifyingNativelyProducedDocInProducedFile() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-48647 -Production Component");
+		base.stepInfo(
+				"To verify that if 'Do not produce full content TIFF / PDFs or placeholder TIFF / PDFs for Natively Produced Docs' is enabled, then TIFFs with Placeholder should not produced, It should export only Natives.");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		int pureHit = sessionSearch.basicContentSearchForTwoItems(Input.telecaSearchString, Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFWithNativelyProducedDocs(Input.tagNameTechnical);
+		driver.scrollPageToTop();
+		page.getDoNotProduceFullContentTiff().waitAndClick(10);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		driver.waitForPageToBeReady();
+		String name = page.getProduction().getText().trim();
+		String home = System.getProperty("user.home");
+		page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+		System.out.println("Unzipped the downloaded files");
+		driver.waitForPageToBeReady();
+		File dir = new File(home + "/Downloads/VOL0001/Natives/0001/");
+		File[] dir_contents = dir.listFiles();
+		System.out.println(dir_contents.length);
+		int nativefile = dir_contents.length;
+
+		if (pureHit != nativefile) {
+			base.passedStep("Natively produced document is generated successfully as expected");
+		} else {
+			base.failedStep("Natively produced document is not generated successfully as expected");
+		}
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha Test case id-RPMXCON-48179
+	 * @DescriptionTo Verify For Multimedia file group Production Generation with
+	 *                some doc having Priv Tag Classification.
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 133)
+	public void verifyTheGenerationOfPrroductionWithNativeWithoutPrivFile() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-48179 -Production Component");
+		base.stepInfo(
+				"To Verify For Multimedia file group Production Generation with some doc having Priv Tag Classification");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String VolumeName = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.SearchMetaData("SourceDocID", Input.fileGroup);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSection(tagname, Input.tagNameTechnical);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.GetVolumeName().Click();
+		page.GetVolumeName().SendKeys(VolumeName);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		String name = page.getProduction().getText().trim();
+		String home = System.getProperty("user.home");
+		page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
+		System.out.println("Unzipped the downloaded files");
+
+		driver.waitForPageToBeReady();
+		File file = new File(home + "/Downloads/" + VolumeName + "/Natives/0001");
+		File TiffFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/" + productionname + "_TIFF.OPT");
+		File DatFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/" + productionname + "_DAT.dat");
+		File NativeFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/" + productionname + "_Native.lst");
+
+		if (!file.exists()) {
+			base.passedStep("Native file is not copied to priv file as expected");
+		} else {
+			base.failedStep("Native file is  copied to priv file ");
+		}
+
+		if (TiffFile.exists()) {
+			base.passedStep("Tiff file is generated as expected");
+		} else {
+			base.failedStep("Tiff file is not generated as expected");
+		}
+
+		if (DatFile.exists()) {
+			base.passedStep("Dat file is generated as expected");
+		} else {
+			base.failedStep("Dat file is not generated as expected");
+		}
+
+		if (NativeFile.exists()) {
+			base.passedStep("Native file is generated as expected");
+		} else {
+			base.failedStep("Native file is not generated as expected");
+		}
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha Test case id-RPMXCON-49079
+	 * @DescriptionProduction Document Selection to DocList with Child Documents
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 134)
+	public void verifyingTheParentAndChildDocumentInDoclistPage() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-49079 -Production Component");
+		base.stepInfo("Production Document Selection to DocList with Child Documents");
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, "Select Tag Classification");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		driver.waitForPageToBeReady();
+		sessionSearch.ViewInDocList();
+		DocListPage doc = new DocListPage(driver);
+		doc.selectingParentDocument();
+		doc.bulkTagExistingFromDoclist(tagname);
+		driver.waitForPageToBeReady();
+		doc.getSelectDropDown().waitAndClick(10);
+		doc.getSelectParentDocument().waitAndClick(10);
+		int DocumentId = base.getIndex(doc.getChildHeader(), "DOCID");
+		doc.getChildTableRow(DocumentId);
+		System.out.println(DocumentId);
+		ArrayList<String> DocumentIdInDoclist = doc.GettingChildDocumentInDocListPage(DocumentId);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.getIncludeFamilies().waitAndClick(10);
+		String Document = page.navigatingToDocViewPage();
+		doc.getSelectParentDocument().isElementAvailable(1);
+		if (doc.getSelectParentDocument().isDisplayed()) {
+			doc.getSelectParentDocument().waitAndClick(10);
+			ArrayList<String> selectedDocs = doc.GettingChildDocumentInDocListPage(DocumentId);
+			if (DocumentIdInDoclist.equals(selectedDocs)) {
+				base.passedStep("Parent And Child document is displayed as expected");
 			} else {
-				base.failedStep("Volume is displayed  not in the given production directory");
+				base.failedStep("Parent and child document is not displayed as expected");
 			}
-			loginPage.logout();
+		} else {
+			base.failedStep("Parent and child document is not displayed as expected");
 		}
-
-		/**
-		 * @author Brundha Test case id-RPMXCON-49539
-		 * @Description Validate Production with tiff and text options
-		 * 
-		 */
-		@Test(groups = { "regression" }, priority = 128)
-		public void verifyingNativeFileTyp() throws Exception {
-
-			UtilityLog.info(Input.prodPath);
-			base.stepInfo("RPMXCON-49539 -Production Component");
-			base.stepInfo("Validate Production with tiff and text options");
-
-			String foldername = "Folder" + Utility.dynamicNameAppender();
-			String tagname = "Tag" + Utility.dynamicNameAppender();
-			String productionname = "p" + Utility.dynamicNameAppender();
-			String prefixID = Input.randomText + Utility.dynamicNameAppender();
-			String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-			tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
-			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-
-			DataSets dataset = new DataSets(driver);
-			base.stepInfo("Navigating to dataset page");
-			dataset.navigateToDataSetsPage();
-			base.stepInfo("Selecting uploadedset and navigating to doclist page");
-			dataset.SelectingUploadedDataSet();
-			DocListPage doc = new DocListPage(driver);
+		doc.getBackToSourceBtn().waitAndClick(10);
+		page.getBackButton().waitAndClick(10);
+		page.getMarkIncompleteButton().Click();
+		page.getIncludeFamilies().waitAndClick(10);
+		String DocCount = page.navigatingToDocViewPage();
+		if (Integer.valueOf(Document) <= Integer.valueOf(DocCount)) {
 			driver.waitForPageToBeReady();
-
-			doc.documentSelection(3);
-			doc.bulkTagExisting(tagname);
-
-			ProductionPage page = new ProductionPage(driver);
-			page = new ProductionPage(driver);
-			String beginningBates = page.getRandomNumber(2);
-			page.selectingDefaultSecurityGroup();
-			page.addANewProduction(productionname);
-			page.fillingDATSection();
-			page.fillingNativeSection();
-			page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
-			page.fillingTextSection();
-			page.navigateToNextSection();
-			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
-			page.navigateToNextSection();
-			page.fillingDocumentSelectionWithTag(tagname);
-			page.navigateToNextSection();
-			page.fillingPrivGuardPage();
-			page.fillingProductionLocationPage(productionname);
-			page.navigateToNextSection();
-			page.fillingSummaryAndPreview();
-			page.fillingGeneratePageWithContinueGenerationPopup();
-			driver.waitForPageToBeReady();
-			String name = page.getProduction().getText().trim();
-			String home = System.getProperty("user.home");
-			page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
-			System.out.println("Unzipped the downloaded files");
-			
-			driver.waitForPageToBeReady();
-			File file = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".docx");
-			File Textfile = new File(home + "/Downloads/VOL0001/Text/0001/" + prefixID + beginningBates + suffixID + ".txt");
-			File TiffFile = new File(home + "/Downloads/" + "VOL0001/Load Files/" + name + "_TIFF.OPT");
-			System.out.println("BATES" + prefixID + beginningBates + suffixID);
-			
-			if (file.exists()) {base.passedStep("filetype is displayed as expected");
-			} else {	base.failedStep("filetype is not displayed as expected");}
-
-			if (Textfile.exists()) {base.passedStep("Text is generated successfully");
-			} else {base.failedStep("Text is not generated successfully");}
-
-			if (TiffFile.exists()) {base.passedStep("Tiff is generated successfully");
-			} else {base.failedStep("Tiff is not generated successfully");}
-			
-			loginPage.logout();
+			doc.getSelectParentDocument().waitAndClick(10);
+			ArrayList<String> IncludeFamilyMembDocs = doc.GettingChildDocumentInDocListPage(DocumentId);
+			if (DocumentIdInDoclist.equals(IncludeFamilyMembDocs)) {
+				base.passedStep("Include family member doc is displayed as expected");
+			} else {
+				base.failedStep("Include family member doc is not displayed as expected");
+			}
+		} else {
+			base.failedStep("Document is not displayed as expected");
 		}
+		loginPage.logout();
 
+	}
 
-		/**
-		 * @author Brundha Test case id-RPMXCON-47997
-		 * @Description To Verify In Productions, the workproduct fields for slip sheets
-		 * 
-		 */
-		@Test(groups = { "regression" }, priority = 129)
-		public void verifyingWorkProductFieldInProduction() throws Exception {
+	/**
+	 * @author Brundha.T created on:NA modified by:NA TESTCASE No:RPMXCON-48063
+	 * @Description:To Verify placeholders of the docs of the selected file types
+	 *                 are produced in Production.
+	 */
+	@Test(groups = { "regression" }, priority = 135)
+	public void verifyTheFileTypeInProduction() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Test case id : RPMXCON-48063-production component ");
+		base.stepInfo("To Verify placeholders of the docs of the selected file types are produced in Production.");
 
-			UtilityLog.info(Input.prodPath);
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String Text = Input.searchString2;
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
 
-			base.stepInfo("RPMXCON-47997 -Production Component");
-			base.stepInfo("To Verify In Productions, the workproduct fields for slip sheets");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
 
-			String foldername = "Folder" + Utility.dynamicNameAppender();
-			String productionname = "p" + Utility.dynamicNameAppender();
-			String prefixID = Input.randomText + Utility.dynamicNameAppender();
-			String suffixID = Input.randomText + Utility.dynamicNameAppender();
-	        String BatesNumber="B"+Utility.dynamicNameAppender();
-			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		int firstFile = Integer.parseInt(beginningBates);
 
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFWithNativelyProducedDocs(Input.fileTypeInNativeDocs, Text);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		String DocPages = page.getDocPages().getText();
+		String[] doccount = DocPages.split(" ");
+		String DocumentCount = doccount[0];
+		int DocCount = Integer.parseInt(DocumentCount);
+		int lastFile = DocCount;
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
 
-			SessionSearch sessionSearch = new SessionSearch(driver);
-			sessionSearch.basicContentSearch(Input.testData1);
-			sessionSearch.bulkFolderExisting(foldername);
+		String home = System.getProperty("user.home");
+		Ocr.setUp();
+		Ocr ocr = new Ocr();
+		ocr.startEngine("eng", Ocr.SPEED_FASTEST);
 
-			ProductionPage page = new ProductionPage(driver);
-			page = new ProductionPage(driver);
-			String beginningBates = page.getRandomNumber(2);
-			page.selectingDefaultSecurityGroup();
-			page.addANewProduction(productionname);
-			page.fillingDATSection();
-			page.addDATFieldAtSecondRow("Doc Basic","DocID",BatesNumber);
-			page.fillingNativeSection();
-			page.selectGenerateOption(false);
-			page.FillingWorkProductInTiffSection(foldername);
-			page.navigateToNextSection();
-			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
-			page.navigateToNextSection();
-			page.fillingDocumentSelectionPage(foldername);
-			page.navigateToNextSection();
-			page.fillingPrivGuardPage();
-			page.fillingProductionLocationPage(productionname);
-			page.navigateToNextSection();
-			page.fillingSummaryAndPreview();
-			page.fillingGeneratePageWithContinueGenerationPopup();
-			driver.waitForPageToBeReady();
-			String name = page.getProduction().getText().trim();
-			String home = System.getProperty("user.home");
-			page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
-			System.out.println("Unzipped the downloaded files");
-			driver.waitForPageToBeReady();
-			Ocr.setUp();
-			Ocr ocr = new Ocr();
-			ocr.startEngine("eng", Ocr.SPEED_FASTEST); 
-			
-			String Tifffile = ocr.recognize(new File[] { new File(home+"/Downloads/VOL0001/Images/0001/"+prefixID+beginningBates+suffixID+".SS.tiff") },
+		for (int i = firstFile; i < lastFile; i++) {
+			String Tifffile = ocr.recognize(
+					new File[] {
+							new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff") },
 					Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
 			System.out.println(Tifffile);
-			
-			if (Tifffile.contains(foldername)) {
-				base.passedStep("Workproduct  is displayed as expected");
+			if (Tifffile.contains(Text)) {
+				base.passedStep("Placeholder Text is displayed for particular document");
 			} else {
-				base.failedStep("Workproduct is not displayed as expected");
+				base.failedStep(" verification failed");
 			}
-			ocr.stopEngine(); 
-			loginPage.logout();
-				}
-		
-		
-		/**
-		 * @author Brundha Test case id-RPMXCON-48646
-		 * @Description To verify that if "Do Not Produce TIFFs for Natively Produced Docs" is Enabled, then only Native should be produced
-		 * 
-		 */
-		@Test(groups = { "regression" }, priority = 130)
-		public void verifyingNativelyProducedDocumentInProduction() throws Exception {
-
-			UtilityLog.info(Input.prodPath);
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-
-			base.stepInfo("RPMXCON-48646 -Production Component");
-			base.stepInfo("To verify that if 'Do Not Produce TIFFs for Natively Produced Docs' is Enabled, then only Native should be produced");
-
-			String foldername = "Folder" + Utility.dynamicNameAppender();
-			String productionname = "p" + Utility.dynamicNameAppender();
-			String prefixID = Input.randomText + Utility.dynamicNameAppender();
-			String suffixID = Input.randomText + Utility.dynamicNameAppender();
-	       
-			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-
-
-			SessionSearch sessionSearch = new SessionSearch(driver);
-			int pureHit=sessionSearch.basicContentSearchForTwoItems(Input.telecaSearchString,Input.TiffDocId);
-			sessionSearch.bulkFolderExisting(foldername);
-
-			ProductionPage page = new ProductionPage(driver);
-			page = new ProductionPage(driver);
-			String beginningBates = page.getRandomNumber(2);
-			page.selectingDefaultSecurityGroup();
-			page.addANewProduction(productionname);
-			page.fillingDATSection();
-			page.fillingNativeSection();
-			page.selectGenerateOption(false);
-			driver.scrollPageToTop();
-			page.getDoNotProduceFullContentTiff().waitAndClick(10);;
-			page.navigateToNextSection();
-			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
-			page.navigateToNextSection();
-			page.fillingDocumentSelectionPage(foldername);
-			page.navigateToNextSection();
-			page.fillingPrivGuardPage();
-			page.fillingProductionLocationPage(productionname);
-			page.navigateToNextSection();
-			page.fillingSummaryAndPreview();
-			page.fillingGeneratePageWithContinueGenerationPopup();
-			driver.waitForPageToBeReady();
-			String name = page.getProduction().getText().trim();
-			String home = System.getProperty("user.home");
-			page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
-			System.out.println("Unzipped the downloaded files");
-			driver.waitForPageToBeReady();
-			File dir = new File(home+"/Downloads/VOL0001/Natives/0001/");
-			File[] dir_contents = dir.listFiles();
-			System.out.println(dir_contents.length);
-			int nativefile=dir_contents.length;
-			
-			if(pureHit!=nativefile) {
-				base.passedStep("Natively produced document is generated successfully as expected");
-			}else {
-				base.failedStep("Natively produced document is not generated successfully as expected");
-			}
-			
-			loginPage.logout();
-				}
-		
-		
-		
-		/**
-		 * @author Brundha Test case id-RPMXCON-49868
-		 * @Description Verify that Production for redacted PDF should generated successfully if PDF documents are ICE processed with Mapped set
-		 * 
-		 */
-		@Test(groups = { "regression" }, priority = 131)
-		public void verifyingTheGenerationOfProduction() throws Exception {
-
-			UtilityLog.info(Input.prodPath);
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-			base.stepInfo("RPMXCON-49868 -Production Component");
-			base.stepInfo("Verify that Production for redacted PDF should generated successfully if PDF documents are ICE processed with Mapped set");
-
-			String foldername = "Folder" + Utility.dynamicNameAppender();
-			String tagname = "Tag" + Utility.dynamicNameAppender();
-			String productionname = "p" + Utility.dynamicNameAppender();
-			String prefixID = Input.randomText + Utility.dynamicNameAppender();
-			String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-			tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
-			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-
-			DataSets dataset = new DataSets(driver);
-			base.stepInfo("Navigating to dataset page");
-			dataset.navigateToDataSetsPage();
-			dataset.selectDataSetWithName(Input.pdfDataSet);
-			DocListPage doc = new DocListPage(driver);
-			driver.waitForPageToBeReady();
-			doc.documentSelection(3);
-			doc.bulkTagExistingFromDoclist(tagname);
-			
-			String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
-			RedactionPage redactionpage = new RedactionPage(driver);
-			driver.waitForPageToBeReady();
-			redactionpage.selectDefaultSecurityGroup();
-			redactionpage.manageRedactionTagsPage(Redactiontag1);
-			System.out.println("First Redaction Tag is created" + Redactiontag1);
-
-			driver.scrollPageToTop();
-			base = new BaseClass(driver);
-			driver.Navigate().refresh();
-			base.impersonatePAtoRMU();
-			SessionSearch session = new SessionSearch(driver);
-			session.switchToWorkproduct();
-			session.selectTagInASwp(tagname);
-			driver.waitForPageToBeReady();
-			session.getQuerySearchButton().waitAndClick(10);
-			driver.scrollingToBottomofAPage();
-			session.getPureHitAddButton().waitAndClick(10);
-			session.ViewInDocView();
-			
-			DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
-			docViewRedactions.selectDoc1();
-			driver.waitForPageToBeReady();
-			docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
-			driver.waitForPageToBeReady();
-			docViewRedactions.selectingRedactionTag2(Redactiontag1);
-
-			ProductionPage page = new ProductionPage(driver);
-			page = new ProductionPage(driver);
-			String beginningBates = page.getRandomNumber(2);
-			page.selectingDefaultSecurityGroup();
-			page.addANewProduction(productionname);
-			page.fillingDATSection();
-			page.fillingNativeSection();
-			page.selectGenerateOption(false);
-			page.getClk_burnReductiontoggle().waitAndClick(10);
-			page.burnRedactionWithRedactionTag(Redactiontag1);
-			page.navigateToNextSection();
-			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
-			page.navigateToNextSection();
-			page.fillingDocumentSelectionWithTag(tagname);
-			page.navigateToNextSection();
-			page.fillingPrivGuardPage();
-			page.fillingProductionLocationPage(productionname);
-			page.navigateToNextSection();
-			page.fillingSummaryAndPreview();
-			page.fillingGeneratePageWithContinueGenerationPopup();
-			loginPage.logout();
-		}
-		
-		
-		/**
-		 * @author Brundha Test case id-RPMXCON-48647
-		 * @Description To verify that if "Do not produce full content TIFF / PDFs or
-		 *              placeholder TIFF / PDFs for Natively Produced Docs" is enabled,
-		 *              then TIFFs with Placeholder should not produced, It should
-		 *              export only Natives.
-		 * 
-		 */
-		 @Test(groups = { "regression" }, priority = 132)
-		public void verifyingNativelyProducedDocInProducedFile() throws Exception {
-
-			UtilityLog.info(Input.prodPath);
-			base.stepInfo("RPMXCON-48647 -Production Component");
-			base.stepInfo(
-					"To verify that if 'Do not produce full content TIFF / PDFs or placeholder TIFF / PDFs for Natively Produced Docs' is enabled, then TIFFs with Placeholder should not produced, It should export only Natives.");
-
-			String foldername = "Folder" + Utility.dynamicNameAppender();
-			String tagname = "Tag" + Utility.dynamicNameAppender();
-			String productionname = "p" + Utility.dynamicNameAppender();
-			String prefixID = Input.randomText + Utility.dynamicNameAppender();
-			String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-			tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
-			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-
-			SessionSearch sessionSearch = new SessionSearch(driver);
-			int pureHit = sessionSearch.basicContentSearchForTwoItems(Input.telecaSearchString, Input.testData1);
-			sessionSearch.bulkFolderExisting(foldername);
-
-			ProductionPage page = new ProductionPage(driver);
-			page = new ProductionPage(driver);
-
-			String beginningBates = page.getRandomNumber(2);
-			page.selectingDefaultSecurityGroup();
-			page.addANewProduction(productionname);
-			page.fillingDATSection();
-			page.fillingTIFFWithNativelyProducedDocs(Input.tagNameTechnical);
-			driver.scrollPageToTop();
-			page.getDoNotProduceFullContentTiff().waitAndClick(10);
-			page.navigateToNextSection();
-			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
-			page.navigateToNextSection();
-			page.fillingDocumentSelectionPage(foldername);
-			page.navigateToNextSection();
-			page.fillingPrivGuardPage();
-			page.fillingProductionLocationPage(productionname);
-			page.navigateToNextSection();
-			page.fillingSummaryAndPreview();
-			page.fillingGeneratePageWithContinueGenerationPopup();
-			driver.waitForPageToBeReady();
-			String name = page.getProduction().getText().trim();
-			String home = System.getProperty("user.home");
-			page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
-			System.out.println("Unzipped the downloaded files");
-			driver.waitForPageToBeReady();
-			File dir = new File(home + "/Downloads/VOL0001/Natives/0001/");
-			File[] dir_contents = dir.listFiles();
-			System.out.println(dir_contents.length);
-			int nativefile = dir_contents.length;
-
-			if (pureHit != nativefile) {
-				base.passedStep("Natively produced document is generated successfully as expected");
-			} else {
-				base.failedStep("Natively produced document is not generated successfully as expected");
-			}
-
-			loginPage.logout();
 		}
 
-		/**
-		 * @author Brundha Test case id-RPMXCON-48179
-		 * @DescriptionTo Verify For Multimedia file group Production Generation with
-		 *                some doc having Priv Tag Classification.
-		 * 
-		 */
-		 @Test(groups = { "regression" }, priority = 133)
-		public void verifyTheGenerationOfPrroductionWithNativeWithoutPrivFile() throws Exception {
+		ocr.stopEngine();
+		for (int i = firstFile; i < lastFile; i++) {
+			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".doc");
 
-			UtilityLog.info(Input.prodPath);
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-			base.stepInfo("RPMXCON-48179 -Production Component");
-			base.stepInfo(
-					"To Verify For Multimedia file group Production Generation with some doc having Priv Tag Classification");
-
-			String foldername = "Folder" + Utility.dynamicNameAppender();
-			String tagname = "Tag" + Utility.dynamicNameAppender();
-			String productionname = "p" + Utility.dynamicNameAppender();
-			String prefixID = Input.randomText + Utility.dynamicNameAppender();
-			String suffixID = Input.randomText + Utility.dynamicNameAppender();
-			String VolumeName = Input.randomText + Utility.dynamicNameAppender();
-
-			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
-			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-
-			SessionSearch sessionSearch = new SessionSearch(driver);
-			sessionSearch.SearchMetaData("SourceDocID",Input.fileGroup);
-			sessionSearch.bulkFolderExisting(foldername);
-			sessionSearch.bulkTagExisting(tagname);
-
-			ProductionPage page = new ProductionPage(driver);
-			page = new ProductionPage(driver);
-			String beginningBates = page.getRandomNumber(2);
-			page.selectingDefaultSecurityGroup();
-			page.addANewProduction(productionname);
-			page.fillingDATSection();
-			page.fillingNativeSection();
-			page.fillingTIFFSection(tagname, Input.tagNameTechnical);
-			page.navigateToNextSection();
-			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
-			page.navigateToNextSection();
-			page.fillingDocumentSelectionPage(foldername);
-			page.navigateToNextSection();
-			page.fillingPrivGuardPage();
-			page.fillingProductionLocationPage(productionname);
-			page.GetVolumeName().Click();
-			page.GetVolumeName().SendKeys(VolumeName);
-			page.navigateToNextSection();
-			page.fillingSummaryAndPreview();
-			page.fillingGeneratePageWithContinueGenerationPopup();
-
-			String name = page.getProduction().getText().trim();
-			String home = System.getProperty("user.home");
-			page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
-			System.out.println("Unzipped the downloaded files");
-
-			driver.waitForPageToBeReady();
-			File file = new File(home + "/Downloads/" + VolumeName + "/Natives/0001");
-			File TiffFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/"+productionname+"_TIFF.OPT");
-			File DatFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/"+productionname+"_DAT.dat");
-			File NativeFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/"+productionname+"_Native.lst");
-
-			if (!file.exists()) {
-				base.passedStep("Native file is not copied to priv file as expected");
+			if (Native.exists()) {
+				base.passedStep("Native file are generated correctly : " + prefixID + i + suffixID + ".doc");
+				System.out.println("passeed");
 			} else {
-				base.failedStep("Native file is  copied to priv file ");}
-
-			if (TiffFile.exists()) {
-				base.passedStep("Tiff file is generated as expected");
-			} else {
-				base.failedStep("Tiff file is not generated as expected");}
-
-			if (DatFile.exists()) {
-				base.passedStep("Dat file is generated as expected");
-			} else {
-				base.failedStep("Dat file is not generated as expected");}
-			
-			if (NativeFile.exists()) {
-				base.passedStep("Native file is generated as expected");
-			} else {
-				base.failedStep("Native file is not generated as expected");}
-			loginPage.logout();
-
+				base.failedStep("verification failed");
+			}
 		}
+		loginPage.logout();
+	}
 
-		 
-		 
-		 /**
-			 * @author Brundha Test case id-RPMXCON-49079
-			 * @DescriptionProduction Document Selection to DocList with Child Documents
-			 * 
-			 */
-			 @Test(groups = { "regression" }, priority = 134)
-			public void verifyingTheParentAndChildDocumentInDoclistPage() throws Exception {
+	/**
+	* @authorBrundha created on:NA modified by:NA TESTCASE No:RPMXCON-49102
+	* @Description:To verify that In DAT file, Email metadata should not be
+	* displayed if document is redacted and privileged
+	*/
+	@Test(groups = { "regression" }, priority = 72)
+	public void verifyEndBatesInProduction() throws Exception {
+	UtilityLog.info(Input.prodPath);
 
-				UtilityLog.info(Input.prodPath);
-				loginPage.logout();
-				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-				base.stepInfo("RPMXCON-49079 -Production Component");
-				base.stepInfo(
-						"Production Document Selection to DocList with Child Documents");
-				
-				String tagname = "Tag" + Utility.dynamicNameAppender();
-				String productionname = "p" + Utility.dynamicNameAppender();
-				String prefixID = Input.randomText + Utility.dynamicNameAppender();
-				String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
-				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-				tagsAndFolderPage.CreateTagwithClassification(tagname,"Select Tag Classification");
 
-				SessionSearch sessionSearch = new SessionSearch(driver);
-				sessionSearch.basicContentSearch(Input.searchStringStar);
-				driver.waitForPageToBeReady();
-				sessionSearch.ViewInDocList();
-				DocListPage doc=new DocListPage(driver);
-				doc.selectingParentDocument();
-				doc.bulkTagExistingFromDoclist(tagname);
-				driver.waitForPageToBeReady();
-				doc.getSelectDropDown().waitAndClick(10);
-				doc.getSelectParentDocument().waitAndClick(10);
-				int DocumentId=base.getIndex(doc.getChildHeader(),"DOCID");
-				doc.getChildTableRow(DocumentId);
-				System.out.println(DocumentId);
-				ArrayList<String> DocumentIdInDoclist = doc.GettingChildDocumentInDocListPage(DocumentId);
+	base.stepInfo("Test case id : RPMXCON-49102 ");
+	base.stepInfo(
+	"To verify that In DAT file, Email metadata should not be displayed if document is redacted and privileged");
+	String testData1 = Input.testData1;
+	foldername = "FolderProd" + Utility.dynamicNameAppender();
+	tagname = "Tag" + Utility.dynamicNameAppender();
 
-				ProductionPage page = new ProductionPage(driver);
-				page = new ProductionPage(driver);
-				String beginningBates = page.getRandomNumber(2);
-				page.selectingDefaultSecurityGroup();
-				page.addANewProduction(productionname);
-				page.fillingDATSection();
-				page.fillingNativeSection();
-				page.navigateToNextSection();
-				page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
-				page.navigateToNextSection();
-				page.fillingDocumentSelectionWithTag(tagname);
-				page.getIncludeFamilies().waitAndClick(10);
-				String Document=page.navigatingToDocViewPage();
-				doc.getSelectParentDocument().isElementAvailable(1);
-				if(doc.getSelectParentDocument().isDisplayed()) {
-					doc.getSelectParentDocument().waitAndClick(10);
-					ArrayList<String> selectedDocs = doc.GettingChildDocumentInDocListPage(DocumentId);
-					if(DocumentIdInDoclist.equals(selectedDocs)) {
-						base.passedStep("Parent And Child document is displayed as expected");
-					}else {
-						base.failedStep("Parent and child document is not displayed as expected");}
-				}else {
-					base.failedStep("Parent and child document is not displayed as expected");}
-				doc.getBackToSourceBtn().waitAndClick(10);
-				page.getBackButton().waitAndClick(10);
-				page.getMarkIncompleteButton().Click();
-				page.getIncludeFamilies().waitAndClick(10);
-				String DocCount=page.navigatingToDocViewPage();
-				if(Integer.valueOf(Document)<=Integer.valueOf(DocCount)) {
-					driver.waitForPageToBeReady();
-					doc.getSelectParentDocument().waitAndClick(10);
-					ArrayList<String> IncludeFamilyMembDocs = doc.GettingChildDocumentInDocListPage(DocumentId);
-					if(DocumentIdInDoclist.equals(IncludeFamilyMembDocs)) {
-						base.passedStep("Include family member doc is displayed as expected");
-					}else {
-						base.failedStep("Include family member doc is not displayed as expected");}
-				}else {
-						base.failedStep("Document is not displayed as expected");}
-				loginPage.logout();
-				
-				
-			 }
-			 
-			 
-			 /**
-				 * @author Brundha.T created on:NA modified by:NA TESTCASE No:RPMXCON-48063
-				 * @Description:To Verify placeholders of the docs of the selected file types
-				 *                 are produced in Production.
-				 */
-				@Test(groups = { "regression" }, priority = 135)
-				public void verifyTheFileTypeInProduction() throws Exception {
-					UtilityLog.info(Input.prodPath);
-					loginPage.logout();
-					loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-					base.stepInfo("Test case id : RPMXCON-48063-production component ");
-					base.stepInfo("To Verify placeholders of the docs of the selected file types are produced in Production.");
 
-					foldername = "FolderProd" + Utility.dynamicNameAppender();
-					tagname = "Tag" + Utility.dynamicNameAppender();
-					String prefixID = Input.randomText + Utility.dynamicNameAppender();
-					String suffixID = Input.randomText + Utility.dynamicNameAppender();
-					String Text = Input.searchString2;
-					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-					tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
 
-					SessionSearch sessionSearch = new SessionSearch(driver);
-					sessionSearch.basicContentSearch(Input.testData1);
-					sessionSearch.bulkFolderExisting(foldername);
-					sessionSearch.bulkTagExisting(tagname);
-				
-					ProductionPage page = new ProductionPage(driver);
-					String beginningBates = page.getRandomNumber(2);
-					int firstFile = Integer.parseInt(beginningBates);
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
-					productionname = "p" + Utility.dynamicNameAppender();
-					page.selectingDefaultSecurityGroup();
-					page.addANewProduction(productionname);
-					page.fillingDATSection();
-					page.fillingNativeSection();
-					page.fillingTIFFWithNativelyProducedDocs(Input.fileTypeInNativeDocs, Text);
-					page.navigateToNextSection();
-					page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
-					page.navigateToNextSection();
-					page.fillingDocumentSelectionPage(foldername);
-					page.navigateToNextSection();
-					page.fillingPrivGuardPage();
-					page.fillingProductionLocationPage(productionname);
-					page.navigateToNextSection();
-					String DocPages = page.getDocPages().getText();
-					String[] doccount = DocPages.split(" ");
-					String DocumentCount = doccount[0];
-					int DocCount = Integer.parseInt(DocumentCount);
-					int lastFile = DocCount;
-					page.fillingSummaryAndPreview();
-					page.fillingGeneratePageWithContinueGenerationPopup();
-					page.extractFile();
-					
-					String home = System.getProperty("user.home");
-					Ocr.setUp();
-					Ocr ocr = new Ocr();
-					ocr.startEngine("eng", Ocr.SPEED_FASTEST);
 
-					for (int i = firstFile; i < lastFile; i++) {
-						String Tifffile = ocr.recognize(
-								new File[] {
-										new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff") },
-								Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
-						System.out.println(Tifffile);
-						if (Tifffile.contains(Text)) {
-							base.passedStep("Placeholder Text is displayed for particular document");
-						} else {
-							base.failedStep(" verification failed");}}
 
-					ocr.stopEngine();
-					for (int i = firstFile; i < lastFile; i++) {
-						File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".doc");
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearchForTwoItems(testData1,Input.document);
+	sessionSearch.bulkTagExisting(tagname);
+	sessionSearch.ViewInDocView();
 
-						if (Native.exists()) {
-							base.passedStep("Native file are generated correctly : " + prefixID + i + suffixID + ".doc");
-							System.out.println("passeed");
-						} else {
-							base.failedStep("verification failed");}
-					}
-					loginPage.logout();
-				}
 
-				/**
-				 * @authorBrundha created on:NA modified by:NA TESTCASE No:RPMXCON-49102
-				 * @Description:To verify that In DAT file, Email metadata should not be
-				 *                 displayed if document is redacted and privileged
-				 */
-				@Test(groups = { "regression" }, priority = 136)
-				public void verifyEndBatesInProduction() throws Exception {
-					UtilityLog.info(Input.prodPath);
-					
-					base.stepInfo("Test case id : RPMXCON-49102 Production component");
-					base.stepInfo(
-							"To verify that In DAT file, Email metadata should not be displayed if document is redacted and privileged");
-					String testData1 = Input.testData1;
-					foldername = "FolderProd" + Utility.dynamicNameAppender();
-					tagname = "Tag" + Utility.dynamicNameAppender();
 
-					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-					tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+	DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+	docViewRedactions.selectDoc1();
+	driver.waitForPageToBeReady();
+	docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+	driver.waitForPageToBeReady();
+	docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
 
-					SessionSearch sessionSearch = new SessionSearch(driver);
-					sessionSearch = new SessionSearch(driver);
-					sessionSearch.basicContentSearchForTwoItems(testData1,Input.document);
-					sessionSearch.bulkTagExisting(tagname);
-					sessionSearch.ViewInDocView();
 
-					DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
-					docViewRedactions.selectDoc1();
-					driver.waitForPageToBeReady();
-					docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
-					driver.waitForPageToBeReady();
-					docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
 
-					loginPage.logout();
-					loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-					
-					ProductionPage page = new ProductionPage(driver);
-					String beginningBates = page.getRandomNumber(2);
-					productionname = "p" + Utility.dynamicNameAppender();
-					page.selectingDefaultSecurityGroup();
-					page.addANewProduction(productionname);
-					page.fillingDATSection();
-					page.getDAT_AddField().waitAndClick(5);
-					page.addDatField(1, "Email", "EmailAuthorNameAndAddress");
-					page.selectingCheckboxInDatSection(1);
-					page.addNewFieldOnDAT();
-					page.addDatField(2, "Email", "EmailToNamesAndAddresses");
-					page.selectingCheckboxInDatSection(2);
-					page.addNewFieldOnDAT();
-					page.addDatField(3, "Email", "EmailCCNamesAndAddresses");
-					page.selectingCheckboxInDatSection(3);
-					page.addNewFieldOnDAT();
-					page.addDatField(4, "Email", "EmailBCCNamesAndAddresses");
-					page.selectingCheckboxInDatSection(4);
-					page.navigateToNextSection();
-					page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
-					page.navigateToNextSection();
-					page.fillingDocumentSelectionWithTag(tagname);
-					page.getIncludeFamilies().waitAndClick(10);
-					page.navigateToNextSection();
-					page.fillingPrivGuardPage();
-					page.fillingProductionLocationPage(productionname);
-					page.navigateToNextSection();
-					page.fillingSummaryAndPreview();
-					page.fillingGeneratePageWithContinueGenerationPopup();
-					page.extractFile();
-					driver.waitForPageToBeReady();
-					String home = System.getProperty("user.home");
-					String name = page.getProduction().getText().trim();
-					driver.waitForPageToBeReady();
-					File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
-					if (DatFile.exists()) {
-						base.passedStep("Dat file is displayed as expected");
-					} else {
-						base.failedStep("Dat file is not displayed as expected");
-					}
-					BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(DatFile), "UTF16"));
-						StringBuilder sb = new StringBuilder();
-						String line = br.readLine();
-						while (line != null) {
-							sb.append(line);
-							sb.append(System.lineSeparator());
-							line = br.readLine();}
-						String everything = sb.toString();
-						System.out.println(everything);
-						String valueString=Input.metaDataCN;
-						if(!everything.contains(valueString)) {
-							base.passedStep("Dat Value is displayed as expected");
-						}else {
-							base.failedStep("Dat value is not displayed as expected");}
-						br.close();
-					
-					loginPage.logout();
-				}
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.getDAT_AddField().waitAndClick(5);
+	page.addDatField(1, "Email", "EmailAuthorNameAndAddress");
+	page.selectingCheckboxInDatSection(1);
+	page.addNewFieldOnDAT();
+	page.addDatField(2, "Email", "EmailToNamesAndAddresses");
+	page.selectingCheckboxInDatSection(2);
+	page.addNewFieldOnDAT();
+	page.addDatField(3, "Email", "EmailCCNamesAndAddresses");
+	page.selectingCheckboxInDatSection(3);
+	page.addNewFieldOnDAT();
+	page.addDatField(4, "Email", "EmailBCCNamesAndAddresses");
+	page.selectingCheckboxInDatSection(4);
+	page.navigateToNextSection();
+	page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionWithTag(tagname);
+	page.getIncludeFamilies().waitAndClick(10);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	page.extractFile();
+	driver.waitForPageToBeReady();
+	String home = System.getProperty("user.home");
+	String name = page.getProduction().getText().trim();
+	driver.waitForPageToBeReady();
+	File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
+	if (DatFile.exists()) {
+	base.passedStep("Dat file is displayed as expected");
+	} else {
+	base.failedStep("Dat file is not displayed as expected");
+	}
+
+	String valueString ="allen";
+	String line;
+	List<String> lines = new ArrayList<>();
+	BufferedReader brReader = new BufferedReader(new InputStreamReader(new FileInputStream(DatFile), "UTF16"));
+	while ((line = brReader.readLine()) != null) {
+	lines.add(line);
+	}
+	for (String a : lines) {
+	System.out.println(a);
+	String[] arrOfStr = a.split(" ");
+	for(String text : arrOfStr)
+	{
+	if (!text.equalsIgnoreCase(valueString)) {
+	base.passedStep("Dat file value is displayed as expected");
+	} else {
+	base.failedStep("Dat file value is not displayed as expected");
+	}
+	}
+	}
+	brReader.close();
+	loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
