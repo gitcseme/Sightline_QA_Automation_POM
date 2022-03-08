@@ -214,9 +214,9 @@ public class UsersAndRoleManagement_Regression {
 	@DataProvider(name = "combinationRole")
 	public Object[][] combination() {
 		return new Object[][] { { "sa", Input.sa1userName, Input.sa1password, Input.rmu1userName, Input.rmu1password },
-			{ "sa", Input.sa1userName, Input.sa1password, Input.rev1userName, Input.rev1password },
-			{ "pa", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password },
-			{ "pa", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password }, };
+				{ "sa", Input.sa1userName, Input.sa1password, Input.rev1userName, Input.rev1password },
+				{ "pa", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password },
+				{ "pa", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password }, };
 	}
 
 	@Test(alwaysRun = true, dataProvider = "combinationRole", groups = { "regression" }, priority = 4)
@@ -254,10 +254,10 @@ public class UsersAndRoleManagement_Regression {
 
 		// validating download icon
 		docViewPage.verifyNativeFile(false, false);
-		
+
 		// logout
 		loginPage.logout();
-		
+
 		// login
 		loginPage.loginToSightLine(userName, password);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
@@ -364,6 +364,165 @@ public class UsersAndRoleManagement_Regression {
 		driver.waitForPageToBeReady();
 		// validating ingestion icon
 		userManage.verifyIngestionIcon(true, true);
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:08/03/2022 Modified by: Baskar
+	 * Description :To verify landing page for User when 'Manage' is
+	 * Checekd/Unchecked from Edit User > functionality tab
+	 */
+
+	@DataProvider(name = "differentRole")
+	public Object[][] differentRole() {
+		return new Object[][] { { "sa", Input.sa1userName, Input.sa1password, Input.pa1userName, Input.pa1password }, 
+			{ "sa", Input.sa1userName, Input.sa1password, Input.rmu1userName, Input.rmu1password },
+				{ "pa", Input.pa2userName, Input.pa2password, Input.pa1userName, Input.pa1password },
+				{ "pa", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password },
+				{ "pa", Input.rmu2userName, Input.rmu2password, Input.rmu1userName, Input.rmu1password }, };
+	}
+	@Test(alwaysRun = true, dataProvider = "differentRole", groups = { "regression" }, priority = 6)
+	public void validatingManageIcon(String roll, String userName, String password, String userNameTwo,
+			String passWordTwo) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52694");
+		baseClass.stepInfo("To verify landing page for User when 'Manage' is Checekd/Unchecked "
+				+ "from Edit User > functionality tab");
+		userManage = new UserManagement(driver);
+
+		// login
+		loginPage.loginToSightLine(userName, password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(userNameTwo);
+		userManage.applyFilter();
+		if (roll == "sa") {
+			userManage.editFunctionality(Input.projectName);
+		}
+		if (roll == "pa") {
+			userManage.editLoginUser();
+		}
+
+		// Manage uncheckbox
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyManageCheckBox();
+
+		// logout
+		loginPage.logout();
+
+		// login
+		loginPage.loginToSightLine(userNameTwo, passWordTwo);
+
+		// validating Manage icon
+		userManage.verifyManageIcon(false, false);
+
+		// logout
+		loginPage.logout();
+
+		// login
+		loginPage.loginToSightLine(userName, password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(userNameTwo);
+		userManage.applyFilter();
+		if (roll == "sa") {
+			userManage.editFunctionality(Input.projectName);
+		}
+		if (roll == "pa") {
+			userManage.editLoginUser();
+		}
+
+		// Manage checkbox applying
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyManageCheckBox();
+
+		// logout
+		loginPage.logout();
+
+		// login
+		loginPage.loginToSightLine(userNameTwo, passWordTwo);
+
+		// validating Manage icon
+		userManage.verifyManageIcon(true, true);
+
+		// logout
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:08/03/2022 Modified by: Baskar
+	 * Description :To verify landing page for User when 'Categorize' is Checekd/Unchecked 
+	 *               from Edit User > functionality tab
+	 */
+
+	@DataProvider(name = "fourRole")
+	public Object[][] fourRole() {
+		return new Object[][] { { "sa", Input.sa1userName, Input.sa1password, Input.pa1userName, Input.pa1password }, 
+			{ "sa", Input.sa1userName, Input.sa1password, Input.rmu1userName, Input.rmu1password },
+				{ "pa", Input.pa1userName, Input.pa1password, Input.pa1userName, Input.pa1password },
+				{ "pa", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password },
+				 };
+	}
+	@Test(alwaysRun = true, dataProvider = "fourRole", groups = { "regression" }, priority = 7)
+	public void validatingCategorizeIcon(String roll, String userName, String password, String userNameTwo,
+			String passWordTwo) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52692");
+		baseClass.stepInfo("To verify landing page for User when 'Categorize' is "
+				+ "Checekd/Unchecked from Edit User > functionality tab");
+		userManage = new UserManagement(driver);
+
+		// login
+		loginPage.loginToSightLine(userName, password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(userNameTwo);
+		userManage.applyFilter();
+		if (roll == "sa") {
+			userManage.editFunctionality(Input.projectName);
+		}
+		if (roll == "pa") {
+			userManage.editLoginUser();
+		}
+
+		// Categorize uncheckbox
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyCategorizeCheckBox();
+
+		// logout
+		loginPage.logout();
+
+		// login
+		loginPage.loginToSightLine(userNameTwo, passWordTwo);
+
+		// validating Categorize icon
+		userManage.verifyCategorizeIcon(false, false);
+
+		// logout
+		loginPage.logout();
+
+		// login
+		loginPage.loginToSightLine(userName, password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(userNameTwo);
+		userManage.applyFilter();
+		if (roll == "sa") {
+			userManage.editFunctionality(Input.projectName);
+		}
+		if (roll == "pa") {
+			userManage.editLoginUser();
+		}
+
+		// Categorize checkbox applying
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyCategorizeCheckBox();
+		// logout
+		loginPage.logout();
+
+		// login
+		loginPage.loginToSightLine(userNameTwo, passWordTwo);
+
+		// validating Categorize icon
+		userManage.verifyCategorizeIcon(true, true);
 
 		// logout
 		loginPage.logout();

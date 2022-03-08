@@ -32,7 +32,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
-import com.gargoylesoftware.htmlunit.javascript.host.html.Option;
+//import com.gargoylesoftware.htmlunit.javascript.host.html.Option;
 
 import configsAndTestData.ConfigLoader;
 import configsAndTestData.ConfigMain;
@@ -292,7 +292,7 @@ public  class Driver  {
 					//Added by : Raghuram A - to disable "Chrome is being controlled by Automated software" while execution
 					options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); 
 			
-					driver = new ChromeDriver(caps);
+					driver = new ChromeDriver(options);
 					driver.manage().window().maximize();
 					driver.manage().timeouts().pageLoadTimeout(180, TimeUnit.SECONDS);
 					driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);

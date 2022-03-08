@@ -380,6 +380,12 @@ public class SessionSearch {
 		return driver.FindElementsByXPath("//span//count[contains(@id,'tilecount-')]");
 	}
 
+	public ElementCollection gettTileSpinningList(String searchName, int num) {
+		return driver.FindElementsByXPath("//span[@style=\"margin-bottom:3px;\" and text()='" + searchName
+				+ " ']//span[@id='divSearchCnt' and text()='" + num
+				+ "']//..//..//..//..//..//span//count[contains(@id,'tilecount-')]");
+	}
+
 	public Element getContentAndMetaDatabtnCurrent() {
 		return driver.FindElementByXPath("(//button[@id='contentmetadata'])[last()]");
 	}
@@ -2472,22 +2478,11 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getSavedSearchBtn().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSavedSearchName(SaveName).Visible();
-			}
-		}), Input.wait60);
 		driver.scrollingToBottomofAPage();
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			// System.out.println(iterable_element.getText());
 			if (iterable_element.getText().contains(SaveName)) {
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-
-					e.printStackTrace();
-				}
+				base.waitTime(3);
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
 				// System.out.println(iterable_element.getText());
@@ -3797,7 +3792,7 @@ public class SessionSearch {
 			public Boolean call() {
 				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getPureHitsCount().Visible();
@@ -5648,7 +5643,6 @@ public class SessionSearch {
 	 *              tree.
 	 */
 	public void selectFolderInTree(String folderName) {
-		base.waitForElementCollection(getTree());
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
@@ -10751,6 +10745,26 @@ public class SessionSearch {
 			}
 			assertion.assertAll();
 			base.passedStep("Search Result should appeared " + "without Refresh  on Advanced Search Result Screen");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description - verify tile spinning in session search page dynamic
+	 * @param searchName - Search name to pick (or) current search
+	 * @param Index      - search index
+	 */
+	public void verifyTileSpinning(String searchName, int Index) {
+		List<String> spinningTileList = new ArrayList<>();
+
+		spinningTileList = base.getAvailableListofElements(gettTileSpinningList(searchName, Index));
+		for (String a : spinningTileList) {
+			if (a.isBlank()) {
+				base.stepInfo(" Yes - one or more related tiles are still spinning ");
+				break;
+			} else {
+				System.out.println(" one or more related tiles are not still spinning ");
+			}
 		}
 	}
 }

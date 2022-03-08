@@ -615,6 +615,10 @@ public class SavedSearch {
 		return driver.FindElementByXPath("//button[@class='ColVis_Button ColVis_MasterButton']");
 	}
 
+	public Element getCurrentSelectedSearchName(int num) {
+		return driver.FindElementByXPath("//tr[contains(@class,'active-row')]//td['" + num + "']");
+	}
+
 	public Element getFieldoptions(String fieldToChoose) {
 		return driver.FindElementByXPath(
 				"(//span[contains(text(),'" + fieldToChoose + "')]//..//input[@type='checkbox'])[last()]");
@@ -4198,7 +4202,7 @@ public class SavedSearch {
 	 */
 	public void selectSavedSearchTAb(String search, String GroupName, String selectSearch) throws InterruptedException {
 		// Perform Edit function
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		navigateToSavedSearchPage();
 		getSavedSearchGroupName(GroupName).waitAndClick(10);
 		savedSearch_SearchandSelect(search, selectSearch);
 	}
@@ -7519,35 +7523,38 @@ public class SavedSearch {
 			base.waitForElement(getNumberOfSavedSearchToBeShown());
 
 			getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
+
+			driver.scrollingToBottomofAPage();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPageNumCount().Visible();
+				}
+			}), Input.wait30);
+			count = ((getPageNumCount().size()) - 2);
+			System.out.println("Number of Pages Available : " + count);
+			base.stepInfo("Number of Pages Available : " + count);
+
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			for (int i = 1; i <= count; i++) {
+				list = getListFromSavedSearchTable(column);
+				driver.scrollingToBottomofAPage();
+
+				if (getPageNextBtn().isElementAvailable(3)) {
+					getPageNextBtn().waitAndClick(3);
+				}
+				System.out.println("Page Number : " + i);
+				base.stepInfo("Page Number : " + i);
+				driver.scrollPageToTop();
+
+			}
 		} else {
 			getStatusDropDown().waitAndClick(2);
 			getLastStatusAs(statusToCHeck).waitAndClick(2);
 			getSavedSearch_ApplyFilterButton().waitAndClick(2);
-		}
-		driver.scrollingToBottomofAPage();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPageNumCount().Visible();
-			}
-		}), Input.wait30);
-		count = ((getPageNumCount().size()) - 2);
-		System.out.println("Number of Pages Available : " + count);
-		base.stepInfo("Number of Pages Available : " + count);
-
-		driver.scrollPageToTop();
-		driver.waitForPageToBeReady();
-		for (int i = 1; i <= count; i++) {
 			list = getListFromSavedSearchTable(column);
-			driver.scrollingToBottomofAPage();
-
-			if (getPageNextBtn().isElementAvailable(3)) {
-				getPageNextBtn().waitAndClick(3);
-			}
-			System.out.println("Page Number : " + i);
-			base.stepInfo("Page Number : " + i);
-			driver.scrollPageToTop();
-
 		}
+
 		if (list.size() > 0) {
 			base.compareListWithString(list, statusToCHeck, passMsg, failMsg);
 		} else {

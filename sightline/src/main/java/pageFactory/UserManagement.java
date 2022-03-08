@@ -117,6 +117,11 @@ public class UserManagement {
 	     public Element getLoginUserEdit(){ return driver.FindElementByXPath("//table[@id='dtUserList']//tr//td//a[text()='Edit']"); }
 	 	 public Element getIngestion(){ return driver.FindElementByXPath("//input[@id='UserRights_CanIngestions']//parent::label//i"); }
 	 	 public Element getIngestionTab(){ return driver.FindElementByXPath("//label[text()='Ingestions']//parent::a"); }
+	 	 public Element getManageCheck(){ return driver.FindElementByXPath("//input[@id='UserRights_CanManage']//parent::label//i"); }
+	 	 public Element getManageTab(){ return driver.FindElementByXPath("//label[text()='Manage']//parent::a"); }
+	 	 public Element getStatusCategorize(){ return driver.FindElementByXPath("//label[normalize-space()='Categorize']"); }
+	 	 public Element getCategorizeCheck(){ return driver.FindElementByXPath("//input[@id='UserRights_CanProview']//parent::label//i"); }
+	 	 public Element getCategorizeTab(){ return driver.FindElementByXPath("//label[text()='Categorize']//parent::a"); }
 
 	 	 
 	 	 
@@ -795,6 +800,8 @@ public void setPassword(String pwd) {
 			/**
 			 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
 			 * @Description:Methods for ingestion validation icon
+			 * @param downloadFalse [False will return ingestion icon not present]
+			 * @param downloadTrue [True will return ingestion icon present]
 			 */
 			
 			public void verifyIngestionIcon(boolean downloadFalse,boolean downloadTrue) {
@@ -817,4 +824,77 @@ public void setPassword(String pwd) {
 				}
 				softAssertion.assertAll();
 			}
+			
+			/**
+			 * @author Indium-Baskar date: 08/03/2022 Modified date: 08/03/2022
+			 * @Description:Methods for Manage checkbox
+			 */
+			public void verifyManageCheckBox() throws Exception {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getManageCheck());
+				getManageCheck().waitAndClick(5);
+				bc.waitForElement(getSaveEditUser());
+				getSaveEditUser().waitAndClick(10);
+			}
+			
+			/**
+			 * @author Indium-Baskar date: 08/03/2022 Modified date: 08/03/2022
+			 * @Description:Methods for Manage icon validation
+			 * @param downloadFalse [False will return Manage icon not present]
+			 * @param downloadTrue  [True will return Manage icon present]
+			 */
+			
+			public void verifyManageIcon(boolean downloadFalse, boolean downloadTrue) {
+				driver.waitForPageToBeReady();
+				if (downloadFalse == false) {
+					if (getManageTab().isElementAvailable(4)) {
+						bc.failedStep("Manage tab icon available");
+					} else {
+						bc.passedStep("Manage tab icon not present in left of the menu");
+					}
+				} else if (downloadTrue == true) {
+					if (getManageTab().isElementAvailable(4)) {
+						bc.passedStep("Manage tab icon not present in left of the menu");
+					} else {
+						bc.failedStep("Manage tab icon available");
+					}
+				}
+			}
+			
+			/**
+			 * @author Indium-Baskar date: 08/03/2022 Modified date: 08/03/2022
+			 * @Description:Methods for Categorize checkbox
+			 */
+			public void verifyCategorizeCheckBox() throws Exception {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getCategorizeCheck());
+				getCategorizeCheck().waitAndClick(5);
+				bc.waitForElement(getSaveEditUser());
+				getSaveEditUser().waitAndClick(10);
+			}
+			
+			/**
+			 * @author Indium-Baskar date: 08/03/2022 Modified date: 08/03/2022
+			 * @Description:Methods for Categorize icon validation
+			 * @param downloadFalse [False will return Categorize icon not present]
+			 * @param downloadTrue  [True will return Categorize icon present]
+			 */
+			
+			public void verifyCategorizeIcon(boolean downloadFalse, boolean downloadTrue) {
+				driver.waitForPageToBeReady();
+				if (downloadFalse == false) {
+					if (getCategorizeTab().isElementAvailable(4)) {
+						bc.failedStep("Categorize tab icon available");
+					} else {
+						bc.passedStep("Categorize tab icon not present in left of the menu");
+					}
+				} else if (downloadTrue == true) {
+					if (getCategorizeTab().isElementAvailable(4)) {
+						bc.passedStep("Categorize tab icon not present in left of the menu");
+					} else {
+						bc.failedStep("Categorize tab icon available");
+					}
+				}
+			}
+			
 }

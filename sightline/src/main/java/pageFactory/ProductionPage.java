@@ -18316,4 +18316,43 @@ public class ProductionPage {
 			document.close();
 			}
 		}
+		
+		/**
+		 * @author Vijaya.Rani
+		 * @param elementName
+		 * @throws InterruptedException
+		 */
+		public void clickBackBtnandSelectingNative(int Count, String tagname) throws InterruptedException {
+			int i;
+			for (i = 0; i < Count; i++) {
+				driver.waitForPageToBeReady();
+				getQC_backbutton().waitAndClick(10);
+			}
+
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getMarkInCompleteBtn().waitAndClick(10);
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			// disabling enable for priviledged docs
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitForElement(getTiff_NativeDoc());
+			getTiff_NativeDoc().Click();
+			base.waitForElement(getclkSelectTag());
+			getclkSelectTag().Click();
+			base.waitForElement(getPriveldged_TagTree(tagname));
+			getPriveldged_TagTree(tagname).Click();
+			base.waitForElement(getClkSelect());
+			getClkSelect().Click();
+			Thread.sleep(Input.wait30 / 10);
+			base.waitForElement(getNativeDocsPlaceholder());
+			getNativeDocsPlaceholder().SendKeys(tagname);
+
+		}
 }
