@@ -4683,7 +4683,7 @@ public class ProductionPage {
 		getDAT_SourceField1().selectFromDropdown().selectByVisibleText(Input.batesNumber);
 
 		base.waitForElement(getDAT_DATField1());
-		base.waitTime(2);
+		getDAT_DATField1().waitAndClick(10);
 		getDAT_DATField1().SendKeys("B" + Utility.dynamicNameAppender());
 		base.stepInfo("Dat section is filled");
 	}
@@ -6306,6 +6306,7 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 03/08/2022
 	 * @Author Indium-Sowndarya.Velraj
 	 */
 	public void fillingSummaryAndPreview() {
@@ -6316,6 +6317,9 @@ public class ProductionPage {
 		}), Input.wait30);
 		getbtnProductionSummaryMarkComplete().Click();
 
+		driver.waitForPageToBeReady();
+		base.getCloseSucessmsg();
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getbtnProductionSummaryNext().Enabled();
@@ -6590,12 +6594,14 @@ public class ProductionPage {
 		}), Input.wait60);
 
 		// added thread.sleep to avoid exception while executing in batch
-		Thread.sleep(5000);
+
+		base.waitTime(2);
 		getConfirmProductionCommit().waitAndClick(10);
+		base.CloseSuccessMsgpopup();
 
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch
-		Thread.sleep(1000);
+		base.waitTime(2);
 		System.out.println(PDocCount);
 		int Doc = Integer.parseInt(PDocCount);
 
@@ -6623,6 +6629,7 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 03/08/2022(Replaced isElementAvailable() to avoid e.printStackTrace in reports)
 	 * @throws InterruptedException
 	 * @Author Indium-Sowndarya.Velraj.Modified on 10/28/2021
 	 */
@@ -6648,11 +6655,8 @@ public class ProductionPage {
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
-			}
-		}), Input.wait120);
+		getDocumentGeneratetext().isElementAvailable(120);
+		base.stepInfo("wait until Document Generated Text is visible");
 		String actualText = getStatusSuccessTxt().getText();
 		System.out.println(actualText);
 
@@ -6665,13 +6669,14 @@ public class ProductionPage {
 			}
 		}), Input.wait60);
 
-		// added thread.sleep to avoid exception while executing in batch
-		Thread.sleep(2000);
+		base.waitTime(2);
 		getConfirmProductionCommit().waitAndClick(10);
+		
+		base.CloseSuccessMsgpopup();
 
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch
-		Thread.sleep(1000);
+		base.waitTime(1);
 		System.out.println(PDocCount);
 		int Doc = Integer.parseInt(PDocCount);
 
@@ -6699,7 +6704,7 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @Author Indium-Sowndarya.Velraj
+	 * @Author Indium-Sowndarya.Velraj.Modified on 03/08/2022
 	 */
 	public void navigateToNextSection() throws InterruptedException {
 
@@ -6710,9 +6715,13 @@ public class ProductionPage {
 		System.out.println("Clicked on Mark Complete Button..");
 		driver.waitForPageToBeReady();
 
+		base.CloseSuccessMsgpopup();
+		
 		base.waitForElement(getNextButton());
 		getNextButton().Enabled();
 		getNextButton().waitAndClick(10);
+		
+		
 
 		base.stepInfo("Navigate to next page");
 	}
@@ -12510,7 +12519,7 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @author :Sowndarya.velraj.Modified on 12/19/21
+	 * @author :Sowndarya.velraj.Modified on 03/08/2022 
 	 * 
 	 * @Description: Method for checking status of production from homepage
 	 * @param Status: Status is String value that name of Production status on
@@ -12521,7 +12530,7 @@ public class ProductionPage {
 
 		// Verifying status of the production from home page
 		for (int i = 0; i < 500; i++) {
-			base.waitForElement(getProductionFromHomePage(productionname));
+			getProductionFromHomePage(productionname).isElementAvailable(180);
 			productionFromHomePage = getProductionFromHomePage(productionname).getText();
 			if (productionFromHomePage.contains(statusMsg)) {
 				base.passedStep(statusMsg + "status displayed");
@@ -12561,7 +12570,8 @@ public class ProductionPage {
 		base.clickButton(getMP3RatiobtnRedactiontag());
 		Thread.sleep(3000);
 		if (getMP3RatiobtnRedactiontag().Enabled()) {
-			base.clickButton(getMP3SelectDefaultRedactiontag());
+			driver.scrollingToElementofAPage(getMP3SelectDefaultRedactiontag());
+			getMP3SelectDefaultRedactiontag().waitAndClick(10);
 			driver.scrollPageToTop();
 		}
 		base.stepInfo("Advanced production section MP3 files is filled with enabling the reduction toggle button");
@@ -13455,6 +13465,7 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 03/08/2022
 	 * @author : Aathith Senthilkumar
 	 * @Description: Method for filling Generate section without wait.
 	 */
@@ -13468,12 +13479,9 @@ public class ProductionPage {
 		getbtnProductionGenerate().Click();
 
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnContinueGenerate().Enabled() && getbtnContinueGenerate().isDisplayed();
-			}
-		}), Input.wait60);
-		getbtnContinueGenerate().Click();
+		
+		getbtnContinueGenerate().isElementAvailable(120);
+		getbtnContinueGenerate().waitAndClick(10);
 
 		Reporter.log("Wait for generate to complete", true);
 		System.out.println("Wait for generate to complete");
@@ -13482,6 +13490,7 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 03/08/2022 (Removed thread.sleep and replaced waitForPageToBeReady())
 	 * @author : Aathith Senthilkumar
 	 * @Description: Method for homepage Grid view status check.
 	 */
@@ -13500,8 +13509,8 @@ public class ProductionPage {
 			} else if (i == 499) {
 				base.failedStep(statusMsg + "status not displayed");
 			} else {
-				Thread.sleep(1000);
 				getRefreshButton().waitAndClick(5);
+				driver.waitForPageToBeReady();
 			}
 		}
 	}
@@ -18315,44 +18324,5 @@ public class ProductionPage {
 			}
 			document.close();
 			}
-		}
-		
-		/**
-		 * @author Vijaya.Rani
-		 * @param elementName
-		 * @throws InterruptedException
-		 */
-		public void clickBackBtnandSelectingNative(int Count, String tagname) throws InterruptedException {
-			int i;
-			for (i = 0; i < Count; i++) {
-				driver.waitForPageToBeReady();
-				getQC_backbutton().waitAndClick(10);
-			}
-
-			driver.scrollPageToTop();
-			driver.waitForPageToBeReady();
-			getMarkInCompleteBtn().waitAndClick(10);
-			base.waitForElement(getTIFFTab());
-			getTIFFTab().Click();
-
-			getTIFF_EnableforPrivilegedDocs().ScrollTo();
-
-			// disabling enable for priviledged docs
-
-			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-			getTIFF_EnableforPrivilegedDocs().Enabled();
-			getTIFF_EnableforPrivilegedDocs().Click();
-			base.waitForElement(getTiff_NativeDoc());
-			getTiff_NativeDoc().Click();
-			base.waitForElement(getclkSelectTag());
-			getclkSelectTag().Click();
-			base.waitForElement(getPriveldged_TagTree(tagname));
-			getPriveldged_TagTree(tagname).Click();
-			base.waitForElement(getClkSelect());
-			getClkSelect().Click();
-			Thread.sleep(Input.wait30 / 10);
-			base.waitForElement(getNativeDocsPlaceholder());
-			getNativeDocsPlaceholder().SendKeys(tagname);
-
 		}
 }

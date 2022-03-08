@@ -2687,6 +2687,7 @@ public class SessionSearch {
 	}
 
 	/**
+	 * @modifiedOn : 3/8/2022 (added wait time)
 	 * @modifiedOn : 1/5/2022 (getRemovePureHit().isElementAvailable(3))
 	 * @modifiedOn : 1/7/2022 getPureHitAddButton().Click(); to
 	 *             getPureHitAddButton().waitAndClick(10);
@@ -2703,6 +2704,7 @@ public class SessionSearch {
 			getPureHitAddButton().waitAndClick(10);
 		}
 
+		driver.waitForPageToBeReady();
 		getBulkActionButton().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -2765,6 +2767,7 @@ public class SessionSearch {
 		// to avoid it..
 		driver.getWebDriver().navigate().refresh();
 	}
+
 
 	// Function to perform bulk tag with given tag name
 	public void bulkTag(String TagName) throws InterruptedException {
