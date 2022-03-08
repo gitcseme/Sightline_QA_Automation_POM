@@ -2478,22 +2478,11 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getSavedSearchBtn().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSavedSearchName(SaveName).Visible();
-			}
-		}), Input.wait60);
 		driver.scrollingToBottomofAPage();
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			// System.out.println(iterable_element.getText());
 			if (iterable_element.getText().contains(SaveName)) {
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-
-					e.printStackTrace();
-				}
+				base.waitTime(3);
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
 				// System.out.println(iterable_element.getText());
@@ -3803,7 +3792,7 @@ public class SessionSearch {
 			public Boolean call() {
 				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getPureHitsCount().Visible();
@@ -5654,7 +5643,6 @@ public class SessionSearch {
 	 *              tree.
 	 */
 	public void selectFolderInTree(String folderName) {
-		base.waitForElementCollection(getTree());
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
