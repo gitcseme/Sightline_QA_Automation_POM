@@ -4107,5 +4107,71 @@ public class DocViewRedactions {
 				.moveByOffset(offsetx, offsety).release().build().perform();
 
 	}
+	
+	/**
+	 * @author Krishna Date: 03/02/22 Modified date: N/A Modified by: N/A
+	 * @description Verify ThumnbnailsPanel is displayed on Docview.
+	 */
+	
+	public void verifyThumbNailsPanelDisplayed() {
+		driver.waitForPageToBeReady();
+		base = new BaseClass(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		softAssertion.assertTrue(docViewRedact.thumbNailsPanel().isElementPresent());
+		if (docViewRedact.thumbNailsPanel().isElementPresent() == true) {
+			base.passedStep("The thumbnails panel is clicked and menu is visible");
+		} else {
+			base.failedStep("The thumbnail Panel menu is NOT displayed");
+		}
+	}
+	
+	/**
+	 * @author Krishna Date: 03/02/22 Modified date: N/A Modified by: N/A
+	 * @description verify different type of Documents in minidocList on Thumbnailspanel is displayed.
+	 * @Param pdfDocId,xlsExcelDocId,tiffDocId,pptDocId,messageDocId
+	 */
+	public void verifyDifferentTypesOfDocsInThumbNailsPanel(String pdfDocId,String xlsExcelDocId,String tiffDocId,String pptDocId,String messageDocId ) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		base = new BaseClass(driver);
+		base.stepInfo("bascic contant search on DocView");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.verifyThumbNailsPanelDisplayed();
+		base.passedStep("Thumbnails of docs page is displayed in thumbnail panel");
+		docView.ScrollAndSelectDocument(pdfDocId);
+		driver.waitForPageToBeReady();
+		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.verifyThumbNailsPanelDisplayed();
+		base.passedStep("Thumbnails of pdfDoc page is displayed in thumbnail panel");
+		driver.Navigate().refresh();
+		docView.ScrollAndSelectDocument(xlsExcelDocId);
+		driver.waitForPageToBeReady();
+		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.verifyThumbNailsPanelDisplayed();
+		base.passedStep("Thumbnails of XlsDoc page is displayed in thumbnail panel");
+		driver.Navigate().refresh();
+		docView.ScrollAndSelectDocument(tiffDocId);
+		driver.waitForPageToBeReady();
+		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.verifyThumbNailsPanelDisplayed();
+		base.passedStep("Thumbnails of tiffDoc page is displayed in thumbnail panel");
+		driver.Navigate().refresh();
+		docView.ScrollAndSelectDocument(pptDocId);
+		driver.waitForPageToBeReady();
+		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.verifyThumbNailsPanelDisplayed();
+		base.passedStep("Thumbnails of ppt page is displayed in thumbnail panel");
+		driver.Navigate().refresh();
+		docView.ScrollAndSelectDocument(messageDocId);
+		driver.waitForPageToBeReady();
+		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.verifyThumbNailsPanelDisplayed();	
+		base.passedStep("Thumbnails of messagedocs page is displayed in thumbnail panel");
+	
+	}
 
 }

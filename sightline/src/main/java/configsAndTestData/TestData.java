@@ -185,6 +185,11 @@ public class TestData {
 	public String audioString2;
 	public String DocIdWithComments;
 	public String DocIdWithTrackChanges;
+	public String pdfDocId;
+	public String xlsExcelDocId;
+	public String tiffDocId1;
+	public String pptDocId;
+	public String messageDocId;
 
 	//Added by arunkumar
 	public String pageRange1;
