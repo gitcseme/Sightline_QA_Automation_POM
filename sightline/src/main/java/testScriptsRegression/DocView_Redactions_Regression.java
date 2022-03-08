@@ -7458,6 +7458,41 @@ public class DocView_Redactions_Regression {
 		baseClass.passedStep("chain link icon removed for the documents after Remove code same");
 
 	}
+	
+	/**
+	 * @author Krishna TestCase Id:51006 Verify user can see the thumbnail image
+	 *         of each page of the document being viewed on doc view page in
+	 *         thumbnail panel when redirecting from other than assignment page
+	 * @throws InterruptedException
+	 *
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 60)
+	public void verifyEachPageDocViewedOnDocViewInThumbNailPanel() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51006");
+		baseClass.stepInfo(
+				"Verify user can see the thumbnail image of each page of the document being viewed on doc view page in thumbnail panel when redirecting from other than assignment page");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+        
+		baseClass.stepInfo("Logged in using RMU account");
+		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(Input.pdfDocId, Input.xlsExcelDocId, Input.tiffDocId1,
+				Input.pptDocId, Input.messageDocId);
+		loginPage.logout();
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in using REV account");
+		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(Input.pdfDocId, Input.xlsExcelDocId, Input.tiffDocId1,
+				Input.pptDocId, Input.messageDocId);
+		loginPage.logout();
+
+		// Login As PA.
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in using PA account");
+		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(Input.pdfDocId, Input.xlsExcelDocId, Input.tiffDocId1,
+				Input.pptDocId, Input.messageDocId);
+	}
 
 	
 	@AfterMethod(alwaysRun = true)

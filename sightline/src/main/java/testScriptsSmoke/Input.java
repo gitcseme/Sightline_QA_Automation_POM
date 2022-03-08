@@ -290,6 +290,11 @@ public class Input {
 	public static String HiddenIngestionDocId;
 	public static String HiddenIngestionName;
 	public static String HiddenLinkDocId;
+	public static String pdfDocId;
+	public static String xlsExcelDocId;
+	public static String tiffDocId1;
+	public static String pptDocId;
+	public static String messageDocId;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -1057,6 +1062,12 @@ public class Input {
 		warningMessage = testData.getWarningMessage();
 		DocIdWithComments = testData.getDocIdWithComments();
 		DocIdWithTrackChanges = testData.getDocIdWithTrackChanges();
+		pdfDocId = testData.getPdfDocId();
+		xlsExcelDocId = testData.getXlsExcelDocId();
+		tiffDocId1 = testData.getTiffDocId1();
+		pptDocId = testData.getPptDocId();
+		messageDocId= testData.getMessageDocId();
+		
 		// Added by Gopinath - 16/11/2021
 		signDocumentId = testData.getSignDocumentId();
 		technicalIssue = testData.getTechnicalIssue();
