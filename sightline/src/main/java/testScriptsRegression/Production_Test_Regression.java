@@ -6404,7 +6404,103 @@ public class Production_Test_Regression {
 				
 			}
 			
-			
+			/**
+			 * Author : Vijaya.Rani date: 3/03/22 NA Modified date: NA Modified by:NA
+			 * Description :To Verify Removal of Redaction Tag from a documents Should get
+			 * produced in Production for Native. 'RPMXCON-48038'
+			 * 
+			 */
+			@Test(groups = { "regression" }, priority = 92)
+			public void verifyRemovalRedactionTagProductionForNative() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48038 -Production Component");
+				base.stepInfo(
+						"To Verify Removal of Redaction Tag from a documents Should get produced in Production for Native");
+
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String tagname1 = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+				tagsAndFolderPage.CreateTagwithClassification(tagname1,"Select Tag Classification");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+				sessionSearch.bulkTagExisting(tagname1);
+
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingTIFFSection(tagname, Input.tagNameTechnical);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+				driver.waitForPageToBeReady();
+				page.getQC_Download().isElementAvailable(160);
+				page.getCopyPath().isDisplayed();
+				page.getCopyPath().Click();
+				page.getQC_Download().waitAndClick(10);
+				page.getQC_Downloadbutton_allfiles().waitAndClick(10);
+				page.extractFile();
+				driver.waitForPageToBeReady();
+				String home = System.getProperty("user.home");
+
+				File Native = new File(
+						home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".doc");
+
+				if (Native.exists()) {
+					base.passedStep("Native file are generated correctly : " + prefixID + beginningBates + suffixID + ".doc");
+					System.out.println("passeed");
+				} else {
+					base.failedStep("verification failed");
+					System.out.println("failed");
+
+				}
+				page.clickBackBtnandSelectingNative(7,tagname);
+				driver.scrollingToBottomofAPage();
+				page.getTIFF_EnableforPrivilegedDocs().isDisplayed();
+				page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+				page.clickMArkCompleteMutipleTimes(6);
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				page.extractFile();
+
+				driver.waitForPageToBeReady();
+				String home1 = System.getProperty("user.home");
+
+				File Native1 = new File(
+						home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".doc");
+
+				if (Native1.exists()) {
+					base.passedStep("Native file are generated correctly : " + prefixID + beginningBates + suffixID + ".doc");
+					System.out.println("passeed");
+				} else {
+					base.failedStep("verification failed");
+					System.out.println("failed");
+
+				}
+
+				loginPage.logout();
+
+			}
 			
 			
 			
