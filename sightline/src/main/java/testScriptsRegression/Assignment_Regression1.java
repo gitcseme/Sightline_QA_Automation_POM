@@ -53,7 +53,7 @@ public class Assignment_Regression1 {
 	 * @description Verify that RMU can move the assignment from Non cascade parent
 	 *              moving to cascade parent which is cascade child RPMXCON-54967
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-54967", enabled = true, groups = { "regression" }, priority = 1)
 	public void validateMove_NonCascadeToCascadeGrpWithChild() throws InterruptedException {
 		String cascadeSettings_yes = "Yes";
 		String cascadeSettings_No = "No";
@@ -101,7 +101,7 @@ public class Assignment_Regression1 {
 	 * @description Verify that RMU can move the assignment from Self cascade parent
 	 *              moving to cascade parent RPMXCON-54968
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-54968",enabled = true, groups = { "regression" }, priority = 2)
 	public void validateMove_CascadeToCascadeAssignGroup() throws InterruptedException {
 		String cascadeSettings_yes = "Yes";
 		String cascadeSettings_No = "No";
@@ -140,7 +140,7 @@ public class Assignment_Regression1 {
 	 * @description Verify that RMU can move the assignment from Child cascade
 	 *              parent moving to non cascade parent (RPMXCON-54969)
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-54969",enabled = true, groups = { "regression" }, priority = 3)
 
 	public void validateMove_CascadeChildToNonCascadeAssignGroup() throws InterruptedException {
 		String cascadeSettings_yes = "Yes";
@@ -186,7 +186,7 @@ public class Assignment_Regression1 {
 	 * @description Verify that RMU can move the assignment from Child cascade
 	 *              parent moving to cascade parent (RPMXCON-54970)
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-54970",enabled = true, groups = { "regression" }, priority = 8)
 	public void validateMove_CascadeChildToCascadeAssignGroup() throws InterruptedException {
 		String cascadeSettings_yes = "Yes";
 		String cascadeSettings_No = "No";
@@ -233,7 +233,7 @@ public class Assignment_Regression1 {
 	 *              to non cascade parent and user can edit the assignment from any
 	 *              group(RPMXCON-54965)
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-54965",enabled = true, groups = { "regression" }, priority = 4)
 	public void validateMove_nonCascadeToNonCascadeAssignGroup() throws InterruptedException {
 		String cascadeSettings_yes = "Yes";
 		String cascadeSettings_No = "No";
@@ -274,7 +274,7 @@ public class Assignment_Regression1 {
 	 *              assignment(RPMXCON-54966)
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-54966",enabled = true, groups = { "regression" }, priority = 5)
 	public void validateMove_NonCascadeToCascadeAssignGroup() throws InterruptedException {
 		String cascadeSettings_yes = "Yes";
 		String cascadeSettings_No = "No";
@@ -316,7 +316,7 @@ public class Assignment_Regression1 {
 	 *              Bulk Assignment RPMXCON-54962
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-54962",enabled = true, groups = { "regression" }, priority = 6)
 	public void VerifyTheCascadeSettingsInBulkAssign() throws InterruptedException, ParseException, IOException {
 		String assignmentName = "assignment" + Utility.dynamicNameAppender();
 		String assignmentGroup = "assgnGrp" + Utility.dynamicNameAppender();
@@ -340,7 +340,7 @@ public class Assignment_Regression1 {
 	 * @description To verify the functionality of the Instructions while editing
 	 *              existing Assignment.RPMXCON-53797
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-53797",enabled = true, groups = { "regression" }, priority = 7)
 
 	public void validateInstructionPopUpInAssignments() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("To verify the functionality of the Instructions while editing existing Assignment.");
@@ -368,7 +368,7 @@ public class Assignment_Regression1 {
 	 *               Assignment Page with descending Metadata selection
 	 *               (RPMXCON-54918)
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-54918",enabled = true, groups = { "regression" }, priority = 9)
 	public void validateConfigureButtonInExistingAssignment() throws InterruptedException, ParseException, IOException {
 		String assignmentName = "AR1Assignment" + Utility.dynamicNameAppender();
 		bc.stepInfo("To verify that RMU is able to view the configure button on Edit"
@@ -409,7 +409,7 @@ public class Assignment_Regression1 {
 	 *               (RPMXCON-54917)
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-54917",enabled = true, groups = { "regression" }, priority = 10)
 	public void validateConfigureButtonInNewAssignment() throws InterruptedException, ParseException, IOException {
 		String assignmentName = "AR1Assignment" + Utility.dynamicNameAppender();
 
@@ -446,7 +446,7 @@ public class Assignment_Regression1 {
 	 * @description: To verify that RMU is able to sort the documents by selecting
 	 *               System define metadata. RPMXCON-53821
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-53821",enabled = true, groups = { "regression" }, priority = 11)
 	public void VerifySystemDefineMetaDataSorting() throws InterruptedException {
 		bc.stepInfo("To verify that RMU is able to sort the documents by selecting System define metadata.");
 		bc.stepInfo("Test case Id:RPMXCON-53821");
@@ -476,7 +476,7 @@ public class Assignment_Regression1 {
 	 * @description: To verify that on Instruction pop up formating toolbar is
 	 *               provided.
 	 */ 
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-53916",enabled = true, groups = { "regression" }, priority = 12)
 	public void ValidateFormatingToolBarInInstructionPopup() throws InterruptedException, AWTException {
 		bc.stepInfo("To verify that on Instruction pop up formating toolbar is provided.");
 		bc.stepInfo("Test case Id:RPMXCON-53916");
@@ -499,7 +499,7 @@ public class Assignment_Regression1 {
 	 * @description: To verify that if 'Show Docs Counts' is OFF  then document
 	 *               counts is not displayed on the Assignment. (RPMXCON-54164)
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-54164",enabled = true, groups = { "regression" }, priority = 13)
 	public void validateDocCountdisplay() throws InterruptedException {
 		bc.stepInfo(
 				"To verify that if 'Show Docs Counts' is OFF  then document counts is not displayed on the Assignment.");
@@ -514,7 +514,7 @@ public class Assignment_Regression1 {
 	 * @description: To verify the functionality of the Instructions while creating
 	 *               New Assignment.. (RPMXCON-53797)
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-53797",enabled = true, groups = { "regression" }, priority = 14)
 	public void validateInstructionPopUpInNewAssignment() throws InterruptedException {
 		bc.stepInfo("To verify the functionality of the Instructions while creating New Assignment.");
 		bc.stepInfo("Test case Id:RPMXCON-53797");
@@ -542,7 +542,7 @@ public class Assignment_Regression1 {
 	 *               Assignments(RPMXCON-54764)
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-54764",enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyThedistributedUserNotInRedistributeList()
 			throws InterruptedException, ParseException, IOException {
 		String assignmentName = "AR1Assignment" + Utility.dynamicNameAppender();
@@ -579,7 +579,7 @@ public class Assignment_Regression1 {
 	 * @description: To verify that RMU is able to view option "View All Docs in
 	 *               DocList"(RPMXCON-53803)
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-53803",enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyViewAllDocsinDocList() throws InterruptedException, IOException {
 		bc.stepInfo("To verify that RMU is able to view option \"View All Docs in DocList\"");
 		bc.stepInfo("Test case Id:RPMXCON-53803");
@@ -592,7 +592,7 @@ public class Assignment_Regression1 {
 	 * 
 	 * @description: To verify that RMU can create New Assignments from Assign/Unassign Documents pop up (RPMXCON-53812)
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority =17)
+	@Test(description ="RPMXCON-53812",enabled = true, groups = { "regression" }, priority =17)
 	public void verifyToCreateNewAgnmtFromAssgnUnassgnDocPopUP() throws InterruptedException, ParseException, IOException {
 		String assignmentName = "AR1Assignment" + Utility.dynamicNameAppender();
 		String assignmentGroup = "assgnGrp" + Utility.dynamicNameAppender();
@@ -648,7 +648,7 @@ public class Assignment_Regression1 {
 	 * @description: To verify that RMU is able to sort the documents by selecting option as Doc ID (RPMXCON-53826)
 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority =18)
+	@Test(description ="RPMXCON-53826",enabled = true, groups = { "regression" }, priority =18)
 	public void verifyDocSortedByDocId() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("To verify that RMU is able to sort the documents by selecting option as Doc ID.");
 		bc.stepInfo("Test case Id:RPMXCON-53826");
@@ -686,7 +686,7 @@ public class Assignment_Regression1 {
 	 *              (RPMXCON-53635)
 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(description ="RPMXCON-53635",enabled = true, groups = { "regression" }, priority = 19)
 	public void VerifyStandardMethods_assignDocs() throws InterruptedException, ParseException, IOException {
 		String assignmentName = "AR1Assignment" + Utility.dynamicNameAppender();
 		String assignmentName2 = "AR1Assignment" + Utility.dynamicNameAppender();
@@ -714,7 +714,7 @@ public class Assignment_Regression1 {
 	 * @description: To verify the functionality of Standard methods for assigning the documents to one/multiple Assignment.
 	 *               RPMXCON-53636
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description ="RPMXCON-53636",enabled = true, groups = { "regression" }, priority = 20)
 	public void VerifyPercentageMethods_assignDocs() throws InterruptedException, ParseException, IOException {
 		String assignmentName = "AR1Assignment" + Utility.dynamicNameAppender();
 		String assignmentName2 = "AR1Assignment" + Utility.dynamicNameAppender();
@@ -744,7 +744,7 @@ public class Assignment_Regression1 {
 	 * @description: To verify that RMU cannot change the Metadata options if Cascading options are ON for Assignment Group (RPMXCON-53830)
 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority =21)
+	@Test(description ="RPMXCON-53830",enabled = true, groups = { "regression" }, priority =21)
 	public void verifyCascadedSortByMetadataChangesInAssignment() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("To verify that RMU cannot change the Metadata options if Cascading options are ON for Assignment Group");
 		bc.stepInfo("Test case Id:RPMXCON-53830");
@@ -780,7 +780,7 @@ public class Assignment_Regression1 {
 	 * @description: To verify that RMU cannot change the Category options if Cascading options are ON for Assignment Group (RPMXCON-53829)
 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority =22)
+	@Test(description ="RPMXCON-53829",enabled = true, groups = { "regression" }, priority =22)
 	public void verifyCascadedCategoryChangesInAssignment() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("To verify that RMU cannot change the Category options if Cascading options are ON for Assignment Group");
 		bc.stepInfo("Test case Id:RPMXCON-53829");
