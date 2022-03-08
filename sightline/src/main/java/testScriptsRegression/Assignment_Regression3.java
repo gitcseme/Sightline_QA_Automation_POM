@@ -78,7 +78,7 @@ public class Assignment_Regression3 {
 		softAssertion = new SoftAssert();
 	}
 
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-54431",enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyDocCounts() throws Exception {
 		baseClass = new BaseClass(driver);
 		softAssertion = new SoftAssert();
@@ -118,7 +118,7 @@ public class Assignment_Regression3 {
 	 * Documents tab
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-54432",enabled = true, groups = { "regression" }, priority = 2)
 	public void VerifyDocsCount_DistributeTab() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -170,7 +170,7 @@ public class Assignment_Regression3 {
 	 * distribute all documents to Reviewer in assignment, then 'DISTRIBUTED to
 	 * User' count displays correct count on Manage Reviewers tab
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-54433",enabled = true, groups = { "regression" }, priority = 3)
 
 	public void VerifyDocsCount_ReviewerTab() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -222,7 +222,7 @@ public class Assignment_Regression3 {
 	 * in context of an assignment
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-54434",enabled = true, groups = { "regression" }, priority = 4)
 
 	public void VerifyDocsCount_DocView() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -265,7 +265,7 @@ public class Assignment_Regression3 {
 	 * @Description-Verify that 'Show Default View Tab' enabled by default with
 	 *                     cascading settings not enabled
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-54513",enabled = true, groups = { "regression" }, priority = 5)
 
 	public void VerifyToggleEnabled() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -308,7 +308,7 @@ public class Assignment_Regression3 {
 	 * @description: Delete keywords - Assignment should not display the deleted
 	 *               keyword
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-54756",enabled = true, groups = { "regression" }, priority = 6)
 	public void validateKeywordsInAssignment() throws InterruptedException, AWTException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -355,7 +355,7 @@ public class Assignment_Regression3 {
 	 * @description:Verifying the Default Live Sequence while creating a new
 	 *                        assignment group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-54493",enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyLivesequence() throws InterruptedException, AWTException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -394,7 +394,7 @@ public class Assignment_Regression3 {
 	 *                     settings incl. Max Draw Count as 100 when creating
 	 *                     assignment group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-60049",enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyToggle_AssgnGrp() throws InterruptedException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -435,7 +435,7 @@ public class Assignment_Regression3 {
 	 *                     incl. Max Draw Count as 100 when creating new assignment
 	 *                     from manage assignment
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-60048",enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyToggle_Assignments() throws InterruptedException, AWTException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -473,7 +473,7 @@ public class Assignment_Regression3 {
 	 *              settings incl. Max Draw Count as 100 when creating assignment
 	 *              with Quick Batch
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-60046",enabled = true, groups = { "regression" }, priority = 10)
 	public void VerifyToggle_QuickBatch() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -513,7 +513,7 @@ public class Assignment_Regression3 {
 	 *                     with Bulk Assign
 	 */
 
-	@Test(enabled= true,groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-60047",enabled= true,groups = { "regression" }, priority = 11)
 	public void CreateAssgn_DocExp_VerifyToggle() throws InterruptedException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -561,7 +561,7 @@ public class Assignment_Regression3 {
 	 * @description:
 	 */
 
-	@Test(enabled = true,groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-54497",enabled = true,groups = { "regression" }, priority = 12)
 	public void verifyDrawPoolToggle() throws InterruptedException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -613,7 +613,7 @@ public class Assignment_Regression3 {
 	 *              [RPMXCON-59178]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-59178",enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyDrawLinkWhenFamiliesToggleDisabled() throws InterruptedException {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -675,7 +675,7 @@ public class Assignment_Regression3 {
 	 *              [RPMXCON-59201]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-59201",enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyAfterEditingAssignGroup() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
 		String assignment = "Assignment" + Utility.dynamicNameAppender();
@@ -724,7 +724,7 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-59179",enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyDrawLinkWhenEmailThreadToggleEnabled() throws InterruptedException {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -827,7 +827,7 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-59177",enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyDrawLinkWhenFamilyToggleEnabled() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -928,7 +928,7 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-59197",enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyDrawaLimit_BothToggleOFF() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
