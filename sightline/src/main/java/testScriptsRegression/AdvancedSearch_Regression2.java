@@ -229,9 +229,7 @@ public class AdvancedSearch_Regression2 {
 		loginPage.loginToSightLine(UserName, PassWord);
 		if (UserName.equals(Input.rmu1userName)) {
 			search.advancedContentSearch(Input.searchString2);
-			search.getIntoFullScreen();
 			search.bulkTag(TagName);
-			search.getExitFullScreen();
 			baseClass.selectproject();
 			search.advancedContentSearch(Input.searchString2);
 			search.getIntoFullScreen();
@@ -243,7 +241,7 @@ public class AdvancedSearch_Regression2 {
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit);
 			int ExpectedPureHit3 = search.verifyCombinedSearch(TagName, "tag", "yes", "OR", "NOT", "OR");
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit3);
-			softAssertion.assertEquals(834, ExpectedPureHit3);
+			softAssertion.assertEquals(837, ExpectedPureHit3);
 			softAssertion.assertEquals(53, ExpectedPureHit);
 			softAssertion.assertAll();
 			baseClass.passedStep(
