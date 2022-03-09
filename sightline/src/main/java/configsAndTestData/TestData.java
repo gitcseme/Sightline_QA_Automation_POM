@@ -548,7 +548,7 @@ public class TestData {
 		public String ingDocFileType ;
 		public String lessThan500PagesDocId;
 		public String d500PagesDocId;
-		public String getsearchString_Audio;
+		public String SearchString_Audio;
 
 		
 		

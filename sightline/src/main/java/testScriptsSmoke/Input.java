@@ -540,7 +540,7 @@ public class Input {
 	public static String metadataIngestion;
 	public static String custodianName_Andrew;
 	public static String custodianName_allen;
-	public static String searchString_Audio;
+	public static String SearchString_Audio;
 	
 	// Added by Gopinath - 05/01/2021
 	public static String downloadDocID;
@@ -1227,7 +1227,8 @@ public class Input {
 		metadataIngestion= testData.getMetadataIngestion();
 		 custodianName_Andrew= testData.getCustodianName_Andrew();
 		 custodianName_allen= testData.getCustodianName_allen();
-		searchString_Audio= testData.getsearchString_Audio;
+		SearchString_Audio= testData.getSearchString_Audio();
+		
 		TermOperator = testData.getTermOperator();
 		// Added by Gopinath 05/01/2021
 		downloadDocID = testData.getDownloadDocID();
