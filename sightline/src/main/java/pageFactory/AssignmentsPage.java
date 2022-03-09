@@ -9783,4 +9783,23 @@ public int assignmentCreationFamilyCount(String assignmentName, String codingFor
 	}
 	return familyCount;
 }
+/**
+ * @author Jayanthi.ganesan
+ * @description This method return boolean value as 'true' if toggle is enabled and 
+ * 'false' if given toggle is disabled
+ * @param Element to which enabled or disabled state needs to checked
+ */
+public boolean verifyToggleEnableORDisabled(Element ele,String elementInfo) {
+	String s = ele.GetAttribute("Class");
+	boolean status;
+	if(s.equals("true")) {
+		status=true;
+		bc.stepInfo(elementInfo+"Toggle is enabled*");
+	}
+	else {
+		status=false;
+		bc.stepInfo(elementInfo+"Toggle is disabled*");
+	}
+	return status;
+}
 }
