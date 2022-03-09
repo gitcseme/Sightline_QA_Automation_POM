@@ -427,7 +427,7 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON_48500 :
+	 * @author Gopinath created on:NA modified by:NA. //@Testcase ID : RPMXCON_48500 :
 	 *         To verify that if annotation layer option is selected in Tiff section
 	 *         and document is redacted then selected Metadata should not be
 	 *         displayed on DAT.
@@ -435,7 +435,7 @@ public class Production_Regression1 {
 	 *              section and document is redacted then selected Metadata should
 	 *              not be displayed on DAT.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 11)
+	@Test(groups = { "regression" }, priority = 11)
 	public void generateProductionWithoutSelectedMetadata() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -510,19 +510,22 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("Generated production successfully");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON_48491 :
+	 * @author Gopinath created on:NA modified by:NA. //@Testcase ID : RPMXCON_48491 :
 	 *         To verify that if annotation layer option is selected and non audio
 	 *         document is redacted then native should not copied.
 	 * @Description : Verify that if annotation layer option is selected and non
 	 *              audio document is redacted then native should not copied.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 12)
+	@Test(enabled=true,groups = { "regression" }, priority = 12)
 	public void generateProductionWithNonAudioDocument() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -592,19 +595,22 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("Generated production successfully");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-48312 :
+	 * @author Gopinath created on:NA modified by:NA. //@Testcase ID : RPMXCON-48312 :
 	 *         To verify that redaction text should be printed on burned redaction
 	 *         if user selects Tiff.
 	 * @Description : Verify that redaction text should be printed on burned
 	 *              redaction if user selects Tiff.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 13)
+	@Test(enabled=true,groups = { "regression" }, priority = 13)
 	public void verifyingRedactedTextPrintedOnBurnRedactionSelectingTIFF() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -679,19 +685,22 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.stepInfo("verified  the reduction text printed on selecting TIFF ");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-48310 :
+	 * @author Gopinath created on:NA modified by:NA. //@Testcase ID : RPMXCON-48310 :
 	 *         To verify that redaction text should be printed on burned redaction
 	 *         if user selects only PDF.
 	 * @Description : Verify that redaction text should be printed on burned
 	 *              redaction if user selects only PDF.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 14)
+	@Test(enabled=true,groups = { "regression" }, priority = 14)
 	public void verifyingRedactedTextPrintedOnSelectingPDF() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -765,18 +774,21 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.stepInfo("verified  the reduction text printed on selecting PDF");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-48600 :
+	 * @author Gopinath created on:NA modified by:NA. //@Testcase ID : RPMXCON-48600 :
 	 *         To verify that user can export only after pre-gen check is completed.
 	 * @Description :Verify that user can export only after pre-gen check is
 	 *              completed.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 15)
+	@Test(enabled=true,groups = { "regression" }, priority = 15)
 	public void verifyExportButtonEnabledAfterPreGenCompletion() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -790,12 +802,12 @@ public class Production_Regression1 {
 		// Pre-requisites
 		// create tag
 
-		loginPage = new LoginPage(driver);
+		
 		loginPage.logout();
 
 		base.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		base.stepInfo("Logged in as User: " + Input.pa2FullName);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as User: " + Input.pa1FullName);
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -853,24 +865,27 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		base.stepInfo("Click on navigate back");
 		page.navigateBack();
 
 		base.stepInfo("Verify export bates button is enabled");
 		page.verifyExportBatesButtonIsEnabled();
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername,Input.securityGroup);
+		
+		
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-49218 :
+	 * @author Gopinath created on:NA modified by:NA. //@Testcase ID : RPMXCON-49218 :
 	 *         To verify that in Advanced Search, search against uncommit Production
 	 *         should not display any results.
 	 * @Description : Verify that in Advanced Search, search against uncommit
 	 *              Production should not display any results.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 16)
+	@Test(enabled=true,groups = { "regression" }, priority = 16)
 	public void verifyCommitAndUnCommitProductionResults() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -882,15 +897,11 @@ public class Production_Regression1 {
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
-		// Pre-requisites
-		// create tag
-
-		loginPage = new LoginPage(driver);
+		
 		loginPage.logout();
-
 		base.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		base.stepInfo("Logged in as User: " + Input.pa2FullName);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as User: " + Input.pa1FullName);
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -947,7 +958,7 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		base.stepInfo("Get document select count");
 		int docCount = page.getDocumentSelectedCount();
@@ -982,18 +993,21 @@ public class Production_Regression1 {
 
 		base.stepInfo("Verify pure hit count with production count after uncommit");
 		search.verifyPureHitsCountWithManyProductionCount(0);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername,Input.securityGroup);
+		
+		
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-49998 :
+	 * @author Gopinath created on:NA modified by:NA. //@Testcase ID : RPMXCON-49998 :
 	 *         Verify if user included only default branding text then branding text
 	 *         should display on 'Preview' document and on produced documents also.
 	 * @Description : Verify if user included only default branding text then
 	 *              branding text should display on 'Preview' document and on
 	 *              produced documents also.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 17)
+	@Test(enabled=true,groups = { "regression" }, priority = 17)
 	public void defaultBrandingTextDisplayedInPrieviewDocs() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1007,12 +1021,17 @@ public class Production_Regression1 {
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		
+		
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
+		search = new SessionSearch(driver);
+		search.basicContentSearch(Input.testData1);
+		search.bulkFolderExisting(foldername);
 		base.stepInfo("Select default security group");
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 
 		base.stepInfo("Add new production");
@@ -1058,10 +1077,14 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
+	
 	/**
 	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON-50016 :
 	 *         Verify that if 'AllProductionBatesRanges' is non-searchable for
