@@ -591,6 +591,73 @@ public class UsersAndRoleManagement_Regression {
 		loginPage.logout();
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 09/03/2022 Modified date:NA Modified by:NA
+	 * Description :Verify when user enters First Name to search in 'Filter by user name' text 
+	 * box and hits enter key. 'RPMXCON-53179' sprint-13
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
+	public void validatingEnterFirstNameSearchFilterByUserName() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53179");
+		baseClass.stepInfo("Verify when user enters First Name to search in 'Filter by user name' text box and hits enter key.");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		String firstName = "Automation";
+		
+		// Login As SA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+
+		userManage.passingUserName(firstName);
+		userManage.applyFilter();
+		baseClass.stepInfo("Apply Filter Button in clicked successfully");
+				
+		driver.waitForPageToBeReady();
+		String AfterfilterUserName=userManage.getFirstNameTab().getText().trim();
+		System.out.println(AfterfilterUserName);
+		
+		softAssertion.assertEquals(firstName, AfterfilterUserName);
+		baseClass.passedStep("Users containing the entered first name is searched and listed under the firstName user list is Displayed Successfully");
+		softAssertion.assertAll();
+		
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 09/03/2022 Modified date:NA Modified by:NA
+	 * Description :Verify when user enters Last Name to search in 'Filter by user name' text box and 
+	 * clicks to Apply. 'RPMXCON-53178' sprint-13
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
+	public void validatingEnterLastNameSearchFilterByUserName() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53178");
+		baseClass.stepInfo("Verify when user enters Last Name to search in 'Filter by user name' text box and clicks to Apply.");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		String lastName = "Indium";
+		
+		// Login As SA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+
+		userManage.passingUserName(lastName);
+		userManage.applyFilter();
+		baseClass.stepInfo("Apply Filter Button in clicked successfully");
+				
+		driver.waitForPageToBeReady();
+		String AfterfilterUserLastName=userManage.getLastNameTab().getText().trim();
+		System.out.println(AfterfilterUserLastName);
+		
+		softAssertion.assertEquals(lastName, AfterfilterUserLastName);
+		baseClass.passedStep("Users containing the entered Last name is searched and listed under the lastName user list is Displayed Successfully");
+		softAssertion.assertAll();
+		
+		// logout
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
