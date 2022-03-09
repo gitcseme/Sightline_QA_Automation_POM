@@ -533,7 +533,15 @@ public class Input {
 	// added by jayanthi-30/12/21
 	public static String TallySearch;
 	public static String TallyCN;
-
+	public static String sameThreadDocs_EmailThreadID;
+	public static String sameFamilyDocs_FamilyID;
+	public static String IngestionName_PT;
+	public static String IngestionName_UAT;
+	public static String metadataIngestion;
+	public static String custodianName_Andrew;
+	public static String custodianName_allen;
+	public static String searchString_Audio;
+	
 	// Added by Gopinath - 05/01/2021
 	public static String downloadDocID;
 	public static String translationDocId;
@@ -1212,6 +1220,14 @@ public class Input {
 
 		TallySearch = testData.getTallySearch();
 		TallyCN = testData.getTallyCN();
+		 sameThreadDocs_EmailThreadID = testData.getSameThreadDocs_EmailThreadID();
+		 sameFamilyDocs_FamilyID= testData.getSameFamilyDocs_FamilyID();
+		IngestionName_PT= testData.getIngestionName_PT();
+	 IngestionName_UAT= testData.getIngestionName_UAT();
+		metadataIngestion= testData.getMetadataIngestion();
+		 custodianName_Andrew= testData.getCustodianName_Andrew();
+		 custodianName_allen= testData.getCustodianName_allen();
+		searchString_Audio= testData.getsearchString_Audio;
 		TermOperator = testData.getTermOperator();
 		// Added by Gopinath 05/01/2021
 		downloadDocID = testData.getDownloadDocID();
