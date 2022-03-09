@@ -15,6 +15,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -1742,6 +1743,7 @@ public class DocViewAudio_IndiumRegression {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
 		sessionSearch = new SessionSearch(driver);
+		softAssertion=new SoftAssert();
 
 		String comment = "comments" + Utility.dynamicNameAppender();
 
@@ -1765,8 +1767,9 @@ public class DocViewAudio_IndiumRegression {
 			baseClass.failedMessage("Lesser than one hour");
 		}
 		// playing audio file
+		baseClass.waitTime(3);
 		baseClass.waitForElement(docViewPage.audioPlayPauseIcon());
-		docViewPage.audioPlayPauseIcon().waitAndClick(5);
+		docViewPage.audioPlayPauseIcon().waitAndClick(10);
 
 		// Edit coding form in parent window
 		docViewPage.editCodingForm(comment);
@@ -1774,20 +1777,24 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("Document saved successfully");
 
 		String activeId = docViewPage.getDocView_CurrentDocId().getText();
-		softAssertion.assertEquals(Input.oneHourAudio, activeId);
+		Assert.assertEquals(Input.oneHourAudio, activeId);
+		baseClass.waitForElement(docViewPage.getAudioWaveForm());
 		boolean waveform = docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
-		softAssertion.assertTrue(waveform);
+		Assert.assertTrue(waveform);
 		baseClass.passedStep("Waveform is displayed for same document");
 
 		// validating audio is still playing
+		baseClass.waitForElement(docViewPage.audioPlayPauseIcon());
 		boolean audioPlay = docViewPage.audioPlayPauseIcon().GetAttribute("title").contains("Pause");
-		softAssertion.assertTrue(audioPlay);
+		Assert.assertTrue(audioPlay);
 		baseClass.stepInfo("Audio button docs are in play mode");
 
 		// checking zoom in function working for more than one hour audio docs
+		baseClass.waitForElement(docViewPage.getAudioDocZoom());
 		docViewPage.getAudioDocZoom().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getAudioZoomBar());
 		boolean zoomBar = docViewPage.getAudioZoomBar().Displayed();
-		softAssertion.assertTrue(zoomBar);
+		Assert.assertTrue(zoomBar);
 		baseClass.passedStep("Zoom functionality working for more than one hour of document");
 
 		// edit coding form again
@@ -1796,20 +1803,24 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("Document saved successfully");
 
 		String childactiveId = docViewPage.getDocView_CurrentDocId().getText();
-		softAssertion.assertEquals(Input.oneHourAudio, childactiveId);
+		Assert.assertEquals(Input.oneHourAudio, childactiveId);
+		baseClass.waitForElement(docViewPage.getAudioWaveForm());
 		boolean childwaveform = docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
-		softAssertion.assertTrue(childwaveform);
+		Assert.assertTrue(childwaveform);
 		baseClass.passedStep("Waveform is displayed for same document");
 
 		// validating audio is still playing
+		baseClass.waitForElement(docViewPage.audioPlayPauseIcon());
 		boolean childaudioPlay = docViewPage.audioPlayPauseIcon().GetAttribute("title").contains("Pause");
-		softAssertion.assertTrue(childaudioPlay);
+		Assert.assertTrue(childaudioPlay);
 		baseClass.stepInfo("Audio button docs are in play mode");
 
 		// checking zoom in function working for more than one hour audio docs
+		baseClass.waitForElement(docViewPage.getAudioDocZoom());
 		docViewPage.getAudioDocZoom().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getAudioZoomBar());
 		boolean childzoomBar = docViewPage.getAudioZoomBar().Displayed();
-		softAssertion.assertTrue(childzoomBar);
+		Assert.assertTrue(childzoomBar);
 		baseClass.passedStep("Zoom functionality working for more than one hour of document");
 
 		softAssertion.assertAll();
@@ -1980,7 +1991,6 @@ public class DocViewAudio_IndiumRegression {
 	 * Search panel in DocView screen.
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 28)
-
 	public void verifyModifiedStringInPersistPanel() throws Exception {
 
 		baseClass = new BaseClass(driver);
@@ -2000,25 +2010,24 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("Navigate to docview page");
 		sessionSearch.ViewInDocView();
 
-		DocViewPage docView = new DocViewPage(driver);
 		baseClass.stepInfo("Verifying the Persistent panel search string and Visiblity");
-		docView.verifyingAudioPersistantHitPanel(Input.audioSearch);
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearch);
 
-		sessionSearch = new SessionSearch(driver);
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Modifying the search string");
 		sessionSearch.modifyAdvanceSearch("Yes", Input.audioSearchString1);
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(sessionSearch.getRemoveAddBtn());
-		sessionSearch.getRemoveAddBtn().waitAndClick(10);
-
+		sessionSearch.getRemoveAddBtn().waitAndClick(20);
 		baseClass.waitForElement(sessionSearch.getPureHitAddBtn());
 		sessionSearch.getPureHitAddBtn().waitAndClick(10);
-
+		sessionSearch.getBulkActionButton().waitAndClick(5);
+		baseClass.waitTime(3); // added for stabilization
+		sessionSearch.getDocViewAction().waitAndClick(10);
 		baseClass.stepInfo("Navigate to docview page");
-		sessionSearch.ViewInDocView();
-
-		docView = new DocViewPage(driver);
 		baseClass.stepInfo("Verifying the Persistent panel search string and Visiblity");
-		docView.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
 
 		loginPage.logout();
 
@@ -2465,6 +2474,7 @@ public class DocViewAudio_IndiumRegression {
 		docViewPage.scrollingDocumentInMiniDocList();
 
 		// Basic Search
+		driver.getWebDriver().get(Input.url + "Search/Searches");
 		sessionSearch.saveSearch(BasicSearchName);
 		savedSearch.savedSearchToDocView(BasicSearchName);
 
@@ -2676,7 +2686,20 @@ public class DocViewAudio_IndiumRegression {
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.ViewInDocList();
 		docListPage.DoclisttobulkAssign(null, "100");
-		docListPage.bulkAssignWithPersistantHit(assignmentName);
+		docListPage.getSelectAssignmentExisting(assignmentName).Click();
+		docListPage.getPersistantHitCheckBox().isElementAvailable(15);
+		docListPage.getPersistantHitCheckBox().Click();
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docListPage.getContinueButton());
+		docListPage.getContinueButton().waitAndClick(20);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docListPage.getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait30);
+		docListPage.getFinalizeButton().isElementAvailable(15);
+		docListPage.getFinalizeButton().Click();
 
 		assignmentPage.navigateToAssignmentsPage();
 		assignmentPage.manageAssignmentToDocViewAsRmu(assignmentName);
@@ -3029,7 +3052,7 @@ public class DocViewAudio_IndiumRegression {
  * @param role
  * @throws InterruptedException
  */
-@Test(enabled = true,dataProvider = "userDetailsAndRole", groups = { "regression" }, priority = 39)
+@Test(enabled = true,dataProvider = "userDetailsAndRole", groups = { "regression" }, priority = 43)
 	public void verifyPersistentHit_DifferentSearch(String fullName, String userName, String password, String role) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51848");
 		baseClass.stepInfo("Verify that when document present in different searches with term then, should display search term on persistent hits panel on"

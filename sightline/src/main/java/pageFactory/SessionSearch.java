@@ -10397,10 +10397,14 @@ public class SessionSearch {
 			base.waitTillElemetToBeClickable(getAdvancedSearchTextArea());
 			getAdvancedSearchTextArea().waitAndClick(10);
 			driver.waitForPageToBeReady();
+			base.waitForElement(getAdvancedSearchTextArea());
 			getAdvancedSearchTextArea().Clear();
+			base.waitForElement(getAdvancedSearchTextArea());
 			getAdvancedSearchTextArea().SendKeys(SearchString);
-			base.waitTillElemetToBeClickable(getModifysearchOKBtn());
-			getModifysearchOKBtn().waitAndClick(10);
+			base.waitForElement(getModifysearchOKBtn());
+			getModifysearchOKBtn().waitAndClick(20);
+			base.waitTime(3);
+			driver.waitForPageToBeReady();
 			base.passedStep("Ok button is clicked");
 		} else {
 			base.waitTillElemetToBeClickable(getModifysearchNOBtn());
@@ -10420,7 +10424,6 @@ public class SessionSearch {
 		UtilityLog.info("Serach is done and PureHit is : " + pureHit);
 
 		return pureHit;
-
 	}
 
 	/**
