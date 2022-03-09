@@ -626,6 +626,38 @@ public class Input {
 	public static String ingDocFileType ;
 	public static String lessThan500PagesDocId;
 	public static String d500PagesDocId;
+	
+	
+	//Added by Mohan for PT Env analytics panel
+	public static String conceptualDocId01; 
+	public static String conceptualDocId02;
+	public static String conceptualDocId03;
+	public static String conceptualDocIdForReviewer01;
+	public static String conceptualDocIdForReviewer02;
+	public static String conceptualDocIdForReviewer03;
+	public static String familyDocId01; 
+	public static String familyDocId02;
+	public static String familyDocId03;
+	public static String familyDocIdForReviewer01;
+	public static String familyDocIdForReviewer02;
+	public static String familyDocIdForReviewer03;
+	public static String nearDupeDocId01; 
+	public static String nearDupeDocId02;
+	public static String nearDupeDocId03;
+	public static String nearDupeDocIdForReviewer01;
+	public static String nearDupeDocIdForReviewer02;
+	public static String nearDupeDocIdForReviewer03;
+	public static String threadMapDocId01;
+	public static String threadMapWithNonEmailAttachment;
+	public static String conceptualDocId04;
+	
+	
+	
+	
+	
+	
+	
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -962,6 +994,30 @@ public class Input {
 		progresBarColor = testData.getProgresBarColor();
 		BatchFileduplicateHeader = testData.getBatchFileduplicateHeader();
 		metaDataCNcount = testData.getMetaDataCNcount();
+		
+		
+		//Added by Mohan
+		conceptualDocId01=testData.getConceptualDocId01();
+		conceptualDocId02=testData.getConceptualDocId02();
+		conceptualDocId03=testData.getConceptualDocId03();
+		conceptualDocId04=testData.getConceptualDocId04();
+		conceptualDocIdForReviewer01=testData.getConceptualDocIdForReviewer01();
+		conceptualDocIdForReviewer02=testData.getConceptualDocIdForReviewer02();
+		conceptualDocIdForReviewer03=testData.getConceptualDocIdForReviewer03();
+		 familyDocId01=testData.getFamilyDocId01();
+		familyDocId02=testData.getFamilyDocId02();
+		 familyDocId03=testData.getFamilyDocId03();
+		familyDocIdForReviewer01=testData.getFamilyDocIdForReviewer01();
+		familyDocIdForReviewer02=testData.getFamilyDocIdForReviewer02();
+		familyDocIdForReviewer03=testData.getFamilyDocIdForReviewer03();
+		nearDupeDocId01=testData.getNearDupeDocId01();
+		nearDupeDocId02=testData.getNearDupeDocId02();
+		nearDupeDocId03=testData.getNearDupeDocId03();
+		nearDupeDocIdForReviewer01=testData.getNearDupeDocIdForReviewer01();
+		nearDupeDocIdForReviewer02=testData.getNearDupeDocIdForReviewer02();
+		nearDupeDocIdForReviewer03=testData.getNearDupeDocIdForReviewer03();
+		threadMapDocId01=testData.getThreadMapDocId01();
+		threadMapWithNonEmailAttachment=testData.getThreadMapWithNonEmailAttachment();
 
 		/**
 		 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
