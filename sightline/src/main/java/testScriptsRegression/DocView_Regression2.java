@@ -3544,43 +3544,13 @@ public class DocView_Regression2 {
 
 	}
 
-	/**
-	 * @Author date: 08/02/2022 Modified date: NA Modified by:
-	 * @Description:Verify that when document is viewed from history drop down
-	 *                     having multiple terms when presently viewed document is
-	 *                     with single term then persistent hits panel should
-	 *                     display all the hits present in the document.
-	 * 
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 49)
-	public void verifyMultipleTermsPresentlyViewedDocInPersistentHits() throws Exception {
-		baseClass.stepInfo("Test case Id: RPMXCON-51870");
-		baseClass.stepInfo(
-				"Verify that when document is viewed from history drop down having multiple terms when presently viewed document is with single term then persistent hits panel should display all the hits present in the document.");
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		docView = new DocViewPage(driver);
-		MiniDocListPage miniDocList = new MiniDocListPage(driver);
-		String audioSearchString2 = "left";
-		sessionsearch.audioSearch(Input.audioSearchString1, Input.language);
-		docView.selectPureHit();
-		driver.waitForPageToBeReady();
-		sessionsearch.modifyAudioSearch(audioSearchString2, Input.language, null);
-		docView.selectPureHit();
-		sessionsearch.ViewInDocView();
-		baseClass.stepInfo("Searching multiterms in audioDoc view in docview");
-		// click PersistentHits icon on select Docs
-		docViewRedact.checkingPersistentHitPanelAudio();
-		miniDocList.verifyViewDocInPersistentHitPanel(Input.audioSearchString1, audioSearchString2);
-		miniDocList.verifySelectedDocsInClockIcon(audioSearchString2, Input.audioSearchString1);
-	}
 
 	/**
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51954
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 50)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 49)
 	public void verifyMessageForHiddenContentDocsExcelProtecTedWorkSheets(String fullName, String userName,
 			String password) throws Exception {
 		baseClass = new BaseClass(driver);
@@ -3615,7 +3585,7 @@ public class DocView_Regression2 {
 	 * to the same record successfully, and confirm that the XML nodes are all
 	 * properly created/reflected in the XML
 	 */
-	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 3)
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 50)
 	public void verifyRemarkPanelRemarkDetailsAfterDeletionBetweenTwoUsers(String firstUserName,
 			String firstUserPassword, String secondUserName, String secondUserPassword) throws Exception {
 
@@ -3768,7 +3738,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51948
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =51)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =52)
 	public void verifyMouseHoverOfHiddenContentIconDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -3797,7 +3767,7 @@ public class DocView_Regression2 {
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-46954
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 54)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 53)
 	public void VerifyMultiPageRedactionTagDefaultSelection() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -3841,7 +3811,7 @@ public class DocView_Regression2 {
 	 * Description :Verify that persistent hits should be highlighted when documents are assigned to existing assignment from Advanced Search > Doc List
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = true, groups = {"regression" },priority = 55)
+	@Test(enabled = true, groups = {"regression" },priority = 54)
 	public void verifyPersistentHitsHighlightWhenAssigned() throws InterruptedException  {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -4413,7 +4383,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51994
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =67)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =66)
 	public void verifyHiddenContentContainsComments(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
@@ -4443,7 +4413,7 @@ public class DocView_Regression2 {
 	 */
 	
 	
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =68)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =67)
 	public void verifyHiddenContentContainsTrackChanges(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
@@ -4482,7 +4452,7 @@ public class DocView_Regression2 {
 	 */
 	
 	
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority =69)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority =68)
 	public void verifyHiddenContentFromIngestionName() throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
@@ -4530,7 +4500,7 @@ public class DocView_Regression2 {
 	 */
 	
 	
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =70)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =69)
 	public void verifyHiddenContentExternalLink(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
