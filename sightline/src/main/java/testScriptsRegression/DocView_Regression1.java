@@ -7078,6 +7078,64 @@ public class DocView_Regression1 {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * @author Gopinath
+	 * @TestCase Id:51438 Verify that after impersonation if the document
+	 *           native/PDF/TIFF/Text is being presented, the N/P/T/X icon with the
+	 *           accompanying mouse over tool tip must appear
+	 * @Description :To Verify that after impersonation if the document
+	 *              native/PDF/TIFF/Text is being presented, the N/P/T/X icon with
+	 *              the accompanying mouse over tool tip must appear.
+	 * @throws InterruptedException stabilization - not done
+	 */
+	// @Test(enabled = true,dataProvider="multiUserCredentials", groups = {
+	// "regression" }, priority = 15)
+	public void verifyDocIdIconOnDocViewPanal(String fullName, String userName, String password, String fromRole,
+			String toRole) throws InterruptedException {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		baseClass.stepInfo("Test case id : RPMXCON-51438");
+		baseClass.stepInfo(
+				"Verify that after impersonation if the document native/PDF/TIFF/Text is being presented, the N/P/T/X icon with the accompanying mouse over tool tip must appear");
+		String N_DocID = "ID00001351";
+		String N_DocToolTipMessage = "Native file variant of the document being displayed";
+		String X_DocID = "ID00000102";
+		String X_DocToolTipMessage = "Text file variant of the document being displayed";
+		String T_DocID = "ID00001012";
+		String T_DocToolTipMessage = "TIFF file variant of the document being displayed";
+		String P_DocId = "ID00001464";
+		String P_DocToolTipMessage = "PDF file variant of the document being displayed";
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		SessionSearch session = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+
+		baseClass.stepInfo("Impersnated from " + fromRole + " to " + toRole);
+		baseClass.rolesToImp(fromRole, toRole);
+
+		baseClass.stepInfo("Step 1: Search for the docs ");
+		session.basicContentSearch(Input.searchString1);
+
+		baseClass.stepInfo("Step 2:view docS in DocView");
+		session.ViewInDocView();
+
+		baseClass.stepInfo("Verify T icon and tolltip message for selected document");
+		docView.verifyingToolTipPopupMessage(T_DocID, T_DocToolTipMessage);
+
+		baseClass.stepInfo("Verify X icon and tolltip message for selected document");
+		docView.verifyingToolTipPopupMessage(X_DocID, X_DocToolTipMessage);
+
+		baseClass.stepInfo("Verifying P icon and tolltip message for selected document");
+		docView.verifyingToolTipPopupMessage(P_DocId, P_DocToolTipMessage);
+
+		baseClass.stepInfo("Verifying N icon and tolltip message for selected document");
+		docView.verifyingToolTipPopupMessage(N_DocID, N_DocToolTipMessage);
+
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
