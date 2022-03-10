@@ -25,6 +25,7 @@ import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
+import pageFactory.DocExplorerPage;
 import pageFactory.DocViewPage;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
@@ -52,6 +53,7 @@ public class DocView_MiniDocList_Regression2 {
 	SavedSearch savedSearch;
 	KeywordPage keywordPage;
 	CodingForm codingForm;
+	DocExplorerPage docEx;
 
 	String assignmentNew = "Assignment06" + Utility.dynamicNameAppender();
 	String assignmentComplete = "Assignment" + Utility.dynamicNameAppender();
@@ -75,6 +77,7 @@ public class DocView_MiniDocList_Regression2 {
 		keywordPage = new KeywordPage(driver);
 		codingForm = new CodingForm(driver);
 		softAssertion = new SoftAssert();
+		docEx =new DocExplorerPage(driver);
 
 	}
 
@@ -971,7 +974,35 @@ public class DocView_MiniDocList_Regression2 {
 		loginPage.logout();
 		
 		}
+	/**
+	 * Author : Vijaya.Rani date: 10/03/21 Modified date: NA Modified by:NA
+	 * Description :Verify selection of fields from Configure Mini Doc List.'RPMXCON-55219' Sprint : 13
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	public void verifySelectionFieldsFromConfigureMiniDocList() throws InterruptedException, AWTException {
 
+		baseClass.stepInfo("Test case Id: RPMXCON-55219");
+		baseClass.stepInfo(
+				"Verify selection of fields from Configure Mini Doc List");
+
+		// login as PA
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+		
+		//DocExploer to viewindocView Page
+		baseClass.stepInfo("step 1:DocExplorer Navigate To ViewInDocView");
+		docEx.docExpViewInDocView();
+		
+		//Configure MiniDoclist 
+		miniDocListpage.afterImpersonateWebFieldsSelectionManualMode();
+		
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
