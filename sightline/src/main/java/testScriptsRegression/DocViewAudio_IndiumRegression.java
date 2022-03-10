@@ -33,6 +33,7 @@ import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
@@ -3156,6 +3157,38 @@ public class DocViewAudio_IndiumRegression {
 		
 		loginPage.logout();
 	}
+
+
+/**
+ * @Author date: 08/02/2022 Modified date: NA Modified by:
+ * @Description:Verify that when document is viewed from history drop down
+ *                     having multiple terms when presently viewed document is
+ *                     with single term then persistent hits panel should
+ *                     display all the hits present in the document.
+ * 
+ */
+@Test(enabled = true, groups = { "regression" }, priority = 44)
+public void verifyMultipleTermsPresentlyViewedDocInPersistentHits() throws Exception {
+	baseClass.stepInfo("Test case Id: RPMXCON-51870");
+	baseClass.stepInfo(
+			"Verify that when document is viewed from history drop down having multiple terms when presently viewed document is with single term then persistent hits panel should display all the hits present in the document.");
+	SessionSearch sessionsearch = new SessionSearch(driver);
+	DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+	docViewPage = new DocViewPage(driver);
+	MiniDocListPage miniDocList = new MiniDocListPage(driver);
+	String audioSearchString2 = "left";
+	sessionsearch.audioSearch(Input.audioSearchString1, Input.language);
+	docViewPage.selectPureHit();
+	driver.waitForPageToBeReady();
+	sessionsearch.modifyAudioSearch(audioSearchString2, Input.language, null);
+	docViewPage.selectPureHit();
+	sessionsearch.ViewInDocView();
+	baseClass.stepInfo("Searching multiterms in audioDoc view in docview");
+	// click PersistentHits icon on select Docs
+	docViewRedact.checkingPersistentHitPanelAudio();
+	miniDocList.verifyViewDocInPersistentHitPanel(Input.audioSearchString1, audioSearchString2);
+	miniDocList.verifySelectedDocsInClockIcon(audioSearchString2, Input.audioSearchString1);
+}
 	
 	
 
