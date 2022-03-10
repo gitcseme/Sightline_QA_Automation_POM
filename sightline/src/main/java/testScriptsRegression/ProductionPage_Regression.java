@@ -81,7 +81,6 @@ public class ProductionPage_Regression {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 	}
-
 	/**
 	 * @author Indium-Baskar date: 29/8/2021 Modified date: N/A Modified by: Baskar
 	 * @Description : Verify that Preivew documents should be display Standard
@@ -200,7 +199,7 @@ public class ProductionPage_Regression {
 
 	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyPreviewButtonShouldNotDisplayWhileDatAndMp3OnlySelection() throws InterruptedException {
-		baseClass.stepInfo("Test case Id: RPMXCON-56116- Production Sprint 02");
+		baseClass.stepInfo("Test case Id: RPMXCON-56115- Production Sprint 02");
 
 		UtilityLog.info(Input.prodPath);
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
@@ -307,7 +306,7 @@ public class ProductionPage_Regression {
 
 	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyingPageLevelOptionsOnTextComponents() throws InterruptedException {
-		baseClass.stepInfo("Test case Id: RPMXCON-56117- Production Sprint 02");
+		baseClass.stepInfo("Test case Id:RPMXCON-56072- Production Sprint 02");
 		UtilityLog.info(Input.prodPath);
 
 		// create production with DAT,Native,PDF& ingested Text
@@ -424,7 +423,6 @@ public class ProductionPage_Regression {
 				"Verified that Production generate successfully for redacted document if user select TIFF Or PDF with Naitvely Placeholder and Redaction is not enabled.");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
@@ -439,7 +437,7 @@ public class ProductionPage_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 8)
+	@Test(enabled = true, groups = { " regression" }, priority = 8)
 	public void verifySharableLinks() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-56003- Production Sprint 05");
 		baseClass.stepInfo("Test case Id: RPMXCON-56004- Production Sprint 05");
@@ -450,8 +448,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -482,9 +480,8 @@ public class ProductionPage_Regression {
 		baseClass.passedStep("Verified the shareable links and a password is available on 'Shareable Link' window");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
-		loginPage.logout();
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 
 	}
 
@@ -494,7 +491,7 @@ public class ProductionPage_Regression {
 	 * @Description:Verify that Count displays correctly on Priv Guard if child
 	 *                     documents is assigned to Priv Tag
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 9)
+	@Test(enabled = true, groups = { " regression" }, priority = 9)
 	public void verifyPrivGuardBySelectingChildDocuments() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56137- Production Sprint 05");
@@ -506,11 +503,11 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
 
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch("ID00001542");
+		sessionSearch.basicContentSearch("ID00005183");
 		sessionSearch.ViewInDocList();
 
 		docPage = new DocListPage(driver);
-		docPage.selectChildDocumentAndSave("ID00001542");
+		docPage.selectChildDocumentAndSave("ID00005183");
 		driver.scrollPageToTop();
 		docPage.bulkTagExistingFromDoclist(tagname);
 
@@ -542,9 +539,8 @@ public class ProductionPage_Regression {
 				"Verified that Count displays correctly on Priv Guard if child documents is assigned to Priv Tag");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
-		loginPage.logout();
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+
 
 	}
 
@@ -1445,7 +1441,7 @@ public class ProductionPage_Regression {
 	 *                 from beginning, middle and end of the audio file
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 25)
+	@Test(enabled = true, groups = { " regression" }, priority = 25)
 	public void verifyAudioFilesWithRedactedDocuments() throws InterruptedException {
 
 		baseClass.stepInfo("RPMXCON_48317 Production- Sprint 06");
@@ -1459,7 +1455,7 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create folder and tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
 
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.audioSearch(Input.audioSearch, Input.audioLanguage);
@@ -1484,7 +1480,7 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername,Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -1932,7 +1928,6 @@ public class ProductionPage_Regression {
 		baseClass.passedStep("Componenet tab completed without any error");
 		loginPage.logout();
 	}
-
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
@@ -1962,5 +1957,6 @@ public class ProductionPage_Regression {
 
 		}
 	}
+
 
 }

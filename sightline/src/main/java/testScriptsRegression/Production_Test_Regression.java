@@ -545,26 +545,27 @@ public class Production_Test_Regression {
 	 *               selecting only DAT and 'Generate PDF' option with Priv
 	 *               Placholder.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 8)
+	@Test(enabled = true,groups = { "regression" }, priority = 8)
 	public void getProductionPageWithDatPdf() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56086 -Production Sprint 06");
 
-		String testData1 = Input.testData1;
 		String tagNameTechnical = Input.tagNameTechnical;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify
@@ -594,24 +595,24 @@ public class Production_Test_Regression {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
-
 	/**
 	 * @author Aathith.Senthilkumar RPMXCON-56151
 	 * @Description:To Verify that Regenerate button Popup should close on clicking
 	 *                 on Cancel button.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void regeneratePopUpClickCancel() throws InterruptedException {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56151 -Production Sprint 07");
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
+		
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -646,19 +647,18 @@ public class Production_Test_Regression {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
-
 	/**
 	 * @author Aathith.Senthilkumar RPMXCON-56109
 	 * @Description:To Verify the error message for MP3 component when 'Disable
 	 *                 generate load File.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 10)
+	@Test(enabled = true,groups = { "regression" }, priority = 10)
 	public void getMp3DisableGenarateLoadFile() throws InterruptedException {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56109 -Production Sprint 07");
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-
+		BaseClass base = new BaseClass(driver);
 		// Verify
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
@@ -677,13 +677,12 @@ public class Production_Test_Regression {
 		base.passedStep("Verified the error message for MP3 component when 'Disable generate load File ");
 		loginPage.logout();
 	}
-
 	/**
 	 * @author Aathith.Senthilkumar RPMXCON-56101
 	 * @Description:To Verify the error message for TIFF/PDF component when 'Enabled
 	 *                 privileg doc without tag or text'.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 11)
+	@Test(enabled = true,groups = { "regression" }, priority = 11)
 	public void verifyErrormsgTiffPdf() throws InterruptedException {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56101 -Production Sprint 07");
@@ -691,6 +690,7 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 
 		// Verify
+		BaseClass base = new BaseClass(driver);
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
@@ -725,7 +725,6 @@ public class Production_Test_Regression {
 				"Verified the error message for TIFF/PDF component when 'Enabled privileg doc without tag or text'");
 		loginPage.logout();
 	}
-
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-56041
@@ -733,7 +732,7 @@ public class Production_Test_Regression {
 	 *               displays 'Reserving Bates Range Complete' status on Grid View
 	 *               on Production Home page.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 12)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyBatesRangecompletedOnGridView() throws Exception {
 		loginPage.logout();
 
@@ -748,12 +747,14 @@ public class Production_Test_Regression {
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolderInRMU(foldername);
-		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, "Privileged");
+		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -798,7 +799,6 @@ public class Production_Test_Regression {
 		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
-
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-56034
@@ -806,20 +806,21 @@ public class Production_Test_Regression {
 	 *               'Creating Archive Complete' status on Production Generation
 	 *               page.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 13)
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void createArchivingStatusVerifyOnGenPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56034 -Production Sprint 07");
 
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-		tagname = "Tag" + Utility.dynamicNameAppender();
+		//tagname = "Tag" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -855,30 +856,29 @@ public class Production_Test_Regression {
 		// delete tags and folders
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
-
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-56035
 	 * @Description: To Verify that Production status displays as Draft on
 	 *               Production Grid View.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 14)
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyDraftStatusOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56035 -Production Sprint 07");
 
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-		tagname = "Tag" + Utility.dynamicNameAppender();
+		//tagname = "Tag" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -919,6 +919,7 @@ public class Production_Test_Regression {
 
 		page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
+		beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -945,7 +946,6 @@ public class Production_Test_Regression {
 		// delete tag ang folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
-		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
