@@ -1281,79 +1281,6 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	
-	/**
-	 * Author : Mohan date: 05/02/22 NA Modified date: NA Modified by:NA
-	 * Description:To verify assignment progress bar should be displayed on Doc View
-	 * page for RMU and Reviewer'RPMXCON-50781' Sprint : 12
-	 * 
-	 * @throws Exception
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
-	public void verifyAssignmentProgressBarInDocViewPage() throws InterruptedException {
-
-		baseClass.stepInfo("Test case Id: RPMXCON-50781");
-		baseClass.stepInfo(
-				"To verify assignment progress bar should be displayed on Doc View page for RMU and Reviewer");
-		baseClass = new BaseClass(driver);
-		assignmentPage = new AssignmentsPage(driver);
-		sessionSearch = new SessionSearch(driver);
-		docViewPage = new DocViewPage(driver);
-		String codingForm = Input.codingFormName;
-		String assname = "assgnment" + Utility.dynamicNameAppender();
-
-		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info(
-				"User successfully logged into slightline webpage as ReviewManager with " + Input.rmu1userName + "");
-
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as ReviewManager with " + Input.rmu1userName + "");
-
-		baseClass.stepInfo(
-				"Step 1: Prerequisites: Logged @user and go to Doc View page  Manage Assignment > View All in Doc View ");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.bulkAssign();
-
-		assignmentPage.assignmentCreation(assname, codingForm);
-		assignmentPage.add2ReviewerAndDistribute();
-		assignmentPage.selectAssignmentToViewinDocview(assname);
-
-		baseClass.stepInfo("Step 2: Verify assignment progress bar from Doc View page");
-
-		softAssertion.assertTrue(docViewPage.getDocView_AssignmentProgressBar().isDisplayed());
-		softAssertion.assertTrue(docViewPage.getDocView_AssigmentName().isDisplayed());
-		softAssertion.assertAll();
-		String assName = docViewPage.getDocView_AssigmentName().getText();
-		System.out.println(assName);
-		baseClass.passedStep(
-				"Assignment progress bar is displayed on doc view page.Assignment name is also displayed above the assignment progress bar successfully");
-
-		loginPage.logout();
-
-		// login Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
-
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
-
-		// Select the Assignment from dashboard
-		assignmentPage.SelectAssignmentByReviewer(assname);
-		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
-
-		baseClass.stepInfo("Step 2: Verify assignment progress bar from Doc View page");
-
-		softAssertion.assertTrue(docViewPage.getDocView_AssignmentProgressBar().isDisplayed());
-		softAssertion.assertTrue(docViewPage.getDocView_AssigmentName().isDisplayed());
-		softAssertion.assertAll();
-		assName = docViewPage.getDocView_AssigmentName().getText();
-		System.out.println(assName);
-		baseClass.passedStep(
-				"Assignment progress bar is displayed on doc view page.Assignment name is also displayed above the assignment progress bar successfully");
-
-		loginPage.logout();
-
-	}
 
 	/**
 	 * Author : Mohan date: 05/02/22 NA Modified date: NA Modified by:NA
@@ -1362,7 +1289,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyReviewerRemarksTabInDocViewPageForReviewer() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51174");
@@ -1419,7 +1346,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyReviewerRemarksTabInDocViewPageForProjectAdmin() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51175");
@@ -1468,7 +1395,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifySameDifferentThresholdInSessionSearch() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -1580,7 +1507,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void validatePlayIconInCfChild() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51821");
 		baseClass.stepInfo("Verify that when audio file is playing and clicked "
@@ -1685,7 +1612,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void validatePlayIconCF() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51819");
 		baseClass.stepInfo("Verify that when audio file is playing and clicked to "
@@ -1791,7 +1718,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyAudioDocsScrollingMiniDocList() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51816");
@@ -1900,7 +1827,7 @@ public class DocViewAudio_IndiumRegression {
 	 *              [RPMXCON-51857]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyPersistentForAudio() throws InterruptedException {
 		String assignmentName = "Assign" + Utility.dynamicNameAppender();
 		String audioSearch = Input.audioSearch.toUpperCase();
@@ -1944,7 +1871,7 @@ public class DocViewAudio_IndiumRegression {
 	 * re-execute the same query then modified Term does not appear in Persistent
 	 * Search panel in DocView screen.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 27)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 26)
 	public void verifyModifiedStringInPersistPanel() throws Exception {
 
 		baseClass = new BaseClass(driver);
@@ -1996,7 +1923,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifySameDifferentThresholdAndSearchTerms() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -2105,7 +2032,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @Description:Verify that when last audio document is selected and played then
 	 *                     browser page should not scroll down automatically
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
 	public void validatePullButtonAndWebPage(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51817");
@@ -2160,7 +2087,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @Description:Verify that when last audio document is selected and played then
 	 *                     mini doc list should not scroll up automatically
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 30)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
 	public void validatePlayAudioWebPageNotScrollUp(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51815");
@@ -2220,7 +2147,7 @@ public class DocViewAudio_IndiumRegression {
 	 *                     unassigned from assignment and documents are distributed
 	 *                     again
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	@Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifyPersistentHits() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51774");
 		baseClass.stepInfo(
@@ -2280,7 +2207,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @param fullName
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 32)
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 31)
 	public void verifyPersistentHits_sameTerm(String username, String password, String fullName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-48788");
 		baseClass.stepInfo(
@@ -2361,7 +2288,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 33)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyLoadingDisplayInMiniDocListPersistentHit() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51866");
@@ -2400,7 +2327,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifyLoadingDisplayInMiniDocListImmediately() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51812");
@@ -2450,7 +2377,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws ParseException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void audioRedactionDefaultTagSelection() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -2508,7 +2435,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void verifyBulkAssignFromDoclist() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -2588,7 +2515,7 @@ public class DocViewAudio_IndiumRegression {
 	 *              search, hits should be highlighted [RPMXCON-46998]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 37)
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
 	public void verifyBulkAssignWithAudioAndMetadata() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -2677,7 +2604,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 38)
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
 	public void verifyPersistentHits_editAndComplete() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51772");
 		baseClass.stepInfo("Verify that previously saved Persistent hits displayed on the audio doc view when documents assigned to"
@@ -2758,7 +2685,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws ParseException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 39)
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
 	public void audioMulti() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -2844,7 +2771,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyPersistentHits_unCompleteDocs() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-46921");
 		baseClass.stepInfo("Verify that previously saved Persistent hits should be displayed on the audio doc view "
@@ -2910,7 +2837,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void verifyPersistentHits_RemoveAudioDocs() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51769");
 		baseClass.stepInfo("Verify When remove audio docs from a user/reviewer in an assignment, displays persistent search hits in the assignment, when reassigning these audio docs to another/same reviewer in the assignment");
@@ -3006,7 +2933,7 @@ public class DocViewAudio_IndiumRegression {
  * @param role
  * @throws InterruptedException
  */
-@Test(enabled = true,dataProvider = "userDetailsAndRole", groups = { "regression" }, priority = 42)
+@Test(enabled = true,dataProvider = "userDetailsAndRole", groups = { "regression" }, priority = 41)
 	public void verifyPersistentHit_DifferentSearch(String fullName, String userName, String password, String role) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51848");
 		baseClass.stepInfo("Verify that when document present in different searches with term then, should display search term on persistent hits panel on"
@@ -3119,7 +3046,7 @@ public class DocViewAudio_IndiumRegression {
  *                     display all the hits present in the document.
  * 
  */
-@Test(enabled = true, groups = { "regression" }, priority = 43)
+@Test(enabled = true, groups = { "regression" }, priority = 42)
 public void verifyMultipleTermsPresentlyViewedDocInPersistentHits() throws Exception {
 	baseClass.stepInfo("Test case Id: RPMXCON-51870");
 	baseClass.stepInfo(
