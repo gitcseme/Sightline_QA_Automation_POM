@@ -1,6 +1,5 @@
 package testScriptsRegression;
 
-
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -34,11 +33,10 @@ public class Proview_Regression {
 	String pureHit;
 	String pureHit1;
 	BaseClass bc;
-	
 
-	String tagName = "CatTag2"+Utility.dynamicNameAppender();
-	String folderName="CatFolder2"+Utility.dynamicNameAppender();
-	
+	String tagName = "CatTag2" + Utility.dynamicNameAppender();
+	String folderName = "CatFolder2" + Utility.dynamicNameAppender();
+
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
@@ -48,12 +46,14 @@ public class Proview_Regression {
 		in.loadEnvConfig();
 
 	}
-	
+
 	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
 	public void validateCategorization(String username, String password, String role) throws InterruptedException {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(username, password);
-	if (role == "RMU") {
+		bc.stepInfo("RPMXC0N-54272");
+		bc.stepInfo("To verify that Categorization functionality is working correctly and properly");
+		if (role == "RMU") {
 			// Search for any content on basic search screen
 			sessionSearch = new SessionSearch(driver);
 			sessionSearch.basicContentSearch(Input.testData1);
@@ -69,11 +69,11 @@ public class Proview_Regression {
 		Categorization cat = new Categorization(driver);
 		cat.CategorizationFunctionalityVerification(tagName, folderName);
 		cat.ViewInDocLIst();
-		DocListPage doclistPage=new DocListPage(driver);
+		DocListPage doclistPage = new DocListPage(driver);
 		List<String> docids = new ArrayList<>();
-		docids=bc.getAvailableListofElements( doclistPage.getDocIds());
+		docids = bc.getAvailableListofElements(doclistPage.getDocIds());
 		System.out.println(docids.size());
-		
+
 		if (role == "PA") {
 			TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
 			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
@@ -82,13 +82,14 @@ public class Proview_Regression {
 			tp.deleteAllFolders("CatFolder2");
 		}
 	}
+
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method : " + testMethod.getName());
 		driver = new Driver();
 		bc = new BaseClass(driver);
-		
+
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -117,7 +118,7 @@ public class Proview_Regression {
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		
+
 		System.out.println("Executed :Reviewer Result Report Regression ");
 	}
 }

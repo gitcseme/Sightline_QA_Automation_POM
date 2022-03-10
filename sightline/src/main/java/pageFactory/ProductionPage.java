@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -2713,6 +2714,26 @@ public class ProductionPage {
 	public Element getPrivledgedDATCheckBox(int i) {
 		return driver.FindElementByXPath("//input[@id='ChkPrev_" + i + "']/following-sibling:: i");
 	}
+	
+	//Added by Gopinath - 20/12/2021
+		public Element getTiffAdvancedTab() {
+			return driver.FindElementByXPath("//label[text()='Burn Redactions :']//..//..//..//..//..//..//div[@class='advanced-dd-toggle']");
+		}
+		public Element getSlipSheetToogle() {
+			return driver.FindElementByXPath("//input[@id='chkIsTIFFSlipSheetEnabled']//..//i");
+		}
+		public ElementCollection getSlipSheetMetaDataList() {
+			return driver.FindElementsByXPath("//div[@id='tifftab1']//strong");
+		}
+		public Element getNativeMetaDataFieldLink() {
+			return driver.FindElementByXPath("//a[@id='LaunchMetaData0']");
+		}
+		public Element getNativeMetaDataFieldDropdown() {
+			return driver.FindElementByXPath("//select[@id='selectedMetadataField']");
+		}
+		public Element getExceptionMetaDataFieldLink() {
+			return driver.FindElementByXPath("//input[@id='chkEnabledforExceptionDocs']//..//..//..//../*[@title='Insert Metadata Field']");
+		}
 
 	public ProductionPage(Driver driver) {
 
@@ -18387,6 +18408,258 @@ public class ProductionPage {
 
 			}
 			document.close();
+		}
+	}
+	
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify meta data list in slip sheet will be in ascending order on Tiff section.
+	 */
+	public void verifyMetaDataListSlipSheetInAscendingOrderTiffSec() {
+
+		try {
+			ArrayList<String> metadataList = new ArrayList<String>();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			getTiffAdvancedTab().ScrollTo();
+			getTiffAdvancedTab().isElementAvailable(15);
+			getTiffAdvancedTab().Click();
+			getSlipSheetToogle().isElementAvailable(15);
+			getSlipSheetToogle().Click();
+			List<WebElement> slipSheetMetaDataList = getSlipSheetMetaDataList().FindWebElements();
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				metadataList.add(metaDataVal);
+			}
+			Collections.sort(metadataList,String.CASE_INSENSITIVE_ORDER);
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				if(!metadataList.get(i).contentEquals(metaDataVal)) {
+					base.failedStep("Mata data list is not in ascending order of slip sheet on Tiff section");
+				}
+			}
+			base.passedStep("Mata data list is in ascending order of slip sheet on Tiff section");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying meta data list in slip sheet will be in ascending order on Tiff section."+e.getMessage() );
+		}
+
+	}
+
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify meta data list in slip sheet will be in ascending order on pdf section.
+	 */
+	public void verifyMetaDataListSlipSheetInAscendingOrderPDFSec() {
+		try {
+			ArrayList<String> metadataList = new ArrayList<String>();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getPDFGenerateRadioButton().ScrollTo();
+			base.clickButton(getPDFGenerateRadioButton());
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			getTiffAdvancedTab().ScrollTo();
+			getTiffAdvancedTab().isElementAvailable(15);
+			getTiffAdvancedTab().Click();
+			getSlipSheetToogle().isElementAvailable(15);
+			getSlipSheetToogle().Click();
+			List<WebElement> slipSheetMetaDataList = getSlipSheetMetaDataList().FindWebElements();
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				metadataList.add(metaDataVal);
+			}
+			Collections.sort(metadataList,String.CASE_INSENSITIVE_ORDER);
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				if(!metadataList.get(i).contentEquals(metaDataVal)) {
+					base.failedStep("Mata data list is not in ascending order of slip sheet on pdf section");
+				}
+			}
+			base.passedStep("Mata data list is in ascending order of slip sheet on pdf section");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying meta data list in slip sheet will be in ascending order on pdf section."+e.getMessage() );
+		}
+	}
+
+
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify meta data list in drop down native will be in ascending order on tiff section.
+	 */
+	public void verifyMetaDataDropdownNativeAscendingOrderTiffSec() throws InterruptedException {
+		try {
+			ArrayList<String> metadataList = new ArrayList<String>();
+			getTIFFChkBox().isElementAvailable(15);
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			getTIFFTab().isElementAvailable(15);
+			getTIFFTab().Click();
+			driver.scrollingToBottomofAPage();
+			getclkNativelyProducedDocumentLnk().isElementAvailable(15);
+			getclkNativelyProducedDocumentLnk().Click();
+			getNativeMetaDataFieldLink().isElementAvailable(15);
+			getNativeMetaDataFieldLink().Click();
+			getNativeMetaDataFieldDropdown().isElementAvailable(10);
+			List<WebElement> slipSheetMetaDataList = getNativeMetaDataFieldDropdown().selectFromDropdown().getOptions();
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				metadataList.add(metaDataVal);
+			}
+			Collections.sort(metadataList,String.CASE_INSENSITIVE_ORDER);
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				if(!metadataList.get(i).contentEquals(metaDataVal)) {
+					base.failedStep("Mata data list is not in ascending order of native on tiff section");
+				}
+			}
+			base.passedStep("Mata data list is in ascending order of native on tiff section");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying meta data list in drop down native will be in ascending order on tiff section..."+e.getMessage() );
+		}
+	}
+
+
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify meta data list in drop down native will be in ascending order on pdf section.
+	 */
+	public void verifyMetaDataDropdownNativeAscendingOrderPdfSec() throws InterruptedException {
+		try {
+			ArrayList<String> metadataList = new ArrayList<String>();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getPDFGenerateRadioButton().ScrollTo();
+			base.clickButton(getPDFGenerateRadioButton());
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			getclkNativelyProducedDocumentLnk().isElementAvailable(15);
+			getclkNativelyProducedDocumentLnk().Click();
+			getNativeMetaDataFieldLink().isElementAvailable(15);
+			getNativeMetaDataFieldLink().Click();
+			getNativeMetaDataFieldDropdown().isElementAvailable(10);
+			List<WebElement> slipSheetMetaDataList = getNativeMetaDataFieldDropdown().selectFromDropdown().getOptions();
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				metadataList.add(metaDataVal);
+			}
+			Collections.sort(metadataList,String.CASE_INSENSITIVE_ORDER);
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				if(!metadataList.get(i).contentEquals(metaDataVal)) {
+					base.failedStep("Mata data list is not in ascending order of native on pdf section");
+				}
+			}
+			base.passedStep("Mata data list is in ascending order of native on pdf section");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying meta data list in drop down native will be in ascending order on pdf section..."+e.getMessage() );
+		}
+	}
+
+
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify meta data list in drop down exception will be in ascending order on tiff section.
+	 */
+	public void verifyMetaDataDropdownExceptionAscendingOrderTiffSec() {
+		try {
+			ArrayList<String> metadataList = new ArrayList<String>();
+			getTIFFChkBox().isElementAvailable(15);
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			getTIFFTab().isElementAvailable(15);
+			getTIFFTab().Click();
+			driver.scrollingToBottomofAPage();
+			getTechissue_toggle().isElementAvailable(15);
+			base.waitForElement(getTechissue_toggle());
+			getTechissue_toggle().Click();
+			getExceptionMetaDataFieldLink().isElementAvailable(10);
+			getExceptionMetaDataFieldLink().Click();
+			getNativeMetaDataFieldDropdown().isElementAvailable(10);
+			List<WebElement> slipSheetMetaDataList = getNativeMetaDataFieldDropdown().selectFromDropdown().getOptions();
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				metadataList.add(metaDataVal);
+			}
+			Collections.sort(metadataList,String.CASE_INSENSITIVE_ORDER);
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				if(!metadataList.get(i).contentEquals(metaDataVal)) {
+					base.failedStep("Mata data list is not in ascending order of exception on tiff section");
+				}
+			}
+			base.passedStep("Mata data list is in ascending order of exception on tiff section");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying meta data list in drop down exception will be in ascending order on tiff section." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify meta data list in drop down exception will be in ascending order on pdf section.
+	 */
+	public void verifyMetaDataDropdownExceptionAscendingOrderPDFSec() {
+		try {
+			ArrayList<String> metadataList = new ArrayList<String>();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getPDFGenerateRadioButton().ScrollTo();
+			base.clickButton(getPDFGenerateRadioButton());
+			driver.scrollingToBottomofAPage();
+			getTechissue_toggle().isElementAvailable(15);
+			base.waitForElement(getTechissue_toggle());
+			getTechissue_toggle().Click();
+			getExceptionMetaDataFieldLink().isElementAvailable(10);
+			getExceptionMetaDataFieldLink().Click();
+			getNativeMetaDataFieldDropdown().isElementAvailable(10);
+			List<WebElement> slipSheetMetaDataList = getNativeMetaDataFieldDropdown().selectFromDropdown().getOptions();
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				metadataList.add(metaDataVal);
+			}
+			Collections.sort(metadataList,String.CASE_INSENSITIVE_ORDER);
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				if(!metadataList.get(i).contentEquals(metaDataVal)) {
+					base.failedStep("Mata data list is not in ascending order of exception on pdf section");
+				}
+			}
+			base.passedStep("Mata data list is in ascending order of exception on pdf section");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying meta data list in drop down exception will be in ascending order on pdf section." + e.getMessage());
 		}
 	}
 

@@ -1085,6 +1085,119 @@ public class Export_Regression {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Gopinath created on:NA modified by:NA
+	 * @TESTCASE_No:RPMXCON-49131 : To verify that in Production-Export-Slip Sheet, Metadata Field should be sorted by alpha ascending.
+	 * @Description: Verify that in Production-Export-Slip Sheet, Metadata Field should be sorted by alpha ascending
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 7)
+	public void verifyProductionExportSlipSheetMetaDataSorted() throws Exception {
+		base=new BaseClass(driver);
+
+		base.stepInfo("#### To verify that in Production-Export-Slip Sheet, Metadata Field should be sorted by alpha ascending ####");
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49131 Export-sprint:08");
+		String exportname = Input.randomText + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+
+		base.stepInfo("Selecting Default Security Group");
+		page.selectingDefaultSecurityGroup();
+
+		base.stepInfo("select Export Set From DropDown");
+		page.selectExportSetFromDropDown();
+
+		base.stepInfo("Add New Export");
+		page.addANewExport(exportname);
+
+		base.stepInfo("Verify MetaData List Slip Sheet In Ascending Order tiff section");
+		page.verifyMetaDataListSlipSheetInAscendingOrderTiffSec();
+
+		base.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		base.stepInfo("Verify MetaData List Slip Sheet In Ascending Order PDF section");
+		page.verifyMetaDataListSlipSheetInAscendingOrderPDFSec();
+
+	}
+
+
+	/**
+	 * @author Gopinath created on:NA modified by:NA
+	 * @TESTCASE_No:RPMXCON-49127 : To verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascending.
+	 * @Description: Verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascending.
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 8)
+	public void verifyProductionExportNativeMetaDataDropdownSorted() throws Exception {
+		base=new BaseClass(driver);
+		base.stepInfo("#### Verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascending. ####");
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49127 Export-sprint:08");
+		String exportname = Input.randomText + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+
+		base.stepInfo("Selecting Default Security Group");
+		page.selectingDefaultSecurityGroup();
+
+		base.stepInfo("select Export Set From DropDown");
+		page.selectExportSetFromDropDown();
+
+		base.stepInfo("Add New Export");
+		page.addANewExport(exportname);
+
+		base.stepInfo("Verify meta data list in drop down native will be in ascending order on tiff section.");
+		page.verifyMetaDataDropdownNativeAscendingOrderTiffSec();
+
+		base.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		base.stepInfo("Verify meta data list in drop down native will be in ascending order on pdf section.");
+		page.verifyMetaDataDropdownNativeAscendingOrderPdfSec();
+
+	}
+
+	/**
+	 * @author Gopinath created on:NA modified by:NA
+	 * @TESTCASE_No:RPMXCON-49125 : Verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascending.
+	 * @Description: Verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascending.
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 9)
+	public void verifyProductionExportExceptionMetaDataDropdownSorted() throws Exception {
+		base=new BaseClass(driver);
+		base.stepInfo("#### Verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascending. ####");
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49125 Export-sprint:08");
+		String exportname = Input.randomText + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+
+		base.stepInfo("Selecting Default Security Group");
+		page.selectingDefaultSecurityGroup();
+
+		base.stepInfo("select Export Set From DropDown");
+		page.selectExportSetFromDropDown();
+
+		base.stepInfo("Add New Export");
+		page.addANewExport(exportname);
+
+		base.stepInfo("Verify meta data list in drop down native will be in ascending order on tiff section.");
+		page.verifyMetaDataDropdownExceptionAscendingOrderTiffSec();
+
+		base.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		base.stepInfo("Verify meta data list in drop down native will be in ascending order on pdf section.");
+		page.verifyMetaDataDropdownExceptionAscendingOrderPDFSec();
+
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
