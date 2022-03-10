@@ -1928,9 +1928,7 @@ public class BatchRedactionRegression3 {
 
 	@DataProvider(name = "multipleSearchTerm")
 	public Object[][] multipleSearchTerm() {
-		Object[][] searchTerm = { 
-				{ "denise" },
-				{"*@consilio.com"},
+		Object[][] searchTerm = { { "denise" }, { "*@consilio.com" },
 //				{ "\"##[1-9]{3}-[1-9]{3}-[1-9]{4}\"" },
 //				{ "*@enron.com" }, 
 //				{"\"denise legasse\"~2"},
@@ -1946,7 +1944,7 @@ public class BatchRedactionRegression3 {
 	 * @param searchTerm
 	 * @throws Exception
 	 */
-	@Test(enabled = true,dataProvider = "multipleSearchTerm", groups = { "regression" }, priority = 35)
+	@Test(enabled = true, dataProvider = "multipleSearchTerm", groups = { "regression" }, priority = 35)
 	public void verifyRedactionNavigationIconAndDeleteIcon(String searchTerm) throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -2618,6 +2616,55 @@ public class BatchRedactionRegression3 {
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 		login.logout();
 
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : Verify that pagination should be displayed for Batch Redaction
+	 *              History for more than 10 history records [RPMXCON-53369]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	public void verifyPaginationForBR() throws Exception {
+		String search = "Search" + Utility.dynamicNameAppender();
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Test case Id: RPMXCON-53369 batch redcation Sprint-8");
+		base.stepInfo(
+				"Verify that pagination should be displayed for Batch Redaction History for more than 10 history records");
+		// Verify PAgination BAR And COunt
+		batch.verifyPagination();
+		// Verify Previous AND Next for Each Page
+		batch.verifyPreviousAndNextBtn();
+		login.logout();
+	}
+
+	/**
+	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 53421
+	 * Verifying keyword is redacted Batch Redactions - sprint 3
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 42)
+	public void verifyKeywordHighlitingAfterBatchRedaction() throws Exception {
+		base = new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-53421");
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		String search = "Name1" + Utility.dynamicNameAppender();
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		int purehit = sessionsearch.basicContentSearch("crammer");
+		sessionsearch.saveSearch(search);
+		BatchRedactionPage batch = new BatchRedactionPage(driver);
+		// Verify Analyze Report and View Report
+		driver.waitForPageToBeReady();
+		batch.savedSearchBatchRedaction(search);
+		// verify Popup Yes Button
+		batch.getPopupYesBtn().Click();
+		base.stepInfo("Clicked Yes Button");
+		// verify History status
+		batch.verifyHistoryStatus2(search, purehit);
+		SavedSearch savedsearch = new SavedSearch(driver);
+		savedsearch.savedSearchToDocView(search);
+		docViewRedact.checkinHighlitedText();
+		login.logout();
 	}
 
 	@BeforeMethod(alwaysRun = true)

@@ -1198,6 +1198,51 @@ public class Export_Regression {
 
 	}
 	
+	/**
+	 * Author : Baskar date: NA Modified date:19/01/2021 Modified by: Baskar
+	 * Description : Verify that if PA selects the Export with Production and has
+	 * Native Files and Tags selected in the native components section, then
+	 * Component tab should Complete without any error.
+	 */
+	@Test(enabled = false, groups = { "regression" }, priority = 10)
+	public void verifyProductionCreationDateMarkComp() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id: RPMXCON-49360");
+		base.stepInfo("Verify that if PA selects the Export with Production and has Native Files and Tags "
+				+ "selected in the native components section, then Component tab should Complete without any error.");
+
+		String AAfolder = "AFolderProd" + Utility.dynamicNameAppender();
+		String AAAfolder = "AFolderProd" + Utility.dynamicNameAppender();
+		// String tagNameTechnical = Input.tagNameTechnical;
+		String newExport = "Ex" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateTag(AAfolder, "Default Security Group");
+		tagsAndFolderPage.CreateTag(AAAfolder, "Default Security Group");
+		// tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String text = page.getProdExport_ProductionSets().getText();
+		if (text.contains("Export Set")) {
+			page.selectExportSetFromDropDown();
+		} else {
+			page.createNewExport(newExport);
+		}
+		page.addANewExport(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectNativeTag(AAfolder, AAAfolder);
+		driver.scrollPageToTop();
+		page.getComponentsMarkComplete().waitAndClick(10);
+		base.VerifySuccessMessage("Mark Complete successful");
+		base.passedStep("Componenet tab completed without any error");
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

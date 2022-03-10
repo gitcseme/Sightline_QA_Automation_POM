@@ -1072,34 +1072,6 @@ public class DocView_Sprint2_Regression {
 	}
 
 	/**
-	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 53421
-	 * Verifying keyword is redacted Batch Redactions - sprint 3
-	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 24)
-	public void verifyKeywordHighlitingAfterBatchRedaction() throws Exception {
-		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-53421");
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		String search = "Name1" + Utility.dynamicNameAppender();
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		int purehit = sessionsearch.basicContentSearch("crammer");
-		sessionsearch.saveSearch(search);
-		BatchRedactionPage batch = new BatchRedactionPage(driver);
-		// Verify Analyze Report and View Report
-		driver.waitForPageToBeReady();
-		batch.savedSearchBatchRedaction(search);
-		// verify Popup Yes Button
-		batch.getPopupYesBtn().Click();
-		baseClass.stepInfo("Clicked Yes Button");
-		// verify History status
-		batch.verifyHistoryStatus2(search, purehit);
-		SavedSearch savedsearch = new SavedSearch(driver);
-		savedsearch.savedSearchToDocView(search);
-		docViewRedact.checkinHighlitedText();
-		loginPage.logout();
-	}
-
-	/**
 	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 52190
 	 * Verifying while navigating from mini doclist child window, persistent hit
 	 * panel stays open DocView-Sprint 4
