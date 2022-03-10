@@ -360,6 +360,9 @@ public class UserManagement {
 	public Element getLastNameTab() {
 		return driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr[1]/td[2]");
 	}
+	 public Element getPopUpMessageEditUser(){ return driver.FindElementByXPath("//p[text()='User profile was successfully modified']"); }
+ 	 public ElementCollection getSecurityGroupList(){ return driver.FindElementsByXPath("//select[@id='ddlSg']//option"); }
+
 	
 	public UserManagement(Driver driver) {
 
