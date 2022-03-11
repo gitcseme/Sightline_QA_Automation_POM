@@ -942,7 +942,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @Author : Mohan date: 24/10/2021 Modified date: NA Modified by: Mohan
 	 * @Description : TTo verify Sys Admin/Project Admin/RMU after impersonating-
 	 *              Threaded Map tab when no documents to display. 'RPMXCON-50903'
-	 * @Stabilization - done
+	 * @Stabilization - done1
 	 */
 
 	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 13)
