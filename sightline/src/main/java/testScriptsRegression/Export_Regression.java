@@ -1243,6 +1243,7 @@ public class Export_Regression {
 		loginPage.logout();
 	}
 	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
