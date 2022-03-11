@@ -1069,7 +1069,6 @@ public class DocExplorerPage {
 	 * 
 	 */
 	public void documentSelectionIteration() throws InterruptedException {
-		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		for (int D = 1; D < 4; D++) {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getselectDoc(D));

@@ -1034,7 +1034,7 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-59196",enabled = true, groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-59196",enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyDrawaLimit_BothToggleON() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -1141,7 +1141,7 @@ public class Assignment_Regression3 {
 	 * @throws InterruptedException
 	 */
 	
-	@Test(description = "RPMXCON-59202", enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description = "RPMXCON-59202", enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyAfterEditingAssignGroup_FamilyON_EmailThreadOFF() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
 		String assignment = "Assignment" + Utility.dynamicNameAppender();
@@ -1210,7 +1210,7 @@ public class Assignment_Regression3 {
 	/**
 	 * @author Jayanthi.Ganesan
 	 */
-	@Test(description = "RPMXCON-59206", enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description = "RPMXCON-59206", enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyAfterEditingAssignGroup_FamilyOFF_EmailThreadON() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
 		String assignment = "Assignment" + Utility.dynamicNameAppender();
@@ -1241,7 +1241,6 @@ public class Assignment_Regression3 {
 		// Create Assignment in Assignment Group
 		agnmt.selectAssignmentGroup(cascadeAsgnGrpName);
 		agnmt.createAssignmentFromAssgnGroup(assignment, Input.codeFormName);
-		
 		agnmt.editAssgnGrp(cascadeAsgnGrpName, "Yes");
 		driver.waitForPageToBeReady();
 
@@ -1284,6 +1283,132 @@ public class Assignment_Regression3 {
 		loginPage.logout();
 
 	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 */
+	@Test(description = "RPMXCON-59207", enabled = true, groups = { "regression" }, priority = 21)
+	public void verifyAfterEditingAssignGroup_FamilyOFF_EmailThreadOFF() throws InterruptedException {
+		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
+		String assignment = "Assignment" + Utility.dynamicNameAppender();
+		String cascadeSettings_yes = "Yes";
+
+		softAssertion = new SoftAssert();
+		loginPage = new LoginPage(driver);
+		agnmt = new AssignmentsPage(driver);
+		search = new SessionSearch(driver);
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-59207");
+		baseClass.stepInfo("Verify that after editing assignment group with Keep families together as OFF & keep email "
+				+ "threads as OFF, changes should reflect in its respective assignment");
+
+		// create Assignment group with Draw Toggle Enabled
+		agnmt.navigateToAssignmentsPage();
+		agnmt.createCascadeNonCascadeAssgnGroup_withoutSave(cascadeAsgnGrpName, cascadeSettings_yes);
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", false);
+		agnmt.getKeepEmailThreadTogether_Text().ScrollTo();
+		String emailThread = agnmt.getKeepEmailThreadTogether_Text().getText();
+		// Keep Thread together Toggle enabled
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepEmailThreadTogetherToggle(),
+				emailThread, false);
+		// Keep family Toggles enabled
+    	String familyMem = agnmt.getKeepFamilyTogetther_Text().getText();
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepFamiliesTogetherToggle(), familyMem,
+						true);
+		baseClass.stepInfo(
+				"Created a assignment group with keep family together toggle ON" + " and threads together toggle OFF");
+		// Create Assignment in Assignment Group
+		agnmt.selectAssignmentGroup(cascadeAsgnGrpName);
+		agnmt.createAssignmentFromAssgnGroup(assignment, Input.codeFormName);
+		agnmt.editAssgnGrp(cascadeAsgnGrpName, "Yes");
+		driver.waitForPageToBeReady();
+
+		// email Thread Toggles disabled
+		agnmt.getKeepEmailThreadTogether_Text().ScrollTo();
+
+		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepEmailThreadTogetherToggle(),
+				emailThread, false);
+		// Keep family Toggles disabled
+		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepFamiliesTogetherToggle(), familyMem,
+				true);
+		baseClass.stepInfo(
+				"Edited  assignment group with keep family together toggle OFF and threads together toggle ON");
+		// verify Draw Toggle is Enabled in Assignment
+		agnmt.selectAssignmentToView(assignment);
+		baseClass.waitForElement(agnmt.getAssignmentActionDropdown());
+		agnmt.getAssignmentAction_EditAssignment().waitAndClick(3);
+		SoftAssert assertion = new SoftAssert();
+		baseClass.stepInfo("**Check for the Draw from pool settings for the assignment "
+				+ "after making changes in assignment group**");
+		boolean status_draw = agnmt.verifyToggleEnableORDisabled(agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw Pool toggle");
+		assertion.assertTrue(status_draw, "Draw Pool Toggle is Not Enabled");
+		boolean status = agnmt.verifyToggleEnableORDisabled(agnmt.getAssgn_keepFamiliesTogetherToggle(),
+				"Keep family together");
+		assertion.assertFalse(status, "keep family together Toggle is Not  Disabled");
+		boolean status1 = agnmt.verifyToggleEnableORDisabled(agnmt.getAssgn_keepEmailThreadTogetherToggle(),
+				"Keep threads together");
+		assertion.assertFalse(status1, "KeepEmailThreads Together Toggle is not Disabled");
+		// Delete Assign group and assign
+		agnmt.navigateToAssignmentsPage();
+		agnmt.deleteAssignmentFromSingleAssgnGrp(cascadeAsgnGrpName, assignment);
+		agnmt.DeleteAssgnGroup(cascadeAsgnGrpName);
+		assertion.assertAll();
+		baseClass.passedStep(
+				"Sucessfuly Verified that after editing assignment group with Keep families together as OFF & keep email threads as OFF,"
+						+ " changes  reflected in its respective assignment");
+
+		loginPage.logout();
+
+	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 */
+	@Test(description = "RPMXCON-59176", enabled = true, groups = { "regression" }, priority = 22)
+	public void UI_Validation_Toggles() throws InterruptedException {
+		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
+		String assignment = "Assignment" + Utility.dynamicNameAppender();
+		String cascadeSettings_yes = "Yes";
+
+		softAssertion = new SoftAssert();
+		loginPage = new LoginPage(driver);
+		agnmt = new AssignmentsPage(driver);
+		search = new SessionSearch(driver);
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-59176");
+		
+		baseClass.stepInfo("UI: Verify that option to keep families together and option to keep "
+				+ "threads together should be displayed while creating/editing assignment group and assignment");
+
+		// verify Draw Toggle Enabled
+		agnmt.navigateToAssignmentsPage();
+		agnmt.createCascadeNonCascadeAssgnGroup_withoutSave(cascadeAsgnGrpName, cascadeSettings_yes);
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", false);
+		baseClass.stepInfo("Check for the toggle under the 'Draw from pool'"
+				+ " section of the new assignment group page");
+		agnmt.checkForToggleEnable(agnmt.getAssgnGrp_Create_DrawPooltoggle());
+		agnmt.checkForToggleEnable(agnmt.getAssgn_keepFamiliesTogetherToggle());
+		agnmt.checkForToggleEnable(agnmt.getAssgn_keepEmailThreadTogetherToggle());
+		agnmt.createAssignment_withoutSave(assignment, Input.codeFormName);
+		baseClass.stepInfo("Check for the toggle under the 'Draw from pool'"
+				+ " section of the new assignment page");
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", false);
+		agnmt.checkForToggleEnable(agnmt.getAssgnGrp_Create_DrawPooltoggle());
+		agnmt.checkForToggleEnable(agnmt.getAssgn_keepFamiliesTogetherToggle());
+		agnmt.checkForToggleEnable(agnmt.getAssgn_keepEmailThreadTogetherToggle());
+		
+		baseClass.passedStep("Sucessfully Verified that option to keep families together and option to keep "
+				+ "threads together should be displayed while creating assignment group and assignment");
+
+		loginPage.logout();
+
+	}
+	
+
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

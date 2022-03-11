@@ -766,6 +766,7 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 		loginPage.logout();
+		
 	}
 
 	/*

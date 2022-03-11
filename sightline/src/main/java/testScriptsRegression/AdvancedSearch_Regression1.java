@@ -23,6 +23,7 @@ import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -36,6 +37,7 @@ public class AdvancedSearch_Regression1 {
 	AssignmentsPage assgnPage;
 	SavedSearch savedSearch;
 	TagsAndFoldersPage tagPage;
+	TallyPage tallyPage;
 	int pureHit;
 	BaseClass baseClass;
 	String assignmentName = "Assignment" + Utility.dynamicNameAppender();
@@ -902,6 +904,42 @@ public class AdvancedSearch_Regression1 {
 			baseClass.passedStep(
 					"User can be able to search by Applying By Pass sanitization filter on Saved search in work product tab");
 		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Baskar Created on : 11/3/21 modified on : N/A by : N/ADescription :
+	 *         Verify that correct number of documents appears when user Selects
+	 *         "Tally" action from Advanced Search Screen(RPMXCON-47957) Sprint 05
+	 * @throws InterruptedException
+	 * @Stabilization - done
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	public void TallyResult() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47957 - Saved Search Sprint 05");
+		baseClass.stepInfo(
+				"Verify that correct number of documents appears when user Selects Tally action from Advanced Search Screen");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		int pureHits = search.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+		baseClass.stepInfo("Purehit count : " + pureHits);
+		search.tallyResults();
+		tallyPage.selectTallyByMetaDataField(Input.metaDataName);
+		driver.scrollingToBottomofAPage();
+		baseClass.waitForElement(tallyPage.getTallyCount());
+		int tallyCount = Integer.parseInt(tallyPage.getTallyCount().getText());
+		baseClass.stepInfo("Tally count : " + tallyCount);
+
+		if (tallyCount == pureHits) {
+			softAssertion.assertEquals(tallyCount, pureHits);
+			baseClass.passedStep("Verified the correct Tally document Number:" + tallyCount);
+		} else {
+			baseClass.failedStep("Verified the correct Tally document Number:" + tallyCount);
+		}
+
 		loginPage.logout();
 	}
 

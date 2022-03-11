@@ -33,6 +33,9 @@ public class ProjectFieldsPage {
 	public Element getFieldName() {return driver.FindElementByXPath("//label[contains(text(),'Field Name')]/following-sibling::div//label//input");}
 	public Element getFieldGroupName() {	return driver.FindElementByXPath("//label[contains(text(),'Field Group Name')]/following-sibling::div//select");}
 	
+	public Element getIsSearchable() {
+		return driver.FindElementByXPath("//label[text()='Is Searchable :']/../..//label[@class='checkbox']/input[@value='true']");
+	}
 	//Added by Mohan
 	public ElementCollection getProjectGridFieldNameValue(String textValue) {
 		return driver.FindElementsByXPath(
@@ -194,50 +197,6 @@ public class ProjectFieldsPage {
 			
 		}
 	}
-	/**
-	*@author Aathith
-	*@description : Method to verify Is Searchable Bates Range Is Selected.
-	*/
-	public void enableIsSearchableBatesRangeIsSelected() {
-		try {			
-			base.waitForElement(getIsSearchableCheckBox());
-			if(getIsSearchableCheckBox().Selected()) {
-				base.stepInfo("IsSeachable checkbox for all productionBatesRanges is selected");
-			}else {
-				getIsSearchableCheckBox().waitAndClick(5);
-				getConfirmOkButton().waitAndClick(5);
-				getSaveButton().waitAndClick(5);
-				base.stepInfo("IsSeachable checkbox for all productionBatesRanges is selected");
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occcured while verify is searchable bates range is selected."+e.getMessage());
-			
-		}
-	}
-	/**
-	*@author Aathith
-	*@description : Method to verify Is Searchable Bates Range Is Selected.
-	*/
-	public void disableIsSearchableBatesRangeIsSelected() {
-		try {
-			base.waitForElement(getIsSearchableCheckBox());
-			if(getIsSearchableCheckBox().Selected()) {
-				getIsSearchableCheckBox().waitAndClick(5);
-				getConfirmOkButton().waitAndClick(5);
-				getSaveButton().waitAndClick(5);
-				base.stepInfo("IsSeachable checkbox for all productionBatesRanges is unChecked");
-				
-			}else {
-				base.stepInfo("IsSeachable checkbox for all productionBatesRanges is unChecked");
-				}
-			}
-		catch(Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occcured while verify is searchable bates range is selected."+e.getMessage());
-			
-		}
-	}
 	
 	
 	/**
@@ -282,5 +241,39 @@ public class ProjectFieldsPage {
 		}
 
 	}
+	
+	public void enableIsSearchableBatesRangeIsSelected() throws Exception {
+		String value = getIsSearchable().GetAttribute("checked");
+		System.out.println("value :" + value);
+		//String expected = "true";
+		driver.waitForPageToBeReady();
+		if (value != null) {
+			base.passedStep("isSearchable check box is checked");
+			System.out.println("element is Checked");
+		}
+		else if(value == null) {
+			getIsSearchableCheckBox().waitAndClick(5);
+			getConfirmOkButton().waitAndClick(5);
+			getSaveButton().waitAndClick(5);
+			base.passedStep("isSearchable check box not Checked");
+			System.out.println("isSearchable check box not Checked");
+		}
+	}
+	public void disableIsSearchableBatesRangeIsSelected() {
+		String value = getIsSearchable().GetAttribute("checked");
+		System.out.println("value :" + value);
+		driver.waitForPageToBeReady();
+		if (value!=null) {
+			getIsSearchableCheckBox().waitAndClick(5);
+			getConfirmOkButton().waitAndClick(5);
+			getSaveButton().waitAndClick(5);
+			base.passedStep("isSearchable check box is checked");
+			System.out.println("element is Checked");
+		} else if(value == null){
+			base.passedStep("isSearchable check box not Checked");
+			System.out.println("isSearchable check box not Checked");
+		}
+	}
+
 	
 }
