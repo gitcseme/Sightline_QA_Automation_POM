@@ -2734,6 +2734,16 @@ public class ProductionPage {
 		public Element getExceptionMetaDataFieldLink() {
 			return driver.FindElementByXPath("//input[@id='chkEnabledforExceptionDocs']//..//..//..//../*[@title='Insert Metadata Field']");
 		}
+		public Element getPrivPlaceHolder() {
+			return driver.FindElementByXPath("//div[@placeholder='Enter placeholder text for the privileged docs']");
+		}
+		
+		public Element getNativePlaceHolder() {
+			return driver.FindElementByXPath("//div[@placeholder='Enter placeholder text for the docs of the selected file types']");
+		}
+		public Element getRemoveBtnInSlipSheet() {
+			return driver.FindElementByXPath("//a[@class='link remove-modal remove-item pull-right text-danger']");
+		}
 
 	public ProductionPage(Driver driver) {
 

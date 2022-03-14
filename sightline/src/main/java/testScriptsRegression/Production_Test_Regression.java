@@ -173,7 +173,7 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
-        suffixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -236,7 +236,7 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
-        suffixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -331,7 +331,7 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
-        suffixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 		// Pre-requisites
 
 		ProductionPage page = new ProductionPage(driver);
@@ -379,7 +379,7 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
-        suffixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -435,8 +435,8 @@ public class Production_Test_Regression {
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-		  prefixID = Input.randomText + Utility.dynamicNameAppender();
-          suffixID = Input.randomText + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -495,8 +495,8 @@ public class Production_Test_Regression {
 		String tagNameTechnical = Input.tagNameTechnical;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-		  prefixID = Input.randomText + Utility.dynamicNameAppender();
-          suffixID = Input.randomText + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -545,7 +545,7 @@ public class Production_Test_Regression {
 	 *               selecting only DAT and 'Generate PDF' option with Priv
 	 *               Placholder.
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void getProductionPageWithDatPdf() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56086 -Production Sprint 06");
@@ -559,7 +559,7 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
@@ -595,6 +595,7 @@ public class Production_Test_Regression {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar RPMXCON-56151
 	 * @Description:To Verify that Regenerate button Popup should close on clicking
@@ -607,12 +608,12 @@ public class Production_Test_Regression {
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-		
+
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -647,12 +648,13 @@ public class Production_Test_Regression {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar RPMXCON-56109
 	 * @Description:To Verify the error message for MP3 component when 'Disable
 	 *                 generate load File.
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void getMp3DisableGenarateLoadFile() throws InterruptedException {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56109 -Production Sprint 07");
@@ -677,12 +679,13 @@ public class Production_Test_Regression {
 		base.passedStep("Verified the error message for MP3 component when 'Disable generate load File ");
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar RPMXCON-56101
 	 * @Description:To Verify the error message for TIFF/PDF component when 'Enabled
 	 *                 privileg doc without tag or text'.
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 11)
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyErrormsgTiffPdf() throws InterruptedException {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56101 -Production Sprint 07");
@@ -725,6 +728,7 @@ public class Production_Test_Regression {
 				"Verified the error message for TIFF/PDF component when 'Enabled privileg doc without tag or text'");
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-56041
@@ -799,6 +803,7 @@ public class Production_Test_Regression {
 		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-56034
@@ -813,7 +818,7 @@ public class Production_Test_Regression {
 
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-		//tagname = "Tag" + Utility.dynamicNameAppender();
+		// tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
 		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
@@ -858,6 +863,7 @@ public class Production_Test_Regression {
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-56035
@@ -871,7 +877,7 @@ public class Production_Test_Regression {
 
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-		//tagname = "Tag" + Utility.dynamicNameAppender();
+		// tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
 		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
@@ -962,7 +968,7 @@ public class Production_Test_Regression {
 
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-		//tagname = "Tag" + Utility.dynamicNameAppender();
+		// tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
 		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
@@ -971,7 +977,7 @@ public class Production_Test_Regression {
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-		//tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		// tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1042,7 +1048,7 @@ public class Production_Test_Regression {
 		// delete tag ang folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
-		//tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+		// tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
@@ -1173,8 +1179,9 @@ public class Production_Test_Regression {
 	public void verifyExportinFilesStatusOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56048 -Production Sprint 08");
-		base.stepInfo("Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Grid View.");
-		
+		base.stepInfo(
+				"Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Grid View.");
+
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1305,6 +1312,7 @@ public class Production_Test_Regression {
 				"Verified if in existing project, 'AllProductionBatesRange' field is searchable and if  this field has been edited and is make it non-searchable, then this field cannot make as searchable again");
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar 49099
 	 * @Description In production, Preview should displays correctly
@@ -6533,6 +6541,91 @@ public class Production_Test_Regression {
 			System.out.println("failed");
 
 		}
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Vijaya.Rani Modify Date: 14/03/2022 Test case id-RPMXCON-47886
+	 * @Description To Verify TIFF Section with various options
+	 *
+	 */
+	@Test(groups = { "regression" }, priority = 93)
+	public void verifyTiffSectionVariosOption() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-47886 -Production Component");
+		base.stepInfo("To Verify TIFF Section with various options");
+		String productionname = "p" + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+
+		driver.waitForPageToBeReady();
+		page.getTIFFChkBox().waitAndClick(10);
+		base.waitForElement(page.getTIFFTab());
+		page.getTIFFTab().Click();
+		driver.waitForPageToBeReady();
+
+		page.visibleCheck("Page Options:");
+		page.visibleCheck("Branding:");
+		page.getElementDisplayCheck(page.getPrivPlaceHolder());
+		base.stepInfo("Privledge placholder is displayed");
+		page.getTiff_NativeDoc().waitAndClick(10);
+		page.getElementDisplayCheck(page.getNativePlaceHolder());
+		base.stepInfo("Native placeholder is displayed");
+		page.visibleCheck("Redactions:");
+
+		page.getTiffAdvanceBtn().ScrollTo();
+		page.getTiffAdvanceBtn().waitAndClick(10);
+		page.visibleCheck("Slip Sheets:");
+		page.getSlipSheets().waitAndClick(10);
+
+		page.visibleCheck("METADATA");
+		page.visibleCheck("WORKPRODUCT");
+		page.visibleCheck("CALCULATED");
+
+		page.getSlipSheetWorkProduct().waitAndClick(10);
+		page.getSlipSheetWorkProductFolderProduction().ScrollTo();
+		page.getSlipSheetWorkProductFolderProduction().waitAndClick(10);
+		base.waitForElement(page.getbtnAddToSelect());
+		page.getbtnAddToSelect().waitAndClick(10);
+		page.getElementDisplayCheck(page.getSelectedFieldItems());
+		base.stepInfo("Document is added");
+		page.getRemoveBtnInSlipSheet().waitAndClick(10);
+		if (page.getSelectedFieldItems().isElementAvailable(1)) {
+			base.failedStep("document not removed");
+		} else {
+			base.passedStep("Document got removed");
+		}
+		base.stepInfo("Field Add-Remove Functionality worked well");
+
+		// adv btn open close verification
+		SoftAssert softAssertion = new SoftAssert();
+		boolean flag5 = page.getAdvanceBtnOpenCloseCheck().GetAttribute("class").contains("down");
+		if (flag5) {
+			softAssertion.assertTrue(flag5);
+			base.passedStep("Advanced button is open");
+		} else {
+			base.failedStep("verification failed");
+		}
+		page.getTiffAdvanceBtn().ScrollTo();
+		page.getTiffAdvanceBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		boolean flag6 = page.getAdvanceBtnOpenCloseCheck().GetAttribute("class").contains("right");
+		if (flag6) {
+			softAssertion.assertTrue(flag6);
+			softAssertion.assertAll();
+			base.passedStep("Advanced button is close");
+		} else {
+			base.failedStep("verification failed");
+		}
+		base.stepInfo("Advance Show/Hide Button should work as expected (show/Hide).");
+
+		base.passedStep("Verified TIFF Section with various options");
 
 		loginPage.logout();
 
