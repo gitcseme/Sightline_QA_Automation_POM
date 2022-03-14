@@ -10802,7 +10802,7 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getDocviewCommentSection());
 			base.waitTillElemetToBeClickable(getDocviewCommentSection());
-			getDocviewCommentSection().Click();
+			getDocviewCommentSection().waitAndClick(10);
 			getDocviewCommentSection().SendKeys(Text);
 			base.waitForElement(getSelectSaveLink());
 			driver.waitForPageToBeReady();

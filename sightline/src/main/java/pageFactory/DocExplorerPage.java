@@ -754,17 +754,23 @@ public class DocExplorerPage {
   		   getBulkTagButton().Click();
   		   driver.scrollingToBottomofAPage();
   		   bc.waitForElement(getDocBoard());
-  		   getDocBoard().Click();
-  		   getTag(tagName).Click();
+  		  // getDocBoard().Click();//another tag is getting selected
+  		   Actions ac= new Actions(driver.getWebDriver());
+  		   ac.moveToElement(getDocBoard().getWebElement()).perform();
+  		  bc.waitForElement(getTag(tagName));
+  		   getTag(tagName).waitAndClick(10);
   		   for(int i=0;i<20;i++) {
 			   try {
+				   driver.Manage().window().fullscreen();
 				   Thread.sleep(1500);
-				   getContinueButton().Click();
+				   bc.waitTillElemetToBeClickable(getContinueButton());
+				   getContinueButton().waitAndClick(15);
 				   break;
 			   }catch(Exception e) {
 				   bc.waitTillElemetToBeClickable(getContinueButton());
 			   }
 		   }
+  		   driver.Manage().window().maximize();
   		   bc.waitForElement(getFinalizeButton());
 		   bc.waitTillElemetToBeClickable(getFinalizeButton());
   		   getFinalizeButton().Click();
@@ -988,13 +994,15 @@ public class DocExplorerPage {
      		   getTag(tagName).Click();
      		   for(int i=0;i<5;i++) {
 	   			   try {
+	   				   driver.Manage().window().fullscreen();
 	   				   Thread.sleep(Input.wait30/10);
-	   				   getContinueButton().Click();
+	   				   getContinueButton().waitAndClick(15);
 	   				   break;
 	   			   }catch(Exception e) {
 	   				   bc.waitTillElemetToBeClickable(getContinueButton());
 	   			   }
      		   }
+     		   driver.Manage().window().maximize();
      		   bc.waitForElement(getFinalizeButton());
 	   		   bc.waitTillElemetToBeClickable(getFinalizeButton());
      		   getFinalizeButton().Click();
@@ -1459,6 +1467,7 @@ public class DocExplorerPage {
                 		 for (int D=0;D<noofDocuments;D++) {
                     		 driver.waitForPageToBeReady();
                     		 bc.waitForElement(getDocumentsCheckBoxbyRowNum(D+1));
+                    		 bc.waitTillElemetToBeClickable(getDocumentsCheckBoxbyRowNum(D+1));
                     		 getDocumentsCheckBoxbyRowNum(D+1).waitAndClick(10);
                 		 }
             	 	} catch (Exception e) {
@@ -1849,7 +1858,7 @@ public class DocExplorerPage {
 				if(foldername.length()>18) {
 					Actions ac= new Actions(driver.getWebDriver());
 					ac.moveToElement(folders.get(i)).perform();
-					ac.moveByOffset(50,50).perform();
+					ac.moveToElement(getDocExp_EmailReciepientDomainFilter().getWebElement()).perform();
 					ac.moveToElement(folders.get(i)).perform();
 					bc.passedStep("after mouse hover to the folder full name "+foldername+" is displayed in tool tip");
 					if(getFolderToolTip().isDisplayed()) {

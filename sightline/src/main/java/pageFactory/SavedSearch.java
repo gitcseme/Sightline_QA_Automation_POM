@@ -1110,6 +1110,7 @@ public class SavedSearch {
 			}
 		}), Input.wait30);
 		getSelectWithName(searchName).waitAndClick(10);
+		driver.scrollPageToTop();
 		getToDocList().waitAndClick(10);
 		try {
 			if (base.getYesBtn().isElementAvailable(5)) {

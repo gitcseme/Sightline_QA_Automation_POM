@@ -313,15 +313,19 @@ public class TagsAndFoldersPage {
 	}
 
 	// Added by Gopinath -- 29-09-2021
-	public Element getTag(int rowNum) {
+	/**public Element getTag(int rowNum) {
 		return driver.FindElementByXPath(
-				"//a[contains(@data-content,'Default Tags')]/..//i[@class='jstree-icon jstree-themeicon fa fa-tags jstree-themeicon-custom']//..//..//li["
+				"//a[contains(@data-content,'All Tags')]/..//i[@class='jstree-icon jstree-themeicon fa fa-tags jstree-themeicon-custom']//..//..//li["
 						+ rowNum + "]//a");
+	}**/
+	
+	public Element getTag(int rowNum) {
+		return driver.FindElementByXPath("//a[contains(@data-content,'All Tags')]/../descendant::li["+rowNum+"]//a");
 	}
 
 	public ElementCollection getTagsRows() {
 		return driver.FindElementsByXPath(
-				"//a[contains(@data-content,'Default Tags')]/..//i[@class='jstree-icon jstree-themeicon fa fa-tags jstree-themeicon-custom']//..//..//li//a");
+				"//a[contains(@data-content,'All Tags')]/..//i[@class='jstree-icon jstree-themeicon fa fa-tags jstree-themeicon-custom']//..//..//li//a");
 	}
 
 	public Element getShowDocumentsCountToogle() {
@@ -1712,7 +1716,8 @@ public class TagsAndFoldersPage {
 	public void verifyTagNameIsAddedToStructure(String tagName) {
 		try {
 			try {
-				if (getTagNameDataCon(tagName).getWebElement().isDisplayed()) {
+				getTagName(tagName).isElementAvailable(10);
+				if (getTagName(tagName).getWebElement().isDisplayed()) {	
 					base.passedStep("Tag : " + tagName + " is displayed in tags structure successfully");
 				}
 			} catch (NoSuchElementException e) {

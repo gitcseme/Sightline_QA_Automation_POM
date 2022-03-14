@@ -1791,6 +1791,7 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getSaveSearch_Name().SendKeys(searchName);
+		driver.Manage().window().fullscreen();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1798,6 +1799,7 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getSaveSearch_SaveButton().Click();
+		driver.Manage().window().maximize();
 		driver.waitForPageToBeReady();
 
 		base.VerifySuccessMessage("Saved search saved successfully");
