@@ -14,6 +14,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.fasterxml.jackson.databind.deser.Deserializers.Base;
+
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
@@ -82,7 +84,7 @@ public class DocExplorer_Regression1 {
 		baseClass.stepInfo(
 				"#### Verify that filter functionality works properly when TAG name contains word between on SubTally screen ####");
 		utility = new Utility(driver);
-		String random = Input.betweenTagName + utility.dynamicNameAppender();
+		String random = Input.betweenTagName +  Utility.dynamicNameAppender();
 		final String random1 = random;
 		tagAndFol = new TagsAndFoldersPage(driver);
 
@@ -90,6 +92,7 @@ public class DocExplorer_Regression1 {
 		tagAndFol.CreateTag(random1, Input.securityGroup);
 
 		baseClass.stepInfo("Verify created tag is added to tag structure");
+		driver.Navigate().refresh();
 		tagAndFol.verifyTagNameIsAddedToStructure(random1);
 
 		docexp = new DocExplorerPage(driver);
@@ -99,11 +102,17 @@ public class DocExplorer_Regression1 {
 
 		securityGroup = new SecurityGroupsPage(driver);
 
+		baseClass.stepInfo("Navigate to security group");
+		securityGroup.navigateToSecurityGropusPageURL();
+		
 		baseClass.stepInfo("Add tag to security group");
 		securityGroup.addTagToSecurityGroup(Input.securityGroup, random1);
 
 		tally = new TallyPage(driver);
 
+		baseClass.stepInfo("Navigate to tally page");
+		tally.navigateTo_Tallypage();
+		
 		baseClass.stepInfo("Select project as souce for tally");
 		tally.selectSourceByProject();
 
@@ -137,7 +146,7 @@ public class DocExplorer_Regression1 {
 		baseClass.stepInfo(
 				"####  Verify that filter functionality works properly when TAG name contains word between on Tally screen. ####");
 		utility = new Utility(driver);
-		String random = Input.betweenTagName + utility.dynamicNameAppender();
+		String random = Input.betweenTagName +  Utility.dynamicNameAppender();
 		final String random1 = random;
 		tagAndFol = new TagsAndFoldersPage(driver);
 
@@ -154,11 +163,17 @@ public class DocExplorer_Regression1 {
 
 		securityGroup = new SecurityGroupsPage(driver);
 
+		baseClass.stepInfo("Navigate to security group");
+		securityGroup.navigateToSecurityGropusPageURL();
+		
 		baseClass.stepInfo("Add tag to security group");
 		securityGroup.addTagToSecurityGroup(Input.securityGroup, random1);
 
 		tally = new TallyPage(driver);
 
+		baseClass.stepInfo("Navigate to tally page");
+		tally.navigateTo_Tallypage();
+		
 		baseClass.stepInfo("Select project as souce for tally");
 		tally.selectSourceByProject();
 
@@ -356,6 +371,8 @@ public class DocExplorer_Regression1 {
 			
 			baseClass.stepInfo("Selecting the document in docExplorer page");
 			docExplorer.selectDocument(1);
+			docExplorer.getDocumentsCheckBoxbyRowNum(1).waitAndClick(10);
+			
 			
 			baseClass.stepInfo("View document in doc view on doc explorer");
 			docExplorer.navigateToDocViewFromDocExplorer();
@@ -394,7 +411,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:54695 Verify that “EmailRecipientDomains” Filter with "Exclude" functionality is working correctly on Doc Explorer list.
 			 * @Description:To Verify that “EmailRecipientDomains” Filter with "Exclude" functionality is working correctly on Doc Explorer list.
 			 */
-			@Test
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
 			public void verifyEmailDomainExclude() {
 				String functionality="exclude";
 				String domain1="aol.com";
@@ -429,7 +446,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:RPMXCON-54593 Verify that correct count should be displayed for each node from the tree structure
 			 * @Description:To Verify that correct count should be displayed for each node from the tree structure
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
 			public void verifyDocExplorerDocCount() {
 				String folderNumber="13";//having more docs for better verification
 				baseClass = new BaseClass(driver);
@@ -561,7 +578,7 @@ public class DocExplorer_Regression1 {
 			 *               and select action as View in DocList from Actions drop down
 			 * @throws AWTException
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
 			public void verifyViewInDocListForSelectedDocs() throws AWTException {
 				int numberOfFolders=14;
 				baseClass = new BaseClass(driver);
@@ -595,7 +612,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:54589 Verify the default menu for the PA and RMU after login
 			 * @Description:To Verify the default menu for the PA and RMU after login
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
 			public void verfifyDefaultMenuForPAandRMU() {
 				baseClass = new BaseClass(driver);
 				baseClass.stepInfo("Test case Id: RPMXCON-54589 sprint 12");
@@ -625,7 +642,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase id:54594 Verify the display of folder name when name is too long
 			 * @Description:To Verify the display of folder name when name is too long
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
 			public void verifyLongfolderName() {
 				baseClass = new BaseClass(driver);
 				baseClass.stepInfo("Test case Id: RPMXCON-54594 Sprint 12");
@@ -645,7 +662,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:54598 Verify when folder count is with the groups of thousands
 			 * @Description:To Verify when folder count is with the groups of thousands.
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+			@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
 			public void verifyDocExplorerFolderCountFormat() {
 				String folderNumber="1";
 				baseClass=new BaseClass(driver);
@@ -666,7 +683,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:54592 Verify the default structure of the Tree View and the document list from right panel
 			 * @Description:To Verify the default structure of the Tree View and the document list from right panel
 			 */
-			@Test (alwaysRun = true, groups = { "regression" }, priority = 1)
+			@Test (alwaysRun = true, groups = { "regression" }, priority = 2)
 			public void verifyDefaultStructureOfTreeView() {
 				String folderName="Enron Data (23)";
 				int folderLevel=5;
@@ -686,7 +703,7 @@ public class DocExplorer_Regression1 {
 				
 			}
 			
-	@AfterMethod(alwaysRun = true)
+	/**@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
 
@@ -709,6 +726,30 @@ public class DocExplorer_Regression1 {
 			loginPage.closeBrowser();
 			LoginPage.clearBrowserCache();
 		}
-	}
+	}**/
+			
+			@AfterClass(alwaysRun = true)
+			public void close() {
+				try {
+					loginPage.quitBrowser();
+				} catch (Exception e) {
+					System.out.println("Sessions already closed");
+				}
+			}
+
+		  	@AfterMethod(alwaysRun = true)
+			public void takeScreenShot(ITestResult result) {
+				if (ITestResult.FAILURE == result.getStatus()) {
+					Utility bc = new Utility(driver);
+					bc.screenShot(result);
+					System.out.println("Executed :" + result.getMethod().getMethodName());
+					loginPage.logoutWithoutAssert();
+				}
+				try {
+					loginPage.quitBrowser();
+				} catch (Exception e) {
+					loginPage.quitBrowser();
+				}
+			}
 
 }

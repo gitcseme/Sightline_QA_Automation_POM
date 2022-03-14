@@ -1160,7 +1160,7 @@ public class DocViewMetaDataPage {
 			// WebElement text = getRedactRectBoard().getWebElement();
 			WebElement text = driver.getWebDriver().findElement(By.xpath("//div[@class='igViewerGraphics']"));
 
-			actions.moveToElement(text, off1, off2).clickAndHold().moveByOffset(200, 220).release().perform();
+			actions.moveToElement(text, off1, off2).clickAndHold().moveByOffset(50, 60).release().perform();
 			getSelectReductionTagDropDown().isElementAvailable(15);
 			base.waitForElement(getSelectReductionTagDropDown());
 			getSelectReductionTagDropDown().selectFromDropdown().selectByVisibleText(redactiontag);
