@@ -2627,13 +2627,16 @@ public class BatchRedactionRegression3 {
 	@Test(enabled = true, groups = { "regression" }, priority = 41)
 	public void verifyPaginationForBR() throws Exception {
 		String search = "Search" + Utility.dynamicNameAppender();
+
 		// Login as RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Test case Id: RPMXCON-53369 batch redcation Sprint-8");
 		base.stepInfo(
 				"Verify that pagination should be displayed for Batch Redaction History for more than 10 history records");
+
 		// Verify PAgination BAR And COunt
 		batch.verifyPagination();
+
 		// Verify Previous AND Next for Each Page
 		batch.verifyPreviousAndNextBtn();
 		login.logout();
@@ -2650,6 +2653,11 @@ public class BatchRedactionRegression3 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		String search = "Name1" + Utility.dynamicNameAppender();
 		SessionSearch sessionsearch = new SessionSearch(driver);
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+
 		int purehit = sessionsearch.basicContentSearch("crammer");
 		sessionsearch.saveSearch(search);
 		BatchRedactionPage batch = new BatchRedactionPage(driver);
@@ -2665,6 +2673,92 @@ public class BatchRedactionRegression3 {
 		savedsearch.savedSearchToDocView(search);
 		docViewRedact.checkinHighlitedText();
 		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description :Verify that Relevant queue message appears on "Batch Redaction
+	 *              History" table screen when user tries to perform Redaction and
+	 *              Rollback having same document at the same time on 2 different
+	 *              TABS  [RPMXCON-53525]
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 43)
+	public void verifyRollBackQuequedFromDupeTAb() throws InterruptedException, ParseException, AWTException {
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String SearchName = "SearchName" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case id :RPMXCON-53525 Batch Redaction");
+		base.stepInfo(
+				"Verify that Relevant queue message appears on \"Batch Redaction History\" table screen when user tries to perform Redaction and Rollback having same document at the same time on 2 different TABS");
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged in as : " + Input.rmu1FullName);
+
+		// Search and Save a Search
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.saveSearch(SearchName);
+
+		// perform Batch redaction and verify Status
+		batch.VerifyBatchRedaction_ElementsDisplay(SearchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
+		batch.verifyBatchHistoryStatus(SearchName);
+
+		// Opening duplicate TAb
+		base.stepInfo("Initiating Duplicate Current tab");
+		String firstUserWindow = driver.CurrentWindowHandle();
+		base.openDuplicateTab();
+
+		// second tab
+		driver.switchToChildWindow();
+		base.stepInfo("Switched To Second Window");
+		batch.loadBatchRedactionPage(SearchName);
+		String secondWindow = driver.CurrentWindowHandle();
+
+		// Switch to First Tab
+		base.stepInfo("Switch to firstTAb");
+		driver.switchToWindow(firstUserWindow);
+		driver.waitForPageToBeReady();
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(SearchName, true);
+
+		// Switch back to Second tab
+		driver.switchToWindow(secondWindow);
+
+		// perform RollBack
+		base.stepInfo("Perform RollBack from Tab 2");
+		batch.rollBack(SearchName);
+
+		// Switch to First Tab
+		base.stepInfo("Switch to firstTAb");
+		driver.switchToWindow(firstUserWindow);
+		driver.waitForPageToBeReady();
+		
+		//click yes on view Analysiz Pop up 
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
+
+		// Switch back to Second tab
+		base.stepInfo("Switch to Second TAb");
+		driver.switchToWindow(secondWindow);
+		driver.waitForPageToBeReady();
+		base.stepInfo("Rollback confirmation from Tab 2");
+		batch.rollBackActionConfirmation(Input.yesButton);
+
+		//verify Rollback Batch Redaction queued from TAb 2
+		boolean rollbackQue=batch.getRollbackQueText(SearchName).isElementAvailable(3);
+		String rollbackQueMsg=batch.getRollbackQueText(SearchName).getText();
+		String failMsg="Rollback Batch Redaction queued is not displayed For Search : "+SearchName;
+        base.printResutInReport(rollbackQue,rollbackQueMsg,failMsg,"Pass");
+        
+		// Delete search
+		base.stepInfo("Initiating delete Searh");
+		saveSearch.deleteSearch(SearchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
 	}
 
 	@BeforeMethod(alwaysRun = true)
