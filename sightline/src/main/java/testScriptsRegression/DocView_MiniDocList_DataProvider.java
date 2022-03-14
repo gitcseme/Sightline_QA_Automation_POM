@@ -2046,6 +2046,69 @@ public class DocView_MiniDocList_DataProvider {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @Author : Baskar date: 10/03/2022 Modified date: NA Modified by: Baskar
+	 * @Description : Verify that 'Family Relationship' should be displayed as default 
+	 *                column from mini doc list of doc view
+	 */
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 47)
+	public void verifyFamilyRelationshipDefaultHeaderValue(String fullName, String userName, String password)
+			throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51651");
+		baseClass.stepInfo("Verify that 'Family Relationship' should be displayed as "
+				+ "default column from mini doc list of doc view");
+
+//      login as @user		
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+//		search and go to docview
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+//		verify header value as Family Relationship
+		reusableDocViewPage.defaultHeaderValue();
+
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" +userName+ "'");
+
+	}
+	
+	/**
+	 * @Author : Baskar date: 10/03/2022 Modified date: NA Modified by: Baskar
+	 * @Description : Verify that 'Family Relationship' should be displayed as default 
+	 *                column from mini doc list child window of doc view
+	 */
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 48)
+	public void verifyFamilyRelationshipDefaultHeaderValueCW(String fullName, String userName, String password)
+			throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51652");
+		baseClass.stepInfo("Verify that 'Family Relationship' should be displayed as default "
+				+ "column from mini doc list child window of doc view");
+
+//      login as @user		
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+//		search and go to docview
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+//		verify header value as Family Relationship from child window
+		docViewPage.clickGearIconOpenMiniDocList();
+		String parentWindow=docViewPage.switchTochildWindow();
+		reusableDocViewPage.defaultHeaderValue();
+		docViewPage.childWindowToParentWindowSwitching(parentWindow);
+
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" +userName+ "'");
+
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

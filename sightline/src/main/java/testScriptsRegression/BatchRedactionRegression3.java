@@ -88,7 +88,8 @@ public class BatchRedactionRegression3 {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 1)
+	// @Test(enabled = true, dataProvider = "Users", groups = { "regression" },
+	// priority = 1)
 	public void createExport(String username, String password) throws InterruptedException {
 		String foldername = "FolderProd" + Utility.dynamicNameAppender();
 		String exportname = "E" + Utility.dynamicNameAppender();
@@ -309,6 +310,10 @@ public class BatchRedactionRegression3 {
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu2userName);
+		if (userManagement.getSavePassword().isElementAvailable(3)) {
+			userManagement.getSavePassword().waitAndClick(3);
+			driver.waitForPageToBeReady();
+		}
 
 		// Create saved search
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -416,6 +421,10 @@ public class BatchRedactionRegression3 {
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu2userName);
+		if (userManagement.getSavePassword().isElementAvailable(3)) {
+			userManagement.getSavePassword().waitAndClick(3);
+			driver.waitForPageToBeReady();
+		}
 
 		// Create saved search
 		session.basicContentSearch(Input.testData1);
@@ -474,7 +483,8 @@ public class BatchRedactionRegression3 {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 7)
+	// @Test(enabled = true, dataProvider = "Users", groups = { "regression" },
+	// priority = 7)
 	public void generateProductionWithMultipleRedactionTags(String username, String password)
 			throws InterruptedException {
 		String tagname = "FirstTag" + Utility.dynamicNameAppender();
@@ -623,7 +633,7 @@ public class BatchRedactionRegression3 {
 		DocViewRedactions DCRedactions = new DocViewRedactions(driver);
 
 		// Login as a RMU
-		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// Test Case Description
 		base.stepInfo("Testcase ID : RPMXCON-53422   Bacth Redaction  Sprint-7");
@@ -828,7 +838,7 @@ public class BatchRedactionRegression3 {
 				"Verify that \"Analyze Search for Redaction\" and \"View & Redact Search\" buttons are NOT Visible on Batch Redaction Screen.");
 
 		// load the saved search page and click on create new search group
-		String newNode = saveSearch.createSearchGroupAndReturn(searchName, "PA", "Yes");
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "Yes");
 
 		// will load the session search page and search
 		session.basicContentSearch(data);
@@ -840,6 +850,7 @@ public class BatchRedactionRegression3 {
 		batch.verifyNodeAnalyseAndViewBtn(newNode, searchName, null, null);
 
 		// Delete Created Node
+		saveSearch.navigateToSavedSearchPage();
 		saveSearch.deleteNode(Input.mySavedSearch, newNode);
 
 		login.logout();
@@ -918,8 +929,11 @@ public class BatchRedactionRegression3 {
 		sg.assignRedactionTagtoSG(Input.defaultRedactionTag);
 
 		// Assign access to SG
-		userManagemet.assignAccessToSecurityGroups(othSG, Input.rev1userName);
-
+		userManagemet.assignAccessToSecurityGroups(othSG, Input.rmu1userName);
+		if (userManagemet.getSavePassword().isElementAvailable(3)) {
+			userManagemet.getSavePassword().waitAndClick(3);
+			driver.waitForPageToBeReady();
+		}
 		session.basicContentSearch(Input.testData1);
 		session.bulkRelease(othSG);
 
@@ -1011,7 +1025,7 @@ public class BatchRedactionRegression3 {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+//	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void generateProductionWithMultipleRedactionTags() throws InterruptedException {
 
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -1758,7 +1772,7 @@ public class BatchRedactionRegression3 {
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void chechInlineScrollBarDisplayedforSavedSearchSection() throws InterruptedException {
-		int limit = 10;
+		int limit = 9;
 		String searchName = "SearchName_" + Utility.dynamicNameAppender();
 
 		// Login as a RMU
@@ -1767,7 +1781,7 @@ public class BatchRedactionRegression3 {
 		base.stepInfo("Test case Id:RPMXCON-53358 Sprint 10");
 		base.stepInfo(
 				"Verify that inline scroll bar should be displayed for Saved searches section on Batch Redaction home page when count is greater than 10");
-		base.stepInfo("Limit reach for scoll bar is : " + limit);
+		base.stepInfo("Limit reach for scoll bar is : " + (limit + 1));
 
 		session.basicContentSearch(Input.testData1);
 		session.saveSearch(searchName);
@@ -1914,8 +1928,9 @@ public class BatchRedactionRegression3 {
 
 	@DataProvider(name = "multipleSearchTerm")
 	public Object[][] multipleSearchTerm() {
-		Object[][] searchTerm = { { "*@enron.com" }, { "denise" }, { "\"##[1-9]{3}-[1-9]{3}-[1-9]{4}\"" }
-//				{"*@consilio.com"},
+		Object[][] searchTerm = { { "denise" }, { "*@consilio.com" },
+//				{ "\"##[1-9]{3}-[1-9]{3}-[1-9]{4}\"" },
+//				{ "*@enron.com" }, 
 //				{"\"denise legasse\"~2"},
 		};
 		return searchTerm;
@@ -1929,7 +1944,7 @@ public class BatchRedactionRegression3 {
 	 * @param searchTerm
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	@Test(enabled = true, dataProvider = "multipleSearchTerm", groups = { "regression" }, priority = 35)
 	public void verifyRedactionNavigationIconAndDeleteIcon(String searchTerm) throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -2538,7 +2553,7 @@ public class BatchRedactionRegression3 {
 		String expectedErrorMsg = "DE: One or more of your selected searches are currently being redacted. Please refresh and try again.";
 
 		// Login as a RMU
-		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		base.stepInfo("Test case Id:RPMXCON-53521 Batch Redaction");
 		base.stepInfo(
@@ -2603,6 +2618,55 @@ public class BatchRedactionRegression3 {
 
 	}
 
+	/**
+	 * @author Jeevitha
+	 * @Description : Verify that pagination should be displayed for Batch Redaction
+	 *              History for more than 10 history records [RPMXCON-53369]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	public void verifyPaginationForBR() throws Exception {
+		String search = "Search" + Utility.dynamicNameAppender();
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Test case Id: RPMXCON-53369 batch redcation Sprint-8");
+		base.stepInfo(
+				"Verify that pagination should be displayed for Batch Redaction History for more than 10 history records");
+		// Verify PAgination BAR And COunt
+		batch.verifyPagination();
+		// Verify Previous AND Next for Each Page
+		batch.verifyPreviousAndNextBtn();
+		login.logout();
+	}
+
+	/**
+	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 53421
+	 * Verifying keyword is redacted Batch Redactions - sprint 3
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 42)
+	public void verifyKeywordHighlitingAfterBatchRedaction() throws Exception {
+		base = new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-53421");
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		String search = "Name1" + Utility.dynamicNameAppender();
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		int purehit = sessionsearch.basicContentSearch("crammer");
+		sessionsearch.saveSearch(search);
+		BatchRedactionPage batch = new BatchRedactionPage(driver);
+		// Verify Analyze Report and View Report
+		driver.waitForPageToBeReady();
+		batch.savedSearchBatchRedaction(search);
+		// verify Popup Yes Button
+		batch.getPopupYesBtn().Click();
+		base.stepInfo("Clicked Yes Button");
+		// verify History status
+		batch.verifyHistoryStatus2(search, purehit);
+		SavedSearch savedsearch = new SavedSearch(driver);
+		savedsearch.savedSearchToDocView(search);
+		docViewRedact.checkinHighlitedText();
+		login.logout();
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
@@ -2641,7 +2705,7 @@ public class BatchRedactionRegression3 {
 	public void close() {
 		System.out.println("******TEST CASES FOR Batch Redactions EXECUTED******");
 		try {
-			login.clearBrowserCache();
+//			login.clearBrowserCache();
 		} catch (Exception e) {
 			// no session avilable
 

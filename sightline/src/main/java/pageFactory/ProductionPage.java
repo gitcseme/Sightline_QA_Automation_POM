@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -850,51 +851,58 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
-	
+
 	public Element fieldMappingtTextInDAT() {
 		return driver.FindElementByXPath("//label[contains(text(),'Field Mapping:')]");
 	}
-	
+
 	public Element dateFormatDdInDAT() {
 		return driver.FindElementByXPath("//select[@name='DATComponentModelData.DateFormatID']");
 	}
-	
+
 	public Element dateFormatTextInDAT() {
 		return driver.FindElementByXPath("//label[contains(text(),'Date Format:')]");
 	}
+
 	public Element fieldSeperatorDdInDAT() {
 		return driver.FindElementByXPath("//select[@id='lstFieldSeparator']");
 	}
+
 	public Element fieldDelimitersTextInDAT() {
-		return driver.FindElementByXPath("//div[@class='form-group required']//label[contains(text(),'Field Delimiters:')]");
+		return driver
+				.FindElementByXPath("//div[@class='form-group required']//label[contains(text(),'Field Delimiters:')]");
 	}
-	
+
 	public Element radioBtnANSIInDAT() {
-		return driver.FindElementByXPath("//div[@class='form-group required']//label[@class='radio']//input[@id='rdbANSI']//..//i");
+		return driver.FindElementByXPath(
+				"//div[@class='form-group required']//label[@class='radio']//input[@id='rdbANSI']//..//i");
 	}
-	
+
 	public Element FormatTextInDAT() {
 		return driver.FindElementByXPath("//div[@class='form-group required']//label[contains(text(),'Format:')]");
 	}
+
 	public Element gridAndTileViewProdCount() {
 		return driver.FindElementByXPath("//div[@id='cardGrid']//span[@id='totalProductionCount']");
 	}
-	
+
 	public Element identifyByProductionGuardSource_radioBtn() {
 		return driver.FindElementByXPath("//a[@id='a-c-6']");
 	}
+
 	public Element analyzeSelectProductionSets_radioBtn() {
 		return driver.FindElementByXPath("//a[@id='a-c-2-4']");
 	}
-	
+
 	public Element runCategorizationBtn() {
 		return driver.FindElementByXPath("//button[contains(text(),'Run Categorization')]");
 	}
-	
+
 	public Element radioBtnInAdvancedNative_ForPrivRedactedDocs() {
-		return driver.FindElementByXPath("//ul[@class='list-inline']//label//input[@id='rdbExcludeNativesofparent']//..//span[contains(text(),'natives of the parents')]");
+		return driver.FindElementByXPath(
+				"//ul[@class='list-inline']//label//input[@id='rdbExcludeNativesofparent']//..//span[contains(text(),'natives of the parents')]");
 	}
-	
+
 	public Element productionNameInHomePage() {
 		return driver.FindElementById("pName");
 	}
@@ -1123,7 +1131,8 @@ public class ProductionPage {
 	}
 
 	public Element getMP3SelectDefaultRedactiontag() {
-		return driver.FindElementByXPath("(//*[@id='1_anchor'])[5]");
+		return driver
+				.FindElementByXPath("//div[@id='MP3RedactionTagsTree']//a[contains(text(),'Default Redaction Tag')]");
 	}
 
 	public Element checkMp3ReductionTagDisable() {
@@ -1463,10 +1472,8 @@ public class ProductionPage {
 	}
 
 	public Element getClkCheckBox_selectingRedactionTags() {
-		return driver.FindElementByXPath(
-				// "//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='New Redaction
-				// Tag']/i[@class='jstree-icon jstree-checkbox']");
-				"//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='Default Redaction Tag']/i[@class='jstree-icon jstree-checkbox']");
+		return driver
+				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[text()='Default Redaction Tag']");
 	}
 
 	public Element getClk_selectBtn() {
@@ -2531,22 +2538,28 @@ public class ProductionPage {
 	public Element getSplitSubFolderToggle() {
 		return driver.FindElementByXPath("//label[text()='Split Sub Folders:']/..//i");
 	}
+
 	public Element getMP3FilesRedactionTag() {
-		return driver.FindElementByXPath("//div[@id='MP3RedactiontreeFolder']/ul/li//a[text()='Default Redaction Tag']");
+		return driver
+				.FindElementByXPath("//div[@id='MP3RedactiontreeFolder']/ul/li//a[text()='Default Redaction Tag']");
 	}
+
 	public Element getGenratePDFRadioButton() {
-		return driver.FindElementByXPath("//span//b[text()='Generate PDF']/../..//input[@id='CommonTIFFSettings_FileType']");
+		return driver
+				.FindElementByXPath("//span//b[text()='Generate PDF']/../..//input[@id='CommonTIFFSettings_FileType']");
 	}
+
 	public Element getMP3FilesBurnRedactionTag(String Tag) {
-		return driver.FindElementByXPath("//div[@id='MP3RedactiontreeFolder']/ul/li//a[text()='"+Tag+"']");
+		return driver.FindElementByXPath("//div[@id='MP3RedactiontreeFolder']/ul/li//a[text()='" + Tag + "']");
 	}
-	
+
 	public Element getMP3FileSelectRedactionTags() {
 		return driver.FindElementByXPath("//input[@id='chkMP3SPecifytRedactions']");
 	}
-	
+
 	public Element getGenrateTIFFRadioButton() {
-		return driver.FindElementByXPath("//span//b[text()='Generate TIFF']/../..//input[@id='CommonTIFFSettings_FileType']");
+		return driver.FindElementByXPath(
+				"//span//b[text()='Generate TIFF']/../..//input[@id='CommonTIFFSettings_FileType']");
 	}
 
 	public Element chkIsTIFFSelected() {
@@ -2554,122 +2567,174 @@ public class ProductionPage {
 	}
 
 	public Element getclkSelectTag(int i) {
-		return driver.FindElementByXPath("//button[@id='btnTIFFPHSelectTags_"+ i +"']");
+		return driver.FindElementByXPath("//button[@id='btnTIFFPHSelectTags_" + i + "']");
 	}
-	
+
 	public Element getRotationDropDown() {
 		return driver.FindElementByXPath("//select[@id='dldPageRotatePreference']");
 	}
-	//add by sowndarya
+
+	// add by sowndarya
 	public Element redactedTextInRedaction() {
 		return driver.FindElementByXPath("//p[text()='REDACTED']");
 	}
-	//add by Aathith
-		public ElementCollection getProductionSate() {
-			return driver.FindElementsByXPath("//div[@class='col-md-12 font-xs']");
+
+	// add by Aathith
+	public ElementCollection getProductionSate() {
+		return driver.FindElementsByXPath("//div[@class='col-md-12 font-xs']");
+	}
+
+	public Element getGridViewWebTable(int row, int col) {
+		return driver
+				.FindElementByXPath("//*[@id='ProductionListGridViewTable']/tbody/tr[" + row + "]/td[" + col + "]");
+	}
+
+	public ElementCollection getGridViewWebTable(int col) {
+		return driver.FindElementsByXPath("//*[@id='ProductionListGridViewTable']/tbody/tr/td[" + col + "]");
+	}
+
+	public Element getSlipSheetMetaData() {
+		return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='METADATA']");
+	}
+
+	public Element getSlipSheetWorkProduct() {
+		return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='WORKPRODUCT']");
+	}
+
+	public Element getSlipSheetMetaDataActiveCheck() {
+		return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='METADATA']/../..");
+	}
+
+	public Element getSlipSheetMetaDataTypeCheck() {
+		return driver.FindElementByXPath("//ul[@id='tiffMetadataList']//label");
+	}
+
+	public Element getSlipSheetWorkProductActiveCheck() {
+		return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='WORKPRODUCT']/../..");
+	}
+
+	public Element getSlipSheetWorkProductFolder() {
+		return driver.FindElementByXPath("//div[@id='tiffFolderTreeSlipSheets']");
+	}
+
+	public Element getSlipSheetWorkProductFolderProduction() {
+		return driver.FindElementByXPath("//a[text()='Productions']");
+	}
+
+	public Element getbtnAddToSelect() {
+		return driver.FindElementByXPath("//a[@class='btn btn-primary pull-right']");
+	}
+
+	public Element getSelectedFieldItems() {
+		return driver.FindElementByXPath("//div[@class='ddcf-content']");
+	}
+
+	public Element getAdvanceBtnOpenCloseCheck() {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//div[@class='advanced-dd-toggle']/i");
+	}
+
+	public Element getTiffAdvanceBtn() {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//div[@class='advanced-dd-toggle']");
+	}
+
+	public Element getRegenerateAllRadioBtn() {
+		return driver.FindElementByXPath("//input[@id='RegenerateAll']/../i");
+	}
+
+	public Element getProductionOutputLocation_VolumeName() {
+		return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_VolumeName']");
+	}
+
+	public Element getProductionComponentsFolderDetails_FolderName_LoadFiles() {
+		return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_LoadFiles']");
+	}
+
+	public Element getProductionOutputLocation_DriveText() {
+		return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_DriveText']");
+	}
+
+	public Element getProductionComponentsFolderDetails_FolderName_Images() {
+		return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_Images']");
+	}
+
+	public Element getProductionComponentsFolderDetails_FolderName_Text() {
+		return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_Text']");
+	}
+
+	public Element getProductionComponentsFolderDetails_FolderName_Natives() {
+		return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_Natives']");
+	}
+
+	public Element getProductionOutputLocationProductionDirectory() {
+		return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_ProductionDirectory']");
+	}
+
+	public Element getDocumentWithMultipleBrandingTagsOnGenerationPage() {
+		return driver.FindElementByXPath(
+				"//*[text()='Documents with Multiple Branding Tags ']/following-sibling::td/span[@class='text-success']");
+	}
+
+	public Element getSelectFileTypeInTifffNative(String fileType) {
+		return driver.FindElementByXPath(
+				"//div[@id='divImageTIFFPHImage_0']/..//option[contains(text(),'" + fileType + "')]");
+	}
+
+	// added by Brundha
+	public Element GetVolumeName() {
+		return driver.FindElementById("ProductionOutputLocation_VolumeName");
+	}
+
+	public Element GetVolumeLocation() {
+		return driver.FindElementById("lstVolumeLocation");
+	}
+
+	public Element getNativeFileType() {
+		return driver
+				.FindElementByXPath("//table[@id='native-table']//tbody//tr//td[contains(text(),'Database')]/..//i");
+	}
+
+	public Element getPrivDocCountInSummaryPage() {
+		return driver.FindElementByXPath("//label[text()='Privileged Documents: ']/following-sibling::label");
+	}
+
+	// added by Brundha
+	public Element getWorkProductFolderName(String FolderName) {
+		return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'" + FolderName + "')]");
+	}
+
+	public Element getDocPages() {
+		return driver.FindElementByXPath("//label[contains(text(),'Number of Natives:')]/following-sibling:: i");
+	}
+
+	public Element getRedactDATCheckBox(int i) {
+		return driver.FindElementByXPath("//input[@id='ChkRedacted_" + i + "']/following-sibling:: i");
+
+	}
+
+	public Element getPrivledgedDATCheckBox(int i) {
+		return driver.FindElementByXPath("//input[@id='ChkPrev_" + i + "']/following-sibling:: i");
+	}
+	
+	//Added by Gopinath - 20/12/2021
+		public Element getTiffAdvancedTab() {
+			return driver.FindElementByXPath("//label[text()='Burn Redactions :']//..//..//..//..//..//..//div[@class='advanced-dd-toggle']");
 		}
-		public Element getGridViewWebTable(int row, int col) {
-			return driver.FindElementByXPath("//*[@id='ProductionListGridViewTable']/tbody/tr["+row+"]/td["+col+"]");
+		public Element getSlipSheetToogle() {
+			return driver.FindElementByXPath("//input[@id='chkIsTIFFSlipSheetEnabled']//..//i");
 		}
-		public ElementCollection getGridViewWebTable(int col) {
-			return driver.FindElementsByXPath("//*[@id='ProductionListGridViewTable']/tbody/tr/td["+col+"]");
+		public ElementCollection getSlipSheetMetaDataList() {
+			return driver.FindElementsByXPath("//div[@id='tifftab1']//strong");
 		}
-		public Element getSlipSheetMetaData() {
-			return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='METADATA']");
+		public Element getNativeMetaDataFieldLink() {
+			return driver.FindElementByXPath("//a[@id='LaunchMetaData0']");
 		}
-		public Element getSlipSheetWorkProduct() {
-			return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='WORKPRODUCT']");
+		public Element getNativeMetaDataFieldDropdown() {
+			return driver.FindElementByXPath("//select[@id='selectedMetadataField']");
 		}
-		public Element getSlipSheetMetaDataActiveCheck() {
-			return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='METADATA']/../..");
-		}
-		public Element getSlipSheetMetaDataTypeCheck() {
-			return driver.FindElementByXPath("//ul[@id='tiffMetadataList']//label");
-		}
-		public Element getSlipSheetWorkProductActiveCheck() {
-			return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='WORKPRODUCT']/../..");
-		}
-		public Element getSlipSheetWorkProductFolder() {
-			return driver.FindElementByXPath("//div[@id='tiffFolderTreeSlipSheets']");
-		}
-		public Element getSlipSheetWorkProductFolderProduction() {
-			return driver.FindElementByXPath("//a[text()='Productions']");
-		}
-		public Element getbtnAddToSelect() {
-			return driver.FindElementByXPath("//a[@class='btn btn-primary pull-right']");
-		}
-		public Element getSelectedFieldItems() {
-			return driver.FindElementByXPath("//div[@class='ddcf-content']");
-		}
-		public Element getAdvanceBtnOpenCloseCheck() {
-			return driver.FindElementByXPath("//div[@id='TIFFContainer']//div[@class='advanced-dd-toggle']/i");
-		}
-		public Element getTiffAdvanceBtn() {
-			return driver.FindElementByXPath("//div[@id='TIFFContainer']//div[@class='advanced-dd-toggle']");
-		}
-		public Element getRegenerateAllRadioBtn() {
-			return driver.FindElementByXPath("//input[@id='RegenerateAll']/../i");
-		}
-		public Element getProductionOutputLocation_VolumeName() {
-			return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_VolumeName']");
-		}
-		public Element getProductionComponentsFolderDetails_FolderName_LoadFiles() {
-			return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_LoadFiles']");
-		}
-		public Element getProductionOutputLocation_DriveText() {
-			return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_DriveText']");
-		}
-		public Element getProductionComponentsFolderDetails_FolderName_Images() {
-			return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_Images']");
-		}
-		public Element getProductionComponentsFolderDetails_FolderName_Text() {
-			return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_Text']");
-		}
-		public Element getProductionComponentsFolderDetails_FolderName_Natives() {
-			return driver.FindElementByXPath("//*[@id='ProductionComponentsFolderDetails_FolderName_Natives']");
-		}
-		public Element getProductionOutputLocationProductionDirectory() {
-			return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_ProductionDirectory']");
-		}
-		public Element getDocumentWithMultipleBrandingTagsOnGenerationPage() {
-			return driver.FindElementByXPath("//*[text()='Documents with Multiple Branding Tags ']/following-sibling::td/span[@class='text-success']");
-		}
-		public Element getSelectFileTypeInTifffNative(String fileType) {
-			return driver.FindElementByXPath("//div[@id='divImageTIFFPHImage_0']/..//option[contains(text(),'"+fileType+"')]");
-		}
-		
-		
-     //added by Brundha
-		public Element GetVolumeName() {
-			return driver.FindElementById("ProductionOutputLocation_VolumeName");
-		}
-		
-		public Element GetVolumeLocation() {
-			return driver.FindElementById("lstVolumeLocation");
-		}
-		public Element getNativeFileType() {
-			return driver.FindElementByXPath("//table[@id='native-table']//tbody//tr//td[contains(text(),'Database')]/..//i");
-		}
-		public Element getPrivDocCountInSummaryPage() {
-			return driver.FindElementByXPath("//label[text()='Privileged Documents: ']/following-sibling::label");
-		}
-		
-      //added by Brundha
-		public Element getWorkProductFolderName(String FolderName) {
-			return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'"+FolderName+"')]");
+		public Element getExceptionMetaDataFieldLink() {
+			return driver.FindElementByXPath("//input[@id='chkEnabledforExceptionDocs']//..//..//..//../*[@title='Insert Metadata Field']");
 		}
 
-		public Element getDocPages() {
-			return driver.FindElementByXPath("//label[contains(text(),'Number of Natives:')]/following-sibling:: i");
-		}
-		
-		public Element getRedactDATCheckBox(int i) {
-			return driver.FindElementByXPath("//input[@id='ChkRedacted_"+i+"']/following-sibling:: i");
-			
-		}
-		public Element getPrivledgedDATCheckBox(int i) {
-			return driver.FindElementByXPath("//input[@id='ChkPrev_"+i+"']/following-sibling:: i");
-		}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -4666,7 +4731,7 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @Modified Indium-Sowndarya.Velraj.Modified on 10/27/2021
+	 * @Modified Indium-Sowndarya.Velraj.Modified on 03/09/2022
 	 */
 	public void fillingDATSection() {
 
@@ -4682,8 +4747,8 @@ public class ProductionPage {
 		base.waitForElement(getDAT_SourceField1());
 		getDAT_SourceField1().selectFromDropdown().selectByVisibleText(Input.batesNumber);
 
-		base.waitForElement(getDAT_DATField1());
 		getDAT_DATField1().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		getDAT_DATField1().SendKeys("B" + Utility.dynamicNameAppender());
 		base.stepInfo("Dat section is filled");
 	}
@@ -6307,6 +6372,7 @@ public class ProductionPage {
 
 	/**
 	 * Modified on 03/08/2022
+	 * 
 	 * @Author Indium-Sowndarya.Velraj
 	 */
 	public void fillingSummaryAndPreview() {
@@ -6319,7 +6385,7 @@ public class ProductionPage {
 
 		driver.waitForPageToBeReady();
 		base.getCloseSucessmsg();
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getbtnProductionSummaryNext().Enabled();
@@ -6629,7 +6695,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * Modified on 03/08/2022(Replaced isElementAvailable() to avoid e.printStackTrace in reports)
+	 * Modified on 03/09/2022(Replaced isElementAvailable() to avoid
+	 * e.printStackTrace in reports)
+	 * 
 	 * @throws InterruptedException
 	 * @Author Indium-Sowndarya.Velraj.Modified on 10/28/2021
 	 */
@@ -6655,7 +6723,7 @@ public class ProductionPage {
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
 
-		getDocumentGeneratetext().isElementAvailable(120);
+		getDocumentGeneratetext().isElementAvailable(180);
 		base.stepInfo("wait until Document Generated Text is visible");
 		String actualText = getStatusSuccessTxt().getText();
 		System.out.println(actualText);
@@ -6663,16 +6731,11 @@ public class ProductionPage {
 		softAssertion.assertTrue(actualText.contains(expectedText));
 		base.passedStep("Documents Generated successfully");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
-			}
-		}), Input.wait60);
-
+		getConfirmProductionCommit().isElementAvailable(120);
 		base.waitTime(2);
 		getConfirmProductionCommit().waitAndClick(10);
-		
-		base.CloseSuccessMsgpopup();
+
+//		base.CloseSuccessMsgpopup();
 
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch
@@ -6716,12 +6779,10 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 
 		base.CloseSuccessMsgpopup();
-		
+
 		base.waitForElement(getNextButton());
 		getNextButton().Enabled();
 		getNextButton().waitAndClick(10);
-		
-		
 
 		base.stepInfo("Navigate to next page");
 	}
@@ -9008,48 +9069,38 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 03/09/2022
+	 * 
 	 * @Author Indium-Sowndarya.Velraj
 	 */
 	public void selectDownloadInGeneratePage() throws InterruptedException {
 
 		SoftAssert softAssertion = new SoftAssert();
-
 		String expectedText = "Success";
 
 		driver.WaitUntil((new Callable<Boolean>() {
-
 			public Boolean call() {
-
 				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
-
 			}
-
 		}), Input.wait30);
+		getbtnProductionGenerate().waitAndClick(10);
 
-		getbtnProductionGenerate().Click();
+		getbtnContinueGeneration().isElementAvailable(150);
+		if (getbtnContinueGeneration().isDisplayed()) {
+			base.waitForElement(getbtnContinueGeneration());
+			getbtnContinueGeneration().waitAndClick(10);
+		}
 
 		Reporter.log("Wait for generate to complete", true);
-
 		System.out.println("Wait for generate to complete");
-
 		UtilityLog.info("Wait for generate to complete");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-
-			public Boolean call() {
-
-				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
-
-			}
-
-		}), Input.wait120);
-
+		getDocumentGeneratetext().isElementAvailable(180);
+		base.stepInfo("wait until Document Generated Text is visible");
 		String actualText = getStatusSuccessTxt().getText();
-
 		System.out.println(actualText);
 
 		softAssertion.assertTrue(actualText.contains(expectedText));
-
 		base.passedStep("Documents Generated successfully");
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -9681,6 +9732,7 @@ public class ProductionPage {
 		}
 
 	}
+
 	/**
 	 * @author Sowndarya.velraj.Modified on 02/08/22
 	 * @Description : Method to save a production as template and verifying it in
@@ -9689,8 +9741,8 @@ public class ProductionPage {
 	 *                       Production need to select production.
 	 * @throws InterruptedException
 	 */
-	public void saveProductionAsTemplateAndVerifyProductionComponentsInManageTemplateTab(String productionname, String templateName)
-			throws InterruptedException {
+	public void saveProductionAsTemplateAndVerifyProductionComponentsInManageTemplateTab(String productionname,
+			String templateName) throws InterruptedException {
 
 		base.stepInfo("click on gear icon of the current production");
 		driver.waitForPageToBeReady();
@@ -9709,7 +9761,6 @@ public class ProductionPage {
 
 		getManageTemplates().waitAndClick(10);
 
-		
 		getDeleteBtn(templateName).ScrollTo();
 		getDeleteBtn(templateName).isElementAvailable(5);
 		base.stepInfo("Delete option is displayed");
@@ -9735,7 +9786,8 @@ public class ProductionPage {
 		base.waitForElement(productionComponentsInTemplate());
 		if (productionComponentsInTemplate().isElementAvailable(5)) {
 			base.stepInfo("production component option is displayed");
-		}}
+		}
+	}
 
 	/**
 	 * @Author Indium-Sowndarya.Velraj.Modified on 01/19/22
@@ -10988,86 +11040,48 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 03/09/2022
+	 * 
 	 * @author Gopinath
 	 * @description : Method to select row by production name and open in wizard.
 	 * @param productionName : productionName is a String value that name of
 	 *                       production.
 	 */
 	public void selectRowByProductionNameAndOpenWizard(String productionName) {
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFilterByButton().Visible();
-				}
-			}), Input.wait30);
-			getFilterByButton().waitAndClick(10);
-			for (int i = 1; i < getFilterOptions().size(); i++) {
-				getFilter(i).waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getGridView().Visible();
 			}
+		}), Input.wait30);
+		getGridView().waitAndClick(10);
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFilterByCOMPLETED().Visible();
-				}
-			}), Input.wait30);
-			getFilterByCOMPLETED().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getRefreshButton().Visible();
+			}
+		}), Input.wait30);
+		getRefreshButton().waitAndClick(10);
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getRefreshButton().Visible();
-				}
-			}), Input.wait30);
-			getRefreshButton().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionListGridViewTable().Visible();
+			}
+		}), Input.wait30);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getProductionByWizard(productionName));
+		base.waitTillElemetToBeClickable(getProductionByWizard(productionName));
+		getProductionByWizard(productionName).Click();
 
-			Thread.sleep(Input.wait30 / 10);
-			getArrow().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getTileDelete().Visible();
-				}
-			}), Input.wait30);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getGridView().Visible();
-				}
-			}), Input.wait30);
-			getGridView().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getRefreshButton().Visible();
-				}
-			}), Input.wait30);
-			getRefreshButton().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getProductionListGridViewTable().Visible();
-				}
-			}), Input.wait30);
-			driver.waitForPageToBeReady();
-			base.waitForElement(getProductionByWizard(productionName));
-			base.waitTillElemetToBeClickable(getProductionByWizard(productionName));
-			getProductionByWizard(productionName).Click();
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAction().Visible();
-				}
-			}), Input.wait30);
-			getAction().waitAndClick(8);
-			driver.waitForPageToBeReady();
-			base.waitForElement(getOpenInWizard());
-			base.waitTillElemetToBeClickable(getOpenInWizard());
-			getOpenInWizard().Click();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep(
-					"Exception occcured while select row by production name and open in wizard" + e.getMessage());
-		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAction().Visible();
+			}
+		}), Input.wait30);
+		getAction().waitAndClick(8);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getOpenInWizard());
+		base.waitTillElemetToBeClickable(getOpenInWizard());
+		getOpenInWizard().Click();
 	}
 
 	/**
@@ -12519,7 +12533,7 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @author :Sowndarya.velraj.Modified on 03/08/2022 
+	 * @author :Sowndarya.velraj.Modified on 03/08/2022
 	 * 
 	 * @Description: Method for checking status of production from homepage
 	 * @param Status: Status is String value that name of Production status on
@@ -12736,6 +12750,8 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 03/09/2022
+	 * 
 	 * @author :Aathith senthilkumar
 	 * @throws InterruptedException
 	 * @Description: Method for checking the status of production from generate page
@@ -12745,7 +12761,7 @@ public class ProductionPage {
 		// Verifying status of the production from generate page
 		for (int i = 0; i < 500; i++) {
 			driver.waitForPageToBeReady();
-			base.waitForElement(getVerifyGenStatus(statusMsg));
+			getVerifyGenStatus(statusMsg).isElementAvailable(180);
 			VerifyGenStatus = getVerifyGenStatus(statusMsg).getText();
 			if (VerifyGenStatus.contains(statusMsg)) {
 				base.passedStep(statusMsg + "status displayed");
@@ -13466,6 +13482,7 @@ public class ProductionPage {
 
 	/**
 	 * Modified on 03/08/2022
+	 * 
 	 * @author : Aathith Senthilkumar
 	 * @Description: Method for filling Generate section without wait.
 	 */
@@ -13479,7 +13496,7 @@ public class ProductionPage {
 		getbtnProductionGenerate().Click();
 
 		driver.waitForPageToBeReady();
-		
+
 		getbtnContinueGenerate().isElementAvailable(120);
 		getbtnContinueGenerate().waitAndClick(10);
 
@@ -13490,7 +13507,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * Modified on 03/08/2022 (Removed thread.sleep and replaced waitForPageToBeReady())
+	 * Modified on 03/08/2022 (Removed thread.sleep and replaced
+	 * waitForPageToBeReady())
+	 * 
 	 * @author : Aathith Senthilkumar
 	 * @Description: Method for homepage Grid view status check.
 	 */
@@ -13998,6 +14017,7 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 03/09/2022
 	 * @author : Aathith Senthilkumar
 	 * @Description: Method for genarate page without wait
 	 */
@@ -14009,14 +14029,11 @@ public class ProductionPage {
 		}), Input.wait30);
 		getbtnProductionGenerate().Click();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnReGenerateMarkComplete().Enabled() && getbtnReGenerateMarkComplete().isDisplayed();
-			}
-		}), Input.wait60);
+		getbtnReGenerateMarkComplete().isElementAvailable(120);
 	}
 
 	/**
+	 * Modified on 03/09/2022
 	 * @author Aathith.Senthilkumar
 	 */
 	public void prodReservingBatesRangeFailedProduction1() throws InterruptedException {
@@ -14094,7 +14111,7 @@ public class ProductionPage {
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
 
-		base.waitForElement(getbtnReGenerateMarkComplete());
+		getbtnReGenerateMarkComplete().isElementAvailable(120);
 		getbtnReGenerateMarkComplete().Click();
 
 		base.waitForElement(getbtnRegenerateCancel());
@@ -14134,6 +14151,7 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 03/09/2022
 	 * @author : Aathith Senthilkumar
 	 * @Description: Method for filling Generate wait for continue button to be
 	 *               ready.
@@ -14148,11 +14166,7 @@ public class ProductionPage {
 		getbtnProductionGenerate().Click();
 
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnContinueGenerate().Enabled() && getbtnContinueGenerate().isDisplayed();
-			}
-		}), Input.wait60);
+		getbtnContinueGenerate().isElementAvailable(120);
 
 	}
 
@@ -16873,62 +16887,59 @@ public class ProductionPage {
 
 	}
 
-	
-
 	/**
-	* @Author Gopinath
-	* @Description : Filling tiff section that burn redaction with tag
-	*/
-	public void fillingTIFFSectionBurnRedaction(String tagname,String placeHolderValue) throws InterruptedException {
-	try {
-	base.waitForElement(getTIFFChkBox());
-	getTIFFChkBox().Click();
-	driver.scrollingToBottomofAPage();
-	base.waitForElement(getTIFFTab());
-	getTIFFTab().Click();
-	getTIFF_EnableforPrivilegedDocs().ScrollTo();
-	// disabling enable for priviledged docs
-	base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-	base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
-	getTIFF_EnableforPrivilegedDocs().Enabled();
-	getTIFF_EnableforPrivilegedDocs().Click();
-	getClk_burnReductiontoggle().ScrollTo();
-	// enable burn redaction
-	base.waitForElement(getClk_burnReductiontoggle());
-	getClk_burnReductiontoggle().Click();
-	getClkRadioBtn_selectRedactionTags().ScrollTo();
-	base.waitForElement(getClkRadioBtn_selectRedactionTags());
-	getClkRadioBtn_selectRedactionTags().isDisplayed();
-	driver.waitForPageToBeReady();
-	getClkRadioBtn_selectRedactionTags().waitAndClick(10);
-	base.waitForElement(getClkCheckBox_defaultRedactionTag());
-	getClkCheckBox_defaultRedactionTag().isDisplayed();
-	getClkCheckBox_defaultRedactionTag().waitAndClick(10);
-	base.waitForElement(getClkLink_selectingRedactionTags());
-	getClkLink_selectingRedactionTags().isDisplayed();
-	getClkLink_selectingRedactionTags().waitAndClick(10);
-	base.waitForElement(getClkBtn_selectingRedactionTags());
-	getClkBtn_selectingRedactionTags().isDisplayed();
-	getClkBtn_selectingRedactionTags().waitAndClick(10);
-	base.waitForElement(getPriveldged_TagTree(tagname));
-	getPriveldged_TagTree(tagname).isElementAvailable(10);
-	getPriveldged_TagTree(tagname).ScrollTo();
-	getPriveldged_TagTree(tagname).isDisplayed();
-	getPriveldged_TagTree(tagname).waitAndClick(10);
-	base.waitForElement(getClk_selectBtn());
-	getClk_selectBtn().isDisplayed();
-	getClk_selectBtn().waitAndClick(10);
-	base.waitForElement(gettextRedactionPlaceHolder());
-	gettextRedactionPlaceHolder().isDisplayed();
-	gettextRedactionPlaceHolder().waitAndClick(10);
-	gettextRedactionPlaceHolder().SendKeys(placeHolderValue);
-	}catch(Exception e) {
-	e.printStackTrace();
-	base.failedStep("Exception occured while filling tiff section with burn redaction tag"+e.getLocalizedMessage());
+	 * @Author Gopinath
+	 * @Description : Filling tiff section that burn redaction with tag
+	 */
+	public void fillingTIFFSectionBurnRedaction(String tagname, String placeHolderValue) throws InterruptedException {
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			// disabling enable for priviledged docs
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			getClk_burnReductiontoggle().ScrollTo();
+			// enable burn redaction
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+			getClkRadioBtn_selectRedactionTags().ScrollTo();
+			base.waitForElement(getClkRadioBtn_selectRedactionTags());
+			getClkRadioBtn_selectRedactionTags().isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+			base.waitForElement(getClkCheckBox_defaultRedactionTag());
+			getClkCheckBox_defaultRedactionTag().isDisplayed();
+			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+			base.waitForElement(getClkLink_selectingRedactionTags());
+			getClkLink_selectingRedactionTags().isDisplayed();
+			getClkLink_selectingRedactionTags().waitAndClick(10);
+			base.waitForElement(getClkBtn_selectingRedactionTags());
+			getClkBtn_selectingRedactionTags().isDisplayed();
+			getClkBtn_selectingRedactionTags().waitAndClick(10);
+			base.waitForElement(getPriveldged_TagTree(tagname));
+			getPriveldged_TagTree(tagname).isElementAvailable(10);
+			getPriveldged_TagTree(tagname).ScrollTo();
+			getPriveldged_TagTree(tagname).isDisplayed();
+			getPriveldged_TagTree(tagname).waitAndClick(10);
+			base.waitForElement(getClk_selectBtn());
+			getClk_selectBtn().isDisplayed();
+			getClk_selectBtn().waitAndClick(10);
+			base.waitForElement(gettextRedactionPlaceHolder());
+			gettextRedactionPlaceHolder().isDisplayed();
+			gettextRedactionPlaceHolder().waitAndClick(10);
+			gettextRedactionPlaceHolder().SendKeys(placeHolderValue);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occured while filling tiff section with burn redaction tag" + e.getLocalizedMessage());
+		}
 	}
-	}
-
-
 
 	/**
 	 * @author Aathith.Senthilkumar
@@ -16966,7 +16977,7 @@ public class ProductionPage {
 		Thread.sleep(Input.wait30 / 10);
 		base.waitForElement(getNativeDocsPlaceholder());
 		getNativeDocsPlaceholder().SendKeys(tagname);
-		
+
 		base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting multiple tag");
 
 	}
@@ -16996,16 +17007,14 @@ public class ProductionPage {
 		gettextRedactionPlaceHolder().SendKeys(redactionText);
 		base.stepInfo("Reaction Text : " + redactionText);
 	}
-	
-	
+
 	/**
-	 * @Author Brundha
-	 *  Description:Method to fill burn redaction in MP3 file
+	 * @Author Brundha Description:Method to fill burn redaction in MP3 file
 	 * 
 	 */
-	
-	public void fillingMP3FileWithBurnRedaction(String redactionTag) throws InterruptedException {	
-	
+
+	public void fillingMP3FileWithBurnRedaction(String redactionTag) throws InterruptedException {
+
 		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
 		base.clickButton(getAdvancedProductionComponent());
 		base.waitForElement(getMP3CheckBox());
@@ -17014,11 +17023,11 @@ public class ProductionPage {
 		base.clickButton(getMP3CheckReductionBoxEnable());
 		getMP3CheckReductionBoxEnable().Enabled();
 		base.clickButton(getMP3RatiobtnRedactiontag());
-		
+
 		driver.waitForPageToBeReady();
 		getMP3FilesRedactionTag().waitAndClick(10);
 		driver.scrollingToBottomofAPage();
-		 getMP3FilesBurnRedactionTag(redactionTag).ScrollTo();
+		getMP3FilesBurnRedactionTag(redactionTag).ScrollTo();
 		getMP3FilesBurnRedactionTag(redactionTag).waitAndClick(10);
 		driver.waitForPageToBeReady();
 		getSelect_RedactionStyle_Dropdown().Click();
@@ -17034,19 +17043,19 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @Author Brundha
-	 *  Description:verifying the retained data in MP3 file burn redaction 
+	 * @Author Brundha Description:verifying the retained data in MP3 file burn
+	 *         redaction
 	 * 
 	 */
-	public void verifyingMP3FileBurnRedaction( String Redactiontag) {
-		
+	public void verifyingMP3FileBurnRedaction(String Redactiontag) {
+
 		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
 		base.clickButton(getAdvancedProductionComponent());
 		base.clickButton(getMP3CheckBoxToggle());
 		driver.scrollingToBottomofAPage();
 		getMP3FilesRedactionTag().ScrollTo();
 		boolean flag = getMP3FilesBurnRedactionTag(Redactiontag).GetAttribute("class").contains("clicked");
-		
+
 		if (flag) {
 			Assert.assertTrue(true);
 			base.passedStep("production template retains the redaction tags configured in the production");
@@ -17056,39 +17065,42 @@ public class ProductionPage {
 		}
 		Select select = new Select(driver.FindElementByXPath("//select[@id='lstFillerAudio']").getWebElement());
 		String option = select.getFirstSelectedOption().getText();
-		System.out.println("the dropdown value is "+option);
-		base.textCompareEquals(option,"Beep","Dropdown value is retained in Template", "Drop down value is not retained in Template as Expected");
+		System.out.println("the dropdown value is " + option);
+		base.textCompareEquals(option, "Beep", "Dropdown value is retained in Template",
+				"Drop down value is not retained in Template as Expected");
 		base.stepInfo("Verifying the Redaction tag and dropdown in Mp3 checkbox");
-		
+
 	}
-	
+
 	/**
-	 * @Author Brundha
-	 *  Description:Method to verify retained rotation in component tab
+	 * @Author Brundha Description:Method to verify retained rotation in component
+	 *         tab
 	 * 
 	 */
-	
+
 	public void verifyRotationInComponentTab(String GenerateButton) {
 		driver.scrollingToBottomofAPage();
 		base.waitForElement(getTIFFTab());
 		getTIFFTab().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		if("tiff".equals(GenerateButton)) {
+		if ("tiff".equals(GenerateButton)) {
 			base.stepInfo("Verifying  Generate TIFF radio button in Component tab");
 			getCheckBoxCheckedVerification(getGenrateTIFFRadioButton());
-		}else if("pdf".equals(GenerateButton)) {
+		} else if ("pdf".equals(GenerateButton)) {
 			base.stepInfo("Verifying  Generate TIFF radio button in Component tab");
 			getCheckBoxCheckedVerification(getGenratePDFRadioButton());
 		}
-		Select select = new Select(driver.FindElementByXPath("//select[@id='dldPageRotatePreference']").getWebElement());
+		Select select = new Select(
+				driver.FindElementByXPath("//select[@id='dldPageRotatePreference']").getWebElement());
 		String option = select.getFirstSelectedOption().getText();
-		System.out.println("the value is "+option);
-		base.textCompareEquals(option,"Rotate 90 degrees clock-wise","Rotation value is retained in Template", "Rotation value is not retained in Template as Expected");
-		
+		System.out.println("the value is " + option);
+		base.textCompareEquals(option, "Rotate 90 degrees clock-wise", "Rotation value is retained in Template",
+				"Rotation value is not retained in Template as Expected");
+
 	}
-	
+
 	public void verifyingComponentTabOnMarkComplete() throws InterruptedException {
-		
+
 		driver.scrollPageToTop();
 		base.waitForElement(getMarkCompleteLink());
 		getMarkCompleteLink().waitAndClick(10);
@@ -17101,21 +17113,23 @@ public class ProductionPage {
 		base.waitForElement(getTIFFTab());
 		getTIFFTab().Click();
 		driver.scrollingToBottomofAPage();
-		String PlaceholderText=getPriveldge_TextArea().getText();
-		if("Technical_Issue".equals(PlaceholderText)) {
-			base.passedStep(""+PlaceholderText+". placeholder text is retained on Markcomplete");
-		}else {base.failedStep(""+PlaceholderText+". placeholder text  is retained on Markcomplete");}
+		String PlaceholderText = getPriveldge_TextArea().getText();
+		if ("Technical_Issue".equals(PlaceholderText)) {
+			base.passedStep("" + PlaceholderText + ". placeholder text is retained on Markcomplete");
+		} else {
+			base.failedStep("" + PlaceholderText + ". placeholder text  is retained on Markcomplete");
+		}
 		driver.scrollPageToTop();
 		base.waitForElement(getNextButton());
 		getNextButton().waitAndClick(10);
 		base.stepInfo("Navigate to next page");
-  }
-
+	}
 
 	/**
-	* @author Aathith.Senthilkumar
-	* @Description :Natively placeholder selecting tags Type in different Native docs
-	*/
+	 * @author Aathith.Senthilkumar
+	 * @Description :Natively placeholder selecting tags Type in different Native
+	 *              docs
+	 */
 	public void fillingTIFFSectionwithNativelyPlaceholderWithTagTypeAndTags(String tagname, String tagname1)
 			throws InterruptedException {
 
@@ -17178,14 +17192,13 @@ public class ProductionPage {
 		base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting tags and tag type");
 
 	}
-	
 
 	/**
-	 * @Author Brundha
-	 *  Description:Verifying Docs w/ No Master Date retained on markcomplete
+	 * @Author Brundha Description:Verifying Docs w/ No Master Date retained on
+	 *         markcomplete
 	 * 
 	 */
-	
+
 	public void verifyMasterDateRetainedOnMarkComplete() throws InterruptedException {
 		driver.scrollingToBottomofAPage();
 		getlstSortByKeepDocsWithNoMasterDate().selectFromDropdown().selectByVisibleText("At the beginning");
@@ -17194,25 +17207,26 @@ public class ProductionPage {
 		getMarkCompleteLink().waitAndClick(10);
 		base.VerifySuccessMessage("Mark Complete successful");
 		base.CloseSuccessMsgpopup();
-		
+
 		Select select = new Select(getlstSortingOrder().getWebElement());
 		String option = select.getFirstSelectedOption().getText();
-		System.out.println("the value is "+option);
-		base.textCompareEquals(option,"Ascending","Sorting order dropdown Option is retained on MarkComplete", "Sorting order dropdown Option is not retained on MarkComplete");
-	     select = new Select(getlstSortByKeepDocsWithNoMasterDate().getWebElement());
+		System.out.println("the value is " + option);
+		base.textCompareEquals(option, "Ascending", "Sorting order dropdown Option is retained on MarkComplete",
+				"Sorting order dropdown Option is not retained on MarkComplete");
+		select = new Select(getlstSortByKeepDocsWithNoMasterDate().getWebElement());
 		String DropdownValue = select.getFirstSelectedOption().getText();
-		System.out.println("the value is "+DropdownValue);
-		base.textCompareEquals(DropdownValue,"At the beginning","Master Date Option is retained on MarkComplete", "Master Date Option is not retained on MarkComplete");
+		System.out.println("the value is " + DropdownValue);
+		base.textCompareEquals(DropdownValue, "At the beginning", "Master Date Option is retained on MarkComplete",
+				"Master Date Option is not retained on MarkComplete");
 		driver.scrollPageToTop();
 		base.waitForElement(getNextButton());
-		
+
 		getNextButton().Click();
 		base.stepInfo("Navigate to next page");
 	}
-	
+
 	/**
-	 * @Author Brundha
-	 * Description:Method to add new production and save
+	 * @Author Brundha Description:Method to add new production and save
 	 */
 	public void addANewProductionAndSave(String productionName) throws InterruptedException {
 		base.waitForElement(getAddNewProductionbutton());
@@ -17230,12 +17244,12 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @Author Brundha
-	 * Description:Method to fill Numbering and sorting page without family members together
+	 * @Author Brundha Description:Method to fill Numbering and sorting page without
+	 *         family members together
 	 */
-	public void fillingNumberingAndSortingWithoutFamilyMember(String prefixId, String suffixId)  {
+	public void fillingNumberingAndSortingWithoutFamilyMember(String prefixId, String suffixId) {
 
-       base.waitForElement(getBeginningBates());
+		base.waitForElement(getBeginningBates());
 		driver.waitForPageToBeReady();
 		num = getRandomNumber(2);
 		getBeginningBates().SendKeys(num);
@@ -17249,6 +17263,7 @@ public class ProductionPage {
 		gettxtBeginningBatesIDMinNumLength().SendKeys(num1);
 		base.stepInfo("Numbering and sorting page is filled without checked 'Family members together' checkbox");
 	}
+
 	/**
 	 * @throws InterruptedException
 	 * @Author Aathith
@@ -17303,6 +17318,7 @@ public class ProductionPage {
 
 		base.stepInfo("Generate production page is filled");
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -17317,7 +17333,7 @@ public class ProductionPage {
 			base.waitForElement(getTIFFTab());
 			getTIFFTab().Click();
 			driver.scrollPageToTop();
-			
+
 			getRotationDropDown().ScrollTo();
 			getRotationDropDown().selectFromDropdown().selectByVisibleText("Rotate 90 degrees clock-wise");
 			base.stepInfo("'Rotate 90 degrees clock-wise' is selected in Tiff");
@@ -17381,107 +17397,113 @@ public class ProductionPage {
 	/**
 	 * @author Gopinath
 	 * @Description :Method to get production name from completed production.
-	 * @return productionName : productionName is String value that returns name of completed production.
+	 * @return productionName : productionName is String value that returns name of
+	 *         completed production.
 	 */
-	public String getGeneratedProductionName(){
+	public String getGeneratedProductionName() {
 		String productionName = null;
 		try {
 			getProduction().isElementAvailable(10);
 			base.waitTime(2);
 			productionName = getProduction().getText().trim();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while getting production name from completed production."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while getting production name from completed production."
+					+ e.getLocalizedMessage());
 		}
 		return productionName;
 	}
+
 	/**
 	 * @author Brundha
 	 * @Description :Method to unzip the zipped file
 	 * 
 	 */
-	public void unzipping(String source,String Destination) throws ZipException  {
-		
-		ZipFile zipFile = new ZipFile(source);
-	    zipFile.extractAll(Destination);
-		
-	}
-	/**
+	public void unzipping(String source, String Destination) throws ZipException {
 
-	 * @Author Brundha
-	 * Description:verifying the belly band message in DAT section .
+		ZipFile zipFile = new ZipFile(source);
+		zipFile.extractAll(Destination);
+
+	}
+
+	/**
+	 * 
+	 * @Author Brundha Description:verifying the belly band message in DAT section .
 	 */
 	public void verifyingBellyBandMessageInDATSection(String Batesnumber) {
 		driver.scrollPageToTop();
 		base.waitForElement(getMarkCompleteLink());
 		getMarkCompleteLink().waitAndClick(10);
-		String ActualBellyBandMsg=getErrorMsgPopupInDAT().getText();
-		String ExpectedMsg="In the DAT configuration, at least one of the project fields is mapped to multiple DAT fields. Do you want to continue with this same configuration?";
-		
-		base.textCompareEquals(ActualBellyBandMsg, ExpectedMsg,"Message is displayed as Expected","Mesaage is not displayed as expected");
+		String ActualBellyBandMsg = getErrorMsgPopupInDAT().getText();
+		String ExpectedMsg = "In the DAT configuration, at least one of the project fields is mapped to multiple DAT fields. Do you want to continue with this same configuration?";
+
+		base.textCompareEquals(ActualBellyBandMsg, ExpectedMsg, "Message is displayed as Expected",
+				"Mesaage is not displayed as expected");
 		base.waitForElement(getOkButton());
 		getOkButton().Click();
 		base.VerifySuccessMessage("Mark Complete successful");
-		
+
 	}
-	
-/**
+
+	/**
 	 * @author Aathith.Senthilkumar
 	 * @param element
 	 * @param text
 	 */
 	public void verifyProdctionState(ElementCollection element, String text) {
-		
+
 		List<WebElement> elementList = null;
 		try {
 			elementList = element.FindWebElements();
 			for (WebElement wenElementNames : elementList) {
-				
+
 				String elementName = wenElementNames.getText().trim();
 				softAssertion.assertEquals(elementName, text);
 				softAssertion.assertAll();
-				
+
 			}
-			
-			base.passedStep(text +" status is displayed all production");
-			
+
+			base.passedStep(text + " status is displayed all production");
+
 		} catch (Exception E) {
 			base.failedStep("verification failed");
 			System.out.println(E);
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param col
 	 * @param text
 	 */
 	public void verifyProductionStateWebTableGridView(int col, String text) {
-		
+
 		try {
-			
-			for (int i = 1;i<=getGridViewWebTable(col).size();i++) {
-				
-				String elementName = getGridViewWebTable(i,col).getText().trim();
+
+			for (int i = 1; i <= getGridViewWebTable(col).size(); i++) {
+
+				String elementName = getGridViewWebTable(i, col).getText().trim();
 				boolean flag = elementName.contains(text);
 				softAssertion.assertTrue(flag);
 				softAssertion.assertAll();
-				
+
 			}
-			
-			base.passedStep(text +" status is displayed all production in grid view page");
-			
+
+			base.passedStep(text + " status is displayed all production in grid view page");
+
 		} catch (Exception E) {
 			base.failedStep("verification failed");
 			System.out.println(E);
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param element
 	 */
 	public void toggleOnCheck(Element element) {
 		driver.waitForPageToBeReady();
-		
+
 		element.isDisplayed();
 		String color = element.GetCssValue("background-color");
 		System.out.println(color);
@@ -17494,6 +17516,7 @@ public class ProductionPage {
 			base.failedStep("toggle off verifaction failed");
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -17512,116 +17535,116 @@ public class ProductionPage {
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param Batesvalue
 	 * @throws InterruptedException
 	 */
 	public void fillingGeneratePageAndVerfyingBatesRangeValue(String Batesvalue) throws InterruptedException {
-		//generating production:
-				SoftAssert softAssertion = new SoftAssert();
-				String expectedText = "Success";
+		// generating production:
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
 
-				base.waitForElement(getbtnProductionGenerate());
-				getbtnProductionGenerate().waitAndClick(10);
-				
-				verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+		base.waitForElement(getbtnProductionGenerate());
+		getbtnProductionGenerate().waitAndClick(10);
 
-				Reporter.log("Wait for generate to complete", true);
-				System.out.println("Wait for generate to complete");
-				UtilityLog.info("Wait for generate to complete");
-				driver.waitForPageToBeReady();
-				String Value = getBatesRange().getText();
-				System.out.println(Value);
+		verifyProductionStatusInGenPage("Reserving Bates Range Complete");
 
-				if (Value.contains(Batesvalue)) {
-					base.passedStep("Batesrange is value is verified");
-				} else {
-					base.failedStep("verification failed");
-				}
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
-					}
-				}), Input.wait120);
-				String actualText = getStatusSuccessTxt().getText();
-				System.out.println(actualText);
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+		driver.waitForPageToBeReady();
+		String Value = getBatesRange().getText();
+		System.out.println(Value);
 
-				softAssertion.assertTrue(actualText.contains(expectedText));
-				base.passedStep("Documents Generated successfully");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
-					}
-				}), Input.wait60);
-
-				// added thread.sleep to avoid exception while executing in batch
-				Thread.sleep(2000);
-				getConfirmProductionCommit().waitAndClick(10);
-
-				String PDocCount = getProductionDocCount().getText();
-				// added thread.sleep to avoid exception while executing in batch
-				Thread.sleep(1000);
-				System.out.println(PDocCount);
-				int Doc = Integer.parseInt(PDocCount);
-
-				Reporter.log("Doc - " + Doc, true);
-				System.out.println(Doc);
-				UtilityLog.info(Doc);
-
-				base.waitForElement(getCopyPath());
-				getCopyPath().waitAndClick(10);
-
-				base.waitForElement(getQC_Download());
-
-				getQC_Download().waitAndClick(10);
-				getQC_Downloadbutton_allfiles().waitAndClick(10);
-				base.VerifySuccessMessage("Your Production Archive download will get started shortly");
-				base.stepInfo("Generate production page is filled");
+		if (Value.contains(Batesvalue)) {
+			base.passedStep("Batesrange is value is verified");
+		} else {
+			base.failedStep("verification failed");
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
 			}
+		}), Input.wait120);
+		String actualText = getStatusSuccessTxt().getText();
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+			}
+		}), Input.wait60);
+
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(2000);
+		getConfirmProductionCommit().waitAndClick(10);
+
+		String PDocCount = getProductionDocCount().getText();
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(1000);
+		System.out.println(PDocCount);
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+		System.out.println(Doc);
+		UtilityLog.info(Doc);
+
+		base.waitForElement(getCopyPath());
+		getCopyPath().waitAndClick(10);
+
+		base.waitForElement(getQC_Download());
+
+		getQC_Download().waitAndClick(10);
+		getQC_Downloadbutton_allfiles().waitAndClick(10);
+		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+		base.stepInfo("Generate production page is filled");
+	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param Batesvalue
 	 * @throws InterruptedException
 	 */
-		public void fillingExportGeneratePageAndVerfyingBatesRangeValue(String Batesvalue) throws InterruptedException {
-				
-				SoftAssert softAssertion = new SoftAssert();
-				String expectedText = "Success";
+	public void fillingExportGeneratePageAndVerfyingBatesRangeValue(String Batesvalue) throws InterruptedException {
 
-				base.waitForElement(getbtnProductionGenerate());
-				getbtnProductionGenerate().waitAndClick(10);
-				
-				verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
 
-				Reporter.log("Wait for generate to complete", true);
-				System.out.println("Wait for generate to complete");
-				UtilityLog.info("Wait for generate to complete");
-				driver.waitForPageToBeReady();
-				String Value = getBatesRange().getText();
-				System.out.println(Value);
+		base.waitForElement(getbtnProductionGenerate());
+		getbtnProductionGenerate().waitAndClick(10);
 
-				if (Value.contains(Batesvalue)) {
-					base.passedStep("Batesrange is value is verified");
-				} else {
-					base.failedStep("verification failed");
-				}
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
-					}
-				}), Input.wait120);
-				String actualText = getStatusSuccessTxt().getText();
-				System.out.println(actualText);
+		verifyProductionStatusInGenPage("Reserving Bates Range Complete");
 
-				softAssertion.assertTrue(actualText.contains(expectedText));
-				base.passedStep("Documents Generated successfully");
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+		driver.waitForPageToBeReady();
+		String Value = getBatesRange().getText();
+		System.out.println(Value);
 
-				
+		if (Value.contains(Batesvalue)) {
+			base.passedStep("Batesrange is value is verified");
+		} else {
+			base.failedStep("verification failed");
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
 			}
+		}), Input.wait120);
+		String actualText = getStatusSuccessTxt().getText();
+		System.out.println(actualText);
 
-	
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+
+	}
+
 	/**
 	 * @author Brundha
 	 * @description :filling Document selection tab
@@ -17635,107 +17658,110 @@ public class ProductionPage {
 		getSelectFolder(foldername).waitAndClick(10);
 		driver.scrollingToBottomofAPage();
 		getIncludeFamilies().isDisplayed();
-		String color =(getIncludeFamilies()).GetCssValue("background-color");
+		String color = (getIncludeFamilies()).GetCssValue("background-color");
 		System.out.println(color);
 		String ExpectedColor = Color.fromString(color).asHex();
 		System.out.println(ExpectedColor);
 		String ActualColor = "#a9c981";
-		base.textCompareEquals(ActualColor,ExpectedColor,"Include families toggle is on by default", "Include families members toggle is not on by default");
+		base.textCompareEquals(ActualColor, ExpectedColor, "Include families toggle is on by default",
+				"Include families members toggle is not on by default");
 		base.stepInfo("Filled document selection tab");
 	}
+
 	/**
 	 * @author Brundha
 	 * @description :method for filling burn redaction with redaction tags.
 	 * 
 	 */
-	public void burnRedactionWithRedactionTags(String Tag1,String Tag2) {
-		
-			base.waitForElement(getClkLink_selectingRedactionTags());
-			getClkLink_selectingRedactionTags().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			base.waitForElement(getClkBtn_selectingRedactionTags());
-			getClkBtn_selectingRedactionTags().Click();
-			driver.waitForPageToBeReady();
-			base.waitForElement(BurnRedactionCheckBox(Tag1));
-			BurnRedactionCheckBox(Tag1).waitAndClick(10);
-			base.waitForElement(BurnRedactionCheckBox(Tag2));
-			BurnRedactionCheckBox(Tag2).waitAndClick(10);
-			driver.waitForPageToBeReady();
-			base.waitForElement(getClk_selectBtn());
-			getClk_selectBtn().Click();
-			driver.waitForPageToBeReady();
-			base.waitForElement(gettextRedactionPlaceHolder());
-			gettextRedactionPlaceHolder().Click();
-			gettextRedactionPlaceHolder().SendKeys(Input.searchString4);
-			base.stepInfo("Burn redaction  is filled successfully");
-		
+	public void burnRedactionWithRedactionTags(String Tag1, String Tag2) {
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(BurnRedactionCheckBox(Tag1));
+		BurnRedactionCheckBox(Tag1).waitAndClick(10);
+		base.waitForElement(BurnRedactionCheckBox(Tag2));
+		BurnRedactionCheckBox(Tag2).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(gettextRedactionPlaceHolder());
+		gettextRedactionPlaceHolder().Click();
+		gettextRedactionPlaceHolder().SendKeys(Input.searchString4);
+		base.stepInfo("Burn redaction  is filled successfully");
+
 	}
 
-	
 	/**
 	 * @author Brundha
 	 * @description :verifying include families toggle
 	 * 
 	 */
-	
-	public void verifyingIncludeFamiliesToggleInDocumentSelectionPage() {
-		
-	   driver.scrollPageToTop();
-	   getMarkCompleteLink().waitAndClick(10);
-	   base.VerifySuccessMessage("Mark Complete successful");
-	   base.waitTillElemetToBeClickable(getMarkInCompleteBtn());
-	   getMarkInCompleteBtn().Click();
-	   driver.scrollingToBottomofAPage();
-	   getIncludeFamilies().waitAndClick(10); 
-	   driver.scrollingToBottomofAPage();
-	   base.waitForElement(getIncludeFamilies());
-	   getIncludeFamilies().Click();
-	   driver.waitForPageToBeReady();
-	   getMarkCompleteLink().waitAndClick(10);
-	   if(getMarkCompleteLink().isDisplayed()) {
-	      getMarkCompleteLink().waitAndClick(10);
-	      base.VerifySuccessMessage("Mark Complete successful");
-		  base.passedStep("There is no error message as expected");
-	  }else {base.failedStep("Error message is displayed");  }
-	}	   
-		    	
 
-	
-	
+	public void verifyingIncludeFamiliesToggleInDocumentSelectionPage() {
+
+		driver.scrollPageToTop();
+		getMarkCompleteLink().waitAndClick(10);
+		base.VerifySuccessMessage("Mark Complete successful");
+		base.waitTillElemetToBeClickable(getMarkInCompleteBtn());
+		getMarkInCompleteBtn().Click();
+		driver.scrollingToBottomofAPage();
+		getIncludeFamilies().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getIncludeFamilies());
+		getIncludeFamilies().Click();
+		driver.waitForPageToBeReady();
+		getMarkCompleteLink().waitAndClick(10);
+		if (getMarkCompleteLink().isDisplayed()) {
+			getMarkCompleteLink().waitAndClick(10);
+			base.VerifySuccessMessage("Mark Complete successful");
+			base.passedStep("There is no error message as expected");
+		} else {
+			base.failedStep("Error message is displayed");
+		}
+	}
+
 	/**
 	 * @author Brundha
-	 * @description :filling natively produced docs with file type and verifying the warning message.
+	 * @description :filling natively produced docs with file type and verifying the
+	 *              warning message.
 	 * 
 	 */
 	public void fillingTIFFWithNativelyProducedDocsFileType(String Test) {
-		
-			driver.waitForPageToBeReady();
-			base.waitForElement(getTIFFChkBox());
-			getTIFFChkBox().Click();
-			driver.scrollingToBottomofAPage();
-			base.waitForElement(getTIFFTab());
-			getTIFFTab().Click();
-			driver.waitForPageToBeReady();
-			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-			getTIFF_EnableforPrivilegedDocs().Click();
-			base.waitForElement(getTiff_NativeDoc());
-			getTiff_NativeDoc().Click();
-			base.waitTillElemetToBeClickable(getFileTypeNativelyProducedDocs());
-			getFileTypeNativelyProducedDocs().Click();
-			base.waitForElement(getNativeDocsPlaceholder());
-			getNativeDocsPlaceholder().SendKeys(Test);
-			base.waitForElement(getTiff_NativeDoc());
-			getTiff_NativeDoc().Click();
-			driver.scrollPageToTop();
-			getMarkCompleteLink().waitAndClick(10);
-			base.VerifyWarningMessage("In the TIFF / PDF section, no values are specified in the placeholder configuration for the docs produced natively. Please check.");
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Click();
+		base.waitForElement(getTiff_NativeDoc());
+		getTiff_NativeDoc().Click();
+		base.waitTillElemetToBeClickable(getFileTypeNativelyProducedDocs());
+		getFileTypeNativelyProducedDocs().Click();
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(Test);
+		base.waitForElement(getTiff_NativeDoc());
+		getTiff_NativeDoc().Click();
+		driver.scrollPageToTop();
+		getMarkCompleteLink().waitAndClick(10);
+		base.VerifyWarningMessage(
+				"In the TIFF / PDF section, no values are specified in the placeholder configuration for the docs produced natively. Please check.");
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param prodName
 	 */
 	public void openExistingProduction(String prodName) {
-		
+
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		base.waitForElement(getGearIconForProdName(prodName));
 		getGearIconForProdName(prodName).waitAndClick(5);
@@ -17743,13 +17769,14 @@ public class ProductionPage {
 		base.waitForElement(getOpenWizard());
 		getOpenWizard().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		base.stepInfo("Opened Existing production : "+prodName);
+		base.stepInfo("Opened Existing production : " + prodName);
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
 	public void verifyProductionGenerateSuccussfully() {
-		
+
 		getDocumentGeneratetext().isElementAvailable(180);
 		String actualText = getStatusSuccessTxt().getText();
 		String expectedText = "Success";
@@ -17759,6 +17786,7 @@ public class ProductionPage {
 		base.passedStep("Documents Generated successfully");
 		base.stepInfo("Generation completed");
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param Batesvalue
@@ -17766,86 +17794,88 @@ public class ProductionPage {
 	 * @param suffix
 	 * @throws InterruptedException
 	 */
-	public void fillingGeneratePageAndVerfyingBatesRangeValue(String Batesvalue,String Prefix ,String suffix) throws InterruptedException {
-		//generating production:
-				SoftAssert softAssertion = new SoftAssert();
-				String expectedText = "Success";
+	public void fillingGeneratePageAndVerfyingBatesRangeValue(String Batesvalue, String Prefix, String suffix)
+			throws InterruptedException {
+		// generating production:
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
 
-				base.waitForElement(getbtnProductionGenerate());
-				getbtnProductionGenerate().waitAndClick(10);
-				
-				verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+		base.waitForElement(getbtnProductionGenerate());
+		getbtnProductionGenerate().waitAndClick(10);
 
-				Reporter.log("Wait for generate to complete", true);
-				System.out.println("Wait for generate to complete");
-				UtilityLog.info("Wait for generate to complete");
-				driver.waitForPageToBeReady();
-				String Value = getBatesRange().getText();
-				System.out.println(Value);
+		verifyProductionStatusInGenPage("Reserving Bates Range Complete");
 
-				if (Value.contains(Batesvalue)) {
-					base.passedStep("Batesrange is value is verified");
-				} else {
-					base.failedStep("verification failed");
-				}
-				if (Value.contains(Prefix)) {
-					base.passedStep("Prefix value is verified");
-				} else {
-					base.failedStep("verification failed");
-				}
-				if (Value.contains(suffix)) {
-					base.passedStep("suffix value is verified");
-				} else {
-					base.failedStep("verification failed");
-				}
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
-					}
-				}), Input.wait120);
-				String actualText = getStatusSuccessTxt().getText();
-				System.out.println(actualText);
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+		driver.waitForPageToBeReady();
+		String Value = getBatesRange().getText();
+		System.out.println(Value);
 
-				softAssertion.assertTrue(actualText.contains(expectedText));
-				base.passedStep("Documents Generated successfully");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
-					}
-				}), Input.wait60);
-
-				// added thread.sleep to avoid exception while executing in batch
-				Thread.sleep(2000);
-				getConfirmProductionCommit().waitAndClick(10);
-
-				String PDocCount = getProductionDocCount().getText();
-				// added thread.sleep to avoid exception while executing in batch
-				Thread.sleep(1000);
-				System.out.println(PDocCount);
-				int Doc = Integer.parseInt(PDocCount);
-
-				Reporter.log("Doc - " + Doc, true);
-				System.out.println(Doc);
-				UtilityLog.info(Doc);
-
-				base.waitForElement(getCopyPath());
-				getCopyPath().waitAndClick(10);
-
-				base.waitForElement(getQC_Download());
-
-				getQC_Download().waitAndClick(10);
-				getQC_Downloadbutton_allfiles().waitAndClick(10);
-				base.VerifySuccessMessage("Your Production Archive download will get started shortly");
-				base.stepInfo("Generate production page is filled");
+		if (Value.contains(Batesvalue)) {
+			base.passedStep("Batesrange is value is verified");
+		} else {
+			base.failedStep("verification failed");
 		}
+		if (Value.contains(Prefix)) {
+			base.passedStep("Prefix value is verified");
+		} else {
+			base.failedStep("verification failed");
+		}
+		if (Value.contains(suffix)) {
+			base.passedStep("suffix value is verified");
+		} else {
+			base.failedStep("verification failed");
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+			}
+		}), Input.wait120);
+		String actualText = getStatusSuccessTxt().getText();
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+			}
+		}), Input.wait60);
+
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(2000);
+		getConfirmProductionCommit().waitAndClick(10);
+
+		String PDocCount = getProductionDocCount().getText();
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(1000);
+		System.out.println(PDocCount);
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+		System.out.println(Doc);
+		UtilityLog.info(Doc);
+
+		base.waitForElement(getCopyPath());
+		getCopyPath().waitAndClick(10);
+
+		base.waitForElement(getQC_Download());
+
+		getQC_Download().waitAndClick(10);
+		getQC_Downloadbutton_allfiles().waitAndClick(10);
+		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+		base.stepInfo("Generate production page is filled");
+	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @throws InterruptedException
 	 */
-	public void fillingMP3FileWithBurnRedaction() throws InterruptedException {	
-		
+	public void fillingMP3FileWithBurnRedaction() throws InterruptedException {
+
 		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
 		base.clickButton(getAdvancedProductionComponent());
 		base.waitForElement(getMP3CheckBox());
@@ -17854,7 +17884,7 @@ public class ProductionPage {
 		base.clickButton(getMP3CheckReductionBoxEnable());
 		getMP3CheckReductionBoxEnable().Enabled();
 		base.clickButton(getMP3RatiobtnRedactiontag());
-		
+
 		driver.waitForPageToBeReady();
 		getMP3FilesRedactionTag().waitAndClick(10);
 		driver.scrollingToBottomofAPage();
@@ -17870,6 +17900,7 @@ public class ProductionPage {
 				"lst files toggle is not enabled by default");
 		driver.scrollPageToTop();
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param tag
@@ -17884,17 +17915,18 @@ public class ProductionPage {
 		base.waitForElement(getTagsCheckbox(tag));
 		getTagsCheckbox(tag).Click();
 		getInsertQueryBtnInPrivGaurd().Click();
-		
+
 		base.waitForElement(getRedactions());
 		getRedactions().waitAndClick(10);
 		base.waitForElement(getTagsCheckbox(tag1));
 		getTagsCheckbox(tag1).Click();
 		getInsertQueryBtnInPrivGaurd().Click();
-		
+
 		driver.waitForPageToBeReady();
 		getDocumentMatchesButton().waitAndClick(10);
 
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param prefixId
@@ -17916,11 +17948,11 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDSuffix());
 		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
-		
+
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
 		gettxtBeginningBatesIDMinNumLength().SendKeys("2");
-		
+
 		driver.scrollingToBottomofAPage();
 
 		base.waitForElement(getlstSortingMetaData());
@@ -17941,45 +17973,44 @@ public class ProductionPage {
 		base.stepInfo("Numbering and sorting section is filled");
 
 	}
-	   
-	/**
-	 * @Author Brundha
-	 * Description:Method to fill prefix and suffix in sorting tab
-	 */
-	public void fillingNumberingAndSortingTab(String prefixId, String suffixId,String begBate){
 
-	       base.waitForElement(getBeginningBates());
-			driver.waitForPageToBeReady();
-			getBeginningBates().SendKeys(begBate);
-			base.waitForElement(gettxtBeginningBatesIDPrefix());
-			gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
-			base.waitForElement(gettxtBeginningBatesIDSuffix());
-			gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
-			base.stepInfo("Filled numbering and sorting tab");
+	/**
+	 * @Author Brundha Description:Method to fill prefix and suffix in sorting tab
+	 */
+	public void fillingNumberingAndSortingTab(String prefixId, String suffixId, String begBate) {
+
+		base.waitForElement(getBeginningBates());
+		driver.waitForPageToBeReady();
+		getBeginningBates().SendKeys(begBate);
+		base.waitForElement(gettxtBeginningBatesIDPrefix());
+		gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
+		base.waitForElement(gettxtBeginningBatesIDSuffix());
+		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
+		base.stepInfo("Filled numbering and sorting tab");
 	}
-	
-	
+
 	/**
 	 * @author Brundha
 	 * @description :filling natively Section with filetype in component tab
 	 * 
 	 */
 	public void selectingNativeFileType() {
-			base.waitForElement(getNativeChkBox());
-			getNativeChkBox().Click();
-			base.waitForElement(getNativeTab());
-			getNativeTab().Click();
-			base.waitForElement(getNativeFileType());
-			getNativeFileType().ScrollTo();
-			getNativeFileType().Click();
-			base.stepInfo("Filled native section with file type");
+		base.waitForElement(getNativeChkBox());
+		getNativeChkBox().Click();
+		base.waitForElement(getNativeTab());
+		getNativeTab().Click();
+		base.waitForElement(getNativeFileType());
+		getNativeFileType().ScrollTo();
+		getNativeFileType().Click();
+		base.stepInfo("Filled native section with file type");
 	}
+
 	/**
 	 * @author Brundha
 	 * @description :filling Workproduct in tiff section
 	 * 
 	 */
-	
+
 	public void FillingWorkProductInTiffSection(String FolderName) {
 		driver.scrollingToBottomofAPage();
 		base.waitForElement(getTiffAdvanceBtn());
@@ -17992,8 +18023,9 @@ public class ProductionPage {
 		getWorkProductFolderName(FolderName).Click();
 		base.waitForElement(getAddSelected());
 		getAddSelected().Click();
-		
+
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param tagname
@@ -18002,7 +18034,8 @@ public class ProductionPage {
 	 * @throws InterruptedException
 	 * @Description : selecting 2 technical issue tag and enter placeholder
 	 */
-	public void fillingTiffSectionTechIssueWithEnteringText(String tagname, String tagname1 , String placeholder) throws InterruptedException {
+	public void fillingTiffSectionTechIssueWithEnteringText(String tagname, String tagname1, String placeholder)
+			throws InterruptedException {
 
 		base.waitForElement(getTIFFChkBox());
 		getTIFFChkBox().waitAndClick(5);
@@ -18030,7 +18063,7 @@ public class ProductionPage {
 
 		base.waitForElement(getPriveldge_TagTree(tagname));
 		getPriveldge_TagTree(tagname).waitAndClick(10);
-		
+
 		base.waitForElement(getPriveldge_TagTree(tagname1));
 		getPriveldge_TagTree(tagname1).waitAndClick(10);
 
@@ -18046,6 +18079,7 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @throws ZipException
@@ -18055,12 +18089,13 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		String name = getProduction().getText().trim();
 		String home = System.getProperty("user.home");
-		
+
 		unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads/");
-		System.out.println("Unzipped the downloaded files");					
+		System.out.println("Unzipped the downloaded files");
 		driver.waitForPageToBeReady();
 		base.stepInfo("Downloaded zip file was extracted");
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param firstFile
@@ -18070,33 +18105,37 @@ public class ProductionPage {
 	 * @param verificationText
 	 * @description Verifing placeholder text using ocr in downloaded image file
 	 */
-	public void OCR_Verification_In_Generated_Tiff(int firstFile, int lastFile, String prefixID, String suffixID, String verificationText) {
+	public void OCR_Verification_In_Generated_Tiff(int firstFile, int lastFile, String prefixID, String suffixID,
+			String verificationText) {
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		Ocr.setUp();
 		Ocr ocr = new Ocr();
-		ocr.startEngine("eng", Ocr.SPEED_FASTEST); 
-		
-		for(int i=firstFile; i<lastFile ;i++) {
-		String Tifffile = ocr.recognize(new File[] { new File(home+"/Downloads/VOL0001/Images/0001/"+prefixID+i+suffixID+".tiff") },
-				Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
-		System.out.println(Tifffile);
-		
-		if (Tifffile.contains(verificationText)) {
-			base.passedStep(verificationText+" is displayed in "+i+" file expected");
-		} else {
-			base.failedStep(verificationText+" verification failed");
-		}
+		ocr.startEngine("eng", Ocr.SPEED_FASTEST);
+
+		for (int i = firstFile; i < lastFile; i++) {
+			String Tifffile = ocr.recognize(
+					new File[] {
+							new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff") },
+					Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
+			System.out.println(Tifffile);
+
+			if (Tifffile.contains(verificationText)) {
+				base.passedStep(verificationText + " is displayed in " + i + " file expected");
+			} else {
+				base.failedStep(verificationText + " verification failed");
+			}
 		}
 		ocr.stopEngine();
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param fileType
 	 * @param placeholderText
 	 * @Description selecting only file type in tiff Native docs
 	 */
-	public void fillingTIFFWithNativelyProducedDocs(String fileType ,String placeholderText) {
+	public void fillingTIFFWithNativelyProducedDocs(String fileType, String placeholderText) {
 
 		try {
 			driver.waitForPageToBeReady();
@@ -18124,18 +18163,18 @@ public class ProductionPage {
 					"Exception occcured while filling tiff section with natively produced documents." + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author sowndarya.velraj
 	 * @param prefixId
 	 * @param suffixId
 	 * @param beginningBates
-	 *  @param sortData1
-	 *   @param sortData2
+	 * @param sortData1
+	 * @param sortData2
 	 * @throws InterruptedException
 	 */
-	public void fillingNumberingAndSortingWithSortingByMetaData(String prefixId, String suffixId, String beginningBates,String sortData1,String sortData2)
-			throws InterruptedException {
+	public void fillingNumberingAndSortingWithSortingByMetaData(String prefixId, String suffixId, String beginningBates,
+			String sortData1, String sortData2) throws InterruptedException {
 
 		base.waitForElement(getBeginningBates());
 		driver.waitForPageToBeReady();
@@ -18148,7 +18187,7 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDSuffix());
 		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
-		
+
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
 		num1 = getRandomNumber(1);
@@ -18175,6 +18214,7 @@ public class ProductionPage {
 		base.stepInfo("Numbering and sorting section is filled");
 
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param firstFile
@@ -18186,18 +18226,19 @@ public class ProductionPage {
 	public void isImageFileExist(int firstFile, int lastFile, String prefixID, String suffixID) {
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
-		for(int i=firstFile; i<lastFile ;i++) {
-		File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" +  prefixID + i + suffixID + ".tiff");
-		
-		if(TiffFile.exists()) {
-			base.passedStep("Tiff file are generated coreectly : "+prefixID + i + suffixID+".tiff");
-			System.out.println("passeed");
-		}else {
-			base.failedStep("verification failed");
-			System.out.println("failed");
-		}
+		for (int i = firstFile; i < lastFile; i++) {
+			File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff");
+
+			if (TiffFile.exists()) {
+				base.passedStep("Tiff file are generated coreectly : " + prefixID + i + suffixID + ".tiff");
+				System.out.println("passeed");
+			} else {
+				base.failedStep("verification failed");
+				System.out.println("failed");
+			}
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param firstFile
@@ -18206,123 +18247,421 @@ public class ProductionPage {
 	 * @param suffixID
 	 * @Description verify Text is generated in Production
 	 */
-		public void isTextFileExist(int firstFile, int lastFile, String prefixID, String suffixID) {
-			driver.waitForPageToBeReady();
-			String home = System.getProperty("user.home");
-			for(int i=firstFile; i<lastFile ;i++) {
-				File Textfile = new File(home + "/Downloads/VOL0001/Text/0001/" + prefixID + i + suffixID + ".txt");
-			
-				if(Textfile.exists()) {
-					base.passedStep("Text file are generated correctly : "+prefixID + i + suffixID+".txt");
-					System.out.println("passeed");
-				}else {
-					base.failedStep("verification failed");
-					System.out.println("failed");
-				}
-			}
-		}
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @param firstFile
-		 * @param lastFile
-		 * @param prefixID
-		 * @param suffixID
-		 * @Description Native Docx file is Generated in production
-		 */
-		public void isNativeDocxFileExist(int firstFile, int lastFile, String prefixID, String suffixID) {
-			driver.waitForPageToBeReady();
-			String home = System.getProperty("user.home");
-			for(int i=firstFile; i<lastFile ;i++) {
-				File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".docx");
-			
-				if(Native.exists()) {
-					base.passedStep("Native file are generated correctly : "+prefixID + i + suffixID+".docx");
-					System.out.println("passeed");
-				}else {
-					base.failedStep("verification failed");
-					System.out.println("failed");
-				}
-			}
-		}
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @param element
-		 * @param text
-		 * @Description verify values using get text in element
-		 */
-		public void verifyText(Element element , String text) {
-			driver.waitForPageToBeReady();
-			String value = element.getText().trim();
-			
-			if(value.equals(text)) {
-			softAssertion.assertEquals(value, text);
-			base.passedStep(text+"value is displayed correcly");
-			System.out.println("passed");
-			}else {
-				System.out.println("actual value : "+value);
-				System.out.println("passed value : "+ text);
+	public void isTextFileExist(int firstFile, int lastFile, String prefixID, String suffixID) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		for (int i = firstFile; i < lastFile; i++) {
+			File Textfile = new File(home + "/Downloads/VOL0001/Text/0001/" + prefixID + i + suffixID + ".txt");
+
+			if (Textfile.exists()) {
+				base.passedStep("Text file are generated correctly : " + prefixID + i + suffixID + ".txt");
+				System.out.println("passeed");
+			} else {
 				base.failedStep("verification failed");
+				System.out.println("failed");
 			}
 		}
-		
-		/**
-		 * @author Brundha
-		 * @description :Selecting CheckBox In Dat section
-		 * 
-		 */
-		public void selectingCheckboxInDatSection(int i) {
-			base.waitForElement(getRedactDATCheckBox(i));
-			getRedactDATCheckBox(i).Click();
-			base.waitForElement(getPrivledgedDATCheckBox(i));
-			getPrivledgedDATCheckBox(i).Click();
-			
-    }
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @param prefixID
-		 * @param suffixID
-		 * @param beginningBates
-		 * @throws IOException
-		 * @Description generated file pdf annotation verification 
-		 */
-		public void pdf_Verification_In_Generated_Pdf(String prefixID, String suffixID, String beginningBates) throws IOException {
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @Description Native Docx file is Generated in production
+	 */
+	public void isNativeDocxFileExist(int firstFile, int lastFile, String prefixID, String suffixID) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		for (int i = firstFile; i < lastFile; i++) {
+			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".docx");
+
+			if (Native.exists()) {
+				base.passedStep("Native file are generated correctly : " + prefixID + i + suffixID + ".docx");
+				System.out.println("passeed");
+			} else {
+				base.failedStep("verification failed");
+				System.out.println("failed");
+			}
+		}
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param element
+	 * @param text
+	 * @Description verify values using get text in element
+	 */
+	public void verifyText(Element element, String text) {
+		driver.waitForPageToBeReady();
+		String value = element.getText().trim();
+
+		if (value.equals(text)) {
+			softAssertion.assertEquals(value, text);
+			base.passedStep(text + "value is displayed correcly");
+			System.out.println("passed");
+		} else {
+			System.out.println("actual value : " + value);
+			System.out.println("passed value : " + text);
+			base.failedStep("verification failed");
+		}
+	}
+
+	/**
+	 * @author Brundha
+	 * @description :Selecting CheckBox In Dat section
+	 * 
+	 */
+	public void selectingCheckboxInDatSection(int i) {
+		base.waitForElement(getRedactDATCheckBox(i));
+		getRedactDATCheckBox(i).Click();
+		base.waitForElement(getPrivledgedDATCheckBox(i));
+		getPrivledgedDATCheckBox(i).Click();
+
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param prefixID
+	 * @param suffixID
+	 * @param beginningBates
+	 * @throws IOException
+	 * @Description generated file pdf annotation verification
+	 */
+	public void pdf_Verification_In_Generated_Pdf(String prefixID, String suffixID, String beginningBates)
+			throws IOException {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		PDDocument document = PDDocument
+				.load(new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID + ".pdf"));
+		if (!document.isEncrypted()) {
+			PDFTextStripper stripper = new PDFTextStripper();
+			String text = stripper.getText(document);
+			System.out.println("Text:" + text);
+			if (text != null) {
+				base.passedStep("Documents is produced with annotations");
+			}
+		}
+		document.close();
+	}
+
+	/**
+	 * * @author Vijaya.Rani
+	 * 
+	 * @param elementName
+	 * @throws InterruptedException
+	 */
+	public void clickBackBtnandSelectingNative(int Count, String tagname) throws InterruptedException {
+		int i;
+		for (i = 0; i < Count; i++) {
 			driver.waitForPageToBeReady();
-			String home = System.getProperty("user.home");
-			PDDocument document = PDDocument.load(new File(home+"/Downloads/VOL0001/PDF/0001/"+prefixID+beginningBates+suffixID+".pdf"));
+			getQC_backbutton().waitAndClick(10);
+		}
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		getMarkInCompleteBtn().waitAndClick(10);
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		// disabling enable for priviledged docs
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+		base.waitForElement(getTiff_NativeDoc());
+		getTiff_NativeDoc().Click();
+		base.waitForElement(getclkSelectTag());
+		getclkSelectTag().Click();
+		base.waitForElement(getPriveldged_TagTree(tagname));
+		getPriveldged_TagTree(tagname).Click();
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		Thread.sleep(Input.wait30 / 10);
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(tagname);
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @param verificationText
+	 * @throws IOException
+	 * @Description Downloaded pdf file verification
+	 */
+	public void pdf_Verification_In_Generated_PlaceHolder(int firstFile, int lastFile, String prefixID, String suffixID,
+			String verificationText) throws IOException {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		for (int i = firstFile; i < lastFile; i++) {
+			PDDocument document = PDDocument
+					.load(new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + i + suffixID + ".pdf"));
 			if (!document.isEncrypted()) {
-			    PDFTextStripper stripper = new PDFTextStripper();
-			    String text = stripper.getText(document);
-			    System.out.println("Text:" + text);
-			    if(text != null) {
-			    	base.passedStep("Documents is produced with annotations");
-			    }
+				PDFTextStripper stripper = new PDFTextStripper();
+				String text = stripper.getText(document);
+				System.out.println("Text:" + text);
+				if (text.contains(verificationText)) {
+					base.passedStep("Documents is produced with annotations");
+				}
+
 			}
 			document.close();
 		}
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @param firstFile
-		 * @param lastFile
-		 * @param prefixID
-		 * @param suffixID
-		 * @param verificationText
-		 * @throws IOException
-		 * @Description Downloaded pdf file verification
-		 */
-		public void pdf_Verification_In_Generated_PlaceHolder(int firstFile, int lastFile, String prefixID, String suffixID, String verificationText) throws IOException {
-			driver.waitForPageToBeReady();
-			String home = System.getProperty("user.home");
-			for(int i=firstFile; i<lastFile ;i++) {
-			PDDocument document = PDDocument.load(new File(home+"/Downloads/VOL0001/PDF/0001/"+prefixID+i+suffixID+".pdf"));
-			if (!document.isEncrypted()) {
-			    PDFTextStripper stripper = new PDFTextStripper();
-			    String text = stripper.getText(document);
-			    System.out.println("Text:" + text);
-			    if(text.contains(verificationText)) {
-			    	base.passedStep("Documents is produced with annotations");
-			    }
+	}
+	
+	
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify meta data list in slip sheet will be in ascending order on Tiff section.
+	 */
+	public void verifyMetaDataListSlipSheetInAscendingOrderTiffSec() {
+
+		try {
+			ArrayList<String> metadataList = new ArrayList<String>();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			getTiffAdvancedTab().ScrollTo();
+			getTiffAdvancedTab().isElementAvailable(15);
+			getTiffAdvancedTab().Click();
+			getSlipSheetToogle().isElementAvailable(15);
+			getSlipSheetToogle().Click();
+			List<WebElement> slipSheetMetaDataList = getSlipSheetMetaDataList().FindWebElements();
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				metadataList.add(metaDataVal);
 			}
-			document.close();
+			Collections.sort(metadataList,String.CASE_INSENSITIVE_ORDER);
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				if(!metadataList.get(i).contentEquals(metaDataVal)) {
+					base.failedStep("Mata data list is not in ascending order of slip sheet on Tiff section");
+				}
 			}
+			base.passedStep("Mata data list is in ascending order of slip sheet on Tiff section");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying meta data list in slip sheet will be in ascending order on Tiff section."+e.getMessage() );
 		}
+
+	}
+
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify meta data list in slip sheet will be in ascending order on pdf section.
+	 */
+	public void verifyMetaDataListSlipSheetInAscendingOrderPDFSec() {
+		try {
+			ArrayList<String> metadataList = new ArrayList<String>();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getPDFGenerateRadioButton().ScrollTo();
+			base.clickButton(getPDFGenerateRadioButton());
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			getTiffAdvancedTab().ScrollTo();
+			getTiffAdvancedTab().isElementAvailable(15);
+			getTiffAdvancedTab().Click();
+			getSlipSheetToogle().isElementAvailable(15);
+			getSlipSheetToogle().Click();
+			List<WebElement> slipSheetMetaDataList = getSlipSheetMetaDataList().FindWebElements();
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				metadataList.add(metaDataVal);
+			}
+			Collections.sort(metadataList,String.CASE_INSENSITIVE_ORDER);
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				if(!metadataList.get(i).contentEquals(metaDataVal)) {
+					base.failedStep("Mata data list is not in ascending order of slip sheet on pdf section");
+				}
+			}
+			base.passedStep("Mata data list is in ascending order of slip sheet on pdf section");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying meta data list in slip sheet will be in ascending order on pdf section."+e.getMessage() );
+		}
+	}
+
+
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify meta data list in drop down native will be in ascending order on tiff section.
+	 */
+	public void verifyMetaDataDropdownNativeAscendingOrderTiffSec() throws InterruptedException {
+		try {
+			ArrayList<String> metadataList = new ArrayList<String>();
+			getTIFFChkBox().isElementAvailable(15);
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			getTIFFTab().isElementAvailable(15);
+			getTIFFTab().Click();
+			driver.scrollingToBottomofAPage();
+			getclkNativelyProducedDocumentLnk().isElementAvailable(15);
+			getclkNativelyProducedDocumentLnk().Click();
+			getNativeMetaDataFieldLink().isElementAvailable(15);
+			getNativeMetaDataFieldLink().Click();
+			getNativeMetaDataFieldDropdown().isElementAvailable(10);
+			List<WebElement> slipSheetMetaDataList = getNativeMetaDataFieldDropdown().selectFromDropdown().getOptions();
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				metadataList.add(metaDataVal);
+			}
+			Collections.sort(metadataList,String.CASE_INSENSITIVE_ORDER);
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				if(!metadataList.get(i).contentEquals(metaDataVal)) {
+					base.failedStep("Mata data list is not in ascending order of native on tiff section");
+				}
+			}
+			base.passedStep("Mata data list is in ascending order of native on tiff section");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying meta data list in drop down native will be in ascending order on tiff section..."+e.getMessage() );
+		}
+	}
+
+
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify meta data list in drop down native will be in ascending order on pdf section.
+	 */
+	public void verifyMetaDataDropdownNativeAscendingOrderPdfSec() throws InterruptedException {
+		try {
+			ArrayList<String> metadataList = new ArrayList<String>();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getPDFGenerateRadioButton().ScrollTo();
+			base.clickButton(getPDFGenerateRadioButton());
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			getclkNativelyProducedDocumentLnk().isElementAvailable(15);
+			getclkNativelyProducedDocumentLnk().Click();
+			getNativeMetaDataFieldLink().isElementAvailable(15);
+			getNativeMetaDataFieldLink().Click();
+			getNativeMetaDataFieldDropdown().isElementAvailable(10);
+			List<WebElement> slipSheetMetaDataList = getNativeMetaDataFieldDropdown().selectFromDropdown().getOptions();
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				metadataList.add(metaDataVal);
+			}
+			Collections.sort(metadataList,String.CASE_INSENSITIVE_ORDER);
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				if(!metadataList.get(i).contentEquals(metaDataVal)) {
+					base.failedStep("Mata data list is not in ascending order of native on pdf section");
+				}
+			}
+			base.passedStep("Mata data list is in ascending order of native on pdf section");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying meta data list in drop down native will be in ascending order on pdf section..."+e.getMessage() );
+		}
+	}
+
+
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify meta data list in drop down exception will be in ascending order on tiff section.
+	 */
+	public void verifyMetaDataDropdownExceptionAscendingOrderTiffSec() {
+		try {
+			ArrayList<String> metadataList = new ArrayList<String>();
+			getTIFFChkBox().isElementAvailable(15);
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			getTIFFTab().isElementAvailable(15);
+			getTIFFTab().Click();
+			driver.scrollingToBottomofAPage();
+			getTechissue_toggle().isElementAvailable(15);
+			base.waitForElement(getTechissue_toggle());
+			getTechissue_toggle().Click();
+			getExceptionMetaDataFieldLink().isElementAvailable(10);
+			getExceptionMetaDataFieldLink().Click();
+			getNativeMetaDataFieldDropdown().isElementAvailable(10);
+			List<WebElement> slipSheetMetaDataList = getNativeMetaDataFieldDropdown().selectFromDropdown().getOptions();
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				metadataList.add(metaDataVal);
+			}
+			Collections.sort(metadataList,String.CASE_INSENSITIVE_ORDER);
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				if(!metadataList.get(i).contentEquals(metaDataVal)) {
+					base.failedStep("Mata data list is not in ascending order of exception on tiff section");
+				}
+			}
+			base.passedStep("Mata data list is in ascending order of exception on tiff section");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying meta data list in drop down exception will be in ascending order on tiff section." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify meta data list in drop down exception will be in ascending order on pdf section.
+	 */
+	public void verifyMetaDataDropdownExceptionAscendingOrderPDFSec() {
+		try {
+			ArrayList<String> metadataList = new ArrayList<String>();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getPDFGenerateRadioButton().ScrollTo();
+			base.clickButton(getPDFGenerateRadioButton());
+			driver.scrollingToBottomofAPage();
+			getTechissue_toggle().isElementAvailable(15);
+			base.waitForElement(getTechissue_toggle());
+			getTechissue_toggle().Click();
+			getExceptionMetaDataFieldLink().isElementAvailable(10);
+			getExceptionMetaDataFieldLink().Click();
+			getNativeMetaDataFieldDropdown().isElementAvailable(10);
+			List<WebElement> slipSheetMetaDataList = getNativeMetaDataFieldDropdown().selectFromDropdown().getOptions();
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				metadataList.add(metaDataVal);
+			}
+			Collections.sort(metadataList,String.CASE_INSENSITIVE_ORDER);
+			for(int i=0;i<slipSheetMetaDataList.size();i++) {
+				String metaDataVal = slipSheetMetaDataList.get(i).getText().trim();
+				if(!metadataList.get(i).contentEquals(metaDataVal)) {
+					base.failedStep("Mata data list is not in ascending order of exception on pdf section");
+				}
+			}
+			base.passedStep("Mata data list is in ascending order of exception on pdf section");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying meta data list in drop down exception will be in ascending order on pdf section." + e.getMessage());
+		}
+	}
+
 }

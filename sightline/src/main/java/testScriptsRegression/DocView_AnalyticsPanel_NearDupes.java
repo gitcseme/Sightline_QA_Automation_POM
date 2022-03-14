@@ -56,8 +56,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify that Search text box should be REMOVED from both the
 	 *              Original and NearDupe windows of near dupe comparison window
-	 *              RPMXCON-51707
-	 * stabilization done
+	 *              RPMXCON-51707 stabilization done
 	 */
 	@Test(priority = 1, enabled = true, groups = { "regression" })
 	public void verifySearchTextboxIsDisplayedInNearDupeComparisonWindow()
@@ -173,8 +172,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	/**
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify whether the DocID is getting displayed in the near
-	 *              dupe comparison window. RPMXCON-51710
-	 * stabilization done
+	 *              dupe comparison window. RPMXCON-51710 stabilization done
 	 */
 	@Test(priority = 2, enabled = true, groups = { "regression" })
 	public void verifyDocIdIsDisplayedInNearDupeComparisonWindow()
@@ -315,8 +313,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	/**
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify that 'Apply Coding to this Near Dupe' is not be
-	 *              visible for Project Admin user. RPMXCON-51715
-	 * stabilization done
+	 *              visible for Project Admin user. RPMXCON-51715 stabilization done
 	 */
 	@Test(priority = 3, enabled = true, groups = { "regression" })
 	public void verifyApplyCodingNearDupeNotvisibleForProjectAdminUser()
@@ -480,8 +477,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	/**
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify 'View in doc list' action when no document in
-	 *              Threaded Map panel. RPMXCON-50868
-	 * stabilization done
+	 *              Threaded Map panel. RPMXCON-50868 stabilization done
 	 */
 	@Test(priority = 5, enabled = true, groups = { "regression" })
 	public void verifyViewInDoclistWhenNoDocumentSelected() {
@@ -759,7 +755,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form child window 'RPMXCON-51381'
 	 * @throws InterruptedException
 	 * 
-	 * stabilization done
+	 *                              stabilization done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyCodeAsSameNearDupeSimilarChildWindow() throws InterruptedException {
@@ -1012,12 +1008,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify when Code same action selected from Analytics Panel >
 	 *              Near Dupe and Save/Complete clicked from coding form child
 	 *              window'RPMXCON-51379'
-	 * @throws InterruptedException
-	 * stabilization done
+	 * @throws InterruptedException stabilization done
 	 */
 
-	
-	 @Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyCodeAsSameWithCodingFormChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1123,8 +1117,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify when Code same action selected from Analytics Panel >
 	 *              Near Dupe child window and Save/Complete clicked from coding
 	 *              form parent window'RPMXCON-51380'
-	 * @throws InterruptedException
-	 * stabilization done
+	 * @throws InterruptedException stabilization done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyCodeAsSameNearDupeSimilarParentWindow() throws InterruptedException {
@@ -1289,7 +1282,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 11)
+	/// @Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyDocsCompletedApplyingStamp() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1390,7 +1383,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 12)
+	// @Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyDocsCompletedApplyingStampAndCodeSameAsLast() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1741,12 +1734,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              comparison window'RPMXCON-51702
 	 * @throws InterruptedException
 	 * @throws AWTException
+	 * stabilization done
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyPageNavigationInNearDupeDocumentInComparisonWindow() throws InterruptedException {
 		baseClass.stepInfo("Test Case Id: RPMXCON-51702");
 		String searchString = Input.searchString1;
-		String documentToBeSelected = Input.nearDupeDocumentForReviewer;
+		String documentToBeSelected = "ID00004847";
 
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
@@ -1768,6 +1762,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the near dedupe documents are getting listed in Mini Doc List");
 		docViewPage.verifyNdDocumentsPureHits(ndPureHit);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
 
 		baseClass.stepInfo("To Verify that document pagination should work from near dupe comparison window");
 
@@ -1796,6 +1791,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the near dedupe documents are getting listed in Mini Doc List");
 		docViewPage.verifyNdDocumentsPureHits(ndPureHit);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
 
 		baseClass.stepInfo(
 				"Verify that Near dupe window to see the differences should open, on click of the icon from Analytics Panel > Near Dupe child window");
@@ -1824,6 +1820,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the near dedupe documents are getting listed in Mini Doc List");
 		docViewPage.verifyNdDocumentsPureHits(ndPureHit);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
 
 		baseClass.stepInfo(
 				"Verify that Near dupe window to see the differences should open, on click of the icon from Analytics Panel > Near Dupe child window");
@@ -1844,8 +1841,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify code same chain link icon should be displayed for the
 	 *              document selected for code same on thread map'RPMXCON-51361'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyCodeAsSameThreadMapDocuments() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1863,7 +1861,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = Input.conceptualDocs1;
+		String documentToBeSelected = Input.newNearDupeDocId;
 
 		baseClass.stepInfo(
 				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
@@ -1908,8 +1906,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :The default columns viewable in the Family Members Tab of the
 	 *              Analytics Panel'RPMXCON-51288'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyColumsInFamilyMemBerTabAnalyticalPanel() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -1967,8 +1966,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify default columns viewable in the Near Dupe Tab of the
 	 *              Analytics Panel'RPMXCON-51289'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
-   // @Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyColumsInNearDupeTabAnalyticalPanel() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -1979,10 +1979,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		
+
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51289");
 		baseClass.stepInfo("Verify default columns viewable in the Near Dupe Tab of the Analytics Panel");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -2035,13 +2035,14 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify default columns viewable in the Conceptual Tab of the
 	 *              Analytics Panel'RPMXCON-51290'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyColumsInConceptualTabAnalyticalPanel() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.conceptualDocument;
+		String documentToBeSelected = Input.MetaDataId;
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
@@ -2103,8 +2104,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              thread map and Save/Complete clicked from coding form child
 	 *              window'RPMXCON-51371'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyCodeAsSameWithCodingFormChildWindowForThreadedDocs() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2122,8 +2124,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.threadDocWithToolTip;
-		String revDocsToBeSeletced = Input.newNearDupeDocId;
+		String documentToBeSelected = Input.newNearDupeDocId;
+		String revDocsToBeSeletced = Input.threadDocId;
 
 		baseClass
 				.stepInfo("Searching threaded documents based on search string and added to shopping cart successfuly");
@@ -2212,8 +2214,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              thread map child window and Save/Complete clicked from coding
 	 *              form parent window'RPMXCON-51372'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
-    //@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyCodeAsSameThreadDocumentsParentWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2231,8 +2234,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.conceptualDocs1;
-		String revDocsToBeSeletced = Input.newNearDupeDocId;
+		String documentToBeSelected = Input.newNearDupeDocId;
+		String revDocsToBeSeletced = Input.threadDocId;
 
 		baseClass
 				.stepInfo("Searching threaded documents based on search string and added to shopping cart successfuly");
@@ -2383,8 +2386,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              thread map child window and Save/Complete clicked from coding
 	 *              form child window 'RPMXCON-51373'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyCodeAsSameThreadMapSimilarChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2402,8 +2406,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.conceptualDocs1;
-		String revDocsToBeSeletced = Input.newNearDupeDocId;
+		String documentToBeSelected = Input.newNearDupeDocId;
+		String revDocsToBeSeletced = Input.threadDocId;
 
 		baseClass
 				.stepInfo("Searching threaded documents based on search string and added to shopping cart successfuly");
@@ -2635,13 +2639,14 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Family Member and Save/Complete clicked from coding form parent
 	 *              window'RPMXCON-51374'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyCodeAsSameFamilyMemberParentWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.familyDocument;
+		String documentToBeSelected = Input.threadDocId;
 		String revDocsToBeSelected = Input.familyDocumentForReviewer;
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2741,14 +2746,16 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Family Member and Save/Complete clicked from coding form child
 	 *              window'RPMXCON-51375'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyCodeSameFamilyMemberCodingFormChildWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.familyDocument;
+		String documentToBeSelected = Input.threadDocId;
 		String revDocsToBeSelected = Input.familyDocumentForReviewer;
+
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
@@ -2771,7 +2778,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		sessionSearch.bulkAssignFamilyMemberDocuments();
 		assignmentsPage.assignFamilyDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
 
-		// Impersonate to Reviewer	
+		// Impersonate to Reviewer
 		baseClass.impersonateRMUtoReviewer();
 
 		// Select assgn by reviewer
@@ -2891,14 +2898,16 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Family Member child window and Save/Complete clicked from coding
 	 *              form parent window'RPMXCON-51376'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyCodeAsSameFamilyMemberChildWindowCodingFormParentWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.familyDocument;
+		String documentToBeSelected = Input.threadDocId;
 		String revDocsToBeSelected = Input.familyDocumentForReviewer;
+
 		softAssertion = new SoftAssert();
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
@@ -3123,8 +3132,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Near Dupe and Save/Complete clicked from coding form parent
 	 *              window'RPMXCON-51378'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyCodeAsSameWithCodingFormParentWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3142,8 +3152,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeDocId1;
-		String revDocsToBeSelected = Input.nearDupeDocId;
+		String documentToBeSelected = Input.nearDupeCompletedDocId;
+		String revDocsToBeSelected = Input.nearDupeDocumentForReviewer;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
@@ -3232,12 +3242,12 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form child window 'RPMXCON-51377'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyCodeAsSameFamilyMemberSimilarChildWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.familyDocument;
+		String documentToBeSelected = Input.threadDocId;
 		String revDocsToBeSelected = Input.familyDocumentForReviewer;
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3495,8 +3505,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion = new SoftAssert();
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.conceptualDocs1;
-		String revDocToBeSelected = Input.newNearDupeDocId;
+		String documentToBeSelected = Input.newNearDupeDocId;
+		String revDocToBeSelected = Input.threadDocId;
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51362");
 		baseClass.stepInfo("Verify completed icon should be displayed for the completed documents on thread map tab");
@@ -3597,8 +3607,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeDocId1;
-		String revDocsToBeSelected = Input.nearDupeDocId;
+		String documentToBeSelected = Input.nearDupeCompletedDocId;
+		String revDocsToBeSelected = Input.nearDupeDocumentForReviewer;
 
 		// Search the doc and bulk Assign the particular docs
 		sessionSearch.basicContentSearch(searchString);
@@ -3641,7 +3651,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
 
-		
 		// popout Analytics Panel
 		docViewPage.popOutAnalyticsPanelForNearDupe();
 
@@ -3665,14 +3674,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewPage.verifyChainLinkAfterCoding();
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
-		
-		
+
 		driver.waitForPageToBeReady();
 		driver.Navigate().refresh();
-		
+
 		baseClass.waitForElement(docViewPage.getDocView_MiniDocList_SecDoc());
 		docViewPage.getDocView_MiniDocList_SecDoc().waitAndClick(5);
-		
+
 		docViewPage.popOutCodingFormChildWindowForNearDupe();
 		// verify Completed checkmark
 		docViewPage.verifyCheckMark();
@@ -3765,8 +3773,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion = new SoftAssert();
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected =Input.nearDupeDocId1;
-		String revDocsToBeSelected = Input.nearDupeDocId;
+		String documentToBeSelected = Input.nearDupeCompletedDocId;
+		String revDocsToBeSelected = Input.nearDupeDocumentForReviewer;
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 
@@ -3956,8 +3964,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.NewDocId;
-		String revDocToBeSelected= Input.conceptualDocument;
+		String documentToBeSelected = Input.conceptualDocumentReviewer;
+		String revDocToBeSelected = Input.conceptualDocument;
 		baseClass.stepInfo("Test case Id: RPMXCON-51420");
 		baseClass.stepInfo(
 				"To verify that user has selected an Analytics Panel > Conceptual tab and completed document, the Analytics Panel Tab previously selected must remain.");
@@ -4143,8 +4151,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion = new SoftAssert();
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeDocId1;
-		String revDocsToBeSelected = Input.nearDupeDocId;
+		String documentToBeSelected = Input.nearDupeCompletedDocId;
+		String revDocsToBeSelected = Input.nearDupeDocumentForReviewer;
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 
@@ -4399,7 +4407,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.NewDocId;
+		String documentToBeSelected = Input.conceptualDocumentReviewer;
 		String revDocsToBeSelected = Input.conceptualDocument;
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51424");
@@ -4647,8 +4655,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify that for email threaded documents should be displayed
 	 *              though Inclusive Email is either Yes or NO'RPMXCON-51514'
 	 * @throws InterruptedException
+	 * stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyInclusiveEmailThreadMapDocuments() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4667,7 +4676,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = Input.conceptualDocs1;
+		String documentToBeSelected = Input.threadDocId;
 
 		baseClass.stepInfo(
 				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
@@ -4681,7 +4690,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo(
 				"Verify whether the threaded documents has documents which has Inclusive emails is either Yes or No");
 		docViewAnalytics.verifyThreadDocsDisplayDocsIrrespectiveOfInclusiveEmailValue();
-		loginPage.logout();	
+		loginPage.logout();
 
 	}
 
@@ -4697,10 +4706,12 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 		try {
 //			loginPage.logout();
-			loginPage.quitBrowser();
+			loginPage.closeBrowser();
+//			loginPage.quitBrowser();
 		} catch (Exception e) {
-			loginPage.quitBrowser();
-			//Indium-Stabilized
+			loginPage.closeBrowser();
+//			loginPage.quitBrowser();
+			// Indium-Stabilized
 //			LoginPage.clearBrowserCache();
 		}
 	}
@@ -4708,7 +4719,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 	@AfterClass(alwaysRun = true)
 	public void close2() {
 		try {
-			//Indium-Stabilized
+			loginPage.closeBrowser();
+			// Indium-Stabilized
 //			LoginPage.clearBrowserCache();
 		} catch (Exception e) {
 			// no such session

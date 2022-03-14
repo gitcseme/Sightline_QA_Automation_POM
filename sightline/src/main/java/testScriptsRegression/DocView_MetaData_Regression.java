@@ -1311,6 +1311,82 @@ public class DocView_MetaData_Regression {
 		docViewMetaData.verifyMetadataPopUpColumns();
 		
 	}
+	
+
+	/**
+	 * @author Gopinath
+	 * @throws InterruptedException 
+	 * @Testcase_Id : RPMXCON-48802 : Verify that DocView Metadata Panel data should not go missing in an assignment.
+	 * @description : Verify that DocView Metadata Panel data should not go missing in an assignment.
+	 */
+
+	@Test(groups = { "regression" }, priority = 23)
+	public void verifyMeataDataPanelDisplayedByAssignmentsView() throws InterruptedException {
+		baseClass=new BaseClass(driver);
+		baseClass.stepInfo("RPMXCON-48802 DocView/Meatadata-sprint:08");
+		baseClass.stepInfo("#### Verify that DocView Metadata Panel data should not go missing in an assignment.. ####");
+		String assignmentName = Input.randomText + Utility.dynamicNameAppender();
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		AssignmentsPage assgnPage = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Navigate To Assignments Page");
+		assgnPage.navigateToAssignmentsPage();
+
+		baseClass.stepInfo("Create Assignment");
+		assgnPage.createAssignment(assignmentName, Input.codeFormName);
+
+		SessionSearch search = new SessionSearch(driver);
+
+		baseClass.stepInfo("Navigate To Session Search Page URL");
+		search.navigateToSessionSearchPageURL();
+
+		baseClass.stepInfo("Basic Content Search");
+		search.basicContentSearch(Input.testData1);
+
+		baseClass.stepInfo("Bulk Assign Existing");
+		search.bulkAssignExisting(assignmentName);
+
+		baseClass.stepInfo("Created a assignment " + assignmentName);
+
+		baseClass.selectproject();
+
+		baseClass.stepInfo("Navigate To Assignments Page");
+		assgnPage.navigateToAssignmentsPage();
+
+		baseClass.stepInfo("Edit Assignment Using Pagination Concept");
+		assgnPage.editAssignmentUsingPaginationConcept(assignmentName);
+
+		baseClass.stepInfo("Add Reviewer And Distribute Docs");
+		assgnPage.addReviewerAndDistributeDocs();
+
+		baseClass.stepInfo("Navigate To Assignments Page");
+		assgnPage.navigateToAssignmentsPage();
+
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		baseClass.stepInfo("Select assignment to view in doc view");
+		assgnPage.selectAssignmentToViewinDocview(assignmentName);
+
+		docView = new DocViewPage(driver);
+
+		baseClass.stepInfo("Navigate To Doc View Page URL");
+		docView.navigateToDocViewPageURL();
+
+		baseClass.stepInfo("Verify Meta Data Panel Is Enabled");
+		docViewMetaDataPage.verifyMetaDataPanelIsEnabled();
+
+		baseClass.stepInfo("Navigate To Assignments Page");
+		assgnPage.navigateToAssignmentsPage();
+
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+		assgnPage.deleteAssignment(assignmentName);
+	}
+
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

@@ -129,13 +129,16 @@ public class BatchRedactionRegression {
 
 	/**
 	 * @throws InterruptedException
-	 * @created By Jeevitha.R Description: Verify that Relevant message appears on
-	 *          "Batch Redaction" screen when User tries to Perform Batch Redaction
-	 *          on Saved Query.(RPMXCON-53453)(RPMXCON-53455) Description:Verify
-	 *          when user clicks 'Analyze Group for Redaction' for the saved search
-	 *          group with some analyzed saved searches (RPMXCON-53454)
-	 *          description:Verify the inline document count details displayed in
-	 *          'Pre-Redaction Report' pop up for the saved search (RPMXCON-53452)
+	 * @created By Jeevitha.R
+	 * @Description: Verify that Relevant message appears on "Batch Redaction"
+	 *               screen when User tries to Perform Batch Redaction on Saved
+	 *               Query.(RPMXCON-53453)(RPMXCON-53455)
+	 * @Description:Verify when user clicks 'Analyze Group for Redaction' for the
+	 *                     saved search group with some analyzed saved searches
+	 *                     (RPMXCON-53454)
+	 * @description:Verify the inline document count details displayed in
+	 *                     'Pre-Redaction Report' pop up for the saved search
+	 *                     (RPMXCON-53452)
 	 * 
 	 */
 	@Test(groups = { "regression" }, priority = 1)
@@ -146,7 +149,8 @@ public class BatchRedactionRegression {
 
 		// Edit Profile Language to English.
 		login.editProfile("English - United States");
-		base.stepInfo("RPMXCON-53453,RPMXCON-53455,RPMXCON-53454  Batch Redaction");
+		base.stepInfo("RPMXCON-53453,RPMXCON-53455,RPMXCON-53454,  Batch Redaction");
+		base.stepInfo("Test case Id:RPMXCON-53452");
 
 		// Create saved search
 		session.basicContentSearch(Input.testData1);
@@ -162,7 +166,6 @@ public class BatchRedactionRegression {
 		base.stepInfo("Clicked No Button");
 
 		// Verify Inline Documents count
-		base.stepInfo("Test case Id:RPMXCON-53452");
 		batch.mySavedSearchRedaction();
 
 		login.logout();
@@ -197,11 +200,13 @@ public class BatchRedactionRegression {
 	/**
 	 * 
 	 * @throws InterruptedException
-	 * @Author Jeevitha Description: Verify Rollback for the batch redactions for
-	 *         the saved search group/saved search after renaming from My
-	 *         searches/shared with security group(RPMXCON-53469) Description:Verify
-	 *         that once Rollback is successful user should be able to view the
-	 *         report for same from batch redaction history( RPMXCON-48808)
+	 * @Author Jeevitha
+	 * @Description: Verify Rollback for the batch redactions for the saved search
+	 *               group/saved search after renaming from My searches/shared with
+	 *               security group(RPMXCON-53469)
+	 * @Description:Verify that once Rollback is successful user should be able to
+	 *                     view the report for same from batch redaction history(
+	 *                     RPMXCON-48808)
 	 * 
 	 * 
 	 */
@@ -1119,7 +1124,7 @@ public class BatchRedactionRegression {
 
 		// verify History status
 		batch.verifyBatchHistoryStatus(search);
-		
+
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		session.ViewInDocView();
 		session.checkBatchRedactionCount();
@@ -1338,7 +1343,7 @@ public class BatchRedactionRegression {
 		login.logout();
 
 		// login as RMU
-		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		batch.verifyBatchReductionMenuFlow(assignName);
 
 		login.logout();
@@ -1438,7 +1443,7 @@ public class BatchRedactionRegression {
 		// modifications to do : "Yes" -
 		batch.getConfirmationBtn("Yes").waitAndClick(5);
 
-		batch.verifyHistoryStatus2(search, purehit);
+		batch.waitUntilStatusUpdate(search);
 
 		// To make sure we are in basic search page
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -1524,7 +1529,7 @@ public class BatchRedactionRegression {
 		// modifications to do : "Yes" -
 		batch.getConfirmationBtn("Yes").waitAndClick(5);
 
-		batch.verifyHistoryStatus2(search, purehit);
+		batch.waitUntilStatusUpdate(search);
 
 		driver.waitForPageToBeReady();
 		String batchId2 = batch.getBatchId(search).getText();
@@ -1568,7 +1573,7 @@ public class BatchRedactionRegression {
 		// modifications to do : "Yes" -
 		batch.getConfirmationBtn("Yes").waitAndClick(5);
 
-		batch.verifyHistoryStatus2(search, purehit);
+		batch.waitUntilStatusUpdate(search);
 
 		driver.waitForPageToBeReady();
 		String batchId1 = batch.getBatchId(search).getText();
@@ -1901,13 +1906,11 @@ public class BatchRedactionRegression {
 		login.logout();
 	}
 
-
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }, };
 		return users;
 	}
-
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
@@ -1918,18 +1921,18 @@ public class BatchRedactionRegression {
 			baseClass.screenShot(result);
 			login.logoutWithoutAssert();
 		}
-	login.quitBrowser();
+		login.closeBrowser();
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
 
 		try {
-			driver.scrollPageToTop();
-
-			login.closeBrowser();
+//			driver.scrollPageToTop();
+//
+//			login.closeBrowser();
 		} finally {
-			login.clearBrowserCache();
+//			login.clearBrowserCache();
 		}
 	}
 

@@ -1307,31 +1307,30 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath("//div[@class='pull-right']//div[@id='counterAll']");
 	}
 
-	
 	public Element textViewTab() {
 		return driver.FindElementById("liDocumentTxtView");
 	}
-	
+
 	public Element translationsViewTab() {
 		return driver.FindElementById("liDocumentTranslationsView");
 	}
-	
+
 	public Element defaultViewTab() {
 		return driver.FindElementById("liDocumentDefaultView");
 	}
-	
+
 	public Element imagesTabSlider() {
 		return driver.FindElementById("slider_divDocViewerImage");
 	}
-	
+
 	public Element ImagesTabRightRotate() {
 		return driver.FindElementById("rotateRight_divDocViewerImage");
 	}
-	
+
 	public Element ImagesTabLeftRotate() {
 		return driver.FindElementById("rotateLeft_divDocViewerImage");
 	}
-	
+
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements
@@ -2583,12 +2582,13 @@ public class DocViewRedactions {
 				"Given access for these SG's " + securityGroup1 + " " + securityGroup2 + "  for this user" + user);
 	}
 
-	/*
-	 * Steffy 18/01/2022 Method for assigning access to RMU user for newly created
-	 * SGs From PA user provide access to SGs for RMU-- Needed few wait times to
-	 * make the method robust
+	/**
+	 * @author Steffy.D Method for assigning access to RMU user for newly created
+	 *         SGs From PA user provide access to SGs for RMU
+	 * @param securityGroup1 SG for which user access needs to be given
+	 * @param user           Name of the user for which SG access needed
+	 * @throws Exception
 	 */
-
 	public void assignAccesstoSGs(String securityGroup1, String user) throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
@@ -2764,12 +2764,10 @@ public class DocViewRedactions {
 
 	}
 
-	/*
-	 * @author Steffy
-	 * 
-	 * @Description -- Method to verify whether the highlighted text in docview are
-	 * from keyword groups
-	 * 
+	/**
+	 * @author Steffy.D Method to verify whether the highlighted text in docview are
+	 *         from keyword groups
+	 * @throws Exception
 	 */
 	public void verifyHighlightedTextsAreDisplayed() throws Exception {
 		try {
@@ -3588,11 +3586,13 @@ public class DocViewRedactions {
 
 	}
 
-	/*
-	 * @author Steffy Method to validate persistent hit panel against doc
-	 * highlighted count
-	 */
+	
 
+	/**
+	 * Method to validate persistent hit panel against doc highlighted count
+	 * @author Steffy.D
+	 * @param term Term for which persistent hits needs to be verified
+	 */
 	public void validatePersistentPanelHitCountAgainstDocHighlightedCount(String term) {
 		Robot robot;
 		try {
@@ -4107,12 +4107,12 @@ public class DocViewRedactions {
 				.moveByOffset(offsetx, offsety).release().build().perform();
 
 	}
-	
+
 	/**
 	 * @author Krishna Date: 03/02/22 Modified date: N/A Modified by: N/A
 	 * @description Verify ThumnbnailsPanel is displayed on Docview.
 	 */
-	
+
 	public void verifyThumbNailsPanelDisplayed() {
 		driver.waitForPageToBeReady();
 		base = new BaseClass(driver);
@@ -4124,13 +4124,15 @@ public class DocViewRedactions {
 			base.failedStep("The thumbnail Panel menu is NOT displayed");
 		}
 	}
-	
+
 	/**
 	 * @author Krishna Date: 03/02/22 Modified date: N/A Modified by: N/A
-	 * @description verify different type of Documents in minidocList on Thumbnailspanel is displayed.
+	 * @description verify different type of Documents in minidocList on
+	 *              Thumbnailspanel is displayed.
 	 * @Param pdfDocId,xlsExcelDocId,tiffDocId,pptDocId,messageDocId
 	 */
-	public void verifyDifferentTypesOfDocsInThumbNailsPanel(String pdfDocId,String xlsExcelDocId,String tiffDocId,String pptDocId,String messageDocId ) throws InterruptedException {
+	public void verifyDifferentTypesOfDocsInThumbNailsPanel(String pdfDocId, String xlsExcelDocId, String tiffDocId,
+			String pptDocId, String messageDocId) throws InterruptedException {
 		driver.waitForPageToBeReady();
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4169,9 +4171,9 @@ public class DocViewRedactions {
 		docView.ScrollAndSelectDocument(messageDocId);
 		driver.waitForPageToBeReady();
 		docViewRedact.clickingThumbnailIcon();
-		docViewRedact.verifyThumbNailsPanelDisplayed();	
+		docViewRedact.verifyThumbNailsPanelDisplayed();
 		base.passedStep("Thumbnails of messagedocs page is displayed in thumbnail panel");
-	
+
 	}
 
 }

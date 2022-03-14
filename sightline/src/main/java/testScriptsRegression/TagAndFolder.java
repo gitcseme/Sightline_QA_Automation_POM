@@ -15,7 +15,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;

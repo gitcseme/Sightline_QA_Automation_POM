@@ -7382,37 +7382,36 @@ public class SessionSearch {
 	}
 
 	/**
-	 * @author Gopianth
+	 * Modified on 03/09/2022
+	 * @author Gopinath
 	 * @description-This method verify pure hit count with many production count.
 	 * @param productionCount : productionCount is integer value that production
 	 *                        count got from production.
 	 */
 	public void verifyPureHitsCountWithManyProductionCount(int productionCount) {
-		try {
-			try {
-				getYesQueryAlert().waitAndClick(8);
-			} catch (Exception e) {
+		if(getYesQueryAlert().isDisplayed()) {
+			getYesQueryAlert().waitAndClick(8);}
+			else {
+			driver.waitForPageToBeReady();
 			}
+
 			List<WebElement> elemnts = getDocCount().FindWebElements();
 
 			// verify counts for all the tiles
 			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return elemnts.get(elemnts.size() - 1).getText().matches("-?\\d+(\\.\\d+)?");
-				}
+			public Boolean call() {
+			return elemnts.get(elemnts.size() - 1).getText().matches("-?\\d+(\\.\\d+)?");
+			}
 			}), Input.wait120);
 
+
+
 			int pureHit = Integer.parseInt(elemnts.get(elemnts.size() - 1).getText());
-			if (pureHit == productionCount)
-				base.passedStep("Pure hit count is equal production count");
-			else
-				base.failedStep("Pure hit count is not equal production count");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occcured while verifying pure hit count with production count" + e.getMessage());
-		}
-
+			if (pureHit == productionCount) {
+			base.passedStep("Pure hit count is equal production count");}
+			else {
+			base.failedStep("Pure hit count is not equal production count");
+			}
 	}
 
 	/**
@@ -10399,10 +10398,14 @@ public class SessionSearch {
 			base.waitTillElemetToBeClickable(getAdvancedSearchTextArea());
 			getAdvancedSearchTextArea().waitAndClick(10);
 			driver.waitForPageToBeReady();
+			base.waitForElement(getAdvancedSearchTextArea());
 			getAdvancedSearchTextArea().Clear();
+			base.waitForElement(getAdvancedSearchTextArea());
 			getAdvancedSearchTextArea().SendKeys(SearchString);
-			base.waitTillElemetToBeClickable(getModifysearchOKBtn());
-			getModifysearchOKBtn().waitAndClick(10);
+			base.waitForElement(getModifysearchOKBtn());
+			getModifysearchOKBtn().waitAndClick(20);
+			base.waitTime(3);
+			driver.waitForPageToBeReady();
 			base.passedStep("Ok button is clicked");
 		} else {
 			base.waitTillElemetToBeClickable(getModifysearchNOBtn());
@@ -10422,7 +10425,6 @@ public class SessionSearch {
 		UtilityLog.info("Serach is done and PureHit is : " + pureHit);
 
 		return pureHit;
-
 	}
 
 	/**

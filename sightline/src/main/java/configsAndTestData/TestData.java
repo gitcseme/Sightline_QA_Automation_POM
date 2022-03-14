@@ -348,6 +348,13 @@ public class TestData {
 	public String MetaDataReciepientsDomain;
 	public String MetaDataDomainName;
     public String KeyWordColour;
+    public  String sameThreadDocs_EmailThreadID;
+   	public  String sameFamilyDocs_FamilyID;
+   	public  String IngestionName_PT;
+   	public  String IngestionName_UAT;
+   	public  String metadataIngestion;
+   	public  String custodianName_Andrew;
+   	public  String custodianName_allen;
     public  String TermOperator;
 	public String signDocumentId() {
 		// TODO Auto-generated method stub
@@ -451,6 +458,7 @@ public class TestData {
 		//Added by jayanthi
 		public String TallySearch;
 		public String TallyCN;
+		
 
 		//Added by Gopinath - 05/01/2021
 		public String downloadDocID;
@@ -540,6 +548,8 @@ public class TestData {
 		public String ingDocFileType ;
 		public String lessThan500PagesDocId;
 		public String d500PagesDocId;
+		public String SearchString_Audio;
+
 		
 		
 		//Added by Mohan (PT Env DocIDs)
@@ -575,6 +585,7 @@ public class TestData {
 		
 		
 		
+
 		
 }
 

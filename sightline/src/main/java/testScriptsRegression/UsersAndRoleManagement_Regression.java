@@ -591,6 +591,150 @@ public class UsersAndRoleManagement_Regression {
 		loginPage.logout();
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 09/03/2022 Modified date:NA Modified by:NA
+	 * Description :Verify when user enters First Name to search in 'Filter by user name' text 
+	 * box and hits enter key. 'RPMXCON-53179' sprint-13
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
+	public void validatingEnterFirstNameSearchFilterByUserName() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53179");
+		baseClass.stepInfo("Verify when user enters First Name to search in 'Filter by user name' text box and hits enter key.");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		String firstName = "Automation";
+		
+		// Login As SA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+
+		userManage.passingUserName(firstName);
+		userManage.applyFilter();
+		baseClass.stepInfo("Apply Filter Button in clicked successfully");
+				
+		driver.waitForPageToBeReady();
+		String AfterfilterUserName=userManage.getFirstNameTab().getText().trim();
+		System.out.println(AfterfilterUserName);
+		
+		softAssertion.assertEquals(firstName, AfterfilterUserName);
+		baseClass.passedStep("Users containing the entered first name is searched and listed under the firstName user list is Displayed Successfully");
+		softAssertion.assertAll();
+		
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 09/03/2022 Modified date:NA Modified by:NA
+	 * Description :Verify when user enters Last Name to search in 'Filter by user name' text box and 
+	 * clicks to Apply. 'RPMXCON-53178' sprint-13
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
+	public void validatingEnterLastNameSearchFilterByUserName() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53178");
+		baseClass.stepInfo("Verify when user enters Last Name to search in 'Filter by user name' text box and clicks to Apply.");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		String lastName = "Indium";
+		
+		// Login As SA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+
+		userManage.passingUserName(lastName);
+		userManage.applyFilter();
+		baseClass.stepInfo("Apply Filter Button in clicked successfully");
+				
+		driver.waitForPageToBeReady();
+		String AfterfilterUserLastName=userManage.getLastNameTab().getText().trim();
+		System.out.println(AfterfilterUserLastName);
+		
+		softAssertion.assertEquals(lastName, AfterfilterUserLastName);
+		baseClass.passedStep("Users containing the entered Last name is searched and listed under the lastName user list is Displayed Successfully");
+		softAssertion.assertAll();
+		
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:10/03/2022 Modified by: Baskar
+	 * Description :Verify RMU can edit the user within his security group
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 11)
+	public void validatingRmuUser() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52680");
+		baseClass.stepInfo("Verify RMU can edit the user within his security group");
+		userManage = new UserManagement(driver);
+		SoftAssert assertion = new SoftAssert();
+
+		// login
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		String expectedURL = Input.url + "User/UserListView";
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		String actualURL = driver.getUrl();
+		assertion.assertEquals(expectedURL, actualURL);
+		baseClass.stepInfo("Rmu user at the Manage userlist page");
+		userManage.passingUserName(Input.rev1userName);
+		userManage.applyFilter();
+		// editing the user
+		userManage.editLoginUser();
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.nativeDownload();
+		boolean flagPopUp=userManage.getPopUpMessageEditUser().Displayed();
+		assertion.assertTrue(flagPopUp);
+		userManage.editLoginUser();
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.nativeDownload();
+		boolean flagPopUps=userManage.getPopUpMessageEditUser().Displayed();
+		assertion.assertTrue(flagPopUps);
+		assertion.assertAll();
+		baseClass.passedStep("Rmu user can able to edit the user with his security group");
+        
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:10/03/2022 Modified by: Baskar
+	 * Description :Verify list box should be displayed for security group on 
+	 *              edit user pop up for RMU and Reviewer
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
+	public void validatingForRmuUserSecurityGroupListBox() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52660");
+		baseClass.stepInfo("Verify list box should be displayed for security "
+				+ "group on edit user pop up for RMU and Reviewer");
+		userManage = new UserManagement(driver);
+		SoftAssert assertion = new SoftAssert();
+
+		// login
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		baseClass.stepInfo("Sa user at the Manage userlist page");
+		userManage.passingUserName(Input.rmu1userName);
+		userManage.applyFilter();
+		// editing the user``
+		userManage.editFunctionality(Input.projectName);
+		driver.waitForPageToBeReady();
+		// validating security group list box
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#s1').scrollBy(0,2000)");
+		boolean securityScrollList=(boolean)((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#ddlSg').scrollHeight>document.querySelector('#ddlSg').clientHeight;");
+		assertion.assertTrue(securityScrollList);
+		baseClass.passedStep("Security group list box displayed in sa user manage userlist in edit popup window");
+		int count=userManage.getSecurityGroupList().size();
+		baseClass.stepInfo("Security group list box displayed with :" +count+" different SG Group");
+		System.out.println(count);
+		
+		assertion.assertAll();
+        
+		// logout
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

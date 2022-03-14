@@ -2538,7 +2538,7 @@ public class SavedSearch {
 	}
 
 	/**
-	 * @author A Date: 9/15/21 Modified date:9/21/21 Modified by: A Description :
+	 * @author A Date: 9/15/21 Modified date:03/08/22 Modified by: A Description :
 	 *         Saved Search Selection- Sprint 03
 	 * @throws InterruptedException
 	 * @Stabilization : changes done
@@ -2549,12 +2549,16 @@ public class SavedSearch {
 		base.waitForElement(getSavedSearch_SearchName());
 		getSavedSearch_SearchName().SendKeys(searchName);
 		getSavedSearch_ApplyFilterButton().waitAndClick(10);
-		base.waitForElement(getSelectWithName(searchName));
+		driver.waitForPageToBeReady();
+//		base.waitForElement(getSelectWithName(searchName));// impacts to be verified
 		try {
-			if (getSelectWithName(searchName).isElementAvailable(10)) {
+			if (getSelectWithName(searchName).isElementAvailable(15)) {
 				base.stepInfo("Search Found :" + searchName);
 			} else {
 				base.stepInfo("Search Not Found :" + searchName);
+				if (select.equals("Yes")) {
+					base.failedStep("Search Not Found :" + searchName); // impacts to be verified
+				}
 			}
 		} catch (Exception e) {
 			// e.printStackTrace();
@@ -7274,7 +7278,7 @@ public class SavedSearch {
 	public List<String> getListFromSavedSearchTable(String headerName) {
 		int i;
 		i = base.getIndex(gettableHeaders(), headerName);
-		System.out.println(i);
+		System.out.println(headerName +"--"+ i);
 
 		base.waitForElement(getNumberOfSavedSearchToBeShown());
 		getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");

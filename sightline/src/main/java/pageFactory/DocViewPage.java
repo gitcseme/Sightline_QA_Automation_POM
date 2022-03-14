@@ -3254,7 +3254,7 @@ public class DocViewPage {
 	public Element searchResult() {
 		return driver.FindElementByXPath("//*[@class='count']");
 	}
-	
+
 	public ElementCollection getDocViewDownload_Options() {
 		return driver.FindElementsByXPath("//ul[@id='documentTypeDropDown']/li/a");
 	}
@@ -9221,9 +9221,10 @@ public class DocViewPage {
 			getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
 			base.waitForElement(getDocView_Analytics_NoQuery());
+			getDocView_Analytics_NoQuery().ScrollTo();
 			softAssertion.assertTrue(getDocView_Analytics_NoQuery().isDisplayed());
-			base.passedStep("Message is displayed as 'Your query returned no data' successfully");
 			softAssertion.assertAll();
+			base.passedStep("Message is displayed as 'Your query returned no data' successfully");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("No Doc is viewed from Analytics panel Thread Map tab successfully");
@@ -10023,14 +10024,18 @@ public class DocViewPage {
 	}
 
 	/**
+	 * Method is to open near dupe comparison window for specific doc Id
 	 * 
 	 * @author Steffy 10/06/21 NA Modified date: NA Modified by:NA
-	 * @description to open NearDupe ComparisonWindow
+	 * @param documentId Doc Id for which near dupe comparison window should be
+	 *                   opened throws InterruptedException
 	 */
 
 	public void openNearDupeComparisonWindowForDocumentWhichHasMorePages(String documentId)
 			throws InterruptedException {
-
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().ScrollTo();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDocView_Analytics_NearDupeTab().Displayed();
@@ -10055,7 +10060,7 @@ public class DocViewPage {
 
 	/**
 	 * @author Steffy 10/06/21 NA Modified date: NA Modified by:NA
-	 * @description to open NearDupe ComparisonWindow
+	 * @description to open NearDupe ComparisonWindow throws InterrupetedException
 	 */
 
 	public void verifyPaginationFromNearDupeWindow() throws InterruptedException {
@@ -10282,7 +10287,7 @@ public class DocViewPage {
 	/**
 	 * @Author Steffy Created on 07/10/2021
 	 * @Description To perform CodeSame for threaded documents in the DocView Test
-	 *              Case id: RPMXCON-51361 & 51371
+	 *              Case id: RPMXCON-51361 & 51371 throws InterruptedException
 	 * 
 	 */
 	public void performCodeSameForThreadedDocuments() throws InterruptedException {
@@ -10325,6 +10330,7 @@ public class DocViewPage {
 	/**
 	 * @Author Steffy Created on 07/10/2021
 	 * @Description To verify Family Members tab columns Case id: RPMXCON-51288
+	 *              throws Interruptedxception
 	 * 
 	 */
 	public void verifyFamilyMembersTabColumns() throws InterruptedException {
@@ -10369,7 +10375,8 @@ public class DocViewPage {
 
 	/**
 	 * @Author Steffy Created on 08/10/2021
-	 * @Description To verify Near Dupe tab columns Case id: RPMXCON-51289
+	 * @Description To verify Near Dupe tab columns Case id: RPMXCON-51289 throws
+	 *              Interruptedxception
 	 * 
 	 */
 	public void verifyNearDupeTabColumns() throws InterruptedException {
@@ -10432,9 +10439,8 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @Author Steffy Created on 08/10/2021
-	 * @Description To verify Conceptual tab columns Case id: RPMXCON-51290
-	 * 
+	 * @Author Steffy Created on 08/10/2021 To verify Conceptual tab columns Case
+	 *         id: RPMXCON-51290 throws Interruptedxception
 	 */
 	public void verifyConceptualTabColumns() throws InterruptedException {
 		driver.waitForPageToBeReady();
@@ -10575,6 +10581,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+		base.waitTime(10);
 		for (int i = 2; i <= 2; i++) {
 			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
 			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
@@ -10618,6 +10625,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+		base.waitTime(10);
 		for (int i = 3; i <= 3; i++) {
 			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
 			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
@@ -10657,16 +10665,16 @@ public class DocViewPage {
 	 * @Author Steffy Created on 10/10/2021
 	 * @Description To perform CodeSame in Threaded tab in the DocView. Test Case
 	 *              id: RPMXCON- 51372
+	 * @param windowId ID of the child window which needs to be switched throws
+	 *                 InterruptedException
 	 */
 	public void performCodeSameForThreadDocuments(String windowId) throws InterruptedException {
 
 		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
-		for (int i = 1; i <= 1; i++) {
-			base.waitForElement(getDocView_Analytics_ThreadedDocument_Doc(i));
-			getDocView_Analytics_ThreadedDocument_Doc(i).waitAndClick(5);
-		}
+		base.waitForElement(getDocView_Analytics_ThreadedDocument_Doc(1));
+		getDocView_Analytics_ThreadedDocument_Doc(1).waitAndClick(5);
 
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
@@ -10686,18 +10694,15 @@ public class DocViewPage {
 			}
 		}
 
-		for (int i = 1; i <= 1; i++) {
-			base.waitForElement(geDocView_ThreadMap_CodeSameAsIcon(i));
-			softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIcon(i).isDisplayed().booleanValue(), true);
-			try {
-				if (geDocView_ThreadMap_CodeSameAsIcon(i).isDisplayed()) {
-					base.passedStep("CodeAsSame icon is displayed for the selected docs ");
-				}
-			} catch (Exception e) {
-				base.failedStep("CodeAsSame icon is not displayed for the selected docs");
-				UtilityLog.info("Verification failed due to " + e.getMessage());
+		base.waitForElement(geDocView_ThreadMap_CodeSameAsIcon(1));
+		softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIcon(1).isDisplayed().booleanValue(), true);
+		try {
+			if (geDocView_ThreadMap_CodeSameAsIcon(1).isDisplayed()) {
+				base.passedStep("CodeAsSame icon is displayed for the selected docs ");
 			}
-
+		} catch (Exception e) {
+			base.failedStep("CodeAsSame icon is not displayed for the selected docs");
+			UtilityLog.info("Verification failed due to " + e.getMessage());
 		}
 
 		base.waitForElement(getThreadedDocumentWhichHasCodeSameIcon());
@@ -10710,6 +10715,8 @@ public class DocViewPage {
 	 * @Author Steffy Created on 10/10/2021
 	 * @Description To perform CodeSame in Thread tab in the DocView for Reviewer.
 	 *              Test Case id: RPMXCON- 51372
+	 * @param windowId ID of the child window which needs to be switched throws
+	 *                 InterruptedException
 	 */
 	public void performCodeSameForThreadDocumentsForReviewer(String windowId) throws InterruptedException {
 		driver.waitForPageToBeReady();
@@ -10750,8 +10757,7 @@ public class DocViewPage {
 	/**
 	 * @Author Steffy Created on 09/10/2021
 	 * @Description To perform CodeSame thread docs in the DocView Test Case id:
-	 *              RPMXCON-51374
-	 * 
+	 *              RPMXCON-51374 throws InterruptedException
 	 */
 	public void performCodeSameForFamilyMembersDocuments() throws InterruptedException {
 
@@ -10773,19 +10779,16 @@ public class DocViewPage {
 
 		base.VerifySuccessMessage("Code same performed successfully.");
 
-		for (int i = 1; i <= 1; i++) {
-			base.waitForElement(geDocView_FamilyMembers_CodeSameAsIcon(i));
-			softAssertion.assertEquals(geDocView_FamilyMembers_CodeSameAsIcon(i).isDisplayed().booleanValue(), true);
-			softAssertion.assertAll();
-			try {
-				if (geDocView_FamilyMembers_CodeSameAsIcon(i).isDisplayed()) {
-					base.passedStep("CodeAsSame icon is displayed for the selected docs ");
-				}
-			} catch (Exception e) {
-				base.failedStep("CodeAsSame icon is not displayed for the selected docs");
-				UtilityLog.info("Verification failed due to " + e.getMessage());
+		base.waitForElement(geDocView_FamilyMembers_CodeSameAsIcon(1));
+		softAssertion.assertEquals(geDocView_FamilyMembers_CodeSameAsIcon(1).isDisplayed().booleanValue(), true);
+		softAssertion.assertAll();
+		try {
+			if (geDocView_FamilyMembers_CodeSameAsIcon(1).isDisplayed()) {
+				base.passedStep("CodeAsSame icon is displayed for the selected docs ");
 			}
-
+		} catch (Exception e) {
+			base.failedStep("CodeAsSame icon is not displayed for the selected docs");
+			UtilityLog.info("Verification failed due to " + e.getMessage());
 		}
 
 		codeSameDocumentid = getFamilyMembersWhichHasCodeSameIcon().getText();
@@ -10843,7 +10846,7 @@ public class DocViewPage {
 	 * @author Mohan 11/10/21 NA Modified date: NA Modified by:NA
 	 * @description To verify Complete check mark for thread map tab
 	 */
-	public void verifyCompleteCheckMarkForThreadMapTabDocs() {
+	public void verifyCompleteCheckMarkForThreadMapTabDocs(int docRow) {
 
 		driver.waitForPageToBeReady();
 		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
@@ -10854,7 +10857,7 @@ public class DocViewPage {
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 //		base.waitForElement(getCodeCompleteIconThreadTab());
 
-		for (int i = 2; i <= 2; i++) {
+		for (int i = docRow; i <= docRow; i++) {
 			try {
 				if (geDocView_ThreadMap_CheckMarkIcon(i).getWebElement().isDisplayed())
 					softAssertion.assertEquals(geDocView_ThreadMap_CheckMarkIcon(i).isDisplayed().booleanValue(), true);
@@ -10900,7 +10903,8 @@ public class DocViewPage {
 	 * @Author Steffy Created on 09/10/2021
 	 * @Description To perform CodeSame thread docs in the DocView Test Case id:
 	 *              RPMXCON-51376
-	 * 
+	 * @param windowId ID of the child window which needs to be switched throws
+	 *                 InterruptedException
 	 */
 	public void performCodeSameForFamilyMembersDocuments(String windowId) throws InterruptedException {
 
@@ -10960,7 +10964,8 @@ public class DocViewPage {
 	 * @Author Steffy Created on 13/10/2021
 	 * @Description To perform CodeSame thread docs in the DocView Test Case id:
 	 *              RPMXCON-51377
-	 * 
+	 * @param windowId ID of the child window which needs to be switched throws
+	 *                 InterruptedException
 	 */
 	public void performCodeSameForFamilyMembersDocumentsForReviewer(String windowId) throws InterruptedException {
 
@@ -12050,6 +12055,7 @@ public class DocViewPage {
 //			getDocView_Analytics_FamilyTab().ScrollTo();
 			getDocView_Analytics_FamilyTab().waitAndClick(10);
 
+			driver.waitForPageToBeReady();
 			for (int i = 1; i <= 2; i++) {
 				base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(i));
 				getDocView_Analytics_FamilyMember_DocCheckBox(i).waitAndClick(10);
@@ -12063,7 +12069,11 @@ public class DocViewPage {
 			base.VerifySuccessMessage("Code Same has been successfully removed");
 			driver.waitForPageToBeReady();
 			base.waitTime(5);
+			driver.Navigate().refresh();
+			base.handleAlert();
+			driver.waitForPageToBeReady();
 			getDocView_Analytics_FamilyTab().waitAndClick(10);
+
 			// verify Code Same as Link
 			try {
 				if (getDocView_Analytics_FamilyMember_CodeSameLink().isElementAvailable(5)) {
@@ -12606,7 +12616,7 @@ public class DocViewPage {
 	 * 
 	 * @Description -- Method to verify whether the keywords along with counts are
 	 *              displayed
-	 * 
+	 * @param keywords keyword which needs to be verified
 	 */
 	public void verifyKeywordsAreDisplayed(String[] keywords) throws Exception {
 		try {
@@ -13506,6 +13516,7 @@ public class DocViewPage {
 	/**
 	 * @author Steffy 24/11/21 NA Modified date: NA Modified by:NA
 	 * @description Method to scroll and verify laoding text while scrolling
+	 * @param loadingFlag flag which denotes whether the loading is displayed or not
 	 */
 	public void scrollUntilloadingTextDisplay(Boolean loadingFlag) throws InterruptedException {
 		driver.waitForPageToBeReady();
@@ -16638,9 +16649,9 @@ public class DocViewPage {
 
 		String currentDocId2 = getDocView_CurrentDocId().getText();
 		base.stepInfo("The Current Display DocId Is" + currentDocId2 + "");
-		if(currentDocId1.trim().equals(currentDocId2.trim()))
-		base.passedStep(
-				"Next document of the main viewing document from the mini doc list is viewed in doc view panel successfully");
+		if (currentDocId1.trim().equals(currentDocId2.trim()))
+			base.passedStep(
+					"Next document of the main viewing document from the mini doc list is viewed in doc view panel successfully");
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getLastCodeSameAsIcon());
@@ -18491,9 +18502,9 @@ public class DocViewPage {
 		}
 	}
 
-	/*
-	 * @author Steffy D Method to verify whether the sub menus of the redactions are
-	 * disabled
+	/**
+	 * @author Steffy.D Method to verify whether the redaction sub menus are
+	 *         disabled
 	 */
 	public void verifyAppliedRedactionSubMenusAreDisabled() {
 		base.stepInfo("Verify redaction sub menus are disabled");
@@ -18532,9 +18543,9 @@ public class DocViewPage {
 		}
 	}
 
-	/*
-	 * @author Steffy D Method to verify whether the sub menus of the annotation are
-	 * disabled
+	/**
+	 * @author Steffy.D Method to verify whether the annotation sub menus are
+	 *         disabled
 	 */
 	public void verifyAppliedAnnotationSubMenusAreDisabled() {
 		base.stepInfo("Verify annotation sub menus are disabled");
@@ -20924,8 +20935,8 @@ public class DocViewPage {
 
 	}
 
-	/*
-	 * @author steffy.d Method is to verify review mode text in docview page
+	/**
+	 * @author Steffy.D Method to verify whether the review text is displayed or not
 	 */
 	public void verifyReviewModeText() {
 		driver.waitForPageToBeReady();
@@ -22585,7 +22596,7 @@ public class DocViewPage {
 	 * @author Steffy
 	 * @Description :Selecting unfolder in selecting the doc.
 	 * 
-	 * @param :Folder name
+	 * @param :Folder name throws InterruptedException
 	 */
 	public void selectingUnFoldersAndVerifyingTheDocCount(String Foldername) throws InterruptedException {
 		DocListPage docList = new DocListPage(driver);
@@ -23705,11 +23716,11 @@ public class DocViewPage {
 		}
 	}
 
-	/*
-	 * @Author Steffy Created on 04/02/2022
-	 * 
-	 * @Description To select docs from Analytics Family member Tab
-	 * 
+	/**
+	 * @author Steffy.D Method to select the doc from family tab and view the doc in
+	 *         doc view page
+	 * @param docIdToBeSelected ID of the document which need to be opened in
+	 *                          docviewPage
 	 */
 	public void selectDocsFromFamilyTabUsingDocIdAndViewInDocview(String docIdToBeSelected) {
 		try {
@@ -24505,10 +24516,13 @@ public class DocViewPage {
 		verifyDocumentDisplayedInTextView();
 	}
 
-	/*
-	 * @author Steffy D This is method is to verify warning message which is getting
-	 * displayed when two users make changes to same document
+	/**
+	 * @author Steffy.D 
+	 * Method is to verify warning message which is getting
+	 *         displayed when two users make changes to same document
+	 * @param	highlightIcon Icon Name for which warning message needs to be verified
 	 */
+	
 	public void verifyWarningMessage(String highLightIcon) {
 		try {
 			base.stepInfo("Verifying warning message for " + highLightIcon);
@@ -24555,10 +24569,15 @@ public class DocViewPage {
 		}
 	}
 
-	/*
-	 * @author Steffy D This method is to verify whether remark panel action iteams
-	 * are displayed or not
-	 * 
+	
+	
+	
+	
+	/**
+	 * @author Steffy.D
+	 * Method is to verify whether remark panel items are displayed or not
+	 * @param actionItem The action icon which need to be verified
+	 * @param remarkValue Remark value which needs to be verified
 	 */
 	public void verifyReviewRemarkActionPanel(String actionItem, String remarkValue) {
 		try {
@@ -26030,69 +26049,74 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//li[@id='previousPage_divDocViewer']/a");
 	}
 
-		
-			/**
-			 * @author Gopinath
-			 * @decsription : Method for verifying total page count which is less than 500 and doc view document is loaded proper or not.
-			 */
-			public void verifyTotalPagesOfDocumentCountLessThan500() {
+	/**
+	 * @author Gopinath
+	 * @decsription : Method for verifying total page count which is less than 500
+	 *              and doc view document is loaded proper or not.
+	 */
+	public void verifyTotalPagesOfDocumentCountLessThan500() {
+		try {
+			driver.waitForPageToBeReady();
+			int pagesCont = 0;
+			for (int i = 0; i < 20; i++) {
 				try {
-					driver.waitForPageToBeReady();
-					int pagesCont = 0;
-					for(int i=0;i<20;i++) {
-						try {
-							totalPageCount().isElementAvailable(15);
-							String pagesCount = totalPageCount().getText().trim();
-							String[] pageCnt = pagesCount.split("of", 2);
-							String[] pageCnt2 = pageCnt[1].split("pages", 2);
-							pagesCont = Integer.parseInt(pageCnt2[0].trim());
-							break;
-						}catch(Exception e) {
-							base.waitTime(1);
-						}
-					}
-					if (pagesCont < 500 && getSelectedAreaElement().isDisplayed()) {
-						base.passedStep("Total pages less than 500 pages is loaded in docview");
-					} else {
-						base.failedStep("Total pages less than 500 pages is not loaded in docview");
-					}
+					totalPageCount().isElementAvailable(15);
+					String pagesCount = totalPageCount().getText().trim();
+					String[] pageCnt = pagesCount.split("of", 2);
+					String[] pageCnt2 = pageCnt[1].split("pages", 2);
+					pagesCont = Integer.parseInt(pageCnt2[0].trim());
+					break;
 				} catch (Exception e) {
-					e.printStackTrace();
-					base.failedStep("Exception occred while verifying total page count  which is less than 500 and doc view document is loaded proper or not." + e.getLocalizedMessage());
+					base.waitTime(1);
 				}
-
 			}
-			
-			/**
-			 * @author Gopinath
-			 * @decsription : Method for verifying total page count which is less than or equal to 500 and doc view document is loaded proper or not.
-			 */
-			public void verifyTotalPagesOfDocumentCountLessThanOrEqualTo500() {
+			if (pagesCont < 500 && getSelectedAreaElement().isDisplayed()) {
+				base.passedStep("Total pages less than 500 pages is loaded in docview");
+			} else {
+				base.failedStep("Total pages less than 500 pages is not loaded in docview");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occred while verifying total page count  which is less than 500 and doc view document is loaded proper or not."
+							+ e.getLocalizedMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @decsription : Method for verifying total page count which is less than or
+	 *              equal to 500 and doc view document is loaded proper or not.
+	 */
+	public void verifyTotalPagesOfDocumentCountLessThanOrEqualTo500() {
+		try {
+			driver.waitForPageToBeReady();
+			int pagesCont = 0;
+			for (int i = 0; i < 20; i++) {
 				try {
-					driver.waitForPageToBeReady();
-					int pagesCont = 0;
-					for(int i=0;i<20;i++) {
-						try {
-							totalPageCount().isElementAvailable(15);
-							String pagesCount = totalPageCount().getText().trim();
-							String[] pageCnt = pagesCount.split("of", 2);
-							String[] pageCnt2 = pageCnt[1].split("pages", 2);
-							pagesCont = Integer.parseInt(pageCnt2[0].trim());
-							break;
-						}catch(Exception e) {
-							base.waitTime(1);
-						}
-					}
-					if (pagesCont <= 500 && getSelectedAreaElement().isDisplayed()) {
-						base.passedStep("Total pages less than or equal to 500 pages is loaded in docview");
-					} else {
-						base.failedStep("Total pages less than or equal to 500 pages is not loaded in docview");
-					}
+					totalPageCount().isElementAvailable(15);
+					String pagesCount = totalPageCount().getText().trim();
+					String[] pageCnt = pagesCount.split("of", 2);
+					String[] pageCnt2 = pageCnt[1].split("pages", 2);
+					pagesCont = Integer.parseInt(pageCnt2[0].trim());
+					break;
 				} catch (Exception e) {
-					e.printStackTrace();
-					base.failedStep("Exception occred while verifying total page count which is less than or equal to 500 and doc view document is loaded proper or not." + e.getLocalizedMessage());
+					base.waitTime(1);
 				}
-      }
+			}
+			if (pagesCont <= 500 && getSelectedAreaElement().isDisplayed()) {
+				base.passedStep("Total pages less than or equal to 500 pages is loaded in docview");
+			} else {
+				base.failedStep("Total pages less than or equal to 500 pages is not loaded in docview");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occred while verifying total page count which is less than or equal to 500 and doc view document is loaded proper or not."
+							+ e.getLocalizedMessage());
+		}
+	}
 
 	public Element getDocViewDocPageFirstButton() {
 		return driver.FindElementByXPath("//li[@id='firstPage_divDocViewer']/a");
@@ -26138,33 +26162,32 @@ public class DocViewPage {
 
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
 	 * @Description:This method used for download icon validation
-	 * @param downloadFalse 
+	 * @param downloadFalse
 	 * @param downloadTrue
 	 */
-	
-	public void verifyNativeFile(boolean downloadFalse,boolean downloadTrue) {
+
+	public void verifyNativeFile(boolean downloadFalse, boolean downloadTrue) {
 		driver.waitForPageToBeReady();
-		if (downloadFalse==false) {
+		if (downloadFalse == false) {
 			base.waitForElement(getDocView_IconDownload());
-			boolean notPresent=getDocView_IconDownload().Displayed();
+			boolean notPresent = getDocView_IconDownload().Displayed();
 			softAssertion.assertFalse(notPresent);
 			base.passedStep("Download icon not displayed in docview page");
-		}
-		else if (downloadTrue==true) {
+		} else if (downloadTrue == true) {
 			base.waitForElement(getDocView_IconDownload());
-			boolean flag=getDocView_IconDownload().Displayed();
+			boolean flag = getDocView_IconDownload().Displayed();
 			softAssertion.assertTrue(flag);
 			base.passedStep("Download icon displayed in docview page");
 			getDocView_IconDownload().waitAndClick(5);
-			boolean enabledFlag=getDocView_IconDownload().Enabled();
+			boolean enabledFlag = getDocView_IconDownload().Enabled();
 			softAssertion.assertTrue(enabledFlag);
 			base.waitForElementCollection(getDocViewDownload_Options());
-			int count=getDocViewDownload_Options().size();
-			base.stepInfo("Download option count: "+count);
+			int count = getDocViewDownload_Options().size();
+			base.stepInfo("Download option count: " + count);
 			base.passedStep("User can able to download the txt.file");
 		}
 		softAssertion.assertAll();

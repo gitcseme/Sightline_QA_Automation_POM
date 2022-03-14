@@ -47,7 +47,7 @@
 	<pageRange2>3</pageRange2>
 	<pageRange3>1,2,8,10,11,12,13</pageRange3>
 	<pageRange4>2-13</pageRange4>
-	<searchPhraseWithQuote>"is required"</searchPhraseWithQuote>
+	<searchPhraseWithQuote>is required</searchPhraseWithQuote>
 	<keywordColor1>Cyan</keywordColor1>
 	<multiwordText>will be</multiwordText>
 	<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
@@ -90,7 +90,6 @@
 	<sourceDocId3>T2545D</sourceDocId3>
 	<sourceDocId4>T2552D</sourceDocId4>
 	<sourceDocId5>T2554D</sourceDocId5>
-	<nearDupeDocumentForReviewer>ID00001191</nearDupeDocumentForReviewer>
 	<threadDocumentForReviewer>ID00001402</threadDocumentForReviewer>
 	<familyDocumentForReviewer>ID00001355</familyDocumentForReviewer>
 	<nearDupeCompletedDocIdReviewer>ID00001532
@@ -412,7 +411,7 @@
 	<regressionConsilio1>Regression_AllDataset_Consilio1</regressionConsilio1>
 	<audioSearchString2>interview</audioSearchString2>
 	<audioSearchString3>six</audioSearchString3>
-	<audioSearchString4>"Phrase"</audioSearchString4>
+	<audioSearchString4>Phrase</audioSearchString4>
 	<audioSearchString5>evidence</audioSearchString5>
 	<audioSearchString6>market</audioSearchString6>
 	<audioSearchString7>transaction</audioSearchString7>
@@ -455,12 +454,19 @@
 	<tiffPageCountText>TIFFPAGECOUNT</tiffPageCountText>
 
 	<!-- Added by Gopinath Created date - 27/12/2021 -->
-	<errorQueryFileLocation>\BatchFiles\InvalidQuery\
-	</errorQueryFileLocation>
+	<errorQueryFileLocation>\BatchFiles\InvalidQuery\</errorQueryFileLocation>
 	<invalidNameText>Invalid Name</invalidNameText>
 	<conceptualDoc>ID00000001</conceptualDoc>
 	<TallySearch>null</TallySearch>
 	<TallyCN>auto</TallyCN>
+<sameThreadDocs_EmailThreadID>F00000001</sameThreadDocs_EmailThreadID>
+<sameFamilyDocs_FamilyID>41ID00000005</sameFamilyDocs_FamilyID>
+<IngestionName_PT>C113_QA_EmailConcatenatedData_SS_20211129145953453</IngestionName_PT>
+<IngestionName_UAT></IngestionName_UAT>
+<metadataIngestion>IngestionName</metadataIngestion>
+<custodianName_Andrew>Andrew</custodianName_Andrew>
+<custodianName_allen>allen</custodianName_allen>
+<SearchString_Audio>well</SearchString_Audio>
 
 	<!-- Added by Gopinath Created date - 05/01/2022 -->
 	<downloadDocID>ID00001069</downloadDocID>
@@ -480,6 +486,7 @@
 	<nearDupeDocId>ID00003801</nearDupeDocId>
 	<nearDupeDocument>ID00004474</nearDupeDocument>
 	<threadDocWithToolTip>ID00004514</threadDocWithToolTip>
+	<nearDupeDocumentForReviewer>ID00003801</nearDupeDocumentForReviewer>
 	<TermOperator>ALL</TermOperator>
 
 	<familyDocWhichIsNotInMiniDoc>ID00003763</familyDocWhichIsNotInMiniDoc>
@@ -597,6 +604,5 @@
 		<ingDocFileType>DocFileType</ingDocFileType>
 		<lessThan500PagesDocId>ID00000189</lessThan500PagesDocId>
 		<d500PagesDocId>ID00000263</d500PagesDocId>
-
 
 </TestData>

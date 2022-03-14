@@ -15,6 +15,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -32,6 +33,7 @@ import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
@@ -1278,127 +1280,7 @@ public class DocViewAudio_IndiumRegression {
 
 	}
 
-	/**
-	 * Author : Mohan date: 05/02/22 NA Modified date: NA Modified by:NA
-	 * Description:To verify option to translation the document from doc view
-	 * page'RPMXCON-50778' Sprint : 12
-	 * 
-	 * @throws Exception
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
-	public void verifyOptionTranslationDocsInDocViewPage() throws InterruptedException {
-
-		baseClass.stepInfo("Test case Id: RPMXCON-50778");
-		baseClass.stepInfo("To verify option to translation the document from doc view page");
-		baseClass = new BaseClass(driver);
-		assignmentPage = new AssignmentsPage(driver);
-		sessionSearch = new SessionSearch(driver);
-		docViewPage = new DocViewPage(driver);
-		String codingForm = Input.codingFormName;
-		String assname = "assgnment" + Utility.dynamicNameAppender();
-
-		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info(
-				"User successfully logged into slightline webpage as ReviewManager with " + Input.rmu1userName + "");
-
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as ReviewManager with " + Input.rmu1userName + "");
-
-		baseClass.stepInfo(
-				"Step 1: Prerequisites: Logged in user should be RMU and should be on Manage Assignments page  Assignment group and assignment should be created."
-						+ "  From Search page result should be 'BulkAssign' to the assignment  Documents should be ingested with Translation documents  ");
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkAssign();
-
-		assignmentPage.assignmentCreation(assname, codingForm);
-		assignmentPage.add2ReviewerAndDistribute();
-		assignmentPage.selectAssignmentToViewinDocview(assname);
-
-		baseClass.stepInfo("Step 2: Check 'Translations' option from doc view page");
-
-		baseClass.waitForElement(docViewPage.getDocView_TranslationTab());
-		softAssertion.assertTrue(docViewPage.getDocView_TranslationTab().isDisplayed());
-		softAssertion.assertAll();
-		baseClass.passedStep("Translations tab is displayed on doc view page successfully");
-
-		loginPage.logout();
-
-	}
-
-	/**
-	 * Author : Mohan date: 05/02/22 NA Modified date: NA Modified by:NA
-	 * Description:To verify assignment progress bar should be displayed on Doc View
-	 * page for RMU and Reviewer'RPMXCON-50781' Sprint : 12
-	 * 
-	 * @throws Exception
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
-	public void verifyAssignmentProgressBarInDocViewPage() throws InterruptedException {
-
-		baseClass.stepInfo("Test case Id: RPMXCON-50781");
-		baseClass.stepInfo(
-				"To verify assignment progress bar should be displayed on Doc View page for RMU and Reviewer");
-		baseClass = new BaseClass(driver);
-		assignmentPage = new AssignmentsPage(driver);
-		sessionSearch = new SessionSearch(driver);
-		docViewPage = new DocViewPage(driver);
-		String codingForm = Input.codingFormName;
-		String assname = "assgnment" + Utility.dynamicNameAppender();
-
-		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info(
-				"User successfully logged into slightline webpage as ReviewManager with " + Input.rmu1userName + "");
-
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as ReviewManager with " + Input.rmu1userName + "");
-
-		baseClass.stepInfo(
-				"Step 1: Prerequisites: Logged @user and go to Doc View page  Manage Assignment > View All in Doc View ");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.bulkAssign();
-
-		assignmentPage.assignmentCreation(assname, codingForm);
-		assignmentPage.add2ReviewerAndDistribute();
-		assignmentPage.selectAssignmentToViewinDocview(assname);
-
-		baseClass.stepInfo("Step 2: Verify assignment progress bar from Doc View page");
-
-		softAssertion.assertTrue(docViewPage.getDocView_AssignmentProgressBar().isDisplayed());
-		softAssertion.assertTrue(docViewPage.getDocView_AssigmentName().isDisplayed());
-		softAssertion.assertAll();
-		String assName = docViewPage.getDocView_AssigmentName().getText();
-		System.out.println(assName);
-		baseClass.passedStep(
-				"Assignment progress bar is displayed on doc view page.Assignment name is also displayed above the assignment progress bar successfully");
-
-		loginPage.logout();
-
-		// login Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
-
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
-
-		// Select the Assignment from dashboard
-		assignmentPage.SelectAssignmentByReviewer(assname);
-		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
-
-		baseClass.stepInfo("Step 2: Verify assignment progress bar from Doc View page");
-
-		softAssertion.assertTrue(docViewPage.getDocView_AssignmentProgressBar().isDisplayed());
-		softAssertion.assertTrue(docViewPage.getDocView_AssigmentName().isDisplayed());
-		softAssertion.assertAll();
-		assName = docViewPage.getDocView_AssigmentName().getText();
-		System.out.println(assName);
-		baseClass.passedStep(
-				"Assignment progress bar is displayed on doc view page.Assignment name is also displayed above the assignment progress bar successfully");
-
-		loginPage.logout();
-
-	}
+	
 
 	/**
 	 * Author : Mohan date: 05/02/22 NA Modified date: NA Modified by:NA
@@ -1407,7 +1289,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyReviewerRemarksTabInDocViewPageForReviewer() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51174");
@@ -1464,7 +1346,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyReviewerRemarksTabInDocViewPageForProjectAdmin() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51175");
@@ -1513,7 +1395,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifySameDifferentThresholdInSessionSearch() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -1625,7 +1507,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void validatePlayIconInCfChild() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51821");
 		baseClass.stepInfo("Verify that when audio file is playing and clicked "
@@ -1730,7 +1612,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void validatePlayIconCF() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51819");
 		baseClass.stepInfo("Verify that when audio file is playing and clicked to "
@@ -1742,6 +1624,7 @@ public class DocViewAudio_IndiumRegression {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
 		sessionSearch = new SessionSearch(driver);
+		softAssertion=new SoftAssert();
 
 		String comment = "comments" + Utility.dynamicNameAppender();
 
@@ -1765,8 +1648,9 @@ public class DocViewAudio_IndiumRegression {
 			baseClass.failedMessage("Lesser than one hour");
 		}
 		// playing audio file
+		baseClass.waitTime(3);
 		baseClass.waitForElement(docViewPage.audioPlayPauseIcon());
-		docViewPage.audioPlayPauseIcon().waitAndClick(5);
+		docViewPage.audioPlayPauseIcon().waitAndClick(10);
 
 		// Edit coding form in parent window
 		docViewPage.editCodingForm(comment);
@@ -1774,20 +1658,24 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("Document saved successfully");
 
 		String activeId = docViewPage.getDocView_CurrentDocId().getText();
-		softAssertion.assertEquals(Input.oneHourAudio, activeId);
+		Assert.assertEquals(Input.oneHourAudio, activeId);
+		baseClass.waitForElement(docViewPage.getAudioWaveForm());
 		boolean waveform = docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
-		softAssertion.assertTrue(waveform);
+		Assert.assertTrue(waveform);
 		baseClass.passedStep("Waveform is displayed for same document");
 
 		// validating audio is still playing
+		baseClass.waitForElement(docViewPage.audioPlayPauseIcon());
 		boolean audioPlay = docViewPage.audioPlayPauseIcon().GetAttribute("title").contains("Pause");
-		softAssertion.assertTrue(audioPlay);
+		Assert.assertTrue(audioPlay);
 		baseClass.stepInfo("Audio button docs are in play mode");
 
 		// checking zoom in function working for more than one hour audio docs
+		baseClass.waitForElement(docViewPage.getAudioDocZoom());
 		docViewPage.getAudioDocZoom().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getAudioZoomBar());
 		boolean zoomBar = docViewPage.getAudioZoomBar().Displayed();
-		softAssertion.assertTrue(zoomBar);
+		Assert.assertTrue(zoomBar);
 		baseClass.passedStep("Zoom functionality working for more than one hour of document");
 
 		// edit coding form again
@@ -1796,20 +1684,24 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("Document saved successfully");
 
 		String childactiveId = docViewPage.getDocView_CurrentDocId().getText();
-		softAssertion.assertEquals(Input.oneHourAudio, childactiveId);
+		Assert.assertEquals(Input.oneHourAudio, childactiveId);
+		baseClass.waitForElement(docViewPage.getAudioWaveForm());
 		boolean childwaveform = docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
-		softAssertion.assertTrue(childwaveform);
+		Assert.assertTrue(childwaveform);
 		baseClass.passedStep("Waveform is displayed for same document");
 
 		// validating audio is still playing
+		baseClass.waitForElement(docViewPage.audioPlayPauseIcon());
 		boolean childaudioPlay = docViewPage.audioPlayPauseIcon().GetAttribute("title").contains("Pause");
-		softAssertion.assertTrue(childaudioPlay);
+		Assert.assertTrue(childaudioPlay);
 		baseClass.stepInfo("Audio button docs are in play mode");
 
 		// checking zoom in function working for more than one hour audio docs
+		baseClass.waitForElement(docViewPage.getAudioDocZoom());
 		docViewPage.getAudioDocZoom().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getAudioZoomBar());
 		boolean childzoomBar = docViewPage.getAudioZoomBar().Displayed();
-		softAssertion.assertTrue(childzoomBar);
+		Assert.assertTrue(childzoomBar);
 		baseClass.passedStep("Zoom functionality working for more than one hour of document");
 
 		softAssertion.assertAll();
@@ -1826,7 +1718,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyAudioDocsScrollingMiniDocList() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51816");
@@ -1935,7 +1827,7 @@ public class DocViewAudio_IndiumRegression {
 	 *              [RPMXCON-51857]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyPersistentForAudio() throws InterruptedException {
 		String assignmentName = "Assign" + Utility.dynamicNameAppender();
 		String audioSearch = Input.audioSearch.toUpperCase();
@@ -1979,8 +1871,7 @@ public class DocViewAudio_IndiumRegression {
 	 * re-execute the same query then modified Term does not appear in Persistent
 	 * Search panel in DocView screen.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 28)
-
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 26)
 	public void verifyModifiedStringInPersistPanel() throws Exception {
 
 		baseClass = new BaseClass(driver);
@@ -2000,25 +1891,24 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("Navigate to docview page");
 		sessionSearch.ViewInDocView();
 
-		DocViewPage docView = new DocViewPage(driver);
 		baseClass.stepInfo("Verifying the Persistent panel search string and Visiblity");
-		docView.verifyingAudioPersistantHitPanel(Input.audioSearch);
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearch);
 
-		sessionSearch = new SessionSearch(driver);
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Modifying the search string");
 		sessionSearch.modifyAdvanceSearch("Yes", Input.audioSearchString1);
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(sessionSearch.getRemoveAddBtn());
-		sessionSearch.getRemoveAddBtn().waitAndClick(10);
-
+		sessionSearch.getRemoveAddBtn().waitAndClick(20);
 		baseClass.waitForElement(sessionSearch.getPureHitAddBtn());
 		sessionSearch.getPureHitAddBtn().waitAndClick(10);
-
+		sessionSearch.getBulkActionButton().waitAndClick(5);
+		baseClass.waitTime(3); // added for stabilization
+		sessionSearch.getDocViewAction().waitAndClick(10);
 		baseClass.stepInfo("Navigate to docview page");
-		sessionSearch.ViewInDocView();
-
-		docView = new DocViewPage(driver);
 		baseClass.stepInfo("Verifying the Persistent panel search string and Visiblity");
-		docView.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
 
 		loginPage.logout();
 
@@ -2033,7 +1923,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifySameDifferentThresholdAndSearchTerms() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -2142,7 +2032,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @Description:Verify that when last audio document is selected and played then
 	 *                     browser page should not scroll down automatically
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 30)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
 	public void validatePullButtonAndWebPage(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51817");
@@ -2197,7 +2087,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @Description:Verify that when last audio document is selected and played then
 	 *                     mini doc list should not scroll up automatically
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 31)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
 	public void validatePlayAudioWebPageNotScrollUp(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51815");
@@ -2257,7 +2147,7 @@ public class DocViewAudio_IndiumRegression {
 	 *                     unassigned from assignment and documents are distributed
 	 *                     again
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	@Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifyPersistentHits() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51774");
 		baseClass.stepInfo(
@@ -2290,7 +2180,7 @@ public class DocViewAudio_IndiumRegression {
 		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
 		// Unassigning the Reviewer Step-4
 		assignmentPage.editAssignment(assign);
-		assignmentPage.UnassignedDocs(Input.rev1userName);
+		assignmentPage.UnassignedUser(Input.rev1userName);
 
 		// again assign the same Reviewer Step-5
 		assignmentPage.assignmentDistributingToReviewer();
@@ -2317,7 +2207,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @param fullName
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 33)
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 31)
 	public void verifyPersistentHits_sameTerm(String username, String password, String fullName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-48788");
 		baseClass.stepInfo(
@@ -2398,7 +2288,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyLoadingDisplayInMiniDocListPersistentHit() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51866");
@@ -2437,7 +2327,7 @@ public class DocViewAudio_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifyLoadingDisplayInMiniDocListImmediately() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51812");
@@ -2465,6 +2355,7 @@ public class DocViewAudio_IndiumRegression {
 		docViewPage.scrollingDocumentInMiniDocList();
 
 		// Basic Search
+		driver.getWebDriver().get(Input.url + "Search/Searches");
 		sessionSearch.saveSearch(BasicSearchName);
 		savedSearch.savedSearchToDocView(BasicSearchName);
 
@@ -2486,7 +2377,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws ParseException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void audioRedactionDefaultTagSelection() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -2544,7 +2435,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 37)
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void verifyBulkAssignFromDoclist() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -2624,7 +2515,7 @@ public class DocViewAudio_IndiumRegression {
 	 *              search, hits should be highlighted [RPMXCON-46998]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 38)
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
 	public void verifyBulkAssignWithAudioAndMetadata() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -2676,7 +2567,20 @@ public class DocViewAudio_IndiumRegression {
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.ViewInDocList();
 		docListPage.DoclisttobulkAssign(null, "100");
-		docListPage.bulkAssignWithPersistantHit(assignmentName);
+		docListPage.getSelectAssignmentExisting(assignmentName).Click();
+		docListPage.getPersistantHitCheckBox().isElementAvailable(15);
+		docListPage.getPersistantHitCheckBox().Click();
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docListPage.getContinueButton());
+		docListPage.getContinueButton().waitAndClick(20);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docListPage.getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait30);
+		docListPage.getFinalizeButton().isElementAvailable(15);
+		docListPage.getFinalizeButton().Click();
 
 		assignmentPage.navigateToAssignmentsPage();
 		assignmentPage.manageAssignmentToDocViewAsRmu(assignmentName);
@@ -2700,7 +2604,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 39)
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
 	public void verifyPersistentHits_editAndComplete() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51772");
 		baseClass.stepInfo("Verify that previously saved Persistent hits displayed on the audio doc view when documents assigned to"
@@ -2781,7 +2685,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws ParseException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
 	public void audioMulti() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -2867,7 +2771,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @throws InterruptedException
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyPersistentHits_unCompleteDocs() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-46921");
 		baseClass.stepInfo("Verify that previously saved Persistent hits should be displayed on the audio doc view "
@@ -2933,7 +2837,7 @@ public class DocViewAudio_IndiumRegression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 42)
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void verifyPersistentHits_RemoveAudioDocs() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51769");
 		baseClass.stepInfo("Verify When remove audio docs from a user/reviewer in an assignment, displays persistent search hits in the assignment, when reassigning these audio docs to another/same reviewer in the assignment");
@@ -3029,7 +2933,7 @@ public class DocViewAudio_IndiumRegression {
  * @param role
  * @throws InterruptedException
  */
-@Test(enabled = true,dataProvider = "userDetailsAndRole", groups = { "regression" }, priority = 39)
+@Test(enabled = true,dataProvider = "userDetailsAndRole", groups = { "regression" }, priority = 41)
 	public void verifyPersistentHit_DifferentSearch(String fullName, String userName, String password, String role) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51848");
 		baseClass.stepInfo("Verify that when document present in different searches with term then, should display search term on persistent hits panel on"
@@ -3133,6 +3037,38 @@ public class DocViewAudio_IndiumRegression {
 		
 		loginPage.logout();
 	}
+
+/**
+ * @Author date: 08/02/2022 Modified date: NA Modified by:
+ * @Description:Verify that when document is viewed from history drop down
+ *                     having multiple terms when presently viewed document is
+ *                     with single term then persistent hits panel should
+ *                     display all the hits present in the document.
+ * 
+ */
+@Test(enabled = true, groups = { "regression" }, priority = 42)
+public void verifyMultipleTermsPresentlyViewedDocInPersistentHits() throws Exception {
+	baseClass.stepInfo("Test case Id: RPMXCON-51870");
+	baseClass.stepInfo(
+			"Verify that when document is viewed from history drop down having multiple terms when presently viewed document is with single term then persistent hits panel should display all the hits present in the document.");
+	SessionSearch sessionsearch = new SessionSearch(driver);
+	DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+	docViewPage = new DocViewPage(driver);
+	MiniDocListPage miniDocList = new MiniDocListPage(driver);
+	String audioSearchString2 = "left";
+	sessionsearch.audioSearch(Input.audioSearchString1, Input.language);
+	docViewPage.selectPureHit();
+	driver.waitForPageToBeReady();
+	sessionsearch.modifyAudioSearch(audioSearchString2, Input.language, null);
+	docViewPage.selectPureHit();
+	sessionsearch.ViewInDocView();
+	baseClass.stepInfo("Searching multiterms in audioDoc view in docview");
+	// click PersistentHits icon on select Docs
+	docViewRedact.checkingPersistentHitPanelAudio();
+	miniDocList.verifyViewDocInPersistentHitPanel(Input.audioSearchString1, audioSearchString2);
+	miniDocList.verifySelectedDocsInClockIcon(audioSearchString2, Input.audioSearchString1);
+}
+
 	
 	
 

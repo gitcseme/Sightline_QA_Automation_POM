@@ -632,6 +632,8 @@ public class TagsAndFoldersPage {
 	 *
 	 */
 	public void CreateFolderInRMU(String strFolder) throws InterruptedException {
+		navigateToTagsAndFolderPage();
+		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFoldersTab().Enabled();
