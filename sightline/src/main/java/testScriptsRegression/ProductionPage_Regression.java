@@ -725,7 +725,7 @@ public class ProductionPage_Regression {
 	 * be created under the mentioned default directory in the production
 	 * configuration
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 13)
+	@Test(enabled = true, groups = { " regression" }, priority = 13)
 	public void passProductionNameAsLoadFilesName() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -754,6 +754,7 @@ public class ProductionPage_Regression {
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
+		driver.waitForPageToBeReady();
 		page.fillingNativeSection();
 		page.fillingTIFFSection(tagname, Input.tagNamePrev);
 		page.fillingTextSection();
@@ -776,7 +777,7 @@ public class ProductionPage_Regression {
 	 * @Description:Verify that configuration format should applied for OCRed text
 	 * files
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 14)
+	@Test(enabled = true, groups = { " regression" }, priority = 14)
 	public void verifyFormatOCRedTextFiles() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -825,8 +826,7 @@ public class ProductionPage_Regression {
 	 *                     Generation QC Checks'
 	 */
 
-	@Test(enabled = false, groups = { " regression" }, priority = 15)
-
+	@Test(enabled = true, groups = { " regression" }, priority = 15)
 	public void verifyPostGenInTileView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55987- Production Sprint 05");
@@ -897,7 +897,7 @@ public class ProductionPage_Regression {
 	 * @Description:To Verify that End-to-end Production Export functionality is
 	 *                 working properly with TIFF files(Production Export).
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 17)
+	@Test(enabled = true, groups = { " regression" }, priority = 17)
 	public void createExport() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56165- Production Sprint 05");
@@ -962,7 +962,7 @@ public class ProductionPage_Regression {
 	 * 
 	 */
 
-	@Test(enabled = false, groups = { " regression" }, priority = 18)
+	@Test(enabled = true, groups = { " regression" }, priority = 18)
 	public void generatingTheProductionAfterBurnRedaction() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56122- Production Sprint 05");
@@ -1019,7 +1019,7 @@ public class ProductionPage_Regression {
 	 *              then that Tag should not be available.
 	 */
 
-	@Test(enabled = false, groups = { " regression" }, priority = 16)
+	@Test(enabled = true, groups = { " regression" }, priority = 16)
 
 	public void tiffSectionLeftBranding() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-56124- Production Sprint 05");
@@ -1064,7 +1064,7 @@ public class ProductionPage_Regression {
 	 *         the populated the bates number fields and production should generated
 	 *         with modified bates number
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 19)
+	@Test(enabled = true, groups = { " regression" }, priority = 19)
 	public void verificationOnNumberingAndSortingPage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49242- Production Sprint 05");
@@ -1113,7 +1113,7 @@ public class ProductionPage_Regression {
 	 *                     docs from export
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 21)
+	@Test(enabled = true, groups = { " regression" }, priority = 21)
 	public void verifyNativeSectionDisplayForDocumentsFromExport() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56150- Production Sprint 06");
@@ -1170,7 +1170,7 @@ public class ProductionPage_Regression {
 	 *                     text
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 20)
+	@Test(enabled = true, groups = { " regression" }, priority = 20)
 	public void verifyProductionWithPDFRedaction() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49969- Production Sprint 06");
@@ -1217,7 +1217,7 @@ public class ProductionPage_Regression {
 	 *                 should export the text with the Placeholder
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 22)
+	@Test(enabled = true, groups = { " regression" }, priority = 22)
 	public void verifyTextExportWithPlaceholder() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49134- Production Sprint 06");
