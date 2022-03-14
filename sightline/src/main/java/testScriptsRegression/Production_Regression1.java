@@ -1793,13 +1793,13 @@ public class Production_Regression1 {
 	}
 
 	/**
-	 * @author : Gopinath created on:NA modified by:NA @Testcase id : RPMXCON_49221
+	 * @author : Gopinath created on:NA modified by:NA //@Testcase id : RPMXCON_49221
 	 *         : To verify that after uncommit if user regenerate the production ,
 	 *         it should generate successfully
 	 * @Description : Verify that after uncommit if user regenerate the production ,
 	 *              it should generate successfully.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority =27 )
+	@Test(enabled=true,groups = { "regression" }, priority =27 )
 	public void ProductionGenerateSuccessfullyAfterUnCommit() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1876,17 +1876,20 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page AFter Uncommit");
 		page.fillingGeneratePageAFterUncommit();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON_50033 :
+	 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON_50033 :
 	 *         To verify that PDF should burn multiple redactions and display the
 	 *         correct text for each redaction.
 	 * @Description : To verify that PDF should burn multiple redactions and display
 	 *              the correct text for each redaction.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority =28 )
+	@Test(enabled=true,groups = { "regression" }, priority =28 )
 	public void SelectingRedactionTagsInPDFSection() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1975,19 +1978,22 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		
 		loginPage.logout();
 
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA. @Testcase ID : RPMXCON_56007 :
+	 * @author Gopinath created on:NA modified by:NA. //@Testcase ID : RPMXCON_56007 :
 	 *         Verify that user can download the production by using the Shareable
 	 *         link for 'All Files'.
 	 * @Description :Verify that user can download the production by using the
 	 *              Shareable link for 'All Files'.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 29)
+	@Test(enabled=true,groups = { "regression" }, priority = 29)
 	public void verifyDownloadProductionUsingSharableLink() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2053,16 +2059,19 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("Generated production successfully");
 
 		base.stepInfo("Verify download production using sharable link.");
 		page.verifyDownloadProductionUsingSharableLink();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON-49224 :
+	 * @author Gopinath created on:NA modified by:NA //@Testcase Id : RPMXCON-49224 :
 	 *         To verify that after uncommit, if user change the source in Document
 	 *         Selection tab, it should regenerate and commit Production
 	 *         successfully.
@@ -2070,7 +2079,7 @@ public class Production_Regression1 {
 	 *              Document Selection tab, it should regenerate and commit
 	 *              Production successfully
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 30)
+	@Test(enabled=true,groups = { "regression" }, priority = 30)
 	public void modifyingTheDocumentSelectionTabAndGenerateTheProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-49224 -Production Sprint 05");
@@ -2096,6 +2105,7 @@ public class Production_Regression1 {
 		sessionSearch.basicContentSearch(testData1);
 
 		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting Default Security Group");
@@ -2144,7 +2154,7 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		base.stepInfo("Filling Generate Pageand Uncommit TheProduction ");
 		page.fillingGeneratePageandUncommitTheProduction();
@@ -2153,18 +2163,21 @@ public class Production_Regression1 {
 		page.modifyingDocumentSelectionAndMarkcomplete(tagname);
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56010 :
+	 * @author Gopinath created on:NA modified by:NA //@Testcase Id : RPMXCON_56010 :
 	 *         Verify that even after Uncommit the producion user can download the
 	 *         Production.
 	 * @Description : Verify that even after Uncommit the producion user can
 	 *              download the Production.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 31)
+	@Test(enabled=true,groups = { "regression" }, priority = 31)
 	public void productionGeneratedSuccessfullyAfterUnCommit() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2241,19 +2254,22 @@ public class Production_Regression1 {
 
 		base.stepInfo("Filling Generate Page AFter Uncommit");
 		page.fillingGeneratePageAFterUncommit();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON-56085 :
+	 * @author Gopinath created on:NA modified by:NA //@Testcase Id : RPMXCON-56085 :
 	 *         Verify that Production should generate successfully by selecting only
 	 *         DAT and 'Generate TIFF' option with Priv Placholder.
 	 * @Description : Verify that Production should generate successfully by
 	 *              selecting only DAT and 'Generate TIFF' option with Priv
 	 *              Placholder.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 32)
+	@Test(enabled=true,groups = { "regression" }, priority = 32)
 	public void TiffWithPrivPlaceholderAndGenerateProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56085 -Production Sprint 05");
@@ -2327,20 +2343,23 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.stepInfo("Production is generated successfully on Selecting Priv docs placeholder");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56084 :
+	 * @author Gopinath created on:NA modified by:NA //@Testcase Id : RPMXCON_56084 :
 	 *         Verify that Production should generate successfully by selecting only
 	 *         DAT and 'Generate PDF' option.
 	 * @Description : Verify that Production should generate successfully by
 	 *              selecting only DAT and 'Generate PDF' option.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 33)
+	@Test(enabled=true,groups = { "regression" }, priority = 33)
 	public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2412,21 +2431,24 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.stepInfo("Production is generated successfully on filling DAT and PDF section");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
 	/**
 	 * 
-	 * @author Gopinath created on:NA modified by:NA TESTCASE @Testcase No :
+	 * @author Gopinath created on:NA modified by:NA TESTCASE //@Testcase No :
 	 *         RPMXCON-56128 : Verify that if Redaction Tag/s is already specified
 	 *         with Redaction Text then that Redaction Tag.
 	 * @Description : Verify that if Redaction Tag/s is already specified with
 	 *              Redaction Text then that Redaction Tag.
 	 */
 
-	@Test(enabled=false,groups = { "regression" }, priority = 34)
+	@Test(enabled=true,groups = { "regression" }, priority = 34)
 	public void verifyClickMarkIncompleteDisablesALreadyRedactedTags() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56128 Production");
@@ -2476,14 +2498,14 @@ public class Production_Regression1 {
 
 	/**
 	 * 
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56062 :
+	 * @author Gopinath created on:NA modified by:NA //@Testcase Id : RPMXCON_56062 :
 	 *         Verify Production should generate successfully with page counting if
 	 *         user selects PDF and TEXT.
 	 * @Description : Verify Production should generate successfully with page
 	 *              counting if user selects PDF and TEXT.
 	 */
 
-	@Test(enabled=false,groups = { "regression" }, priority = 35)
+	@Test(enabled=true,groups = { "regression" }, priority = 35)
 	public void generateProductionByFillingDATAndPDFAndTextSection() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-56062 -Production");
@@ -2562,12 +2584,15 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		base.stepInfo("Production is generated successfully on filling DAT,PDF and TEXT section");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
-
+	
 	/**
 	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON-55717 :
 	 *         To Verify in Productions, for a document with AudioPlayReady, only

@@ -2622,16 +2622,18 @@ public class SessionSearch {
 		driver.getWebDriver().navigate().refresh();
 	}
 
-	// Function to perform bulk folder with existing folder
+	/**
+	 * Modified on 03/14/2022
+	 *  Function to perform bulk folder with existing folder
+	 */
 	public void bulkFolderExisting(final String folderName) throws InterruptedException {
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		if (getPureHitAddButton().isElementAvailable(2)) {
-			getPureHitAddButton().waitAndClick(10);
-		} else {
-			// System.out.println("Pure hit block already moved to action panel");
+		if (getRemovePureHit().isElementAvailable(3)) {
+			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
-			Reporter.log("Pure hit block already moved to action panel", true);
+		} else if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(10);
 		}
 
 		driver.scrollPageToTop();
