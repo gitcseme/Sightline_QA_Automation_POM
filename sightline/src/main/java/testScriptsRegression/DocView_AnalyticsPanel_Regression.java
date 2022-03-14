@@ -2747,7 +2747,7 @@ public class DocView_AnalyticsPanel_Regression {
 		baseClass.stepInfo("Docs are completed successfully");
 
 		// verify completed docs completed checkmark Icon
-		docViewAnalytics.verifyCompleteCheckMarkForThreadMapTabDocs();
+		docViewAnalytics.verifyCompleteCheckMarkForThreadMapTabDocs(2);
 
 		// Impersonate to RMU
 		baseClass.impersonateReviewertoRMU();

@@ -5898,7 +5898,7 @@ public class DocView_Redactions_Regression {
 		assignmentsPage.selectAssignmentToView(assname);
 
 		assignmentsPage.assignmentActions("Edit");
-		assignmentsPage.UnassignedDocs(Input.rev1userName);
+		assignmentsPage.UnassignedUser(Input.rev1userName);
 		assignmentsPage.addReviewerAndDistributeDocs();
 		assignmentsPage.selectAssignmentToViewinDocviewThreadMap(assname);
 		driver.waitForPageToBeReady();

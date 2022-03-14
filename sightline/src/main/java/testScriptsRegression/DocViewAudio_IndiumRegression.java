@@ -2180,7 +2180,7 @@ public class DocViewAudio_IndiumRegression {
 		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
 		// Unassigning the Reviewer Step-4
 		assignmentPage.editAssignment(assign);
-		assignmentPage.UnassignedDocs(Input.rev1userName);
+		assignmentPage.UnassignedUser(Input.rev1userName);
 
 		// again assign the same Reviewer Step-5
 		assignmentPage.assignmentDistributingToReviewer();
