@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.Dimension;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -2632,6 +2633,127 @@ public class SavedSearchRegression_New_Set_05 {
 
 		login.logout();
 
+	}
+
+	/**
+	 * Author : Jeevitha
+	 * 
+	 * @TestCase id : RPMXCON-48631
+	 * @Description : Verify on selecting saved search with Pending status and Doc
+	 *              View option user should not navigate to Doc View screen
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 43)
+	public void verifyInvalidQueryBatchUploadSavedSearch(String username, String password, String fullName)
+			throws Exception {
+		String fileName = saveSearch.renameFile(Input.errorQueryFileLocation);
+		String search = "Basic Invalid WP";
+		String expectedMsg = "The selected search is not yet completed successfully. Please select a valid completed search.";
+
+		// Login as PA
+		login.loginToSightLine(username, password);
+
+		base.stepInfo("Test case Id: RPMXCON-48631");
+		base.stepInfo(
+				"Verify on selecting saved search with Pending status and Doc View option user should not navigate to Doc View screen");
+
+		// Upload Error Query Through Batch File
+		base.stepInfo("Upload Batch File");
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.uploadWPBatchFile_New(fileName, Input.errorQueryFileLocation);
+
+		// verify status
+		saveSearch.selectSavedSearch(search);
+		base.waitForElement(saveSearch.getSavedSearchStatus(search));
+		String status = saveSearch.getSavedSearchStatus(search).getText();
+
+		String passMsg = "Search Status is : " + status;
+		String failMsg = "Saerch Status is not As Expected";
+		base.textCompareEquals(status, "ERROR", passMsg, failMsg);
+
+		// verify warning msg
+		saveSearch.getDocView_button().waitAndClick(10);
+		base.VerifyWarningMessage(expectedMsg);
+
+		// Delete Uploaded File
+		saveSearch.deleteUploadedBatchFile(fileName, Input.mySavedSearch, false, null);
+		softAssertion.assertAll();
+
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description: Verify that Search upload functionality is working proper for
+	 *               multi sheets in Saved searches(RPMXCON-48791)
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 44)
+	public void verifyMultipleTabWorkSheets(String userName, String password, String fullanme)
+			throws InterruptedException, IOException {
+
+		String fileName = Input.BatchFileWithMultiplesheetFile;
+		String fileFormat = ".xlsx";
+		String fileLocation = System.getProperty("user.dir") + Input.validBatchFileLocation;
+		List<String> sheetList = new ArrayList<>();
+
+		base.stepInfo("Test case Id: RPMXCON-48791 - Saved Search");
+		base.stepInfo("Verify that Search upload functionality is working proper for multi sheets in Saved searches");
+
+		// Login as User
+		login.loginToSightLine(userName, password);
+		base.stepInfo("Logged in as : " + userName);
+
+		int number_of_sheets = base.getTotalSheetCount(fileLocation, fileName + fileFormat);
+		base.stepInfo("Total no.of sheets available in the workbook : " + number_of_sheets);
+
+		saveSearch.navigateToSavedSearchPage();
+
+		String fileToSelect = base.renameFile(true, fileLocation, fileName, fileFormat, false, "");
+		System.out.println(fileToSelect);
+
+		// upload batch file
+		saveSearch.uploadBatchFile_D(Input.validBatchFileLocation, fileToSelect + fileFormat, false);
+		saveSearch.getSubmitToUpload().Click();
+		saveSearch.verifyBatchUploadMessage("Success", false);
+
+		sheetList = saveSearch.verifyListOfNodes(sheetList, null, true, number_of_sheets, fileToSelect, null, null,
+				true, Input.mySavedSearch);
+
+		base.passedStep("Search groups created as per the naming convention  {Spreadsheet File Name} TabID{Tab Name}");
+
+		String resetName = base.renameFile(false, fileLocation, fileToSelect, fileFormat, true, fileName);
+		System.out.println(resetName);
+
+		// Delete node
+		saveSearch.deleteListofNode(Input.mySavedSearch, sheetList, true, true);
+
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description: Verify that after resize browser Save Search grid does not
+	 *               resize(RPMXCON-48857)
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
+	public void verifyGridAfterResize() throws Exception {
+		// Minimize browser
+		Dimension n = new Dimension(800, 800);
+		driver.Manage().window().setSize(n);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48857");
+		base.stepInfo("Verify that after resize browser Save Search grid does not resize");
+
+		// Verify Grid position
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.verifyGridPosition();
+
+		login.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)

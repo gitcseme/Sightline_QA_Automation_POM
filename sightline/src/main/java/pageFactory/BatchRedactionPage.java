@@ -262,7 +262,7 @@ public class BatchRedactionPage {
 		return driver.FindElementByXPath("//table[@id='BatchRedactionsDataTable']//tbody//tr//td[text()='" + searchName
 				+ "']//following::td[3]//div");
 	}
-
+	
 	public Element getRollBackNotification() {
 		return driver.FindElementByXPath("(//ul[@class='notification-body']//a)[1]");
 	}
@@ -313,6 +313,10 @@ public class BatchRedactionPage {
 	}
 
 	// Added By Jeevitha
+	public Element getRollbackQueText(String ssName) {
+		return driver.FindElementByXPath("//td[text()='" + ssName + "']//parent::tr//td//div[contains(text(),'Rollback Batch Redaction queued')]");
+	}
+	
 	public Element getNodeAnalyseBtn(String newNode) {
 		return driver.FindElementByXPath(
 				"//div[text()='" + newNode + "']//parent::a//child::div//button[contains(text(),'Analyze Group')]");

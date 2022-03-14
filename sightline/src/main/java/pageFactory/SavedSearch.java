@@ -323,6 +323,14 @@ public class SavedSearch {
 	}
 
 	// Added By Jeevitha
+	public Element getGridHeader() {
+		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']");
+	}
+
+	public Element getGridBody() {
+		return driver.FindElementByClassName("dataTables_scrollBody");
+	}
+
 	public Element getExecutePopMSg() {
 		return driver.FindElementByXPath("//p[@class='pText']");
 	}
@@ -6307,16 +6315,13 @@ public class SavedSearch {
 	 */
 	public String verifyCompletedTime(String search, String node, String sg, boolean selectNode)
 			throws InterruptedException {
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		driver.waitForPageToBeReady();
+		navigateToSavedSearchPage();
 		getSavedSearchGroupName(sg).waitAndClick(10);
-		base.waitForElement(getSavedSearchNewGroupExpand());
-		getSavedSearchNewGroupExpand().Click();
+		rootGroupExpansion();
 		if (selectNode) {
 			getSavedSearchGroupName(node).waitAndClick(10);
-			base.stepInfo(node + " is present in  " + "'" + sg + "'");
+			base.stepInfo(node + " is present in " + "'" + sg + "'");
 		}
-
 		savedSearch_SearchandSelect(search, "Yes");
 		String dateAndTime = getLastCompletedTime(search).getText();
 		System.out.println("Last Completed Date And Time : " + dateAndTime);
@@ -7278,7 +7283,7 @@ public class SavedSearch {
 	public List<String> getListFromSavedSearchTable(String headerName) {
 		int i;
 		i = base.getIndex(gettableHeaders(), headerName);
-		System.out.println(headerName +"--"+ i);
+		System.out.println(headerName + "--" + i);
 
 		base.waitForElement(getNumberOfSavedSearchToBeShown());
 		getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
@@ -7709,4 +7714,31 @@ public class SavedSearch {
 		}
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Decsription : verifies Saved Search Page Grid Position After Resize
+	 */
+	public void verifyGridPosition() {
+		// value before maximize
+		driver.waitForPageToBeReady();
+		base.waitForElement(getGridHeader());
+		String headerWidthBefore = getGridHeader().GetAttribute("style");
+		String bodyWidthBefore = getGridBody().GetAttribute("style");
+
+		// Maximize
+		driver.Manage().window().maximize();
+
+		// value After Maximize
+		driver.waitForPageToBeReady();
+		base.waitForElement(getGridHeader());
+		String headerWidthAfter = getGridHeader().GetAttribute("style");
+		String bodyWidthAfter = getGridBody().GetAttribute("style");
+
+		String passMsg = "The Header of Grid position is As expected : " + headerWidthAfter;
+		String failMsg = "The Grid Position is Not As Expected";
+		base.textCompareEquals(headerWidthBefore, headerWidthAfter, passMsg, failMsg);
+
+		String passMsgGridBody = "The Body of Grid position is As expected : " + bodyWidthAfter;
+		base.textCompareEquals(bodyWidthBefore, bodyWidthAfter, passMsgGridBody, failMsg);
+	}
 }
