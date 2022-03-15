@@ -2755,6 +2755,9 @@ public class ProductionPage {
 				"//input[@id='chkEnabledforExceptionDocs']//..//..//..//../*[@title='Insert Metadata Field']");
 	}
 
+	public Element getAddWorkProductSlipSheet(String ProductName) {
+		return driver.FindElementByXPath("//input[@class='chk-data']/..//i/following-sibling::strong[text()='"+ProductName+"']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -18869,6 +18872,83 @@ public class ProductionPage {
 					"Exception occcured while verifying meta data list in drop down exception will be in ascending order on pdf section."
 							+ e.getMessage());
 		}
+	}
+	
+	/**
+	 * @author Vijaya.Rani Modified By - 15/03/2022 Modified Date - NA
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @param verificationText
+	 * @throws IOException
+	 * @Description :  OCR Verification In Generated Tiff SS.
+	 */
+	public void OCR_Verification_In_Generated_Tiff_SS(int firstFile, int lastFile, String prefixID, String suffixID,
+			String verificationText) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		Ocr.setUp();
+		Ocr ocr = new Ocr();
+		ocr.startEngine("eng", Ocr.SPEED_FASTEST);
+		for (int i = firstFile; i < lastFile; i++) {
+			
+			String Tifffile = ocr.recognize(
+					new File[] {
+							new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".ss.tiff") },
+					Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
+			System.out.println(Tifffile);
+
+			if (Tifffile.contains(verificationText)) {
+				base.passedStep(verificationText + " is displayed in " + prefixID + i + suffixID + " file expected");
+			} else {
+				base.failedStep( prefixID + i + suffixID +" : "+verificationText);
+			}
+			
+		}
+		ocr.stopEngine();
+	}
+
+
+	/**
+	 * @author Vijaya.Rani
+	 * @description : Adding Slip Sheet Work Product
+	 * @param productName1
+	 * @param productName2
+	 * @param productName3 
+	 * @param productName4 
+	 * @throws IOException
+	 * 
+	 */
+	public void addingSlipSheetWorkProduct(String productName1,String productName2,String productName3,String productName4) throws InterruptedException {
+		
+		base.waitForElement(getadvance());
+		getadvance().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSlipSheets().Visible();
+			}
+		}), Input.wait30);
+		getSlipSheets().waitAndClick(10);
+		
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getAddWorkProductSlipSheet(productName1));
+		getAddWorkProductSlipSheet(productName1).waitAndClick(10);
+		
+		base.waitForElement(getAddWorkProductSlipSheet(productName2));
+		getAddWorkProductSlipSheet(productName2).waitAndClick(10);
+		
+		base.waitForElement(getAddWorkProductSlipSheet(productName3));
+		getAddWorkProductSlipSheet(productName3).waitAndClick(10);
+		
+		base.waitForElement(getAddWorkProductSlipSheet(productName4));
+		getAddWorkProductSlipSheet(productName4).waitAndClick(10);
+		
+		base.waitForElement(getAddSelected());
+		getAddSelected().waitAndClick(10);
+		
+		
+		
 	}
 
 }

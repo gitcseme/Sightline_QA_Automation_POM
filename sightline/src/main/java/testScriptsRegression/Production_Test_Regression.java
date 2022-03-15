@@ -2082,7 +2082,7 @@ public class Production_Test_Regression {
 	 * @Description: To verify that if Blank Page Removal toggle is OFF then it
 	 *               should produced the PDF with blank pages
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 32)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyBlankRemovalToggleWithpdfGen() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48533 -Production Sprint 09");
@@ -2136,7 +2136,7 @@ public class Production_Test_Regression {
 	 *               only tags selected in the native components, then Component tab
 	 *               should Complete without any error.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 33)
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifiyProdComponentTabWithoutError() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55920 -Production Sprint 10");
@@ -2212,7 +2212,7 @@ public class Production_Test_Regression {
 	 * @Description: To Verify Document Selection Page (for Folder/Tag/Search;
 	 *               Include Family ;Total Count)
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyDocmentSelectionPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48183 -Production Sprint 10");
@@ -2270,7 +2270,7 @@ public class Production_Test_Regression {
 	 *               displays 'Reserving Bates Range Completed' status on Progress
 	 *               bar in Tile View on Production Home page
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 35)
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void verifiyBateRangeCompletedOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56019 -Production Sprint 10");
@@ -2334,7 +2334,7 @@ public class Production_Test_Regression {
 	 * @Description: Verify that once LST generation is started it should displays '
 	 *               Generating Load Files' status on Production Tile View
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 36)
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
 	public void verifiyLSTGenOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56022 -Production Sprint 10");
@@ -2400,7 +2400,7 @@ public class Production_Test_Regression {
 	 * @Description: Verify that once LST generation is started it should displays '
 	 *               Generating Load Files' status on Production Grid View
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 37)
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
 	public void verifiyGenarationloadFilesOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56045 -Production Sprint 10");
@@ -2468,7 +2468,7 @@ public class Production_Test_Regression {
 	 * @Description: Verify that if Production is regeneate then previous sharable
 	 *               link should not be usabel
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 38)
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
 	public void verifyRegenarateSharable() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56012 -Production Sprint 10");
@@ -2542,7 +2542,7 @@ public class Production_Test_Regression {
 	 * @Description: Verify that after the regenerate the new links, previous links
 	 *               and password will no longer work,
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 39)
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyRegenareOldLinkNoLongerWork() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56006 -Production Sprint 10");
@@ -2616,7 +2616,7 @@ public class Production_Test_Regression {
 	 * @Description: Verify that in the Production components page 'Archive File
 	 *               from FTP' component is not available
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void verifyArchiveFileFromFTPNotDisplayed() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55997 -Production Sprint 10");
@@ -6558,7 +6558,7 @@ public class Production_Test_Regression {
 	 * @Description To Verify TIFF Section with various options
 	 *
 	 */
-	@Test(groups = { "regression" }, priority = 93)
+	@Test(enabled = false,groups = { "regression" }, priority = 93)
 	public void verifyTiffSectionVariosOption() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -6638,6 +6638,74 @@ public class Production_Test_Regression {
 
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 15/03/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify concatenated email value should be displayed correctly on Slip Sheets in Production. 'RPMXCON-55940'
+	 *
+	 * @throws IOException
+	 */
+	@Test(enabled=true,groups = { "regression" }, priority = 94)
+	public void verifyEmailValueDisplayOnSlipSheets() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-55940 -Production Sprint 13");
+	base.stepInfo(
+	"Verify concatenated email value should be displayed correctly on Slip Sheets in Production.");
+
+	String foldername = "Folder" + Utility.dynamicNameAppender();
+	String productionname = "p" + Utility.dynamicNameAppender();
+	String tagname = "Tag" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+	String s1="EmailAuthorAddress";
+	String s2="EmailAuthorName";
+	String s3="EmailBCCNamesAndAddresses";
+	String s4="EmailCCNamesAndAddresses";
+	String s5 ="AuthorName";
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.SearchMetaData("IngestionName", "C113_GD_994_Native_Text_ForProduction_20211223121754233");
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	page = new ProductionPage(driver);
+	String beginningBates=page.getRandomNumber(2);
+	int firstFile = Integer.parseInt(beginningBates);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSection();
+	page.selectGenerateOption(false);
+	page.addingSlipSheetWorkProduct(s1,s2,s3,s4);
+	page.fillingTextSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	String PDocCount = page.getProductionDocCount().getText();
+	int docno = Integer.parseInt(PDocCount);
+	int lastfile = firstFile +docno;
+	page.extractFile();
+	page.OCR_Verification_In_Generated_Tiff_SS(firstFile, lastfile, prefixID, suffixID, s1);
+	page.OCR_Verification_In_Generated_Tiff_SS(firstFile, lastfile, prefixID, suffixID, s5);
+	page.OCR_Verification_In_Generated_Tiff_SS(firstFile, lastfile, prefixID, suffixID, s3);
+	page.OCR_Verification_In_Generated_Tiff_SS(firstFile, lastfile, prefixID, suffixID, s4);
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+	loginPage.logout();
+	}
+
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
