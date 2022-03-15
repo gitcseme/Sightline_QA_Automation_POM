@@ -30,6 +30,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
+
 public class CreateCodingForm_New_Regression {
 	Driver driver;
 	LoginPage loginPage;
@@ -2534,7 +2535,6 @@ public class CreateCodingForm_New_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority = 41)
 	public void  validateChildwindowForRequiredTag() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52045");
-		baseClass.stepInfo("Test case Id: RPMXCON-52044");
 		baseClass.stepInfo("Verify that user should not save the "
 				+ "coding stamp without selecting coding form for required fields "
 				+ "in context of security group");
@@ -3072,7 +3072,7 @@ public class CreateCodingForm_New_Regression {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		
-		baseClass.stepInfo("Test case Id: RPMXCON-52989");
+		baseClass.stepInfo("Test case Id: RPMXCON-50989");
 		baseClass.stepInfo("To verify that if coding form is not associated "
 				+ "to the security group, document should not be saved.");
 		String cfName = "CF"+Utility.dynamicNameAppender();
@@ -4364,6 +4364,112 @@ public class CreateCodingForm_New_Regression {
 		codingForm.assignCodingFormToSG(Input.codingFormName);
 		codingForm.deleteCodingForm(cfName, cfName);
 		
+		// logout
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Baskar date:1/12/21 Modified date: NA Modified by: Baskar 
+	 * @Description : Verify that user should not save the coding stamp without 
+	 *                selecting coding form for required fields in context of security group
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 71)
+	public void  validateChildwindowForRequiredTagCF() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52044");
+		baseClass.stepInfo("Verify that user should not save the coding stamp without "
+				+ "selecting coding form for required fields in context of security group");
+		String cfName = "CF"+Utility.dynamicNameAppender();
+		String fieldText="Stamp"+Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		// create new coding form
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.commentRequired(cfName);
+		baseClass.stepInfo("Coding form created with comments required tag");
+		
+		// Assign to security group
+		codingForm.assignCodingFormToSG(cfName);
+		baseClass.stepInfo("Coding form assigned to security group");
+		
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		
+		docViewPage.validateWithoutEditUsingStamp(fieldText);
+		
+		codingForm.assignCodingFormToSGAlert("Default Project Coding Form");
+		driver.waitForPageToBeReady();
+		codingForm.deleteCodingForm(cfName,cfName);
+		
+		// logout
+		loginPage.logout();
+	}
+	
+
+	/**
+	 * @Author : Baskar date: NA Modified date:10/12/2021 Modified by: Baskar 
+	 * @Description :Verify validation of coding form when coding form is created with metadata 
+	 *               field as DateTime on click of 'Save''
+	 */
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 72)
+	public void validationOfNonDateFormatUsingSave() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51579");
+	    baseClass.stepInfo("Verify validation of coding form when coding form is "
+	    		+ "created with metadata field as DateOnly on click of 'Save'");
+	    String codingForms = "CFDate"+Utility.dynamicNameAppender();
+	    String assgnCoding = "codingAssgn"+Utility.dynamicNameAppender();
+
+		UtilityLog.info("Started Execution for prerequisite");
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+	
+		// Custom Field created with DATE DataType
+		projectPage.addCustomFieldDataType(date, "Date");
+		baseClass.stepInfo("Custom meta data field created with DATE datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(date);
+		baseClass.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Creating Coding Form
+		codingForm.creatingCodingFormAndAssgnUsingParameter(codingForms, date,Input.optional);
+		baseClass.stepInfo("Project field added to coding form in Doc view");
+		
+		// Session search to doc view to create assignment
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		
+		assignmentPage.assignmentCreation(assgnCoding, codingForms);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+		
+		// logout
+		loginPage.logout();
+		
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		
+		// verify the coding form panel for non-date format
+		docViewPage.nonDateFormatValidationUsingSave(date);
+
 		// logout
 		loginPage.logout();
 	}
