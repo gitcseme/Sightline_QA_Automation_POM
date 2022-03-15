@@ -14342,11 +14342,16 @@ public class ProductionPage {
 		base.stepInfo(exportname + " Is selected From Production/Export Set DropDown");
 	}
 
-	/*
+	
+	/**
 	 * @authorBrundha
+	 * @param Batesvalue
+	 * @throws InterruptedException 
+	 * 
+	 * @description:verifying the batesrange value in generate page
 	 */
-	public void fillingGeneratePageAndVerfyingBatesRange(String Batesvalue) throws InterruptedException {
-//generating production:
+	public void fillingGeneratePageAndVerfyingBatesRange(String Batesvalue) throws InterruptedException  {
+
 		SoftAssert softAssertion = new SoftAssert();
 		String expectedText = "Success";
 
@@ -14427,9 +14432,10 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @author: Brundha
+	 * @author Brundha.T
+	 * @param Productionname
+	 * @param Templatename
 	 * @Description: Method for adding the saved template in basic info tab.
-	 * 
 	 */
 	public void savedTemplateAndNewProdcution(String Productionname, String Templatename) {
 		try {
@@ -14453,13 +14459,13 @@ public class ProductionPage {
 		}
 
 	}
-
-	/**
-	 * @author: Brundha
-	 * @Description: Method for verifying the text in prefix and suffix in numbering
-	 *               and sorting page
-	 * 
-	 */
+/**
+ * @author Brundha.T
+ * @param prefixID
+ * @param suffixID
+ * @Description: Method for verifying the text in prefix and suffix in numbering
+	               and sorting page
+ */
 	public void verifyingPrefixAndSuffixText(String prefixID, String suffixID) {
 		try {
 			base.waitForElement(getBeginningBates());
@@ -14602,6 +14608,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorBrundha
+	 * @param Tag
 	 * @description :method for filling burn redaction with redaction tag.
 	 * 
 	 */
@@ -14665,8 +14672,8 @@ public class ProductionPage {
 	/**
 	 * @author:Brundha
 	 * @Description: Method for checking status of production from homepage
-	 * @param Status: Status is String value that name of Production status on
-	 *                progress bar.
+	 * @param statusMsg
+	 * @param productionname
 	 */
 	public void verifyingProductionStatusInHomePage(String statusMsg, String productionname) {
 		String productionFromHomePage = null;
@@ -14716,6 +14723,8 @@ public class ProductionPage {
 	/**
 	 * @authorBrundha
 	 * @description :selecting pdf generate radio button
+	 * @param tagname
+	 * @param tagnameprev
 	 * 
 	 */
 	public void fillingPrivledgedDocForPDFSection(String tagname, String tagnameprev) {
@@ -15133,6 +15142,7 @@ public class ProductionPage {
 	/**
 	 * @authorBrundha
 	 * @Description : Method for navigating to doclist page.
+	 * @return docCount
 	 * @Modified by Jeevitha 17/1/2022
 	 */
 	public String navigatingToDocViewPage() {
@@ -15216,10 +15226,11 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha
-	 * @Description :method to validate clickhere link
+	 * @author Brundha.T
+	 *@Description :method to validate clickhere link
+	 * 
 	 */
-	public void verifyClickHereLinkNotAvailableAtMarkComplete() throws InterruptedException {
+	public void verifyClickHereLinkNotAvailableAtMarkComplete() {
 
 		if (getClickHereLink().isDisplayed()) {
 			base.passedStep("ClickHere link is available before Markcomplete");
@@ -15389,7 +15400,9 @@ public class ProductionPage {
 
 	/**
 	 *
-	 * @authorBrundha method for filling document selction page with one tag
+	 * @author Brundha
+	 * @param Tag
+	 * @Description  method for filling document selction page with one tag
 	 */
 	public void fillingDocumentSelectionWithTag(String Tag) {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -15421,19 +15434,17 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @throws InterruptedException
-	 * @authorBrundha method for filling mp3 file
+	 *
+	 * @authorBrundha
+	 * @Description  method for filling mp3 file
 	 */
 	public void SelectMP3FileAndVerifyLstFile() {
 
 		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
 		base.waitForElement(getAdvancedProductionComponent());
 		getAdvancedProductionComponent().waitAndClick(10);
-		;
 		getMP3CheckBox().waitAndClick(10);
-		;
 		getMP3CheckBoxToggle().waitAndClick(10);
-		;
 		driver.waitForPageToBeReady();
 		base.clickButton(getAdvancedInMP3Files());
 		String color = driver.FindElement(By.xpath("//label//input[@id='chkMP3ProduceLoadFile']//following-sibling::i"))
@@ -15820,6 +15831,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorBrundha
+	 * @param Tag
 	 * @description :method for filling native placeholder
 	 */
 	public void fillingNativeDocsPlaceholder(String Tag) {
@@ -15942,7 +15954,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to select blank page removal toggle
+	 * @authorBrundha 
+	 * @Description:Method to select blank page removal toggle
 	 */
 	public void selectBlankRemovalInTiffSection() {
 		base.waitForElement(getTIFFChkBox());
@@ -15974,9 +15987,11 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to select redaction tag
+	 * @authorBrundha 
+	 * @param tagname
+	 * @Description:Method to select redaction tag
 	 */
-	public void burnRedactionWithRedactionTagInTiffSection(String tagname) throws InterruptedException {
+	public void burnRedactionWithRedactionTagInTiffSection(String tagname) {
 
 		base.waitForElement(getTIFFChkBox());
 		getTIFFChkBox().Click();
@@ -16010,7 +16025,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to verify specific dropdown value
+	 * @authorBrundha 
+	 * @param TextNotExpected
+	 * @Description:Method to verify specific dropdown value
 	 */
 	public void verifyDropDownValueInCompletedProduction(String TextNotExpected) {
 		driver.waitForPageToBeReady();
@@ -16184,7 +16201,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to select generate radio button
+	 * @author Brundha.T
+	 * @param Value
+	 * @Description:Method to select generate radio button
 	 */
 	public void selectGenerateOption(boolean Value) {
 
@@ -16205,7 +16224,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to verify placeholder text in burn
+	 * @authorBrundha 
+	 * @param Tag
+	 * @Description:Method to verify placeholder text in burn
 	 *                redaction
 	 */
 	public void verifyPlaceholderTextInBurnRedaction(String Tag) {
@@ -16234,7 +16255,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to verify text in text section
+	 * @authorBrundha 
+	 * @Description:Method to verify text in text section
 	 */
 	public void verifyTextInTextSection() {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -16289,7 +16311,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to select branding
+	 * @authorBrundha
+	 * @param Tag
+	 * @ Description:Method to select branding
 	 */
 	public void selectBrandingInTiffAndPdfSection(String Tag) {
 
@@ -16439,7 +16463,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to Delete production in draft mode
+	 * @authorBrundha
+	 * @param productionname
+	 * @Description:Method to Delete production in draft mode
 	 */
 
 	public void deleteProduction(String productionname) {
@@ -16475,6 +16501,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorBrundha
+	 * @param Tag
 	 * @Description : Method for add rules in priv guard and remove the rules
 	 */
 	public void AddRuleAndRemoveRule(String Tag) {
@@ -16953,7 +16980,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to verify blank page removal toggle message
+	 * @authorBrundha 
+	 * @Description:Method to verify blank page removal toggle message
 	 * 
 	 */
 	public void verifyBlankPageRemovalMeassage() {
@@ -16990,7 +17018,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to verify split sub folder toggle
+	 * @authorBrundha 
+	 * @Description:Method to verify split sub folder toggle
 	 * 
 	 */
 	public void verifySubFolderToggle() {
@@ -17135,7 +17164,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to fill burn redaction in MP3 file
+	 * @authorBrundha 
+	 * @Description:Method to fill burn redaction in MP3 file
 	 * 
 	 */
 
@@ -17169,7 +17199,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:verifying the retained data in MP3 file burn
+	 * @authorBrundha 
+	 * @param Redactiontag
+	 * @Description:verifying the retained data in MP3 file burn
 	 *                redaction
 	 * 
 	 */
@@ -17199,7 +17231,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to verify retained rotation in component
+	 * @authorBrundha
+	 * @param GenerateButton
+	 * @Description:Method to verify retained rotation in component
 	 *                tab
 	 * 
 	 */
@@ -17323,12 +17357,13 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Verifying Docs w/ No Master Date retained on
+	 * @authorBrundha 
+	 * @Description:Verifying Docs w/ No Master Date retained on
 	 *                markcomplete
 	 * 
 	 */
 
-	public void verifyMasterDateRetainedOnMarkComplete() throws InterruptedException {
+	public void verifyMasterDateRetainedOnMarkComplete()  {
 		driver.scrollingToBottomofAPage();
 		getlstSortByKeepDocsWithNoMasterDate().selectFromDropdown().selectByVisibleText("At the beginning");
 		driver.scrollPageToTop();
@@ -17355,7 +17390,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to add new production and save
+	 * @authorBrundha 
+	 * @param productionName
+	 * @Description:Method to add new production and save
 	 */
 	public void addANewProductionAndSave(String productionName) throws InterruptedException {
 		base.waitForElement(getAddNewProductionbutton());
@@ -17373,7 +17410,10 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to fill Numbering and sorting page without
+	 * @authorBrundha 
+	 * @param prefixId
+	 * @param suffixId
+	 * @Description:Method to fill Numbering and sorting page without
 	 *                family members together
 	 */
 	public void fillingNumberingAndSortingWithoutFamilyMember(String prefixId, String suffixId) {
@@ -17548,6 +17588,8 @@ public class ProductionPage {
 
 	/**
 	 * @authorBrundha
+	 * @param source
+	 * @param Destination
 	 * @Description :Method to unzip the zipped file
 	 * 
 	 */
@@ -17560,7 +17602,9 @@ public class ProductionPage {
 
 	/**
 	 * 
-	 * @authorBrundha Description:verifying the belly band message in DAT section .
+	 * @authorBrundha 
+	 * @param Batesnumber
+	 * @Description:verifying the belly band message in DAT section .
 	 */
 	public void verifyingBellyBandMessageInDATSection(String Batesnumber) {
 		driver.scrollPageToTop();
@@ -17785,6 +17829,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorBrundha
+	 * @param foldername
 	 * @description :filling Document selection tab
 	 * 
 	 */
@@ -17808,6 +17853,8 @@ public class ProductionPage {
 
 	/**
 	 * @authorBrundha
+	 * @param Tag1
+	 * @param Tag2
 	 * @description :method for filling burn redaction with redaction tags.
 	 * 
 	 */
@@ -17865,6 +17912,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorBrundha
+	 * @param Test
 	 * @description :filling natively produced docs with file type and verifying the
 	 *              warning message.
 	 * 
@@ -18119,7 +18167,11 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha Description:Method to fill prefix and suffix in sorting tab
+	 * @authorBrundha
+	 * @param prefixId
+	 * @param suffixId
+	 * @param begBate
+	 * @Description:Method to fill prefix and suffix in sorting tab
 	 */
 	public void fillingNumberingAndSortingTab(String prefixId, String suffixId, String begBate) {
 
@@ -18151,6 +18203,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorBrundha
+	 * @param FolderName
 	 * @description :filling Workproduct in tiff section
 	 * 
 	 */
@@ -18453,9 +18506,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorBrundha
+	 * @author Brundha.T
+	 * @param i
 	 * @description :Selecting CheckBox In Dat section
-	 * 
 	 */
 	public void selectingCheckboxInDatSection(int i) {
 		base.waitForElement(getRedactDATCheckBox(i));
