@@ -240,6 +240,7 @@ public class TestData {
     public String batchFileWithMultiSheetColumnOrderChange;
     public String highVolumeProject;
     public String bulkSearchSting1;
+    public String validBatchFile;
     
 	// Added by jeevitha
 	public String colorCodeOfRed;

@@ -356,6 +356,7 @@ public class Input {
 	public static String batchFileWithMultiSheetColumnOrderChange;
 	public static String highVolumeProject;
 	public static String bulkSearchSting1;
+	public static String validBatchFile;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -502,7 +503,7 @@ public class Input {
 	public static String fileGroup;
 	public static String document;
 	public static String fileTypeInNativeDocs;
-	
+
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -542,7 +543,7 @@ public class Input {
 	public static String custodianName_Andrew;
 	public static String custodianName_allen;
 	public static String SearchString_Audio;
-	
+
 	// Added by Gopinath - 05/01/2021
 	public static String downloadDocID;
 	public static String translationDocId;
@@ -598,51 +599,49 @@ public class Input {
 	public static String Natives_DDMMYYYY_Slash;
 	public static String DAT_MMDDYYYY_Slash;
 	public static String Natives_MMDDYYYY_Slash;
-	
-	
-	//Added by Gopinath - 02/03/2022
+
+	// Added by Gopinath - 02/03/2022
 	public static String ingestionProjectName;
-	public static String ingestionType ;
+	public static String ingestionType;
 	public static String sourceSystem;
-	public static String sourceLocation ;
+	public static String sourceLocation;
 	public static String sourceFolder;
-	public static String fieldSeperator ;
-	public static String textQualifier ;
-	public static String multiValue ;
-	public static String datLoadFile ;
-	public static String documentKey ;
-	public static String mp3LoadFile ;
-	public static String dateFormat ;
-	public static String docId ;
-	public static String dataSource ;
-	public static String custodian ;
-	public static String fileExt ;
-	public static String fileName ;
-	public static String fileSize ;
-	public static String fileType ;
-	public static String ingDocBasic ;
-	public static String docFileExt ;
-	public static String ingDocFileName ;
-	public static String ingDocFileSize ;
-	public static String ingDocFileType ;
+	public static String fieldSeperator;
+	public static String textQualifier;
+	public static String multiValue;
+	public static String datLoadFile;
+	public static String documentKey;
+	public static String mp3LoadFile;
+	public static String dateFormat;
+	public static String docId;
+	public static String dataSource;
+	public static String custodian;
+	public static String fileExt;
+	public static String fileName;
+	public static String fileSize;
+	public static String fileType;
+	public static String ingDocBasic;
+	public static String docFileExt;
+	public static String ingDocFileName;
+	public static String ingDocFileSize;
+	public static String ingDocFileType;
 	public static String lessThan500PagesDocId;
 	public static String d500PagesDocId;
-	
-	
-	//Added by Mohan for PT Env analytics panel
-	public static String conceptualDocId01; 
+
+	// Added by Mohan for PT Env analytics panel
+	public static String conceptualDocId01;
 	public static String conceptualDocId02;
 	public static String conceptualDocId03;
 	public static String conceptualDocIdForReviewer01;
 	public static String conceptualDocIdForReviewer02;
 	public static String conceptualDocIdForReviewer03;
-	public static String familyDocId01; 
+	public static String familyDocId01;
 	public static String familyDocId02;
 	public static String familyDocId03;
 	public static String familyDocIdForReviewer01;
 	public static String familyDocIdForReviewer02;
 	public static String familyDocIdForReviewer03;
-	public static String nearDupeDocId01; 
+	public static String nearDupeDocId01;
 	public static String nearDupeDocId02;
 	public static String nearDupeDocId03;
 	public static String nearDupeDocIdForReviewer01;
@@ -651,14 +650,7 @@ public class Input {
 	public static String threadMapDocId01;
 	public static String threadMapWithNonEmailAttachment;
 	public static String conceptualDocId04;
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -868,7 +860,7 @@ public class Input {
 		TIFFPageCount = testData.getPageCount();
 		translationDocumentId = testData.getTranslationDocId();
 		parentDocument = testData.getParentDocument();
-		masterDateText=testData.getMasterDate();
+		masterDateText = testData.getMasterDate();
 		/**
 		 * @author Aathith.Senthilkumar
 		 */
@@ -938,7 +930,6 @@ public class Input {
 		HiddenIngestionDocId = testData.getHiddenIngestionDocId();
 		HiddenIngestionName = testData.getHiddenIngestionName();
 		HiddenLinkDocId = testData.getHiddenLinkDocId();
-		
 
 		// Added by Arun
 		pageRange1 = testData.getPageRange1();
@@ -987,6 +978,7 @@ public class Input {
 		batchFileWithMultiSheetColumnOrderChange = testData.getBatchFileWithMultiSheetColumnOrderChange();
 		highVolumeProject = testData.getHighVolumeProject();
 		bulkSearchSting1 = testData.getBulkSearchSting1();
+		validBatchFile = testData.getValidBatchFile();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
@@ -996,30 +988,29 @@ public class Input {
 		progresBarColor = testData.getProgresBarColor();
 		BatchFileduplicateHeader = testData.getBatchFileduplicateHeader();
 		metaDataCNcount = testData.getMetaDataCNcount();
-		
-		
-		//Added by Mohan
-		conceptualDocId01=testData.getConceptualDocId01();
-		conceptualDocId02=testData.getConceptualDocId02();
-		conceptualDocId03=testData.getConceptualDocId03();
-		conceptualDocId04=testData.getConceptualDocId04();
-		conceptualDocIdForReviewer01=testData.getConceptualDocIdForReviewer01();
-		conceptualDocIdForReviewer02=testData.getConceptualDocIdForReviewer02();
-		conceptualDocIdForReviewer03=testData.getConceptualDocIdForReviewer03();
-		 familyDocId01=testData.getFamilyDocId01();
-		familyDocId02=testData.getFamilyDocId02();
-		 familyDocId03=testData.getFamilyDocId03();
-		familyDocIdForReviewer01=testData.getFamilyDocIdForReviewer01();
-		familyDocIdForReviewer02=testData.getFamilyDocIdForReviewer02();
-		familyDocIdForReviewer03=testData.getFamilyDocIdForReviewer03();
-		nearDupeDocId01=testData.getNearDupeDocId01();
-		nearDupeDocId02=testData.getNearDupeDocId02();
-		nearDupeDocId03=testData.getNearDupeDocId03();
-		nearDupeDocIdForReviewer01=testData.getNearDupeDocIdForReviewer01();
-		nearDupeDocIdForReviewer02=testData.getNearDupeDocIdForReviewer02();
-		nearDupeDocIdForReviewer03=testData.getNearDupeDocIdForReviewer03();
-		threadMapDocId01=testData.getThreadMapDocId01();
-		threadMapWithNonEmailAttachment=testData.getThreadMapWithNonEmailAttachment();
+
+		// Added by Mohan
+		conceptualDocId01 = testData.getConceptualDocId01();
+		conceptualDocId02 = testData.getConceptualDocId02();
+		conceptualDocId03 = testData.getConceptualDocId03();
+		conceptualDocId04 = testData.getConceptualDocId04();
+		conceptualDocIdForReviewer01 = testData.getConceptualDocIdForReviewer01();
+		conceptualDocIdForReviewer02 = testData.getConceptualDocIdForReviewer02();
+		conceptualDocIdForReviewer03 = testData.getConceptualDocIdForReviewer03();
+		familyDocId01 = testData.getFamilyDocId01();
+		familyDocId02 = testData.getFamilyDocId02();
+		familyDocId03 = testData.getFamilyDocId03();
+		familyDocIdForReviewer01 = testData.getFamilyDocIdForReviewer01();
+		familyDocIdForReviewer02 = testData.getFamilyDocIdForReviewer02();
+		familyDocIdForReviewer03 = testData.getFamilyDocIdForReviewer03();
+		nearDupeDocId01 = testData.getNearDupeDocId01();
+		nearDupeDocId02 = testData.getNearDupeDocId02();
+		nearDupeDocId03 = testData.getNearDupeDocId03();
+		nearDupeDocIdForReviewer01 = testData.getNearDupeDocIdForReviewer01();
+		nearDupeDocIdForReviewer02 = testData.getNearDupeDocIdForReviewer02();
+		nearDupeDocIdForReviewer03 = testData.getNearDupeDocIdForReviewer03();
+		threadMapDocId01 = testData.getThreadMapDocId01();
+		threadMapWithNonEmailAttachment = testData.getThreadMapWithNonEmailAttachment();
 
 		/**
 		 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
@@ -1132,8 +1123,8 @@ public class Input {
 		xlsExcelDocId = testData.getXlsExcelDocId();
 		tiffDocId1 = testData.getTiffDocId1();
 		pptDocId = testData.getPptDocId();
-		messageDocId= testData.getMessageDocId();
-		
+		messageDocId = testData.getMessageDocId();
+
 		// Added by Gopinath - 16/11/2021
 		signDocumentId = testData.getSignDocumentId();
 		technicalIssue = testData.getTechnicalIssue();
@@ -1188,9 +1179,9 @@ public class Input {
 		docFile = testData.getDocFile();
 		stampRed = testData.getStampRed();
 		stampGreen = testData.getStampGreen();
-		fileGroup=testData.getFileGroup();
-		document=testData.getDocument();
-		fileTypeInNativeDocs=testData.getFileTypeInNativeDocs();
+		fileGroup = testData.getFileGroup();
+		document = testData.getDocument();
+		fileTypeInNativeDocs = testData.getFileTypeInNativeDocs();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();
@@ -1222,15 +1213,15 @@ public class Input {
 
 		TallySearch = testData.getTallySearch();
 		TallyCN = testData.getTallyCN();
-		 sameThreadDocs_EmailThreadID = testData.getSameThreadDocs_EmailThreadID();
-		 sameFamilyDocs_FamilyID= testData.getSameFamilyDocs_FamilyID();
-		IngestionName_PT= testData.getIngestionName_PT();
-	 IngestionName_UAT= testData.getIngestionName_UAT();
-		metadataIngestion= testData.getMetadataIngestion();
-		 custodianName_Andrew= testData.getCustodianName_Andrew();
-		 custodianName_allen= testData.getCustodianName_allen();
-		SearchString_Audio= testData.getSearchString_Audio();
-		
+		sameThreadDocs_EmailThreadID = testData.getSameThreadDocs_EmailThreadID();
+		sameFamilyDocs_FamilyID = testData.getSameFamilyDocs_FamilyID();
+		IngestionName_PT = testData.getIngestionName_PT();
+		IngestionName_UAT = testData.getIngestionName_UAT();
+		metadataIngestion = testData.getMetadataIngestion();
+		custodianName_Andrew = testData.getCustodianName_Andrew();
+		custodianName_allen = testData.getCustodianName_allen();
+		SearchString_Audio = testData.getSearchString_Audio();
+
 		TermOperator = testData.getTermOperator();
 		// Added by Gopinath 05/01/2021
 		downloadDocID = testData.getDownloadDocID();
@@ -1279,46 +1270,45 @@ public class Input {
 		DATFile1 = testData.getDATFile1();
 		DATFile2 = testData.getDATFile2();
 		TiffImagesFolder = testData.getTiffImagesFolder();
-		DAT_MMDDYYYY=testData.getDAT_MMDDYYYY();
-		Natives_MMDDYYYY=testData.getNatives_MMDDYYYY();
-		DAT_YYYYDDMM_Slash=testData.getDAT_YYYYDDMM_Slash();
-		Natives_YYYYDDMM_Slash=testData.getNatives_YYYYDDMM_Slash();
-		DAT_YYYYMMDD_Slash=testData.getDAT_YYYYMMDD_Slash();
-		Natives_YYYYMMDD_Slash=testData.getNatives_YYYYMMDD_Slash();
+		DAT_MMDDYYYY = testData.getDAT_MMDDYYYY();
+		Natives_MMDDYYYY = testData.getNatives_MMDDYYYY();
+		DAT_YYYYDDMM_Slash = testData.getDAT_YYYYDDMM_Slash();
+		Natives_YYYYDDMM_Slash = testData.getNatives_YYYYDDMM_Slash();
+		DAT_YYYYMMDD_Slash = testData.getDAT_YYYYMMDD_Slash();
+		Natives_YYYYMMDD_Slash = testData.getNatives_YYYYMMDD_Slash();
 		DAT_DDMMYYYY_Slash = testData.getDAT_DDMMYYYY_Slash();
 		Natives_DDMMYYYY_Slash = testData.getNatives_DDMMYYYY_Slash();
 		DAT_MMDDYYYY_Slash = testData.getDAT_MMDDYYYY_Slash();
 		Natives_MMDDYYYY_Slash = testData.getNatives_MMDDYYYY_Slash();
 
-		//Added by Gopinath - 02/03/2022
+		// Added by Gopinath - 02/03/2022
 		ingestionProjectName = testData.getIngestionProjectName();
 		ingestionType = testData.getIngestionType();
-	 	sourceSystem = testData.getSourceSystem();
-	    sourceLocation =  testData.getSourceLocation();
-	    sourceFolder =  testData.getSourceFolder();
-	    fieldSeperator = testData.getFieldSeperator();
-	    textQualifier = testData.getTextQualifier();
-	    multiValue = testData.getMultiValue();
-	    datLoadFile = testData.getDatLoadFile();
-	    documentKey = testData.getDocumentKey();
-	    mp3LoadFile = testData.getMp3LoadFile();
-	    dateFormat = testData.getDateFormat();
-	    docId = testData.getDocId();
-	    dataSource = testData.getDataSource();
-	    custodian = testData.getCustodian();
-	    fileExt = testData.getFileExt();
-		fileName =testData.getFileName();
+		sourceSystem = testData.getSourceSystem();
+		sourceLocation = testData.getSourceLocation();
+		sourceFolder = testData.getSourceFolder();
+		fieldSeperator = testData.getFieldSeperator();
+		textQualifier = testData.getTextQualifier();
+		multiValue = testData.getMultiValue();
+		datLoadFile = testData.getDatLoadFile();
+		documentKey = testData.getDocumentKey();
+		mp3LoadFile = testData.getMp3LoadFile();
+		dateFormat = testData.getDateFormat();
+		docId = testData.getDocId();
+		dataSource = testData.getDataSource();
+		custodian = testData.getCustodian();
+		fileExt = testData.getFileExt();
+		fileName = testData.getFileName();
 		fileSize = testData.getFileSize();
 		fileType = testData.getFileType();
 		ingDocBasic = testData.getIngDocBasic();
 		docFileExt = testData.getDocFileExt();
-		ingDocFileName =testData.getIngDocFileName();
+		ingDocFileName = testData.getIngDocFileName();
 		ingDocFileSize = testData.getIngDocFileSize();
 		ingDocFileType = testData.getIngDocFileType();
-		lessThan500PagesDocId =testData.getLessThan500PagesDocId();
+		lessThan500PagesDocId = testData.getLessThan500PagesDocId();
 		d500PagesDocId = testData.getD500PagesDocId();
-		
-		
+
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 

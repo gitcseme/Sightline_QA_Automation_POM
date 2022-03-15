@@ -26,6 +26,7 @@ import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.BatchRedactionPage;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
 import pageFactory.ReportsPage;
@@ -2912,6 +2913,101 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// Delete Search
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/15/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that count of Results from saved search after batch
+	 *              upload should match with the actual docs from background tasks
+	 *              page with large data[RPMXCON-49075] sprint 13
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 48)
+	public void verifyActualDocsCountFromBackgroundPage(String username, String password, String fullname)
+			throws InterruptedException, IOException {
+		BatchRedactionPage batch = new BatchRedactionPage(driver);
+		List<String> searchIDlist = new ArrayList<>();
+		HashMap<String, String> mapPair = new HashMap<String, String>();
+		String fileLocation = Input.batchFileNewLocation;
+		String fileLocationWithDir = System.getProperty("user.dir") + Input.batchFileNewLocation;
+		String fileName = Input.validBatchFile;
+		String fileFormat = ".xlsx";
+		String batchNodeToCheck, fileToSelect;
+		String expectedStatus = "INPROGRESS";
+		String expBGURL = Input.url + "Background/BackgroundTask";
+		int Bgcount, rowCOuntFromExcel, bgHeaderIndex, searchIDindex, countIDindex;
+
+		base.stepInfo("Test case Id: RPMXCON-49075  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that count of Results from saved search after batch upload should match with the actual docs from background tasks page with large data");
+
+		// Login as PA
+		login.loginToSightLine(username, password);
+		base.stepInfo("Loggedin As : " + fullname);
+
+		// Navigate to saved search page
+		saveSearch.navigateToSSPage();
+
+		// Initial Notification count
+		Bgcount = base.initialBgCount();
+
+		// Rename as dynamic fileName and store data respectively
+		fileToSelect = base.renameFile(true, fileLocationWithDir, fileName, fileFormat, false, "");
+		batchNodeToCheck = fileToSelect + "_" + 1 + "_Sheet" + 1;
+
+		// Total no.of rows(searches) in sheet
+		rowCOuntFromExcel = base.getTotalNumOfRowsInExcel(fileLocationWithDir + "\\" + fileToSelect + fileFormat, 0, "",
+				0);
+		System.out.println(rowCOuntFromExcel);
+
+		// Upload batch file
+		saveSearch.uploadBatchFile_D(fileLocation, fileToSelect + fileFormat, false);
+		saveSearch.getSubmitToUpload().Click();
+		saveSearch.verifyBatchUploadMessage("Success", false);
+		driver.waitForPageToBeReady();
+
+		// Wait for Searches to complete and count get updated
+		base.stepInfo("Wait till all the search status changes to 'Completed' from 'InProgress'");
+		base.checkNotificationCount(Bgcount, rowCOuntFromExcel);
+		saveSearch.sgExpansion();
+		softAssertion.assertTrue(saveSearch.verifyNodePresent(batchNodeToCheck),
+				"Searches uploaded in Saved search screen.");
+		softAssertion.assertAll();
+
+		// Fetch datas
+		searchIDindex = base.getIndex(saveSearch.gettableHeaders(), "SEARCH ID");
+		countIDindex = base.getIndex(saveSearch.gettableHeaders(), "COUNT OF RESULTS");
+		saveSearch.selectNode1(batchNodeToCheck);
+		saveSearch.getCreatedNode(batchNodeToCheck).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		searchIDlist = base.availableListofElements(saveSearch.getGridDataList(searchIDindex));
+
+		// Mapping Search id and count
+		mapPair = saveSearch.collectionOfSearchIdAndItsCount(searchIDlist, countIDindex);
+
+		// Click the notifications to launch
+		base.waitForElement(batch.getBullHornIcon());
+		batch.getBullHornIcon().waitAndClick(10);
+		base.waitForElement(batch.getViewAllBtn());
+		batch.getViewAllBtn().waitAndClick(10);
+
+		// verify Background Task page
+		base.verifyUrlLanding(expBGURL, "Navigated to My backgroud task page.", "Navigation Failed");
+		bgHeaderIndex = base.getIndex(saveSearch.getBGgridDataList(), "ACTUAL DOCS");
+
+		// SearchID data comparision
+		saveSearch.SearchIdAndDataToCompare(searchIDlist, mapPair, bgHeaderIndex);
+
+		// Delete uploaded batch file
+		base.stepInfo("Initiated Batch upload delete");
+		saveSearch.deleteUploadedBatchFile(fileToSelect, Input.mySavedSearch, false, null);
+
+		// Reset FIleName
+		base.renameFile(false, System.getProperty("user.dir") + fileLocation, fileToSelect, fileFormat, true, fileName);
 
 		login.logout();
 
