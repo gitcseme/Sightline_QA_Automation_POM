@@ -26192,5 +26192,72 @@ public class DocViewPage {
 		}
 		softAssertion.assertAll();
 	}
+	
+	
+	/**
+	 * @author Indium-Baskar date: 03/03/2022 Modified date: 03/03/2022
+	 * @Description:This method used to pass alpha character
+	 * @param tiny Nvachar Datatype
+	 * @param small Nvachar Datatype
+	 * @param average Nvachar Datatype
+	 * @param bit Nvachar Datatype
+	 * @param tinys passing count
+	 * @param smalls passing count
+	 * @param big passing count
+	 * @param average passing count
+	 */
+
+	public void passingNvacharDatatypeUsingLength(String tiny, String small, String average,
+			String bit,int tinys,int smalls,int averages,int big ) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getReadOnlyTextBox(tiny));
+		String character20=passingLengthCharacter(tinys);
+		getReadOnlyTextBox(tiny).SendKeys(character20);
+		base.waitForElement(getReadOnlyTextBox(small));
+		String character50=passingLengthCharacter(smalls);
+		getReadOnlyTextBox(small).SendKeys(character50);
+		base.waitForElement(getReadOnlyTextBox(average));
+		String character400=passingCharacterUsingCommaSeparator(averages);
+		getReadOnlyTextBox(average).SendKeys(character400);
+		base.waitForElement(getReadOnlyTextBox(bit));
+		String character4000=passingLengthCharacter(big);
+		getReadOnlyTextBox(bit).SendKeys(character4000);
+		codingFormSaveButton();
+		base.VerifySuccessMessage("Document saved successfully");
+	}
+	/**
+	 * @author Indium-Baskar date: 03/03/2022 Modified date: 03/03/2022
+	 * @Description:This method used to pass lenght character
+	 *  @param size passing count
+	 */
+	
+	public String passingLengthCharacter(int size) {
+		char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+		StringBuilder sb = new StringBuilder(4000);
+		Random random = new Random();
+		for (int i = 0; i < size; i++) {
+			char c = chars[random.nextInt(chars.length)];
+			sb.append(c);
+		}
+		String output = sb.toString();
+		return output;
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 03/03/2022 Modified date: 03/03/2022
+	 * @Description:This method used to pass lenght character using comma separator
+	 * @param size passing count
+	 */
+	public String passingCharacterUsingCommaSeparator(int size) {
+		char[] chars = "abc,defg,hijk,lmn,opq,rstu,vwxyz".toCharArray();
+		StringBuilder sb = new StringBuilder(4000);
+		Random random = new Random();
+		for (int i = 0; i < size; i++) {
+			char c = chars[random.nextInt(chars.length)];
+			sb.append(c);
+		}
+		String output = sb.toString();
+		return output;
+	}
 
 }
