@@ -96,7 +96,7 @@ public class Production_Test_Regression {
 	 * @Description: To Verify that after Archiving is completed it should displays
 	 *               'Creating Archive Complete' status on Production Grid View
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = false, groups = { "regression" }, priority = 1)
 	public void archivingStatusVerifyOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56052 -Production Sprint 06");
@@ -164,12 +164,12 @@ public class Production_Test_Regression {
 	 *               'Reserving Bates Range' status on Progress bar in Tile View on
 	 *               Production Home page
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = false, groups = { "regression" }, priority = 2)
 	public void reservingBateRangeStatusVerifyOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55975 -Production Sprint 06");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -178,13 +178,13 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify Reserving Bates Range status on Tile view
@@ -227,12 +227,12 @@ public class Production_Test_Regression {
 	 * @Description: To Verify that after Pre-gen checks is in progress, it will
 	 *               displays status on Production Progress bar Tile View
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = false, groups = { "regression" }, priority = 3)
 	public void preGenChecksStatusVerifyOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55973 -Production Sprint 06");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -241,13 +241,13 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify Pre-gen checks is in progress status on Tile view
@@ -324,7 +324,7 @@ public class Production_Test_Regression {
 	 * @Description: To Verify that for the saved template under Translations
 	 *               component- File Type Options should be disabled.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = false, groups = { "regression" }, priority = 4)
 	public void verifyTranslationComponentDisableAtMangeTemp() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON_56136 Production- Sprint 06");
@@ -370,12 +370,12 @@ public class Production_Test_Regression {
 	 * @Description: To Verify that PDF should generate with Burned Redaction if
 	 *               Only Burn Redaction is enabled.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = false, groups = { "regression" }, priority = 5)
 	public void getPdfWithBurnRedactionTag() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56091 -Production Sprint 06");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -384,13 +384,13 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify pdf with burn redaction
@@ -427,12 +427,12 @@ public class Production_Test_Regression {
 	 * @Description: To Verify that Production should export Text files for Document
 	 *               level successfully.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = false, groups = { "regression" }, priority = 6)
 	public void getExortTextforDocument() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56073 -Production Sprint 06");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -441,13 +441,13 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -486,12 +486,12 @@ public class Production_Test_Regression {
 	 * @Description: To Verify that Production should generate successfully by
 	 *               selecting only DAT and 'Generate TIFF' option.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = false, groups = { "regression" }, priority = 7)
 	public void getProductionPageWithDatTiff() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56083 -Production Sprint 06");
 
-		String testData1 = Input.testData1;
+		
 		String tagNameTechnical = Input.tagNameTechnical;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
@@ -501,13 +501,13 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 		// Verify
@@ -545,7 +545,7 @@ public class Production_Test_Regression {
 	 *               selecting only DAT and 'Generate PDF' option with Priv
 	 *               Placholder.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = false, groups = { "regression" }, priority = 8)
 	public void getProductionPageWithDatPdf() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56086 -Production Sprint 06");
@@ -601,11 +601,11 @@ public class Production_Test_Regression {
 	 * @Description:To Verify that Regenerate button Popup should close on clicking
 	 *                 on Cancel button.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = false, groups = { "regression" }, priority = 9)
 	public void regeneratePopUpClickCancel() throws InterruptedException {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56151 -Production Sprint 07");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -618,7 +618,7 @@ public class Production_Test_Regression {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify
@@ -654,7 +654,7 @@ public class Production_Test_Regression {
 	 * @Description:To Verify the error message for MP3 component when 'Disable
 	 *                 generate load File.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = false, groups = { "regression" }, priority = 10)
 	public void getMp3DisableGenarateLoadFile() throws InterruptedException {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56109 -Production Sprint 07");
@@ -685,7 +685,7 @@ public class Production_Test_Regression {
 	 * @Description:To Verify the error message for TIFF/PDF component when 'Enabled
 	 *                 privileg doc without tag or text'.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	@Test(enabled = false, groups = { "regression" }, priority = 11)
 	public void verifyErrormsgTiffPdf() throws InterruptedException {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56101 -Production Sprint 07");
@@ -736,7 +736,7 @@ public class Production_Test_Regression {
 	 *               displays 'Reserving Bates Range Complete' status on Grid View
 	 *               on Production Home page.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = false, groups = { "regression" }, priority = 12)
 	public void verifyBatesRangecompletedOnGridView() throws Exception {
 		loginPage.logout();
 
@@ -748,7 +748,7 @@ public class Production_Test_Regression {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56041 -Production Sprint 07");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -763,7 +763,7 @@ public class Production_Test_Regression {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify archive status on Grid view
@@ -811,12 +811,12 @@ public class Production_Test_Regression {
 	 *               'Creating Archive Complete' status on Production Generation
 	 *               page.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = false, groups = { "regression" }, priority = 13)
 	public void createArchivingStatusVerifyOnGenPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56034 -Production Sprint 07");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -830,7 +830,7 @@ public class Production_Test_Regression {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify archive status on Gen page
@@ -870,12 +870,12 @@ public class Production_Test_Regression {
 	 * @Description: To Verify that Production status displays as Draft on
 	 *               Production Grid View.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(enabled = false, groups = { "regression" }, priority = 14)
 	public void verifyDraftStatusOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56035 -Production Sprint 07");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -889,7 +889,7 @@ public class Production_Test_Regression {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify archive status on Gen page
@@ -966,7 +966,7 @@ public class Production_Test_Regression {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56036 -Production Sprint 07");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -982,7 +982,7 @@ public class Production_Test_Regression {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify archive status on Gen page
@@ -1064,7 +1064,7 @@ public class Production_Test_Regression {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56029 -Production Sprint 07");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1078,7 +1078,7 @@ public class Production_Test_Regression {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify archive status on Gen page
@@ -1132,7 +1132,7 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1182,7 +1182,7 @@ public class Production_Test_Regression {
 		base.stepInfo(
 				"Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Grid View.");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
 		suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1191,12 +1191,12 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify archive status on Gen page
@@ -1318,7 +1318,7 @@ public class Production_Test_Regression {
 	 * @Description In production, Preview should displays correctly
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = false, groups = { "regression" }, priority = 21)
 	public void verifyPreviewInProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49099 -Production Sprint 09");
@@ -1378,7 +1378,7 @@ public class Production_Test_Regression {
 	 *              correct format in the Production, DAT.
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = false, groups = { "regression" }, priority = 22)
 	public void verifyDatFieldsAreExport() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49104 -Production Sprint 09");
@@ -1450,7 +1450,7 @@ public class Production_Test_Regression {
 	 *              a PDF file.
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = false, groups = { "regression" }, priority = 23)
 	public void verifyBrandingTextToSixLocation() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48978 -Production Sprint 09");
@@ -1510,7 +1510,7 @@ public class Production_Test_Regression {
 	 *              produced. It should not export Natives
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = false, groups = { "regression" }, priority = 24)
 	public void verifyDoNotProduceTiffToggleOn() throws Exception {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -1621,12 +1621,12 @@ public class Production_Test_Regression {
 	 *              docs.
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = false, groups = { "regression" }, priority = 25)
 	public void verifyProdGenSuccesInPdfDoc() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48454 -Production Sprint 09");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1636,13 +1636,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -1679,12 +1679,12 @@ public class Production_Test_Regression {
 	 * @Description To Verify Enabling Placeholder for Privilege Doc at PrivGuard.
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = false, groups = { "regression" }, priority = 26)
 	public void verifiyEnablePlaceholderAtPrivDoc() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48279 -Production Sprint 09");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1694,13 +1694,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify
@@ -1757,14 +1757,14 @@ public class Production_Test_Regression {
 	 *               progress, it will displays status as 'Exporting Files' on
 	 *               Production Generation tab
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = false, groups = { "regression" }, priority = 27)
 	public void verifyLstGenExportinFilesStatusOnGen() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55981 -Production Sprint 09");
 		base.stepInfo(
 				"Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Generation tab");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1774,13 +1774,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -1825,14 +1825,14 @@ public class Production_Test_Regression {
 	 *               progress, it will displays status as 'Exporting Files' on
 	 *               Production Progress bar Tile View.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = false, groups = { "regression" }, priority = 28)
 	public void verifyLstGenExportinFilesStatusOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55980 -Production Sprint 09");
 		base.stepInfo(
 				"Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Progress bar Tile View");
 
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1842,13 +1842,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -1897,7 +1897,7 @@ public class Production_Test_Regression {
 	 * @Description: To verify that 'Production Creation Date' should displayed when
 	 *               it saved first time.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = false, groups = { "regression" }, priority = 29)
 	public void verifyProductionCreationDate() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49040 -Production Sprint 09");
@@ -1942,12 +1942,12 @@ public class Production_Test_Regression {
 	 * @Description: To verify that 'Bates Range' should be blank before pre-gen
 	 *               check completed.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	@Test(enabled = false, groups = { "regression" }, priority = 30)
 	public void verifyBateRangeBlankGenPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48569 -Production Sprint 09");
 		base.stepInfo("To verify that 'Bates Range' should be blank before pre-gen check completed.");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1957,12 +1957,12 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// Verify archive status on Gen page
@@ -2007,13 +2007,13 @@ public class Production_Test_Regression {
 	 *               Burn redactions and File group/tag based placeholdering is
 	 *               exists.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	@Test(enabled = false, groups = { "regression" }, priority = 31)
 	public void verifyGenWithPrivplcholderTechIssueRedactionTag() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48344 -Production Sprint 09");
 		base.stepInfo(
 				"To verify that Tiff/PDF should generate with Priv placeholdering even though 'Tech Issue Doc' placeholdering, Burn redactions and File group/tag based placeholdering is exists.");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String tagname1 = "Tag" + Utility.dynamicNameAppender();
@@ -2026,12 +2026,12 @@ public class Production_Test_Regression {
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.CreateTagwithClassification(tagname1, Input.technicalIssue);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		driver.waitForPageToBeReady();
 		sessionSearch.bulkFolderExisting(foldername);
@@ -2088,7 +2088,7 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-48533 -Production Sprint 09");
 		base.stepInfo(
 				"To verify that if Blank Page Removal toggle is OFF then it should produced the PDF with blank pages");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -2096,13 +2096,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -2142,7 +2142,7 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-55920 -Production Sprint 10");
 		base.stepInfo(
 				"Verify if PA Select the Production using a template that has only tags selected in the native components, then Component tab should Complete without any error.");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
@@ -2151,13 +2151,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -2217,7 +2217,7 @@ public class Production_Test_Regression {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48183 -Production Sprint 10");
 		base.stepInfo("To Verify Document Selection Page (for Folder/Tag/Search; Include Family ;Total Count)");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
@@ -2226,13 +2226,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -2276,7 +2276,7 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-56019 -Production Sprint 10");
 		base.stepInfo(
 				"Verify that after Reserving Bates Range completed it should displays 'Reserving Bates Range Completed' status on Progress bar in Tile View on Production Home page");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
@@ -2285,13 +2285,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		// tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		// tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		// sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -2340,7 +2340,7 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-56022 -Production Sprint 10");
 		base.stepInfo(
 				"Verify that once LST generation is started it should displays ' Generating Load Files' status on Production Tile View");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
@@ -2349,13 +2349,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -2406,7 +2406,7 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-56045 -Production Sprint 10");
 		base.stepInfo(
 				"Verify that once LST generation is started it should displays ' Generating Load Files' status on Production Grid View");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
@@ -2415,13 +2415,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -2473,7 +2473,7 @@ public class Production_Test_Regression {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56012 -Production Sprint 10");
 		base.stepInfo("Verify that if Production is regeneate then previous sharable link should not be usabel");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
@@ -2482,13 +2482,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -2548,7 +2548,7 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-56006 -Production Sprint 10");
 		base.stepInfo(
 				"Verify that  after the regenerate the new links, previous links and password will no longer work");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
@@ -2557,13 +2557,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -2655,7 +2655,7 @@ public class Production_Test_Regression {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56005 -Production Sprint 10");
 		base.stepInfo("Verify that user can regenerate the Shareable links and reset the expiration time");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
@@ -2664,13 +2664,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		// tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		// tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		// sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -2828,7 +2828,7 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-56033 -Production Sprint 10");
 		base.stepInfo(
 				"Verify that after Archiving is completed it should displays 'Creating Archive Complete' status on Production Progress bar Tile View");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
@@ -2837,13 +2837,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -2939,7 +2939,7 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-55994 -Production Sprint 10");
 		base.stepInfo(
 				"Verify that the text should not go out the progress bar or wrap, even when the user zooms out/in the browser with different screen resolution  on tile view");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		int[][] diemen = { { 1024, 768 }, { 1280, 800 }, { 1440, 900 }, { 1600, 900 }, { 1280, 1024 } };
@@ -2949,13 +2949,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		// tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		// tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		// sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -3053,20 +3053,20 @@ public class Production_Test_Regression {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49967 -Production Sprint 10");
 		base.stepInfo("Verify that production should generated with modified Redaction placeholder text");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -3119,7 +3119,7 @@ public class Production_Test_Regression {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49815 -Production Sprint 10");
 		base.stepInfo("To verify that Production should generate successfully if Prefix is up to 50 characters");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Utility.randomCharacterAppender(50);
@@ -3127,13 +3127,13 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		// tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		// tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		// sessionSearch.bulkTagExisting(tagname);
 
@@ -3176,7 +3176,7 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-47174 -Production Sprint 10");
 		base.stepInfo(
 				"Verify that TIFF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 1000");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -3184,13 +3184,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
@@ -3250,7 +3250,7 @@ public class Production_Test_Regression {
 		base.stepInfo("Testcase No: RPMXCON-55653");
 		base.stepInfo(
 				"To  Verify the availability of 'Translations' under the Advanced Production Types show/hide section (in Production Component).");
-		String testData1 = Input.testData1;
+		
 		// foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -3258,13 +3258,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		// tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		// tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		// sessionSearch.bulkFolderExisting(foldername);
 
@@ -3321,20 +3321,20 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-47884 -Production Sprint 11");
 		base.stepInfo(
 				"To Verify Native Section with various options(Produce Native Files selection/Generate Load LST/Advance Show Hide/and Toggles in Advance)");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		// tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		// tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		// sessionSearch.bulkTagExisting(tagname);
 
@@ -3379,20 +3379,20 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-47944 -Production Sprint 11");
 		base.stepInfo(
 				"To Verify On grid view of the productions  the start date and end date  for a production that is still in Completed state.");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		// tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		// tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		// sessionSearch.bulkTagExisting(tagname);
 
@@ -3473,20 +3473,20 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-56078 -Production Sprint 11");
 		base.stepInfo(
 				"Verify that Production should export Native with  the Text file in selected format if Text is not ingested");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		// tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		// tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		// sessionSearch.bulkTagExisting(tagname);
 
@@ -3523,20 +3523,20 @@ public class Production_Test_Regression {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-47889 -Production Sprint 11");
 		base.stepInfo("To Verify Generate Section for Production Name and Status.");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -3589,20 +3589,20 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-49968 -Production Sprint 11");
 		base.stepInfo(
 				"Verify that Production should generated with redaction text if user selects the annotation layer");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		// tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		// tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		// sessionSearch.bulkTagExisting(tagname);
 
@@ -3646,20 +3646,20 @@ public class Production_Test_Regression {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49728 -Production Sprint 11");
 		base.stepInfo("Verify that branding is applied on all pages for redacted image based documents");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -3809,8 +3809,8 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		// tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		// tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3860,20 +3860,20 @@ public class Production_Test_Regression {
 		base.stepInfo("RPMXCON-47987 -Production Sprint 11");
 		base.stepInfo(
 				"To Verify The format of the date produced in the Production DAT should honor the date format configured in DAT section");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -3919,8 +3919,8 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3998,9 +3998,9 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.createNewTagwithClassification(tagname1, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.createNewTagwithClassification(tagname1, Input.tagNamePrev);
 		base.stepInfo("Tags are created with file type");
 
 		// search for folder
@@ -4066,9 +4066,9 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.CreateTag(tagname, "Default Security Group");
-		tagsAndFolderPage.CreateTag(tagname1, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
+		tagsAndFolderPage.CreateTag(tagname1, Input.securityGroup);
 		base.stepInfo("Tags are created without file type");
 
 		// search for folder
@@ -4137,9 +4137,9 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.createNewTagwithClassification(tagname1, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.createNewTagwithClassification(tagname1, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4201,9 +4201,9 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.createNewTagwithClassification(tagname1, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.createNewTagwithClassification(tagname1, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4291,7 +4291,7 @@ public class Production_Test_Regression {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.SearchMetaData("SourceDocID", "STC4_00000995");
@@ -4353,8 +4353,8 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4400,8 +4400,8 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		// tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		// tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4458,8 +4458,8 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4712,20 +4712,20 @@ public class Production_Test_Regression {
 		base.stepInfo("Test case id : RPMXCON-48341 ");
 		base.stepInfo(
 				"To verify that Tiff /PDF should burn Redactions even though file based or tag based placeholdering is exists in the document");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		// tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		// tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		// sessionSearch.bulkTagExisting(tagname);
 
@@ -4786,20 +4786,20 @@ public class Production_Test_Regression {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case id : RPMXCON-48072 ");
 		base.stepInfo("To Verify Field EndingBates in Production");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		int docno = sessionSearch.basicContentSearch(testData1);
+		int docno = sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -4874,7 +4874,7 @@ public class Production_Test_Regression {
 		base.stepInfo("Test case Id : RPMXCON-49062");
 		base.stepInfo(
 				"To verify that the 'Production End Date' should contain and present the date when the post-gen checks are completed");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -4882,13 +4882,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -4954,7 +4954,7 @@ public class Production_Test_Regression {
 		base.stepInfo("Test case Id : RPMXCON-49361");
 		base.stepInfo(
 				"Verify if PA Select the Production using a template that has Native Files and Tags selected in the native components, then Component tab should Complete without any error.");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
@@ -4964,13 +4964,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -5036,8 +5036,8 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5119,7 +5119,7 @@ public class Production_Test_Regression {
 		base.stepInfo("Test case Id : RPMXCON-48166");
 		base.stepInfo(
 				"To Verify  All the Parameters configured for MP3 is saved for the production on save Production as Template.");
-		String testData1 = Input.testData1;
+		
 		// foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
@@ -5129,13 +5129,13 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
-		// tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		// tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		// sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -5180,7 +5180,7 @@ public class Production_Test_Regression {
 		base.stepInfo("Test case id : RPMXCON-48573 ");
 		base.stepInfo(
 				"To verify that PA creates new production using continue with last bates range of last production, which is completed with only pre-gen check");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Utility.randomCharacterAppender(1);
@@ -5189,13 +5189,13 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		int docno = sessionSearch.basicContentSearch(testData1);
+		int docno = sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -5280,8 +5280,8 @@ public class Production_Test_Regression {
 		String suffixID = Utility.randomCharacterAppender(1);
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
@@ -5469,7 +5469,7 @@ public class Production_Test_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, "Privileged");
+		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.CreateFolderInRMU(foldername);
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5538,7 +5538,7 @@ public class Production_Test_Regression {
 		base.stepInfo("Test case id : RPMXCON-48020 ");
 		base.stepInfo(
 				"To Verify Natives of the docs of the selected file types or selected tags are produced unless they are to excluded due to Redaction or PrivTags.");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Utility.randomCharacterAppender(1);
@@ -5547,13 +5547,13 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		int docno = sessionSearch.basicContentSearch(testData1);
+		int docno = sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -5650,7 +5650,7 @@ public class Production_Test_Regression {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		DataSets dataset = new DataSets(driver);
 		base.stepInfo("Navigating to dataset page");
@@ -5727,7 +5727,7 @@ public class Production_Test_Regression {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		DataSets dataset = new DataSets(driver);
 		base.stepInfo("Navigating to dataset page");
@@ -5813,7 +5813,7 @@ public class Production_Test_Regression {
 		base.stepInfo("Test case id : RPMXCON-49337 ");
 		base.stepInfo(
 				"To verify that document should produced with 'Tech Issues Docs' placeholdering by selecting more than one Tag");
-		String testData1 = Input.testData1;
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String tagname1 = "tag" + Utility.dynamicNameAppender();
@@ -5823,13 +5823,13 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.technicalIssue);
 		tagsAndFolderPage.createNewTagwithClassification(tagname1, Input.technicalIssue);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		int docno = sessionSearch.basicContentSearch(testData1);
+		int docno = sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkTagExisting(tagname1);
@@ -5891,7 +5891,7 @@ public class Production_Test_Regression {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		DataSets dataset = new DataSets(driver);
 		base.stepInfo("Navigating to dataset page");
@@ -5958,9 +5958,9 @@ public class Production_Test_Regression {
 		String value = "0";
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.createNewTagwithClassification(tagname1, Input.technicalIssue);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		int docno = sessionSearch.basicContentSearch(text);
@@ -6045,7 +6045,7 @@ public class Production_Test_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		// tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		// tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.technicalIssue);
 
 		// search for folder
@@ -6107,7 +6107,7 @@ public class Production_Test_Regression {
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -6185,7 +6185,7 @@ public class Production_Test_Regression {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		DataSets dataset = new DataSets(driver);
 		base.stepInfo("Navigating to dataset page");
@@ -6255,8 +6255,8 @@ public class Production_Test_Regression {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -6341,7 +6341,7 @@ public class Production_Test_Regression {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		DataSets dataset = new DataSets(driver);
 		base.stepInfo("Navigating to dataset page");
@@ -6412,8 +6412,8 @@ public class Production_Test_Regression {
 		base.selectproject("AutomationAdditionalDataProject");
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -6480,7 +6480,7 @@ public class Production_Test_Regression {
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.CreateTagwithClassification(tagname1, "Select Tag Classification");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);

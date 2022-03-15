@@ -4827,7 +4827,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @Description Second dat field choosed value TiffPageCount
 	 */
 	public void datMetaDataTiffPageCount() {
 		addNewFieldOnDAT();
@@ -13554,9 +13555,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * Modified on 03/08/2022
-	 * 
-	 * @author: Aathith Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException
 	 * @Description: Method for filling Generate section without wait.
 	 */
 	public void fillingGeneratePageWithContinueGenerationPopupWithoutWait() throws InterruptedException {
@@ -13580,10 +13580,10 @@ public class ProductionPage {
 	}
 
 	/**
-	 * Modified on 03/08/2022 (Removed thread.sleep and replaced
-	 * waitForPageToBeReady())
-	 * 
-	 * @author: Aathith Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @param statusMsg
+	 * @param productionname
+	 * @throws InterruptedException
 	 * @Description: Method for homepage Grid view status check.
 	 */
 	public void verifyProductionStatusInHomePageGridView(String statusMsg, String productionname)
@@ -13910,9 +13910,10 @@ public class ProductionPage {
 		}
 
 	}
-
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException
+	 * @Description filling Advanced production Translation component
 	 */
 	public void advancedProductionComponentsTranslations() throws InterruptedException {
 		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
@@ -13940,6 +13941,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorAathith.Senthilkumar
+	 * @Description verification for translation disabled or not in template view
 	 */
 	public void translationDisableCheck() {
 		boolean flag;
@@ -13959,6 +13961,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorAathith.Senthilkumar
+	 * @Description In production Template page permorme in Translation function
 	 */
 	public void viewTempProductionNextAdvTranslation() {
 
@@ -13972,6 +13975,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorAathith.Senthilkumar
+	 * @Description Filling Pdf section with default redaction
 	 */
 	public void fillingPDFForRedaction1() throws InterruptedException {
 
@@ -14107,9 +14111,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * Modified on 03/09/2022
-	 * 
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException
+	 * @Description Production reverse bates range failed check
 	 */
 	public void prodReservingBatesRangeFailedProduction1() throws InterruptedException {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -14195,7 +14199,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException
+	 * @Description Production advance section mp3 section filling
 	 */
 	public void advancedProductionComponentsMP3DisableGenarateFileLoad() throws InterruptedException {
 		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
@@ -14208,7 +14214,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException
+	 * @Description filling tiff section with error
 	 */
 	public void fillingTIFFSectionWithError() throws InterruptedException {
 
@@ -14229,6 +14237,7 @@ public class ProductionPage {
 	 * Modified on 03/09/2022
 	 * 
 	 * @author: Aathith Senthilkumar
+	 * @throws InterruptedException
 	 * @Description: Method for filling Generate wait for continue button to be
 	 *               ready.
 	 */
@@ -14248,6 +14257,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorAathith.Senthilkumar
+	 * @Description Slip Count check in Production location page
 	 */
 	public void splictCountCheck() {
 		boolean flag;
@@ -14276,7 +14286,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException
+	 * @Description filling pdf section with error
 	 */
 	public void fillingPDFSectionWithError() throws InterruptedException {
 
@@ -15344,7 +15356,11 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @param i
+	 * @param classification
+	 * @param sourceField
+	 * @Description filling dat filed reusable for all dat column 
 	 */
 	public void addDatField(int i, String classification, String sourceField) {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -15435,7 +15451,10 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith
+	 * @author Aathith.Senthilkumar
+	 * @param tagname
+	 * @throws InterruptedException
+	 * @Description filling pdf section with multi branding
 	 */
 	public void fillingPDFSectionWithMultiBranding(String tagname) throws InterruptedException {
 
@@ -15516,7 +15535,10 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith
+	 * @author Aathith.Senthilkumar
+	 * @param tagname
+	 * @throws InterruptedException
+	 * @Description filling tiff section with burn redaction by choosing redaction tag
 	 */
 	public void fillingTIFFSectionwithBurnRedactionSelectRedactTag(String tagname) throws InterruptedException {
 
@@ -15579,7 +15601,11 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith
+	 * @author Aathith.Senthilkumar
+	 * @param tagname
+	 * @throws InterruptedException
+	 * @author Aathith.Senthilkumar
+	 * @Description filling pdf section with redaction choosing redaction tag
 	 */
 	public void fillingPDFSectionwithBurnRedactionSelectRedactTag(String tagname) throws InterruptedException {
 
@@ -15741,6 +15767,7 @@ public class ProductionPage {
 	/**
 	 * @authorAathith.Senthilkumar
 	 * @param tagname
+	 * @Descripotion Enabling Priviage placeholder at priv gaurd page and choosing tag
 	 */
 	public void EnablePrivPlaceholderAtPrivGaurdPage(String tagname) {
 		base.waitForElement(getPrivPlaceHolderToggleAtPrivGaurdPage());
@@ -15768,7 +15795,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @param tagname
+	 * @Description filling priv guard page with placeholder
 	 */
 	public void fillingPrivGuardPageWithPrivPlaceHolder(String tagname) {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -15840,7 +15869,10 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @param tagname
+	 * @throws InterruptedException
+	 * @Decription Filling tiff section
 	 */
 	public void fillingTIFFSection(String tagname) throws InterruptedException {
 
@@ -16128,6 +16160,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorAathith.Senthilkumar
+	 * @Description Checking is black page removal toggle isOff
 	 */
 	public void banlkPageRemovalToggleOffCheck() {
 		try {
@@ -16242,7 +16275,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @Description Text visiblity check for all the page
 	 */
 	public void visibleCheck(String text) {
 		if (text("text").isDisplayed()) {
@@ -16332,6 +16366,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorAathith.Senthilkumar
+	 * @Description at production qc page generated file sharable link getting
 	 */
 	public String getCopySharableLink() {
 		driver.waitForPageToBeReady();
@@ -16350,7 +16385,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @Decription open new tab with the sharableLink
 	 */
 	public String openNewTab(String sharableLink) {
 		String parentWindow = driver.getWebDriver().getWindowHandle();
@@ -16427,6 +16463,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorAathith.Senthilkumar
+	 * @Description Choosing security group by it's name
 	 */
 	public void selectingSecurityGroup(String securityGroup) {
 		base.waitForElement(getSecurityGroupDropDown());
@@ -16471,7 +16508,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @Description checking that text is not available in that page
 	 */
 	public void nonVisibleCheck(String text) {
 		if (gettext("text").isDisplayed()) {
@@ -16504,7 +16542,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith
+	 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException
+	 * @Description filling tiff section with burn redaction without update placeholder
 	 */
 	public void fillingTIFFSectionwithBurnRedactionWithoutUpdatedText() throws InterruptedException {
 
@@ -16620,7 +16660,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException
+	 * @Description Filling native section with verification
 	 */
 	public void fillingNativeSectionWithVerification() throws InterruptedException {
 		SoftAssert softAssertion = new SoftAssert();
@@ -16671,8 +16713,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith
-	 * @Description selecting text formate
+	 * @author Aathith.Senthilkumar
+	 * @Description selecting text section and choose format
 	 */
 	public void fillingTextSectionWithTextFormat(String format) {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -16714,6 +16756,7 @@ public class ProductionPage {
 
 	/**
 	 * @authorAathith
+	 * @throws InterruptedException
 	 * @description : Method for filling pdf section with default annatation layer.
 	 */
 	public void fillingPDFSectionwithBurnRedaction() throws InterruptedException {
@@ -16755,7 +16798,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @param tagname
+	 * @param ObjectName
 	 * @description In branding center choose batesnumber and left confidential text
 	 *              passed for both pdf or tiff
 	 */
@@ -16862,6 +16907,7 @@ public class ProductionPage {
 	 * @authorAathith.Senthilkumar
 	 * @param element
 	 * @param n
+	 * @Description clicking name element for Nth time
 	 */
 	public void clickElementNthtime(Element element, int n) {
 		for (int i = 0; i < n; i++) {
@@ -16873,6 +16919,7 @@ public class ProductionPage {
 	/**
 	 * @authorAathith.Senthilkumar
 	 * @param element
+	 * @Description verifing that element is displayed or not
 	 */
 	public void getElementDisplayCheck(Element element) {
 		boolean flag = element.isElementAvailable(10);
@@ -16888,7 +16935,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith
+	 * @author Aathith
+	 * @param element
 	 * @Description : CheckBox Checked verification
 	 */
 	public void getCheckBoxCheckedVerification(Element element) {
@@ -17017,8 +17065,11 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
-	 * @Description :Natively placeholder selecting multiple tag
+	 * @author Aathith.Senthilkumar
+	 * @param tagname
+	 * @param tagname1
+	 * @throws InterruptedException
+	 * @Description :Natively placeholder selecting multiple tag 
 	 */
 	public void fillingTIFFSectionwithNativelyPlaceholder(String tagname, String tagname1) throws InterruptedException {
 
@@ -17201,9 +17252,12 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @param tagname
+	 * @param tagname1
+	 * @throws InterruptedException
 	 * @Description :Natively placeholder selecting tags Type in different Native
-	 *              docs
+	 *              docsa
 	 */
 	public void fillingTIFFSectionwithNativelyPlaceholderWithTagTypeAndTags(String tagname, String tagname1)
 			throws InterruptedException {
@@ -17341,7 +17395,7 @@ public class ProductionPage {
 
 	/**
 	 * @throws InterruptedException
-	 * @authorAathith
+	 * @author Aathith
 	 */
 	public void fillingGeneratePageWithContinueGenerationPopupWithoutDownload() throws InterruptedException {
 
@@ -17395,7 +17449,10 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @param tagname
+	 * @throws InterruptedException
+	 * @Description filling tiff section with rotate 90 degree clock wise
 	 */
 	public void fillingTIFFSectionRotate90DegreeClockWise(String tagname) throws InterruptedException {
 
@@ -17524,6 +17581,7 @@ public class ProductionPage {
 	 * @authorAathith.Senthilkumar
 	 * @param element
 	 * @param text
+	 * @Description Verifing production state are same by before filter
 	 */
 	public void verifyProdctionState(ElementCollection element, String text) {
 
@@ -17550,6 +17608,7 @@ public class ProductionPage {
 	 * @authorAathith.Senthilkumar
 	 * @param col
 	 * @param text
+	 * @Description Veerifing production status on grid view page 
 	 */
 	public void verifyProductionStateWebTableGridView(int col, String text) {
 
@@ -17575,6 +17634,7 @@ public class ProductionPage {
 	/**
 	 * @authorAathith.Senthilkumar
 	 * @param element
+	 * @Description Verify that toggle is off check
 	 */
 	public void toggleOnCheck(Element element) {
 		driver.waitForPageToBeReady();
@@ -17593,7 +17653,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @Description filling completed production only
 	 */
 	public void filterCompletedProduction() {
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
@@ -17615,6 +17676,7 @@ public class ProductionPage {
 	 * @authorAathith.Senthilkumar
 	 * @param Batesvalue
 	 * @throws InterruptedException
+	 * @Description perform a generation page and verifing Bates Range Value
 	 */
 	public void fillingGeneratePageAndVerfyingBatesRangeValue(String Batesvalue) throws InterruptedException {
 		// generating production:
@@ -17684,6 +17746,7 @@ public class ProductionPage {
 	 * @authorAathith.Senthilkumar
 	 * @param Batesvalue
 	 * @throws InterruptedException
+	 * @Description filling export generation page and verifing Bates Range value
 	 */
 	public void fillingExportGeneratePageAndVerfyingBatesRangeValue(String Batesvalue) throws InterruptedException {
 
@@ -17832,8 +17895,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
 	 * @param prodName
+	 * @Description Open a exiting production on Home page
 	 */
 	public void openExistingProduction(String prodName) {
 
@@ -17848,7 +17912,8 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
+	 * @Description verify Production is generated succcessfully
 	 */
 	public void verifyProductionGenerateSuccussfully() {
 
@@ -17868,6 +17933,7 @@ public class ProductionPage {
 	 * @param Prefix
 	 * @param suffix
 	 * @throws InterruptedException
+	 * @Description perform generation page and verify bate vale, prefix and suffix
 	 */
 	public void fillingGeneratePageAndVerfyingBatesRangeValue(String Batesvalue, String Prefix, String suffix)
 			throws InterruptedException {
@@ -17946,8 +18012,9 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
 	 * @throws InterruptedException
+	 * @Description filling mp3 with burn redaction
 	 */
 	public void fillingMP3FileWithBurnRedaction() throws InterruptedException {
 
@@ -17980,6 +18047,7 @@ public class ProductionPage {
 	 * @authorAathith.Senthilkumar
 	 * @param tag
 	 * @param tag1
+	 * @Description perform add rule and add priv and redaction tag
 	 */
 	public void AddRuleAndRemoveRuleTagAndRedaction(String tag, String tag1) {
 		base.waitForElement(getAddRule());
@@ -18003,11 +18071,12 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorAathith.Senthilkumar
+	 * @author Aathith.Senthilkumar
 	 * @param prefixId
 	 * @param suffixId
 	 * @param beginningBates
 	 * @throws InterruptedException
+	 * @Description filing number and sorting page with bates rage lenth 2
 	 */
 	public void fillingNumberingAndSorting(String prefixId, String suffixId, String beginningBates)
 			throws InterruptedException {
