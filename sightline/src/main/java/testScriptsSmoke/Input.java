@@ -197,6 +197,7 @@ public class Input {
 	public static String ingestionQuery;
 	public static String ingestionDocIdFamilyMember;
 	public static String ingestionDocIdNearDupe;
+	public static String nearDupeDoc05;
 
 	// DocView codingform Baskar Indium
 
@@ -836,6 +837,7 @@ public class Input {
 		ingestionQuery = testData.getIngestionQuery();
 		ingestionDocIdFamilyMember = testData.getIngestionDocIdFamilyMember();
 		ingestionDocIdNearDupe = testData.getIngestionDocIdNearDupe();
+		nearDupeDoc05 = testData.getNearDupeDoc05();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
