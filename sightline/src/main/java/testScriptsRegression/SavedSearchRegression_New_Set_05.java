@@ -1957,41 +1957,41 @@ public class SavedSearchRegression_New_Set_05 {
 		session.navigateToSessionSearchPageURL();
 		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
 
-//		// To Pick Expected Aggregate count
-//		session.selectSavedsearchInASWp(nodeToSelect);
-//		session.SearchBtnAction();
-//		int purehit = session.returnPurehitCount();
-//
-//		base.stepInfo("-------Pre-requesties completed--------");
-//		base.stepInfo("Expected aggregate purehit count from Export : " + purehit);
-//
-//		// Select Parent Node
-//		saveSearch.navigateToSSPage();
-//		saveSearch.selectNode1(nodeToSelect);
-//		base.stepInfo("Parent Node Selected : " + nodeToSelect);
-//
-//		// Verify Export
-//		base.stepInfo("Initiate Export");
-//		saveSearch.getSavedSearchExportButton().Click();
-//		base.waitForElement(saveSearch.getExportPopup());
-//		report.customDataReportMethodExport("", false);
-//		driver.waitForPageToBeReady();
-//
-//		// Check NotificationCount
-//		base.checkNotificationCount(Bgcount, 1);
-//
-//		// Download report
-//		base.stepInfo("Initiate File Download");
-//		report.downLoadReport();
-//		base.stepInfo("File Downloaded");
-//
-//		base.stepInfo(
-//				"Should show all documents that are in the aggregate results set of all child search groups and searches in Exported file");
-//		int countToCompare = saveSearch.fileVerificationSpecificMethod();
-//		base.stepInfo("Document count from the export : " + countToCompare);
-//		base.digitCompareEquals(purehit, countToCompare,
-//				"Exported file lists all tall documents that are in the aggregate results set of all child search groups and searches",
-//				"Purehit and File count doesn't match");
+		// To Pick Expected Aggregate count
+		session.selectSavedsearchInASWp(nodeToSelect);
+		session.SearchBtnAction();
+		int purehit = session.returnPurehitCount();
+
+		base.stepInfo("-------Pre-requesties completed--------");
+		base.stepInfo("Expected aggregate purehit count from Export : " + purehit);
+
+		// Select Parent Node
+		saveSearch.navigateToSSPage();
+		saveSearch.selectNode1(nodeToSelect);
+		base.stepInfo("Parent Node Selected : " + nodeToSelect);
+
+		// Verify Export
+		base.stepInfo("Initiate Export");
+		saveSearch.getSavedSearchExportButton().Click();
+		base.waitForElement(saveSearch.getExportPopup());
+		report.customDataReportMethodExport("", false);
+		driver.waitForPageToBeReady();
+
+		// Check NotificationCount
+		base.checkNotificationCount(Bgcount, 1);
+
+		// Download report
+		base.stepInfo("Initiate File Download");
+		report.downLoadReport();
+		base.stepInfo("File Downloaded");
+
+		base.stepInfo(
+				"Should show all documents that are in the aggregate results set of all child search groups and searches in Exported file");
+		int countToCompare = saveSearch.fileVerificationSpecificMethod();
+		base.stepInfo("Document count from the export : " + countToCompare);
+		base.digitCompareEquals(purehit, countToCompare,
+				"Exported file lists all tall documents that are in the aggregate results set of all child search groups and searches",
+				"Purehit and File count doesn't match");
 
 		login.logout();
 
@@ -2754,6 +2754,167 @@ public class SavedSearchRegression_New_Set_05 {
 		saveSearch.verifyGridPosition();
 
 		login.logout();
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/14/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that After adding Saved Query - application displays
+	 *              all documents that are in the aggregate results - When User
+	 *              performs Export with Child Search group [RPMXCON-49069] sprint
+	 *              13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
+	public void aggregateResultDocExportSGandSearchesUpdated() throws Exception {
+
+		ReportsPage report = new ReportsPage(driver);
+
+		List<String> newNodeList = new ArrayList<>();
+		Boolean inputValue = true;
+		String StyletoChoose = "CSV";
+		String fieldTypeToChoose = "[,] 044";
+		String savedSearchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String savedSearchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+		String nodeToSelect;
+
+		base.stepInfo("Test case Id: RPMXCON-49069  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that  After adding Saved Query -  application displays all documents that are in the aggregate results - When User performs Export with Child Search groups");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Navigate on Saved Search & Multiple Node Creation & save search in node
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", 3);
+		base.stepInfo("Next adding searches to the created nodes");
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+		nodeToSelect = newNodeList.get(0);
+
+		// Initial Notification count
+		int Bgcount = base.initialBgCount();
+
+		// Saving additional search under child node
+		session.multipleBasicContentSearch(Input.searchString1);
+		session.saveSearchInNodewithChildNode(savedSearchName, newNodeList.get(1));
+		session.getNewSearchButton().waitAndClick(5);
+		session.multipleBasicContentSearch(Input.searchString2);
+		session.saveSearchInNodewithChildNode(savedSearchName1, newNodeList.get(2));
+
+		// To Pick Expected Aggregate count
+		session.selectSavedsearchInASWp(nodeToSelect);
+		session.SearchBtnAction();
+		int purehit = session.returnPurehitCount();
+		base.stepInfo("Expected aggregate purehit count from Export : " + purehit);
+
+		// selecting the parent node
+		saveSearch.navigateToSSPage();
+		saveSearch.selectNode1(nodeToSelect);
+		base.stepInfo("Parent Node Selected : " + nodeToSelect);
+
+		// Verify Export
+		base.stepInfo("Initiate Export");
+		saveSearch.getSavedSearchExportButton().Click();
+		base.waitForElement(saveSearch.getExportPopup());
+		report.customDataReportMethodExport("", false);
+		driver.waitForPageToBeReady();
+
+		// Check NotificationCount
+		base.checkNotificationCount(Bgcount, 1);
+
+		// Download report
+		base.stepInfo("Initiate File Download");
+		report.downLoadReport();
+		base.stepInfo("File Downloaded");
+
+		base.stepInfo(
+				"Should show all documents that are in the aggregate results set of all child search groups and searches in Exported file");
+		int countToCompare = saveSearch.fileVerificationSpecificMethod();
+		base.stepInfo("Document count from the export : " + countToCompare);
+		base.digitCompareEquals(purehit, countToCompare,
+				"Shows all documents that are in the aggregate results set of all child search groups and searches.      ",
+				"Purehit and File count doesn't match");
+
+		// Delete Search Group
+		base.stepInfo("Initiating Delete SearchGroup");
+		saveSearch.deleteNode(Input.mySavedSearch, nodeToSelect);
+
+		// logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/14/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that "Count" gets update in Saved Search Screen when
+	 *              user saved a Background Basic search Query[RPMXCON-48477] sprint
+	 *              13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 47)
+	public void saveSearchScreenOnBasicQueryCountWithBulkDatas() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "COMPLETED";
+		String searchString = Input.bulkSearchSting1;
+		int Bgcount;
+		String nearDupe = "Near Duplicate Count";
+
+		base.stepInfo("Test case Id: RPMXCON-48477  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that \"Count\" gets update  in Saved Search Screen when user saved a Background Basic search Query");
+		base.stepInfo("Flow can only be done for inputs/projects with 6L - 7L bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Switch to HighVolume Project
+		base.selectproject(highVolumeProject);
+
+		// Initial Notification count
+		Bgcount = base.initialBgCount();
+
+		// Basic Search
+		session.navigateToSessionSearchPageURL();
+		session.basicContentSearchWithSaveChanges(searchString, "No", "First");
+		session.SearchBtnAction();
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		int pureHit = session.returnPurehitCount();
+
+		// Verify Tile Spinning
+		base.stepInfo("Verifying for one or more related tiles are still spinning .");
+		session.verifyTileSpinning();
+
+		// Save Search
+		session.saveSearch(searchName);
+
+		// Verify Status based on Count
+		base.stepInfo("Before Execution get completed");
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.verifyStatusBasedOnCount(searchName, "flow-1", 0);
+
+		// Check NotificationCount
+		base.checkNotificationCount(Bgcount, 1);
+
+		// Verify SavedSearch Status once notification arises
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.docResultCOuntCHeck(searchName);
+		base.stepInfo(
+				"Verifing the count on Saved Search Screen for the above saved Search search execution is completed");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+		String updatedDocCount = session.getSavedSearchCount(searchName).getText();
+		base.stepInfo("Updated Count from SavedSearch : " + updatedDocCount);
+		base.textCompareEquals(Integer.toString(pureHit), updatedDocCount, "SavedSearch count updated", "count failed");
+		saveSearch.getDocCountAndStatusOfBatch(searchName, nearDupe, true);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)
