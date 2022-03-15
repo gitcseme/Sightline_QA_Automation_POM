@@ -1109,7 +1109,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * 
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetailAsRev", groups = { "regression" }, priority = 16)
+	@Test(enabled = true, dataProvider = "userDetailAsRev", groups = { "regression" }, priority = 15)
 	public void verifyFamilyMemberTabWhenNoDocsToDisplay(String roll, String userName, String password)
 			throws InterruptedException {
 		loginPage = new LoginPage(driver);
@@ -1146,7 +1146,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyFamilyMemberTabWhenNoDocsToDisplayForPAUser() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
