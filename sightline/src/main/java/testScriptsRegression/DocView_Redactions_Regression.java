@@ -5898,7 +5898,7 @@ public class DocView_Redactions_Regression {
 		assignmentsPage.selectAssignmentToView(assname);
 
 		assignmentsPage.assignmentActions("Edit");
-		assignmentsPage.UnassignedDocs(Input.rev1userName);
+		assignmentsPage.UnassignedUser(Input.rev1userName);
 		assignmentsPage.addReviewerAndDistributeDocs();
 		assignmentsPage.selectAssignmentToViewinDocviewThreadMap(assname);
 		driver.waitForPageToBeReady();
@@ -7456,6 +7456,119 @@ public class DocView_Redactions_Regression {
 		driver.waitForPageToBeReady();
 		softAssert.assertFalse(docView.geDocView_MiniList_CodeSameAsIcon().isDisplayed());
 		baseClass.passedStep("chain link icon removed for the documents after Remove code same");
+
+	}
+	
+	/**
+	 * @author Krishna TestCase Id:51006 Verify user can see the thumbnail image
+	 *         of each page of the document being viewed on doc view page in
+	 *         thumbnail panel when redirecting from other than assignment page
+	 * @throws InterruptedException
+	 *
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 60)
+	public void verifyEachPageDocViewedOnDocViewInThumbNailPanel() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51006");
+		baseClass.stepInfo(
+				"Verify user can see the thumbnail image of each page of the document being viewed on doc view page in thumbnail panel when redirecting from other than assignment page");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+        
+		baseClass.stepInfo("Logged in using RMU account");
+		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(Input.pdfDocId, Input.xlsExcelDocId, Input.tiffDocId1,
+				Input.pptDocId, Input.messageDocId);
+		loginPage.logout();
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in using REV account");
+		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(Input.pdfDocId, Input.xlsExcelDocId, Input.tiffDocId1,
+				Input.pptDocId, Input.messageDocId);
+		loginPage.logout();
+
+		// Login As PA.
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in using PA account");
+		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(Input.pdfDocId, Input.xlsExcelDocId, Input.tiffDocId1,
+				Input.pptDocId, Input.messageDocId);
+	}
+	
+	/**
+	 * Author : Mohan date: 03/12/2021 Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51028 To verify that after impersonation user can see remarks for
+	 * selected document
+	 * 
+	 * @Stabilization - done
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 61)
+	public void verifyRemarksForSelectedDocsAfterImpersonating() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Test case id : RPMXCON-51008");
+		baseClass.stepInfo("To verify that after impersonation user can see remarks for selected document");
+
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Step 1: Impersonate SA to RMU, search docs and Search for docs");
+		baseClass.impersonateSAtoRMU();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 2: Create new assignment and distribute docs to reviewer");
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentspage.add3ReviewerAndDistribute();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click to see Reviewer Remarks");
+		docViewRedact.clickingRemarksIcon();
+		docViewRedact.verifyReviewerRemarksIsPresent();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Step 1: Impersonate PAU to RMU, select assignment and go to Docview");
+		baseClass.impersonatePAtoRMU();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 2: Select document and click to see Reviewer Remarks");
+		docViewRedact.clickingRemarksIcon();
+		docViewRedact.verifyReviewerRemarksIsPresent();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Step 1: Impersonate PAU to Reviewer,select assignment and go to Docview");
+		baseClass.impersonatePAtoReviewer();
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 2: Select document and click to see Reviewer Remarks");
+		docViewRedact.clickingRemarksIcon();
+		docViewRedact.verifyReviewerRemarksIsPresent();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Step 1: Impersonate RMU to Reviewer,select assignment and go to Docview");
+		baseClass.impersonateRMUtoReviewer();
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 2: Select document and click to see Reviewer Remarks");
+		docViewRedact.clickingRemarksIcon();
+		docViewRedact.verifyReviewerRemarksIsPresent();
+		loginPage.logout();
 
 	}
 

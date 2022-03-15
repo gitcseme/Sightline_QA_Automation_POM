@@ -161,6 +161,7 @@ public class TestData {
 	public  String TIFFPageCount;
 	public String translationDocumentId;
 	public String parentDocument;
+	public String masterDateText;
 
 	// Added by Sai Krishna
 	public String pageNumber;
@@ -184,6 +185,11 @@ public class TestData {
 	public String audioString2;
 	public String DocIdWithComments;
 	public String DocIdWithTrackChanges;
+	public String pdfDocId;
+	public String xlsExcelDocId;
+	public String tiffDocId1;
+	public String pptDocId;
+	public String messageDocId;
 
 	//Added by arunkumar
 	public String pageRange1;
@@ -319,6 +325,9 @@ public class TestData {
 	public String HiddenContentExcelSheet;
 	public String HiddenContentExcelBook;
 	public String HiddenContentExternalLink;
+	public String HiddenIngestionDocId;
+	public String HiddenIngestionName;
+	public String HiddenLinkDocId;
 	
 	
 
@@ -339,6 +348,13 @@ public class TestData {
 	public String MetaDataReciepientsDomain;
 	public String MetaDataDomainName;
     public String KeyWordColour;
+    public  String sameThreadDocs_EmailThreadID;
+   	public  String sameFamilyDocs_FamilyID;
+   	public  String IngestionName_PT;
+   	public  String IngestionName_UAT;
+   	public  String metadataIngestion;
+   	public  String custodianName_Andrew;
+   	public  String custodianName_allen;
     public  String TermOperator;
 	public String signDocumentId() {
 		// TODO Auto-generated method stub
@@ -397,6 +413,8 @@ public class TestData {
 		public String audioSearchString6;
 		public String audioSearchString7;
 		public String pdfDataSet;
+		public String dbFile;
+		public String sourceDocIdDB992;
 	
 		//Added by Gopinath - 30/11/2021
 		public String postGenQcChecks;
@@ -411,6 +429,9 @@ public class TestData {
 		public String docFile;
 		public String stampRed;
 		public String stampGreen;
+		public String fileGroup;
+		public String document;
+		public String fileTypeInNativeDocs;
 		
 		//Added by gopinath - 08/12/2021
 		public String anotherRemarkMessage;
@@ -437,6 +458,7 @@ public class TestData {
 		//Added by jayanthi
 		public String TallySearch;
 		public String TallyCN;
+		
 
 		//Added by Gopinath - 05/01/2021
 		public String downloadDocID;
@@ -480,6 +502,11 @@ public class TestData {
 		public String YYYYMMDDHHMISSDat;
 		public String YYYYMMDDHHMISSLst;
 		public String DATFile1;
+
+
+//		public String query;
+//		public String miniDocListID;
+
 		public String StitchedTIFF;		
 		public String DATFile2;
 		public String TiffImagesFolder;
@@ -493,6 +520,72 @@ public class TestData {
 		public String Natives_DDMMYYYY_Slash;
 		public String DAT_MMDDYYYY_Slash;
 		public String Natives_MMDDYYYY_Slash;
+		
+		//Added by Gopinath - 02/03/2022
+		public String ingestionProjectName;
+		public String ingestionType ;
+		public String sourceSystem;
+		public String sourceLocation ;
+		public String sourceFolder;
+		public String fieldSeperator ;
+		public String textQualifier ;
+		public String multiValue ;
+		public String datLoadFile ;
+		public String documentKey ;
+		public String mp3LoadFile ;
+		public String dateFormat ;
+		public String docId ;
+		public String dataSource ;
+		public String custodian ;
+		public String fileExt ;
+		public String fileName ;
+		public String fileSize ;
+		public String fileType ;
+		public String ingDocBasic ;
+		public String docFileExt ;
+		public String ingDocFileName ;
+		public String ingDocFileSize ;
+		public String ingDocFileType ;
+		public String lessThan500PagesDocId;
+		public String d500PagesDocId;
+		public String SearchString_Audio;
+
+		
+		
+		//Added by Mohan (PT Env DocIDs)
+		public String conceptualDocId01; 
+		public String conceptualDocId02;
+		public String conceptualDocId03;
+		public String conceptualDocId04;
+		public String conceptualDocIdForReviewer01;
+		public String conceptualDocIdForReviewer02;
+		public String conceptualDocIdForReviewer03;
+		public String familyDocId01; 
+		public String familyDocId02;
+		public String familyDocId03;
+		public String familyDocIdForReviewer01;
+		public String familyDocIdForReviewer02;
+		public String familyDocIdForReviewer03;
+		public String nearDupeDocId01; 
+		public String nearDupeDocId02;
+		public String nearDupeDocId03;
+		public String nearDupeDocIdForReviewer01;
+		public String nearDupeDocIdForReviewer02;
+		public String nearDupeDocIdForReviewer03;
+		public String threadMapDocId01;
+		public String threadMapWithNonEmailAttachment;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
 		
 }
 

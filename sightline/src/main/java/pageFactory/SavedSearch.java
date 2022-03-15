@@ -323,6 +323,26 @@ public class SavedSearch {
 	}
 
 	// Added By Jeevitha
+	public Element getGridHeader() {
+		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']");
+	}
+
+	public Element getGridBody() {
+		return driver.FindElementByClassName("dataTables_scrollBody");
+	}
+
+	public Element getExecutePopMSg() {
+		return driver.FindElementByXPath("//p[@class='pText']");
+	}
+
+	public ElementCollection getPageNumCount() {
+		return driver.FindElementsByXPath("//ul[@class='pagination pagination-sm']//li");
+	}
+
+	public Element getPageNextBtn() {
+		return driver.FindElementByXPath("//li[@class='paginate_button next']//a");
+	}
+
 	public Element getLastNodeFromTab(String GroupName) {
 		return driver.FindElementByXPath("(//a[text()='" + GroupName + "']//following-sibling::ul//a)[last()]");
 	}
@@ -601,6 +621,10 @@ public class SavedSearch {
 	// Added by raghuram
 	public Element getHideSHowBtn() {
 		return driver.FindElementByXPath("//button[@class='ColVis_Button ColVis_MasterButton']");
+	}
+
+	public Element getCurrentSelectedSearchName(int num) {
+		return driver.FindElementByXPath("//tr[contains(@class,'active-row')]//td['" + num + "']");
 	}
 
 	public Element getFieldoptions(String fieldToChoose) {
@@ -1094,6 +1118,7 @@ public class SavedSearch {
 			}
 		}), Input.wait30);
 		getSelectWithName(searchName).waitAndClick(10);
+		driver.scrollPageToTop();
 		getToDocList().waitAndClick(10);
 		try {
 			if (base.getYesBtn().isElementAvailable(5)) {
@@ -1919,26 +1944,31 @@ public class SavedSearch {
 	/**
 	 * @param searchName
 	 * @author Jeevitha Description: creates new search group
-	 * @modifiedBy : Raghuram @modifiedOn : 2/9/22
+	 * @return
+	 * @modifiedBy : Raghuram @modifiedOn : 03/02/22
 	 */
-	public void createNewSearchGrp(String groupName) {
+	public String createNewSearchGrp(String groupName) {
 
 		navigateToSSPage();
 		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 		System.out.println("Clicked MY saved Search Tab");
 
+		// Select specified Root group
 		selectRootGroupTab(groupName);
 
 		getSavedSearchNewGroupButton().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
-		System.out.println("Clicked MY saved Search Tab");
-
-		selectRootGroupTab(groupName);
+		base.waitTime(2);// to handle wait for observing the text
+		base.hitKey(KeyEvent.VK_ENTER);// base on new implementation
 
 		driver.waitForPageToBeReady();
 		base.VerifySuccessMessage("Save search tree node successfully created.");
 		base.CloseSuccessMsgpopup();
+
+		// Get created node text
+		String newNode = currentClickedNode().getText();
+		System.out.println("Created new node : " + newNode);
+
+		return newNode;
 	}
 
 	/**
@@ -2184,22 +2214,18 @@ public class SavedSearch {
 	/**
 	 * @param searchName
 	 * @author Raghuram Date : 9/21/21 Description: creates new search group
-	 *         Modified on : 2/9/22 modified by : Raghuram - as per new
+	 *         Modified on : 03/02/22 modified by : Raghuram - as per new
 	 *         implementation - still need to verify the impacted methods
 	 * @throws InterruptedException
 	 */
 	public String createSearchGroupAndReturn(String groupName, String role, String verifyNodeEmptyInitally)
 			throws InterruptedException {
-		createNewSearchGrp(groupName);
-		String newNode = null;
 
-		if (getSavedSearchNewNode().isElementAvailable(2)) {
-			newNode = getSavedSearchNewNode().getText();
-		} else if (getLastNodeFromTab(groupName).isElementAvailable(2)) {
-			newNode = getLastNodeFromTab(groupName).getText();
-		}
-		System.out.println("Via : " + role + " Created new node : " + newNode);
+		// Create SG and Get created node text
+		String newNode = createNewSearchGrp(groupName);
 		base.stepInfo("Via : " + role + " Created new node : " + newNode);
+
+		// To check Empty
 		if (verifyNodeEmptyInitally.equals("Yes")) {
 			if (getSelectAnode(newNode).isElementAvailable(1)) {
 				getSelectAnode(newNode).waitAndClick(10);
@@ -2520,7 +2546,7 @@ public class SavedSearch {
 	}
 
 	/**
-	 * @author A Date: 9/15/21 Modified date:9/21/21 Modified by: A Description :
+	 * @author A Date: 9/15/21 Modified date:03/08/22 Modified by: A Description :
 	 *         Saved Search Selection- Sprint 03
 	 * @throws InterruptedException
 	 * @Stabilization : changes done
@@ -2531,12 +2557,16 @@ public class SavedSearch {
 		base.waitForElement(getSavedSearch_SearchName());
 		getSavedSearch_SearchName().SendKeys(searchName);
 		getSavedSearch_ApplyFilterButton().waitAndClick(10);
-		base.waitForElement(getSelectWithName(searchName));
+		driver.waitForPageToBeReady();
+//		base.waitForElement(getSelectWithName(searchName));// impacts to be verified
 		try {
-			if (getSelectWithName(searchName).isElementAvailable(10)) {
+			if (getSelectWithName(searchName).isElementAvailable(15)) {
 				base.stepInfo("Search Found :" + searchName);
 			} else {
 				base.stepInfo("Search Not Found :" + searchName);
+				if (select.equals("Yes")) {
+					base.failedStep("Search Not Found :" + searchName); // impacts to be verified
+				}
 			}
 		} catch (Exception e) {
 			// e.printStackTrace();
@@ -4185,7 +4215,7 @@ public class SavedSearch {
 	 */
 	public void selectSavedSearchTAb(String search, String GroupName, String selectSearch) throws InterruptedException {
 		// Perform Edit function
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		navigateToSavedSearchPage();
 		getSavedSearchGroupName(GroupName).waitAndClick(10);
 		savedSearch_SearchandSelect(search, selectSearch);
 	}
@@ -4929,7 +4959,7 @@ public class SavedSearch {
 		getSavedSearch_ApplyFilterButton().waitAndClick(10);
 		base.waitForElement(getSavedSearchCB(searchName));
 		base.waitTillElemetToBeClickable(getSavedSearchCB(searchName));
-		if (getSavedSearchCB(searchName).Displayed() == true) {
+		if (getSavedSearchCB(searchName).isElementAvailable(3)) {
 			softAssertion.assertTrue(true);
 			base.stepInfo("Search Found :" + searchName);
 		} else {
@@ -6285,16 +6315,13 @@ public class SavedSearch {
 	 */
 	public String verifyCompletedTime(String search, String node, String sg, boolean selectNode)
 			throws InterruptedException {
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		driver.waitForPageToBeReady();
+		navigateToSavedSearchPage();
 		getSavedSearchGroupName(sg).waitAndClick(10);
-		base.waitForElement(getSavedSearchNewGroupExpand());
-		getSavedSearchNewGroupExpand().Click();
+		rootGroupExpansion();
 		if (selectNode) {
 			getSavedSearchGroupName(node).waitAndClick(10);
-			base.stepInfo(node + " is present in  " + "'" + sg + "'");
+			base.stepInfo(node + " is present in " + "'" + sg + "'");
 		}
-
 		savedSearch_SearchandSelect(search, "Yes");
 		String dateAndTime = getLastCompletedTime(search).getText();
 		System.out.println("Last Completed Date And Time : " + dateAndTime);
@@ -6681,7 +6708,7 @@ public class SavedSearch {
 	}
 
 	/**
-	 * @Author Jeevitha
+	 * @Author Jeevitha @Modified By jeevitha @Modified On 4/03/2022
 	 * @param SGtoShare
 	 * @param newNodeList
 	 * @param selectIndex
@@ -6689,8 +6716,11 @@ public class SavedSearch {
 	 */
 	public void verifyStatusAndCountInAllChildNode(String SGtoShare, List<String> newNodeList, int selectIndex,
 			HashMap<String, String> nodeSearchpair) {
+		List<String> list = new ArrayList<>();
+
 		getSavedSearchGroupName(SGtoShare).waitAndClick(10);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
+
+		rootGroupExpansion();
 		String node = null, searchiD;
 		for (int i = 0; i <= nodeSearchpair.size() - 1; i++) {
 			node = newNodeList.get(i);
@@ -6703,27 +6733,31 @@ public class SavedSearch {
 				base.passedStep(node + " : Search group is Present in " + SGtoShare);
 				getSavedSearchGroupName(node).Click();
 				if (i >= selectIndex) {
-					savedSearch_SearchandSelect(nodeSearchpair.get(node), "No");
-					driver.waitForPageToBeReady();
 
-					// GetStatus
-					String searchStatus = getLastStatus();
-					base.stepInfo(nodeSearchpair.get(node) + " Status : " + searchStatus);
-					softAssertion.assertEquals(searchStatus, "COMPLETED");
+					list = getListFromSavedSearchTable("Search Name");
+					for (String searchNames : list) {
+						savedSearch_SearchandSelect(searchNames, "No");
+						driver.waitForPageToBeReady();
 
-					// Result count
-					String resultCount = getSelectSearchWithResultCount(nodeSearchpair.get(node)).getText();
-					if (resultCount.length() > 0) {
-						base.stepInfo("Count Of Doc is : " + resultCount);
-					} else {
-						base.stepInfo("Count Of Doc is Empty : " + resultCount);
+						// GetStatus
+						String searchStatus = getLastStatus();
+						base.stepInfo(nodeSearchpair.get(node) + " Status : " + searchStatus);
+						softAssertion.assertEquals(searchStatus, "COMPLETED");
+
+						// Result count
+						String resultCount = getSelectSearchWithResultCount(searchNames).getText();
+
+						if (resultCount.length() > 0) {
+							base.stepInfo("Count Of Doc is : " + resultCount);
+						} else {
+							base.stepInfo("Count Of Doc is Empty : " + resultCount);
+						}
 					}
-
 				} else {
 					verifySavedSearch_isEmpty();
 					base.passedStep("Not the selected search group");
 				}
-				getSavedSearchNewGroupExpand().waitAndClick(20);
+				sgExpansion();
 			} catch (Exception e) {
 				System.out.println(node + " : Search group is not Present in " + SGtoShare);
 				base.failedStep(node + " : Search group is not Present in " + SGtoShare);
@@ -7204,6 +7238,12 @@ public class SavedSearch {
 		getSavedSearchExecuteButton().Click();
 
 		if (getExecuteContinueBtn().isElementAvailable(10)) {
+
+			String executeActualMSg = getExecutePopMSg().getText();
+			String executeExpectedMsg = "All child searches in all child groups will be submitted to the search engine for execution";
+			base.textCompareEquals(executeActualMSg, executeExpectedMsg, executeActualMSg,
+					"Popup Msg is Not As Expected");
+
 			getExecuteContinueBtn().waitAndClick(10);
 		} else {
 			System.out.println("Saved Search Execute Popup is Not Dispalyed ");
@@ -7243,7 +7283,7 @@ public class SavedSearch {
 	public List<String> getListFromSavedSearchTable(String headerName) {
 		int i;
 		i = base.getIndex(gettableHeaders(), headerName);
-		System.out.println(i);
+		System.out.println(headerName + "--" + i);
 
 		base.waitForElement(getNumberOfSavedSearchToBeShown());
 		getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
@@ -7473,7 +7513,7 @@ public class SavedSearch {
 	}
 
 	/**
-	 * @author Raghuram.A
+	 * @author Raghuram.A @Modified By Jeevitha @Modified On 2/03/2022
 	 * @param statusToCHeck
 	 * @param column
 	 * @param multiPage
@@ -7487,16 +7527,50 @@ public class SavedSearch {
 
 		System.out.println(statusToCHeck);
 		base.stepInfo("To verify " + column + " Status By applying filter");
-		getStatusDropDown().waitAndClick(2);
-		getLastStatusAs(statusToCHeck).waitAndClick(2);
-		getSavedSearch_ApplyFilterButton().waitAndClick(2);
-		driver.waitForPageToBeReady();
-		list = getListFromSavedSearchTable(column);
+
+		int count = 0;
+		if (multiPage) {
+			base.waitForElement(getNumberOfSavedSearchToBeShown());
+
+			getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
+
+			driver.scrollingToBottomofAPage();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPageNumCount().Visible();
+				}
+			}), Input.wait30);
+			count = ((getPageNumCount().size()) - 2);
+			System.out.println("Number of Pages Available : " + count);
+			base.stepInfo("Number of Pages Available : " + count);
+
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			for (int i = 1; i <= count; i++) {
+				list = getListFromSavedSearchTable(column);
+				driver.scrollingToBottomofAPage();
+
+				if (getPageNextBtn().isElementAvailable(3)) {
+					getPageNextBtn().waitAndClick(3);
+				}
+				System.out.println("Page Number : " + i);
+				base.stepInfo("Page Number : " + i);
+				driver.scrollPageToTop();
+
+			}
+		} else {
+			getStatusDropDown().waitAndClick(2);
+			getLastStatusAs(statusToCHeck).waitAndClick(2);
+			getSavedSearch_ApplyFilterButton().waitAndClick(2);
+			list = getListFromSavedSearchTable(column);
+		}
+
 		if (list.size() > 0) {
 			base.compareListWithString(list, statusToCHeck, passMsg, failMsg);
 		} else {
 			base.failedMessage("No data Available");
 		}
+
 	}
 
 	/**
@@ -7557,7 +7631,7 @@ public class SavedSearch {
 	public void selectRootGroupTab(String groupName) {
 
 		if (groupName.equals(Input.shareSearchDefaultSG) || groupName.equals(Input.shareSearchPA)
-				|| groupName.contains("Shared with ")) {
+				|| groupName.contains("Shared with ") || (groupName.equals(Input.mySavedSearch))) {
 			getSavedSearchGroupName(groupName).waitAndClick(5);
 			System.out.println("Clicked :" + groupName);
 		}
@@ -7568,14 +7642,14 @@ public class SavedSearch {
 	 *         search group.
 	 * @param searchGroup[Search group under which node needs to be selected]
 	 * @param NodeName[Name      of node needs to be selected]
+	 * 
+	 * @Modified By Jeevitha @Modified On 2/03/2022
 	 */
-	public void selectNodeUnderSpecificSearchGroup(String searchGroup, String NodeName) {
+	public void selectNodeUnderSpecificSearchGroup(String GroupName, String NodeName) {
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		getSavedSearchGroupName(searchGroup).waitAndClick(10);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
-		base.waitForElement(getCreatedNode(NodeName));
-		getCreatedNode(NodeName).waitAndClick(20);
+		getSavedSearchGroupName(GroupName).waitAndClick(10);
+		selectNode1(NodeName);
 
 	}
 
@@ -7640,4 +7714,31 @@ public class SavedSearch {
 		}
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Decsription : verifies Saved Search Page Grid Position After Resize
+	 */
+	public void verifyGridPosition() {
+		// value before maximize
+		driver.waitForPageToBeReady();
+		base.waitForElement(getGridHeader());
+		String headerWidthBefore = getGridHeader().GetAttribute("style");
+		String bodyWidthBefore = getGridBody().GetAttribute("style");
+
+		// Maximize
+		driver.Manage().window().maximize();
+
+		// value After Maximize
+		driver.waitForPageToBeReady();
+		base.waitForElement(getGridHeader());
+		String headerWidthAfter = getGridHeader().GetAttribute("style");
+		String bodyWidthAfter = getGridBody().GetAttribute("style");
+
+		String passMsg = "The Header of Grid position is As expected : " + headerWidthAfter;
+		String failMsg = "The Grid Position is Not As Expected";
+		base.textCompareEquals(headerWidthBefore, headerWidthAfter, passMsg, failMsg);
+
+		String passMsgGridBody = "The Body of Grid position is As expected : " + bodyWidthAfter;
+		base.textCompareEquals(bodyWidthBefore, bodyWidthAfter, passMsgGridBody, failMsg);
+	}
 }

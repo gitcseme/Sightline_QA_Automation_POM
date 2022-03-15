@@ -32,6 +32,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	LoginPage loginPage;
 	BaseClass baseClass;
 	SoftAssert softAssertion;
+	String executionURL;
+	String documentToBeSelected;
+	String revDocToBeSelected;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws InterruptedException, IOException, ParseException {
@@ -50,14 +53,14 @@ public class DocView_AnalyticsPanel_NearDupes {
 		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
+		executionURL = Input.url;
 	}
 
 	/**
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify that Search text box should be REMOVED from both the
 	 *              Original and NearDupe windows of near dupe comparison window
-	 *              RPMXCON-51707
-	 * stabilization done
+	 *              RPMXCON-51707 stabilization done
 	 */
 	@Test(priority = 1, enabled = true, groups = { "regression" })
 	public void verifySearchTextboxIsDisplayedInNearDupeComparisonWindow()
@@ -173,8 +176,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	/**
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify whether the DocID is getting displayed in the near
-	 *              dupe comparison window. RPMXCON-51710
-	 * stabilization done
+	 *              dupe comparison window. RPMXCON-51710 stabilization done
 	 */
 	@Test(priority = 2, enabled = true, groups = { "regression" })
 	public void verifyDocIdIsDisplayedInNearDupeComparisonWindow()
@@ -315,8 +317,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	/**
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify that 'Apply Coding to this Near Dupe' is not be
-	 *              visible for Project Admin user. RPMXCON-51715
-	 * stabilization done
+	 *              visible for Project Admin user. RPMXCON-51715 stabilization done
 	 */
 	@Test(priority = 3, enabled = true, groups = { "regression" })
 	public void verifyApplyCodingNearDupeNotvisibleForProjectAdminUser()
@@ -364,6 +365,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description : Verify that 'Apply Coding to this Near Dupe' should be
 	 *              functional from near dupe comparison window opened from
 	 *              analytics panel child window RPMXCON-51711
+	 * 
+	 *              coding form not coming properly
 	 * 
 	 */
 	// @Test(priority = 4, enabled = true, groups = { "regression" })
@@ -480,8 +483,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	/**
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : To verify 'View in doc list' action when no document in
-	 *              Threaded Map panel. RPMXCON-50868
-	 * stabilization done
+	 *              Threaded Map panel. RPMXCON-50868 stabilization done
 	 */
 	@Test(priority = 5, enabled = true, groups = { "regression" })
 	public void verifyViewInDoclistWhenNoDocumentSelected() {
@@ -535,12 +537,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description : Verify when document is completed when 'Apply Coding to this
 	 *              Near Dupe' is clicked from near dupe comparison window opened
-	 *              from analytics panel parent window 'RPMXCON-51712'
-	 * 
+	 *              from analytics panel parent window 'RPMXCON-51712' stabilization
+	 *              done
 	 */
-	// @Test(priority = 6, enabled = true, groups = { "regression" })
+	@Test(priority = 6, enabled = true, groups = { "regression" })
 	public void verifyDocCompletedAndIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
+		String revDocument = Input.nearDupeDocId01;
 		baseClass.stepInfo("Test case Id: RPMXCON-51712");
 		baseClass.stepInfo(
 				"Verify when document is completed when 'Apply Coding to this Near Dupe' is clicked from near dupe comparison window opened from analytics panel parent window");
@@ -601,6 +604,11 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
+		if (executionURL.contains("pt")) {
+			docViewPage.selectDocIdInMiniDocList(revDocument);
+			driver.waitForPageToBeReady();
+		}
+
 		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
 
 		// open neardupe comparison window as reviewer
@@ -629,6 +637,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              functional from near dupe comparison window and document is
 	 *              saved 'RPMXCON-51708'
 	 * 
+	 *              coding form not coming properly
 	 */
 	// @Test(priority = 7, enabled = true, groups = { "regression" })
 	public void verifyNearDupeDocIsSaved() throws InterruptedException {
@@ -759,7 +768,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form child window 'RPMXCON-51381'
 	 * @throws InterruptedException
 	 * 
-	 * stabilization done
+	 *                              stabilization done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyCodeAsSameNearDupeSimilarChildWindow() throws InterruptedException {
@@ -779,8 +788,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeCompletedDocId;
-		String revDocsToBeSelected = Input.nearDupeDocId;
+		documentToBeSelected = Input.nearDupeCompletedDocId;
+		revDocToBeSelected = Input.nearDupeDocId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
@@ -914,7 +923,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Select MiniDocList Docs
-		docViewPage.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -972,7 +981,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.scrollPageToTop();
 
 		// Select docs from miniDoclist
-		docViewPage.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 		try {
 			if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
@@ -1012,12 +1021,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify when Code same action selected from Analytics Panel >
 	 *              Near Dupe and Save/Complete clicked from coding form child
 	 *              window'RPMXCON-51379'
-	 * @throws InterruptedException
-	 * stabilization done
+	 * @throws InterruptedException stabilization done
 	 */
 
-	
-	 @Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyCodeAsSameWithCodingFormChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1035,8 +1042,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeCompletedDocId;
-		String revDocsToBeSelected = Input.nearDupeDocId;
+		documentToBeSelected = Input.nearDupeCompletedDocId;
+		revDocToBeSelected = Input.nearDupeDocId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
@@ -1088,7 +1095,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Perform Code Same for Conceptual Docs
@@ -1104,7 +1111,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Pop-out Coding form and Docs are completed successfully");
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Verify CheckMark is present
@@ -1123,8 +1130,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify when Code same action selected from Analytics Panel >
 	 *              Near Dupe child window and Save/Complete clicked from coding
 	 *              form parent window'RPMXCON-51380'
-	 * @throws InterruptedException
-	 * stabilization done
+	 * @throws InterruptedException stabilization done
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyCodeAsSameNearDupeSimilarParentWindow() throws InterruptedException {
@@ -1144,8 +1150,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeCompletedDocId;
-		String revDocsToBeSelected = Input.nearDupeDocId;
+		documentToBeSelected = Input.nearDupeCompletedDocId;
+		revDocToBeSelected = Input.nearDupeDocId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
@@ -1223,7 +1229,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		parentWindowID = driver.getWebDriver().getWindowHandle();
@@ -1254,7 +1260,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Expand Analytics Panel
@@ -1287,10 +1293,11 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              comparison window opened from analytics panel
 	 *              window'RPMXCON-51713'
 	 * @throws InterruptedException
-	 * @throws AWTException
+	 * @throws AWTException         stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 11)
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyDocsCompletedApplyingStamp() throws InterruptedException {
+		String revDocument = Input.nearDupeDocId01;
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -1357,6 +1364,11 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
+		if (executionURL.contains("pt")) {
+			docViewPage.selectDocIdInMiniDocList(revDocument);
+			driver.waitForPageToBeReady();
+		}
+
 		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
 
 		// open neardupe comparison window as reviewer
@@ -1388,11 +1400,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Coding to this Near Dupe' is clicked from near dupe comparison
 	 *              window opened from analytics panel window'RPMXCON-51714'
 	 * @throws InterruptedException
-	 * @throws AWTException
+	 * @throws AWTException         stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyDocsCompletedApplyingStampAndCodeSameAsLast() throws InterruptedException {
-
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
@@ -1489,9 +1500,12 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              from analytics panel child window'RPMXCON-51716'
 	 * @throws InterruptedException
 	 * @throws AWTException
+	 * 
+	 *                              stabilization done
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyDocsInAnalyticsPanelChildWindow() throws InterruptedException {
+		String revDocument = Input.nearDupeDocId01;
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -1566,6 +1580,11 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
+		if (executionURL.contains("pt")) {
+			docViewPage.selectDocIdInMiniDocList(revDocument);
+			driver.waitForPageToBeReady();
+		}
+
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// popout Analytics panel
@@ -1609,10 +1628,11 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              comparison window opened from analytics panel child
 	 *              window'RPMXCON-51717'
 	 * @throws InterruptedException
-	 * @throws AWTException
+	 * @throws AWTException         stabilization done
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyDocsByApplyingStampAnalyticsPanelChildWindow() throws InterruptedException {
+		String revDocument = Input.nearDupeDocId01;
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -1696,6 +1716,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
+		if (executionURL.contains("pt")) {
+			docViewPage.selectDocIdInMiniDocList(revDocument);
+			driver.waitForPageToBeReady();
+		}
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// popout Analytics panel
@@ -1740,13 +1764,17 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :To Verify that document pagination should work from near dupe
 	 *              comparison window'RPMXCON-51702
 	 * @throws InterruptedException
-	 * @throws AWTException
+	 * @throws AWTException         stabilization done
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyPageNavigationInNearDupeDocumentInComparisonWindow() throws InterruptedException {
 		baseClass.stepInfo("Test Case Id: RPMXCON-51702");
 		String searchString = Input.searchString1;
-		String documentToBeSelected = Input.nearDupeDocumentForReviewer;
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.nearDupeDoc05;
+		} else {
+			documentToBeSelected = Input.nearDupeDocumentForReviewer;
+		}
 
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
@@ -1768,6 +1796,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the near dedupe documents are getting listed in Mini Doc List");
 		docViewPage.verifyNdDocumentsPureHits(ndPureHit);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
 
 		baseClass.stepInfo("To Verify that document pagination should work from near dupe comparison window");
 
@@ -1796,6 +1825,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the near dedupe documents are getting listed in Mini Doc List");
 		docViewPage.verifyNdDocumentsPureHits(ndPureHit);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
 
 		baseClass.stepInfo(
 				"Verify that Near dupe window to see the differences should open, on click of the icon from Analytics Panel > Near Dupe child window");
@@ -1824,6 +1854,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the near dedupe documents are getting listed in Mini Doc List");
 		docViewPage.verifyNdDocumentsPureHits(ndPureHit);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
 
 		baseClass.stepInfo(
 				"Verify that Near dupe window to see the differences should open, on click of the icon from Analytics Panel > Near Dupe child window");
@@ -1843,9 +1874,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Author: Steffy Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description :Verify code same chain link icon should be displayed for the
 	 *              document selected for code same on thread map'RPMXCON-51361'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyCodeAsSameThreadMapDocuments() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1863,7 +1894,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = Input.conceptualDocs1;
+		if (executionURL.contains("pt"))
+			documentToBeSelected = Input.newNearDupeDocId;
+		else
+			documentToBeSelected = Input.conceptualDocs1;
 
 		baseClass.stepInfo(
 				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
@@ -1907,9 +1941,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Author: Steffy Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description :The default columns viewable in the Family Members Tab of the
 	 *              Analytics Panel'RPMXCON-51288'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyColumsInFamilyMemBerTabAnalyticalPanel() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -1966,23 +2000,23 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Author: Steffy Created date: NA Modified date: NA Modified by: NA
 	 * @Description :Verify default columns viewable in the Near Dupe Tab of the
 	 *              Analytics Panel'RPMXCON-51289'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-   // @Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyColumsInNearDupeTabAnalyticalPanel() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeCompletedDocId;
-		String revDocsToBeSelected = Input.nearDupeDocId;
+		documentToBeSelected = Input.nearDupeCompletedDocId;
+		revDocToBeSelected = Input.nearDupeDocId;
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		
+
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51289");
 		baseClass.stepInfo("Verify default columns viewable in the Near Dupe Tab of the Analytics Panel");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -2022,7 +2056,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		baseClass.stepInfo("Selecting Documents which has near dupe documents");
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 
 		baseClass.stepInfo("Verify columns in Near Dupe tab in Analytical columns");
 		docViewAnalytics.verifyNearDupeTabColumns();
@@ -2034,14 +2068,17 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Author: Steffy Created date: NA Modified date: NA Modified by: NA
 	 * @Description :Verify default columns viewable in the Conceptual Tab of the
 	 *              Analytics Panel'RPMXCON-51290'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyColumsInConceptualTabAnalyticalPanel() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.conceptualDocument;
+		if (executionURL.contains("pt"))
+			documentToBeSelected = Input.MetaDataId;
+		else
+			documentToBeSelected = Input.conceptualDocument;
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
@@ -2102,9 +2139,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify when Code same action selected from Analytics Panel >
 	 *              thread map and Save/Complete clicked from coding form child
 	 *              window'RPMXCON-51371'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyCodeAsSameWithCodingFormChildWindowForThreadedDocs() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2122,8 +2159,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.threadDocWithToolTip;
-		String revDocsToBeSeletced = Input.newNearDupeDocId;
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.newNearDupeDocId;
+			revDocToBeSelected = Input.threadDocId;
+		} else {
+			documentToBeSelected = Input.threadDocWithToolTip;
+			revDocToBeSelected = Input.newNearDupeDocId;
+		}
 
 		baseClass
 				.stepInfo("Searching threaded documents based on search string and added to shopping cart successfuly");
@@ -2177,7 +2219,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select Docid from MiniDocLis
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSeletced);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 
 		// Perform Code Same for Conceptual Docs
 		baseClass.stepInfo("CodeAsSame is performed for the selected docs");
@@ -2194,7 +2236,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select Docid from MiniDocLis
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSeletced);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 
 		// Verify CheckMark is present
 		baseClass.stepInfo("Verify whether the Complete CheckMark is displayed or not");
@@ -2211,9 +2253,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify when Code same action selected from Analytics Panel >
 	 *              thread map child window and Save/Complete clicked from coding
 	 *              form parent window'RPMXCON-51372'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-    //@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyCodeAsSameThreadDocumentsParentWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2231,8 +2273,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.conceptualDocs1;
-		String revDocsToBeSeletced = Input.newNearDupeDocId;
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.newNearDupeDocId;
+			revDocToBeSelected = Input.threadDocId;
+		} else {
+			documentToBeSelected = Input.conceptualDocs1;
+			revDocToBeSelected = Input.newNearDupeDocId;
+		}
 
 		baseClass
 				.stepInfo("Searching threaded documents based on search string and added to shopping cart successfuly");
@@ -2322,7 +2369,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSeletced);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		parentWindowID = driver.getWebDriver().getWindowHandle();
@@ -2353,7 +2400,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSeletced);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Expand Analytics Panel
@@ -2382,9 +2429,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify when Code same action selected from Analytics Panel >
 	 *              thread map child window and Save/Complete clicked from coding
 	 *              form child window 'RPMXCON-51373'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyCodeAsSameThreadMapSimilarChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2402,8 +2449,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.conceptualDocs1;
-		String revDocsToBeSeletced = Input.newNearDupeDocId;
+		if (executionURL.contains("pt")) {
+			String documentToBeSelected = Input.newNearDupeDocId;
+			String revDocToBeSelected = Input.threadDocId;
+		} else {
+			documentToBeSelected = Input.conceptualDocs1;
+			revDocToBeSelected = Input.newNearDupeDocId;
+		}
 
 		baseClass
 				.stepInfo("Searching threaded documents based on search string and added to shopping cart successfuly");
@@ -2548,7 +2600,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Select MiniDocList Docs
-		docViewPage.selectDocIdInMiniDocList(revDocsToBeSeletced);
+		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -2597,7 +2649,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.scrollPageToTop();
 
 		// Select docs from miniDoclist
-		docViewPage.selectDocIdInMiniDocList(revDocsToBeSeletced);
+		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 		try {
 			if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
@@ -2634,15 +2686,20 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify when Code same action selected from Analytics Panel >
 	 *              Family Member and Save/Complete clicked from coding form parent
 	 *              window'RPMXCON-51374'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyCodeAsSameFamilyMemberParentWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.familyDocument;
-		String revDocsToBeSelected = Input.familyDocumentForReviewer;
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.threadDocId;
+			revDocToBeSelected = Input.familyDocumentForReviewer;
+		} else {
+			documentToBeSelected = Input.familyDocument;
+			revDocToBeSelected = Input.familyDocumentForReviewer;
+		}
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
@@ -2706,7 +2763,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Perform Code Same for Conceptual Docs
@@ -2722,7 +2779,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Verify CheckMark is present
@@ -2740,15 +2797,21 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify when Code same action selected from Analytics Panel >
 	 *              Family Member and Save/Complete clicked from coding form child
 	 *              window'RPMXCON-51375'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyCodeSameFamilyMemberCodingFormChildWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.familyDocument;
-		String revDocsToBeSelected = Input.familyDocumentForReviewer;
+
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.threadDocId;
+			revDocToBeSelected = Input.familyDocumentForReviewer;
+		} else {
+			documentToBeSelected = Input.familyDocument;
+			revDocToBeSelected = Input.familyDocumentForReviewer;
+		}
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
@@ -2771,7 +2834,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		sessionSearch.bulkAssignFamilyMemberDocuments();
 		assignmentsPage.assignFamilyDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
 
-		// Impersonate to Reviewer	
+		// Impersonate to Reviewer
 		baseClass.impersonateRMUtoReviewer();
 
 		// Select assgn by reviewer
@@ -2835,7 +2898,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Perform Code Same for Conceptual Docs
@@ -2852,7 +2915,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select docs Form MiniDocsList
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		try {
@@ -2890,15 +2953,22 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify when Code same action selected from Analytics Panel >
 	 *              Family Member child window and Save/Complete clicked from coding
 	 *              form parent window'RPMXCON-51376'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyCodeAsSameFamilyMemberChildWindowCodingFormParentWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.familyDocument;
-		String revDocsToBeSelected = Input.familyDocumentForReviewer;
+
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.threadDocId;
+			revDocToBeSelected = Input.familyDocumentForReviewer;
+		} else {
+			documentToBeSelected = Input.familyDocument;
+			revDocToBeSelected = Input.familyDocumentForReviewer;
+		}
+
 		softAssertion = new SoftAssert();
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
@@ -3038,7 +3108,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Select DocId In MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -3096,7 +3166,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Expand Analytics Panel
@@ -3122,9 +3192,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify when Code same action selected from Analytics Panel >
 	 *              Near Dupe and Save/Complete clicked from coding form parent
 	 *              window'RPMXCON-51378'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyCodeAsSameWithCodingFormParentWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3142,8 +3212,14 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeDocId1;
-		String revDocsToBeSelected = Input.nearDupeDocId;
+
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.nearDupeCompletedDocId;
+			revDocToBeSelected = Input.nearDupeDocumentForReviewer;
+		} else {
+			documentToBeSelected = Input.nearDupeDocId1;
+			revDocToBeSelected = Input.nearDupeDocId;
+		}
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
@@ -3195,7 +3271,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Perform Code Same for Conceptual Docs
@@ -3211,7 +3287,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Coding form is edited and Docs are completed successfully");
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Verify CheckMark is present
@@ -3232,13 +3308,19 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form child window 'RPMXCON-51377'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyCodeAsSameFamilyMemberSimilarChildWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.familyDocument;
-		String revDocsToBeSelected = Input.familyDocumentForReviewer;
+
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.threadDocId;
+			revDocToBeSelected = Input.familyDocumentForReviewer;
+		} else {
+			documentToBeSelected = Input.familyDocument;
+			revDocToBeSelected = Input.familyDocumentForReviewer;
+		}
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -3390,7 +3472,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select MiniDocList Docs
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
@@ -3448,7 +3530,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select docs from miniDoclist
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 		try {
 			if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
@@ -3483,9 +3565,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Author: Steffy Created date: NA Modified date: NA Modified by: NA
 	 * @Description :Verify completed icon should be displayed for the completed
 	 *              documents on thread map tab'RPMXCON-51362'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyCodeCompleteThreadMapDocuments() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3495,8 +3577,14 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion = new SoftAssert();
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.conceptualDocs1;
-		String revDocToBeSelected = Input.newNearDupeDocId;
+
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.newNearDupeDocId;
+			revDocToBeSelected = Input.threadDocId;
+		} else {
+			documentToBeSelected = Input.conceptualDocs1;
+			revDocToBeSelected = Input.newNearDupeDocId;
+		}
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51362");
 		baseClass.stepInfo("Verify completed icon should be displayed for the completed documents on thread map tab");
@@ -3539,7 +3627,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
 
 		baseClass.stepInfo("Verify completed check mark on thread map tab");
-		docViewAnalytics.verifyCompleteCheckMarkForThreadMapTabDocs();
+		docViewAnalytics.verifyCompleteCheckMarkForThreadMapTabDocs(2);
 
 		// logout
 		loginPage.logout();
@@ -3567,7 +3655,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 
 		baseClass.stepInfo("Verify completed check mark on thread map tab");
-		docViewAnalytics.verifyCompleteCheckMarkForThreadMapTabDocs();
+		docViewAnalytics.verifyCompleteCheckMarkForThreadMapTabDocs(3);
 		loginPage.logout();
 	}
 
@@ -3580,7 +3668,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 29)
+	// @Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyDocsCompletedSameAslastInAnalyticsPanelChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3597,8 +3685,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeDocId1;
-		String revDocsToBeSelected = Input.nearDupeDocId;
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.nearDupeDocumentForReviewer;
+			revDocToBeSelected = Input.nearDupeCompletedDocId;
+		} else {
+			documentToBeSelected = Input.nearDupeDocId1;
+			revDocToBeSelected = Input.nearDupeDocId;
+		}
 
 		// Search the doc and bulk Assign the particular docs
 		sessionSearch.basicContentSearch(searchString);
@@ -3641,7 +3734,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
 
-		
 		// popout Analytics Panel
 		docViewPage.popOutAnalyticsPanelForNearDupe();
 
@@ -3665,14 +3757,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewPage.verifyChainLinkAfterCoding();
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
-		
-		
+
 		driver.waitForPageToBeReady();
 		driver.Navigate().refresh();
-		
+
 		baseClass.waitForElement(docViewPage.getDocView_MiniDocList_SecDoc());
 		docViewPage.getDocView_MiniDocList_SecDoc().waitAndClick(5);
-		
+
 		docViewPage.popOutCodingFormChildWindowForNearDupe();
 		// verify Completed checkmark
 		docViewPage.verifyCheckMark();
@@ -3690,7 +3781,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
 
-		docViewPage.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		docViewPage.selectCompleteButton();
@@ -3707,7 +3798,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Select DocId In MiniDocList
-		docViewPage.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -3726,7 +3817,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		String analyticsWindowID1 = driver.getWebDriver().getWindowHandle();
 		// Open Comparison Window in NearDupes Tab
-		docViewPage.openNearDupeComparisonWindowForDocumentWhichHasMorePages(revDocsToBeSelected);
+		docViewPage.openNearDupeComparisonWindowForDocumentWhichHasMorePages(revDocToBeSelected);
 		// Click Apply Coding Button
 		docViewPage.clickApplyCodingBtn();
 		driver.getWebDriver().close();
@@ -3755,7 +3846,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              selected must remain.b'RPMXCON-51419'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 30)
+	// @Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifySelectedTabStilRemainInAnalyticalPanelAfterCompletingNearDupeDoc() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3765,8 +3856,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion = new SoftAssert();
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected =Input.nearDupeDocId1;
-		String revDocsToBeSelected = Input.nearDupeDocId;
+		if (executionURL.contains("pt")) {
+			String documentToBeSelected = Input.nearDupeCompletedDocId;
+			String revDocsToBeSelected = Input.nearDupeDocumentForReviewer;
+		} else {
+			String documentToBeSelected = Input.nearDupeDocId1;
+			String revDocsToBeSelected = Input.nearDupeDocId;
+		}
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 
@@ -3876,8 +3972,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
-		DocViewPage.codeSameDocumentid = revDocsToBeSelected;
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		DocViewPage.codeSameDocumentid = revDocToBeSelected;
 
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3945,7 +4041,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              previously selected must remain..b'RPMXCON-51420'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 31)
+	// @Test(enabled = true, groups = { "regression" }, priority = 31)
 	public void verifySelectedTabStilRemainInAnalyticalPanelAfterCompletingCoceptualDoc() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3956,8 +4052,14 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.NewDocId;
-		String revDocToBeSelected= Input.conceptualDocument;
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.conceptualDocumentReviewer;
+			revDocToBeSelected = Input.conceptualDocument;
+		} else {
+			documentToBeSelected = Input.NewDocId;
+			revDocToBeSelected = Input.conceptualDocument;
+		}
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51420");
 		baseClass.stepInfo(
 				"To verify that user has selected an Analytics Panel > Conceptual tab and completed document, the Analytics Panel Tab previously selected must remain.");
@@ -4132,7 +4234,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Panel Tab previously selected must remain.b'RPMXCON-51423'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 32)
+	// @Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifySelectedTabStilRemainInAnalyticalPanelChildWindowAfterCompletingNearDupeDoc()
 			throws InterruptedException {
 
@@ -4143,8 +4245,14 @@ public class DocView_AnalyticsPanel_NearDupes {
 		softAssertion = new SoftAssert();
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.nearDupeDocId1;
-		String revDocsToBeSelected = Input.nearDupeDocId;
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.nearDupeCompletedDocId;
+			revDocToBeSelected = Input.nearDupeDocumentForReviewer;
+		} else {
+			documentToBeSelected = Input.nearDupeCompletedDocId;
+			revDocToBeSelected = Input.nearDupeDocumentForReviewer;
+		}
+
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 
@@ -4285,8 +4393,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
-		DocViewPage.codeSameDocumentid = revDocsToBeSelected;
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		DocViewPage.codeSameDocumentid = revDocToBeSelected;
 
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -4387,7 +4495,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              remain.'RPMXCON-51424'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 33)
+	// @Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifySelectedTabStilRemainInAnalyticalPanelChildWindowAfterCompletingCoceptualDoc()
 			throws InterruptedException {
 
@@ -4399,8 +4507,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.NewDocId;
-		String revDocsToBeSelected = Input.conceptualDocument;
+		if (executionURL.contains("pt")) {
+			documentToBeSelected = Input.conceptualDocumentReviewer;
+			revDocToBeSelected = Input.conceptualDocument;
+		} else {
+			documentToBeSelected = Input.NewDocId;
+			revDocToBeSelected = Input.conceptualDocument;
+		}
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51424");
 		baseClass.stepInfo(
@@ -4546,8 +4659,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
 		driver.waitForPageToBeReady();
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
-		DocViewPage.codeSameDocumentid = revDocsToBeSelected;
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		DocViewPage.codeSameDocumentid = revDocToBeSelected;
 
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -4646,9 +4759,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Author: Steffy Created date: NA Modified date: NA Modified by: Mohan
 	 * @Description :Verify that for email threaded documents should be displayed
 	 *              though Inclusive Email is either Yes or NO'RPMXCON-51514'
-	 * @throws InterruptedException
+	 * @throws InterruptedException stabilization done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyInclusiveEmailThreadMapDocuments() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4667,7 +4780,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = Input.conceptualDocs1;
+		String documentToBeSelected = Input.threadDocId;
 
 		baseClass.stepInfo(
 				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
@@ -4681,7 +4794,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo(
 				"Verify whether the threaded documents has documents which has Inclusive emails is either Yes or No");
 		docViewAnalytics.verifyThreadDocsDisplayDocsIrrespectiveOfInclusiveEmailValue();
-		loginPage.logout();	
+		loginPage.logout();
 
 	}
 
@@ -4697,10 +4810,12 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 		try {
 //			loginPage.logout();
-			loginPage.quitBrowser();
+			loginPage.closeBrowser();
+//			loginPage.quitBrowser();
 		} catch (Exception e) {
-			loginPage.quitBrowser();
-			//Indium-Stabilized
+			loginPage.closeBrowser();
+//			loginPage.quitBrowser();
+			// Indium-Stabilized
 //			LoginPage.clearBrowserCache();
 		}
 	}
@@ -4708,7 +4823,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 	@AfterClass(alwaysRun = true)
 	public void close2() {
 		try {
-			//Indium-Stabilized
+			loginPage.closeBrowser();
+			// Indium-Stabilized
 //			LoginPage.clearBrowserCache();
 		} catch (Exception e) {
 			// no such session

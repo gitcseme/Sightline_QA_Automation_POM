@@ -5,38 +5,22 @@ import static org.testng.Assert.assertTrue;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.Command;
-import org.openqa.selenium.remote.CommandExecutor;
-import org.openqa.selenium.remote.Response;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.ITestResult;
 import org.testng.asserts.SoftAssert;
-
-import com.google.common.collect.ImmutableMap;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -142,15 +126,7 @@ public class DocViewRedactions {
 		return driver.FindElementById("blackRectRedact_divDocViewer");
 	}
 
-	public Element rectangleRedactstart() {
-		return driver.FindElementByCssSelector(
-				"body.minified.fixed-header.smart-style-1.desktop-detected:nth-child(2) div.row:nth-child(1) div.middle-tab.col-md-6.ui-resizable div.smartwrap div.col-md-12 div.inPageNav.dropDown.col-md-12.ui-tabs.ui-corner-all.ui-widget.ui-widget-content div.tab-content.ui-tabs-panel.ui-corner-bottom.ui-widget-content:nth-child(3) div.row.centerBackground div.docViewer.col-md-12.no-padding.resize-docview.active:nth-child(1) div.pccv:nth-child(1) div.pccViewerControl div.pccPageListContainerWrapper div.pccPageListContainer div.pccPageListItem:nth-child(1) div.igViewerScroller div.igViewerGraphics:nth-child(1) div.igAnchor g:nth-child(1) svg:nth-child(1) g:nth-child(4) g:nth-child(1) > text:nth-child(10)");
-	}
 
-	public Element rectangleRedactstop() {
-		return driver.FindElementByCssSelector(
-				"body.minified.fixed-header.smart-style-1.desktop-detected:nth-child(2) div.row:nth-child(1) div.middle-tab.col-md-6.ui-resizable div.smartwrap div.col-md-12 div.inPageNav.dropDown.col-md-12.ui-tabs.ui-corner-all.ui-widget.ui-widget-content div.tab-content.ui-tabs-panel.ui-corner-bottom.ui-widget-content:nth-child(3) div.row.centerBackground div.docViewer.col-md-12.no-padding.resize-docview.active:nth-child(1) div.pccv:nth-child(1) div.pccViewerControl div.pccPageListContainerWrapper div.pccPageListContainer div.pccPageListItem:nth-child(1) div.igViewerScroller div.igViewerGraphics:nth-child(1) div.igAnchor g:nth-child(1) svg:nth-child(1) g:nth-child(4) g:nth-child(1) > text:nth-child(11)");
-	}
 
 	public Element redactionSave() {
 		return driver.FindElementByXPath("//*[@id=\"btnSave\"]");
@@ -324,10 +300,6 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath("//*[@id=\"2\"]/i");
 	}
 
-	public Element manageSecurityGroups() {
-		return driver.FindElementByXPath(
-				"//body/div[@id='divLeftNav']/aside[@id='left-panel']/nav[1]/ul[1]/li[3]/ul[1]/li[5]/a[1]");
-	}
 
 	public Element editUserRMUSecurity() {
 		return driver.FindElementByXPath("//td[contains(text(),'Consilio RMU1')]");
@@ -373,10 +345,6 @@ public class DocViewRedactions {
 
 	// Elements for adding annotation layer
 
-	public Element annotationLayerBtn() {
-		return driver.FindElementByXPath("//*[@id=\"myTab1\"]/li[5]/a");
-	}
-
 	public Element defaultAnnotationLayer() {
 		return driver.FindElementByXPath(
 				"//a[@id='1_anchor'][@class='jstree-anchor'][@data-content='Default Annotation Layer']");
@@ -392,9 +360,6 @@ public class DocViewRedactions {
 
 // adding to create new annotation layer-04/08
 
-	public Element manageAnnotationLayers() {
-		return driver.FindElementByXPath("//*[@id=\"LeftMenu\"]/li[3]/ul/li[9]/a");
-	}
 
 	public Element selectSecurityGroup() {
 		return driver.FindElementByXPath("//select[@id='ddlSecurityGroup']");
@@ -1340,24 +1305,6 @@ public class DocViewRedactions {
 		base = new BaseClass(driver);
 	}
 
-	/**
-	 * Author : Krishna D date: NA Modified date: NA Modified by: Krishna D Krishna
-	 * Description : View Docs in DocView panel from Actions dropdown use of thread
-	 * sleep due to elements not present while using keyboard actions
-	 */
-
-	public void viewInDocViewFromActions() throws Exception {
-		Robot robot = new Robot();
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		Thread.sleep(2000);
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		Thread.sleep(2000);
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-		Thread.sleep(1000);
-	}
 
 	/**
 	 * Author : Krishna D date: NA Modified date: 24/08/21 Modified by: Krishna D
@@ -1427,7 +1374,6 @@ public class DocViewRedactions {
 			actions.moveToElement(multiPageIcon().getWebElement()).click();
 			actions.click().build().perform();
 			multiPageInputTextbox().waitAndClick(5);
-
 		}
 
 		multiPageInputTextbox().Clear();
@@ -1435,26 +1381,6 @@ public class DocViewRedactions {
 		multiPageInputSavaBtn().waitAndClick(4);
 	}
 
-	/**
-	 * Author : Krishna D date: NA Modified date: NA Modified by: Krishna D Krishna
-	 * Description : Redaction using Rectangle redact option
-	 */
-	public void addRectangleRedaction() throws Exception {
-		Actions actions = new Actions(driver.getWebDriver());
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return rectangleClick().Visible() && rectangleClick().Enabled();
-			}
-		}), Input.wait30);
-		rectangleClick().waitAndClick(30);
-		wait.until(ExpectedConditions.elementToBeClickable(rectangleRedactstart().getWebElement()));
-		actions.clickAndHold(rectangleRedactstart().getWebElement());
-		wait.until(ExpectedConditions.elementToBeClickable(rectangleRedactstop().getWebElement()));
-		actions.moveToElement(rectangleRedactstop().getWebElement());
-		actions.release(rectangleRedactstop().getWebElement());
-		actions.build().perform();
-	}
 
 	/**
 	 * Author : Krishna D date: NA Modified date: NA Modified by: Krishna D Krishna
@@ -4106,6 +4032,72 @@ public class DocViewRedactions {
 		actions.moveToElement(getDocView_Redactrec_textarea().getWebElement(), x, y).clickAndHold()
 				.moveByOffset(offsetx, offsety).release().build().perform();
 
+	}
+	
+	/**
+	 * @author Krishna Date: 03/02/22 Modified date: N/A Modified by: N/A
+	 * @description Verify ThumnbnailsPanel is displayed on Docview.
+	 */
+	
+	public void verifyThumbNailsPanelDisplayed() {
+		driver.waitForPageToBeReady();
+		base = new BaseClass(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		softAssertion.assertTrue(docViewRedact.thumbNailsPanel().isElementPresent());
+		if (docViewRedact.thumbNailsPanel().isElementPresent() == true) {
+			base.passedStep("The thumbnails panel is clicked and menu is visible");
+		} else {
+			base.failedStep("The thumbnail Panel menu is NOT displayed");
+		}
+	}
+	
+	/**
+	 * @author Krishna Date: 03/02/22 Modified date: N/A Modified by: N/A
+	 * @description verify different type of Documents in minidocList on Thumbnailspanel is displayed.
+	 * @Param pdfDocId,xlsExcelDocId,tiffDocId,pptDocId,messageDocId
+	 */
+	public void verifyDifferentTypesOfDocsInThumbNailsPanel(String pdfDocId,String xlsExcelDocId,String tiffDocId,String pptDocId,String messageDocId ) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		base = new BaseClass(driver);
+		base.stepInfo("bascic contant search on DocView");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.verifyThumbNailsPanelDisplayed();
+		base.passedStep("Thumbnails of docs page is displayed in thumbnail panel");
+		docView.ScrollAndSelectDocument(pdfDocId);
+		driver.waitForPageToBeReady();
+		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.verifyThumbNailsPanelDisplayed();
+		base.passedStep("Thumbnails of pdfDoc page is displayed in thumbnail panel");
+		driver.Navigate().refresh();
+		docView.ScrollAndSelectDocument(xlsExcelDocId);
+		driver.waitForPageToBeReady();
+		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.verifyThumbNailsPanelDisplayed();
+		base.passedStep("Thumbnails of XlsDoc page is displayed in thumbnail panel");
+		driver.Navigate().refresh();
+		docView.ScrollAndSelectDocument(tiffDocId);
+		driver.waitForPageToBeReady();
+		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.verifyThumbNailsPanelDisplayed();
+		base.passedStep("Thumbnails of tiffDoc page is displayed in thumbnail panel");
+		driver.Navigate().refresh();
+		docView.ScrollAndSelectDocument(pptDocId);
+		driver.waitForPageToBeReady();
+		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.verifyThumbNailsPanelDisplayed();
+		base.passedStep("Thumbnails of ppt page is displayed in thumbnail panel");
+		driver.Navigate().refresh();
+		docView.ScrollAndSelectDocument(messageDocId);
+		driver.waitForPageToBeReady();
+		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.verifyThumbNailsPanelDisplayed();	
+		base.passedStep("Thumbnails of messagedocs page is displayed in thumbnail panel");
+	
 	}
 
 }

@@ -59,8 +59,8 @@ public class ModifySearchInAdvancedSearch_Regression{
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		search = new SessionSearch(driver);
@@ -268,10 +268,10 @@ public class ModifySearchInAdvancedSearch_Regression{
 		search.validateModifiedAdvnSearch(option_yes, expectedCount_2,securitygroupname_2);
 		driver.waitForPageToBeReady();
 		search.validateModifiedAdvnSearch(option_No, expectedCount_2,securitygroupname_2);
-		securityPage.deleteSecurityGroups(securitygroupname);
-		if(operator=="OR") {
-			securityPage.deleteSecurityGroups(securitygroupname_2);
-		}
+//		securityPage.deleteSecurityGroups(securitygroupname);
+//		if(operator=="OR") {
+//			securityPage.deleteSecurityGroups(securitygroupname_2);
+//		}
 
 	}	
 	/**
@@ -427,10 +427,10 @@ public class ModifySearchInAdvancedSearch_Regression{
 		search.validateModifiedAdvnSearch(option_No, pureHitCount_expected, RedactionName_2);
 		driver.waitForPageToBeReady();
 		search.validateModifiedAdvnSearch(option_yes, pureHitCount_expected, RedactionName);
-		redact.DeleteRedaction(RedactionName);
-		if(operator=="OR") {
-			redact.DeleteRedaction(RedactionName_2);
-		}
+//		redact.DeleteRedaction(RedactionName);
+//		if(operator=="OR") {
+//			redact.DeleteRedaction(RedactionName_2);
+//		}
 	}
 
 	
@@ -567,7 +567,7 @@ public class ModifySearchInAdvancedSearch_Regression{
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			loginPage.closeBrowser();
+			loginPage.quitBrowser();
 		} finally {
 			//LoginPage.clearBrowserCache();
 		}

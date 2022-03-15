@@ -2896,9 +2896,8 @@ public class DocView_CodingForm_Regression {
 	 */
 
 	@Test(enabled = true, groups = { "regression" }, priority = 72)
-	public void validateCompleteBtnAfterScroll() throws InterruptedException, AWTException {
+	public void validateCompleteBtnAfterScrollCF() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51678");
-		baseClass.stepInfo("Test case Id: RPMXCON-51677");
 		baseClass.stepInfo("Verify that after loading additional documents in mini doc list child window "
 				+ "and parent window Complete action on the principal document should be working");
 		String assignName = "Assignment" + Utility.dynamicNameAppender();
@@ -2970,45 +2969,75 @@ public class DocView_CodingForm_Regression {
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-
+	
 	/**
-	 * @Author : Baskar date:06/12/21 Modified date: NA Modified by: Baskar
-	 * @Description : Verify when RMU impersonates as Reviewer and complete same as
-	 *              last doc when preceding document is completed
+	 * @Author : Baskar date: NA Modified date:03/03/2022 Modified by: Baskar
+	 * @Description :Verify length validation for editable metadata field (datatype NVARCHAR) 
+	 *               from doc view coding form on click of Save
 	 */
+
 	@Test(enabled = true, groups = { "regression" }, priority = 74)
-	public void validateAfterImpersonateSameAsLast() throws InterruptedException, AWTException {
-		baseClass.stepInfo("Test case Id: RPMXCON-51608");
-		baseClass.stepInfo("Verify when RMU impersonates as Reviewer and complete "
-				+ "same as last doc when preceding document is completed");
-		String assignName = "Assignment" + Utility.dynamicNameAppender();
-		String comment = "comment" + Utility.dynamicNameAppender();
-		String fieldText = "stamp" + Utility.dynamicNameAppender();
+	public void validateNvarcharUsingLength() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59483");
+		baseClass.stepInfo("Verify length validation for editable metadata field (datatype NVARCHAR) "
+				+ "from doc view coding form on click of Save");
+		String formName = "CFMetaData" + Utility.dynamicNameAppender();
+		String NVARCHAR = "NVARCHAR";
+		String Defaultaction = "Make It Required";
+		UtilityLog.info("Started Execution for prerequisite");
+		DocExplorerPage docExplore=new DocExplorerPage(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
-		if (roll.equalsIgnoreCase("rmu")) {
-//			searching document for assignment creation
-			sessionSearch.basicContentSearch(Input.searchString2);
-			sessionSearch.bulkAssign();
-			assignmentPage.assignmentCreation(assignName, Input.codingFormName);
-			assignmentPage.toggleCodingStampEnabled();
-			assignmentPage.assignmentDistributingToReviewer();
-			driver.waitForPageToBeReady();
-			System.out.println(assignName);
-		}
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+
+		// Custom Field created with INT DataType
+		projectPage.clickingManageButton();
+		projectPage.addMetaDataFieldUsingIntergerType(tinyInt, NVARCHAR, Input.docBasic, Input.tinyInt);
+		projectPage.addMetaDataFieldUsingIntergerType(smallInt, NVARCHAR, Input.docBasic, Input.smallInt);
+		projectPage.addMetaDataFieldUsingIntergerType(avearageInt, NVARCHAR, Input.docBasic, Input.averageInt);
+		projectPage.addMetaDataFieldUsingIntergerType(bigInt, NVARCHAR, Input.docBasic, Input.bigInt);
+		baseClass.stepInfo("Custom meta data field created with NVARCHAR datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(tinyInt);
+		securityGroupPage.addProjectFieldtoSG(smallInt);
+		securityGroupPage.addProjectFieldtoSG(avearageInt);
+		securityGroupPage.addProjectFieldtoSG(bigInt);
+		baseClass.stepInfo("Custom metadata NVARCHAR field assign to security group");
+
+		// logout
 		loginPage.logout();
-		// login as reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		// selecting the assignment
-		assignmentPage.SelectAssignmentByReviewer(assignName);
-		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
 
-		// validate complete doc to display uncomplete button
-		docViewPage.stampAndCompleteBtnValidation(comment, fieldText, Input.stampSelection);
-		driver.waitForPageToBeReady();
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// create new coding form
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.creatingCodingFormusingMultipleNvachar(formName, tinyInt, smallInt, avearageInt, bigInt,
+				Defaultaction);
+		baseClass.stepInfo("Coding form created with metadata fieldValue");
+		codingForm.assignCodingFormToSG(formName);
+
+		// docexplorer to docview
+	  	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
+		docExplore.selectAllDocumentsFromCurrentPage();
+		docExplore.docExpViewInDocView();
+
+		// validating the coding form using nvarchar datatype
+		docViewPage.passingNvacharDatatypeUsingLength(tinyInt, smallInt, avearageInt,bigInt,20,50,400,4000);
+		baseClass.passedStep("Coding form saved with maximum NVARCHAR character successfully");
+		docViewPage.passingNvacharDatatypeUsingLength(tinyInt, smallInt, avearageInt,bigInt,19,49,399,3999);
+		baseClass.passedStep("Coding form saved with minimum NVARCHAR character successfully");
+
+		// logout
 		loginPage.logout();
 	}
+	
+
 
 	/**
 	 * @Author : Baskar date: 08/12/2021 Modified date: NA Modified by: Baskar
@@ -3302,44 +3331,49 @@ public class DocView_CodingForm_Regression {
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-
+	
 	/**
-	 * @Author : Baskar date:09/12/21 Modified date: NA Modified by: Baskar
-	 * @Description : Verify user can apply coding stamp for the document once
-	 *              marked as un-complete in an assignment
+	 * @Author : Baskar date:06/12/21 Modified date: NA Modified by: Baskar
+	 * @Description : Verify that after loading additional documents in mini doc list 
+	 *                Complete action on the principal document should be working
 	 */
+
 	@Test(enabled = true, groups = { "regression" }, priority = 83)
-	public void afterImpersonateCanSaveStamp() throws InterruptedException, AWTException {
-		baseClass.stepInfo("Test case Id: RPMXCON-51049");
-		baseClass.stepInfo(
-				"Verify user can apply coding stamp for the " + "document once marked as un-complete in an assignment");
+	public void validateCompleteBtnAfterScroll() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51677");
+		baseClass.stepInfo("Verify that after loading additional documents in mini doc list "
+				+ "Complete action on the principal document should be working");
 		String assignName = "Assignment" + Utility.dynamicNameAppender();
-		String filedText = "stampName" + Utility.dynamicNameAppender();
-		String comment = "commentValue" + Utility.dynamicNameAppender();
-
+		// Login As Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
-		if (roll.equalsIgnoreCase("rmu")) {
-//			searching document for assignment creation
-			sessionSearch.basicContentSearch(Input.searchString2);
-			sessionSearch.bulkAssign();
-			assignmentPage.assignmentCreation(assignName, Input.codingFormName);
-			assignmentPage.toggleCodingStampEnabled();
-			assignmentPage.add2ReviewerAndDistribute();
-			driver.waitForPageToBeReady();
-			System.out.println(assignName);
-		}
-		baseClass.impersonateRMUtoReviewer();
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+
 		// selecting the assignment
 		assignmentPage.SelectAssignmentByReviewer(assignName);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
-		// validation of completing document
-		docViewPage.validateSavedStampAfterImpersonate(filedText, comment);
+		// validate checkmark icon and code same as last button
+		docViewPage.validateCompleteBtnAndVerifyCheckMark();
 
-		driver.waitForPageToBeReady();
+		// logout
 		loginPage.logout();
 	}
+
+	
 
 	/**
 	 * @Author : Baskar date: NA Modified date:10/12/2021 Modified by: Baskar
@@ -3536,8 +3570,6 @@ public class DocView_CodingForm_Regression {
 
 	}
 
-//////Changes done as per stabilization team below one//////
-	////// For my Reference where//////@Start priority 88
 
 	/**
 	 * @Author : Baskar date:13/12/21 Modified date: NA Modified by: Baskar
@@ -4129,7 +4161,7 @@ public class DocView_CodingForm_Regression {
 	 *              reviewer's batch (but within assignment) ' on in an assignment.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 105)
+	@Test(enabled = true, groups = { "regression" }, priority = 100)
 	public void allowReviewerstoCodedocsOutsrideReviewerbatch() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -4171,7 +4203,7 @@ public class DocView_CodingForm_Regression {
 	 *              assignment.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 106)
+	@Test(enabled = true, groups = { "regression" }, priority = 101)
 	public void disableAllowReviewerstoCodedocsOutsrideReviewerbatchRmuImporsonateRve()
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -4226,7 +4258,7 @@ public class DocView_CodingForm_Regression {
 	 *              action when 'Allow coding outside reviewer batch' is on in an
 	 *              assignment.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 107)
+	@Test(enabled = true, groups = { "regression" }, priority = 102)
 
 	public void enableAllowReviewerstoCodedocsOutsrideReviewerbatchINRmuRve()
 			throws InterruptedException, AWTException {
@@ -4296,7 +4328,7 @@ public class DocView_CodingForm_Regression {
 	 *              assignment, custom coding form is not editable on doc view page
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 108)
+	@Test(enabled = true, groups = { "regression" }, priority = 103)
 	public void verifyDocMarkCompletecodingFormNotEditable() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -4364,7 +4396,7 @@ public class DocView_CodingForm_Regression {
 	 *                     when user clicks 'Save' button without changing stamp
 	 *                     color and name
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 109)
+	@Test(enabled = true, groups = { "regression" }, priority = 104)
 	public void validateOverWriteMsgForSavedStamp() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -4422,7 +4454,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify that in DocView, Complete button and coding stamps should
 	 *                     not disappear after Draw from Pool action
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 110)
+	@Test(enabled = true, groups = { "regression" }, priority = 105)
 	public void validateCompleteAndCodingStampBtnToDisplay() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -4466,7 +4498,7 @@ public class DocView_CodingForm_Regression {
 	 * group and user navigates to Doc View from Basic Search.
 	 */
 
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 111)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 106)
 	public void validateCodingFormToDisplayFromBasicSearch(String fullName, String userName, String password)
 			throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
@@ -4509,7 +4541,7 @@ public class DocView_CodingForm_Regression {
 	 * coding form should be displayed on Doc View.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 112)
+	@Test(enabled = true, groups = { "regression" }, priority = 107)
 	public void validateUpdatedCodingForm() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -4552,7 +4584,7 @@ public class DocView_CodingForm_Regression {
 	 * assigned to the assignment, it should displayed the message on Doc View.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 113)
+	@Test(enabled = true, groups = { "regression" }, priority = 108)
 
 	public void validateCodingFormAfterDelete() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
@@ -4608,7 +4640,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:To verify that user cannot view the 'Coding Stamps' on Doc View,
 	 *                 if preferences set as 'OFF' from the assignment.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 114)
+	@Test(enabled = true, groups = { "regression" }, priority = 109)
 	public void validateForAssgnCodingStampNotDisplay() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -4654,7 +4686,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify that when user clicks 'Save and Next' when audio file is
 	 *                     in play mode
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 115)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 110)
 	public void validateAudioFileSaveAndNext(String roll, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -4686,7 +4718,7 @@ public class DocView_CodingForm_Regression {
 	 *                     'View Coding' button from edit coding stamp pop up
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 116)
+	@Test(enabled = true, groups = { "regression" }, priority = 111)
 
 	public void validateFromAssgnCodingStampViewCoding() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -4746,7 +4778,7 @@ public class DocView_CodingForm_Regression {
 	 *                 coding form should be displayed on the Doc View.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 117)
+	@Test(enabled = true, groups = { "regression" }, priority = 112)
 
 	public void validateCodingFormShouldDisplayAfterImpFromSA() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -4797,7 +4829,7 @@ public class DocView_CodingForm_Regression {
 	 *                     assignment
 	 */
 
-	@Test(enabled = true, dataProvider = "daToRmuRev", groups = { "regression" }, priority = 118)
+	@Test(enabled = true, dataProvider = "daToRmuRev", groups = { "regression" }, priority = 113)
 
 	public void validateDAImpersonateShouldDisplayCodingstampPa(String roll, String userName, String password,
 			String impersonate) throws InterruptedException, AWTException {
@@ -4844,7 +4876,7 @@ public class DocView_CodingForm_Regression {
 	 *                 coding form in default view.
 	 */
 
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 119)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 114)
 
 	public void validateCodingFormForCodeSameAsSaved(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
@@ -4882,7 +4914,7 @@ public class DocView_CodingForm_Regression {
 	 *              off at assignment level 'RPMXCON-50962'
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 120)
+	@Test(enabled = true, groups = { "regression" }, priority = 115)
 
 	public void assignmentCannotCompleteDocsOutsideBatch() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50962");
@@ -4994,7 +5026,7 @@ public class DocView_CodingForm_Regression {
 	 * @throws AWTException
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 121)
+	@Test(enabled = true, groups = { "regression" }, priority = 116)
 
 	public void verifyCodingSatmpSavedInChildWindow() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52067");
@@ -5046,7 +5078,7 @@ public class DocView_CodingForm_Regression {
 	 *              assignment, custom coding form is editable on doc view page.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 122)
+	@Test(enabled = true, groups = { "regression" }, priority = 117)
 
 	public void verifyDocNotMarkCompletecodingFormEditable() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -5111,7 +5143,7 @@ public class DocView_CodingForm_Regression {
 	 *              assignment, custom coding form is not editable on doc view page.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 123)
+	@Test(enabled = true, groups = { "regression" }, priority = 118)
 
 	public void verifyMarkCompletedDocumentNotEditable() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -5180,7 +5212,7 @@ public class DocView_CodingForm_Regression {
 	 *                 document should not be modified on the doc view by Reviewer
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 124)
+	@Test(enabled = true, groups = { "regression" }, priority = 119)
 	public void validateCompleteDocsFromReviewer() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -5234,7 +5266,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify that when user clicks 'code same as last' when audio file
 	 *                     is in play mode
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 125)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 120)
 	public void validateCodeSameAsLast(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -5265,7 +5297,7 @@ public class DocView_CodingForm_Regression {
 	 *              'RPMXCON-52051'
 	 * @throws AWTException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 126)
+	@Test(enabled = true, groups = { "regression" }, priority = 121)
 	public void verifyCodingStampSaved() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52051");
 		baseClass.stepInfo(
@@ -5300,7 +5332,7 @@ public class DocView_CodingForm_Regression {
 	 *              outside of reviewers batch, then on mouse hover tool tip should
 	 *              be displayed for the stamp icon. 'RPMXCON-51577'
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 127)
+	@Test(enabled = true, groups = { "regression" }, priority = 122)
 	public void assignmentCannotCompleteDocsOutsideBatchCodingStamp() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51577");
 		baseClass.stepInfo(
@@ -5439,7 +5471,7 @@ public class DocView_CodingForm_Regression {
 	 *              document from history drop down. 'RPMXCON-52118' Sprint : 8
 	 */
 
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 128)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 123)
 	public void verifyUserClickSaveAndNextSelectDropDown(String roll, String userName, String password)
 			throws InterruptedException, AWTException {
 
@@ -5482,7 +5514,7 @@ public class DocView_CodingForm_Regression {
 	 *              from search. 'RPMXCON-52124' Sprint : 8
 	 */
 
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 129)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 124)
 	public void verifyUserClickCodeSameAsLastInDocViewFromSearch(String roll, String userName, String password)
 			throws InterruptedException, AWTException {
 
@@ -5520,7 +5552,7 @@ public class DocView_CodingForm_Regression {
 	 *              shared annotation layer with shared redactation tags in security
 	 *              groups and all documents are released to security groups.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 130)
+	@Test(enabled = true, groups = { "regression" }, priority = 125)
 	public void verifyAllDocumentAreReleaseToSG() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -5559,12 +5591,12 @@ public class DocView_CodingForm_Regression {
 	 * @author Aathith.Senthilkumar RPMXCON-52122
 	 * @DisCription Verify tool tip on mouse hover of the icon to code same as last.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 131)
+	@Test(enabled = true, groups = { "regression" }, priority = 126)
 	public void verifyToolTipCodeSameAsLast() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 
-		baseClass.stepInfo("Test case Id: RPMXCON-52121");
+		baseClass.stepInfo("Test case Id: RPMXCON-52122");
 
 		baseClass.stepInfo("Verify tool tip on mouse hover of the icon to code same as last");
 
@@ -5600,7 +5632,7 @@ public class DocView_CodingForm_Regression {
 	 *              document number].
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 132)
+	@Test(enabled = true, groups = { "regression" }, priority = 127)
 	public void verifiyNavigateToDocument() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52117");
 
@@ -5653,7 +5685,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify that on click of the saved stamp should load the coding
 	 *                     form values in context of security group
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 133)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 128)
 	public void validateSavedStampSG(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -5699,7 +5731,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify user can delete the stamp from edit coding stamp pop up
 	 *                     in context of security group
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 134)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 129)
 	public void validateDeletionOfStamp(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -5740,7 +5772,7 @@ public class DocView_CodingForm_Regression {
 	 *              retained
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 135)
+	@Test(enabled = true, groups = { "regression" }, priority = 130)
 	public void verifyHitPanelUsingStamp() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -5791,7 +5823,7 @@ public class DocView_CodingForm_Regression {
 	 *              enable/disable should be retained
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 136)
+	@Test(enabled = true, groups = { "regression" }, priority = 131)
 	public void verifyHitPanelCodeSameAsAndCodeLast() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -5840,7 +5872,7 @@ public class DocView_CodingForm_Regression {
 	 *              then enable/disable should be retained
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 137)
+	@Test(enabled = true, groups = { "regression" }, priority = 132)
 	public void verifyHitPanelCompleteBtn() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -5889,7 +5921,7 @@ public class DocView_CodingForm_Regression {
 	 *                 form also.
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 138)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 133)
 	public void validateSavedDocsAfterCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -5945,7 +5977,7 @@ public class DocView_CodingForm_Regression {
 	 *                 docs, the Complete action on the principal document is should
 	 *                 be working
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 139)
+	@Test(enabled = true, groups = { "regression" }, priority = 134)
 	public void validateFirstAndLastDocsShouldComplete() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -6003,7 +6035,7 @@ public class DocView_CodingForm_Regression {
 	 * last' for the document in security group context
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 140)
+	@Test(enabled = true, groups = { "regression" }, priority = 135)
 	public void validateCommentAndMetadataPureHitCount() throws InterruptedException, AWTException {
 		projectPage = new ProjectPage(driver);
 		securityGroupPage = new SecurityGroupsPage(driver);
@@ -6071,7 +6103,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description : Verify when user clicks the saved stamp on selecting the
 	 *              document from history drop down
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 141)
+	@Test(enabled = true, groups = { "regression" }, priority = 136)
 	public void savedStampInHistoryDropDown() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -6109,7 +6141,7 @@ public class DocView_CodingForm_Regression {
 	 *              to document on document navigation options [<<, <, >, >>, enter
 	 *              document number]
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 142)
+	@Test(enabled = true, groups = { "regression" }, priority = 137)
 	public void validateNavigateOptionUsingSaveAndNext() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -6147,7 +6179,7 @@ public class DocView_CodingForm_Regression {
 	 *              with metadata field as DateOnly on click of 'Complete'
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 143)
+	@Test(enabled = true, groups = { "regression" }, priority = 138)
 	public void nonDateFormatForDateUsingComplete() throws InterruptedException, AWTException {
 		projectPage = new ProjectPage(driver);
 		securityGroupPage = new SecurityGroupsPage(driver);
@@ -6219,7 +6251,7 @@ public class DocView_CodingForm_Regression {
 	 *              with metadata field as DateOnly on saving of the stamp
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 144)
+	@Test(enabled = true, groups = { "regression" }, priority = 139)
 	public void validationOfNonDateFormatDateOnly() throws InterruptedException, AWTException {
 		projectPage = new ProjectPage(driver);
 		securityGroupPage = new SecurityGroupsPage(driver);
@@ -6294,7 +6326,7 @@ public class DocView_CodingForm_Regression {
 	 *              to complete document same as last
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 145)
+	@Test(enabled = true, groups = { "regression" }, priority = 140)
 	public void validateTollTipFromAssgnCodeLast() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -6343,7 +6375,7 @@ public class DocView_CodingForm_Regression {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 146)
+	@Test(enabled = true, groups = { "regression" }, priority = 141)
 	public void validateUnAssignedCFAndCfObjectToRemove() throws InterruptedException, AWTException {
 		codingForm = new CodingForm(driver);
 
@@ -6372,7 +6404,7 @@ public class DocView_CodingForm_Regression {
 	 *              form should not be clear, this is in context of an assignment
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 147)
+	@Test(enabled = true, groups = { "regression" }, priority = 142)
 	public void validateStampControlShouldNotClaerFromAssgn() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -6430,7 +6462,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify on click of the gear icon of the coding stamp saved stamp
 	 *                     color should be clickable
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 148)
+	@Test(enabled = true, groups = { "regression" }, priority = 143)
 	public void validateSavedStampToDisplayFromAssign() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -6483,7 +6515,7 @@ public class DocView_CodingForm_Regression {
 	 *                     the stamp with already saved stamp
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 149)
+	@Test(enabled = true, groups = { "regression" }, priority = 144)
 	public void validateOverWriteMsgForAlreadySavedStamp() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -6545,7 +6577,7 @@ public class DocView_CodingForm_Regression {
 	 *                     on/off for assignment group
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 150)
+	@Test(enabled = true, groups = { "regression" }, priority = 145)
 	public void validateToggleColour() throws InterruptedException, AWTException {
 		assignmentPage = new AssignmentsPage(driver);
 
@@ -6569,7 +6601,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description : Coding form child window: Verify that code same as last should
 	 *              be displayed in context of security group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 151)
+	@Test(enabled = true, groups = { "regression" }, priority = 146)
 	public void codeSameAsLastShouldDisplay() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -6615,7 +6647,7 @@ public class DocView_CodingForm_Regression {
 	 *                     with large text and complete the same document
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 152)
+	@Test(enabled = true, groups = { "regression" }, priority = 147)
 	public void validateScrollToDisplayForComment() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -6659,7 +6691,7 @@ public class DocView_CodingForm_Regression {
 	 * Next' for the document in security group context
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 153)
+	@Test(enabled = true, groups = { "regression" }, priority = 148)
 	public void validateCommentAndMetadataPureHitCountSaveAndNext() throws InterruptedException, AWTException {
 		projectPage = new ProjectPage(driver);
 		securityGroupPage = new SecurityGroupsPage(driver);
@@ -6727,7 +6759,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description :To verify that user can change the label of the field in coding
 	 *              form, it should displayed on the Doc View.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 154)
+	@Test(enabled = true, groups = { "regression" }, priority = 149)
 	public void verifyEditedCfLabelsInDocview() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50984");
 		baseClass.stepInfo(
@@ -6787,7 +6819,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description : To verify that user can view the helpful tooltip in doc view
 	 *              coding form.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 155)
+	@Test(enabled = true, groups = { "regression" }, priority = 150)
 	public void verifyHelpToolTipInDocviewCf() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50985");
 		baseClass.stepInfo("To verify that user can view the helpful tooltip in doc view coding form.");
@@ -6835,120 +6867,143 @@ public class DocView_CodingForm_Regression {
 		softAssertion.assertAll();
 
 	}
-
+	
 	/**
-	 * @Author : Sakthivel date:30/12/2021 Modified date:NA
-	 * @Description :Verify that when user in on Images tab and completes the
-	 *              document from coding form child window then should be on Images
-	 *              tab for next navigated document
+	 * @Author : Baskar date: 18/01/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Verify user can view the coding for the stamp on click of the 
+	 *              'View Coding' button from edit coding stamp pop up in 
+	 *              context of security group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 156)
-	public void verifyImageTabCompleteForNextNavigatedDoc() throws InterruptedException, AWTException {
+
+	@Test(enabled = true, groups = { "regression" }, priority = 151)
+	public void validateFromSgViewCoding() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		softAssertion = new SoftAssert();
-		assignmentPage = new AssignmentsPage(driver);
-		String assignmentName = "assignment" + Utility.dynamicNameAppender();
+		codingForm = new CodingForm(driver);
 
-		// Login As RMU
+		baseClass.stepInfo("Test case Id: RPMXCON-52058");
+		baseClass.stepInfo("Verify user can view the coding for the stamp on click of the "
+				+ "'View Coding' button from edit coding stamp pop up in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-		baseClass.stepInfo("Test case Id: RPMXCON- 51920");
-		baseClass.stepInfo("Verify that when user in on Images tab and completes the document from coding form "
-				+ "child window then should be on Images tab for next navigated document");
 
-		// search to Assignment creation
-		sessionSearch.basicContentSearch(Input.searchText);
-		sessionSearch.bulkAssign();
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
 
-		// Assignment creating and saving the assignment
-		assignmentPage.assignmentCreation(assignmentName, "Default Project Coding Form");
-		baseClass.stepInfo("Assignment is saved succcessfully");
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
 
-		// Assignment saved and distributing to reviewer
-		assignmentPage.assignmentDistributingToReviewer();
-		baseClass.stepInfo("distrubuting to reviwer");
-
-		// Logout as Reviewer manager
-		loginPage.logout();
-		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
-
-		// Login as Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
-
-		// Assignment Selection and Reviewer
-		assignmentPage.SelectAssignmentByReviewer(assignmentName);
-		baseClass.stepInfo("User on the doc view after selecting the assignment");
-
-		// Method for viewing doc view images.
-		docViewPage.verifyDocViewImages();
-		docViewPage.verifyCodingFormChildWindowCursorNavigatedToImageTabDisplayed();
-		loginPage.logout();
-		baseClass.stepInfo("Successfully logout Reviewer'" + Input.rev1password + "'");
+		// stamp saving as Prerequisites
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(EditStamp);
+		baseClass.stepInfo("Edit coding stamp popup window opened to re-edit the stamp");
+		docViewPage.clickViewCodingButton();
+		driver.waitForPageToBeReady();
+		
+		// validation for saved stamp in view coding popup
+		boolean viewCoding=docViewPage.getViewCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(viewCoding);
+		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
+		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
+		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
+		softAssertion.assertEquals(comment, actual);
+		baseClass.stepInfo("verify viewcodingstamp popup saved stamp value is successfully displayed ");
+		docViewPage.getViewCodingCloseButton().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getDeletePopUpAssignedColour());
+		docViewPage.getDeletePopUpAssignedColour().waitAndClick(10);
 		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
 	}
-
+	
 	/**
-	 * @Author : Sakthivel date:30/12/2021 Modified date:NA
-	 * @Description : Verify that when user in on Images tab and completes the
-	 *              document from coding form child window after applying stamp then
-	 *              should be on Images tab for next navigated document
+	 * @Author : Baskar date: 18/01/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Verify coding form objects should be displayed on edit coding 
+	 *               stamp in context of security group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 157)
-	public void verifyCfSavedStampChildNavigatedDoc() throws InterruptedException, AWTException {
+
+	@Test(enabled = true, groups = { "regression" }, priority = 152)
+	public void validateCodingFormObject() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		softAssertion = new SoftAssert();
-		assignmentPage = new AssignmentsPage(driver);
-		String assignmentName = "assignment" + Utility.dynamicNameAppender();
-		// Login As RMU
+		codingForm = new CodingForm(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52052");
+		baseClass.stepInfo("Verify coding form objects should be "
+				+ "displayed on edit coding stamp in context of security group");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-		baseClass.stepInfo("Test case Id: RPMXCON- 51921");
-		baseClass.stepInfo(
-				"Verify that when user in on Images tab and completes the document from coding form child window after applying stamp"
-						+ " then should be on Images tab for next navigated document");
 
-		// searching document for assignment creation
-		sessionSearch.basicContentSearch(Input.searchText);
-		sessionSearch.bulkAssign();
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
 
-		// Assignment Saved
-		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
-		baseClass.stepInfo("Assignment is saved succcessfully");
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
 
-		// Assignment saved and distributing to reviewer
-		assignmentPage.assignmentDistributingToReviewer();
-		baseClass.stepInfo("distrubuting to reviwer");
-
-		// Logout As Review Manager
-		loginPage.logout();
-		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
-
-		// Login as Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
-
-		assignmentPage.SelectAssignmentByReviewer(assignmentName);
-		baseClass.stepInfo("User on the doc view after selecting the assignment");
-
-		// Method for viewing doc view images.
-		docViewPage.verifyDocViewImages();
-		docViewPage.verifyCfStampChildCursorNavigatedToDocViewImage(Input.stampColour, Input.stampColour);
-
-		// Logout As Reviewer
-		loginPage.logout();
-		baseClass.stepInfo("Successfully logout Reviewer'" + Input.rev1password + "'");
+		// stamp saving as Prerequisites
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(EditStamp);
+		if (docViewPage.getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()) {
+			baseClass.passedStep("Coding stamp applied colour displayed in popup");
+		} else {
+			baseClass.failedStep("Coding stamp applied colour not displayed in popup");
+		}
+		docViewPage.clickViewCodingButton();
+		driver.waitForPageToBeReady();
+		
+		// validation for coding form saved object
+		boolean viewCoding=docViewPage.getViewCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(viewCoding);
+		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
+		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
+		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
+		softAssertion.assertEquals(comment, actual);
+		baseClass.stepInfo("Coding form saved object values displayed in viewcoding popup window");
+		docViewPage.getViewCodingCloseButton().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getDeletePopUpAssignedColour());
+		docViewPage.getDeletePopUpAssignedColour().waitAndClick(10);
 		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
 	}
 
+	
+
+	
 	/**
 	 * @Author : Sakthivel date:30/12/2021 Modified date:NA
 	 * @Description :Verify when user clicks 'Save and Next' when document not part
 	 *              of mini doc list is viewed from analytics panel
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 158)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 153)
 	public void verifyDocNotPartInMiniDocListViewed(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -6995,7 +7050,7 @@ public class DocView_CodingForm_Regression {
 	 *              code same as action for document selected from analytics panel
 	 *              in context of a security group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 159)
+	@Test(enabled = true, groups = { "regression" }, priority = 154)
 	public void verifyCodeSameAsDocSelectedFromAnalyticsPanel() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -7048,7 +7103,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description :Verify when user clicks saved stamp when document not part of
 	 *              mini doc list is viewed from analytics panel
 	 */
-	@Test(enabled = false, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 160)
+	@Test(enabled = false, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 155)
 	public void verifySavedStampDocNotPartInDocList(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -7096,7 +7151,7 @@ public class DocView_CodingForm_Regression {
 	 *                     outside the context of an assignment
 	 */
 
-	@Test(enabled = true, dataProvider = "saToRmuRev", groups = { "regression" }, priority = 161)
+	@Test(enabled = true, dataProvider = "saToRmuRev", groups = { "regression" }, priority = 156)
 	public void verifyCodingStampOptionFromChildWindowSACF(String roll, String userName, String password,
 			String impersonate) throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -7144,7 +7199,7 @@ public class DocView_CodingForm_Regression {
 	 *              displayed.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 162)
+	@Test(enabled = true, groups = { "regression" }, priority = 157)
 	public void validateCommentUsingSave() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		codingForm = new CodingForm(driver);
@@ -7187,7 +7242,7 @@ public class DocView_CodingForm_Regression {
 	 *              and Next the document, cannot save stamp
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 163)
+	@Test(enabled = true, groups = { "regression" }, priority = 158)
 	public void validateProjectAdminCodeSameA() throws InterruptedException, AWTException {
 		sessionSearch = new SessionSearch(driver);
 		docViewPage = new DocViewPage(driver);
@@ -7230,7 +7285,7 @@ public class DocView_CodingForm_Regression {
 	 *              same as last after code same as this action
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 164)
+	@Test(enabled = true, groups = { "regression" }, priority = 159)
 	public void validateCheckMarkIcon() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -7278,7 +7333,7 @@ public class DocView_CodingForm_Regression {
 	 *              be validated as per the customized"+ " coding form using Tag
 	 *              objects along with "Selected" condition
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 165)
+	@Test(enabled = true, groups = { "regression" }, priority = 160)
 	public void verifyCompleteButtonTagObjectsValidation() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51211");
 		baseClass.stepInfo(
@@ -7339,7 +7394,7 @@ public class DocView_CodingForm_Regression {
 	 *              be validated as per the customized coding form using Tags and
 	 *              Check group combined with Check Item
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 166)
+	@Test(enabled = true, groups = { "regression" }, priority = 161)
 	public void verifyCompleteButtonValidationUsingTagCheckGroup() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51208");
 		baseClass.stepInfo(
@@ -7414,7 +7469,7 @@ public class DocView_CodingForm_Regression {
 	 *              be validated as per the customized coding form using Tags
 	 *              objects along with Selected and "Not Selected" condition
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 167)
+	@Test(enabled = true, groups = { "regression" }, priority = 162)
 	public void verifyCompleteButtonValidationUsingTagRadiogrpLogics() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51213");
 		baseClass.stepInfo(
@@ -7502,7 +7557,7 @@ public class DocView_CodingForm_Regression {
 	 *              be validated as per the customized coding form using Comments
 	 *              objects along with "Not Selected" condition
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 168)
+	@Test(enabled = true, groups = { "regression" }, priority = 163)
 	public void verifyCompleteValidationUsingCommentsLogics() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51212");
 		baseClass.stepInfo(
@@ -7579,7 +7634,7 @@ public class DocView_CodingForm_Regression {
 	 * assignment
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 169)
+	@Test(enabled = true, groups = { "regression" }, priority = 164)
 	public void validateCommentAndMetadataPureHitCont() throws InterruptedException, AWTException {
 		projectPage = new ProjectPage(driver);
 		securityGroupPage = new SecurityGroupsPage(driver);
@@ -7664,7 +7719,7 @@ public class DocView_CodingForm_Regression {
 	 *              should be applied to the un complete document to complete those
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 170)
+	@Test(enabled = true, groups = { "regression" }, priority = 165)
 	public void validateSavedStampForCompleteDocs() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -7712,7 +7767,7 @@ public class DocView_CodingForm_Regression {
 	 *              applying coding stamp after code same as this action
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 171)
+	@Test(enabled = true, groups = { "regression" }, priority = 166)
 	public void validateCheckMarkIconForCodingStamp() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -7761,7 +7816,7 @@ public class DocView_CodingForm_Regression {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 172)
+	@Test(enabled = true, groups = { "regression" }, priority = 167)
 	public void validateCheckMarkIconForComplete() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -7808,7 +7863,7 @@ public class DocView_CodingForm_Regression {
 	 *              code same as last button should not be clickable.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 173)
+	@Test(enabled = true, groups = { "regression" }, priority = 168)
 	public void validateCodeSameAsLastShouldDisable() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -7867,7 +7922,7 @@ public class DocView_CodingForm_Regression {
 	 *              condition and Radio Item in context of security group
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 174)
+	@Test(enabled = true, groups = { "regression" }, priority = 169)
 	public void validateUsingAllObjectRadioItem() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52093");
 		baseClass.stepInfo("[TC reference RPMXCON-51215] Verify on click of 'Save and Next' "
@@ -7946,7 +8001,7 @@ public class DocView_CodingForm_Regression {
 	 *              window when document not part of mini doc list is viewed from
 	 *              analytics panel child window.
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 175)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 170)
 	public void verifyCfSavedStampDocNotPartInChildWindow(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -7995,7 +8050,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description :To verify that tag should be read only when the dependent tag
 	 *              is selected/unselected.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 176)
+	@Test(enabled = true, groups = { "regression" }, priority = 171)
 	public void verifyCfDependentTagSelectOrNot() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -8023,7 +8078,7 @@ public class DocView_CodingForm_Regression {
 	 *              validated when coding form customized for all objects along with
 	 *              all condition and Check Item.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 177)
+	@Test(enabled = false, groups = { "regression" }, priority = 172)
 	public void verifySaveBtnValidateCfCheckItem() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51186");
 		baseClass.stepInfo("Verify on click of 'Save' button coding form should be validated when coding form"
@@ -8173,7 +8228,7 @@ public class DocView_CodingForm_Regression {
 	 *              should be displayed on doc view
 	 */
 
-	@Test(enabled = true, dataProvider = "rmuRevLoginRole", groups = { "regression" }, priority = 178)
+	@Test(enabled = true, dataProvider = "rmuRevLoginRole", groups = { "regression" }, priority = 173)
 	public void afterEditCodingFormObjectShouldDisplay(String roll, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51189");
@@ -8246,7 +8301,7 @@ public class DocView_CodingForm_Regression {
 	 *                     should be validated outside of an assignment context
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 179)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 174)
 	public void validateCodingFormAfterImpersonateSecurity(String roll, String userName, String password,
 			String impersonate) throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -8293,10 +8348,10 @@ public class DocView_CodingForm_Regression {
 
 	/**
 	 * @Author : Iyappan.Kasinathan
-	 * @Description:Verify after impersonation on click of 'Save' button coding form
-	 *                     should be validated outside of an assignment context
+	 * @Description:Verify when user clicks 'Save and Next' when
+	 *               vieweing the last document of mini doc list
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 180)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 175)
 	public void validateSaveAndNextActionInLastDocOfMiniDocList(String fullname, String username, String password)
 			throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
@@ -8329,7 +8384,7 @@ public class DocView_CodingForm_Regression {
 	 * a completed record, the application should not automatically jog forward to
 	 * the next record.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 181)
+	@Test(enabled = true, groups = { "regression" }, priority = 176)
 	public void verifyDocsNotAutomaticallyMoveNextAfterUncompleteAction() throws InterruptedException, AWTException {
 		assignmentPage = new AssignmentsPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -8372,7 +8427,7 @@ public class DocView_CodingForm_Regression {
 	 * for the document in security group context
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 182)
+	@Test(enabled = true, groups = { "regression" }, priority = 177)
 	public void validateCommentAndMetadataPureHitCountSavedStamp() throws InterruptedException, AWTException {
 		projectPage = new ProjectPage(driver);
 		securityGroupPage = new SecurityGroupsPage(driver);
@@ -8447,7 +8502,7 @@ public class DocView_CodingForm_Regression {
 	 *              assignment
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 183)
+	@Test(enabled = true, groups = { "regression" }, priority = 178)
 	public void validateLastDocsShouldNotClickable() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -8500,7 +8555,7 @@ public class DocView_CodingForm_Regression {
 	 *              validated as per the customized coding form using multiple tags
 	 *              elements in context of security group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 184)
+	@Test(enabled = true, groups = { "regression" }, priority = 179)
 	public void verifyCustomizedCodingFormUsingDisabledMultipleTags() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		codingForm = new CodingForm(driver);
@@ -8565,7 +8620,7 @@ public class DocView_CodingForm_Regression {
 	 * Author : Iyappan.Kasinathan Description: To verify that if document marked as
 	 * un-completed, then user can edit the coding form.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 185)
+	@Test(enabled = true, groups = { "regression" }, priority = 180)
 	public void verifyUncompletedDocCfBeEdited() throws InterruptedException, AWTException {
 		assignmentPage = new AssignmentsPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -8611,35 +8666,6 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 	}
 
-	/**
-	 * @Author : Iyappan.Kasinathan
-	 * @Description:Verify that code same as last should be displayed in context of
-	 *                     security group
-	 */
-
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 186)
-	public void verifyCodeSameAsLAstIconDisplayed(String fullname, String username, String password)
-			throws InterruptedException {
-		docViewPage = new DocViewPage(driver);
-		sessionSearch = new SessionSearch(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-52115");
-		baseClass.stepInfo("Verify that code same as last should be displayed in context of security group");
-		// Login As
-		loginPage.loginToSightLine(username, password);
-		// Session search to doc view Coding Form
-		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
-		docViewPage.selectPureHit();
-		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch1(Input.testData1);
-		sessionSearch.ViewInDocView();
-		driver.waitForPageToBeReady();
-		if (docViewPage.getCodeSameAsLast().isDisplayed()) {
-			baseClass.passedStep("Code same as last icon is displayed");
-		} else {
-			baseClass.failedStep("Code same as last icon is not displayed");
-		}
-		loginPage.logout();
-	}
 
 	/**
 	 * @Author : Iyappan.Kasinathan
@@ -8647,7 +8673,7 @@ public class DocView_CodingForm_Regression {
 	 *               as last' after saving the document on applying the stamp
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 187)
+	@Test(enabled = true, groups = { "regression" }, priority = 181)
 	public void verifyCodeSameAsLastAfterSavingDocOnApplyingStamp() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -8681,6 +8707,36 @@ public class DocView_CodingForm_Regression {
 		reusableDocView.deleteStampColour(Input.stampColour);
 		loginPage.logout();
 	}
+	
+
+	/**
+	 * @Author : Iyappan.Kasinathan
+	 * @Description:Verify that code same as last should be displayed in context of
+	 *                     security group
+	 */
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 182)
+	public void verifyCodeSameAsLAstIconDisplayed(String fullname, String username, String password)
+			throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48801");//missing
+		baseClass.stepInfo("Verify that code same as last should be displayed in context of security group");
+		// Login As
+		loginPage.loginToSightLine(username, password);
+		// Session search to doc view Coding Form
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		if (docViewPage.getCodeSameAsLast().isDisplayed()) {
+			baseClass.passedStep("Code same as last icon is displayed");
+		} else {
+			baseClass.failedStep("Code same as last icon is not displayed");
+		}
+		loginPage.logout();
+	}
 
 	/**
 	 * @Author : Iyappan.Kasinathan
@@ -8688,7 +8744,7 @@ public class DocView_CodingForm_Regression {
 	 *               as last' after saving the document
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 188)
+	@Test(enabled = true, groups = { "regression" }, priority = 183)
 	public void verifyCodeSameAsLastAfterSavingDoc() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -8726,7 +8782,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description : Verify on saving of the stamp coding form should not clear for
 	 *              the document
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 189)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 184)
 	public void validateAfterSavingStampObjectNotClear(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48731");
@@ -8768,7 +8824,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify that for RMU/Reviewer coding stamps option should be
 	 *                     displayed outside the context of an assignment
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 190)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 185)
 	public void ValidateCodingStampOption(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48800");
@@ -8804,7 +8860,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description : Verify that on click of the coding stamp non-audio document
 	 *              should be completed which is viewed after the audio document.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 191)
+	@Test(enabled = true, groups = { "regression" }, priority = 186)
 	public void validateSavedStampFromNonAudio() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51888");
 		baseClass.stepInfo("Verify that on click of the coding stamp non-audio document "
@@ -8852,7 +8908,7 @@ public class DocView_CodingForm_Regression {
 	 * @Author : Baskar date: 11/01/2022 Modified date: NA Modified by: Baskar
 	 * @Description:Verify user can delete the stamp from edit coding stamp pop up
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 192)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 187)
 	public void validateDeletionOfStampFromUser(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48730");
@@ -8892,7 +8948,7 @@ public class DocView_CodingForm_Regression {
 	 * @Author : Baskar date: 11/02/2021 Modified date: NA Modified by: Baskar
 	 * @Description:Verify user can edit the coding stamp with the different color
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 193)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 188)
 	public void validateNotYetAssignedColourUser(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -8949,7 +9005,7 @@ public class DocView_CodingForm_Regression {
 	 *                     the last coded document, when immediately preceding
 	 *                     document is completed by applying coding stamp
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 194)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 189)
 	public void validateSavedStampAfterClickSameAsLast(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -8992,7 +9048,7 @@ public class DocView_CodingForm_Regression {
 	 *              navigating to document on document navigation options [<<, <, >,
 	 *              >>, enter document number]
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 195)
+	@Test(enabled = true, groups = { "regression" }, priority = 190)
 	public void validateNavigateOptionUsingCodeSameAsLast() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -9023,7 +9079,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description : Verify after impersonation on click of 'Save' button coding
 	 *              form should be validated in context of an assignment
 	 */
-	@Test(enabled = true, dataProvider = "rmuDauSauLogin", groups = { "regression" }, priority = 196)
+	@Test(enabled = true, dataProvider = "rmuDauSauLogin", groups = { "regression" }, priority = 191)
 	public void validateAfterImpersonateCodingForm(String fullName, String userName, String password,
 			String impersonate) throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -9068,7 +9124,7 @@ public class DocView_CodingForm_Regression {
 	 *                     group
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 197)
+	@Test(enabled = true, groups = { "regression" }, priority = 192)
 	public void validateFromSGCodingStampViewCoding() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -9136,7 +9192,7 @@ public class DocView_CodingForm_Regression {
 	 * retained on click of saved stamp in context of security group
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 198)
+	@Test(enabled = true, groups = { "regression" }, priority = 193)
 	public void verifyMeataDataUsingSavedStamp() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52183");
 		baseClass.stepInfo("Verify that read only custom metadata field value should be "
@@ -9196,7 +9252,7 @@ public class DocView_CodingForm_Regression {
 	 *              click of 'Save and Next' button coding form should be validated
 	 *              in context of security group
 	 */
-	@Test(enabled = true, dataProvider = "impersoante", groups = { "regression" }, priority = 199)
+	@Test(enabled = true, dataProvider = "impersoante", groups = { "regression" }, priority = 194)
 	public void validateAfterImpersonateCodingFormInSG(String roll, String userName, String password,
 			String impersonate) throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -9239,14 +9295,11 @@ public class DocView_CodingForm_Regression {
 
 	/**
 	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA
-	 * @TestCase_id : 51005 - To verify that comment should not be displayed on
-	 *              document, if document is in two different security group and
-	 *              comment is in one security group.
 	 * @Description : To verify that comment should not be displayed on document, if
 	 *              document is in two different security group and comment is in
 	 *              one security group
 	 */
-	@Test(enabled = true,alwaysRun = false, groups = { "regression" }, priority = 200)
+	@Test(enabled = true,alwaysRun = false, groups = { "regression" }, priority = 195)
 	public void verifyCommentTextFieldIsNotAppearedAtDiffSecurityGroup() throws Exception {
 		String AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		String namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -9377,7 +9430,7 @@ public class DocView_CodingForm_Regression {
 	 * when user applies coding stamp to the document in context of an assignment
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 201)
+	@Test(enabled = true, groups = { "regression" }, priority = 196)
 	public void validateCodingStampPureHitCont() throws InterruptedException, AWTException {
 		projectPage = new ProjectPage(driver);
 		securityGroupPage = new SecurityGroupsPage(driver);
@@ -9461,7 +9514,7 @@ public class DocView_CodingForm_Regression {
 	 * @Author : Baskar date: 24/01/2021 Modified date: NA Modified by: Baskar
 	 * @Description:To verify that user can complete the document.
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 202)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 197)
 	public void validateUserCanCompleteDocsInAssgn(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -9495,95 +9548,69 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 
 	}
-
+	
 	/**
-	 * @Author : Steffy date: 28/01/2021 Modified date: NA Modified by:
-	 * @Description:Verify assignment progress bar refreshesh after completing the
-	 *                     document same as last prior documents should be completed
-	 *                     by clicking complete button after selecting code same as
-	 *                     this action.
+	 * @Author : Baskar date: 25/02/2022 Modified date: NA Modified by: Baskar
+	 * @Description:Verify coding form objects should be displayed on edit coding stamp
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 203)
-	public void verifyAssignmentProgressBarDocCompleteAfterCodeSameAs() throws InterruptedException, AWTException {
-		baseClass.stepInfo("Test case Id: RPMXCON-51275");
-		baseClass.stepInfo(
-				"Verify assignment progress bar refreshesh after completing the document same as last prior documents should be completed by "
-						+ "clicking complete button after selecting code same as this action");
-		sessionSearch = new SessionSearch(driver);
-		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+	@Test(enabled = true, groups = { "regression" }, priority = 198)
+	public void validateViewCodingPopUp() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
-		String searchString = Input.searchString1;
-		String codingForm = Input.codeFormName;
-		String docTextbox = "assignment click";
-		String assname = "assgnment" + Utility.dynamicNameAppender();
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
 
-		// Login as Reviewer Manager
+		baseClass.stepInfo("Test case Id: RPMXCON-51262");
+		baseClass.stepInfo("Verify coding form objects should be displayed on edit coding stamp");
+		String assign = "AAssgn" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
-		// Basic Search and select the pure hit count
-		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
-		sessionSearch.basicContentSearch(searchString);
+		// Create New Assignment
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assign, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
 
-		// create Assignment and disturbute docs
-		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
-		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
-		driver.waitForPageToBeReady();
-		System.out.println(assname);
+		// logout
 		loginPage.logout();
-
-		// login as Reviewer
+		
+		// login as reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		assignmentsPage.SelectAssignmentByReviewer(assname);
-		docViewPage.selectDocsFromMiniDocsAndCodeSameAs();
-		baseClass.waitForElement(docViewPage.getDocument_CommentsTextBox());
-		docViewPage.getDocument_CommentsTextBox().SendKeys(docTextbox);
-		driver.scrollPageToTop();
-		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
-		docViewPage.getCompleteDocBtn().waitAndClick(20);
-		baseClass.VerifySuccessMessage("Document completed successfully");
+
+		// selecting assignment by reviewer
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(EditStamp);
+		docViewPage.clickViewCodingButton();
 		driver.waitForPageToBeReady();
-		docViewRedact.getHomeDashBoard().waitAndClick(10);
-
-		// verify assignment progress bar in completed docs
-		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
-		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
-			System.out.println("completed doc is refreshed in assignment bar");
-			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
-			softAssertion.assertTrue(assignmentsPage.getBatchAssignmentBar(assname).isDisplayed());
-
-		} else {
-			System.out.println("not completed");
-			baseClass.failedStep("Doc not completed");
-		}
-
-		assignmentsPage.SelectAssignmentByReviewer(assname);
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docViewRedact.getDocView_MiniDoc_Selectdoc(3));
-		docViewRedact.getDocView_MiniDoc_Selectdoc(3).waitAndClick(5);
-		docViewPage.completeButton();
-		baseClass.waitTime(1);
-		docViewPage.clickCodeSameAsLast();
-		docViewRedact.getHomeDashBoard().waitAndClick(10);
-
-		// verify assignment progress bar in completed docs
-		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
-		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
-			System.out.println("completed doc is refreshed in assignment bar");
-			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
-			softAssertion.assertTrue(assignmentsPage.getBatchAssignmentBar(assname).isDisplayed());
-
-		} else {
-			System.out.println("not completed");
-			baseClass.failedStep("Doc not completed");
-		}
+		
+		// validation from view coding stamp popup window
+		boolean viewCoding=docViewPage.getViewCodingStamp_PopUpWindow().Displayed();
+		softAssertion.assertTrue(viewCoding);
+		baseClass.stepInfo("ViewCoding stamp popup window opened");
+		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
+		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
+		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
+		softAssertion.assertEquals(comment, actual);
+		baseClass.passedStep("While View coding stamp window stamp saved value loaded successfully");
 		softAssertion.assertAll();
+		
 		// logout
 		loginPage.logout();
 	}
+
+	
 
 	/*
 	 * @Author : Baskar date:28/01/22 Modified date: NA Modified by: Baskar
@@ -9592,7 +9619,7 @@ public class DocView_CodingForm_Regression {
 	 * the document as 'Save'.
 	 */
 
-	@Test(enabled = true, dataProvider = "rmuRevRmuLogin", groups = { "regression" }, priority = 203)
+	@Test(enabled = true, dataProvider = "rmuRevRmuLogin", groups = { "regression" }, priority = 199)
 	public void validateCustomCodingFormUsingSave(String roll, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50981");
@@ -9656,7 +9683,7 @@ public class DocView_CodingForm_Regression {
 	 *              without saving - RPMXCON-50974
 	 */
 
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 204)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 200)
 	public void editCodingNavigationCheck(String roll, String userName, String password) throws InterruptedException, AWTException {
 
 		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
@@ -9753,7 +9780,7 @@ public class DocView_CodingForm_Regression {
 	 * @Author : Baskar date: 01/02/2022 Modified date: NA Modified by: Baskar
 	 * @Description:To verify that Project Admin cannot view the coding form.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 205)
+	@Test(enabled = true, groups = { "regression" }, priority = 201)
 	public void validateCodingFormInPaUser() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -9793,7 +9820,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:To verify that user can view the coding form if it is Assigned
 	 *                 to the assignment.
 	 */
-	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 206)
+	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 202)
 	public void validateAssignedCfInAssignment(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -9837,7 +9864,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Performance: Verify that doc view should not hang when large 
 	 *              coding form is assigned to security group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 207)
+	@Test(enabled = true, groups = { "regression" }, priority = 203)
 	public void validateCodingFormInPaUssser() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -9871,7 +9898,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Performance: Verify that doc view should not hang when large 
 	 *              coding form is assigned to assignment
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 208)
+	@Test(enabled = true, groups = { "regression" }, priority = 204)
 	public void validatingLargeCfFromAssgn() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -9919,7 +9946,7 @@ public class DocView_CodingForm_Regression {
 	 *              after impersonation when user navigates away from the page without 
 	 *              completing or saving from doc view
 	 */
-	@Test(enabled = true, dataProvider = "threeUser", groups = { "regression" }, priority = 5)
+	@Test(enabled = true, dataProvider = "threeUser", groups = { "regression" }, priority = 205)
 	public void validatePopUpMsgUsingAllOption(String roll, String userName, String password,
 			String impersonate) throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
@@ -9996,7 +10023,7 @@ public class DocView_CodingForm_Regression {
 	 *              impersonation when user navigates away from the page without completing or 
 	 *              saving from doc view
 	 */
-	@Test(enabled = true, dataProvider = "threeUser", groups = { "regression" }, priority = 5)
+	@Test(enabled = true, dataProvider = "threeUser", groups = { "regression" }, priority = 206)
 	public void validatePopUpMsgUsingBackAndRefresh(String roll, String userName, String password,
 			String impersonate) throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
@@ -10071,7 +10098,7 @@ public class DocView_CodingForm_Regression {
 	* @Description:To verify that message should be displayed if no coding form is
 	* available for principal document and user select action as 'Code Same as this'.
 	*/
-	@Test(enabled = true, groups = { "regression" }, priority = 209)
+	@Test(enabled = true, groups = { "regression" }, priority = 207)
 	public void validateCodeSameWhenNoCf() throws InterruptedException, AWTException {
 	docViewPage = new DocViewPage(driver);
 	sessionSearch = new SessionSearch(driver);
@@ -10118,7 +10145,7 @@ public class DocView_CodingForm_Regression {
 	 *                            mouse hover tool tip should be displayed for the
 	 *                            stamp icon in coding form child window.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 210)
+	@Test(enabled = true, groups = { "regression" }, priority = 208)
 	public void validateToolTipInDocViewCodingFormChildWindow() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -10205,7 +10232,7 @@ public class DocView_CodingForm_Regression {
 	 *                            mouse hover tool tip should be displayed for the
 	 *                            stamp icon.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 211)
+	@Test(enabled = true, groups = { "regression" }, priority = 209)
 	public void validateToolTipInDocViewCodingForm() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -10271,7 +10298,7 @@ public class DocView_CodingForm_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 212)
+	@Test(enabled = true, groups = { "regression" }, priority = 210)
 	public void verifyCodingFormvalidatedtagElement() throws InterruptedException, AWTException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-52076");
@@ -10333,7 +10360,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify user can apply the saved coding stamp to other documents 
 	 *              from mini doc list in context of security group
 	 */
-	@Test(enabled = true, dataProvider = "ContentAndAudio", groups = { "regression" }, priority = 214)
+	@Test(enabled = true, dataProvider = "ContentAndAudio", groups = { "regression" }, priority = 211)
 	public void validateSavedStampInSG(String method) throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -10417,7 +10444,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify when 'Complete When Coding Stamp Applied' off at an 
 	 *              assignment group/assignment level
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 215)
+	@Test(enabled = true, groups = { "regression" }, priority = 212)
 	public void validatingToggleCodingStampInAssign() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -10485,7 +10512,7 @@ public class DocView_CodingForm_Regression {
 	 * @Author : Baskar date: 11/02/2022 Modified date: NA Modified by: Baskar
 	 * @Description:Verify coding stamp should not be applied to completed document in an assignment
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 216)
+	@Test(enabled = true, groups = { "regression" }, priority = 213)
 	public void validatingSavedStampForCompletedDocs() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -10549,7 +10576,7 @@ public class DocView_CodingForm_Regression {
 	 * @Author : date: 10/02/2022 Modified date: NA Modified by: Baskar
 	 * @Description:To verify that comment should displayed on the document.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 216)
+	@Test(enabled = true, groups = { "regression" }, priority = 214)
 	public void verifyCommentDisplayedOnTheDocument() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -10618,7 +10645,7 @@ public class DocView_CodingForm_Regression {
 	 *                            with tool tips when redirected from my assignment
 	 *                            and stamp are saved
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 217)
+	@Test(enabled = true, groups = { "regression" }, priority = 215)
 	public void validateToolTipInStampIcons() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -10687,7 +10714,7 @@ public class DocView_CodingForm_Regression {
 	 *              saved coding form should be displayed
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 218)
+	@Test(enabled = true, groups = { "regression" }, priority = 216)
 	public void validateSavedStampFromViewCoding() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -10750,7 +10777,7 @@ public class DocView_CodingForm_Regression {
 	 *              form should be displayed in context of security group
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 219)
+	@Test(enabled = true, groups = { "regression" }, priority = 217)
 	public void validateViewCodingStampFromSG() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -10814,7 +10841,7 @@ public class DocView_CodingForm_Regression {
 	 *              coding stamp saved coding form should be displayed in context of security group
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 220)
+	@Test(enabled = true, groups = { "regression" }, priority = 218)
 	public void validateViewCodingButtonFromCW() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -10886,7 +10913,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify confirmation message should be displayed when overwriting 
 	 *               the stamp with already saved stamp in context of security group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 221)
+	@Test(enabled = true, groups = { "regression" }, priority = 219)
 	public void validateOverWriteMsgForSavedStampSG() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -10947,7 +10974,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify user can save the coding stamp with the stamp color which 
 	 *              is deleted in context of security group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 222)
+	@Test(enabled = true, groups = { "regression" }, priority = 220)
 	public void validateUsingSavingAndDeletingTheStamp() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -11043,7 +11070,7 @@ public class DocView_CodingForm_Regression {
 	 *                     when user clicks 'Save' button without changing stamp
 	 *                     color and name in context of security group
 	 */
-    @Test(enabled = true, groups = { "regression" }, priority = 223)
+    @Test(enabled = true, groups = { "regression" }, priority = 221)
 	public void validateOverWriteMsgForRenamingStampName() throws InterruptedException, AWTException {
     	docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -11127,7 +11154,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify tool tip should be displayed for the stamp icons on mouse
 	 *                     over after editing the stamp in context of security group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 224)
+	@Test(enabled = true, groups = { "regression" }, priority = 222)
 	public void validatToolTipForStampIcon() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -11196,7 +11223,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:Verify on click of the gear icon of the coding stamp saved stamp 
 	 *              color should be clickable in context of security group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 225)
+	@Test(enabled = true, groups = { "regression" }, priority = 223)
 	public void validatSavedStampShouldClickable() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -11272,7 +11299,7 @@ public class DocView_CodingForm_Regression {
 	 * @Description:[Covered Coding form child window]Verify user can edit the coding 
 	 *              stamp with the different color in context of security group
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 226)
+	@Test(enabled = true, groups = { "regression" }, priority = 224)
 	public void validatWithoutChangingObjectUsingStamp() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -11368,195 +11395,6 @@ public class DocView_CodingForm_Regression {
 		// logout
 		loginPage.logout();
 	}
-	
-	/**
-	 * @Author : Baskar date: 25/02/2022 Modified date: NA Modified by: Baskar
-	 * @Description:Verify coding form objects should be displayed on edit coding stamp
-	 */
-
-	@Test(enabled = true, groups = { "regression" }, priority = 227)
-	public void validateViewCodingPopUp() throws InterruptedException, AWTException {
-		docViewPage = new DocViewPage(driver);
-		assignmentPage = new AssignmentsPage(driver);
-		sessionSearch = new SessionSearch(driver);
-		softAssertion = new SoftAssert();
-
-		baseClass.stepInfo("Test case Id: RPMXCON-51262");
-		baseClass.stepInfo("Verify coding form objects should be displayed on edit coding stamp");
-		String assign = "AAssgn" + Utility.dynamicNameAppender();
-		String comment = "comment" + Utility.dynamicNameAppender();
-		String fieldText = "stamp" + Utility.dynamicNameAppender();
-
-		// Login As Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-
-		// Create New Assignment
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkAssign();
-		assignmentPage.assignmentCreation(assign, Input.codingFormName);
-		assignmentPage.toggleCodingStampEnabled();
-		assignmentPage.assignmentDistributingToReviewer();
-
-		// logout
-		loginPage.logout();
-		
-		// login as reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-
-		// selecting assignment by reviewer
-		assignmentPage.SelectAssignmentByReviewer(assign);
-		docViewPage.editCodingForm(comment);
-		docViewPage.codingStampButton();
-		docViewPage.popUpAction(fieldText, Input.stampSelection);
-		docViewPage.pencilGearicon(Input.stampSelection);
-		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
-		softAssertion.assertTrue(EditStamp);
-		docViewPage.clickViewCodingButton();
-		driver.waitForPageToBeReady();
-		
-		// validation from view coding stamp popup window
-		boolean viewCoding=docViewPage.getViewCodingStamp_PopUpWindow().Displayed();
-		softAssertion.assertTrue(viewCoding);
-		baseClass.stepInfo("ViewCoding stamp popup window opened");
-		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
-		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
-		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
-		softAssertion.assertEquals(comment, actual);
-		baseClass.passedStep("While View coding stamp window stamp saved value loaded successfully");
-		softAssertion.assertAll();
-		
-		// logout
-		loginPage.logout();
-	}
-	
-	/**
-	 * @Author : Baskar date: 18/01/2021 Modified date: NA Modified by: Baskar
-	 * @Description:Verify user can view the coding for the stamp on click of the 
-	 *              'View Coding' button from edit coding stamp pop up in 
-	 *              context of security group
-	 */
-
-	@Test(enabled = true, groups = { "regression" }, priority = 228)
-	public void validateFromSgViewCoding() throws InterruptedException, AWTException {
-		docViewPage = new DocViewPage(driver);
-		sessionSearch = new SessionSearch(driver);
-		softAssertion = new SoftAssert();
-		codingForm = new CodingForm(driver);
-
-		baseClass.stepInfo("Test case Id: RPMXCON-52058");
-		baseClass.stepInfo("Verify user can view the coding for the stamp on click of the "
-				+ "'View Coding' button from edit coding stamp pop up in context of security group");
-		String comment = "comment" + Utility.dynamicNameAppender();
-		String fieldText = "stamp" + Utility.dynamicNameAppender();
-
-		// Login As Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-
-		codingForm.assignCodingFormToSG("Default Project Coding Form");
-
-		// Searching audio document with different term
-		baseClass.stepInfo("Searching audio documents based on search string");
-		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
-		docViewPage.selectPureHit();
-		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch1(Input.testData1);
-		baseClass.stepInfo("Open the searched documents in doc view mini list");
-		sessionSearch.ViewInDocViews();
-
-		// stamp saving as Prerequisites
-		docViewPage.editCodingForm(comment);
-		docViewPage.codingStampButton();
-		docViewPage.popUpAction(fieldText, Input.stampSelection);
-		docViewPage.pencilGearicon(Input.stampSelection);
-		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
-		softAssertion.assertTrue(EditStamp);
-		baseClass.stepInfo("Edit coding stamp popup window opened to re-edit the stamp");
-		docViewPage.clickViewCodingButton();
-		driver.waitForPageToBeReady();
-		
-		// validation for saved stamp in view coding popup
-		boolean viewCoding=docViewPage.getViewCodingStamp_PopUpWindow().Displayed();
-		softAssertion.assertTrue(viewCoding);
-		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
-		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
-		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
-		softAssertion.assertEquals(comment, actual);
-		baseClass.stepInfo("verify viewcodingstamp popup saved stamp value is successfully displayed ");
-		docViewPage.getViewCodingCloseButton().waitAndClick(5);
-		baseClass.waitForElement(docViewPage.getDeletePopUpAssignedColour());
-		docViewPage.getDeletePopUpAssignedColour().waitAndClick(10);
-		softAssertion.assertAll();
-		// logout
-		loginPage.logout();
-	}
-	
-	/**
-	 * @Author : Baskar date: 18/01/2021 Modified date: NA Modified by: Baskar
-	 * @Description:Verify coding form objects should be displayed on edit coding 
-	 *               stamp in context of security group
-	 */
-
-	@Test(enabled = true, groups = { "regression" }, priority = 229)
-	public void validateCodingFormObject() throws InterruptedException, AWTException {
-		docViewPage = new DocViewPage(driver);
-		sessionSearch = new SessionSearch(driver);
-		softAssertion = new SoftAssert();
-		codingForm = new CodingForm(driver);
-
-		baseClass.stepInfo("Test case Id: RPMXCON-52052");
-		baseClass.stepInfo("Verify coding form objects should be "
-				+ "displayed on edit coding stamp in context of security group");
-		String comment = "comment" + Utility.dynamicNameAppender();
-		String fieldText = "stamp" + Utility.dynamicNameAppender();
-
-		// Login As Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-
-		codingForm.assignCodingFormToSG("Default Project Coding Form");
-
-		// Searching audio document with different term
-		baseClass.stepInfo("Searching audio documents based on search string");
-		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
-		docViewPage.selectPureHit();
-		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch1(Input.testData1);
-		baseClass.stepInfo("Open the searched documents in doc view mini list");
-		sessionSearch.ViewInDocViews();
-
-		// stamp saving as Prerequisites
-		docViewPage.editCodingForm(comment);
-		docViewPage.codingStampButton();
-		docViewPage.popUpAction(fieldText, Input.stampSelection);
-		docViewPage.pencilGearicon(Input.stampSelection);
-		boolean EditStamp=docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
-		softAssertion.assertTrue(EditStamp);
-		if (docViewPage.getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()) {
-			baseClass.passedStep("Coding stamp applied colour displayed in popup");
-		} else {
-			baseClass.failedStep("Coding stamp applied colour not displayed in popup");
-		}
-		docViewPage.clickViewCodingButton();
-		driver.waitForPageToBeReady();
-		
-		// validation for coding form saved object
-		boolean viewCoding=docViewPage.getViewCodingStamp_PopUpWindow().Displayed();
-		softAssertion.assertTrue(viewCoding);
-		baseClass.waitForElement(docViewPage.getDocumentsCommentViewCoding());
-		docViewPage.getDocumentsCommentViewCoding().ScrollTo();
-		String actual = docViewPage.getDocumentsCommentViewCoding().getText();
-		softAssertion.assertEquals(comment, actual);
-		baseClass.stepInfo("Coding form saved object values displayed in viewcoding popup window");
-		docViewPage.getViewCodingCloseButton().waitAndClick(5);
-		baseClass.waitForElement(docViewPage.getDeletePopUpAssignedColour());
-		docViewPage.getDeletePopUpAssignedColour().waitAndClick(10);
-		softAssertion.assertAll();
-		// logout
-		loginPage.logout();
-	}
-	
 	
 	
 	

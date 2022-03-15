@@ -269,7 +269,111 @@ public class Ingestion_Regression {
 		
 	}
 
-
+	/**  
+	 * @author Gopinath
+	 * @throws InterruptedException 
+	 * @TestCase id:50744 : Verify that when rollback is in-progress then error page should not be displayed on Datasets page.
+	 * @Description: Verify that when rollback is in-progress then error page should not be displayed on Datasets page.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	public void verifyRollBackIsInProgressErrorMsgNotDisplayed() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		String projectName = Input.ingestionProjectName;
+		String ingestionType = Input.ingestionType;
+		String sourceSystem = Input.sourceSystem;
+		String sourceLocation =  Input.sourceLocation;
+		String sourceFolder =  Input.sourceFolder;
+		String fieldSeperator = Input.fieldSeperator;
+		String textQualifier = Input.textQualifier;
+		String multiValue = Input.multiValue;
+		String datLoadFile = Input.datLoadFile;
+		String documentKey = Input.documentKey;
+		String mp3LoadFile = Input.mp3LoadFile;
+		String dateFormat = Input.dateFormat;
+		String docId = Input.docId;
+		String dataSource = Input.dataSource;
+		String custodian = Input.custodian;
+		String fileExt =Input.fileExt;
+		String fileName = Input.fileName;
+		String fileSize = Input.fileSize;
+		String fileType =Input.fileType;
+		String docBasic = Input.ingDocBasic;
+		String docFileExt = Input.docFileExt;
+		String docFileName = Input.ingDocFileName;
+		String docFileSize = Input.ingDocFileSize;
+		String docFileType = Input.ingDocFileType;
+		baseClass.stepInfo("Test case Id: RPMXCON-50744 Sprint 12");
+		baseClass.stepInfo("###  Verify that when rollback is in-progress then error page should not be displayed on Datasets page. ###");
+		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
+		
+		baseClass.stepInfo("Select project");
+		baseClass.selectproject(projectName);
+		
+		baseClass.stepInfo("Navigate to ingestion page.");
+		ingetion.navigateToIngestionPage();
+		
+		baseClass.stepInfo("Select ingestion type and specify source loaction.");
+		ingetion.selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, sourceLocation,sourceFolder);
+		
+		baseClass.stepInfo("Select DAT delimiters.");
+		ingetion.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+		
+		baseClass.stepInfo("Select DAT source.");
+		ingetion.selectDATSource(datLoadFile, documentKey);
+		
+		baseClass.stepInfo("Select MP3 varient source.");
+		ingetion.selectMP3VarientSource(mp3LoadFile, false);
+		
+		baseClass.stepInfo("Select Date and Time format.");
+		ingetion.selectDateAndTimeForamt(dateFormat);
+		
+		baseClass.stepInfo("Click on next button.");
+		ingetion.clickOnNextButton();
+		
+		baseClass.stepInfo("Select value from first three source DAT fields");
+		ingetion.selectValueFromEnabledFirstThreeSourceDATFields(docId,dataSource, custodian);
+		
+		baseClass.stepInfo(" select field catagory and destination field by using source DAT field.");
+		ingetion.selectFieldCatagoryDestinationFields(fileExt, docBasic, docFileExt);
+		
+		ingetion.selectFieldCatagoryDestinationFields(fileName, docBasic, docFileName);
+		
+		ingetion.selectFieldCatagoryDestinationFields(fileSize, docBasic, docFileSize);
+		
+		ingetion.selectFieldCatagoryDestinationFields(fileType, docBasic, docFileType);
+		
+		baseClass.stepInfo("Click on preview and run button.");
+		ingetion.clickOnPreviewAndRunButton();
+		
+		baseClass.stepInfo("Select all options from filter by dropdown.");
+		ingetion.selectAllOptionsFromFilterByDropdown();
+		
+		baseClass.stepInfo("Create ingestion to cataloged stage");
+		String ingestionName = ingetion.ingestionCreationToCatalogedStage();
+		
+		baseClass.stepInfo("Click on roll back from catalog stage and verify status changed is inprogress.");
+		ingetion.verifyInprogressStatusByclickOnRollback(ingestionName);
+		
+		dataSets = new DataSets(driver);
+		
+		baseClass.stepInfo("Navigate data sets page.");
+		dataSets.navigateToDataSetsPage();
+	
+		baseClass.stepInfo("Verify data sets page is loaded.");
+		dataSets.verifyDatasetsPageIsLoaded();
+		
+		baseClass.stepInfo("Impersonate PA to RMU");
+		baseClass.impersonatePAtoRMU();
+		
+		baseClass.stepInfo("Navigate data sets page.");
+		dataSets.navigateToDataSetsPage();
+	
+		baseClass.stepInfo("Verify data sets page is loaded.");
+		dataSets.verifyDatasetsPageIsLoaded();
+		
+		loginPage.logout();
+		
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

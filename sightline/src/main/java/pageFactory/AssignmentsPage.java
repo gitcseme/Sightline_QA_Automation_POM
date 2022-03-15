@@ -8055,7 +8055,7 @@ public Element getFamilyMembersCount() {
 	/**
 	 * @author Steffy
 	 * @description this method will the reassign docs to the specific user.
-	 * @param user
+	 * @param user Name of the user for whom the docs needs to be reassigned
 	 */
 	public void reassignDocs(String user) {
 		bc.waitForElement(getDistributeTab());
@@ -8585,7 +8585,7 @@ public Element getFamilyMembersCount() {
 	/**
 	 * @author Steffy
 	 * @description this method will the complete docs to the specific user.
-	 * @param user
+	 * @param user Name of the user for whom the docs needs to be completed
 	 */
 	public void completeDocs(String user) {
 		bc.waitForElement(getAssignment_ManageReviewersTab());
@@ -9259,9 +9259,9 @@ public Element getFamilyMembersCount() {
 	/**
 	 * @author Steffy
 	 * @description this method will the unassigned docs to the specific user.
-	 * @param user
+	 * @param user Name of the user for whom the docs needs to be unassigned
 	 */
-	public void UnassignedDocs(String user) {
+	public void UnassignedUser(String user) {
 		bc.waitForElement(getAssignment_ManageReviewersTab());
 		getAssignment_ManageReviewersTab().waitAndClick(10);
 		getAssgn_ManageRev_selectReviewer(user).waitAndClick(20);
@@ -9782,5 +9782,24 @@ public int assignmentCreationFamilyCount(String assignmentName, String codingFor
 
 	}
 	return familyCount;
+}
+/**
+ * @author Jayanthi.ganesan
+ * @description This method return boolean value as 'true' if toggle is enabled and 
+ * 'false' if given toggle is disabled
+ * @param Element to which enabled or disabled state needs to checked
+ */
+public boolean verifyToggleEnableORDisabled(Element ele,String elementInfo) {
+	String s = ele.GetAttribute("Class");
+	boolean status;
+	if(s.equals("true")) {
+		status=true;
+		bc.stepInfo(elementInfo+"Toggle is enabled*");
+	}
+	else {
+		status=false;
+		bc.stepInfo(elementInfo+"Toggle is disabled*");
+	}
+	return status;
 }
 }

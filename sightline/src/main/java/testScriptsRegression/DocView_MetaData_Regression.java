@@ -221,6 +221,8 @@ public class DocView_MetaData_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-51021- DocView/MetaData Sprint 01");
 		docView = new DocViewPage(driver);
 		utility= new Utility(driver);
+		String remark = Input.randomText+Utility.dynamicNameAppender();
+		String editRemark = Input.randomText+Utility.dynamicNameAppender();
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		baseClass.stepInfo("#### Vierify that remarks activity should be displayed in history record of document ####");
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -231,21 +233,17 @@ public class DocView_MetaData_Regression {
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicMetaDataSearch(Input.metaDataName,null,Input.metaDataCN,null);
 		sessionSearch.addDocsMetCriteriaToActionBoard();
+
+		baseClass.stepInfo("Add Remark To Non Audio Document");
+		baseClass.waitTime(3);
+		docView.addRemarkToNonAudioDocument(30, 45, remark);
 		
-		baseClass.stepInfo("Click on reduction button ");
-		docViewMetaDataPage.clickOnRedactAndRectangle();
+		baseClass.stepInfo("Verify Remark Actions To History .");
+		docViewMetaDataPage.verifyRemarkActionsToHistory();
 		
-		baseClass.stepInfo("Set rectangle reduct in doc");
-		docViewMetaDataPage.redactbyrectangle(10, 15,Input.defaultRedactionTag);
+		baseClass.stepInfo("Edit Remark");
+		docView.editRemark(editRemark);
 	
-		baseClass.stepInfo("Click on unredact in doc page.");
-		docViewMetaDataPage.clickOnUnRedact();
-		
-		baseClass.stepInfo("Set unredact in doc page.");
-		docViewMetaDataPage.unReduction(Input.defaultRedactionTag);
-		
-		baseClass.stepInfo("Verify reduction tagged and untagged added to history table.");
-		docViewMetaDataPage.verifyReductionTaggedAndUnTaggedAddedToHistory();
 		loginPage.logout();		
 	}
 	
@@ -254,7 +252,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  51144 - Verify that updated metadata should be displayed on Metadata panel from doc view.
 	 * Description : To verify Updated Meta Data Displayed On Meta Data Table 
 	 */
-	//@Test(alwaysRun = true,groups={"regression"},priority = 5)
+	@Test(alwaysRun = true,groups={"regression"},priority = 5)
 	public void verifyUpdatedMetaDataDisplayedOnMetaDataTable()throws Exception {
 		
 		baseClass=new BaseClass(driver);
@@ -599,7 +597,7 @@ public class DocView_MetaData_Regression {
 		sessionSearch.addDocsMetCriteriaToActionBoard();
 		
 		baseClass.stepInfo("Verify Metadata tab should be displayed with default metadata fields");
-		docViewMetaDataPage.verifyMetadataTabDisplayedWithDefaultFields();
+		docViewMetaDataPage.verifyMetaDataColumns();
 	
 		baseClass.stepInfo("Verify Metadata tab from Doc View page.");
 		docViewMetaDataPage.verifyMetadataTabFromDocViewPage();
@@ -639,6 +637,22 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Refresh page");
 		driver.Navigate().refresh();
+		
+		baseClass.stepInfo("Edit coding form on Doc view");
+		docViewMetaDataPage.editCodingFormOnDocView(Input.comment);
+		
+		baseClass.stepInfo("Open Doc view meta data pop up on doc view page.");
+		docViewMetaDataPage.openDocViewMetaDataPopup();
+		
+		baseClass.stepInfo("Verify Metadata tab pop up");
+		docViewMetaDataPage.verifyMetaDataPopup();
+		
+		baseClass.stepInfo("Close meta data popup");
+		docViewMetaDataPage.closeMetaDataPopup();
+		
+		baseClass.stepInfo("Save complete edited coding form and verify user navigated to present document to next document");
+		docViewMetaDataPage.saveCompleteEditedCodingFormAndVerifyNavigatedToNextDoc();
+		
 		loginPage.logout();		
 	}
 	
@@ -1297,6 +1311,82 @@ public class DocView_MetaData_Regression {
 		docViewMetaData.verifyMetadataPopUpColumns();
 		
 	}
+	
+
+	/**
+	 * @author Gopinath
+	 * @throws InterruptedException 
+	 * @Testcase_Id : RPMXCON-48802 : Verify that DocView Metadata Panel data should not go missing in an assignment.
+	 * @description : Verify that DocView Metadata Panel data should not go missing in an assignment.
+	 */
+
+	@Test(groups = { "regression" }, priority = 23)
+	public void verifyMeataDataPanelDisplayedByAssignmentsView() throws InterruptedException {
+		baseClass=new BaseClass(driver);
+		baseClass.stepInfo("RPMXCON-48802 DocView/Meatadata-sprint:08");
+		baseClass.stepInfo("#### Verify that DocView Metadata Panel data should not go missing in an assignment.. ####");
+		String assignmentName = Input.randomText + Utility.dynamicNameAppender();
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		AssignmentsPage assgnPage = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Navigate To Assignments Page");
+		assgnPage.navigateToAssignmentsPage();
+
+		baseClass.stepInfo("Create Assignment");
+		assgnPage.createAssignment(assignmentName, Input.codeFormName);
+
+		SessionSearch search = new SessionSearch(driver);
+
+		baseClass.stepInfo("Navigate To Session Search Page URL");
+		search.navigateToSessionSearchPageURL();
+
+		baseClass.stepInfo("Basic Content Search");
+		search.basicContentSearch(Input.testData1);
+
+		baseClass.stepInfo("Bulk Assign Existing");
+		search.bulkAssignExisting(assignmentName);
+
+		baseClass.stepInfo("Created a assignment " + assignmentName);
+
+		baseClass.selectproject();
+
+		baseClass.stepInfo("Navigate To Assignments Page");
+		assgnPage.navigateToAssignmentsPage();
+
+		baseClass.stepInfo("Edit Assignment Using Pagination Concept");
+		assgnPage.editAssignmentUsingPaginationConcept(assignmentName);
+
+		baseClass.stepInfo("Add Reviewer And Distribute Docs");
+		assgnPage.addReviewerAndDistributeDocs();
+
+		baseClass.stepInfo("Navigate To Assignments Page");
+		assgnPage.navigateToAssignmentsPage();
+
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		baseClass.stepInfo("Select assignment to view in doc view");
+		assgnPage.selectAssignmentToViewinDocview(assignmentName);
+
+		docView = new DocViewPage(driver);
+
+		baseClass.stepInfo("Navigate To Doc View Page URL");
+		docView.navigateToDocViewPageURL();
+
+		baseClass.stepInfo("Verify Meta Data Panel Is Enabled");
+		docViewMetaDataPage.verifyMetaDataPanelIsEnabled();
+
+		baseClass.stepInfo("Navigate To Assignments Page");
+		assgnPage.navigateToAssignmentsPage();
+
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		baseClass.stepInfo("Delete Assgnmnt Using Pagination");
+		assgnPage.deleteAssignment(assignmentName);
+	}
+
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

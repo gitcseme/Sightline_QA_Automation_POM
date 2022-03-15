@@ -996,7 +996,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              redirects from Manage Assignment page
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 25)
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 24)
 	public void afterImpSortSequenceFromAssignment(String roll, String userName, String password, String impersonate)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50892");
@@ -1065,7 +1065,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              from doc list page
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 25)
 	public void verifySortSequenceDocListToDocView(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50895");
@@ -1097,7 +1097,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              number of documents
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
 	public void scrollDownWithLessDocument(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51610");
@@ -1127,7 +1127,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              document
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
 	public void verifyTextTab(String fullName, String userName, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51682");
 		baseClass.stepInfo("Verify that document should be loaded successfully when document "
@@ -1154,7 +1154,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
 	public void verifyEmailAuthorNameAndAddressField(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1214,7 +1214,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 30)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
 	public void verifyMiniDoclistWebFieldAfterChangingThem(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1261,7 +1261,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *         list-RPMXCON-51297 Sprint 09
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 31)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 30)
 	public void verifyDocIdInDocVIewPanel(String fullName, String userName, String password)
 			throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
@@ -1304,7 +1304,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *         icon"-RPMXCON-51295 Sprint 09
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 32)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 31)
 	public void verifypriorDocumentViewedHistory(String fullName, String userName, String password)
 			throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
@@ -1347,7 +1347,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              Sorting tab of configure mini doc list pop up [RPMXCON-51654]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 33)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 32)
 	public void verifyAvailableFields(String fullName, String username, String password) throws InterruptedException {
 		String fieldValue = "FamilyRelationship";
 
@@ -1382,7 +1382,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              [RPMXCON-51656]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "ContentAndAudio", groups = { "regression" }, priority = 55)
+	@Test(enabled = true, dataProvider = "ContentAndAudio", groups = { "regression" }, priority = 33)
 	public void docviewLoadingNext(String method) throws InterruptedException {
 
 		// Login As PA
@@ -1412,7 +1412,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              doc list [RPMXCON-51657]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "ContentAndAudio", groups = { "regression" }, priority = 56)
+	@Test(enabled = true, dataProvider = "ContentAndAudio", groups = { "regression" }, priority = 34)
 	public void docviewLoadingNextAfterScroll(String method) throws InterruptedException {
 		List<String> docIDlist = null;
 
@@ -1448,7 +1448,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 57)
+	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 35)
 	public void savedSearchAndBasicAndDocListToDocView(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50888");
@@ -1487,7 +1487,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * Description : To verify that selected document with details is displayed on
 	 * parent window.
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 58)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 36)
 	public void verifySelectedDocsInParentWindow(String fullName, String userName, String password) throws Exception {
 
 		DocViewMetaDataPage dovViewMeteData = new DocViewMetaDataPage(driver);
@@ -1548,7 +1548,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 59)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 37)
 	public void BasicSearchToDocView_PanelVerify(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50811");
@@ -1590,7 +1590,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 60)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 38)
 	public void savedSearchToDocView_PanelVerify(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50809");
@@ -1638,7 +1638,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              from dockout screens and Select Action as 'Folder'
 	 */
 
-	@Test(enabled = true, dataProvider = "paRmuRole", groups = { "regression" }, priority = 61)
+	@Test(enabled = true, dataProvider = "paRmuRole", groups = { "regression" }, priority = 39)
 	public void validateFolderFromMiniDocList(String fullName, String userName, String password)
 			throws InterruptedException, Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51132");
@@ -1667,7 +1667,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * @Description:Verify scrolling in mini doc list should work when user
 	 *                     completes the document from mini doc list
 	 */
-	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 62)
+	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 40)
 	public void validateScrollAndLastDocsCursor(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51088");
@@ -1713,7 +1713,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * @Description:Verify scrolling in mini doc list should work when user enters
 	 *                     document ID in document navigation
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 63)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 41)
 	public void validateScrollIsScrollableWhenDocIdEntered(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51087");
@@ -1759,7 +1759,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *                     to go to first, last , prev and next document from
 	 *                     document navigation
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 64)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 42)
 	public void validateNavigationOptions(String fullName, String userName, String password)
 			throws InterruptedException,AWTException{
 		baseClass.stepInfo("Test case Id: RPMXCON-51086");
@@ -1788,7 +1788,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * @Description:Verify user can scroll down the mini doc list to see the
 	 *                     additional documents
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 65)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 43)
 	public void validateScrollBarIsScrollable(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51085");
@@ -1829,7 +1829,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * project fields mapping to a security group
 	 */
 
-	@Test(enabled = true, dataProvider = "sixRole", groups = { "regression" }, priority = 66)
+	@Test(enabled = true, dataProvider = "sixRole", groups = { "regression" }, priority = 44)
 	public void validateProjectFieldFromMiniDocList(String fullName, String userName, String password)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50958");
@@ -1910,7 +1910,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              preferences is set as 'Enabled' from the assignment.
 	 */
 
-	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 67)
+	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 45)
 	public void validatePopOutPanelAtAssgnLevel(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50840");
@@ -1994,7 +1994,7 @@ public class DocView_MiniDocList_DataProvider {
 	 *              selecting document from mini doc list
 	 */
 
-	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 68)
+	@Test(enabled = true, dataProvider = "twoLogins", groups = { "regression" }, priority = 46)
 	public void validateUserViewingOneByOne(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50835");
@@ -2031,6 +2031,7 @@ public class DocView_MiniDocList_DataProvider {
 			docviewPanelDocId.add(activeDocId);
 		}
 		for (String docId : docviewPanelDocId) {
+			
 			docViewPage.getDociD(docId).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			String pnDocs = docViewPage.getVerifyPrincipalDocument().getText();
@@ -2043,6 +2044,69 @@ public class DocView_MiniDocList_DataProvider {
 		
 		// logout
 		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 10/03/2022 Modified date: NA Modified by: Baskar
+	 * @Description : Verify that 'Family Relationship' should be displayed as default 
+	 *                column from mini doc list of doc view
+	 */
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 47)
+	public void verifyFamilyRelationshipDefaultHeaderValue(String fullName, String userName, String password)
+			throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51651");
+		baseClass.stepInfo("Verify that 'Family Relationship' should be displayed as "
+				+ "default column from mini doc list of doc view");
+
+//      login as @user		
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+//		search and go to docview
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+//		verify header value as Family Relationship
+		reusableDocViewPage.defaultHeaderValue();
+
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" +userName+ "'");
+
+	}
+	
+	/**
+	 * @Author : Baskar date: 10/03/2022 Modified date: NA Modified by: Baskar
+	 * @Description : Verify that 'Family Relationship' should be displayed as default 
+	 *                column from mini doc list child window of doc view
+	 */
+
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 48)
+	public void verifyFamilyRelationshipDefaultHeaderValueCW(String fullName, String userName, String password)
+			throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51652");
+		baseClass.stepInfo("Verify that 'Family Relationship' should be displayed as default "
+				+ "column from mini doc list child window of doc view");
+
+//      login as @user		
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+//		search and go to docview
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+//		verify header value as Family Relationship from child window
+		docViewPage.clickGearIconOpenMiniDocList();
+		String parentWindow=docViewPage.switchTochildWindow();
+		reusableDocViewPage.defaultHeaderValue();
+		docViewPage.childWindowToParentWindowSwitching(parentWindow);
+
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" +userName+ "'");
+
 	}
 	
 	@AfterMethod(alwaysRun = true)

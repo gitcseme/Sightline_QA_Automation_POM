@@ -313,15 +313,19 @@ public class TagsAndFoldersPage {
 	}
 
 	// Added by Gopinath -- 29-09-2021
-	public Element getTag(int rowNum) {
+	/**public Element getTag(int rowNum) {
 		return driver.FindElementByXPath(
-				"//a[contains(@data-content,'Default Tags')]/..//i[@class='jstree-icon jstree-themeicon fa fa-tags jstree-themeicon-custom']//..//..//li["
+				"//a[contains(@data-content,'All Tags')]/..//i[@class='jstree-icon jstree-themeicon fa fa-tags jstree-themeicon-custom']//..//..//li["
 						+ rowNum + "]//a");
+	}**/
+	
+	public Element getTag(int rowNum) {
+		return driver.FindElementByXPath("//a[contains(@data-content,'All Tags')]/../descendant::li["+rowNum+"]//a");
 	}
 
 	public ElementCollection getTagsRows() {
 		return driver.FindElementsByXPath(
-				"//a[contains(@data-content,'Default Tags')]/..//i[@class='jstree-icon jstree-themeicon fa fa-tags jstree-themeicon-custom']//..//..//li//a");
+				"//a[contains(@data-content,'All Tags')]/..//i[@class='jstree-icon jstree-themeicon fa fa-tags jstree-themeicon-custom']//..//..//li//a");
 	}
 
 	public Element getShowDocumentsCountToogle() {
@@ -628,6 +632,8 @@ public class TagsAndFoldersPage {
 	 *
 	 */
 	public void CreateFolderInRMU(String strFolder) throws InterruptedException {
+		navigateToTagsAndFolderPage();
+		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFoldersTab().Enabled();
@@ -803,7 +809,9 @@ public class TagsAndFoldersPage {
 	 */
 	public void DeleteFolderWithSecurityGroup(final String strFolder, String securityGroup) {
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		navigateToTagsAndFolderPage();
+		driver.waitForPageToBeReady();	
+
 		base.waitForElement(getFoldersTab());
 		getFoldersTab().waitAndClick(5);
 
@@ -853,12 +861,14 @@ public class TagsAndFoldersPage {
 
 	/**
 	 * @author Indium Aathith This method deletes the folder created in security
-	 *         groups for RMU user
+	 *         groups for RMU user.Modified on 03/08/2022
 	 * @param strFolder
 	 * @param securityGroup
 	 */
 	public void DeleteFolderWithSecurityGroupInRMU(final String strFolder) {
-
+		navigateToTagsAndFolderPage();
+		driver.waitForPageToBeReady();		
+		
 		base.waitForElement(getFoldersTab());
 		getFoldersTab().waitAndClick(5);
 
@@ -898,6 +908,9 @@ public class TagsAndFoldersPage {
 	 */
 	public void DeleteTagWithClassification(final String strtag, String securityGroup) {
 
+		navigateToTagsAndFolderPage();
+		driver.waitForPageToBeReady();	
+		
 		base.waitForElement(getTagsTab());
 		getTagsTab().waitAndClick(5);
 
@@ -934,6 +947,7 @@ public class TagsAndFoldersPage {
 	}
 
 	/**
+	 * MOdified on 03/08/2022
 	 * @author Indium Aathith This method deletes the tag created with certain
 	 *         classifications in RMU user
 	 * @param strtag
@@ -941,6 +955,9 @@ public class TagsAndFoldersPage {
 	 */
 	public void DeleteTagWithClassificationInRMU(final String strtag) {
 
+	navigateToTagsAndFolderPage();
+	driver.waitForPageToBeReady();
+	
 		base.waitForElement(getTagsTab());
 		getTagsTab().waitAndClick(5);
 
@@ -948,14 +965,15 @@ public class TagsAndFoldersPage {
 		try {
 
 			driver.scrollingToBottomofAPage();
-
-			base.waitForElement(getTagName(strtag));
-			getTagName(strtag).waitAndClick(5);
+			
+			getTagName(strtag).ScrollTo();
+			base.waitTillElemetToBeClickable(getTagName(strtag));
+			getTagName(strtag).waitAndClick(10);
 
 			driver.scrollPageToTop();
 
 			base.waitForElement(getTagActionDropDownArrow());
-			getTagActionDropDownArrow().waitAndClick(5);
+			getTagActionDropDownArrow().waitAndClick(10);
 
 			base.waitForElement(getDeleteTag());
 			getDeleteTag().waitAndClick(10);
@@ -1700,7 +1718,8 @@ public class TagsAndFoldersPage {
 	public void verifyTagNameIsAddedToStructure(String tagName) {
 		try {
 			try {
-				if (getTagNameDataCon(tagName).getWebElement().isDisplayed()) {
+				getTagName(tagName).isElementAvailable(10);
+				if (getTagName(tagName).getWebElement().isDisplayed()) {	
 					base.passedStep("Tag : " + tagName + " is displayed in tags structure successfully");
 				}
 			} catch (NoSuchElementException e) {

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.Dimension;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -1280,7 +1281,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @throws ParseException
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 21)
-	public void searchFilterBasedOnStatusAsRev() throws InterruptedException, ParseException {
+	public void searchBasedOnStatusAsRev() throws InterruptedException, ParseException {
 
 		String SearchName = "SearchName" + Utility.dynamicNameAppender();
 		String SearchName1 = "SearchName" + Utility.dynamicNameAppender();
@@ -1483,6 +1484,1274 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// Delete Search
 		saveSearch.deleteSearch(Search1, Input.mySavedSearch, "Yes");
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that spreadsheets uploaded to the project database (even
+	 *              in different Security Groups) with the same name will throw an
+	 *              error message in the UI[RPMXCON-48297]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	public void verifyUploadingSameBatchFileWillThrowError() throws Exception {
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String file = saveSearch.renameFile(Input.WPbatchFile);
+		String fileName = file.substring(file.indexOf(""), file.indexOf("."));
+		String batchNodeToCheck = fileName + "_" + 1 + "_Sheet" + 1;
+		String fileFormat = ".xlsx";
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48297 Saved Search");
+		base.stepInfo(
+				"Verify that spreadsheets uploaded to the project database (even in different Security Groups) with the same name will throw an error message in the UIVerify that spreadsheets uploaded to the project database (even in different Security Groups) with the same name will throw an error message in the UI");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to REV
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+
+		login.logout();
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected SG : " + Input.securityGroup);
+
+		// Upload batch File succesfully
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.uploadWPBatchFile_New(file, Input.WPbatchFile);
+
+		softAssertion.assertTrue(saveSearch.verifyNodePresent(batchNodeToCheck),
+				"Searches uploaded in Saved search screen.");
+		softAssertion.assertAll();
+
+		// Error when you try uploading same file
+		saveSearch.uploadBatchFile_D(Input.WPbatchFile, file, false);
+		saveSearch.getSubmitToUpload().waitAndClick(10);
+		saveSearch.verifyBatchUploadMessage("SameFile", false);
+
+		// Other SG
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected SG : " + securityGroup);
+
+		// Error when you try uploading same file in Other SG
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectRootGroupTab(Input.mySavedSearch);
+		saveSearch.uploadBatchFile_D(Input.WPbatchFile, file, false);
+		saveSearch.getSubmitToUpload().waitAndClick(10);
+		saveSearch.verifyBatchUploadMessage("SameFile", false);
+
+		// Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected SG : " + Input.securityGroup);
+
+		// Delete uploaded batch file
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.deleteUplodedBatchFile(file);
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : RMU User - Verify that User can renames existing search Group
+	 *              under the respective Security Group on Saved Search Screen.
+	 *              [RPMXCON-48126]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	public void verifyRenameExistingSearchGroupAsRmu() throws Exception {
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String securityTab = "Shared with " + securityGroup;
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48126 Saved Search");
+		base.stepInfo(
+				"RMU User - Verify that User can renames existing search Group under the respective Security Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to Rmu
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+
+		login.logout();
+
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// create Node In Other SG
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected Security Group : " + securityGroup);
+		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		// create Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		String node2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		// Rename Node In Default SG
+		String renamedNode = saveSearch.renameSearchGroup(node2);
+
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected Security Group : " + securityGroup);
+		String passMsg = renamedNode + " : is Not Available";
+
+		// verify Renamed Node In Other SG
+		saveSearch.navigateToSavedSearchPage();
+		base.waitTillElemetToBeClickable(saveSearch.getSavedSearchGroupName(Input.mySavedSearch));
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		saveSearch.selectNode1(node1);
+
+		Element RenamedNodeInDef = saveSearch.getSavedSearchNodeWithRespectiveSG(securityTab, renamedNode);
+		base.ValidateElement_Absence(RenamedNodeInDef, passMsg);
+
+		// verify Renamed Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		saveSearch.verifyNodePresentInSG(Input.mySavedSearch, renamedNode);
+
+		// Delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, renamedNode);
+
+		login.logout();
+
+		// Delete Other SG
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that after the spreadsheet is parsed and search groups
+	 *              are created per the spec, that all newly provisioned search
+	 *              groups are executed (all new saved searches will be run)
+	 *              [RPMXCON-48300]
+	 * @param username
+	 * @param password
+	 * @param fullname
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 27)
+	public void verifyAllSearchGroupsAreExecuted(String username, String password, String fullname) throws Exception {
+		String file = saveSearch.renameFile(Input.WPbatchFile);
+		String fileName = file.substring(file.indexOf(""), file.indexOf("."));
+		String batchNodeToCheck = fileName + "_" + 1 + "_Sheet" + 1;
+		String statusToCheck = "COMPLETED";
+
+		// Login
+		login.loginToSightLine(username, password);
+
+		base.stepInfo("Test case Id: RPMXCON-48300 Saved Search");
+		base.stepInfo(
+				"Verify that after the spreadsheet is parsed and search groups are created per the spec, that all newly provisioned search groups are executed (all new saved searches will be run)");
+
+		// Upload batch File succesfully
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.uploadWPBatchFile_New(file, Input.WPbatchFile);
+
+		// verify FileName
+		softAssertion.assertTrue(saveSearch.verifyNodePresent(batchNodeToCheck),
+				"Searches uploaded in Saved search screen.");
+		softAssertion.assertAll();
+
+		// verify search execution
+		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", true);
+
+		// Delete uploaded batch file
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.deleteUplodedBatchFile(file);
+
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : TC07_Verify that application does not display any warnings
+	 *              when a user executes a search group under "Shared with <Security
+	 *              Group>" which contains only Basic Search(es) in Draft state on
+	 *              Saved Search Screen.[RPMXCON-49827]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "SavedSearchwithRMUandREV", groups = { "regression" }, priority = 28)
+	public void verifyAppDoesnotDisplayWarning(String username, String password, String fullname) throws Exception {
+
+		String Search1 = "search" + Utility.dynamicNameAppender();
+		String failMsg = "Last Status of Search is Not as Expected";
+
+		// Login as PA
+		login.loginToSightLine(username, password);
+
+		base.stepInfo("Test case Id: RPMXCON-49827  Saved Search");
+		base.stepInfo(
+				"TC07_Verify that application does not display any warnings when a user executes a search group under \"Shared with <Security Group>\" which contains only Basic Search(es) in Draft state on Saved Search Screen.");
+
+		// create new searchgroup
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		// Draft Query
+		session.navigateToSessionSearchPageURL();
+		int purehit = session.basicContentSearchWithSaveChanges(Input.searchString1, "No", "First");
+		session.saveSearchInNewNode(Search1, newNode);
+
+		// Share Search group to Default SG
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectNode1(newNode);
+		saveSearch.shareSavedNodeWithDesiredGroup(newNode, Input.shareSearchDefaultSG);
+
+		// verify Search Status In Default
+		saveSearch.selectNodeUnderSpecificSearchGroup(Input.shareSearchDefaultSG, newNode);
+		base.waitForElement(saveSearch.getSavedSearchStatus(Search1));
+		String searchStatus = saveSearch.getSavedSearchStatus(Search1).getText();
+
+		String passMsg = "Last Status of Search is : " + searchStatus;
+		base.textCompareEquals(searchStatus, "DRAFT", passMsg, failMsg);
+
+		// execute Search group from default TAb
+		saveSearch.savedSearchExecute_SearchGRoup(Search1, purehit);
+		base.waitForElement(saveSearch.getSavedSearchStatus(Search1));
+		String searchStatusafter = saveSearch.getSavedSearchStatus(Search1).getText();
+
+		// verify status After execute
+		String passMsgAfter = "Last Status of Search is : " + searchStatusafter;
+		base.textCompareEquals(searchStatusafter, "COMPLETED", searchStatusafter, failMsg);
+
+		// deleting the searches
+		saveSearch.deleteNode(Input.mySavedSearch, newNode);
+		saveSearch.deleteNode(Input.shareSearchDefaultSG, newNode);
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/02/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify status on Saved Search Screen when user saves an
+	 *              Advanced search query[RPMXCON-48476] sprint 13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	public void saveSearchScreenOnAdvancedQueryWithBulkDatas() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "COMPLETED";
+		String searchString = Input.bulkSearchSting1;
+		int Bgcount;
+
+		base.stepInfo("Test case Id: RPMXCON-48476  Saved Search Sprint 13");
+		base.stepInfo("Verify status on Saved Search Screen when user saves an Advanced search query");
+		base.stepInfo("Flow can only be done for inputs/projects with 6L - 7L bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Switch to HighVolume Project
+		base.selectproject(highVolumeProject);
+
+		// Initial Notification count
+		Bgcount = base.initialBgCount();
+
+		// Basic Search
+		session.navigateToSessionSearchPageURL();
+		session.advancedContentSearchWithSearchChanges(searchString, "No");
+		session.SearchBtnAction();
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		session.returnPurehitCount();
+
+		// Verify Tile Spinning
+		base.stepInfo("Verifying for one or more related tiles are still spinning .");
+		session.verifyTileSpinning();
+
+		// Save Search
+		session.saveSearch(searchName);
+
+		// Verify Status based on Count
+		base.stepInfo("Verifying status to be In Progress until all counts are  available for the Advanced search.");
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.verifyStatusBasedOnCount(searchName, "flow-1", 0);
+
+		// Check NotificationCount
+		base.checkNotificationCount(Bgcount, 1);
+
+		// Verify SavedSearch Status once notification arises
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.docResultCOuntCHeck(searchName);
+		base.stepInfo(
+				"Verifing the status on Saved Search Screen for the above saved Search after receiving task completion notification");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/02/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that "In Progress" status appears in Saved Search
+	 *              Screen when user saved a Advanced search, for which only pure
+	 *              hits are available on the Advanced search.[RPMXCON-48453] sprint
+	 *              13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	public void verifyInprogressStatusWithTileSpinningForAdvancedSearch() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "INPROGRESS";
+		String searchString = Input.bulkSearchSting1;
+		int Bgcount;
+
+		base.stepInfo("Test case Id: RPMXCON-48453  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that In Progress status appears in Saved Search Screen when user saved a Advanced search, for which only pure hits are available on the Advanced search.");
+		base.stepInfo("Flow can only be done for inputs/projects with 6L - 7L bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Switch to HighVolume Project
+		base.selectproject(highVolumeProject);
+
+		// Initial Notification count
+		Bgcount = base.initialBgCount();
+
+		// Basic Search
+		session.navigateToSessionSearchPageURL();
+		session.advancedContentSearchWithSearchChanges(searchString, "No");
+		session.SearchBtnAction();
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		session.returnPurehitCount();
+
+		// Verify Tile Spinning
+		base.stepInfo("Verifying for one or more related tiles are still spinning .");
+		session.verifyTileSpinning();
+
+		// Save Search
+		session.saveSearch(searchName);
+
+		// Verify Status based on Count
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+
+		base.stepInfo(
+				"Verifing that In Progress status appears in Saved Search Screen when user saved a Advanced search, for which only pure hits are available on the Advanced search.");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/03/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Overwriting saved searches - User should not be allowed to
+	 *              overwrite the search in In-Progress status.[RPMXCON-48948]
+	 *              sprint 13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 31)
+	public void overWriteNotAllowedInProgressState(String username, String password, String fullName)
+			throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "INPROGRESS";
+		String searchString = Input.searchString9;
+
+		base.stepInfo("Test case Id: RPMXCON-48948  Saved Search Sprint 13");
+		base.stepInfo(
+				"Overwriting saved searches - User should not be allowed to overwrite the search in In-Progress status");
+		base.stepInfo("Flow can only be done for inputs/projects with bulk data");
+
+		// Login as USER
+		login.loginToSightLine(username, password);
+		base.stepInfo("Loggedin as : " + fullName);
+		base.selectproject(highVolumeProject);
+
+		// Perform Search and SaveSearch
+		session.basicContentSearch(searchString);
+		session.saveSearch(searchName);
+
+		// Execute
+		base.stepInfo("Select an existing saved search that is progress and try to Save it");
+		saveSearch.savedSearch_Searchandclick(searchName);
+		saveSearch.verifyStatusByReSearch(searchName, "COMPLETED", 5);
+		saveSearch.getSavedSearchExecuteButton().Click();
+
+		// Verify Overwrite
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+		saveSearch.getSavedSearchEditButton().waitAndClick(2);
+		session.saveAsOverwrittenSearch(Input.mySavedSearch, searchName, "First", "ExecutionErrorInProgress", "", null);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A Description : Verify that application displays all
+	 *         documents that are in the aggregate results set of all child search
+	 *         groups "My Saved Search" and searches when User performs Export with
+	 *         Child Search groups(RPMXCON-48920)
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	public void verifyExportDocsWithHierarchialNodes() throws InterruptedException {
+
+		ReportsPage report = new ReportsPage(driver);
+
+		int noOfNodesToCreate = 6, nodeIndex = 0;
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		Boolean inputValue = true;
+		String nodeToSelect;
+		int Bgcount;
+
+		base.stepInfo("Test case Id: RPMXCON-48920 - Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of all child search groups \"My Saved Search\" and searches when User performs Export with Child Search groups");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as : " + Input.pa1FullName);
+
+		// Initial Notification count
+		Bgcount = base.initialBgCount();
+
+		// Multiple Node Creation
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
+		nodeToSelect = newNodeList.get(nodeIndex);
+		System.out.println("Next adding searches to the created nodes");
+		base.stepInfo("Next adding searches to the created nodes");
+
+		// add save search in node
+		session.navigateToSessionSearchPageURL();
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+
+//		// To Pick Expected Aggregate count
+//		session.selectSavedsearchInASWp(nodeToSelect);
+//		session.SearchBtnAction();
+//		int purehit = session.returnPurehitCount();
+//
+//		base.stepInfo("-------Pre-requesties completed--------");
+//		base.stepInfo("Expected aggregate purehit count from Export : " + purehit);
+//
+//		// Select Parent Node
+//		saveSearch.navigateToSSPage();
+//		saveSearch.selectNode1(nodeToSelect);
+//		base.stepInfo("Parent Node Selected : " + nodeToSelect);
+//
+//		// Verify Export
+//		base.stepInfo("Initiate Export");
+//		saveSearch.getSavedSearchExportButton().Click();
+//		base.waitForElement(saveSearch.getExportPopup());
+//		report.customDataReportMethodExport("", false);
+//		driver.waitForPageToBeReady();
+//
+//		// Check NotificationCount
+//		base.checkNotificationCount(Bgcount, 1);
+//
+//		// Download report
+//		base.stepInfo("Initiate File Download");
+//		report.downLoadReport();
+//		base.stepInfo("File Downloaded");
+//
+//		base.stepInfo(
+//				"Should show all documents that are in the aggregate results set of all child search groups and searches in Exported file");
+//		int countToCompare = saveSearch.fileVerificationSpecificMethod();
+//		base.stepInfo("Document count from the export : " + countToCompare);
+//		base.digitCompareEquals(purehit, countToCompare,
+//				"Exported file lists all tall documents that are in the aggregate results set of all child search groups and searches",
+//				"Purehit and File count doesn't match");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/03/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Overwriting an existing Saved Search with a new query in
+	 *              In-Progress status[RPMXCON-49052] sprint 13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 33)
+	public void overWriteNewSSInProgressState(String username, String password, String fullName)
+			throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "COMPLETED";
+		String searchString = Input.bulkSearchSting1;
+		String searchStringC = Input.testData1;
+
+		base.stepInfo("Test case Id: RPMXCON-49052  Saved Search Sprint 13");
+		base.stepInfo("Overwriting an existing Saved Search with a new query in In-Progress status");
+		base.stepInfo("Flow can only be done for inputs/projects with bulk data");
+
+		// Login as USER
+		login.loginToSightLine(username, password);
+		base.stepInfo("Loggedin as : " + fullName);
+		base.selectproject(highVolumeProject);
+
+		// Perform Search and SaveSearch
+		session.basicContentSearch(searchStringC);
+		session.saveSearch(searchName);
+
+		// Verify SavedSearch in in COmpleted State
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+		String initialDocCount = session.getSavedSearchCount(searchName).getText();
+		base.stepInfo("Initial Count : " + initialDocCount);
+		base.selectproject(highVolumeProject);
+
+		// Search and Overwrite SavedSearch
+		session.basicContentDraftSearch(searchString);
+		session.SearchBtnAction();
+
+		// Handling when Search goes background
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		session.saveAsOverwrittenSearch(Input.mySavedSearch, searchName, "First", "Success", "", null);
+
+		// Verify Tile Spinning
+		base.stepInfo(
+				"Verifying for one or more related tiles are still spinning - to ensure saved search while it's in inprogress state");
+		session.verifyTileSpinning();
+
+		int overWrittenPureHit = session.returnPurehitCount();
+		base.stepInfo("Overwritten Count from Search : " + overWrittenPureHit);
+
+		// Overwritten verification
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "No");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 7);
+		String updatedDocCount = session.getSavedSearchCount(searchName).getText();
+		base.stepInfo("Overwritten Count from SavedSearch : " + updatedDocCount);
+
+		base.textCompareNotEquals(initialDocCount, updatedDocCount, "SavedSearch Overwritten and updated",
+				"Overwritten failed");
+
+		base.textCompareEquals(Integer.toString(overWrittenPureHit), updatedDocCount,
+				"SavedSearch Overwritten and count is updated", "Overwritten failed");
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A Date: 02/22/22 Modified date:N/A Modified by: Description
+	 *         : Verify that application displays all documents that are in the
+	 *         aggregate results set of all child search groups "My Saved Search"
+	 *         and searches when User Navigate Child Search groups to DocView.-
+	 *         RPMXCON-48915 Sprint 12
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
+	public void verifyDocsDisplayAndNavigatingToDocviewP() throws Exception {
+
+		int latencyCheckTime = 5;
+		String passMessage = "Application not hang or shows latency more than " + latencyCheckTime + " seconds.";
+		String failureMsg = "Continues Loading more than " + latencyCheckTime + " seconds.";
+		int noOfNodesToCreate = 6, nodeIndex = 0;
+		String executionCountSuccessMsg = "Aggregate result matches with the count.";
+		String executionCountFailureMsg = "Count Mismatches";
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		Boolean inputValue = true;
+		String nodeToSelect;
+
+		base.stepInfo("Test case Id: RPMXCON-48915 - Saved Search Sprint 12");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of all child search groups \"My Saved Search\" and searches when User Navigate Child Search groups to DocView.");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as : " + Input.pa1FullName);
+
+		// Calculate the unique doc count for the respective searches
+		int aggregateHitCount = session.getDocCountBtwnTwoSearches(true, Input.searchString5, Input.searchString6);
+		base.stepInfo("Aggregate count : " + aggregateHitCount);
+		base.selectproject();
+
+		// Multiple Node Creation
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
+		nodeToSelect = newNodeList.get(nodeIndex);
+		System.out.println("Next adding searches to the created nodes");
+		base.stepInfo("Next adding searches to the created nodes");
+
+		// add save search in node
+		session.navigateToSessionSearchPageURL();
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+
+		base.stepInfo("-------Pre-requesties completed--------");
+
+		saveSearch.navigateToSSPage();
+		base.stepInfo("Root node selected : " + nodeIndex);
+		saveSearch.selectNode1(nodeToSelect);
+		saveSearch.getToDocView().waitAndClick(5);
+
+		// Load latency Verification
+		Element loadingElement = session.getspinningWheel();
+		saveSearch.loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
+		driver.waitForPageToBeReady();
+		String currentUrl = driver.getWebDriver().getCurrentUrl();
+		softAssertion.assertEquals(Input.url + "DocumentViewer/DocView", currentUrl);
+		base.stepInfo("Navigated to DocView Page : " + currentUrl);
+
+		// Main method
+		miniDocListPage = new MiniDocListPage(driver);
+		base.waitForElement(miniDocListPage.getDocumentCountFromDocView());
+		String sizeofList = miniDocListPage.getDocumentCountFromDocView().getText();
+		String documentSize = sizeofList.substring(sizeofList.indexOf("of") + 2, sizeofList.indexOf("Docs")).trim();
+		System.out.println("Size : " + documentSize);
+		base.stepInfo("Available documents in DocView page : " + sizeofList);
+
+		base.digitCompareEquals(aggregateHitCount, Integer.parseInt(documentSize), executionCountSuccessMsg,
+				executionCountFailureMsg);
+
+		// Delete Search Group
+		base.stepInfo("Initiating Delete SearchGroup");
+		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0));
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha @Date: 03/03/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that status and all counts gets updated in saved search
+	 *              if a session search is saved when one or more related tiles are
+	 *              still loading[RPMXCON-48909] sprint 13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	public void statusAndCountBasedonSessionSavedSearch() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "COMPLETED";
+		String searchString = Input.bulkSearchSting1;
+		String nearDupe = "Near Duplicate Count";
+
+		base.stepInfo("Test case Id: RPMXCON-48909  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that status and all counts gets updated in saved search if a session search is saved when one or more related tiles are still loading");
+		base.stepInfo("Flow can only be done for inputs/projects with bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Search and Overwrite SavedSearch
+		session.basicContentDraftSearch(searchString);
+		session.SearchBtnAction();
+
+		// Handling when Search goes background
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		int pureHit = session.returnPurehitCount();
+		base.stepInfo("Purehit : " + pureHit);
+
+		// Verify Tile Spinning and Save Search
+		session.verifyTileSpinning();
+		session.saveSearch(searchName);
+
+		// logout
+		login.logout();
+		base.stepInfo("Logged out from current user");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("re-Logged in as : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Verify Status and Count
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "No");
+
+		base.stepInfo("Verify that status and count the saved search");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+		String updatedDocCount = session.getSavedSearchCount(searchName).getText();
+		base.stepInfo("Updated Count from SavedSearch : " + updatedDocCount);
+		base.textCompareEquals(Integer.toString(pureHit), updatedDocCount, "SavedSearch count updated", "count failed");
+		saveSearch.getDocCountAndStatusOfBatch(searchName, nearDupe, true);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha @Date: 03/03/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that status and count gets updated in saved search When
+	 *              User Saved the In Progress Search execution and User log out and
+	 *              relogin to Saved Search Screen [RPMXCON-48906] sprint 13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	public void statusAndCountBasedonSessionAdvSavedSearch() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "COMPLETED";
+		String searchString = Input.bulkSearchSting1;
+		String nearDupe = "Near Duplicate Count";
+
+		base.stepInfo("Test case Id: RPMXCON-48906  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that status and count gets updated in saved search When User Saved the In Progress Search execution and User log out and relogin to Saved Search Screen");
+		base.stepInfo("Flow can only be done for inputs/projects with bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Search and Overwrite SavedSearch
+		session.navigateToSessionSearchPageURL();
+		session.advancedContentSearchWithSearchChanges(searchString, "No");
+		session.SearchBtnAction();
+
+		// Handling when Search goes background
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		int pureHit = session.returnPurehitCount();
+		base.stepInfo("Purehit : " + pureHit);
+
+		// Verify Tile Spinning and Save Search
+		session.verifyTileSpinning();
+		session.saveSearch(searchName);
+
+		// logout
+		login.logout();
+		base.stepInfo("Logged out from current user");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("re-Logged in as : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Verify Status and Count
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "No");
+
+		base.stepInfo("Verify that status and count the saved search");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+		String updatedDocCount = session.getSavedSearchCount(searchName).getText();
+		base.stepInfo("Updated Count from SavedSearch : " + updatedDocCount);
+		base.textCompareEquals(Integer.toString(pureHit), updatedDocCount, "SavedSearch count updated", "count failed");
+		saveSearch.getDocCountAndStatusOfBatch(searchName, nearDupe, true);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : Verify that application displays all documents that are in the
+	 *              aggregate results set of all child search groups "My Saved
+	 *              Search" and searches when User performs Execute option with
+	 *              Child Search groups[RPMXCON-48919]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
+	public void verifyApplicationDisplaysAllDocAfterExecute() throws Exception {
+		int noOfNodesToCreate = 6, nodeIndex = 0;
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		Boolean inputValue = true;
+		String nodeToSelect;
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48919  Saved Search");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of all child search groups \"My Saved Search\" and searches when User performs Execute option with Child Search groups");
+
+		// Multiple Node Creation
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
+		nodeToSelect = newNodeList.get(nodeIndex);
+		System.out.println("Next adding searches to the created nodes");
+		base.stepInfo("Next adding searches to the created nodes");
+
+		// add save search in node
+		session.navigateToSessionSearchPageURL();
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+		base.stepInfo("-------Pre-requesties completed--------");
+
+		// execute
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectNode1(newNodeList.get(0));
+		Element executeBtnStatus = saveSearch.getSavedSearchExecuteButton();
+		saveSearch.checkButtonEnabled(executeBtnStatus, "Should be Enabled", "Execute");
+		saveSearch.performExecute();
+
+		// Verify Search Status And Count in all nodes
+		saveSearch.verifyStatusAndCountInAllChildNode(Input.mySavedSearch, newNodeList, 0, nodeSearchpair);
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : Verify that After adding Saved Query - application displays
+	 *              all documents that are in the aggregate results - When User
+	 *              performs Execute option with Child Search groups[RPMXCON-49068]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
+	public void verifyAfterAddingSavedQuery() throws Exception {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		int noOfNodesToCreate = 6, nodeIndex = 0;
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		Boolean inputValue = true;
+		String nodeToSelect;
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-49068  Saved Search");
+		base.stepInfo(
+				"Verify that After adding Saved Query - application displays all documents that are in the aggregate results - When User performs Execute option with Child Search groups");
+
+		// Multiple Node Creation
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
+		nodeToSelect = newNodeList.get(nodeIndex);
+		System.out.println("Next adding searches to the created nodes");
+		base.stepInfo("Next adding searches to the created nodes");
+
+		// add save search in nodes
+		session.navigateToSessionSearchPageURL();
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+		base.stepInfo("-------Pre-requesties completed--------");
+
+		// Save query again in child node
+		session.multipleBasicContentSearch(Input.searchString2);
+		session.saveSearchInNodewithChildNode(searchName, newNodeList.get(1));
+
+		// execute parent node
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectNode1(newNodeList.get(0));
+		Element executeBtnStatus = saveSearch.getSavedSearchExecuteButton();
+		saveSearch.checkButtonEnabled(executeBtnStatus, "Should be Enabled", "Execute");
+		saveSearch.performExecute();
+
+		// Verify Search Status And Count in all nodes
+		saveSearch.verifyStatusAndCountInAllChildNode(Input.mySavedSearch, newNodeList, 0, nodeSearchpair);
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/08/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that status and count gets updated in saved search
+	 *              where a session search is still spinning for one or more related
+	 *              tiles, then the user saves it, and logs out before the queries
+	 *              are complete. [RPMXCON-48908] sprint 13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
+	public void statusAndCountBasedonAdvSessionSavedSearch() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "searchAdv" + Utility.dynamicNameAppender();
+		String expectedStatus = "COMPLETED";
+		String nearDupe = "Near Duplicate Count";
+		String searchString = Input.bulkSearchSting1;
+
+		base.stepInfo("Test case Id: RPMXCON-48908  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that status and count gets updated in saved search where a session search is still spinning for one or more related tiles, then the user saves it, and logs out before the queries are complete.");
+		base.stepInfo("Flow can only be done for inputs/projects with bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Search and Overwrite SavedSearch
+		session.navigateToSessionSearchPageURL();
+		session.advancedContentSearchWithSearchChanges(searchString, "No");
+		session.SearchBtnAction();
+
+		// Handling when Search goes background
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		int pureHit = session.returnPurehitCount();
+		base.stepInfo("Purehit : " + pureHit);
+
+		// Verify Tile Spinning and Save Search
+		session.verifyTileSpinning();
+		session.saveSearchadvanced(searchName);
+
+		// logout
+		login.logout();
+		base.stepInfo("Logged out from current user");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("re-Logged in as : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Verify Status and Count
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "No");
+
+		base.stepInfo("Verify that status and count the saved search");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+		String updatedDocCount = session.getSavedSearchCount(searchName).getText();
+		base.stepInfo("Updated Count from SavedSearch : " + updatedDocCount);
+		base.textCompareEquals(Integer.toString(pureHit), updatedDocCount, "SavedSearch count updated", "count failed");
+		saveSearch.getDocCountAndStatusOfBatch(searchName, nearDupe, true);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram A @Date: 03/08/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that status and count gets updated(Modified) in saved
+	 *              search When User Saved the In Progress Search execution and User
+	 *              log out and relogin to Saved Search Screen[RPMXCON-48907] sprint
+	 *              13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	public void statusAndCountBasedonEditSessionSavedSearch() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String expectedStatus = "COMPLETED";
+		String searchString = Input.searchString1;
+		String modifyString = Input.bulkSearchSting1;
+		String nearDupe = "Near Duplicate Count";
+
+		base.stepInfo("Test case Id: RPMXCON-48907  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that status and count gets updated(Modified) in saved search When User Saved the In Progress Search execution and User log out and relogin to Saved Search Screen");
+		base.stepInfo("Flow can only be done for inputs/projects with bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Search and Save Search
+		session.basicContentSearch(searchString);
+		session.saveSearch(searchName);
+
+		// Verify Status and Count
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.getSavedSearchEditButton().waitAndClick(5);
+		session.modifySearchTextArea(1, searchString, modifyString, "Save");
+		session.SearchBtnAction();
+
+		// Handling when Search goes background
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		int pureHit = session.returnPurehitCount();
+		base.stepInfo("Purehit : " + pureHit);
+
+		// Verify Tile Spinning and Save Search
+		session.verifyTileSpinning("Search", 3);
+		session.saveAsOverwrittenSearch(Input.mySavedSearch, searchName, "First", "Success", "", null);
+
+		// logout
+		login.logout();
+		base.stepInfo("Logged out from current user");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("re-Logged in as : " + Input.pa1FullName);
+		base.selectproject(highVolumeProject);
+
+		// Verify Status and Count
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "No");
+
+		base.stepInfo("Verify that status and count the saved search");
+		saveSearch.verifyStatusByReSearch(searchName, expectedStatus, 5);
+		String updatedDocCount = session.getSavedSearchCount(searchName).getText();
+		base.stepInfo("Updated Count from SavedSearch : " + updatedDocCount);
+		base.textCompareEquals(Integer.toString(pureHit), updatedDocCount, "SavedSearch count updated", "count failed");
+		saveSearch.getDocCountAndStatusOfBatch(searchName, nearDupe, true);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/09/22 @Modified date:N/A @Modified by:N/A
+	 * @Description :Verify that user can save a Basic search, for which only pure
+	 *              hits are available and the wheels are still spinning for one or
+	 *              more related tiles on the Basic search. [RPMXCON-48450] sprint
+	 *              13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	public void saveSearchScreenOnBasicQueryWithBulkDatasSave() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String searchString = Input.bulkSearchSting1;
+
+		base.stepInfo("Test case Id: RPMXCON-48450  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that user can save a Basic search, for which only pure hits are available and the wheels are still spinning for one or more related tiles on the Basic search.");
+		base.stepInfo("Flow can only be done for inputs/projects with 6L - 7L bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Switch to HighVolume Project
+		base.selectproject(highVolumeProject);
+
+		// Basic Search
+		session.navigateToSessionSearchPageURL();
+		base.stepInfo("Perform Basic Search");
+		session.basicContentSearchWithSaveChanges(searchString, "No", "First");
+		session.getSecondSearchBtn().waitAndClick(5);
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		session.returnPurehitCount();
+
+		// Verify Tile Spinning
+		base.stepInfo("Verifying for one or more related tiles are still spinning .");
+		session.verifyTileSpinning();
+
+		// Save Search
+		session.saveSearch(searchName);
+
+		// Verify Status based on Count
+		base.stepInfo(
+				"Verify that user can save a Basic search, for which only pure hits are available and the wheels are still spinning for one or more related tiles on the Basic search.");
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		base.passedStep(
+				"User able to save a Basic search, for which only pure hits are available and the wheels are still spinning for one or more related tiles on the Basic search.  ");
+
+		// Delete Search
+		base.stepInfo("Initiating Delete Search");
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/08/22 @Modified date:N/A @Modified by:N/A
+	 * @Description :Verify that user can save a Advanced search, for which only
+	 *              pure hits are available and the wheels are still spinning for
+	 *              one or more related tiles on the Advanced search.
+	 *              [RPMXCON-48451] sprint 13
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 42)
+	public void saveSearchScreenOnAdvQueryWithBulkDatasSave() throws InterruptedException {
+		String highVolumeProject = Input.highVolumeProject;
+		String searchName = "search" + Utility.dynamicNameAppender();
+		String searchString = Input.bulkSearchSting1;
+
+		base.stepInfo("Test case Id: RPMXCON-48451  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that user can save a Advanced search, for which only pure hits are available and the wheels are still spinning for one or more related tiles on the Advanced search.");
+		base.stepInfo("Flow can only be done for inputs/projects with 6L - 7L bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Switch to HighVolume Project
+		base.selectproject(highVolumeProject);
+
+		// AdvanceSearch
+		session.navigateToSessionSearchPageURL();
+		base.stepInfo("Perform Advance Search");
+		session.advancedContentSearchWithSearchChanges(searchString, "No");
+		session.SearchBtnAction();
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		session.returnPurehitCount();
+
+		// Verify Tile Spinning
+		base.stepInfo("Verifying for one or more related tiles are still spinning .");
+		session.verifyTileSpinning();
+
+		// Save Search
+		session.saveSearch(searchName);
+
+		// Verify Status based on Count
+		base.stepInfo(
+				"Verify that user can save a Advanced search, for which only pure hits are available and the wheels are still spinning for one or more related tiles on the Advanced search.");
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		base.passedStep(
+				"User able to save a Advanced search, for which only pure hits are available and the wheels are still spinning for one or more related tiles on the Advanced search.  ");
+
+		// Delete Search
+		base.stepInfo("Initiating Delete Search");
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * Author : Jeevitha
+	 * 
+	 * @TestCase id : RPMXCON-48631
+	 * @Description : Verify on selecting saved search with Pending status and Doc
+	 *              View option user should not navigate to Doc View screen
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 43)
+	public void verifyInvalidQueryBatchUploadSavedSearch(String username, String password, String fullName)
+			throws Exception {
+		String fileName = saveSearch.renameFile(Input.errorQueryFileLocation);
+		String search = "Basic Invalid WP";
+		String expectedMsg = "The selected search is not yet completed successfully. Please select a valid completed search.";
+
+		// Login as PA
+		login.loginToSightLine(username, password);
+
+		base.stepInfo("Test case Id: RPMXCON-48631");
+		base.stepInfo(
+				"Verify on selecting saved search with Pending status and Doc View option user should not navigate to Doc View screen");
+
+		// Upload Error Query Through Batch File
+		base.stepInfo("Upload Batch File");
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.uploadWPBatchFile_New(fileName, Input.errorQueryFileLocation);
+
+		// verify status
+		saveSearch.selectSavedSearch(search);
+		base.waitForElement(saveSearch.getSavedSearchStatus(search));
+		String status = saveSearch.getSavedSearchStatus(search).getText();
+
+		String passMsg = "Search Status is : " + status;
+		String failMsg = "Saerch Status is not As Expected";
+		base.textCompareEquals(status, "ERROR", passMsg, failMsg);
+
+		// verify warning msg
+		saveSearch.getDocView_button().waitAndClick(10);
+		base.VerifyWarningMessage(expectedMsg);
+
+		// Delete Uploaded File
+		saveSearch.deleteUploadedBatchFile(fileName, Input.mySavedSearch, false, null);
+		softAssertion.assertAll();
+
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description: Verify that Search upload functionality is working proper for
+	 *               multi sheets in Saved searches(RPMXCON-48791)
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 44)
+	public void verifyMultipleTabWorkSheets(String userName, String password, String fullanme)
+			throws InterruptedException, IOException {
+
+		String fileName = Input.BatchFileWithMultiplesheetFile;
+		String fileFormat = ".xlsx";
+		String fileLocation = System.getProperty("user.dir") + Input.validBatchFileLocation;
+		List<String> sheetList = new ArrayList<>();
+
+		base.stepInfo("Test case Id: RPMXCON-48791 - Saved Search");
+		base.stepInfo("Verify that Search upload functionality is working proper for multi sheets in Saved searches");
+
+		// Login as User
+		login.loginToSightLine(userName, password);
+		base.stepInfo("Logged in as : " + userName);
+
+		int number_of_sheets = base.getTotalSheetCount(fileLocation, fileName + fileFormat);
+		base.stepInfo("Total no.of sheets available in the workbook : " + number_of_sheets);
+
+		saveSearch.navigateToSavedSearchPage();
+
+		String fileToSelect = base.renameFile(true, fileLocation, fileName, fileFormat, false, "");
+		System.out.println(fileToSelect);
+
+		// upload batch file
+		saveSearch.uploadBatchFile_D(Input.validBatchFileLocation, fileToSelect + fileFormat, false);
+		saveSearch.getSubmitToUpload().Click();
+		saveSearch.verifyBatchUploadMessage("Success", false);
+
+		sheetList = saveSearch.verifyListOfNodes(sheetList, null, true, number_of_sheets, fileToSelect, null, null,
+				true, Input.mySavedSearch);
+
+		base.passedStep("Search groups created as per the naming convention  {Spreadsheet File Name} TabID{Tab Name}");
+
+		String resetName = base.renameFile(false, fileLocation, fileToSelect, fileFormat, true, fileName);
+		System.out.println(resetName);
+
+		// Delete node
+		saveSearch.deleteListofNode(Input.mySavedSearch, sheetList, true, true);
+
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description: Verify that after resize browser Save Search grid does not
+	 *               resize(RPMXCON-48857)
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
+	public void verifyGridAfterResize() throws Exception {
+		// Minimize browser
+		Dimension n = new Dimension(800, 800);
+		driver.Manage().window().setSize(n);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48857");
+		base.stepInfo("Verify that after resize browser Save Search grid does not resize");
+
+		// Verify Grid position
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.verifyGridPosition();
 
 		login.logout();
 	}

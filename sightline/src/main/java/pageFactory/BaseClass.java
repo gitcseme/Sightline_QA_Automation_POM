@@ -3083,7 +3083,24 @@ public List<String> getUniqueValues_FromTwoList(List<String>BaseList, List<Strin
 			}
 		}), Input.wait60);
 	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 * This method will find the number of times a String appeared in a given  list.
+	 * @param s [List from which element occurrence needs to be counted]
+	 * @param elementToCountOCurence [string for which we need to find no of occurrences in list] 
+	 * @return
+	 */
+	public int findNoOfOccurences(List<String> s,String elementToCountOCurence) {
+		int occurence=0;
 
+		for(int i=0;i<s.size();i++) {
+			if(elementToCountOCurence.equalsIgnoreCase(s.get(i))){
+				occurence++;
+			}
+		}
+		return occurence;
+		
+	}
 
 	}
 

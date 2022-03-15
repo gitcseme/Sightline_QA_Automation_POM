@@ -363,12 +363,27 @@ public class SessionSearch {
 	}
 
 	// Added by Raghuram A - 9/30
+	public Element getSaveSearchPopupFolderName_Expand(String name) {
+		return driver.FindElementByXPath(
+				"(// a[contains(text(),'" + name + "')])[last()]//parent::li[contains(@class,'closed')]");
+	}
+
+	public Element getSavedSearchChecked(String name) {
+		return driver.FindElementByXPath("//a[contains(@class,'clicked') and text()='" + name + "']");
+	}
+
 	public Element getAdvancedSearchLinkCurrent() {
 		return driver.FindElementByXPath("(//*[@id='advancedswitch'])[last()]");
 	}
 
 	public ElementCollection gettTileSpinningList() {
 		return driver.FindElementsByXPath("//span//count[contains(@id,'tilecount-')]");
+	}
+
+	public ElementCollection gettTileSpinningList(String searchName, int num) {
+		return driver.FindElementsByXPath("//span[@style=\"margin-bottom:3px;\" and text()='" + searchName
+				+ " ']//span[@id='divSearchCnt' and text()='" + num
+				+ "']//..//..//..//..//..//span//count[contains(@id,'tilecount-')]");
 	}
 
 	public Element getContentAndMetaDatabtnCurrent() {
@@ -1591,6 +1606,52 @@ public class SessionSearch {
 				"//label[text()='Docs That Met Your Criteria']//..//..//..//i[@title='Remove from Selected Results']");
 	}
 
+	public Element getWhenAllResultsAreReadyPopUpDynamic() {
+		return driver.FindElementByXPath(
+				"(//div[@class='MessageBoxButtonSection']//button[text()=' When all results are ready'])[last()]");
+	}
+
+	public Element getWhenAllResultsAreReadyIDDynamic() {
+		return driver.FindElementByXPath("(//div[@class='modal-body ui-dialog-content ui-widget-content']//b)[last()]");
+	}
+
+	public Element getBulkTagConfirmationBtnDynamic() {
+		return driver.FindElementByXPath("(//button[contains(text(),'Ok')])[last()]");
+	}
+
+	public Element getspinningPurehit(int i) {
+		return driver.FindElementByXPath(
+				"(//i[@class='fa fa-spinner fa-spin']/ancestor::li[@data-tile='purehit'])[" + i + "]");
+	}
+
+	public Element getspinningfamilyHit(int i) {
+		return driver.FindElementByXPath(
+				"(//i[@class='fa fa-spinner fa-spin']/ancestor::li[@data-tile='family'])[" + i + "]");
+	}
+
+	public Element getspinningThreadedCount(int i) {
+		return driver.FindElementByXPath(
+				"(//i[@class='fa fa-spinner fa-spin']/ancestor::li[@data-tile='thread'])[" + i + "]");
+	}
+
+	public Element getspinningNearDupeCount(int i) {
+		return driver.FindElementByXPath(
+				"(//i[@class='fa fa-spinner fa-spin']/ancestor::li[@data-tile='neardupe'])[" + i + "]");
+	}
+
+	public Element getSessionSearchList(String searchId) {
+		return driver.FindElementByXPath("//span[@id='SearchCnt' and contains(text(),'" + searchId + "')]");
+	}
+
+	public Element getEnteredSearchText(String searchText) {
+		return driver.FindElementByXPath("//span[text()='" + searchText + "']");
+	}
+
+	public ElementCollection getAllTilesResult(String searchNO) {
+		return driver.FindElementsByXPath("(//span[@id='divSearchCnt' and contains(text(),'" + searchNO
+				+ "')])[last()]//..//..//..//..//span//count");
+	}
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -1730,6 +1791,7 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getSaveSearch_Name().SendKeys(searchName);
+		driver.Manage().window().fullscreen();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1737,6 +1799,7 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getSaveSearch_SaveButton().Click();
+		driver.Manage().window().maximize();
 		driver.waitForPageToBeReady();
 
 		base.VerifySuccessMessage("Saved search saved successfully");
@@ -2417,22 +2480,11 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getSavedSearchBtn().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSavedSearchName(SaveName).Visible();
-			}
-		}), Input.wait60);
 		driver.scrollingToBottomofAPage();
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			// System.out.println(iterable_element.getText());
 			if (iterable_element.getText().contains(SaveName)) {
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-
-					e.printStackTrace();
-				}
+				base.waitTime(3);
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
 				// System.out.println(iterable_element.getText());
@@ -2570,16 +2622,18 @@ public class SessionSearch {
 		driver.getWebDriver().navigate().refresh();
 	}
 
-	// Function to perform bulk folder with existing folder
+	/**
+	 * Modified on 03/14/2022
+	 *  Function to perform bulk folder with existing folder
+	 */
 	public void bulkFolderExisting(final String folderName) throws InterruptedException {
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		if (getPureHitAddButton().isElementAvailable(2)) {
-			getPureHitAddButton().waitAndClick(10);
-		} else {
-			// System.out.println("Pure hit block already moved to action panel");
+		if (getRemovePureHit().isElementAvailable(3)) {
+			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
-			Reporter.log("Pure hit block already moved to action panel", true);
+		} else if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(10);
 		}
 
 		driver.scrollPageToTop();
@@ -2637,6 +2691,7 @@ public class SessionSearch {
 	}
 
 	/**
+	 * @modifiedOn : 3/8/2022 (added wait time)
 	 * @modifiedOn : 1/5/2022 (getRemovePureHit().isElementAvailable(3))
 	 * @modifiedOn : 1/7/2022 getPureHitAddButton().Click(); to
 	 *             getPureHitAddButton().waitAndClick(10);
@@ -2653,6 +2708,7 @@ public class SessionSearch {
 			getPureHitAddButton().waitAndClick(10);
 		}
 
+		driver.waitForPageToBeReady();
 		getBulkActionButton().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -2715,6 +2771,7 @@ public class SessionSearch {
 		// to avoid it..
 		driver.getWebDriver().navigate().refresh();
 	}
+
 
 	// Function to perform bulk tag with given tag name
 	public void bulkTag(String TagName) throws InterruptedException {
@@ -3742,7 +3799,7 @@ public class SessionSearch {
 			public Boolean call() {
 				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getPureHitsCount().Visible();
@@ -5593,7 +5650,6 @@ public class SessionSearch {
 	 *              tree.
 	 */
 	public void selectFolderInTree(String folderName) {
-		base.waitForElementCollection(getTree());
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
@@ -7328,37 +7384,36 @@ public class SessionSearch {
 	}
 
 	/**
-	 * @author Gopianth
+	 * Modified on 03/09/2022
+	 * @author Gopinath
 	 * @description-This method verify pure hit count with many production count.
 	 * @param productionCount : productionCount is integer value that production
 	 *                        count got from production.
 	 */
 	public void verifyPureHitsCountWithManyProductionCount(int productionCount) {
-		try {
-			try {
-				getYesQueryAlert().waitAndClick(8);
-			} catch (Exception e) {
+		if(getYesQueryAlert().isDisplayed()) {
+			getYesQueryAlert().waitAndClick(8);}
+			else {
+			driver.waitForPageToBeReady();
 			}
+
 			List<WebElement> elemnts = getDocCount().FindWebElements();
 
 			// verify counts for all the tiles
 			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return elemnts.get(elemnts.size() - 1).getText().matches("-?\\d+(\\.\\d+)?");
-				}
+			public Boolean call() {
+			return elemnts.get(elemnts.size() - 1).getText().matches("-?\\d+(\\.\\d+)?");
+			}
 			}), Input.wait120);
 
+
+
 			int pureHit = Integer.parseInt(elemnts.get(elemnts.size() - 1).getText());
-			if (pureHit == productionCount)
-				base.passedStep("Pure hit count is equal production count");
-			else
-				base.failedStep("Pure hit count is not equal production count");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occcured while verifying pure hit count with production count" + e.getMessage());
-		}
-
+			if (pureHit == productionCount) {
+			base.passedStep("Pure hit count is equal production count");}
+			else {
+			base.failedStep("Pure hit count is not equal production count");
+			}
 	}
 
 	/**
@@ -7457,7 +7512,7 @@ public class SessionSearch {
 
 	/**
 	 * @author Jeevitha Description : Save search with Overwritten Search
-	 * @modifiedBy : Raghuram @modifiedDate : 12/28/21
+	 * @modifiedBy : Raghuram @modifiedDate : 03/04/21
 	 * @param groupName
 	 * @param searchName
 	 * @param select
@@ -7476,26 +7531,34 @@ public class SessionSearch {
 			UtilityLog.info("Radio button already selected");
 		}
 
-		if (select.equalsIgnoreCase("First") && getOverWrittenAllTabDD().isElementAvailable(3)) {
-			getOverWrittenAllTabDD().waitAndClick(5);
-		} else if (select.equalsIgnoreCase("Next")) {
+//		if (select.equalsIgnoreCase("First") && getOverWrittenAllTabDD().isElementAvailable(3)) {
+//			getOverWrittenAllTabDD().waitAndClick(5);
+//		} else if (select.equalsIgnoreCase("Next")) {
+//			System.out.println("ALl TAb dropdown Already CLicked");
+//			base.stepInfo("ALl TAb dropdown Already CLicked");
+//		} -  backup --------
+		if (getSaveSearchPopupFolderName_Expand("All").isElementAvailable(3)) {
+			getSaveSearchPopupFolderName_cc("All").waitAndClick(10);
+			System.out.println("Expanded");
+		} else {
 			System.out.println("ALl TAb dropdown Already CLicked");
 			base.stepInfo("ALl TAb dropdown Already CLicked");
 		}
 
-		if (getSaveSearchPopupFolderName_cc(groupName).isElementAvailable(3)) {
+		if (getSaveSearchPopupFolderName_Expand(groupName).isElementAvailable(3)) {
 			getSaveSearchPopupFolderName_cc(groupName).waitAndClick(10);
+			System.out.println("Expanded");
 		} else {
-			System.out.println(groupName + " : SG not available");
-			base.stepInfo(groupName + " : SG not available");
+			System.out.println(groupName + " Already Expanded");
 		}
 
-		if (getChooseSearchToOverwrite(searchName).isElementAvailable(5)) {
+		if (!getSavedSearchChecked(searchName).isElementAvailable(3)) {
 			getChooseSearchToOverwrite(searchName).waitAndClick(10);
 		} else {
-			getSaveSearchPopupFolderName_cc(groupName).waitAndClick(10);
-			base.waitForElement(getChooseSearchToOverwrite(searchName));
-			getChooseSearchToOverwrite(searchName).waitAndClick(10);
+//			getSaveSearchPopupFolderName_cc(groupName).waitAndClick(10);
+//			base.waitForElement(getChooseSearchToOverwrite(searchName));
+//			getChooseSearchToOverwrite(searchName).waitAndClick(10); - for backup - to be removed after impacts verified
+			System.out.println(searchName + " already checked");
 		}
 
 		base.waitForElement(getSaveSearch_SaveButton_cc());
@@ -10337,10 +10400,14 @@ public class SessionSearch {
 			base.waitTillElemetToBeClickable(getAdvancedSearchTextArea());
 			getAdvancedSearchTextArea().waitAndClick(10);
 			driver.waitForPageToBeReady();
+			base.waitForElement(getAdvancedSearchTextArea());
 			getAdvancedSearchTextArea().Clear();
+			base.waitForElement(getAdvancedSearchTextArea());
 			getAdvancedSearchTextArea().SendKeys(SearchString);
-			base.waitTillElemetToBeClickable(getModifysearchOKBtn());
-			getModifysearchOKBtn().waitAndClick(10);
+			base.waitForElement(getModifysearchOKBtn());
+			getModifysearchOKBtn().waitAndClick(20);
+			base.waitTime(3);
+			driver.waitForPageToBeReady();
 			base.passedStep("Ok button is clicked");
 		} else {
 			base.waitTillElemetToBeClickable(getModifysearchNOBtn());
@@ -10360,7 +10427,6 @@ public class SessionSearch {
 		UtilityLog.info("Serach is done and PureHit is : " + pureHit);
 
 		return pureHit;
-
 	}
 
 	/**
@@ -10607,6 +10673,100 @@ public class SessionSearch {
 		List<String> spinningTileList = new ArrayList<>();
 
 		spinningTileList = base.getAvailableListofElements(gettTileSpinningList());
+		for (String a : spinningTileList) {
+			if (a.isBlank()) {
+				base.stepInfo(" Yes - one or more related tiles are still spinning ");
+				break;
+			} else {
+				System.out.println(" one or more related tiles are not still spinning ");
+			}
+		}
+	}
+
+	/**
+	 * @author Jayanthi.Ganesan This method will handle when all results are ready
+	 *         pop up when search goes back ground
+	 * @return
+	 */
+	public String handleWhenAllResultsPopUpDynamic() {
+		String ID = null;
+
+		if (getWhenAllResultsAreReadyPopUpDynamic().isElementAvailable(20)) {
+			getWhenAllResultsAreReadyPopUpDynamic().waitAndClick(3);
+			base.waitTime(1);
+			ID = getWhenAllResultsAreReadyIDDynamic().getText();
+			base.stepInfo("When All Results Tab Clicked And Seach is in back ground with " + "Generated ID is: " + ID);
+			getBulkTagConfirmationBtnDynamic().ScrollTo();
+			getBulkTagConfirmationBtnDynamic().waitAndClick(10);
+		} else {
+			base.stepInfo("Page Loaded and PopUp Didnot Appear");
+		}
+		return ID;
+	}
+
+	/**
+	 * @author Jayanthi.Ganesan This method will perform Advanced search when search
+	 *         goes background
+	 * @param SearchString
+	 * @param select
+	 * @param i[represents nth number of search performed]
+	 * @return
+	 */
+	public String advancedContentBGSearch(String SearchString, int i) {
+		base.waitForElement(getContentAndMetaDatabtnCurrent());
+		getContentAndMetaDatabtnCurrent().Click();
+		// Enter search string
+		base.waitForElement(getAdvancedContentSearchInputCurrent());
+		getAdvancedContentSearchInputCurrent().SendKeys(SearchString);
+		getAdvanceSearch_btn_Current().waitAndClick(15);
+		driver.waitForPageToBeReady();
+		String id = handleWhenAllResultsPopUpDynamic();
+		if (getspinningPurehit(i).isElementAvailable(2) && getspinningfamilyHit(i).isElementAvailable(2)
+				&& getspinningThreadedCount(i).isElementAvailable(2)
+				&& getspinningThreadedCount(i).isElementAvailable(2)) {
+			base.passedStep("All tiles are spinning when search is in back ground.");
+		} else {
+			base.failedStep("All tiles are  not spinning when search is in back ground.");
+		}
+		getNewSearchButton().waitAndClick(5);
+		return id;
+	}
+
+	/**
+	 * @author Jayanthi.Ganesan This method will verify display of search results
+	 *         after a background search without refresh.
+	 * @param searchText[search Term]
+	 * @param searchNO[Number   of saerch term as per the session search list
+	 *                          displayed in right side]
+	 */
+
+	public void verifySearchDisplayWithoutRefresh(String searchText, String searchNO) {
+		getSessionSearchList(searchNO).Click();
+		if (getEnteredSearchText(searchText).isElementAvailable(2)) {
+			base.waitTime(2);
+			List<String> tileResults = base.availableListofElements(getAllTilesResult(searchNO));
+			System.out.println(tileResults);
+			int size = tileResults.size();
+			int limit = size - 2;
+			SoftAssert assertion = new SoftAssert();
+			for (int j = 0; j < limit; j++) {
+				assertion.assertNotNull(tileResults.get(j));
+			}
+			assertion.assertAll();
+			base.passedStep("Search Result should appeared " + "without Refresh  on Advanced Search Result Screen");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description - verify tile spinning in session search page dynamic
+	 * @param searchName - Search name to pick (or) current search
+	 * @param Index      - search index
+	 */
+	public void verifyTileSpinning(String searchName, int Index) {
+		List<String> spinningTileList = new ArrayList<>();
+
+		spinningTileList = base.getAvailableListofElements(gettTileSpinningList(searchName, Index));
 		for (String a : spinningTileList) {
 			if (a.isBlank()) {
 				base.stepInfo(" Yes - one or more related tiles are still spinning ");

@@ -68,6 +68,11 @@ public class DataSets {
 	public Element getDataSetViewInDocList(String DataSet) {
 		return driver.FindElementByXPath("//a[contains(@title,'"+DataSet+"')]/../..//a[text()='DocList']");
 	}
+	//Added by Gopinath - 28/02/2022
+	public Element getDatasetPanel() {
+		return driver.FindElementByXPath("//div[@id='DataSetListContainer']//div[@id='tileContainer']//div[@id='cardCanvas']");
+	
+	}
 	
 	
 	public DataSets(Driver driver) {
@@ -283,6 +288,25 @@ public class DataSets {
 		}
 	}
 	
+	/**
+	*@author Gopinath
+	*@description : Method to verify data sets page is loaded.
+	*/
+	public void verifyDatasetsPageIsLoaded() {
+		try {
+			driver.waitForPageToBeReady();
+			getDatasetPanel().isElementAvailable(15);
+			if(getDatasetPanel().isDisplayed()) {
+				base.passedStep("Data sets page is loaded successfully");
+			}else {
+				base.failedStep("Loading Data sets page is failed");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verify data sets page is loaded."+e.getMessage());
+			
+		}
+	}
 }
 
 

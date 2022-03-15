@@ -1162,6 +1162,16 @@ public class DocListPage {
 		return driver.FindElementByXPath("//h1[@class='page-title' and contains(text(),'DocList')]");
 	}
 	
+	
+	//Added by Brundha
+	public ElementCollection getChildTableRow(int i) {
+		return driver.FindElementsByXPath("//table[contains(@id,'childlist')]//tbody//tr/td["+i+"]");
+	}
+	
+	public ElementCollection getChildHeader() {
+		return driver.FindElementsByXPath("//table[contains(@id,'childlist')]//tr/th");
+		
+	}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -1767,9 +1777,9 @@ public class DocListPage {
 	 */
 	public void addNewBulkTag(String tagname) throws InterruptedException, AWTException {
 
-		try {
+		if(getPureHitAddButton().isElementAvailable(5)) {
 			getPureHitAddButton().waitAndClick(10);
-		} catch (Exception e) {
+		} else {
 			// System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 			Reporter.log("Pure hit block already moved to action panel", true);
@@ -2041,9 +2051,9 @@ public class DocListPage {
 			base.waitForElement(getSelectWithName(searchName));
 			getSelectWithName(searchName).waitAndClick(10);
 			getToDocList().waitAndClick(10);
-			try {
+			if(base.getYesBtn().isElementAvailable(3)) {
 				base.getYesBtn().waitAndClick(10);
-			} catch (Exception e) {
+			} else {
 				System.out.println("Pop up message does not appear");
 				Log.info("Pop up message does not appear");
 			}
@@ -2508,9 +2518,9 @@ public class DocListPage {
 	 */
 	public void unTagDocmuments(String tagName) {
 		try {
-			try {
+			if(getPureHitAddButton().isElementAvailable(5)) {
 				getPureHitAddButton().waitAndClick(10);
-			} catch (Exception e) {
+			}else {
 				// System.out.println("Pure hit block already moved to action panel");
 				UtilityLog.info("Pure hit block already moved to action panel");
 				Reporter.log("Pure hit block already moved to action panel", true);
@@ -2529,6 +2539,7 @@ public class DocListPage {
 			base.waitTillElemetToBeClickable(getBulkUntagTree());
 			getBulkUntagTree().Click();
 			base.waitForElement(getExistingTagInUntagTable(tagName));
+			getExistingTagInUntagTable(tagName).ScrollTo();
 			base.waitTillElemetToBeClickable(getExistingTagInUntagTable(tagName));
 			getExistingTagInUntagTable(tagName).Click();
 			driver.waitForPageToBeReady();
@@ -2536,7 +2547,7 @@ public class DocListPage {
 			base.waitTillElemetToBeClickable(getContinueButtonUntag());
 			for (int i = 0; i < 10; i++) {
 				try {
-					getContinueButtonUntag().Click();
+					getContinueButtonUntag().waitAndClick(10);
 					break;
 				} catch (Exception e) {
 					Thread.sleep(1000);
@@ -2545,6 +2556,7 @@ public class DocListPage {
 					base.waitTillElemetToBeClickable(getContinueButtonUntag());
 				}
 			}
+			driver.Manage().window().maximize();
 			base.VerifySuccessMessage("Records saved successfully");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2666,7 +2678,7 @@ public class DocListPage {
 					driver.waitForPageToBeReady();
 					base.waitForElement(getContinueBtn());
 					base.waitTillElemetToBeClickable(getContinueBtn());
-					getContinueBtn().Click();
+					getContinueBtn().waitAndClick(25);
 					break;
 				} catch (Exception e) {
 					driver.waitForPageToBeReady();
@@ -3293,9 +3305,11 @@ public class DocListPage {
 			getSelectFolderCheckBox(Test).Click();
 			driver.waitForPageToBeReady();
 			base.waitForElement(gettotalSelectedDocuments());
+			driver.Manage().window().fullscreen();
 			base.waitForElement(getContinueCount());
 			base.waitTillElemetToBeClickable(getContinueCount());
 			getContinueCount().Click();
+			driver.Manage().window().maximize();
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception is occured while unfoldering the documents" + e.getMessage());
@@ -3974,8 +3988,10 @@ public class DocListPage {
 			getSelectAllFolderBtn().Click();
 			base.waitForElement(getEnterName());
 			getEnterName().SendKeys(Test);
+			driver.Manage().window().fullscreen();
 			base.waitForElement(getSelect_continue_btn());
 			getSelect_continue_btn().waitAndClick(10);
+			driver.Manage().window().maximize();
 			System.out.println("Click continue");
 			base.waitTillElemetToBeClickable(getFinalizeButton());
 			base.waitForElement(getFinalizeButton());
@@ -4396,5 +4412,50 @@ public List<String> gettingAllDocIDs(){
 		getSelectAll().waitAndClick(10);
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().waitAndClick(10);
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param noOfDocuments
+	 * @throws InterruptedException
+	 * @Description selecting document with child document
+	 */
+	public void documentSelectionIncludeChildDoc(int noOfDocuments) throws InterruptedException {
+		try {
+			for (int row = 0; row < noOfDocuments; row++) {
+
+				driver.waitForPageToBeReady();
+				base.waitForElement(getselectDoc(row + 1));
+				getselectDoc(row + 1).waitAndClick(10);
+				if(getPopUpOkBtn().isElementAvailable(1)) {
+					getPopUpOkBtn().waitAndClick(5);
+				}
+				base.stepInfo("Document is selected in doc list");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Failed to download selection documents" + e.getMessage());
+		}
+	}
+	
+	
+	
+	/**
+	 * @author Brundha.T
+	 * Method for getting child document in doclist page 
+	 * 
+	 */
+	public ArrayList<String> GettingChildDocumentInDocListPage(int doc) {
+		ArrayList<String> arList = null;
+		int j;
+		
+			 arList = new ArrayList<String>();
+			 List<WebElement> RowCount = getChildTableRow(doc).FindWebElements();
+				for (j = 0; j < RowCount.size(); j++) {
+					driver.waitForPageToBeReady();
+					String row = RowCount.get(j).getText();
+					arList.add(row);
+					System.out.println(row);
+				}
+			 return arList;
 	}
 }

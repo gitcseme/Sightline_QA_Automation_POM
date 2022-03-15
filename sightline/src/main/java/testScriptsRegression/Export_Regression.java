@@ -1085,6 +1085,165 @@ public class Export_Regression {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Gopinath created on:NA modified by:NA
+	 * @TESTCASE_No:RPMXCON-49131 : To verify that in Production-Export-Slip Sheet, Metadata Field should be sorted by alpha ascending.
+	 * @Description: Verify that in Production-Export-Slip Sheet, Metadata Field should be sorted by alpha ascending
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 7)
+	public void verifyProductionExportSlipSheetMetaDataSorted() throws Exception {
+		base=new BaseClass(driver);
+
+		base.stepInfo("#### To verify that in Production-Export-Slip Sheet, Metadata Field should be sorted by alpha ascending ####");
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49131 Export-sprint:08");
+		String exportname = Input.randomText + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+
+		base.stepInfo("Selecting Default Security Group");
+		page.selectingDefaultSecurityGroup();
+
+		base.stepInfo("select Export Set From DropDown");
+		page.selectExportSetFromDropDown();
+
+		base.stepInfo("Add New Export");
+		page.addANewExport(exportname);
+
+		base.stepInfo("Verify MetaData List Slip Sheet In Ascending Order tiff section");
+		page.verifyMetaDataListSlipSheetInAscendingOrderTiffSec();
+
+		base.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		base.stepInfo("Verify MetaData List Slip Sheet In Ascending Order PDF section");
+		page.verifyMetaDataListSlipSheetInAscendingOrderPDFSec();
+
+	}
+
+
+	/**
+	 * @author Gopinath created on:NA modified by:NA
+	 * @TESTCASE_No:RPMXCON-49127 : To verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascending.
+	 * @Description: Verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascending.
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 8)
+	public void verifyProductionExportNativeMetaDataDropdownSorted() throws Exception {
+		base=new BaseClass(driver);
+		base.stepInfo("#### Verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascending. ####");
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49127 Export-sprint:08");
+		String exportname = Input.randomText + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+
+		base.stepInfo("Selecting Default Security Group");
+		page.selectingDefaultSecurityGroup();
+
+		base.stepInfo("select Export Set From DropDown");
+		page.selectExportSetFromDropDown();
+
+		base.stepInfo("Add New Export");
+		page.addANewExport(exportname);
+
+		base.stepInfo("Verify meta data list in drop down native will be in ascending order on tiff section.");
+		page.verifyMetaDataDropdownNativeAscendingOrderTiffSec();
+
+		base.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		base.stepInfo("Verify meta data list in drop down native will be in ascending order on pdf section.");
+		page.verifyMetaDataDropdownNativeAscendingOrderPdfSec();
+
+	}
+
+	/**
+	 * @author Gopinath created on:NA modified by:NA
+	 * @TESTCASE_No:RPMXCON-49125 : Verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascending.
+	 * @Description: Verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascending.
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 9)
+	public void verifyProductionExportExceptionMetaDataDropdownSorted() throws Exception {
+		base=new BaseClass(driver);
+		base.stepInfo("#### Verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascending. ####");
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49125 Export-sprint:08");
+		String exportname = Input.randomText + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+
+		base.stepInfo("Selecting Default Security Group");
+		page.selectingDefaultSecurityGroup();
+
+		base.stepInfo("select Export Set From DropDown");
+		page.selectExportSetFromDropDown();
+
+		base.stepInfo("Add New Export");
+		page.addANewExport(exportname);
+
+		base.stepInfo("Verify meta data list in drop down native will be in ascending order on tiff section.");
+		page.verifyMetaDataDropdownExceptionAscendingOrderTiffSec();
+
+		base.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		base.stepInfo("Verify meta data list in drop down native will be in ascending order on pdf section.");
+		page.verifyMetaDataDropdownExceptionAscendingOrderPDFSec();
+
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:19/01/2021 Modified by: Baskar
+	 * Description : Verify that if PA selects the Export with Production and has
+	 * Native Files and Tags selected in the native components section, then
+	 * Component tab should Complete without any error.
+	 */
+	@Test(enabled = false, groups = { "regression" }, priority = 10)
+	public void verifyProductionCreationDateMarkComp() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id: RPMXCON-49360");
+		base.stepInfo("Verify that if PA selects the Export with Production and has Native Files and Tags "
+				+ "selected in the native components section, then Component tab should Complete without any error.");
+
+		String AAfolder = "AFolderProd" + Utility.dynamicNameAppender();
+		String AAAfolder = "AFolderProd" + Utility.dynamicNameAppender();
+		// String tagNameTechnical = Input.tagNameTechnical;
+		String newExport = "Ex" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateTag(AAfolder, "Default Security Group");
+		tagsAndFolderPage.CreateTag(AAAfolder, "Default Security Group");
+		// tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String text = page.getProdExport_ProductionSets().getText();
+		if (text.contains("Export Set")) {
+			page.selectExportSetFromDropDown();
+		} else {
+			page.createNewExport(newExport);
+		}
+		page.addANewExport(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectNativeTag(AAfolder, AAAfolder);
+		driver.scrollPageToTop();
+		page.getComponentsMarkComplete().waitAndClick(10);
+		base.VerifySuccessMessage("Mark Complete successful");
+		base.passedStep("Componenet tab completed without any error");
+		loginPage.logout();
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

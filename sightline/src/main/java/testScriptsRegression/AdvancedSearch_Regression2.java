@@ -7,9 +7,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -21,6 +23,7 @@ import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CustomDocumentDataReport;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.RedactionPage;
@@ -116,7 +119,7 @@ public class AdvancedSearch_Regression2 {
 	 *                 able to edit the advanced search saved query & able to search
 	 *                 and save the query RPMXCON-47770
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 2, enabled = true)
+	@Test(description ="RPMXCON-47770",dataProvider = "Users", groups = { "regression" }, priority = 2, enabled = true)
 	public void validateSearchAndSavedTheModifiedQuery(String username, String password)
 			throws InterruptedException, ParseException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-47770");
@@ -168,7 +171,7 @@ public class AdvancedSearch_Regression2 {
 	 *                 able to edit the advanced search saved query & after execute
 	 *                 user will be able to save the query RPMXCON-47771
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 3, enabled = true)
+	@Test(description ="RPMXCON-47771",dataProvider = "Users", groups = { "regression" }, priority = 3, enabled = true)
 	public void validateSavedSearchModifiedQuery(String username, String password)
 			throws InterruptedException, ParseException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-47771");
@@ -219,16 +222,14 @@ public class AdvancedSearch_Regression2 {
 	 * @description Validate search with combination of Content/Metadata, Audio,
 	 *              Conceptual, WorkProduct
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-46980",dataProvider = "Users", groups = { "regression" }, priority = 4)
 	public void verifyCombinedSearch(String UserName, String PassWord) throws InterruptedException, AWTException {
 		baseClass.stepInfo("Validate search with combination of Content/Metadata, " + "Audio, Conceptual, WorkProduct");
 		baseClass.stepInfo("Test case Id: RPMXCON-46980");
 		loginPage.loginToSightLine(UserName, PassWord);
 		if (UserName.equals(Input.rmu1userName)) {
 			search.advancedContentSearch(Input.searchString2);
-			search.getIntoFullScreen();
 			search.bulkTag(TagName);
-			search.getExitFullScreen();
 			baseClass.selectproject();
 			search.advancedContentSearch(Input.searchString2);
 			search.getIntoFullScreen();
@@ -240,7 +241,7 @@ public class AdvancedSearch_Regression2 {
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit);
 			int ExpectedPureHit3 = search.verifyCombinedSearch(TagName, "tag", "yes", "OR", "NOT", "OR");
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit3);
-			softAssertion.assertEquals(834, ExpectedPureHit3);
+			softAssertion.assertEquals(837, ExpectedPureHit3);
 			softAssertion.assertEquals(53, ExpectedPureHit);
 			softAssertion.assertAll();
 			baseClass.passedStep(
@@ -259,7 +260,7 @@ public class AdvancedSearch_Regression2 {
 	 * @description To verify as an user login into the Application, user will be
 	 *              able to save the In-Session search query from advanced search
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 5, enabled = true)
+	@Test(description ="RPMXCON-47758",dataProvider = "Users", groups = { "regression" }, priority = 5, enabled = true)
 	public void verifysavedSearch_sessionSearch(String username, String password)
 			throws InterruptedException, ParseException, IOException {
 		baseClass.stepInfo("To verify as an user login into the Application, user will be able to save"
@@ -292,43 +293,38 @@ public class AdvancedSearch_Regression2 {
 	 * @description Verify that Term Operator - Any is working properly on Advanced
 	 *              Search screen
 	 */
-	// @Test(groups = { "regression" }, priority = 6,enabled = false)
-
-	public void verifyTermOperator() throws InterruptedException {
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	 @Test(description ="RPMXCON-47728",groups = { "regression" },dataProvider = "Users", priority = 6,enabled = true)
+	public void verifyTermOperator(String username, String password) throws InterruptedException {
+		loginPage.loginToSightLine(username, password);
 		baseClass.selectproject();
+		DocListPage dlPage= new DocListPage(driver);
 		baseClass.stepInfo("Verify that Term Operator - All is working properly on Advanced Search screen");
 		baseClass.stepInfo("Test case Id: RPMXCON-47728");
-
-		baseClass.stepInfo("Verify that Term Operator - Any is working properly on Advanced Search screen");
-		baseClass.stepInfo("Test case Id: RPMXCON-47729");
-
-		int Expected1 = search.VerifyaudioSearchAndSetThreshold("morning", "International English", -34);
+		search.VerifyaudioSearchAndSetThreshold(Input.audioSearch, Input.audioLanguage, -34);
+		driver.scrollPageToTop();
+		search.ViewInDocList();
+		//getting doc id's after saerch with 'morning'
+		List<String> DocIdsWithSearchString1 = dlPage.gettingAllDocIDs();
 		baseClass.selectproject();
-		int Expected2 = search.VerifyaudioSearchAndSetThreshold("well", "International English", -34);
-		baseClass.selectproject();
-		int ActualAll = search.audioSearchWithOperator("morning", "well", "International English", -34, "ALL");
-		baseClass.selectproject();
-		int ActualAny = search.audioSearchWithOperator("morning", "well", "International English", -34, "ANY");
-		try {
-			if (Expected1 >= Expected2) {
-				softAssertion.assertEquals(Expected1, ActualAny);
-				softAssertion.assertEquals(Expected2, ActualAll);
-				softAssertion.assertAll();
-			} else {
-				softAssertion.assertEquals(Expected2, ActualAny);
-				softAssertion.assertEquals(Expected1, ActualAll);
-				softAssertion.assertAll();
-			}
-			baseClass.passedStep("All and Any Operator is working properly on Advanced Search screen");
+		search.VerifyaudioSearchAndSetThreshold("well",Input.audioLanguage, -34);
+		driver.scrollPageToTop();
+		search.ViewInDocList();
+		//getting doc id's after saerch with 'well'
+		List<String> DocIdsWithSearchString2 = dlPage.gettingAllDocIDs();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			baseClass.failedStep("All and Any Operator is not working properly on Advanced Search screen");
-		}
+		//getting list of common docs with both search terms --expected result after performing search with both terms and ALL operator.
+		DocIdsWithSearchString2.retainAll(DocIdsWithSearchString1);
+		baseClass.selectproject();
+		int ActualAny = search.audioSearchWithOperator(Input.audioSearch, "well", Input.audioLanguage, -34, "ALL");
+		softAssertion.assertEquals(DocIdsWithSearchString2.size(), ActualAny);
+		softAssertion.assertAll();
+		baseClass.passedStep("All Operator is working properly on Advanced Search screen");
 		loginPage.logout();
+		}
 
-	}
+
+
+	
 
 	/**
 	 * @author Iyappan.Kasinathan
@@ -338,7 +334,7 @@ public class AdvancedSearch_Regression2 {
 	 *              some query along with multiple Folder filter applied from work
 	 *              product tab of advanced search RPMXCON-47657
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-47657",dataProvider = "Users", groups = { "regression" }, priority = 7)
 	public void validateThreadedDocsForMultipleFolders(String username, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-47657");
 		baseClass.stepInfo("Verify the search result for threaded Documents is working properly for multiple folders"
@@ -394,7 +390,7 @@ public class AdvancedSearch_Regression2 {
 	 *               Completed Assignment workproduct (SysAdmin/DAU/PAU impersonated
 	 *               as RMU) RPMXCON-57268
 	 */
-	@Test(groups = { "regression" }, priority = 8, enabled = true)
+	@Test(description ="RPMXCON-57268",groups = { "regression" }, priority = 8, enabled = true)
 	public void verifyDistributedListUsingImpersonation() throws InterruptedException, AWTException {
 		baseClass.stepInfo(
 				"Validate distributed list and results for searching by Completed Assignment workproduct(SysAdmin/DAU/PAU impersonated as RMU)");
@@ -456,7 +452,7 @@ public class AdvancedSearch_Regression2 {
 	 * @description: Verify that "Export Data" window have a closing "x" button in
 	 *               the top right. RPMXCON-47181
 	 */
-	@Test(groups = { "regression" }, priority = 9, enabled = true)
+	@Test(description ="RPMXCON-47181",groups = { "regression" }, priority = 9, enabled = true)
 	public void verifyExportDataPopUpCloseButton() throws InterruptedException {
 		baseClass.stepInfo("Verify that \"Export Data\" window have a closing \"x\" button in the top right.");
 		baseClass.stepInfo("Test case Id: RPMXCON-47181");
@@ -478,7 +474,7 @@ public class AdvancedSearch_Regression2 {
 	 * @throws InterruptedException
 	 * @description: Search Query Saved Using Advanced Search RPMXCON-47214
 	 */
-	@Test(groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-47214",groups = { "regression" }, priority = 10)
 	public void verifySavedSearchQuery() throws InterruptedException {
 		baseClass.stepInfo("Search Query Saved Using Advanced Search ");
 		baseClass.stepInfo("Test case Id: RPMXCON-47214");
@@ -512,7 +508,7 @@ public class AdvancedSearch_Regression2 {
 	 * @description: Verify that pre-defined list of special characters should be
 	 *               disallowed to be entered by the user in audio search
 	 */
-	@Test(groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-47135",groups = { "regression" }, priority = 11)
 	public void VerifyWarningMessage_AudioSearchSpecialChars() throws InterruptedException {
 		baseClass.stepInfo(
 				"Verify that pre-defined list of special characters should be disallowed to be entered by the user in audio search");
@@ -531,7 +527,7 @@ public class AdvancedSearch_Regression2 {
 	 *              search which involve content in other languages - eg. German,
 	 *              Japanese characters in search text
 	 */
-	@Test(groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-47138",groups = { "regression" }, priority = 12)
 	public void AudioSearch_SaveAndExecute() throws InterruptedException {
 		String Search1 = "AudioSearch" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case Id: RPMXCON-47138");
@@ -561,7 +557,7 @@ public class AdvancedSearch_Regression2 {
 	 *              involve content in other languages - eg. German, Japanese
 	 *              characters in search text
 	 */
-	@Test(groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-47137",groups = { "regression" }, priority = 13)
 	public void AudioSearch_Save() throws InterruptedException {
 		String Search1 = "AudioSearch" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case Id: RPMXCON-47137");
@@ -591,7 +587,7 @@ public class AdvancedSearch_Regression2 {
 	 *              search which with the content in other languages - eg. German,
 	 *              Japanese in search text
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-47140",dataProvider = "Users", groups = { "regression" }, priority = 14)
 	public void VerifyAudio_ModifySearchWithOtherLanguages(String username, String password)
 			throws InterruptedException {
 		String Search1 = "AudioSearch" + Utility.dynamicNameAppender();
@@ -634,7 +630,7 @@ public class AdvancedSearch_Regression2 {
 	 *              which involve content in other languages - eg. German, Japanese
 	 *              characters in search text
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-47139",dataProvider = "Users", groups = { "regression" }, priority = 15)
 	public void VerifyAudio_ModifySearchTextAndLanguages(String username, String password) throws InterruptedException {
 		String Search1 = "AudioSearch" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case Id: RPMXCON-47139");
@@ -668,7 +664,7 @@ public class AdvancedSearch_Regression2 {
 	 *              content in other languages - eg. German, Japanese, Mandarin by
 	 *              being able to key in search text in these languages
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-47136",dataProvider = "Users", groups = { "regression" }, priority = 16)
 	public void AudioSearch(String username, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-47136");
 		baseClass.stepInfo(
@@ -682,7 +678,7 @@ public class AdvancedSearch_Regression2 {
 		String actualPH2 = search.verifyPureHitsCount();
 		try {
 			softAssertion.assertEquals(actualPH1, "2");
-			softAssertion.assertEquals(actualPH2, "4");
+			softAssertion.assertEquals(actualPH2, "3");
 			softAssertion.assertAll();
 			baseClass.passedStep(
 					"Audio Search is done using german language PureHit is displayed as expected : " + actualPH1 + "");
@@ -808,7 +804,7 @@ public class AdvancedSearch_Regression2 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(groups = { "regression" }, priority = 18,enabled=false)
+	@Test(description ="RPMXCON-57377",groups = { "regression" }, priority = 18,enabled=false)
 	public void verifytruncate_500chars() throws InterruptedException {
 		String expectedSearchName="Abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijkl"
 				+ "mnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnop...";
@@ -844,7 +840,7 @@ public class AdvancedSearch_Regression2 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 19,enabled=true)
+	@Test(description ="RPMXCON-47151",dataProvider = "Users", groups = { "regression" }, priority = 19,enabled=true)
 	public void audioSearch_warningTile(String username, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-47151");
 		baseClass.stepInfo("Verify that warning should be displayed for search results when audio docs searched with German/Japanese characters and"
@@ -874,7 +870,7 @@ public class AdvancedSearch_Regression2 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test( groups = { "regression" }, priority = 20,enabled=true)
+	@Test(description ="RPMXCON-48787", groups = { "regression" }, priority = 20,enabled=true)
 	public void verifyDroppedTile() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48787");
 		baseClass.stepInfo("Verify that Dropped tiles are retained in shopping cart when User Navigates Advanced Search"
@@ -908,7 +904,7 @@ public class AdvancedSearch_Regression2 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 21,enabled=true)
+	@Test(description ="RPMXCON-57272",dataProvider = "Users", groups = { "regression" }, priority = 21,enabled=true)
 	public void verifyDoubleQuotesSearch(String username, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-57272");
 		baseClass.stepInfo("Verify that result appears for phrase(in double quote) search in Advanced Search Query Screen.");
@@ -932,7 +928,7 @@ public class AdvancedSearch_Regression2 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test(dataProvider = "Export", groups = { "regression" }, priority = 22,enabled=true)
+	@Test(description ="RPMXCON-46876",dataProvider = "Export", groups = { "regression" }, priority = 22,enabled=true)
 	public void verifyExportAction(String username, String password,boolean saerch) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-46876");
 		baseClass.stepInfo("Verify that Bulk Export Data Action is working properly on Advanced Search result Screen");
@@ -975,7 +971,7 @@ public class AdvancedSearch_Regression2 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 22,enabled=true)
+	@Test(description ="RPMXCON-57290",dataProvider = "Users", groups = { "regression" }, priority = 22,enabled=true)
 	public void verifyWarningDForDoubleQuote(String username, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-57290");
 		baseClass.stepInfo("Verify that belly band message appears when user tries to run search having "
@@ -1002,6 +998,55 @@ public class AdvancedSearch_Regression2 {
 		loginPage.logout();		
 		}
 	
+	
+	/**
+	 * @author jayanthi 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-57202",dataProvider = "Users",enabled = true, groups = { "regression" }, priority = 23)  
+	public void verifyBGAdvancesearch(String username, String password) throws InterruptedException {
+		
+		SessionSearch search = new SessionSearch(driver);
+		SavedSearch ss = new SavedSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-57202");
+		baseClass.stepInfo("Verify that Search Result appears without"
+				+ " Refresh  on Advanced Search Result Screen");
+		loginPage.loginToSightLine(username, password);
+		baseClass.selectproject(Input.highVolumeProject);
+		String searchText1 = "s";
+		String searchText3 = "2";
+		search.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		search.getAdvancedSearchLinkCurrent().Click();
+		driver.waitForPageToBeReady();
+		int Bgcount = baseClass.initialBgCount();
+
+		search.advancedContentBGSearch(searchText1, 1);
+		search.advancedContentBGSearch(Input.searchString9, 2);
+		search.advancedContentBGSearch(searchText3, 3);
+		ss.navigateToSavedSearchPage();
+		search.navigateToSessionSearchPageURL();
+		search.getNewSearchButton().waitAndClick(5);
+		baseClass.stepInfo("Navigated back to session search page and clicked on  new search button." );
+		// checking for notification for BG search completed status.
+		for (int i = 0; i < 2; i++) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return baseClass.initialBgCount() == Bgcount + 3;
+				}
+			}), Input.wait120);
+			if (baseClass.initialBgCount() == Bgcount + 3) {
+				break;
+			}
+		}
+		baseClass.stepInfo("Notifications are notified for BG Search completion.");
+		search.verifySearchDisplayWithoutRefresh(searchText1, "3");
+		search.verifySearchDisplayWithoutRefresh(Input.searchString9, "2");
+		search.verifySearchDisplayWithoutRefresh(searchText3, "1");
+		loginPage.logout();
+
+	}
+
 	@DataProvider(name = "Export")
 	public Object[][] Export() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, true },
@@ -1039,6 +1084,7 @@ public class AdvancedSearch_Regression2 {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);

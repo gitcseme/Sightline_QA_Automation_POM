@@ -1,5 +1,6 @@
 package testScriptsRegression;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -687,7 +688,312 @@ public class WorkFlow_IndiumRegression {
 		// logout
 		loginPage.logout();
 	}
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	public void validatestatus() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52655");
+		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected Status.");
+		int Id;
+		int Id1;
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		String assgn = "Assgn" + Utility.dynamicNameAppender();
 
+		String wfDesc_Draft = "Desc" + Utility.dynamicNameAppender();
+		String wfName_Draft  = "work" + Utility.dynamicNameAppender();
+
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		 
+	    page = new TagsAndFoldersPage(driver);
+		page.CreateFolder(folderName,Input.securityGroup);
+
+		// Search for any string
+		search = new SessionSearch(driver);
+		search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id);
+		UtilityLog.info(Id);
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver); 
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, assgn, false,3);
+		
+		// creating new work flow in draft state
+		workflow.getWorkFlowPage();
+		workflow.workFlow_Draft(wfName_Draft, wfDesc_Draft);
+		
+		String folderName_Complete = "WF" + Utility.dynamicNameAppender();
+		String SearchName_Complete = "WF" + Utility.dynamicNameAppender();
+		String wfName_Complete = "work" + Utility.dynamicNameAppender();
+		String wfDesc_Complete = "Desc" + Utility.dynamicNameAppender();
+		String assgn_Complete = "WF" + Utility.dynamicNameAppender();
+
+		baseClass.selectproject();	
+		page.CreateFolder(folderName_Complete, Input.securityGroup);
+	     search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName_Complete);
+		ss.getSaveSearchID(SearchName_Complete);
+		Id1 = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id1);
+		UtilityLog.info(Id1);
+
+		// creating new work flow Completed status
+		workflow.getWorkFlowPage();
+		workflow.newWorkFlowCreation(wfName_Complete, wfDesc_Complete, Id1, false, folderName_Complete, true, assgn_Complete, false,3);
+		workflow.selectWorkFlowUsingPagination(wfName_Complete);
+		
+		// Running workflow
+		workflow.actionToRunWorkFlow();
+		// Page refresh
+		workflow.refreshingThePage();
+		baseClass.waitTime(10);
+		String[] status= {"Completed","Configured","Draft"};
+		
+		  this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		  List<String> listStatus = workflow.getTableHeaderValuesPagination("STATUS", false);
+			int occurence_Comp = baseClass.findNoOfOccurences(listStatus, "Completed");
+			int occurence_Conf= baseClass.findNoOfOccurences(listStatus, "Configured");
+			int occurence_Draft= baseClass.findNoOfOccurences(listStatus, "Draft");
+			int[] statusCount= {occurence_Comp,occurence_Conf,occurence_Draft};
+			
+		for(int i=0;i<status.length;i++) {	
+			this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+			workflow.filterByStatus(status[i]);
+			baseClass.stepInfo("Work flow Filter for status "+status[i]+" is apllied.");
+			driver.waitForPageToBeReady();
+			baseClass.waitTime(2);
+			List<String> WfStatus_AfterFilter=workflow.getTableHeaderValuesPagination("STATUS", false);
+			System.out.println(WfStatus_AfterFilter);
+			if(WfStatus_AfterFilter.size()==statusCount[i]) {
+				for(int j=0;j<WfStatus_AfterFilter.size();j++) {
+				if( WfStatus_AfterFilter.get(j).equals(status[i])) {
+					if(j==(WfStatus_AfterFilter.size()-1))
+				baseClass.passedStep("Work flow filter for 'status' functionality working properly when we apply status as"+status[i]);
+				}else {
+					baseClass.failedStep("Work flow filter displayed different statud "+WfStatus_AfterFilter.get(i)+" which is not applied in filter");
+				}
+				}
+			}
+			else {
+				baseClass.failedStep("work flow filter for status not working as expected.");
+			}
+		}
+
+		// logout
+		loginPage.logout();
+	}
+/**
+ * @author Jayanthi.ganesan
+ * @throws InterruptedException
+ */
+@Test(enabled = true, groups = { "regression" }, priority = 14)
+public void verifyHistoryBtnEnabled() throws InterruptedException {
+	baseClass.stepInfo("Test case Id: RPMXCON-52646");
+	baseClass.stepInfo("To verify that 'View History' action should be enabled only if Workflow is selected.");
+	
+	String wfName = "work" + Utility.dynamicNameAppender();
+	String wfDesc = "work" + Utility.dynamicNameAppender();
+	// Login as Reviewer Manager
+	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+	workflow=new WorkflowPage(driver);
+	workflow.workFlow_Draft(wfName,wfDesc);
+	baseClass.stepInfo("Draft Work Flow Created with name "+wfName);
+	//selecting workflow
+	workflow.selectWorkFlowUsingPagination(wfName);
+	workflow.getWorkFlow_ActionDropdown().waitAndClick(5);
+	baseClass.stepInfo("Clicked on Action button.");
+	//validation for display of enabled History button
+	if(workflow.getEnabledHistoryBtn().isDisplayed()) {
+		baseClass.passedStep("Sucessfully verified that RMU can view the action Enabled "
+				+ "'View History' Button if we select any work flow.");
+	}
+	else {
+		baseClass.failedStep("Enabled View History Button not displayed.");
+	}
+	//validation for display of disabled history button if we dint select any work flow.
+	
+	workflow.getWorkFlow_ActionDropdown().waitAndClick(5);
+	baseClass.stepInfo("Clicked on Action button.");
+	//here we are validating display of disabled History button with absence of enabled history button.
+	if(!workflow.getEnabledHistoryBtn().isDisplayed()) {
+		baseClass.passedStep("History button is in disabled state if we dint select any work flow");
+	}
+	else {
+		baseClass.failedStep("History button is in ensabled state if we dint select any work flow which is not expected.");
+	}
+	loginPage.logout();
+}
+
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 * @throws AWTException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	public void verifyAllColumnSorting() throws InterruptedException, ParseException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52618");
+		baseClass.stepInfo("To verify that RMU can sort by ascending and descending on all columns");
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		workflow = new WorkflowPage(driver);
+		
+		//verifying Enabled state column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listEnabled = workflow.getTableHeaderValuesPagination("ENABLED STATE", true);
+		workflow.applySorting(true, false, true, "ENABLED STATE");
+		workflow.verifyHeaderSort("ENABLED STATE", true, listEnabled, "Ascending");
+		workflow.applySorting(false, true, true, "ENABLED STATE");
+		workflow.verifyHeaderSort("ENABLED STATE", true, listEnabled, "Descending");
+		
+		//verifying status column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listStatus = workflow.getTableHeaderValuesPagination("STATUS", false);
+		workflow.applySorting(true, false, true, "STATUS");
+		workflow.verifyHeaderSort("STATUS", false, listStatus, "Ascending");
+		workflow.applySorting(false, true, true, "STATUS");
+		workflow.verifyHeaderSort("STATUS", false, listStatus, "Descending");
+		
+		//verifying  Workflow ID column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listWFID = workflow.getTableHeaderValuesPagination("Workflow ID", false);
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		workflow.verifyHeaderSort("Workflow ID", false, listWFID, "Ascending");
+		workflow.applySorting(false, true, true, "Workflow ID");
+		workflow.verifyHeaderSort("Workflow ID", false, listWFID, "Descending");
+		
+		//verifying  Last Modified Date column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listLMF = workflow.getTableHeaderValuesPagination("LAST MODIFIED DATE", false);
+		workflow.applySorting(true, false, true, "LAST MODIFIED DATE");
+		workflow.verifyHeaderSort("LAST MODIFIED DATE", false, listLMF, "Ascending");
+		workflow.applySorting(false, true, true, "LAST MODIFIED DATE");
+		workflow.verifyHeaderSort("LAST MODIFIED DATE", false, listLMF, "Descending");
+		
+		//verifying  Workflow Name column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listWFName = workflow.getTableHeaderValuesPagination("Workflow Name", false);
+		workflow.applySorting(true, false, true, "Workflow Name");
+		workflow.verifyHeaderSort("Workflow Name", false, listWFName, "Ascending");
+		workflow.applySorting(false, true, true, "Workflow Name");
+		workflow.verifyHeaderSort("Workflow Name", false, listWFName, "Descending");
+		
+		//verifying Next Triggered Date column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listTrigger = workflow.getTableHeaderValuesPagination("NEXT TRIGGER DATE", false);
+		workflow.applySorting(true, false, true, "NEXT TRIGGER DATE");
+		workflow.verifyHeaderSort("NEXT TRIGGER DATE", false, listTrigger, "Ascending");
+		workflow.applySorting(false, true, true, "NEXT TRIGGER DATE");
+		workflow.verifyHeaderSort("NEXT TRIGGER DATE", false, listTrigger, "Descending");
+		
+		//verifying Last run actioned doc count  column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listRunCount = workflow.getTableHeaderValuesPagination("LAST RUN ACTIONED DOC COUNT", false);
+		workflow.applySorting(true, false, true, "LAST RUN ACTIONED DOC COUNT");
+		workflow.verifyHeaderSort("LAST RUN ACTIONED DOC COUNT", false, listRunCount, "Ascending");
+		workflow.applySorting(false, true, true, "LAST RUN ACTIONED DOC COUNT");
+		workflow.verifyHeaderSort("LAST RUN ACTIONED DOC COUNT", false, listRunCount, "Descending");
+		
+		//verifying  Created by user column sorting
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listCreatedBy = workflow.getTableHeaderValuesPagination("Created By", false);
+		workflow.applySorting(true, false, true, "Created By");
+		workflow.verifyHeaderSort("Created By", false, listCreatedBy, "Ascending");
+		workflow.applySorting(false, true, true, "Created By");
+		workflow.verifyHeaderSort("Created By", false, listCreatedBy, "Descending");
+
+		// logout
+		loginPage.logout();
+	}
+/**
+ * @author Jayanthi.Ganesan
+ * @throws InterruptedException
+ * @throws ParseException
+ * @throws AWTException
+ */
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	public void verifyEnabledStateFilter() throws InterruptedException, ParseException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52656");
+		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected 'Enabled State'.");
+		int Id;
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		String assgn = "Assgn" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		page = new TagsAndFoldersPage(driver);
+		page.CreateFolder(folderName, Input.securityGroup);
+
+		// Search for any string
+		search = new SessionSearch(driver);
+	    search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		
+
+		// creating new work flow wirh enabled state.
+		workflow = new WorkflowPage(driver);
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, assgn, false, 1);
+		workflow.selectWorkFlowUsingPagination(wfName);
+
+		// Running workflow
+		workflow.actionToRunWorkFlow();
+		// Page refresh
+		workflow.refreshingThePage();
+		baseClass.waitTime(10);
+		
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		//getting List Of Enabled state column before applying filter using Pagination.
+		List<String> listEnabled = workflow.getTableHeaderValuesPagination("ENABLED STATE", true);
+		//taking count of Enabled state work flows
+		int occurence = baseClass.findNoOfOccurences(listEnabled, "ENABLED");
+		//applying filter for  EnabledState.
+		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		workflow.filterByState("Enabled");
+		//taking count of Enabled state work flows after applying enabled state filter.
+		List<String> listEnabledAfterFilter = workflow.getTableHeaderValuesPagination("ENABLED STATE", true);
+		SoftAssert assertion=new SoftAssert();
+		
+		//Validation part 
+		//Verifying filtered list Count
+		if (listEnabledAfterFilter.size() == occurence) {
+			//Verifying filtered list contains  only enabled state
+			for(int i=0;i<listEnabledAfterFilter.size();i++) {
+				assertion.assertTrue( listEnabledAfterFilter.get(i).equalsIgnoreCase("ENABLED")) ;
+			}
+			assertion.assertAll();
+			baseClass.passedStep("Sucessfully verified that Workflow details  filtered as per the selected 'Enabled State'.");
+		} else {
+			baseClass.failedStep(" Workflow details not filtered as per the selected 'Enabled State'.");
+		}
+
+		// logout
+		loginPage.logout();
+		}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

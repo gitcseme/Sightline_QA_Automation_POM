@@ -30,6 +30,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
+import views.html.helper.input;
 
 public class DocList_Regression1 {
 
@@ -462,7 +463,7 @@ public class DocList_Regression1 {
 		SessionSearch search = new SessionSearch(driver);
 
 		baseClass.stepInfo("Basic Search");
-		search.basicContentSearch(Input.searchStringStar);
+		search.basicContentSearch(Input.searchString1);
 		search.ViewInDocList();
 
 		docList = new DocListPage(driver);
@@ -493,7 +494,7 @@ public class DocList_Regression1 {
 		SessionSearch search = new SessionSearch(driver);
 
 		baseClass.stepInfo("Basic Search");
-		search.basicContentSearch(Input.searchStringStar);
+		search.basicContentSearch(Input.searchString1);
 		search.ViewInDocList();
 
 		docList = new DocListPage(driver);
@@ -549,7 +550,7 @@ public class DocList_Regression1 {
 	 * search
 	 */
 
-	//@Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void releaseAllDocsToSG() throws Exception {
 		String securityGroup = "DSecurityGroup" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -563,6 +564,8 @@ public class DocList_Regression1 {
 //		Creating security group
 		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		securityGroupsPage.AddSecurityGroup(securityGroup);
+		driver.Navigate().refresh();
+		securityGroupsPage.selectSecurityGroup(securityGroup);
 		securityGroupsPage.addlayertosg();
 
 //      session search to doclist
@@ -623,7 +626,7 @@ public class DocList_Regression1 {
 	 * and assign it to some assignment from DocList Page
 	 */
 
-	//@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void selectDocsFromDocListAndAssignToAssignment() throws Exception {
 		String assignment = "NewAssignment" + Utility.dynamicNameAppender();
 		String count = "10";
@@ -666,7 +669,7 @@ public class DocList_Regression1 {
 	 *              in Doc list page
 	 */
 
-	//@Test(groups = { "regression" }, priority = 16)
+	@Test(groups = { "regression" }, priority = 16)
 	public void removeTagsInDocsInDocList() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -686,19 +689,21 @@ public class DocList_Regression1 {
 		docList.addNewBulkTag(tagName);
 		docList.addBulkTagAcceptRequestOnPopup(true);
 
-		// Click on default tags
-		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
-		tagsAndFolderPage.refreshPage();
-		tagsAndFolderPage.clickOnDefaultTag();
-
-		baseClass.stepInfo("Verify documents unassigned for a tag");
-		tagsAndFolderPage.verifyTagContainedDocumentsCount(tagName, 0);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Select all documents in current page for removing tags");
 		docList.selectAllDocumentsInCurrentPageOnly();
 		baseClass.stepInfo("Untag documents");
 		docList.unTagDocmuments(tagName);
+		
+		// Click on default tags
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.refreshPage();
+		tagsAndFolderPage.clickOnDefaultTag();
+		
+		baseClass.stepInfo("Verify documents unassigned for a tag");
+		tagsAndFolderPage.verifyTagContainedDocumentsCount(tagName, 0);
+		
 		loginPage.logout();
 		}
 
@@ -710,7 +715,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	//@Test(groups = { "regression" }, priority = 17)
+	@Test(groups = { "regression" }, priority = 17)
 	public void verifyUserRemoveAllDocumentsFromTagInDocLlistPage() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -742,6 +747,9 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Refresh page");
 		tagsAndFolderPage.refreshPage();
+		
+		baseClass.stepInfo("Navigate to tags and folders page");
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
 
 		baseClass.stepInfo("Click on defalut tag");
 		tagsAndFolderPage.clickOnDefaultTag();
@@ -751,6 +759,9 @@ public class DocList_Regression1 {
 
 		docList = new DocListPage(driver);
 
+		baseClass.stepInfo("Navigate to DocList page");
+		driver.getWebDriver().get(Input.url + "Document/DocList");
+		
 		baseClass.stepInfo("Select all documents in current page");
 		docList.selectAllDocumentsInCurrentPageOnly();
 
@@ -761,6 +772,9 @@ public class DocList_Regression1 {
 
 		baseClass.stepInfo("Refresh page");
 		tagsAndFolderPage.refreshPage();
+		
+		baseClass.stepInfo("Navigate to tags and folders page");
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
 
 		baseClass.stepInfo("Click on defalut tag");
 		tagsAndFolderPage.clickOnDefaultTag();
@@ -817,7 +831,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	//@Test(groups = { "regression" }, priority = 19)
+	@Test(groups = { "regression" }, priority = 19)
 	public void verifySelectDocsAndRemoveDocsFromAssignent() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -844,8 +858,8 @@ public class DocList_Regression1 {
 		String testing = "test" + Utility.dynamicNameAppender();
 		AssignmentsPage AssignmentsPage = new AssignmentsPage(driver);
 
-		baseClass.stepInfo("Navigate back for two times");
-		AssignmentsPage.navigateBack(2);
+//		baseClass.stepInfo("Navigate back for two times");
+//		AssignmentsPage.navigateBack(2);
 
 		baseClass.stepInfo("Verified The Bulk assigned Document in Assignmentpage");
 		AssignmentsPage.verifyingTheDocCount(testing, 3, Input.codeFormName);
@@ -974,7 +988,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	//@Test(groups = { "regression" }, priority = 23)
+	@Test(groups = { "regression" }, priority = 23)
 	public void verifyAssignSingleDocumentOnDocList() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -1002,8 +1016,10 @@ public class DocList_Regression1 {
 		final String test =testing;
 		AssignmentsPage AssignmentsPage = new AssignmentsPage(driver);
 
-		baseClass.stepInfo("Navigate back for two times");
-		AssignmentsPage.navigateBack(2);
+//		baseClass.stepInfo("Navigate back for two times");
+//		AssignmentsPage.navigateBack(2);
+//		baseClass.stepInfo("Navigate to assignment page");
+//		AssignmentsPage.navigateToAssignmentsPage();
 
 		baseClass.stepInfo("Verified The Bulk assign single Document in Assignmentpage");
 		AssignmentsPage.verifyingTheDocCount(test, 1, Input.codeFormName);
@@ -1076,7 +1092,7 @@ public class DocList_Regression1 {
 		 * Description : Verify user is able to remove all documents from Folder in Doc list page
 		 * @throws AWTException 
 		 */	
-	 //@Test(groups={"regression"},priority = 26)
+	 @Test(groups={"regression"},priority = 26)
 	 public void verifyRemoveMultipleDocumentsFromFolderDocList() throws InterruptedException, AWTException {
 		baseClass=new BaseClass(driver);
 		String test="Folder"+Utility.dynamicNameAppender();
@@ -1270,13 +1286,13 @@ public class DocList_Regression1 {
 			baseClass.stepInfo("Open Doc list from Saved search page");
 			savedSearch.savedSearchToDocList(searchname);
 
-			docList = new DocListPage(driver);
-			
-			baseClass.stepInfo("Select The Document in Doclistpage");
-			docList.documentSelection(1);
-			
-			baseClass.stepInfo("Bulk release to security group of selected documents");
-			docList.docListToBulkRelease(Input.securityGroup);
+//			docList = new DocListPage(driver);
+//			
+//			baseClass.stepInfo("Select The Document in Doclistpage");
+//			docList.documentSelection(1);
+//			
+//			baseClass.stepInfo("Bulk release to security group of selected documents");
+//			docList.docListToBulkRelease(Input.securityGroup);
 			loginPage.logout();
 				
 		}
@@ -1392,7 +1408,7 @@ public class DocList_Regression1 {
              * @throws AWTException
              */        
         
-        // @Test(groups={"regression"},priority = 34)
+        @Test(groups={"regression"},priority = 34)
          public void verifyUnreleaseSingleDocFromSecurityGroupOnDocList() throws InterruptedException, AWTException {
              baseClass=new BaseClass(driver);
               
@@ -1428,7 +1444,7 @@ public class DocList_Regression1 {
   		 * @throws AWTException 
   		 */		 
   	 
-  	 //@Test(groups={"regression"},priority = 35)
+  	 @Test(groups={"regression"},priority = 35)
   	 public void verfyingTheAscendingAndDescendingOrderInColumn() throws InterruptedException, AWTException {
   		 baseClass=new BaseClass(driver);
   		    String testData1 = Input.testData1;

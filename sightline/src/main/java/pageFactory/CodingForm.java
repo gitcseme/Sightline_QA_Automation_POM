@@ -2810,10 +2810,13 @@ public class CodingForm {
 	public void searchAndEditCodeForm(String codeFormName, String projectFieldName) {
 		try {
 			driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			base.waitTime(3);
 			base.waitForElement(getCodingForm_SearchBox());
 			getCodingForm_SearchBox().SendKeys(codeFormName);
 			// getCodingForm_SearchButton().Click();
+			driver.waitForPageToBeReady();
 			base.waitForElement(getCodingForm_EditButton(codeFormName));
+			getCodingForm_EditButton(codeFormName).isElementAvailable(15);
 			getCodingForm_EditButton(codeFormName).Click();
 			driver.waitForPageToBeReady();
 			base.waitForElement(getCodingForm_EDITABLE_METADATA_Tab());
@@ -4756,5 +4759,41 @@ public class CodingForm {
 		addcodingFormAddButton();
 		passingCodingFormName(cfName);
 		saveCodingForm();
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 03/03/2022 Modified date: 03/03/2022
+	 * @Description:This method used to create coding form
+	 * @param cfName
+	 * @param small 
+	 * @param tiny 
+	 * @param average 
+	 * @param bit
+	 * @param action
+	 */
+	public void creatingCodingFormusingMultipleNvachar(String cfName, String tiny, String small, String average,
+			String bit,String action) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		addNewCodingFormButton();
+		basedOnCreatingNewObject(null, null, tiny, "metadata");
+		addcodingFormAddButton();
+		driver.scrollPageToTop();
+		basedOnCreatingNewObject(null, null, small, "metadata");
+		addcodingFormAddButton();
+		driver.scrollPageToTop();
+		basedOnCreatingNewObject(null, null, average, "metadata");
+		addcodingFormAddButton();
+		driver.scrollPageToTop();
+		basedOnCreatingNewObject(null, null, bit, "metadata");
+		addcodingFormAddButton();
+		addcodingFormAddButton();
+		selectDefaultActions(0, action);
+		selectDefaultActions(1, action);
+		selectDefaultActions(2, action);
+		selectDefaultActions(3, action);
+		driver.scrollPageToTop();
+		passingCodingFormName(cfName);
+		saveCodingForm();
+
 	}
 }

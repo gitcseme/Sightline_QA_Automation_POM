@@ -6967,6 +6967,175 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("verifying comparison window neardupe spinnig wheel");
 		docView.nearDupeComparisonWindowLodingVerification();
 	}
+	
+	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+	 * @TestCase id : 51650 - Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view.
+	 * @Description : Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view
+	 **/
+	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	public void verifyDocPagesLoadedProperlyForLessThan500PagesDoc() throws Exception {		
+		baseClass=new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51650 Sprint 13");
+		utility = new Utility(driver);
+		String lessThan500PagesDocId = Input.lessThan500PagesDocId;
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("#### Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view ####");
+		
+		baseClass.selectproject("AutomationAdditionalDataProject");
+	
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		baseClass.stepInfo("Basic Basic content search");
+		session.basicContentSearch(lessThan500PagesDocId);
+
+		baseClass.stepInfo("Navigate to  DocView page");
+		session.ViewInDocView();
+
+		baseClass.stepInfo("Verify total page count.");
+		docView.verifyTotalPagesOfDocumentCountLessThan500();
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+	 * @TestCase id : 51649 - Verify that if the file size is blank and # of pages <= 500, then set NearNativeReady = 1 and document should be loaded successfully.
+	 * @Description : Verify that if the file size is blank and # of pages <= 500, then set NearNativeReady = 1 and document should be loaded successfully.
+	 **/
+	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	public void verifyDocPagesLoadedProperlyForLessThanOrEqual500PagesDoc() throws Exception {		
+		baseClass=new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51649 Sprint 13");
+		utility = new Utility(driver);
+		String d500PagesDocId = Input.d500PagesDocId;
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("#### Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view ####");
+		
+		baseClass.selectproject("AutomationAdditionalDataProject");
+	
+		docView = new DocViewPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		baseClass.stepInfo("Basic Basic content search");
+		session.basicContentSearch(d500PagesDocId);
+
+		baseClass.stepInfo("Navigate to  DocView page");
+		session.ViewInDocView();
+
+		baseClass.stepInfo("Verify total page count which is less than or equal to 500 and doc view document is loaded proper or not.");
+		docView.verifyTotalPagesOfDocumentCountLessThanOrEqualTo500();
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @TestCase_Id : 52260 : Verify that on deleting the applied redaction tag message should be displayed to the user.
+	 * @description : Verify that on deleting the applied redaction tag message should be displayed to the user.
+	 */
+	@Test(groups = { "regression" }, priority = 18)
+	public void verifyErrorMsgDisplayedBYDeletingAppliedRedactionTag() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("RPMXCON-52260 Production-sprint:13");
+		baseClass.stepInfo("#### Verify that on deleting the applied redaction tag message should be displayed to the user. ####");
+		String redactiontag1 = Input.randomText + Utility.dynamicNameAppender();
+		
+		RedactionPage redactionpage = new RedactionPage(driver);
+
+		baseClass.stepInfo("Navigate To Redactions Page URL");
+		redactionpage.navigateToRedactionsPageURL();
+
+		baseClass.stepInfo("Manage Redaction Tags Page");
+		redactionpage.manageRedactionTagsPage(redactiontag1);
+
+		SessionSearch search = new SessionSearch(driver);
+
+		baseClass.stepInfo("Navigate To Session Search Page URL");
+		search.navigateToSessionSearchPageURL();
+
+		baseClass.stepInfo("Basic Content Search");
+		search.basicContentSearch(Input.testData1);
+
+		baseClass.stepInfo("View in doc view");
+		search.ViewInDocView();
+		
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		
+		baseClass.stepInfo("Click on reduction button ");
+		docViewMetaDataPage.clickOnRedactAndRectangle();
+
+		redact = new DocViewRedactions(driver);
+
+		baseClass.stepInfo("Set this page reduct in doc");
+		redact.performThisPageRedaction(redactiontag1);
+		
+		redactionpage = new RedactionPage(driver);
+		redactionpage.verifyErrorMessageByDeletingAppliedRedactionTag(redactiontag1);
+		
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @TestCase Id:51438 Verify that after impersonation if the document
+	 *           native/PDF/TIFF/Text is being presented, the N/P/T/X icon with the
+	 *           accompanying mouse over tool tip must appear
+	 * @Description :To Verify that after impersonation if the document
+	 *              native/PDF/TIFF/Text is being presented, the N/P/T/X icon with
+	 *              the accompanying mouse over tool tip must appear.
+	 * @throws InterruptedException stabilization - not done
+	 */
+	// @Test(enabled = true,dataProvider="multiUserCredentials", groups = {
+	// "regression" }, priority = 15)
+	public void verifyDocIdIconOnDocViewPanal(String fullName, String userName, String password, String fromRole,
+			String toRole) throws InterruptedException {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		baseClass.stepInfo("Test case id : RPMXCON-51438");
+		baseClass.stepInfo(
+				"Verify that after impersonation if the document native/PDF/TIFF/Text is being presented, the N/P/T/X icon with the accompanying mouse over tool tip must appear");
+		String N_DocID = "ID00001351";
+		String N_DocToolTipMessage = "Native file variant of the document being displayed";
+		String X_DocID = "ID00000102";
+		String X_DocToolTipMessage = "Text file variant of the document being displayed";
+		String T_DocID = "ID00001012";
+		String T_DocToolTipMessage = "TIFF file variant of the document being displayed";
+		String P_DocId = "ID00001464";
+		String P_DocToolTipMessage = "PDF file variant of the document being displayed";
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		SessionSearch session = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+
+		baseClass.stepInfo("Impersnated from " + fromRole + " to " + toRole);
+		baseClass.rolesToImp(fromRole, toRole);
+
+		baseClass.stepInfo("Step 1: Search for the docs ");
+		session.basicContentSearch(Input.searchString1);
+
+		baseClass.stepInfo("Step 2:view docS in DocView");
+		session.ViewInDocView();
+
+		baseClass.stepInfo("Verify T icon and tolltip message for selected document");
+		docView.verifyingToolTipPopupMessage(T_DocID, T_DocToolTipMessage);
+
+		baseClass.stepInfo("Verify X icon and tolltip message for selected document");
+		docView.verifyingToolTipPopupMessage(X_DocID, X_DocToolTipMessage);
+
+		baseClass.stepInfo("Verifying P icon and tolltip message for selected document");
+		docView.verifyingToolTipPopupMessage(P_DocId, P_DocToolTipMessage);
+
+		baseClass.stepInfo("Verifying N icon and tolltip message for selected document");
+		docView.verifyingToolTipPopupMessage(N_DocID, N_DocToolTipMessage);
+
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

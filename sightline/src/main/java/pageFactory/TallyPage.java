@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -597,7 +598,7 @@ public class TallyPage {
 
 		getTally_btnTallyAll().ScrollTo();
 		getTally_btnTallyAll().waitAndClick(30);
-		driver.scrollingToElementofAPage(getTally_tallyactionbtn());
+		driver.scrollingToElementofAPage(getTally_btnTallyApply());
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_tallyactionbtn().Visible();
@@ -1143,13 +1144,16 @@ public class TallyPage {
 	 */
 	public void applyingSubTallyField(String tagName) {
 		try {
+			driver.scrollPageToTop();
 			base.waitForElement(getSubTallyField());
 			base.waitTillElemetToBeClickable(getSubTallyField());
 			getSubTallyField().Click();
 			base.waitTillElemetToBeClickable(getSubTagsCheckBox());
 			getSubTagsCheckBox().Click();
 			base.waitForElement(getTagsBoard());
-			getTagsBoard().Click();
+//			getTagsBoard().Click();//another tag is getting selected.
+			Actions ac = new Actions(driver.getWebDriver());
+			ac.moveToElement(getTagsBoard().getWebElement()).perform();
 			base.waitForElement(getSubTagByName(tagName));
 			base.waitTillElemetToBeClickable(getSubTagByName(tagName));
 			getSubTagByName(tagName).Click();
