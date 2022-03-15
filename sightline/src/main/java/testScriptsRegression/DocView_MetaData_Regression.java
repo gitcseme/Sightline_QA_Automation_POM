@@ -72,7 +72,7 @@ public class DocView_MetaData_Regression {
 	 *					51130 - To verify that user can select documents and view the added folder.
 	 * Description : To Verify History and folder Popups From DocView
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	@Test(description ="RPMXCON-51313,RPMXCON-50853,RPMXCON-51312,RPMXCON-51311,RPMXCON-51130",alwaysRun = true,groups={"regression"},priority = 1)
 	public void verifyHistoryPopupFromDocView() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51313, RPMXCON-50853, RPMXCON-51312, RPMXCON-51311, RPMXCON-51130 DocView/MetaData Sprint 01");
@@ -120,7 +120,7 @@ public class DocView_MetaData_Regression {
 	 * 				 50857 - To verify that user can not view the 'Folder' action on Doc View, if preferences is set as 'Disabled'  from the assignent.	
 	 * Description : To Verify Assignment operations reflect on Doc View
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 2)
+	@Test(description ="RPMXCON-50856,RPMXCON-50855,RPMXCON-50854,RPMXCON-50857",alwaysRun = true,groups={"regression"},priority = 2)
 	public void verifyAssignmentsForDocView() throws Exception {	
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50856, RPMXCON-50855, RPMXCON-50854, RPMXCON-50857- DocView/MetaData Sprint 01");
@@ -183,7 +183,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  52001 - Verify Hidden Property Metadata label warning from Doc view page does not appear when property is blank
 	 * Description : To Verify Hidden properties alert box not displayed on history
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 3)
+	@Test(description ="RPMXCON-52001",alwaysRun = true,groups={"regression"},priority = 3)
 	public void verifyHiddenPropertiesOnHistory() throws Exception {
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52001- DocView/MetaData Sprint 01");
@@ -215,7 +215,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  51021 - To verify that remarks activity should be displayed in history record of document.
 	 * Description : To verify Remarks Activity Displayed On History Record
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 4)
+	@Test(description ="RPMXCON-51021",alwaysRun = true,groups={"regression"},priority = 4)
 	public void verifyRemarksActivityDisplayedOnHistoryRecord()throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51021- DocView/MetaData Sprint 01");
@@ -252,7 +252,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  51144 - Verify that updated metadata should be displayed on Metadata panel from doc view.
 	 * Description : To verify Updated Meta Data Displayed On Meta Data Table 
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 5)
+	@Test(description ="RPMXCON-51144",alwaysRun = true,groups={"regression"},priority = 5)
 	public void verifyUpdatedMetaDataDisplayedOnMetaDataTable()throws Exception {
 		
 		baseClass=new BaseClass(driver);
@@ -329,7 +329,7 @@ public class DocView_MetaData_Regression {
 	 * 				  50836 - To verify that RMU can view the 'MetaData' tab on Doc View, if preferences is set as 'Enabled' from the assignment.
 	 * Description : To Verify Assignment operations reflect on Doc View
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 6)
+	@Test(description ="RPMXCON-50837,RPMXCON-50836",alwaysRun = true,groups={"regression"},priority = 6)
 	public void verifyAssignmentsForMetaDataTabOnDocView() throws Exception {
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50837, RPMXCON-50836 DocView/MetaData Sprint 02");
@@ -368,7 +368,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  50807 - To verify user can redirect to Doc View page, can view History, Metadata tab when Sys Admin impersonates.
 	 * Description : To Verify History and folder Popups From DocView
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 7)
+	@Test(description ="RPMXCON-50807",alwaysRun = true,groups={"regression"},priority = 7)
 	public void verifyDocViewPageComponentsAsSystemAdmin() throws Exception {	
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50807- DocView/MetaData Sprint 02");
@@ -425,7 +425,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  50803 - To verify 'Folder' tab from doc view page on document pagination for Reviewer..
 	 * Description : Verify Folder tab is displayed by Document Pagination On Doc View.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 8)
+	@Test(description ="RPMXCON-50803",alwaysRun = true,groups={"regression"},priority = 8)
 	public void verifyFolderTabDisplayedByDocPaginationOnDocView()throws Exception {
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50803- DocView/MetaData Sprint 02");
@@ -456,7 +456,7 @@ public class DocView_MetaData_Regression {
 	 * Description : To Verify Project Admin impersonates to Reviewer role and clicks to view the 'Folders' tab from doc view page.
 	 */
 
-	@Test(alwaysRun = true,groups={"regression"},priority = 9)
+	@Test(description ="RPMXCON-50806",alwaysRun = true,groups={"regression"},priority = 9)
 
 	public void verifyProjectAdminImpersonatesToReviewer() throws Exception {	
 		baseClass=new BaseClass(driver);
@@ -509,7 +509,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  50791 - To verify pagination from list of metadata pop up.
 	 * Description : To verify pagination from list of metadata pop up.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 10)
+	@Test(description ="RPMXCON-50791",alwaysRun = true,groups={"regression"},priority = 10)
 	public void verifyPaginationFromListOfMetadataPopup() throws Exception {	
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50791- DocView/MetaData Sprint 02");
@@ -532,7 +532,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  50792 - To verify when Reviewer clicks the 'History' tab from doc view page.
 	 * Description : To verify when Reviewer clicks the 'History' tab from doc view page.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 11)
+	@Test(description ="RPMXCON-50792",alwaysRun = true,groups={"regression"},priority = 11)
 	public void verifyHistoryTabOnDocViewPage() throws Exception {	
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50792- DocView/MetaData Sprint 02");
@@ -576,7 +576,7 @@ public class DocView_MetaData_Regression {
 	 * Testcase id :  50788 - To verify Metadata tab from Doc view page for Reviewer user.
 	 * Description : To Verify meta data tab as reviewer.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 12)
+	@Test(description ="RPMXCON-50788",alwaysRun = true,groups={"regression"},priority = 12)
 	public void verifyMetadataTabFromDocViewPage() throws Exception {
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50788 DocView/MetaData Sprint 03");
@@ -664,7 +664,7 @@ public class DocView_MetaData_Regression {
 	 * @description : Verify when Project Admin impersonates to RMU role and clicks to view the 'Folders' tab from doc view page.
 	 */
 
-	@Test(groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-50805",groups = { "regression" }, priority = 13)
 	public void verifyFoldertabDisplayedWithExpandCollapseHirearcy() throws InterruptedException {
 		baseClass=new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -752,7 +752,7 @@ public class DocView_MetaData_Regression {
 	 * @TestCase id : 50802 - To verify 'Folder' tab from doc view page on document navigation.
 	 * @Description : Verify 'Folder' tab from doc view page on document navigation.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 14)
+	@Test(description ="RPMXCON-50802",alwaysRun = true,groups={"regression"},priority = 14)
 	public void verifyCreatedFolderIsAddedToFolderTreeHirercy() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50802 DocView/MetaData Sprint 08");
@@ -781,7 +781,7 @@ public class DocView_MetaData_Regression {
 	 * @TestCase id : 50801 - To verify that InActive fields is not displayed on Doc View-MetaData tab.
 	 * @Description : Verify that InActive fields is not displayed on Doc View-MetaData tab.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 15)
+	@Test(description ="RPMXCON-50801",alwaysRun = true,groups={"regression"},priority = 15)
 	public void verifyInactiveFieldsNotDisplayedonDocViewMetadata() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50801 DocView/MetaData Sprint 08");
@@ -833,7 +833,7 @@ public class DocView_MetaData_Regression {
 	 * @Testcase_Id : RPMXCON-50800 : To verify when Reviewer clicks the 'Folders' tab from doc view page when BulkFolder action is performed by PA/RMU from search result.
 	 * @Description : Verify when Reviewer clicks the 'Folders' tab from doc view page when BulkFolder action is performed by PA/RMU from search result
 	 */
-	@Test(groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-50800",groups = { "regression" }, priority = 16)
 	public void verifyReviwerGetFolderByBulkFolderRMU() throws Exception {
 		baseClass=new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
@@ -885,7 +885,7 @@ public class DocView_MetaData_Regression {
 	 * @Testcase_Id : RPMXCON-50799 : To verify when RMU/Reviewer clicks the 'Folders' tab from doc view page when BulkFolder action is not performed from search result.
 	 * @Description : To verify when RMU/Reviewer clicks the 'Folders' tab from doc view page when BulkFolder action is not performed from search result.
 	 */
-	@Test(groups = { "regression" }, priority = 17)
+	@Test(description ="RPMXCON-50799",groups = { "regression" }, priority = 17)
 	public void verifyFolderTabWithoutPerformingBulkFolder() throws Exception {
 		baseClass=new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
@@ -913,7 +913,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  50796 - To verify when Reviewer clicks the 'Browse All History' button from History tab from doc view page.
 	 * Description : To verify when Reviewer clicks the 'Browse All History' button from History tab from doc view page.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 18)
+	@Test(description ="RPMXCON-50796",alwaysRun = true,groups={"regression"},priority = 18)
 	public void verifyBrowseAllHistoryOnHistoryTabDocView() throws Exception {	
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50796- DocView/MetaData Sprint 08");
@@ -960,7 +960,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  50795 - To verify when RMU/Reviewer clicks the 'Browse All History' button from History tab from doc view page.
 	 * Description : Verify when RMU/Reviewer clicks the 'Browse All History' button from History tab from doc view page.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 19)
+	@Test(description ="RPMXCON-50795",alwaysRun = true,groups={"regression"},priority = 19)
 	public void verifyBrowseAllHistoryOnHistoryTabDocViewFromAssignments() throws Exception {	
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50795- DocView/MetaData Sprint 08");
@@ -1049,7 +1049,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  50793 - To verify when user clicks the 'Folders' tab from doc view page.
 	 * Description : Verify when user clicks the 'Folders' tab from doc view page
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 20)
+	@Test(description ="RPMXCON-50793",alwaysRun = true,groups={"regression"},priority = 20)
 	public void verifyUserClicksFoldersTabFromDocView() throws Exception {	
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50793- DocView/MetaData Sprint 08");
@@ -1130,7 +1130,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  48689 - To verify when user clicks the 'History' tab from doc view page.
 	 * Description : Verify when user clicks the 'History' tab from doc view page.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 21)
+	@Test(description ="RPMXCON-48689",alwaysRun = true,groups={"regression"},priority = 21)
 	public void verifyHistoryTabDocViewFromAssignments() throws Exception {	
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48689- DocView/MetaData Sprint 08");
@@ -1218,7 +1218,7 @@ public class DocView_MetaData_Regression {
 	 * TestCase id :  48688 - To verify Metadata tab from doc view page for user.
 	 * Description : Verify Metadata tab from doc view page for user.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 22)
+	@Test(description ="RPMXCON-48688",alwaysRun = true,groups={"regression"},priority = 22)
 	public void verifyMetadataTabDocViewFromAssignments() throws Exception {	
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48688- DocView/MetaData Sprint 08");
@@ -1290,7 +1290,7 @@ public class DocView_MetaData_Regression {
 	 * @description:  To verify sorting from list of metadata pop up
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 23)
+	@Test(description ="RPMXCON-50790",alwaysRun = true,groups={"regression"},priority = 23)
 	public void verifyMetadataPopUpColumns() throws InterruptedException {
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50790 sprint-11");
@@ -1320,7 +1320,7 @@ public class DocView_MetaData_Regression {
 	 * @description : Verify that DocView Metadata Panel data should not go missing in an assignment.
 	 */
 
-	@Test(groups = { "regression" }, priority = 23)
+	@Test(description ="RPMXCON-48802",groups = { "regression" }, priority = 24)
 	public void verifyMeataDataPanelDisplayedByAssignmentsView() throws InterruptedException {
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-48802 DocView/Meatadata-sprint:08");
