@@ -4314,7 +4314,7 @@ public class CreateCodingForm_New_Regression {
 	 	codingForm.specialObjectsBox(Input.checkGroup);
 	 	driver.scrollPageToTop();
 	 	codingForm.addcodingFormAddButton();
-	 	codingForm.getCF_TagTypes(0).selectFromDropdown().selectByVisibleText(Input.checkItem);
+//	 	codingForm.getCF_TagTypes(0).selectFromDropdown().selectByVisibleText(Input.checkItem);
 	 	driver.waitForPageToBeReady();
 	 	codingForm.getCF_CheckGroup(0).selectFromDropdown().selectByIndex(1);
 	 	codingForm.selectDefaultActions(1, Input.hidden);
@@ -4474,32 +4474,32 @@ public class CreateCodingForm_New_Regression {
 		loginPage.logout();
 	}
 
-		
-
-	
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
-		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
+	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
-			try { // if any tc failed and dint logout!
-				loginPage.logoutWithoutAssert();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
-		UtilityLog.info("Executed :" + result.getMethod().getMethodName());
+		try {
+			// loginPage.logout();
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
+		}
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			loginPage.quitBrowser();
-		} finally {
-			//loginPage.clearBrowserCache();
+			// LoginPage.clearBrowserCache();
+
+		} catch (Exception e) {
+			System.out.println("Sessions already closed");
 		}
 	}
+
+
+
 
 }

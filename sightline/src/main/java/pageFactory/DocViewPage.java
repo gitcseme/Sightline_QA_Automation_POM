@@ -15041,8 +15041,10 @@ public class DocViewPage {
 		for (String docId : completedDoc) {
 			getDociD(docId).ScrollTo();
 			getDociD(docId).waitAndClick(5);
-			softAssertion.assertTrue(getUnCompleteButton().Displayed());
-		}
+			boolean flag=getUnCompleteButton().Displayed();
+			System.out.println(flag);
+			softAssertion.assertTrue(flag);
+			softAssertion.assertAll();		}
 		base.passedStep("Uncomplete button displayed for completed document");
 		driver.waitForPageToBeReady();
 	}
@@ -16446,6 +16448,7 @@ public class DocViewPage {
 	/**
 	 * @author Indium-Baskar
 	 */
+	
 //	Reusable method for verify unComplete to click complete button in random order
 	public void unCompleteButtonToCompleteBtn() {
 		driver.waitForPageToBeReady();
@@ -16454,7 +16457,12 @@ public class DocViewPage {
 			getDociD(docId).waitAndClick(5);
 			base.waitForElement(getUnCompleteButton());
 			getUnCompleteButton().waitAndClick(5);
-			softAssertion.assertTrue(getCompleteDocBtn().isDisplayed());
+			driver.waitForPageToBeReady();
+			base.waitTime(3);
+			boolean flag=getCompleteDocBtn().Displayed();
+			System.out.println(flag);
+			softAssertion.assertTrue(flag);
+			softAssertion.assertAll();
 		}
 		driver.waitForPageToBeReady();
 		if (getverifyCodeSameAsLast().isElementAvailable(5)) {
@@ -16462,7 +16470,6 @@ public class DocViewPage {
 		} else {
 			base.passedStep("Tick mark removed for document after clicking the uncomplete button");
 		}
-		softAssertion.assertAll();
 	}
 
 	/**
@@ -18775,7 +18782,7 @@ public class DocViewPage {
 //	Reusable method for edit coding without complete btn and verify scroll
 	public void editCodingFormScrollComplete() throws InterruptedException {
 		driver.waitForPageToBeReady();
-		getClickDocviewID(3).waitAndClick(5);
+		String prnDoc=getVerifyPrincipalDocument().getText();
 		base.waitForElement(getResponsiveCheked());
 		getResponsiveCheked().waitAndClick(5);
 		base.waitForElement(getNonPrivilegeRadio());
@@ -18792,6 +18799,8 @@ public class DocViewPage {
 		getDocument_CommentsTextBox().SendKeys(output);
 		completeButton();
 		base.VerifySuccessMessage("Document completed successfully");
+		driver.waitForPageToBeReady();
+		getDociD(prnDoc).waitAndClick(5);
 		driver.waitForPageToBeReady();
 		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
 		boolean flag = (boolean) jse
