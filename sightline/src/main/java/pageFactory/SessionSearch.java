@@ -10776,4 +10776,38 @@ public class SessionSearch {
 			}
 		}
 	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 * This method will perform a metadata search in advanced search page in draft state[which means with out clicking search button].
+	 * @param metaDataField [Meta data field to be selected in DD]
+	 * @param val1[Metadata Value to be entered in query text box]
+	 */
+public void advMetaSearch_Draft(String metaDataField,String val1) {
+		
+		base.waitForElement(getAdvanceSearch_MetadataBtn());
+		getAdvanceSearch_MetadataBtn().Click();
+		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+		 getMetaDataInserQuery().Click();
+	}
+/**
+ * @author Jayanthi.Ganesan
+ * This method will create Metadata search in advanced search page with operator 
+ * @param metaData[Meta data field to be selected in DD]
+ * @param metaDataValue[Metadata Value to be entered in query text box]
+ * @param Operator
+ * @param metaData1[Meta data field to be selected in DD]
+ * @param metaDataValue1[Metadata Value to be entered in query text box]
+ * @param clickContetnBtn [if true it will navigate to advanced saerch button and click on content meta data button]
+ */
+	public void metadataSearchesUsingOperators(String metaData,String metaDataValue,String Operator,String metaData1,String metaDataValue1,boolean clickContetnBtn) {
+		if(clickContetnBtn) {
+			navigateToAdvancedSearchPage();
+			base.waitForElement(getContentAndMetaDatabtn());
+			getContentAndMetaDatabtn().Click();
+		}
+	advMetaSearch_Draft( metaData, metaDataValue);
+	selectOperator(Operator);
+	advMetaSearch_Draft( metaData1, metaDataValue1);
+	}
 }

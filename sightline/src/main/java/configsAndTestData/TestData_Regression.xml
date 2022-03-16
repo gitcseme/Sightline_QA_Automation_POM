@@ -75,7 +75,6 @@
 	<ThreadQuery>"testing the same"</ThreadQuery>
 	<NewDocId>ID00001178</NewDocId>
 	<documentToBeScrolled>ID00001352-I</documentToBeScrolled>
-	<conceptualDocument>ID00004389</conceptualDocument>
 	<conceptualDocs1>ID00000703</conceptualDocs1>
 	<principalDocId>5168</principalDocId>
 	<principalDocId1>5138</principalDocId1>
@@ -257,6 +256,7 @@
 	<batchFileWithMultiSheetColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange_MS</batchFileWithMultiSheetColumnOrderChange>
 	<highVolumeProject>AutomationHighVolumeProject</highVolumeProject>
 	<bulkSearchSting1>s</bulkSearchSting1>
+	<validBatchFile>ValidBatchFile</validBatchFile>
 	
     
 
@@ -517,6 +517,8 @@
 	<threadMapDocId01>ID00003041</threadMapDocId01>
 	<threadMapWithNonEmailAttachment>ID00000098</threadMapWithNonEmailAttachment>
 	<conceptualDocId04>ID00004990</conceptualDocId04>
+		<nearDupeDoc05>ID00004847</nearDupeDoc05>
+	
 	
 	 <!-- Ingetion Related data Start -->
     <Collection1KFolder>Automation_Collection1K_Tally</Collection1KFolder>

@@ -102,6 +102,7 @@ public class TestData {
 	public String ingestionQuery;
 	public String ingestionDocIdFamilyMember;
 	public String ingestionDocIdNearDupe;
+	public String nearDupeDoc05;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;
@@ -239,6 +240,7 @@ public class TestData {
     public String batchFileWithMultiSheetColumnOrderChange;
     public String highVolumeProject;
     public String bulkSearchSting1;
+    public String validBatchFile;
     
 	// Added by jeevitha
 	public String colorCodeOfRed;

@@ -58,29 +58,31 @@ public class ProductionPage_Regression {
 	String productionname;
 	String TempName;
 
-	@BeforeClass(alwaysRun = true)
-
-	private void TestStart() throws Exception, InterruptedException, IOException {
-
+	@BeforeMethod(alwaysRun = true)
+	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("Started Execution for prerequisite");
+		Input input = new Input();
+		input.loadEnvConfig();
+		baseClass = new BaseClass(driver);
+		driver = new Driver();
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
+
 	}
 
 	@BeforeMethod(alwaysRun = true)
-	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
-
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-		in.loadEnvConfig();
-		driver = new Driver();
-		baseClass = new BaseClass(driver);
-		loginPage = new LoginPage(driver);
-		softAssertion = new SoftAssert();
-
-		// Login as a PA
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.info(testMethod.getName());
 	}
+
+	
 	/**
 	 * @author Indium-Baskar date: 29/8/2021 Modified date: N/A Modified by: Baskar
 	 * @Description : Verify that Preivew documents should be display Standard
@@ -97,8 +99,8 @@ public class ProductionPage_Regression {
 
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -139,6 +141,7 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 
+		loginPage.logout();
 	}
 
 	/**
@@ -157,8 +160,8 @@ public class ProductionPage_Regression {
 
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -188,6 +191,7 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 
 	/**
@@ -207,8 +211,8 @@ public class ProductionPage_Regression {
 
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -240,6 +244,7 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 
 	/**
@@ -258,8 +263,8 @@ public class ProductionPage_Regression {
 
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -296,6 +301,7 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 
 	/**
@@ -323,6 +329,7 @@ public class ProductionPage_Regression {
 			baseClass
 					.passedStep("Page level options not displayed in production component when clicking the  Text tab");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -375,6 +382,7 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 
 	/**
@@ -425,6 +433,7 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 
 	/**
@@ -482,6 +491,7 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 
 	}
 
@@ -500,7 +510,7 @@ public class ProductionPage_Regression {
 		tagname = "AATag" + Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch("ID00005183");
@@ -540,6 +550,7 @@ public class ProductionPage_Regression {
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 
 
 	}
@@ -550,7 +561,7 @@ public class ProductionPage_Regression {
 	 * @Description:Verify that updated redaction text is displays on generated
 	 *                     Tiff/PDF for orphan redactions document
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 10)
+	@Test(enabled = true, groups = { " regression" }, priority = 10)
 	public void orphanRedactionsInSelectedDocument() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56121- Production Sprint 05");
@@ -562,8 +573,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create folder and tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Technical Issue");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.technicalIssue);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		sessionSearch = new SessionSearch(driver);
 		// passing orphan redacted DOCID as string
@@ -589,8 +600,8 @@ public class ProductionPage_Regression {
 				"Verified that updated redaction text is displays on generated Tiff/PDF for orphan redactions document");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
 
@@ -614,8 +625,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -648,8 +659,8 @@ public class ProductionPage_Regression {
 				"Verify that if Producion is UnCommitted then 'Post Generation QC Checks' status should be display on Production progress status bar");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
 
@@ -675,8 +686,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -711,8 +722,8 @@ public class ProductionPage_Regression {
 		baseClass.passedStep(" Production status displays as Draft on Generation Page");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
 
@@ -725,7 +736,7 @@ public class ProductionPage_Regression {
 	 * be created under the mentioned default directory in the production
 	 * configuration
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 13)
+	@Test(enabled = false, groups = { " regression" }, priority = 13)
 	public void passProductionNameAsLoadFilesName() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -738,8 +749,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create folder and tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		sessionSearch = new SessionSearch(driver);
@@ -764,8 +775,8 @@ public class ProductionPage_Regression {
 		baseClass.passedStep("passed ProductionName As LoadFiles Name.");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 		
 	}
@@ -777,7 +788,7 @@ public class ProductionPage_Regression {
 	 * @Description:Verify that configuration format should applied for OCRed text
 	 * files
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 14)
+	@Test(enabled = false, groups = { " regression" }, priority = 14)
 	public void verifyFormatOCRedTextFiles() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -789,8 +800,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create folder and tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		sessionSearch = new SessionSearch(driver);
@@ -813,8 +824,8 @@ public class ProductionPage_Regression {
 		baseClass.passedStep("Verify that configuration format should applied for OCRed text files");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
 
@@ -826,7 +837,7 @@ public class ProductionPage_Regression {
 	 *                     Generation QC Checks'
 	 */
 
-	@Test(enabled = true, groups = { " regression" }, priority = 15)
+	@Test(enabled = false, groups = { " regression" }, priority = 15)
 	public void verifyPostGenInTileView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55987- Production Sprint 05");
@@ -838,8 +849,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -884,8 +895,8 @@ public class ProductionPage_Regression {
 		}
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -897,7 +908,7 @@ public class ProductionPage_Regression {
 	 * @Description:To Verify that End-to-end Production Export functionality is
 	 *                 working properly with TIFF files(Production Export).
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 17)
+	@Test(enabled = false, groups = { " regression" }, priority = 17)
 	public void createExport() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56165- Production Sprint 05");
@@ -912,8 +923,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create folder and tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for the created folder and check the pure hit count
 		sessionSearch = new SessionSearch(driver);
@@ -942,8 +953,8 @@ public class ProductionPage_Regression {
 
 		// To delete tags and folders
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -962,7 +973,7 @@ public class ProductionPage_Regression {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { " regression" }, priority = 18)
+	@Test(enabled = false, groups = { " regression" }, priority = 18)
 	public void generatingTheProductionAfterBurnRedaction() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56122- Production Sprint 05");
@@ -976,7 +987,7 @@ public class ProductionPage_Regression {
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		UtilityLog.info(Input.prodPath);
 
 		Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
@@ -1005,7 +1016,7 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder created
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -1019,7 +1030,7 @@ public class ProductionPage_Regression {
 	 *              then that Tag should not be available.
 	 */
 
-	@Test(enabled = true, groups = { " regression" }, priority = 16)
+	@Test(enabled = false, groups = { " regression" }, priority = 16)
 
 	public void tiffSectionLeftBranding() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-56124- Production Sprint 05");
@@ -1033,7 +1044,7 @@ public class ProductionPage_Regression {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		baseClass.stepInfo("Create Tag with Classification");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		ProductionPage page = new ProductionPage(driver);
 		baseClass.stepInfo("Add New Production");
@@ -1054,7 +1065,7 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder created
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
 
@@ -1064,7 +1075,7 @@ public class ProductionPage_Regression {
 	 *         the populated the bates number fields and production should generated
 	 *         with modified bates number
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 19)
+	@Test(enabled = false, groups = { " regression" }, priority = 19)
 	public void verificationOnNumberingAndSortingPage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49242- Production Sprint 05");
@@ -1075,8 +1086,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -1098,8 +1109,8 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder created
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
 
@@ -1113,7 +1124,7 @@ public class ProductionPage_Regression {
 	 *                     docs from export
 	 * 
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 21)
+	@Test(enabled = false, groups = { " regression" }, priority = 21)
 	public void verifyNativeSectionDisplayForDocumentsFromExport() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56150- Production Sprint 06");
@@ -1125,8 +1136,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create folder and tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		sessionSearch = new SessionSearch(driver);
 		// testData string contains redacted documents as per Pre-requisites
@@ -1157,8 +1168,8 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -1170,7 +1181,7 @@ public class ProductionPage_Regression {
 	 *                     text
 	 * 
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 20)
+	@Test(enabled = false, groups = { " regression" }, priority = 20)
 	public void verifyProductionWithPDFRedaction() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49969- Production Sprint 06");
@@ -1182,8 +1193,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create folder and tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		sessionSearch = new SessionSearch(driver);
 		// testData string contains redacted documents as per Pre-requisites
@@ -1205,8 +1216,8 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
 
@@ -1217,7 +1228,7 @@ public class ProductionPage_Regression {
 	 *                 should export the text with the Placeholder
 	 * 
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 22)
+	@Test(enabled = false, groups = { " regression" }, priority = 22)
 	public void verifyTextExportWithPlaceholder() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49134- Production Sprint 06");
@@ -1230,9 +1241,9 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create folder and tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
 		UtilityLog.info(foldername);
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateTagwithClassification(tagname,Input.technicalIssue);
 		UtilityLog.info(tagname);
 
 		sessionSearch = new SessionSearch(driver);
@@ -1257,8 +1268,8 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername,Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname,Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -1283,9 +1294,9 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create folder and tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
 		UtilityLog.info(foldername);
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateTagwithClassification(tagname,Input.tagNamePrev);
 		UtilityLog.info(tagname);
 
 		sessionSearch = new SessionSearch(driver);
@@ -1301,6 +1312,7 @@ public class ProductionPage_Regression {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
+		driver.scrollingToBottomofAPage();
 		page.fillingTIFFSection(tagname, Input.tagNameTechnical);
 		page.fillingTextSection();
 		page.navigateToNextSection();
@@ -1311,8 +1323,8 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername,Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname,Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -1337,8 +1349,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for documents and adding to bulk folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1369,8 +1381,8 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
 
@@ -1394,8 +1406,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for documents and adding to bulk folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1429,8 +1441,8 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -1442,7 +1454,7 @@ public class ProductionPage_Regression {
 	 *                 from beginning, middle and end of the audio file
 	 * 
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 25)
+	@Test(enabled = false, groups = { " regression" }, priority = 25)
 	public void verifyAudioFilesWithRedactedDocuments() throws InterruptedException {
 
 		baseClass.stepInfo("RPMXCON_48317 Production- Sprint 06");
@@ -1544,8 +1556,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create folder and tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.audioSearch("Morning", "North American English");
@@ -1573,8 +1585,8 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -1599,8 +1611,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for redacted documents and adding to bulk folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1622,8 +1634,8 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 
 		baseClass.stepInfo("Burn reduction with white with black text enabled");
 		loginPage.logout();
@@ -1648,8 +1660,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for redacted documents and adding to bulk folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1675,8 +1687,8 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -1700,8 +1712,8 @@ public class ProductionPage_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateTagwithClassification(tagname1, "Privileged");
-		tagsAndFolderPage.CreateTagwithClassification(tagname2, "Technical Issue");
+		tagsAndFolderPage.CreateTagwithClassification(tagname1, Input.tagNamePrev);
+		tagsAndFolderPage.CreateTagwithClassification(tagname2, Input.technicalIssue);
 
 		// search for redacted documents and adding to bulk folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1734,8 +1746,8 @@ public class ProductionPage_Regression {
 
 		// delete tags and folders
 //	tagsAndFolderPage=new TagsAndFoldersPage(driver);
-//	tagsAndFolderPage.DeleteTagWithClassification(tagname1, "Default Security Group");
-//	tagsAndFolderPage.DeleteTagWithClassification(tagname2, "Default Security Group");
+//	tagsAndFolderPage.DeleteTagWithClassification(tagname1, Input.securityGroup);
+//	tagsAndFolderPage.DeleteTagWithClassification(tagname2, Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -1884,36 +1896,29 @@ public class ProductionPage_Regression {
 		loginPage.logout();
 	}
 
-	
 	@AfterMethod(alwaysRun = true)
-	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-		baseClass = new BaseClass(driver);
-		Reporter.setCurrentTestResult(result);
+	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 			loginPage.logoutWithoutAssert();
 		}
 		try {
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
-//			LoginPage.clearBrowserCache();
 		}
-
 	}
 
 	@AfterClass(alwaysRun = true)
-
 	public void close() {
-		System.out.println("******TEST CASES FOR PRODUCTIONS EXECUTED******");
 		try {
-//			loginPage.clearBrowserCache();
-		} catch (Exception e) {
-			// no session avilable
+			// LoginPage.clearBrowserCache();
 
+		} catch (Exception e) {
+			System.out.println("Sessions already closed");
 		}
 	}
-
 
 }
