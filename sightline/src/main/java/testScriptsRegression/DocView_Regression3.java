@@ -2775,7 +2775,102 @@ public class DocView_Regression3 {
 		loginPage.quitBrowser();
 		LoginPage.clearBrowserCache();
 	}
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA 
+	 * @TestCase id : 51448 -Verify that remark should be saved for the document when same annotation layer is mapped to different security groups.
+	 * @Description : Verify that remark should be saved for the document when same annotation layer is mapped to different security groups.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
+	public void verifyRemarkDiffSecurityGroupsSameAnnotationLayer() throws Exception {
+		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		namesg2 = Input.randomText + Utility.dynamicNameAppender();
+		namesg3 = Input.randomText + Utility.dynamicNameAppender();
+		String remark = Input.randomText + Utility.dynamicNameAppender();
+		docExp = new DocExplorerPage(driver);
+		baseClass = new BaseClass(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		sessionsearch = new SessionSearch(driver);
 
+		baseClass.stepInfo("Test case Id: RPMXCON-51448 Sprint 13");
+		baseClass.stepInfo(
+				"### Verify that remark should be saved for the document when same annotation layer is mapped to different security groups ###");
+		utility = new Utility(driver);
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User : " + Input.pa1userName + " to create prerequisite SG's and annotation layer");
+
+		baseClass.stepInfo("Creation of Prerequisites");
+		baseClass.stepInfo("Creation of two different security groups");
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityGroupsPage.AddSecurityGroup(namesg2);
+		driver.scrollPageToTop();
+		securityGroupsPage.AddSecurityGroup(namesg3);
+
+		baseClass.stepInfo("Creation of annotation layer");
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+
+		baseClass.stepInfo("Sharing same annotation layer to different security groups");
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+		securityGroupsPage.selectSecurityGroup(namesg3);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.CloseSuccessMsgpopup();
+
+		baseClass.stepInfo("Docs are released to both security groups");
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkRelease(namesg2);
+		sessionsearch.bulkRelease(namesg3);
+
+		baseClass.stepInfo("Access has been given to RMU and Rev to these security groups");
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu1userName);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rev1userName);
+		loginPage.logout();
+
+		baseClass.stepInfo("Adding annotation to document by RMU user as a prequisite");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		docViewRedact.selectsecuritygroup(namesg2);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		driver.waitForPageToBeReady();
+		
+		baseClass.stepInfo("Adding remark to document");
+		docView.addRemarkByText(remark);
+		
+		baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
+		docView.verifyRemarkIsAdded(remark);
+		
+		loginPage.logout();
+		
+		baseClass.stepInfo("Adding annotation to document by Rev user as a prequisite");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+		docViewRedact.selectsecuritygroup(namesg3);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.addDocsMetCriteriaToActionBoard();
+		driver.waitForPageToBeReady();
+	
+		baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
+		docView.verifyRemarkIsAdded(remark);
+		
+		
+		baseClass.stepInfo("Log out");
+		loginPage.logout();
+		loginPage.quitBrowser();
+		
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void close() throws ParseException, InterruptedException, IOException {
 		try {

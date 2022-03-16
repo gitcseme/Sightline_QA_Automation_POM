@@ -703,6 +703,39 @@ public class DocExplorer_Regression1 {
 				
 			}
 			
+			/**
+			 * @author Gopinath
+			 * @TestCase Id:54588 Verify the "Doc Explorer" left menu for the PA and RMU
+			 * @Description To Verify the "Doc Explorer" left menu for the PA and RMU
+			 */
+			@Test(alwaysRun = true, groups = { "regression" })
+			public void verifyDocExplorerLeftMenuPaAndRmu() {
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("###Verify the 'Doc Explorer' left menu for the PA and RMU###");
+				baseClass.stepInfo("Test case Id: RPMXCON-54588 ");
+				docexp = new DocExplorerPage(driver);
+				
+				baseClass.stepInfo("verify doc explorer presented in left menu panal");
+				docexp.verifyDocExplorerInLeftMenu();
+				
+				loginPage.logout();
+				
+				baseClass.stepInfo("login as Review manager");
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				
+				baseClass.stepInfo("verfify doc explorer view Below dash board in left menu for ");
+				docexp.verifyDocExplorerBelowDashBoard();
+				
+				loginPage.logout();
+				
+				baseClass.stepInfo("login as Project Administrator");
+				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+				
+				baseClass.stepInfo("verify doc explorer view above Datasets in leftmenu");
+				docexp.verifyDocExplorerAboveDatasets();
+
+			}
+			
 	/**@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

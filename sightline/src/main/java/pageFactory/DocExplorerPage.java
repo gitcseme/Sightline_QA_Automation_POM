@@ -447,6 +447,20 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//*[@id='dtDocumentList']/tbody/tr[" + row + "]/td[1]/label/i");
 	}
 	
+	//Added by Gopinath - 16/03/2022
+	public Element getDocExplorerTabAfterDashBoard() {
+		return driver.FindElementByXPath("//ul[@id='LeftMenu']/li/a[@title='Dashboard']/../following-sibling::li/a[@title='Doc Explorer']");
+	}
+	
+	
+	public Element getDocExplorerAboveDatasets() {
+		return driver.FindElementByXPath("//ul[@id='LeftMenu']/li/a[@title='Datasets']/../preceding-sibling::li/a[@title='Doc Explorer']");
+	}
+	
+	public Element getDocExplorerTab() {
+		return driver.FindElementByXPath("//ul[@id='LeftMenu']/li/a[@title='Doc Explorer']");
+	}
+	
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -2273,4 +2287,63 @@ public class DocExplorerPage {
 		bc.waitForElement(getDocViewAction());
 		getDocViewAction().waitAndClick(5);
 	}
+/**
+* @author Gopinath
+* @Description method to verify DocExplorer view presented below the dash
+*              board in left menu panal
+*/
+public void verifyDocExplorerBelowDashBoard() {
+try {
+	driver.waitForPageToBeReady();
+	bc.waitForElement(getDocExplorerTabAfterDashBoard());
+	if (getDocExplorerTabAfterDashBoard().isDisplayed()) {
+		bc.passedStep("Doc explorer view is displayed below dash board from left menu");
+	} else {
+		bc.failedStep("Doc explorer view is not displayed after dash board fro left menu");
+	}
+} catch (Exception e) {
+	e.printStackTrace();
+	bc.failedStep("Exception occured while verifying docExplorer view in left menu panal");
+
+}
+
+}
+
+/**
+* @author Gopinath
+* @Description method to verify docExplorer view presented above the datasets in left menu panal
+*/
+public void verifyDocExplorerAboveDatasets() {
+try {
+	bc.waitForElement(getDocExplorerAboveDatasets());
+	if (getDocExplorerAboveDatasets().isDisplayed()) {
+		bc.passedStep("Docexplorer view is displayed above the datasets in left menu");
+	} else {
+		bc.failedStep("Docexplorer view is not displayed above the datasets in left menu");
+	}
+} catch (Exception e) {
+	e.printStackTrace();
+	bc.failedStep("Exception occured while verifying Doc explorer view in left menu panal");
+}
+}
+
+/**
+* @author Gopinath
+* @Description: method to verify DocExplorer in left menu panal
+*/
+public void verifyDocExplorerInLeftMenu() {
+try {
+	driver.waitForPageToBeReady();
+	bc.waitForElement(getDocExplorerTab());
+	if (getDocExplorerTab().getWebElement().isDisplayed()) {
+		bc.passedStep("Doc Explorer is presented in left menu panal");
+
+	} else {
+		bc.failedStep("Doc explorer is not presented in left menu panal");
+	}
+} catch (Exception e) {
+	e.printStackTrace();
+	bc.stepInfo("Exception occured while verifying docExplorer tab");
+}
+}
 }
