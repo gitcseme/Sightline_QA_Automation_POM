@@ -2680,7 +2680,7 @@ public class BatchRedactionRegression3 {
 	 * @Description :Verify that Relevant queue message appears on "Batch Redaction
 	 *              History" table screen when user tries to perform Redaction and
 	 *              Rollback having same document at the same time on 2 different
-	 *              TABS  [RPMXCON-53525]
+	 *              TABS [RPMXCON-53525]
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
@@ -2736,8 +2736,8 @@ public class BatchRedactionRegression3 {
 		base.stepInfo("Switch to firstTAb");
 		driver.switchToWindow(firstUserWindow);
 		driver.waitForPageToBeReady();
-		
-		//click yes on view Analysiz Pop up 
+
+		// click yes on view Analysiz Pop up
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
 
 		// Switch back to Second tab
@@ -2747,16 +2747,86 @@ public class BatchRedactionRegression3 {
 		base.stepInfo("Rollback confirmation from Tab 2");
 		batch.rollBackActionConfirmation(Input.yesButton);
 
-		//verify Rollback Batch Redaction queued from TAb 2
-		boolean rollbackQue=batch.getRollbackQueText(SearchName).isElementAvailable(3);
-		String rollbackQueMsg=batch.getRollbackQueText(SearchName).getText();
-		String failMsg="Rollback Batch Redaction queued is not displayed For Search : "+SearchName;
-        base.printResutInReport(rollbackQue,rollbackQueMsg,failMsg,"Pass");
-        
+		// verify Rollback Batch Redaction queued from TAb 2
+		boolean rollbackQue = batch.getRollbackQueText(SearchName).isElementAvailable(3);
+		String rollbackQueMsg = batch.getRollbackQueText(SearchName).getText();
+		String failMsg = "Rollback Batch Redaction queued is not displayed For Search : " + SearchName;
+		base.printResutInReport(rollbackQue, rollbackQueMsg, failMsg, "Pass");
+
 		// Delete search
 		base.stepInfo("Initiating delete Searh");
 		saveSearch.deleteSearch(SearchName, Input.mySavedSearch, "Yes");
 
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that Relevant redacted message appears on \"Batch
+	 *              Redaction\" screen when user tries to perform Redaction having
+	 *              same document at the same time on 2 different TABS [RPMXCON-53517]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 44)
+	public void AnalyseSearchesIntwoTabSimultaneously() throws Exception {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		String expectedErrorMsg = "One or more of your selected searches are currently being redacted. Please refresh and try again.";
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("Test case Id:RPMXCON-53517 Batch Redaction");
+		base.stepInfo(
+				"Verify that Relevant redacted message appears on \"Batch Redaction\" screen when user tries to perform Redaction having same document at the same time on 2 different TABS");
+
+		// Create saved search
+		int purehit = session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		// first tab
+		batch.loadBatchRedactionPage(searchName);
+		batch.verifyAnalyzeBtn(searchName, null);
+
+		// open duplicate tab
+		String firstUserWindow = driver.CurrentWindowHandle();
+		base.openDuplicateTab();
+
+		// second tab
+		driver.switchToChildWindow();
+		base.stepInfo("Switched To Second Window");
+		batch.loadBatchRedactionPage(searchName);
+		batch.verifyAnalyzeBtn(searchName, null);
+		String secondWindow = driver.CurrentWindowHandle();
+
+		// first tab
+		driver.switchToWindow(firstUserWindow);
+		base.stepInfo("Switched To First Window");
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+
+		// second tab
+		driver.switchToWindow(secondWindow);
+		base.stepInfo("Switched To Second Window");
+		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false);
+		base.waitForElement(batch.getViewReportForSavedSearch(searchName));
+		batch.getViewReportForSavedSearch(searchName).waitAndClick(10);
+
+		// first tab
+		driver.switchToWindow(firstUserWindow);
+		base.stepInfo("Switched To First Window");
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
+
+		// second tab
+		driver.switchToWindow(secondWindow);
+		base.stepInfo("Switched To Second Window");
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
+		base.stepInfo("Analyze Button is clicked On Second Window");
+
+		// verify Error Message
+		base.VerifyErrorMessage(expectedErrorMsg);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 		login.logout();
 
 	}
