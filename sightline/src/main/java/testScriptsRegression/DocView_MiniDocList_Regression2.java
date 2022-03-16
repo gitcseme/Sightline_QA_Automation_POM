@@ -1004,6 +1004,147 @@ public class DocView_MiniDocList_Regression2 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author : Vijaya.Rani date: 16/03/21 Modified date: NA Modified by:NA
+	 * Description :Verify after impersonation Configure Mini DocList modal window
+	 * should be launched on click of the small gear icon in the Mini DocList panel
+	 * in context of an assignment.'RPMXCON-55426' Sprint : 14
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	public void verifyImpersonationConfigureMiniDoclistWindowDisplay() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-55426");
+		baseClass.stepInfo(
+				"Verify after impersonation Configure Mini DocList modal window should be launched on click of the small gear icon in the Mini DocList panel in context of an assignment");
+
+		// login as SA
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Assient with " + Input.sa1userName + "");
+		// Impersonate SA to PA
+		baseClass.impersonateSAtoPA();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		miniDocListpage.viewInDocView();
+		// verify Configare Window is open
+		miniDocListpage.performGearIconOpenPopUpWindow();
+		loginPage.logout();
+
+		// login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Assient with " + Input.sa1userName + "");
+		// Impersonate SA to RMU
+		baseClass.impersonateSAtoRMU();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		miniDocListpage.viewInDocView();
+		// verify Configare Window is open
+		miniDocListpage.performGearIconOpenPopUpWindow();
+		loginPage.logout();
+
+		// login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Assient with " + Input.sa1userName + "");
+		// Impersonate SA to Reviewer
+		baseClass.impersonateSAtoReviewer();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		miniDocListpage.viewInDocView();
+		// verify Configare Window is open
+		miniDocListpage.performGearIconOpenPopUpWindow();
+		loginPage.logout();
+
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+		// Impersonate PA to RMU
+		baseClass.impersonatePAtoRMU();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		miniDocListpage.viewInDocView();
+		// verify Configare Window is open
+		miniDocListpage.performGearIconOpenPopUpWindow();
+		loginPage.logout();
+
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+		// Impersonate PA To Reviewer
+		baseClass.impersonatePAtoReviewer();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		miniDocListpage.viewInDocView();
+		// verify Configare Window is open
+		miniDocListpage.performGearIconOpenPopUpWindow();
+		loginPage.logout();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Manager with " + Input.rmu1userName + "");
+		// Impersonate RMU To Reviewer
+		baseClass.impersonateRMUtoReviewer();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		miniDocListpage.viewInDocView();
+		// verify Configare Window is open
+		miniDocListpage.performGearIconOpenPopUpWindow();
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 16/03/21 Modified date: NA Modified by:NA
+	 * Description :Verify warning message displayed when user navigates to other
+	 * page without Save from Doc View > mini doc list, redirected from search/doc
+	 * list pages.'RPMXCON-55213' Sprint : 14
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	public void verifyImpersonationConfigureMiniDoclistWindowDis() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-55213");
+		baseClass.stepInfo(
+				"Verify warning message displayed when user navigates to other page without Save from Doc View > mini doc list, redirected from search/doc list pages.");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Review Manager with " + Input.rmu1userName + "");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		miniDocListpage.viewInDocView();
+		// MiniDocList Code Same As
+		docViewPage.performMiniDocListCodeSameAsIcon();
+		// Confirm navigation popup No btn
+		docViewPage.verifyNavigationPopUpWindowNoButton();
+		// MiniDocList Code Same As
+		docViewPage.performMiniDocListCodeSameAsIcon();
+		// Confirm navigation popup Yes btn
+		docViewPage.verifyNavigationPopUpWindowYesButton();
+		loginPage.logout();
+		
+		//login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		miniDocListpage.viewInDocView();
+		// MiniDocList Code Same As
+		docViewPage.performMiniDocListCodeSameAsIcon();
+		// Confirm navigation popup No btn
+		docViewPage.verifyNavigationPopUpWindowNoButton();
+		// MiniDocList Code Same As
+		docViewPage.performMiniDocListCodeSameAsIcon();
+		// Confirm navigation popup Yes btn
+		docViewPage.verifyNavigationPopUpWindowYesButton();
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
