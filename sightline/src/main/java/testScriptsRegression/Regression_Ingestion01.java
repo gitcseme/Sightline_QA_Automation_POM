@@ -252,6 +252,43 @@ public class Regression_Ingestion01 {
 		
 	}
 	
+	/**
+	 * Author : Arunkumar date:16/03/22 NA Modified date: NA Modified by:NA Test Case Id:RPMXCON-49506
+	 * Description :Verify the 'Next' button enable/disable from 'Ingestion Wizard' screen when 'Date & Time Format' selected/not-selected
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void verifyNextButtonFromIngestionWizard() throws Exception{
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49506");
+		baseClass.stepInfo("Verify the 'Next' button enable/disable from 'Ingestion Wizard' screen when 'Date & Time Format' selected/not-selected");
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.VerifyNextButtonStatusBasedOnDateTimeFormatSelection();
+		
+	}
+	
+
+    /** 
+     *Author :Arunkumar date: 16/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49733
+	 * Description :Verify 'Missed Docs' count is display for 'Stitching TIFF' in Ingestion detail pop up
+     * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 12)
+	public void verifyStitchedTiffCountUnderCopyColumn() throws InterruptedException   {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49733");
+		baseClass.stepInfo("Verify 'Missed Docs' count is display for 'Stitching TIFF' in Ingestion detail pop up");
+		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+		ingestionPage.IngestionCatlogtoCopying(Input.TiffImagesFolder);
+		ingestionPage.verifyMissedDocValuePresentInCopyTableColumn(Input.StitchedTIFF);
+		//rollback
+		ingestionPage.rollBackIngestion();
+	
+		}
+	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

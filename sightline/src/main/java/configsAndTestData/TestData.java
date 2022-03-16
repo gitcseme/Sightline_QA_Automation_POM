@@ -202,6 +202,7 @@ public class TestData {
 	public String multiwordText;
 	public String query;
 	public String miniDocListID;
+	public String DATFile3;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22 
