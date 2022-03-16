@@ -6719,6 +6719,149 @@ public class Production_Test_Regression {
 	tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 	loginPage.logout();
 	}
+	/**
+	 * @author Aathith Test case id-RPMXCON-49729
+	 * @Description Verify that branding is applied on all pages for  image based documents on generated PDF file 
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 95)
+	public void verifyDiffFileBrandingGenerateSuccessfully() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49729 -Production Component");
+		base.stepInfo("Verify that branding is applied on all pages for  image based documents on generated PDF file");
+		
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
+		BaseClass base = new BaseClass(driver);
+		base.selectproject("AutomationAdditionalDataProject");
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		DataSets dataset = new DataSets(driver);
+		base.stepInfo("Navigating to dataset page");
+		dataset.navigateToDataSetsPage();
+		base.stepInfo("Selecting uploadedset and navigating to doclist page");
+		dataset.selectDataSetWithName("RPMXCON39718");
+		DocListPage doc = new DocListPage(driver);
+		driver.waitForPageToBeReady();
+
+		doc.selectAllDocs();
+		
+		doc.bulkTagExistingFromDoclist(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		int firstFile = Integer.parseInt(beginningBates);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingPDFSection(tagname);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		String PDocCount = page.getProductionDocCount().getText();
+		int DocCount = Integer.parseInt(PDocCount);
+		int lastfile = firstFile + DocCount;
+		page.extractFile();
+		page.pdf_Verification_In_Generated_PlaceHolder(firstFile, lastfile, prefixID, suffixID, Input.searchString4);
+		
+		base.passedStep("Verified that branding is applied on all pages for  image based documents on generated PDF file");
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");	
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
+		
+	}
+	/**
+	 * @author Aathith Test case id-RPMXCON-47932
+	 * @Description To verify, User able to edit a production to regenerate it
+	 * 
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 96)
+	public void verifyRegenerateWithEditSuccessfully() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-47932 -Production Component");
+		base.stepInfo("To verify, User able to edit a production to regenerate it");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String newProdName = "N" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getBackButton().waitAndClick(5);
+		page.verifyProductionStatusInGenPage("Post-Generation QC checks Complete");
+		page.clickElementNthtime(page.getBackButton(), 6);
+		page.getMarkIncompleteButton().waitAndClick(5);
+		page.getDATTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		page.getDAT_DATField1().SendKeys("B" + Utility.dynamicNameAppender());
+		page.navigateToNextSection();
+		page.navigateToNextSection();
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(newProdName);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		base.passedStep("verified, User able to edit a production to regenerate it");
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
+		
+	}
 
 	
 	@AfterMethod(alwaysRun = true)
