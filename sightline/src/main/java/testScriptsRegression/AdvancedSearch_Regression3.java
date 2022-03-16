@@ -99,7 +99,7 @@ public class AdvancedSearch_Regression3 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 3, enabled = true)
+	@Test(description ="RPMXCON-48765",dataProvider = "Users", groups = { "regression" }, priority = 3, enabled = true)
 	public void verifyResubmit_content(String username, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48765");
 		baseClass.stepInfo("Verify that - Application returns consistent search result when user resubmits a "
@@ -140,7 +140,7 @@ public class AdvancedSearch_Regression3 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test(groups = { "regression" }, priority = 2, enabled = true)
+	@Test(description ="RPMXCON-48747",groups = { "regression" }, priority = 2, enabled = true)
 	public void verifyDocsCntAlreadyProduced() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48747");
@@ -185,7 +185,7 @@ public class AdvancedSearch_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws AWTException
 	 */
-	@Test(groups = { "regression" }, priority = 1, enabled = true)
+	@Test(description ="RPMXCON-48746",groups = { "regression" }, priority = 1, enabled = true)
 	public void verifyDocsCntAssgnments() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48746");
@@ -247,7 +247,7 @@ public class AdvancedSearch_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws AWTException
 	 */
-	@Test(groups = { "regression" }, priority = 4, enabled = true)
+	@Test(description ="RPMXCON-49300",groups = { "regression" }, priority = 4, enabled = true)
 	public void verifyDocsCntTagNOTProd() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49300");
@@ -304,7 +304,7 @@ public class AdvancedSearch_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws AWTException
 	 */
-	@Test(groups = { "regression" }, priority = 5, enabled = true)
+	@Test(description ="RPMXCON-48748",groups = { "regression" }, priority = 5, enabled = true)
 	public void verifyDocsCntCompletedAssgnments() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48748");
@@ -367,7 +367,7 @@ public class AdvancedSearch_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-47778",dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 6)
 	public void verifySearchResultForComment(String username, String password) throws InterruptedException {
 
 		String docComment = "Reviewed";
@@ -403,7 +403,7 @@ public class AdvancedSearch_Regression3 {
 	 * @author Jayanthi.ganesan]
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-47761",dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyPinnedIcon(String username, String password) throws InterruptedException {
 		lp = new LoginPage(driver);
 		SessionSearch search = new SessionSearch(driver);
@@ -429,7 +429,7 @@ public class AdvancedSearch_Regression3 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test(groups = { "regression" }, priority = 8, enabled = true)
+	@Test(description ="RPMXCON-48766",groups = { "regression" }, priority = 8, enabled = true)
 	public void verifyResubmit_WPAndAudio() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48766");
 		baseClass.stepInfo("Verify that - Application returns consistent search result when "
@@ -486,7 +486,7 @@ public class AdvancedSearch_Regression3 {
 	 * @throws InterruptedException
 	 */
 
-	@Test(groups = { "regression" }, priority = 9, enabled = true)
+	@Test(description ="RPMXCON-46891",groups = { "regression" }, priority = 9, enabled = true)
 	public void verifyResubmit_cntAndMetaAndConceptualAndWPFolderAndAudio() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-46891");
 		baseClass.stepInfo(
@@ -542,7 +542,7 @@ public class AdvancedSearch_Regression3 {
 	/**
 	 * @author Jayanthi.ganesan
 	 */
-	@Test(groups = { "regression" }, priority = 10, enabled = true)
+	@Test(description ="RPMXCON-48745",groups = { "regression" }, priority = 10, enabled = true)
 	public void verifyDocsCnt_SecGrp_OR_production() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48745");
@@ -581,7 +581,7 @@ public class AdvancedSearch_Regression3 {
 						+ "selected group with OR operator in search result.");
 	}
 
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-48158",dataProvider = "Users", groups = { "regression" }, priority = 11)
 	public void verifyAudioSearchCreteria(String username, String password) throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48158");
@@ -620,7 +620,7 @@ public class AdvancedSearch_Regression3 {
 		lp.logout();
 	}
 
-	@Test(groups = { "regression" }, priority = 12, enabled = true)
+	@Test(description ="RPMXCON-48767",groups = { "regression" }, priority = 12, enabled = true)
 	public void verifyResubmit_cntAndMetaAndConceptualAndWP_Prod() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48767");
 		baseClass.stepInfo(
@@ -683,7 +683,7 @@ public class AdvancedSearch_Regression3 {
  * @param password
  * @throws InterruptedException
  */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-48795",dataProvider = "Users", groups = { "regression" }, priority = 13)
 	public void verifyProximityTildechar(String username, String password ) throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48795");
@@ -711,7 +711,7 @@ public class AdvancedSearch_Regression3 {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users",groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-47635",dataProvider = "Users",groups = { "regression" }, priority = 14)
 	public void verifyEmailAllDomain(String username, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id:47635 ");
 		baseClass.stepInfo("Verify that Advanced Search is"
