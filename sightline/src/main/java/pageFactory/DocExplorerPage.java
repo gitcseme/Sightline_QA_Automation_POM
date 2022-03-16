@@ -2325,7 +2325,7 @@ try {
 	e.printStackTrace();
 	bc.failedStep("Exception occured while verifying Doc explorer view in left menu panal");
 }
-}
+} 
 
 /**
 * @author Gopinath
