@@ -4317,5 +4317,22 @@ public class MiniDocListPage {
 		}
 
 	}
+	
+	/**
+	 * @author Vijaya.Rani Modify Date: 16/03/22 NA Modified date: NA Modified by:NA
+	 * @description perform Gear Icon OpenPopUp Window
+	 */
+	public void performGearIconOpenPopUpWindow() {
+
+		// Click gear icon open popup window and cancel
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getChildWindowGearIcons());
+		getChildWindowGearIcons().waitAndClick(10);
+		baseClass.stepInfo("Successflly open gear review mode popup window");
+		baseClass.waitForElement(getConfigureMiniDocTab());
+		softAssertion.assertTrue(getConfigureMiniDocTab().Displayed());
+		softAssertion.assertAll();
+		baseClass.passedStep("Configure mini doc list pop up Window open Successfully");
+	}
 
 }

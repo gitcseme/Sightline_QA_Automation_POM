@@ -3259,6 +3259,14 @@ public class DocViewPage {
 		return driver.FindElementsByXPath("//ul[@id='documentTypeDropDown']/li/a");
 	}
 
+	public Element getChildWindowGearIcons() {
+		return driver.FindElementByXPath("//i[@class='fa fa-gear']");
+	}
+	
+	public Element getSearchIcons() {
+		return driver.FindElementByXPath("//i[@class='fa fa-lg fa-fw fa-search']");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -13660,8 +13668,9 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @author Vijaya Rani 24/11/21 NA Modified date: NA Modified by:NA
+	 * @author Vijaya.M
 	 * @description To verify thread docs mre data link and size thread
+	 * @throws InterruptedException
 	 */
 	public void selectDocsFromMiniDocsListAndCheckTheThreadedDocuments() throws InterruptedException {
 		driver.waitForPageToBeReady();
@@ -26259,5 +26268,48 @@ public class DocViewPage {
 		String output = sb.toString();
 		return output;
 	}
-
+	/**
+	 * @author Vijaya.Rani  Modify Date: 16/03/22 NA Modified date: NA Modified by:NA
+	 * @Description: This method used verify navigation confirmation popup buttons
+	 * 
+	 */
+	public void verifyNavigationPopUpWindowNoButton() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSearchIcons());
+		getSearchIcons().waitAndClick(5);
+		
+		if (getNavigationMsg().Displayed() == true) {
+			base.passedStep("Navigation popup window is dsiplayed");
+		} else {
+			base.failedStep("Navigation popup window is not dsiplayed");
+		}
+		
+		base.waitForElement(getNavigationMsgPopupNoBtn());
+		getNavigationMsgPopupNoBtn().waitAndClick(5);
+		base.stepInfo("Confirm Navigation Yes Button Clicked Successfully");
+		
+		base.waitForElement(getChildWindowGearIcons());
+		softAssertion.assertTrue(getChildWindowGearIcons().Displayed());
+		base.passedStep("User can see the 'Doc View' page successfully");
+		
+	}
+	
+	/**
+	 * @author Vijaya.Rani  Modify Date: 16/03/22 NA Modified date: NA Modified by:NA
+	 * @Description: This method used verify navigation confirmation popup buttons
+	 * 
+	 */
+	public void verifyNavigationPopUpWindowYesButton() {
+		base.waitForElement(getSearchIcons());
+		getSearchIcons().waitAndClick(5);
+		
+		base.waitForElement(getNavigationMsgPopupYesBtn());
+		getNavigationMsgPopupYesBtn().waitAndClick(5);
+		base.stepInfo("Confirm Navigation Yes Button Clicked Successfully");
+		
+		base.waitForElement(getChildWindowGearIcons());
+		softAssertion.assertTrue(getChildWindowGearIcons().Displayed());
+		base.passedStep("Users actions is saved and user should redirect to the clicked page");
+		
+	}
 }
