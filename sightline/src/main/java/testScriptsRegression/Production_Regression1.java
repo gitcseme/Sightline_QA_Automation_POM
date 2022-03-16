@@ -2594,14 +2594,14 @@ public class Production_Regression1 {
 	}
 	
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON-55717 :
-	 *         To Verify in Productions, for a document with AudioPlayReady, only
+	 * @author Gopinath created on:NA modified by:NA //@Testcase Id : RPMXCON-55717
+	 *         : To Verify in Productions, for a document with AudioPlayReady, only
 	 *         the MP3 file variant is produced as MP3 files.
 	 * @Description : To Verify in Productions, for a document with AudioPlayReady,
 	 *              only the MP3 file variant is produced as MP3 files.
 	 */
 
-	@Test(enabled=false,groups = { "regression" }, priority = 36)
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
 	public void selectAudioSearchAndGenerateProdcution() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-55717 -Production");
@@ -2668,18 +2668,21 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56126 :
-	 *         Verify that if Tag is already specified with Privileged Placeholder
+	 * @author Gopinath created on:NA modified by:NA //@Testcase Id : RPMXCON_56126
+	 *         : Verify that if Tag is already specified with Privileged Placeholder
 	 *         then that Tag should not be available.
 	 * @Description : Verify that if Tag is already specified with Privileged
 	 *              Placeholder then that Tag should not be available.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 37)
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
 	public void verifyTagIsEnabledForAllDocsEnabledforPrivTag() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2726,7 +2729,7 @@ public class Production_Regression1 {
 	 * @Description : Verify that if Tag is already specified with Right Branding
 	 *              then that Tag should not be available.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority =38)
+	//@Test(enabled = true, groups = { "regression" }, priority = 38)
 	public void tiffSectionRightBranding() throws Exception {
 		base.stepInfo("Test case Id: No:RPMXCON_56125 -Production");
 		base.stepInfo(
@@ -2762,21 +2765,21 @@ public class Production_Regression1 {
 
 		base.stepInfo("Again Selecting Right Header Branding");
 		page.againSelectingRightHeaderBranding(tagname);
-		base.stepInfo("verifying tag selected in the  specify branding at right Header branding");
+		base.stepInfo("verifying tag selected in the specify branding at right Header branding");
 		loginPage.logout();
 
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_id : RPMXCON-55923 :
-	 *         Verify that in Production, DocFileExtensionCorrected should be used
+	 * @author Gopinath created on:NA modified by:NA //@Testcase_id : RPMXCON-55923
+	 *         : Verify that in Production, DocFileExtensionCorrected should be used
 	 *         in the file name as Native, when DocFileExtension and
 	 *         DocFileExtensionCorrected is having different value.
 	 * @Description : Verify that in Production, DocFileExtensionCorrected should be
 	 *              used in the file name as Native, when DocFileExtension and
 	 *              DocFileExtensionCorrected is having different value.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 39)
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void generatingProductionForCorrectedExtesionFile() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-55923 -Production Sprint 05");
@@ -2853,22 +2856,25 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-55924 :
-	 *         Verify that in Production Native file will have no extension, when
+	 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-55924
+	 *         : Verify that in Production Native file will have no extension, when
 	 *         file extension and file extension corrected as blank values.
 	 * @Description : Verify that in Production Native file will have no extension,
 	 *              when file extension and file extension corrected as blank
 	 *              values.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void generatingProductionWithoutExtesionFile() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-55923 -Production Sprint 05");
+		base.stepInfo("Test case Id: RPMXCON-55924 -Production Sprint 05");
 		base.stepInfo(
 				"#### Verify that in Production Native file will have no extension, when file extension and file extension corrected as blank values ####");
 
@@ -2942,18 +2948,21 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-49138 :
-	 *         Verify that when text is exported for file group type then it should
-	 *         export the actual text file and not the placeholder.
+	 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-49138
+	 *         : Verify that when text is exported for file group type then it
+	 *         should export the actual text file and not the placeholder.
 	 * @Description : Verify that when text is exported for file group type then it
 	 *              should export the actual text file and not the placeholder.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 41)
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
 	public void selectTextFileInNativeProducedDocsAndGenerateProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-49138 -Production Sprint 05");
@@ -3031,20 +3040,23 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
 	/**
 	 * 
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-55775 :
-	 *         To verify that If user select PrivTag and if translations document is
-	 *         associated to that tag then Native should not produced.
+	 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-55775
+	 *         : To verify that If user select PrivTag and if translations document
+	 *         is associated to that tag then Native should not produced.
 	 * @Description : Verify that If user select PrivTag and if translations
 	 *              document is associated to that tag then Native should not
 	 *              produced
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority =42)
+	@Test(enabled = true, groups = { "regression" }, priority = 42)
 	public void fillingPrivPlaceholderAndGenerateProduction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3118,20 +3130,22 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
-
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		base.stepInfo("Production is generated successfully on Selecting Priv docs placeholder");
 		loginPage.logout();
 	}
 
 	/**
-	 * @author : Gopinath Created on:NA Modified by:NA @Testcase_Id : RPMXCON_55941
-	 *         : Verify that in Doc View, images tab should displayed with produced
-	 *         documents having comments/signautre.
+	 * @author : Gopinath Created on:NA Modified by:NA //@Testcase_Id :
+	 *         RPMXCON_55941 : Verify that in Doc View, images tab should displayed
+	 *         with produced documents having comments/signautre.
 	 * @Description: Verify that in Doc View, images tab should displayed with
 	 *               produced documents having comments/signautre.
 	 */
-	@Test(enabled=false,groups = { "regression" },priority = 43)
+	@Test(enabled = true, groups = { "regression" }, priority = 43)
 	public void verifyDocViewImagesTabForCommentsAndSignautre() throws Exception {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -3208,25 +3222,28 @@ public class Production_Regression1 {
 		sessionSearch = new SessionSearch(driver);
 
 		base.stepInfo("Select Docview At Action");
-		sessionSearch.selectDocviewAtAction();
+		sessionSearch.ViewInDocView();
 
 		DocViewPage docViewPage = new DocViewPage(driver);
 
 		base.stepInfo("Verify Doc View Images");
 		docViewPage.verifyDocViewImages();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56088 :
-	 *         Verify that Production should generate successfully by selecting only
-	 *         DAT and 'Generate PDF' option with TechIssue Placholder.
+	 * @author Gopinath created on:NA modified by:NA //@Testcase Id : RPMXCON_56088
+	 *         : Verify that Production should generate successfully by selecting
+	 *         only DAT and 'Generate PDF' option with TechIssue Placholder.
 	 * @Description : Verify that Production should generate successfully by
 	 *              selecting only DAT and 'Generate PDF' option with TechIssue
 	 *              Placholder.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 44)
+	@Test(enabled = true, groups = { "regression" }, priority = 44)
 	public void pdfSecionWithTechIssueDocAndGenratingProdcution() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3301,21 +3318,24 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.stepInfo("production generated successfully on filling DAT and PDF section TechissueDocs");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase Id : RPMXCON_56090 :
-	 *         Verify that Production should generate successfully by selecting only
-	 *         DAT and 'Generate PDF' option with Natively Produced Documents
+	 * @author Gopinath created on:NA modified by:NA //@Testcase Id : RPMXCON_56090
+	 *         : Verify that Production should generate successfully by selecting
+	 *         only DAT and 'Generate PDF' option with Natively Produced Documents
 	 *         Placholder.
 	 * @Description : Verify that Production should generate successfully by
 	 *              selecting only DAT and 'Generate PDF' option with Natively
 	 *              Produced Documents Placholder.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 45)
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
 	public void pdfSectionWithNativelyProdcuedDocAndGenratingProdcution() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3338,6 +3358,14 @@ public class Production_Regression1 {
 		base.stepInfo("Create Tag with Classification");
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
+		
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		base.stepInfo("Basic content search");
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		base.stepInfo("Bulk folder existing");
+		sessionSearch.bulkFolderExisting(foldername);
 		// create production and pass production name as load files name
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
@@ -3385,19 +3413,22 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.stepInfo("production generated successfully on filling DAT and PDF section NativelyProducedDocs");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
 	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-49222 :
-	 *         To verify that after uncommit the production, Action "Production
+	 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-49222
+	 *         : To verify that after uncommit the production, Action "Production
 	 *         Deleted" should be displayed in 'Document Audit Report'.
 	 * @Description : Verify that after uncommit the production, Action "Production
 	 *              Deleted" should be displayed in 'Document Audit Report'.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 46)
+	 @Test(enabled=true,groups = { "regression" }, priority = 46)
 	public void verifyingTheAuditReportInGeneratedDocument() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3482,8 +3513,7 @@ public class Production_Regression1 {
 
 		page = new ProductionPage(driver);
 
-		base.stepInfo("Perform operation on production filter");
-		page.ProductionFilter();
+		driver.waitForPageToBeReady();
 
 		base.stepInfo("Select row by production name and open in wizard.");
 		page.selectRowByProductionNameAndOpenWizard(productionname);
@@ -3501,13 +3531,13 @@ public class Production_Regression1 {
 
 	/**
 	 * 
-	 * @author Gopinath created on:NA modified by:NA @TestCase_id : RPMXCON-56082 :
-	 *         Verify that in Production components, TIFF/PDF section displays
+	 * @author Gopinath created on:NA modified by:NA //@TestCase_id : RPMXCON-56082
+	 *         : Verify that in Production components, TIFF/PDF section displays
 	 *         options for Generating TIFF or Generating PDF
 	 * @Description: Verify that in Production components, TIFF/PDF section displays
 	 *               options for Generating TIFF or Generating PDF.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority =47)
+	 @Test(enabled=true,groups = { "regression" }, priority =47)
 	public void verifyingGenerateTIFFandPDF() throws Exception {
 		UtilityLog.info(Input.prodPath);
 
@@ -3529,7 +3559,7 @@ public class Production_Regression1 {
 		loginPage.logout();
 
 	}
-
+	 
 	/**
 	 * @author Gopinath created on:NA modified by:NA
 	 * @Testcase_Id:RPMXCON-55986 : Verify that after Post Geneation is completed,

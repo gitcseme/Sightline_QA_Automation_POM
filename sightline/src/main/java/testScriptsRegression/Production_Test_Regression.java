@@ -2091,6 +2091,8 @@ public class Production_Test_Regression {
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -2146,6 +2148,8 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -2174,12 +2178,10 @@ public class Production_Test_Regression {
 				beginningBates);
 
 		page = new ProductionPage(driver);
-		page.getFilterByButton().waitAndClick(10);
-		page.getFilterByCOMPLETED().waitAndClick(10);
-		page.getRefreshButton().waitAndClick(10);
-		// page.getProductionHomePage().waitAndClick(10);
+		page.filterCompletedProduction();
 		page.getprod_ActionButton_Reusable(productionname).waitAndClick(10);
 		driver.waitForPageToBeReady();
+		page.getprod_Action_SaveTemplate_Reusable(productionname).Enabled();
 		page.getprod_Action_SaveTemplate_Reusable(productionname).waitAndClick(10);
 
 		page.saveTemple(TempName);
@@ -2191,9 +2193,17 @@ public class Production_Test_Regression {
 		page.getProductionName().SendKeys(productionname);
 		String loadfile = TempName + " (Production)";
 		page.getprod_LoadTemplate().selectFromDropdown().selectByVisibleText(loadfile);
-		page.navigateToNextSection();
+		base.waitTillElemetToBeClickable(page.getBasicInfoMarkComplete());
+		page.getBasicInfoMarkComplete().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		page.navigateToNextSection();
+		page.getDATTab().waitAndClick(10);
+		page.getElementDisplayCheck(page.getDAT_FieldClassification1());
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(page.getMarkCompleteLink());
+		page.getMarkCompleteLink().Enabled();
+		page.getMarkCompleteLink().waitAndClick(10);
+		BaseClass base = new BaseClass(driver);
+		base.VerifySuccessMessage("Mark Complete successful");
 		base.passedStep("It should be completed without any error.");
 		base.passedStep(
 				"Verified if PA Select the Production using a template that has only tags selected in the native components, then Component tab should Complete without any error.");
@@ -2221,6 +2231,8 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -2280,22 +2292,21 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		// tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
-		// sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
-		// Verify archive status on Gen page
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
@@ -2323,8 +2334,6 @@ public class Production_Test_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
-		// tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security
-		// Group");
 		loginPage.logout();
 	}
 
@@ -2344,6 +2353,8 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -2409,7 +2420,8 @@ public class Production_Test_Regression {
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-		TempName = "Templete" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -2425,7 +2437,6 @@ public class Production_Test_Regression {
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
-		// Verify archive status on Gen page
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
@@ -2477,7 +2488,9 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
-
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2551,8 +2564,9 @@ public class Production_Test_Regression {
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-		TempName = "Templete" + Utility.dynamicNameAppender();
-
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -6558,7 +6572,7 @@ public class Production_Test_Regression {
 	 * @Description To Verify TIFF Section with various options
 	 *
 	 */
-	@Test(groups = { "regression" }, priority = 93)
+	@Test(enabled =false,groups = { "regression" }, priority = 93)
 	public void verifyTiffSectionVariosOption() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
