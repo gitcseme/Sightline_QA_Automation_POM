@@ -4434,6 +4434,8 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 	 */
 	public void rollBackIngestion() {
 		
+		base.waitTime(5);
+		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getIngestionSettingGearIcon());
 		getIngestionSettingGearIcon().waitAndClick(10);
@@ -5235,6 +5237,24 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 	 	int value = Integer.parseInt(copyTableDataValue(term,4).getText());
 	 	getCloseButton().waitAndClick(10);
 	 	return value;	
+	}
+	
+	/**
+	 * @author: Arunkumar Created Date: 17/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will validate the date format in ingestion field cataloging stage
+	 */
+	public void verifyExpectedDateFormatAfterCatalogingStage() {
+		driver.waitForPageToBeReady();
+		String dateFormat = getIngestionWizardDateFormate().getText();
+		String firstSectionInDateFormat[] = dateFormat.split("/");
+		int firstsectionLength= firstSectionInDateFormat[0].length();
+		int dateFormatTotalLength = dateFormat.length();
+		
+		if (dateFormatTotalLength==19 && firstsectionLength==4) {
+			base.passedStep(" ingestion converted the provided data into the Sightline desired/expected date format ");
+		} else {
+			base.failedStep("ingestion not converted the provided data into the Sightline desired/expected date format");
+		}	
 	}
 
 }

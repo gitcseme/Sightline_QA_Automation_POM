@@ -289,6 +289,69 @@ public class Regression_Ingestion01 {
 	
 		}
 	
+	/** 
+     *Author :Arunkumar date: 17/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49522
+	 * Description :Verify when user selects date & time format 'MM/DD/YYYY HH:MI' for ingestion which is same as in the DAT file
+     * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 13)
+	public void verifyDateFormatMMDDYYYYHHMIInIngestionSameAsInDATFile() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49522");
+		baseClass.stepInfo("Verify when user selects date & time format 'MM/DD/YYYY HH:MI' for ingestion which is same as in the DAT file");
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY HH:MI",Input.DAT_MMDDYYYY_HHMI,Input.Natives_MMDDYYYY_HHMI);
+		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
+		//rollback
+		ingestionPage.rollBackIngestion();
+		
+	}
+	
+	 /** 
+     *Author :Arunkumar date: 17/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49523
+	 * Description :Verify when user selects date & time format 'DD/MM/YYYY HH:MI' for ingestion which is same as in the DAT file
+     * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 14)
+	public void verifyDateFormatDDMMYYYYHHMIInIngestionSameAsInDATFile() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49523");
+		baseClass.stepInfo("Verify when user selects date & time format 'DD/MM/YYYY HH:MI' for ingestion which is same as in the DAT file");
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DD/MM/YYYY HH:MI",Input.DAT_DDMMYYYY_HHMI,Input.Natives_DDMMYYYY_HHMI);
+		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
+		//rollback
+		ingestionPage.rollBackIngestion();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 17/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49525
+	 * Description :Verify when user selects date & time format 'DD/MM/YYYY HH:MI:SS' for ingestion which is same as in the DAT file
+     * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 15)
+	public void verifyDateFormatDDMMYYYYHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49525");
+		baseClass.stepInfo("Verify when user selects date & time format 'DD/MM/YYYY HH:MI:SS' for ingestion which is same as in the DAT file");
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DD/MM/YYYY HH:MI:SS",Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
+		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
+		//rollback
+		ingestionPage.rollBackIngestion();
+		
+	}
+	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
