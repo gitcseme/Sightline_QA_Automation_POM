@@ -10312,6 +10312,7 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+		driver.waitForPageToBeReady();
 
 		for (int i = 1; i <= 1; i++) {
 			base.waitForElement(getDocView_Analytics_ThreadedDocument_Doc(i));
@@ -12126,6 +12127,10 @@ public class DocViewPage {
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
 //			getDocView_Analytics_liDocumentConceptualSimilarab().ScrollTo();
 			getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			driver.getPageSource();
+			driver.waitForPageToBeReady();
+
 
 			for (int i = 2; i <= 3; i++) {
 				base.waitForElement(getDocView_Analytics_Concept_DocCheckBox(i));
