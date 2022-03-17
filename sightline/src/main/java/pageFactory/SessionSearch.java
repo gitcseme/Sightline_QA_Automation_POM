@@ -7378,10 +7378,11 @@ public class SessionSearch {
 	 */
 	public void verifyPureHitsCountWithProductionCount(int productionCount) {
 		try {
-			try {
+			if(getYesQueryAlert().isDisplayed()) {
 				getYesQueryAlert().waitAndClick(8);
-			} catch (Exception e) {
-			}
+				}else {
+				driver.waitForPageToBeReady();
+				}
 
 			// verify counts for all the tiles
 			driver.WaitUntil((new Callable<Boolean>() {
