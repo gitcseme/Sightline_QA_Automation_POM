@@ -6724,7 +6724,7 @@ public class Production_Test_Regression {
 	 * @Description Verify that branding is applied on all pages for  image based documents on generated PDF file 
 	 * 
 	 */
-	@Test(groups = { "regression" }, priority = 95)
+	@Test(enabled = true,groups = { "regression" }, priority = 95)
 	public void verifyDiffFileBrandingGenerateSuccessfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -6854,6 +6854,68 @@ public class Production_Test_Regression {
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		
 		base.passedStep("verified, User able to edit a production to regenerate it");
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
+		
+	}
+	/**
+	 * @author Aathith Test case id-RPMXCON-48814
+	 * @Description Verify that Production should generated successfully for Natively PDF documents
+	 * @Hint : test case run on the project Regression_AllDataset_Consilio1 in UAT environment
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 97)
+	public void verifyProdGenSuccussNativePdf() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-48814 -Production Component");
+		base.stepInfo("Verify that Production should generated successfully for Natively PDF documents");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		DataSets dataset = new DataSets(driver);
+		base.stepInfo("Navigating to dataset page");
+		dataset.navigateToDataSetsPage();
+		base.stepInfo("Selecting uploadedset and navigating to doclist page");
+		dataset.selectDataSetWithName("B2F9_GD_994_Native_Text_ForProduction_20211205214453140");
+		DocListPage doc = new DocListPage(driver);
+		driver.waitForPageToBeReady();
+
+		doc.selectAllDocs();
+		doc.bulkTagExistingFromDoclist(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingPDFSection(tagname,Input.searchString4);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		base.passedStep("Verified that Production should generated successfully for Natively PDF documents");
 		
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
