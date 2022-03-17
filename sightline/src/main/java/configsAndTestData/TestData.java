@@ -526,6 +526,14 @@ public class TestData {
 		public String Natives_DDMMYYYY_Slash;
 		public String DAT_MMDDYYYY_Slash;
 		public String Natives_MMDDYYYY_Slash;
+		public String DAT_MMDDYYYY_HHMI;
+		public String Natives_MMDDYYYY_HHMI;
+		public String DAT_DDMMYYYY_HHMI;
+		public String Natives_DDMMYYYY_HHMI;
+		public String DAT_MMDDYYYY_HHMISS;
+		public String Natives_MMDDYYYY_HHMISS;
+		public String DAT_DDMMYYYY_HHMISS;
+		public String Natives_DDMMYYYY_HHMISS;
 		
 		//Added by Gopinath - 02/03/2022
 		public String ingestionProjectName;

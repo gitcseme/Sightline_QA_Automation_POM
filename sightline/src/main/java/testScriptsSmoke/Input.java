@@ -601,6 +601,14 @@ public class Input {
 	public static String Natives_DDMMYYYY_Slash;
 	public static String DAT_MMDDYYYY_Slash;
 	public static String Natives_MMDDYYYY_Slash;
+	public static String DAT_MMDDYYYY_HHMI;
+	public static String Natives_MMDDYYYY_HHMI;
+	public static String DAT_DDMMYYYY_HHMI;
+	public static String Natives_DDMMYYYY_HHMI;
+	public static String DAT_MMDDYYYY_HHMISS;
+	public static String Natives_MMDDYYYY_HHMISS;
+	public static String DAT_DDMMYYYY_HHMISS;
+	public static String Natives_DDMMYYYY_HHMISS;
 
 	// Added by Gopinath - 02/03/2022
 	public static String ingestionProjectName;
@@ -1285,7 +1293,17 @@ public class Input {
 		Natives_DDMMYYYY_Slash = testData.getNatives_DDMMYYYY_Slash();
 		DAT_MMDDYYYY_Slash = testData.getDAT_MMDDYYYY_Slash();
 		Natives_MMDDYYYY_Slash = testData.getNatives_MMDDYYYY_Slash();
-
+		DAT_MMDDYYYY_HHMI = testData.getDAT_MMDDYYYY_HHMI();
+		Natives_MMDDYYYY_HHMI = testData.getNatives_MMDDYYYY_HHMI();
+		DAT_DDMMYYYY_HHMI = testData.getDAT_DDMMYYYY_HHMI();
+		Natives_DDMMYYYY_HHMI = testData.getNatives_DDMMYYYY_HHMI();
+		DAT_MMDDYYYY_HHMISS = testData.getDAT_MMDDYYYY_HHMISS();
+		Natives_MMDDYYYY_HHMISS = testData.getNatives_MMDDYYYY_HHMISS();
+		DAT_DDMMYYYY_HHMISS = testData.getDAT_DDMMYYYY_HHMISS();
+		Natives_DDMMYYYY_HHMISS = testData.getNatives_DDMMYYYY_HHMISS();
+		
+		
+		
 		// Added by Gopinath - 02/03/2022
 		ingestionProjectName = testData.getIngestionProjectName();
 		ingestionType = testData.getIngestionType();
