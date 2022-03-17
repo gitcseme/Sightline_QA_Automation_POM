@@ -1610,7 +1610,6 @@ public class SessionSearch {
 		return driver.FindElementByXPath(
 				"(//div[@class='MessageBoxButtonSection']//button[text()=' When all results are ready'])[last()]");
 	}
-
 	public Element getWhenAllResultsAreReadyIDDynamic() {
 		return driver.FindElementByXPath("(//div[@class='modal-body ui-dialog-content ui-widget-content']//b)[last()]");
 	}
@@ -1650,6 +1649,28 @@ public class SessionSearch {
 	public ElementCollection getAllTilesResult(String searchNO) {
 		return driver.FindElementsByXPath("(//span[@id='divSearchCnt' and contains(text(),'" + searchNO
 				+ "')])[last()]//..//..//..//..//span//count");
+	}
+	public Element getBulkNavigationPopup() {
+		return driver.FindElementByXPath("//span[text()='BulkNavigation']");
+	}
+	public Element getBulkNavigationPopupNoBtn() {
+		return driver.FindElementByXPath("//span[text()='BulkNavigation']/parent::div/following-sibling::div[contains(@class,'buttonpane') ]/div/button[@id='btnNo']");
+	}
+	public Element getBackGroundTaskAlertPopUp() {
+		return driver.FindElementByXPath(
+				"(//span[contains(text(),'Background Task Alert')])[last()]");
+	}
+	public Element getBullHornIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']");
+	}
+	public Element getViewAllBtn() {
+		return driver.FindElementByXPath("//button[@id='btnViewAll']");
+	}
+	public ElementCollection getTableHeader_BGPage() {
+		return driver.FindElementsByXPath("//table[@id='dt_basic']//th");
+	}
+	public Element getRowElement_BgPage(String BG_ID,int index) {
+		return driver.FindElementByXPath("(//td[normalize-space(text())='"+BG_ID+"']/parent::tr/td)["+index+"]");
 	}
 
 	public SessionSearch(Driver driver) {
@@ -9347,56 +9368,7 @@ public class SessionSearch {
 		return combinedSearchResults;
 	}
 
-	/**
-	 * @author Jayanthi.ganesan
-	 * @param metaDataField
-	 * @param val1
-	 */
-	public void advMetaDataSearchQueryInsert(String metaDataField, String val1) {
-		driver.getWebDriver().get(Input.url + "Search/Searches");
-		base.waitForElement(getAdvancedSearchLink());
-		getAdvancedSearchLink().Click();
-		base.waitForElement(getContentAndMetaDatabtn());
-		getContentAndMetaDatabtn().Click();
-		base.waitForElement(getAdvanceSearch_MetadataBtn());
-		getAdvanceSearch_MetadataBtn().Click();
-		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
-		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
-		base.waitForElement(getMetaDataInserQuery());
-		getMetaDataInserQuery().Click();
-	}
-
-	/**
-	 * @author Jayanthi.ganesan
-	 * @param SearchString
-	 * @return
-	 */
-	public String advContentSearchWithoutURL(String SearchString) {
-		base.waitForElement(getAdvancedContentSearchInputCurrent());
-		getAdvancedContentSearchInputCurrent().SendKeys(SearchString);
-		base.waitForElement(getQuerySearchButton());
-		getQuerySearchButton().Click();
-
-		// look for warnings, in case of proximity search
-		try {
-			if (getTallyContinue().isElementAvailable(2)) {
-				getTallyContinue().waitAndClick(10);
-			}
-		} catch (Exception e) {
-
-		}
-		// verify counts for all the tiles
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
-			}
-		}), Input.wait90);
-
-		String pureHit = getPureHitsCount().getText();
-		UtilityLog.info("Search is done purehit is : " + pureHit);
-		return pureHit;
-	}
-
+	
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param folderName
@@ -10712,7 +10684,7 @@ public class SessionSearch {
 	 * @param i[represents nth number of search performed]
 	 * @return
 	 */
-	public String advancedContentBGSearch(String SearchString, int i) {
+	public String advancedContentBGSearch(String SearchString, int i,boolean newSearch) {
 		base.waitForElement(getContentAndMetaDatabtnCurrent());
 		getContentAndMetaDatabtnCurrent().Click();
 		// Enter search string
@@ -10728,7 +10700,9 @@ public class SessionSearch {
 		} else {
 			base.failedStep("All tiles are  not spinning when search is in back ground.");
 		}
+		if(newSearch) {
 		getNewSearchButton().waitAndClick(5);
+		}
 		return id;
 	}
 
@@ -10809,5 +10783,74 @@ public void advMetaSearch_Draft(String metaDataField,String val1) {
 	advMetaSearch_Draft( metaData, metaDataValue);
 	selectOperator(Operator);
 	advMetaSearch_Draft( metaData1, metaDataValue1);
+	}
+	
+	/**
+	 * @author Jayanthi.Ganesan
+	 * This method will handle bulk navigation pop up if we navigate from session search page to any page with very high doc count.
+	 * @return
+	 */
+	public String pushingBulkNavigationToBackGround() {
+		//base.waitForElementToBeGone(getspinningWheel(), 8);
+		for(int i=0;i<=6;i++) {
+			base.waitTime(1);
+			if(getspinningWheel().Displayed()) {
+				continue;
+			}
+			if(getBulkNavigationPopup().Displayed()) {		
+				base.failedStep("Bulk navigation pop appeared before 8 seconds");
+			}
+			
+		}
+		String BGTaskId=null;
+		if(getBulkNavigationPopup().isElementAvailable(3)) {
+			base.stepInfo("Bulk Navigation pop displayed.");
+			getBulkNavigationPopupNoBtn().waitAndClick(30);
+			if(getBackGroundTaskAlertPopUp().isElementAvailable(3)) {			
+				BGTaskId = getWhenAllResultsAreReadyIDDynamic().getText();
+				base.stepInfo("bulk navigation is  in back ground with " + "Generated ID is: " + BGTaskId);
+				getBulkTagConfirmationBtnDynamic().ScrollTo();
+				getBulkTagConfirmationBtnDynamic().waitAndClick(10);
+			} else {
+				base.stepInfo("Page Loaded and bulk navigation PopUp Didnot Appear");
+			}}
+			
+		else {
+			base.stepInfo("Bulk Navigation pop not displayed.");
+		}
+		return BGTaskId;
+	}
+	/**
+	 * this method will verify whether the notification count in bull horn icon and 
+	 * navigate to my back ground task page
+	 * @author Jayanthi.Ganesan
+	 * @param bgCount[Initial back ground count]
+	 */
+	public void verifyNotificationAndNavigateBackGroundTaskPg(int bgCount) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.initialBgCount() == bgCount + 1;
+			}
+		}), Input.wait60);
+		base.waitForElement(getBullHornIcon());
+		getBullHornIcon().waitAndClick(20);
+		base.waitForElement(getViewAllBtn());
+		getViewAllBtn().waitAndClick(20);
+		driver.waitForPageToBeReady();
+		base.stepInfo("Navigated to My backgroud task page.");
+	}
+	/**This method will take particular cell value from a My back ground 
+	 * task page web table row based on Back ground task id given.
+	 * @author Jayanthi.Ganesan
+	 * @param columnName[column value from which data needs to be taken ]
+	 * @param BG_ID[Back ground task id ]
+	 * @return
+	 */
+	public String getRowData_BGT_Page(String columnName,String BG_ID) {
+		int Index;
+		Index=base.getIndex(getTableHeader_BGPage(), columnName);
+		String actualDocs=getRowElement_BgPage(BG_ID,Index).getText();
+		return actualDocs;
 	}
 }

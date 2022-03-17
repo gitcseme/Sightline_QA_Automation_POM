@@ -544,7 +544,8 @@ public class Input {
 	public static String custodianName_Andrew;
 	public static String custodianName_allen;
 	public static String SearchString_Audio;
-
+    public static String SearchString_HighVolume;
+    public static String DocCount_BG_Page;
 	// Added by Gopinath - 05/01/2021
 	public static String downloadDocID;
 	public static String translationDocId;
@@ -1212,7 +1213,7 @@ public class Input {
 
 		threadDocWithToolTip = testData.getThreadDocWithToolTip();
 		conceptualDoc = testData.getConceptualDoc();
-
+//added by jayanthi
 		TallySearch = testData.getTallySearch();
 		TallyCN = testData.getTallyCN();
 		sameThreadDocs_EmailThreadID = testData.getSameThreadDocs_EmailThreadID();
@@ -1223,8 +1224,10 @@ public class Input {
 		custodianName_Andrew = testData.getCustodianName_Andrew();
 		custodianName_allen = testData.getCustodianName_allen();
 		SearchString_Audio = testData.getSearchString_Audio();
-
+		SearchString_HighVolume=testData.getSearchString_HighVolume();
+		DocCount_BG_Page=testData.getDocCount_BG_Page();
 		TermOperator = testData.getTermOperator();
+		
 		// Added by Gopinath 05/01/2021
 		downloadDocID = testData.getDownloadDocID();
 		translationDocId = testData.getTranslationDocId();

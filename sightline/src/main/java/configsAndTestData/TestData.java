@@ -359,6 +359,9 @@ public class TestData {
    	public  String custodianName_Andrew;
    	public  String custodianName_allen;
     public  String TermOperator;
+    public  String SearchString_HighVolume;
+    public  String DocCount_BG_Page;
+ 
 	public String signDocumentId() {
 		// TODO Auto-generated method stub
 		return null; 
