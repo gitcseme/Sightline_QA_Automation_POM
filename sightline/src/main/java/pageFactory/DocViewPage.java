@@ -3259,10 +3259,21 @@ public class DocViewPage {
 		return driver.FindElementsByXPath("//ul[@id='documentTypeDropDown']/li/a");
 	}
 
+
 	//Added by gopinath - 16/03/2022
 	public Element remarkElement() {
 		return driver.FindElementByXPath("(//*[local-name()='g']//*[name()='rect'])[2]");
 	}
+
+	public Element getChildWindowGearIcons() {
+		return driver.FindElementByXPath("//i[@class='fa fa-gear']");
+	}
+	
+	public Element getSearchIcons() {
+		return driver.FindElementByXPath("//i[@class='fa fa-lg fa-fw fa-search']");
+	}
+	
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -10072,8 +10083,6 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		try {
 			base.waitForElement(getOriginalDocPageNumber());
-			String originalDocPageNumber = getOriginalDocPageNumber().GetAttribute("value");
-
 			base.stepInfo("Verify pagination functionality is not works for original document which has 1 page");
 
 			base.stepInfo("Verify pagination is not working for the documents which has 1 page");
@@ -10092,14 +10101,19 @@ public class DocViewPage {
 				}
 
 			}
-			String originalDocPageNumberAfterClick = getOriginalDocPageNumber().GetAttribute("value");
-			softAssertion.assertEquals(originalDocPageNumber, originalDocPageNumberAfterClick,
-					"Document page number is not changed even after clicking on pagination icon for the document which has 1 page");
+			String originalDocPageNumberAfterClick = getOriginalDocPageNumber().GetAttribute("placeholder");
+			
+			if (originalDocPageNumberAfterClick.equals("1")) {
+				base.passedStep(
+						"Expected Last Page Number is displayed in page number text box after clicking on pagination icon");
+			} else {
+				base.failedStep(
+						"Expected Last Page Number is not displayed in page number text box after clicking on pagination icon");
+			}
 
 			base.stepInfo("Verify pagination functionality works for near dupe document which has more than 1 page");
 
 			base.waitForElement(getNearDupeDocPageNumber());
-			String nearDupeDocPageNumber = getNearDupeDocPageNumber().GetAttribute("value");
 
 			base.stepInfo("Verify pagination is working for the documents which has more than 1 page");
 			for (int i = 0; i < 20; i++) {
@@ -10119,8 +10133,6 @@ public class DocViewPage {
 			}
 
 			String nearDupeDocPageNumberAfterClick = getNearDupeDocPageNumber().GetAttribute("value");
-			softAssertion.assertNotEquals(nearDupeDocPageNumber, nearDupeDocPageNumberAfterClick,
-					"Document page number is changed even after clicking on pagination icon for the document which has 1 page");
 
 			base.waitForElement(getNearDupeDocTotalPageCount());
 			String totalPageCount = getNearDupeDocTotalPageCount().getText();
@@ -10131,7 +10143,6 @@ public class DocViewPage {
 				base.failedStep(
 						"Expected Last Page Number is not displayed in page number text box after clicking on pagination icon");
 			}
-			softAssertion.assertAll();
 		} catch (Exception e) {
 			UtilityLog.info("Pagination functionality verifcation for near dupe comparsion window failed due to " + e);
 			e.printStackTrace();
@@ -13664,8 +13675,9 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @author Vijaya Rani 24/11/21 NA Modified date: NA Modified by:NA
+	 * @author Vijaya.M
 	 * @description To verify thread docs mre data link and size thread
+	 * @throws InterruptedException
 	 */
 	public void selectDocsFromMiniDocsListAndCheckTheThreadedDocuments() throws InterruptedException {
 		driver.waitForPageToBeReady();
@@ -15036,8 +15048,10 @@ public class DocViewPage {
 		for (String docId : completedDoc) {
 			getDociD(docId).ScrollTo();
 			getDociD(docId).waitAndClick(5);
-			softAssertion.assertTrue(getUnCompleteButton().Displayed());
-		}
+			boolean flag=getUnCompleteButton().Displayed();
+			System.out.println(flag);
+			softAssertion.assertTrue(flag);
+			softAssertion.assertAll();		}
 		base.passedStep("Uncomplete button displayed for completed document");
 		driver.waitForPageToBeReady();
 	}
@@ -16441,6 +16455,7 @@ public class DocViewPage {
 	/**
 	 * @author Indium-Baskar
 	 */
+	
 //	Reusable method for verify unComplete to click complete button in random order
 	public void unCompleteButtonToCompleteBtn() {
 		driver.waitForPageToBeReady();
@@ -16449,7 +16464,12 @@ public class DocViewPage {
 			getDociD(docId).waitAndClick(5);
 			base.waitForElement(getUnCompleteButton());
 			getUnCompleteButton().waitAndClick(5);
-			softAssertion.assertTrue(getCompleteDocBtn().isDisplayed());
+			driver.waitForPageToBeReady();
+			base.waitTime(3);
+			boolean flag=getCompleteDocBtn().Displayed();
+			System.out.println(flag);
+			softAssertion.assertTrue(flag);
+			softAssertion.assertAll();
 		}
 		driver.waitForPageToBeReady();
 		if (getverifyCodeSameAsLast().isElementAvailable(5)) {
@@ -16457,7 +16477,6 @@ public class DocViewPage {
 		} else {
 			base.passedStep("Tick mark removed for document after clicking the uncomplete button");
 		}
-		softAssertion.assertAll();
 	}
 
 	/**
@@ -18770,7 +18789,7 @@ public class DocViewPage {
 //	Reusable method for edit coding without complete btn and verify scroll
 	public void editCodingFormScrollComplete() throws InterruptedException {
 		driver.waitForPageToBeReady();
-		getClickDocviewID(3).waitAndClick(5);
+		String prnDoc=getVerifyPrincipalDocument().getText();
 		base.waitForElement(getResponsiveCheked());
 		getResponsiveCheked().waitAndClick(5);
 		base.waitForElement(getNonPrivilegeRadio());
@@ -18787,6 +18806,8 @@ public class DocViewPage {
 		getDocument_CommentsTextBox().SendKeys(output);
 		completeButton();
 		base.VerifySuccessMessage("Document completed successfully");
+		driver.waitForPageToBeReady();
+		getDociD(prnDoc).waitAndClick(5);
 		driver.waitForPageToBeReady();
 		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
 		boolean flag = (boolean) jse
@@ -26263,6 +26284,7 @@ public class DocViewPage {
 		String output = sb.toString();
 		return output;
 	}
+
  
 	
 	/**
@@ -26309,5 +26331,49 @@ public class DocViewPage {
 			e.printStackTrace();
 			base.failedStep("Exception occured while  adding remark"+e.getLocalizedMessage());
 		}
+
+	/**
+	 * @author Vijaya.Rani  Modify Date: 16/03/22 NA Modified date: NA Modified by:NA
+	 * @Description: This method used verify navigation confirmation popup buttons
+	 * 
+	 */
+	public void verifyNavigationPopUpWindowNoButton() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSearchIcons());
+		getSearchIcons().waitAndClick(5);
+		
+		if (getNavigationMsg().Displayed() == true) {
+			base.passedStep("Navigation popup window is dsiplayed");
+		} else {
+			base.failedStep("Navigation popup window is not dsiplayed");
+		}
+		
+		base.waitForElement(getNavigationMsgPopupNoBtn());
+		getNavigationMsgPopupNoBtn().waitAndClick(5);
+		base.stepInfo("Confirm Navigation Yes Button Clicked Successfully");
+		
+		base.waitForElement(getChildWindowGearIcons());
+		softAssertion.assertTrue(getChildWindowGearIcons().Displayed());
+		base.passedStep("User can see the 'Doc View' page successfully");
+		
+	}
+	
+	/**
+	 * @author Vijaya.Rani  Modify Date: 16/03/22 NA Modified date: NA Modified by:NA
+	 * @Description: This method used verify navigation confirmation popup buttons
+	 * 
+	 */
+	public void verifyNavigationPopUpWindowYesButton() {
+		base.waitForElement(getSearchIcons());
+		getSearchIcons().waitAndClick(5);
+		
+		base.waitForElement(getNavigationMsgPopupYesBtn());
+		getNavigationMsgPopupYesBtn().waitAndClick(5);
+		base.stepInfo("Confirm Navigation Yes Button Clicked Successfully");
+		
+		base.waitForElement(getChildWindowGearIcons());
+		softAssertion.assertTrue(getChildWindowGearIcons().Displayed());
+		base.passedStep("Users actions is saved and user should redirect to the clicked page");
+
 	}
 }

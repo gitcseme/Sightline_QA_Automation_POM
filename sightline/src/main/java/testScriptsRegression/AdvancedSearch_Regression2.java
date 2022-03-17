@@ -1021,9 +1021,9 @@ public class AdvancedSearch_Regression2 {
 		driver.waitForPageToBeReady();
 		int Bgcount = baseClass.initialBgCount();
 
-		search.advancedContentBGSearch(searchText1, 1);
-		search.advancedContentBGSearch(Input.searchString9, 2);
-		search.advancedContentBGSearch(searchText3, 3);
+		search.advancedContentBGSearch(searchText1, 1,true);
+		search.advancedContentBGSearch(Input.searchString9, 2,true);
+		search.advancedContentBGSearch(searchText3, 3,true);
 		ss.navigateToSavedSearchPage();
 		search.navigateToSessionSearchPageURL();
 		search.getNewSearchButton().waitAndClick(5);
@@ -1046,7 +1046,53 @@ public class AdvancedSearch_Regression2 {
 		loginPage.logout();
 
 	}
+	/**
+	 * @author jayanthi 
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-48434", dataProvider = "Users", enabled = true, groups = {
+			"regression" }, priority = 23)
+	public void verifyBG_CountAdvancesearchToDocList(String username, String password) throws InterruptedException {
 
+		SessionSearch search = new SessionSearch(driver);
+		SavedSearch ss = new SavedSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48434");
+		baseClass.stepInfo("Verify that Actual count appears on \"My Background Tasks\" page When User Navigate between"
+				+ " Search to DocList and Navigation action takes longer time.(8 Sec)");
+		loginPage.loginToSightLine(username, password);
+		baseClass.selectproject(Input.highVolumeProject);
+		String searchText1 = "s";
+		String maxDocCountViewedinDocList = "500000";
+		search.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		search.getAdvancedSearchLinkCurrent().Click();
+		driver.waitForPageToBeReady();
+		int Bgcount = baseClass.initialBgCount();
+		// Content search in advanced search page
+		search.advancedContentBGSearch(searchText1, 1, false);
+		baseClass.stepInfo("performed a content search in advanced search pagae and it goes to back ground. ");
+		// checking for notification for BG search completed status.
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return baseClass.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120);
+		baseClass.stepInfo("Notifications are notified after BackGround Search completion.");
+		search.ViewInDocList();
+		// handling display of spinning wheel for 8 seconds and pushing the doc list
+		// navigation to back ground task.
+		String backGroundTask_ID = search.pushingBulkNavigationToBackGround();
+		search.verifyNotificationAndNavigateBackGroundTaskPg(Bgcount + 1);
+		String actualDocs = search.getRowData_BGT_Page("Actual Docs", backGroundTask_ID);
+		SoftAssert softassert = new SoftAssert();
+		softassert.assertEquals(actualDocs, maxDocCountViewedinDocList);
+		softassert.assertAll();
+		baseClass.passedStep(actualDocs + " is the doc count displayed in my back ground task page.");
+		baseClass.passedStep("Sucessfully verified that Actual count appears on My Background Tasks page When"
+				+ " User Navigate between Search to DocList and Navigation action takes longer time.(8 Sec)");
+		loginPage.logout();
+
+	}
 	@DataProvider(name = "Export")
 	public Object[][] Export() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, true },

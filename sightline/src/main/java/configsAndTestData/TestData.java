@@ -202,6 +202,7 @@ public class TestData {
 	public String multiwordText;
 	public String query;
 	public String miniDocListID;
+	public String DATFile3;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22 
@@ -240,6 +241,7 @@ public class TestData {
     public String batchFileWithMultiSheetColumnOrderChange;
     public String highVolumeProject;
     public String bulkSearchSting1;
+    public String validBatchFile;
     
 	// Added by jeevitha
 	public String colorCodeOfRed;
@@ -357,6 +359,9 @@ public class TestData {
    	public  String custodianName_Andrew;
    	public  String custodianName_allen;
     public  String TermOperator;
+    public  String SearchString_HighVolume;
+    public  String DocCount_BG_Page;
+ 
 	public String signDocumentId() {
 		// TODO Auto-generated method stub
 		return null; 

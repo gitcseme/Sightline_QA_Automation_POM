@@ -3,7 +3,6 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.support.Color;
@@ -58,6 +57,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
+		executionURL = Input.url;
 
 	}
 
