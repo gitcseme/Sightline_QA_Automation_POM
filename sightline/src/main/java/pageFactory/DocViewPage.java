@@ -3259,6 +3259,12 @@ public class DocViewPage {
 		return driver.FindElementsByXPath("//ul[@id='documentTypeDropDown']/li/a");
 	}
 
+
+	//Added by gopinath - 16/03/2022
+	public Element remarkElement() {
+		return driver.FindElementByXPath("(//*[local-name()='g']//*[name()='rect'])[2]");
+	}
+
 	public Element getChildWindowGearIcons() {
 		return driver.FindElementByXPath("//i[@class='fa fa-gear']");
 	}
@@ -3267,6 +3273,7 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//i[@class='fa fa-lg fa-fw fa-search']");
 	}
 	
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -13994,7 +14001,7 @@ public class DocViewPage {
 			Actions actions = new Actions(driver.getWebDriver());
 			driver.waitForPageToBeReady();
 			WebElement text = getSelectedAreaElement().getWebElement();
-			actions.moveToElement(text, off1, off2).clickAndHold().moveByOffset(200, 220).release().perform();
+			actions.moveToElement(text, 5, 55).clickAndHold().moveByOffset(200, 220).release().perform();
 			driver.scrollPageToTop();
 			getAddRemarkbtn().getWebElement().click();
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -26277,6 +26284,54 @@ public class DocViewPage {
 		String output = sb.toString();
 		return output;
 	}
+
+ 
+	
+	/**
+	 * @author Gopinath Created date: 16/03/2022 Modified date: N/A 
+	 * @Description:This method used to add remark by cicking on text on doc view page.
+	 * @param remark : remark is String value that need to enter in remark text field.
+	 */
+	public void addRemarkByText(String remark) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getNonAudioRemarkBtn().isElementAvailable(10);
+				}
+			}), Input.wait60);
+			getNonAudioRemarkBtn().waitAndClick(9);
+
+			if (getDocView_Remark_DeleteIcon().isElementAvailable(2)) {
+				getDocView_Remark_DeleteIcon().waitAndClick(10);
+				base.getPopupYesBtn().waitAndClick(5);
+			} else {
+				System.out.println("Remark not present");
+			}
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectRemarkDocArea().isElementAvailable(10);
+				}
+			}), Input.wait30);
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			remarkElement().isElementAvailable(20);
+			remarkElement().Click();
+			driver.scrollPageToTop();
+			getAddRemarkbtn().getWebElement().click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getRemarkTextArea().isElementAvailable(10);
+				}
+			}), Input.wait30);
+			getRemarkTextArea().SendKeys(remark);
+			getSaveRemark().Click();
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while  adding remark"+e.getLocalizedMessage());
+		}
+
 	/**
 	 * @author Vijaya.Rani  Modify Date: 16/03/22 NA Modified date: NA Modified by:NA
 	 * @Description: This method used verify navigation confirmation popup buttons
@@ -26319,6 +26374,6 @@ public class DocViewPage {
 		base.waitForElement(getChildWindowGearIcons());
 		softAssertion.assertTrue(getChildWindowGearIcons().Displayed());
 		base.passedStep("Users actions is saved and user should redirect to the clicked page");
-		
+
 	}
 }
