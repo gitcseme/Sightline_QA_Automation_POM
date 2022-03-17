@@ -68,8 +68,8 @@ public class ProductionPage_Regression {
 		baseClass = new BaseClass(driver);
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 	}
@@ -137,7 +137,6 @@ public class ProductionPage_Regression {
 		driver.getWebDriver().navigate().refresh();
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 
@@ -188,7 +187,6 @@ public class ProductionPage_Regression {
 		page.viewingPreviewButtonInSummaryTab();
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
@@ -241,7 +239,6 @@ public class ProductionPage_Regression {
 		page.viewingPreviewButtonInSummaryTab();
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
@@ -298,7 +295,6 @@ public class ProductionPage_Regression {
 		baseClass.passedStep("OCRed text files verified according to ansi text configuration");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
@@ -613,7 +609,7 @@ public class ProductionPage_Regression {
 	 *                     status bar
 	 */
 
-	@Test(enabled = false, groups = { " regression" }, priority = 11)
+	@Test(enabled = true, groups = { " regression" }, priority = 11)
 	public void AssertionOnUnCommitInQCPage() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-55990- Production Sprint 05");
 
@@ -674,7 +670,7 @@ public class ProductionPage_Regression {
 	 * 
 	 */
 
-	@Test(enabled = false, groups = { " regression" }, priority = 12)
+	@Test(enabled = true, groups = { " regression" }, priority = 12)
 	public void ViewDraftAssertionInGeneratePage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55971- Production Sprint 05");
@@ -736,7 +732,7 @@ public class ProductionPage_Regression {
 	 * be created under the mentioned default directory in the production
 	 * configuration
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 13)
+	@Test(enabled = true, groups = { " regression" }, priority = 13)
 	public void passProductionNameAsLoadFilesName() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -788,7 +784,7 @@ public class ProductionPage_Regression {
 	 * @Description:Verify that configuration format should applied for OCRed text
 	 * files
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 14)
+	@Test(enabled = true, groups = { " regression" }, priority = 14)
 	public void verifyFormatOCRedTextFiles() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -837,7 +833,7 @@ public class ProductionPage_Regression {
 	 *                     Generation QC Checks'
 	 */
 
-	@Test(enabled = false, groups = { " regression" }, priority = 15)
+	@Test(enabled = true, groups = { " regression" }, priority = 15)
 	public void verifyPostGenInTileView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55987- Production Sprint 05");
@@ -908,7 +904,7 @@ public class ProductionPage_Regression {
 	 * @Description:To Verify that End-to-end Production Export functionality is
 	 *                 working properly with TIFF files(Production Export).
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 17)
+	@Test(enabled = true, groups = { " regression" }, priority = 17)
 	public void createExport() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56165- Production Sprint 05");
@@ -973,7 +969,7 @@ public class ProductionPage_Regression {
 	 * 
 	 */
 
-	@Test(enabled = false, groups = { " regression" }, priority = 18)
+	@Test(enabled = true, groups = { " regression" }, priority = 18)
 	public void generatingTheProductionAfterBurnRedaction() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56122- Production Sprint 05");
@@ -1030,7 +1026,7 @@ public class ProductionPage_Regression {
 	 *              then that Tag should not be available.
 	 */
 
-	@Test(enabled = false, groups = { " regression" }, priority = 16)
+	@Test(enabled = true, groups = { " regression" }, priority = 16)
 
 	public void tiffSectionLeftBranding() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-56124- Production Sprint 05");
@@ -1075,7 +1071,7 @@ public class ProductionPage_Regression {
 	 *         the populated the bates number fields and production should generated
 	 *         with modified bates number
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 19)
+	@Test(enabled = true, groups = { " regression" }, priority = 19)
 	public void verificationOnNumberingAndSortingPage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49242- Production Sprint 05");
@@ -1124,7 +1120,7 @@ public class ProductionPage_Regression {
 	 *                     docs from export
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 21)
+	@Test(enabled = true, groups = { " regression" }, priority = 21)
 	public void verifyNativeSectionDisplayForDocumentsFromExport() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56150- Production Sprint 06");
@@ -1181,7 +1177,7 @@ public class ProductionPage_Regression {
 	 *                     text
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 20)
+	@Test(enabled = true, groups = { " regression" }, priority = 20)
 	public void verifyProductionWithPDFRedaction() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49969- Production Sprint 06");
@@ -1228,7 +1224,7 @@ public class ProductionPage_Regression {
 	 *                 should export the text with the Placeholder
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 22)
+	@Test(enabled = true, groups = { " regression" }, priority = 22)
 	public void verifyTextExportWithPlaceholder() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49134- Production Sprint 06");
@@ -1281,7 +1277,7 @@ public class ProductionPage_Regression {
 	 *                     PDF/TIFF should produced with Comments/Signature
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 23)
+	@Test(enabled = true, groups = { " regression" }, priority = 23)
 	public void verifyTIFFWithSignature() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49856- Production Sprint 06");
@@ -1337,7 +1333,7 @@ public class ProductionPage_Regression {
 	 *                     template file
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 24)
+	@Test(enabled = true, groups = { " regression" }, priority = 24)
 	public void verifyPDFGeneration() throws Exception {
 
 		baseClass.stepInfo("RPMXCON_56110 Production- Sprint 06");
@@ -1394,7 +1390,7 @@ public class ProductionPage_Regression {
 	 *                 document is redacted
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 26)
+	@Test(enabled = true, groups = { " regression" }, priority = 26)
 	public void verifyNatives() throws Exception {
 
 		baseClass.stepInfo("RPMXCON_49113 Production- Sprint 06");
@@ -1454,7 +1450,7 @@ public class ProductionPage_Regression {
 	 *                 from beginning, middle and end of the audio file
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 25)
+	@Test(enabled = true, groups = { " regression" }, priority = 25)
 	public void verifyAudioFilesWithRedactedDocuments() throws InterruptedException {
 
 		baseClass.stepInfo("RPMXCON_48317 Production- Sprint 06");
@@ -1505,7 +1501,7 @@ public class ProductionPage_Regression {
 	 *                     Redaction Tags should be disabled
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 28)
+	@Test(enabled = true, groups = { " regression" }, priority = 28)
 	public void verifyMp3ComponentRedactionTag() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1542,7 +1538,7 @@ public class ProductionPage_Regression {
 	 *                 document is redacted then native should not produced
 	 * 
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 27)
+	@Test(enabled = true, groups = { " regression" }, priority = 27)
 	public void verifyAudioFilesWithAnnotationLayerOption() throws InterruptedException {
 
 		baseClass.stepInfo("RPMXCON_48495 Production- Sprint 06");
@@ -1560,7 +1556,7 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.audioSearch("Morning", "North American English");
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
 		sessionSearch.bulkFolderExisting(foldername);
 
 		sessionSearch.ViewInDocView();
@@ -1585,7 +1581,7 @@ public class ProductionPage_Regression {
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 
@@ -1599,7 +1595,7 @@ public class ProductionPage_Regression {
 	 *                 font" option and its functionality.
 	 */
 
-	@Test(enabled = false, groups = { " regression" }, priority = 30)
+	@Test(enabled = true, groups = { " regression" }, priority = 30)
 	public void toggleBurnOnAndReductionStyle() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1648,7 +1644,7 @@ public class ProductionPage_Regression {
 	 *                 Redaction is disabled then Native should be generated
 	 */
 
-	@Test(enabled = false, groups = { " regression" }, priority = 29)
+	@Test(enabled = true, groups = { " regression" }, priority = 29)
 	public void verfiyTIFFwithoutBurnRedactionTag() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1699,7 +1695,7 @@ public class ProductionPage_Regression {
 	 * @Description:To verify that if Redacted document is selected and Burn
 	 *                 Redaction is disabled then Native should be generated
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 31)
+	@Test(enabled = true, groups = { " regression" }, priority = 31)
 	public void generatetDocumentswithMultipleBrandingTags() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		baseClass.stepInfo("RPMXCON-49044 -Production Sprint 06");
@@ -1745,9 +1741,10 @@ public class ProductionPage_Regression {
 				"Verified in Productions, the Documents with Multiple Branding Tags count on pre-gen checks page is showing correct count");
 
 		// delete tags and folders
-//	tagsAndFolderPage=new TagsAndFoldersPage(driver);
-//	tagsAndFolderPage.DeleteTagWithClassification(tagname1, Input.securityGroup);
-//	tagsAndFolderPage.DeleteTagWithClassification(tagname2, Input.securityGroup);
+	tagsAndFolderPage=new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.DeleteTagWithClassification(tagname1, Input.securityGroup);
+	driver.waitForPageToBeReady();
+	tagsAndFolderPage.DeleteTagWithClassification(tagname2, Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -1758,7 +1755,7 @@ public class ProductionPage_Regression {
 	 *              Document Match [RPMXCON-47900]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 32)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyPrivGuardForDocMatch() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		baseClass.stepInfo("RPMXCON-47900 -Production Sprint 10");
@@ -1809,7 +1806,7 @@ public class ProductionPage_Regression {
 	 *              wizard For Tag [RPMXCON-47898]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 33)
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifyDocSelectionForTag() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		baseClass.stepInfo("RPMXCON-47898 -Production Sprint 10");
@@ -1846,8 +1843,7 @@ public class ProductionPage_Regression {
 		softAssertion.assertNotEquals(docCount, "0");
 		softAssertion.assertAll();
 
-		// Delete TAG
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 
@@ -1858,7 +1854,7 @@ public class ProductionPage_Regression {
 	 * Description : Verify that read only custom metadata field value should be
 	 * retained on click of saved stamp in context of security group
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyProductionCreationDateMarkComplete() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		baseClass.stepInfo("Test case Id: RPMXCON-49041");
@@ -1897,11 +1893,12 @@ public class ProductionPage_Regression {
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
+	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
+		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			System.out.println("Executed :" + result.getMethod().getMethodName());
 			loginPage.logoutWithoutAssert();
 		}
 		try {
@@ -1909,16 +1906,18 @@ public class ProductionPage_Regression {
 		} catch (Exception e) {
 			loginPage.quitBrowser();
 		}
+		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
 	@AfterClass(alwaysRun = true)
-	public void close() {
-		try {
-			// LoginPage.clearBrowserCache();
 
+	public void close() {
+		System.out.println("******TEST CASES FOR Batch Redactions EXECUTED******");
+		try {
+//			login.clearBrowserCache();
 		} catch (Exception e) {
-			System.out.println("Sessions already closed");
+			// no session avilable
+
 		}
 	}
-
 }

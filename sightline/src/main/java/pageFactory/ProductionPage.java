@@ -9014,7 +9014,7 @@ public class ProductionPage {
 		base.stepInfo(tagname + " : Is Selected");
 
 		base.waitForElement(getInsertQueryBtn());
-		getInsertQueryBtn().Click();
+		getInsertQueryBtn().waitAndClick(10);
 
 		base.waitForElement(getCheckForMatchingDocuments());
 		getCheckForMatchingDocuments().Enabled();
@@ -13895,20 +13895,11 @@ public class ProductionPage {
 
 			base.waitForElement(getTechissue_toggle());
 			getTechissue_toggle().waitAndClick(5);
-
 			driver.waitForPageToBeReady();
-
 			base.waitForElement(getTechissue_SelectTagButton());
 			getTechissue_SelectTagButton().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSelectTechnicalIssueTag().Visible() && getPriveldge_TagTree(tagname).Enabled();
-				}
-			}), Input.wait90);
-
-			getSelectTechnicalIssueTag().waitAndClick(15);
-
+			getPriveldge_TagTree(tagname).isElementAvailable(10);
+			getPriveldge_TagTree(tagname).waitAndClick(5);
 			base.waitForElement(getPriveldge_TagTree_SelectButton());
 			getPriveldge_TagTree_SelectButton().waitAndClick(15);
 			driver.waitForPageToBeReady();
@@ -13925,6 +13916,8 @@ public class ProductionPage {
 		}
 
 	}
+	
+	
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @throws InterruptedException
@@ -14263,10 +14256,12 @@ public class ProductionPage {
 				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
 			}
 		}), Input.wait30);
+		
 		getbtnProductionGenerate().Click();
 
 		driver.waitForPageToBeReady();
-		getbtnContinueGenerate().isElementAvailable(120);
+		getbtnContinueGenerate().isElementAvailable(320);
+		getbtnContinueGenerate().Click();
 
 	}
 
