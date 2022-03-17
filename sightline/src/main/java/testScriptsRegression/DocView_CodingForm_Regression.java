@@ -7118,6 +7118,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON- 52112");
 		baseClass.stepInfo("Verify when user clicks saved stamp when document"
 				+ "not part of mini doc list is viewed from analytics panel");
+		codingForm.assignCodingFormByCondition(Input.codeFormName);
 
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);

@@ -11,6 +11,7 @@ import java.text.ParseException;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -186,7 +187,7 @@ public class Assignment_Regression1 {
 	 * @description Verify that RMU can move the assignment from Child cascade
 	 *              parent moving to cascade parent (RPMXCON-54970)
 	 */
-	@Test(description ="RPMXCON-54970",enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-54970",enabled = true, groups = { "regression" }, priority = 4)
 	public void validateMove_CascadeChildToCascadeAssignGroup() throws InterruptedException {
 		String cascadeSettings_yes = "Yes";
 		String cascadeSettings_No = "No";
@@ -233,7 +234,7 @@ public class Assignment_Regression1 {
 	 *              to non cascade parent and user can edit the assignment from any
 	 *              group(RPMXCON-54965)
 	 */
-	@Test(description ="RPMXCON-54965",enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-54965",enabled = true, groups = { "regression" }, priority = 5)
 	public void validateMove_nonCascadeToNonCascadeAssignGroup() throws InterruptedException {
 		String cascadeSettings_yes = "Yes";
 		String cascadeSettings_No = "No";
@@ -274,7 +275,7 @@ public class Assignment_Regression1 {
 	 *              assignment(RPMXCON-54966)
 	 * 
 	 */
-	@Test(description ="RPMXCON-54966",enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-54966",enabled = true, groups = { "regression" }, priority = 6)
 	public void validateMove_NonCascadeToCascadeAssignGroup() throws InterruptedException {
 		String cascadeSettings_yes = "Yes";
 		String cascadeSettings_No = "No";
@@ -316,7 +317,7 @@ public class Assignment_Regression1 {
 	 *              Bulk Assignment RPMXCON-54962
 	 */
 
-	@Test(description ="RPMXCON-54962",enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-54962",enabled = true, groups = { "regression" }, priority = 7)
 	public void VerifyTheCascadeSettingsInBulkAssign() throws InterruptedException, ParseException, IOException {
 		String assignmentName = "assignment" + Utility.dynamicNameAppender();
 		String assignmentGroup = "assgnGrp" + Utility.dynamicNameAppender();
@@ -340,7 +341,7 @@ public class Assignment_Regression1 {
 	 * @description To verify the functionality of the Instructions while editing
 	 *              existing Assignment.RPMXCON-53797
 	 */
-	@Test(description ="RPMXCON-53797",enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-53797",enabled = true, groups = { "regression" }, priority = 8)
 
 	public void validateInstructionPopUpInAssignments() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("To verify the functionality of the Instructions while editing existing Assignment.");
@@ -628,7 +629,8 @@ public class Assignment_Regression1 {
 		}catch(Exception e) {
 			bc.failedStep("The Docs assigned in search page to assignment and in the assigments grid view are not equal");
 		}
-		agnmt.getSelectAssignment(assignmentName).waitAndClick(3);
+		bc.waitForElement(agnmt.getSelectAssignment(assignmentName));
+		agnmt.Checkclickedstatus(assignmentName);
 		driver.scrollPageToTop();
 		bc.waitForElement(agnmt.getAssignmentActionDropdown());
 		agnmt.getAssignmentActionDropdown().waitAndClick(3);
@@ -830,6 +832,7 @@ public class Assignment_Regression1 {
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		bc = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
