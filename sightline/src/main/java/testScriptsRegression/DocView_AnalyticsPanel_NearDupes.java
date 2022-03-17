@@ -2203,8 +2203,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		if (executionURL.contains("pt")) {
-			String documentToBeSelected = Input.newNearDupeDocId;
-			String revDocToBeSelected = Input.threadDocId;
+			documentToBeSelected = Input.newNearDupeDocId;
+			revDocToBeSelected = Input.threadDocId;
 		} else {
 			documentToBeSelected = Input.conceptualDocs1;
 			revDocToBeSelected = Input.newNearDupeDocId;
