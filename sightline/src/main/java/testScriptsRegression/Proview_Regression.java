@@ -15,6 +15,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
@@ -33,6 +35,7 @@ public class Proview_Regression {
 	String pureHit;
 	String pureHit1;
 	BaseClass bc;
+	SoftAssert softAssert;
 
 	String tagName = "CatTag2" + Utility.dynamicNameAppender();
 	String folderName = "CatFolder2" + Utility.dynamicNameAppender();
@@ -67,7 +70,7 @@ public class Proview_Regression {
 			sessionSearch.bulkFolder(folderName);
 		}
 		Categorization cat = new Categorization(driver);
-		cat.CategorizationFunctionalityVerification(tagName, folderName);
+		cat.CategorizationFunctionalityVerification(tagName, folderName, Input.tag);
 		cat.ViewInDocLIst();
 		DocListPage doclistPage = new DocListPage(driver);
 		List<String> docids = new ArrayList<>();
@@ -81,6 +84,96 @@ public class Proview_Regression {
 			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 			tp.deleteAllFolders("CatFolder2");
 		}
+		lp.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that the link should be displayed for ID on
+	 *              Background Task Page and it should redirect to the
+	 *              Categorization Page [RPMXCON-54132]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	public void verifyLinkForIdOnBGPage() throws InterruptedException {
+		Categorization categorize = new Categorization(driver);
+		sessionSearch = new SessionSearch(driver);
+		String folderName = "FOLDER" + Utility.dynamicNameAppender();
+		String tagName = "TAG" + Utility.dynamicNameAppender();
+
+		// Login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		bc.stepInfo("RPMXC0N-54132 Proview");
+		bc.stepInfo(
+				"To verify that the link should be displayed for ID on Background Task Page and it should redirect to the Categorization Page");
+
+		// basic Content search
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		// perform Bulk Tag And Bulk Folder
+		sessionSearch.bulkTag(tagName);
+		sessionSearch.bulkFolderWithOutHitADD(folderName);
+
+		// RUN CATEGORIZATION
+		categorize.navigateToCategorizePage();
+		categorize.CategorizationFunctionalityVerification(tagName, folderName, Input.tag);
+
+		// Verify Link From BackgroundTask Page
+		categorize.backGroundTaskPageToCategorize();
+		softAssert.assertAll();
+
+		lp.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that user can view the total no of documents from
+	 *              Categorization to doc list. [RPMXCON-54138]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
+	public void verifyDocsFromCategorizeToDoclist(String username, String password, String role) throws InterruptedException {
+		String folderName = "FOLDER" + Utility.dynamicNameAppender();
+
+		Categorization categorize = new Categorization(driver);
+		sessionSearch = new SessionSearch(driver);
+		DocListPage doclistPage = new DocListPage(driver);
+
+		// Login as PA
+		lp.loginToSightLine(username, password);
+
+		bc.stepInfo("RPMXC0N-54138 Proview");
+		bc.stepInfo("To verify that user can view the total no of documents from Categorization to doc list.");
+
+		// basic Content search
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		// perform Bulk Folder
+		sessionSearch.bulkFolder(folderName);
+
+		// RUN CATEGORIZATION
+		categorize.navigateToCategorizePage();
+		categorize.CategorizationFunctionalityVerification(Input.securityGroup, folderName, "SG");
+
+		// navigate to doclist
+		categorize.ViewInDocLIst();
+		String docCount = doclistPage.verifyingDocCount();
+		bc.textCompareNotEquals(docCount, "0", "Documents Displayed in doclistPage : " + docCount,
+				"Documentts Are Not Dispalyed");
+
+		// verify Selected Docs In Categorize page
+		String currentUrl = driver.getUrl();
+		String passMsg = "Navigated to Categorization page ";
+		bc.compareTextViaContains(currentUrl, "/Proview/Proview", passMsg, "");
+		bc.ValidateElement_Presence(categorize.getSelectedCorpusToAnalyze(folderName),
+				"Selected folder : " + folderName);
+
+		String resultCount = categorize.getDocCount().getText();
+		bc.textCompareEquals(resultCount, docCount, "Previously Selected Docs Remains Selected With DocCount : "+resultCount,
+				"Selected Docs are not Displayed");
+		
+		lp.logout();
 	}
 
 	@BeforeMethod
@@ -89,6 +182,8 @@ public class Proview_Regression {
 		System.out.println("Executing method : " + testMethod.getName());
 		driver = new Driver();
 		bc = new BaseClass(driver);
+		lp = new LoginPage(driver);
+		softAssert = new SoftAssert();
 
 	}
 
@@ -99,7 +194,7 @@ public class Proview_Regression {
 			bc.screenShot(result);
 		}
 		try {
-			lp.logout();
+
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();
