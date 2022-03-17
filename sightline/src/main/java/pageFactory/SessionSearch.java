@@ -2097,6 +2097,7 @@ public class SessionSearch {
 	public int basicContentSearch(String SearchString) {
 		// To make sure we are in basic search page
 		driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
 		// Enter seatch string
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {

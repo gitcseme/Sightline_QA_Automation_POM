@@ -2591,7 +2591,7 @@ public class SavedSearch {
 		if (select.equals("Yes")) {
 			base.waitTime(5); // in order to handle abnormal wait activities
 			// base.waitForElement(getSelectWithName(searchName));
-			getSelectWithName(searchName).isElementAvailable(5);
+//			getSelectWithName(searchName).isElementAvailable(5);
 			getSelectWithName(searchName).waitAndClick(6);
 			getSelectWithName(searchName).checkIn();
 		}
@@ -3424,7 +3424,7 @@ public class SavedSearch {
 				return getBatchUploadButton().Visible();
 			}
 		}), Input.wait30);
-		getBatchUploadButton().Click();
+		getBatchUploadButton().waitAndClick(5);
 		System.out.println("Clicked on Upload button..");
 		UtilityLog.info("Clicked on Upload button..");
 
