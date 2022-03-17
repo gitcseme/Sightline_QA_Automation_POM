@@ -358,6 +358,7 @@ public class Input {
 	public static String highVolumeProject;
 	public static String bulkSearchSting1;
 	public static String validBatchFile;
+	public static String masterDateBatchFile;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -982,6 +983,7 @@ public class Input {
 		highVolumeProject = testData.getHighVolumeProject();
 		bulkSearchSting1 = testData.getBulkSearchSting1();
 		validBatchFile = testData.getValidBatchFile();
+		masterDateBatchFile = testData.getMasterDateBatchFile();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();

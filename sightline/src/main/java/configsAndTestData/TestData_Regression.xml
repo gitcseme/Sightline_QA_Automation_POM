@@ -257,7 +257,7 @@
 	<highVolumeProject>AutomationHighVolumeProject</highVolumeProject>
 	<bulkSearchSting1>s</bulkSearchSting1>
 	<validBatchFile>ValidBatchFile</validBatchFile>
-	
+	<masterDateBatchFile>MasterDate-IS-RANGE</masterDateBatchFile>
     
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->

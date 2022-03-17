@@ -242,6 +242,7 @@ public class TestData {
     public String highVolumeProject;
     public String bulkSearchSting1;
     public String validBatchFile;
+    public String masterDateBatchFile;
     
 	// Added by jeevitha
 	public String colorCodeOfRed;

@@ -2932,8 +2932,8 @@ public class SavedSearchRegression_New_Set_05 {
 		BatchRedactionPage batch = new BatchRedactionPage(driver);
 		List<String> searchIDlist = new ArrayList<>();
 		HashMap<String, String> mapPair = new HashMap<String, String>();
-		String fileLocation = Input.batchFileNewLocation;
-		String fileLocationWithDir = System.getProperty("user.dir") + Input.batchFileNewLocation;
+		String fileLocation = Input.validBatchFileLocation;
+		String fileLocationWithDir = System.getProperty("user.dir") + Input.validBatchFileLocation;
 		String fileName = Input.validBatchFile;
 		String fileFormat = ".xlsx";
 		String batchNodeToCheck, fileToSelect;
@@ -3008,6 +3008,192 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// Reset FIleName
 		base.renameFile(false, System.getProperty("user.dir") + fileLocation, fileToSelect, fileFormat, true, fileName);
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/15/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that Saved Search >> Uploaded Batch Search query works
+	 *              properly for MasterDate date/time field with
+	 *              "Is"operator[RPMXCON-48774] sprint 13
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 49)
+	public void masterDateISoperator() throws InterruptedException, IOException {
+		String expSSURL = Input.url + "Search/Searches";
+		String fileLocation = Input.validBatchFileLocation;
+		String fileLocationWithDir = System.getProperty("user.dir") + Input.validBatchFileLocation;
+		String fileName = Input.masterDateBatchFile;
+		String fileFormat = ".xlsx";
+		String batchNodeToCheck, fileToSelect;
+		String searchName = "MasterDate IS operator Basic Search";
+		int Bgcount, pureHit, rowCOuntFromExcel;
+		String docCount;
+
+		base.stepInfo("Test case Id: RPMXCON-48774  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that Saved Search >> Uploaded Batch Search query works properly for MasterDate date/time field with \"Is\"operator");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Navigate to saved search page
+		saveSearch.navigateToSSPage();
+
+		// Initial Notification count
+		Bgcount = base.initialBgCount();
+
+		// Rename as dynamic fileName and store data respectively
+		fileToSelect = base.renameFile(true, fileLocationWithDir, fileName, fileFormat, false, "");
+		batchNodeToCheck = fileToSelect + "_" + 1 + "_Sheet" + 1;
+
+		// Total no.of rows(searches) in sheet
+		rowCOuntFromExcel = base.getTotalNumOfRowsInExcel(fileLocationWithDir + "\\" + fileToSelect + fileFormat, 0, "",
+				0);
+		System.out.println(rowCOuntFromExcel);
+
+		// Upload batch file
+		saveSearch.uploadBatchFile_D(fileLocation, fileToSelect + fileFormat, false);
+		saveSearch.getSubmitToUpload().Click();
+		saveSearch.verifyBatchUploadMessage("Success", false);
+		driver.waitForPageToBeReady();
+
+		// Reset FIleName
+		base.renameFile(false, System.getProperty("user.dir") + fileLocation, fileToSelect, fileFormat, true, fileName);
+
+		// Wait for Searches to complete and count get updated
+		base.stepInfo("Wait till all the search status changes to 'Completed' from 'InProgress'");
+		base.checkNotificationCount(Bgcount, rowCOuntFromExcel);
+		saveSearch.sgExpansion();
+		softAssertion.assertTrue(saveSearch.verifyNodePresent(batchNodeToCheck),
+				"Searches uploaded in Saved search screen.");
+		softAssertion.assertAll();
+
+		// Search and Edit
+		saveSearch.selectNode1(batchNodeToCheck);
+		saveSearch.getCreatedNode(batchNodeToCheck).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.stepInfo("Search for : " + searchName);
+		saveSearch.selectSavedSearch(searchName);
+		docCount = saveSearch.getCount(searchName).getText();
+		base.stepInfo("Doc count for the search from pureHit page : " + docCount);
+		saveSearch.getSavedSearchEditButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.verifyUrlLanding(expSSURL, "Clicked on Edit and Landed on Session Search page",
+				"Failed to click edit - not landed in Session Search Page");
+
+		// Search and get Purehit
+		session.getModifyASearch_Last().waitAndClick(5);
+		session.SearchBtnAction();
+		base.stepInfo("Performed Search");
+		pureHit = session.returnPurehitCount();
+		base.stepInfo("PureHit count : " + pureHit);
+
+		// Validation Doc count
+		base.digitCompareEquals(pureHit, Integer.parseInt(docCount),
+				"MasterDate date/time field search result returns documents which satisfied above configured query. ",
+				"Doc count failed");
+
+		// Delete uploaded batch file
+		base.stepInfo("Initiated Batch upload delete");
+		saveSearch.deleteUploadedBatchFile(fileToSelect, Input.mySavedSearch, false, null);
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram @Date: 03/16s/22 @Modified date:N/A @Modified by:N/A
+	 * @Description : Verify that Saved Search >> Uploaded Batch Search query works
+	 *              properly for MasterDate date/time field with
+	 *              "Range"operator[RPMXCON-48775] sprint 13
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 50)
+	public void masterDateRangeSoperator() throws InterruptedException, IOException {
+		String expSSURL = Input.url + "Search/Searches";
+		String fileLocation = Input.validBatchFileLocation;
+		String fileLocationWithDir = System.getProperty("user.dir") + Input.validBatchFileLocation;
+		String fileName = Input.masterDateBatchFile;
+		String fileFormat = ".xlsx";
+		String batchNodeToCheck, fileToSelect;
+		String searchName = "MasterDate RANGE operator Basic Search";
+		int Bgcount, pureHit, rowCOuntFromExcel;
+		String docCount;
+
+		base.stepInfo("Test case Id: RPMXCON-48775  Saved Search Sprint 13");
+		base.stepInfo(
+				"Verify that Saved Search >> Uploaded Batch Search query works properly for MasterDate  date/time field with \"Range\"operator");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Navigate to saved search page
+		saveSearch.navigateToSSPage();
+
+		// Initial Notification count
+		Bgcount = base.initialBgCount();
+
+		// Rename as dynamic fileName and store data respectively
+		fileToSelect = base.renameFile(true, fileLocationWithDir, fileName, fileFormat, false, "");
+		batchNodeToCheck = fileToSelect + "_" + 1 + "_Sheet" + 1;
+
+		// Total no.of rows(searches) in sheet
+		rowCOuntFromExcel = base.getTotalNumOfRowsInExcel(fileLocationWithDir + "\\" + fileToSelect + fileFormat, 0, "",
+				0);
+		System.out.println(rowCOuntFromExcel);
+
+		// Upload batch file
+		saveSearch.uploadBatchFile_D(fileLocation, fileToSelect + fileFormat, false);
+		saveSearch.getSubmitToUpload().Click();
+		saveSearch.verifyBatchUploadMessage("Success", false);
+		driver.waitForPageToBeReady();
+
+		// Reset FIleName
+		base.renameFile(false, System.getProperty("user.dir") + fileLocation, fileToSelect, fileFormat, true, fileName);
+
+		// Wait for Searches to complete and count get updated
+		base.stepInfo("Wait till all the search status changes to 'Completed' from 'InProgress'");
+		base.checkNotificationCount(Bgcount, rowCOuntFromExcel);
+		saveSearch.sgExpansion();
+		softAssertion.assertTrue(saveSearch.verifyNodePresent(batchNodeToCheck),
+				"Searches uploaded in Saved search screen.");
+		softAssertion.assertAll();
+
+		// Search and Edit
+		saveSearch.selectNode1(batchNodeToCheck);
+		saveSearch.getCreatedNode(batchNodeToCheck).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.stepInfo("Search for : " + searchName);
+		saveSearch.selectSavedSearch(searchName);
+		docCount = saveSearch.getCount(searchName).getText();
+		base.stepInfo("Doc count for the search from pureHit page : " + docCount);
+		saveSearch.getSavedSearchEditButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.verifyUrlLanding(expSSURL, "Clicked on Edit and Landed on Session Search page",
+				"Failed to click edit - not landed in Session Search Page");
+
+		// Search and get Purehit
+		session.getModifyASearch_Last().waitAndClick(5);
+		session.SearchBtnAction();
+		base.stepInfo("Performed Search");
+		pureHit = session.returnPurehitCount();
+		base.stepInfo("PureHit count : " + pureHit);
+
+		// Validation Doc count
+		base.digitCompareEquals(pureHit, Integer.parseInt(docCount),
+				"MasterDate date/time field search result returns documents which satisfied above configured query. ",
+				"Doc count failed");
+
+		// Delete uploaded batch file
+		base.stepInfo("Initiated Batch upload delete");
+		saveSearch.deleteUploadedBatchFile(fileToSelect, Input.mySavedSearch, false, null);
 
 		login.logout();
 
