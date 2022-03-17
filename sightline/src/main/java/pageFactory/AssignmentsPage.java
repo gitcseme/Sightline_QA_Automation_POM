@@ -7525,6 +7525,7 @@ public Element getFamilyMembersCount() {
 			bc.getCloseSucessmsg().waitAndClick(10);
 			bc.waitForElement(getAssignment_ManageReviewersTab());
 			getAssignment_ManageReviewersTab().waitAndClick(10);
+			bc.waitTime(5);
 			bc.waitForElement(getAssgn_ManageRev_selectReviewer(Input.rmu1userName));
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 			selectActionsInManageRev(getAssgn_ManageRev_Action_CompleteAllDocs());
@@ -7604,6 +7605,7 @@ public Element getFamilyMembersCount() {
 	public void selectActionsInManageRev(Element actions) {
 		// try {
 		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
 		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
 		getAssgn_ManageRev_Action().waitAndClick(10);
 		bc.waitTillElemetToBeClickable(actions);

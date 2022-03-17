@@ -2613,8 +2613,8 @@ public class DocViewPage {
 	// Added by Aathith
 
 	public Element getAttachCountTextBox() {
-		return driver.FindElementByXPath("//input[@projectfieldname='AttachCount']");
-	}
+		return driver.FindElementByXPath("//label[@id='l_it_0']//input");
+		}
 
 	// added sakthivel
 	public Element getVerifyNearDuppin() {
@@ -2805,6 +2805,9 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//li[@id='liDocumentDefaultView' and @class='ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active']");
 	}
+	public Element getDocViewAnaliticalFamilTab() {
+		return driver.FindElementByXPath("//li[@id='liDocumentFamilyMember']");
+		}
 
 	// verfifying the docid on docview panal by passing required docid
 	public Element getDocViewPanelDocId(String docId) {
@@ -5478,7 +5481,7 @@ public class DocViewPage {
 		base.passedStep("Cursor moved to the next document after getting success message ");
 		for (int i = 3; i <= 3; i++) {
 			base.waitForElement(getClickDocviewID(i));
-			getClickDocviewID(i).WaitUntilPresent().Click();
+			getClickDocviewID(i).waitAndClick(5);
 		}
 		try {
 			getDocument_CommentsTextBox().WaitUntilPresent().ScrollTo();
@@ -5502,7 +5505,7 @@ public class DocViewPage {
 			getClickDocviewID(i).WaitUntilPresent().waitAndClick(5);
 		}
 		try {
-			base.waitForElement(getDocument_CommentsTextBox());
+			base.waitTillElemetToBeClickable(getDocument_CommentsTextBox());
 			getDocument_CommentsTextBox().SendKeys("codesameas");
 		} catch (org.openqa.selenium.StaleElementReferenceException e) {
 			e.printStackTrace();
@@ -11825,7 +11828,7 @@ public class DocViewPage {
 	public void clickOnSavedStamp(String textBox, String colour, String projectFieldName)
 			throws InterruptedException, AWTException {
 		driver.waitForPageToBeReady();
-		reusableDocView.stampColourSelection(textBox, colour);
+		reusableDocView.codingStampPopUpWindow(textBox, colour);
 		base.waitForElement(getCodingStampLastIcon(colour));
 		getCodingStampLastIcon(colour).waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -11886,7 +11889,7 @@ public class DocViewPage {
 	public void viewCodingPopUp(String textBox, String colour, String projectFieldName)
 			throws InterruptedException, AWTException {
 		driver.waitForPageToBeReady();
-		reusableDocView.stampColourSelection(textBox, colour);
+		reusableDocView.codingStampPopUpWindow(textBox, colour);
 		driver.waitForPageToBeReady();
 		driver.getWebDriver().navigate().refresh();
 		reusableDocView.pencilGearicon(colour);
@@ -12413,7 +12416,7 @@ public class DocViewPage {
 		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
 //		base.waitForElement(getReadOnlyTextBox(projectFieldName));
 		getDateFormat().SendKeys("11/10/2021");
-		reusableDocView.stampColourSelection(fieldValue, colour);
+		reusableDocView.codingStampPopUpWindow(fieldValue, colour);
 		String errorText = getCodingFormValidErrorMeta().getText().trim();
 		String actual = "Coding Form validation failed";
 		base.stepInfo("Save using stamp on non-date format and verify error message");
@@ -12662,6 +12665,7 @@ public class DocViewPage {
 			String actualObjectName = getCodingFormObjectNames(objectNo).getText();
 			System.out.println("actual: " + actualObjectName);
 			softAssertion.assertEquals(expectedObjectName, actualObjectName);
+			softAssertion.assertAll();
 			base.passedStep("Object added in the coding form is displayed in docview page as expected");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -13335,7 +13339,7 @@ public class DocViewPage {
 		base.waitForElement(getDociD(docId));
 		getDociD(docId).waitAndClick(5);
 		driver.waitForPageToBeReady();
-		if (getDocument_CommentsTextBox().isElementPresent() == false) {
+		if (getDocument_CommentsTextBox().isElementAvailable(5) == false) {
 			base.stepInfo("Search done via outside of an assignment");
 			base.passedStep("Coding form values are not same when different coding form is applied");
 
@@ -13601,7 +13605,7 @@ public class DocViewPage {
 			String average, String bit, String huge) {
 		base.stepInfo("Performing from parent window");
 		passingAlphaIntergerMetaData(alpha, tiny, small, average, bit, huge);
-		reusableDocView.stampColourSelection(stamp, colour);
+		reusableDocView.codingStampPopUpWindow(stamp, colour);
 		getCodingStampCancel().waitAndClick(5);
 		if (getCodingFormValidErrorMeta().Displayed()) {
 			base.stepInfo("Alpha and numeric character are not entered in integer metadata field");
@@ -13610,7 +13614,7 @@ public class DocViewPage {
 			base.stepInfo("Alpha and numeric value entering in interger metadata fields");
 		}
 		passingOutsideRangeIntergerMetaData(tiny, small, average, bit, huge);
-		reusableDocView.stampColourSelection(stamp, colour);
+		reusableDocView.codingStampPopUpWindow(stamp, colour);
 		getCodingStampCancel().waitAndClick(5);
 		if (getCodingFormValidErrorMeta().Displayed()) {
 			base.passedStep("Validation message displayed for when values entered in outside of range ");
@@ -14285,7 +14289,7 @@ public class DocViewPage {
 		base.stepInfo("Performing action from parent window");
 		base.waitForElement(getDocView_CodingFormComments());
 		getDocView_CodingFormComments().Clear();
-		reusableDocView.stampColourSelection(fieldText, Input.stampSelection);
+		reusableDocView.codingStampPopUpWindow(fieldText, Input.stampSelection);
 		boolean flag = getCodingFormValidErrorMeta().Displayed();
 		softAssertion.assertTrue(flag);
 		if (getCodingFormValidErrorMeta().Displayed()) {
@@ -16826,26 +16830,23 @@ public class DocViewPage {
 	 * @author Aathith.Senthilkumar
 	 */
 	public void performCodeSameForFamilyMembersDocumentsReviewer() throws InterruptedException {
-
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocFileType());
-		getDocFileType().waitAndClick(5);
-		// driver.scrollingToBottomofAPage();
-		base.waitForElement(getDocView_Analytics_FamilyTab());
-		// driver.scrollingToElementofAPage(getDocView_Analytics_FamilyTab());
-		// getDocView_Analytics_FamilyTab().ScrollTo();
-		getDocView_Analytics_FamilyTab().waitAndClick(10);
-
+		getDocFileType().waitAndClick(15);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocViewAnaliticalFamilTab());
+		//driver.scrollingToElementofAPage(getDocViewAnaliticalFamilTab());
+		getDocViewAnaliticalFamilTab().ScrollTo();
+		getDocViewAnaliticalFamilTab().waitAndClick(15);
 		base.waitForElement(getDocView_Analytics_ChildWindow_FamilyTab_doc(2));
-		getDocView_Analytics_ChildWindow_FamilyTab_doc(2).waitAndClick(10);
-
+		getDocView_Analytics_ChildWindow_FamilyTab_doc(2).ScrollTo();
+		getDocView_Analytics_ChildWindow_FamilyTab_doc(2).waitAndClick(15);
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
-
 		getDocView_Analytics_Family_Member_CodeSameAs().waitAndClick(15);
-
 		base.VerifySuccessMessage("Code same performed successfully.");
-
-	}
+		}
+		
 
 	/**
 	 * @author Aathith.Senthilkumar
@@ -26331,6 +26332,7 @@ public class DocViewPage {
 			e.printStackTrace();
 			base.failedStep("Exception occured while  adding remark"+e.getLocalizedMessage());
 		}
+	}
 
 	/**
 	 * @author Vijaya.Rani  Modify Date: 16/03/22 NA Modified date: NA Modified by:NA

@@ -714,7 +714,7 @@ public class ReusableDocViewPage {
 		getResponsiveCheked().waitAndClick(5);
 		base.waitForElement(getNonPrivilegeRadio());
 		getNonPrivilegeRadio().waitAndClick(5);
-		base.waitForElement(getDocument_CommentsTextBox());
+		base.waitTillElemetToBeClickable(getDocument_CommentsTextBox());
 		getDocument_CommentsTextBox().SendKeys("Edited and save with save button");
 		base.waitForElement(getSaveAndNextButton());
 		getSaveAndNextButton().waitAndClick(5);
