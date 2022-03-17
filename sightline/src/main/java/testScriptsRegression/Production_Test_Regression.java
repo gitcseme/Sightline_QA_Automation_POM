@@ -2082,7 +2082,7 @@ public class Production_Test_Regression {
 	 * @Description: To verify that if Blank Page Removal toggle is OFF then it
 	 *               should produced the PDF with blank pages
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 32)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyBlankRemovalToggleWithpdfGen() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48533 -Production Sprint 09");
@@ -2091,6 +2091,8 @@ public class Production_Test_Regression {
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -2136,7 +2138,7 @@ public class Production_Test_Regression {
 	 *               only tags selected in the native components, then Component tab
 	 *               should Complete without any error.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 33)
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifiyProdComponentTabWithoutError() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55920 -Production Sprint 10");
@@ -2146,6 +2148,8 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -2174,12 +2178,10 @@ public class Production_Test_Regression {
 				beginningBates);
 
 		page = new ProductionPage(driver);
-		page.getFilterByButton().waitAndClick(10);
-		page.getFilterByCOMPLETED().waitAndClick(10);
-		page.getRefreshButton().waitAndClick(10);
-		// page.getProductionHomePage().waitAndClick(10);
+		page.filterCompletedProduction();
 		page.getprod_ActionButton_Reusable(productionname).waitAndClick(10);
 		driver.waitForPageToBeReady();
+		page.getprod_Action_SaveTemplate_Reusable(productionname).Enabled();
 		page.getprod_Action_SaveTemplate_Reusable(productionname).waitAndClick(10);
 
 		page.saveTemple(TempName);
@@ -2191,9 +2193,17 @@ public class Production_Test_Regression {
 		page.getProductionName().SendKeys(productionname);
 		String loadfile = TempName + " (Production)";
 		page.getprod_LoadTemplate().selectFromDropdown().selectByVisibleText(loadfile);
-		page.navigateToNextSection();
+		base.waitTillElemetToBeClickable(page.getBasicInfoMarkComplete());
+		page.getBasicInfoMarkComplete().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		page.navigateToNextSection();
+		page.getDATTab().waitAndClick(10);
+		page.getElementDisplayCheck(page.getDAT_FieldClassification1());
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(page.getMarkCompleteLink());
+		page.getMarkCompleteLink().Enabled();
+		page.getMarkCompleteLink().waitAndClick(10);
+		BaseClass base = new BaseClass(driver);
+		base.VerifySuccessMessage("Mark Complete successful");
 		base.passedStep("It should be completed without any error.");
 		base.passedStep(
 				"Verified if PA Select the Production using a template that has only tags selected in the native components, then Component tab should Complete without any error.");
@@ -2212,7 +2222,7 @@ public class Production_Test_Regression {
 	 * @Description: To Verify Document Selection Page (for Folder/Tag/Search;
 	 *               Include Family ;Total Count)
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyDocmentSelectionPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48183 -Production Sprint 10");
@@ -2221,6 +2231,8 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -2270,7 +2282,7 @@ public class Production_Test_Regression {
 	 *               displays 'Reserving Bates Range Completed' status on Progress
 	 *               bar in Tile View on Production Home page
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 35)
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void verifiyBateRangeCompletedOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56019 -Production Sprint 10");
@@ -2280,22 +2292,21 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		// tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
-		// sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
-		// Verify archive status on Gen page
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
@@ -2323,8 +2334,6 @@ public class Production_Test_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
-		// tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security
-		// Group");
 		loginPage.logout();
 	}
 
@@ -2334,7 +2343,7 @@ public class Production_Test_Regression {
 	 * @Description: Verify that once LST generation is started it should displays '
 	 *               Generating Load Files' status on Production Tile View
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 36)
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
 	public void verifiyLSTGenOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56022 -Production Sprint 10");
@@ -2344,6 +2353,8 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -2400,7 +2411,7 @@ public class Production_Test_Regression {
 	 * @Description: Verify that once LST generation is started it should displays '
 	 *               Generating Load Files' status on Production Grid View
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 37)
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
 	public void verifiyGenarationloadFilesOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56045 -Production Sprint 10");
@@ -2409,7 +2420,8 @@ public class Production_Test_Regression {
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-		TempName = "Templete" + Utility.dynamicNameAppender();
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -2425,7 +2437,6 @@ public class Production_Test_Regression {
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 
-		// Verify archive status on Gen page
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
@@ -2468,7 +2479,7 @@ public class Production_Test_Regression {
 	 * @Description: Verify that if Production is regeneate then previous sharable
 	 *               link should not be usabel
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 38)
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
 	public void verifyRegenarateSharable() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56012 -Production Sprint 10");
@@ -2477,7 +2488,9 @@ public class Production_Test_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
-
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2542,7 +2555,7 @@ public class Production_Test_Regression {
 	 * @Description: Verify that after the regenerate the new links, previous links
 	 *               and password will no longer work,
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 39)
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyRegenareOldLinkNoLongerWork() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56006 -Production Sprint 10");
@@ -2551,8 +2564,9 @@ public class Production_Test_Regression {
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-		TempName = "Templete" + Utility.dynamicNameAppender();
-
+		prefixID = Input.randomText + Utility.dynamicNameAppender();
+		suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2616,7 +2630,7 @@ public class Production_Test_Regression {
 	 * @Description: Verify that in the Production components page 'Archive File
 	 *               from FTP' component is not available
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void verifyArchiveFileFromFTPNotDisplayed() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55997 -Production Sprint 10");
@@ -6558,7 +6572,8 @@ public class Production_Test_Regression {
 	 * @Description To Verify TIFF Section with various options
 	 *
 	 */
-	@Test(groups = { "regression" }, priority = 93)
+
+	@Test(enabled = false,groups = { "regression" }, priority = 93)
 	public void verifyTiffSectionVariosOption() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -6638,6 +6653,217 @@ public class Production_Test_Regression {
 
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 15/03/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify concatenated email value should be displayed correctly on Slip Sheets in Production. 'RPMXCON-55940'
+	 *
+	 * @throws IOException
+	 */
+	@Test(enabled=true,groups = { "regression" }, priority = 94)
+	public void verifyEmailValueDisplayOnSlipSheets() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-55940 -Production Sprint 13");
+	base.stepInfo(
+	"Verify concatenated email value should be displayed correctly on Slip Sheets in Production.");
+
+	String foldername = "Folder" + Utility.dynamicNameAppender();
+	String productionname = "p" + Utility.dynamicNameAppender();
+	String tagname = "Tag" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+	String s1="EmailAuthorAddress";
+	String s2="EmailAuthorName";
+	String s3="EmailBCCNamesAndAddresses";
+	String s4="EmailCCNamesAndAddresses";
+	String s5 ="AuthorName";
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.SearchMetaData("IngestionName", "C113_GD_994_Native_Text_ForProduction_20211223121754233");
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	page = new ProductionPage(driver);
+	String beginningBates=page.getRandomNumber(2);
+	int firstFile = Integer.parseInt(beginningBates);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSection();
+	page.selectGenerateOption(false);
+	page.addingSlipSheetWorkProduct(s1,s2,s3,s4);
+	page.fillingTextSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	String PDocCount = page.getProductionDocCount().getText();
+	int docno = Integer.parseInt(PDocCount);
+	int lastfile = firstFile +docno;
+	page.extractFile();
+	page.OCR_Verification_In_Generated_Tiff_SS(firstFile, lastfile, prefixID, suffixID, s1);
+	page.OCR_Verification_In_Generated_Tiff_SS(firstFile, lastfile, prefixID, suffixID, s5);
+	page.OCR_Verification_In_Generated_Tiff_SS(firstFile, lastfile, prefixID, suffixID, s3);
+	page.OCR_Verification_In_Generated_Tiff_SS(firstFile, lastfile, prefixID, suffixID, s4);
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+	loginPage.logout();
+	}
+	/**
+	 * @author Aathith Test case id-RPMXCON-49729
+	 * @Description Verify that branding is applied on all pages for  image based documents on generated PDF file 
+	 * 
+	 */
+	@Test(groups = { "regression" }, priority = 95)
+	public void verifyDiffFileBrandingGenerateSuccessfully() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49729 -Production Component");
+		base.stepInfo("Verify that branding is applied on all pages for  image based documents on generated PDF file");
+		
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
+		BaseClass base = new BaseClass(driver);
+		base.selectproject("AutomationAdditionalDataProject");
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		DataSets dataset = new DataSets(driver);
+		base.stepInfo("Navigating to dataset page");
+		dataset.navigateToDataSetsPage();
+		base.stepInfo("Selecting uploadedset and navigating to doclist page");
+		dataset.selectDataSetWithName("RPMXCON39718");
+		DocListPage doc = new DocListPage(driver);
+		driver.waitForPageToBeReady();
+
+		doc.selectAllDocs();
+		
+		doc.bulkTagExistingFromDoclist(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		int firstFile = Integer.parseInt(beginningBates);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingPDFSection(tagname);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		String PDocCount = page.getProductionDocCount().getText();
+		int DocCount = Integer.parseInt(PDocCount);
+		int lastfile = firstFile + DocCount;
+		page.extractFile();
+		page.pdf_Verification_In_Generated_PlaceHolder(firstFile, lastfile, prefixID, suffixID, Input.searchString4);
+		
+		base.passedStep("Verified that branding is applied on all pages for  image based documents on generated PDF file");
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");	
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
+		
+	}
+	/**
+	 * @author Aathith Test case id-RPMXCON-47932
+	 * @Description To verify, User able to edit a production to regenerate it
+	 * 
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 96)
+	public void verifyRegenerateWithEditSuccessfully() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-47932 -Production Component");
+		base.stepInfo("To verify, User able to edit a production to regenerate it");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String newProdName = "N" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getBackButton().waitAndClick(5);
+		page.verifyProductionStatusInGenPage("Post-Generation QC checks Complete");
+		page.clickElementNthtime(page.getBackButton(), 6);
+		page.getMarkIncompleteButton().waitAndClick(5);
+		page.getDATTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		page.getDAT_DATField1().SendKeys("B" + Utility.dynamicNameAppender());
+		page.navigateToNextSection();
+		page.navigateToNextSection();
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(newProdName);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		base.passedStep("verified, User able to edit a production to regenerate it");
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
+		
+	}
+
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);

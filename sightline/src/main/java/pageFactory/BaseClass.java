@@ -1760,8 +1760,8 @@ public class BaseClass {
 	}
 
 	/**
-	 * @author Raghuram A Modified on : 23/2/22 by Jeevitha Description : TO
-	 *         handle all impersonate dynamically in one method with "FROM" and "TO"
+	 * @author Raghuram A Modified on : 23/2/22 by Jeevitha Description : TO handle
+	 *         all impersonate dynamically in one method with "FROM" and "TO"
 	 *         parameter - can be extended based on the requirement
 	 * 
 	 */
@@ -1792,7 +1792,7 @@ public class BaseClass {
 				impersonateSAtoPA();
 			} else if (fromRole.equalsIgnoreCase("PA") && toRole.equalsIgnoreCase("REV")) {// impersonate to PA
 				impersonatePAtoReviewer();
-			} 
+			}
 			stepInfo("Impersonated to " + toRole + " from " + fromRole + "");
 		} catch (Exception E) {
 			E.printStackTrace(pw);
@@ -3052,19 +3052,20 @@ public class BaseClass {
 			e.printStackTrace();
 		}
 	}
-/**
- * @author Jayanthi.ganesan
- * @param BaseList
- * @param CompareList[List to be compared]
- * This method will remove the duplicated elements 
- * in the given list by comparing with another base list. 
- * @return
- */
-public List<String> getUniqueValues_FromTwoList(List<String>BaseList, List<String>CompareList){
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param BaseList
+	 * @param CompareList[List to be compared] This method will remove the
+	 *                         duplicated elements in the given list by comparing
+	 *                         with another base list.
+	 * @return
+	 */
+	public List<String> getUniqueValues_FromTwoList(List<String> BaseList, List<String> CompareList) {
 		List<String> UniqueValues = new ArrayList<String>();
-		
-		for(int i=0;i<CompareList.size();i++) {
-			if(!BaseList.contains(CompareList.get(i))){
+
+		for (int i = 0; i < CompareList.size(); i++) {
+			if (!BaseList.contains(CompareList.get(i))) {
 				UniqueValues.add(CompareList.get(i));
 			}
 		}
@@ -3083,25 +3084,68 @@ public List<String> getUniqueValues_FromTwoList(List<String>BaseList, List<Strin
 			}
 		}), Input.wait60);
 	}
+
 	/**
-	 * @author Jayanthi.Ganesan
-	 * This method will find the number of times a String appeared in a given  list.
-	 * @param s [List from which element occurrence needs to be counted]
-	 * @param elementToCountOCurence [string for which we need to find no of occurrences in list] 
+	 * @author Jayanthi.Ganesan This method will find the number of times a String
+	 *         appeared in a given list.
+	 * @param s                      [List from which element occurrence needs to be
+	 *                               counted]
+	 * @param elementToCountOCurence [string for which we need to find no of
+	 *                               occurrences in list]
 	 * @return
 	 */
-	public int findNoOfOccurences(List<String> s,String elementToCountOCurence) {
-		int occurence=0;
+	public int findNoOfOccurences(List<String> s, String elementToCountOCurence) {
+		int occurence = 0;
 
-		for(int i=0;i<s.size();i++) {
-			if(elementToCountOCurence.equalsIgnoreCase(s.get(i))){
+		for (int i = 0; i < s.size(); i++) {
+			if (elementToCountOCurence.equalsIgnoreCase(s.get(i))) {
 				occurence++;
 			}
 		}
 		return occurence;
-		
-	}
 
 	}
 
+	/**
+	 * @author Raghuram.A
+	 * @param fileName    - Excel File to select along with location
+	 * @param sheet       - Sheet to select
+	 * @param additional1 - additional string parameter for future reference
+	 * @param additional2 - additional int parameter for future reference
+	 * @return - return total no.of rows in excel
+	 * @throws IOException
+	 */
+	public int getTotalNumOfRowsInExcel(String fileName, int sheet, String additional1, int additional2)
+			throws IOException {
+		int numRows = 0;
+		File file = new File(fileName);
+		try {
+			FileInputStream xlFile = new FileInputStream(file);
+			Workbook xlwb = new XSSFWorkbook(xlFile);
+			Sheet xlSheet = xlwb.getSheetAt(sheet);
 
+			// Get total no.of rows in excel
+			numRows = xlSheet.getLastRowNum();
+			System.out.println("no of Rows : " + numRows);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return numRows;
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param expURL  - Expected Landing page URL
+	 * @param passMsg - Pass message to display
+	 * @param failMsg - Fail message to display
+	 */
+	public void verifyUrlLanding(String expURL, String passMsg, String failMsg) {
+		driver.waitForPageToBeReady();
+		String url = driver.getUrl();
+		textCompareEquals(expURL, url, passMsg, failMsg);
+	}
+
+}

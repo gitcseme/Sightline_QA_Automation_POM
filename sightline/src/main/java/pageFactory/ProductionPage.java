@@ -2285,6 +2285,10 @@ public class ProductionPage {
 	}
 
 	// added by Aathith
+	public Element isCompletedIsChecked() {
+		return driver.FindElementByXPath("//input[@value='COMPLETED']/../../..");
+	}
+	
 	public Element getDAT_FieldClassification(int i) {
 		return driver.FindElementById("TY_" + i + "");
 	}
@@ -2755,6 +2759,9 @@ public class ProductionPage {
 				"//input[@id='chkEnabledforExceptionDocs']//..//..//..//../*[@title='Insert Metadata Field']");
 	}
 
+	public Element getAddWorkProductSlipSheet(String ProductName) {
+		return driver.FindElementByXPath("//input[@class='chk-data']/..//i/following-sibling::strong[text()='"+ProductName+"']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -4756,7 +4763,7 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @Modified Indium-Sowndarya.Velraj.Modified on 03/09/2022
+	 * @Modified Indium-Aathith.senthilkumar on 03/15/2022
 	 */
 	public void fillingDATSection() {
 
@@ -4772,10 +4779,9 @@ public class ProductionPage {
 		base.waitForElement(getDAT_SourceField1());
 		getDAT_SourceField1().selectFromDropdown().selectByVisibleText(Input.batesNumber);
 
+		driver.waitForPageToBeReady();
 		getDAT_DATField1().waitAndClick(10);
-		driver.waitForPageToBeReady();
 		getDAT_DATField1().SendKeys("B" + Utility.dynamicNameAppender());
-		driver.waitForPageToBeReady();
 		base.stepInfo("Dat section is filled");
 	}
 
@@ -11888,40 +11894,96 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
-	 * @Description: Method for uncommit the production.
-	 *
-	 */
+	* @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	* @Description: Method for uncommit the production.
+	*
+	*/
 	public void fillingGeneratePageandUncommitTheProduction() {
+	try {
+	getBackButton().waitAndClick(10);
+	getNextButton().waitAndClick(10);
+	for (int i = 0; i < 10; i++) {
+	getConfirmProductionUnCommit().isElementAvailable(10);
+	if (getConfirmProductionUnCommit().isDisplayed()) {
+	base.waitTillElemetToBeClickable(getConfirmProductionUnCommit());
+	getConfirmProductionUnCommit().waitAndClick(10);
+	base.CloseSuccessMsgpopup();
+	driver.Navigate().refresh();
+	break;
+	} else {
+	driver.Navigate().refresh();
+	}
+	}
+	for (int i = 0; i < 5; i++) {
+	driver.waitForPageToBeReady();
+	base.waitForElement(getBckBtn());
+	getBckBtn().Click();
+	}
+	driver.waitForPageToBeReady();
+	getNextButton().waitAndClick(10);
+	getBackButton().waitAndClick(10);
+	} catch (Exception e) {
+	e.printStackTrace();
+	base.failedStep(
+	"Exception occcured while again navigating back to document selection section" + e.getMessage());
+	}
+	}
+
+
+	
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for perform committing the production.
+	 */
+	public void commitTheProduction() throws InterruptedException {
 		try {
-			getBackButton().waitAndClick(10);
-			getNextButton().waitAndClick(10);
-			for (int i = 0; i < 10; i++) {
-				getConfirmProductionUnCommit().isElementAvailable(10);
-				if (getConfirmProductionUnCommit().isDisplayed()) {
-					base.waitTillElemetToBeClickable(getConfirmProductionUnCommit());
-					getConfirmProductionUnCommit().waitAndClick(10);
-					base.CloseSuccessMsgpopup();
-					driver.Navigate().refresh();
-					break;
-				} else {
-					driver.Navigate().refresh();
+			SoftAssert softAssertion = new SoftAssert();
+			String expectedText = "Success";
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
 				}
+			}), Input.wait30);
+			getbtnProductionGenerate().Click();
+
+			Reporter.log("Wait for generate to complete", true);
+			System.out.println("Wait for generate to complete");
+			UtilityLog.info("Wait for generate to complete");
+			getbtnContinueGeneration().isElementAvailable(220);
+			if (getbtnContinueGeneration().isDisplayed()) {
+				base.waitForElement(getbtnContinueGeneration());
+				getbtnContinueGeneration().Click();
 			}
-			for (int i = 0; i < 5; i++) {
-				driver.waitForPageToBeReady();
-				base.waitForElement(getBckBtn());
-				getBckBtn().Click();
-			}
-			driver.waitForPageToBeReady();
-			getNextButton().waitAndClick(10);
-			getBackButton().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocumentGeneratetext().isElementAvailable(540);
+				}
+			}), Input.wait120);
+
+			String actualText = getStatusSuccessTxt().getText();
+			System.out.println(actualText);
+
+			softAssertion.assertTrue(actualText.contains(expectedText));
+			base.passedStep("Documents Generated successfully");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+				}
+			}), Input.wait60);
+
+			// added thread.sleep to avoid exception while executing in batch
+			Thread.sleep(Input.wait30 / 10);
+			getConfirmProductionCommit().waitAndClick(10);
 		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep(
-					"Exception occcured while again navigating back to document selection section" + e.getMessage());
+			base.failedStep("Exception occcured while committing the production" + e.getMessage());
 		}
+
 	}
+
 
 	/**
 	 * @author: Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -12417,53 +12479,6 @@ public class ProductionPage {
 
 	}
 
-	/**
-	 * @author: Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
-	 * @Description: Method for perform committing the production.
-	 */
-	public void commitTheProduction() throws InterruptedException {
-		try {
-			SoftAssert softAssertion = new SoftAssert();
-			String expectedText = "Success";
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
-				}
-			}), Input.wait30);
-			getbtnProductionGenerate().Click();
-
-			Reporter.log("Wait for generate to complete", true);
-			System.out.println("Wait for generate to complete");
-			UtilityLog.info("Wait for generate to complete");
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDocumentGeneratetext().isElementAvailable(540);
-				}
-			}), Input.wait120);
-
-			String actualText = getStatusSuccessTxt().getText();
-			System.out.println(actualText);
-
-			softAssertion.assertTrue(actualText.contains(expectedText));
-			base.passedStep("Documents Generated successfully");
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
-				}
-			}), Input.wait60);
-
-			// added thread.sleep to avoid exception while executing in batch
-			Thread.sleep(Input.wait30 / 10);
-			getConfirmProductionCommit().waitAndClick(10);
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occcured while committing the production" + e.getMessage());
-		}
-
-	}
 
 	/**
 	 * 
@@ -17709,13 +17724,15 @@ public class ProductionPage {
 		getFilterByDRAFT().waitAndClick(5);
 		getFilterByINPROGRESS().waitAndClick(5);
 		getFilterByFAILED().waitAndClick(5);
+		boolean flag = isCompletedIsChecked().GetAttribute("class").contains("active");
+		if(!flag) {
 		getFilterByCOMPLETED().waitAndClick(5);
+		}
 		base.stepInfo("Filtered completed satus only");
 		driver.waitForPageToBeReady();
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 	}
-
 	/**
 	 * @authorAathith.Senthilkumar
 	 * @param Batesvalue
@@ -18869,6 +18886,83 @@ public class ProductionPage {
 					"Exception occcured while verifying meta data list in drop down exception will be in ascending order on pdf section."
 							+ e.getMessage());
 		}
+	}
+	
+	/**
+	 * @author Vijaya.Rani Modified By - 15/03/2022 Modified Date - NA
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @param verificationText
+	 * @throws IOException
+	 * @Description :  OCR Verification In Generated Tiff SS.
+	 */
+	public void OCR_Verification_In_Generated_Tiff_SS(int firstFile, int lastFile, String prefixID, String suffixID,
+			String verificationText) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		Ocr.setUp();
+		Ocr ocr = new Ocr();
+		ocr.startEngine("eng", Ocr.SPEED_FASTEST);
+		for (int i = firstFile; i < lastFile; i++) {
+			
+			String Tifffile = ocr.recognize(
+					new File[] {
+							new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".ss.tiff") },
+					Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
+			System.out.println(Tifffile);
+
+			if (Tifffile.contains(verificationText)) {
+				base.passedStep(verificationText + " is displayed in " + prefixID + i + suffixID + " file expected");
+			} else {
+				base.failedStep( prefixID + i + suffixID +" : "+verificationText);
+			}
+			
+		}
+		ocr.stopEngine();
+	}
+
+
+	/**
+	 * @author Vijaya.Rani
+	 * @description : Adding Slip Sheet Work Product
+	 * @param productName1
+	 * @param productName2
+	 * @param productName3 
+	 * @param productName4 
+	 * @throws IOException
+	 * 
+	 */
+	public void addingSlipSheetWorkProduct(String productName1,String productName2,String productName3,String productName4) throws InterruptedException {
+		
+		base.waitForElement(getadvance());
+		getadvance().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSlipSheets().Visible();
+			}
+		}), Input.wait30);
+		getSlipSheets().waitAndClick(10);
+		
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getAddWorkProductSlipSheet(productName1));
+		getAddWorkProductSlipSheet(productName1).waitAndClick(10);
+		
+		base.waitForElement(getAddWorkProductSlipSheet(productName2));
+		getAddWorkProductSlipSheet(productName2).waitAndClick(10);
+		
+		base.waitForElement(getAddWorkProductSlipSheet(productName3));
+		getAddWorkProductSlipSheet(productName3).waitAndClick(10);
+		
+		base.waitForElement(getAddWorkProductSlipSheet(productName4));
+		getAddWorkProductSlipSheet(productName4).waitAndClick(10);
+		
+		base.waitForElement(getAddSelected());
+		getAddSelected().waitAndClick(10);
+		
+		
+		
 	}
 
 }

@@ -4830,7 +4830,6 @@ public class DocView_CodingForm_Regression {
 	 */
 
 	@Test(enabled = true, dataProvider = "daToRmuRev", groups = { "regression" }, priority = 113)
-
 	public void validateDAImpersonateShouldDisplayCodingstampPa(String roll, String userName, String password,
 			String impersonate) throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -4853,7 +4852,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		// sessionSearch.advancedLastContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -8227,6 +8226,14 @@ public class DocView_CodingForm_Regression {
 	 * @Description : Verify on edit of the coding form objects, updated objects
 	 *              should be displayed on doc view
 	 */
+	@DataProvider(name = "rmuRevLoginRole")
+	public Object[][] rmuRevLoginRole() {
+		return new Object[][] { { "rmu1", Input.rmu1userName, Input.rmu1password},
+				{ "rev1", Input.rev1userName, Input.rev1password},
+				{ "rmu2", Input.rmu1userName, Input.rmu1password},
+				{ "rev2", Input.rev1userName, Input.rev1password},
+				 };
+	}
 
 	@Test(enabled = true, dataProvider = "rmuRevLoginRole", groups = { "regression" }, priority = 173)
 	public void afterEditCodingFormObjectShouldDisplay(String roll, String userName, String password)
@@ -8484,7 +8491,7 @@ public class DocView_CodingForm_Regression {
 		int pureHitCount = sessionSearch.metadataAndCommentSearch(projectFieldINT, metadataText, addComment,
 				commentText);
 
-		codingForm.assignCodingFormByCondition(Input.codingFormName);
+		codingForm.assignCodingFormToSG(Input.codingFormName);
 		codingForm.deleteCodingForm(cfName, cfName);
 
 		softAssertion.assertEquals(1, pureHitCount);
@@ -10601,7 +10608,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.addCommentAndSave(docComment, true, count);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocument_CommentsTextBox());
-		String DocComments = docViewPage.getDocument_CommentsTextBox().getText();
+		String DocComments = docViewPage.getDocument_CommentsTextBox().GetAttribute("value");
 		System.out.println(DocComments);
 
 		// searching document for assignmnet creation
@@ -10624,7 +10631,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Same documenId is displayed on Docview");
 		// verify last saved same docId is displayed
 		driver.waitForPageToBeReady();
-		String DocComments1 = docViewPage.getDocument_CommentsTextBox().getText();
+		String DocComments1 = docViewPage.getDocument_CommentsTextBox().GetAttribute("value");
 		System.out.println(DocComments1);
 		softAssertion.assertEquals(DocComments, DocComments1);
 		if (DocComments.equals(DocComments1)) {

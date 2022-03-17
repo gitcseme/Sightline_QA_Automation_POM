@@ -623,6 +623,23 @@ public class SavedSearch {
 		return driver.FindElementByXPath("//button[@class='ColVis_Button ColVis_MasterButton']");
 	}
 
+	public ElementCollection getGridDataList(int numIndex) {
+		return driver.FindElementsByXPath("//table[@id='SavedSearchGrid']//tr//td[" + numIndex + "]");
+	}
+
+	public ElementCollection getBGgridDataList() {
+		return driver.FindElementsByXPath("//table[@id='dt_basic']//th");
+	}
+
+	public Element getValueAgainstID(String id, int index) {
+		return driver.FindElementByXPath(
+				"//table[@id='SavedSearchGrid']//tr//td[text()='" + id + "']//..//td[" + index + "]");
+	}
+
+	public Element getValueAgainstIDbg(String id, int index) {
+		return driver.FindElementByXPath("//table[@id='dt_basic']//td[text()='" + id + " ']//..//td[" + index + "]");
+	}
+
 	public Element getCurrentSelectedSearchName(int num) {
 		return driver.FindElementByXPath("//tr[contains(@class,'active-row')]//td['" + num + "']");
 	}
@@ -7740,5 +7757,39 @@ public class SavedSearch {
 
 		String passMsgGridBody = "The Body of Grid position is As expected : " + bodyWidthAfter;
 		base.textCompareEquals(bodyWidthBefore, bodyWidthAfter, passMsgGridBody, failMsg);
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param searchIDlist - List of search id's
+	 * @param countIDindex - header/colum to pick
+	 * @return
+	 */
+	public HashMap<String, String> collectionOfSearchIdAndItsCount(List<String> searchIDlist, int IDindex) {
+		HashMap<String, String> mapPair = new HashMap<String, String>();
+		for (String searchIDName : searchIDlist) {
+			System.out.println(searchIDName);
+			String countIDindex = getValueAgainstID(searchIDName, IDindex).getText();
+			mapPair.put(searchIDName, countIDindex);
+		}
+		return mapPair;
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param searchIDlist - List of search id's
+	 * @param mapPair      - hasSet data to compare
+	 * @param index        - header/column to pick
+	 */
+	public void SearchIdAndDataToCompare(List<String> searchIDlist, HashMap<String, String> mapPair, int index) {
+		for (String value : searchIDlist) {
+			String countValue = mapPair.get(value);
+			base.stepInfo("Doc Count for " + value + " in Saved Search Page : " + countValue);
+			String countValuefromBG = getValueAgainstIDbg(value, index).getText();
+			base.stepInfo("Doc Count for " + value + " in Background Page : " + countValuefromBG);
+			base.textCompareEquals(countValuefromBG, countValue,
+					"Count of results from saved search after batch upload matchs with the actual docs from background tasks page with large data  ",
+					"FAIL");
+		}
 	}
 }

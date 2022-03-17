@@ -134,6 +134,30 @@ public class Categorization {
 		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']");
 	}
 
+	// Added By Jeevitha
+	public Element getViewAllBtn() {
+		return driver.FindElementByXPath("//div[contains(@style,'block')]//button[@id='btnViewAll']");
+	}
+
+	public ElementCollection getBGTaskHeader() {
+		return driver.FindElementsByXPath("(//thead//tr)[1]//th");
+	}
+
+	public Element getCategoreIdLinkInBG(int i) {
+		return driver.FindElementByXPath("(//td[text()='Categorization']//..//td//a)[ " + i + "]");
+	}
+
+	public Element getSGCheckbox(String sgName) {
+		return driver.FindElementByXPath("//div[@class='tagselector']//label[normalize-space()='" + sgName + "']");
+	}
+	public Element getSelectedCorpusToAnalyze(String analyzesdName) {
+		return driver.FindElementByXPath("//div[@class='bootstrap-tagsinput']//span[text()='" + analyzesdName + "']");
+	}
+	
+	public Element getDocCount() {
+		return driver.FindElementByXPath("//div[@class='proview-result']//div[@class='docs']");
+	}
+	
 	public Categorization(Driver driver) {
 
 		this.driver = driver;
@@ -374,27 +398,36 @@ public class Categorization {
 	}
 
 	/**
-	 * @author Jayanthi.ganesan
+	 * @author Jayanthi.ganesan    @Modified By Jeevitha
 	 * @param tagName
 	 * @param folderName
 	 * @throws InterruptedException
 	 */
-	public void CategorizationFunctionalityVerification(String tagName, String folderName) throws InterruptedException {
+	public void CategorizationFunctionalityVerification(String tagNameORSG, String folderName, String select)
+			throws InterruptedException {
 		String bullHornValue = getBullHornIcon_CC().getText();
 		int valueBeforeAnalysis = Integer.parseInt(bullHornValue);
 		System.out.println(valueBeforeAnalysis);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectIdentifyByTags().Visible();
-			}
-		}), Input.wait30);
 
-		getSelectIdentifyByTags().Click();
-		driver.scrollingToBottomofAPage();
+		if (select.equalsIgnoreCase("Tag")) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectIdentifyByTags().Visible();
+				}
+			}), Input.wait30);
 
-		getSelectTag(tagName).ScrollTo();
-		getSelectTag(tagName).Click();
-		// selectTagInCat(tagName);
+			getSelectIdentifyByTags().Click();
+			driver.scrollingToBottomofAPage();
+
+//		getSelectTag(tagName).ScrollTo();
+			getSelectTag(tagNameORSG).Click();
+//		 selectTagInCat(tagName);
+			
+		} else if (select.equalsIgnoreCase("SG")) {
+			selectTrainingSet("Identify by Security Group");
+			driver.scrollingToBottomofAPage();
+			getSGCheckbox(tagNameORSG).waitAndClick(5);
+		}
 		driver.scrollingToBottomofAPage();
 
 		getGotoStep2().Click();
@@ -478,6 +511,7 @@ public class Categorization {
 
 		}
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
@@ -489,6 +523,58 @@ public class Categorization {
 		} else {
 			base.stepInfo("PopUp Not Appeared");
 		}
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Navigation Categorization Page
+	 */
+	public void navigateToCategorizePage() {
+		driver.getWebDriver().get(Input.url + "Proview/Proview");
+		driver.waitForPageToBeReady();
+		String currentUrl = driver.getWebDriver().getCurrentUrl();
+		softAssertion.assertEquals(Input.url + "Proview/Proview", currentUrl);
+		base.stepInfo("Landed on Categorization Page : " + currentUrl);
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify Categorization id as Link from BackGroundPage
+	 */
+	public void backGroundTaskPageToCategorize() {
+		if (getViewAllBtn().isElementAvailable(3)) {
+			getViewAllBtn().waitAndClick(3);
+		} else {
+			base.waitForElement(getBullHornIcon());
+			getBullHornIcon().waitAndClick(10);
+
+			base.waitForElement(getViewAllBtn());
+			getViewAllBtn().waitAndClick(3);
+		}
+
+		// verify Background Task page
+		driver.waitForPageToBeReady();
+		String url = driver.getUrl();
+		String expURL = "https://sightlinept.consilio.com/Background/BackgroundTask";
+		softAssertion.assertEquals(expURL, url);
+		base.stepInfo("Navigated to My Backgroud Task Page.");
+
+		int indexValue = base.getIndex(getBGTaskHeader(), "ID/NAME");
+		System.out.println(indexValue);
+
+		base.waitForElement(getCategoreIdLinkInBG(indexValue));
+		String IdValue = getCategoreIdLinkInBG(indexValue).getText();
+		String actualURL = getCategoreIdLinkInBG(indexValue).GetAttribute("href");
+
+		System.out.println("ID Value is  : " + IdValue);
+		base.stepInfo("ID/NAME value is  : " + IdValue + " With the link : " + actualURL);
+
+		getCategoreIdLinkInBG(indexValue).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String currentUrl = driver.getUrl();
+		softAssertion.assertEquals(actualURL, currentUrl);
+		base.passedStep("Navigated Back to categorization Page : " + currentUrl);
 
 	}
 }

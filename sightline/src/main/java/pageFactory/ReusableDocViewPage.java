@@ -1380,6 +1380,7 @@ public class ReusableDocViewPage {
 		getNonPrivilegeRadio().waitAndClick(5);
 		base.waitTillElemetToBeClickable(getDocument_CommentsTextBox());
 		getDocument_CommentsTextBox().Clear();
+		base.waitForElement(getDocument_CommentsTextBox());
 		getDocument_CommentsTextBox().SendKeys(comment);
 	}
 	
