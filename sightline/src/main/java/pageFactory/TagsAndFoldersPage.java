@@ -955,40 +955,31 @@ public class TagsAndFoldersPage {
 	 */
 	public void DeleteTagWithClassificationInRMU(final String strtag) {
 
-	navigateToTagsAndFolderPage();
-	driver.waitForPageToBeReady();
-	
+	    navigateToTagsAndFolderPage();
+	    driver.waitForPageToBeReady();
 		base.waitForElement(getTagsTab());
 		getTagsTab().waitAndClick(5);
-
-		// Select secGroup
 		try {
 
 			driver.scrollingToBottomofAPage();
-			
 			getTagName(strtag).ScrollTo();
 			base.waitTillElemetToBeClickable(getTagName(strtag));
 			getTagName(strtag).waitAndClick(10);
-
 			driver.scrollPageToTop();
-
 			base.waitForElement(getTagActionDropDownArrow());
 			getTagActionDropDownArrow().waitAndClick(10);
-
 			base.waitForElement(getDeleteTag());
 			getDeleteTag().waitAndClick(10);
-
+           driver.waitForPageToBeReady();
+          if( base.getYesBtn().isDisplayed()) {
+        	driver.waitForPageToBeReady();
 			base.getYesBtn().waitAndClick(10);
-
+			base.VerifySuccessMessage("Tag deleted successfully");
+          }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		base.VerifySuccessMessage("Tag deleted successfully");
-		base.CloseSuccessMsgpopup();
-
-		Reporter.log(strtag + "tag delete Successful", true);
-		UtilityLog.info("Tag deleted Successfully");
-
+		
 	}
 
 	public void CreateTagwithClassification(String strtag, String classificationname) throws InterruptedException
