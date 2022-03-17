@@ -10076,8 +10076,6 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		try {
 			base.waitForElement(getOriginalDocPageNumber());
-			String originalDocPageNumber = getOriginalDocPageNumber().GetAttribute("value");
-
 			base.stepInfo("Verify pagination functionality is not works for original document which has 1 page");
 
 			base.stepInfo("Verify pagination is not working for the documents which has 1 page");
@@ -10096,14 +10094,19 @@ public class DocViewPage {
 				}
 
 			}
-			String originalDocPageNumberAfterClick = getOriginalDocPageNumber().GetAttribute("value");
-			softAssertion.assertEquals(originalDocPageNumber, originalDocPageNumberAfterClick,
-					"Document page number is not changed even after clicking on pagination icon for the document which has 1 page");
+			String originalDocPageNumberAfterClick = getOriginalDocPageNumber().GetAttribute("placeholder");
+			
+			if (originalDocPageNumberAfterClick.equals("1")) {
+				base.passedStep(
+						"Expected Last Page Number is displayed in page number text box after clicking on pagination icon");
+			} else {
+				base.failedStep(
+						"Expected Last Page Number is not displayed in page number text box after clicking on pagination icon");
+			}
 
 			base.stepInfo("Verify pagination functionality works for near dupe document which has more than 1 page");
 
 			base.waitForElement(getNearDupeDocPageNumber());
-			String nearDupeDocPageNumber = getNearDupeDocPageNumber().GetAttribute("value");
 
 			base.stepInfo("Verify pagination is working for the documents which has more than 1 page");
 			for (int i = 0; i < 20; i++) {
@@ -10123,8 +10126,6 @@ public class DocViewPage {
 			}
 
 			String nearDupeDocPageNumberAfterClick = getNearDupeDocPageNumber().GetAttribute("value");
-			softAssertion.assertNotEquals(nearDupeDocPageNumber, nearDupeDocPageNumberAfterClick,
-					"Document page number is changed even after clicking on pagination icon for the document which has 1 page");
 
 			base.waitForElement(getNearDupeDocTotalPageCount());
 			String totalPageCount = getNearDupeDocTotalPageCount().getText();
@@ -10135,7 +10136,6 @@ public class DocViewPage {
 				base.failedStep(
 						"Expected Last Page Number is not displayed in page number text box after clicking on pagination icon");
 			}
-			softAssertion.assertAll();
 		} catch (Exception e) {
 			UtilityLog.info("Pagination functionality verifcation for near dupe comparsion window failed due to " + e);
 			e.printStackTrace();
