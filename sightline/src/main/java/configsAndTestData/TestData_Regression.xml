@@ -570,6 +570,7 @@
     <Natives_DDMMYYYY_Slash>Natives_DDMMYYYY_Slash.lst</Natives_DDMMYYYY_Slash>
     <DAT_MMDDYYYY_Slash>DAT_MMDDYYYY_Slash.dat</DAT_MMDDYYYY_Slash>
     <Natives_MMDDYYYY_Slash>Natives_MMDDYYYY_Slash.lst</Natives_MMDDYYYY_Slash>
+    <DATFile3>DAT4_STC_Image_PDFs.dat</DATFile3>
      <!-- Ingestion Related data END -->
 
 <query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>

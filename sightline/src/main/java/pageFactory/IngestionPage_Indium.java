@@ -801,6 +801,10 @@ public class IngestionPage_Indium {
 	public Element doneButton() {
 		return driver.FindElementById("Catalogdone");
 	}
+	
+	public Element errorMessageMissingDate() {
+		return driver.FindElementById("errorMsgDateFormat");
+	}
 
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
@@ -5150,5 +5154,87 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		base.failedStep("Exception occured while process to click on roll back from catalog stage and verify status changed is inprogress.."+e.getLocalizedMessage());
 	}
 }
+
+	/**
+	 * @author: Arunkumar Created Date: 16/03/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to check next button status when date is selected and not selected
+	 */
+	
+	public void VerifyNextButtonStatusBasedOnDateTimeFormatSelection() {
+		base.stepInfo("Click on add new ingestion button");
+		base.waitForElement(getAddanewIngestionButton());
+		getAddanewIngestionButton().waitAndClick(10);
+		base.stepInfo("Select Source system");
+		base.waitForElement(getSpecifySourceSystem());
+		getSpecifySourceSystem().selectFromDropdown().selectByVisibleText("TRUE");
+		base.stepInfo("Select Location");
+		base.waitForElement(getSpecifyLocation());
+		getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
+		base.waitForElement(getSpecifySourceFolder());
+		base.stepInfo("Select Folder");
+	
+		getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.TiffImagesFolder);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+	
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+	
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+	
+		base.waitForElement(getSourceSelectionDATKey());
+		
+		getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		getNextButton().waitAndClick(20);
+		driver.scrollingToBottomofAPage();
+		if(errorMessageMissingDate().isDisplayed()) {
+			base.passedStep("Next button is disabled if date format is not selected");
+		}
+		else {
+			base.passedStep("Next button is enabled if date format is not selected");
+		}
+		base.stepInfo("Select Date Format");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+	
+		driver.scrollPageToTop();
+		base.waitForElement(getNextButton());
+		getNextButton().waitAndClick(20);
+		
+		if(getApproveMessageOKButton().isDisplayed()) {
+			base.passedStep("Next button is enabled if date format is selected");
+		}
+		else {
+			base.passedStep("Next button is not enabled if date format is selected");
+		}
+	}
+	
+	/**
+	 * @author: Arunkumar Created Date: 16/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will validate the term which present in the copying table column
+	 * @return: will return the missed doc value of term which displayed in copy table columns
+	 */
+	public int verifyMissedDocValuePresentInCopyTableColumn(String term) {
+		 getRefreshButton().waitAndClick(10);	
+	     getIngestionName().waitAndClick(Input.wait30);
+	    
+	 	driver.scrollingToElementofAPage(getRunIndexing());
+	 	base.waitForElement(getRunIndexing());
+	 	
+	 	if(copyTableDataValue(term,4).isDisplayed()) {
+	 		base.passedStep(term+ "count is displayed in the copying table column");
+	 	}
+	 	else {
+	 		base.failedStep(term+"count is not displayed in the copying table column");
+	 	}
+	 	int value = Integer.parseInt(copyTableDataValue(term,4).getText());
+	 	getCloseButton().waitAndClick(10);
+	 	return value;	
+	}
 
 }

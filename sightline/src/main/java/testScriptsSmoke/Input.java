@@ -319,6 +319,7 @@ public class Input {
 	public static String multiwordText;
 	public static String query;
 	public static String miniDocListID;
+	public static String DATFile3;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -941,7 +942,8 @@ public class Input {
 		multiwordText = testData.getMultiwordText();
 		query = testData.getQuery();
 		miniDocListID = testData.getMiniDocListID();
-
+		DATFile3 = testData.getDATFile3();
+		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
 		docHighlightColor = testData.getDocHighlightColor();
