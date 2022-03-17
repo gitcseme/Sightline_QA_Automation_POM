@@ -3560,1767 +3560,1854 @@ public class Production_Regression1 {
 
 	}
 	 
-	/**
-	 * @author Gopinath created on:NA modified by:NA
-	 * @Testcase_Id:RPMXCON-55986 : Verify that after Post Geneation is completed,
-	 *                            it will displays status on Production Generation
-	 *                            page as 'Post Generation QC Check Complete'
-	 * @Description : Verify that after Post Geneation is completed, it will
-	 *              displays status on Production Generation page.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 48)
-	public void verifyTheProductionStatusInProducedGeneration() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-55986 -Production Sprint 06");
-		base.stepInfo(
-				"#### Verify that after Post Geneation is completed, it will displays status on Production Generation page. ####");
+	 /**
+		 * @author Gopinath created on:NA modified by:NA
+		 * //@Testcase_Id:RPMXCON-55986 : Verify that after Post Geneation is completed,
+		 *                            it will displays status on Production Generation
+		 *                            page as 'Post Generation QC Check Complete'
+		 * @Description : Verify that after Post Geneation is completed, it will
+		 *              displays status on Production Generation page.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 48)
+		public void verifyTheProductionStatusInProducedGeneration() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-55986 -Production Sprint 06");
+			base.stepInfo(
+					"#### Verify that after Post Geneation is completed, it will displays status on Production Generation page. ####");
 
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagname = Input.randomText + Utility.dynamicNameAppender();
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String tagname = Input.randomText + Utility.dynamicNameAppender();
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 
-		base.stepInfo("Create folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+			base.stepInfo("Create folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
-		base.stepInfo("Create Tag with Classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			base.stepInfo("Create Tag with Classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
-		SessionSearch sessionSearch = new SessionSearch(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
 
-		base.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(testData1);
+			base.stepInfo("Basic content search");
+			sessionSearch.basicContentSearch(testData1);
 
-		base.stepInfo("Bulk folder existing");
-		sessionSearch.bulkFolderExisting(foldername);
+			base.stepInfo("Bulk folder existing");
+			sessionSearch.bulkFolderExisting(foldername);
 
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
 
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
 
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
 
-		base.stepInfo("Filling TIFF Section with Burn Redaction");
-		page.fillingTIFFSectionwithBurnRedaction(tagname);
+			base.stepInfo("Filling TIFF Section with Burn Redaction");
+			page.fillingTIFFSectionwithBurnRedaction(tagname);
 
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
 
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
 
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
 
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
 
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
 
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
 
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
 
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
 
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
 
-		base.stepInfo("Verifying Production Status In Generate");
-		page.verifyingProductionStatusInGenerate();
+			base.stepInfo("Verifying Production Status In Generate");
+			page.verifyingProductionStatusInGenerate();
 
-		base.stepInfo("Production status in generate page is verified successfully");
-		loginPage.logout();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 
+			base.stepInfo("Production status in generate page is verified successfully");
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-48874 :
+		 *         To verify that Production should generate successfully if user map
+		 *         the one source field to multiple DAT fields.
+		 * @Description : To verify that Production should generate successfully if user
+		 *              map the one source field to multiple DAT fields.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 49)
+		public void addDifferentDATFieldAndGenerateProduction() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-48874 -Production Sprint 06");
+			base.stepInfo(
+					"#### To verify that Production should generate successfully if user map the one source field to multiple DAT fields. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String tagname = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			base.stepInfo("Create Tag with Classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk Folder Existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
+
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("filling DAT Section With Diff DAT Field");
+			page.fillingDATSectionWithDiffDATField();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+
+			base.stepInfo("DAT section with different DAT field is generated successfully");
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-49970 :
+		 *         Verify that after updating the placeholder text on uncompleting the
+		 *         production, production should generate with the updated redaction
+		 *         text.
+		 * @Description : Verify that after updating the placeholder text on
+		 *              uncompleting the production, production should generate with the
+		 *              updated redaction text.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 50)
+		public void updatingtextInBurnRedactionAndGeneratingProduction() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-49970 -Production Sprint 06");
+			base.stepInfo(
+					"#### Verify that after updating the placeholder text on uncompleting the production, production should generate with the updated redaction text.. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String Redactiontag1 = Input.randomText + Utility.dynamicNameAppender();
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			RedactionPage redactionpage = new RedactionPage(driver);
+
+			base.stepInfo("Manage Redaction Tags Page");
+			redactionpage.manageRedactionTagsPage(Redactiontag1);
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create Folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk Folder Existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
+
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Filling TIFF Section with Burn Redaction");
+			page.fillingTIFFSectionwithBurnRedaction(Redactiontag1);
+
+			base.stepInfo("Click Component Mark Complete And Incomplete");
+			page.clickComponentMarkCompleteAndIncomplete();
+
+			base.stepInfo("Filling Placeholder In Burn Redaction");
+			page.fillingPlaceholderInBurnRedaction(Input.randomText);
+
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-48951 :
+		 *         To verify that user can load the template in New Production and
+		 *         Generate for TIFF file.
+		 * @Description : Verify that user can load the template in New Production and
+		 *              Generate for TIFF file.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 51)
+		public void verifyingTIFFSectionInManageTemplate() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-48951 -Production Sprint 06");
+			base.stepInfo(
+					"#### To verify that user can load the template in New Production and Generate for TIFF file. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String Templatename = Input.randomText + Utility.dynamicNameAppender();
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			ProductionPage page1 = new ProductionPage(driver);
+
+			base.stepInfo("Add New Production");
+			page1.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page1.fillingDATSection();
+
+			base.stepInfo("Filling Tiff Section Branding");
+			page1.fillingTiffSectionBranding();
+
+			ProductionPage Page = new ProductionPage(driver);
+
+			base.stepInfo("Select Saved Template And Manage Template");
+			Page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
+
+			base.stepInfo("Verify Tiff Section Is Selected");
+			Page.verifyTiffSectionIsSelected();
+			// botClose3
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create Folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk Folder Existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			productionname = Input.randomText + Utility.dynamicNameAppender();
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Base Info Load Template");
+			page.baseInfoLoadTemplate(productionname, Templatename);
+
+			base.stepInfo("Verify DAT And TIFF Field");
+			page.verifyDATAndTIFFField();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			
+
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-48953 :
+		 *         To verify that after loading the template PA can change the
+		 *         configuration in any of the steps.
+		 * @Description : Verify that after loading the template PA can change the
+		 *              configuration in any of the steps.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 52)
+		public void verifyingPDFSectionInManageTemplate() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-48953 -Production Sprint 06");
+			base.stepInfo(
+					"#### Verify that after loading the template PA can change the configuration in any of the steps.. ####");
+
+			loginPage = new LoginPage(driver);
+			loginPage.logout();
+
+			base.stepInfo("Login with project administrator");
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			base.stepInfo("Logged in as User: " + Input.pa1FullName);
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String tagNamePrev = Input.tagNamePrev;
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String tagName = Input.randomText + Utility.dynamicNameAppender();
+			String Templatename = Input.randomText + Utility.dynamicNameAppender();
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			base.stepInfo("Create Folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			base.stepInfo("Create tag with classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
+
+			ProductionPage page1 = new ProductionPage(driver);
+
+			base.stepInfo("Add New Production");
+			page1.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page1.fillingDATSection();
+
+			base.stepInfo("Filling Native Section");
+			page1.fillingNativeSection();
+
+			base.stepInfo("Filling PDF Section");
+			page1.fillingPDFSection(tagName, tagNamePrev);
+
+			base.stepInfo("Filling Text Section");
+			page1.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page1.navigateToNextSection();
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Select Saved Template And Manage Template");
+			page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
+
+			base.stepInfo("Verify PDF Section Is Selected");
+			page.verifyPDFSectionIsSelected();
+			// botClose3
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk Folder Existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			productionname = Input.randomText + Utility.dynamicNameAppender();
+			page = new ProductionPage(driver);
+
+			base.stepInfo("Base Info Load Template");
+			page.baseInfoLoadTemplate(productionname, Templatename);
+
+			base.stepInfo("Verify DAT And PDF Field");
+			page.verifyDATAndPDFField();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+			tagsAndFolderPage.DeleteTagWithClassification(tagName, "Default Security Group");
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-48952 :
+		 *         To verify that user can load the template in New Production and
+		 *         Generate PDF files.
+		 * @Description : Verify that user can load the template in New Production and
+		 *              Generate PDF files
+		 */
+	@Test(enabled=true,groups = { "regression" }, priority = 53)
+		public void verifyingPDFFilesGeneratedOnManageTemplate() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-48952 -Production Sprint 06");
+			base.stepInfo("#### Verify that user can load the template in New Production and Generate PDF files.. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String Templatename = Input.randomText + Utility.dynamicNameAppender();
+			ProductionPage page1 = new ProductionPage(driver);
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			base.stepInfo("Add New Production");
+			page1.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page1.fillingDATSection();
+
+			base.stepInfo("Filling PDF Section Branding");
+			page1.fillingPDFSectionBranding();
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Filling PDF Section Branding");
+			page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
+
+			base.stepInfo("Verify Production Component");
+			page.verifyProductionComponent();
+			// botClose3
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create Folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk Folder Existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			productionname = Input.randomText + Utility.dynamicNameAppender();
+
+			page = new ProductionPage(driver);
+
+			base.stepInfo("Base Info Load Template");
+			page.baseInfoLoadTemplate(productionname, Templatename);
+
+			base.stepInfo("Verify DAT And TIFF Field");
+			page.verifyDATAndTIFFField();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			
+
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-48000 :
+		 *         Verify Branding Bates number
+		 * @Description: Verify Branding Bates number
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 54)
+		public void fillingTIFFSectionWithBatesNumberAndGenerateProduction() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-48000 -Production Sprint 06");
+			base.stepInfo("#### Verify Branding Bates number.. ####");
+			
+			String tagName = Input.randomText + Utility.dynamicNameAppender();
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			
+			base.stepInfo("Create tag with classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(Input.batesDocumentId);
+			sessionSearch.ViewInDocList();
+			DocListPage doc = new DocListPage(driver);
+			
+			doc.documentSelection(4);
+			doc.bulkTagExistingFromDoclist(tagName);
+
+			ProductionPage page = new ProductionPage(driver);
+
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
+
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Filling Native Section");
+			page.fillingNativeSection();
+
+			base.stepInfo("Filling TIFF Section With Bates Number");
+			page.fillingTIFFSectionWithBatesNumber();
+
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Document Page");
+			page.fillingNumberingAndSortingDocumentPage(beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionWithTag(tagName);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagName);
+
+			
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-49999 :
+		 *         Verify if multiple tag-based brandings are specified then first
+		 *         matching tab-based branding should be display on 'Preview' document
+		 *         and on produced documents also.
+		 * @Description : Verify if multiple tag-based brandings are specified then
+		 *              first matching tab-based branding should be display.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 55)
+		public void generateTheProductionBySelectingTags() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-49999 -Production Sprint 06");
+			base.stepInfo(
+					"#### Verify if multiple tag-based brandings are specified then first matching tab-based branding should be display... ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String tagName1 = Input.randomText + Utility.dynamicNameAppender();
+			String tagName2 = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create tag with classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagName1, Input.tagNamePrev);
+
+			base.stepInfo("Create Folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			base.stepInfo("Create tag with classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagName2, Input.tagNamePrev);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk Folder Existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
+
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Filling Native Section");
+			page.fillingNativeSection();
+
+			base.stepInfo("Specify Branding In Tiff Section");
+			page.specifyBrandingInTiffSection(tagName1, tagName2, Input.randomText);
+
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-55957 :
+		 *         Verify that if 'Volume Included' toggle is OFF then "Archive for FTP"
+		 *         should archive everything in the Production Directory.
+		 * @Description : Verify that if 'Volume Included' toggle is OFF then "Archive
+		 *              for FTP" should archive everything in the Production Directory.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 56)
+		public void verifyingProductionAfterAudioIncludedToggleDisabled() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-55957 -Production Sprint 06");
+			base.stepInfo(
+					"#### Verify that if 'Volume Included' toggle is OFF then 'Archive for FTP' should archive everything in the Production Directory.... ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String tagName = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create Folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			base.stepInfo("Create tag with classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk Folder Existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
+
+			base.stepInfo("add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Filling Native Section");
+			page.fillingNativeSection();
+
+			base.stepInfo("Filling TIFF Section with Burn Redaction");
+			page.fillingTIFFSectionwithBurnRedaction(tagName);
+
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Prodcution Selection Volume Included");
+			page.fillingProdcutionSelectionVolumeIncluded(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Copy Path In QC Tab");
+			page.copyPathInQCTab();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagName);
+			
+			loginPage.logout();
+		}
+
+		/**
+		 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-48496 :
+		 *         To verify that the selected metadata is not displayed in DAT.
+		 * @Description : Verify that the selected metadata is not displayed in DAT if
+		 *              the document has at least one of the selected PRIV tags in PRIV
+		 *              placeholdering for PDF.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 57)
+		public void fillingPDFPrivDocsAndGenerateProduction() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-48496 -Production Sprint 06");
+			base.stepInfo(
+					"#### Verify that the selected metadata is not displayed in DAT if the document has at least one of the selected PRIV tags in PRIV placeholdering for PDF.. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String tagName = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create Folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			base.stepInfo("Create tag with classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk Folder Existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Filling DAT Section With Priv Checked");
+			page.fillingDATSectionWithPrivChecked();
+
+			base.stepInfo("Filling Native Section");
+			page.fillingNativeSection();
+
+			base.stepInfo("Select Priv Docs In Tiff Section");
+			page.selectPrivDocsInTiffSection(tagName);
+
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			base.stepInfo("Production is generated successfully on Selecting PDF Priv tag");
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagName);
+			
+			loginPage.logout();
+		}
+
+		/**
+		 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-56138 :
+		 *         Verify that Count displays correctly on Priv Guard if few of the
+		 *         parents and few child of other parents marked as Priv document.
+		 * @Description : Verify that Count displays correctly on Priv Guard if few of
+		 *              the parents and few child of other parents marked as Priv
+		 *              document.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 58)
+		public void selectingPrivTagAndGenerateProduction() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-56138 -Production Sprint 06");
+			base.stepInfo(
+					"#### Verify that Count displays correctly on Priv Guard if few of the parents and few child of other parents marked as Priv document. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String tagName1 = Input.randomText + Utility.dynamicNameAppender();
+			String tagName2 = Input.randomText + Utility.dynamicNameAppender();
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create tag with classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagName1, Input.tagNamePrev);
+
+			base.stepInfo("Create Folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			base.stepInfo("Create tag with classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagName2, Input.tagNamePrev);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(Input.searchString2);
+
+			base.stepInfo("View In Doc List");
+			sessionSearch.ViewInDocList();
+
+			DocListPage docPage = new DocListPage(driver);
+
+			base.stepInfo("Selecting Parent Document");
+			docPage.selectingParentDocument();
+
+			
+			base.stepInfo("Bulk Tag Existing");
+			docPage.bulkTagExistingFromDoclist(tagName1);
+
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			
+			base.stepInfo("Selecting Child Document");
+			docPage.selectingChildDocument();
+
+			base.stepInfo("Bulk Tag Existing");
+			docPage.bulkTagExistingFromDoclist(tagName2);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
+
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Filling DAT Section With Source ID");
+			page.fillingDATSectionWithSourceID();
+
+			base.stepInfo("Filling DAT Section With Priv Checked");
+			page.fillingDATSectionWithPrivChecked();
+
+			base.stepInfo("Filling Native Section");
+			page.fillingNativeSection();
+
+			base.stepInfo("Filling Priv Tags In TIFF Section");
+			page.fillingPrivTagsInTIFFSection(tagName1, tagName2);
+
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page With Tag");
+			page.fillingDocSelectionPageWithTag(tagName1, tagName2);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagName2);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagName1);
+
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-56074 :
+		 *         Verify the static text in Production-Text component section.
+		 * @Description : Verify the static text in Production-Text component section.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 59)
+		public void verifyTextSection() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-56074 -Production Sprint 06");
+			base.stepInfo("#### Verify the static text in Production-Text component section. ####");
+
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			ProductionPage page = new ProductionPage(driver);
+
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling Text Section And Verfying Text");
+			page.fillingTextSectionAndVerfyingText(Input.exText);
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Brundha created on:NA modified by:NA
+		 * //@Testcase_Id:RPMXCON-56068 :Verify if TIFF selecting for Priv Placeholdering
+		 *                            file then PageCount is always 1 and it will skip
+		 *                            the 'DOCPGCOUNTUPDT'
+		 * @Description : Verify that after selecting tiffpagecount in DAT section, it
+		 *              will generate the production.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 60)
+		public void selectTiffPageCountAndGenerateProduction() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-56068 -Production Sprint 06");
+			base.stepInfo(
+					"#### Verify that after Post Generation is completed, it will displays status on Production Generation page. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String tagname = Input.randomText + Utility.dynamicNameAppender();
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			base.stepInfo("Create Tag with Classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic content search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk folder existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
+
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Add New Field On DAT");
+			page.addNewFieldOnDAT();
+
+			base.stepInfo("filling tiffpagecount in DAT");
+			page.fillingTiffPageCountToDATFields();
+
+			base.stepInfo("Filling Native Section");
+			page.fillingNativeSection();
+
+			base.stepInfo("Select Priv Docs In Tiff Section with insert metadata field");
+			page.selectPrivDocsInTiffSectionWithMetaDataField(tagname);
+
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Brundha created on:NA modified by:NA
+		 * //@Testcase_Id:RPMXCON-56069 :Verify if TIFF selecting for Tech Placeholdering
+		 *                            file then PageCount is always 1 and it will skip
+		 *                            the 'DOCPGCOUNTUPDT'
+		 * @Description : Verify that after selecting tiffpagecount in DAT section, it
+		 *              will generate the production.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 61)
+		public void selectTiffPageCountAndTechPlaceholderGenerateProduction() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-56069 -Production Sprint 06");
+			base.stepInfo(
+					"#### Verify that after Post Geneation is completed, it will displays status on Production Generation page. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String tagname = Input.randomText + Utility.dynamicNameAppender();
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			base.stepInfo("Create Tag with Classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.technicalIssue);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic content search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk folder existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
+
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Add New Field On DAT");
+			page.addNewFieldOnDAT();
+
+			base.stepInfo("filling tiffpagecount in DAT");
+			page.fillingTiffPageCountToDATFields();
+
+			base.stepInfo("Filling Native Section");
+			page.fillingNativeSection();
+
+			base.stepInfo("filling TIFF section techissue with insert meta data field");
+			page.fillingTiffSectionTechIssueMetaDataField(tagname);
+
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Brundha created on:NA modified by:NA
+		 * //@Testcase_Id:RPMXCON-56067 :Verify page counting is not skipped if Production
+		 *                            exports only Natives,text(not ingested)
+		 * @Description :generate the production on filling native and text section.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 62)
+		public void generateProductionWithNativeAndTextSection() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-56067 -Production Sprint 06");
+			base.stepInfo("#### verify the generation of production  on filling native and text section. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String tagname = Input.randomText + Utility.dynamicNameAppender();
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			base.stepInfo("Create Tag with Classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic content search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk folder existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
+
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Add New Field On DAT");
+			page.addNewFieldOnDAT();
+
+			base.stepInfo("filling tiffpagecount in DAT");
+			page.fillingTiffPageCountToDATFields();
+
+			base.stepInfo("Filling Native Section");
+			page.fillingNativeSection();
+
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Brundha created on:NA modified by:NA
+		 * //@Testcase_Id:RPMXCON-56065 :Verify page counting is skipped if Production
+		 *                            exports only Text (If text ingested)
+		 * @Description :generate the production on filling text section.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 63)
+		public void generateProductionWithTextSection() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-56065 -Production Sprint 06");
+			base.stepInfo("#### verify the production generation  on filling  text section. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String tagname = Input.randomText + Utility.dynamicNameAppender();
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			base.stepInfo("Create Tag with Classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic content search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk folder existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
+
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Add New Field On DAT");
+			page.addNewFieldOnDAT();
+
+			base.stepInfo("filling tiffpagecount in DAT");
+			page.fillingTiffPageCountToDATFields();
+
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Brundha created on:NA modified by:NA
+		 * //@Testcase_Id:RPMXCON-56059 :Verify page counting is skipped if Production
+		 *                            exports only Natives,text (Text is ingested) with
+		 *                            DAT
+		 * @Description :generate the production on filling text section.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 64)
+		public void generateProductionWithDATNativeAndTextSection() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-56059 -Production Sprint 06");
+			base.stepInfo("#### verify the production generation  on filling  text section. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String tagname = Input.randomText + Utility.dynamicNameAppender();
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			base.stepInfo("Create Tag with Classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic content search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk folder existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
+
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Filling Native Section");
+			page.fillingNativeSection();
+
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Gopinath created on:NA modified by:NA //@Testcase_Id : RPMXCON-55942
+		 *         :Verify that Production should generated successfully and PDF/TIFF
+		 *         should produced with Comments/Signautre (Documents processed through
+		 *         ICE)
+		 * @Description : Verify that after loading the template PA can change the
+		 *              configuration in any of the steps.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 65)
+		public void fillingPDFSectionGeneratingTheProduction() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-55942 -Production Sprint 07");
+			base.stepInfo("#### verify the production generation  on filling  text section. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String tagname = Input.randomText + Utility.dynamicNameAppender();
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Create Folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			base.stepInfo("Create tag with classification");
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Basic content search");
+			sessionSearch.basicContentSearch(Input.documentId);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.fillingTextSection();
+			page.fillingTIFFSection(tagname, Input.searchString4);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+			loginPage.logout();
+			
+			
+		}
+
+		/**
+		 * @author Brundha created on:NA modified by:NA
+		 * //@Testcase_Id:RPMXCON-56057 : Verify page counting is skipped if Production
+		 *                            exports only Natives.
+		 * @Description : Verify page counting is skipped if Production exports only
+		 *              Natives.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 66)
+		public void selectDATAndNativeSectionsForProduction() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-56057 -Production Sprint 06");
+			base.stepInfo("#### Verify page counting is skipped if Production exports only Natives. ####");
+
+			String tagname = Input.randomText + Utility.dynamicNameAppender();
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String testData1 = Input.testData1;
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			loginPage = new LoginPage(driver);
+			loginPage.logout();
+
+			base.stepInfo("Login with project administrator");
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			Reporter.log("Logged in as User: " + Input.pa1userName);
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Navigate To Tags And Folder Page");
+			tagsAndFolderPage.navigateToTagsAndFolderPage();
+
+			base.stepInfo("Create folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Navigate To Session Search Page URL");
+			sessionSearch.navigateToSessionSearchPageURL();
+
+			base.stepInfo("Basic content search");
+			sessionSearch.basicContentSearch(testData1);
+
+			base.stepInfo("Bulk folder existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Filling Native Section");
+			page.fillingNativeSection();
+
+			base.stepInfo("Filling PDF Section");
+			page.fillingPDFSection(tagname, Input.tagNamePrev);
+
+			base.stepInfo("Filling Text Section");
+			page.fillingTextSection();
+
+			base.stepInfo("Navigate To Next Section");
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page");
+
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername,Input.securityGroup);
+			tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.tagNamePrev);
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Brundha created on:NA modified by:NA
+		 * //@Testcase_Id:RPMXCON-56053 : Verify that once Post Geneation is in progress,
+		 *                            it will displays status on ProductionGrid View as
+		 *                            'Post-Gen QC Checks In Progress'.
+		 * @Description : Verify that once Post Geneation is in progress, it will
+		 *              displays status on ProductionGrid View as 'Post-Gen QC Checks In
+		 *              Progress'.
+		 */
+		@Test(enabled=true,groups = { "regression" }, priority = 67)
+		public void verifyPostGenProgressStatusonProductionHomePage() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("Test case Id: RPMXCON-56053 -Production Sprint 06");
+			base.stepInfo(
+					"#### Verify that once Post Geneation is in progress, it will displays status on ProductionGrid View as 'Post-Gen QC Checks In Progress'. ####");
+
+			String foldername = Input.randomText + Utility.dynamicNameAppender();
+			String productionname = Input.randomText + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			base.stepInfo("Navigate To Tags And Folder Page");
+			tagsAndFolderPage.navigateToTagsAndFolderPage();
+
+			base.stepInfo("Create folder");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			base.stepInfo("Navigate To Session Search Page URL");
+			sessionSearch.navigateToSessionSearchPageURL();
+
+			base.stepInfo("Basic content search");
+			sessionSearch.basicContentSearch(Input.searchString20Docs);
+
+			base.stepInfo("Bulk folder existing");
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			base.stepInfo("Navigate to production page");
+			page.navigateToProductionPage();
+
+			base.stepInfo("Selecting Default Security Group");
+			page.selectingDefaultSecurityGroup();
+
+			base.stepInfo("Add New Production");
+			page.addANewProduction(productionname);
+
+			base.stepInfo("Filling DAT Section");
+			page.fillingDATSection();
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Numbering And Sorting Page");
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Document Selection Page");
+			page.fillingDocumentSelectionPage(foldername);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Priv Guard Page");
+			page.fillingPrivGuardPage();
+
+			base.stepInfo("Filling Production Location Page And Passing Text");
+			page.fillingProductionLocationPageAndPassingText(productionname);
+
+			base.stepInfo("Navigate To Next Section");
+			page.navigateToNextSection();
+
+			base.stepInfo("Filling Summary And Preview");
+			page.fillingSummaryAndPreview();
+
+			base.stepInfo("Filling Generate Page And Regenerating Again");
+			page.fillingGeneratePageWaitForContinueGeneration();
+			driver.waitForPageToBeReady();
+
+			// Go To Production Home Page
+			base.stepInfo("Navigate To Production Page");
+			page.navigateToProductionPage();
+
+			base.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+
+			base.stepInfo("Verify Production Status In HomePage");
+			page.verifyProductionStatusInHomePage(Input.postGenQcChecks, productionname);
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			loginPage.logout();
 	}
 
-	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-48874 :
-	 *         To verify that Production should generate successfully if user map
-	 *         the one source field to multiple DAT fields.
-	 * @Description : To verify that Production should generate successfully if user
-	 *              map the one source field to multiple DAT fields.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 49)
-	public void addDifferentDATFieldAndGenerateProduction() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-48874 -Production Sprint 06");
-		base.stepInfo(
-				"#### To verify that Production should generate successfully if user map the one source field to multiple DAT fields. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagname = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create Tag with Classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic Content Search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk Folder Existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
-
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("filling DAT Section With Diff DAT Field");
-		page.fillingDATSectionWithDiffDATField();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
-
-		base.stepInfo("DAT section with different DAT field is generated successfully");
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-49970 :
-	 *         Verify that after updating the placeholder text on uncompleting the
-	 *         production, production should generate with the updated redaction
-	 *         text.
-	 * @Description : Verify that after updating the placeholder text on
-	 *              uncompleting the production, production should generate with the
-	 *              updated redaction text.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 50)
-	public void updatingtextInBurnRedactionAndGeneratingProduction() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-49970 -Production Sprint 06");
-		base.stepInfo(
-				"#### Verify that after updating the placeholder text on uncompleting the production, production should generate with the updated redaction text.. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String Redactiontag1 = Input.randomText + Utility.dynamicNameAppender();
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		RedactionPage redactionpage = new RedactionPage(driver);
-
-		base.stepInfo("Manage Redaction Tags Page");
-		redactionpage.manageRedactionTagsPage(Redactiontag1);
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create Folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic Content Search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk Folder Existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
-
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Filling TIFF Section with Burn Redaction");
-		page.fillingTIFFSectionwithBurnRedaction(Redactiontag1);
-
-		base.stepInfo("Click Component Mark Complete And Incomplete");
-		page.clickComponentMarkCompleteAndIncomplete();
-
-		base.stepInfo("Filling Placeholder In Burn Redaction");
-		page.fillingPlaceholderInBurnRedaction(Input.randomText);
-
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-48951 :
-	 *         To verify that user can load the template in New Production and
-	 *         Generate for TIFF file.
-	 * @Description : Verify that user can load the template in New Production and
-	 *              Generate for TIFF file.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 51)
-	public void verifyingTIFFSectionInManageTemplate() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-48951 -Production Sprint 06");
-		base.stepInfo(
-				"#### To verify that user can load the template in New Production and Generate for TIFF file. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String Templatename = Input.randomText + Utility.dynamicNameAppender();
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		ProductionPage page1 = new ProductionPage(driver);
-
-		base.stepInfo("Add New Production");
-		page1.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page1.fillingDATSection();
-
-		base.stepInfo("Filling Tiff Section Branding");
-		page1.fillingTiffSectionBranding();
-
-		ProductionPage Page = new ProductionPage(driver);
-
-		base.stepInfo("Select Saved Template And Manage Template");
-		Page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
-
-		base.stepInfo("Verify Tiff Section Is Selected");
-		Page.verifyTiffSectionIsSelected();
-		// botClose3
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create Folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic Content Search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk Folder Existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		productionname = Input.randomText + Utility.dynamicNameAppender();
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Base Info Load Template");
-		page.baseInfoLoadTemplate(productionname, Templatename);
-
-		base.stepInfo("Verify DAT And TIFF Field");
-		page.verifyDATAndTIFFField();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-48953 :
-	 *         To verify that after loading the template PA can change the
-	 *         configuration in any of the steps.
-	 * @Description : Verify that after loading the template PA can change the
-	 *              configuration in any of the steps.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 52)
-	public void verifyingPDFSectionInManageTemplate() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-48953 -Production Sprint 06");
-		base.stepInfo(
-				"#### Verify that after loading the template PA can change the configuration in any of the steps.. ####");
-
-		loginPage = new LoginPage(driver);
-		loginPage.logout();
-
-		base.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		base.stepInfo("Logged in as User: " + Input.pa2FullName);
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String tagNamePrev = Input.tagNamePrev;
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String tagName = Input.randomText + Utility.dynamicNameAppender();
-		String Templatename = Input.randomText + Utility.dynamicNameAppender();
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		base.stepInfo("Create Folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create tag with classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
-
-		ProductionPage page1 = new ProductionPage(driver);
-
-		base.stepInfo("Add New Production");
-		page1.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page1.fillingDATSection();
-
-		base.stepInfo("Filling Native Section");
-		page1.fillingNativeSection();
-
-		base.stepInfo("Filling PDF Section");
-		page1.fillingPDFSection(tagName, tagNamePrev);
-
-		base.stepInfo("Filling Text Section");
-		page1.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page1.navigateToNextSection();
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Select Saved Template And Manage Template");
-		page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
-
-		base.stepInfo("Verify PDF Section Is Selected");
-		page.verifyPDFSectionIsSelected();
-		// botClose3
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic Content Search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk Folder Existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		productionname = Input.randomText + Utility.dynamicNameAppender();
-		page = new ProductionPage(driver);
-
-		base.stepInfo("Base Info Load Template");
-		page.baseInfoLoadTemplate(productionname, Templatename);
-
-		base.stepInfo("Verify DAT And PDF Field");
-		page.verifyDATAndPDFField();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-48952 :
-	 *         To verify that user can load the template in New Production and
-	 *         Generate PDF files.
-	 * @Description : Verify that user can load the template in New Production and
-	 *              Generate PDF files
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 53)
-	public void verifyingPDFFilesGeneratedOnManageTemplate() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-48952 -Production Sprint 06");
-		base.stepInfo("#### Verify that user can load the template in New Production and Generate PDF files.. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String Templatename = Input.randomText + Utility.dynamicNameAppender();
-		ProductionPage page1 = new ProductionPage(driver);
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		base.stepInfo("Add New Production");
-		page1.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page1.fillingDATSection();
-
-		base.stepInfo("Filling PDF Section Branding");
-		page1.fillingPDFSectionBranding();
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Filling PDF Section Branding");
-		page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
-
-		base.stepInfo("Verify Production Component");
-		page.verifyProductionComponent();
-		// botClose3
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create Folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic Content Search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk Folder Existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		productionname = Input.randomText + Utility.dynamicNameAppender();
-
-		page = new ProductionPage(driver);
-
-		base.stepInfo("Base Info Load Template");
-		page.baseInfoLoadTemplate(productionname, Templatename);
-
-		base.stepInfo("Verify DAT And TIFF Field");
-		page.verifyDATAndTIFFField();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-48000 :
-	 *         Verify Branding Bates number
-	 * @Description: Verify Branding Bates number
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 54)
-	public void fillingTIFFSectionWithBatesNumberAndGenerateProduction() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-48000 -Production Sprint 06");
-		base.stepInfo("#### Verify Branding Bates number.. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagName = Input.randomText + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create Folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create tag with classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic Content Search");
-		sessionSearch.basicContentSearch(Input.batesDocumentId);
-
-		base.stepInfo("Bulk Folder Existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
-
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Filling Native Section");
-		page.fillingNativeSection();
-
-		base.stepInfo("Filling TIFF Section With Bates Number");
-		page.fillingTIFFSectionWithBatesNumber();
-
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Document Page");
-		page.fillingNumberingAndSortingDocumentPage(prefixID);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-49999 :
-	 *         Verify if multiple tag-based brandings are specified then first
-	 *         matching tab-based branding should be display on 'Preview' document
-	 *         and on produced documents also.
-	 * @Description : Verify if multiple tag-based brandings are specified then
-	 *              first matching tab-based branding should be display.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 55)
-	public void generateTheProductionBySelectingTags() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-49999 -Production Sprint 06");
-		base.stepInfo(
-				"#### Verify if multiple tag-based brandings are specified then first matching tab-based branding should be display... ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagName1 = Input.randomText + Utility.dynamicNameAppender();
-		String tagName2 = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create tag with classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagName1, Input.tagNamePrev);
-
-		base.stepInfo("Create Folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create tag with classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagName2, Input.tagNamePrev);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic Content Search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk Folder Existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
-
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Filling Native Section");
-		page.fillingNativeSection();
-
-		base.stepInfo("Specify Branding In Tiff Section");
-		page.specifyBrandingInTiffSection(tagName1, tagName2, Input.randomText);
-
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-55957 :
-	 *         Verify that if 'Volume Included' toggle is OFF then "Archive for FTP"
-	 *         should archive everything in the Production Directory.
-	 * @Description : Verify that if 'Volume Included' toggle is OFF then "Archive
-	 *              for FTP" should archive everything in the Production Directory.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 56)
-	public void verifyingProductionAfterAudioIncludedToggleDisabled() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-55957 -Production Sprint 06");
-		base.stepInfo(
-				"#### Verify that if 'Volume Included' toggle is OFF then 'Archive for FTP' should archive everything in the Production Directory.... ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagName = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create Folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create tag with classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic Content Search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk Folder Existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
-
-		base.stepInfo("add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Filling Native Section");
-		page.fillingNativeSection();
-
-		base.stepInfo("Filling TIFF Section with Burn Redaction");
-		page.fillingTIFFSectionwithBurnRedaction(tagName);
-
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Prodcution Selection Volume Included");
-		page.fillingProdcutionSelectionVolumeIncluded(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Copy Path In QC Tab");
-		page.copyPathInQCTab();
-		loginPage.logout();
-	}
-
-	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-48496 :
-	 *         To verify that the selected metadata is not displayed in DAT.
-	 * @Description : Verify that the selected metadata is not displayed in DAT if
-	 *              the document has at least one of the selected PRIV tags in PRIV
-	 *              placeholdering for PDF.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 57)
-	public void fillingPDFPrivDocsAndGenerateProduction() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-48496 -Production Sprint 06");
-		base.stepInfo(
-				"#### Verify that the selected metadata is not displayed in DAT if the document has at least one of the selected PRIV tags in PRIV placeholdering for PDF.. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagName = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create Folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create tag with classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic Content Search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk Folder Existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Filling DAT Section With Priv Checked");
-		page.fillingDATSectionWithPrivChecked();
-
-		base.stepInfo("Filling Native Section");
-		page.fillingNativeSection();
-
-		base.stepInfo("Select Priv Docs In Tiff Section");
-		page.selectPrivDocsInTiffSection(tagName);
-
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
-
-		base.stepInfo("Production is generated successfully on Selecting PDF Priv tag");
-		loginPage.logout();
-	}
-
-	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-56138 :
-	 *         Verify that Count displays correctly on Priv Guard if few of the
-	 *         parents and few child of other parents marked as Priv document.
-	 * @Description : Verify that Count displays correctly on Priv Guard if few of
-	 *              the parents and few child of other parents marked as Priv
-	 *              document.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 58)
-	public void selectingPrivTagAndGenerateProduction() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-56138 -Production Sprint 06");
-		base.stepInfo(
-				"#### Verify that Count displays correctly on Priv Guard if few of the parents and few child of other parents marked as Priv document. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagName1 = Input.randomText + Utility.dynamicNameAppender();
-		String tagName2 = Input.randomText + Utility.dynamicNameAppender();
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create tag with classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagName1, Input.tagNamePrev);
-
-		base.stepInfo("Create Folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create tag with classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagName2, Input.tagNamePrev);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic Content Search");
-		sessionSearch.basicContentSearch(Input.searchStringStar);
-
-		base.stepInfo("View In Doc List");
-		sessionSearch.ViewInDocList();
-
-		DocListPage docPage = new DocListPage(driver);
-
-		base.stepInfo("Selecting Parent Document");
-		docPage.selectingParentDocument();
-
-		base.stepInfo("Bulk Tag Existing");
-		docPage.bulkTagExisting(tagName1);
-
-		base.stepInfo("Selecting Child Document");
-		docPage.selectingChildDocument();
-
-		base.stepInfo("Bulk Tag Existing");
-		docPage.bulkTagExisting(tagName2);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
-
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Filling DAT Section With Source ID");
-		page.fillingDATSectionWithSourceID();
-
-		base.stepInfo("Filling DAT Section With Priv Checked");
-		page.fillingDATSectionWithPrivChecked();
-
-		base.stepInfo("Filling Native Section");
-		page.fillingNativeSection();
-
-		base.stepInfo("Filling Priv Tags In TIFF Section");
-		page.fillingPrivTagsInTIFFSection(tagName1, tagName2);
-
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page With Tag");
-		page.fillingDocSelectionPageWithTag(tagName1, tagName2);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePage();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-56074 :
-	 *         Verify the static text in Production-Text component section.
-	 * @Description : Verify the static text in Production-Text component section.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 59)
-	public void verifyTextSection() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-56074 -Production Sprint 06");
-		base.stepInfo("#### Verify the static text in Production-Text component section. ####");
-
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		ProductionPage page = new ProductionPage(driver);
-
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling Text Section And Verfying Text");
-		page.fillingTextSectionAndVerfyingText(Input.exText);
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Brundha created on:NA modified by:NA
-	 * @Testcase_Id:RPMXCON-56068 :Verify if TIFF selecting for Priv Placeholdering
-	 *                            file then PageCount is always 1 and it will skip
-	 *                            the 'DOCPGCOUNTUPDT'
-	 * @Description : Verify that after selecting tiffpagecount in DAT section, it
-	 *              will generate the production.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 60)
-	public void selectTiffPageCountAndGenerateProduction() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-56068 -Production Sprint 06");
-		base.stepInfo(
-				"#### Verify that after Post Generation is completed, it will displays status on Production Generation page. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagname = Input.randomText + Utility.dynamicNameAppender();
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create Tag with Classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk folder existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
-
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Add New Field On DAT");
-		page.addNewFieldOnDAT();
-
-		base.stepInfo("filling tiffpagecount in DAT");
-		page.fillingTiffPageCountToDATFields();
-
-		base.stepInfo("Filling Native Section");
-		page.fillingNativeSection();
-
-		base.stepInfo("Select Priv Docs In Tiff Section with insert metadata field");
-		page.selectPrivDocsInTiffSectionWithMetaDataField(tagname);
-
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePageWithContinueGenerationPopup();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Brundha created on:NA modified by:NA
-	 * @Testcase_Id:RPMXCON-56069 :Verify if TIFF selecting for Tech Placeholdering
-	 *                            file then PageCount is always 1 and it will skip
-	 *                            the 'DOCPGCOUNTUPDT'
-	 * @Description : Verify that after selecting tiffpagecount in DAT section, it
-	 *              will generate the production.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 61)
-	public void selectTiffPageCountAndTechPlaceholderGenerateProduction() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-56069 -Production Sprint 06");
-		base.stepInfo(
-				"#### Verify that after Post Geneation is completed, it will displays status on Production Generation page. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagname = Input.randomText + Utility.dynamicNameAppender();
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create Tag with Classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.technicalIssue);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk folder existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
-
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Add New Field On DAT");
-		page.addNewFieldOnDAT();
-
-		base.stepInfo("filling tiffpagecount in DAT");
-		page.fillingTiffPageCountToDATFields();
-
-		base.stepInfo("Filling Native Section");
-		page.fillingNativeSection();
-
-		base.stepInfo("filling TIFF section techissue with insert meta data field");
-		page.fillingTiffSectionTechIssueMetaDataField(tagname);
-
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePageWithContinueGenerationPopup();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Brundha created on:NA modified by:NA
-	 * @Testcase_Id:RPMXCON-56067 :Verify page counting is not skipped if Production
-	 *                            exports only Natives,text(not ingested)
-	 * @Description :generate the production on filling native and text section.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 62)
-	public void generateProductionWithNativeAndTextSection() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-56067 -Production Sprint 06");
-		base.stepInfo("#### verify the generation of production  on filling native and text section. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagname = Input.randomText + Utility.dynamicNameAppender();
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create Tag with Classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk folder existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
-
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Add New Field On DAT");
-		page.addNewFieldOnDAT();
-
-		base.stepInfo("filling tiffpagecount in DAT");
-		page.fillingTiffPageCountToDATFields();
-
-		base.stepInfo("Filling Native Section");
-		page.fillingNativeSection();
-
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePageWithContinueGenerationPopup();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Brundha created on:NA modified by:NA
-	 * @Testcase_Id:RPMXCON-56065 :Verify page counting is skipped if Production
-	 *                            exports only Text (If text ingested)
-	 * @Description :generate the production on filling text section.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 63)
-	public void generateProductionWithTextSection() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-56065 -Production Sprint 06");
-		base.stepInfo("#### verify the production generation  on filling  text section. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagname = Input.randomText + Utility.dynamicNameAppender();
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create Tag with Classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk folder existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
-
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Add New Field On DAT");
-		page.addNewFieldOnDAT();
-
-		base.stepInfo("filling tiffpagecount in DAT");
-		page.fillingTiffPageCountToDATFields();
-
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePageWithContinueGenerationPopup();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Brundha created on:NA modified by:NA
-	 * @Testcase_Id:RPMXCON-56059 :Verify page counting is skipped if Production
-	 *                            exports only Natives,text (Text is ingested) with
-	 *                            DAT
-	 * @Description :generate the production on filling text section.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 64)
-	public void generateProductionWithDATNativeAndTextSection() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-56059 -Production Sprint 06");
-		base.stepInfo("#### verify the production generation  on filling  text section. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagname = Input.randomText + Utility.dynamicNameAppender();
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create Tag with Classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk folder existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
-
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Filling Native Section");
-		page.fillingNativeSection();
-
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePageWithContinueGenerationPopup();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Gopinath created on:NA modified by:NA @Testcase_Id : RPMXCON-55942
-	 *         :Verify that Production should generated successfully and PDF/TIFF
-	 *         should produced with Comments/Signautre (Documents processed through
-	 *         ICE)
-	 * @Description : Verify that after loading the template PA can change the
-	 *              configuration in any of the steps.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 65)
-	public void fillingPDFSectionGeneratingTheProduction() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-55942 -Production Sprint 07");
-		base.stepInfo("#### verify the production generation  on filling  text section. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagname = Input.randomText + Utility.dynamicNameAppender();
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Create Folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		base.stepInfo("Create tag with classification");
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(Input.documentId);
-		loginPage.logout();
-	}
-
-	/**
-	 * @author Brundha created on:NA modified by:NA
-	 * @Testcase_Id:RPMXCON-56057 : Verify page counting is skipped if Production
-	 *                            exports only Natives.
-	 * @Description : Verify page counting is skipped if Production exports only
-	 *              Natives.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 66)
-	public void selectDATAndNativeSectionsForProduction() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-56057 -Production Sprint 06");
-		base.stepInfo("#### Verify page counting is skipped if Production exports only Natives. ####");
-
-		String tagname = Input.randomText + Utility.dynamicNameAppender();
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		loginPage = new LoginPage(driver);
-		loginPage.logout();
-
-		base.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		Reporter.log("Logged in as User: " + Input.pa2userName);
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Navigate To Tags And Folder Page");
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
-
-		base.stepInfo("Create folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Navigate To Session Search Page URL");
-		sessionSearch.navigateToSessionSearchPageURL();
-
-		base.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(testData1);
-
-		base.stepInfo("Bulk folder existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Filling Native Section");
-		page.fillingNativeSection();
-
-		base.stepInfo("Filling PDF Section");
-		page.fillingPDFSection(tagname, Input.tagNamePrev);
-
-		base.stepInfo("Filling Text Section");
-		page.fillingTextSection();
-
-		base.stepInfo("Navigate To Next Section");
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page");
-
-		page.fillingGeneratePage();
-
-		page.fillingGeneratePageWithContinueGenerationPopup();
-		loginPage.logout();
-
-	}
-
-	/**
-	 * @author Brundha created on:NA modified by:NA
-	 * @Testcase_Id:RPMXCON-56053 : Verify that once Post Geneation is in progress,
-	 *                            it will displays status on ProductionGrid View as
-	 *                            'Post-Gen QC Checks In Progress'.
-	 * @Description : Verify that once Post Geneation is in progress, it will
-	 *              displays status on ProductionGrid View as 'Post-Gen QC Checks In
-	 *              Progress'.
-	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 67)
-	public void verifyPostGenProgressStatusonProductionHomePage() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id: RPMXCON-56053 -Production Sprint 06");
-		base.stepInfo(
-				"#### Verify that once Post Geneation is in progress, it will displays status on ProductionGrid View as 'Post-Gen QC Checks In Progress'. ####");
-
-		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String productionname = Input.randomText + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
-		base.stepInfo("Navigate To Tags And Folder Page");
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
-
-		base.stepInfo("Create folder");
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		base.stepInfo("Navigate To Session Search Page URL");
-		sessionSearch.navigateToSessionSearchPageURL();
-
-		base.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(Input.searchString20Docs);
-
-		base.stepInfo("Bulk folder existing");
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		base.stepInfo("Navigate to production page");
-		page.navigateToProductionPage();
-
-		base.stepInfo("Selecting Default Security Group");
-		page.selectingDefaultSecurityGroup();
-
-		base.stepInfo("Add New Production");
-		page.addANewProduction(productionname);
-
-		base.stepInfo("Filling DAT Section");
-		page.fillingDATSection();
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Numbering And Sorting Page");
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Document Selection Page");
-		page.fillingDocumentSelectionPage(foldername);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Priv Guard Page");
-		page.fillingPrivGuardPage();
-
-		base.stepInfo("Filling Production Location Page And Passing Text");
-		page.fillingProductionLocationPageAndPassingText(productionname);
-
-		base.stepInfo("Navigate To Next Section");
-		page.navigateToNextSection();
-
-		base.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
-
-		base.stepInfo("Filling Generate Page And Regenerating Again");
-		page.clickOnGenerateButton();
-		driver.waitForPageToBeReady();
-
-		// Go To Production Home Page
-		base.stepInfo("Navigate To Production Page");
-		page.navigateToProductionPage();
-
-		base.stepInfo("Refresh page");
-		driver.Navigate().refresh();
-
-		base.stepInfo("Verify Production Status In HomePage");
-		page.verifyProductionStatusInHomePage(Input.postGenQcChecks, productionname);
-		loginPage.logout();
-	}
 
 	/**
 	 * @author Brundha created on:NA modified by:NA
