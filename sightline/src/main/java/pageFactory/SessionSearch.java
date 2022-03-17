@@ -10853,4 +10853,57 @@ public void advMetaSearch_Draft(String metaDataField,String val1) {
 		String actualDocs=getRowElement_BgPage(BG_ID,Index).getText();
 		return actualDocs;
 	}
+
+	/**
+	 * @author Jayanthi 
+	 * Description: To BulkTag the Family Members Docs.
+	 * @param TagName [Name of Tag]
+	 */
+	public void bulkTagFamilyMemberDocuments(String TagName) {
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		getFamilyAddButton().ScrollTo();
+		getFamilyAddButton().waitAndClick(10);
+		getBulkActionButton().ScrollTo();
+		getBulkActionButton().waitAndClick(10);
+		base.waitTime(1);
+		base.waitForElement(getBulkTagAction());
+		getBulkTagAction().waitAndClick(30);
+		getBulkNewTab().waitAndClick(60);
+		base.waitForElement(getEnterTagName());
+		getEnterTagName().SendKeys(TagName);
+		getTagsAllRoot().waitAndClick(30);
+		driver.Manage().window().fullscreen();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getContinueButton().Click();
+		driver.Manage().window().maximize();
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getFinalizeButton().Click();
+
+		getBulkTagConfirmationButton().Click();
+
+		base.VerifySuccessMessage("Records saved successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+
+		UtilityLog.info("Bulk Tag is done, Tag is : " + TagName);
+		Reporter.log("Bulk Tag is done, Tag is : " + TagName, true);
+
+	}
+	
 }

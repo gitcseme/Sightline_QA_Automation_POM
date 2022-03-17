@@ -561,8 +561,71 @@ public class SearchTermReport_Regression1 {
 			}
 			lp.logout();
 			}
-			
-		
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+		@Test(groups = { "regression" }, priority = 14, enabled = true)
+		public void VerifyFamilyUniqueHits() throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56585");
+			bc.stepInfo("Search Term Report - Validate Unique Family Hits column value.");
+			String tagName1 = "STR" + Utility.dynamicNameAppender();
+			String tagName2 = "STR" + Utility.dynamicNameAppender();
+			st = new SearchTermReportPage(driver);
+			lp = new LoginPage(driver);
+			SessionSearch search = new SessionSearch(driver);
+			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			bc.stepInfo("Logged in as - RMU");
+			String[] savedSearchRMU = { saveSearchNameRMU1, saveSearchNameRMU2 };
+			SessionSearch ss = new SessionSearch(driver);
+			ss.basicContentSearch(Input.searchString1);
+			ss.bulkTagFamilyMemberDocuments(tagName1);
+			bc.selectproject();
+			ss.basicContentSearch(Input.searchString2);
+			ss.bulkTagFamilyMemberDocuments(tagName2);
+			bc.selectproject();
+			search.navigateToAdvancedSearchPage();
+			// Adding WP tag into search text box
+			search.workProductSearch("tag", tagName1, true);
+			// Adding Operator into search text box
+			search.selectOperator("NOT");
+			search.workProductSearch("tag", tagName2, false);
+			search.serarchWP();
+			bc.waitTime(2);
+			driver.waitForPageToBeReady();
+			String expectedFamilyHit1 = ss.verifyPureHitsCount();
+			bc.stepInfo("Family members count if Configured query with family members of "
+					+ "'test' 'NOT' 'Comments' search terms " + expectedFamilyHit1);
+			bc.selectproject();
+			search.navigateToAdvancedSearchPage();
+			// Adding WP tag into search text box
+			search.workProductSearch("tag", tagName2, true);
+			// Adding Operator into search text box
+			search.selectOperator("NOT");
+			search.workProductSearch("tag", tagName1, false);
+			search.serarchWP();
+			bc.waitTime(2);
+			driver.waitForPageToBeReady();
+			String expectedFamilyHit2 = ss.verifyPureHitsCount();
+			bc.stepInfo(
+					"Family members count if Configured query family members of  'Comments''NOT' 'test' search terms"
+							+ expectedFamilyHit2);
+			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+			st.GenerateReportWithAllSearches(savedSearchRMU);
+			SoftAssert SoftAssertion = new SoftAssert();
+
+			SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE FAMILY HITS", saveSearchNameRMU1),
+					expectedFamilyHit2);
+			SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE FAMILY HITS", saveSearchNameRMU2),
+					expectedFamilyHit1);
+			bc.stepInfo("The unique Family Hits Count for saved saerch " + saveSearchNameRMU1 + "--"
+					+ st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU1));
+			bc.stepInfo("The unique Family  Hits Count for saved saerch " + saveSearchNameRMU2 + "--"
+					+ st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU2));
+			SoftAssertion.assertAll();
+			bc.passedStep("Sucessfully verified the Unique Family Hits Column value in STR Page");
+
+		}
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
