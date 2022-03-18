@@ -805,6 +805,14 @@ public class IngestionPage_Indium {
 	public Element errorMessageMissingDate() {
 		return driver.FindElementById("errorMsgDateFormat");
 	}
+	
+	public Element ingestionErrorNote(int row) {
+		return driver.FindElementByXPath("//*[@id='myDataTable']//tbody//tr["+row+"]//td[3]");
+	}
+	
+	public Element errorCountStatus() {
+		return driver.FindElementById("errcount");
+	}
 
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
@@ -5244,6 +5252,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 	 * @description: this method will validate the date format in ingestion field cataloging stage
 	 */
 	public void verifyExpectedDateFormatAfterCatalogingStage() {
+		
 		driver.waitForPageToBeReady();
 		String dateFormat = getIngestionWizardDateFormate().getText();
 		String firstSectionInDateFormat[] = dateFormat.split("/");
@@ -5256,5 +5265,40 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			base.failedStep("ingestion not converted the provided data into the Sightline desired/expected date format");
 		}	
 	}
-
+	
+	/**
+	 * @author: Arunkumar Created Date: 18/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the error when selected date format is different than in DAT.
+	 */
+	public void verifyCatalogingErrorIfDateFormatIsDifferentThanDAT() {
+		
+		driver.waitForPageToBeReady();
+		if (getFailedIngestionStatus().isElementAvailable(5)) {
+			int numberOfErrors= Integer.parseInt(errorCountStatus().getText());
+			
+			getIngestionName().waitAndClick(10);
+			
+			base.waitForElement(errorCountCatalogingStage());
+		    errorCountCatalogingStage().waitAndClick(10);
+		    base.waitTime(5);
+		    base.waitForElement(ignoreAllButton());
+		
+			for(int i=1;i<=numberOfErrors;i++) {
+				
+				if(ingestionErrorNote(i).getText().contains(Input.differentDateFormatError)) {
+					base.passedStep("Cataloging Error displayed when selected date format different than in DAT");
+				}
+				else {
+					base.failedStep("Cataloging Error not displayed when selected date format different than in DAT");
+				}
+			}
+			
+			getCloseButton().waitAndClick(10);
+	}
+		else if(getCatalogedIngestionStatus().isElementAvailable(5)) {
+			base.failedStep("No Errors and Selected Date format is same as in DAT");
+			
+		}
+			
+	}
 }

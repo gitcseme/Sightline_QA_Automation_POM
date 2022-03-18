@@ -610,6 +610,9 @@ public class Input {
 	public static String Natives_MMDDYYYY_HHMISS;
 	public static String DAT_DDMMYYYY_HHMISS;
 	public static String Natives_DDMMYYYY_HHMISS;
+	public static String DAT_DDMMYYYY;
+	public static String Natives_DDMMYYYY;
+	public static String differentDateFormatError;
 
 	// Added by Gopinath - 02/03/2022
 	public static String ingestionProjectName;
@@ -1303,7 +1306,9 @@ public class Input {
 		Natives_MMDDYYYY_HHMISS = testData.getNatives_MMDDYYYY_HHMISS();
 		DAT_DDMMYYYY_HHMISS = testData.getDAT_DDMMYYYY_HHMISS();
 		Natives_DDMMYYYY_HHMISS = testData.getNatives_DDMMYYYY_HHMISS();
-		
+		DAT_DDMMYYYY = testData.getDAT_DDMMYYYY();
+		Natives_DDMMYYYY = testData.getNatives_DDMMYYYY();
+		differentDateFormatError = testData.getDifferentDateFormatError();
 		
 		
 		// Added by Gopinath - 02/03/2022
