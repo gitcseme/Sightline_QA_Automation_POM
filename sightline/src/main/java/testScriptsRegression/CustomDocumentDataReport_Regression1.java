@@ -57,8 +57,8 @@ public class CustomDocumentDataReport_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		//Input in = new Input();
-		// in.loadEnvConfig();
+		Input in = new Input();
+		 in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -353,6 +353,94 @@ public class CustomDocumentDataReport_Regression1 {
 		cddr.verifyMetaFieldDisplay();
 		cddr.validateWrkprductHeaders(workproductFields);
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	 @Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 6)
+	public void verifyAndValidateCustomDataReport_BasicSearch(String username, String password, String role)
+			throws InterruptedException, ParseException, IOException {
+		String[] workProductFields = { tagName };
+		bc.stepInfo("Test case Id: RPMXCON-58571");
+		bc.stepInfo("Verify saved Document Data Export Report from Basic Search"
+				+ " should retain the selected criteria in custom report");
+		lp.loginToSightLine(username, password);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("Logged in as -" + role);
+		// report1
+		String[] metaDataFields = { "CustodianName"};
+		String textFormat1 = "039";
+		String textFormat2 = "034";
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+		search = new SessionSearch(driver);
+		search.basicContentSearch(Input.testData1);
+		driver.waitForPageToBeReady();
+		search.exportData();
+		driver.waitForPageToBeReady();
+		cddr.selectExportFieldFormat(textFormat1);
+		cddr.selectExportTextFormat(textFormat1);
+			cddr.selectMetaDataFields(metaDataFields);
+			cddr.selectWorkProductFields(workProductFields);
+			cddr.SaveReport(report1);
+			bc.stepInfo("Saved the Custom report " + report1);
+			cddr.getRunReport().waitAndClick(3);
+			cddr.reportRunSuccessMsg();
+			
+
+			// report2
+			bc.selectproject();
+			search.basicContentSearch(Input.testData1);
+			driver.waitForPageToBeReady();
+			search.exportData();
+			cddr.selectExportFieldFormat(textFormat2);
+			cddr.selectExportTextFormat(textFormat2);
+			cddr.selectWorkProductFields(workProductFields);
+			cddr.SaveReport(report2);
+			bc.stepInfo("Saved the Custom report " + report2);
+			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+			cddr.getReportName(report1).Click();
+			driver.waitForPageToBeReady();
+			cddr.selectSource("Security Groups", Input.securityGroup);
+			cddr.validateSelectedExports(workProductFields);
+			cddr.validateSelectedExports(metaDataFields);
+			cddr.getRunReport().Click();
+	    	cddr.reportRunSuccessMsg();
+
+			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+			cddr.getReportName(report2).Click();
+			driver.waitForPageToBeReady();
+			cddr.selectSource("Security Groups", Input.securityGroup);
+			cddr.selectMetaDataFields(metaDataFields);
+			cddr.validateSelectedExports(workProductFields);
+			final int Bgcount = bc.initialBgCount();
+			cddr.getRunReport().Click();
+			cddr.reportRunSuccessMsg();
+			SoftAssert softAssertion = new SoftAssert();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return bc.initialBgCount() == Bgcount + 1;
+				}
+			}), Input.wait60);
+			cddr.downloadExport();
+			bc.waitTime(5);
+			String Filename2 = bc.GetLastModifiedFileName();
+			bc.stepInfo(Filename2 + "Last Modified File name after Downloading the report");
+			String actualValue = cddr.csvfileVerification("", Filename2);
+			softAssertion.assertTrue(actualValue.contains("Alltags" + tagName + "\"CustodianName\"\""));
+			softAssertion.assertAll();
+			bc.passedStep("Sucessfully verified that saved Document Data Export Report from Basic "
+					+ "Search should retain the selected criteria in custom report");
+			ReportsPage rp = new ReportsPage(driver);
+			rp.deleteCustomReport(report1);
+
+	}
+
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");

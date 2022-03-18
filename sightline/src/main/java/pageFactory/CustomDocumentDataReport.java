@@ -343,6 +343,7 @@ public class CustomDocumentDataReport {
 	public void SaveReport(String reportName) {
 
 		if (getSaveReportBtn().isElementAvailable(2)) {
+			getSaveReportBtn().ScrollTo();
 			getSaveReportBtn().waitAndClick(2);
 		}
 		getSaveReportName().isElementAvailable(3);
@@ -363,9 +364,10 @@ public class CustomDocumentDataReport {
 	}
 
 	public void selectWorkProductFields(String[] Wfields) {
+		getWorkProductTab().ScrollTo();
 		getWorkProductTab().Click();
 		for (int i = 0; i < Wfields.length; i++) {
-			driver.scrollingToBottomofAPage();
+			getWorkProductField(Wfields[i]).ScrollTo();
 			getWorkProductField(Wfields[i]).waitAndClick(5);
 		}
 		getAddToSelectedBtn().waitAndClick(2);
