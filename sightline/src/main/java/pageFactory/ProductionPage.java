@@ -2762,6 +2762,16 @@ public class ProductionPage {
 	public Element getAddWorkProductSlipSheet(String ProductName) {
 		return driver.FindElementByXPath("//input[@class='chk-data']/..//i/following-sibling::strong[text()='"+ProductName+"']");
 	}
+	
+	//add by Aathith
+	public Element getDaAdditionalDataProject(String project) {
+		return driver.FindElementByXPath("//td[@class='ddGridAlignLeft sorting_1']//a[text()='"+project+"']");
+	}
+	
+	public Element gotoDAtoRMU(String project) {
+		return driver.FindElementByXPath("//a[text()='"+project+"']/..//a[text()='Go to Project']");
+	}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;

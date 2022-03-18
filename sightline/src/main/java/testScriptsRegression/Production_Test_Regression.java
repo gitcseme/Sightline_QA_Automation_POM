@@ -37,6 +37,7 @@ import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.ProjectFieldsPage;
 import pageFactory.RedactionPage;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -6920,6 +6921,114 @@ public class Production_Test_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
+		
+	}
+	/**
+	 * @author Aathith 
+	 * Test case id-RPMXCON-55952
+	 * @Description Verify that if DAU clicks on project from dashboard and Copy the Production URL which is not part of assigned domain Project
+	 * 
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 98)
+	public void verifyProdUrlNotPartOfDomain() throws Exception {
+		
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-55952 -Production Sprint 10");
+		base.stepInfo("Verify that if DAU clicks on project from dashboard and Copy the Production URL which is not part of assigned domain Project");
+		base = new BaseClass(driver);
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.impersonateSAtoPA();
+		
+        ProductionPage page = new ProductionPage(driver);
+        productionname = "p" + Utility.dynamicNameAppender();
+        page.selectingSecurityGroup(Input.securityGroup);
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+        driver.waitForPageToBeReady();
+		
+		String currentURL=driver.getWebDriver().getCurrentUrl();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		driver.waitForPageToBeReady();
+		page.getDaAdditionalDataProject(Input.additionalDataProject).waitAndClick(10);
+		page.gotoDAtoRMU(Input.additionalDataProject).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.stepInfo("switched to RMU");
+		
+		page = new ProductionPage(driver);
+		driver.Navigate().to(currentURL);
+		driver.waitForPageToBeReady();
+		String ErrorMsg=page.getErrorMsgText().getText();
+		if(ErrorMsg.contains("Error")) { base.passedStep("Error message is displayed as expected"); }
+		else {base.failedStep("Error message is not  displayed as expected");	}
+		driver.Navigate().back();
+		
+		base.passedStep("Verified that if DAU clicks on project from dashboard and Copy the Production URL which is not part of assigned domain Project");
+		loginPage.logout();
+		
+	}
+	/**
+	 * @author Aathith Test case id-RPMXCON-47924
+	 * @Description To Verify Production Generation in Different Security Group.
+	 * 
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 99)
+	public void verifyProdDiffSecuriyGroup() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-47924 -Production Component");
+		base.stepInfo("To Verify Production Generation in Different Security Group.");
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.translationDocumentId);
+		sessionSearch.ViewInDocList();
+		DocListPage doc = new DocListPage(driver);
+		doc.selectAllDocs();
+		doc.docListToBulkRelease(Input.securityGroup_sg47);
+		driver.waitForPageToBeReady();
+		doc.bulkTagExistingFromDoclist(tagname);
+		
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		sg.addTagToSecurityGroup(Input.securityGroup_sg47, tagname);
+		
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingSecurityGroup(Input.securityGroup_sg47);
+		driver.waitForPageToBeReady();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTiffSectionDisablePrivilegedDocs();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		base.passedStep("To Verify Production Generation in Different Security Group.");
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 		loginPage.logout();
 		
