@@ -886,18 +886,20 @@ public class TagsAndFoldersPage {
 
 			base.waitForElement(getDeleteFolder());
 			getDeleteFolder().waitAndClick(5);
-
+			driver.waitForPageToBeReady();
+			if(base.getYesBtn().Displayed()) {
 			base.waitForElement(base.getYesBtn());
 			base.getYesBtn().waitAndClick(5);
-
+			base.VerifySuccessMessage("Folder deleted successfully");
+			base.CloseSuccessMsgpopup();
+			Reporter.log(strFolder + " Folder delete Successful", true);
+			UtilityLog.info("Folder deleted Successfully");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		base.VerifySuccessMessage("Folder deleted successfully");
-		base.CloseSuccessMsgpopup();
-		Reporter.log(strFolder + " Folder delete Successful", true);
-		UtilityLog.info("Folder deleted Successfully");
+		
 	}
 
 	/**
