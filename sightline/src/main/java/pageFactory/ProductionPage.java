@@ -2763,15 +2763,12 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//input[@class='chk-data']/..//i/following-sibling::strong[text()='"+ProductName+"']");
 	}
 	
-	//add by Aathith
 	public Element getDaAdditionalDataProject(String project) {
 		return driver.FindElementByXPath("//td[@class='ddGridAlignLeft sorting_1']//a[text()='"+project+"']");
-	}
-	
-	public Element gotoDAtoRMU(String project) {
+		}
+		public Element gotoDAtoRMU(String project) {
 		return driver.FindElementByXPath("//a[text()='"+project+"']/..//a[text()='Go to Project']");
-	}
-	
+		}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -11903,41 +11900,46 @@ public class ProductionPage {
 
 	}
 
-	/**
-	* @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
-	* @Description: Method for uncommit the production.
-	*
-	*/
-	public void fillingGeneratePageandUncommitTheProduction() {
-	try {
-	getBackButton().waitAndClick(10);
-	getNextButton().waitAndClick(10);
-	for (int i = 0; i < 10; i++) {
-	getConfirmProductionUnCommit().isElementAvailable(10);
-	if (getConfirmProductionUnCommit().isDisplayed()) {
-	base.waitTillElemetToBeClickable(getConfirmProductionUnCommit());
-	getConfirmProductionUnCommit().waitAndClick(10);
-	base.CloseSuccessMsgpopup();
-	driver.Navigate().refresh();
-	break;
-	} else {
-	driver.Navigate().refresh();
-	}
-	}
-	for (int i = 0; i < 5; i++) {
-	driver.waitForPageToBeReady();
-	base.waitForElement(getBckBtn());
-	getBckBtn().Click();
-	}
-	driver.waitForPageToBeReady();
-	getNextButton().waitAndClick(10);
-	getBackButton().waitAndClick(10);
-	} catch (Exception e) {
-	e.printStackTrace();
-	base.failedStep(
-	"Exception occcured while again navigating back to document selection section" + e.getMessage());
-	}
-	}
+
+/**
+* @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+* @Description: Method for uncommit the production.
+*
+*/
+public void fillingGeneratePageandUncommitTheProduction() {
+try {
+getBackButton().waitAndClick(10);
+getNextButton().waitAndClick(10);
+for (int i = 0; i < 10; i++) {
+getConfirmProductionUnCommit().isElementAvailable(10);
+if (getConfirmProductionUnCommit().isDisplayed()) {
+base.waitTillElemetToBeClickable(getConfirmProductionUnCommit());
+getConfirmProductionUnCommit().waitAndClick(10);
+base.CloseSuccessMsgpopup();
+driver.Navigate().refresh();
+break;
+} else {
+driver.Navigate().refresh();
+}
+}
+for (int i = 0; i < 5; i++) {
+driver.waitForPageToBeReady();
+base.waitForElement(getBckBtn());
+getBckBtn().Click();
+}
+driver.waitForPageToBeReady();
+for (int i = 0; i < 3; i++) {
+getNextButton().waitAndClick(10);
+getBackButton().waitAndClick(10);
+}
+} catch (Exception e) {
+e.printStackTrace();
+base.failedStep(
+"Exception occcured while again navigating back to document selection section" + e.getMessage());
+}
+}
+
+
 
 
 	
@@ -12528,11 +12530,17 @@ public class ProductionPage {
 			String expectedText = "Success";
 			base.waitForElement(getbtnProductionGenerate());
 			getbtnProductionGenerate().Click();
+			getbtnContinueGeneration().isElementAvailable(220);
+			if (getbtnContinueGeneration().isDisplayed()) {
+				base.waitForElement(getbtnContinueGeneration());
+				getbtnContinueGeneration().Click();
+			}
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getDocumentGeneratetext().isElementAvailable(540);
 				}
 			}), Input.wait120);
+			
 			String actualText = getStatusSuccessTxt().getText();
 			System.out.println(actualText);
 			softAssertion.assertTrue(actualText.contains(expectedText));
@@ -13299,11 +13307,10 @@ public class ProductionPage {
 		try {
 			base.waitForElement(getDocumentRadioBtn());
 			getDocumentRadioBtn().Click();
+			
 			driver.waitForPageToBeReady();
-			num = getRandomNumber(2);
-			System.out.println(num);
-			driver.waitForPageToBeReady();
-			getBeginningSubBatesNum().SendKeys(num);
+			getBeginningSubBatesNum().Click();
+			getBeginningSubBatesNum().SendKeys(prefixID);
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occcured while filling numbering and sorting document " + e.getMessage());
@@ -14106,6 +14113,7 @@ public class ProductionPage {
 		}
 	}
 
+
 	/**
 	 * Modified on 03/09/2022
 	 * 
@@ -14377,7 +14385,7 @@ public class ProductionPage {
 		}), Input.wait30);
 		getbtnProductionGenerate().waitAndClick(10);
 
-		getbtnContinueGeneration().isElementAvailable(120);
+		getbtnContinueGeneration().isElementAvailable(540);
 		if (getbtnContinueGeneration().isDisplayed()) {
 			base.waitForElement(getbtnContinueGeneration());
 			getbtnContinueGeneration().waitAndClick(10);
@@ -14396,11 +14404,7 @@ public class ProductionPage {
 		} else {
 			base.failedStep("BatesRange is not  with 50 character as expected");
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
-			}
-		}), Input.wait120);
+		getDocumentGeneratetext().isElementAvailable(120);
 		String actualText = getStatusSuccessTxt().getText();
 		System.out.println(actualText);
 
@@ -14446,6 +14450,9 @@ public class ProductionPage {
 		base.stepInfo("Generate production page is filled");
 	}
 
+
+
+
 	/**
 	 * @author Brundha.T
 	 * @param Productionname
@@ -14474,48 +14481,48 @@ public class ProductionPage {
 		}
 
 	}
-/**
- * @author Brundha.T
- * @param prefixID
- * @param suffixID
- * @Description: Method for verifying the text in prefix and suffix in numbering
-	               and sorting page
- */
-	public void verifyingPrefixAndSuffixText(String prefixID, String suffixID) {
-		try {
-			base.waitForElement(getBeginningBates());
-			driver.waitForPageToBeReady();
-			num = getRandomNumber(2);
-			System.out.println(num);
-			getBeginningBates().SendKeys(num);
-			driver.waitForPageToBeReady();
-			base.waitForElement(gettxtBeginningBatesIDPrefix());
-			driver.waitForPageToBeReady();
-			String Prefix = gettxtBeginningBatesIDPrefix().getText();
-			System.out.println(Prefix);
-			System.out.println(prefixID);
-			if (Prefix.equals(prefixID)) {
-				base.passedStep("" + Prefix + " and " + prefixID + "  text is as expected");
-			} else {
-				base.failedStep("" + Prefix + " and " + prefixID + "  text is as expected");
+	/**
+	 * @author Brundha.T
+	 * @param prefixID
+	 * @param suffixID
+	 * @Description: Method for verifying the text in prefix and suffix in numbering
+		               and sorting page
+	 */
+		public void verifyingPrefixAndSuffixText(String prefixID, String suffixID) {
+			try {
+				base.waitForElement(getBeginningBates());
+				driver.waitForPageToBeReady();
+				num = getRandomNumber(2);
+				System.out.println(num);
+				getBeginningBates().SendKeys(num);
+				driver.waitForPageToBeReady();
+				base.waitForElement(gettxtBeginningBatesIDPrefix());
+				driver.waitForPageToBeReady();
+				String Prefix = gettxtBeginningBatesIDPrefix().GetAttribute("value");
+				System.out.println(Prefix);
+				System.out.println(prefixID);
+				driver.waitForPageToBeReady();
+				if (Prefix.equals(prefixID)) {
+					base.passedStep("" + Prefix + " and " + prefixID + "  text is as expected");
+				} else {
+					base.failedStep("" + Prefix + " and " + prefixID + "  text is as expected");
+				}
+				driver.waitForPageToBeReady();
+				base.waitForElement(gettxtBeginningBatesIDSuffix());
+				String Suffix = gettxtBeginningBatesIDSuffix().GetAttribute("value");
+				System.out.println(Suffix);
+				System.out.println(suffixID);
+				if (Suffix.equals(suffixID)) {
+					base.passedStep("" + Suffix + " and " + suffixID + "  text is as expected");
+				} else {
+					base.failedStep("" + Suffix + " and " + suffixID + "  text is as expected");
+				}
+			} catch (Exception e) {
+				base.failedStep("Exception occcured while handling numbering and sorting tab" + e.getMessage());
+				e.printStackTrace();
 			}
-			driver.waitForPageToBeReady();
-			base.waitForElement(gettxtBeginningBatesIDSuffix());
-			String Suffix = gettxtBeginningBatesIDSuffix().getText();
-			System.out.println(Suffix);
-			System.out.println(suffixID);
-			if (Suffix.equals(prefixID)) {
-				base.passedStep("" + Suffix + " and " + suffixID + "  text is as expected");
-			} else {
-				base.failedStep("" + Suffix + " and " + suffixID + "  text is as expected");
-			}
-		} catch (Exception e) {
-			base.failedStep("Exception occcured while handling numbering and sorting tab" + e.getMessage());
-			e.printStackTrace();
+
 		}
-
-	}
-
 	/**
 	 * @author: Brundha
 	 * @Description: method for applying completed status in the production filter
