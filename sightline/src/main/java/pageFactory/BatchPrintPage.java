@@ -11,12 +11,15 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
 
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -2044,8 +2047,8 @@ public class BatchPrintPage {
 	/**
 	 * @AUthor Jeevitha
 	 * @Description : Filling Basis For Printing Tab
-	 * @param Native  : If Native Checkbox or not
-	 * @param Next : Next Button
+	 * @param Native : If Native Checkbox or not
+	 * @param Next   : Next Button
 	 */
 	public void fillingBasisForPrinting(boolean Native, boolean Next) {
 		driver.waitForPageToBeReady();
@@ -2063,11 +2066,11 @@ public class BatchPrintPage {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description  : Clicks On next Button and Returns Navigated Page Header
+	 * @Description : Clicks On next Button and Returns Navigated Page Header
 	 * @param count :no of times to click NEXT btn
 	 */
 	public String navigateToNextPage(int count) {
-		String Header= null;
+		String Header = null;
 		for (int i = 1; i <= count; i++) {
 			driver.scrollPageToTop();
 			base.waitForElement(getbtnNext());
@@ -2075,7 +2078,7 @@ public class BatchPrintPage {
 			driver.waitForPageToBeReady();
 
 			base.waitForElement(getPageHeader());
-			 Header = getPageHeader().getText();
+			Header = getPageHeader().getText();
 			System.out.println("Navigated To : " + Header);
 			base.passedStep("Navigated To : " + Header);
 		}
@@ -2085,8 +2088,8 @@ public class BatchPrintPage {
 	/**
 	 * @Author Jeevitha
 	 * @Description : filling slipSheet with METADATA
-	 * @param metadata  : Metadata to select
-	 * @param Next : Next Button
+	 * @param metadata : Metadata to select
+	 * @param Next     : Next Button
 	 */
 	public void fillingSlipSheetWithMetadata(String metadata, boolean Next) {
 		driver.scrollingToBottomofAPage();
@@ -2105,15 +2108,15 @@ public class BatchPrintPage {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description  :filling export page and verifying complete tstaus in Background task page
-	 * @param exportFile  :export Filen Name
-	 * @param sortBy : sort by DropDown
+	 * @Description :filling export page and verifying complete tstaus in Background
+	 *              task page
+	 * @param exportFile   :export Filen Name
+	 * @param sortBy       : sort by DropDown
 	 * @param onePdfForAll : checkBox One pdf for all doc
 	 * @param refreshCount : no of times to refresh in BG page
-	 * @param Download : download link
+	 * @param Download     : download link
 	 */
-	public void fillingExportFormatPage(String exportFile, String sortBy, boolean onePdfForAll, int refreshCount,
-			boolean Download) {
+	public void fillingExportFormatPage(String exportFile, String sortBy, boolean onePdfForAll, int refreshCount) {
 		base.waitForElement(getSelectExportFileName());
 		getSelectExportFileName().selectFromDropdown().selectByVisibleText(exportFile);
 
@@ -2133,7 +2136,7 @@ public class BatchPrintPage {
 		base.VerifySuccessMessage(
 				"Successfully initiated the batch print. You will be prompted with notification once completed.");
 
-        //verifying In Background ask PAge
+		// verifying In Background ask PAge
 		driver.waitForPageToBeReady();
 		base.waitForElement(getBgPageDD());
 		String expURL = Input.url + "Background/BackgroundTask";
@@ -2157,11 +2160,100 @@ public class BatchPrintPage {
 		base.textCompareEquals("COMPLETED", status, "Batch Print Status IS Updated As COMPLETED",
 				"Batch Print Status Is Not As Expected");
 
-		if (Download) {
-			base.waitForElement(getDownLoadLink());
-			getDownLoadLink().waitAndClick(10);
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Downloaded latest batch print file
+	 * @return : retruns file name
+	 */
+	public String DownloadBatchPrintFile() {
+		base.waitForElement(getDownLoadLink());
+		getDownLoadLink().waitAndClick(10);
+
+		base.waitTime(25);
+		File ab = new File(Input.fileDownloadLocation);
+		String testPath = ab.toString() + "\\";
+
+		// base.csvReader();
+		ReportsPage report = new ReportsPage(driver);
+		File a = report.getLatestFilefromDir(testPath);
+		System.out.println(a.getName());
+		base.stepInfo(a.getName());
+
+		String fileName = a.getName();
+
+		String fielPath = testPath + fileName;
+		System.out.println(fileName);
+		base.stepInfo("Downloade File  : "+fielPath);
+		return fileName;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Extracts ZIp File And Creates Another Folder And Place The
+	 *              extracted file in it
+	 * @param fileName  : Zip file name
+	 * @return  : return newFolder created file name
+	 * @throws ZipException
+	 */
+	public String extractFile(String fileName) throws ZipException {
+		String extractedfile = "Extracted File" + Utility.dynamicNameAppender();
+
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+
+		ZipFile zipFile = new ZipFile(Input.fileDownloadLocation + "\\" + fileName);
+		zipFile.extractAll(Input.fileDownloadLocation + "\\" + extractedfile);
+
+		System.out.println("Unzipped the downloaded files");
+		driver.waitForPageToBeReady();
+		base.stepInfo("Downloaded zip file was extracted");
+		return extractedfile;
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verifies Downloaded file Count, Gets File Names and verify
+	 *              File format
+	 * @param filePath : PAth OF FIle
+	 * @return : Return Downloaded File Names
+	 */
+	public List<String> verifyDownloadedFileCountAndFormat(String filePath) {
+		List<String> fileNames = new ArrayList<>();
+
+		File dir = new File(filePath);
+		File[] files = dir.listFiles();
+
+		// Verify No of files Downloaded Count
+		int noOfFile = files.length;
+		System.out.println("Number of PDF FILE : " + noOfFile);
+		if (noOfFile == 1) {
+			base.stepInfo("One PDF for All Document  And Count IS : " + noOfFile);
+		} else if (noOfFile > 1) {
+			base.stepInfo("One PDF for Each Document  And Count IS : " + noOfFile);
+		} else {
+			base.failedStep("PDF Files Not Available ");
 		}
 
+		for (int i = 0; i < noOfFile; i++) {
+			// Get File Names
+			String filename = files[i].getName();
+			System.out.println("Downloaded File Name : " + filename);
+
+			// Verify File Extension
+			String actualfileName = FilenameUtils.getBaseName(filename);
+			String fileFormat = FilenameUtils.getExtension(filename);
+			String expectedFormat = "pdf";
+
+			String passMsg = "Downloaded File : "+filename+"    And Verified Format IS  : " + fileFormat;
+			String failMsg = "Downloaded File Format is Not As Expected";
+			base.textCompareEquals(fileFormat, expectedFormat, passMsg, failMsg);
+
+			fileNames.add(filename);
+		}
+		return fileNames;
 	}
 
 }
