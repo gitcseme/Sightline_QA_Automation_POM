@@ -3204,6 +3204,120 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Vijaya.Rani date: 17/03/22 Modified date: NA Modified by: NA Test
+	 *         Case Description :Verify the automatically selected audio redaction
+	 *         tag when shared annotation layer with shared redactation tags in
+	 *         security groups and all propogated documents are not released to
+	 *         security groups. 'RPMXCON-52023' Sprint 14
+	 * @throws Exception
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 44)
+	public void verifySelectedAudioRedactionTagAnnotationlayerPropogatededDocs() throws Exception {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		AnnotationLayer annotationLayer = new AnnotationLayer(driver);
+		RedactionPage redact = new RedactionPage(driver);
+		userManagement = new UserManagement(driver);
+		String headerName = "RedactionTags";
+		int index;
+		String securityGroup = "securityGroup" + Utility.dynamicNameAppender();
+		String addName = "test" + Utility.dynamicNameAppender();
+		String RedactName = "new" + Utility.dynamicNameAppender();
+
+		List<String> docIDlist = new ArrayList<>();
+		String firnstDocname;
+		String audioSearchInput = Input.audioSearch;
+
+		baseClass.stepInfo("Test case id :RPMXCON-52023 Sprint 14");
+		baseClass.stepInfo(
+				"Verify the automatically selected audio redaction tag when shared annotation layer with shared redactation tags in security groups and all propogated documents are not released to security groups");
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Create security group
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.AddSecurityGroup(securityGroup);
+
+		// access to security group to REV
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.bulkRelease(securityGroup);
+
+		redact.AddRedaction(RedactName, Input.rev1FullName);
+		annotationLayer.AddAnnotation(addName);
+		
+		loginPage.logout();
+
+		// Login as USER
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as : " + Input.rev1FullName);
+
+		// Audio Search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.audioReduction(Input.defaultRedactionTag);
+
+		index = baseClass.getIndex(docViewPage.getAudioRedactionTableHeader(), headerName);
+
+		// AfterSave Default Selection
+		String defautTagSelection = docViewPage.getAudioRedactionColumnValue(index).getText();
+		baseClass.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
+				"After Save : ‘Default Redaction Tag’ is displayed", "After Save : invalid redaction tag selected");
+
+		// Audio Redaction Tag deletion
+		docViewPage.deleteAudioRedactionTag();
+
+		loginPage.logout();
+
+		// Login as USER
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as : " + Input.rev1FullName);
+
+		// Audio Search
+		sessionSearch.audioSearch(audioSearchInput, Input.language);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.audioReduction(Input.defaultRedactionTag);
+
+		index = baseClass.getIndex(docViewPage.getAudioRedactionTableHeader(), headerName);
+
+		// AfterSave Default Selection
+		String defautTagSelection1 = docViewPage.getAudioRedactionColumnValue(index).getText();
+		baseClass.textCompareEquals(defautTagSelection1, Input.defaultRedactionTag,
+				"After Save : ‘Default Redaction Tag’ is displayed", "After Save : invalid redaction tag selected");
+
+		// Audio Redaction Tag deletion
+		docViewPage.deleteAudioRedactionTag();
+
+		loginPage.logout();
+	}
+
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
 		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
