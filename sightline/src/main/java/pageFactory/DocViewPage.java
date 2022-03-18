@@ -19150,11 +19150,6 @@ public class DocViewPage {
 		String actual = getDocView_CurrentDocId().getText();
 		softAssertion.assertEquals(expect, actual);
 		base.stepInfo(" selected document successfully displayed in parent window");
-		reusableDocView.closeWindow(1);
-		reusableDocView.switchToNewWindow(1);
-		driver.Navigate().refresh();
-		driver.switchTo().alert().accept();
-		driver.waitForPageToBeReady();
 	}
 
 	/**
