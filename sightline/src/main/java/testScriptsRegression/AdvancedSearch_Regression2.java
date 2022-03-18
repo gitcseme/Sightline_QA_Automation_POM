@@ -84,8 +84,8 @@ public class AdvancedSearch_Regression2 {
 	 *              basic search Modified on : 10/26/21 - DataProvider name and try
 	 *              block
 	 */
-	// @Test(dataProvider = "UsersWithoutPA", groups = { "regression" }, priority =
-	// 1,enabled = true)
+	 @Test(dataProvider = "UsersWithoutPA", groups = { "regression" }, priority =
+	 1,enabled = true)
 	public void verifyRemarks(String username, String password) throws InterruptedException {
 		String RemarksName = "Remarks" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(username, password);
@@ -129,10 +129,10 @@ public class AdvancedSearch_Regression2 {
 		String savedSearchName = "test" + Utility.dynamicNameAppender();
 		String savedSearchName_2 = "test" + Utility.dynamicNameAppender();
 		baseClass.selectproject();
-		search.MetaDataSearchInAdvancedSearch(Input.metaDataName, "Andrew");
+		search.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.custodianName_Andrew);
 		search.saveSearchAdvanced(savedSearchName);
 		savedSearch.savesearch_Edit(savedSearchName);
-		search.clearExistingQueryAndSearchNewQuery(Input.metaDataName, "allen");
+		search.clearExistingQueryAndSearchNewQuery(Input.metaDataName, Input.custodianName_allen);
 		search.saveAdvancedSearchQuery(savedSearchName_2);
 		if (username == Input.pa1userName) {
 			baseClass.stepInfo(
@@ -147,7 +147,7 @@ public class AdvancedSearch_Regression2 {
 					"After the saved query edited in saved search page, modified query is search and saved usingg Reviewer");
 		}
 		savedSearch.savesearch_Edit(savedSearchName_2);
-		savedSearch.verifyTheNavigationOfAS("allen");
+		savedSearch.verifyTheNavigationOfAS(Input.custodianName_allen);
 		if (username == Input.pa1userName) {
 			baseClass.stepInfo(
 					"Saved modified query in saved search page is successfully validated in advance search page using PA user");
@@ -181,10 +181,10 @@ public class AdvancedSearch_Regression2 {
 		String savedSearchName = "test" + Utility.dynamicNameAppender();
 		String savedSearchName_2 = "test" + Utility.dynamicNameAppender();
 		baseClass.selectproject();
-		search.MetaDataSearchInAdvancedSearch(Input.metaDataName, "Andrew");
+		search.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.custodianName_Andrew);
 		search.saveSearchAdvanced(savedSearchName);
 		savedSearch.savesearch_Edit(savedSearchName);
-		search.clearExistingQueryAndSearchNewQueryWithoutSearch(Input.metaDataName, "allen");
+		search.clearExistingQueryAndSearchNewQueryWithoutSearch(Input.metaDataName, Input.custodianName_allen);
 		search.saveASQueryWithoutSearch(savedSearchName_2);
 		if (username == Input.pa1userName) {
 			baseClass.stepInfo(
@@ -197,7 +197,7 @@ public class AdvancedSearch_Regression2 {
 			baseClass.stepInfo("After the saved query edit in saved search, modified query is saved using Reviewer");
 		}
 		savedSearch.savesearch_Edit(savedSearchName_2);
-		savedSearch.verifyTheNavigationOfAS("allen");
+		savedSearch.verifyTheNavigationOfAS(Input.custodianName_allen);
 		if (username == Input.pa1userName) {
 			baseClass.stepInfo(
 					"Saved modified query in saved search page is successfully validated in advance search page using PA user");
@@ -232,9 +232,7 @@ public class AdvancedSearch_Regression2 {
 			search.bulkTag(TagName);
 			baseClass.selectproject();
 			search.advancedContentSearch(Input.searchString2);
-			search.getIntoFullScreen();
 			search.bulkFolder(FolderName);
-			search.getExitFullScreen();
 		}
 		try {
 			int ExpectedPureHit = search.verifyCombinedSearch(FolderName, "folder", "no", "AND", "NOT", "OR");
@@ -269,7 +267,7 @@ public class AdvancedSearch_Regression2 {
 		loginPage.loginToSightLine(username, password);
 		String savedSearchName = "test" + Utility.dynamicNameAppender();
 		baseClass.selectproject();
-		search.MetaDataSearchInAdvancedSearch(Input.metaDataName, "Andrew");
+		search.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.custodianName_Andrew);
 		search.saveSearchAdvanced(savedSearchName);
 		baseClass.stepInfo("Created a saved search " + savedSearchName);
 		savedSearch.savedSearch_Searchandclick(savedSearchName);
@@ -306,7 +304,7 @@ public class AdvancedSearch_Regression2 {
 		//getting doc id's after saerch with 'morning'
 		List<String> DocIdsWithSearchString1 = dlPage.gettingAllDocIDs();
 		baseClass.selectproject();
-		search.VerifyaudioSearchAndSetThreshold("well",Input.audioLanguage, -34);
+		search.VerifyaudioSearchAndSetThreshold(Input.SearchString_Audio,Input.audioLanguage, -34);
 		driver.scrollPageToTop();
 		search.ViewInDocList();
 		//getting doc id's after saerch with 'well'
@@ -315,7 +313,7 @@ public class AdvancedSearch_Regression2 {
 		//getting list of common docs with both search terms --expected result after performing search with both terms and ALL operator.
 		DocIdsWithSearchString2.retainAll(DocIdsWithSearchString1);
 		baseClass.selectproject();
-		int ActualAny = search.audioSearchWithOperator(Input.audioSearch, "well", Input.audioLanguage, -34, "ALL");
+		int ActualAny = search.audioSearchWithOperator(Input.audioSearch, Input.SearchString_Audio, Input.audioLanguage, -34, "ALL");
 		softAssertion.assertEquals(DocIdsWithSearchString2.size(), ActualAny);
 		softAssertion.assertAll();
 		baseClass.passedStep("All Operator is working properly on Advanced Search screen");
@@ -400,7 +398,7 @@ public class AdvancedSearch_Regression2 {
 		baseClass.stepInfo("Logged in as RMU user");
 		assgnPage.createAssignment(assignmentName, Input.codeFormName);
 		baseClass.selectproject();
-		search.basicContentSearch("null");
+		search.basicContentSearch(Input.TallySearch);
 		search.bulkAssignExisting(assignmentName);
 		baseClass.stepInfo("Created a assignment " + assignmentName);
 		baseClass.selectproject();
@@ -458,12 +456,12 @@ public class AdvancedSearch_Regression2 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47181");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Metadata search is done by basic search and validate export data popup close button");
-		search.MetaDataSearchInBasicSearch(Input.metaDataName, "Andrew");
+		search.MetaDataSearchInBasicSearch(Input.metaDataName, Input.custodianName_Andrew);
 		search.exportData();
 		search.closeExportDataPopup();
 		baseClass.selectproject();
 		baseClass.stepInfo("Metadata search is done by advance search and validate export data popup close button");
-		search.MetaDataSearchInAdvancedSearch(Input.metaDataName, "Andrew");
+		search.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.custodianName_Andrew);
 		search.exportData();
 		search.closeExportDataPopup();
 		loginPage.logout();
@@ -481,7 +479,7 @@ public class AdvancedSearch_Regression2 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		String savedSearchName = "test" + Utility.dynamicNameAppender();
 		baseClass.selectproject();
-		int pureHits = search.MetaDataSearchInAdvancedSearch("DocFileExtension", ".xls");
+		int pureHits = search.MetaDataSearchInAdvancedSearch(Input.docFileExt, ".xls");
 		search.saveSearchAdvanced(savedSearchName);
 		baseClass.stepInfo("Created a saved search " + savedSearchName);
 		savedSearch.savedSearch_Searchandclick(savedSearchName);
@@ -538,14 +536,14 @@ public class AdvancedSearch_Regression2 {
 		search.VerifyaudioSearchThreshold("grün", "German", "min");
 		String actualPH1 = search.verifyPureHitsCount();
 		baseClass.stepInfo("Audio Search is done PureHit is : " + actualPH1 + "");
-		search.saveSearchAdvanced_New(Search1, "My Saved Search");
+		search.saveSearchAdvanced_New(Search1, Input.mySavedSearch);
 		savedSearch.VerifySavedSearchExecuteStatus(Search1);
 		baseClass.selectproject();
 		String Search2 = "AudioSearch" + Utility.dynamicNameAppender();
 		search.VerifyaudioSearchThreshold("です", "Japanese", "min");
 		String actualPH2 = search.verifyPureHitsCount();
 		baseClass.stepInfo("Audio Search is done using Japnese language  is done PureHit is : " + actualPH2 + "");
-		search.saveSearchAdvanced_New(Search2, "My Saved Search");
+		search.saveSearchAdvanced_New(Search2, Input.mySavedSearch);
 		savedSearch.VerifySavedSearchExecuteStatus(Search2);
 		loginPage.logout();
 	}
@@ -569,14 +567,14 @@ public class AdvancedSearch_Regression2 {
 		String actualPH1 = search.verifyPureHitsCount();
 		baseClass.stepInfo(
 				"Audio Search is done using german language PureHit is displayed as expected : " + actualPH1 + "");
-		search.saveSearchAdvanced_New(Search1, "My Saved Search");
+		search.saveSearchAdvanced_New(Search1, Input.mySavedSearch);
 		baseClass.selectproject();
 		String Search2 = "AudioSearch" + Utility.dynamicNameAppender();
 		search.VerifyaudioSearchThreshold("です", "Japanese", "min");
 		String actualPH2 = search.verifyPureHitsCount();
 		baseClass.stepInfo(
 				"Audio Search is done using Japnese language  PureHit is displayed as expected : " + actualPH2 + "");
-		search.saveSearchAdvanced_New(Search2, "My Saved Search");
+		search.saveSearchAdvanced_New(Search2, Input.mySavedSearch);
 		loginPage.logout();
 	}
 
@@ -596,10 +594,10 @@ public class AdvancedSearch_Regression2 {
 				"Verify that user should be able to edit the existing saved audio search which with the content"
 						+ " in other languages - eg. German, Japanese in search text");
 		loginPage.loginToSightLine(username, password);
-		search.VerifyaudioSearchThreshold("right", "North American English", "min");
+		search.VerifyaudioSearchThreshold(Input.audioSearchString1, Input.language, "min");
 		String actualPH1 = search.verifyPureHitsCount();
 		baseClass.stepInfo("Audio Search is done PureHit is : " + actualPH1);
-		search.saveSearchAdvanced_New(Search1, "My Saved Search");
+		search.saveSearchAdvanced_New(Search1, Input.mySavedSearch);
 		try {
 			savedSearch.savedSearch_Searchandclick(Search1);
 			savedSearch.VerifyPureHitInSavedAudiosearch(Search1);
@@ -640,7 +638,7 @@ public class AdvancedSearch_Regression2 {
 		search.VerifyaudioSearchThreshold("grün", "German", "max");
 		search.verifyPureHitsCount();
 		baseClass.passedStep("Sucessfully modified the query and get the search results for the german language");
-		search.saveSearchAdvanced_New(Search1, "My Saved Search");
+		search.saveSearchAdvanced_New(Search1, Input.mySavedSearch);
 		try {
 			savedSearch.savedSearch_Searchandclick(Search1);
 			savedSearch.VerifyPureHitInSavedAudiosearch(Search1);
@@ -727,25 +725,25 @@ public class AdvancedSearch_Regression2 {
 			baseClass.stepInfo("Logged in as SA and impersonated as RMU");
 		}
 		// creating audio search
-		String ActualThresholdValue1 = search.VerifyaudioSearchThreshold("right", "North American English", "min");
+		String ActualThresholdValue1 = search.VerifyaudioSearchThreshold(Input.audioSearchString1, Input.language, "min");
 		String actualPH1 = search.verifyPureHitsCount();
 		baseClass.stepInfo(
 				"Audio Search is done PureHit is : " + actualPH1 + "Threshold value is " + ActualThresholdValue1);
-		search.saveSearchAdvanced_New(Search1, "My Saved Search");
+		search.saveSearchAdvanced_New(Search1, Input.mySavedSearch);
 
 		// Modifying the audio serach and saving it
-		search.ModifyAudioSearch("morning well", "North American English", "max");
+		search.ModifyAudioSearch("morning well", Input.language, "max");
 		String actualThreshold2 = search.GetConfidenceThresholdInSecondSearchResult().getText();
 		String actualPH2 = search.getPureHitsCount_ModifySearch().getText();
 		baseClass.stepInfo("Audio Search is done PureHit is : " + actualPH2 + "Threshold value is " + actualThreshold2);
 		System.out.println("Audio Search is done PureHit is : " + actualPH2 + "Threshold value is " + actualThreshold2);
-		search.saveSearchAdvanced_New(Search2, "My Saved Search");
+		search.saveSearchAdvanced_New(Search2, Input.mySavedSearch);
 		// Modifying the audio serach and saving it
-		search.ModifyAudioSearch(null, "North American English", "min");
+		search.ModifyAudioSearch(null, Input.language, "min");
 		String actualThreshold3 = search.GetConfidenceThresholdInSecondSearchResult().getText();
 		String actualPH3 = search.getPureHitsCount_ModifySearch().getText();
 		baseClass.stepInfo("Audio Search is done PureHit is : " + actualPH3 + "Threshold value is " + actualThreshold3);
-		search.saveSearchAdvanced_New(Search3, "My Saved Search");
+		search.saveSearchAdvanced_New(Search3, Input.mySavedSearch);
 		baseClass.selectproject();
 		try {
 			String pureHit0;
@@ -773,9 +771,9 @@ public class AdvancedSearch_Regression2 {
 				// editing the saved audio search
 				baseClass.waitForElement(savedSearch.getSavedSearchEditButton());
 				savedSearch.getSavedSearchEditButton().waitAndClick(10);
-				search.ModifyAudioSearch("well", "North American English", "max");
+				search.ModifyAudioSearch(Input.SearchString_Audio, Input.language, "max");
 				// saving the modified search by overwriting the existing search
-				search.saveAsOverwrittenSearch("My Saved Search", searches, "First", "Success", "", null);
+				search.saveAsOverwrittenSearch(Input.mySavedSearch, searches, "First", "Success", "", null);
 
 				String actualThreshold = search.GetConfidenceThresholdInSecondSearchResult().getText();
 				String actualPH = search.getPureHitsCount_ModifySearch().getText();
@@ -945,7 +943,7 @@ public class AdvancedSearch_Regression2 {
 		driver.waitForPageToBeReady();
 		search.exportData();
 		driver.waitForPageToBeReady();
-		String[] metaDataFields1 = { "CustodianName", "DocFileName", "AttachCount" };
+		String[] metaDataFields1 = { Input.metaDataName, Input.docFileName, "AttachCount" };
 		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
 		cddr.selectMetaDataFields(metaDataFields1);
 		String Filename2=cddr.runReportandVerifyFileDownloaded();

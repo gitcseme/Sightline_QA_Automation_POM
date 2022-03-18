@@ -64,7 +64,7 @@ public class AdvancedSearch_Regression3 {
 		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tp.CreateFolder(foldername, Input.securityGroup);
-		tp.createNewTagwithClassification(tagname, "Privileged");
+		tp.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);

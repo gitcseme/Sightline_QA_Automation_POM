@@ -65,6 +65,7 @@ public class AdvancedSearch_Regression1 {
 		savedSearch = new SavedSearch(driver);
 		tagPage = new TagsAndFoldersPage(driver);
 		softAssertion = new SoftAssert();
+		tallyPage = new TallyPage(driver);
 		searchText = Input.searchString1;
 	}
 
@@ -199,7 +200,7 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47759");
 		loginPage.loginToSightLine(username, password);
 		String savedSearchName = "test" + Utility.dynamicNameAppender();
-		int pureHitCount = search.MetaDataSearchInAdvancedSearch(Input.metaDataName, "Andrew");
+		int pureHitCount = search.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.metaDataCustodianNameInput);
 		search.saveSearchAdvanced(savedSearchName);
 		savedSearch.savedSearchExecuteAndrefresh(savedSearchName, pureHitCount);
 		if (username == Input.pa1userName) {
@@ -231,10 +232,10 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47769");
 		loginPage.loginToSightLine(username, password);
 		String savedSearchName = "test" + Utility.dynamicNameAppender();
-		search.MetaDataSearchInAdvancedSearch(Input.metaDataName, "Andrew");
+		search.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.metaDataCustodianNameInput);
 		search.saveSearchAdvanced(savedSearchName);
 		savedSearch.savesearch_Edit(savedSearchName);
-		search.clearExistingQueryAndSearchNewQuery(Input.metaDataName, "allen");
+		search.clearExistingQueryAndSearchNewQuery(Input.metaDataName, Input.custodianName_allen);
 		if (username == Input.pa1userName) {
 			baseClass.stepInfo(
 					"Navigated to advance search page successfully from saved search page and new query is searched using PA user");
@@ -286,7 +287,7 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47702");
 		baseClass.stepInfo("Verify that Minimum confidence level is set proper on Advanced Search screen");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		String AcutalValue = search.VerifyaudioSearchThreshold("right", "North American English", "Min");
+		String AcutalValue = search.VerifyaudioSearchThreshold(Input.audioSearchString1, Input.language, "Min");
 		try {
 			softAssertion.assertEquals(AcutalValue, "50");
 			baseClass.stepInfo("Threshold Value displayed in Advanced search screen is" + AcutalValue);
@@ -311,7 +312,7 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47701");
 		baseClass.stepInfo("Verify that Default confidence level is set proper on Advanced Search screen");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		String AcutalValue = search.VerifyaudioSearchThreshold("right", "North American English", "default");
+		String AcutalValue = search.VerifyaudioSearchThreshold(Input.audioSearchString1, Input.language, "default");
 		try {
 			baseClass.stepInfo("Threshold Value displayed in Advanced search screen is" + AcutalValue);
 			softAssertion.assertEquals(AcutalValue, "70");
@@ -392,8 +393,8 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Navigated to advance search and work product is clicked");
 		baseClass.waitForElement(search.getSavedSearchBtn1());
 		search.getSavedSearchBtn1().Click();
-		search.selectSavedsearchesInTree("Shared with Default Security Group");
-		search.selectSavedsearchesInTree("My Saved Search");
+		search.selectSavedsearchesInTree(Input.shareSearchDefaultSG);
+		search.selectSavedsearchesInTree(Input.mySavedSearch);
 		try {
 			baseClass.waitForElement(search.getMetaDataInserQuery());
 			search.getMetaDataInserQuery().waitAndClick(15);
@@ -435,7 +436,7 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Navigated to advance search and work product is clicked");
 		baseClass.waitForElement(search.getSavedSearchBtn1());
 		search.getSavedSearchBtn1().Click();
-		search.selectSavedsearchesInTree("Shared with Default Security Group");
+		search.selectSavedsearchesInTree(Input.shareSearchDefaultSG);
 		try {
 			baseClass.waitForElement(search.getMetaDataInserQuery());
 			search.getMetaDataInserQuery().waitAndClick(15);
@@ -477,8 +478,8 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Navigated to advance search and work product is clicked");
 		baseClass.waitForElement(search.getSavedSearchBtn1());
 		search.getSavedSearchBtn1().Click();
-		search.selectSavedsearchesInTree("Shared with Default Security Group");
-		search.selectSavedsearchesInTree("My Saved Search");
+		search.selectSavedsearchesInTree(Input.shareSearchDefaultSG);
+		search.selectSavedsearchesInTree(Input.mySavedSearch);
 		try {
 			baseClass.waitForElement(search.getMetaDataInserQuery());
 			search.getMetaDataInserQuery().waitAndClick(15);
@@ -521,8 +522,8 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Navigated to advance search and work product is clicked");
 		baseClass.waitForElement(search.getSavedSearchBtn1());
 		search.getSavedSearchBtn1().Click();
-		search.selectSavedsearchesInTree("Shared with Default Security Group");
-		search.selectSavedsearchesInTree("My Saved Search");
+		search.selectSavedsearchesInTree(Input.shareSearchDefaultSG);
+		search.selectSavedsearchesInTree(Input.mySavedSearch);
 
 		try {
 			baseClass.waitForElement(search.getMetaDataInserQuery());
@@ -618,22 +619,22 @@ public class AdvancedSearch_Regression1 {
 			baseClass.impersonateSAtoRMU();
 			baseClass.stepInfo("Logged in as SA and impersonated as RMU");
 		}
-		String ActualThresholdValue1 = search.VerifyaudioSearchThreshold("right", "North American English", "min");
+		String ActualThresholdValue1 = search.VerifyaudioSearchThreshold(Input.audioSearchString1, Input.language, "min");
 		String actualPH1 = search.verifyPureHitsCount();
 		baseClass.stepInfo(
 				"Audio Search is done PureHit is : " + actualPH1 + "Threshold value is " + ActualThresholdValue1);
-		search.saveSearchAdvanced_New(Search1, "My Saved Search");
-		search.ModifyAudioSearch("morning well", "North American English", "max");
+		search.saveSearchAdvanced_New(Search1, Input.mySavedSearch);
+		search.ModifyAudioSearch("morning well", Input.language, "max");
 		String actualThreshold2 = search.GetConfidenceThresholdInSecondSearchResult().getText();
 		String actualPH2 = search.getPureHitsCount_ModifySearch().getText();
 		baseClass.stepInfo("Audio Search is done PureHit is : " + actualPH2 + "Threshold value is " + actualThreshold2);
 		System.out.println("Audio Search is done PureHit is : " + actualPH2 + "Threshold value is " + actualThreshold2);
-		search.saveSearchAdvanced_New(Search2, "My Saved Search");
-		search.ModifyAudioSearch(null, "North American English", "min");
+		search.saveSearchAdvanced_New(Search2, Input.mySavedSearch);
+		search.ModifyAudioSearch(null, Input.language, "min");
 		String actualThreshold3 = search.GetConfidenceThresholdInSecondSearchResult().getText();
 		String actualPH3 = search.getPureHitsCount_ModifySearch().getText();
 		baseClass.stepInfo("Audio Search is done PureHit is : " + actualPH3 + "Threshold value is " + actualThreshold3);
-		search.saveSearchAdvanced_New(Search3, "My Saved Search");
+		search.saveSearchAdvanced_New(Search3, Input.mySavedSearch);
 		try {
 			savedSearch.savedSearch_Searchandclick(Search1);
 			driver.waitForPageToBeReady();
@@ -686,22 +687,22 @@ public class AdvancedSearch_Regression1 {
 		if (ImpersonateOption == "RMU") {
 			baseClass.impersonateSAtoRMU();
 		}
-		String ActualThresholdValue1 = search.VerifyaudioSearchThreshold("right", "North American English", "min");
+		String ActualThresholdValue1 = search.VerifyaudioSearchThreshold("right", Input.language, "min");
 		String actualPH1 = search.verifyPureHitsCount();
 		baseClass.stepInfo(
 				"Audio Search is done PureHit is : " + actualPH1 + "Threshold value is " + ActualThresholdValue1);
-		search.saveSearchAdvanced_New(Search1, "Shared with Default Security Group");
+		search.saveSearchAdvanced_New(Search1, Input.shareSearchDefaultSG);
 		search.ModifyAudioSearch("morning well", "German", "max");
 		String actualThreshold2 = search.GetConfidenceThresholdInSecondSearchResult().getText();
 		String actualPH2 = search.getPureHitsCount_ModifySearch().getText();
 		baseClass.stepInfo("Audio Search is done PureHit is : " + actualPH2 + "Threshold value is " + actualThreshold2);
 		System.out.println("Audio Search is done PureHit is : " + actualPH2 + "Threshold value is " + actualThreshold2);
 		search.saveSearchAdvanced_New(Search2, "Shared with Default Security Group");
-		search.ModifyAudioSearch(null, "North American English", "min");
+		search.ModifyAudioSearch(null, Input.language, "min");
 		String actualThreshold3 = search.GetConfidenceThresholdInSecondSearchResult().getText();
 		String actualPH3 = search.getPureHitsCount_ModifySearch().getText();
 		baseClass.stepInfo("Audio Search is done PureHit is : " + actualPH3 + "Threshold value is " + actualThreshold3);
-		search.saveSearchAdvanced_New(Search3, "Shared with Default Security Group");
+		search.saveSearchAdvanced_New(Search3, Input.shareSearchDefaultSG);
 		try {
 			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 			driver.waitForPageToBeReady();
@@ -798,7 +799,7 @@ public class AdvancedSearch_Regression1 {
                 + " configured query with Advanced Search option (All threaded email documents) and clicks on Conceptually Similar tile");
         loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
         baseClass.selectproject();
-        search.conceptualSimilarSearchInAdvancedSearch("CustodianName", "Andrew", search.getadvoption_threaded());
+        search.conceptualSimilarSearchInAdvancedSearch(Input.metaDataName, Input.custodianName_Andrew, search.getadvoption_threaded());
         if (search.getThreadedCount().isElementAvailable(3) == false) {
             baseClass.passedStep("Pure hits for threaded documents are not displayed in search results");
         } else {
@@ -822,7 +823,7 @@ public class AdvancedSearch_Regression1 {
                 + " configured query with Advanced Search option (Family member documents) and clicks on Conceptually Similar tile");
         loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
         baseClass.selectproject();
-        search.conceptualSimilarSearchInAdvancedSearch("CustodianName", "Andrew", search.getadvoption_family());
+        search.conceptualSimilarSearchInAdvancedSearch(Input.metaDataName, Input.custodianName_Andrew, search.getadvoption_family());
         if (search.getFamilyCount().isElementAvailable(3) == false) {
             baseClass.passedStep("Pure hits for family members are not displayed in search results");
         } else {
@@ -845,7 +846,7 @@ public class AdvancedSearch_Regression1 {
                 + " configured query with Advanced Search option (90% or higher textual near duplicate documents) and clicks on Conceptually Similar tile");
         loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
         baseClass.selectproject();
-        search.conceptualSimilarSearchInAdvancedSearch("CustodianName", "Andrew", search.getadvoption_near());
+        search.conceptualSimilarSearchInAdvancedSearch(Input.metaDataName, Input.custodianName_Andrew, search.getadvoption_near());
         if (search.getNearDupeCount().isElementAvailable(3) == false) {
             baseClass.passedStep("Pure hits for near dupes are not displayed in search results");
         } else {
@@ -870,7 +871,7 @@ public class AdvancedSearch_Regression1 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.selectproject();
 		search.sanitizationWithFolder();
-		if (search.getWarningPopupMsg().Displayed()) {
+		if (search.getWarningPopupMsg().isDisplayed()) {
 			baseClass.failedStep(
 					"User cannot able to search by Applying By Pass sanitization filter on Folders in work product tab");
 		} else {
@@ -897,7 +898,7 @@ public class AdvancedSearch_Regression1 {
 		baseClass.selectproject();
 		search.sanitizationWithSavedSearch();
 
-		if (search.getWarningPopupMsg().Displayed()) {
+		if (search.getWarningPopupMsg().isDisplayed()) {
 			baseClass.failedStep(
 					"User cannot able to search by Applying By Pass sanitization filter on Saved search in work product tab");
 		} else {
@@ -939,7 +940,7 @@ public class AdvancedSearch_Regression1 {
 		} else {
 			baseClass.failedStep("Verified the correct Tally document Number:" + tallyCount);
 		}
-
+		softAssertion.assertAll();
 		loginPage.logout();
 	}
 
