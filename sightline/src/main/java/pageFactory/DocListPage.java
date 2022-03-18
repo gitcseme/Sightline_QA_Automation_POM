@@ -3799,6 +3799,7 @@ public class DocListPage {
 		}
 	}
 
+
 	/**
 	 * @author Gopinath
 	 * @Description :Selecting Child document
@@ -3811,8 +3812,9 @@ public class DocListPage {
 			base.waitForElement(getSelectDropDown());
 			getSelectDropDown().Click();
 			driver.waitForPageToBeReady();
+			getChildDocument().ScrollTo();
 			base.waitForElement(getChildDocument());
-			getChildDocument().Click();
+			getChildDocument().waitAndClick(10);
 			driver.scrollPageToTop();
 		} catch (Exception e) {
 			e.printStackTrace();

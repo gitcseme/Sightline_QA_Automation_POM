@@ -14085,14 +14085,9 @@ public class ProductionPage {
 		try {
 			base.waitForElement(getbtnProductionGenerate());
 			getbtnProductionGenerate().waitAndClick(10);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getPreGenStatus().isElementAvailable(500);
-				}
-			}), Input.wait60);
-			if (getPreGenStatus().isDisplayed()) {
-				base.passedStep("Pre-gen checks is in progress is displayed in success page");
-			}
+			driver.waitForPageToBeReady();
+			verifyProductionStatusInGenPage("Pre-Generation Checks In Progress");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while licking generate button and verify pre gen check status."
