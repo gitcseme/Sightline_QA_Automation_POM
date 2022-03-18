@@ -78,6 +78,7 @@ public class SavedSearch_Regression_Set_01 {
 	 * @author Jeevitha Description - Creates the node and uploads the batch
 	 *         file.(RPMXCON-57473) Description - Selects the node and uploads the
 	 *         batch file.(RPMXCON-57483)
+	 * @modified by : Raghuram - changes of new sg creation method
 	 */
 	@Test(groups = { "regression" }, priority = 15)
 	public void createSearchGroupAndbatchUploadByPA() throws InterruptedException {
@@ -88,7 +89,7 @@ public class SavedSearch_Regression_Set_01 {
 		base.stepInfo("Test case id: RPMXCON-57473, RPMXCON-57483");
 		// create new search group
 		// ss.createNewSearchGrp(SearchNamePA);
-		String new_Node = ss.createSearchGroupAndReturn(SearchNamePA, "PA");
+		String new_Node = ss.createSearchGroupAndReturn(SearchNamePA, "PA", "No");
 		driver.getWebDriver().navigate().refresh();
 		ss.uploadBatchFile_New(ss.renameFile(Input.batchFileNewLocation));
 
@@ -119,6 +120,7 @@ public class SavedSearch_Regression_Set_01 {
 	 * @author Jeevitha Description - Creates the node and uploads the batch
 	 *         file.(RPMXCON-57473) Description - Selects the node and uploads the
 	 *         batch file.(RPMXCON-57483)
+	 * @modified by : Raghuram - changes of new sg creation method
 	 */
 	@Test(groups = { "regression" }, priority = 16)
 	public void createSearchGroupAndbatchUploadByRmu() throws InterruptedException {
@@ -130,7 +132,7 @@ public class SavedSearch_Regression_Set_01 {
 
 		// create new search group
 		// ss.createNewSearchGrp(SearchNameRMU);
-		String new_Node = ss.createSearchGroupAndReturn(SearchNameRMU, "RMU");
+		String new_Node = ss.createSearchGroupAndReturn(SearchNameRMU, "RMU", "No");
 		driver.getWebDriver().navigate().refresh();
 		System.out.println("Selected Node");
 		base.stepInfo("Created New Search Group");
@@ -164,6 +166,7 @@ public class SavedSearch_Regression_Set_01 {
 	 *         Description - Creates the node and uploads the batch
 	 *         file.(RPMXCON-57473) Description - Selects the node and uploads the
 	 *         batch file.(RPMXCON-57483)
+	 * @modified by : Raghuram - changes of new sg creation method
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
@@ -177,7 +180,7 @@ public class SavedSearch_Regression_Set_01 {
 
 		// create new search group
 		// ss.createNewSearchGrp(saveSearchName);
-		String new_Node = ss.createSearchGroupAndReturn(saveSearchName, "Rev");
+		String new_Node = ss.createSearchGroupAndReturn(saveSearchName, "Rev", "No");
 		driver.getWebDriver().navigate().refresh();
 
 		ss.uploadBatchFile_New(ss.renameFile(Input.batchFileNewLocation));
@@ -412,6 +415,7 @@ public class SavedSearch_Regression_Set_01 {
 
 		// Delete Search
 		driver.getWebDriver().navigate().refresh();
+		driver.waitForPageToBeReady();
 		ss.deleteSearch(SearchNamePA, Input.shareSearchDefaultSG, "Yes");
 
 		lp.logout();
@@ -472,24 +476,28 @@ public class SavedSearch_Regression_Set_01 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			System.out.println("Executed :" + result.getMethod().getMethodName());
+			try { // if any tc failed and dint logout!
+				lp.logoutWithoutAssert();
+			} catch (Exception e) {
+//							 TODO: handle exception
+			}
 		}
 		try {
-			base.clearAllCookies();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();
+			lp.clearBrowserCache();
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");
+
 		try {
-			lp.quitBrowser();
-		} catch (Exception e) {
-			lp.quitBrowser();
+			lp.clearBrowserCache();
+		} finally {
+			lp.clearBrowserCache();
 		}
 	}
 }
