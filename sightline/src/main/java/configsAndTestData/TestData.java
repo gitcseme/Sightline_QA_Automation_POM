@@ -535,6 +535,9 @@ public class TestData {
 		public String Natives_MMDDYYYY_HHMISS;
 		public String DAT_DDMMYYYY_HHMISS;
 		public String Natives_DDMMYYYY_HHMISS;
+		public String DAT_DDMMYYYY;
+		public String Natives_DDMMYYYY;
+		public String differentDateFormatError;
 		
 		//Added by Gopinath - 02/03/2022
 		public String ingestionProjectName;

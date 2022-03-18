@@ -581,7 +581,9 @@
 	<Natives_MMDDYYYY_HHMISS>Natives_MMDDYYYY HHMISS.lst</Natives_MMDDYYYY_HHMISS>
 	<DAT_DDMMYYYY_HHMISS>DAT_DDMMYYYY HHMISS.dat</DAT_DDMMYYYY_HHMISS>
 	<Natives_DDMMYYYY_HHMISS>Natives_DDMMYYYY HHMISS.lst</Natives_DDMMYYYY_HHMISS>
-		
+	<DAT_DDMMYYYY>DAT_DDMMYYYY.dat</DAT_DDMMYYYY>
+	<Natives_DDMMYYYY>Natives_DDMMYYYY.lst</Natives_DDMMYYYY>
+	<differentDateFormatError>Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. Please provide the matching date format.</differentDateFormatError>
     
      <!-- Ingestion Related data END -->
 
