@@ -77,7 +77,7 @@ public class DocExplorer_Regression1 {
 	 * TAG name contains word between on SubTally screen. Description : To verify
 	 * filter functionality works on subtally.
 	 */
-	@Test(groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-54952",groups = { "regression" }, priority = 1)
 	public void filterFunctionalityOnSubTallyScreen() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-54952");
@@ -139,7 +139,7 @@ public class DocExplorer_Regression1 {
 	 * Testcase id : 54950 - Verify that filter functionality works properly when TAG name contains word between on Tally screen.
 	 * Description : Verify filter functionality works on tally screen.
 	 */
-	@Test(groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-54950",groups = { "regression" }, priority = 2)
 	public void filterFunctionalityOnTallyScreen() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-54950");
@@ -192,7 +192,7 @@ public class DocExplorer_Regression1 {
 	 * Testcase id : 54947 - Verify that Exclude filter functionality works properly when TAG name contains word between on Doc Explorer screen.
 	 * Description : Verify exculde filter for tag name is working properly in DocExplorer.
 	 */
-	@Test(groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-54947",groups = { "regression" }, priority = 3)
 	public void verifyTagExcludeFilterOnDocExplorer() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-54947 Docexplorer of Sprint-4 ");
@@ -227,7 +227,7 @@ public class DocExplorer_Regression1 {
 	 * Testcase id : 54946 - Verify that Include filter functionality works properly when TAG name contains word between on Doc Explorer screen.
 	 * Description : Verify include filter for tag name is working properly in DocExplorer.
 	 */
-	@Test(groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-54946",groups = { "regression" }, priority = 4)
 	public void verifyTagIncludeFilterOnDocExplorer() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-54946 Docexplorer of Sprint-4 ");
@@ -263,7 +263,7 @@ public class DocExplorer_Regression1 {
 	 * Testcase id : 54699 - Verify that Folders Filter with "Exclude" functionality is working correctly on Doc Explorer list.
 	 * Description : Verify exculde filter for folder name is working properly in DocExplorer.
 	 */
-	@Test(groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-54699",groups = { "regression" }, priority = 5)
 	public void verifyFolderExcludeFilterOnDocExplorer() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-54699 Docexplorer of Sprint-4 ");
@@ -320,7 +320,7 @@ public class DocExplorer_Regression1 {
 	 * Testcase id : 54682- Verify that Comments Filter with 'Include' functionality is working correctly on Doc Explorer list..
 	 * Description : Verify comments filter include functionality working in DocExlorer 
 	 */		
-	 @Test(groups={"regression"},priority = 6)
+	 @Test(description ="RPMXCON-54682",groups={"regression"},priority = 6)
 	 public void verifyCommentFilterFunctionality() throws InterruptedException, AWTException {
 		baseClass=new BaseClass(driver);
 	    DocViewPage docViewPage=new DocViewPage(driver);
@@ -355,7 +355,7 @@ public class DocExplorer_Regression1 {
 		 * Testcase id : 55001- Verify that when a user configures MasterDate and EmailSubject filters and  selects check-boxes manually and navigates Doc-Explorer to DocList then documents gets loaded on DocList screen.
 		 * Description : Verify that when a user configures MasterDate and EmailSubject filters and  selects check-boxes manually and navigates Doc-Explorer to DocList.
 		 */		
-		 @Test(groups={"regression"},priority = 7)
+		 @Test(description ="RPMXCON-55001",groups={"regression"},priority = 7)
 		 public void verifyUserNavigateToDocListWithFilters(){
 			baseClass=new BaseClass(driver);
 		    baseClass.stepInfo("Test case Id: RPMXCON-55001- DocExplorer Sprint 08");
@@ -388,7 +388,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:RPMXCON-54642 Verify the documents from list view
 			 * @Description:To Verify the documents from list view.
 			 */
-			@Test(groups={"regression"},priority = 8)
+			@Test(description ="RPMXCON-54642",groups={"regression"},priority = 8)
 			public void verifyDocExplorerDocList() {
 				String folderNumber="14";
 				baseClass = new BaseClass(driver);
@@ -411,7 +411,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:54695 Verify that “EmailRecipientDomains” Filter with "Exclude" functionality is working correctly on Doc Explorer list.
 			 * @Description:To Verify that “EmailRecipientDomains” Filter with "Exclude" functionality is working correctly on Doc Explorer list.
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+			@Test(description ="RPMXCON-54695",alwaysRun = true, groups = { "regression" }, priority = 9)
 			public void verifyEmailDomainExclude() {
 				String functionality="exclude";
 				String domain1="aol.com";
@@ -446,7 +446,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:RPMXCON-54593 Verify that correct count should be displayed for each node from the tree structure
 			 * @Description:To Verify that correct count should be displayed for each node from the tree structure
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+			@Test(description ="RPMXCON-54593",alwaysRun = true, groups = { "regression" }, priority = 10)
 			public void verifyDocExplorerDocCount() {
 				String folderNumber="13";//having more docs for better verification
 				baseClass = new BaseClass(driver);
@@ -468,7 +468,7 @@ public class DocExplorer_Regression1 {
 			 * @Description:To Doc Explorer: Preview- Verify that on click of the print icon success message should be displayed to inform the user that it is processed in background task
 			 * @throws InterruptedException 
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 7)
+			@Test(description ="RPMXCON-54978",alwaysRun = true, groups = { "regression" }, priority = 11)
 			public void verifyBackgroundProcessOfPrintDocument() throws InterruptedException {
 				String pdfDocId = "ID00004847";
 				String textDocId = "ID00004707";
@@ -530,7 +530,7 @@ public class DocExplorer_Regression1 {
 			 * @Description:To Verify that “Tags” Filter with "Exclude" functionality is working correctly on Doc Explorer list
 			 * @throws InterruptedException
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
+			@Test(description ="RPMXCON-54698",alwaysRun = true, groups = { "regression" }, priority = 12)
 			public void verifyTagFilterWithExclude() throws InterruptedException {
 				String tag1="Attorney_Client";
 				String tag2="Confidential";
@@ -578,7 +578,7 @@ public class DocExplorer_Regression1 {
 			 *               and select action as View in DocList from Actions drop down
 			 * @throws AWTException
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+			@Test(description ="RPMXCON-54610",alwaysRun = true, groups = { "regression" }, priority = 13)
 			public void verifyViewInDocListForSelectedDocs() throws AWTException {
 				int numberOfFolders=14;
 				baseClass = new BaseClass(driver);
@@ -612,7 +612,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:54589 Verify the default menu for the PA and RMU after login
 			 * @Description:To Verify the default menu for the PA and RMU after login
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+			@Test(description ="RPMXCON-54589",alwaysRun = true, groups = { "regression" }, priority = 14)
 			public void verfifyDefaultMenuForPAandRMU() {
 				baseClass = new BaseClass(driver);
 				baseClass.stepInfo("Test case Id: RPMXCON-54589 sprint 12");
@@ -642,7 +642,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase id:54594 Verify the display of folder name when name is too long
 			 * @Description:To Verify the display of folder name when name is too long
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+			@Test(description ="RPMXCON-54594",alwaysRun = true, groups = { "regression" }, priority = 15)
 			public void verifyLongfolderName() {
 				baseClass = new BaseClass(driver);
 				baseClass.stepInfo("Test case Id: RPMXCON-54594 Sprint 12");
@@ -662,7 +662,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:54598 Verify when folder count is with the groups of thousands
 			 * @Description:To Verify when folder count is with the groups of thousands.
 			 */
-			@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+			@Test(description ="RPMXCON-54598",alwaysRun = true, groups = { "regression" }, priority = 16)
 			public void verifyDocExplorerFolderCountFormat() {
 				String folderNumber="1";
 				baseClass=new BaseClass(driver);
@@ -683,7 +683,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:54592 Verify the default structure of the Tree View and the document list from right panel
 			 * @Description:To Verify the default structure of the Tree View and the document list from right panel
 			 */
-			@Test (alwaysRun = true, groups = { "regression" }, priority = 2)
+			@Test (description ="RPMXCON-54592",alwaysRun = true, groups = { "regression" }, priority = 17)
 			public void verifyDefaultStructureOfTreeView() {
 				String folderName="Enron Data (23)";
 				int folderLevel=5;
@@ -708,7 +708,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:54588 Verify the "Doc Explorer" left menu for the PA and RMU
 			 * @Description To Verify the "Doc Explorer" left menu for the PA and RMU
 			 */
-			@Test(alwaysRun = true, groups = { "regression" })
+			@Test(description ="RPMXCON-54588",alwaysRun = true, groups = { "regression" }, priority = 18)
 			public void verifyDocExplorerLeftMenuPaAndRmu() {
 				baseClass = new BaseClass(driver);
 				baseClass.stepInfo("###Verify the 'Doc Explorer' left menu for the PA and RMU###");
