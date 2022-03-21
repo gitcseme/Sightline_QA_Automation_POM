@@ -39,6 +39,10 @@ import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
+import net.sourceforge.tess4j.ITesseract;
+import net.sourceforge.tess4j.Tesseract1;
+import net.sourceforge.tess4j.TesseractException;
+import net.sourceforge.tess4j.util.LoadLibs;
 import testScriptsSmoke.Input;
 
 public class ProductionPage {
@@ -6768,11 +6772,12 @@ public class ProductionPage {
 	/**
 	 * Modified on 03/09/2022(Replaced isElementAvailable() to avoid
 	 * e.printStackTrace in reports)
+	 * Modified on 03/21/2022 return the document count
 	 * 
 	 * @throws InterruptedException
 	 * @authorIndium-Sowndarya.Velraj.Modified on 10/28/2021
 	 */
-	public void fillingGeneratePageWithContinueGenerationPopup() throws InterruptedException {
+	public int fillingGeneratePageWithContinueGenerationPopup() throws InterruptedException {
 
 		SoftAssert softAssertion = new SoftAssert();
 		String expectedText = "Success";
@@ -6836,6 +6841,8 @@ public class ProductionPage {
 		getQC_Downloadbutton_allfiles().waitAndClick(10);
 		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
 		base.stepInfo("Generate production page is filled");
+		
+		return Doc;
 	}
 
 	/**
@@ -18970,6 +18977,40 @@ base.failedStep(
 		
 		
 		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @param verificationText
+	 * @Description verifying text on the tiff image file on downloaded zip file
+	 */
+	public void OCR_Verification_In_Generated_Tiff_tess4j(int firstFile, int lastFile, String prefixID, String suffixID, String verificationText) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		
+		for(int i=firstFile; i<lastFile ;i++) {
+		
+		File imageFile = new File(home+"/Downloads/VOL0001/Images/0001/"+prefixID+i+suffixID+".tiff");
+	       // ITesseract instance = new Tesseract();  // JNA Interface Mapping
+	         ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+	         File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+	         instance.setDatapath(tessDataFolder.getPath());
+
+	        try {
+	            String result = instance.doOCR(imageFile);
+	            System.out.println(result);
+	            if (result.contains(verificationText)) {
+					base.passedStep(verificationText+" is displayed in "+prefixID+i+suffixID+".tiff"+" file as expected");
+				} else {
+					base.failedStep(verificationText+" verification failed");
+				}
+	        } catch (TesseractException e) {
+	            System.err.println(e.getMessage());
+	        }
+		}
 	}
 
 }
