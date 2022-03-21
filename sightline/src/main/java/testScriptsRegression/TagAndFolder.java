@@ -15,7 +15,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
@@ -556,6 +555,98 @@ public class TagAndFolder {
 
 		lp.logout();
 
+	}
+
+	/**
+	 * @author Raghuram A Date: 03/21/21 Modified date:N/A Modified by: Description
+	 *         :Verify that after Impersonation of PA User - can edit/delete Tag
+	 *         Group name appropriately that have created on "Tags and Folders" >>
+	 *         Folders screen - RPMXCON-59214 Sprint 14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	public void verifyAfterPAImpersonateUserEditAndDeleteTagGroup() throws Exception {
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		String tagGroup = "newTagGroup" + Utility.dynamicNameAppender();
+		String renamedTagGroup = "renamedTagGroup" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59214 TagsAndFolder Sprint 14");
+		bc.stepInfo(
+				"Verify that after Impersonation of PA User - can edit/delete Tag Group name appropriately that have created on \"Tags and Folders\" >> Folders screen");
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Impersonate into PA/RMU
+		driver.waitForPageToBeReady();
+		bc.rolesToImp("PA", "RMU");
+
+		// Create Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.createTagGroup(Input.securityGroup, tagGroup, "Success", null);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		// Rename Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.verifyNodePresent(tagGroup, true, "Tag");
+		tagAndFolderPage.editTagGroup(Input.securityGroup, tagGroup, renamedTagGroup, "Success", null);
+
+		// Delete folder group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllTagsGroups(renamedTagGroup, "Success");
+		tagAndFolderPage.verifyNodeNotPresent(renamedTagGroup, " - not present - Tag Group Deleted Successfully ",
+				"Deletion failed");
+
+		lp.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 03/21/21 Modified date:N/A Modified by: Description
+	 *         : Verify that after Impersonation of PA User - can edit/delete Folder
+	 *         Group name appropriately that have created on "Tags and Folders" >>
+	 *         Folders screen - RPMXCON-59215 Sprint 14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	public void verifyAfterPAImpersonateUserEditAndDeleteFolderGroup() throws Exception {
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		String folderGroup = "newFolderGroup" + Utility.dynamicNameAppender();
+		String renamedFolderGroup = "renamedFolderGroup" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59215 TagsAndFolder Sprint 14");
+		bc.stepInfo(
+				"Verify that after Impersonation of PA User - can edit/delete Folder Group name appropriately that have created on \"Tags and Folders\" >> Folders screen");
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// impersonate into RMU
+		driver.waitForPageToBeReady();
+		bc.rolesToImp("PA", "RMU");
+
+		// create Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.createFolderGroup(Input.securityGroup, folderGroup, "Success", null);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		// rename Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.verifyNodePresent(folderGroup, true, "Folder");
+		tagAndFolderPage.editFolderGroup(Input.securityGroup, folderGroup, renamedFolderGroup, "Success", null);
+
+		// delete folder group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllFolderGroup(renamedFolderGroup, "Success");
+		tagAndFolderPage.verifyNodeNotPresent(renamedFolderGroup, "- not present - Folder Group Deleted Successfully ",
+				"Deletion failed");
+
+		lp.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
