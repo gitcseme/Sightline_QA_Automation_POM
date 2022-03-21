@@ -373,7 +373,7 @@ public class CustomDocumentDataReport_Regression1 {
 		driver.waitForPageToBeReady();
 		bc.stepInfo("Logged in as -" + role);
 		// report1
-		String[] metaDataFields = { "CustodianName"};
+		String[] metaDataFields = {Input.metaDataName};
 		String textFormat1 = "039";
 		String textFormat2 = "034";
 		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
