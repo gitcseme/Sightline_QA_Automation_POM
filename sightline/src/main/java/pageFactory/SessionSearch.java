@@ -1672,7 +1672,9 @@ public class SessionSearch {
 	public Element getRowElement_BgPage(String BG_ID,int index) {
 		return driver.FindElementByXPath("(//td[normalize-space(text())='"+BG_ID+"']/parent::tr/td)["+index+"]");
 	}
-
+	public Element getPureHitCount(int i) {
+		return driver.FindElementByXPath("(.//*[@data-original-title='Docs That Met Your Criteria']/span/count)["+i+"]");
+	}
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -9696,6 +9698,7 @@ public class SessionSearch {
 	public void verifyProximitySearch() {
 		String expectedHeaderMsg = "Possible Wrong Query Alert";
 		String expectedAlertMSg = "Double quotes are missing in your search query. Please correct the query to include double quotes.";
+		base.waitForElement(getQueryAlertGetTextHeader());
 		String actualHeadaerMsg = getQueryAlertGetTextHeader().getText().trim();
 		String ActualAlertMSg = getQueryAlertGetTextSingleLine().getText().trim();
 		System.out.println(actualHeadaerMsg);
@@ -9706,7 +9709,7 @@ public class SessionSearch {
 			base.passedStep(actualHeadaerMsg);
 			base.passedStep(ActualAlertMSg);
 		} else {
-			base.failedStep("Application  not displayed  warning message on screen");
+			base.failedStep("Application  not displayed the expected warning message on screen");
 		}
 	}
 
@@ -9732,8 +9735,10 @@ public class SessionSearch {
 	 * @author Jayanthi.ganesan Modified by jayanthi-3/2/21
 	 */
 	public void resubmitSearch() {
+		driver.scrollPageToTop();
+		base.waitForElement(getModifyASearch_Last());
 		getModifyASearch_Last().waitAndClick(10);
-		getAdvSearchCopyToNewSearch().waitAndClick(10);
+		base.waitForElement(getAdvanceSearch_btn_Current());
 		getAdvanceSearch_btn_Current().waitAndClick(10);
 	}
 

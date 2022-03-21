@@ -50,8 +50,8 @@ public class AdvancedSearch_Regression3 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
+	//	Input in = new Input();
+	//	in.loadEnvConfig();
 		// Open browser
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
@@ -59,12 +59,12 @@ public class AdvancedSearch_Regression3 {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		// Pre-requesites creation
-//
+
 		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
 		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tp.CreateFolder(foldername, Input.securityGroup);
-		tp.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tp.createNewTagwithClassification(tagname, "Privileged");
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -93,7 +93,7 @@ public class AdvancedSearch_Regression3 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		lp.logout();
-		lp.closeBrowser();  
+		lp.closeBrowser(); 
 	}
 
 	/**
@@ -121,13 +121,20 @@ public class AdvancedSearch_Regression3 {
 		baseClass.stepInfo("Pure hit count after WP saved search is " + expectedHits1);
 		search.resubmitSearch();
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(search.getPureHitsLastCount());
-		baseClass.waitTime(4);
-		String expectedHits2 = search.getPureHitsLastCount().getText();
+		baseClass.waitForElement(search.getPureHitCount(2));
+		baseClass.waitTillTextToPresent(search.getPureHitCount(2),PureHitCount);
+		String expectedHits2 = search.getPureHitCount(2).getText();
 		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + expectedHits2);
+		search.resubmitSearch();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(search.getPureHitCount(3));
+		baseClass.waitTillTextToPresent(search.getPureHitCount(3),PureHitCount);
+		String expectedHits3 = search.getPureHitCount(3).getText();
+		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + expectedHits3);
 		SoftAssert assertion = new SoftAssert();
 		assertion.assertEquals(PureHitCount, expectedHits2);
 		assertion.assertEquals(PureHitCount, expectedHits1);
+		assertion.assertEquals(PureHitCount, expectedHits3);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		savedSearch.SaveSearchDelete(saveSearchName);
 		assertion.assertAll();
@@ -254,7 +261,6 @@ public class AdvancedSearch_Regression3 {
 		baseClass.stepInfo("Verify that - Application returns all the documents which are available under "
 				+ "selected Tags with NOT operator in search result.");
 		String tagName = "combined" + Utility.dynamicNameAppender();
-		String assgnName = "combined" + Utility.dynamicNameAppender();
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
 		SessionSearch search = new SessionSearch(driver);
@@ -266,8 +272,6 @@ public class AdvancedSearch_Regression3 {
 		String totalAvailDocsHitsCount = search.verifyPureHitsCount();// expected value
 		search.bulkTag(tagName);
 		baseClass.stepInfo("Created a Tag " + tagName + "Count of docs bulk tagged" + totalAvailDocsHitsCount);
-		baseClass.selectproject();
-
 		baseClass.selectproject();
 		search.navigateToAdvancedSearchPage();
 		// Adding WP tag into search text box
@@ -332,8 +336,6 @@ public class AdvancedSearch_Regression3 {
 		String expectedPureHitCount = search.verifyPureHitsCount();// expected value
 		baseClass.stepInfo("Total no docs in  Completed status under Assignments  " + expectedPureHitCount);
 
-		// Apply comments to document
-		// docview.addCommentAndSave(docComment, true, count,true);
 		baseClass.selectproject();
 		search.navigateToAdvancedSearchPage();
 		// Adding WP tag into search text box
@@ -367,10 +369,10 @@ public class AdvancedSearch_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47778",dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-47778",dataProvider = "Users_RMU_Rev", enabled = true, groups = { "regression" }, priority = 6)
 	public void verifySearchResultForComment(String username, String password) throws InterruptedException {
 
-		String docComment = "Reviewed";
+		String docComment = "Reviewed"+Utility.dynamicNameAppender();
 		int count = 2;
 
 		lp = new LoginPage(driver);
@@ -381,15 +383,12 @@ public class AdvancedSearch_Regression3 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47778");
 		baseClass.stepInfo("To verify as an user login into the Application, user will be able to search based on"
 				+ " comments text on Content & Metadata in advanced search");
-		if (username == Input.rmu1userName) {
-			search.advancedContentSearch(Input.searchString1);
-			search.ViewInDocView();
+		search.advancedContentSearch(Input.testData1);
+		search.ViewInDocView();
 
-			// Apply comments to document
-			// docview.addCommentAndSave(docComment, true, count);
-			baseClass.selectproject();
-		}
-
+		// Apply comments to document
+		docview.addCommentAndSave(docComment, true, count);
+		baseClass.selectproject();
 		int pureHit1 = search.getCommentsOrRemarksCount_AdvancedSearch(Input.documentComments, docComment);
 		SoftAssert assertion = new SoftAssert();
 		assertion.assertEquals(pureHit1, count);
@@ -458,15 +457,13 @@ public class AdvancedSearch_Regression3 {
 		baseClass.stepInfo("Pure hit count after WP saved search is " + actualHits1);
 		search.resubmitSearch();
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(3);
-		baseClass.waitForElement(search.getPureHitsLastCount());
-		String actualHits2 = search.getPureHitsLastCount().getText();
+		baseClass.waitTillTextToPresent(search.getPureHitCount(2),PureHitCount);
+		String actualHits2 = search.getPureHitCount(2).getText();	
 		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + actualHits2);
 		search.resubmitSearch();
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(search.getPureHitsLastCount());
-		baseClass.waitTime(4);
-		String actualHits3 = search.getPureHitsLastCount().getText();
+		baseClass.waitTillTextToPresent(search.getPureHitCount(3),PureHitCount);
+		String actualHits3 = search.getPureHitCount(3).getText();
 		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + actualHits3);
 		SoftAssert assertion = new SoftAssert();
 		assertion.assertEquals(PureHitCount, actualHits1);
@@ -508,19 +505,17 @@ public class AdvancedSearch_Regression3 {
 		baseClass.stepInfo("Configured a Work product search query -- saved search -" + saveSearchName + " ");
 		search.serarchWP();
 		driver.waitForPageToBeReady();
-		String actualHits1 = search.getPureHitsLastCount().getText();
+		String actualHits1 = search.getPureHitCount(1).getText();
 		baseClass.stepInfo("Pure hit count after WP saved search is " + actualHits1);
 		search.resubmitSearch();
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(search.getPureHitsLastCount());
-		baseClass.waitTime(4);
-		String actualHits2 = search.getPureHitsLastCount().getText();
+		baseClass.waitTillTextToPresent(search.getPureHitCount(2), actualHits1);
+		String actualHits2 = search.getPureHitCount(2).getText();
 		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + actualHits2);
 		search.resubmitSearch();
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(search.getPureHitsLastCount());
-		baseClass.waitTime(4);
-		String actualHits3 = search.getPureHitsLastCount().getText();
+		baseClass.waitTillTextToPresent(search.getPureHitCount(3), actualHits1);
+		String actualHits3 = search.getPureHitCount(3).getText();
 		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + actualHits3);
 		SoftAssert assertion = new SoftAssert();
 		assertion.assertEquals(ExpectedPureHit1, actualHits1);
@@ -649,20 +644,18 @@ public class AdvancedSearch_Regression3 {
 		baseClass.stepInfo("Configured a Work product 'saved search ' search query -- -" + saveSearchName + " ");
 		search.serarchWP();
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(3);
-		String actualHits1 = search.getPureHitsLastCount().getText();
+		baseClass.waitTillTextToPresent(search.getPureHitCount(1), PureHitCount);
+		String actualHits1 = search.getPureHitCount(1).getText();
 		baseClass.stepInfo("Pure hit count after WP saved search is " + actualHits1);
 		search.resubmitSearch();
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(3);
-		baseClass.waitForElement(search.getPureHitsLastCount());
-		String actualHits2 = search.getPureHitsLastCount().getText();
+		baseClass.waitTillTextToPresent(search.getPureHitCount(2), PureHitCount);
+		String actualHits2 = search.getPureHitCount(2).getText();
 		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + actualHits2);
 		search.resubmitSearch();
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(search.getPureHitsLastCount());
-		baseClass.waitTime(3);
-		String actualHits3 = search.getPureHitsLastCount().getText();
+		baseClass.waitTillTextToPresent(search.getPureHitCount(3), PureHitCount);
+		String actualHits3 = search.getPureHitCount(3).getText();
 		baseClass.stepInfo("Pure hit count after resubmitting WP saved search is " + actualHits3);
 		SoftAssert assertion = new SoftAssert();
 		// validations
@@ -766,7 +759,6 @@ public class AdvancedSearch_Regression3 {
 		} catch (Exception e) {
 			lp.quitBrowser();
 		}
-
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
@@ -776,6 +768,12 @@ public class AdvancedSearch_Regression3 {
 				{ Input.rev1userName, Input.rev1password } };
 		return users;
 	}
+	@DataProvider(name = "Users_RMU_Rev")
+	public Object[][] Users_RMU_Rev() {
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password },{ Input.rev1userName, Input.rev1password } };
+		return users;
+	}
+
 
 	@AfterClass(alwaysRun = true)
 	public void close() {

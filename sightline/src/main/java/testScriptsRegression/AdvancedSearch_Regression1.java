@@ -47,8 +47,8 @@ public class AdvancedSearch_Regression1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -65,7 +65,6 @@ public class AdvancedSearch_Regression1 {
 		savedSearch = new SavedSearch(driver);
 		tagPage = new TagsAndFoldersPage(driver);
 		softAssertion = new SoftAssert();
-		tallyPage = new TallyPage(driver);
 		searchText = Input.searchString1;
 	}
 
@@ -924,7 +923,7 @@ public class AdvancedSearch_Regression1 {
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Loggedin As : " + Input.pa1FullName);
-
+		TallyPage tallyPage = new TallyPage(driver);
 		int pureHits = search.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
 		baseClass.stepInfo("Purehit count : " + pureHits);
 		search.tallyResults();
