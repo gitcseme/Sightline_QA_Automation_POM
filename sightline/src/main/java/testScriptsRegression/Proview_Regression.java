@@ -50,7 +50,7 @@ public class Proview_Regression {
 
 	}
 
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
+	@Test(enabled = true, dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
 	public void validateCategorization(String username, String password, String role) throws InterruptedException {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(username, password);
@@ -133,7 +133,8 @@ public class Proview_Regression {
 	 * @throws InterruptedException
 	 */
 	@Test(enabled = true, dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
-	public void verifyDocsFromCategorizeToDoclist(String username, String password, String role) throws InterruptedException {
+	public void verifyDocsFromCategorizeToDoclist(String username, String password, String role)
+			throws InterruptedException {
 		String folderName = "FOLDER" + Utility.dynamicNameAppender();
 
 		Categorization categorize = new Categorization(driver);
@@ -170,9 +171,64 @@ public class Proview_Regression {
 				"Selected folder : " + folderName);
 
 		String resultCount = categorize.getDocCount().getText();
-		bc.textCompareEquals(resultCount, docCount, "Previously Selected Docs Remains Selected With DocCount : "+resultCount,
+		bc.textCompareEquals(resultCount, docCount,
+				"Previously Selected Docs Remains Selected With DocCount : " + resultCount,
 				"Selected Docs are not Displayed");
-		
+
+		lp.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To Verify Categorization settings should get populated when
+	 *              coming from My Background Tasks (or from Notifications )
+	 *              [RPMXCON-54278]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	public void verifyCategorizatiinSettings() throws InterruptedException {
+		Categorization categorize = new Categorization(driver);
+		sessionSearch = new SessionSearch(driver);
+		String folderName = "FOLDER" + Utility.dynamicNameAppender();
+		String tagName = "TAG" + Utility.dynamicNameAppender();
+
+		// Login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		bc.stepInfo("RPMXC0N-54278 Proview");
+		bc.stepInfo(
+				"To verify that the link should be displayed for ID on Background Task Page and it should redirect to the Categorization Page");
+
+		// basic Content search
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		// perform Bulk Tag And Bulk Folder
+		sessionSearch.bulkTag(tagName);
+		sessionSearch.bulkFolderWithOutHitADD(folderName);
+
+		// RUN CATEGORIZATION
+		categorize.navigateToCategorizePage();
+		categorize.CategorizationFunctionalityVerification(Input.securityGroup, folderName, "SG");
+
+		// Doc Count before Navigating to BG Page
+		driver.waitForPageToBeReady();
+		String beforeCount = categorize.getDocCount().getText();
+
+		// Verify Link From BackgroundTask Page
+		categorize.backGroundTaskPageToCategorize();
+
+		bc.ValidateElement_Presence(categorize.getSelectedCorpusToAnalyze(folderName),
+				"Selected folder : " + folderName);
+
+		// Doc Count before Navigating to BG Page
+		driver.waitForPageToBeReady();
+		String afterCount = categorize.getDocCount().getText();
+		bc.textCompareEquals(afterCount, beforeCount,
+				"Previously Selected Docs Remains Selected With DocCount : " + afterCount,
+				"Selected Docs are not Displayed");
+
+		softAssert.assertAll();
+
 		lp.logout();
 	}
 

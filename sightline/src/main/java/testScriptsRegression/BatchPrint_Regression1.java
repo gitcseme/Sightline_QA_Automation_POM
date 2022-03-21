@@ -55,7 +55,7 @@ public class BatchPrint_Regression1 {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.info(testMethod.getName());
-		
+
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
@@ -68,7 +68,7 @@ public class BatchPrint_Regression1 {
 	 * production set. Description : To Verify PDF file should be generated for the
 	 * selected production set.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = false, groups = { "regression" }, priority = 1)
 	public void verifyPdfFileGeneratedBySelectedProductionSet() throws InterruptedException {
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -101,7 +101,7 @@ public class BatchPrint_Regression1 {
 	 * @Testcase id : 49900 - Verify and generate BatchPrint with Search as source.
 	 * @Description : Verify and generate BatchPrint with Search as source
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = false, groups = { "regression" }, priority = 2)
 	public void verifyBatchPrintWithSearchAsSource() throws InterruptedException {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -155,7 +155,7 @@ public class BatchPrint_Regression1 {
 	 * @Description : To verify that user can view the total count of Excel files is
 	 *              displayed.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = false, groups = { "regression" }, priority = 3)
 	public void verifyTotalCountExcelFilesDisplayed() throws InterruptedException {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -229,7 +229,7 @@ public class BatchPrint_Regression1 {
 	 * @Description : To verify that user can view the total count of Media files is
 	 *              displayed.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = false, groups = { "regression" }, priority = 4)
 	public void verifyTotalCountMediaFilesDisplayed() throws InterruptedException {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -276,7 +276,7 @@ public class BatchPrint_Regression1 {
 	 *              DocFileName [RPMXCON-58917]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 5)
+	@Test(enabled = false, dataProvider = "Users", groups = { "regression" }, priority = 5)
 	public void verifyPDFForAllDoc(String username, String password) throws InterruptedException {
 		String tagName = Input.randomText + Utility.dynamicNameAppender();
 		SessionSearch search = new SessionSearch(driver);
@@ -398,11 +398,58 @@ public class BatchPrint_Regression1 {
 
 	}
 
+	/**
+	 * @Jeevitha
+	 * @Description :Verify batch print should generate successfully for the files
+	 *              containing special characters in DocFileName. [RPMXCON-58973]
+	 * @param username
+	 * @param password
+	 * @throws InterruptedException
+	 * @throws ZipException
+	 */
+	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 7)
+	public void verifySpecialCharactForBatchPrint(String username, String password)
+			throws InterruptedException, ZipException {
+		String tagName = Input.randomText + Utility.dynamicNameAppender();
+		String expectedFileName = "SpecialCharacter&";
+		String metaDataField = "DocFileName";
+		String value = "SpecialCharact";
+		SessionSearch search = new SessionSearch(driver);
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-58973 Batch Print");
+		baseClass.stepInfo(
+				"Verify batch print should generate successfully for the files containing special characters in DocFileName.");
+
+		// Bulk Tag
+		search.validateAutosuggestSearchResult_BS(expectedFileName, metaDataField, value);
+		search.bulkTag(tagName);
+
+		// Select TAG
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab(Input.tag, tagName, true);
+		batchPrint.fillingBasisForPrinting(true, true);
+		batchPrint.navigateToNextPage(2);
+
+		// filling SlipSheet WIth metadata
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true);
+		batchPrint.navigateToNextPage(1);
+
+		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
+		batchPrint.fillingExportFormatPage(Input.docFileName, Input.documentKey, true, 20);
+		loginPage.logout();
+
+	}
+	
+
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }, };
 		return users;
 	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
