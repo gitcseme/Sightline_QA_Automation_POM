@@ -55,7 +55,7 @@ public class BatchPrint_Regression1 {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.info(testMethod.getName());
-		
+
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
@@ -398,11 +398,58 @@ public class BatchPrint_Regression1 {
 
 	}
 
+	/**
+	 * @Jeevitha
+	 * @Description :Verify batch print should generate successfully for the files
+	 *              containing special characters in DocFileName. [RPMXCON-58973]
+	 * @param username
+	 * @param password
+	 * @throws InterruptedException
+	 * @throws ZipException
+	 */
+	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 7)
+	public void verifySpecialCharactForBatchPrint(String username, String password)
+			throws InterruptedException, ZipException {
+		String tagName = Input.randomText + Utility.dynamicNameAppender();
+		String expectedFileName = "SpecialCharacter&";
+		String metaDataField = "DocFileName";
+		String value = "SpecialCharact";
+		SessionSearch search = new SessionSearch(driver);
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-58973 Batch Print");
+		baseClass.stepInfo(
+				"Verify batch print should generate successfully for the files containing special characters in DocFileName.");
+
+		// Bulk Tag
+		search.validateAutosuggestSearchResult_BS(expectedFileName, metaDataField, value);
+		search.bulkTag(tagName);
+
+		// Select TAG
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab(Input.tag, tagName, true);
+		batchPrint.fillingBasisForPrinting(true, true);
+		batchPrint.navigateToNextPage(2);
+
+		// filling SlipSheet WIth metadata
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true);
+		batchPrint.navigateToNextPage(1);
+
+		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
+		batchPrint.fillingExportFormatPage(Input.docFileName, Input.documentKey, true, 20);
+		loginPage.logout();
+
+	}
+	
+
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }, };
 		return users;
 	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
