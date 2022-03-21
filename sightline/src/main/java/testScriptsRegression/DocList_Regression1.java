@@ -1508,7 +1508,78 @@ public class DocList_Regression1 {
   			
   	 }
    
-	
+  	/**
+ 	 * @author Gopinath
+ 	 * @TestCase Id:54456 To verify that parent child hierarchical presentation in DocList is shown properly
+ 	 * @Description To To verify that parent child hierarchical presentation in DocList is shown properly
+ 	 * @throws InterruptedException
+ 	 */
+ 	@Test(groups={"regression"},priority = 1)
+ 	public void verifychildHierarchicalPresentationDocList() throws InterruptedException {
+ 		
+ 		String folderName="Folder"+Utility.dynamicNameAppender();
+ 		baseClass = new BaseClass(driver);
+
+ 		baseClass.stepInfo("Test case Id: RPMXCON-54456");
+ 		baseClass.stepInfo("####  To verify that parent child hierarchical presentation in DocList is shown properly####");
+
+ 		docList=new DocListPage(driver);
+ 		SessionSearch search = new SessionSearch(driver);
+
+ 		baseClass.stepInfo("Basic Search");
+ 		search.basicContentSearch(Input.searchString1);
+ 		baseClass.stepInfo("perform bulk folder");
+ 		search.bulkFolder(folderName);
+ 		
+ 		TagsAndFoldersPage tagAndFol = new TagsAndFoldersPage(driver);
+ 		
+ 		baseClass.stepInfo("select folder and view in DocList");
+ 		tagAndFol.ViewinDocListthrFolder(folderName);
+ 		
+ 		baseClass.stepInfo("Select page length");
+ 		docList.Selectpagelength(Input.pageLength);
+ 		
+ 		baseClass.stepInfo("Verify that user can view the Child Document on doc list");
+ 		docList.verifyUserCanViewChildDocumetOnDocList();
+ 		
+ 		driver.Navigate().refresh();
+ 		baseClass.stepInfo("Select page length");
+ 		docList.Selectpagelength(Input.pageLength);
+ 		
+ 		baseClass.stepInfo("Verify sequence of parent and Child Document on doc list");
+ 		docList.verifySequenceOrderOfchildDocsInDocList();
+ 		
+ 	}
+ 	/**
+	 * @author Gopinath
+	 * @TestCase Id:54460 To Verify that on selecting 'Tally' action from DocList no javascript pop up gets displayed
+	 * @Description:To To Verify that on selecting 'Tally' action from DocList no javascript pop up gets displayed
+	 * @throws InterruptedException
+	 */
+  	 @Test	(groups={"regression"},priority = 2)
+  	 public void verifyDocListTallyActionNoPopUP() throws InterruptedException {
+			baseClass = new BaseClass(driver);
+			String testData1 = Input.testData1;
+			baseClass.stepInfo("Test case Id: RPMXCON-54460");
+			baseClass.stepInfo("#### To Verify that on selecting 'Tally' action from DocList no javascript pop up gets displayed ####");
+
+			SessionSearch search = new SessionSearch(driver);
+
+			baseClass.stepInfo("Basic meta data search");
+			search.basicContentSearch(testData1);
+
+			baseClass.stepInfo("View search data in doc list");
+			search.ViewInDocList();
+
+			DocListPage docPage = new DocListPage(driver);
+			
+			baseClass.stepInfo("select documents");
+			docPage.selectAllDocs();
+			
+			baseClass.stepInfo("perform tally");
+			docPage.performTallyAction();
+
+		}
   	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {

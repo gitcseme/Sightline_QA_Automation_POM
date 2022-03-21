@@ -461,6 +461,12 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//ul[@id='LeftMenu']/li/a[@title='Doc Explorer']");
 	}
 	
+	//Added by Gopinath - 21/03/2022
+	public ElementCollection getDocExplorerFolders() {
+		return driver.FindElementsByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a[@id='-1_anchor']/following-sibling::ul[@class='jstree-children']/li/a");
+		
+	}
+	
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -2345,5 +2351,60 @@ try {
 	e.printStackTrace();
 	bc.stepInfo("Exception occured while verifying docExplorer tab");
 }
+}
+
+/**
+ * @author Gopinath
+ * @Description method to verify folders having zero doc are not displayed
+ */
+public void verifyDOcExplorerNoZeroDocFolder() {
+	driver.waitForPageToBeReady();
+	bc.waitForElementCollection(getDocExplorerFolders());
+	for(int i=0;i<getDocExplorerFolders().size();i++) {
+		String folderName = getDocExplorerFolders().FindWebElements().get(i).getText();
+		String noOfDdocs = folderName.substring(folderName.indexOf("(") + 1, folderName.indexOf(")"));
+		if(noOfDdocs.equals("0")) {
+			bc.failedStep(folderName+" folder having zero documents is displayed in doc explorer tree structure");
+			break;
+		}
+	}
+	bc.passedStep("folders with zero documents are not displayed");
+	
+}
+
+
+/**
+ * @author : Gopinath
+ * @Description : Method to verify custodian and corresponding data sets are displayed 
+ * @param folderName
+ */
+public void verrifyDocExplorerFolder(String folderName) {
+	try {
+		getfolderFromTreeByName(folderName).ScrollTo();
+		bc.waitForElement(getfolderFromTreeByName(folderName));
+		if (getfolderFromTreeByName(folderName).isDisplayed()) {
+			String custName = getfolderFromTreeByName(folderName).getText();
+			if (custName.length() > 0) {
+				bc.passedStep("folder with custodian name is displayed in doc explorer tree structure ");
+			} else {
+				bc.failedStep("custodian name is not displayed");
+			}
+		} else {
+			bc.failedStep("folder is not displayed in doc explorer tree view");
+		}
+		bc.waitForElement(getDocExpFolderExpandbutton(folderName));
+		getDocExpFolderExpandbutton(folderName).waitAndClick(5);
+		bc.waitForElement(getDocExpSubFolderName(folderName, 1));
+		if (getDocExpSubFolderName(folderName, 1).isElementAvailable(5)
+				&& getDocExpSubFolderName(folderName, 1).isDisplayed()) {
+			bc.passedStep("After click on coustodian name corresponding datasets are expanded and displayed");
+		} else {
+			bc.failedStep("After click on coustodian name corresponding datasets are not displayed");
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		bc.failedStep("Exception occured while verifying custodian and datasets");
+	}
+
 }
 }

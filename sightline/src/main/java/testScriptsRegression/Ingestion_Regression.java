@@ -374,6 +374,71 @@ public class Ingestion_Regression {
 		loginPage.logout();
 		
 	}
+	
+	/**  
+	 * @author Gopinath
+	 * @throws InterruptedException 
+	 * @TestCase id:58503 : Verify if user ingest documents with ICE as Source System then same dataset cannot ingest with any other Source System.
+	 * @Description: Verify if user ingest documents with ICE as Source System then same dataset cannot ingest with any other Source System
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	public void verifyErrorMsgDisplayedByIngestingPublishedData() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		String projectName = "AutomationRegressionBackup";
+		String ingestionType = Input.ingestionType;
+		String sourceSystem = Input.iceSourceSystem;
+		String sourceLocation =  Input.sourceLocation;
+		String sourceFolder =  Input.multiPageTIFFSourceFolder;
+		String fieldSeperator = Input.fieldSeperator;
+		String textQualifier = Input.textQualifier;
+		String multiValue = Input.multiValue;
+		String datLoadFile = Input.multiPageTIFFDATLoadFile;
+		String documentKey = Input.documentKeyBNum;
+		String dateFormat = Input.dateFormat;
+		String docId = Input.documentKeyBNum;
+		String dataSource = Input.documentKeyDSource;
+		String custodian = Input.documentKeyCName;
+	
+		baseClass.stepInfo("Test case Id: RPMXCON-58503 Sprint 13");
+		baseClass.stepInfo("### Verify if user ingest documents with ICE as Source System then same dataset cannot ingest with any other Source System ###");
+		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
+		
+		baseClass.stepInfo("Select project");
+		baseClass.selectproject(projectName);
+		
+		baseClass.stepInfo("Navigate to ingestion page.");
+		ingetion.navigateToIngestionPage();
+		
+		baseClass.stepInfo("Select ingestion type and specify source loaction.");
+		ingetion.selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, sourceLocation,sourceFolder);
+		
+		baseClass.stepInfo("Select DAT delimiters.");
+		ingetion.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+		
+		baseClass.stepInfo("Select DAT source.");
+		ingetion.selectDATSource(datLoadFile, documentKey);
+		
+		baseClass.stepInfo("Select Date and Time format.");
+		ingetion.selectDateAndTimeForamt(dateFormat);
+		
+		baseClass.stepInfo("Click on next button.");
+		ingetion.clickOnNextButton();
+		
+		baseClass.stepInfo("Select value from first three source DAT fields");
+		ingetion.selectValueFromEnabledFirstThreeSourceDATFields(docId,dataSource, custodian);
+		
+		baseClass.stepInfo("Click on preview and run button.");
+		ingetion.clickOnPreviewAndRunButton();
+		
+		baseClass.stepInfo("Select all options from filter by dropdown.");
+		ingetion.selectAllOptionsFromFilterByDropdown();
+		
+		baseClass.stepInfo("Create ingestion to cataloged stage");
+		ingetion.ingestionCreationToFailedState();
+		
+		loginPage.logout();
+		
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
