@@ -68,7 +68,7 @@ public class BatchPrint_Regression1 {
 	 * production set. Description : To Verify PDF file should be generated for the
 	 * selected production set.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyPdfFileGeneratedBySelectedProductionSet() throws InterruptedException {
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -101,7 +101,7 @@ public class BatchPrint_Regression1 {
 	 * @Testcase id : 49900 - Verify and generate BatchPrint with Search as source.
 	 * @Description : Verify and generate BatchPrint with Search as source
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyBatchPrintWithSearchAsSource() throws InterruptedException {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -155,7 +155,7 @@ public class BatchPrint_Regression1 {
 	 * @Description : To verify that user can view the total count of Excel files is
 	 *              displayed.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyTotalCountExcelFilesDisplayed() throws InterruptedException {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -229,7 +229,7 @@ public class BatchPrint_Regression1 {
 	 * @Description : To verify that user can view the total count of Media files is
 	 *              displayed.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 4)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyTotalCountMediaFilesDisplayed() throws InterruptedException {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -276,7 +276,7 @@ public class BatchPrint_Regression1 {
 	 *              DocFileName [RPMXCON-58917]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, dataProvider = "Users", groups = { "regression" }, priority = 5)
+	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 5)
 	public void verifyPDFForAllDoc(String username, String password) throws InterruptedException {
 		String tagName = Input.randomText + Utility.dynamicNameAppender();
 		SessionSearch search = new SessionSearch(driver);
