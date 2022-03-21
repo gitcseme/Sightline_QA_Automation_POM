@@ -584,7 +584,7 @@ public class TestData {
 		public String familyDocIdForReviewer01;
 		public String familyDocIdForReviewer02;
 		public String familyDocIdForReviewer03;
-		public String nearDupeDocId01; 
+		public String nearDupeDocId01;  
 		public String nearDupeDocId02;
 		public String nearDupeDocId03;
 		public String nearDupeDocIdForReviewer01;
