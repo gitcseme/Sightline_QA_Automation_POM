@@ -5413,7 +5413,7 @@ public class Production_Regression1 {
 
 		/**
 		 * @author Brundha created on:NA modified by:NA
-		 * //@Testcase_Id:RPMXCON-55974 : Verify that after Pre-gen checks is in progress,
+		 * @Testcase_Id:RPMXCON-55974 : Verify that after Pre-gen checks is in progress,
 		 *                            it will displays status on Production Generation
 		 *                            page
 		 * @Description : Verify that after Pre-gen checks is in progress, it will
@@ -5503,7 +5503,7 @@ public class Production_Regression1 {
 
 		/**
 		 * @author Brundha created on:NA modified by:NA
-		 * //@Testcase_Id:RPMXCON-49814 :To verify that Production should generate
+		 * @Testcase_Id:RPMXCON-49814 :To verify that Production should generate
 		 *                            successfully if Suffix is up to 50 characters
 		 * @Description :verify the generation of production when suffix with 50
 		 *              character.
@@ -5597,7 +5597,7 @@ public class Production_Regression1 {
 
 		/**
 		 * @author Brundha created on:NA modified by:NA
-		 * //@Testcase_Id:RPMXCON-49813 :To verify that Production should generate
+		 * @Testcase_Id:RPMXCON-49813 :To verify that Production should generate
 		 *                            successfully if prefix and Suffix is less than 50
 		 *                            characters
 		 * @Description :verify the generation of production when prefix and suffix is
@@ -5694,7 +5694,7 @@ public class Production_Regression1 {
 
 		/**
 		 * @author Brundha created on:NA modified by:NA
-		 * //@Testcase_Id:RPMXCON-49812 :To verify that Production using template should
+		 * @Testcase_Id:RPMXCON-49812 :To verify that Production using template should
 		 *                            generate with Prefix and Suffix having 50
 		 *                            characters
 		 * @Description :verify the generation of production when prefix and suffix 50
@@ -5989,7 +5989,7 @@ public class Production_Regression1 {
 	 *                 clicking on document count link it should redirect to Doc
 	 *                 List page with correct document count
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 76)
+	@Test(enabled=true,groups = { "regression" }, priority = 76)
 	public void verifyNavigationToDocListPageFromDocumentSelectionTab() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49236 -Production Sprint 08");
@@ -6031,6 +6031,8 @@ public class Production_Regression1 {
 		page.verifyNavigationToProductionPage();
 		base.textCompareEquals(docCount, DocumentCount, "The document count is equal as expected",
 				"The document count is not equal as expected");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		loginPage.logout();
 
 	}
@@ -6040,7 +6042,7 @@ public class Production_Regression1 {
 	 * @Description:To verify that after selecting the Next BatesNumbers, value
 	 *                 should be auto-populated
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 77)
+	@Test(enabled=true,groups = { "regression" }, priority = 77)
 	public void SelectNextBatesNumberAndVerifyingAutoPopulatedValue() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49239 -Production Sprint 08");
@@ -6074,6 +6076,8 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 		page.navigatingBackToNumberingAndSortingPage();
 		page.SelectNextBatesNumber();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		loginPage.logout();
 	}
 
@@ -6083,7 +6087,7 @@ public class Production_Regression1 {
 	 *                 number(S)' link should not be available in Mark Complete
 	 *                 mode.
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 78)
+	@Test(enabled=true,groups = { "regression" }, priority = 78)
 	public void verifyClickHerelinkNotAvailableInMarkComplete() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49241 -Production Sprint 08");
@@ -6104,7 +6108,7 @@ public class Production_Regression1 {
 	 *                 ''Click here to View and select the bates number(S)'' should
 	 *                 be available and user can select the bates numbers
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 79)
+	@Test(enabled=true,groups = { "regression" }, priority = 79)
 	public void verifyClickHerelinkAvailableInMarkInComplete() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49243 -Production Sprint 08");
@@ -6126,7 +6130,7 @@ public class Production_Regression1 {
 	 * @Description:To verify that when text is exported for Priv file then it
 	 *                 should export the text with the Placeholder
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 80)
+	@Test(enabled=true,groups = { "regression" }, priority = 80)
 	public void verifyExportInTIFFAndPDFPriviledgedPlaceHolder() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49133 -Production Sprint 08");
@@ -6192,6 +6196,9 @@ public class Production_Regression1 {
 		page.fillingSummaryAndPreview();
 		base.stepInfo("Export for priviledged doc in pdf section is to generate");
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 
 	}
@@ -6201,7 +6208,7 @@ public class Production_Regression1 {
 	 * @Description:To verify that ' Number Of Custodians' on Production Summary
 	 *                 page
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 81)
+	@Test(enabled=true,groups = { "regression" }, priority = 81)
 	public void verifyingUniqueCustodianInSummaryAndPreviewTab() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49108 -Production Sprint 08");
@@ -6233,6 +6240,8 @@ public class Production_Regression1 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.verifyingUniqueCustodianNameInSummaryPreviewTab();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		loginPage.logout();
 
 	}
@@ -6242,7 +6251,7 @@ public class Production_Regression1 {
 	 * @Description:Create a Production with the Prerequisite: MP3 files and by
 	 *                     selecting just the DAT file as a production component
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 82)
+	@Test(enabled=true,groups = { "regression" }, priority = 82)
 	public void verifyProductionGenerateForMP3Docs() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48662 -Production Sprint 09");
@@ -6277,6 +6286,8 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 		loginPage.logout();
 	}
 
@@ -6285,7 +6296,7 @@ public class Production_Regression1 {
 	 * @Description:Verify that production should be generated successfully for
 	 *                     audio files
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 83)
+	@Test(enabled=true,groups = { "regression" }, priority = 83)
 	public void verifyProductionGenerateForAudioFile() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48661 -Production Sprint 09");
@@ -6321,6 +6332,8 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 		loginPage.logout();
 
 	}
@@ -6330,7 +6343,7 @@ public class Production_Regression1 {
 	 * @Description:To verify that If user select PrivTag and if Audio document is
 	 *                 associated to that tag then Native should not produced
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 84)
+	@Test(enabled=true,groups = { "regression" }, priority = 84)
 	public void SelectPrivTagWithAudioDocumentAndNativeNotProduced() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48492 -Production Sprint 09");
@@ -6373,6 +6386,10 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		
 		loginPage.logout();
 
 	}
@@ -6382,7 +6399,7 @@ public class Production_Regression1 {
 	 * @Description:To verify that If user select PrivTag and if Audio document is
 	 *                 not associated to that tag then Native should be produced
 	 */
-	@Test(enabled=false,groups = { "regression" }, priority = 85)
+	@Test(enabled=true,groups = { "regression" }, priority = 85)
 	public void SelectPrivTagWithAudioDocumentAndNativeProduced() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48493 -Production Sprint 09");
@@ -6424,6 +6441,9 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 		loginPage.logout();
 	}
 

@@ -11908,6 +11908,7 @@ public class ProductionPage {
 	}
 
 
+
 /**
 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
 * @Description: Method for uncommit the production.
@@ -11922,29 +11923,35 @@ getConfirmProductionUnCommit().isElementAvailable(10);
 if (getConfirmProductionUnCommit().isDisplayed()) {
 base.waitTillElemetToBeClickable(getConfirmProductionUnCommit());
 getConfirmProductionUnCommit().waitAndClick(10);
+driver.waitForPageToBeReady();
 base.CloseSuccessMsgpopup();
-driver.Navigate().refresh();
 break;
 } else {
 driver.Navigate().refresh();
 }
 }
-for (int i = 0; i < 5; i++) {
-driver.waitForPageToBeReady();
-base.waitForElement(getBckBtn());
-getBckBtn().Click();
+for (int i = 0; i < 6; i++) {
+	driver.waitForPageToBeReady();
+	driver.Navigate().refresh();
 }
-driver.waitForPageToBeReady();
-for (int i = 0; i < 3; i++) {
-getNextButton().waitAndClick(10);
-getBackButton().waitAndClick(10);
-}
-} catch (Exception e) {
-e.printStackTrace();
-base.failedStep(
-"Exception occcured while again navigating back to document selection section" + e.getMessage());
-}
-}
+	driver.waitForPageToBeReady();
+	for (int i = 0; i < 5; i++) {
+		base.waitForElement(getBckBtn());
+		getBckBtn().Click();
+		}
+	driver.waitForPageToBeReady();
+	for (int i = 0; i < 4; i++) {
+		driver.waitForPageToBeReady();
+	getNextButton().waitAndClick(10);
+	driver.waitForPageToBeReady();
+	getBackButton().waitAndClick(10);
+	}
+	} catch (Exception e) {
+	e.printStackTrace();
+	base.failedStep(
+	"Exception occcured while again navigating back to document selection section" + e.getMessage());
+	}
+	}
 
 
 
@@ -13489,6 +13496,11 @@ base.failedStep(
 			}), Input.wait30);
 			getbtnProductionGenerate().Click();
 
+			if (getbtnContinueGeneration().isDisplayed()) {
+				base.waitForElement(getbtnContinueGeneration());
+				getbtnContinueGeneration().waitAndClick(10);
+			}
+			
 			Reporter.log("Wait for generate to complete", true);
 			System.out.println("Wait for generate to complete");
 			UtilityLog.info("Wait for generate to complete");
@@ -14218,8 +14230,8 @@ base.failedStep(
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
 
-		getbtnReGenerateMarkComplete().isElementAvailable(120);
-		getbtnReGenerateMarkComplete().Click();
+		getbtnReGenerateMarkComplete().isElementAvailable(200);
+		getbtnReGenerateMarkComplete().waitAndClick(10);
 
 		base.waitForElement(getbtnRegenerateCancel());
 		getbtnRegenerateCancel().Click();
