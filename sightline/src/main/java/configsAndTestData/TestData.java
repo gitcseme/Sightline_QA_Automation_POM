@@ -332,6 +332,7 @@ public class TestData {
 	public String HiddenIngestionDocId;
 	public String HiddenIngestionName;
 	public String HiddenLinkDocId;
+	public String defaultPdfDocId;
 	
 	
 

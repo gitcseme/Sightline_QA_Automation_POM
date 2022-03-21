@@ -26379,4 +26379,66 @@ public class DocViewPage {
 		base.passedStep("Users actions is saved and user should redirect to the clicked page");
 
 	}
+	
+	/**
+	 * @author Krishna 14/03/22 NA Modified date: NA Modified by:NA
+	 * @throws InterruptedException
+	 * @description verify defaultpdftab is displayed on docview
+	 */
+	public void verifyDisplaysTheDefaultPdfInDocView() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_DefaultViewTab());
+		softAssertion.assertEquals(getDocView_DefaultViewTab().Displayed().booleanValue(), true);
+		base.passedStep("Document displaying in default view page");
+		driver.waitForPageToBeReady();
+		String ActualValue = getDocView_IconFileType().getText();
+		System.out.println("default value:" + ActualValue);
+		if (getDocView_IconFileType().isDisplayed()) {
+			base.passedStep("Default " + ActualValue + " value  is displayed");
+		} else {
+			base.failedStep("Default " + ActualValue + " value is not displayed");
+		}
+		Assert.assertEquals(getDocView_IconFileType().getText().toString(), "P");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_TextFileType().Visible();
+			}
+		}), Input.wait120);
+		Assert.assertEquals(getDocView_TextFileType().getText().toString(), "PDF");
+		base.passedStep(ActualValue + "default PDF on default view is successfully displayed");
+	}
+
+	/**
+	 * @author Krishna 17/03/22 NA Modified date: NA Modified by:NA
+	 * @description verifying a corresponding text is highlighting on a document.
+	 */
+	public void verifyCorrespondingTextIsHighlightedOnDocs(String text) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getDocView_SearchButton().Visible() && getDocView_SearchButton().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getDocView_SearchButton());
+		getDocView_SearchButton().Click();
+		if (!getDocView_SearchButton().isDisplayed() && searchTextBox().isDisplayed() && closeIcon().isDisplayed()) {
+			base.passedStep("After clicking magnifying icon it is application should look for the corresponding text");
+		} else {
+			base.failedStep(
+					"After clicking magnifying icon it is not application should look for the corresponding text");
+		}
+		base.waitForElement(searchTextBox());
+		searchTextBox().waitAndClick(5);
+		searchTextBox().WaitUntilPresent().SendKeys(text);
+		searchIcon().waitAndClick(5);
+		String searchResult = searchResult().getText();
+		base.stepInfo("Highlighted corresponding text search result:" + searchResult);
+		if (searchResult.contains("1 of")) {
+			base.passedStep(" corresponding text is highlighting in the document");
+		} else {
+			base.failedStep("corresponding text is not highlighted in the document");
+		}
+
+	}
 }

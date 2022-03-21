@@ -4518,6 +4518,107 @@ public class DocView_Regression2 {
 	loginPage.logout();
 	}
 	
+	
+	
+	/**
+	 * @author Krishna TestCase Id:51243 Verify user after impersonation should
+	 *         see the message like 'No files associated with this document' when
+	 *         user ingest only metadata
+	 *
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 97)
+	public void verifyUserAfterImpersonationMsgOnlyMetaData() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51243");
+		baseClass.stepInfo(
+				"Verify user after impersonation should see the message like 'No files associated with this document' when user ingest only metadata");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Step 1: Impersonating SA to PA");
+		baseClass.impersonateSAtoPA();
+		// searching metadataSearch for default pdfDocId
+		sessionSearch.basicMetaDataSearch("DocID", null, Input.defaultPdfDocId, null);
+		sessionSearch.ViewInDocView();
+		docView.verifyDisplaysTheDefaultPdfInDocView();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		// searching metadataSearch for default pdfDocId
+		baseClass.impersonateSAtoRMU();
+		sessionSearch.basicMetaDataSearch("DocID", null, Input.defaultPdfDocId, null);
+		sessionSearch.ViewInDocView();
+		docView.verifyDisplaysTheDefaultPdfInDocView();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Step 1: Impersonating SA to Rev");
+		// searching metadataSearch for default pdfDocId
+		baseClass.impersonateSAtoReviewer();
+		sessionSearch.basicMetaDataSearch("DocID", null, Input.defaultPdfDocId, null);
+		sessionSearch.ViewInDocView();
+		docView.verifyDisplaysTheDefaultPdfInDocView();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Step 1: Impersonating PA to Rmu");
+		// searching metadataSearch for default pdfDocId
+		baseClass.impersonatePAtoRMU();
+		sessionSearch.basicMetaDataSearch("DocID", null, Input.defaultPdfDocId, null);
+		sessionSearch.ViewInDocView();
+		docView.verifyDisplaysTheDefaultPdfInDocView();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Step 1: Impersonating PA to Rev");
+		// searching metadataSearch for default pdfDocId
+		baseClass.impersonatePAtoReviewer();
+		sessionSearch.basicMetaDataSearch("DocID", null, Input.defaultPdfDocId, null);
+		sessionSearch.ViewInDocView();
+		docView.verifyDisplaysTheDefaultPdfInDocView();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		// searching metadataSearch for default pdfDocId
+		baseClass.impersonateRMUtoReviewer();
+		sessionSearch.basicMetaDataSearch("DocID", null, Input.defaultPdfDocId, null);
+		sessionSearch.ViewInDocView();
+		docView.verifyDisplaysTheDefaultPdfInDocView();
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51984 Verify in-doc search highlighting is working for Searchable
+	 * PDF (with Mapped dataset having RequiredPDFGenartion is TRUE)
+	 * 
+	 */
+
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 98)
+	public void verifyDocHighlightingIsWorkingForSearchablePdf(String fullName, String userName, String password)
+			throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51984");
+		baseClass.stepInfo(
+				"Verify in-doc search highlighting  is working for Searchable PDF (with Mapped dataset having RequiredPDFGenartion is TRUE)");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		String text = "Message";
+
+		// Searching for document with dataset having required PDF
+		loginPage.loginToSightLine(userName, password);
+		sessionsearch.basicContentSearch(Input.defaultPdfDocId);
+		baseClass.stepInfo("Searching a documents having 'RequiredPDFGenertion is TRUE' ");
+		sessionsearch.ViewInDocView();
+		docView.verifyDisplaysTheDefaultPdfInDocView();
+
+		// verifying a corresponding text and highlighting a document.
+		docView.verifyCorrespondingTextIsHighlightedOnDocs(text);
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
