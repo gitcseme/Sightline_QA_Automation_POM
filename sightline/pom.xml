@@ -398,5 +398,10 @@
     <artifactId>java-ocr-api</artifactId>
     <version>15.3.0.3</version>
 </dependency>
+<dependency>
+    <groupId>net.sourceforge.tess4j</groupId>
+    <artifactId>tess4j</artifactId>
+    <version>4.5.2</version>
+</dependency>
 	</dependencies>
 </project>
