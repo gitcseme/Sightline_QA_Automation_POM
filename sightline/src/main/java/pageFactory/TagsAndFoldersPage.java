@@ -2546,9 +2546,9 @@ public class TagsAndFoldersPage {
 	public void verifyNodeNotPresent(String toSelectName, String passMsg, String FailMsg) {
 		driver.waitForPageToBeReady();
 		if (getTagNameDataCon(toSelectName).isElementAvailable(3)) {
-			base.stepInfo(toSelectName + " : " + FailMsg);
+			base.failedStep(toSelectName + " : " + FailMsg);
 		} else {
-			base.passedStep(toSelectName + " : " + passMsg);
+			base.stepInfo(toSelectName + " : " + passMsg);
 		}
 	}
 
