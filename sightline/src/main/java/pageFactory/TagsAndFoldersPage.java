@@ -313,14 +313,16 @@ public class TagsAndFoldersPage {
 	}
 
 	// Added by Gopinath -- 29-09-2021
-	/**public Element getTag(int rowNum) {
-		return driver.FindElementByXPath(
-				"//a[contains(@data-content,'All Tags')]/..//i[@class='jstree-icon jstree-themeicon fa fa-tags jstree-themeicon-custom']//..//..//li["
-						+ rowNum + "]//a");
-	}**/
-	
+	/**
+	 * public Element getTag(int rowNum) { return driver.FindElementByXPath(
+	 * "//a[contains(@data-content,'All Tags')]/..//i[@class='jstree-icon
+	 * jstree-themeicon fa fa-tags jstree-themeicon-custom']//..//..//li[" + rowNum
+	 * + "]//a"); }
+	 **/
+
 	public Element getTag(int rowNum) {
-		return driver.FindElementByXPath("//a[contains(@data-content,'All Tags')]/../descendant::li["+rowNum+"]//a");
+		return driver
+				.FindElementByXPath("//a[contains(@data-content,'All Tags')]/../descendant::li[" + rowNum + "]//a");
 	}
 
 	public ElementCollection getTagsRows() {
@@ -810,7 +812,7 @@ public class TagsAndFoldersPage {
 	public void DeleteFolderWithSecurityGroup(final String strFolder, String securityGroup) {
 
 		navigateToTagsAndFolderPage();
-		driver.waitForPageToBeReady();	
+		driver.waitForPageToBeReady();
 
 		base.waitForElement(getFoldersTab());
 		getFoldersTab().waitAndClick(5);
@@ -867,8 +869,8 @@ public class TagsAndFoldersPage {
 	 */
 	public void DeleteFolderWithSecurityGroupInRMU(final String strFolder) {
 		navigateToTagsAndFolderPage();
-		driver.waitForPageToBeReady();		
-		
+		driver.waitForPageToBeReady();
+
 		base.waitForElement(getFoldersTab());
 		getFoldersTab().waitAndClick(5);
 
@@ -887,19 +889,18 @@ public class TagsAndFoldersPage {
 			base.waitForElement(getDeleteFolder());
 			getDeleteFolder().waitAndClick(5);
 			driver.waitForPageToBeReady();
-			if(base.getYesBtn().Displayed()) {
-			base.waitForElement(base.getYesBtn());
-			base.getYesBtn().waitAndClick(5);
-			base.VerifySuccessMessage("Folder deleted successfully");
-			base.CloseSuccessMsgpopup();
-			Reporter.log(strFolder + " Folder delete Successful", true);
-			UtilityLog.info("Folder deleted Successfully");
+			if (base.getYesBtn().Displayed()) {
+				base.waitForElement(base.getYesBtn());
+				base.getYesBtn().waitAndClick(5);
+				base.VerifySuccessMessage("Folder deleted successfully");
+				base.CloseSuccessMsgpopup();
+				Reporter.log(strFolder + " Folder delete Successful", true);
+				UtilityLog.info("Folder deleted Successfully");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		
 	}
 
 	/**
@@ -911,8 +912,8 @@ public class TagsAndFoldersPage {
 	public void DeleteTagWithClassification(final String strtag, String securityGroup) {
 
 		navigateToTagsAndFolderPage();
-		driver.waitForPageToBeReady();	
-		
+		driver.waitForPageToBeReady();
+
 		base.waitForElement(getTagsTab());
 		getTagsTab().waitAndClick(5);
 
@@ -950,6 +951,7 @@ public class TagsAndFoldersPage {
 
 	/**
 	 * MOdified on 03/08/2022
+	 * 
 	 * @author Indium Aathith This method deletes the tag created with certain
 	 *         classifications in RMU user
 	 * @param strtag
@@ -957,8 +959,8 @@ public class TagsAndFoldersPage {
 	 */
 	public void DeleteTagWithClassificationInRMU(final String strtag) {
 
-	    navigateToTagsAndFolderPage();
-	    driver.waitForPageToBeReady();
+		navigateToTagsAndFolderPage();
+		driver.waitForPageToBeReady();
 		base.waitForElement(getTagsTab());
 		getTagsTab().waitAndClick(5);
 		try {
@@ -972,16 +974,16 @@ public class TagsAndFoldersPage {
 			getTagActionDropDownArrow().waitAndClick(10);
 			base.waitForElement(getDeleteTag());
 			getDeleteTag().waitAndClick(10);
-           driver.waitForPageToBeReady();
-          if( base.getYesBtn().isDisplayed()) {
-        	driver.waitForPageToBeReady();
-			base.getYesBtn().waitAndClick(10);
-			base.VerifySuccessMessage("Tag deleted successfully");
-          }
+			driver.waitForPageToBeReady();
+			if (base.getYesBtn().isDisplayed()) {
+				driver.waitForPageToBeReady();
+				base.getYesBtn().waitAndClick(10);
+				base.VerifySuccessMessage("Tag deleted successfully");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void CreateTagwithClassification(String strtag, String classificationname) throws InterruptedException
@@ -1712,7 +1714,7 @@ public class TagsAndFoldersPage {
 		try {
 			try {
 				getTagName(tagName).isElementAvailable(10);
-				if (getTagName(tagName).getWebElement().isDisplayed()) {	
+				if (getTagName(tagName).getWebElement().isDisplayed()) {
 					base.passedStep("Tag : " + tagName + " is displayed in tags structure successfully");
 				}
 			} catch (NoSuchElementException e) {
@@ -2499,37 +2501,55 @@ public class TagsAndFoldersPage {
 			System.out.println("Tag name updated successfully : " + reTagName);
 		}
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param tagName
 	 */
-		public void verifyTagDocCount(String tagName,int count) {
-			base.waitForElement(getTag_ToggleDocCount());
-			getTag_ToggleDocCount().waitAndClick(20);
-			getTagandCount(tagName, count).waitAndGet(30);
-			System.out.println(getTagandCount(tagName, 0).getText());
-			if(getTagandCount(tagName, 0).isElementAvailable(3)) {
-			base.passedStep(tagName + " with zero count  could be seen under tags and folder page -"+getTagandCount(tagName, 0).getText());
-			}
-			else {
-				base.failedStep(tagName+" with zero count is not displayed");
-			}
+	public void verifyTagDocCount(String tagName, int count) {
+		base.waitForElement(getTag_ToggleDocCount());
+		getTag_ToggleDocCount().waitAndClick(20);
+		getTagandCount(tagName, count).waitAndGet(30);
+		System.out.println(getTagandCount(tagName, 0).getText());
+		if (getTagandCount(tagName, 0).isElementAvailable(3)) {
+			base.passedStep(tagName + " with zero count  could be seen under tags and folder page -"
+					+ getTagandCount(tagName, 0).getText());
+		} else {
+			base.failedStep(tagName + " with zero count is not displayed");
 		}
-		/**
-		 * @author Jayanthi.ganesan
-		 * @param folderName
-		 * @param count
-		 */
-		public void verifyFolderDocCount(String folderName,int count) {
-		base.waitForElement( getFoldersTab());	
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param folderName
+	 * @param count
+	 */
+	public void verifyFolderDocCount(String folderName, int count) {
+		base.waitForElement(getFoldersTab());
 		getFoldersTab().waitAndClick(10);
 		getFolder_ToggleDocCount().waitAndClick(10);
 		getFolderandCount(folderName, count).WaitUntilPresent();
-		if(getFolderandCount(folderName, count).isElementAvailable(3)) {
-	base.passedStep(folderName + " could be seen under tags and folder page "+getFolderandCount(folderName, count).getText());
-		}else {
-			base.failedStep(folderName+" with zero count is not displayed");
+		if (getFolderandCount(folderName, count).isElementAvailable(3)) {
+			base.passedStep(folderName + " could be seen under tags and folder page "
+					+ getFolderandCount(folderName, count).getText());
+		} else {
+			base.failedStep(folderName + " with zero count is not displayed");
 		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param toSelectName - node to check
+	 * @param passMsg      - pass message to print
+	 * @param FailMsg      - fail message to print
+	 */
+	public void verifyNodeNotPresent(String toSelectName, String passMsg, String FailMsg) {
+		driver.waitForPageToBeReady();
+		if (getTagNameDataCon(toSelectName).isElementAvailable(3)) {
+			base.failedStep(toSelectName + " : " + FailMsg);
+		} else {
+			base.stepInfo(toSelectName + " : " + passMsg);
 		}
+	}
 
 }
