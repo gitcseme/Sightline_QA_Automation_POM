@@ -10691,7 +10691,7 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
-
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_ThreadedDocument_Doc(1));
 		getDocView_Analytics_ThreadedDocument_Doc(1).waitAndClick(5);
 
@@ -10745,6 +10745,7 @@ public class DocViewPage {
 		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
 		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(4));
 		getDocView_Analytics_ThreadMap_DocCheckBox(4).waitAndClick(10);
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
