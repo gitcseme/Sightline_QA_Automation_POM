@@ -1549,7 +1549,7 @@ public class DocList_Regression1 {
  		baseClass.stepInfo("Verify sequence of parent and Child Document on doc list");
  		docList.verifySequenceOrderOfchildDocsInDocList();
  		
- 	}
+ 	} 
  	/**
 	 * @author Gopinath
 	 * @TestCase Id:54460 To Verify that on selecting 'Tally' action from DocList no javascript pop up gets displayed

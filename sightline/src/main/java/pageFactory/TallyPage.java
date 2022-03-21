@@ -511,7 +511,7 @@ public class TallyPage {
 
 	public Element getSubAssgnCheckBox() {
 		return driver.FindElementByXPath("//strong[text()=' Assignments']//..//..//input[@name='sub-metadata']//..//i");
-	}
+	} 
 	public Element getsubTallyFolderExpandButton(String expandValue) {
 		return driver.FindElementByXPath("//div[@id='_subfoldersTree']//li[@aria-expanded='"+expandValue+"']/i");
 	}

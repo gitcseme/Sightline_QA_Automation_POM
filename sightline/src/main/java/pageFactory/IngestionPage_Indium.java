@@ -5329,7 +5329,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 						if(j!=1) {
 							count=j-1;
 						}
-						break;
+						break; 
 					}else {
 						driver.scrollingToBottomofAPage();
 					}

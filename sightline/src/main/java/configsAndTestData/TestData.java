@@ -594,10 +594,13 @@ public class TestData {
 		public String threadMapWithNonEmailAttachment;
 		
 		
-		
-		
-		
-		
+		//Added by Gopinath - 21/03/2022
+		public String iceSourceSystem;
+		public String multiPageTIFFSourceFolder;
+		public String multiPageTIFFDATLoadFile;
+		public String documentKeyBNum;
+		public String documentKeyDSource;
+		public String documentKeyCName;
 		
 		
 		
