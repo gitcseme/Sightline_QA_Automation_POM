@@ -664,6 +664,7 @@ public class Input {
 	public static String threadMapDocId01;
 	public static String threadMapWithNonEmailAttachment;
 	public static String conceptualDocId04;
+	public static String defaultPdfDocId;
 
 	@BeforeSuite(alwaysRun = true)
 
@@ -944,6 +945,7 @@ public class Input {
 		HiddenIngestionDocId = testData.getHiddenIngestionDocId();
 		HiddenIngestionName = testData.getHiddenIngestionName();
 		HiddenLinkDocId = testData.getHiddenLinkDocId();
+		defaultPdfDocId= testData.getDefaultPdfDocId();
 
 		// Added by Arun
 		pageRange1 = testData.getPageRange1();
