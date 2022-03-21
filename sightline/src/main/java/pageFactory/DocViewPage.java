@@ -26439,6 +26439,34 @@ public class DocViewPage {
 		} else {
 			base.failedStep("corresponding text is not highlighted in the document");
 		}
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 21/03/2022 Modified date: 21/03/2022
+	 * @Description:This method used for download icon validation
+	 * @param downloadFalse
+	 * @param downloadTrue
+	 */
 
+	public void verifyBulkUserNativeFile(boolean downloadFalse, boolean downloadTrue, String rollUser) {
+		driver.waitForPageToBeReady();
+		if (downloadFalse == false) {
+			boolean notPresent = getDocView_IconDownload().Displayed();
+			softAssertion.assertFalse(notPresent);
+			if (notPresent == downloadFalse) {
+				base.passedStep("Download native button icon not present in left of the menu:" + rollUser + "");
+			} else {
+				base.failedStep("Download native button icon available:" + rollUser + "");
+			}
+		} else if (downloadTrue == true) {
+			base.waitForElement(getDocView_IconDownload());
+			boolean present = getDocView_IconDownload().Displayed();
+			softAssertion.assertFalse(present);
+			if (present == downloadFalse) {
+				base.passedStep("Download native button icon present in left of the menu:" + rollUser + "");
+			} else {
+				base.failedStep("Download native button icon available:" + rollUser + "");
+			}
+		}
 	}
 }

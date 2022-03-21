@@ -30,6 +30,7 @@ import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
+import views.html.helper.input;
 
 public class UsersAndRoleManagement_Regression {
 	Driver driver;
@@ -378,12 +379,13 @@ public class UsersAndRoleManagement_Regression {
 
 	@DataProvider(name = "differentRole")
 	public Object[][] differentRole() {
-		return new Object[][] { { "sa", Input.sa1userName, Input.sa1password, Input.pa1userName, Input.pa1password }, 
-			{ "sa", Input.sa1userName, Input.sa1password, Input.rmu1userName, Input.rmu1password },
+		return new Object[][] { { "sa", Input.sa1userName, Input.sa1password, Input.pa1userName, Input.pa1password },
+				{ "sa", Input.sa1userName, Input.sa1password, Input.rmu1userName, Input.rmu1password },
 				{ "pa", Input.pa2userName, Input.pa2password, Input.pa1userName, Input.pa1password },
 				{ "pa", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password },
 				{ "pa", Input.rmu2userName, Input.rmu2password, Input.rmu1userName, Input.rmu1password }, };
 	}
+
 	@Test(alwaysRun = true, dataProvider = "differentRole", groups = { "regression" }, priority = 6)
 	public void validatingManageIcon(String roll, String userName, String password, String userNameTwo,
 			String passWordTwo) throws Exception {
@@ -449,21 +451,21 @@ public class UsersAndRoleManagement_Regression {
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * Author : Baskar date: NA Modified date:08/03/2022 Modified by: Baskar
-	 * Description :To verify landing page for User when 'Categorize' is Checekd/Unchecked 
-	 *               from Edit User > functionality tab
+	 * Description :To verify landing page for User when 'Categorize' is
+	 * Checekd/Unchecked from Edit User > functionality tab
 	 */
 
 	@DataProvider(name = "fourRole")
 	public Object[][] fourRole() {
-		return new Object[][] { { "sa", Input.sa1userName, Input.sa1password, Input.pa1userName, Input.pa1password }, 
-			{ "sa", Input.sa1userName, Input.sa1password, Input.rmu1userName, Input.rmu1password },
+		return new Object[][] { { "sa", Input.sa1userName, Input.sa1password, Input.pa1userName, Input.pa1password },
+				{ "sa", Input.sa1userName, Input.sa1password, Input.rmu1userName, Input.rmu1password },
 				{ "pa", Input.pa1userName, Input.pa1password, Input.pa1userName, Input.pa1password },
-				{ "pa", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password },
-				 };
+				{ "pa", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password }, };
 	}
+
 	@Test(alwaysRun = true, dataProvider = "fourRole", groups = { "regression" }, priority = 7)
 	public void validatingCategorizeIcon(String roll, String userName, String password, String userNameTwo,
 			String passWordTwo) throws Exception {
@@ -593,18 +595,19 @@ public class UsersAndRoleManagement_Regression {
 
 	/**
 	 * Author : Vijaya.Rani date: 09/03/2022 Modified date:NA Modified by:NA
-	 * Description :Verify when user enters First Name to search in 'Filter by user name' text 
-	 * box and hits enter key. 'RPMXCON-53179' sprint-13
+	 * Description :Verify when user enters First Name to search in 'Filter by user
+	 * name' text box and hits enter key. 'RPMXCON-53179' sprint-13
 	 */
 
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
 	public void validatingEnterFirstNameSearchFilterByUserName() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53179");
-		baseClass.stepInfo("Verify when user enters First Name to search in 'Filter by user name' text box and hits enter key.");
+		baseClass.stepInfo(
+				"Verify when user enters First Name to search in 'Filter by user name' text box and hits enter key.");
 		userManage = new UserManagement(driver);
 		softAssertion = new SoftAssert();
 		String firstName = "Automation";
-		
+
 		// Login As SA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
@@ -612,33 +615,35 @@ public class UsersAndRoleManagement_Regression {
 		userManage.passingUserName(firstName);
 		userManage.applyFilter();
 		baseClass.stepInfo("Apply Filter Button in clicked successfully");
-				
+
 		driver.waitForPageToBeReady();
-		String AfterfilterUserName=userManage.getFirstNameTab().getText().trim();
+		String AfterfilterUserName = userManage.getFirstNameTab().getText().trim();
 		System.out.println(AfterfilterUserName);
-		
+
 		softAssertion.assertEquals(firstName, AfterfilterUserName);
-		baseClass.passedStep("Users containing the entered first name is searched and listed under the firstName user list is Displayed Successfully");
+		baseClass.passedStep(
+				"Users containing the entered first name is searched and listed under the firstName user list is Displayed Successfully");
 		softAssertion.assertAll();
-		
+
 		// logout
 		loginPage.logout();
 	}
 
 	/**
 	 * Author : Vijaya.Rani date: 09/03/2022 Modified date:NA Modified by:NA
-	 * Description :Verify when user enters Last Name to search in 'Filter by user name' text box and 
-	 * clicks to Apply. 'RPMXCON-53178' sprint-13
+	 * Description :Verify when user enters Last Name to search in 'Filter by user
+	 * name' text box and clicks to Apply. 'RPMXCON-53178' sprint-13
 	 */
 
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
 	public void validatingEnterLastNameSearchFilterByUserName() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53178");
-		baseClass.stepInfo("Verify when user enters Last Name to search in 'Filter by user name' text box and clicks to Apply.");
+		baseClass.stepInfo(
+				"Verify when user enters Last Name to search in 'Filter by user name' text box and clicks to Apply.");
 		userManage = new UserManagement(driver);
 		softAssertion = new SoftAssert();
 		String lastName = "Indium";
-		
+
 		// Login As SA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
@@ -646,19 +651,20 @@ public class UsersAndRoleManagement_Regression {
 		userManage.passingUserName(lastName);
 		userManage.applyFilter();
 		baseClass.stepInfo("Apply Filter Button in clicked successfully");
-				
+
 		driver.waitForPageToBeReady();
-		String AfterfilterUserLastName=userManage.getLastNameTab().getText().trim();
+		String AfterfilterUserLastName = userManage.getLastNameTab().getText().trim();
 		System.out.println(AfterfilterUserLastName);
-		
+
 		softAssertion.assertEquals(lastName, AfterfilterUserLastName);
-		baseClass.passedStep("Users containing the entered Last name is searched and listed under the lastName user list is Displayed Successfully");
+		baseClass.passedStep(
+				"Users containing the entered Last name is searched and listed under the lastName user list is Displayed Successfully");
 		softAssertion.assertAll();
-		
+
 		// logout
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * Author : Baskar date: NA Modified date:10/03/2022 Modified by: Baskar
 	 * Description :Verify RMU can edit the user within his security group
@@ -684,31 +690,31 @@ public class UsersAndRoleManagement_Regression {
 		userManage.editLoginUser();
 		userManage.getFunctionalityTab().waitAndClick(5);
 		userManage.nativeDownload();
-		boolean flagPopUp=userManage.getPopUpMessageEditUser().Displayed();
+		boolean flagPopUp = userManage.getPopUpMessageEditUser().Displayed();
 		assertion.assertTrue(flagPopUp);
 		userManage.editLoginUser();
 		userManage.getFunctionalityTab().waitAndClick(5);
 		userManage.nativeDownload();
-		boolean flagPopUps=userManage.getPopUpMessageEditUser().Displayed();
+		boolean flagPopUps = userManage.getPopUpMessageEditUser().Displayed();
 		assertion.assertTrue(flagPopUps);
 		assertion.assertAll();
 		baseClass.passedStep("Rmu user can able to edit the user with his security group");
-        
+
 		// logout
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * Author : Baskar date: NA Modified date:10/03/2022 Modified by: Baskar
-	 * Description :Verify list box should be displayed for security group on 
-	 *              edit user pop up for RMU and Reviewer
+	 * Description :Verify list box should be displayed for security group on edit
+	 * user pop up for RMU and Reviewer
 	 */
 
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void validatingForRmuUserSecurityGroupListBox() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52660");
-		baseClass.stepInfo("Verify list box should be displayed for security "
-				+ "group on edit user pop up for RMU and Reviewer");
+		baseClass.stepInfo(
+				"Verify list box should be displayed for security " + "group on edit user pop up for RMU and Reviewer");
 		userManage = new UserManagement(driver);
 		SoftAssert assertion = new SoftAssert();
 
@@ -723,18 +729,792 @@ public class UsersAndRoleManagement_Regression {
 		driver.waitForPageToBeReady();
 		// validating security group list box
 		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#s1').scrollBy(0,2000)");
-		boolean securityScrollList=(boolean)((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#ddlSg').scrollHeight>document.querySelector('#ddlSg').clientHeight;");
+		boolean securityScrollList = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript(
+				"return document.querySelector('#ddlSg').scrollHeight>document.querySelector('#ddlSg').clientHeight;");
 		assertion.assertTrue(securityScrollList);
 		baseClass.passedStep("Security group list box displayed in sa user manage userlist in edit popup window");
-		int count=userManage.getSecurityGroupList().size();
-		baseClass.stepInfo("Security group list box displayed with :" +count+" different SG Group");
+		int count = userManage.getSecurityGroupList().size();
+		baseClass.stepInfo("Security group list box displayed with :" + count + " different SG Group");
 		System.out.println(count);
-		
+
 		assertion.assertAll();
-        
+
 		// logout
 		loginPage.logout();
 	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:20/03/2022 Modified by: Baskar
+	 * Description :To verify landing page for User when 'Search' is Checked from
+	 * Bulk User Access Control
+	 */
+
+	@DataProvider(name = "bulkSearch")
+	public Object[][] bulkSearch() {
+		return new Object[][] {
+				{ "pa", Input.sa1userName, Input.sa1password, Input.pa1userName, Input.pa1password,
+						"Project Administrator", "sa",Input.pa1FullName },
+				{ "rmu", Input.sa1userName, Input.sa1password, Input.rmu1userName, Input.rmu1password, "Review Manager",
+						"sa",Input.rmu1FullName},
+				{ "rev", Input.sa1userName, Input.sa1password, Input.rev1userName, Input.rev1password, "Reviewer",
+						"sa",Input.rev1FullName },
+				{ "pa", Input.pa1userName, Input.pa1password, Input.pa1userName, Input.pa1password,
+						"Project Administrator", "pa",Input.pa1FullName },
+				{ "rmu", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password, "Review Manager",
+						"pa",Input.rmu1FullName },
+				{ "rev", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password, "Reviewer",
+						"pa" },
+				{ "pa", Input.da1userName, Input.da1password, Input.pa1userName, Input.pa1password,
+						"Project Administrator", "da",Input.pa1FullName },
+				{ "rmu", Input.da1userName, Input.da1password, Input.rmu1userName, Input.rmu1password, "Review Manager",
+						"da",Input.rmu1FullName },
+				{ "rev", Input.da1userName, Input.da1password, Input.rev1userName, Input.rev1password, "Reviewer",
+						"da",Input.rev1FullName }, };
+	}
+
+	@Test(alwaysRun = true, dataProvider = "bulkSearch", groups = { "regression" }, priority = 13)
+	public void validatingBulkuserSearchIcon(String roll, String loginuser, String loginPass, String rollUser,
+			String rollPass, String rollId, String assignRole,String fullName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52690");
+		baseClass.stepInfo("To verify landing page for User when 'Search' is Checked from Bulk User Access Control");
+		userManage = new UserManagement(driver);
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, false, true, true, true, true, true, true,
+					true, true, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, false, true, true, true, false, false,
+					true, true, true, true, true, true);
+		}
+		if (roll == "rev") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, false, false, false, false, false, false, false,
+					false, true, true, true, true, true);
+		}
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(fullName));
+		userManage.getSelectBulkUser(fullName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// validating search icon
+		userManage.verifySearchIcon(true, true, rollUser);
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:20/03/2022 Modified by: Baskar
+	 * Description :To verify landing page for User when 'Search' is Checked from
+	 * Edit User > functionality tab
+	 */
+
+	@DataProvider(name = "threeRole")
+	public Object[][] ThreeRole() {
+		return new Object[][] { { "pa", Input.pa1userName, Input.pa1password, null, null },
+				{ "rmu", Input.rmu1userName, Input.rmu1password, null, null },
+				{ "rev", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password }, };
+	}
+
+	@Test(alwaysRun = true, dataProvider = "threeRole", groups = { "regression" }, priority = 14)
+	public void validatingSearchIcon(String roll, String loginuser, String loginPass, String assignUser,
+			String assignPass) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52691");
+		baseClass.stepInfo(
+				"To verify landing page for User when 'Search' is Checked from Edit User > functionality tab");
+		userManage = new UserManagement(driver);
+		SoftAssert assertion = new SoftAssert();
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		if (roll == "rev") {
+			userManage.passingUserName(assignUser);
+		}
+		if (roll == "pa" || roll == "rmu") {
+			userManage.passingUserName(loginuser);
+		}
+		userManage.applyFilter();
+		// editing the user based on login role
+		if (roll == "pa" || roll == "rmu" || roll == "rev") {
+			userManage.editLoginUser();
+		}
+		userManage.getFunctionalityTab().waitAndClick(5);
+		// validating checkbox checked
+		String flag = userManage.getSearchCheck().GetAttribute("checked");
+		assertion.assertTrue(Boolean.parseBoolean(flag));
+		if (Boolean.parseBoolean(flag)) {
+			baseClass.passedStep("Search checkbox is checked");
+		} else {
+			baseClass.failedStep("Search checkbox is not checked");
+		}
+		// logout
+		loginPage.logout();
+		// login as roll
+		loginPage.loginToSightLine(loginuser, loginPass);
+
+		// validating search icon
+		userManage.verifySearchIcon(true, true, loginuser);
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:20/03/2022 Modified by: Baskar
+	 * Description :To verify landing page for User when 'Categorize' is
+	 * Checekd/Unchecked from Bulk User Access Control
+	 */
+
+	@DataProvider(name = "bulkCategorize")
+	public Object[][] basedRollId() {
+		return new Object[][] {
+				{ "pa", Input.sa1userName, Input.sa1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "sa", Input.pa1FullName },
+				{ "rmu", Input.sa1userName, Input.sa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"sa", Input.rmu1FullName },
+				{ "pa", Input.pa1userName, Input.pa1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "pa", Input.pa1FullName },
+				{ "rmu", Input.pa1userName, Input.pa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"pa", Input.rmu1FullName },
+				{ "pa", Input.da1userName, Input.da1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "da", Input.pa1FullName },
+				{ "rmu", Input.da1userName, Input.da1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"da", Input.rmu1FullName }, };
+	}
+
+	@Test(alwaysRun = true, dataProvider = "bulkCategorize", groups = { "regression" }, priority = 15)
+	public void validatingBulkUserCategorizeIcon(String roll, String loginuser, String loginPass, String rollId,
+			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52693");
+		baseClass.stepInfo("To verify landing page for User when 'Categorize' is Checekd/Unchecked "
+				+ "from Bulk User Access Control");
+		userManage = new UserManagement(driver);
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, false, true, true, true,
+					true, true, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, false, false, false,
+					true, true, true, true, true, true);
+		}
+		baseClass.stepInfo("Enabling the radio btn for Categorize checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// validating search icon
+		userManage.verifyBulkCategorizeIcon(true, true, rollUser);
+		// logout
+		loginPage.logout();
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, false, true, true, true,
+					true, true, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, false, false, false,
+					true, true, true, true, true, true);
+		}
+		baseClass.stepInfo("Disable the radio btn for Categorize checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// validating search icon
+		userManage.verifyBulkCategorizeIcon(false, false, rollUser);
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:20/03/2022 Modified by: Baskar
+	 * Description :To verify landing page for User when 'Manage' is
+	 * Checekd/Unchecked from Bulk User Access Control
+	 */
+
+	@DataProvider(name = "bulkManage")
+	public Object[][] bulkManage() {
+		return new Object[][] {
+				{ "pa", Input.sa1userName, Input.sa1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "sa", Input.pa1FullName },
+				{ "rmu", Input.sa1userName, Input.sa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"sa", Input.rmu1FullName },
+				{ "pa", Input.pa2userName, Input.pa2password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "pa", Input.pa1FullName },
+				{ "rmu", Input.pa1userName, Input.pa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"pa", Input.rmu1FullName },
+				{ "pa", Input.da1userName, Input.da1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "da", Input.pa1FullName },
+				{ "rmu", Input.da1userName, Input.da1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"da", Input.rmu1FullName }, };
+	}
+
+	@Test(alwaysRun = true, dataProvider = "bulkManage", groups = { "regression" }, priority = 16)
+	public void validatingBulkUserManageIcon(String roll, String loginuser, String loginPass, String rollId,
+			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52695");
+		baseClass.stepInfo("To verify landing page for User when 'Manage' is Checekd/Unchecked "
+				+ "from Bulk User Access Control");
+		userManage = new UserManagement(driver);
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, true, true, true, true, true, true, true, true,
+					true, true, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, true, true, true, true, true, false, false,
+					true, true, true, true, true, true);
+		}
+		baseClass.stepInfo("Disable the radio btn for Manage checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// validating search icon
+		userManage.verifyBulkManageIcon(false, false, rollUser);
+		// logout
+		loginPage.logout();
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, true, true, true, true, true, true, true, true,
+					true, true, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, true, true, true, true, true, false, false,
+					true, true, true, true, true, true);
+		}
+		baseClass.stepInfo("Enable the radio btn for Manage checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// validating search icon
+		userManage.verifyBulkManageIcon(true, true, rollUser);
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:20/03/2022 Modified by: Baskar
+	 * Description :To verify landing page for User when 'Manage' is
+	 * Checekd/Unchecked from Bulk User Access Control
+	 */
+
+	@DataProvider(name = "bulkIngestion")
+	public Object[][] bulkIngestion() {
+		return new Object[][] {
+				{ "pa", Input.sa1userName, Input.sa1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "sa", Input.pa1FullName },
+				{ "pa", Input.pa2userName, Input.pa2password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "pa", Input.pa1FullName },
+				{ "pa", Input.da1userName, Input.da1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "da", Input.pa1FullName }, };
+	}
+
+	@Test(alwaysRun = true, dataProvider = "bulkIngestion", groups = { "regression" }, priority = 17)
+	public void validatingBulkUserIngestionIcon(String roll, String loginuser, String loginPass, String rollId,
+			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52697");
+		baseClass.stepInfo("To verify landing page for User when 'Manage' is Checekd/Unchecked "
+				+ "from Bulk User Access Control");
+		userManage = new UserManagement(driver);
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, true, true, true, true, true, true, true, true, true,
+					true, true, true, true, true);
+		}
+		baseClass.stepInfo("Disable the radio btn for Manage checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// validating search icon
+		userManage.verifyBulkUserIngestionIcon(false, false, rollUser);
+		// logout
+		loginPage.logout();
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, true, true, true, true, true, true, true, true, true,
+					true, true, true, true, true);
+		}
+		baseClass.stepInfo("Enable the radio btn for Manage checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// validating search icon
+		userManage.verifyBulkUserIngestionIcon(true, true, rollUser);
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:20/03/2022 Modified by: Baskar
+	 * Description :To verify landing page for User when 'All Repors' is
+	 * Checekd/Unchecked from Bulk User Access Control
+	 */
+
+	@DataProvider(name = "bulkAllReport")
+	public Object[][] bulkAllReport() {
+		return new Object[][] {
+				{ "pa", Input.sa1userName, Input.sa1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "sa", Input.pa1FullName },
+				{ "rmu", Input.sa1userName, Input.sa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"sa", Input.rmu1FullName },
+				{ "pa", Input.pa2userName, Input.pa2password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "pa", Input.pa1FullName },
+				{ "rmu", Input.pa1userName, Input.pa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"pa", Input.rmu1FullName },
+				{ "pa", Input.da1userName, Input.da1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "da", Input.pa1FullName },
+				{ "rmu", Input.da1userName, Input.da1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"da", Input.rmu1FullName }, };
+	}
+
+	@Test(alwaysRun = true, dataProvider = "bulkAllReport", groups = { "regression" }, priority = 18)
+	public void validatingBulkUserAllReportIcon(String roll, String loginuser, String loginPass, String rollId,
+			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52700");
+		baseClass.stepInfo("To verify landing page for User when 'All Repors' is Checekd/Unchecked "
+				+ "from Bulk User Access Control");
+		userManage = new UserManagement(driver);
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, false,
+					true, true, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, false, false,
+					false, true, true, true, true, true);
+		}
+		baseClass.stepInfo("Disable the radio btn for AllReport checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// validating search icon
+		userManage.verifyBulkUserAllReportIcon(false, false, rollUser);
+		// logout
+		loginPage.logout();
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, false,
+					true, true, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, false, false,
+					false, true, true, true, true, true);
+		}
+		baseClass.stepInfo("Enable the radio btn for AllReport checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// validating search icon
+		userManage.verifyBulkUserAllReportIcon(true, true, rollUser);
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:20/03/2022 Modified by: Baskar
+	 * Description :To verify for Project Admin when 'Download Native' is
+	 * Checekd/Unchecked from Bulk User Access Control
+	 */
+
+	@DataProvider(name = "bulkDwNative")
+	public Object[][] bulkDwNative() {
+		return new Object[][] {
+				{ "pa", Input.sa1userName, Input.sa1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "sa", Input.pa1FullName },
+				{ "rmu", Input.sa1userName, Input.sa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"sa", Input.rmu1FullName },
+				{ "rev", Input.sa1userName, Input.sa1password, "Reviewer", Input.rev1userName, Input.rev1password, "sa",
+						Input.rev1FullName },
+				{ "pa", Input.pa2userName, Input.pa2password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "pa", Input.pa1FullName },
+				{ "rmu", Input.pa1userName, Input.pa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"pa", Input.rmu1FullName },
+				{ "rev", Input.pa1userName, Input.pa1password, "Reviewer", Input.rev1userName, Input.rev1password, "pa",
+						Input.rev1FullName },
+				{ "pa", Input.da1userName, Input.da1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "da", Input.pa1FullName },
+				{ "rmu", Input.da1userName, Input.da1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"da", Input.rmu1FullName },
+				{ "rev", Input.da1userName, Input.da1password, "Reviewer", Input.rev1userName, Input.rev1password, "da",
+						Input.rev1FullName },
+				};
+	}
+
+	@Test(alwaysRun = true, dataProvider = "bulkDwNative", groups = { "regression" }, priority = 19)
+	public void validatingBulkUserDownloadNativeIcon(String roll, String loginuser, String loginPass, String rollId,
+			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52701");
+		baseClass.stepInfo("To verify for Project Admin when 'Download Native' "
+				+ "is Checekd/Unchecked from Bulk User Access Control");
+		userManage = new UserManagement(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					false, true, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, false, false, true,
+					false, true, true, true, true);
+		}
+		if (roll == "rev") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, false, true, false, false, false, false, false,
+					false, false, true, true, true, true);
+		}
+		baseClass.stepInfo("Disable the radio btn for Download native checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			if (roll == "rmu"||roll=="rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu"||roll=="rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// session search to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		// validating Download native icon
+		docViewPage.verifyBulkUserNativeFile(false, false, rollUser);
+		// logout
+		loginPage.logout();
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					false, true, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, false, false, true,
+					false, true, true, true, true);
+		}
+		if (roll == "rev") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, false, false, false, false, false, false, false,
+					false, false, true, true, true, true);
+		}
+		baseClass.stepInfo("Enable the radio btn for Download native checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			if (roll == "rmu"||roll=="rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu"||roll=="rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// session search to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		// validating Download native icon
+		docViewPage.verifyBulkUserNativeFile(true, true, rollUser);
+		// logout
+		loginPage.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
