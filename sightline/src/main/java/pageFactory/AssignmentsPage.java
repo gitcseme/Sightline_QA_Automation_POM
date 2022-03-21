@@ -5064,7 +5064,7 @@ public Element getFamilyMembersCount() {
 		actions.clickAndHold((liveSequenceSorts(metaData)).getWebElement());
 		System.out.println("Click and hold performed");
 		actions.moveToElement((dropElement()).getWebElement());
-		actions.moveToElement((dragElement(metaData)).getWebElement(), 0, -30);
+		actions.moveToElement((dragElement(metaData)).getWebElement(), 0, -35);
 		actions.release(dropElement().getWebElement());
 		actions.release();
 		actions.build().perform();

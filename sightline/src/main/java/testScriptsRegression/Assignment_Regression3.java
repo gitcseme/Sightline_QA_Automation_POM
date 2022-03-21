@@ -72,8 +72,8 @@ public class Assignment_Regression3 {
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		softAssertion = new SoftAssert();
@@ -757,7 +757,9 @@ public class Assignment_Regression3 {
 		
 		baseClass.stepInfo("Created Assignment name : " + assignmentName);
 		agnmt.dragAndDropLiveSequence(" Email Threads");
+		baseClass.waitTime(2);
     	agnmt.dragAndDropLiveSequence(" Near Duplicate Docs");
+    	baseClass.waitTime(2);
     	agnmt.dragAndDropLiveSequence(" Family Members");
     	driver.waitForPageToBeReady();
     	//Draw pool toggle enable and setting draw limit as 20.
@@ -859,8 +861,9 @@ public class Assignment_Regression3 {
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 		
 		agnmt.dragAndDropLiveSequence(" Email Threads");
+		baseClass.waitTime(2);
     	agnmt.dragAndDropLiveSequence(" Near Duplicate Docs");
-  
+    	baseClass.waitTime(2);
     	agnmt.dragAndDropLiveSequence(" Family Members");
     	driver.waitForPageToBeReady();
     	// Draw pool Toggle Enable and making draw limit as 20
@@ -875,6 +878,7 @@ public class Assignment_Regression3 {
 		String familyMem = agnmt.getKeepFamilyTogetther_Text().getText();
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepFamiliesTogetherToggle(),
 				familyMem, false);
+		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
