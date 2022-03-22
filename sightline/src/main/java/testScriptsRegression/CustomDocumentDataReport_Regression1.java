@@ -57,8 +57,8 @@ public class CustomDocumentDataReport_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+	//	Input in = new Input();
+	//	in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -72,6 +72,7 @@ public class CustomDocumentDataReport_Regression1 {
 		hitsCount = search.verifyPureHitsCount();
 		search.bulkTag(tagName);
 		lp.logout();
+
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		search = new SessionSearch(driver);
 		search.basicContentSearch(Input.testData1);
@@ -79,39 +80,39 @@ public class CustomDocumentDataReport_Regression1 {
 		lp.quitBrowser();
 
 	}
-/**
- * @author Jayanthi.ganesan
- * @param username
- * @param password
- * @param role
- */
-	@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 0)
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param role
+	 */
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 0)
 	public void navigateToExportReport(String username, String password, String role) {
 		bc.stepInfo("Test case Id: RPMXCON-56390");
 		bc.stepInfo("To verify that User is able view Custom Document Data Report");
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(username, password);
 		bc.stepInfo("Logged in as -" + role);
-        driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-    	CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
-        String expectedURL=Input.url+"Report/ExportData";
-        bc.waitForElement(cddr.getCustomDocumentDataReport());
-        SoftAssert    softAssertion = new SoftAssert();
-        if(cddr.getCustomDocumentDataReport().isDisplayed()) {
-        	bc.passedStep("Custom Document Data  Report link is displayed in reports landing Page");
-        	cddr.getCustomDocumentDataReport().Click();
-            driver.waitForPageToBeReady();
-            bc.stepInfo("Clicked on Custom Document Data  Report link.");
-            softAssertion.assertEquals(expectedURL,driver.getUrl());
-            softAssertion.assertAll();
-            bc.passedStep("***Sucessfully navigated to  Export Page***");   	
-        }
-        else
-        {
-        	bc.failedStep("Custom Document Data  Report link is not found in Reports landing page.");
-        }
-        
-    }
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+		String expectedURL = Input.url + "Report/ExportData";
+		bc.waitForElement(cddr.getCustomDocumentDataReport());
+		SoftAssert softAssertion = new SoftAssert();
+		if (cddr.getCustomDocumentDataReport().isDisplayed()) {
+			bc.passedStep("Custom Document Data  Report link is displayed in reports landing Page");
+			cddr.getCustomDocumentDataReport().Click();
+			driver.waitForPageToBeReady();
+			bc.stepInfo("Clicked on Custom Document Data  Report link.");
+			softAssertion.assertEquals(expectedURL, driver.getUrl());
+			softAssertion.assertAll();
+			bc.passedStep("***Sucessfully navigated to  Export Page***");
+		} else {
+			bc.failedStep("Custom Document Data  Report link is not found in Reports landing page.");
+		}
+
+	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param username
@@ -121,7 +122,7 @@ public class CustomDocumentDataReport_Regression1 {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	 @Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
 	public void verifyAndValidateCustomDataReport(String username, String password, String role)
 			throws InterruptedException, ParseException, IOException {
 		String[] metaDataFields = { "CustodianName" };
@@ -328,6 +329,7 @@ public class CustomDocumentDataReport_Regression1 {
 				"Custom Document Data Report generated if ‘Export Object Names’ and if 'Scrub export of special characters' option is toggled 'ON'");
 
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param username
@@ -339,7 +341,7 @@ public class CustomDocumentDataReport_Regression1 {
 	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5)
 	public void verifyRowDisplay_metadataTab(String username, String password, String role)
 			throws InterruptedException, IOException {
-		String[] workproductFields = { "All Comments", "All Folders","All Tags","All Redaction Tags", };
+		String[] workproductFields = { "All Comments", "All Folders", "All Tags", "All Redaction Tags", };
 		bc.stepInfo("Test case Id: RPMXCON-56939");
 		bc.stepInfo("Verify Export page shows upto 14 rows default for available objects on All reports");
 		lp.loginToSightLine(username, password);
@@ -353,6 +355,7 @@ public class CustomDocumentDataReport_Regression1 {
 		cddr.verifyMetaFieldDisplay();
 		cddr.validateWrkprductHeaders(workproductFields);
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param username
@@ -362,7 +365,7 @@ public class CustomDocumentDataReport_Regression1 {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	 @Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 6)
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 6)
 	public void verifyAndValidateCustomDataReport_BasicSearch(String username, String password, String role)
 			throws InterruptedException, ParseException, IOException {
 		String[] workProductFields = { tagName };
@@ -373,71 +376,245 @@ public class CustomDocumentDataReport_Regression1 {
 		driver.waitForPageToBeReady();
 		bc.stepInfo("Logged in as -" + role);
 		// report1
-		String[] metaDataFields = {Input.metaDataName};
+		String[] metaDataFields = { Input.metaDataName };
 		String textFormat1 = "039";
 		String textFormat2 = "034";
+		
 		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
 		search = new SessionSearch(driver);
+		
 		search.basicContentSearch(Input.testData1);
 		driver.waitForPageToBeReady();
 		search.exportData();
 		driver.waitForPageToBeReady();
 		cddr.selectExportFieldFormat(textFormat1);
 		cddr.selectExportTextFormat(textFormat1);
-			cddr.selectMetaDataFields(metaDataFields);
-			cddr.selectWorkProductFields(workProductFields);
-			cddr.SaveReport(report1);
-			bc.stepInfo("Saved the Custom report " + report1);
-			cddr.getRunReport().waitAndClick(3);
-			cddr.reportRunSuccessMsg();
-			
+		cddr.selectMetaDataFields(metaDataFields);
+		cddr.selectWorkProductFields(workProductFields);
+		cddr.SaveReport(report1);
+		bc.stepInfo("Saved the Custom report " + report1);
+		cddr.getRunReport().waitAndClick(3);
+		cddr.reportRunSuccessMsg();
 
-			// report2
-			bc.selectproject();
-			search.basicContentSearch(Input.testData1);
-			driver.waitForPageToBeReady();
-			search.exportData();
-			cddr.selectExportFieldFormat(textFormat2);
-			cddr.selectExportTextFormat(textFormat2);
-			cddr.selectWorkProductFields(workProductFields);
-			cddr.SaveReport(report2);
-			bc.stepInfo("Saved the Custom report " + report2);
-			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-			cddr.getReportName(report1).Click();
-			driver.waitForPageToBeReady();
-			cddr.selectSource("Security Groups", Input.securityGroup);
-			cddr.validateSelectedExports(workProductFields);
-			cddr.validateSelectedExports(metaDataFields);
-			cddr.getRunReport().Click();
-	    	cddr.reportRunSuccessMsg();
+		// report2
+		bc.selectproject();
+		search.basicContentSearch(Input.testData1);
+		driver.waitForPageToBeReady();
+		search.exportData();
+		cddr.selectExportFieldFormat(textFormat2);
+		cddr.selectExportTextFormat(textFormat2);
+		cddr.selectWorkProductFields(workProductFields);
+		cddr.SaveReport(report2);
+		bc.stepInfo("Saved the Custom report " + report2);
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		cddr.getReportName(report1).Click();
+		driver.waitForPageToBeReady();
+		cddr.selectSources("Security Groups", Input.securityGroup);
+		cddr.validateSelectedExports(workProductFields);
+		cddr.validateSelectedExports(metaDataFields);
+		cddr.getRunReport().Click();
+		cddr.reportRunSuccessMsg();
 
-			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-			cddr.getReportName(report2).Click();
-			driver.waitForPageToBeReady();
-			cddr.selectSource("Security Groups", Input.securityGroup);
-			cddr.selectMetaDataFields(metaDataFields);
-			cddr.validateSelectedExports(workProductFields);
-			final int Bgcount = bc.initialBgCount();
-			cddr.getRunReport().Click();
-			cddr.reportRunSuccessMsg();
-			SoftAssert softAssertion = new SoftAssert();
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		cddr.getReportName(report2).Click();
+		driver.waitForPageToBeReady();
+		cddr.selectSources("Security Groups", Input.securityGroup);
+		driver.scrollPageToTop();
+		cddr.selectMetaDataFields(metaDataFields);
+		cddr.validateSelectedExports(workProductFields);
+		final int Bgcount = bc.initialBgCount();
+		cddr.getRunReport().Click();
+		cddr.reportRunSuccessMsg();
+		SoftAssert softAssertion = new SoftAssert();
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return bc.initialBgCount() == Bgcount + 1;
-				}
-			}), Input.wait60);
-			cddr.downloadExport();
-			bc.waitTime(5);
-			String Filename2 = bc.GetLastModifiedFileName();
-			bc.stepInfo(Filename2 + "Last Modified File name after Downloading the report");
-			String actualValue = cddr.csvfileVerification("", Filename2);
-			softAssertion.assertTrue(actualValue.contains("Alltags" + tagName + "\"CustodianName\"\""));
-			softAssertion.assertAll();
-			bc.passedStep("Sucessfully verified that saved Document Data Export Report from Basic "
-					+ "Search should retain the selected criteria in custom report");
-			ReportsPage rp = new ReportsPage(driver);
-			rp.deleteCustomReport(report1);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		cddr.downloadExport();
+		bc.waitTime(5);
+		String Filename2 = bc.GetLastModifiedFileName();
+		bc.stepInfo(Filename2 + "Last Modified File name after Downloading the report");
+		String actualValue = cddr.csvfileVerification("", Filename2);
+		System.out.println(actualValue);
+		softAssertion.assertTrue(actualValue.contains("All Tags\\" + tagName + "\"\"\"CustodianName\"\""));
+		softAssertion.assertAll();
+		bc.passedStep("Sucessfully verified that saved Document Data Export Report from Basic "
+				+ "Search should retain the selected criteria in custom report");
+		ReportsPage rp = new ReportsPage(driver);
+		rp.deleteCustomReport(report1);
+
+	}
+
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 7)
+	public void verifyAndValidateCustomDataReport_AdvancedSearch(String username, String password, String role)
+			throws InterruptedException, ParseException, IOException {
+		String[] workProductFields = { tagName };
+		String[] metaDataFields = { Input.metaDataName };
+		String[] metaDataField_afterReport = { Input.docId };
+		String textFormat1 = "039";
+		String textFormat2 = "034";
+
+		bc.stepInfo("Test case Id: RPMXCON-58572");
+		bc.stepInfo("Verify saved Document Data Export Report from Advanced Search "
+				+ "should retain the selected criteria in custom report");
+		lp.loginToSightLine(username, password);
+		bc.stepInfo("Logged in as -" + role);
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+		search = new SessionSearch(driver);
+
+		// report1
+		search.advancedContentSearch(Input.testData1);
+		driver.waitForPageToBeReady();
+		search.exportData();
+		cddr.validateSourceSelction("advanced search");
+		cddr.selectExportFieldFormat(textFormat1);
+		cddr.selectExportTextFormat(textFormat1);
+		cddr.selectMetaDataFields(metaDataFields);
+		cddr.selectWorkProductFields(workProductFields);
+		cddr.SaveReport(report1);
+		bc.stepInfo("Saved the Custom report " + report1);
+		cddr.getRunReport().waitAndClick(3);
+		cddr.reportRunSuccessMsg();
+
+		// report2
+		bc.selectproject();
+		search.basicContentSearch(Input.testData1);
+		driver.waitForPageToBeReady();
+		search.exportData();
+		cddr.selectExportFieldFormat(textFormat2);
+		cddr.selectExportTextFormat(textFormat2);
+		cddr.selectMetaDataFields(metaDataFields);
+		cddr.selectWorkProductFields(workProductFields);
+		cddr.SaveReport(report2);
+		bc.stepInfo("Saved the Custom report " + report2);
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		cddr.getReportName(report1).Click();
+		driver.waitForPageToBeReady();
+		cddr.selectSources("Security Groups", Input.securityGroup);
+		cddr.validateSelectedExports(workProductFields);
+		cddr.validateSelectedExports(metaDataFields);
+		cddr.getRunReport().Click();
+		cddr.reportRunSuccessMsg();
+
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		cddr.getReportName(report2).Click();
+		driver.waitForPageToBeReady();
+		cddr.selectSources("Security Groups", Input.securityGroup);
+		driver.scrollPageToTop();
+		cddr.validateSelectedExports(metaDataFields);
+		cddr.validateSelectedExports(workProductFields);
+		cddr.selectMetaDataFields(metaDataField_afterReport);
+		final int Bgcount = bc.initialBgCount();
+		cddr.getRunReport().Click();
+		cddr.reportRunSuccessMsg();
+		SoftAssert softAssertion = new SoftAssert();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		cddr.downloadExport();
+		bc.waitTime(5);
+		String Filename2 = bc.GetLastModifiedFileName();
+		bc.stepInfo(Filename2 + "Last Modified File name after Downloading the report");
+		String actualValue = cddr.csvfileVerification("", Filename2);
+		System.out.println(actualValue);
+		softAssertion.assertTrue(actualValue.contains("CustodianName\"\"\"All Tags\\" + tagName + "\"\"\"DocID\"\""));
+		softAssertion.assertAll();
+		bc.passedStep("Sucessfully verified that saved Document Data Export Report from Advacned  "
+				+ "Search should retain the selected criteria in custom report");
+		ReportsPage rp = new ReportsPage(driver);
+		rp.deleteCustomReport(report1);
+
+	}
+
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 8)
+	public void verifyAndValidateCustomDataReport_SavedSearch(String username, String password, String role)
+			throws InterruptedException, ParseException, IOException {
+		String[] workProductFields = { tagName };
+		String[] metaDataFields = { Input.metaDataName };
+		String textFormat1 = "039";
+		String textFormat2 = "034";
+		String[] metaDataField_afterReport = { Input.docId };
+		String saerchName = "ss" + Utility.dynamicNameAppender();
+		bc.stepInfo("Test case Id: RPMXCON-58573");
+		bc.stepInfo("Verify saved Document Data Export Report from Saved Search"
+				+ " should retain the selected criteria in custom report");
+		lp.loginToSightLine(username, password);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("Logged in as -" + role);
+		// report1
+		SavedSearch ss = new SavedSearch(driver);
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+		search = new SessionSearch(driver);
+		search.advancedContentSearch(Input.testData1);
+		search.saveSearchadvanced(saerchName);
+		ss.savedSearch_Searchandclick(saerchName);
+		ss.getSavedSearchExportButton().Click();
+		cddr.validateSourceSelction("save search");
+		bc.stepInfo("Navigated from saved search to Export Page");
+		cddr.selectExportFieldFormat(textFormat1);
+		cddr.selectExportTextFormat(textFormat1);
+		cddr.selectMetaDataFields(metaDataFields);
+		cddr.selectWorkProductFields(workProductFields);
+		cddr.SaveReport(report1);
+		bc.stepInfo("Saved the Custom report " + report1);
+		cddr.getRunReport().waitAndClick(3);
+		cddr.reportRunSuccessMsg();
+
+		// report2
+		bc.selectproject();
+		search.basicContentSearch(Input.testData1);
+		driver.waitForPageToBeReady();
+		search.exportData();
+		cddr.selectExportFieldFormat(textFormat2);
+		cddr.selectExportTextFormat(textFormat2);
+		cddr.selectMetaDataFields(metaDataFields);
+		cddr.selectWorkProductFields(workProductFields);
+		cddr.SaveReport(report2);
+		bc.stepInfo("Saved the Custom report " + report2);
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		cddr.getReportName(report1).Click();
+		driver.waitForPageToBeReady();
+		cddr.selectSources("Security Groups", Input.securityGroup);
+		cddr.validateSelectedExports(workProductFields);
+		cddr.validateSelectedExports(metaDataFields);
+		cddr.getRunReport().Click();
+		cddr.reportRunSuccessMsg();
+
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		cddr.getReportName(report2).Click();
+		driver.waitForPageToBeReady();
+		cddr.selectSources("Security Groups", Input.securityGroup);
+		driver.scrollPageToTop();
+		cddr.validateSelectedExports(metaDataFields);
+		cddr.validateSelectedExports(workProductFields);
+		cddr.selectMetaDataFields(metaDataField_afterReport);
+		final int Bgcount = bc.initialBgCount();
+		cddr.getRunReport().Click();
+		cddr.reportRunSuccessMsg();
+		SoftAssert softAssertion = new SoftAssert();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		cddr.downloadExport();
+		bc.waitTime(5);
+		String Filename2 = bc.GetLastModifiedFileName();
+		bc.stepInfo(Filename2 + "Last Modified File name after Downloading the report");
+		String actualValue = cddr.csvfileVerification("", Filename2);
+		System.out.println(actualValue);
+		softAssertion.assertTrue(actualValue.contains("CustodianName\"\"\"All Tags\\" + tagName + "\"\"\"DocID\"\""));
+		softAssertion.assertAll();
+		bc.passedStep("Sucessfully verified that saved Document Data Export Report from Saved "
+				+ "Search should retain the selected criteria in custom report");
+		ReportsPage rp = new ReportsPage(driver);
+		rp.deleteCustomReport(report1);
 
 	}
 
@@ -480,26 +657,25 @@ public class CustomDocumentDataReport_Regression1 {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 
-		try {
-			Input in = new Input();
-			in.loadEnvConfig();
-			driver = new Driver();
-			lp = new LoginPage(driver);
-			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
-			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-			tp.deleteAllTags(tagName);
-			SavedSearch savedSearch = new SavedSearch(driver);
-			savedSearch.SaveSearchDelete(saveSearchNameRMU);
-			lp.logout();
-			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-			savedSearch.SaveSearchDelete(saveSearchNamePA);
-			lp.logout();
-			LoginPage.clearBrowserCache();
-			lp.quitBrowser();
-		} catch (Exception e) {
-			lp.quitBrowser();
-		}
+		/*
+		 * try { Input in = new Input(); in.loadEnvConfig(); 
+		 * driver = new Driver(); 
+		 * lp = new LoginPage(driver);
+		 *  lp.loginToSightLine(Input.rmu1userName,Input.rmu1password);
+		 *  TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
+		 * driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		 * tp.deleteAllTags(tagName); 
+		 * SavedSearch savedSearch = new SavedSearch(driver);
+		 * savedSearch.SaveSearchDelete(saveSearchNameRMU); 
+		 * lp.logout();
+		 * lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		 * savedSearch.SaveSearchDelete(saveSearchNamePA); 
+		 * lp.logout();
+		 * LoginPage.clearBrowserCache(); 
+		 * lp.quitBrowser(); } 
+		 * catch (Exception e) {
+		 * lp.quitBrowser(); }
+		 */
 
 	}
 }

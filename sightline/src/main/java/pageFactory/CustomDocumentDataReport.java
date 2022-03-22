@@ -57,7 +57,7 @@ public class CustomDocumentDataReport {
 
 	public Element getMetdataField(String metaDataField) {
 		return driver.FindElementByXPath(
-				"//*[@id='tab1-export']/div/ul/li/label/strong[contains(text(),'" + metaDataField + "')]");
+				"//*[@id='tab1-export']/div/ul/li/label/strong[text()='" + metaDataField + "']");
 	}
 
 	public Element getAddToSelectedBtn() {
@@ -162,8 +162,10 @@ public class CustomDocumentDataReport {
 	public Element getWrkProductHeaders(String eleValue) {
 		return driver.FindElementByXPath("tree//a[text()='"+eleValue+"']/parent::li");
 	}
+	public Element getSelectedSourceName() {
+		return driver.FindElementByXPath("//ul[@id='bitlist-sources']/li");
+	}
 	
-
 	public CustomDocumentDataReport(Driver driver) {
 
 		this.driver = driver;
@@ -356,7 +358,7 @@ public class CustomDocumentDataReport {
 	public void selectMetaDataFields(String[] Mfields) {
 		getMetadataTab().Click();
 		for (int i = 0; i < Mfields.length; i++) {
-			driver.scrollingToBottomofAPage();
+			getMetdataField(Mfields[i]).ScrollTo();
 			getMetdataField(Mfields[i]).waitAndClick(5);
 		}
 		getAddToSelectedBtn().waitAndClick(2);
@@ -526,6 +528,59 @@ public class CustomDocumentDataReport {
 		}
 		softAssertion.assertAll();
 		bc.passedStep("Available objects rows under workproduct tab displayed and expanded by default. ");
+	}
+/**
+ * @author Jayanthi.Ganesan
+ * This method will select source from export page
+ * @param sourceName[Source name like security group,Folder,tag]
+ * @param sourceValue[Tag Name ,Folder name to be selected under Folder/Tag Tree ]
+ * @throws InterruptedException
+ */
+	public void selectSources(String sourceName, final String sourceValue) throws InterruptedException {
+		bc.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
+		Thread.sleep(2000);
+		if (sourceName.equalsIgnoreCase("Security Groups")) {
+			bc.waitForElement(getTally_SecurityGroupsButton());
+			getTally_SecurityGroupsButton().waitAndClick(10);
+			Thread.sleep(2000);
+			bc.waitForElement(getTally_SelectSecurityGroup(sourceValue));
+			getTally_SelectSecurityGroup(sourceValue).waitAndClick(10);
+			// Thread.sleep(2000);
+		}
+		bc.waitForElement(getTally_SaveSelections());
+		driver.scrollingToElementofAPage(getTally_SaveSelections());
+		getTally_SaveSelections().waitAndClick(5);
+
+	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 * This method will verify whether the selected source details are reflected in export page.
+	 * @param sourceType[Source type-Ex: Advanced Search,Saved Search,Doc List,etc]
+	 */
+	public void validateSourceSelction(String sourceType) {
+		driver.waitForPageToBeReady();
+		String sourceName = getSelectedSourceName().getText();
+		switch (sourceType) {
+
+		case "save search":
+			if (sourceName.equalsIgnoreCase("Selected Documents from Save Search")) {
+				bc.passedStep(sourceName + "selected source name reflected in export page as expected.");
+			} else {
+				bc.failedStep(sourceName + "selected source name reflected in export page which is not expected.");
+			}
+			break;
+		case "advanced search":
+			if (sourceName.equalsIgnoreCase("Documents: Selected Documents from Search")) {
+				bc.passedStep(sourceName + "selected source name reflected in export page as expected.");
+			} else {
+
+				bc.failedStep(sourceName + "selected source name reflected in export page which is not expected.");
+			}
+			break;
+
+		}
+
 	}
 
 }
