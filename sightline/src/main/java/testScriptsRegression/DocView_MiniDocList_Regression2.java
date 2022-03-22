@@ -1105,7 +1105,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws Exception
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 17)
-	public void verifyImpersonationConfigureMiniDoclistWindowDis() throws InterruptedException, AWTException {
+	public void verifyWarningMessgeDispalyInMiniDocList() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55213");
 		baseClass.stepInfo(
@@ -1155,7 +1155,7 @@ public class DocView_MiniDocList_Regression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyManageAssigmentAfterImpersonationMiniDocList() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-59591");
@@ -1227,6 +1227,82 @@ public class DocView_MiniDocList_Regression2 {
 		baseClass.waitForElement(docViewPage.getCodingFormSaveBtn());
 		softAssertion.assertTrue(docViewPage.getCodingFormSaveBtn().Displayed());
 		baseClass.passedStep("Save Button is Displayed Successfully");
+		softAssertion.assertAll();
+
+	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 22/03/21 Modified date: NA Modified by:NA
+	 * Description :Verify the context on navigating to doc view from reviewer
+	 * dashboard after impersonation prior to that navigation done from manage
+	 * assignment with configured mini doc list.'RPMXCON-59590' Sprint : 14
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	public void verifyManageAssigmentDasboardInMiniDocList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-59590");
+		baseClass.stepInfo(
+				"Verify the context on navigating to doc view from reviewer dashboard after impersonation prior to that navigation done from manage assignment with configured mini doc list.");
+
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codeFormName;
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Review Manager with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.waitForElement(sessionSearch.getPureHitsCount());
+		int beforepureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
+		baseClass.stepInfo("DocView Assigned Docs Count :" + beforepureHit);
+		sessionSearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Select Assignment in Manage Assignment to DocViewPage
+		driver.getWebDriver().navigate().back();
+		assignmentsPage.manageAssignmentToDocViewAsRmu(assname);
+
+		// Configre gearIcon Perform
+		docViewPage.verifyReviewModeSortOrder();
+
+		// verify Doc Count
+		baseClass.waitForElement(docViewPage.getDocView_info());
+		String AfterDocCount = docViewPage.getDocView_info().getText();
+		baseClass.stepInfo("DocView Assigned Docs Count :" + AfterDocCount);
+
+		// Coding Form Name Display
+		baseClass.waitForElement(docViewPage.getDocView_CFName());
+		String codingFormName = docViewPage.getDocView_CFName().getText();
+		baseClass.stepInfo("DocView Assigned codingForm Name :" + codingFormName);
+		baseClass.passedStep("Selected Coding Form Name is Display");
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		baseClass.waitForElement(docViewPage.getDocView_info());
+		String AfterDocCount1 = docViewPage.getDocView_info().getText();
+		baseClass.stepInfo("DocView Assigned Docs Count :" + AfterDocCount1);
+		// Coding Form Name Display
+		baseClass.waitForElement(docViewPage.getDocView_CFName());
+		String codingFormName1 = docViewPage.getDocView_CFName().getText();
+		baseClass.stepInfo("DocView Assigned codingForm Name :" + codingFormName1);
+		baseClass.passedStep("Selected Coding Form Name is Display");
+		// Complete Btn Display
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		softAssertion.assertTrue(docViewPage.getCompleteDocBtn().Displayed());
+		baseClass.passedStep("Complete Button is Displayed Successfully");
 		softAssertion.assertAll();
 
 	}
