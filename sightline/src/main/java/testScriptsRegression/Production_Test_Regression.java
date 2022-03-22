@@ -7097,6 +7097,149 @@ public class Production_Test_Regression {
 		loginPage.logout();
 		
 	}
+	/**
+	 * @author Aathith Test case id-RPMXCON-47969
+	 * @Description To Verify Correct  Count of Native Documents produce in (Production in Different Security Group).
+	 * 
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 101)
+	public void verifyProdPrivCoutDiffSecuriyGroup() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-47969 -Production Component");
+		base.stepInfo("To Verify Correct  Count of Native Documents produce in (Production in Different Security Group).");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkRelease(Input.securityGroup_sg47);
+		sessionSearch.bulkFolderExisting(foldername);
+		
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		sg.addFolderToSecurityGroup(Input.securityGroup_sg47, foldername);
+		
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingSecurityGroup(Input.securityGroup_sg47);
+		driver.waitForPageToBeReady();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTiffSectionDisablePrivilegedDocs();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.verifyText(page.getNumberOfNativeDocs(), "0");
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		base.passedStep("To Verify Correct  Count of Native Documents produce in (Production in Different Security Group).");
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		loginPage.logout();
+		
+	}
+	/**
+	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-55993
+	 * @Description: Verify that status text along with the docment counts show properly in the space available for the progress bar on tile view
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 102)
+	public void verifyStatusTextAndDocumentCountWithDifferentResolution() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+
+		base.stepInfo("RPMXCON-55993 -Production component");
+		base.stepInfo(
+				"Verify that status text along with the docment counts show properly in the space available for the progress bar on tile view");
+		
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		int[] diemen = { 1920, 1080 };
+		double[] zoom = { 0.75, 0.80, 0.90, 1, 1.25 };
+
+		// Pre-requisites
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// Verify archive status on Gen page
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.getbtnProductionGenerate().waitAndClick(10);
+		base.stepInfo("Production with different progress status should be available");
+
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+
+		for (int i = 0; i < zoom.length; i++) {
+
+			Dimension pram1 = new Dimension(diemen[0], diemen[1]);
+			driver.Manage().window().setSize(pram1);
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.body.style.zoom = '"+zoom[i]+"'");
+
+			driver.Navigate().refresh();
+			if (page.getProductionFromHomePage(productionname).isDisplayed()) {
+				base.passedStep("Status bar text is displayed in : " + diemen[0] + "x" + diemen[1]
+						+ " with zoom size : " + zoom[i]);
+				System.out.println("displayed");
+			} else {
+				base.failedStep("Status bar text is not displayed");
+				System.out.println("Not displayed");
+			}
+			if (page.getProductionDocCountFromHomePage(productionname).isDisplayed()) {
+				base.passedStep("Status bar document count is displayed in : " + diemen[0] + "x" + diemen[1]
+						+ " with zoom size : " + zoom[i]);
+				System.out.println("displayed");
+			} else {
+				base.failedStep("Status bar document count is not displayed");
+				System.out.println("Not displayed");
+			}
+		}
+
+		base.passedStep(
+				"Verified that status text along with the docment counts show properly in the space available for the progress bar on tile view");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		loginPage.logout();
+	}
 
 	
 	@AfterMethod(alwaysRun = true)

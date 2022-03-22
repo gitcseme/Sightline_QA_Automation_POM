@@ -2769,10 +2769,20 @@ public class ProductionPage {
 	
 	public Element getDaAdditionalDataProject(String project) {
 		return driver.FindElementByXPath("//td[@class='ddGridAlignLeft sorting_1']//a[text()='"+project+"']");
-		}
-		public Element gotoDAtoRMU(String project) {
+	}
+	
+	public Element gotoDAtoRMU(String project) {
 		return driver.FindElementByXPath("//a[text()='"+project+"']/..//a[text()='Go to Project']");
-		}
+	}
+	
+	//added by Aathith
+	public Element getProductionDocCountFromHomePage(String productionName) {
+		return driver.FindElementByXPath("//a[@title='" + productionName + "']//..//..//span[@class='font-md']");
+	}
+	public Element getNumberOfNativeDocs() {
+		return driver.FindElementByXPath("//label[contains(text(),'Number of Natives: ')]//following-sibling::label");
+	}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
