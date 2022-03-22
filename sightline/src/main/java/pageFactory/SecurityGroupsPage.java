@@ -454,6 +454,8 @@ public class SecurityGroupsPage {
 	 *                          add to security group).
 	 * @param folderName        -- (folderName is a string value that name of
 	 *                          folder)
+	 *  
+	 *  @Modifed On : 22/03/2022 change try catch to if else on the button getYesButton()
 	 */
 	public void addFolderToSecurityGroup(String securityGroupName, String folderName) {
 		try {
@@ -471,10 +473,10 @@ public class SecurityGroupsPage {
 			bc.waitForElement(getFolderRightShiftButton());
 			getFolderRightShiftButton().Click();
 			getProjectLevelEmailCheckBox().Click();
-			try {
-				getYesButton().Click();
-			} catch (Exception e) {
-				getSG_AnnSaveButton().Click();
+			if(getYesButton().isElementAvailable(1)) {
+				getYesButton().waitAndClick(10);
+			} else {
+				getSG_AnnSaveButton().waitAndClick(10);
 			}
 			bc.waitForElement(bc.getSuccessMsg());
 			bc.getSuccessMsg().waitAndFind(10);
