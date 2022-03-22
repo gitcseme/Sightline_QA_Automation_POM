@@ -736,6 +736,43 @@ public class DocExplorer_Regression1 {
 
 			}
 			
+			/**
+			 * @author Gopinath
+			 * @TestCase Id:54591 Verify the Tree View is displayed from the left side of the "Doc Explorer" page
+			 * @Description:To Verify the Tree View is displayed from the left side of the "Doc Explorer" page
+			 */  
+			@Test(alwaysRun = true, groups = { "regression" })
+			public void verifyDocExplorerTreeView() {
+				String folderName="Enron Data (23)";
+				int folderLevel=5;
+				baseClass = new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-54952");
+				baseClass.stepInfo("Verify the Tree View is displayed from the left side of the 'Doc Explorer' page");
+				loginPage.logout();
+				
+				baseClass.stepInfo("Login review manager");
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				
+				docexp = new DocExplorerPage(driver);
+				
+				baseClass.stepInfo("Navigating to docExplorer page");
+				docexp.navigateToDocExplorerPage();
+				
+				baseClass.stepInfo("Verify folder structure");
+				docexp.verrifyDocExpDefaultTreeStructure(folderName);
+				baseClass.stepInfo("verify zero doc folders are no displayed");
+				docexp.verifyDOcExplorerNoZeroDocFolder();
+				
+				baseClass.stepInfo("verify doc explorer folder and datasets");
+				docexp.verrifyDocExplorerFolder(folderName);
+				
+				baseClass.stepInfo("verify docexplorer folder level structure");
+				driver.Navigate().refresh();
+				docexp.verifyDocExpFolderLevel(folderName,folderLevel );
+				
+				
+			}
+			
 	/**@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

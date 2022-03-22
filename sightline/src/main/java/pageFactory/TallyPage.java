@@ -511,7 +511,7 @@ public class TallyPage {
 
 	public Element getSubAssgnCheckBox() {
 		return driver.FindElementByXPath("//strong[text()=' Assignments']//..//..//input[@name='sub-metadata']//..//i");
-	}
+	}  
 	public Element getsubTallyFolderExpandButton(String expandValue) {
 		return driver.FindElementByXPath("//div[@id='_subfoldersTree']//li[@aria-expanded='"+expandValue+"']/i");
 	}
@@ -522,6 +522,11 @@ public class TallyPage {
 		return driver.FindElementByXPath("//div[@id='_subtagsTree']//li[@aria-expanded='"+expandValue+"']/i");
 	}
 
+	//Added by Gopinath - 21/03/2022
+	public Element getTallyPageHeader() {
+		return driver.FindElementByXPath("//h1[@class='page-title' and contains(text(),'Tally')]");
+	}
+	
 	public TallyPage(Driver driver) {
 
 		this.driver = driver;

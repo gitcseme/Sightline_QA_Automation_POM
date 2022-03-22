@@ -666,6 +666,14 @@ public class Input {
 	public static String conceptualDocId04;
 	public static String defaultPdfDocId;
 
+	//Added by Gopinath -21/03/2022
+	public static String iceSourceSystem;
+	public static String multiPageTIFFSourceFolder;
+	public static String multiPageTIFFDATLoadFile;
+	public static String documentKeyBNum;
+	public static String documentKeyDSource;
+	public static String documentKeyCName;
+	 
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1341,6 +1349,15 @@ public class Input {
 		lessThan500PagesDocId = testData.getLessThan500PagesDocId();
 		d500PagesDocId = testData.getD500PagesDocId();
 
+		//Added by Gopinath -21/03/2022
+		iceSourceSystem = testData.getIceSourceSystem();
+		multiPageTIFFSourceFolder = testData.getMultiPageTIFFSourceFolder();
+		multiPageTIFFDATLoadFile = testData.getMultiPageTIFFDATLoadFile();
+		documentKeyBNum = testData.getDocumentKeyBNum();
+		documentKeyDSource = testData.getDocumentKeyDSource();
+		documentKeyCName = testData.getDocumentKeyCName();
+		
+		
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 

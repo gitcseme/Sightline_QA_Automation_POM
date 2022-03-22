@@ -585,7 +585,7 @@ public class TestData {
 		public String familyDocIdForReviewer01;
 		public String familyDocIdForReviewer02;
 		public String familyDocIdForReviewer03;
-		public String nearDupeDocId01; 
+		public String nearDupeDocId01;  
 		public String nearDupeDocId02;
 		public String nearDupeDocId03;
 		public String nearDupeDocIdForReviewer01;
@@ -595,10 +595,13 @@ public class TestData {
 		public String threadMapWithNonEmailAttachment;
 		
 		
-		
-		
-		
-		
+		//Added by Gopinath - 21/03/2022
+		public String iceSourceSystem;
+		public String multiPageTIFFSourceFolder;
+		public String multiPageTIFFDATLoadFile;
+		public String documentKeyBNum;
+		public String documentKeyDSource;
+		public String documentKeyCName;
 		
 		
 		

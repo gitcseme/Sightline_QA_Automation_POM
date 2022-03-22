@@ -1172,6 +1172,14 @@ public class DocListPage {
 		return driver.FindElementsByXPath("//table[contains(@id,'childlist')]//tr/th");
 		
 	}
+	
+	//Added by Gopinath - 21/03/2022
+	public ElementCollection getChildByRowId() {
+		return driver.FindElementsByXPath("//table[contains(@id,'childlist')]/tbody/tr/td[3]");
+	}
+	public Element getDocList_TallyButton() {
+		return driver.FindElementById("idTally");
+	}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -4459,5 +4467,98 @@ public List<String> gettingAllDocIDs(){
 					System.out.println(row);
 				}
 			 return arList;
+	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * @Description: method to verify sequence of parent and child docs 
+	 */
+	public void verifySequenceOrderOfchildDocsInDocList() {
+		try {
+			int rowNum = 0;
+			JavascriptExecutor js = (JavascriptExecutor) driver.getWebDriver();
+			driver.waitForPageToBeReady();
+			base.waitTime(3);
+
+			List<WebElement> rows = driver.getWebDriver().findElements(By.xpath("//table[@id='dtDocList']//tbody//tr"));
+			for (int row = 0; row < rows.size(); row++) {
+				String rowChar = getParentRow(row).GetAttribute("class").trim();
+				if (rowChar.equalsIgnoreCase((" details-control").trim())) {
+					rowNum = row ;
+					break;
+				}
+			}
+
+			List<WebElement> parents = driver.getWebDriver().findElements(By.xpath("//td[@class=' details-control']"));
+			js.executeScript("arguments[0].scrollIntoView(true);", parents.get(0));
+			js.executeScript("window.scrollBy(0,-250)");
+			for (int i = 0; i < 15; i++) {
+				try {
+					base.waitTime(1);
+					parents.get(0).click();
+					break;
+				} catch (Exception e) {
+					js.executeScript("window.scrollBy(0,-250)");
+				}
+			}
+			String docText = getDocIds().FindWebElements().get(rowNum).getText();
+			int parentDocId =Integer.parseInt( docText.replace("ID", ""));
+			String childDoc = getChildByRowId().FindWebElements().get(0).getText();
+			int firstChildDoc=Integer.parseInt(childDoc.replace("ID",""));
+			if(parentDocId+1==firstChildDoc) {
+				base.passedStep("parent and child docs displayed in sequence order");
+			}else{
+				base.failedStep("in correct sequence order of parent and child docs");
+				
+			}
+			for(int i=0;i<getChildByRowId().size()-1;i++) {
+				String child = getChildByRowId().FindWebElements().get(i).getText();
+				int currentChildDocId=Integer.parseInt(child.replace("ID", ""));
+				String child2 = getChildByRowId().FindWebElements().get(i+1).getText();
+				int nextChildDocId=Integer.parseInt(child2.replace("ID", ""));
+				if(currentChildDocId+1!=nextChildDocId) {
+					base.failedStep("incorrect sequence order of child docs");
+					break;
+				}
+			}
+			base.passedStep("All child docs are displayed in sequence order");
+		  
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying that user can view the Child Document on doc list."
+					+ e.getMessage());
+
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description:methoad to perform tally to navigate to tally page
+	 */
+	public void performTallyAction() {	
+		base.waitTime(2);
+		base.waitForElement(getDocList_actionButton());
+		base.waitTillElemetToBeClickable(getDocList_actionButton());
+		getDocList_actionButton().waitAndClick(10);
+		base.waitForElement(getDocList_TallyButton());
+		base.waitTillElemetToBeClickable(getDocList_TallyButton());
+		getDocList_TallyButton().waitAndClick(10);
+		try {
+			base.waitTime(2);
+			driver.switchTo().alert();
+			base.failedStep("Pop up is appeared while perform tally");
+		}catch(Exception e) {
+			base.passedStep("No popup is  displayed");
+		}
+		TallyPage tallyPage = new TallyPage(driver);
+		base.waitForElement(tallyPage.getTallyPageHeader());
+		if(tallyPage.getTallyPageHeader().isElementAvailable(5)) {
+			base.passedStep("Navigated to tally page");
+		}else {
+			base.failedStep("failed to navigate to tally");
+		}
+		
 	}
 }

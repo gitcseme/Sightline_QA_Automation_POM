@@ -609,7 +609,7 @@
 		<documentKey>DocID</documentKey>
 		<mp3LoadFile>MP3 Files.LST</mp3LoadFile>
 		<dateFormat>YYYY/MM/DD HH:MM:SS</dateFormat>
-		<docId>DocID</docId>
+		<docId>DocID</docId> 
 		<dataSource>Datasource</dataSource>
 		<custodian>Custodian</custodian>
 		<fileExt>FileExt</fileExt>
@@ -623,5 +623,13 @@
 		<ingDocFileType>DocFileType</ingDocFileType>
 		<lessThan500PagesDocId>ID00000189</lessThan500PagesDocId>
 		<d500PagesDocId>ID00000263</d500PagesDocId>
-
+		
+		     <!-- Added by Gopinath Created date - 21/03/2022 -->
+		<iceSourceSystem>ICE</iceSourceSystem>
+		<multiPageTIFFSourceFolder>27Mar_MultiPageTIFF</multiPageTIFFSourceFolder>
+		<multiPageTIFFDATLoadFile>9552EFE2-4EFF-433B-82DD-7B1BD543F16F_DAT.dat</multiPageTIFFDATLoadFile>
+		<documentKeyBNum>BNum</documentKeyBNum>
+		<documentKeyDSource>DSource</documentKeyDSource>
+		<documentKeyCName>CName</documentKeyCName>
+		
 </TestData>

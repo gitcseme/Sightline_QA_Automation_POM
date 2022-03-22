@@ -5301,4 +5301,53 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		}
 			
 	}
+	
+	
+	/**
+	 * @author: Gopinath Created Date: NA Modified by: NA Modified Date: NA
+	 * @description: Method to create ingestion to failed stage
+	 */
+	public String ingestionCreationToFailedState() {
+		String title = null;
+		try {
+			String titleCar = null;
+			int count = 0;
+			driver.waitForPageToBeReady();
+			base.waitForElement(getStatus());
+			for(int i=1;i<500;i++) {
+				driver.waitForPageToBeReady();
+				getIngestionTitle(count+1).ScrollTo();
+				getIngestionTitle(count+1).isElementAvailable(15);
+				title = getIngestionTitle(count+1).GetAttribute("title").trim();
+				getStatus(count+1).isElementAvailable(15);
+				String status = getStatus(count+1).getText().trim();
+				driver.waitForPageToBeReady();
+				for(int j=1;j<50;j++) {
+					titleCar = getIngestionTitle(j).GetAttribute("title").trim();
+					getIngestionTitle(j).ScrollTo();
+					if(titleCar.equalsIgnoreCase(title)) {
+						if(j!=1) {
+							count=j-1;
+						}
+						break;  
+					}else {
+						driver.scrollingToBottomofAPage();
+					}
+				}
+				if(status.contains("In Progress")) {
+					driver.scrollPageToTop();
+					getRefreshButton().isElementAvailable(15);
+					getRefreshButton().Click();
+				}
+				if(status.contains("Failed") && titleCar.equalsIgnoreCase(title)) {
+					base.passedStep("Ingestion is failed as per expected.");
+					break;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while creating ingestion to failed stage."+e.getLocalizedMessage());
+		}
+		return title;
+	}
 }
