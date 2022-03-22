@@ -5350,4 +5350,51 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		}
 		return title;
 	}
+	
+	/**
+	 * @author: Arun Created Date: 22/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify ingestion status after ignoring all the errors
+	 */
+	
+	public void verifyIgnoringErrorsAndContinueIngestion() {
+	
+			 getIngestionName().waitAndClick(10);
+			  
+		      base.waitForElement(errorCountCatalogingStage());
+		      errorCountCatalogingStage().waitAndClick(10);
+		      base.waitForElement(ignoreAllButton());
+		      ignoreAllButton().waitAndClick(10);
+		      if (getApproveMessageOKButton().isElementAvailable(5)) {
+					getApproveMessageOKButton().waitAndClick(10);
+					base.passedStep("Clicked on OK button to ignore all errors");
+				}
+		      
+		      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    		  doneButton().Enabled()  ;}}), Input.wait30); 
+		      doneButton().waitAndClick(10);
+		      
+		      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		  			getCloseButton().Enabled()  ;}}), Input.wait30); 
+		  	getCloseButton().waitAndClick(10);
+		  	base.VerifySuccessMessage("Action done successfully");
+		  	base.waitTime(2);
+		  	getRefreshButton().waitAndClick(10);
+		
+    	//catlogging
+    	for(int i=0;i<20;i++) {
+    		getRefreshButton().waitAndClick(10);
+    		if(getCatalogedIngestionStatus().isElementAvailable(5)) {
+    			base.passedStep("Cataloged completed");
+    			base.passedStep("Ingestion Continued successfully after ignoring errors");
+    			break;
+    		}
+    		else if (getInprogressIngestionStatus().isElementAvailable(5)) {
+    			base.waitTime(20);
+    			getRefreshButton().waitAndClick(10);
+    		}
+    		else if (getFailedIngestionStatus().isElementAvailable(5)) {
+    			base.passedStep("Ingestion not continued successfully after ignoring errors");
+    		}
+    	}
+	}
 }

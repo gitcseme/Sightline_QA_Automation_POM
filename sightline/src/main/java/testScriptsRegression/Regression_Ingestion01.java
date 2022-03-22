@@ -584,6 +584,50 @@ public class Regression_Ingestion01 {
 		ingestionPage.rollBackIngestion();
 		
 	}
+	
+	/** 
+     *Author :Arunkumar date: 22/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49540
+	 * Description :Verify that cataloging error should be displayed for the document if the date & time format for few documents in DAT is different than the selected date format for ingestion
+     * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 27)
+	public void verifyCatalogingErrorForDiferentDateFormat() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49540");
+		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT");
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, Input.dateFormat,Input.DAT_DDMMYYYY,Input.Natives_DDMMYYYY);
+		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
+		//rollback
+		ingestionPage.rollBackIngestion();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 22/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49541
+	 * Description :Verify that Ingestion should be continued if cataloging date time error is displayed for few documents
+     * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 28)
+	public void verifyIgnoringCatalogingErrorAndContinueIngestion() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49541");
+		baseClass.stepInfo("Verify that Ingestion should be continued if cataloging date time error is displayed for few documents");
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
+		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
+		//verify ingestion status after ignoring errors
+		ingestionPage.verifyIgnoringErrorsAndContinueIngestion();
+		//rollback
+		ingestionPage.rollBackIngestion();
+		
+	}
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
