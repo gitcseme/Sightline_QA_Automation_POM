@@ -26469,4 +26469,24 @@ public class DocViewPage {
 			}
 		}
 	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//  Reusable method for clicking the checkbox and perform codesameas and verify chain link
+//	Action click code same as
+	public void clickCheckBoxDocListActionCodeSameAs(int count) {
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocumetCountMiniDocList());
+		for (int i = 1; i <= count; i++) {
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);;
+		}
+		base.waitForElement(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
+		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
+		base.VerifySuccessMessage("Code same performed successfully.");
+		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
+		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+	}
 }
