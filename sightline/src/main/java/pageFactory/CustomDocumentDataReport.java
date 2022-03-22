@@ -539,14 +539,11 @@ public class CustomDocumentDataReport {
 	public void selectSources(String sourceName, final String sourceValue) throws InterruptedException {
 		bc.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().Click();
-		Thread.sleep(2000);
 		if (sourceName.equalsIgnoreCase("Security Groups")) {
 			bc.waitForElement(getTally_SecurityGroupsButton());
 			getTally_SecurityGroupsButton().waitAndClick(10);
-			Thread.sleep(2000);
 			bc.waitForElement(getTally_SelectSecurityGroup(sourceValue));
 			getTally_SelectSecurityGroup(sourceValue).waitAndClick(10);
-			// Thread.sleep(2000);
 		}
 		bc.waitForElement(getTally_SaveSelections());
 		driver.scrollingToElementofAPage(getTally_SaveSelections());
