@@ -813,6 +813,14 @@ public class IngestionPage_Indium {
 	public Element errorCountStatus() {
 		return driver.FindElementById("errcount");
 	}
+	
+	public ElementCollection mappedSourceFields(int row) {
+		return driver.FindElementsByXPath("//*[@id='formMapping']//table//tbody//td["+row+"]");
+	}
+	
+	public ElementCollection previewRecordPopupHeaderFields() {
+		return driver.FindElementsByXPath("//*[@id='popupdiv']//th");
+	}
 
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
@@ -5396,5 +5404,208 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
     			base.passedStep("Ingestion not continued successfully after ignoring errors");
     		}
     	}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 23/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will enter source selection and ingestion type section
+	 */
+	public void sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(String dataset,String DATFile) {
+		
+		base.stepInfo("Click on add new ingestion button");
+		base.waitForElement(getAddanewIngestionButton());
+		getAddanewIngestionButton().waitAndClick(10);
+
+		base.stepInfo("Select Source system");
+		base.waitForElement(getSpecifySourceSystem());
+		getSpecifySourceSystem().selectFromDropdown().selectByVisibleText("TRUE");
+
+		base.stepInfo("Select Location");
+		base.waitForElement(getSpecifyLocation());
+		base.waitTime(2);
+		getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
+
+		base.waitForElement(getSpecifySourceFolder());
+		base.waitTime(2);
+		base.stepInfo("Select Folder");
+		for (int i = 0; i < 30; i++) {
+
+			if (dataset.contains("Collection1K_Tally")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.Collection1KFolder);
+			} else if (dataset.contains("20Family_20Threaded")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.FamilyFolder);
+			} else if (dataset.contains("AllSources")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.AllSourcesFolder);
+			} else if (dataset.contains("0002_H13696_1_Latest")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.H1369Folder);
+			} else if (dataset.contains("16JanMultiPTIFF")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.MultiPTIFFFolder);
+			} else if (dataset.contains("27MarSinglePageTIFF")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SinglePageTIFFFolder);
+			} else if (dataset.contains("CJK_FrenchAudioTestData")) {
+				getSpecifySourceFolder().selectFromDropdown()
+						.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+			} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
+				getSpecifySourceFolder().selectFromDropdown()
+						.selectByVisibleText(Input.EmailConcatenatedDataFolder);
+			} else if (dataset.contains("SSAudioSpeech_Transcript")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SSAudioSpeechFolder);
+			} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
+				getSpecifySourceFolder().selectFromDropdown()
+						.selectByVisibleText(Input.GD994NativeTextForProductionFolder);
+			} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
+				getSpecifySourceFolder().selectFromDropdown()
+						.selectByVisibleText(Input.GNonsearchablePDFLoadfileFolder);
+			} else if (dataset.contains("HiddenProperties_IngestionData")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.HiddenPropertiesFolder);
+			} else if (dataset.contains("UniCodeFiles")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.UniCodeFilesFolder);
+			} else if (dataset.contains("IngestionEmailData")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.IngestionEmailDataFolder);
+			} else if (dataset.contains("CJK_GermanAudioTestData")
+					|| dataset.contains("CJK_JapaneseAudioTestData")) {
+				getSpecifySourceFolder().selectFromDropdown()
+						.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+			}
+		}
+		base.waitTime(2);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getSourceSelectionDATLoadFile());
+		
+		getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(DATFile);
+		
+		base.waitForElement(getSourceSelectionDATKey());
+		base.waitTime(1);
+
+		if (dataset.contains("Collection1K_Tally")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("20Family_20Threaded")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("AllSources")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("ProdBeg");
+		} else if (dataset.contains("0002_H13696_1_Latest")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DOCID");
+		} else if (dataset.contains("16JanMultiPTIFF")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
+		} else if (dataset.contains("27MarSinglePageTIFF")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
+		} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BatesNumber");
+		} else if (dataset.contains("SSAudioSpeech_Transcript")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
+		} else if (dataset.contains("HiddenProperties_IngestionData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
+		} else if (dataset.contains("UniCodeFiles")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("IngestionEmailData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocumentID");
+		} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		}
+
+		base.stepInfo("Select Date Format");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+
+		driver.scrollPageToTop();
+
+		base.waitForElement(getNextButton());
+		getNextButton().waitAndClick(20);
+		base.passedStep("Clicked on Next button");
+
+		base.stepInfo("Pop up messgae for Ingestion without text file");
+		if (getApproveMessageOKButton().isElementAvailable(5)) {
+			getApproveMessageOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to continue without text files");
+		}
+		
+	}
+	
+	/**
+	 * @author: Arun Created Date: 23/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the source selection and ingestion type section after clicking next button
+	 */
+	
+	public void verifySourceSectionStatusAfterClickingNextButton() {
+		
+		driver.waitForPageToBeReady();
+		base.waitTime(2);
+		String sourceSystemStatus = getSpecifySourceSystem().GetAttribute("disabled");
+		String ingestionTypeStatus =getIngestion_IngestionType().GetAttribute("disabled");
+		String nextButtonStatus = getNextButton().GetAttribute("disabled");
+		
+		
+		if(getPreviewRun().Enabled()) {
+			base.passedStep("Configure mapping section enabled");
+		}
+		else {
+			base.failedStep("Configure mapping section not enabled");
+		}
+		
+		if(sourceSystemStatus.equalsIgnoreCase("true") && ingestionTypeStatus.equalsIgnoreCase("true")) {
+			base.passedStep("Source and overwrite setting page disabled");
+		}
+		else {
+			base.failedStep("Source and overwrite setting page not disabled");
+		}
+		
+		if(nextButtonStatus.equalsIgnoreCase("true")) {
+			base.passedStep("Next button in source section is disabled and in non editable state");
+		}
+		else {
+			base.failedStep("Next button is enabled");
+		}
+		
+	}
+	
+	/**
+	 * @author: Arun Created Date: 23/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the count matching in header section pop up with mapping section
+	 */
+	public void verifyHeaderCountInPreviewRecordPopupPage() {
+		driver.waitForPageToBeReady();
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getPreviewRun().Visible()  ;}}), Input.wait30); 
+    	getPreviewRun().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getApproveMessageOKButton().Visible();
+			}
+		}), Input.wait30);
+		getApproveMessageOKButton().waitAndClick(10);
+
+		base.stepInfo("'Preview Documents' pop up is opened successfully");
+		
+		int headerSectionCount =previewRecordPopupHeaderFields().size();
+		
+		int mappedFieldCount = mappedSourceFields(1).size();
+		
+		if(mappedFieldCount==headerSectionCount) {
+			base.passedStep("Headers in preview record popup page count matched with mapped field in configuring section");
+		}
+		else {
+			base.failedStep("Headers in preview record popup page count not matched with mapped field in configuring section");
+		}
+		
 	}
 }

@@ -628,6 +628,25 @@ public class Regression_Ingestion01 {
 		ingestionPage.rollBackIngestion();
 		
 	}
+	
+	/** 
+     *Author :Arunkumar date: 23/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47403
+	 * Description :To verify the headers display in Source field on mapping page.
+	 * @throws Exception 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 29)
+	public void verifyHeadersDisplayOnMappingPage() throws Exception  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47403");
+		baseClass.stepInfo("To verify the headers display in Source field on mapping page.");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		// verify header section count in popup matched with configure mapping section
+		ingestionPage.verifyHeaderCountInPreviewRecordPopupPage();
+		
+	}
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
