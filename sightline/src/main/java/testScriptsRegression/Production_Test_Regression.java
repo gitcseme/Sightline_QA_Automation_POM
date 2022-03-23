@@ -1,16 +1,21 @@
 package testScriptsRegression;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -7239,6 +7244,90 @@ public class Production_Test_Regression {
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		loginPage.logout();
+	}
+	/**
+	* @author Aathith created on:NA modified by:NA TESTCASE No:RPMXCON-47926
+	* @Description:To Verify PRIV flag configured in the DAT section of Production is to being honored for all docs in the generated production
+	*/
+	@Test(enabled=true,groups = { "regression" }, priority = 103)
+	public void verifyDatFiledisBlank() throws Exception {
+	UtilityLog.info(Input.prodPath);
+
+	base.stepInfo("Test case id : RPMXCON-47926 ");
+	base.stepInfo(
+	"To Verify PRIV flag configured in the DAT section of Production is to being honored for all docs in the generated production");
+	
+	foldername = "FolderProd" + Utility.dynamicNameAppender();
+	tagname = "Tag" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+	sessionSearch.bulkTagExisting(tagname);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.addNewFieldOnDAT();
+	page.addDatField(1, "Production", "TIFFPageCount");
+	page.getPrivledgedDATCheckBox(1).waitAndClick(10);
+	page.fillingTIFFSection(tagname);
+	page.navigateToNextSection();
+	page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionWithTag(tagname);
+	page.getIncludeFamilies().waitAndClick(10);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	page.extractFile();
+	
+	driver.waitForPageToBeReady();
+	String home = System.getProperty("user.home");
+	String name = page.getProduction().getText().trim();
+	driver.waitForPageToBeReady();
+	File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
+	if (DatFile.exists()) {
+	base.passedStep("Dat file is exists in generated production");
+	} else {
+	base.failedStep("Dat file is not displayed as expected");
+	}
+
+	String line;
+	List<String> lines = new ArrayList<>();
+	BufferedReader brReader = new BufferedReader(new InputStreamReader(new FileInputStream(DatFile), "UTF16"));
+	while ((line = brReader.readLine()) != null) {
+	lines.add(line);
+	}
+	for (String a : lines) {
+	System.out.println(a);
+	String[] arrOfStr = a.split("þ");
+	for(String text : arrOfStr)
+	{
+		System.out.println("value : "+ text);
+	if (text.isBlank()||text.isEmpty()) {
+	base.passedStep("meta data field is blank");
+	} else {
+	base.stepInfo("this field is bates number");
+	}
+	}
+	}
+	brReader.close();
+	loginPage.logout();
+	base.passedStep("Verified PRIV flag configured in the DAT section of Production is to being honored for all docs in the generated production");
 	}
 
 	
