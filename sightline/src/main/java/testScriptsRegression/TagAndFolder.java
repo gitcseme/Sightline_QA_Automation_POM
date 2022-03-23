@@ -22,6 +22,7 @@ import pageFactory.BaseClass;
 import pageFactory.HomePage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -728,6 +729,259 @@ public class TagAndFolder {
 		tagAndFolderPage.deleteAllTags(renamedTag);
 		tagAndFolderPage.verifyNodeNotPresent(renamedTag, "- not present - Tag  Deleted Successfully ",
 				"Deletion failed");
+
+		// logout
+		lp.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 03/23/21 Modified date:N/A Modified by: Description
+	 *         : Verify that PA User - can edit/delete Tag Group name appropriately
+	 *         that have created on "Tags and Folders" >> Folders screen -
+	 *         RPMXCON-59269 Sprint 14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	public void verifyAfterPAEditAndDeleteTagGroupSG() throws Exception {
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		SecurityGroupsPage sgPage = new SecurityGroupsPage(driver);
+
+		String tagGroup = "newTagGroup" + Utility.dynamicNameAppender();
+		String renamedTagGroup = "renamedTagGroup" + Utility.dynamicNameAppender();
+		String tagGroupSG = "newTagGroup" + Utility.dynamicNameAppender();
+		String renamedTagGroupSG = "renamedTagGroup" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59269 TagsAndFolder Sprint 14");
+		bc.stepInfo(
+				"Verify that PA User - can edit/delete Tag Group name appropriately that have created on \"Tags and Folders\" >> Folders screen");
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Create Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.createTagGroup(Input.securityGroup, tagGroup, "Success", null);
+
+		// Rename Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.verifyNodePresent(tagGroup, true, "Tag");
+		tagAndFolderPage.editTagGroup(Input.securityGroup, tagGroup, renamedTagGroup, "Success", null);
+
+		// Delete folder group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllTagsGroups(renamedTagGroup, "Success");
+		tagAndFolderPage.verifyNodeNotPresent(renamedTagGroup, " - not present - Tag Group Deleted Successfully ",
+				"Deletion failed");
+
+		// Create Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.createTagGroup(Input.securityGroup, tagGroupSG, "Success", null);
+
+		// Add Tag to SG
+		sgPage.navigateToSecurityGropusPageURL();
+		driver.waitForPageToBeReady();
+		sgPage.addTagToSecurityGroup(Input.securityGroup, tagGroupSG);
+		bc.passedStep("Created TagGroup : " + tagGroupSG + " added to Security Group");
+
+		// Rename Tag group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.verifyNodePresent(tagGroupSG, true, "Tag");
+		tagAndFolderPage.editTagGroup(Input.securityGroup, tagGroupSG, renamedTagGroupSG, "Success", null);
+
+		// Delete Tag group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllTagsGroups(renamedTagGroupSG, "Success");
+		tagAndFolderPage.verifyNodeNotPresent(renamedTagGroupSG, " - not present - Tag Group Deleted Successfully ",
+				"Deletion failed");
+
+		lp.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 03/23/21 Modified date:N/A Modified by: Description
+	 *         : Verify that PA User - can edit/delete Folder Group name
+	 *         appropriately that have created on "Tags and Folders" >> Folders
+	 *         screen - RPMXCON-59270 Sprint 14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	public void verifyAfterPAEditAndDeleteFolderGroupSG() throws Exception {
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		SecurityGroupsPage sgPage = new SecurityGroupsPage(driver);
+
+		String folderGroup = "newFolderGroup" + Utility.dynamicNameAppender();
+		String renamedFolderGroup = "renamedFolderGroup" + Utility.dynamicNameAppender();
+
+		String folderGroupSG = "newFolderGroup" + Utility.dynamicNameAppender();
+		String renamedfolderGroupSG = "renamedFolderGroup" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59270 TagsAndFolder Sprint 14");
+		bc.stepInfo(
+				"Verify that PA User - can edit/delete Folder Group name appropriately that have created on \"Tags and Folders\" >> Folders screen");
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// create Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.createFolderGroup(Input.securityGroup, folderGroup, "Success", null);
+
+		// rename Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.verifyNodePresent(folderGroup, true, "Folder");
+		tagAndFolderPage.editFolderGroup(Input.securityGroup, folderGroup, renamedFolderGroup, "Success", null);
+
+		// delete folder group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllFolderGroup(renamedFolderGroup, "Success");
+		tagAndFolderPage.verifyNodeNotPresent(renamedFolderGroup, "- not present - Folder Group Deleted Successfully ",
+				"Deletion failed");
+
+		// create Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.createFolderGroup(Input.securityGroup, folderGroupSG, "Success", null);
+
+		// Add Tag to SG
+		sgPage.navigateToSecurityGropusPageURL();
+		driver.waitForPageToBeReady();
+		sgPage.addFolderToSecurityGroup(Input.securityGroup, folderGroupSG);
+		bc.passedStep("Created Folder Group : " + folderGroupSG + " added to Security Group");
+
+		// rename Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.verifyNodePresent(folderGroupSG, true, "Folder");
+		tagAndFolderPage.editFolderGroup(Input.securityGroup, folderGroupSG, renamedfolderGroupSG, "Success", null);
+
+		// delete folder group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllFolderGroup(renamedfolderGroupSG, "Success");
+		tagAndFolderPage.verifyNodeNotPresent(renamedfolderGroupSG,
+				"- not present - Folder Group Deleted Successfully ", "Deletion failed");
+
+		lp.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 03/22/21 Modified date:N/A Modified by: Description
+	 *         : Verify that PA User - can edit/delete folder names appropriately
+	 *         that have created on "Tags and Folders" >> Folders screen -
+	 *         RPMXCON-59267 Sprint 14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	public void verifyAfterPAEditAndDeleteFolderSG() throws InterruptedException, IOException {
+
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+		
+		String folder1 = "newFolder" + Utility.dynamicNameAppender();
+		String folder2 = "newFolder" + Utility.dynamicNameAppender();
+		String renamedFolder = "renamedFolder" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59267 TagsAndFolder Sprint 14");
+		bc.stepInfo(
+				"Verify that PA User - can edit/delete folder names appropriately that have created on \"Tags and Folders\" >> Folders screen");
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// create Folder
+		tagAndFolderPage.CreateFolder(folder1, Input.securityGroup);
+
+		// rename created folder
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.verifyNodePresent(folder1, true, "Folder");
+		tagAndFolderPage.editFolder(Input.securityGroup, folder1, renamedFolder, "Success", null);
+
+		// delete renamed folder
+		tagAndFolderPage.DeleteFolder(renamedFolder, Input.securityGroup);
+
+		// create Folder set02
+		tagAndFolderPage.CreateFolder(folder2, Input.securityGroup);
+
+		// bulk releasing folder to security groups
+		search.advanceSearchByFolder(folder2);
+		search.bulkRelease(Input.securityGroup);
+		bc.passedStep("Created Folder : " + folder2 + " released to Security Group");
+
+		// rename created folder set02
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.verifyNodePresent(folder2, true, "Folder");
+		tagAndFolderPage.editFolder(Input.securityGroup, folder2, renamedFolder, "Success", null);
+
+		// delete renamed folder set02
+		tagAndFolderPage.DeleteFolder(renamedFolder, Input.securityGroup);
+
+		// logout
+		lp.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 03/23/21 Modified date:N/A Modified by: Description
+	 *         : Verify that PA User - can edit/delete Tag names appropriately that
+	 *         have created on "Tags and Folders" >> Folders screen - RPMXCON-59268
+	 *         Sprint 14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	public void verifyAfterPAEditAndDeleteTagSG() throws InterruptedException, IOException {
+
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+
+		String tag1 = "newTag" + Utility.dynamicNameAppender();
+		String tag2 = "newTag" + Utility.dynamicNameAppender();
+		String renamedTag = "renamedTag" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59268 TagsAndFolder Sprint 14");
+		bc.stepInfo(
+				"Verify that PA User - can edit/delete Tag names appropriately that have created on \"Tags and Folders\" >> Folders screen");
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// create tag
+		tagAndFolderPage.CreateTag(tag1, Input.securityGroup);
+
+		// Edit created tag
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.verifyNodePresent(tag1, true, "Tag");
+		tagAndFolderPage.editTag(Input.securityGroup, tag1, renamedTag, "Success", null);
+
+		// delete edited tag
+		tagAndFolderPage.DeleteTag(renamedTag, Input.securityGroup);
+
+		// create tag set02
+		tagAndFolderPage.CreateTag(tag2, Input.securityGroup);
+
+		// bulk release Tag to security group
+
+		search.navigateToSessionSearchPageURL();
+		search.switchToWorkproduct();
+		search.selectTagInASwp(tag2);
+		search.getQuerySearchButton().waitAndClick(5);
+		search.bulkRelease(Input.securityGroup);
+		bc.passedStep("Created Tag : " + tag2 + " released to Security Group");
+
+		// Edit created tag set02
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.verifyNodePresent(tag2, true, "Tag");
+		tagAndFolderPage.editTag(Input.securityGroup, tag2, renamedTag, "Success", null);
+
+		// delete edited tag set02
+		tagAndFolderPage.DeleteTag(renamedTag, Input.securityGroup);
 
 		// logout
 		lp.logout();
