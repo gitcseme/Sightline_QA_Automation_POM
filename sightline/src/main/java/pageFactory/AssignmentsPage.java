@@ -852,9 +852,9 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("(//span[@class='label label-default count'])[3]");
 	}
 
-	// Elements to be drag and drop under live Sequence
+	/// Elements to be drag and drop under live Sequence
 	public Element dragElement(String text) {
-		return driver.FindElementByXPath("//div/span[text()='" + text + "']/i");
+		return driver.FindElementByXPath("//div/span[contains(text(),'"+text+"')]/i");
 	}
 
 	public Element dropElement() {
@@ -1254,11 +1254,10 @@ public class AssignmentsPage {
 		return driver.FindElementsByXPath("//i[@class='fa fa-align-justify']/parent::span");
 	}
 
-	public Element getPresentationControlToggles(int i) {
+	public Element getPresentationControlToggles(String eleName) {
 		return driver.FindElementByXPath(
-				"(//div[@class='col-md-4']//div[@class='smart-form']//label[@class='toggle']/i)[" + i + "]");
+				"(//div[@class='col-md-4']//div[@class='smart-form']//label[text()[normalize-space() = '"+eleName+"']]/i)");
 	}
-
 	public ElementCollection getPresentationControlTogglesRowCount() {
 		return driver
 				.FindElementsByXPath("(//div[@class='col-md-4']//div[@class='smart-form']//label[@class='toggle']/i)");
@@ -8542,7 +8541,6 @@ public Element getFamilyMembersCount() {
 		bc.stepInfo(s);
 		assertion.assertTrue("true".contentEquals(s));
 	}
-
 	/**
 	 * @author Jayanthi.ganesan 
 	 * @description This method verify whether all toggles under
@@ -8551,20 +8549,31 @@ public Element getFamilyMembersCount() {
 	public void verifyPresentationControlTogglesEnabledDisabled() {
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
-		for (int D = 1; D <= getPresentationControlTogglesRowCount().size(); D++) {
+		String[] elementNamesEnabled= {"Display Mini DocList","Allow reviewers to pop out panels",
+			                   "Allow reviewers to folder documents","Allow reviewers to edit Reviewer Remarks",
+				               "Show Default View Tab","Enable Highlighting","Allow reviewers to override Optimized Sort",
+				               "Allow reviewers to print docs to PDF","Allow reviewers to download natives",
+				               "Allow access to full DocList","Display Analytics Panel",
+	    	                   "Display the Email Thread Map Tab of Analytics Panel","Display the Near Dupes Tab of Analytics Panel",
+				               "Display Folders Tab","Allow access to Coding Stamps","Display Assignment Progress Bar",
+				               "Allow reviewers to see productions/images","Allow reviewers to apply redactions",
+				               "Display the Family Members Tab of Analytics Panel",
+				               "Display the Conceptually Similar Tab of Analytics Panel","Allow presentation of Metadata Panel"};                                                                  
+				                      
+		String[] elementNamesDisabled = { "Display Document History Tab", "Allow users to save without completing",
+				"Complete When Coding Stamp Applied" };
+		// verify default toggles enabled
+		for (int D = 0; D < elementNamesEnabled.length; D++) {
 			driver.waitForPageToBeReady();
-			if (D != 10 && D != 21 && D != 25) {
-				String s = getPresentationControlToggles(D).GetAttribute("Class");
-				assertion.assertTrue("true".contentEquals(s));
-				System.out.println(s);
-				System.out.println(D);
-			} else {
-				String s = getPresentationControlToggles(D).GetAttribute("Class");
-				assertion.assertTrue("false".contentEquals(s));
-				System.out.println(s);
-				System.out.println(D);
-			}
+			String s = getPresentationControlToggles(elementNamesEnabled[D]).GetAttribute("Class");
+			assertion.assertTrue("true".contentEquals(s));
 		}
+		// verify default toggles disabled
+		for (int D = 0; D < elementNamesDisabled.length; D++) {
+			String s = getPresentationControlToggles(elementNamesDisabled[D]).GetAttribute("Class");
+			assertion.assertTrue("false".contentEquals(s));
+		}
+		assertion.assertAll();
 		bc.passedStep(
 				"All toggles from 'CONTROL THE PRESENTATION OF DOCVIEW FOR REVIEWERS WHILE IN THIS ASSIGNMENT' except below is ON by default:"
 						+ "1. Display Document History Tab" + "2. Allow users to save without completing"

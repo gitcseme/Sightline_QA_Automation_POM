@@ -55,8 +55,8 @@ public class AdvancedSearch_Regression2 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -239,7 +239,7 @@ public class AdvancedSearch_Regression2 {
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit);
 			int ExpectedPureHit3 = search.verifyCombinedSearch(TagName, "tag", "yes", "OR", "NOT", "OR");
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit3);
-			softAssertion.assertEquals(836, ExpectedPureHit3);
+			softAssertion.assertEquals(837, ExpectedPureHit3);
 			softAssertion.assertEquals(53, ExpectedPureHit);
 			softAssertion.assertAll();
 			baseClass.passedStep(
@@ -287,8 +287,6 @@ public class AdvancedSearch_Regression2 {
 	 * @author Sowndarya.Velraj
 	 * @throws InterruptedException
 	 * @description Verify that Term Operator - All is working properly on Advanced
-	 *              Search screen
-	 * @description Verify that Term Operator - Any is working properly on Advanced
 	 *              Search screen
 	 */
 	 @Test(description ="RPMXCON-47728",groups = { "regression" },dataProvider = "Users", priority = 6,enabled = true)
@@ -486,7 +484,7 @@ public class AdvancedSearch_Regression2 {
 		if (savedSearch.getSearchName(savedSearchName).isElementPresent()) {
 			baseClass.passedStep("Saved search query is displayed as expected");
 		} else {
-			baseClass.failedStep("Saved search query is displayed as expected");
+			baseClass.failedStep("Saved search query is not  displayed as expected");
 
 		}
 		try {
@@ -646,7 +644,9 @@ public class AdvancedSearch_Regression2 {
 			savedSearch.getSavedSearchEditButton().waitAndClick(10);
 			driver.waitForPageToBeReady();
 			search.modifyAudioSearch("が", "Japanese", "min");
-			search.getPureHitsCount_ModifySearch().getText();
+			SoftAssert assertion=new SoftAssert();
+			assertion.assertNotNull(search.getPureHitsCount_ModifySearch().getText());
+			assertion.assertAll();
 			baseClass.passedStep("Sucessfully modified the query and get the search results for the japanese language");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1011,7 +1011,7 @@ public class AdvancedSearch_Regression2 {
 				+ " Refresh  on Advanced Search Result Screen");
 		loginPage.loginToSightLine(username, password);
 		baseClass.selectproject(Input.highVolumeProject);
-		String searchText1 = "s";
+		String searchText1 = Input.SearchString_HighVolume;
 		String searchText3 = "2";
 		search.navigateToSessionSearchPageURL();
 		driver.waitForPageToBeReady();
@@ -1045,7 +1045,7 @@ public class AdvancedSearch_Regression2 {
 
 	}
 	/**
-	 * @author jayanthi 
+	 * @author Jayanthi 
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-48434", dataProvider = "Users", enabled = true, groups = {
@@ -1053,14 +1053,13 @@ public class AdvancedSearch_Regression2 {
 	public void verifyBG_CountAdvancesearchToDocList(String username, String password) throws InterruptedException {
 
 		SessionSearch search = new SessionSearch(driver);
-		SavedSearch ss = new SavedSearch(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48434");
 		baseClass.stepInfo("Verify that Actual count appears on \"My Background Tasks\" page When User Navigate between"
 				+ " Search to DocList and Navigation action takes longer time.(8 Sec)");
 		loginPage.loginToSightLine(username, password);
 		baseClass.selectproject(Input.highVolumeProject);
-		String searchText1 = "s";
-		String maxDocCountViewedinDocList = "500000";
+		String searchText1 = Input.SearchString_HighVolume;
+		String maxDocCountViewedinDocList = Input.DocCount_BG_Page;
 		search.navigateToSessionSearchPageURL();
 		driver.waitForPageToBeReady();
 		search.getAdvancedSearchLinkCurrent().Click();
@@ -1091,7 +1090,6 @@ public class AdvancedSearch_Regression2 {
 		loginPage.logout();
 
 	}
-	
 	/**
 	* @author Sowndarya.Velraj
 	* @throws InterruptedException

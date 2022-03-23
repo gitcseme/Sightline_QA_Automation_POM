@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -39,15 +40,15 @@ public class Assignment_Regression2 {
 	BaseClass bc;
 	AssignmentsPage agnmt;
 	KeywordPage keyword;
-	String searchText = "null";
+	String searchText = Input.TallySearch;
 	SoftAssert assertion;
 	StringWriter sw;
 	PrintWriter pw;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		//Input in = new Input();
+	  //  in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 	}
 
@@ -62,7 +63,7 @@ public class Assignment_Regression2 {
 		bc.stepInfo("To verify that RMU is able to sort the documents by selecting option as Near Duplicate Docs");
 		bc.stepInfo("Test case Id:RPMXCON-53824");
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
-		agnmt.createAssignment_withoutSave(assignmentName, "Default Project Coding Form");
+		agnmt.createAssignment_withoutSave(assignmentName, Input.codeFormName);
 		driver.scrollingToBottomofAPage();
 		agnmt.dragAndDropLiveSequence(" Email Threads");
 		agnmt.dragAndDropLiveSequence(" DocID");
@@ -102,7 +103,7 @@ public class Assignment_Regression2 {
 		bc.stepInfo("To verify that RMU is able to sort the documents by selecting option as Email Threads.");
 		bc.stepInfo("Test case Id:RPMXCON-53823");
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
-		agnmt.createAssignment_withoutSave(assignmentName, "Default Project Coding Form");
+		agnmt.createAssignment_withoutSave(assignmentName, Input.codeFormName);
 		driver.scrollingToBottomofAPage();
 		agnmt.dragAndDropLiveSequence(" Near Duplicate Docs");
 		agnmt.dragAndDropLiveSequence(" DocID");
@@ -194,7 +195,7 @@ public class Assignment_Regression2 {
 			assertion.assertEquals(pureHits, PureHitCountAfterSelectingCriteria);
 			bc.passedStep("The search results are displayed as per search criteria");
 		} catch (Exception e) {
-			bc.failedStep("The search results are displayed as per search criteria");
+			bc.failedStep("The search results are not displayed as per search criteria");
 		}
 		agnmt.deleteSelectedAgnmt(assignmentName);
 		assertion.assertAll();
@@ -229,7 +230,7 @@ public class Assignment_Regression2 {
 			assertion.assertEquals(pureHits, PureHitCountAfterSelectingCriteria);
 			bc.passedStep("The search results are displayed as per search criteria");
 		} catch (Exception e) {
-			bc.failedStep("The search results are displayed as per search criteria");
+			bc.failedStep("The search results are not displayed as per search criteria");
 		}
 		agnmt.deleteSelectedAgnmt(assignmentName);
 		assertion.assertAll();
@@ -288,7 +289,7 @@ public class Assignment_Regression2 {
 			assertion.assertEquals(pureHits, PureHitCountAfterSelectingCriteria1);
 			bc.passedStep("The search results are displayed as per search criteria");
 		} catch (Exception e) {
-			bc.failedStep("The search results are displayed as per search criteria");
+			bc.failedStep("The search results are not displayed as per search criteria");
 		}
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		assertion.assertAll();
@@ -345,7 +346,7 @@ public class Assignment_Regression2 {
 			assertion.assertEquals(pureHits, PureHitCountAfterSelectingCriteria1);
 			bc.passedStep("The search results are displayed as per search criteria");
 		} catch (Exception e) {
-			bc.failedStep("The search results are displayed as per search criteria");
+			bc.failedStep("The search results are not displayed as per search criteria");
 		}
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		assertion.assertAll();
@@ -455,7 +456,7 @@ public class Assignment_Regression2 {
 			bc.stepInfo("To verify that RMU is able to view the Instruction pop out on clicking the Configure button");
 			bc.stepInfo("Test case Id:RPMXCON-53795");
 			String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
-			agnmt.createAssignment_withoutSave(assignmentName, "Default Project Coding Form");
+			agnmt.createAssignment_withoutSave(assignmentName, Input.codeFormName);
 			agnmt.verifyFormattingToolBar_InstructionPopUp("yes");
 			bc.waitForElement(agnmt.getAssignmentSaveButton());
 			agnmt.getAssignmentSaveButton().waitAndClick(3);
@@ -486,7 +487,7 @@ public class Assignment_Regression2 {
 		bc.stepInfo("To verify that RMU is able to sort the documents by selecting option as FamilyMemebers.");
 		bc.stepInfo("Test case Id:RPMXCON-53825");
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
-		agnmt.createAssignment_withoutSave(assignmentName, "Default Project Coding Form");
+		agnmt.createAssignment_withoutSave(assignmentName, Input.codeFormName);
 		driver.scrollingToBottomofAPage();
 		agnmt.dragAndDropLiveSequence(" Email Threads");
 		agnmt.dragAndDropLiveSequence(" Near Duplicate Docs");
@@ -526,7 +527,7 @@ public class Assignment_Regression2 {
 			bc.stepInfo("To verify that RMU is able to view the configure button on New Assignment Page");
 			bc.stepInfo("Test case Id:RPMXCON-RPMXCON-53793");
 			String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
-			agnmt.createAssignment_withoutSave(assignmentName, "Default Project Coding Form");
+			agnmt.createAssignment_withoutSave(assignmentName, Input.codeFormName);
 			driver.scrollingToElementofAPage(agnmt.configureButton());
 			bc.waitForElement(agnmt.configureButton());
 			bc.ValidateElement_Presence(agnmt.configureButton(), "Configure Button");
@@ -553,7 +554,7 @@ public class Assignment_Regression2 {
 			bc.stepInfo("To verify that RMU is able to view the configure button on Edit Assignment Page");
 			bc.stepInfo("Test case Id:RPMXCON-53794");
 			String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
-			agnmt.createAssignment_withoutSave(assignmentName, "Default Project Coding Form");
+			agnmt.createAssignment_withoutSave(assignmentName,Input.codeFormName);
 			driver.scrollingToElementofAPage(agnmt.configureButton());
 			bc.waitForElement(agnmt.configureButton());
 			bc.ValidateElement_Presence(agnmt.configureButton(), "Configure Button");
@@ -587,7 +588,7 @@ public class Assignment_Regression2 {
 			bc.stepInfo("To verify that on clicking Keyword button pop up is displayed on New/Edit Assignment Page");
 			bc.stepInfo("Test case Id:RPMXCON-53857");
 			String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
-			agnmt.createAssignment_withoutSave(assignmentName, "Default Project Coding Form");
+			agnmt.createAssignment_withoutSave(assignmentName, Input.codeFormName);
 			agnmt.verifyKeywordPopUp();
 			bc.ValidateElement_Presence(agnmt.getAssgn_Keywordspopup(), "Key word PopUp");
 			agnmt.getKeywordPopUpCancelBtn().waitAndClick(5);
@@ -628,7 +629,7 @@ public class Assignment_Regression2 {
 					"To verify that in DOCUMENT PRESENTATION SEQUENCEdifferent sequence options are displayed as per selection of tab by RMU.");
 			bc.stepInfo("Test case Id:RPMXCON-53744");
 			String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
-			agnmt.createAssignment_withoutSave(assignmentName, "Default Project Coding Form");
+			agnmt.createAssignment_withoutSave(assignmentName, Input.codeFormName);
 			driver.scrollingToElementofAPage(agnmt.CatogeryTabClicked());
 			bc.ValidateElement_Presence(agnmt.CatogeryTabClicked(), "Category Tab is selected as Default");
 			bc.ValidateElement_Presence(agnmt.dragElement(" Email Threads"), " Email Threads");
@@ -638,7 +639,7 @@ public class Assignment_Regression2 {
 			bc.ValidateElement_Presence(agnmt.getAssgn_DocSequence_SortbyMetadata(), "Sort By MetaData Tab");
 			agnmt.getAssgn_DocSequence_SortbyMetadata().Click();
 			bc.ValidateElement_Presence(agnmt.getAssgn_DocSequence_Selectmetadata(), "MetaDataList DropDown");
-			agnmt.getAssgn_DocSequence_Selectmetadata().selectFromDropdown().selectByVisibleText("CustodianName");
+			agnmt.getAssgn_DocSequence_Selectmetadata().selectFromDropdown().selectByVisibleText(Input.metaDataName);
 			agnmt.getSortByMetaDataType().waitAndClick(3);
 			agnmt.getSortByMetaDataType().selectFromDropdown().selectByVisibleText("Ascending");
 			bc.ValidateElement_Presence(agnmt.getAssgn_DocSequence_Selectmetadata(),
@@ -946,9 +947,9 @@ public class Assignment_Regression2 {
 		search.basicContentSearch(searchText);
 		search.bulkAssign();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
-		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, "Default Project Coding Form");
+		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 		driver.scrollingToElementofAPage(agnmt.getAssgn_DocSequence_SortbyMetadata());
-		agnmt.Assgnwithdocumentsequence("CustodianName", "Descending");
+		agnmt.Assgnwithdocumentsequence(Input.metaDataName, "Descending");
 		bc.passedStep("Assignment is created with sort by metadata as descending order--" + assignmentName);
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		driver.scrollingToElementofAPage(agnmt.getAssignment_ManageReviewersTab());
@@ -956,7 +957,7 @@ public class Assignment_Regression2 {
 		lp.logout();
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		try {
-			agnmt.verifyDescendingMetaDataSorting_DocList(assignmentName, "CustodianName");
+			agnmt.verifyDescendingMetaDataSorting_DocList(assignmentName, Input.metaDataName);
 			assertion.assertAll();
 			bc.passedStep("sucessfully verified that whether RMU can create Assignments from assign/unassign documents"
 					+ "with descending meta data sorting");
@@ -995,7 +996,7 @@ public class Assignment_Regression2 {
 			savedSearch.savedSearch_Searchandclick(savedSearchName);
 			savedSearch.getSavedSearchToBulkAssign().waitAndClick(5);
 			agnmt.FinalizeAssignmentAfterBulkAssign();
-			agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, "Default Project Coding Form");
+			agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 			agnmt.getAssignmentSaveButton().waitAndClick(5);
 			bc.passedStep(
 					"assignment is created from saved search page assignUnassign document popup" + assignmentName);
@@ -1165,7 +1166,7 @@ public class Assignment_Regression2 {
 		search.basicContentSearch(searchText);
 		search.bulkAssign();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
-		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, "Default Project Coding Form");
+		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 		driver.scrollingToElementofAPage(agnmt.getAssignmentSaveButton());
 		bc.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(3);
@@ -1195,7 +1196,7 @@ public class Assignment_Regression2 {
 		search.basicContentSearch(searchText);
 		search.bulkAssign();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
-		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, "Default Project Coding Form");
+		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName,Input.codeFormName);
 		driver.scrollingToElementofAPage(agnmt.getAssignmentSaveButton());
 		bc.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(3);
@@ -1427,7 +1428,7 @@ public class Assignment_Regression2 {
 		agnmt.selectAssignmentGroup(NoncascadeAsgnGrpName);
 		agnmt.createCascadeNonCascadeAssgnGroup_withoutSave(childNonCascadeAssgnGroup, cascadeSettings_No);
 		agnmt.verifyCascadeFunctionality_OFF();
-		agnmt.ValidateEnabledToggleBtn_PresentationControl(7, 1);
+		agnmt.ValidateEnabledToggleBtn_PresentationControl(9, 1);
 		agnmt.ValidateEnabledToggleBtn_PresentationControl(7, 2);
 		agnmt.ValidateEnabledToggleBtn_PresentationControl(7, 3);
 		driver.scrollPageToTop();
@@ -1476,7 +1477,7 @@ public class Assignment_Regression2 {
 		search.basicContentSearch(searchText);
 		search.bulkAssign();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
-		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, "Default Project Coding Form");
+		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName,Input.codeFormName);
 		driver.scrollingToElementofAPage(agnmt.getAssignmentSaveButton());
 		bc.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(3);
@@ -1825,6 +1826,7 @@ public class Assignment_Regression2 {
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		bc = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
@@ -1832,7 +1834,6 @@ public class Assignment_Regression2 {
 			lp.logoutWithoutAssert();
 		}
 		try {			
-//			lp.logout();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();
@@ -1840,26 +1841,8 @@ public class Assignment_Regression2 {
 	}
 
 	@AfterClass(alwaysRun = true)
-	public void close() {
-		try {
-//				System.out.println("******TEST CASES FOR ASSIGNMENTS-2 EXECUTED******");
-//				Input in = new Input();
-//				in.loadEnvConfig();
-//				driver = new Driver();
-//				lp = new LoginPage(driver);
-//				lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-//				AssignmentsPage agnmt = new AssignmentsPage(driver);
-//				agnmt.deleteAllAssignments("AR2");
-//				lp.logout();
-				lp.quitBrowser();
-			}
-
-		catch (Exception e) {
-			e.printStackTrace(pw);
-			UtilityLog.info("---------CleanUp activity--------");
-			UtilityLog.info(sw.toString());
-			lp.quitBrowser();
-		}
+	public void close() {	
+	UtilityLog.info("Executed Assignment Regression2 class.");		
 	}
 
 

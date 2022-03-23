@@ -38,13 +38,13 @@ public class Assignment_Regression1 {
 	AssignmentsPage agnmt;
 	StringWriter sw;
 	PrintWriter pw;
-	String searchText = "null";
+	String searchText = Input.TallySearch;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		softAssertion=new SoftAssert ();
 	}
@@ -443,7 +443,7 @@ public class Assignment_Regression1 {
 	}
 
 	/**
-	 * @author Jayanthi.ganesan	 * 
+	 * @author Jayanthi.ganesan	
 	 * @description: To verify that RMU is able to sort the documents by selecting
 	 *               System define metadata. RPMXCON-53821
 	 */
@@ -701,6 +701,7 @@ public class Assignment_Regression1 {
 		agnmt.createAssignment(assignmentName3, Input.codeFormName);
 		bc.stepInfo("Created assignment with name" + assignmentName);
 		bc.stepInfo("Created assignment with name" + assignmentName2);	
+		bc.stepInfo("Created assignment with name" + assignmentName3);
 		search.basicContentSearch(searchText);
 		search.bulkAssign();
 		agnmt.assignAndVerifyDocsCountwithSamplemethod(assignmentName3,"Count of Selected Docs",null);
@@ -765,7 +766,7 @@ public class Assignment_Regression1 {
 		bc.stepInfo("Assignment group edit option is clicked");
 		agnmt.Assgnwithdocumentsequence(Input.metaDataName, "Ascending");
 		driver.scrollPageToTop();
-		bc.passedStep("Meta data is selected in sort by metadata under document presentation sequence");
+		bc.stepInfo("Meta data is selected in sort by metadata under document presentation sequence");
 		agnmt.getSelectAssignment(assignmentName).waitAndClick(10);
 		driver.scrollPageToTop();
 		agnmt.getAssignmentActionDropdown().waitAndClick(10);
@@ -840,7 +841,6 @@ public class Assignment_Regression1 {
 			lp.logoutWithoutAssert();
 		}
 		try {			
-//			lp.logout();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();
@@ -849,25 +849,9 @@ public class Assignment_Regression1 {
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		try {
-//				System.out.println("******TEST CASES FOR ASSIGNMENTS-2 EXECUTED******");
-//				Input in = new Input();
-//				in.loadEnvConfig();
-//				driver = new Driver();
-//				lp = new LoginPage(driver);
-//				lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-//				AssignmentsPage agnmt = new AssignmentsPage(driver);
-//				agnmt.deleteAllAssignments("AR2");
-//				lp.logout();
-				lp.quitBrowser();
-			}
-
-		catch (Exception e) {
-			e.printStackTrace(pw);
-			UtilityLog.info("---------CleanUp activity--------");
-			UtilityLog.info(sw.toString());
-			lp.quitBrowser();
-		}
+		
+			UtilityLog.info("Executed Assignment Regression1 class.");
+			
 	}
 
 }
