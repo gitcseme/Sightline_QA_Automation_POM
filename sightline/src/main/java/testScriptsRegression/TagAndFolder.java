@@ -649,6 +649,90 @@ public class TagAndFolder {
 		lp.logout();
 	}
 
+	/**
+	 * @author Raghuram A Date: 03/22/21 Modified date:N/A Modified by: Description
+	 *         : Verify that after Impersonation of PA User - can edit/delete Folder
+	 *         Group name appropriately that have created on "Tags and Folders" >>
+	 *         Folders screen - RPMXCON-59212 Sprint 14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	public void verifyAfterPAImpersonateUserEditAndDeleteFolder() throws InterruptedException, IOException {
+
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		String folder = "newFolder" + Utility.dynamicNameAppender();
+		String renamedFolder = "renamedFolder" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59212 TagsAndFolder Sprint 14");
+		bc.stepInfo(
+				"Verify that after impersonation of PA User - can edit/delete folder names appropriately that have created on 'Tags and Folders'>>Folders screen");
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// impersonate into RMU
+		driver.waitForPageToBeReady();
+		bc.rolesToImp("PA", "RMU");
+
+		// create Folder
+		tagAndFolderPage.CreateFolder(folder, Input.securityGroup);
+
+		// rename created folder
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.verifyNodePresent(folder, true, "Folder");
+		tagAndFolderPage.editFolder(Input.securityGroup, folder, renamedFolder, "Success", null);
+
+		// delete renamed folder
+		tagAndFolderPage.deleteAllFolders(renamedFolder);
+		tagAndFolderPage.verifyNodeNotPresent(renamedFolder, "- not present - Folder  Deleted Successfully ",
+				"Deletion failed");
+
+		// logout
+		lp.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 03/22/21 Modified date:N/A Modified by: Description
+	 *         : Verify that after impersonation of PA User - can edit/delete Tag
+	 *         names appropriately that have created on 'Tags and Folders'>>Folders
+	 *         screen - RPMXCON-59213 Sprint 14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	public void verifyAfterPAImpersonateUserEditAndDeleteTag() throws InterruptedException, IOException {
+
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		String tag = "newTag" + Utility.dynamicNameAppender();
+		String renamedTag = "renamedTag" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59213 TagsAndFolder Sprint 14");
+		bc.stepInfo(
+				"Verify that after impersonation of PA User - can edit/delete Tag names appropriately that have created on 'Tags and Folders'>>Folders screen");
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// impersonate into RMU
+		driver.waitForPageToBeReady();
+		bc.rolesToImp("PA", "RMU");
+
+		// create tag
+		tagAndFolderPage.CreateTag(tag, Input.securityGroup);
+
+		// Edit created tag
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.verifyNodePresent(tag, true, "Folder");
+		tagAndFolderPage.editTag(Input.securityGroup, tag, renamedTag, "Success", null);
+
+		// delete edited tag
+		tagAndFolderPage.deleteAllTags(renamedTag);
+		tagAndFolderPage.verifyNodeNotPresent(renamedTag, "- not present - Tag  Deleted Successfully ",
+				"Deletion failed");
+
+		// logout
+		lp.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
