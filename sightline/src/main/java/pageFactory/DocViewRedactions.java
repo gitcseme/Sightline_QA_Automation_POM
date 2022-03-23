@@ -3983,45 +3983,46 @@ public class DocViewRedactions {
 	}
 
 	/**
-	 * @author Raghuram.A Date: 01/27/22 Modified date: N/A Modified by: N/A
-	 * @param docIDlist
-	 * @param dataToVerify
-	 */
-	public void verifyContentPresentForListOfDocs(List<String> docIDlist, String[] dataToVerify) {
-		base = new BaseClass(driver);
-		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
-		Boolean check = false;
-
-		for (String nb : docIDlist) {
-			System.out.println(nb);
-			miniDocListpage.getDociD(nb).waitAndClick(10);
-			driver.waitForPageToBeReady();
-
-			base.stepInfo(nb + " : Docs Viewed in Doc View");
-			base.waitTillElemetToBeClickable(textTab());
-			textTab().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			base.waitTime(2);
-
-			String datas = textData().getText();
-
-			String[] count = datas.split("\\r?\\n");
-			for (String a : count) {
-				check = false;
-				System.out.println(a);
-				for (String datasToCheck : dataToVerify) {
-					if (a.contains(datasToCheck)) {
-						base.passedStep("Expected data is present in current doucment");
-						check = true;
-						break;
-					}
-				}
-			}
-			if (!check) {
-				base.failedStep("Unrelavent document is filtered");
-			}
-		}
-	}
+     * @author Raghuram.A Date: 01/27/22 Modified date: N/A Modified by: N/A
+     * @param docIDlist
+     * @param dataToVerify
+     */
+    public void verifyContentPresentForListOfDocs(List<String> docIDlist, String[] dataToVerify) {
+        base = new BaseClass(driver);
+        MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+        Boolean check = false;
+ 
+        for (String nb : docIDlist) {
+            System.out.println(nb);
+            miniDocListpage.getDociD(nb).waitAndClick(10);
+            driver.waitForPageToBeReady();
+ 
+            base.stepInfo(nb + " : Docs Viewed in Doc View");
+            base.waitTillElemetToBeClickable(textTab());
+            textTab().waitAndClick(10);
+            driver.waitForPageToBeReady();
+            base.waitTime(2);
+ 
+            String datas = textData().getText();
+ 
+            String[] count = datas.split("\\r"); // change - replacing \\r?\\n with \\r
+            for (String a : count) {
+                check = false;
+                System.out.println(a);
+                for (String datasToCheck : dataToVerify) {
+                    if (a.contains(datasToCheck)) {
+                        base.passedStep("Expected data is present in current doucment");
+                        base.stepInfo(datasToCheck);
+                        check = true;
+                        break;
+                    }
+                }
+            }
+            if (!check) {
+                base.failedStep("Unrelavent document is filtered");
+            }
+        }
+    }
 
 	public void RedactTextInDocView(int x, int y, int offsetx, int offsety) {
 		Actions actions = new Actions(driver.getWebDriver());
