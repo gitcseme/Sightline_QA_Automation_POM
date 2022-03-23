@@ -3747,7 +3747,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify Removal of Priv Tag from a Document should get
 	 *                 Produced in Production for Native
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 68)
+	@Test(enabled = true, groups = { " regression" }, priority = 68)
 	public void verifyPrivilegedTagInNative() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48039- Production Sprint 11");
@@ -3762,7 +3762,7 @@ public class Production_Page_Regression {
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
-		tagsAndFolderPage.createNewTagwithClassification(tagname2, "Technical Issue");
+		tagsAndFolderPage.createNewTagwithClassification(tagname2,Input.tagNameTechnical);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3771,6 +3771,7 @@ public class Production_Page_Regression {
 		baseClass.stepInfo("set of 6 Documents are Bulk Tagged as Privileged tag");
 
 		sessionSearch.navigateToSessionSearchPageURL();
+		baseClass= new BaseClass(driver);
 		baseClass.selectproject();
 		sessionSearch.basicContentSearch(Input.searchString5);
 		sessionSearch.bulkTagExisting(tagname2);
@@ -3821,7 +3822,7 @@ public class Production_Page_Regression {
 	 *              Translation LST & Translated document Produced [ RPMXCON-55680]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 69)
+	@Test(enabled = true, groups = { "regression" }, priority = 69)
 	public void verifyTranslation() throws Exception {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3879,7 +3880,7 @@ public class Production_Page_Regression {
 	 *              Native component should be disabled [ RPMXCON-56133]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 70)
+	@Test(enabled = true, groups = { "regression" }, priority = 70)
 	public void verifySavedTemplateForNative() throws Exception {
 
 		ProductionPage page = new ProductionPage(driver);
@@ -3918,7 +3919,7 @@ public class Production_Page_Regression {
 	 *              privileged and redacted docs'' option is enabled[RPMXCON-49230]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 71)
+	@Test(enabled = true, groups = { "regression" }, priority = 71)
 	public void verifyNativeWithFamilyMembers() throws Exception {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3942,7 +3943,8 @@ public class Production_Page_Regression {
 		sessionSearch.bulkTagExisting(tagname);
 		baseClass.stepInfo(
 				" Redacted documents are selected and preformed bulk tag action with classification as: privileged tag");
-
+		
+		baseClass = new BaseClass(driver);
 		baseClass.selectproject();
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.parentDocument);
@@ -3995,7 +3997,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify that "Production Start Date" should present the date
 	 *                 when the production was started
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 72)
+	@Test(enabled = true, groups = { "regression" }, priority = 72)
 	public void verifyStartDateInGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		baseClass.stepInfo("RPMXCON-49059 -Production Sprint 12");
@@ -4040,7 +4042,9 @@ public class Production_Page_Regression {
 		page.getGridView().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Nativated to production Grid View");
+		baseClass.waitTime(2);
 		int startDateIndex = baseClass.getIndex(page.getGridWebTableHeader(), "START DATE");
+		driver.waitForPageToBeReady();
 		String startDate = page.getGridProdValues(productionname, startDateIndex).getText();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = new Date();
@@ -4067,7 +4071,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify Priv Guard Section on the self production wizard for
 	 *                 Run Categorization
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 73)
+	@Test(enabled = true, groups = { "regression" }, priority = 73)
 	public void verifyPrivGuardForRunCategorization() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4100,6 +4104,7 @@ public class Production_Page_Regression {
 		page.runCategorizationBtn().waitAndClick(10);
 		baseClass.stepInfo("Redirected to Categorization page ");
 
+		softAssertion = new SoftAssert();
 		softAssertion.assertTrue(page.identifyByProductionGuardSource_radioBtn().isDisplayed());
 		baseClass.passedStep("Identify By Production Guard Source radio button is displayed");
 
@@ -4107,8 +4112,7 @@ public class Production_Page_Regression {
 		baseClass.passedStep("Analyze Select Production Sets  radio button is displayed");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername,Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname,Input.securityGroup);
 	}
 
 	/**
@@ -4116,7 +4120,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify Document Selection Section on the self production
 	 *                 wizard For Searches
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 74)
+	@Test(enabled = true, groups = { "regression" }, priority = 74)
 	public void verifyDocumentSelectionOnSearches() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4134,7 +4138,7 @@ public class Production_Page_Regression {
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		int purehit = sessionSearch.advancedContentSearch(Input.testData1);
-		sessionSearch.saveSearchAdvanced_New(searchName, Input.shareSearchDefaultSG);
+		sessionSearch.saveSearchAtAnyRootGroup(searchName,Input.shareSearchPA);
 
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
@@ -4149,11 +4153,11 @@ public class Production_Page_Regression {
 		baseClass.waitForElement(page.getMarkCompleteLink());
 		page.getMarkCompleteLink().waitAndClick(10);
 
+		softAssertion =new SoftAssert();
 		softAssertion.assertTrue(page.getDocumentSelectionLink().isDisplayed());
 		baseClass.passedStep("Total Document count is displayed");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
 
@@ -4162,7 +4166,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify that 'Bates Range' is displayed in Production Generate
 	 *                 step
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 75)
+	@Test(enabled = true, groups = { "regression" }, priority = 75)
 	public void verifyBatesRangeInGenerate() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4194,10 +4198,10 @@ public class Production_Page_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
+		softAssertion =new SoftAssert();
 		softAssertion.assertTrue(page.getProd_BatesRange().isDisplayed());
 		baseClass.passedStep("Bates Range is displayed in generate page");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
 
@@ -4206,7 +4210,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify in Generated Production DAT will always have one row
 	 *                 for each document
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 76)
+	@Test(enabled = true, groups = { "regression" }, priority = 76)
 	public void verifyDATWithFilenameForProduction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4254,7 +4258,6 @@ public class Production_Page_Regression {
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
 
@@ -4263,7 +4266,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify On Productions landing page, Count of productions in
 	 *                 the tile view should match with grid view,
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 77)
+	@Test(enabled = true, groups = { "regression" }, priority = 77)
 	public void verifyProductionCountInTileAndGrid() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4277,6 +4280,7 @@ public class Production_Page_Regression {
 		String tileViewCount = page.getProductionItemsTileItems().getText();
 		page.getGridView().waitAndClick(10);
 		String gridViewCount = page.gridAndTileViewProdCount().getText();
+		softAssertion =new SoftAssert();
 		softAssertion.assertEquals(tileViewCount, gridViewCount);
 		softAssertion.assertAll();
 		baseClass.passedStep(
@@ -4289,7 +4293,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify DAT Section with various Options (Show Hide/Add
 	 *                 Field/Advance Field Toggle and All Dropdown)
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 78)
+	@Test(enabled = true, groups = { "regression" }, priority = 78)
 	public void verifyDATSectionWithVariousOption() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4352,7 +4356,7 @@ public class Production_Page_Regression {
 	 *                 user options to select "All redactions in annotation layer"
 	 *                 or "Individual Redaction".
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 79)
+	@Test(enabled = true, groups = { "regression" }, priority = 79)
 	public void verifymp3ComponentWithRedaction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4393,7 +4397,6 @@ public class Production_Page_Regression {
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 	}
 
@@ -4403,7 +4406,7 @@ public class Production_Page_Regression {
 	 *                 generation should include any branding specified in the
 	 *                 configuration.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 80)
+	@Test(enabled = true, groups = { "regression" }, priority = 80)
 	public void verifyPDFPreview() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4444,7 +4447,6 @@ public class Production_Page_Regression {
 		driver.getWebDriver().navigate().refresh();
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 
 	}
@@ -4453,7 +4455,7 @@ public class Production_Page_Regression {
 	 * @author sowndarya.velraj TESTCASE No:RPMXCON-55928
 	 * @Description:Verify new text in 'Redactions' section in Tiff/PDF components
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 81)
+	@Test(enabled = true, groups = { "regression" }, priority = 81)
 	public void verifyTextInRedaction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4468,6 +4470,7 @@ public class Production_Page_Regression {
 		page.fillingDATSection();
 		page.fillingTIFFSectionwithBurnRedaction();
 		page.getClkLink_selectingRedactionTags().waitAndClick(10);
+		softAssertion = new SoftAssert();		
 		softAssertion.assertTrue(page.redactedTextInRedaction().isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("New text is displayed in 'Redactions' section in Tiff/PDF components");
@@ -4478,7 +4481,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify Bates Number in generated production DAT and Load
 	 *                 Files should be in Ascending Order
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 82)
+	@Test(enabled = true, groups = { "regression" }, priority = 82)
 	public void verifyBatesNumberAndSorting() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4486,6 +4489,7 @@ public class Production_Page_Regression {
 		baseClass.stepInfo(
 				"To verify Bates Number in generated production DAT and Load Files should be in Ascending Order");
 		tagname = "Tag" + Utility.dynamicNameAppender();
+		
 
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -4500,23 +4504,34 @@ public class Production_Page_Regression {
 		String beginningBates = page.getRandomNumber(2);
 		int number = Integer.parseInt(beginningBates);
 		int lastfile = number ;
+		
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTIFFSection(tagname);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingWithSortingByMetaData(prefixID, suffixID, batesNumber, Input.metaDataName,
+		page.fillingNumberingAndSortingWithSortingByMetaData(prefixID, suffixID, beginningBates, Input.metaDataName,
 				Input.masterDateText);
-		driver.waitForPageToBeReady();
-		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingSelectDocumentUsingTags(tagname);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
 		page.fillingProductionLocationPage(productionname);
-		page.navigateToNextSection();
+		
+		driver.scrollPageToTop();
+		baseClass.waitForElement(page.getMarkCompleteLink());
+		page.getMarkCompleteLink().waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		String location = page.getProductionOutputLocation_VolumeName().GetAttribute("value");
+		String loadfile = page.getProductionComponentsFolderDetails_FolderName_LoadFiles().GetAttribute("value");
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(page.getNextButton());
+		page.getNextButton().Enabled();
+		page.getNextButton().waitAndClick(10);
+
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
@@ -4524,8 +4539,6 @@ public class Production_Page_Regression {
 		
 		String name = page.getProduction().getText().trim();
 		String home = System.getProperty("user.home");
-		String location = page.getProductionOutputLocation_VolumeName().GetAttribute("value");
-		String loadfile = page.getProductionComponentsFolderDetails_FolderName_LoadFiles().GetAttribute("value");
 		
 		page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads/");
 		System.out.println("Unzipped the downloaded files");					
@@ -4550,7 +4563,6 @@ public class Production_Page_Regression {
 			}}}
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 
@@ -4561,7 +4573,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify production generation using Custom Template.(Check for
 	 *                 Priv in DAT component).
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 83)
+	@Test(enabled = true, groups = { "regression" }, priority = 83)
 	public void verifyDATTemplate() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4597,8 +4609,8 @@ public class Production_Page_Regression {
 		page.getDATChkBox().waitAndClick(10);
 		page.getDATTab().waitAndClick(10);
 		driver.waitForPageToBeReady();
+		softAssertion = new SoftAssert();
 		softAssertion.assertTrue(page.getDATPrivledgedCheckbox().Selected());
-//		softAssertion.assertAll();
 		baseClass.passedStep("Verified production generation using Custom Template.(Check for Priv in DAT component)");
 		
 

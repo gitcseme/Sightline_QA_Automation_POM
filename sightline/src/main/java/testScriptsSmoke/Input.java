@@ -883,7 +883,7 @@ public class Input {
 		TIFFPageCount = testData.getPageCount();
 		translationDocumentId = testData.getTranslationDocId();
 		parentDocument = testData.getParentDocument();
-		masterDateText = testData.getMasterDate();
+		masterDateText = testData.getMasterDateText();
 		/**
 		 * @author Aathith.Senthilkumar
 		 */
