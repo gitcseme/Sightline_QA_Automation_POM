@@ -45,16 +45,17 @@ public class SearchTermReport_Regression1 {
 	String saveSearchNamePA1 = "ST" + Utility.dynamicNameAppender();
 	String saveSearchNameRMU1 = "ST" + Utility.dynamicNameAppender();
 	String saveSearchNamePA2 = "ST" + Utility.dynamicNameAppender();
-	String saveSearchNameRMU2= "ST" + Utility.dynamicNameAppender();
-	String[] savedSearchNamesPA= {saveSearchNamePA2,saveSearchNamePA1,saveSearchNamePA};
-	String[] savedSearchNamesRMU= {saveSearchNameRMU2,saveSearchNameRMU1,saveSearchNameRMU};
-	String[] searchData= {"test","comments","null"};
-	String[] Hits= new String[3];
-	String[] HitsRMU= new String[3];
-	String cmbSearchName1="STR"+Utility.dynamicNameAppender();
-	String cmbSearchName2="STR"+Utility.dynamicNameAppender();
+	String saveSearchNameRMU2 = "ST" + Utility.dynamicNameAppender();
+	String[] savedSearchNamesPA = { saveSearchNamePA2, saveSearchNamePA1, saveSearchNamePA };
+	String[] savedSearchNamesRMU = { saveSearchNameRMU2, saveSearchNameRMU1, saveSearchNameRMU };
+	String[] searchData = { "test", "comments", "null" };
+	String[] Hits = new String[3];
+	String[] HitsRMU = new String[3];
+	String cmbSearchName1 = "STR" + Utility.dynamicNameAppender();
+	String cmbSearchName2 = "STR" + Utility.dynamicNameAppender();
 	String expectedUHit2;
 	String expectedUHit1;
+
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
@@ -63,34 +64,38 @@ public class SearchTermReport_Regression1 {
 		Input in = new Input();
 		in.loadEnvConfig();
 
-	 // Open browser
-    	driver = new Driver();
+		// Open browser
+		driver = new Driver();
 		bc = new BaseClass(driver);
 		// Login as a PA
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		// Search and save it
-		SessionSearch	search = new SessionSearch(driver);
-		for(int i=0;i<savedSearchNamesPA.length;i++) {
+		SessionSearch search = new SessionSearch(driver);
+		for (int i = 0; i < savedSearchNamesPA.length; i++) {
 			search.basicContentSearch(searchData[i]);
 			search.saveSearch(savedSearchNamesPA[i]);
-			Hits[i] = search.verifyPureHitsCount();	
+			Hits[i] = search.verifyPureHitsCount();
 			System.out.print(Hits[i]);
-			if(i!=2) {bc.selectproject();}
+			if (i != 2) {
+				bc.selectproject();
 			}
-	
+		}
+
 		lp.logout();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Search and save it
-		for(int i=0;i<savedSearchNamesRMU.length;i++) {
+		for (int i = 0; i < savedSearchNamesRMU.length; i++) {
 			search.basicContentSearch(searchData[i]);
 			search.saveSearch(savedSearchNamesRMU[i]);
-			HitsRMU[i] = search.verifyPureHitsCount();	
+			HitsRMU[i] = search.verifyPureHitsCount();
 			System.out.print(HitsRMU[i]);
-			if(i!=2) {bc.selectproject();}
+			if (i != 2) {
+				bc.selectproject();
+			}
 		}
 		lp.logout();
-		lp.quitBrowser();  
+		lp.quitBrowser();
 
 	}
 
@@ -103,25 +108,25 @@ public class SearchTermReport_Regression1 {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(username, password);
 		String saveSearchName = null;
-		String hitsCount=null;
-		SoftAssert	softAssertion = new SoftAssert();
+		String hitsCount = null;
+		SoftAssert softAssertion = new SoftAssert();
 		bc.stepInfo("Logged in as -" + role);
 		if (role == "RMU") {
 			saveSearchName = saveSearchNameRMU;
-			hitsCount=HitsRMU[2];
+			hitsCount = HitsRMU[2];
 		}
 		if (role == "PA") {
 			saveSearchName = saveSearchNamePA;
-			hitsCount=Hits[2];
+			hitsCount = Hits[2];
 		}
 		String TagName = "STRTag" + Utility.dynamicNameAppender();
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		String actualHitCount = st.GenerateReport(saveSearchName);
 		softAssertion.assertEquals(actualHitCount, hitsCount);
 		bc.stepInfo("Report generated for selected searches");
-		String hitCountTagged=st.BulkTag(TagName);
+		String hitCountTagged = st.BulkTag(TagName);
 		bc.stepInfo("Bulk tagging of documents from STR is done and tag name is " + TagName);
-		softAssertion.assertEquals(actualHitCount,hitCountTagged);
+		softAssertion.assertEquals(actualHitCount, hitCountTagged);
 		softAssertion.assertAll();
 		bc.stepInfo("Document Count associated to selected tag is as excpeted");
 		lp.logout();
@@ -136,31 +141,31 @@ public class SearchTermReport_Regression1 {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(username, password);
 		String saveSearchName = null;
-		String hitsCount=null;
-		SoftAssert	softAssertion = new SoftAssert();
+		String hitsCount = null;
+		SoftAssert softAssertion = new SoftAssert();
 		bc.stepInfo("Logged in as -" + role);
 		if (role == "RMU") {
 			saveSearchName = saveSearchNameRMU;
-			hitsCount=HitsRMU[2];
+			hitsCount = HitsRMU[2];
 		}
 		if (role == "PA") {
 			saveSearchName = saveSearchNamePA;
-			hitsCount=Hits[2];
+			hitsCount = Hits[2];
 		}
 		String folderName = "STRFolder" + Utility.dynamicNameAppender();
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		String actualHitCount = st.GenerateReport(saveSearchName);
 		softAssertion.assertEquals(actualHitCount, hitsCount);
 		bc.stepInfo("Report generated for selected search");
-		String folderedDocCount=st.BulkFolder(folderName);
+		String folderedDocCount = st.BulkFolder(folderName);
 		bc.stepInfo("Bulk Foldering of documents from STR is done and tag name is " + folderName);
-		softAssertion.assertEquals(actualHitCount,folderedDocCount);
+		softAssertion.assertEquals(actualHitCount, folderedDocCount);
 		softAssertion.assertAll();
 		bc.stepInfo("Document Count associated to selected folder is as excpeted");
 		lp.logout();
 	}
 
-	//@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
+	// @Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
 	public void ValidateSearchTermreport_viewInDocView(String username, String password, String role)
 			throws InterruptedException, AWTException {
 		bc.stepInfo("Test case Id: RPMXCON-56496");
@@ -169,16 +174,16 @@ public class SearchTermReport_Regression1 {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(username, password);
 		String saveSearchName = null;
-		String hitsCount=null;
-		SoftAssert	softAssertion = new SoftAssert();
+		String hitsCount = null;
+		SoftAssert softAssertion = new SoftAssert();
 		bc.stepInfo("Logged in as -" + role);
 		if (role == "RMU") {
 			saveSearchName = saveSearchNameRMU;
-			hitsCount=HitsRMU[2];	
+			hitsCount = HitsRMU[2];
 		}
 		if (role == "PA") {
 			saveSearchName = saveSearchNamePA;
-			hitsCount=Hits[2];
+			hitsCount = Hits[2];
 		}
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		String actualHitCount = st.GenerateReport(saveSearchName);
@@ -196,15 +201,14 @@ public class SearchTermReport_Regression1 {
 	}
 
 	@Test(groups = { "regression" }, priority = 4)
-	public void ValidateSearchTermreport_BulkAssign()
-			throws InterruptedException, AWTException {
+	public void ValidateSearchTermreport_BulkAssign() throws InterruptedException, AWTException {
 		bc.stepInfo("Test case Id: RPMXCON-56501");
 		bc.stepInfo("To verify that Bulk action_Bulk Assign is working on Search Term Report");
 		st = new SearchTermReportPage(driver);
 		lp = new LoginPage(driver);
 		String assignmentName = "STRAssign" + Utility.dynamicNameAppender();
-		lp.loginToSightLine( Input.rmu1userName, Input.rmu1password);
-		SoftAssert	softAssertion = new SoftAssert();
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		SoftAssert softAssertion = new SoftAssert();
 		String saveSearchName = saveSearchNameRMU;
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		String actualHitCount = st.GenerateReport(saveSearchName);
@@ -219,7 +223,7 @@ public class SearchTermReport_Regression1 {
 		bc.stepInfo("Created a assignment by assigning saved search documents from search term report page -"
 				+ assignmentName);
 		String ActualCount = agnmt.verifydocsCountInAssgnPage(assignmentName);
-	//	agnmt.deleteAllAssignments("STR");
+		// agnmt.deleteAllAssignments("STR");
 		System.out.println(ActualCount);
 		softAssertion.assertEquals(actualHitCount, ActualCount);
 		softAssertion.assertAll();
@@ -227,6 +231,7 @@ public class SearchTermReport_Regression1 {
 				+ " excpeted in manage assignments page after assigning the docs to assignment .");
 		lp.logout();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param username
@@ -234,8 +239,8 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority =5 , enabled = true)
-	public void  VerifyTotalDocsSelected(String username, String password, String role) throws InterruptedException {
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5, enabled = true)
+	public void VerifyTotalDocsSelected(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56507");
 		bc.stepInfo("To verify that total selected unique count will be displayed as \"Total Selected\" under "
 				+ "Actions drop down");
@@ -244,7 +249,7 @@ public class SearchTermReport_Regression1 {
 		lp.loginToSightLine(username, password);
 		bc.stepInfo("Logged in as -" + role);
 		String saveSearchName = null;
-		SoftAssert	softAssertion = new SoftAssert();
+		SoftAssert softAssertion = new SoftAssert();
 		if (role == "RMU") {
 			saveSearchName = saveSearchNameRMU;
 		}
@@ -255,89 +260,44 @@ public class SearchTermReport_Regression1 {
 		String actualHitCount = st.GenerateReport(saveSearchName);
 		bc.passedStep("Report  generated for selected search ");
 		bc.waitForElement(st.getTotalSelectedCount());
-		bc.stepInfo("Total selected Hit count "+actualHitCount);
+		bc.stepInfo("Total selected Hit count " + actualHitCount);
 		bc.waitTime(3);
-		String TotalCount=st.getTotalSelectedCount().getText();
-		bc.stepInfo("Total selected doc count displayed under action button "+TotalCount);
-		softAssertion.assertEquals(actualHitCount,TotalCount );
+		String TotalCount = st.getTotalSelectedCount().getText();
+		bc.stepInfo("Total selected doc count displayed under action button " + TotalCount);
+		softAssertion.assertEquals(actualHitCount, TotalCount);
 		softAssertion.assertAll();
-		bc.passedStep("Sucessfully verified that total selected unique count will be displayed as Total Selected under Actions drop down");
-		lp.logout();		
-	}
-	@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 6)
-	public void navigateToSearchTermReport(String username, String password, String role) {
-		bc.stepInfo("Test case Id: RPMXCON-56361");
-		bc.stepInfo("To verify that Search Term Report link is provided on Report Landing Page and report should be opened on clicking on link");
-		st = new SearchTermReportPage(driver);
-		lp = new LoginPage(driver);
-		lp.loginToSightLine(username, password);
-		bc.stepInfo("Logged in as -" + role);
-        driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-        String expectedURL=Input.url+"DataAnalysisReport/SearchTermReport";
-        bc.waitForElement(st.getSearchTermReport());
-        if(st.getSearchTermReport().isDisplayed()) {
-        	bc.passedStep("Search Term Report link is displayed in reports landing Page");
-            st.getSearchTermReport().Click();
-            SoftAssert    softAssertion = new SoftAssert();
-            driver.waitForPageToBeReady();
-            softAssertion.assertEquals(expectedURL,driver.getUrl());
-            softAssertion.assertAll();
-            bc.passedStep("Sucessfully navigated to  Search Term Report Page");
-        	
-        }
-        else
-        {
-        	bc.failedStep("Search Term Report link is not found in Reports landing page.");
-        }
-        lp.logout();        
-    }
-	/**
-	 * @author Jayanthi.ganesan
-	 * @param username
-	 * @param password
-	 * @param role
-	 * @throws InterruptedException
-	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority =7 , enabled = true)
-	public void  VerifyAggregateSummary(String username, String password, String role) throws InterruptedException {
-		bc.stepInfo("Test case Id: RPMXCON-56482");
-		bc.stepInfo("To verify that  two aggregate unique document counts displays under the Summary section on Search Term Report.");
-		st = new SearchTermReportPage(driver);
-		lp = new LoginPage(driver);
-		lp.loginToSightLine(username, password);
-		bc.stepInfo("Logged in as -" + role);
-		
-		SoftAssert	softAssertion = new SoftAssert();
-		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-		if(role=="PA") {
-		    st.GenerateReportWithAllSearches(savedSearchNamesPA);}
-			
-			if(role=="RMU") {
-			    st.GenerateReportWithAllSearches(savedSearchNamesRMU);}
-		bc.passedStep("Report  generated for selected search ");
-		int i=st.getIndex("UNIQUE HITS");
-		int j=st.getIndex("UNIQUE FAMILY HITS");
-		List<Integer> Hits = new ArrayList<>();
-		List<Integer> familyHits = new ArrayList<>();
-		Hits=st.getColumn(st.getColumnValues(i));
-		familyHits=st.getColumn(st.getColumnValues(j));
-		System.out.println(Hits);
-		System.out.println(familyHits);
-		int uniqueHitsSum=st.sumUsingList(Hits);
-		int uniquefamilyHitsSum=st.sumUsingList(familyHits);
-		bc.waitForElement(st.getUniqueHitsFromSummary());
-		int expecteduniqueHits=Integer.parseInt( st.getUniqueHitsFromSummary().getText());
-		int expecteduniquefamilyHits=Integer.parseInt(st.getUniqueFamilyHitsFromSummary().getText());
-		bc.stepInfo("Sum of all searches unique Hits  "+uniqueHitsSum);
-		bc.stepInfo("Aggregate Unique hits value Displayed in summary of STR Page"+st.getUniqueHitsFromSummary().getText());
-		bc.stepInfo("Sum of all searches unique family  Hits  "+uniquefamilyHitsSum);
-		bc.stepInfo("Aggregate Unique family hits value Displayed in summary of STR Page"+st.getUniqueFamilyHitsFromSummary().getText());
-		softAssertion.assertEquals(uniqueHitsSum,expecteduniqueHits);
-		softAssertion.assertEquals(uniquefamilyHitsSum,expecteduniquefamilyHits);
-		softAssertion.assertAll();
-		bc.passedStep("Sucessfully verified that aggregate unique document counts displays under the Summary section on Search Term Report is sum of all Unique Doc values under report table.");
+		bc.passedStep(
+				"Sucessfully verified that total selected unique count will be displayed as Total Selected under Actions drop down");
 		lp.logout();
 	}
+
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 6)
+	public void navigateToSearchTermReport(String username, String password, String role) {
+		bc.stepInfo("Test case Id: RPMXCON-56361");
+		bc.stepInfo(
+				"To verify that Search Term Report link is provided on Report Landing Page and report should be opened on clicking on link");
+		st = new SearchTermReportPage(driver);
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(username, password);
+		bc.stepInfo("Logged in as -" + role);
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		String expectedURL = Input.url + "DataAnalysisReport/SearchTermReport";
+		bc.waitForElement(st.getSearchTermReport());
+		if (st.getSearchTermReport().isDisplayed()) {
+			bc.passedStep("Search Term Report link is displayed in reports landing Page");
+			st.getSearchTermReport().Click();
+			SoftAssert softAssertion = new SoftAssert();
+			driver.waitForPageToBeReady();
+			softAssertion.assertEquals(expectedURL, driver.getUrl());
+			softAssertion.assertAll();
+			bc.passedStep("Sucessfully navigated to  Search Term Report Page");
+
+		} else {
+			bc.failedStep("Search Term Report link is not found in Reports landing page.");
+		}
+		lp.logout();
+	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param username
@@ -345,8 +305,62 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority =8, enabled = true)
-	public void  VerifySorting(String username, String password, String role) throws InterruptedException {
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 7, enabled = true)
+	public void VerifyAggregateSummary(String username, String password, String role) throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-56482");
+		bc.stepInfo(
+				"To verify that  two aggregate unique document counts displays under the Summary section on Search Term Report.");
+		st = new SearchTermReportPage(driver);
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(username, password);
+		bc.stepInfo("Logged in as -" + role);
+
+		SoftAssert softAssertion = new SoftAssert();
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		if (role == "PA") {
+			st.GenerateReportWithAllSearches(savedSearchNamesPA);
+		}
+
+		if (role == "RMU") {
+			st.GenerateReportWithAllSearches(savedSearchNamesRMU);
+		}
+		bc.passedStep("Report  generated for selected search ");
+		int i = st.getIndex("UNIQUE HITS");
+		int j = st.getIndex("UNIQUE FAMILY HITS");
+		List<Integer> Hits = new ArrayList<>();
+		List<Integer> familyHits = new ArrayList<>();
+		Hits = st.getColumn(st.getColumnValues(i));
+		familyHits = st.getColumn(st.getColumnValues(j));
+		System.out.println(Hits);
+		System.out.println(familyHits);
+		int uniqueHitsSum = st.sumUsingList(Hits);
+		int uniquefamilyHitsSum = st.sumUsingList(familyHits);
+		bc.waitForElement(st.getUniqueHitsFromSummary());
+		int expecteduniqueHits = Integer.parseInt(st.getUniqueHitsFromSummary().getText());
+		int expecteduniquefamilyHits = Integer.parseInt(st.getUniqueFamilyHitsFromSummary().getText());
+		bc.stepInfo("Sum of all searches unique Hits  " + uniqueHitsSum);
+		bc.stepInfo("Aggregate Unique hits value Displayed in summary of STR Page"
+				+ st.getUniqueHitsFromSummary().getText());
+		bc.stepInfo("Sum of all searches unique family  Hits  " + uniquefamilyHitsSum);
+		bc.stepInfo("Aggregate Unique family hits value Displayed in summary of STR Page"
+				+ st.getUniqueFamilyHitsFromSummary().getText());
+		softAssertion.assertEquals(uniqueHitsSum, expecteduniqueHits);
+		softAssertion.assertEquals(uniquefamilyHitsSum, expecteduniquefamilyHits);
+		softAssertion.assertAll();
+		bc.passedStep(
+				"Sucessfully verified that aggregate unique document counts displays under the Summary section on Search Term Report is sum of all Unique Doc values under report table.");
+		lp.logout();
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @throws InterruptedException
+	 */
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 8, enabled = true)
+	public void VerifySorting(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56588");
 		bc.stepInfo("Search Term Report - Verify sorting feature on Unique Hits and Unique Family Hits columns");
 		st = new SearchTermReportPage(driver);
@@ -354,19 +368,22 @@ public class SearchTermReport_Regression1 {
 		lp.loginToSightLine(username, password);
 		bc.stepInfo("Logged in as -" + role);
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-		if(role=="PA") {
-	    st.GenerateReportWithAllSearches(savedSearchNamesPA);}
-		
-		if(role=="RMU") {
-		    st.GenerateReportWithAllSearches(savedSearchNamesRMU);}
-			
+		if (role == "PA") {
+			st.GenerateReportWithAllSearches(savedSearchNamesPA);
+		}
+
+		if (role == "RMU") {
+			st.GenerateReportWithAllSearches(savedSearchNamesRMU);
+		}
+
 		bc.passedStep("Report  generated for All saved searches.");
-		st.verifyColumnSorting("UNIQUE HITS",st.getUniqueHits());
+		st.verifyColumnSorting("UNIQUE HITS", st.getUniqueHits());
 		driver.scrollPageToTop();
-		//st.getUniqueFamilyHits().ScrollTo();
-		//st.verifyColumnSorting("UNIQUE FAMILY HITS",st.getUniqueFamilyHits());
-		lp.logout();		
+		// st.getUniqueFamilyHits().ScrollTo();
+		// st.verifyColumnSorting("UNIQUE FAMILY HITS",st.getUniqueFamilyHits());
+		lp.logout();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param username
@@ -374,8 +391,8 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority =9, enabled = true)
-	public void  VerifyReportGeneration(String username, String password, String role) throws InterruptedException {
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 9, enabled = true)
+	public void VerifyReportGeneration(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56963");
 		bc.stepInfo("Verify and generate Search Term Report with source as Search");
 		st = new SearchTermReportPage(driver);
@@ -383,16 +400,17 @@ public class SearchTermReport_Regression1 {
 		lp.loginToSightLine(username, password);
 		bc.stepInfo("Logged in as -" + role);
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-		if(role=="PA") {
-	    st.GenerateReportWithAllSearches(savedSearchNamesPA);
-		st.verifySearchInReportsTable(savedSearchNamesPA);
+		if (role == "PA") {
+			st.GenerateReportWithAllSearches(savedSearchNamesPA);
+			st.verifySearchInReportsTable(savedSearchNamesPA);
 		}
-		if(role=="RMU") {
-		    st.GenerateReportWithAllSearches(savedSearchNamesRMU);
-		st.verifySearchInReportsTable(savedSearchNamesRMU);
-		lp.logout();
+		if (role == "RMU") {
+			st.GenerateReportWithAllSearches(savedSearchNamesRMU);
+			st.verifySearchInReportsTable(savedSearchNamesRMU);
+			lp.logout();
 		}
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param username
@@ -400,135 +418,143 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority =10, enabled = true)
-	public void  VerifyUniqueHits(String username, String password, String role) throws InterruptedException {
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 10, enabled = true)
+	public void VerifyUniqueHits(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56584");
 		bc.stepInfo("Search Term Report - Validate Unique Hits column value.");
 		st = new SearchTermReportPage(driver);
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(username, password);
 		bc.stepInfo("Logged in as -" + role);
-		String[] savedSearchPA= {saveSearchNamePA1,saveSearchNamePA2};
-		String[] savedSearchRMU= {saveSearchNameRMU1,saveSearchNameRMU2};
-		SessionSearch ss=new SessionSearch(driver);
+		String[] savedSearchPA = { saveSearchNamePA1, saveSearchNamePA2 };
+		String[] savedSearchRMU = { saveSearchNameRMU1, saveSearchNameRMU2 };
+		SessionSearch ss = new SessionSearch(driver);
 		ss.basicContentSearchUsingOperator(Input.searchString1, "NOT", Input.searchString2);
 		String expectedPureHit1 = ss.verifyPureHitsCount();
-		bc.stepInfo("Pure Hits count if Configured query 'test' 'NOT' 'Comments'"+expectedPureHit1);
+		bc.stepInfo("Pure Hits count if Configured query 'test' 'NOT' 'Comments'" + expectedPureHit1);
 		bc.selectproject();
 		ss.basicContentSearchUsingOperator(Input.searchString2, "NOT", Input.searchString1);
 		String expectedPureHit2 = ss.verifyPureHitsCount();
-		bc.stepInfo("Pure Hits count if Configured query 'Comments''NOT' 'test' in basic search page "+expectedPureHit2);
+		bc.stepInfo(
+				"Pure Hits count if Configured query 'Comments''NOT' 'test' in basic search page " + expectedPureHit2);
 		bc.stepInfo("Pure hit count after WP saved search is " + expectedPureHit2);
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-		if(role=="PA") {
-	    st.GenerateReportWithAllSearches(savedSearchPA);
-	    SoftAssert SoftAssertion =new SoftAssert();
-	    SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS",saveSearchNamePA1) ,expectedPureHit2);
-	    SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS", saveSearchNamePA2),expectedPureHit1);
-		bc.stepInfo("The unique Hits Count for saved saerch "+saveSearchNamePA1+"--"+st.getHitsValueFromRow("UNIQUE HITS",saveSearchNamePA1));
-		bc.stepInfo("The unique Hits Count for saved saerch "+saveSearchNamePA2+"--"+st.getHitsValueFromRow("UNIQUE HITS",saveSearchNamePA2));
-		SoftAssertion.assertAll();
-		bc.passedStep("Suceddfully verified the Unique Hits Column value in STR Page");
+		if (role == "PA") {
+			st.GenerateReportWithAllSearches(savedSearchPA);
+			SoftAssert SoftAssertion = new SoftAssert();
+			SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS", saveSearchNamePA1), expectedPureHit2);
+			SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS", saveSearchNamePA2), expectedPureHit1);
+			bc.stepInfo("The unique Hits Count for saved saerch " + saveSearchNamePA1 + "--"
+					+ st.getHitsValueFromRow("UNIQUE HITS", saveSearchNamePA1));
+			bc.stepInfo("The unique Hits Count for saved saerch " + saveSearchNamePA2 + "--"
+					+ st.getHitsValueFromRow("UNIQUE HITS", saveSearchNamePA2));
+			SoftAssertion.assertAll();
+			bc.passedStep("Suceddfully verified the Unique Hits Column value in STR Page");
 		}
-		if(role=="RMU") {
-		st.GenerateReportWithAllSearches(savedSearchRMU);
-		SoftAssert SoftAssertion =new SoftAssert();
-		SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS",saveSearchNameRMU1) ,expectedPureHit2);
-	    SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU2),expectedPureHit1);
-	    bc.stepInfo("The unique Hits Count for saved saerch "+saveSearchNameRMU1+"--"+st.getHitsValueFromRow("UNIQUE HITS",saveSearchNameRMU1));
-	    bc.stepInfo("The unique Hits Count for saved saerch "+saveSearchNameRMU2+"--"+st.getHitsValueFromRow("UNIQUE HITS",saveSearchNameRMU2));
-		SoftAssertion.assertAll();
-		bc.passedStep("Suceddfully verified the Unique Hits Column value in STR Page");
-		lp.logout();
+		if (role == "RMU") {
+			st.GenerateReportWithAllSearches(savedSearchRMU);
+			SoftAssert SoftAssertion = new SoftAssert();
+			SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU1), expectedPureHit2);
+			SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU2), expectedPureHit1);
+			bc.stepInfo("The unique Hits Count for saved saerch " + saveSearchNameRMU1 + "--"
+					+ st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU1));
+			bc.stepInfo("The unique Hits Count for saved saerch " + saveSearchNameRMU2 + "--"
+					+ st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU2));
+			SoftAssertion.assertAll();
+			bc.passedStep("Suceddfully verified the Unique Hits Column value in STR Page");
+			lp.logout();
 		}
-		
+
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-		@Test(groups = { "regression" }, priority = 11)
-		public void ValidateBulkRelease() throws InterruptedException {
-			bc.stepInfo("Test case Id: RPMXCON-56499");
-			bc.stepInfo("To verify that Bulk action_Bulk Release is working on Search Term Report");
-			lp = new LoginPage(driver);
-			st = new SearchTermReportPage(driver);
-			SoftAssert softAssertion = new SoftAssert();
-			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-			String securitygroupname = "STRSG" + Utility.dynamicNameAppender();
-			SecurityGroupsPage securityPage = new SecurityGroupsPage(driver);
-			driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
-			securityPage.AddSecurityGroup(securitygroupname);
-			bc.stepInfo("Added security group -"+securitygroupname);
-			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-			String actualHitCount = st.GenerateReport(saveSearchNamePA);
-			bc.stepInfo("Report generated for selected search");
-			String releasedDocs=st.bulkRelease(securitygroupname);
-			bc.stepInfo("sucessfully released Search term report docs to security group  -"+securitygroupname);
-			softAssertion.assertEquals(actualHitCount, releasedDocs);
-			bc.stepInfo("Document Count associated to selected security group in PopUp is "+releasedDocs);
-			//securityPage.deleteSecurityGroups(securitygroupname);
-			softAssertion.assertAll();
-			bc.passedStep("The Search term report docs released to Security group "+securitygroupname+" is reflected as expected");
-			lp.logout();
-		}
-		
-		/**
-		 * @author Jayanthi.ganesan
-		 * @throws InterruptedException
-		 */
-		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 12)
-		public void validateExportData(String username, String password, String role) throws InterruptedException {
-			bc.stepInfo("Test case Id: RPMXCON-56500");
-			bc.stepInfo("To verify that Action_Export Data is working on Search Term Report");
-			lp = new LoginPage(driver);
-			st = new SearchTermReportPage(driver);
-			SoftAssert softAssertion = new SoftAssert();
-			lp.loginToSightLine(username, password);
-			String saveSearchName = null;
-			bc.stepInfo("Logged in as -" + role);
-			if (role == "RMU") {
-				saveSearchName = saveSearchNameRMU;
-			}
-			if (role == "PA") {
-				saveSearchName = saveSearchNamePA;
-			}
-			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-			st.GenerateReport(saveSearchName);
-			bc.stepInfo("Report generated for selected search");
-			st.STR_ToExportData();
-			driver.waitForPageToBeReady();
-			String[] metaDataFields1 = { "CustodianName", "DocFileName", "AttachCount" };
-			CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
-			cddr.selectMetaDataFields(metaDataFields1);
-			cddr.runReportandVerifyFileDownloaded();
-			softAssertion.assertAll();
-			bc.passedStep("Sucessfully verified that Export Data action is working on Search Term Report Page.");
-			lp.logout();
-		}
+	@Test(groups = { "regression" }, priority = 11)
+	public void ValidateBulkRelease() throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-56499");
+		bc.stepInfo("To verify that Bulk action_Bulk Release is working on Search Term Report");
+		lp = new LoginPage(driver);
+		st = new SearchTermReportPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		String securitygroupname = "STRSG" + Utility.dynamicNameAppender();
+		SecurityGroupsPage securityPage = new SecurityGroupsPage(driver);
+		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityPage.AddSecurityGroup(securitygroupname);
+		bc.stepInfo("Added security group -" + securitygroupname);
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		String actualHitCount = st.GenerateReport(saveSearchNamePA);
+		bc.stepInfo("Report generated for selected search");
+		String releasedDocs = st.bulkRelease(securitygroupname);
+		bc.stepInfo("sucessfully released Search term report docs to security group  -" + securitygroupname);
+		softAssertion.assertEquals(actualHitCount, releasedDocs);
+		bc.stepInfo("Document Count associated to selected security group in PopUp is " + releasedDocs);
+		// securityPage.deleteSecurityGroups(securitygroupname);
+		softAssertion.assertAll();
+		bc.passedStep("The Search term report docs released to Security group " + securitygroupname
+				+ " is reflected as expected");
+		lp.logout();
+	}
 
-		/**
-		 * @author Jayanthi.ganesan
-		 * @param username
-		 * @param password
-		 * @param role
-		 * @throws InterruptedException
-		 */
-		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority =13, enabled = false)
-		public void  VerifyCombinedUniqueHits(String username, String password, String role) throws InterruptedException {
-			bc.stepInfo("Test case Id: RPMXCON-56586");
-			bc.stepInfo("Search Term Report - Validate Unique Hits and Unique Family Hits column value for combined search results");
-			st = new SearchTermReportPage(driver);
-			lp = new LoginPage(driver);
-			lp.loginToSightLine(username, password);
-			bc.stepInfo("Logged in as -" + role);
-			String saveSearch[]= {cmbSearchName1,cmbSearchName2};
-			SessionSearch ss=new SessionSearch(driver);
-			if(role=="RMU") {
-			ss.advancedSearch_CombinedResults(Input.searchString1,ss.getadvoption_family());
-			ss.saveSearchAdvanced_New(cmbSearchName1, "Shared with Default Security Group");	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 12)
+	public void validateExportData(String username, String password, String role) throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-56500");
+		bc.stepInfo("To verify that Action_Export Data is working on Search Term Report");
+		lp = new LoginPage(driver);
+		st = new SearchTermReportPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		lp.loginToSightLine(username, password);
+		String saveSearchName = null;
+		bc.stepInfo("Logged in as -" + role);
+		if (role == "RMU") {
+			saveSearchName = saveSearchNameRMU;
+		}
+		if (role == "PA") {
+			saveSearchName = saveSearchNamePA;
+		}
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		st.GenerateReport(saveSearchName);
+		bc.stepInfo("Report generated for selected search");
+		st.STR_ToExportData();
+		driver.waitForPageToBeReady();
+		String[] metaDataFields1 = { "CustodianName", "DocFileName", "AttachCount" };
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+		cddr.selectMetaDataFields(metaDataFields1);
+		cddr.runReportandVerifyFileDownloaded();
+		softAssertion.assertAll();
+		bc.passedStep("Sucessfully verified that Export Data action is working on Search Term Report Page.");
+		lp.logout();
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @throws InterruptedException
+	 */
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 13, enabled = false)
+	public void VerifyCombinedUniqueHits(String username, String password, String role) throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-56586");
+		bc.stepInfo(
+				"Search Term Report - Validate Unique Hits and Unique Family Hits column value for combined search results");
+		st = new SearchTermReportPage(driver);
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(username, password);
+		bc.stepInfo("Logged in as -" + role);
+		String saveSearch[] = { cmbSearchName1, cmbSearchName2 };
+		SessionSearch ss = new SessionSearch(driver);
+		if (role == "RMU") {
+			ss.advancedSearch_CombinedResults(Input.searchString1, ss.getadvoption_family());
+			ss.saveSearchAdvanced_New(cmbSearchName1, "Shared with Default Security Group");
 			bc.selectproject();
-		    ss.advancedSearch_CombinedResults(Input.searchString2,ss.getadvoption_family());
+			ss.advancedSearch_CombinedResults(Input.searchString2, ss.getadvoption_family());
 			ss.saveSearchAdvanced_New(cmbSearchName2, "Shared with Default Security Group");
 			ss.selectSavedsearchInASWp(cmbSearchName1);
 			driver.waitForPageToBeReady();
@@ -536,96 +562,145 @@ public class SearchTermReport_Regression1 {
 			driver.waitForPageToBeReady();
 			ss.searchSavedSearch(cmbSearchName2);
 			bc.stepInfo("Configured a search query with two saved search and NOT operator in between ");
-			expectedUHit1=Integer.toString(ss.serarchWP());
+			expectedUHit1 = Integer.toString(ss.serarchWP());
 			ss.selectSavedsearchInASWp(cmbSearchName2);
 			driver.waitForPageToBeReady();
 			ss.selectOperator("NOT");
 			driver.waitForPageToBeReady();
 			ss.searchSavedSearch(cmbSearchName1);
-			expectedUHit2=Integer.toString(ss.serarchWP());
+			expectedUHit2 = Integer.toString(ss.serarchWP());
 			bc.stepInfo("Configured a search query with two saved search and NOT operator in between ");
-			}
-			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-			st.GenerateReportWithSharedWithSGSearches(saveSearch);
-		    SoftAssert SoftAssertion =new SoftAssert();
-		    SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS",cmbSearchName1) ,expectedUHit1);
-		   SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS", cmbSearchName2),expectedUHit2);
-			bc.stepInfo("The unique Hits Count for Combined saved saerch "+cmbSearchName1+"--"+st.getHitsValueFromRow("UNIQUE HITS",cmbSearchName1));
-			bc.stepInfo("The unique Hits Count for Combined saved saerch "+cmbSearchName2+"--"+st.getHitsValueFromRow("UNIQUE HITS",cmbSearchName2));
-			SoftAssertion.assertAll();
-			bc.passedStep("Sucessfully verified the Unique Hits Column value for Combined search in STR Page");
-			if(role=="PA") {
-				SavedSearch savedSearch = new SavedSearch(driver);
-				savedSearch.SaveSearchDelete(cmbSearchName1);
-				savedSearch.SaveSearchDelete(cmbSearchName2);
-			}
-			lp.logout();
-			}
-		/**
-		 * @author Jayanthi.ganesan
-		 * @throws InterruptedException
-		 */
-		@Test(groups = { "regression" }, priority = 14, enabled = true)
-		public void VerifyFamilyUniqueHits() throws InterruptedException {
-			bc.stepInfo("Test case Id: RPMXCON-56585");
-			bc.stepInfo("Search Term Report - Validate Unique Family Hits column value.");
-			String tagName1 = "STR" + Utility.dynamicNameAppender();
-			String tagName2 = "STR" + Utility.dynamicNameAppender();
-			st = new SearchTermReportPage(driver);
-			lp = new LoginPage(driver);
-			SessionSearch search = new SessionSearch(driver);
-			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			bc.stepInfo("Logged in as - RMU");
-			String[] savedSearchRMU = { saveSearchNameRMU1, saveSearchNameRMU2 };
-			SessionSearch ss = new SessionSearch(driver);
-			ss.basicContentSearch(Input.searchString1);
-			ss.bulkTagFamilyMemberDocuments(tagName1);
-			bc.selectproject();
-			ss.basicContentSearch(Input.searchString2);
-			ss.bulkTagFamilyMemberDocuments(tagName2);
-			bc.selectproject();
-			search.navigateToAdvancedSearchPage();
-			// Adding WP tag into search text box
-			search.workProductSearch("tag", tagName1, true);
-			// Adding Operator into search text box
-			search.selectOperator("NOT");
-			search.workProductSearch("tag", tagName2, false);
-			search.serarchWP();
-			bc.waitTime(2);
-			driver.waitForPageToBeReady();
-			String expectedFamilyHit1 = ss.verifyPureHitsCount();
-			bc.stepInfo("Family members count if Configured query with family members of "
-					+ "'test' 'NOT' 'Comments' search terms " + expectedFamilyHit1);
-			bc.selectproject();
-			search.navigateToAdvancedSearchPage();
-			// Adding WP tag into search text box
-			search.workProductSearch("tag", tagName2, true);
-			// Adding Operator into search text box
-			search.selectOperator("NOT");
-			search.workProductSearch("tag", tagName1, false);
-			search.serarchWP();
-			bc.waitTime(2);
-			driver.waitForPageToBeReady();
-			String expectedFamilyHit2 = ss.verifyPureHitsCount();
-			bc.stepInfo(
-					"Family members count if Configured query family members of  'Comments''NOT' 'test' search terms"
-							+ expectedFamilyHit2);
-			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-			st.GenerateReportWithAllSearches(savedSearchRMU);
-			SoftAssert SoftAssertion = new SoftAssert();
-
-			SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE FAMILY HITS", saveSearchNameRMU1),
-					expectedFamilyHit2);
-			SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE FAMILY HITS", saveSearchNameRMU2),
-					expectedFamilyHit1);
-			bc.stepInfo("The unique Family Hits Count for saved saerch " + saveSearchNameRMU1 + "--"
-					+ st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU1));
-			bc.stepInfo("The unique Family  Hits Count for saved saerch " + saveSearchNameRMU2 + "--"
-					+ st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU2));
-			SoftAssertion.assertAll();
-			bc.passedStep("Sucessfully verified the Unique Family Hits Column value in STR Page");
-
 		}
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		st.GenerateReportWithSharedWithSGSearches(saveSearch);
+		SoftAssert SoftAssertion = new SoftAssert();
+		SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS", cmbSearchName1), expectedUHit1);
+		SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS", cmbSearchName2), expectedUHit2);
+		bc.stepInfo("The unique Hits Count for Combined saved saerch " + cmbSearchName1 + "--"
+				+ st.getHitsValueFromRow("UNIQUE HITS", cmbSearchName1));
+		bc.stepInfo("The unique Hits Count for Combined saved saerch " + cmbSearchName2 + "--"
+				+ st.getHitsValueFromRow("UNIQUE HITS", cmbSearchName2));
+		SoftAssertion.assertAll();
+		bc.passedStep("Sucessfully verified the Unique Hits Column value for Combined search in STR Page");
+		if (role == "PA") {
+			SavedSearch savedSearch = new SavedSearch(driver);
+			savedSearch.SaveSearchDelete(cmbSearchName1);
+			savedSearch.SaveSearchDelete(cmbSearchName2);
+		}
+		lp.logout();
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(groups = { "regression" }, priority = 14, enabled = true)
+	public void VerifyFamilyUniqueHits() throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-56585");
+		bc.stepInfo("Search Term Report - Validate Unique Family Hits column value.");
+		String tagName1 = "STR" + Utility.dynamicNameAppender();
+		String tagName2 = "STR" + Utility.dynamicNameAppender();
+		st = new SearchTermReportPage(driver);
+		lp = new LoginPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Logged in as - RMU");
+		String[] savedSearchRMU = { saveSearchNameRMU1, saveSearchNameRMU2 };
+		SessionSearch ss = new SessionSearch(driver);
+		ss.basicContentSearch(Input.searchString1);
+		ss.bulkTagFamilyMemberDocuments(tagName1);
+		bc.selectproject();
+		ss.basicContentSearch(Input.searchString2);
+		ss.bulkTagFamilyMemberDocuments(tagName2);
+		bc.selectproject();
+		search.navigateToAdvancedSearchPage();
+		// Adding WP tag into search text box
+		search.workProductSearch("tag", tagName1, true);
+		// Adding Operator into search text box
+		search.selectOperator("NOT");
+		search.workProductSearch("tag", tagName2, false);
+		search.serarchWP();
+		bc.waitTime(2);
+		driver.waitForPageToBeReady();
+		String expectedFamilyHit1 = ss.verifyPureHitsCount();
+		bc.stepInfo("Family members count if Configured query with family members of "
+				+ "'test' 'NOT' 'Comments' search terms " + expectedFamilyHit1);
+		bc.selectproject();
+		search.navigateToAdvancedSearchPage();
+		// Adding WP tag into search text box
+		search.workProductSearch("tag", tagName2, true);
+		// Adding Operator into search text box
+		search.selectOperator("NOT");
+		search.workProductSearch("tag", tagName1, false);
+		search.serarchWP();
+		bc.waitTime(2);
+		driver.waitForPageToBeReady();
+		String expectedFamilyHit2 = ss.verifyPureHitsCount();
+		bc.stepInfo("Family members count if Configured query family members of  'Comments''NOT' 'test' search terms"
+				+ expectedFamilyHit2);
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		st.GenerateReportWithAllSearches(savedSearchRMU);
+		SoftAssert SoftAssertion = new SoftAssert();
+
+		SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE FAMILY HITS", saveSearchNameRMU1),
+				expectedFamilyHit2);
+		SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE FAMILY HITS", saveSearchNameRMU2),
+				expectedFamilyHit1);
+		bc.stepInfo("The unique Family Hits Count for saved saerch " + saveSearchNameRMU1 + "--"
+				+ st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU1));
+		bc.stepInfo("The unique Family  Hits Count for saved saerch " + saveSearchNameRMU2 + "--"
+				+ st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU2));
+		SoftAssertion.assertAll();
+		bc.passedStep("Sucessfully verified the Unique Family Hits Column value in STR Page");
+
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @throws InterruptedException
+	 */
+	@Test(groups = { "regression" }, priority = 13, enabled = true)
+	public void UIvalidation_STR() throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-56582");
+		bc.stepInfo(
+				"Search Term Report - UI Validatation for additional columns 'Unique Hits' and 'Unique Family Hits'");
+		st = new SearchTermReportPage(driver);
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("Logged in as PA");
+		String[] savedSearchPA = { saveSearchNamePA1, saveSearchNamePA2 };
+		st.GenerateReportWithAllSearches(savedSearchPA);
+		driver.waitForPageToBeReady();
+		int conceptualColumn = bc.getIndex(st.getSummaryTableHeader(), "CONCEPTUALLY SIMILAR");
+		int uniqueHitsColumn = bc.getIndex(st.getSummaryTableHeader(), "UNIQUE HITS");
+		int uniqueFamilyHitsColumn = bc.getIndex(st.getSummaryTableHeader(), "UNIQUE FAMILY HITS");
+		int conceptualColSummary = bc.getIndex(st.getSummaryTableHeader(), "CONCEPTUALLY SIMILAR");
+		int uniqueHitsColSummary = bc.getIndex(st.getSummaryTableHeader(), "UNIQUE HITS");
+		int uniqueFamilyHitsColSummary = bc.getIndex(st.getSummaryTableHeader(), "UNIQUE FAMILY HITS");
+
+		SoftAssert SoftAssertion = new SoftAssert();
+		if ((conceptualColumn + 1 == uniqueHitsColumn && conceptualColumn + 2 == uniqueFamilyHitsColumn)
+				&& (conceptualColSummary + 1 == uniqueHitsColSummary
+						&& conceptualColSummary + 2 == uniqueFamilyHitsColSummary)) {
+			bc.passedStep(" Unique Hits column appeared next to the existing Conceptually Similar Column and Unique"
+					+ " Family Hits appeared next to Unique Hits column in Search Term Report and summary report.. ");
+			driver.waitForPageToBeReady();
+			st.getRowCheckBox(Input.searchString2, uniqueHitsColumn).ScrollTo();
+			SoftAssertion.assertTrue(st.getRowCheckBox(Input.searchString2, uniqueHitsColumn).isElementAvailable(2));
+			SoftAssertion
+					.assertTrue(st.getRowCheckBox(Input.TallySearch, uniqueFamilyHitsColumn).isElementAvailable(2));
+			SoftAssertion.assertAll();
+			bc.passedStep("Each cell in both columns have checkboxes "
+					+ " that will look identically to other columns in STR.");
+
+		} else {
+			bc.failedStep("Report not generated / columns are not displayed as expected");
+		}
+	}
+
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
@@ -661,8 +736,8 @@ public class SearchTermReport_Regression1 {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			//Input in = new Input();
-			//in.loadEnvConfig();
+			// Input in = new Input();
+			// in.loadEnvConfig();
 			driver = new Driver();
 			lp = new LoginPage(driver);
 			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);

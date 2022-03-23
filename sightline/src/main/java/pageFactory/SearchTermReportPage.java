@@ -220,6 +220,10 @@ public class SearchTermReportPage {
 	public Element getFinalizeButton() {
 		return driver.FindElementById("btnfinalizeAssignment");
 	}
+	
+	public ElementCollection getSummaryTableHeader() {
+		return driver.FindElementsByXPath("//table[@id='tblSummary']//table//td[@colspan]/label/font");
+		}
 
 	//Added By Jeevitha
 	public Element getHitsCount() {

@@ -239,7 +239,7 @@ public class AdvancedSearch_Regression2 {
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit);
 			int ExpectedPureHit3 = search.verifyCombinedSearch(TagName, "tag", "yes", "OR", "NOT", "OR");
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit3);
-			softAssertion.assertEquals(837, ExpectedPureHit3);
+			softAssertion.assertEquals(836, ExpectedPureHit3);
 			softAssertion.assertEquals(53, ExpectedPureHit);
 			softAssertion.assertAll();
 			baseClass.passedStep(
@@ -1091,6 +1091,24 @@ public class AdvancedSearch_Regression2 {
 		loginPage.logout();
 
 	}
+	
+	/**
+	* @author Sowndarya.Velraj
+	* @throws InterruptedException
+	*/
+	@Test(description ="RPMXCON-47729",groups = { "regression" },dataProvider = "Users", priority = 35,enabled = true)
+	public void verifyWarningMSg_Audisaercho(String username, String password) throws InterruptedException {
+	loginPage.loginToSightLine(username, password);
+	baseClass.stepInfo("Verify that warning message appears if user does not select Language pack "
+	+ "and click on Search button on Advanced Search screen");
+	baseClass.stepInfo("Test case Id: RPMXCON-47729");
+	search.navigateToAdvancedSearchPage();
+	search.verifyWarningAudioSearch_NotSelctedLanguage(Input.audioSearchString1);
+	baseClass.passedStep("Warning message displayed if user does not select Language pack "
+	+ "and click on Search button on Advanced Search screen");
+	loginPage.logout();
+	}
+	
 	@DataProvider(name = "Export")
 	public Object[][] Export() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, true },

@@ -6421,6 +6421,7 @@ public class SessionSearch {
 		} catch (Exception e) {
 			base.failedStep("The distributed list of users are present in advanced search page users list");
 		}
+		driver.scrollingToBottomofAPage();
 		selectStatusInAssgnWp(status).waitAndClick(2);
 		if (status != "Choose Status:") {
 			selectDate("From Date");
@@ -10912,5 +10913,25 @@ public void advMetaSearch_Draft(String metaDataField,String val1) {
 		Reporter.log("Bulk Tag is done, Tag is : " + TagName, true);
 
 	}
+	
+	/**
+     * @author Jayanthi.Ganesan
+     * This method will try to do audio search without selecting language. 
+     * @param SearchString
+     */
+    public void verifyWarningAudioSearch_NotSelctedLanguage(String SearchString) {
+        base.waitForElement(getAs_Audio());
+        getAs_Audio().ScrollTo();
+        getAs_Audio().waitAndClick(10);
+        driver.waitForPageToBeReady();
+        // Enter search string
+        base.waitForElement(getAs_AudioText());
+        getAs_AudioText().SendKeys(SearchString);
+        base.stepInfo("Entered a text in search text box" + SearchString);
+        base.waitForElement(getQuerySearchButton());
+        getQuerySearchButton().Click();
+        base.VerifyWarningMessage("Please select the Language Pack/Dialect in Audio search");
+ 
+    }
 	
 }
