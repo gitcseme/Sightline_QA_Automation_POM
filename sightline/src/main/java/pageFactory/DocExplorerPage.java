@@ -2283,11 +2283,7 @@ public class DocExplorerPage {
 	 * 
 	 */
 	public void docExpViewInDocView() {
-		driver.waitForPageToBeReady();
-		for (int i = 1; i <= 3; i++) {
-			
-			getClickDocExplorerID(i).waitAndClick(5);
-		}
+
 		bc.waitForElement(getDocExp_actionButton());
 		getDocExp_actionButton().waitAndClick(5);
 		bc.waitForElement(getDocViewAction());
