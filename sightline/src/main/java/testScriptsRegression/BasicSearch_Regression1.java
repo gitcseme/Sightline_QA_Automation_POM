@@ -245,6 +245,60 @@ public class BasicSearch_Regression1 {
 				+ " auto-suggest value is selected (presence of a space in Multiple words) then multiple values that are being selected is wrapped in double quotes.  ");
 		lp.logout();
 	}
+	
+	/**
+	 * @author Jeevitha
+	 * Description : to verify as an user login into the Application, user will
+	 *             be able to search based on comments text on Content &
+	 *              Metadata in basic search(RPMXCON-47777)
+	 * @throws InterruptedException
+	 */
+	@Test(groups = { "regression" }, priority = 14)
+	public void verifyComments() throws InterruptedException {
+        String data=Input.searchString5;
+		// login as Pa
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		bc.stepInfo("RPMXCON-47777 Basic Search");
+		
+		sessionSearchPage.basicContentSearch(Input.searchString1);
+		sessionSearchPage.ViewInDocView();
+		
+		DocViewPage docview=new DocViewPage(driver);
+		
+		//Apply comments to document
+		bc.waitForElement(docview.getDocument_CommentsTextBox());
+		docview.getDocument_CommentsTextBox().SendKeys(data);
+		bc.waitForElement(docview.getCodingFormSaveBtn());
+		docview.getCodingFormSaveBtn().waitAndClick(10);
+		
+		bc.selectproject();
+		//Search COmments as RMU
+		int PureHit=sessionSearchPage.getCommentsOrRemarksCount(Input.documentComments, data);
+		System.out.println("PureHit COunt : "+PureHit);
+		bc.stepInfo("PureHit COunt : "+PureHit);
+
+		lp.logout();
+		//Search COmments as pa
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		int PureHit1=sessionSearchPage.getCommentsOrRemarksCount(Input.documentComments, data);
+		System.out.println("PureHit COunt : "+PureHit1);
+		bc.stepInfo("PureHit COunt : "+PureHit1);
+
+		lp.logout();
+		//Search COmments as REV
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		int PureHit2=sessionSearchPage.getCommentsOrRemarksCount(Input.documentComments, data);
+		System.out.println("PureHit COunt : "+PureHit2);
+		bc.stepInfo("PureHit COunt : "+PureHit2);
+
+		lp.logout();
+		
+		
+	}
 
 	@DataProvider(name = "reserve")
 	public Object[][] dataset() {
@@ -464,7 +518,7 @@ public class BasicSearch_Regression1 {
 		bc.stepInfo("RPMXCON- 49637   Basic Search Sprint-10");
 		bc.stepInfo("Verify Search result should work correctly for Comments with format like \"##PF[0-9]{4}\"");
 
-		ss.basicContentSearch(Input.searchString1);
+		ss.basicContentSearch(Input.testData1);
 		ss.ViewInDocView();
 
 		// Apply comments to document
@@ -636,7 +690,7 @@ public class BasicSearch_Regression1 {
 		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
 
 		String[] datasToVerify = { "U&C", "U& C", "U C", "U/C", "U &C", "U!C", "U%C", "U:C", "U)C", "U(C", "U>C", "U<C",
-				"U?C", "U=C", "U;C", "U & C" };
+				"U?C", "U=C", "U;C", "U & C", "U", "C" };
 		List<String> docIDlist = new ArrayList<>();
 		String wildInputString = Input.specialString1;
 
@@ -687,7 +741,7 @@ public class BasicSearch_Regression1 {
 		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
 
 		String[] datasToVerify = { "U&C", "U& C", "U C", "U/C", "U &C", "U!C", "U%C", "U:C", "U)C", "U(C", "U>C", "U<C",
-				"U?C", "U=C", "U;C", "U & C" };
+				"U?C", "U=C", "U;C", "U & C", "U", "C" };
 		List<String> docIDlist = new ArrayList<>();
 		String wildInputString = Input.specialString2;
 
@@ -700,7 +754,7 @@ public class BasicSearch_Regression1 {
 		bc.stepInfo("Loggedin As : " + Input.rmu1FullName);
 
 		// Search and View in DocView
-		bc.stepInfo("Configured Regular Expression query with Right Curly Brace }   : " + wildInputString);
+		bc.stepInfo("Configured Regular Expression query with Double Quotes }   : " + wildInputString);
 		sessionSearch.basicContentSearch(wildInputString);
 		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
@@ -738,7 +792,7 @@ public class BasicSearch_Regression1 {
 		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
 
 		String[] datasToVerify = { "U&C", "U& C", "U C", "U/C", "U &C", "U!C", "U%C", "U:C", "U)C", "U(C", "U>C", "U<C",
-				"U?C", "U=C", "U;C", "U & C" };
+				"U?C", "U=C", "U;C", "U & C", "U", "C" };
 		List<String> docIDlist = new ArrayList<>();
 		String wildInputString = Input.specialString3;
 
@@ -751,7 +805,7 @@ public class BasicSearch_Regression1 {
 		bc.stepInfo("Loggedin As : " + Input.rmu1FullName);
 
 		// Search and View in DocView
-		bc.stepInfo("Configured Regular Expression query with Right Curly Brace }   : " + wildInputString);
+		bc.stepInfo("Configured Regular Expression query with Left Curly Brace }   : " + wildInputString);
 		sessionSearch.basicContentSearch(wildInputString);
 		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
@@ -778,6 +832,7 @@ public class BasicSearch_Regression1 {
 	 *              correctly in Basic Search. [RPMXCON-46882]
 	 * @return
 	 */
+	
 	@DataProvider(name = "commentsCF")
 	public Object[][] commentsCF() {
 		Object[][] commentsCF = { { Input.pa1userName, Input.pa1password, true, false },
@@ -789,7 +844,7 @@ public class BasicSearch_Regression1 {
 	@Test(enabled = true, dataProvider = "commentsCF", groups = { "regression" }, priority = 18)
 	public void verifyCommentsForAudioDoc(String username, String password, boolean coding_Form, boolean DefaultCF)
 			throws InterruptedException {
-		String docComment = Input.comments;
+		String docComment = Input.comments+ Utility.dynamicNameAppender();
 		String codingform = "CF" + Utility.dynamicNameAppender();
 		int count = 1;
 
