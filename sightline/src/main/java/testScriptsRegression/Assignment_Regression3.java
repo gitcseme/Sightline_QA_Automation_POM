@@ -58,8 +58,8 @@ public class Assignment_Regression3 {
 	DocExplorerPage DocExpPage;
 	String assignmentName1 = "AR3assignment" + Utility.dynamicNameAppender();
 	String ActualCount = null;
-	String ingestionDataName="C113_QA_EmailConcatenatedData_SS_20211129145953453*";
-	String ingestionMetaData= "IngestionName";
+	String ingestionDataName=Input.IngestionName_PT;
+	String ingestionMetaData= Input.metadataIngestion;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -73,7 +73,7 @@ public class Assignment_Regression3 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		//Input in = new Input();
-		//in.loadEnvConfig();
+     	//in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		softAssertion = new SoftAssert();
@@ -121,8 +121,6 @@ public class Assignment_Regression3 {
 
 	@Test(description ="RPMXCON-54432",enabled = true, groups = { "regression" }, priority = 2)
 	public void VerifyDocsCount_DistributeTab() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
@@ -174,8 +172,6 @@ public class Assignment_Regression3 {
 	@Test(description ="RPMXCON-54433",enabled = true, groups = { "regression" }, priority = 3)
 
 	public void VerifyDocsCount_ReviewerTab() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
@@ -224,9 +220,7 @@ public class Assignment_Regression3 {
 	 */
 
 	@Test(description ="RPMXCON-54434",enabled = true, groups = { "regression" }, priority = 4)
-
 	public void VerifyDocsCount_DocView() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -269,7 +263,6 @@ public class Assignment_Regression3 {
 	@Test(description ="RPMXCON-54513",enabled = true, groups = { "regression" }, priority = 5)
 
 	public void VerifyToggleEnabled() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -311,7 +304,6 @@ public class Assignment_Regression3 {
 	 */
 	@Test(description ="RPMXCON-54756",enabled = true, groups = { "regression" }, priority = 6)
 	public void validateKeywordsInAssignment() throws InterruptedException, AWTException {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Delete keywords - Assignment should not display the deleted keyword");
 		baseClass.stepInfo("Test case Id: RPMXCON-54756");
@@ -358,7 +350,6 @@ public class Assignment_Regression3 {
 	 */
 	@Test(description ="RPMXCON-54493",enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyLivesequence() throws InterruptedException, AWTException {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Verifying the Default Live Sequence while creating a new assignment group");
 		baseClass.stepInfo("Test case Id: RPMXCON-54493");
@@ -397,7 +388,6 @@ public class Assignment_Regression3 {
 	 */
 	@Test(description ="RPMXCON-60049",enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyToggle_AssgnGrp() throws InterruptedException {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Verify default settings for toggles as well as Draw from Pool settings"
 				+ " incl. Max Draw Count as 100 when creating assignment group");
@@ -438,7 +428,6 @@ public class Assignment_Regression3 {
 	 */
 	@Test(description ="RPMXCON-60048",enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyToggle_Assignments() throws InterruptedException, AWTException {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo(
 				"Verify default settings for toggles, Draw from Pool settings incl. Max Draw Count as 100 when creating "
@@ -476,7 +465,6 @@ public class Assignment_Regression3 {
 	 */
 	@Test(description ="RPMXCON-60046",enabled = true, groups = { "regression" }, priority = 10)
 	public void VerifyToggle_QuickBatch() throws InterruptedException, ParseException, IOException {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -516,7 +504,6 @@ public class Assignment_Regression3 {
 
 	@Test(description ="RPMXCON-60047",enabled= true,groups = { "regression" }, priority = 11)
 	public void CreateAssgn_DocExp_VerifyToggle() throws InterruptedException {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -564,7 +551,6 @@ public class Assignment_Regression3 {
 
 	@Test(description ="RPMXCON-54497",enabled = true,groups = { "regression" }, priority = 12)
 	public void verifyDrawPoolToggle() throws InterruptedException {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -1507,8 +1493,7 @@ public class Assignment_Regression3 {
 			}
 		} else {
 			baseClass.failedStep("Draw pool link is not displayed");
-		}
-		
+		}		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
@@ -1739,20 +1724,5 @@ public class Assignment_Regression3 {
 	@AfterClass(alwaysRun = true)
 	public void close() throws ParseException, InterruptedException, IOException {
 		System.out.println("******TEST CASES FOR ASSIGNMENTS-3 EXECUTED******");
-		// Input in = new Input();
-		// in.loadEnvConfig();
-//		driver = new Driver();
-//		loginPage = new LoginPage(driver);
-//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		try {
-//		AssignmentsPage agnmt = new AssignmentsPage(driver);
-//		agnmt.deleteAllAssignments("AR3");
-//		loginPage.logout();
-			loginPage.quitBrowser();
-		} catch (Exception e) {
-			loginPage.quitBrowser();
-			LoginPage.clearBrowserCache();
-
-		}
 	}
 }
