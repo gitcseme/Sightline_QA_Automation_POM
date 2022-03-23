@@ -2045,6 +2045,7 @@ public class DocViewRedactions {
 				}
 			}), Input.wait30);
 			redactionSaveBtn().waitAndClick(5);
+			base.CloseSuccessMsgpopup();
 		} catch (Exception e) {
 			Robot robot = new Robot();
 			Thread.sleep(2000);
