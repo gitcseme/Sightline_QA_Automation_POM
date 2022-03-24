@@ -19034,5 +19034,52 @@ for (int i = 0; i < 6; i++) {
 	        }
 		}
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description Navigate to Production Grid View
+	 */
+	public void goToProductionGridView() {
+		driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getGridView());
+		getGridView().waitAndClick(10);
+		driver.waitForPageToBeReady();
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param statusMsg
+	 * @param productionname
+	 * @throws InterruptedException
+	 * @Description Verifying the Production status on Grid View page high volume project status
+	 */
+	public void verifyProductionStatusInGridViewForHighVolumeProject(String statusMsg, String productionname)
+			throws InterruptedException {
+		String productionFromHomePage = null;
+		String lastStatus = "Post-Gen QC Checks Complete";
+
+		// Verifying status of the production from home page
+		for (int i = 0; i < 180; i++) {
+			productionFromHomePage = getStatusInGridView(productionname).getText();
+			System.out.println("Preparing Data status displayed for " + productionFromHomePage);
+			if (productionFromHomePage.contains(statusMsg)) {
+				base.passedStep(statusMsg + " status is displayed in Grid View");
+				break;
+			}else if(productionFromHomePage.contains(lastStatus)) {
+				base.stepInfo("last status reached");
+				base.stepInfo("this status only visible in High Volume Project");
+				break;
+			}else if (i == 179) {
+				base.stepInfo("time out for status verification");
+				base.stepInfo("this status take more time than automation time limit");
+				base.stepInfo("this status only visible in High Volume Project");
+				break;
+			} else {
+				getRefreshButton().waitAndClick(5);
+				driver.waitForPageToBeReady();				
+			}
+		}
+	}
 
 }

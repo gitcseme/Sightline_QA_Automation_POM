@@ -7329,6 +7329,116 @@ public class Production_Test_Regression {
 	loginPage.logout();
 	base.passedStep("Verified PRIV flag configured in the DAT section of Production is to being honored for all docs in the generated production");
 	}
+	/**
+	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-56050
+	 * @Description: Verify that after destination copy is completed it should displays 'Exporting Files Complete' status on Grid  View
+	 */
+	@Test(groups = { "regression" }, priority = 104)
+	public void verifyExportinFilesCompleteStatusOnGridView() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-56050 -Production Compinent");
+	base.stepInfo("Verify that after destination copy is completed it should displays 'Exporting Files Complete' status on Grid  View");
+	
+	foldername = "FolderProd" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+	
+	// Pre-requisites
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+	// search for folder
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	//Verify archive status on Gen page
+	ProductionPage page = new ProductionPage(driver);
+	productionname = "p" + Utility.dynamicNameAppender();
+	String beginningBates = page.getRandomNumber(2);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopupWithoutWait();
+	
+	// Go To Production Home Page
+	page.goToProductionGridView();
+	page.verifyProductionStatusInGridViewForHighVolumeProject("Exporting Files Complete", productionname);
+		
+	//delete tags and folders
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+	loginPage.logout();
+	}
+	/**
+	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-56047
+	 * @Description: Verify that after LST generation completed it should displays ' Generating Load Files Complete' status on Grid View on home page
+	 */
+	@Test(groups = { "regression" }, priority = 105)
+	public void verifyGeneratingLoadCompleteStatusOnGridView() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-56047 -Production Compinent");
+	base.stepInfo("Verify that after LST generation completed it should displays ' Generating Load Files Complete' status on Grid View on home page");
+	
+	foldername = "FolderProd" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+	
+	// Pre-requisites
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+	// search for folder
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	//Verify archive status on Gen page
+	ProductionPage page = new ProductionPage(driver);
+	productionname = "p" + Utility.dynamicNameAppender();
+	String beginningBates = page.getRandomNumber(2);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopupWithoutWait();
+	
+	// Go To Production Home Page
+	page.goToProductionGridView();
+	page.verifyProductionStatusInGridViewForHighVolumeProject("Generating Load Files Complete", productionname);
+		
+	//delete tags and folders
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+	loginPage.logout();
+	}
 
 	
 	@AfterMethod(alwaysRun = true)
