@@ -9532,7 +9532,7 @@ public class DocViewPage {
 	public void analyticalDocsPartOfMiniDocList() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		reusableDocView.editingCodingFormWithSaveButton();
-		reusableDocView.analyticalDocsPartOfMiniDocList(1);
+		reusableDocView.analyticalDocsPartOfMiniDocList(0);
 		reusableDocView.codeSameAsInAnalyticalPanel();
 		driver.scrollPageToTop();
 		base.passedStep("Selected document is part of minidoclist document from analytical document");
@@ -9560,23 +9560,49 @@ public class DocViewPage {
 
 		}
 		reusableDocView.editingCodingFormWithSaveButton();
+		driver.waitForPageToBeReady();
 		reusableDocView.codingFormSavingWithCodingStamp(fieldValue, icon);
 		base.waitForElement(getCodingStampLastIcon(lastIcon));
 		getCodingStampLastIcon(lastIcon).waitAndClick(10);
 		base.waitForElement(getCodingFormSaveButton());
 		getCodingFormSaveButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		base.stepInfo("Document saved successfully");
 		reusableDocView.clickGearIconOpenAnalyticalPanel();
 		String parentWindow = reusableDocView.switchTochildWindow();
 		// no docs 1
+		List<String> analyticalDocsAgain= new ArrayList<>();
 		List<String> analytics = reusableDocView.analyticalDocs();
 		for (String analytical : analytics) {
-			if (!duplicates.add(analytical)) {
+			if (duplicates.add(analytical)) {
+			}
+			else {
 				uniqueDocuments.add(analytical);
 			}
 		}
-		String DocIdName = uniqueDocuments.get(1);
+			if (uniqueDocuments.size()<1) {
+				switchToNewWindow(1);
+				driver.waitForPageToBeReady();
+				driver.scrollPageToTop();
+			for (int i = 1; i < duplicates.size(); i++) {
+				getClickDocviewID(++i).waitAndClick(5);
+				driver.waitForPageToBeReady();
+				switchToNewWindow(2);
+				base.waitTime(4);
+				ElementCollection analyticsElementAgain=getAnalyticalPanelDocIdText();
+				analyticalDocsAgain=availableListofElements(analyticsElementAgain);
+				for (String analyticalAgain : analyticalDocsAgain) {
+					if (!duplicates.add(analyticalAgain)) {
+						uniqueDocuments.add(analyticalAgain);
+						}
+				}
+				break;
+				
+			}
+				}
+		String DocIdName = uniqueDocuments.get(0);
 		getAnalyCheckBox(DocIdName).WaitUntilPresent().ScrollTo();
+		base.waitTime(3);
 		base.waitForElement(getAnalyCheckBox(DocIdName));
 		getAnalyCheckBox(DocIdName).waitAndClick(10);
 		reusableDocView.codeSameAsInAnalyticalPanel();
@@ -9587,6 +9613,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		getMiniDocListText(DocIdName).WaitUntilPresent().ScrollTo();
 		getMiniDocListText(DocIdName).waitAndClick(10);
+		driver.waitForPageToBeReady();
 		reusableDocView.VerifyTheDocument();
 		base.stepInfo("Document verified for code same as last button as per the previous docs");
 		base.waitForElement(selectCodingFormCheckBoxes("Not_Responsive"));
@@ -9625,13 +9652,36 @@ public class DocViewPage {
 		reusableDocView.clickGearIconOpenAnalyticalPanel();
 		String parentWindow = reusableDocView.switchTochildWindow();
 		// no docs 1
+		List<String> analyticalDocsAgain= new ArrayList<>();
 		List<String> analytics = reusableDocView.analyticalDocs();
 		for (String analytical : analytics) {
-			if (!duplicates.add(analytical)) {
+			if (duplicates.add(analytical)) {
+			}
+			else {
 				uniqueDocuments.add(analytical);
 			}
 		}
-		String DocIdName = uniqueDocuments.get(1);
+			if (uniqueDocuments.size()<1) {
+				switchToNewWindow(1);
+				driver.waitForPageToBeReady();
+				driver.scrollPageToTop();
+			for (int i = 1; i < duplicates.size(); i++) {
+				getClickDocviewID(++i).waitAndClick(5);
+				driver.waitForPageToBeReady();
+				switchToNewWindow(2);
+				base.waitTime(4);
+				ElementCollection analyticsElementAgain=getAnalyticalPanelDocIdText();
+				analyticalDocsAgain=availableListofElements(analyticsElementAgain);
+				for (String analyticalAgain : analyticalDocsAgain) {
+					if (!duplicates.add(analyticalAgain)) {
+						uniqueDocuments.add(analyticalAgain);
+						}
+				}
+				break;
+				
+			}
+				}
+		String DocIdName = uniqueDocuments.get(0);
 		getAnalyCheckBox(DocIdName).WaitUntilPresent().ScrollTo();
 		base.waitForElement(getAnalyCheckBox(DocIdName));
 		getAnalyCheckBox(DocIdName).waitAndClick(10);
@@ -9658,7 +9708,6 @@ public class DocViewPage {
 		reusableDocView.clickCodeSameAsLast();
 		reusableDocView.deleteStampColour(lastIcons);
 		driver.waitForPageToBeReady();
-
 	}
 
 	/**
@@ -9720,6 +9769,7 @@ public class DocViewPage {
 			String name = listOFData.get(i);
 			getDocListCheckBox(name).waitAndClick(10);
 		}
+		driver.scrollPageToTop();
 		base.waitForElement(getDocList_Action_Drp_Dwn());
 		getDocList_Action_Drp_Dwn().waitAndClick(5);
 		base.waitForElement(getDocListViewInDocView());
@@ -9764,11 +9814,12 @@ public class DocViewPage {
 		String expectedLast = getVerifyPrincipalDocument().getText().trim();
 		base.waitForElement(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(10);
+		base.VerifySuccessMessage("Coded as per the coding form for the previous document");
 		base.waitForElement(getMiniDocListText(expectedLast));
 		getMiniDocListText(expectedLast).waitAndClick(10);
 		reusableDocView.VerifyTheDocument();
-		base.VerifySuccessMessage("Coded as per the coding form for the previous document");
 		base.stepInfo("Document is saved with last applied coding of the document");
+
 
 	}
 
@@ -14231,9 +14282,6 @@ public class DocViewPage {
 		base.waitForElement(getCodingFormStampButton());
 		getCodingFormStampButton().waitAndClick(5);
 		reusableDocView.savedColorNotClickable(Input.stampSelection);
-		driver.getWebDriver().navigate().refresh();
-//		driver.switchTo().alert().accept();
-		driver.waitForPageToBeReady();
 		reusableDocView.deleteStampColour(Input.stampSelection);
 	}
 
@@ -15057,7 +15105,9 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		for (String docId : completedDoc) {
 			getDociD(docId).ScrollTo();
+			base.waitForElement(getDociD(docId));
 			getDociD(docId).waitAndClick(5);
+			driver.waitForPageToBeReady();
 			boolean flag=getUnCompleteButton().Displayed();
 			System.out.println(flag);
 			softAssertion.assertTrue(flag);
@@ -17154,9 +17204,8 @@ public class DocViewPage {
 		driver.scrollPageToTop();
 		base.waitForElement(getVerifyPrincipalDocument());
 		getVerifyPrincipalDocument().waitAndClick(20);
-
 		driver.waitForPageToBeReady();
-
+		base.waitForElement(getVerifyPrincipalDocument());
 		String expectedValue = getVerifyPrincipalDocument().getText().trim();
 		base.waitForElement(getDocView_HistoryButton());
 		getDocView_HistoryButton().waitAndClick(5);
@@ -17171,7 +17220,6 @@ public class DocViewPage {
 		base.waitForElement(getDocView_DefaultViewTab());
 		softAssertion.assertEquals(getDocView_DefaultViewTab().Enabled().booleanValue(), true);
 		base.passedStep("Document displaying in default view page");
-
 		base.waitForElement(getMiniDocListRightArrow());
 		if (getMiniDocListRightArrow().isElementPresent()) {
 
@@ -17180,25 +17228,18 @@ public class DocViewPage {
 		} else {
 			base.failedStep("The MiniDocList is Not Navigate to Next Document");
 		}
-
 		editingCodingFormWithSaveAndNextButton();
-
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_DefaultViewTab());
 		softAssertion.assertEquals(getDocView_DefaultViewTab().Enabled().booleanValue(), true);
 		base.passedStep("Document displaying in default view page");
-
 		base.waitForElement(getStampBlueColour());
 		getStampBlueColour().waitAndClick(10);
-
 		base.waitForElement(getSaveAndNextButton());
 		getSaveAndNextButton().waitAndClick(10);
-
 		base.waitForElement(getMiniDocListRightArrow());
 		if (getMiniDocListRightArrow().isElementPresent()) {
-
 			base.passedStep("The MiniDocList is Navigate to Next Document");
-
 		} else {
 			base.failedStep("The MiniDocList is Not Navigate to Next Document");
 		}

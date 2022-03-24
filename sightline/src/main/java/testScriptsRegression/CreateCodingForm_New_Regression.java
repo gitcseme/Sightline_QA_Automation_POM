@@ -20,6 +20,7 @@ import pageFactory.BaseClass;
 import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
 import pageFactory.DocViewPage;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
 import pageFactory.ReusableDocViewPage;
@@ -55,8 +56,13 @@ public class CreateCodingForm_New_Regression {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("Started Execution for prerequisite");
-	// Open browser
+		Input in = new Input();
+		in.loadEnvConfig();
+	}
+	@BeforeMethod
+	public void beforeTestMethod(Method testMethod) throws ParseException, InterruptedException, IOException {
+		System.out.println("Executing method : " + testMethod.getName());
+		UtilityLog.info("Executing method : " + testMethod.getName());
 		Input in = new Input();
 		in.loadEnvConfig();
 		driver = new Driver();
@@ -72,17 +78,9 @@ public class CreateCodingForm_New_Regression {
 		sessionSearch = new SessionSearch(driver);
 		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
 
-		
+
 	}
 
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) {
-		System.out.println("Executing method : " + testMethod.getName());
-		UtilityLog.info("Executing method : " + testMethod.getName());
-		
-	}
-
-	
 	/**
 	 * @Author : Baskar date:27/9/21 Modified date: NA Modified by: Baskar 
 	 * @Description : [TC reference RPMXCON-51207] Verify on click of 'Save and Next' 
@@ -4476,6 +4474,7 @@ public class CreateCodingForm_New_Regression {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);

@@ -480,7 +480,7 @@ public class ReusableDocViewPage {
 		base.waitTillElemetToBeClickable(getResponsiveCheked());
 		getResponsiveCheked().waitAndClick(5);
 		base.waitForElement(getNonPrivilegeRadio());
-		getNonPrivilegeRadio().Click();
+		getNonPrivilegeRadio().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodingFormStampButton());
 		getCodingFormStampButton().waitAndClick(10);
@@ -837,12 +837,12 @@ public class ReusableDocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getDocView_MiniListDocuments());
 		List<String> uniqueDocuments= new ArrayList<>();
-		Set<String>duplicates=new HashSet<String>();
+		Set<String>docList=new HashSet<String>();
 		List<String> miniDocList= new ArrayList<>();
 		ElementCollection miniDocListelement=getMiniDocListDocIdText();
 		miniDocList=availableListofElements(miniDocListelement);
 		for (String minidoclist : miniDocList) {
-			duplicates.add(minidoclist);
+			docList.add(minidoclist);
 		}
         driver.waitForPageToBeReady();
         Thread.sleep(5000);// Mandatory thread.sleep no need to delete
@@ -850,15 +850,32 @@ public class ReusableDocViewPage {
 		getDocView_Analytics_NearDupeTab().waitAndClick(5);
         Thread.sleep(5000);// Mandatory thread.sleep no need to delete
 		List<String> analyticalDocs= new ArrayList<>();
+		List<String> analyticalDocsAgain= new ArrayList<>();
 		ElementCollection analyticsElement=getAnalyticalPanelDocIdText();
 		analyticalDocs=availableListofElements(analyticsElement);
 		for (String analytical : analyticalDocs) {
-			if (!duplicates.add(analytical)) {
-				uniqueDocuments.add(analytical);
+			if (docList.add(analytical)) {
 				}
+			else {
+				uniqueDocuments.add(analytical);
 			}
-		System.out.println(uniqueDocuments);
-		String docIdText=uniqueDocuments.get(count);
+		}
+			if (uniqueDocuments.size()<1) {
+				driver.scrollPageToTop();
+			for (int i = 1; i < docList.size(); i++) {
+				getClickDocviewID(++i).waitAndClick(5);
+				ElementCollection analyticsElementAgain=getAnalyticalPanelDocIdText();
+				analyticalDocsAgain=availableListofElements(analyticsElementAgain);
+				for (String analyticalAgain : analyticalDocsAgain) {
+					if (!docList.add(analyticalAgain)) {
+						uniqueDocuments.add(analyticalAgain);
+						}
+				}
+				break;
+				
+			}
+				}
+		String docIdText=uniqueDocuments.get(0);
 		getAnalyCheckBox(docIdText).WaitUntilPresent().ScrollTo();
 		base.waitForElement(getAnalyCheckBox(docIdText));
 		getAnalyCheckBox(docIdText).waitAndClick(10);
@@ -914,6 +931,7 @@ public class ReusableDocViewPage {
 	 */
 	public void VerifyTheDocument() {
 		driver.waitForPageToBeReady();
+		base.waitTime(3);
 		boolean flagOne = getVer_Responsive_ChckBox().getWebElement().isSelected();
 		boolean flagTwo = getVer_Not_Privileged_ChckBox().getWebElement().isSelected();
 		if (flagOne == true && flagTwo == true) {

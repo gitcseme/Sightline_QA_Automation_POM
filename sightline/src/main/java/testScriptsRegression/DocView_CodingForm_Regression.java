@@ -43,6 +43,7 @@ import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
+import views.html.helper.input;
 
 public class DocView_CodingForm_Regression {
 	Driver driver;
@@ -128,7 +129,7 @@ public class DocView_CodingForm_Regression {
 	 * RPMXCON-52172 DocView/Coding Forms Sprint 01
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+//	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyThatCustomMetaDataFieldValueWithINTDatatype() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52172");
 		UtilityLog.info("Started Execution for prerequisite");
@@ -175,7 +176,7 @@ public class DocView_CodingForm_Regression {
 	 * doc view when created with NVARCHAR datatype in context of security group
 	 * RPMXCON-52173 DocView/Coding Forms Sprint 01
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+//	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyThatCustomMetaDataFieldValueWithNVARCHARDatatype() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52173");
 		UtilityLog.info("Started Execution for prerequisite");
@@ -223,7 +224,7 @@ public class DocView_CodingForm_Regression {
 	 * context of assignment RPMXCON-52162 DocView/Coding Forms Sprint 01
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+//	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void clickCodeSameAsLastAndCodeingStampSaved() throws AWTException, InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52162");
 		// Login as Reviewer Manager
@@ -464,13 +465,14 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.searchStringStar);
+		sessionSearch.advancedNewContentSearch1(Input.searchStringStar);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
 
 		// CodingForm ChildWindow Stamp selection
 		docViewPage.stampSelectionCodingForm(Input.stampColour);
+		docViewPage.deleteStampColour(Input.stampColour);
 
 		// logout
 		loginPage.logout();
@@ -503,6 +505,7 @@ public class DocView_CodingForm_Regression {
 
 		// Stamp selection
 		docViewPage.clickStampBtnAndVerifyINPopUp(assgnColour, Input.stampSelection, Input.stampSelection);
+		docViewPage.deleteStampColour(Input.stampSelection);
 
 		// logout
 		loginPage.logout();
@@ -660,10 +663,11 @@ public class DocView_CodingForm_Regression {
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocList();
-
-		loginPage.logout();
 		docViewPage.codeSameAsLastSelectDocInDocList(assgnColour, Input.stampSelection, Input.stampSelection,
 				Input.stampSelection);
+
+		loginPage.logout();
+		
 	}
 
 	/**
@@ -1043,8 +1047,8 @@ public class DocView_CodingForm_Regression {
 		tagsAndFoldersPage.ViewinDocViewthrFolder(assgnFolder);
 
 		// DocView
-		docViewPage.codeSameAsAnalyticalChildWindow(assgnColour, Input.stampSelection, Input.stampSelection,
-				Input.stampSelection);
+		docViewPage.codeSameAsAnalyticalChildWindow(assgnColour, Input.stampColour, Input.stampColour,
+				Input.stampColour);
 
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer Manager '" + Input.rmu1userName + "'");
@@ -1073,8 +1077,8 @@ public class DocView_CodingForm_Regression {
 		sessionSearch.bulkFolderNearDupe(assgnFolder);
 		tagsAndFoldersPage.ViewinDocViewthrFolder(assgnFolder);
 
-		docViewPage.codeSameAsLastAnalytical(assgnColour, Input.stampSelection, Input.stampSelection,
-				Input.stampSelection);
+		docViewPage.codeSameAsLastAnalytical(assgnColour, Input.stampColours, Input.stampColours,
+				Input.stampColours);
 
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer Manager '" + Input.rmu1userName + "'");
@@ -1218,7 +1222,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.searchStringStar);
+		sessionSearch.advancedNewContentSearch1(Input.searchStringStar);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -2074,7 +2078,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
 
 		if (fullName.contains(rmu)) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		// Session search to doc view Coding Form
@@ -2107,11 +2111,11 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
 
 		if (fullName.contains(rmu)) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		// Session search to doc view Coding Form
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.ViewInDocView();
 
 		// saved stamp should not clickable again if assigned
@@ -2148,7 +2152,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -2177,7 +2181,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
 
 		if (fullName.contains(rmu)) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		// Searching audio document with different term
@@ -2187,7 +2191,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 		sessionSearch.ViewInDocViews();
 
 		List<String> cfDefault = reusableDocView.getDefaultPopUpStampColour();
@@ -2220,7 +2224,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
 
 		if (fullName.contains(rmu)) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		// Searching audio document with different term
@@ -2230,7 +2234,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 		sessionSearch.ViewInDocViews();
 
 		// saved stamp should not clickable again if assigned
@@ -2261,7 +2265,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
 
 		if (fullName.contains(rmu)) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		// Searching audio document with different term
@@ -2271,7 +2275,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 		sessionSearch.ViewInDocViews();
 
 		// saved stamp should not clickable again if assigned
@@ -2302,7 +2306,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
 
 		if (fullName.contains(rmu)) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		// Searching audio document with different term
@@ -2312,7 +2316,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 		sessionSearch.ViewInDocViews();
 
 		// saved stamp should not clickable again if assigned
@@ -2344,7 +2348,7 @@ public class DocView_CodingForm_Regression {
 		loginPage.loginToSightLine(userName, password);
 
 		if (fullName.contains(rmu)) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		// Searching audio document with different term
@@ -2354,7 +2358,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 		sessionSearch.ViewInDocViews();
 
 		// saved stamp should not clickable again if assigned
@@ -2384,14 +2388,13 @@ public class DocView_CodingForm_Regression {
 		sessionSearch.bulkAssign();
 		// create assignment
 		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
-		assignmentPage.addReviewerAndDistributeDocs();
+		assignmentPage.add2ReviewerAndDistribute();
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		assignmentPage.viewSelectedAssgnUsingPagination(assignmentName);
 		baseClass.waitTillElemetToBeClickable(assignmentPage.getAssignmentActionDropdown());
 		assignmentPage.getAssignmentActionDropdown().waitAndClick(10);
 		assignmentPage.assignmentActions("DocView");
 		reusableDocView.stampColourSelection(Input.searchString2, Input.stampColour);
-		driver.Navigate().refresh();
 		reusableDocView.editStampColour(Input.searchString1, Input.stampColours, Input.stampColour);
 		docViewPage.verifySavedStampTooltip(Input.searchString1, Input.stampColours);
 		baseClass.stepInfo("Tooltip verified successfully");
@@ -2402,7 +2405,6 @@ public class DocView_CodingForm_Regression {
 		assignmentPage.SelectAssignmentByReviewer(assignmentName);
 		// validations
 		reusableDocView.stampColourSelection(Input.searchString2, Input.stampColour);
-		driver.Navigate().refresh();
 		reusableDocView.editStampColour(Input.searchString2, Input.stampColours, Input.stampColour);
 		docViewPage.verifySavedStampTooltip(Input.searchString2, Input.stampColours);
 		baseClass.stepInfo("Tooltip verified successfully");
@@ -2568,7 +2570,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
 
 		if (fullName.contains(rmu)) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		// Searching audio document with different term
@@ -2576,7 +2578,7 @@ public class DocView_CodingForm_Regression {
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		docViewPage.selectPureHit();
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 		sessionSearch.ViewInDocViews();
 
 		// Edit the coding form and save with stamp
@@ -2623,7 +2625,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -2662,7 +2664,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -2700,7 +2702,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -2743,7 +2745,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -2958,7 +2960,7 @@ public class DocView_CodingForm_Regression {
 			System.out.println(assignName);
 		}
 		// complete document in random
-		docViewPage.completeDocumentRandom(3, comment);
+		docViewPage.completeDocumentRandom(2, comment);
 		// impersoante to rev
 		baseClass.impersonateRMUtoReviewer();
 		// selecting the assignment
@@ -2984,6 +2986,11 @@ public class DocView_CodingForm_Regression {
 		String formName = "CFMetaData" + Utility.dynamicNameAppender();
 		String NVARCHAR = "NVARCHAR";
 		String Defaultaction = "Make It Required";
+		String tinyInt = "TinyInt" + Utility.dynamicNameAppender();
+		String smallInt = "SmallInt" + Utility.dynamicNameAppender();
+		String avearageInt = "SmallInt" + Utility.dynamicNameAppender();
+		String bigInt = "BigInt" + Utility.dynamicNameAppender();
+		
 		UtilityLog.info("Started Execution for prerequisite");
 		DocExplorerPage docExplore = new DocExplorerPage(driver);
 
@@ -3031,6 +3038,8 @@ public class DocView_CodingForm_Regression {
 		baseClass.passedStep("Coding form saved with maximum NVARCHAR character successfully");
 		docViewPage.passingNvacharDatatypeUsingLength(tinyInt, smallInt, avearageInt, bigInt, 19, 49, 399, 3999);
 		baseClass.passedStep("Coding form saved with minimum NVARCHAR character successfully");
+		codingForm.assignCodingFormToSG(Input.codeFormName);
+		codingForm.deleteCodingForm(formName,formName);
 
 		// logout
 		loginPage.logout();
@@ -3049,6 +3058,10 @@ public class DocView_CodingForm_Regression {
 				"Verify tool tip on mouse over of the floppy icon to save the stamp in context of security group");
 		// Login As
 		loginPage.loginToSightLine(userName, password);
+		
+		if (roll.contains("rmu")) {
+			codingForm.assignCodingFormToSG(Input.codingFormName);
+		}
 
 		// Searching audio document with different term
 		baseClass.stepInfo("Searching audio documents based on search string");
@@ -3057,7 +3070,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -3093,7 +3106,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -3127,7 +3140,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -3162,7 +3175,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -3197,7 +3210,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -3234,7 +3247,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -3464,6 +3477,11 @@ public class DocView_CodingForm_Regression {
 				+ "created with metadata field as Integer on click of 'Complete'");
 		String formName = "CFMetaData" + Utility.dynamicNameAppender();
 		String assgnCoding = "codingAssgn" + Utility.dynamicNameAppender();
+		String tinyInt = "TinyInt" + Utility.dynamicNameAppender();
+		String smallInt = "SmallInt" + Utility.dynamicNameAppender();
+		String avearageInt = "SmallInt" + Utility.dynamicNameAppender();
+		String bigInt = "BigInt" + Utility.dynamicNameAppender();
+		String hugeInt = "HugeInt" + Utility.dynamicNameAppender();
 		String intData = "INT";
 		String Defaultaction = "Make It Required";
 		String stamptext = "Stamp" + Utility.dynamicNameAppender();
@@ -3612,22 +3630,28 @@ public class DocView_CodingForm_Regression {
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		assignmentPage.SelectAssignmentByReviewer(AssignStamp);
 		// completing docs in user one
+		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
 		String docId = docViewPage.getVerifyPrincipalDocument().getText();
 		baseClass.stepInfo("Completed docs in userOne:" + docId + "");
 		reusableDocView.editCodingForm(comment);
 		docViewPage.getCompleteDocBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		// logout
 		loginPage.logout();
 		// validating docs in user two
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		assignmentPage.SelectAssignmentByReviewer(AssignStampTwo);
+		baseClass.waitForElement(docViewPage.getDociD(docId));
 		docViewPage.getDociD(docId).waitAndClick(5);
 		baseClass.stepInfo("verifying completed docs in userOne:" + docId + "");
 		baseClass.stepInfo("Same Comment displayed");
 		reusableDocView.verifyingComments(comment);
 		reusableDocView.completeButton();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDociD(docId));
 		docViewPage.getDociD(docId).waitAndClick(5);
 		reusableDocView.uncompleteButtonValidate();
+		driver.waitForPageToBeReady();
 		softAssertion.assertAll();
 	}
 
@@ -3724,7 +3748,7 @@ public class DocView_CodingForm_Regression {
 		loginPage.loginToSightLine(userName, password);
 
 		if (fullName.contains(rmu)) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -3762,7 +3786,7 @@ public class DocView_CodingForm_Regression {
 		loginPage.loginToSightLine(userName, password);
 
 		if (fullName.contains(rmu)) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -3885,7 +3909,7 @@ public class DocView_CodingForm_Regression {
 		loginPage.loginToSightLine(userName, password);
 
 		if (fullName.contains(rmu)) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -3925,7 +3949,7 @@ public class DocView_CodingForm_Regression {
 		loginPage.loginToSightLine(userName, password);
 
 		if (fullName.contains(rmu)) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -4082,7 +4106,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		if (fullName.contains("rmu")) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 		// search to Assignment creation
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -4126,7 +4150,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		if (fullName.contains("rmu")) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 		// search to Assignment creation
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -4253,7 +4277,6 @@ public class DocView_CodingForm_Regression {
 	 *              assignment.
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 102)
-
 	public void enableAllowReviewerstoCodedocsOutsrideReviewerbatchINRmuRve()
 			throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
@@ -4508,7 +4531,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		if (fullName.contains("RMU")) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 		// search to Assignment creation
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -4623,7 +4646,7 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer'" + Input.rev1userName + "'");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		codingForm.assignCodingFormByCondition(Input.codingFormName);
+		codingForm.assignCodingFormToSG(Input.codingFormName);
 		loginPage.logout();
 
 		softAssertion.assertAll();
@@ -4788,7 +4811,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		if (roll.contains("rmu")) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		// logout
@@ -4887,7 +4910,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		if (fullName.contains("RMU")) {
-			codingForm.assignCodingFormByCondition(Input.codingFormName);
+			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
 		// session search to docview panel
@@ -5238,11 +5261,13 @@ public class DocView_CodingForm_Regression {
 		// selecting assignment
 		baseClass.impersonateRMUtoReviewer();
 		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		driver.waitForPageToBeReady();
 		baseClass.CloseSuccessMsgpopup();
 		baseClass.stepInfo("User on the docview page after selecting the Assignment");
 		driver.waitForPageToBeReady();
 		miniDocListPage.configureMiniDocListToShowCompletedDocs();
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
 		boolean completeButton = docViewPage.getCompleteDocBtn().Displayed();
 		softAssertion.assertFalse(completeButton);
 		baseClass.passedStep("Complete button not displayed");
@@ -5488,7 +5513,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.searchStringStar);
+		sessionSearch.advancedNewContentSearch1(Input.searchStringStar);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -5528,7 +5553,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.searchStringStar);
+		sessionSearch.advancedNewContentSearch1(Input.searchStringStar);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -5635,7 +5660,6 @@ public class DocView_CodingForm_Regression {
 		sessionSearch = new SessionSearch(driver);
 		codingForm = new CodingForm(driver);
 		String filedText = "Stamp" + Utility.dynamicNameAppender();
-		// String commands = "Stamp" + Utility.dynamicNameAppender();
 
 		// Login As rmu
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -5648,7 +5672,7 @@ public class DocView_CodingForm_Regression {
 		sessionSearch.advancedNewContentSearch1(Input.testData1);
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
-		docViewPage.editCodingFormAndSaveWithStamp(filedText, Input.stampColour);
+		docViewPage.editCodingFormAndSaveWithStamp(filedText, Input.stampColours);
 		docViewPage.verifyThatIsLastDoc();
 		docViewPage.getDocView_NumTextBox().SendKeys("3");
 		driver.waitForPageToBeReady();
@@ -5665,7 +5689,7 @@ public class DocView_CodingForm_Regression {
 		driver.waitForPageToBeReady();
 		docViewPage.getSelectSaveLink().waitAndClick(5);
 		driver.scrollPageToTop();
-		docViewPage.deleteBlueStamp();
+		docViewPage.deleteStampColour(Input.stampColours);
 
 		baseClass.passedStep(
 				"Verified when user clicks the saved stamp when navigating to document on document navigation options [<<, <, >, >>, enter document number]");
@@ -5700,7 +5724,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -5746,7 +5770,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -5937,7 +5961,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -6082,7 +6106,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Checking index of comment and metadata for saved document");
 		sessionSearch.metadataAndCommentSearch(projectFieldINT, metadataText, addComment, commentText);
 
-		codingForm.assignCodingFormByCondition(Input.codingFormName);
+		codingForm.assignCodingFormToSG(Input.codingFormName);
 		codingForm.deleteCodingForm(cfName, cfName);
 
 		// logout
@@ -6738,7 +6762,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Checking index of comment and metadata for saved document");
 		sessionSearch.metadataAndCommentSearch(projectFieldINT, metadataText, addComment, commentText);
 
-		codingForm.assignCodingFormByCondition(Input.codingFormName);
+		codingForm.assignCodingFormToSG(Input.codingFormName);
 		codingForm.deleteCodingForm(cfName, cfName);
 
 		// logout
@@ -7108,7 +7132,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON- 52112");
 		baseClass.stepInfo("Verify when user clicks saved stamp when document"
 				+ "not part of mini doc list is viewed from analytics panel");
-		codingForm.assignCodingFormByCondition(Input.codeFormName);
+		codingForm.assignCodingFormToSG(Input.codeFormName);
 
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -7164,7 +7188,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 
 		baseClass.stepInfo("Searching Content documents based on search string");
-		sessionSearch.advancedNewContentSearch(Input.testData1);
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
@@ -8368,9 +8392,9 @@ public class DocView_CodingForm_Regression {
 		// Login As
 		loginPage.loginToSightLine(username, password);
 		// Session search to doc view Coding Form
-		// sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.basicContentSearch(Input.testData1);
 		docViewPage.selectPureHit();
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		sessionSearch.ViewInDocView();
 		reusableDocView.selectLastDocInMiniDocList();
 		baseClass.stepInfo("Last document is selected in parent minidoc list window");
@@ -8762,7 +8786,6 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 		baseClass.stepInfo("Searching Content documents based on search string");
 		sessionSearch.advancedNewContentSearch1(Input.testData1);
-		docViewPage.selectPureHit();
 		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		reusableDocView.editingCodingFormWithSaveAndNextButton();
@@ -9793,7 +9816,7 @@ public class DocView_CodingForm_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// Assign coding form
-		codingForm.assignCodingFormByCondition(Input.codingFormName);
+		codingForm.assignCodingFormToSG(Input.codingFormName);
 		baseClass.passedStep(Input.codingFormName + "Coding form assigned to context of security group");
 
 		// logout
@@ -9873,7 +9896,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-51457");
 		baseClass.stepInfo("Performance: Verify that doc view should not hang when "
 				+ "large coding form is assigned to security group");
-
+		String cfLarge = "CfNameLarge" + Utility.dynamicNameAppender();
 		// Login as Rmu
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
@@ -9889,6 +9912,9 @@ public class DocView_CodingForm_Regression {
 
 		// validation for large coding form in context of security group
 		docViewPage.docviewPageLoadPerformanceForCF();
+
+		// assign default project coding form
+		codingForm.assignCodingFormToSG(Input.codingFormName);
 
 		// logout
 		loginPage.logout();
@@ -9910,6 +9936,7 @@ public class DocView_CodingForm_Regression {
 				+ "when large coding form is assigned to assignment");
 
 		String assignment = "AssCFLarge" + Utility.dynamicNameAppender();
+		String cfLarge = "CfNameLarge" + Utility.dynamicNameAppender();
 
 		// login as rmu
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -11477,6 +11504,7 @@ public class DocView_CodingForm_Regression {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);

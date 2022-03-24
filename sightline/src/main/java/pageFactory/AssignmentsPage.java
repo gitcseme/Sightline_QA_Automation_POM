@@ -3440,11 +3440,11 @@ public Element getFamilyMembersCount() {
 		try {
 			bc.waitForElement(getContinueBulkAssign());
 			bc.waitTillElemetToBeClickable(getContinueBulkAssign());
-			getContinueBulkAssign().waitAndClick(10);
+			getContinueBulkAssign().waitAndClick(30);
 		} catch (Exception e) {
 			bc.waitForElement(getContinueBulkAssign());
 			bc.waitTillElemetToBeClickable(getContinueBulkAssign());
-			getContinueBulkAssign().waitAndClick(10);
+			getContinueBulkAssign().waitAndClick(30);
 		}
 		bc.waitForElement(getAssgn_TotalCount());
 		bc.waitForElement(getFinalizeButton());
@@ -4322,14 +4322,12 @@ public Element getFamilyMembersCount() {
 		getSelectUserToAssigReviewerManager().waitAndClick(5);
 		bc.waitForElement(getAdduserBtn());
 		getAdduserBtn().waitAndClick(5);
-		bc.VerifySuccessMessage("Record saved successfully");
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 		getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
 		getSelect2ndUserInDistributeTab().waitAndClick(5);
-		bc.CloseSuccessMsgpopup();
-		getDistributeBtn().waitAndClick(3);
+		getDistributeBtn().waitAndClick(5);
 
 	}
 
