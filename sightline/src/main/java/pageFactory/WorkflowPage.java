@@ -125,7 +125,8 @@ public class WorkflowPage {
 	}
 
 	public Element getWorkFlow_WorkFlowID(String WFName) {
-		return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'" + WFName + "')]//preceding-sibling::td");
+		return driver.FindElementByXPath(
+				".//*[@id='dt_basic']/tbody//td[contains(.,'" + WFName + "')]//preceding-sibling::td");
 	}
 
 	public Element getWorkFlow_WorkFlowNotificationStatus() {
@@ -265,97 +266,143 @@ public class WorkflowPage {
 	public Element getCreatedByUserDropDown() {
 		return driver.FindElementByXPath("//select[@id='WorkFlowCreatedBy']");
 
-
 	}
-	
+
 	public Element getWorkFlow_AssignedUsers() {
 		return driver.FindElementById("AssignedUser");
-		
-	}
-		
-		public ElementCollection getTableColumnData(int i) {
-			return driver.FindElementsByXPath("//table[@id='dt_basic']/tbody//td["+i+"]");
-			
-	}
-		public Element getFiltertextbox_WFid() {
-			return driver.FindElementByXPath("//input[@id='txtWorkflowid']");
-			
-	}
-		public Element getApplyFilterBtn() {
-			return driver.FindElementByXPath("//a[@id='btnworkflowfilter']");
-			
-	}
-		public Element getEnabledHistoryBtn() {
-			return driver.FindElementByXPath("//a[@id='lnkviewhistory' and @class='']");
-			
-	}
-		
-		public ElementCollection getActionHeader() {
-			return driver.FindElementsByXPath("//div[@class='dataTables_scrollHead']//tr/th[@class='sorting']");
-			
-	}
-		public Element getSelectedEnabledStateRadioBtn(int j,int headerIndex,int enabledIndex) {
-			return driver.FindElementByXPath("(//tr["+j+"]//td["+headerIndex+"]//label["+enabledIndex+"]/input[@checked=''])");
-		}
-		
-		public Element getTableHeader(int i) {
-			return driver.FindElementByXPath("(//table[@id='dt_basic']/thead/tr/th)["+ i +"]");
-		}
-		public Element getEmptyTableMEssage() {
-			return driver.FindElementByXPath("//tbody/tr/td[@class='dataTables_empty']");
-		}
-		public Element getStateDropDown() {
-			return driver.FindElementByXPath("//select[@id='WorkFlowState']");
-		}
-    public WorkflowPage(Driver driver){
 
-        this.driver = driver;
-        this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
-        baseClass = new BaseClass(driver);
-        //This initElements method will create all WebElements
-        //PageFactory.initElements(driver.getWebDriver(), this);
-    }
-    
-    
-    public boolean checkStatusComplete(final String workflowName) {
- 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
- 			  getStatusTable().Visible()  ;}}),Input.wait30);
- 	   
- 	   boolean nextPage= true;
- 	   boolean found= false;
- 	  
- 	   while(nextPage){
- 		   int row = 1;
- 		   
- 		   for (WebElement ele : getWorkflowNames().FindWebElements()) {
- 			  
- 				if(ele.getText().trim().equals(workflowName)){
- 					nextPage = false;
- 					found=true;
- 					System.out.println(row);
- 					if(getStatus(row).getText().trim().equalsIgnoreCase("COMPLETE") );{
- 					System.out.println(workflowName +" Scheduled run is completed with the status 'COMPLETE'!");
- 					return true;
- 					}
- 				}
- 				
- 				row++;
- 				
- 			}
- 		   try{
- 			   driver.scrollingToBottomofAPage();
- 			   driver.getWebDriver().findElement(By.xpath("//li[@class='paginate_button next disabled']/a")).isDisplayed();
- 			   nextPage = false;
- 			   //System.out.println("Not found!!!!!!");
- 		   }
- 		   catch (Exception e) {
- 			   driver.getWebDriver().findElement(By.linkText("Next")).click(); 
- 		   } 
- 			   
- 	   }
- 	   return false;
- 			
-    	}
+	}
+
+	public ElementCollection getTableColumnData(int i) {
+		return driver.FindElementsByXPath("//table[@id='dt_basic']/tbody//td[" + i + "]");
+
+	}
+
+	public Element getFiltertextbox_WFid() {
+		return driver.FindElementByXPath("//input[@id='txtWorkflowid']");
+
+	}
+
+	public Element getApplyFilterBtn() {
+		return driver.FindElementByXPath("//a[@id='btnworkflowfilter']");
+
+	}
+
+	public Element getEnabledHistoryBtn() {
+		return driver.FindElementByXPath("//a[@id='lnkviewhistory' and @class='']");
+
+	}
+
+	public ElementCollection getActionHeader() {
+		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHead']//tr/th[@class='sorting']");
+
+	}
+
+	public Element getSelectedEnabledStateRadioBtn(int j, int headerIndex, int enabledIndex) {
+		return driver.FindElementByXPath(
+				"(//tr[" + j + "]//td[" + headerIndex + "]//label[" + enabledIndex + "]/input[@checked=''])");
+	}
+
+	public Element getTableHeader(int i) {
+		return driver.FindElementByXPath("(//table[@id='dt_basic']/thead/tr/th)[" + i + "]");
+	}
+
+	public Element getEmptyTableMEssage() {
+		return driver.FindElementByXPath("//tbody/tr/td[@class='dataTables_empty']");
+	}
+
+	public Element getStateDropDown() {
+		return driver.FindElementByXPath("//select[@id='WorkFlowState']");
+	}
+
+	public Element getStatusCompleteOption() {
+		return driver.FindElementByXPath("//option[@value='COMPLETED']");
+
+	}
+
+	public Element getSummeryTabDescription() {
+		return driver.FindElementByXPath("//*[@id='accordion1']/div/div[1]/h4/a");
+
+	}
+
+	public Element getSummeryTabSource() {
+		return driver.FindElementByXPath("//*[@id='accordion2']/div/div[1]/h4/a");
+
+	}
+
+	public Element getSummeryTabFamilyOption() {
+		return driver.FindElementByXPath("//*[@id='accordion4']/div/div[1]/h4/a");
+
+	}
+
+	public Element getSummeryTabActionTab() {
+		return driver.FindElementByXPath("//*[@id='accordion5']/div/div[1]/h4/a");
+
+	}
+
+	public Element getSummeryTabScheduleOption() {
+		return driver.FindElementByXPath("//*[@id='accordion6']/div/div[1]/h4/a");
+
+	}
+
+	public Element getSummeryTabNotificationOption() {
+		return driver.FindElementByXPath("//*[@id='accordion7']/div/div[1]/h4/a");
+
+	}
+
+	public WorkflowPage(Driver driver) {
+
+		this.driver = driver;
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		baseClass = new BaseClass(driver);
+		// This initElements method will create all WebElements
+		// PageFactory.initElements(driver.getWebDriver(), this);
+	}
+
+	public boolean checkStatusComplete(final String workflowName) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getStatusTable().Visible();
+			}
+		}), Input.wait30);
+
+		boolean nextPage = true;
+		boolean found = false;
+
+		while (nextPage) {
+			int row = 1;
+
+			for (WebElement ele : getWorkflowNames().FindWebElements()) {
+
+				if (ele.getText().trim().equals(workflowName)) {
+					nextPage = false;
+					found = true;
+					System.out.println(row);
+					if (getStatus(row).getText().trim().equalsIgnoreCase("COMPLETE"))
+						;
+					{
+						System.out.println(workflowName + " Scheduled run is completed with the status 'COMPLETE'!");
+						return true;
+					}
+				}
+
+				row++;
+
+			}
+			try {
+				driver.scrollingToBottomofAPage();
+				driver.getWebDriver().findElement(By.xpath("//li[@class='paginate_button next disabled']/a"))
+						.isDisplayed();
+				nextPage = false;
+				// System.out.println("Not found!!!!!!");
+			} catch (Exception e) {
+				driver.getWebDriver().findElement(By.linkText("Next")).click();
+			}
+
+		}
+		return false;
+
+	}
 
 	public void CreateWFwithAssignments(int SavedSearchID, final String WFName, String WFDesc,
 			final String AssignmentName, int purehit) throws ParseException, InterruptedException {
@@ -1109,16 +1156,18 @@ public class WorkflowPage {
 		saveButton();
 		baseClass.VerifySuccessMessage("Record saved successfully");
 	}
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 */
 	public void getWorkFlowPage() {
-		  this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
-		  driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		driver.waitForPageToBeReady();
 	}
+
 	/**
-	 * @author Jayanthi.ganesan
-	 * This method will filter the work flow table using 'status'
+	 * @author Jayanthi.ganesan This method will filter the work flow table using
+	 *         'status'
 	 * @param statusTOFilter
 	 */
 	public void filterByStatus(String statusTOFilter) {
@@ -1126,123 +1175,126 @@ public class WorkflowPage {
 		getStatusDropDown().selectFromDropdown().selectByVisibleText(statusTOFilter);
 		getApplyFilterBtn().waitAndClick(2);
 	}
+
 	/**
-	 * @author Jayanthi.Ganesan
-	 * This Method will return all values present under respective column across all pages.
-	 * @param eleName [Name of Column ]
-	 * @param EnabledState[it should be true if we want to take value from enabled state
-	 * column else it should be false.]
-	 * @return  List of values under particular column.
+	 * @author Jayanthi.Ganesan This Method will return all values present under
+	 *         respective column across all pages.
+	 * @param eleName         [Name of Column ]
+	 * @param EnabledState[it should be true if we want to take value from enabled
+	 *                        state column else it should be false.]
+	 * @return List of values under particular column.
 	 */
-	public List<String> getTableHeaderValuesPagination(String eleName,boolean EnabledState) {
+	public List<String> getTableHeaderValuesPagination(String eleName, boolean EnabledState) {
 		driver.scrollingToBottomofAPage();
 		int count = ((getAssgnPaginationCount().size()) - 2);
-		int index=baseClass.getIndex(getTableHeader(), eleName);
+		int index = baseClass.getIndex(getTableHeader(), eleName);
 		List<String> tableValue = new ArrayList<>();
 		for (int i = 0; i < count; i++) {
 			driver.waitForPageToBeReady();
-			int k=1;
+			int k = 1;
 			List<WebElement> elementList = null;
 			elementList = getTableColumnData(index).FindWebElements();
-			if(EnabledState) {
+			if (EnabledState) {
 				for (WebElement wenElementNames : elementList) {
 					String data = wenElementNames.getText();
-					if(data.equals(" ")) {
-					tableValue.add(data);
-					}			
-					else {
-						if(getSelectedEnabledStateRadioBtn(k,index,1).isElementAvailable(2)) {
-					
-					tableValue.add("Enabled");
-					}
-						if(getSelectedEnabledStateRadioBtn(k,index,2).isElementAvailable(2)) {
-							
+					if (data.equals(" ")) {
+						tableValue.add(data);
+					} else {
+						if (getSelectedEnabledStateRadioBtn(k, index, 1).isElementAvailable(2)) {
+
+							tableValue.add("Enabled");
+						}
+						if (getSelectedEnabledStateRadioBtn(k, index, 2).isElementAvailable(2)) {
+
 							tableValue.add("Disabled");
-							}				
-			}
-					k++;}
-			}
-			else {	
-			 for (WebElement wenElementNames : elementList) {
+						}
+					}
+					k++;
+				}
+			} else {
+				for (WebElement wenElementNames : elementList) {
 					String data = wenElementNames.getText();
 					tableValue.add(data);
-			}
+				}
 			}
 			System.out.println(tableValue);
 			System.out.println(tableValue.size());
-				driver.scrollingToBottomofAPage();
-				if(i!=count-1) {
+			driver.scrollingToBottomofAPage();
+			if (i != count - 1) {
 				baseClass.waitForElement(getWorkFlowPaginationNextButton());
 				getWorkFlowPaginationNextButton().waitAndClick(5);
-				}		
+			}
 		}
 		return tableValue;
-		
+
 	}
-/**
- * @author Jayanthi.Ganesan
- * This method will perform column ascending or descending order sorting.
- * @param ascending[True if we want to do ascending order sort]
- * @param descending[True if we want to do descending order sort]
- * @param URL
- * @param eleName[Name of column in which ascending sort to be performed]
- */
-	public void applySorting(boolean ascending, boolean descending,boolean URL,String eleName) {
-		if(URL){
+
+	/**
+	 * @author Jayanthi.Ganesan This method will perform column ascending or
+	 *         descending order sorting.
+	 * @param ascending[True  if we want to do ascending order sort]
+	 * @param descending[True if we want to do descending order sort]
+	 * @param URL
+	 * @param eleName[Name    of column in which ascending sort to be performed]
+	 */
+	public void applySorting(boolean ascending, boolean descending, boolean URL, String eleName) {
+		if (URL) {
 			this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 			driver.waitForPageToBeReady();
 		}
 		String sortOrder;
-		int index=baseClass.getIndex(getTableHeader(), eleName);
-		if(descending) {
+		int index = baseClass.getIndex(getTableHeader(), eleName);
+		if (descending) {
 			baseClass.waitForElement(getTableHeader(index));
 			getTableHeader(index).ScrollTo();
 			getTableHeader(index).Click();
 			baseClass.waitTime(1);
-			if(!eleName.equals("Workflow ID")) {
-			getTableHeader(index).Click();
+			if (!eleName.equals("Workflow ID")) {
+				getTableHeader(index).Click();
 			}
 			baseClass.waitTime(1);
-			 sortOrder=getTableHeader(index).GetAttribute("aria-sort");
-			if (sortOrder.equalsIgnoreCase("descending")) {	
+			sortOrder = getTableHeader(index).GetAttribute("aria-sort");
+			if (sortOrder.equalsIgnoreCase("descending")) {
 				baseClass.stepInfo(getTableHeader(index).getText() + " column is sorted in descending order");
 			}
-		
-		else {
-			baseClass.stepInfo(getTableHeader(index).getText() + " column is not  sorted in descending order");
+
+			else {
+				baseClass.stepInfo(getTableHeader(index).getText() + " column is not  sorted in descending order");
+			}
 		}
-		}
-		if(ascending) {
+		if (ascending) {
 			getTableHeader(index).ScrollTo();
 			getTableHeader(index).Click();
 			driver.waitForPageToBeReady();
-			sortOrder=getTableHeader(index).GetAttribute("aria-sort");
-			if(sortOrder.equalsIgnoreCase("ascending") ){
+			sortOrder = getTableHeader(index).GetAttribute("aria-sort");
+			if (sortOrder.equalsIgnoreCase("ascending")) {
 				baseClass.stepInfo(getTableHeader(index).getText() + " column is sorted in ascending order");
-			}
-			else {
+			} else {
 				baseClass.stepInfo(getTableHeader(index).getText() + " column is not  sorted in ascending order");
 			}
 		}
 	}
+
 	/***
-	 * @author Jayanthi.Ganesan
-	 * This method verify whether a column sorted correctly based on the order applied
-	 * @param eleName[Name of column]
-	 * @param EnabledState[it should be true if we want to take value from enabled state
-	 * column else it should be false.]
+	 * @author Jayanthi.Ganesan This method verify whether a column sorted correctly
+	 *         based on the order applied
+	 * @param eleName[Name      of column]
+	 * @param EnabledState[it   should be true if we want to take value from enabled
+	 *                          state column else it should be false.]
 	 * @param expectedList[List of values under the column before applying sorting]
-	 * @param sortType[Type of sort applied on the column]
+	 * @param sortType[Type     of sort applied on the column]
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	public void verifyHeaderSort(String eleName,boolean enabled,List<String> expectedList,String sortType) throws InterruptedException, AWTException {
-		List<String> listAfterSort= getTableHeaderValuesPagination(eleName,enabled);
-		baseClass.verifyOriginalSortOrder(listAfterSort,expectedList, sortType, true);
+	public void verifyHeaderSort(String eleName, boolean enabled, List<String> expectedList, String sortType)
+			throws InterruptedException, AWTException {
+		List<String> listAfterSort = getTableHeaderValuesPagination(eleName, enabled);
+		baseClass.verifyOriginalSortOrder(listAfterSort, expectedList, sortType, true);
 	}
+
 	/**
-	 * @author Jayanthi.ganesan
-	 * This method will filter the work flow table using 'Enabled state'
+	 * @author Jayanthi.ganesan This method will filter the work flow table using
+	 *         'Enabled state'
 	 * @param stateTOFilter
 	 */
 	public void filterByState(String stateTOFilter) {
@@ -1250,4 +1302,89 @@ public class WorkflowPage {
 		getStateDropDown().selectFromDropdown().selectByVisibleText(stateTOFilter);
 		getApplyFilterBtn().waitAndClick(2);
 	}
+
+	/**
+	 * @author Vijaya.Rani Modified Date:24/3/2022
+	 * @throws ParseException
+	 * @Description : verify Status List Complete Display
+	 */
+	public void verifyStatusListDisplay() {
+
+		softAssertion = new SoftAssert();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getStatusDropDown());
+		getStatusDropDown().waitAndClick(5);
+
+		baseClass.waitForElement(getStatusCompleteOption());
+		softAssertion.assertTrue(getStatusCompleteOption().Displayed());
+		baseClass.passedStep("'Completed' status is displayed in the list successfully");
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Vijaya.Rani Modified Date:24/3/2022
+	 * @throws ParseException
+	 * @Description : Method for creating new workflow Summery Display
+	 */
+	// Reusable method for summary tab
+	public void newWorkFlowCreationSummaryDisplay(String wfName, String wfDesc, int savedSearch, boolean familyFlag,
+			String folder, boolean folderFlag, String assgn, boolean assgnFlag, int number) throws ParseException {
+		createNewWorkFlow();
+		descriptionTab(wfName, wfDesc);
+		nextButton();
+		sourcesTab(savedSearch);
+		nextButton();
+		nextButton();
+		familyOptions(familyFlag);
+		nextButton();
+		actionTabToSelectFolder(folder, folderFlag);
+		actionTabToSelectAssignment(assgn, assgnFlag);
+		nextButton();
+		schedulesTab(number);
+		nextButton();
+		notificationTab();
+		nextButton();
+		summaryTabDetails();
+		summaryTab();
+	}
+
+	/**
+	 * @author Vijaya.Rani Modified Date:24/3/2022
+	 * @throws ParseException
+	 * @Description : Summary All Data Display
+	 */
+	public void summaryTabDetails() {
+		softAssertion = new SoftAssert();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getSummeryTabDescription());
+		softAssertion.assertTrue(getSummeryTabDescription().Displayed());
+		baseClass.passedStep("created workflow name is Display in SummaryTab");
+		softAssertion.assertAll();
+		baseClass.waitForElement(getSummeryTabSource());
+		getSummeryTabSource().waitAndClick(5);
+		softAssertion.assertTrue(getSummeryTabSource().Displayed());
+		baseClass.passedStep("Saved  Search Source is Display in SummaryTab");
+		softAssertion.assertAll();
+		baseClass.waitForElement(getSummeryTabFamilyOption());
+		getSummeryTabFamilyOption().waitAndClick(5);
+		softAssertion.assertTrue(getSummeryTabFamilyOption().Displayed());
+		baseClass.passedStep("Selected Family Option is Display in SummaryTab");
+		softAssertion.assertAll();
+		baseClass.waitForElement(getSummeryTabActionTab());
+		getSummeryTabActionTab().waitAndClick(5);
+		softAssertion.assertTrue(getSummeryTabActionTab().Displayed());
+		baseClass.passedStep("Created FloderName is Display in SummaryTab");
+		softAssertion.assertAll();
+		baseClass.waitForElement(getSummeryTabScheduleOption());
+		getSummeryTabScheduleOption().waitAndClick(5);
+		softAssertion.assertTrue(getSummeryTabScheduleOption().Displayed());
+		baseClass.passedStep("selected Schedule time is Display in SummaryTab");
+		softAssertion.assertAll();
+		baseClass.waitForElement(getSummeryTabNotificationOption());
+		getSummeryTabNotificationOption().waitAndClick(5);
+		softAssertion.assertTrue(getSummeryTabNotificationOption().Displayed());
+		baseClass.passedStep("Notification is Display in SummaryTab");
+		softAssertion.assertAll();
+	}
+
 }
