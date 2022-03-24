@@ -651,7 +651,7 @@ public class CustomDocumentDataReport_Regression1 {
 		bc.stepInfo("Saved the Custom report " + report1);
 		cddr.getRunReport().waitAndClick(3);
 		cddr.reportRunSuccessMsg();
-        search.closeExportDataPopup();
+                search.closeExportDataPopup();
 		// report2
 		bc.selectproject();
 		bc.stepInfo("Basic Content search");
@@ -825,7 +825,7 @@ public class CustomDocumentDataReport_Regression1 {
 
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {
-		Object[][] users = {/* { Input.rmu1userName, Input.rmu1password, "RMU" },*/
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
 				{ Input.pa1userName, Input.pa1password, "PA" } };
 		return users;
 	}
