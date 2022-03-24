@@ -637,6 +637,98 @@ public class SavedSearch_Audio_Regression_Set_02 {
 
 		login.logout();
 	}
+	
+	/**
+	 * @author Raghuram A Date: 9/15/21 Modified date:N/A Modified by: A Description
+	 *         : To verify as an RM user login, I will be able to search a saved
+	 *         query based on search name from My Search folder RPMXCON-47460-
+	 *         Sprint 03
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	public void searchAsavedQueryBasedOnSearchName() throws InterruptedException {
+
+		base.stepInfo("Test case Id: RPMXCON-47460 - Saved Search Sprint 03");
+		String search_Name1 = "Search1" + Utility.dynamicNameAppender();
+		// Login via Reviewer Manager
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// create new searchgroup
+		saveSearch.createNewSearchGrp(searchName1);
+		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		String newNode = saveSearch.getSavedSearchNewNode().getText();
+
+		// add save search in node
+		int purehit = session.basicContentSearch(Input.searchString1);
+		session.saveSearchInNode(search_Name1);
+
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		saveSearch.selectNode1(newNode);
+
+		saveSearch.savedSearch_SearchandSelect(search_Name1, "yes");
+
+		login.logout();
+	}
+	
+	/**
+	 * @author Jeevitha Date: 9/16/21 Modified date:N/A Modified by: A Description :
+	 *         To verify as a Reviewer user login, I will be able to search a saved
+	 *         query based on search name from My Search folder RPMXCON-47561-
+	 *         Sprint 03
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	public void verifySavedSearchAsRev() throws InterruptedException {
+		base.stepInfo("Test case Id: RPMXCON-47460 - Saved Search Sprint 03");
+		String search_Name1 = "Search1" + Utility.dynamicNameAppender();
+
+		login.loginToSightLine(Input.rev1userName, Input.rev1password);
+		base.stepInfo("Loggedin As : " + Input.rev1FullName);
+
+		// create new searchgroup
+		saveSearch.createNewSearchGrp(searchName1);
+		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		String newNode = saveSearch.getSavedSearchNewNode().getText();
+
+		// add save search in node
+		int purehit = session.basicContentSearch(Input.searchString1);
+		session.saveSearchInNode(search_Name1);
+
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		saveSearch.selectNode1(newNode);
+
+		saveSearch.savedSearch_SearchandSelect(search_Name1, "yes");
+
+		login.logout();
+	}
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 * @description Renames an existing Advanced saved search on Saved Search
+	 *              Screen. RPMXCON-49351
+	 */
+	@Test(enabled = false, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 18)
+	public void ValidateRenamedAdvancedSavedSearch(String UserName, String PassWord) throws InterruptedException {
+		base.stepInfo("TEST CASE ID- 49351 --- Saved search");
+		base.stepInfo("Renames an existing Advanced saved search on Saved Search Screen.");
+		String searchName = "SavedSearch" + Utility.dynamicNameAppender();
+		String searchName2 = "RenamedSavedSearch" + Utility.dynamicNameAppender();
+
+		login.loginToSightLine(UserName, PassWord);
+		session.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.metaDataCN);
+		session.saveSearchAdvanced(searchName);
+		saveSearch.verifyRenamedsavsearch(searchName, searchName2);
+		if (UserName == Input.pa1userName) {
+			base.stepInfo(" Renamed an existing Advanced saved search on Saved Search Screen using PA user");
+		}
+		if (UserName == Input.rmu1userName) {
+			base.stepInfo("Renamed an existing Advanced saved search on Saved Search Screen using RMU user");
+		}
+		if (UserName == Input.rev1userName) {
+			base.stepInfo("Renamed an existing Advanced saved search on Saved Search Screen using Reviewer");
+		}
+		login.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {

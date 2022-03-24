@@ -281,9 +281,9 @@ public class SavedSearchRegression_New_Set_03 {
 		String searchGroup = Input.mySavedSearch;
 		String sharedGroup = Input.shareSearchPA;
 
-		base.stepInfo("Test case Id: RPMXCON-49823  Saved Search");
+		base.stepInfo("Test case Id: RPMXCON-49833  Saved Search");
 		base.stepInfo(
-				"TC11_Verify that application does not display any warnings when a user executes a search group under \"Shared with Project Administrators\" which contains only Advanced Search(es) in Draft state on Saved Search Screen.");
+				"\" TC01_Verify that application does not display any warnings when a user execute search group which contains only Basic Search(es) in Draft state on Saved Search Screen.\"");
 		// Login as PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Loggedin As : " + Input.pa1FullName);

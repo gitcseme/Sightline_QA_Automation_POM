@@ -56,6 +56,7 @@ public class DocView_Regression1 {
 	AssignmentsPage agnmt;
 	DocViewRedactions redact;
 	SecurityGroupsPage security;
+	String roll;
 
 	@BeforeMethod(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -7136,6 +7137,289 @@ public class DocView_Regression1 {
 
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author : Baskar date:06/12/21 Modified date: NA Modified by: Baskar
+	 * @Description : Verify when RMU impersonates as Reviewer and complete same as
+	 *              last doc when preceding document is completed
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 74)
+	public void validateAfterImpersonateSameAsLast() throws InterruptedException, AWTException {
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51608");
+		baseClass.stepInfo("Verify when RMU impersonates as Reviewer and complete "
+				+ "same as last doc when preceding document is completed");
+		String assignName = "Assignment" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		if (roll.equalsIgnoreCase("rmu")) {
+//			searching document for assignment creation
+			sessionSearch.basicContentSearch(Input.searchString2);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+			assignmentPage.toggleCodingStampEnabled();
+			assignmentPage.assignmentDistributingToReviewer();
+			driver.waitForPageToBeReady();
+			System.out.println(assignName);
+		}
+		loginPage.logout();
+		// login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validate complete doc to display uncomplete button
+		docViewPage.stampAndCompleteBtnValidation(comment, fieldText, Input.stampSelection);
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date:09/12/21 Modified date: NA Modified by: Baskar
+	 * @Description : Verify user can apply coding stamp for the document once
+	 *              marked as un-complete in an assignment
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 83)
+	public void afterImpersonateCanSaveStamp() throws InterruptedException, AWTException {
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-51049");
+		baseClass.stepInfo(
+				"Verify user can apply coding stamp for the " + "document once marked as un-complete in an assignment");
+		String assignName = "Assignment" + Utility.dynamicNameAppender();
+		String filedText = "stampName" + Utility.dynamicNameAppender();
+		String comment = "commentValue" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		if (roll.equalsIgnoreCase("rmu")) {
+//			searching document for assignment creation
+			sessionSearch.basicContentSearch(Input.searchString2);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+			assignmentPage.toggleCodingStampEnabled();
+			assignmentPage.add2ReviewerAndDistribute();
+			driver.waitForPageToBeReady();
+			System.out.println(assignName);
+		}
+		baseClass.impersonateRMUtoReviewer();
+		// selecting the assignment
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// validation of completing document
+		docViewPage.validateSavedStampAfterImpersonate(filedText, comment);
+
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Sakthivel date:30/12/2021 Modified date:NA
+	 * @Description :Verify that when user in on Images tab and completes the
+	 *              document from coding form child window then should be on Images
+	 *              tab for next navigated document
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 151)
+	public void verifyImageTabCompleteForNextNavigatedDoc() throws InterruptedException, AWTException {
+		DocViewPage docViewPage = new DocViewPage(driver);
+		SessionSearch 	sessionSearch = new SessionSearch(driver);
+		SoftAssert 	softAssertion = new SoftAssert();
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String assignmentName = "assignment" + Utility.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Test case Id: RPMXCON- 51920");
+		baseClass.stepInfo("Verify that when user in on Images tab and completes the document from coding form "
+				+ "child window then should be on Images tab for next navigated document");
+
+		// search to Assignment creation
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.bulkAssign();
+
+		// Assignment creating and saving the assignment
+		assignmentPage.assignmentCreation(assignmentName, "Default Project Coding Form");
+		baseClass.stepInfo("Assignment is saved succcessfully");
+
+		// Assignment saved and distributing to reviewer
+		assignmentPage.assignmentDistributingToReviewer();
+		baseClass.stepInfo("distrubuting to reviwer");
+
+		// Logout as Reviewer manager
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Assignment Selection and Reviewer
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// Method for viewing doc view images.
+		docViewPage.verifyDocViewImages();
+		docViewPage.verifyCodingFormChildWindowCursorNavigatedToImageTabDisplayed();
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer'" + Input.rev1password + "'");
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @Author : Sakthivel date:30/12/2021 Modified date:NA
+	 * @Description : Verify that when user in on Images tab and completes the
+	 *              document from coding form child window after applying stamp then
+	 *              should be on Images tab for next navigated document
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 152)
+	public void verifyCfSavedStampChildNavigatedDoc() throws InterruptedException, AWTException {
+		DocViewPage docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String assignmentName = "assignment" + Utility.dynamicNameAppender();
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Test case Id: RPMXCON- 51921");
+		baseClass.stepInfo(
+				"Verify that when user in on Images tab and completes the document from coding form child window after applying stamp"
+						+ " then should be on Images tab for next navigated document");
+
+		// searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.bulkAssign();
+
+		// Assignment Saved
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		baseClass.stepInfo("Assignment is saved succcessfully");
+
+		// Assignment saved and distributing to reviewer
+		assignmentPage.assignmentDistributingToReviewer();
+		baseClass.stepInfo("distrubuting to reviwer");
+
+		// Logout As Review Manager
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// Method for viewing doc view images.
+		docViewPage.verifyDocViewImages();
+		docViewPage.verifyCfStampChildCursorNavigatedToDocViewImage(Input.stampColour, Input.stampColour);
+
+		// Logout As Reviewer
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer'" + Input.rev1password + "'");
+		softAssertion.assertAll();
+	}
+
+/**
+	 * @Author : Steffy date: 28/01/2021 Modified date: NA Modified by:
+	 * @Description:Verify assignment progress bar refreshesh after completing the
+	 *                     document same as last prior documents should be completed
+	 *                     by clicking complete button after selecting code same as
+	 *                     this action.
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 198)
+	public void verifyAssignmentProgressBarDocCompleteAfterCodeSameAs() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51275");
+		baseClass.stepInfo(
+				"Verify assignment progress bar refreshesh after completing the document same as last prior documents should be completed by "
+						+ "clicking complete button after selecting code same as this action");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		DocViewPage docViewPage = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+		String codingForm = Input.codeFormName;
+		String docTextbox = "assignment click";
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(searchString);
+		sessionSearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		driver.waitForPageToBeReady();
+		System.out.println(assname);
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		docViewPage.selectDocsFromMiniDocsAndCodeSameAs();
+		baseClass.waitForElement(docViewPage.getDocument_CommentsTextBox());
+		docViewPage.getDocument_CommentsTextBox().SendKeys(docTextbox);
+		driver.scrollPageToTop();
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		docViewPage.getCompleteDocBtn().waitAndClick(20);
+		baseClass.VerifySuccessMessage("Document completed successfully");
+		driver.waitForPageToBeReady();
+		docViewRedact.getHomeDashBoard().waitAndClick(10);
+
+		// verify assignment progress bar in completed docs
+		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+			softAssertion.assertTrue(assignmentsPage.getBatchAssignmentBar(assname).isDisplayed());
+
+		} else {
+			System.out.println("not completed");
+			baseClass.failedStep("Doc not completed");
+		}
+
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewRedact.getDocView_MiniDoc_Selectdoc(3));
+		docViewRedact.getDocView_MiniDoc_Selectdoc(3).waitAndClick(5);
+		docViewPage.completeButton();
+		baseClass.waitTime(1);
+		docViewPage.clickCodeSameAsLast();
+		docViewRedact.getHomeDashBoard().waitAndClick(10);
+
+		// verify assignment progress bar in completed docs
+		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+			softAssertion.assertTrue(assignmentsPage.getBatchAssignmentBar(assname).isDisplayed());
+
+		} else {
+			System.out.println("not completed");
+			baseClass.failedStep("Doc not completed");
+		}
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
