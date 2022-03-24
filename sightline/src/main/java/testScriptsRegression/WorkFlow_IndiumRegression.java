@@ -688,6 +688,7 @@ public class WorkFlow_IndiumRegression {
 		// logout
 		loginPage.logout();
 	}
+	
 	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void validatestatus() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52655");
@@ -994,6 +995,79 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		// logout
 		loginPage.logout();
 		}
+	
+	/**
+	 * Author :Vijaya.Rani date: 24/03/2022 Modified date: NA Modified by: NA
+	 * Description:To verify that Status list should be displayed as Complete or
+	 * Assigned. 'RPMXCON-52605' Sprint-14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	public void verifyRMUStatusListCompleteOptionDisplay() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52605");
+		baseClass.stepInfo("To verify that Status list should be displayed as Complete or Assigned.");
+
+		workflow = new WorkflowPage(driver);
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		workflow.verifyStatusListDisplay();
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author :Vijaya.Rani date: 24/03/2022 Modified date: NA Modified by: NA
+	 * Description:To verify that Summary tab will displays all the details.
+	 * 'RPMXCON-52611' Sprint-14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	public void verifySummaryTabWillDisplayAllDetails() throws InterruptedException, ParseException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52611");
+		baseClass.stepInfo("To verify that Summary tab will displays all the details.");
+
+		int Id;
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		String assgn = "Assgn" + Utility.dynamicNameAppender();
+		assignmentPage = new AssignmentsPage(driver);
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Search for any string
+		search = new SessionSearch(driver);
+		int count = search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Thread.sleep(2000);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id);
+		UtilityLog.info(Id);
+
+		// assignment creation
+		search.bulkAssign();
+		assignmentPage.assignmentCreation(assgn, Input.codingFormName);
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		baseClass.stepInfo("Creating workflow using save search,assignmnet and first family options");
+		workflow.newWorkFlowCreationSummaryDisplay(wfName, wfDesc, Id, true, folderName, false, assgn, true, 1);
+		baseClass.stepInfo("Created WorkFlow Details is Display in Summary Tab Successfully");
+
+		// logout
+		loginPage.logout();
+
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
