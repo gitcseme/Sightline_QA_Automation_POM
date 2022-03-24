@@ -2403,4 +2403,17 @@ public void verrifyDocExplorerFolder(String folderName) {
 	}
 
 }
+
+/**
+ * @author Jayanthi.Ganesan This method will navigate from doc explorer page to
+ *         Export page.
+ */
+public void docExpToExport() {
+	bc.waitForElement(actionDropdown());
+	actionDropdown().waitAndClick(10);
+	bc.waitForElement(exportDataFromActionDropdown());
+	exportDataFromActionDropdown().waitAndClick(10);
+	driver.waitForPageToBeReady();
+}
+
 }

@@ -562,22 +562,47 @@ public class CustomDocumentDataReport {
 
 		case "save search":
 			if (sourceName.equalsIgnoreCase("Selected Documents from Save Search")) {
-				bc.passedStep(sourceName + "selected source name reflected in export page as expected.");
+				bc.passedStep(sourceName + " selected source name reflected in export page as expected.");
 			} else {
-				bc.failedStep(sourceName + "selected source name reflected in export page which is not expected.");
+				bc.failedStep(sourceName + " selected source name reflected in export page which is not expected.");
 			}
 			break;
 		case "advanced search":
 			if (sourceName.equalsIgnoreCase("Documents: Selected Documents from Search")) {
-				bc.passedStep(sourceName + "selected source name reflected in export page as expected.");
+				bc.passedStep(sourceName + "  selected source name reflected in export page as expected.");
 			} else {
 
-				bc.failedStep(sourceName + "selected source name reflected in export page which is not expected.");
+				bc.failedStep(sourceName + " selected source name reflected in export page which is not expected.");
 			}
 			break;
+		case "doc list":
+			if (sourceName.equalsIgnoreCase("Documents: Selected Documents from Document List")) {
+				bc.passedStep(sourceName + " selected source name reflected in export page as expected.");
+			} else {
 
+				bc.failedStep(sourceName + " selected source name reflected in export page which is not expected.");
+			}
+			break;
+		case "doc exp":
+			if (sourceName.equalsIgnoreCase("Documents: Selected Documents from Document Explorer")) {
+				bc.passedStep(sourceName + " selected source name reflected in export page as expected.");
+			} else {
+
+				bc.failedStep(sourceName + " selected source name reflected in export page which is not expected.");
+			}
+			break;
 		}
 
+	}
+	/**
+	 * This method will select the saved custom document data report from reports page. 
+	 * @param report1
+	 */
+	public void SavedCDDRToExportPage(String report1) {
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		getReportName(report1).Click();
+		driver.waitForPageToBeReady();
+		
 	}
 
 }
