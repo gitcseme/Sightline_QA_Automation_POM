@@ -102,7 +102,8 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	public Object[][] SavedSearchwithUsers() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
 				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
-				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName }
+				};
 		return users;
 	}
 
@@ -118,7 +119,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 *         group within "My Saved Search" -RPMXCON-47393 Sprint 03
 	 * @Stabilization : Completed
 	 */
-	@Test(enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 16)
+	@Test(enabled = true, dataProvider = "TestUser", groups = { "regression" }, priority = 1)
 	public void verifyMoveActionSS(String UserName, String PassWord, String fullName) throws InterruptedException {
 
 		base.stepInfo("Test case Id: RPMXCON-47393 - Saved Search Sprint 03");
@@ -134,7 +135,9 @@ public class SavedSearch_Audio_Regression_Set_02 {
 		base.stepInfo("Search and saveSearch in the created node");
 		String savedSearchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
 		session.basicContentSearch(Input.searchString2);
-		session.saveSearchInNode(savedSearchName1);
+		
+//		session.saveSearchInNode(savedSearchName1);
+		session.saveSearchInNewNode(savedSearchName1, newNode2);
 		driver.waitForPageToBeReady();
 
 		// verify Move Action via SavedSearch SMethod
@@ -152,7 +155,8 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 *         Saved Search -RPMXCON-49352 Sprint 03
 	 * @Stabilization : Completed
 	 */
-	@Test(enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 17)
+	@Test(enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 2)
+	
 	public void verifyMoveRenamedSearch(String UserName, String PassWord, String fullName) throws InterruptedException {
 
 		base.stepInfo("Test case Id: RPMXCON-49352 - Saved Search Sprint 03");
@@ -170,7 +174,10 @@ public class SavedSearch_Audio_Regression_Set_02 {
 
 		base.stepInfo("Search and saveSearch in the created node");
 		session.basicContentSearch(Input.searchString2);
-		session.saveSearchInNode(searchName);
+		
+//		session.saveSearchInNode(searchName);
+		session.saveSearchInNewNode(searchName, newNode2);
+		
 		driver.waitForPageToBeReady();
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
@@ -195,7 +202,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 *         -RPMXCON-49354 Sprint 03
 	 * @Stabilization : Completed
 	 */
-	@Test(enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 18)
+	@Test(enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 3)
 	public void editRenamedSearchSS(String UserName, String PassWord, String fullName) throws InterruptedException {
 		base.stepInfo("Test case Id: RPMXCON-49354 - Saved Search Sprint 03");
 		// Login as RMU
@@ -231,7 +238,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws ParseException
 	 * @Stabilization : Completed
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void shareaRenamedSearchSS() throws InterruptedException, ParseException {
 		base.stepInfo("Test case Id: RPMXCON-49353 - Saved Search Sprint 03");
 		// Login as PA
@@ -289,7 +296,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws ParseException
 	 * @Stabilization : Completed
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void sharingSearchGroupToPA() throws InterruptedException, ParseException {
 
 		String SGtoShare = Input.shareSearchPA;
@@ -306,8 +313,11 @@ public class SavedSearch_Audio_Regression_Set_02 {
 		// Search and Save in the SG
 		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
 		session.basicContentSearch(Input.searchString2);
-		session.saveSearchInNode(searchName1);
 
+//		session.saveSearchInNode(searchName1);
+		session.saveSearchInNewNode(searchName1, newNode);
+
+		
 		// Landed on Saved Search
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
@@ -342,7 +352,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws ParseException
 	 * @Stabilization : Completed
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void sharingSearchWithPA() throws InterruptedException, ParseException {
 
 		String SGtoShare = Input.shareSearchPA;
@@ -358,12 +368,13 @@ public class SavedSearch_Audio_Regression_Set_02 {
 		session.saveSearch(searchName1);
 
 		// Modify Search via Saved Search
-		saveSearch.shareSavedSearchAsPA(searchName1, Input.securityGroup);
+//		saveSearch.shareSavedSearchAsPA(searchName1, Input.securityGroup);
+		saveSearch.shareSavedSearchAsPA(searchName1, SGtoShare);
 		login.logout();
 
 		// Login as PA
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+		login.loginToSightLine(Input.pa2userName, Input.pa2password);
+		base.stepInfo("Loggedin As : " + Input.pa2FullName);
 
 		saveSearch.navigateToSSPage();
 		saveSearch.verifySharedGroupSearch(SGtoShare, searchName1);
@@ -389,7 +400,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws ParseException
 	 * @Stabilization : Completed-In
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void performActionOnSGviaSG() throws InterruptedException, ParseException {
 
 		String SGtoShare = Input.shareSearchDefaultSG;
@@ -406,11 +417,14 @@ public class SavedSearch_Audio_Regression_Set_02 {
 		// Search and Save in the SG
 		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
 		session.basicContentSearch(Input.searchString2);
-		session.saveSearchInNode(searchName1);
+		
+//		session.saveSearchInNode(searchName1);
+		session.saveSearchInNewNode(searchName1, newNode);
+	
 
 		// Landed on Saved Search
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.rootGroupExpansion(); 
 		driver.waitForPageToBeReady();
 
 		// Share to SG
@@ -463,7 +477,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws InterruptedException
 	 * @Stabilization : Completed
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void newSearchViaSavedSearch() throws InterruptedException {
 
 		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
@@ -536,7 +550,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws InterruptedException
 	 * @Stabilization : Completed - In
 	 */
-	@Test(enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 24)
+	@Test(enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 9)
 	public void saveSearchAdvDraft(String userName, String password, String fullName)
 			throws InterruptedException, ParseException {
 		String search = "Search6" + Utility.dynamicNameAppender();
@@ -553,7 +567,8 @@ public class SavedSearch_Audio_Regression_Set_02 {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		int purehit = session.advancedContentSearchWithSearchChanges(Input.searchString1, "No");
 
-		session.saveSearchInNode(search);
+//		session.saveSearchInNode(search);
+		session.saveSearchInNewNode(search, newNode);
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		saveSearch.selectNode1(newNode);
@@ -577,7 +592,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws InterruptedException
 	 * @Stabilization : Completed
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyBasic_Advancesearch() throws InterruptedException {
 		String Search1 = "search" + Utility.dynamicNameAppender();
 		String Search2 = "search" + Utility.dynamicNameAppender();
