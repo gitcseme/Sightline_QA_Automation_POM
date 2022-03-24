@@ -3409,7 +3409,7 @@ public class MiniDocListPage {
 	public void configureMiniDocListToShowCompletedDocs() {
 		configureMiniDocListPopupOpen();
 		baseClass.waitForElement(this.getShowCompletedDocsToggle());
-		this.getShowCompletedDocsToggle().Click();
+		this.getShowCompletedDocsToggle().waitAndClick(5);
 		saveConfigureMiniDocList();
 	}
 

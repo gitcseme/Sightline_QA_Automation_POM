@@ -9,6 +9,8 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.concurrent.Callable;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -581,9 +583,21 @@ public class CreateCodingForm_New_Regression2 {
 	    docViewPage.verifyNavigationPopUpButtons();
 	    docViewPage.getNavigationMsgPopupYesBtn().waitAndClick(10);
 	    driver.getWebDriver().get(Input.url + "Search/Searches");
-	    sessionSearch.ViewInDocView();
+	    driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearch.getBulkActionButton().Visible();
+			}
+		}), Input.wait30);
+		Thread.sleep(2000); // App synch
+		sessionSearch.getBulkActionButton().waitAndClick(5);
+		Thread.sleep(2000); // App Synch
+		docViewPage.getDocViewAction().waitAndClick(10);
+		baseClass.waitTime(3); // added for stabilization
+		System.out.println("Navigated to docView to view docs");
+		UtilityLog.info("Navigated to docView to view docs");
 	    driver.waitForPageToBeReady();
-	    baseClass.waitForElement(codingForm.selectObjectsInPreviewBox("Technical_Issue"));
+	    baseClass.waitTime(3);
 	    String value = codingForm.getObjectsInPreviewBox("Responsive").GetAttribute("checked");
 	    softAssertion.assertEquals(value, "true");
 	    baseClass.passedStep("No changes are saved after clicking yes button to navigate some other page");
@@ -618,9 +632,23 @@ public class CreateCodingForm_New_Regression2 {
 	    docViewPage.verifyNavigationPopUpButtons();
 	    docViewPage.getNavigationMsgPopupYesBtn().waitAndClick(10);
 	    driver.getWebDriver().get(Input.url + "Search/Searches");
-	    sessionSearch.ViewInDocView();
+	    driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearch.getBulkActionButton().Visible();
+			}
+		}), Input.wait30);
+		Thread.sleep(2000); // App synch
+		sessionSearch.getBulkActionButton().waitAndClick(5);
+		Thread.sleep(2000); // App Synch
+
+		docViewPage.getDocViewAction().waitAndClick(10);
+		baseClass.waitTime(3); // added for stabilization
+
+		System.out.println("Navigated to docView to view docs");
+		UtilityLog.info("Navigated to docView to view docs");
 	    driver.waitForPageToBeReady();
-	    baseClass.waitForElement(codingForm.getObjectsInPreviewBox("Responsive"));
+	    baseClass.waitTime(3);
 	    String value = codingForm.getObjectsInPreviewBox("Responsive").GetAttribute("checked");
 	    softAssertion.assertEquals(value, "true");
 	    baseClass.passedStep("No changes are saved after clicking yes button to navigate some other page");
@@ -661,9 +689,21 @@ public class CreateCodingForm_New_Regression2 {
 	    docViewPage.verifyNavigationPopUpButtons();
 	    docViewPage.getNavigationMsgPopupYesBtn().waitAndClick(10);
 	    driver.getWebDriver().get(Input.url + "Search/Searches");
-	    sessionSearch.ViewInDocView();
+	    driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearch.getBulkActionButton().Visible();
+			}
+		}), Input.wait30);
+		Thread.sleep(2000); // App synch
+		sessionSearch.getBulkActionButton().waitAndClick(5);
+		Thread.sleep(2000); // App Synch
+		docViewPage.getDocViewAction().waitAndClick(10);
+		baseClass.waitTime(3); // added for stabilization
+		System.out.println("Navigated to docView to view docs");
+		UtilityLog.info("Navigated to docView to view docs");
 	    driver.waitForPageToBeReady();
-	    baseClass.waitForElement(codingForm.getObjectsInPreviewBox("Responsive"));
+	    baseClass.waitTime(3);
 	    String value = codingForm.getObjectsInPreviewBox("Responsive").GetAttribute("checked");
 	    softAssertion.assertEquals(value, "true");
 	    baseClass.passedStep("No changes are saved after clicking yes button to navigate some other page");
@@ -705,9 +745,24 @@ public class CreateCodingForm_New_Regression2 {
 	    docViewPage.getNavigationMsgPopupYesBtn().waitAndClick(10);
 	    loginPage.loginToSightLine(username, password);
 	    sessionSearch.basicContentSearch("null");
-	    sessionSearch.ViewInDocView();
+	    driver.getWebDriver().get(Input.url + "Search/Searches");
+	    driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearch.getBulkActionButton().Visible();
+			}
+		}), Input.wait30);
+		Thread.sleep(2000); // App synch
+		sessionSearch.getBulkActionButton().waitAndClick(5);
+		Thread.sleep(2000); // App Synch
+		docViewPage.getDocViewAction().waitAndClick(10);
+		baseClass.waitTime(3); // added for stabilization
+		System.out.println("Navigated to docView to view docs");
+		UtilityLog.info("Navigated to docView to view docs");
 	    driver.waitForPageToBeReady();
-	    baseClass.waitForElement(codingForm.getObjectsInPreviewBox("Responsive"));
+	    baseClass.waitTime(3);
+	    driver.waitForPageToBeReady();
+	    baseClass.waitTime(3);
 	    String value = codingForm.getObjectsInPreviewBox("Responsive").GetAttribute("checked");
 	    softAssertion.assertEquals(value, "true");
 	    baseClass.passedStep("No changes are saved after clicking yes button to navigate some other page");
