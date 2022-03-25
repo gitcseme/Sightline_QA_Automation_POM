@@ -606,23 +606,23 @@ public class SecurityGroupsPage {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getAnnotationLayerLink());
 			bc.waitTillElemetToBeClickable(getAnnotationLayerLink());
-			getAnnotationLayerLink().Click();
+			getAnnotationLayerLink().waitAndClick(5);
 			bc.waitForElement(getAnnatationLayerTable());
 			bc.waitTillElemetToBeClickable(getAnnatationLayerTable());
-			getAnnatationLayerTable().Click();
+			getAnnatationLayerTable().waitAndClick(5);
 
 			bc.waitForElement(getAnnotation(annotation));
 			bc.waitTillElemetToBeClickable(getAnnotation(annotation));
-			getAnnotation(annotation).Click();
+			getAnnotation(annotation).waitAndClick(5);
 			bc.waitForElement(getAnnotationRightShiftButton());
-			getAnnotationRightShiftButton().Click();
-			getProjectLevelEmailCheckBox().Click();
+			getAnnotationRightShiftButton().waitAndClick(5);
+			getProjectLevelEmailCheckBox().waitAndClick(5);
 			driver.scrollingToBottomofAPage();
 			for (int i = 0; i < 15; i++) {
 				try {
 					Thread.sleep(2000);
 					getSG_AnnSaveButton().waitAndFind(10);
-					getSG_AnnSaveButton().Click();
+					getSG_AnnSaveButton().waitAndClick(5);
 					break;
 				} catch (Exception e) {
 					bc.waitForElement(getSG_AnnSaveButton());
