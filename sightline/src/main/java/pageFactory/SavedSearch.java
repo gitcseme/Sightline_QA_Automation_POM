@@ -314,7 +314,7 @@ public class SavedSearch {
 	}
 
 	public Element getSavedSearchGroupName(String name) {
-		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(.,'" + name + "')]");
+		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(text(),'" + name + "')]");
 	}
 
 	// quick batch
@@ -1373,7 +1373,8 @@ public class SavedSearch {
 	public void shareSavedSearchRMU(final String searchName, String securitygroupname)
 			throws ParseException, InterruptedException {
 
-		savedSearch_Searchandclick(searchName);
+//		savedSearch_Searchandclick(searchName);
+		selectSavedSearchTAb(searchName, Input.mySavedSearch, "Yes");
 		getShareSerachBtn().Click();
 		Thread.sleep(3000);
 
@@ -2143,12 +2144,11 @@ public class SavedSearch {
 
 		// Again select same search and share with security group
 		getShareSerachBtn().waitAndClick(3);
-
+		driver.waitForPageToBeReady();
 		getShare_SecurityGroup(securitygroupname).waitAndClick(10);
 
 		getShareSaveBtnNew().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		base.waitTime(2);
 		base.VerifySuccessMessage("Share saved search operation successfully done.");
 		driver.waitForPageToBeReady();
 
@@ -2415,7 +2415,8 @@ public class SavedSearch {
 	 * @return Stabilization changes implemented
 	 */
 	public boolean verifySharedNode(String nodeName) {
-		getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(10);
+//		getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(10);
+		rootGroupExpansion();
 		driver.waitForPageToBeReady();
 		if (getSharedGroupName(nodeName).isElementAvailable(5)) {
 			getSharedGroupName(nodeName).waitAndClick(10);
@@ -2536,9 +2537,9 @@ public class SavedSearch {
 
 		try {
 			base.waitForElement(getMoveIcon());
-			getMoveIcon().Click();
+			getMoveIcon().waitAndClick(5);
 			base.waitForElement(getExpandIconfromPopup());
-			getExpandIconfromPopup().Click();
+			getExpandIconfromPopup().waitAndClick(5);
 			base.waitForElement(getSelectNodeToMove(nodeName));
 			getSelectNodeToMove(nodeName).waitAndClick(5);
 		} catch (Exception e) {
@@ -2728,7 +2729,7 @@ public class SavedSearch {
 	}
 
 	/**
-	 * @author Raghuram A Date: 9/21/21 Modified date:12/9/21 Modified by: Raghuram
+	 * @author Raghuram A Date: 9/21/21 Modified date:3/25/21 Modified by: Jeevitha
 	 *         A Description : verifyMoveActionSSMethod Test case steps
 	 * @throws InterruptedException
 	 * @Stabilization : changes done
@@ -2762,7 +2763,8 @@ public class SavedSearch {
 		if (subFolerToFolderMoveActionVerify) {
 			// Verify moved sub-folder is present in the selected folder
 			driver.waitForPageToBeReady();
-			getSavedSearchNewGroupExpand().waitAndClick(10);
+			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(10);
+			rootGroupExpansion();
 			driver.waitForPageToBeReady();
 			System.out.println("Main folder");
 			base.stepInfo("Main folder");
@@ -2770,7 +2772,7 @@ public class SavedSearch {
 
 			base.waitForElement(getSelectAnode(newNode2));
 			getSelectAnode(newNode2).waitAndClick(6);
-			getSavedSearchNewGroupExpand().waitAndClick(5);
+			rootGroupExpansion();
 			System.out.println("Inside moved folder" + newNode2);
 			base.stepInfo("Inside moved folder" + newNode2);
 			verifyNodePresent(newNode);
@@ -2875,12 +2877,9 @@ public class SavedSearch {
 	public String shareSavedNodePA(String SGtoShare, String nodeName, Boolean verifyNode, Boolean verifySearch,
 			String searchName) throws InterruptedException {
 		// Share to SG
-		// base.waitForElement(getSavedSearchGroupName(nodeName));
 		getSavedSearchGroupName(nodeName).waitAndClick(10);
 		getShareSerachBtn().waitAndClick(10);
-		// base.waitForElement(getShare_SecurityGroup(SGtoShare));
 		getShare_SecurityGroup(SGtoShare).waitAndClick(10);
-		// base.waitForElement(getShareSaveBtnNew());
 		getShareSaveBtnNew().waitAndClick(10);
 		System.out.println("Shared to : " + SGtoShare);
 		base.stepInfo("Shared to : " + SGtoShare);
@@ -2909,7 +2908,8 @@ public class SavedSearch {
 			String searchName, Boolean compareSearchID) throws InterruptedException {
 		// Make sure shared Node reflected in the SG
 		getSavedSearchGroupName(SGtoShare).waitAndClick(10);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
+//		getSavedSearchNewGroupExpand().waitAndClick(20);
+		rootGroupExpansion(); // to handle dynamic expansion as per new updates
 		driver.waitForPageToBeReady();
 
 		// verify id should get changed
@@ -3253,10 +3253,6 @@ public class SavedSearch {
 			} catch (Exception e) {
 				break;
 			}
-//			getSavedSearchNewGroupExpand().waitAndClick(10); //base on new implementation - backup
-//			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);// for new implementation
-//			String newNode = getCurrentNodeLastChild().getText();
-//			getCurrentNodeLastChild().waitAndClick(10);
 			base.waitTime(2);// to handle wait for observing the text
 			driver.waitForPageToBeReady();
 			String newNode = currentClickedNode().getText();
@@ -3566,9 +3562,10 @@ public class SavedSearch {
 
 	/**
 	 * 
-	 * @author Raghuram A Date: 10/5/21 Modified date:11/30/21 Modified by:
+	 * @author Raghuram A Date: 10/5/21 Modified date:3/24/22 Modified by:
 	 *         Description :collectionOfSearchIdsFromNodeCollections updated
-	 *         newNodeList.size() -> nodeSearchpair.size() - S
+	 *         newNodeList.size() -> nodeSearchpair.size() - S - updated dynamically
+	 *         based on new implementation - yet to verify the impacts
 	 */
 	public HashMap<String, String> collectionOfSearchIdsFromNodeCollections(List<String> newNodeList,
 			HashMap<String, String> nodeSearchpair, HashMap<String, String> searchGroupSearchpID)
@@ -3577,16 +3574,15 @@ public class SavedSearch {
 		for (int i = 0; i <= nodeSearchpair.size() - 1; i++) {
 			node = newNodeList.get(i);
 			getSavedSearchGroupName(node).waitAndClick(5);
-			Thread.sleep(3000);// To handle abnormal waits
+			base.waitTime(3);// To handle abnormal waits
 			// get Search ID
 			String searchiD = GetSearchID(nodeSearchpair.get(node));
 			searchGroupSearchpID.put(nodeSearchpair.get(node), searchiD);
 			try {
-				if (getSavedSearchNewGroupExpand().Displayed()) {
-					getSavedSearchNewGroupExpand().waitAndClick(20);
-				} else {
-					getSavedSearchGroupName(node).waitAndClick(5);
+				if (i != nodeSearchpair.size() - 1) {
+					rootGroupExpansion(); // not required at direct situation added in order to prevent future impact
 				}
+				getSavedSearchGroupName(node).waitAndClick(5);
 			} catch (Exception e) {
 				System.out.println("End of Node");
 			}
@@ -3596,26 +3592,23 @@ public class SavedSearch {
 	}
 
 	/**
-	 * @author Raghuram A Date: 10/5/21 Modified date:N/A Modified by: Description
-	 *         :childNodeSelectionToShare
+	 * @author Raghuram A Date: 10/5/21 Modified date:3/24/22 Modified by:
+	 *         Description :childNodeSelectionToShare - updated dynamically based on
+	 *         new implementation - yet to verify the impacts
 	 */
 	public String childNodeSelectionToShare(int selectIndex, List<String> newNodeList) throws InterruptedException {
 		String nodeSelected = null;
-		base.waitForElement(getSavedSearchNewGroupExpand());
-		getSavedSearchNewGroupExpand().waitAndClick(20);
+		rootGroupExpansion();
 		for (int i = 0; i <= selectIndex; i++) {
 			nodeSelected = newNodeList.get(i);
 			getSavedSearchGroupName(nodeSelected).waitAndClick(5);
-			Thread.sleep(3000);
+			base.waitTime(3);
 			try {
-				if (getSavedSearchNewGroupExpand().Displayed()) {
-					getSavedSearchNewGroupExpand().waitAndClick(20);
-					System.out.println("Expanded : " + nodeSelected);
-				} else {
-					//
-					getSavedSearchGroupName(nodeSelected).waitAndClick(5);
-					System.out.println("Final : " + nodeSelected);
+				if (i != selectIndex) {
+					rootGroupExpansion(); // not required at direct situation added in order to prevent future impact
 				}
+				getSavedSearchGroupName(nodeSelected).waitAndClick(5);
+				System.out.println("Final : " + nodeSelected);
 			} catch (Exception e) {
 				System.out.println("End of Node");
 			}
@@ -3754,6 +3747,7 @@ public class SavedSearch {
 			List<String> savedInNode = new ArrayList<String>();// to store name of saved file in the newly created node
 
 			for (int i = 0; i < 2; i++) {
+
 				createNewSearchGrp("PA" + Utility.dynamicNameAppender());
 				getSavedSearchNewGroupExpand().waitAndClick(20);
 				newNodeList.add(getSavedSearchNewNode().getText());
@@ -3848,6 +3842,7 @@ public class SavedSearch {
 		}), Input.wait60);
 		getSavedSearchGroupName(nodeName).waitAndClick(10);
 		getShareSerachBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		getShare_SecurityGroup(desiredGroup).waitAndClick(10);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -4151,8 +4146,7 @@ public class SavedSearch {
 			SGtoShare = Input.shareSearchDefaultSG;
 		}
 
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		driver.waitForPageToBeReady();
+		navigateToSavedSearchPage();
 		newNodeList = createSGAndReturn("PA", "No", noOfNode);
 		System.out.println("Next adding searches to the created nodes");
 		base.stepInfo("Next adding searches to the created nodes");
@@ -4160,8 +4154,7 @@ public class SavedSearch {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		nodeSearchpair = search.saveSearchInNodewithChildNode(newNodeList, inputValue);
 
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		driver.waitForPageToBeReady();
+		navigateToSavedSearchPage();
 		node = childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 
@@ -4170,8 +4163,7 @@ public class SavedSearch {
 		base.stepInfo("-------Pre-requesties completed--------");
 
 		// Launch DocVia via Saved Search
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		driver.waitForPageToBeReady();
+		navigateToSavedSearchPage();
 		base.stepInfo("Root node selected : " + newNodeList.get(0));
 		getSavedSearchGroupName(SGtoShare).waitAndClick(10);
 		selectNode1(newNodeList.get(0));
@@ -4322,8 +4314,10 @@ public class SavedSearch {
 			softAssertion.assertTrue(getSearchName(searchName).Displayed());
 		} else {
 			try {
-				if (getSearchName(searchName).Displayed()) {
+				if (getSearchName(searchName).isElementAvailable(3)) {
 					base.failedStep(searchName + " is displayed under this group " + securitygroupname);
+				} else {
+					base.passedStep(searchName + " is not displayed under this group " + securitygroupname);
 				}
 			} catch (Exception e) {
 				base.passedStep(searchName + " is not displayed under this group " + securitygroupname);
@@ -5808,7 +5802,7 @@ public class SavedSearch {
 	public void deleteNode(String GroupName, String Node, Boolean navigateToSS, Boolean sgToSelect) {
 
 		if (navigateToSS) {
-			navigateToSSPage();
+			navigateToSavedSearchPage();
 		}
 		if (sgToSelect) {
 			getSavedSearchGroupName(GroupName).waitAndClick(10);
@@ -6306,8 +6300,7 @@ public class SavedSearch {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		getSavedSearchGroupName(sg).waitAndClick(10);
-		base.waitForElement(getSavedSearchNewGroupExpand());
-		getSavedSearchNewGroupExpand().Click();
+		rootGroupExpansion();
 
 		boolean flag = getSavedSearchGroupName(Node).isElementPresent();
 		if (flag == true) {

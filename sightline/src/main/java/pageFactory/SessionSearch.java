@@ -1610,6 +1610,7 @@ public class SessionSearch {
 		return driver.FindElementByXPath(
 				"(//div[@class='MessageBoxButtonSection']//button[text()=' When all results are ready'])[last()]");
 	}
+
 	public Element getWhenAllResultsAreReadyIDDynamic() {
 		return driver.FindElementByXPath("(//div[@class='modal-body ui-dialog-content ui-widget-content']//b)[last()]");
 	}
@@ -1650,31 +1651,42 @@ public class SessionSearch {
 		return driver.FindElementsByXPath("(//span[@id='divSearchCnt' and contains(text(),'" + searchNO
 				+ "')])[last()]//..//..//..//..//span//count");
 	}
+
 	public Element getBulkNavigationPopup() {
 		return driver.FindElementByXPath("//span[text()='BulkNavigation']");
 	}
+
 	public Element getBulkNavigationPopupNoBtn() {
-		return driver.FindElementByXPath("//span[text()='BulkNavigation']/parent::div/following-sibling::div[contains(@class,'buttonpane') ]/div/button[@id='btnNo']");
-	}
-	public Element getBackGroundTaskAlertPopUp() {
 		return driver.FindElementByXPath(
-				"(//span[contains(text(),'Background Task Alert')])[last()]");
+				"//span[text()='BulkNavigation']/parent::div/following-sibling::div[contains(@class,'buttonpane') ]/div/button[@id='btnNo']");
 	}
+
+	public Element getBackGroundTaskAlertPopUp() {
+		return driver.FindElementByXPath("(//span[contains(text(),'Background Task Alert')])[last()]");
+	}
+
 	public Element getBullHornIcon() {
 		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']");
 	}
+
 	public Element getViewAllBtn() {
 		return driver.FindElementByXPath("//button[@id='btnViewAll']");
 	}
+
 	public ElementCollection getTableHeader_BGPage() {
 		return driver.FindElementsByXPath("//table[@id='dt_basic']//th");
 	}
-	public Element getRowElement_BgPage(String BG_ID,int index) {
-		return driver.FindElementByXPath("(//td[normalize-space(text())='"+BG_ID+"']/parent::tr/td)["+index+"]");
+
+	public Element getRowElement_BgPage(String BG_ID, int index) {
+		return driver
+				.FindElementByXPath("(//td[normalize-space(text())='" + BG_ID + "']/parent::tr/td)[" + index + "]");
 	}
+
 	public Element getPureHitCount(int i) {
-		return driver.FindElementByXPath("(.//*[@data-original-title='Docs That Met Your Criteria']/span/count)["+i+"]");
+		return driver
+				.FindElementByXPath("(.//*[@data-original-title='Docs That Met Your Criteria']/span/count)[" + i + "]");
 	}
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -2647,8 +2659,7 @@ public class SessionSearch {
 	}
 
 	/**
-	 * Modified on 03/14/2022
-	 *  Function to perform bulk folder with existing folder
+	 * Modified on 03/14/2022 Function to perform bulk folder with existing folder
 	 */
 	public void bulkFolderExisting(final String folderName) throws InterruptedException {
 
@@ -2795,7 +2806,6 @@ public class SessionSearch {
 		// to avoid it..
 		driver.getWebDriver().navigate().refresh();
 	}
-
 
 	// Function to perform bulk tag with given tag name
 	public void bulkTag(String TagName) throws InterruptedException {
@@ -4302,7 +4312,12 @@ public class SessionSearch {
 			System.out.println("Radio button already selected");
 			UtilityLog.info("Radio button already selected");
 		}
-		getSavedSearch_MySearchesTabClosed().waitAndClick(5);
+		// My saved search tab
+		if (getSavedSearch_MySearchesTabClosed().isElementAvailable(3)) {
+			getSavedSearch_MySearchesTabClosed().waitAndClick(3);
+		} else {
+			System.out.println("MY SavedSearch TAb dropdown Already CLicked");
+		}
 		getSavedSearch_MySearchesNewNode().waitAndClick(5);
 
 		getSaveSearch_Name().SendKeys(searchName);
@@ -5160,12 +5175,11 @@ public class SessionSearch {
 		// To make sure we are in basic search page
 
 		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAdvancedSearchLinkCurrent().Visible();
-				}
-			}), Input.wait30);
-			getAdvancedSearchLinkCurrent().Click();
+			if (getAdvancedSearchLinkCurrent().isDisplayed()) {
+				getAdvancedSearchLinkCurrent().waitAndClick(10);
+			} else {
+				System.out.println("Already in Advance Search page");
+			}
 		} catch (Exception e) {
 			System.out.println("Already in Advance Search page");
 		}
@@ -5726,6 +5740,7 @@ public class SessionSearch {
 		getSaveSearch_SaveButton().Click();
 		driver.waitForPageToBeReady();
 		base.VerifySuccessMessage("Saved search saved successfully");
+		base.CloseSuccessMsgpopup();
 		Reporter.log("Saved the search with name '" + searchName + "'", true);
 		UtilityLog.info("Saved search with name - " + searchName);
 	}
@@ -6499,7 +6514,7 @@ public class SessionSearch {
 			UtilityLog.info("Radio button already selected");
 		}
 
-		if (getSavedSearch_MySearchesTabClosed().isElementAvailable(7)) {
+		if (getSavedSearch_MySearchesTabClosed().isElementAvailable(4)) {
 			getSavedSearch_MySearchesTabClosed().waitAndClick(5);
 		} else {
 			System.out.println("Already Expanded");
@@ -7382,11 +7397,11 @@ public class SessionSearch {
 	 */
 	public void verifyPureHitsCountWithProductionCount(int productionCount) {
 		try {
-			if(getYesQueryAlert().isDisplayed()) {
+			if (getYesQueryAlert().isDisplayed()) {
 				getYesQueryAlert().waitAndClick(8);
-				}else {
+			} else {
 				driver.waitForPageToBeReady();
-				}
+			}
 
 			// verify counts for all the tiles
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -7411,35 +7426,34 @@ public class SessionSearch {
 
 	/**
 	 * Modified on 03/09/2022
+	 * 
 	 * @author Gopinath
 	 * @description-This method verify pure hit count with many production count.
 	 * @param productionCount : productionCount is integer value that production
 	 *                        count got from production.
 	 */
 	public void verifyPureHitsCountWithManyProductionCount(int productionCount) {
-		if(getYesQueryAlert().isDisplayed()) {
-			getYesQueryAlert().waitAndClick(8);}
-			else {
+		if (getYesQueryAlert().isDisplayed()) {
+			getYesQueryAlert().waitAndClick(8);
+		} else {
 			driver.waitForPageToBeReady();
-			}
+		}
 
-			List<WebElement> elemnts = getDocCount().FindWebElements();
+		List<WebElement> elemnts = getDocCount().FindWebElements();
 
-			// verify counts for all the tiles
-			driver.WaitUntil((new Callable<Boolean>() {
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-			return elemnts.get(elemnts.size() - 1).getText().matches("-?\\d+(\\.\\d+)?");
+				return elemnts.get(elemnts.size() - 1).getText().matches("-?\\d+(\\.\\d+)?");
 			}
-			}), Input.wait120);
+		}), Input.wait120);
 
-
-
-			int pureHit = Integer.parseInt(elemnts.get(elemnts.size() - 1).getText());
-			if (pureHit == productionCount) {
-			base.passedStep("Pure hit count is equal production count");}
-			else {
+		int pureHit = Integer.parseInt(elemnts.get(elemnts.size() - 1).getText());
+		if (pureHit == productionCount) {
+			base.passedStep("Pure hit count is equal production count");
+		} else {
 			base.failedStep("Pure hit count is not equal production count");
-			}
+		}
 	}
 
 	/**
@@ -7504,9 +7518,8 @@ public class SessionSearch {
 	 */
 	public int searchAndReturnPureHit_BS() {
 
-		if (getSecondSearchBtn().isDisplayed()) { // getSearchButton()
-			getSecondSearchBtn().waitAndClick(5);
-		}
+		// Perform Search
+		SearchBtnAction();
 
 		try {
 			if (getQueryAlertGetText().isElementAvailable(8)) {
@@ -7733,15 +7746,7 @@ public class SessionSearch {
 		}
 
 		driver.waitForPageToBeReady();
-		try {
-			getBsSecondSaveSearch_Button().waitAndClick(5);
-		} catch (Exception e1) {
-			try {
-				getAdvanceS_SaveSearch_Button().waitAndClick(5);
-			} catch (Exception e2) {
-				GetAdvSaveBtn_New().waitAndClick(5);
-			}
-		}
+		saveSearchAction();
 
 		try {
 			getSaveAsNewSearchRadioButton().waitAndClick(5);
@@ -7750,6 +7755,7 @@ public class SessionSearch {
 			UtilityLog.info("Radio button already selected");
 		}
 
+		getMySavedSearch().waitAndClick(5);
 		base.waitForElement(getSavedSearch_MySearchesNewNode());
 		getSavedSearch_MySearchesNewNode().waitAndClick(5);
 
@@ -9373,7 +9379,6 @@ public class SessionSearch {
 		return combinedSearchResults;
 	}
 
-	
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param folderName
@@ -10692,7 +10697,7 @@ public class SessionSearch {
 	 * @param i[represents nth number of search performed]
 	 * @return
 	 */
-	public String advancedContentBGSearch(String SearchString, int i,boolean newSearch) {
+	public String advancedContentBGSearch(String SearchString, int i, boolean newSearch) {
 		base.waitForElement(getContentAndMetaDatabtnCurrent());
 		getContentAndMetaDatabtnCurrent().Click();
 		// Enter search string
@@ -10708,8 +10713,8 @@ public class SessionSearch {
 		} else {
 			base.failedStep("All tiles are  not spinning when search is in back ground.");
 		}
-		if(newSearch) {
-		getNewSearchButton().waitAndClick(5);
+		if (newSearch) {
+			getNewSearchButton().waitAndClick(5);
 		}
 		return id;
 	}
@@ -10758,79 +10763,88 @@ public class SessionSearch {
 			}
 		}
 	}
+
 	/**
-	 * @author Jayanthi.Ganesan
-	 * This method will perform a metadata search in advanced search page in draft state[which means with out clicking search button].
+	 * @author Jayanthi.Ganesan This method will perform a metadata search in
+	 *         advanced search page in draft state[which means with out clicking
+	 *         search button].
 	 * @param metaDataField [Meta data field to be selected in DD]
 	 * @param val1[Metadata Value to be entered in query text box]
 	 */
-public void advMetaSearch_Draft(String metaDataField,String val1) {
-		
+	public void advMetaSearch_Draft(String metaDataField, String val1) {
+
 		base.waitForElement(getAdvanceSearch_MetadataBtn());
 		getAdvanceSearch_MetadataBtn().Click();
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
 		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
-		 getMetaDataInserQuery().Click();
+		getMetaDataInserQuery().Click();
 	}
-/**
- * @author Jayanthi.Ganesan
- * This method will create Metadata search in advanced search page with operator 
- * @param metaData[Meta data field to be selected in DD]
- * @param metaDataValue[Metadata Value to be entered in query text box]
- * @param Operator
- * @param metaData1[Meta data field to be selected in DD]
- * @param metaDataValue1[Metadata Value to be entered in query text box]
- * @param clickContetnBtn [if true it will navigate to advanced saerch button and click on content meta data button]
- */
-	public void metadataSearchesUsingOperators(String metaData,String metaDataValue,String Operator,String metaData1,String metaDataValue1,boolean clickContetnBtn) {
-		if(clickContetnBtn) {
+
+	/**
+	 * @author Jayanthi.Ganesan This method will create Metadata search in advanced
+	 *         search page with operator
+	 * @param metaData[Meta           data field to be selected in DD]
+	 * @param metaDataValue[Metadata  Value to be entered in query text box]
+	 * @param Operator
+	 * @param metaData1[Meta          data field to be selected in DD]
+	 * @param metaDataValue1[Metadata Value to be entered in query text box]
+	 * @param clickContetnBtn         [if true it will navigate to advanced saerch
+	 *                                button and click on content meta data button]
+	 */
+	public void metadataSearchesUsingOperators(String metaData, String metaDataValue, String Operator, String metaData1,
+			String metaDataValue1, boolean clickContetnBtn) {
+		if (clickContetnBtn) {
 			navigateToAdvancedSearchPage();
 			base.waitForElement(getContentAndMetaDatabtn());
 			getContentAndMetaDatabtn().Click();
 		}
-	advMetaSearch_Draft( metaData, metaDataValue);
-	selectOperator(Operator);
-	advMetaSearch_Draft( metaData1, metaDataValue1);
+		advMetaSearch_Draft(metaData, metaDataValue);
+		selectOperator(Operator);
+		advMetaSearch_Draft(metaData1, metaDataValue1);
 	}
-	
+
 	/**
-	 * @author Jayanthi.Ganesan
-	 * This method will handle bulk navigation pop up if we navigate from session search page to any page with very high doc count.
+	 * @author Jayanthi.Ganesan This method will handle bulk navigation pop up if we
+	 *         navigate from session search page to any page with very high doc
+	 *         count.
 	 * @return
 	 */
 	public String pushingBulkNavigationToBackGround() {
-		//base.waitForElementToBeGone(getspinningWheel(), 8);
-		for(int i=0;i<=6;i++) {
+		// base.waitForElementToBeGone(getspinningWheel(), 8);
+		for (int i = 0; i <= 6; i++) {
 			base.waitTime(1);
-			if(getspinningWheel().Displayed()) {
+			if (getspinningWheel().Displayed()) {
 				continue;
 			}
-			if(getBulkNavigationPopup().Displayed()) {		
+			if (getBulkNavigationPopup().Displayed()) {
 				base.failedStep("Bulk navigation pop appeared before 8 seconds");
 			}
-			
+
 		}
-		String BGTaskId=null;
-		if(getBulkNavigationPopup().isElementAvailable(3)) {
+		String BGTaskId = null;
+		if (getBulkNavigationPopup().isElementAvailable(3)) {
 			base.stepInfo("Bulk Navigation pop displayed.");
 			getBulkNavigationPopupNoBtn().waitAndClick(30);
-			if(getBackGroundTaskAlertPopUp().isElementAvailable(3)) {			
+			if (getBackGroundTaskAlertPopUp().isElementAvailable(3)) {
 				BGTaskId = getWhenAllResultsAreReadyIDDynamic().getText();
 				base.stepInfo("bulk navigation is  in back ground with " + "Generated ID is: " + BGTaskId);
 				getBulkTagConfirmationBtnDynamic().ScrollTo();
 				getBulkTagConfirmationBtnDynamic().waitAndClick(10);
 			} else {
 				base.stepInfo("Page Loaded and bulk navigation PopUp Didnot Appear");
-			}}
-			
+			}
+		}
+
 		else {
 			base.stepInfo("Bulk Navigation pop not displayed.");
 		}
 		return BGTaskId;
 	}
+
 	/**
-	 * this method will verify whether the notification count in bull horn icon and 
+	 * this method will verify whether the notification count in bull horn icon and
 	 * navigate to my back ground task page
+	 * 
 	 * @author Jayanthi.Ganesan
 	 * @param bgCount[Initial back ground count]
 	 */
@@ -10848,23 +10862,25 @@ public void advMetaSearch_Draft(String metaDataField,String val1) {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Navigated to My backgroud task page.");
 	}
-	/**This method will take particular cell value from a My back ground 
-	 * task page web table row based on Back ground task id given.
+
+	/**
+	 * This method will take particular cell value from a My back ground task page
+	 * web table row based on Back ground task id given.
+	 * 
 	 * @author Jayanthi.Ganesan
 	 * @param columnName[column value from which data needs to be taken ]
-	 * @param BG_ID[Back ground task id ]
+	 * @param BG_ID[Back        ground task id ]
 	 * @return
 	 */
-	public String getRowData_BGT_Page(String columnName,String BG_ID) {
+	public String getRowData_BGT_Page(String columnName, String BG_ID) {
 		int Index;
-		Index=base.getIndex(getTableHeader_BGPage(), columnName);
-		String actualDocs=getRowElement_BgPage(BG_ID,Index).getText();
+		Index = base.getIndex(getTableHeader_BGPage(), columnName);
+		String actualDocs = getRowElement_BgPage(BG_ID, Index).getText();
 		return actualDocs;
 	}
 
 	/**
-	 * @author Jayanthi 
-	 * Description: To BulkTag the Family Members Docs.
+	 * @author Jayanthi Description: To BulkTag the Family Members Docs.
 	 * @param TagName [Name of Tag]
 	 */
 	public void bulkTagFamilyMemberDocuments(String TagName) {
@@ -10913,25 +10929,25 @@ public void advMetaSearch_Draft(String metaDataField,String val1) {
 		Reporter.log("Bulk Tag is done, Tag is : " + TagName, true);
 
 	}
-	
+
 	/**
-     * @author Jayanthi.Ganesan
-     * This method will try to do audio search without selecting language. 
-     * @param SearchString
-     */
-    public void verifyWarningAudioSearch_NotSelctedLanguage(String SearchString) {
-        base.waitForElement(getAs_Audio());
-        getAs_Audio().ScrollTo();
-        getAs_Audio().waitAndClick(10);
-        driver.waitForPageToBeReady();
-        // Enter search string
-        base.waitForElement(getAs_AudioText());
-        getAs_AudioText().SendKeys(SearchString);
-        base.stepInfo("Entered a text in search text box" + SearchString);
-        base.waitForElement(getQuerySearchButton());
-        getQuerySearchButton().Click();
-        base.VerifyWarningMessage("Please select the Language Pack/Dialect in Audio search");
- 
-    }
-	
+	 * @author Jayanthi.Ganesan This method will try to do audio search without
+	 *         selecting language.
+	 * @param SearchString
+	 */
+	public void verifyWarningAudioSearch_NotSelctedLanguage(String SearchString) {
+		base.waitForElement(getAs_Audio());
+		getAs_Audio().ScrollTo();
+		getAs_Audio().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		// Enter search string
+		base.waitForElement(getAs_AudioText());
+		getAs_AudioText().SendKeys(SearchString);
+		base.stepInfo("Entered a text in search text box" + SearchString);
+		base.waitForElement(getQuerySearchButton());
+		getQuerySearchButton().Click();
+		base.VerifyWarningMessage("Please select the Language Pack/Dialect in Audio search");
+
+	}
+
 }
