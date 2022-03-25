@@ -647,6 +647,73 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyHeaderCountInPreviewRecordPopupPage();
 		
 	}
+	
+	/** 
+     *Author :Arunkumar date: 24/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48176
+	 * Description :To Verify Rollback in Ingestion after Copy is completed.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 30)
+	public void verifyRollbackAfterCopyCompleted() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48176");
+		baseClass.stepInfo("To Verify Rollback in Ingestion after Copy is completed");
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		// Rollback
+		ingestionPage.rollBackIngestion();
+		
+		}
+	
+	/** 
+     *Author :Arunkumar date: 25/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48174
+	 * Description :To Verify Ingestion details information after rollback
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 31)
+	public void verifyIngestionDetailsAfterRollback() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48174");
+		baseClass.stepInfo("To Verify Ingestion details information after rollback");
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+		// Rollback and verify ingestion details
+		ingestionPage.rollBackIngestion();
+		ingestionPage.verifyIngestionDetailsTillIndexingAfterRollback();
+		}
+	
+	/** 
+     *Author :Arunkumar date: 25/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-46932
+	 * Description :To verify that Admin is able to Rollback the ongoing Ingestion process.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 32)
+	public void verifyAdminAbleToRollbackIngestion() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-46932");
+		baseClass.stepInfo("To verify that Admin is able to Rollback the ongoing Ingestion process.");
+		//Catalogging and rollback
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.rollBackIngestion();
+		//Copying and rollback
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.rollBackIngestion();
+		//indexing and rollback
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+		ingestionPage.rollBackIngestion();
+		//save as draft and delete
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
+		ingestionPage.verifyIngestionSaveAsDraftAndDelete();
+		
+		}
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
