@@ -228,6 +228,7 @@ public class DocView_CodingForm_Regression {
 	public void clickCodeSameAsLastAndCodeingStampSaved() throws AWTException, InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52162");
 		// Login as Reviewer Manager
+		String comment1 = "comment" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
@@ -249,9 +250,9 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		// Coding Stamp Selection And code Same As Verify
-		docViewPage.docViewCodingFormPanelStampSelection(Input.stampColour);
+		docViewPage.docViewCodingFormPanelStampSelection(Input.stampColour,comment1);
 		baseClass.stepInfo("Coding form loaded with value and selected with stamp selection");
-		docViewPage.docViewMiniCodeSameAs();
+		docViewPage.docViewMiniCodeSameAs(comment1);
 
 		// logout
 		loginPage.logout();
@@ -320,6 +321,7 @@ public class DocView_CodingForm_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void codingFormToggleShouldOFFAtAssignmentLevel() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52161");
+		String comment1 = "comment" + Utility.dynamicNameAppender();
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -342,9 +344,9 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		// Coding Stamp Selection And code Same As Verify
-		docViewPage.docViewCodingFormPanelStampSelection(Input.stampColours);
+		docViewPage.docViewCodingFormPanelStampSelection(Input.stampColours,comment1);
 		baseClass.stepInfo("Coding form loaded with value and selected with stamp selection");
-		docViewPage.docViewMiniCodeSameAs();
+		docViewPage.docViewMiniCodeSameAs(comment1);
 
 		// logout
 		loginPage.logout();
@@ -429,6 +431,7 @@ public class DocView_CodingForm_Regression {
 	public void codingFormAssignmentLevelCodingStampOFF() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52160");
 		// Login as Reviewer
+		String comment = "comment" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.failedStep("Expected failure case RPMXCON-52160");
 		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
@@ -436,7 +439,7 @@ public class DocView_CodingForm_Regression {
 		// Assignment Selection in Reviewer Login
 		assignmentPage.SelectAssignmentByReviewer(assignmentCreationStampOff);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
-		docViewPage.docViewCodingFormPanelStampSelection(Input.stampSelection);
+		docViewPage.docViewCodingFormPanelStampSelection(Input.stampSelection,comment);
 		docViewPage.codingFormChildWindowCodeAsLast();
 
 		// logout
@@ -3526,10 +3529,8 @@ public class DocView_CodingForm_Regression {
 
 		reusableDocView.editCodingFormAndSaveWithStampColour(fieldText, Input.stampColour, comment);
 		baseClass.VerifySuccessMessage("Coding Stamp saved successfully");
-
-		driver.getWebDriver().navigate().refresh();
-		driver.waitForPageToBeReady();
 		reusableDocView.deleteStampColour(Input.stampColour);
+		driver.waitForPageToBeReady();
 
 		// logout
 		loginPage.logout();
@@ -3559,7 +3560,7 @@ public class DocView_CodingForm_Regression {
 			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
-		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
 		reusableDocView.clearComments();
@@ -5092,6 +5093,7 @@ public class DocView_CodingForm_Regression {
 				"Verify on saving of user stamp all control selections on coding form should not be clear, in context of security group");
 
 		String colour = "BLUE";
+		String comment = "comment" + Utility.dynamicNameAppender();
 		// Login As Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -5107,7 +5109,7 @@ public class DocView_CodingForm_Regression {
 
 		baseClass.stepInfo(
 				"Step 3&4: Edit the coding form and click [floppy icon] to save the coding stamp and Enter name, select color for the stamp from the drop down and Save the coding stamp");
-		docViewPage.docViewCodingFormPanelStampSelection(colour);
+		docViewPage.docViewCodingFormPanelStampSelection(colour,comment);
 
 		loginPage.logout();
 
@@ -7791,6 +7793,8 @@ public class DocView_CodingForm_Regression {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		softAssertion = new SoftAssert();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String stamp = "stamp" + Utility.dynamicNameAppender();
 
 		// Login As RMU
 		loginPage.loginToSightLine(userName, password);
@@ -7798,6 +7802,10 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Verify when user clicks saved stamp from coding form child window when document"
 				+ "not part of mini doc list is viewed from analytics panel child window");
 
+		if (fullName.contains("RMU")) {
+			codingForm.assignCodingFormToSG(Input.codeFormName);
+		}
+		
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
@@ -7807,8 +7815,9 @@ public class DocView_CodingForm_Regression {
 
 		// Doc view coding form stamp selection
 		driver.waitForPageToBeReady();
-		driver.Navigate().refresh();
-		docViewPage.docViewCodingFormPanelStampSelectionWithoutSave(Input.stampColour);
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(stamp, Input.stampColour);
 
 		// CodingForm child window will open
 		docViewPage.clickGearIconOpenCodingFormChildWindow();
@@ -7817,7 +7826,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.switchToNewWindow(2);
 
 		// click StamplastIcon and SavedBtn in ChildWindow.
-		docViewPage.editCfSavedStampBtnSavedChildWindow(Input.stampColour);
+		docViewPage.editCfSavedStampBtnSavedChildWindow(Input.stampColour,comment);
 		docViewPage.closeWindow(1);
 		docViewPage.switchToNewWindow(1);
 		driver.Navigate().refresh();
@@ -8486,7 +8495,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.selectPureHit();
 		baseClass.stepInfo("Searching Content documents based on search string");
 		sessionSearch.advancedNewContentSearch1(Input.testData1);
-		sessionSearch.ViewInDocView();
+		sessionSearch.ViewInDocViews();
 		driver.waitForPageToBeReady();
 		reusableDocView.stampColourSelection(Input.searchString1, Input.stampColour);
 		reusableDocView.getDocView_MiniDocListIds(2).waitAndClick(10);
@@ -8543,6 +8552,7 @@ public class DocView_CodingForm_Regression {
 	public void verifyCodeSameAsLastAfterSavingDoc() throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
+		String comment = "comment" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case Id: RPMXCON-52143");
 		baseClass.stepInfo(
 				"Verify when SA/DA/PA user after impersonation clicks 'code same as last' after saving the document");
@@ -8551,21 +8561,25 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.impersonatePAtoRMU();
 		baseClass.stepInfo("Impersonated as RMU");
+		
+		// assign default coding form
+		codingForm.assignCodingFormToSG(Input.codeFormName);
 		// Session search to doc view Coding Form
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		docViewPage.selectPureHit();
 		baseClass.stepInfo("Searching Content documents based on search string");
 		sessionSearch.advancedNewContentSearch1(Input.testData1);
-		sessionSearch.ViewInDocView();
+		sessionSearch.ViewInDocViews();
 		driver.waitForPageToBeReady();
-		reusableDocView.editingCodingFormWithSaveAndNextButton();
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingFormSaveAndNext();
 		reusableDocView.clickCodeSameAsLastAndVerifyNavigatedToNextDoc();
 		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
 		reusableDocView.clickCodeSameAsLastAndVerifyNavigatedToNextDoc();
 		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
 		reusableDocView.getDocView_MiniDocListIds(2).waitAndClick(10);
 		String Actual = reusableDocView.getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
-		softAssertion.assertEquals("Edited and save with save button", Actual);
+		softAssertion.assertEquals(comment, Actual);
 		softAssertion.assertAll();
 		baseClass.passedStep("Coding form is displayed as expected");
 		loginPage.logout();
@@ -9107,8 +9121,8 @@ public class DocView_CodingForm_Regression {
 		loginPage = new LoginPage(driver);
 
 		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		Reporter.log("Logged in as User: " + Input.pa2userName);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
 		baseClass.stepInfo(
 				"#### To verify that comment should not be displayed on document, if document is in two different security group and comment is in one security group ####");
 
@@ -9147,10 +9161,10 @@ public class DocView_CodingForm_Regression {
 		sessionsearch.bulkRelease(namesg3);
 		driver.waitForPageToBeReady();
 
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu1userName);
 		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rev1userName);
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		CodingForm coding = new CodingForm(driver);
 		// Switch To SG1
@@ -9180,7 +9194,7 @@ public class DocView_CodingForm_Regression {
 		coding.CodingformToSecurityGroup(codingForm2);
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+		baseClass.stepInfo("Successfully logout Reviewer Manger '" + Input.rmu1userName + "'");
 
 		// Login As Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -9479,7 +9493,6 @@ public class DocView_CodingForm_Regression {
 	@Test(enabled = true, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 200)
 	public void editCodingNavigationCheck(String roll, String userName, String password)
 			throws InterruptedException, AWTException {
-
 		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
 		String firnstDocname, secondDocname, docName;
 		String comments = "Comment-" + Utility.dynamicNameAppender();
@@ -9498,6 +9511,7 @@ public class DocView_CodingForm_Regression {
 		driver.waitForPageToBeReady();
 
 		// Main method
+		baseClass.waitForElement(docViewPage.getClickDocviewID(2));
 		docViewPage.getClickDocviewID(2).waitAndClick(5);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
@@ -9512,6 +9526,7 @@ public class DocView_CodingForm_Regression {
 
 		// Switch to a different document
 		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getClickDocviewID(5));
 		docViewPage.getClickDocviewID(5).waitAndClick(5);
 
 		// Confirmation message "NO" flow
@@ -9530,6 +9545,7 @@ public class DocView_CodingForm_Regression {
 
 		// Switch to a different document
 		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getClickDocviewID(11));
 		docViewPage.getClickDocviewID(11).waitAndClick(5);
 		if (docViewPage.getNavigationMsg().isElementAvailable(5)) {
 			baseClass.stepInfo(

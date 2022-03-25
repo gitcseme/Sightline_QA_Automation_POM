@@ -5416,14 +5416,14 @@ public class DocViewPage {
 	 * @Description:Doc view coding form stamp selection
 	 */
 
-	public void docViewCodingFormPanelStampSelection(String colour) throws AWTException {
+	public void docViewCodingFormPanelStampSelection(String colour,String comment1) throws AWTException {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getResponsiveCheked());
 		getResponsiveCheked().Click();
 		base.waitForElement(getNonPrivilegeRadio());
 		getNonPrivilegeRadio().Click();
 		base.waitForElement(getDocument_CommentsTextBox());
-		getDocument_CommentsTextBox().SendKeys("Review");
+		getDocument_CommentsTextBox().SendKeys(comment1);
 		driver.scrollPageToTop();
 		base.waitForElement(getCodingFormStampButton());
 		base.waitTillElemetToBeClickable(getCodingFormStampButton());
@@ -5444,13 +5444,14 @@ public class DocViewPage {
 		base.stepInfo("Document saved successfully");
 	}
 
+
 	/**
 	 * @author Indium-Baskar date: 10/8/2021 Modified date: 24/8/2021 Modified
 	 *         by:Baskar.
 	 * @Description:Doc view mini doc list code same as to
 	 */
 
-	public void docViewMiniCodeSameAs() throws InterruptedException {
+	public void docViewMiniCodeSameAs(String comment1) throws InterruptedException {
 		base.waitForElement(getDocView_EditMode());
 		base.waitTillElemetToBeClickable(getDocView_EditMode());
 		getDocView_EditMode().waitAndClick(5);
@@ -5487,43 +5488,33 @@ public class DocViewPage {
 		for (int i = 3; i <= 3; i++) {
 			base.waitForElement(getClickDocviewID(i));
 			getClickDocviewID(i).waitAndClick(5);
+			driver.waitForPageToBeReady();
 		}
-		try {
-			getDocument_CommentsTextBox().WaitUntilPresent().ScrollTo();
-		} catch (Exception e) {
-			e.printStackTrace();
+		base.waitForElement(getDocument_CommentsTextBox());
+		getDocument_CommentsTextBox().WaitUntilPresent().ScrollTo();
+		String getAttribute = getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
+		softAssertion.assertEquals(comment1, getAttribute);
+		if (getAttribute.equals(comment1)) {
+			base.stepInfo("Document is saved with the last applied coding of  the document..");
+			base.passedStep("Expected Message - code same as last scuessfully..");
+		} else {
+			base.failedStep("Expected Message - code NOT same as last scuessfully..");
 		}
-		try {
-			String getAttribute = getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
-			softAssertion.assertEquals("Review", getAttribute);
-			if (getAttribute.equals("Review")) {
-				base.stepInfo("Document is saved with the last applied coding of  the document..");
-				base.passedStep("Expected Message - code same as last scuessfully..");
-			} else {
-				base.failedStep("Expected Message - code NOT same as last scuessfully..");
-			}
-		} catch (org.openqa.selenium.StaleElementReferenceException e) {
-			e.printStackTrace();
-		}
-		driver.waitForPageToBeReady();
 		for (int i = 1; i <= 1; i++) {
 			getClickDocviewID(i).WaitUntilPresent().waitAndClick(5);
+			driver.waitForPageToBeReady();
 		}
-		try {
-			base.waitTillElemetToBeClickable(getDocument_CommentsTextBox());
-			getDocument_CommentsTextBox().SendKeys("codesameas");
-		} catch (org.openqa.selenium.StaleElementReferenceException e) {
-			e.printStackTrace();
-		}
+		base.waitForElement(getDocument_CommentsTextBox());
+		getDocument_CommentsTextBox().SendKeys("codesameas");
 		driver.scrollPageToTop();
 		base.waitForElement(getCodingFormSaveBtn());
-		base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
 		getCodingFormSaveBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		base.stepInfo("After editing the coding form of the document");
 		base.passedStep("Expected message - Document saved successfully ");
 		base.waitForElement(getCodeSameAsLast());
-		base.waitTillElemetToBeClickable(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		base.stepInfo("Coded as per the coding form for the previous document");
 		base.stepInfo("Document is saved with the last applied coding of  the document..");
 	}
@@ -5729,6 +5720,7 @@ public class DocViewPage {
 		} else {
 			base.failedStep("Failed to save the coding stamp with colour");
 		}
+		driver.Navigate().refresh();
 		driver.scrollPageToTop();
 
 	}
@@ -9653,39 +9645,40 @@ public class DocViewPage {
 		getCodingStampLastIcon(lastIcon).waitAndClick(10);
 		base.waitForElement(getCodingFormSaveButton());
 		getCodingFormSaveButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
 		base.stepInfo("Document saved successfully");
 		reusableDocView.clickGearIconOpenAnalyticalPanel();
 		String parentWindow = reusableDocView.switchTochildWindow();
 		// no docs 1
-		List<String> analyticalDocsAgain= new ArrayList<>();
+		List<String> analyticalDocsAgain = new ArrayList<>();
 		List<String> analytics = reusableDocView.analyticalDocs();
 		for (String analytical : analytics) {
 			if (duplicates.add(analytical)) {
-			}
-			else {
+			} else {
 				uniqueDocuments.add(analytical);
 			}
 		}
-			if (uniqueDocuments.size()<1) {
-				switchToNewWindow(1);
-				driver.waitForPageToBeReady();
-				driver.scrollPageToTop();
+		if (uniqueDocuments.size() < 1) {
+			switchToNewWindow(1);
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
 			for (int i = 1; i < duplicates.size(); i++) {
 				getClickDocviewID(++i).waitAndClick(5);
 				driver.waitForPageToBeReady();
 				switchToNewWindow(2);
-				base.waitTime(4);
-				ElementCollection analyticsElementAgain=getAnalyticalPanelDocIdText();
-				analyticalDocsAgain=availableListofElements(analyticsElementAgain);
+				base.waitTime(5);
+				ElementCollection analyticsElementAgain = getAnalyticalPanelDocIdText();
+				analyticalDocsAgain = availableListofElements(analyticsElementAgain);
 				for (String analyticalAgain : analyticalDocsAgain) {
 					if (!duplicates.add(analyticalAgain)) {
 						uniqueDocuments.add(analyticalAgain);
-						}
+					}
 				}
 				break;
-				
+
 			}
-				}
+		}
 		String DocIdName = uniqueDocuments.get(0);
 		getAnalyCheckBox(DocIdName).WaitUntilPresent().ScrollTo();
 		base.waitForElement(getAnalyCheckBox(DocIdName));
@@ -12256,11 +12249,12 @@ public class DocViewPage {
 			getClickDocviewID(i).waitAndClick(5);
 		}
 		driver.waitForPageToBeReady();
+		base.waitForElement(getVerifyPrincipalDocument());
 		String docsText = getVerifyPrincipalDocument().getText().trim();
 		reusableDocView.clickCodeSameAsLast();
+		base.waitForElement(getVerifyPrincipalDocument());
 		String principalAgainAfterLastBtn = getVerifyPrincipalDocument().getText().trim();
 		softAssertion.assertNotEquals(docsText, principalAgainAfterLastBtn);
-		getHeader().waitAndClick(5);
 		reusableDocView.deleteStampColour(lastIcons);
 		driver.waitForPageToBeReady();
 	}
@@ -20367,7 +20361,7 @@ public class DocViewPage {
 	 * @Description: Reusable this method is used for click StamplastIcon and
 	 *               SavedBtn in ChildWindow.
 	 */
-	public void editCfSavedStampBtnSavedChildWindow(String lastIcon) {
+	public void editCfSavedStampBtnSavedChildWindow(String lastIcon, String comment) {
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		base.waitForElement(getCodingStampLastIcon(lastIcon));
@@ -20375,18 +20369,18 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		String getAttribute = getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
 		driver.waitForPageToBeReady();
-		softAssertion.assertEquals("Review", getAttribute);
-		if (getAttribute.equals("Review")) {
+		softAssertion.assertEquals(comment, getAttribute);
+		if (getAttribute.equals(comment)) {
 			base.passedStep("Expected Message -StamplastIcon is Clicked scuessfully..");
 		} else {
 			base.failedStep("Expected Message - StamplastIcon is not Clicked scuessfully..");
 		}
 		base.waitForElement(getCodingFormSaveButton());
 		getCodingFormSaveButton().waitAndClick(5);
-		switchToNewWindow(1);
-		base.VerifySuccessMessage("Document saved successfully");
+		base.stepInfo("Document saved successfully");
 		driver.waitForPageToBeReady();
 	}
+
 
 	/**
 	 * @Author Jeevitha

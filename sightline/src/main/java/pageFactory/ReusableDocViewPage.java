@@ -848,9 +848,9 @@ public class ReusableDocViewPage {
         Thread.sleep(5000);// Mandatory thread.sleep no need to delete
         getDocView_Analytics_NearDupeTab().WaitUntilPresent().ScrollTo();
 		getDocView_Analytics_NearDupeTab().waitAndClick(5);
-        Thread.sleep(5000);// Mandatory thread.sleep no need to delete
 		List<String> analyticalDocs= new ArrayList<>();
 		List<String> analyticalDocsAgain= new ArrayList<>();
+		base.waitTime(5);
 		ElementCollection analyticsElement=getAnalyticalPanelDocIdText();
 		analyticalDocs=availableListofElements(analyticsElement);
 		for (String analytical : analyticalDocs) {
@@ -864,6 +864,7 @@ public class ReusableDocViewPage {
 				driver.scrollPageToTop();
 			for (int i = 1; i < docList.size(); i++) {
 				getClickDocviewID(++i).waitAndClick(5);
+				base.waitTime(5);
 				ElementCollection analyticsElementAgain=getAnalyticalPanelDocIdText();
 				analyticalDocsAgain=availableListofElements(analyticsElementAgain);
 				for (String analyticalAgain : analyticalDocsAgain) {
