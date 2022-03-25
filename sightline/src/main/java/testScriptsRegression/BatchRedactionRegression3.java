@@ -2765,7 +2765,8 @@ public class BatchRedactionRegression3 {
 	 * @Author Jeevitha
 	 * @Description : Verify that Relevant redacted message appears on \"Batch
 	 *              Redaction\" screen when user tries to perform Redaction having
-	 *              same document at the same time on 2 different TABS [RPMXCON-53517]
+	 *              same document at the same time on 2 different TABS
+	 *              [RPMXCON-53517]
 	 * @throws Exception
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 44)
@@ -2827,6 +2828,155 @@ public class BatchRedactionRegression3 {
 
 		// Delete Search
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Localization : Verify that Relevant Rollback message appears
+	 *              on \"Batch Redaction\" screen when user tries to perform
+	 *              rollback having same document at the same time on 2 different
+	 *              TABS [RPMXCON-53522]
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 * @throws AWTException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
+	public void verfifyRollBackMsgFromduptabInGerman() throws InterruptedException, ParseException, AWTException {
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String SearchName = "SearchName" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case id :RPMXCON-53522  Batch Redaction");
+		base.stepInfo(
+				"Localization : Verify that Relevant Rollback message appears on \"Batch Redaction\" screen when user tries to perform rollback having same document at the same time on 2 different TABS");
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged in as : " + Input.rmu1FullName);
+
+		// Search and Save a Search
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.saveSearch(SearchName);
+
+		// perform Batch redaction and verify Status
+		batch.VerifyBatchRedaction_ElementsDisplay(SearchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
+		batch.verifyBatchHistoryStatus(SearchName);
+
+		// Edit Profile To German
+		login.editProfile("German - Germany");
+		base.stepInfo("Successfully selected German Language");
+
+		// perform RollBack
+		base.stepInfo("Perform RollBack from Tab 1");
+		batch.rollBack(SearchName);
+
+		// open duplicate window
+		base.stepInfo("Initiating Duplicate Current tab");
+		String firstUserWindow = driver.CurrentWindowHandle();
+		base.openDuplicateTab();
+
+		// Switch to Child Tab
+		base.stepInfo("Switch to Child Tab ( Duplicated tab )");
+		driver.switchToChildWindow();
+		driver.waitForPageToBeReady();
+
+		// perform RollBack
+		base.stepInfo("Perform RollBack from Tab 2");
+		batch.rollBack(SearchName);
+
+		// Switch back to Initial tab
+		base.stepInfo("Switch back to Tab 1");
+		driver.switchToWindow(firstUserWindow);
+
+		// Rollback confirmation from Tab 1
+		base.waitTime(4);
+		base.stepInfo("Rollback confirmation from Tab 1");
+		batch.rollBackActionConfirmation("Yes");
+		String ExpectedMsg = "Your request to Roll Back this Batch Redaction has been added to the background.  Once it is complete, the \"bullhorn\" icon in the upper right hand corner will turn red to notify you of the results of your request.";
+		base.VerifySuccessMessageB(ExpectedMsg);
+
+		// Switch to Child Tab
+		base.stepInfo("Switch back to Tab 2");
+		driver.switchToChildWindow();
+		driver.waitForPageToBeReady();
+
+		// Rollback confirmation from Tab 2
+		batch.getPopupYesBtn().waitAndClick(2);
+		String ExpectedMsgErr = "DE-A Rollback for this Batch Redaction has already been requested. Please refresh to see status.";
+		base.VerifyErrorMessageInGerman(ExpectedMsgErr);
+
+		// Edit Profile To German
+		login.editProfile("English - United States");
+		base.stepInfo("Successfully selected English Language");
+
+		// Delete search
+		base.stepInfo("Initiating delete Searh");
+		saveSearch.deleteSearch(SearchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that Relevant need to be re-analyzed message appears on
+	 *              \"Batch Redaction\" screen when user tries to perform Redaction
+	 *              and Saved Search execution having same document at the same time
+	 *              on 2 different TABS [RPMXCON-53524]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
+	public void AnalyseSearchesAndExecuteIntwoTabSimultaneously() throws Exception {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		String expectedErrorMsg = "One or more of your selected searches need to be re-analyzed. Please refresh and try again.";
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("Test case Id:RPMXCON-53524 Batch Redaction");
+		base.stepInfo(
+				"Verify that Relevant need to be re-analyzed message appears on \"Batch Redaction\" screen when user tries to perform Redaction and Saved Search execution having same document at the same time on 2 different TABS");
+
+		// Create search group
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
+
+		// Create saved search
+		int purehit = session.basicContentSearch(Input.testData1);
+		session.saveSearchInNewNode(searchName, newNode);
+
+		// navigate to saved search page and execute
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectNode1(newNode);
+		base.waitForElement(saveSearch.getSavedSearchExecuteButton());
+		saveSearch.getSavedSearchExecuteButton().waitAndClick(10);
+
+		// open duplicate tab
+		String firstUserWindow = driver.CurrentWindowHandle();
+		base.openDuplicateTab();
+
+		// second tab
+		driver.switchToChildWindow();
+		base.stepInfo("Switched To Second Window");
+		batch.verifyNodeAnalyseAndViewBtn(newNode, searchName, null, null);
+		String secondWindow = driver.CurrentWindowHandle();
+
+		// first tab
+		driver.switchToWindow(firstUserWindow);
+		base.stepInfo("Switched To first Window");
+		saveSearch.getExecuteContinueBtn().waitAndClick(10);
+
+		// second tab
+		driver.switchToWindow(secondWindow);
+		base.stepInfo("Switched To second Window");
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
+
+		// verify Error Message
+		base.VerifyErrorMessage(expectedErrorMsg);
+
+		// Delete Search
+		saveSearch.deleteNode(Input.mySavedSearch, newNode);
 		login.logout();
 
 	}
