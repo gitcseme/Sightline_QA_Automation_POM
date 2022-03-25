@@ -13182,21 +13182,21 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @author sowndarya.velraj
+	 * @author sowndarya.velraj.Modified on 03/25/22
 	 * @throws InterruptedException This method is created to redact a audio file at
 	 *                              the beginning,middle and end
 	 */
 	public void addAudioRedaction() throws InterruptedException {
-		Thread.sleep(3000); // waits for page to load
-		deleteExistingAudioRedactions();
+		base.waitTime(3); // waits for page to load
+//		deleteExistingAudioRedactions();
 
 		driver.scrollPageToTop();
-		Thread.sleep(3000); // waits for page to load
+		base.waitTime(3); // waits for page to load
 		System.out.println("Wait for doc files");
 		base.waitForElement(getDocFileTypeCheckbox());
 		getDocFileTypeCheckbox().waitAndClick(10);
 
-		Thread.sleep(3000); // waits for page to load
+		base.waitTime(3); // waits for page to load
 		driver.Navigate().refresh();
 		base.waitForElement(getAddRedationBtn());
 		getAddRedationBtn().waitAndClick(10);
@@ -13204,7 +13204,7 @@ public class DocViewPage {
 		System.out.println("Enter 1st time");
 		getSaveAudioBtn().waitAndClick(10);
 
-		Thread.sleep(3000); // waits for page to load
+		base.waitTime(3); // waits for page to load
 		driver.Navigate().refresh();
 		base.waitForElement(getAddRedationBtn());
 		getAddRedationBtn().waitAndClick(10);
@@ -13212,7 +13212,7 @@ public class DocViewPage {
 		System.out.println("Enter 2nd time");
 		getSaveAudioBtn().waitAndClick(10);
 
-		Thread.sleep(3000); // waits for page to load
+		base.waitTime(3); // waits for page to load
 		driver.Navigate().refresh();
 		base.waitForElement(getAddRedationBtn());
 		getAddRedationBtn().waitAndClick(10);
@@ -13220,6 +13220,7 @@ public class DocViewPage {
 		System.out.println("Enter 3rd time");
 		getSaveAudioBtn().waitAndClick(10);
 	}
+
 
 	/**
 	 * @author sowndarya.velraj
