@@ -669,7 +669,7 @@ public class DocViewRedactions {
 	// added by sowndarya.velraj
 	public Element selectFirstDoc() {
 
-		return driver.FindElementByXPath("//input[@id='chkMiniDocList_1']/following-sibling::i");
+		return driver.FindElementByXPath("// *[@id='SearchDataTable']//tr['row']//td[2]");
 	}
 
 	public Element selectSecondDoc() {
