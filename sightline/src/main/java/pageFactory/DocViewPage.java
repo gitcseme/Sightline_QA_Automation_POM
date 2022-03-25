@@ -3276,6 +3276,11 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//i[@class='fa fa-lg fa-fw fa-search']");
 	}
 	
+	//add by Aathith
+	public Element getSelectDocument(int i) {
+		return driver.FindElementByXPath("(//label[@class='checkbox'])["+i+"]");
+	}
+	
 
 	public DocViewPage(Driver driver) {
 
@@ -26529,5 +26534,25 @@ public class DocViewPage {
 		base.VerifySuccessMessage("Code same performed successfully.");
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
 		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param noOfDocuments
+	 * @throws InterruptedException
+	 * @Description selecting document first nth document
+	 */
+	public void documentSelection(int noOfDocuments) throws InterruptedException {
+		try {
+			for (int row = 0; row < noOfDocuments; row++) {
+
+				driver.waitForPageToBeReady();
+				base.waitForElement(getSelectDocument(row + 1));
+				getSelectDocument(row + 1).waitAndClick(10);
+				base.stepInfo("Document is selected in doc view");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Failed to download selection documents" + e.getMessage());
+		}
 	}
 }

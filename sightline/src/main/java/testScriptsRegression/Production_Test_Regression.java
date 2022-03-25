@@ -7439,6 +7439,99 @@ public class Production_Test_Regression {
 	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 	loginPage.logout();
 	}
+	/**
+	 * @author Aathith Test case id-RPMXCON-60903
+	 * @Description Verify Production should be generated successfully with the redacted documents (for documents with annotation) 
+	 * 
+	 */
+	@Test(enabled= true,groups = { "regression" }, priority = 106)
+	public void verifyAnotationForRedactionPdf() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-60903 -Production Component");
+		base.stepInfo("Verify Production should be generated successfully with the redacted documents (for documents with annotation)");
+		
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
+		BaseClass base = new BaseClass(driver);
+		base.selectproject(Input.additionalDataProject);
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		DataSets dataset = new DataSets(driver);
+		base.stepInfo("Navigating to dataset page");
+		dataset.navigateToDataSetsPage();
+		base.stepInfo("Selecting uploadedset and navigating to doclist page");
+		dataset.selectDataSetWithName("PDF Annotations");
+		DocListPage doc = new DocListPage(driver);
+		driver.waitForPageToBeReady();
+
+		doc.selectAllDocs();
+		doc.docListToBulkRelease(Input.securityGroup);
+		doc.bulkTagExistingFromDoclist(tagname);
+		doc.selectAllDocs();
+		doc.bulkFolderExisting(foldername);
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.selectproject(Input.additionalDataProject);
+		
+		RedactionPage redactionpage=new RedactionPage(driver);
+        driver.waitForPageToBeReady();
+        redactionpage.manageRedactionTagsPage(Redactiontag1);
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.selectFolderViewInDocView(foldername);
+		
+		DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		docView.documentSelection(3);
+        driver.waitForPageToBeReady();
+        docViewRedactions.redactRectangleUsingOffset(10,10,20,20);
+        driver.waitForPageToBeReady();
+        docViewRedactions.selectingRedactionTag2(Redactiontag1);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingPDFSectionwithNativelyPlaceholder(tagname);
+		page.getClk_burnReductiontoggle().ScrollTo();
+		page.getClk_burnReductiontoggle().waitAndClick(10);
+		page.burnRedactionWithRedactionTag(Redactiontag1);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		page.pdf_Verification_In_Generated_Pdf(prefixID, suffixID, beginningBates);
+		
+		base.passedStep("Verified Production should be generated successfully with the redacted documents (for documents with annotation)");
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);	
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+		loginPage.logout();
+		
+	}
 
 	
 	@AfterMethod(alwaysRun = true)
