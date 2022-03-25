@@ -821,6 +821,26 @@ public class IngestionPage_Indium {
 	public ElementCollection previewRecordPopupHeaderFields() {
 		return driver.FindElementsByXPath("//*[@id='popupdiv']//th");
 	}
+	
+	public Element ingestionDetailActionDropdown() {
+		return driver.FindElementByXPath("//button[@class='btn btn-defualt dropdown-toggle']");
+	}
+	
+	public Element deleteActionButton() {
+		return driver.FindElementByXPath("//ul[@role='menu']//li[contains(.,'Delete')]");
+	}
+	
+	public Element copyingSectionDetails() {
+		return driver.FindElementByXPath("//div[@id='Copyingblock']//div//div//div//span");
+	}
+	
+	public Element catalogSectionDetails() {
+		return driver.FindElementByXPath("//div[@id='Catalogingblock']//div//div//div//span");
+	}
+	
+	public Element indexingSectionDetails() {
+		return driver.FindElementByXPath("//div[@id='Indexingblock']//div//div//div//span");
+	}
 
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
@@ -4464,6 +4484,7 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 		}
 		
 		base.VerifySuccessMessage("Rollback of this ingestion has been started. Refresh the page to view for updated status.");
+		base.passedStep("Rollback Done Successfully");
 		}
 	
 	
@@ -4975,20 +4996,22 @@ public void IngestionCatlogtoCopying(String dataset) throws InterruptedException
     	getFilterByCATALOGED().waitAndClick(10);
     	
     	//catlogging
-    	for(int i=0;i<10;i++) {
-    		if(getCatalogedIngestionStatus().isElementAvailable(5)) {
+    	for(int i=0;i<40;i++) {
+			String status = getStatus(1).getText().trim();
+			getRefreshButton().waitAndClick(10);
+			
+    		if(status.contains("Cataloged")) {
     			base.passedStep("Cataloged completed");
     			break;
     		}
-    		else if (getFailedIngestionStatus().isElementAvailable(5)) {
-    			base.failedStep("Ingestion failed");
-    		}
-    		else{
-    			base.waitTime(40);
+    		else if (status.contains("In Progress")) {
+    			base.waitTime(10);
     			getRefreshButton().waitAndClick(10);
     		}
+    		else if (status.contains("Failed")){
+    			base.failedStep("Ingestion Failed");
+    		}
     	}
-	
     	
     	//copy
     	getRefreshButton().waitAndClick(10);
@@ -5015,21 +5038,22 @@ public void IngestionCatlogtoCopying(String dataset) throws InterruptedException
     			getFilterByCOPIED().Visible()  ;}}), Input.wait30); 
     	getFilterByCOPIED().waitAndClick(10);
     	
-    	for(int i=0;i<10;i++) {
-    		if(getCopiedIngestionStatus().isElementAvailable(5)) {
+    	for(int i=0;i<40;i++) {
+			String status = getStatus(1).getText().trim();
+			getRefreshButton().waitAndClick(10);
+			
+    		if(status.contains("Copied")) {
     			base.passedStep("Copied completed");
     			break;
     		}
-    		else if (getFailedIngestionStatus().isElementAvailable(5)) {
-    			base.failedStep("Ingestion failed");
-    		}
-    		else{
-    			base.waitTime(40);
+    		else if (status.contains("In Progress")) {
+    			base.waitTime(10);
     			getRefreshButton().waitAndClick(10);
     		}
+    		else if (status.contains("Failed")){
+    			base.failedStep("Ingestion Failed");
+    		}
     	}
-    	
-		
 	}
 
 	/**
@@ -5608,4 +5632,298 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		}
 		
 	}
+	
+	/**
+	 * @author: Arun Created Date: 25/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform catalogging
+	 */
+	public void ingestionCatalogging() {
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+    	getFilterByButton().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
+    	getFilterByFAILED().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
+    	getFilterByCATALOGED().waitAndClick(10);
+    	
+    	//catlogging
+    	for(int i=0;i<40;i++) {
+			String status = getStatus(1).getText().trim();
+			getRefreshButton().waitAndClick(10);
+			
+    		if(status.contains("Cataloged")) {
+    			base.passedStep("Cataloged completed");
+    			break;
+    		}
+    		else if (status.contains("In Progress")) {
+    			base.waitTime(10);
+    			getRefreshButton().waitAndClick(10);
+    		}
+    		else if (status.contains("Failed")){
+    			base.failedStep("Failed");
+    		}
+    	}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 24/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform indexing
+	 */
+	public void ingestionIndexing(String dataset) {
+		
+		getRefreshButton().waitAndClick(10);
+
+		getIngestionName().waitAndClick(Input.wait30);
+
+		driver.scrollingToElementofAPage(getMP3Count());
+
+		if (dataset.contains("AllSources") || dataset.contains("SSAudioSpeech_Transcript")) {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIsAudioCheckbox().Visible();
+				}
+			}), Input.wait60);
+			getIsAudioCheckbox().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getLanguage().Visible();
+				}
+			}), Input.wait60);
+			getLanguage().selectFromDropdown().selectByVisibleText("North American English");
+		} else if (dataset.contains("CJK_GermanAudioTestData")) {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIsAudioCheckbox().Visible();
+				}
+			}), Input.wait60);
+			getIsAudioCheckbox().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getLanguage().Visible();
+				}
+			}), Input.wait60);
+			getLanguage().selectFromDropdown().selectByVisibleText("German");
+		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIsAudioCheckbox().Visible();
+				}
+			}), Input.wait60);
+			getIsAudioCheckbox().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getLanguage().Visible();
+				}
+			}), Input.wait60);
+			getLanguage().selectFromDropdown().selectByVisibleText("Japanese");
+		} else if (dataset.contains("0002_H13696_1_Latest")) {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIsAudioCheckbox().Visible();
+				}
+			}), Input.wait60);
+			getIsAudioCheckbox().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getLanguage().Visible();
+				}
+			}), Input.wait60);
+			getLanguage().selectFromDropdown().selectByVisibleText("International English");
+		} else {
+			System.out.println("No need to select for other datasets");
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getRunIndexing().Visible();
+			}
+		}), Input.wait60);
+		getRunIndexing().waitAndClick(10);
+
+		base.VerifySuccessMessage("Ingestion Indexing has Started.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByINDEXED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByINDEXED().waitAndClick(10);
+		
+		for(int i=0;i<50;i++) {
+    		if(getIndexedIngestionStatus().isElementAvailable(5)) {
+    			base.passedStep("Indexing completed");
+    			break;
+    		}
+    		else if (getFailedIngestionStatus().isElementAvailable(5)) {
+    			base.failedStep("Ingestion failed");
+    		}
+    		else{
+    			base.waitTime(10);
+    			getRefreshButton().waitAndClick(10);
+    		}
+    	}
+		
+	}
+	
+	/**
+	 * @author: Arun Created Date: 24/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method willverify ingestion details status after rollback the ingestion at indexing stage
+	 */
+	
+	public void verifyIngestionDetailsTillIndexingAfterRollback() {
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByDRAFT().Visible();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().waitAndClick(10);
+		
+		getRefreshButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		
+		for(int i=0;i<40;i++) {
+			String status = getStatus(1).getText().trim();
+			
+    		if(status.contains("Draft")) {
+    			base.passedStep("Draft completed");
+    			break;
+    		}
+    		else if (status.contains("In Progress")) {
+    			base.waitTime(10);
+    			getRefreshButton().waitAndClick(10);
+    		}
+    		else {
+    			base.failedStep("rollback failed");
+    		}
+    	}
+		getIngestionName().waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		
+		String catalogData = catalogSectionDetails().getText();
+		String copyData = catalogSectionDetails().getText();
+		String indexData = indexingSectionDetails().getText();
+		
+		
+		if(catalogData.isBlank() && copyData.isBlank() && indexData.isBlank()) {
+			base.passedStep("Cataloging,Copying and Indexing field is blank");
+		}
+		else {
+			base.failedStep("Cataloging,Copying and Indexing field is not blank");
+		}
+		
+	}
+	
+	/**
+	 * @author: Arun Created Date: 25/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify deletion of ingestion after saving as draft
+	 */
+	
+	public void verifyIngestionSaveAsDraftAndDelete() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getIngestion_SaveAsDraft());
+		getIngestion_SaveAsDraft().waitAndClick(5);
+		
+		if (getApproveMessageOKButton().isElementAvailable(5)) {
+			getApproveMessageOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to save as draft");
+		}
+		
+		base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
+		navigateToIngestionPage();
+		
+		driver.waitForPageToBeReady();
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByDRAFT().Visible();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().waitAndClick(10);
+		
+		getRefreshButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		
+		for(int i=0;i<40;i++) {
+			String status = getStatus(1).getText().trim();
+			
+    		if(status.contains("Draft")) {
+    			base.passedStep("Draft completed");
+    			break;
+    		}
+    		else if (status.contains("In Progress")) {
+    			base.waitTime(10);
+    			getRefreshButton().waitAndClick(10);
+    		}
+    		else {
+    			base.failedStep("Draft failed");
+    		}
+    	}
+		getIngestionName().waitAndClick(10);
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingestionDetailActionDropdown().Visible();
+			}
+		}), Input.wait30);
+		ingestionDetailActionDropdown().waitAndClick(10);
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return deleteActionButton().Visible();
+			}
+		}), Input.wait30);
+		deleteActionButton().waitAndClick(10);
+		
+		if (getApproveMessageOKButton().isElementAvailable(5)) {
+			getApproveMessageOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to Delete the ingestion");
+		}
+		
+		base.VerifySuccessMessage("Ingestion deleted successfully.");
+		
+	}
+	
+	
 }
