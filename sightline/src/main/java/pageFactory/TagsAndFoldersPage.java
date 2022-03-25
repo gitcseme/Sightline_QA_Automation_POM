@@ -349,6 +349,10 @@ public class TagsAndFoldersPage {
 	}
 
 	// Added by Raghuram
+	public Element getBulkReleaseFolder() {
+		return driver.FindElementByXPath("//a[@id='aReleaseFolder']");
+	}
+
 	public Element getBulkReleaseAction() {
 		return driver.FindElementByXPath("//a[@id='aReleaseTag']");
 	}
@@ -2550,6 +2554,50 @@ public class TagsAndFoldersPage {
 		} else {
 			base.stepInfo(toSelectName + " : " + passMsg);
 		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param securityGroupName - List of security groups to release - Folder
+	 */
+	public void bulkReleaseFolder(List<String> securityGroupName) {
+
+		driver.waitForPageToBeReady();
+		getFolderActionDropDownArrow().waitAndClick(10);
+		getBulkReleaseFolder().waitAndClick(10);
+
+		for (int i = 0; i < securityGroupName.size(); i++) {
+			getBulkRelOther_CheckBox(securityGroupName.get(i)).waitAndClick(10);
+		}
+
+		getBulkRelease_ButtonRelease().waitAndClick(10);
+		getFinalizeButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		base.VerifySuccessMessage("Records saved successfully");
+
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param securityGroupName - List of security groups to release - Tag
+	 */
+	public void bulkReleaseTag(List<String> securityGroupName) {
+
+		driver.waitForPageToBeReady();
+		actionarrow().waitAndClick(10);
+		getBulkReleaseAction().waitAndClick(10);
+
+		for (int i = 0; i < securityGroupName.size(); i++) {
+			getBulkRelOther_CheckBox(securityGroupName.get(i)).waitAndClick(10);
+		}
+
+		getBulkRelease_ButtonRelease().waitAndClick(10);
+		getFinalizeButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		base.VerifySuccessMessage("Records saved successfully");
+
 	}
 
 }
