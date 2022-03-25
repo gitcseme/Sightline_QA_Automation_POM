@@ -3,6 +3,8 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -91,7 +93,89 @@ public class ProjectField_Regression {
 	}
 	
 	
+	/**
+	 * @author Gopinath
+	 * @TestCase ID:47070 Verify that message should be displayed when there is no matching text for the 'Filter Fields By' for project fields- Covered localization
+	 * @Description:To Verify that message should be displayed when there is no matching text for the 'Filter Fields By' for project fields- Covered localization
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	public void verifyNoDataMessageForNoMatchingText() {
+		baseClass.stepInfo("Test case Id: RPMXCON-47070");
+		baseClass.stepInfo("Verify that after entering 'Filter Fields By' and on click of 'Apply' should search Project Fields.");
+		utility = new Utility(driver);
+		String fieldName = "Test" +  Utility.dynamicNameAppender();
+		String germanLanguage="German - Germany";
+		String englishLanguage="English - United States";
+		
+		baseClass.stepInfo("Step 1: Login as Project Admin");
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName);
+		
+		baseClass.stepInfo("Step 2: Go to Manage > Project Fields");
+		projectFieldsPage = new ProjectFieldsPage(driver);
+		projectFieldsPage.navigateToProjectFieldsPage();
+		baseClass.passedStep("Navigated to Project Field Page successfully");
+		
+		baseClass.stepInfo("Step 3: Enter the text in 'Filter Fields By' and click on Apply");
+		projectFieldsPage.applyFilterByFilterName(fieldName);
+		
+		baseClass.stepInfo("Verify filter return no data");
+		projectFieldsPage.verifyfilterReturnNoData();
+		
+		baseClass.stepInfo("Step 3:change localization to German");
+		loginPage.editProfile(germanLanguage);
+		
+		baseClass.stepInfo("verify text field and apply button are localise to German");
+		projectFieldsPage.verifyfilterLabelApplyButtonLocaliseToGerman();
+		
+		baseClass.stepInfo(" Enter the text in 'Filter Fields By' and click on Apply");
+		projectFieldsPage.applyFilterByFilterName(fieldName);
+		
+		baseClass.stepInfo("Verify filter return no data after localised to german");
+		projectFieldsPage.verifyfilterReturnNoDataGerman();
+		
+		baseClass.stepInfo("Change localization to English");
+		loginPage.editProfile(englishLanguage);
+		loginPage.logout();
+	}
 	
+	
+	
+	/**
+	 * @author Gopinath
+	 * @TestCase Id:47069 Verify that once user applied filter then after clearing filter text on click of Apply or hitting enter key should display the list of all project fields
+	 * @Description:To Verify that once user applied filter then after clearing filter text on click of Apply or hitting enter key should display the list of all project fields
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	public void verifyFilterFieldBeforeAndAfterClearFilter() {
+		baseClass.stepInfo("Test case Id: RPMXCON-47069");
+		baseClass.stepInfo("Verify that once user applied filter then after clearing filter text on click of Apply or hitting enter key should display the list of all project fields");
+		
+		String fieldName = Input.fieldByValue;
+		baseClass.stepInfo("Step 1: Login as Project Admin");
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName);
+		
+		
+		baseClass.stepInfo("Step 2: Go to Manage > Project Fields");
+		projectFieldsPage = new ProjectFieldsPage(driver);
+		projectFieldsPage.navigateToProjectFieldsPage();
+		baseClass.passedStep("Navigated to Project Field Page successfully");
+		
+		List<String> fieldNamesBeforeFilter = baseClass.availableListofElements(projectFieldsPage.getFieldNames());
+		
+		baseClass.stepInfo("Step 3: Enter the text in 'Filter Fields By' and click on Apply");
+		projectFieldsPage.applyFilterByFilterName(fieldName);
+		
+		baseClass.stepInfo("verify All field Names in project grid Contains filter value");
+		projectFieldsPage.validateFilterFieldsByContainsFieldName(fieldName);
+		
+		baseClass.stepInfo("Step 4: verify all field names are displayed after clear filter");
+		projectFieldsPage.clearFilter();
+		projectFieldsPage.verifyAllFieldNamesDisplaydAfterClearFilter(fieldNamesBeforeFilter);
+		
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);

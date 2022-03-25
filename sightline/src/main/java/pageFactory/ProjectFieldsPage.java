@@ -2,6 +2,8 @@ package pageFactory;
 
 import java.util.List;
 
+import org.openqa.selenium.WebElement;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -42,6 +44,18 @@ public class ProjectFieldsPage {
 				"//*[@id='ProjectFieldsDataTable']//tbody//td[contains(text(),'" + textValue + "')]");
 	}
 
+	
+	//Added by Gopinath - 25/03/2022
+	public Element getQuaryReturnedNoDataMessage() {
+		return driver.FindElementByXPath("//*[@id='ProjectFieldsDataTable']/tbody/tr/td[@class='dataTables_empty']");
+	}
+	public ElementCollection getFieldNames() {
+		return driver.FindElementsByXPath("//*[@id='ProjectFieldsDataTable']/tbody/tr/td[1]");
+	}
+	
+	public Element filterNameTextFieldLabel() {
+		return driver.FindElementByXPath("//div[@class='col-md-2 pd-lab']/div/strong");
+	}
     //Annotation Layer added successfully
     public ProjectFieldsPage(Driver driver){
 
@@ -275,5 +289,111 @@ public class ProjectFieldsPage {
 		}
 	}
 
+	
+	/**
+	 * @author Gopinath
+	 * @Description:Used to validate Filter Filed By using Apply button and verify the search filter applied behaves like 'Contains'
+	 * @param fieldName(Name of the applied filter)
+	 */
+	public void validateFilterFieldsByContainsFieldName(String fieldName) {
+		base.waitForElementCollection(getFieldNames());
+		for(WebElement fieldNamesAfterFilter:getFieldNames().FindWebElements()) {
+			if(!fieldNamesAfterFilter.getText().contains(fieldName)) {
+				base.failedStep("filter applied failed as field Name "+fieldNamesAfterFilter+" is displayed which is not contain filter value");
+			}
+		}
+		base.passedStep("The user is able to enter the input in the textbox and apply filter button is working fine. The search filter applied behaves like 'Contains'. And the resulting fields from the filter is presented in the grid below");
+	}
+	/**
+	 * @author Gopinath
+	 * @Description: method to verify Query return no data message
+	 */
+	public void verifyfilterReturnNoData() {
+		base.waitForElement(getQuaryReturnedNoDataMessage());
+		if(getQuaryReturnedNoDataMessage().getWebElement().isDisplayed()&&getQuaryReturnedNoDataMessage().getText().contains("Your query returned no data")) {
+			base.passedStep("'Your Query returned no data' message is displayed as expected ");
+		}else {
+			base.failedStep("'Your Query returned no data' message is not displayed ");
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description:Method to verify field name text and label localized to german
+	 */
+	public void verifyfilterLabelApplyButtonLocaliseToGerman() {
+		base.waitForElement(filterNameTextFieldLabel());
+		if(filterNameTextFieldLabel().getText().trim().equals("DE-Filter Fields By")) {
+			base.waitForElement(getFiltersByTextField());
+			if(getFiltersByTextField().GetAttribute("placeholder").trim().equals("DE-Field Name")) {
+				base.passedStep("filter name text and label localised to German");
+			}else {
+				base.failedStep("filter name text field text is no localised to german");
+			}
+		}else {
+			base.failedStep("field name text field label is not localised to German");
+		}
+		base.waitForElement(getApplyButton());
+		if(getApplyButton().getText().trim().equals("DE-Apply")) {
+			base.passedStep("Apply button text localised and displayed in german");
+		}else {
+			base.failedStep("Apply button is not displayed German");
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description: method to verify Query return no data message after localised to German
+	 */
+	public void verifyfilterReturnNoDataGerman() {
+		base.waitForElement(getQuaryReturnedNoDataMessage());
+		if(getQuaryReturnedNoDataMessage().getWebElement().isDisplayed()&&getQuaryReturnedNoDataMessage().getText().contains("Keine Daten vorhanden in der Tabelle")) {
+			base.passedStep("'Your Query returned no data' message is displayed in german after localised as expected ");
+		}else {
+			base.failedStep("'Your Query returned no data' message is not displayed in German ");
+		}
+	}
+	/**
+	 * @author Gopinath
+	 * @Description: Method to clear filter
+	 */
+	public void clearFilter() {
+		try {
+		base.waitForElement(getFieldNameTextField());
+		getFiltersByTextField().Clear();
+		getFiltersByTextField().Enter();
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while clear the filter");
+		}
+		
+	}
+	/**
+	 * @author Gopinath
+	 * @Description: Method to verify all field name are displayed after clear filter
+	 * @param fieldNamesBeforeFilter(List of field names before apply filter)
+	 */
+	public void verifyAllFieldNamesDisplaydAfterClearFilter(List<String> fieldNamesBeforeFilter) {
+		try {
+			base.waitForElementCollection(getFieldNames());
+			List<String> fieldNamesAfterClear = base.getAvailableListofElements(getFieldNames());
+			for (String fieldNameBefore : fieldNamesBeforeFilter) {
+				boolean flag = false;
+				for (int i = 0; i < fieldNamesAfterClear.size(); i++) {
+					if (fieldNameBefore.equals(fieldNamesAfterClear.get(i))) {
+						flag = true;
+						break;
+					}
+				}
+				if (flag == false) {
+					base.failedStep("field Name " + fieldNameBefore + " is not displayed after clear filter");
+				}
+			}
+			base.passedStep("All field names are displayed after clear filter");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying field names due to " + e.getMessage());
+		}
+	}
 	
 }
