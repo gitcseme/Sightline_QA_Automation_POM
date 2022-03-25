@@ -9303,13 +9303,11 @@ public Element getFamilyMembersCount() {
 		getSelectUserToAssignPA().waitAndClick(5);
 		bc.waitForElement(getAdduserBtn());
 		getAdduserBtn().waitAndClick(5);
-		bc.VerifySuccessMessage("Record saved successfully");
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelectUserInDistributeDA());
 		getSelectUserInDistributeDA().waitAndClick(5);
 		getSelectUserInDistributeTabsPA().waitAndClick(5);
-		bc.CloseSuccessMsgpopup();
 		getDistributeBtn().waitAndClick(3);
 		bc.stepInfo("Documents are distributed to three reviewers successfully");
 

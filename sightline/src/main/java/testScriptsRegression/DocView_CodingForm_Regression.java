@@ -667,7 +667,7 @@ public class DocView_CodingForm_Regression {
 				Input.stampSelection);
 
 		loginPage.logout();
-		
+
 	}
 
 	/**
@@ -1077,8 +1077,7 @@ public class DocView_CodingForm_Regression {
 		sessionSearch.bulkFolderNearDupe(assgnFolder);
 		tagsAndFoldersPage.ViewinDocViewthrFolder(assgnFolder);
 
-		docViewPage.codeSameAsLastAnalytical(assgnColour, Input.stampColours, Input.stampColours,
-				Input.stampColours);
+		docViewPage.codeSameAsLastAnalytical(assgnColour, Input.stampColours, Input.stampColours, Input.stampColours);
 
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer Manager '" + Input.rmu1userName + "'");
@@ -2990,7 +2989,7 @@ public class DocView_CodingForm_Regression {
 		String smallInt = "SmallInt" + Utility.dynamicNameAppender();
 		String avearageInt = "SmallInt" + Utility.dynamicNameAppender();
 		String bigInt = "BigInt" + Utility.dynamicNameAppender();
-		
+
 		UtilityLog.info("Started Execution for prerequisite");
 		DocExplorerPage docExplore = new DocExplorerPage(driver);
 
@@ -3039,7 +3038,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.passingNvacharDatatypeUsingLength(tinyInt, smallInt, avearageInt, bigInt, 19, 49, 399, 3999);
 		baseClass.passedStep("Coding form saved with minimum NVARCHAR character successfully");
 		codingForm.assignCodingFormToSG(Input.codeFormName);
-		codingForm.deleteCodingForm(formName,formName);
+		codingForm.deleteCodingForm(formName, formName);
 
 		// logout
 		loginPage.logout();
@@ -3058,7 +3057,7 @@ public class DocView_CodingForm_Regression {
 				"Verify tool tip on mouse over of the floppy icon to save the stamp in context of security group");
 		// Login As
 		loginPage.loginToSightLine(userName, password);
-		
+
 		if (roll.contains("rmu")) {
 			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
@@ -8382,19 +8381,19 @@ public class DocView_CodingForm_Regression {
 	public void validateSaveAndNextActionInLastDocOfMiniDocList(String fullname, String username, String password)
 			throws InterruptedException {
 		docViewPage = new DocViewPage(driver);
-		codingForm = new CodingForm(driver);
-		assignmentPage = new AssignmentsPage(driver);
 		sessionSearch = new SessionSearch(driver);
-		softAssertion = new SoftAssert();
 		reusableDocView = new ReusableDocViewPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52115");
 		baseClass.stepInfo("Verify when user clicks 'Save and Next' when vieweing the last document of mini doc list");
 		// Login As
 		loginPage.loginToSightLine(username, password);
 		// Session search to doc view Coding Form
-		sessionSearch.basicContentSearch(Input.testData1);
-		docViewPage.selectPureHit();
+		if (fullname.contains("RMU")) {
+			codingForm.assignCodingFormToSG(Input.codeFormName);
+		}
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		docViewPage.selectPureHit();
+		sessionSearch.advancedNewContentSearch1(Input.searchString1);
 		sessionSearch.ViewInDocView();
 		reusableDocView.selectLastDocInMiniDocList();
 		baseClass.stepInfo("Last document is selected in parent minidoc list window");
@@ -9015,7 +9014,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.getCodingEditStampTextBox().SendKeys(reStamp);
 		baseClass.waitForElement(docViewPage.getCodingStampSaveBtn());
 		docViewPage.getCodingStampSaveBtn().waitAndClick(5);
-		baseClass.VerifySuccessMessage("Coding stamp updated successfully");
+		baseClass.stepInfo("Coding stamp updated successfully");
 		docViewPage.verifyingComments(comment);
 
 		// logout
@@ -9711,9 +9710,6 @@ public class DocView_CodingForm_Regression {
 			throws InterruptedException, AWTException {
 
 		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
-
-		List<String> docIDlist = new ArrayList<>();
-		int sizeofList;
 		String firnstDocname, secondDocname, docName;
 		String comments = "Comment-" + Utility.dynamicNameAppender();
 
@@ -9731,11 +9727,10 @@ public class DocView_CodingForm_Regression {
 		driver.waitForPageToBeReady();
 
 		// Main method
-		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
-		sizeofList = miniDocListpage.getListofDocIDinCW().size();
-		docIDlist = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
-
-		firnstDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		docViewPage.getClickDocviewID(2).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
+		firnstDocname = docViewPage.getVerifyPrincipalDocument().getText();
 		System.out.println("Current Document Viewed : " + firnstDocname);
 		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
 
@@ -9746,26 +9741,25 @@ public class DocView_CodingForm_Regression {
 
 		// Switch to a different document
 		driver.waitForPageToBeReady();
-		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
-		baseClass.waitTime(3);
-		miniDocListpage.docToCHoose(sizeofList, docIDlist, false);
+		docViewPage.getClickDocviewID(5).waitAndClick(5);
 
 		// Confirmation message "NO" flow
 		baseClass.stepInfo("NO FLow : Navigation should not be done");
+		baseClass.waitForElement(docViewPage.getNavigationMsgPopupNoBtn());
 		docViewPage.getNavigationMsgPopupNoBtn().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		baseClass.waitForElement(miniDocListpage.getMainWindowActiveDocID());
 		docName = miniDocListpage.getMainWindowActiveDocID().getText();
+		System.out.println("Baskar:" + docName);
 		baseClass.stepInfo("Current Document : " + docName);
 		baseClass.textCompareEquals(firnstDocname, docName, "Document not navigated", "Document navigated");
+		baseClass.waitForElement(docViewPage.getAudioComment());
 		comments = docViewPage.getAudioComment().GetAttribute("value");
 		baseClass.stepInfo("Coding form input : " + comments);
 
 		// Switch to a different document
 		driver.waitForPageToBeReady();
-		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
-		baseClass.waitTime(3);
-		miniDocListpage.docToCHoose(sizeofList, docIDlist, false);
-
+		docViewPage.getClickDocviewID(11).waitAndClick(5);
 		if (docViewPage.getNavigationMsg().isElementAvailable(5)) {
 			baseClass.stepInfo(
 					"Alert prompted to the user that their edits will not be saved and giving the user confirmation message with Yes/No buttons  ");
@@ -9774,8 +9768,10 @@ public class DocView_CodingForm_Regression {
 		// Confirmation message "YES" flow
 		baseClass.stepInfo(
 				"YES FLow : Edits should not be saved and clicked document from the mini doc list should be loaded.   ");
+		baseClass.waitForElement(docViewPage.getNavigationMsgPopupYesBtnD());
 		docViewPage.getNavigationMsgPopupYesBtnD().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		baseClass.waitForElement(miniDocListpage.getMainWindowActiveDocID());
 		secondDocname = miniDocListpage.getMainWindowActiveDocID().getText();
 		System.out.println("Switched Document : " + secondDocname);
 		baseClass.stepInfo("Switched Document : " + secondDocname);
@@ -9785,13 +9781,17 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Back to Initial document");
 		driver.waitForPageToBeReady();
 		baseClass.waitTime(3);
+		baseClass.waitForElement(miniDocListpage.getDociD(docName));
+		driver.scrollingToElementofAPage(miniDocListpage.getDociD(docName));
 		miniDocListpage.getDociD(docName).waitAndClick(5);
 		driver.waitForPageToBeReady();
+		baseClass.waitForElement(miniDocListpage.getMainWindowActiveDocID());
 		docName = miniDocListpage.getMainWindowActiveDocID().getText();
 		System.out.println("Current Document Viewed : " + docName);
 		baseClass.stepInfo("Current Document Viewed : " + docName);
 
 		// Edits should not be saved
+		baseClass.waitForElement(docViewPage.getAudioComment());
 		String retainedInput = docViewPage.getAudioComment().GetAttribute("value");
 		baseClass.stepInfo("Retained Input : " + retainedInput);
 		baseClass.textCompareNotEquals(comments, retainedInput, "Edited input not saved", "Input saved");
@@ -9914,7 +9914,7 @@ public class DocView_CodingForm_Regression {
 		docViewPage.docviewPageLoadPerformanceForCF();
 
 		// assign default project coding form
-		codingForm.assignCodingFormToSG(Input.codingFormName);
+		codingForm.assignCodingFormToSGAlert(Input.codingFormName);
 
 		// logout
 		loginPage.logout();
@@ -9942,7 +9942,8 @@ public class DocView_CodingForm_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// assign default project coding form
-		codingForm.assignCodingFormToSG(Input.codingFormName);
+		// creating long coding form
+		codingForm.codingFormLarge(cfLarge);
 
 //	    searching document for assignment creation and new coding form created (existing)
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -11471,7 +11472,7 @@ public class DocView_CodingForm_Regression {
 	@DataProvider(name = "rmuDauSauLogin")
 	public Object[][] userRmuDaSa() {
 		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password, "null" },
-//				{ "sa", Input.da1userName, Input.da1password, "rmu" },
+				{ "sa", Input.da1userName, Input.da1password, "rmu" },
 				{ "pa", Input.pa1userName, Input.pa1password, "rmu" } };
 	}
 
