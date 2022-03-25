@@ -249,7 +249,7 @@ public class DataSets {
 	*/
 	public void SelectingUploadedDataSet() {
 		driver.waitForPageToBeReady();
-		base.waitForElement(getDataSetTypeList());
+		base.waitTillElemetToBeClickable(getDataSetTypeList());
 		getDataSetTypeList().selectFromDropdown().selectByVisibleText("Only Uploaded Sets");
 		driver.waitForPageToBeReady();
 		base.waitForElement(getSelectAction());

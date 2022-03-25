@@ -164,7 +164,7 @@ public class Production_Regression2 {
 
 		DocListPage doc = new DocListPage(driver);
 		doc.documentSelection(2);
-		doc.bulkTagExisting(tagname);
+		doc.bulkTagExistingFromDoclist(tagname);
 
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
@@ -257,7 +257,6 @@ public class Production_Regression2 {
 		page.verifyProductionStatusInGenPage("Reserving Bates Range");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
-		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
 
@@ -319,7 +318,7 @@ public class Production_Regression2 {
 	 *              the Production URL if user does not have Production rights
 	 * 
 	 */
-//@Test(enabled=true,groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyingProductionAccess() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -509,8 +508,6 @@ public class Production_Regression2 {
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
-
-		// page.AddRuleAndRemoveRule(tagname);
 		page.getAddRule().waitAndClick(10);
 		base.waitTillElemetToBeClickable(page.getRemoveLink());
 		page.getRemoveLink().Click();
@@ -524,7 +521,7 @@ public class Production_Regression2 {
 		page.AddRuleAndRemoveRule(tagname);
 		String Doc = page.getDocumentSelectionLink().getText();
 		base.stepInfo("Navigating to Docview page");
-
+		driver.waitForPageToBeReady();
 		base.digitCompareEquals(purehit, Integer.parseInt(Doc), "Priv guard and purehit Documents count are equal",
 				"Priv guard and purehit Documents count are not  equal");
 
@@ -547,9 +544,10 @@ public class Production_Regression2 {
 			base.digitCompareEquals(Integer.parseInt(Doc), Integer.parseInt(Document),
 					"Document count is equal as expected", "Count Mismatches with the Documents");
 		}
-		for (int i = 0; i < 2; i++) {
-			driver.Navigate().back();
-		}
+
+		driver.waitForPageToBeReady();
+		driver.Navigate().back();
+		driver.waitForPageToBeReady();
 		for (int i = 0; i < 3; i++) {
 			driver.waitForPageToBeReady();
 			page.getNextButton().waitAndClick(10);
@@ -575,7 +573,7 @@ public class Production_Regression2 {
 	 *              Production URL if user is part of that security group/Project
 	 * 
 	 */
-//@Test(enabled=true,groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyingProductionPageAccessUsingSecurityGroup() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -635,6 +633,9 @@ public class Production_Regression2 {
 	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void generateTheProdcutionForPDFFiles() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
 		base.stepInfo("RPMXCON-55943 -Production Sprint 10");
 		base.stepInfo(
 				"Verify that Production should be generated successfully if PDF documents are ICE processed with Upload set");
@@ -650,7 +651,7 @@ public class Production_Regression2 {
 		DataSets dataset = new DataSets(driver);
 		base.stepInfo("Navigating to dataset page");
 		dataset.navigateToDataSetsPage();
-		dataset.selectDataSetWithName(Input.pdfDataSet);
+		dataset.SelectingUploadedDataSet();
 		DocListPage doc = new DocListPage(driver);
 		driver.waitForPageToBeReady();
 		doc.documentSelection(3);
@@ -738,7 +739,7 @@ public class Production_Regression2 {
 	 *                     'Split Sub Folders' is ON with split count as 10 and
 	 *                     selected documents <= 10
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	// @Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyTheSubFolderAfterGenration() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -788,14 +789,14 @@ public class Production_Regression2 {
 		// document for tiff section
 		page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
-		beginningBates = page.getRandomNumber(2);
+		String beginningBates1 = page.getRandomNumber(2);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.selectPrivDocsInTiffSection(tagname);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates1);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
@@ -851,14 +852,14 @@ public class Production_Regression2 {
 		// document for tiff section
 		page = new ProductionPage(driver);
 		String productionname3 = "p" + Utility.dynamicNameAppender();
-		beginningBates = page.getRandomNumber(2);
+		String beginningBates2 = page.getRandomNumber(2);
 		page.addANewProduction(productionname3);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.selectPrivDocsInTiffSection(tagname1);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates2);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname1);
 		page.navigateToNextSection();
@@ -887,7 +888,7 @@ public class Production_Regression2 {
 	 *              including ''Volume Included'' subfolder
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	// @Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyingTheProductionOnVolumeIncludedToggle() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -943,7 +944,7 @@ public class Production_Regression2 {
 	 * @Description Verify and generate Production with Search as source
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	// @Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyProductionGenerationWithSearches() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
