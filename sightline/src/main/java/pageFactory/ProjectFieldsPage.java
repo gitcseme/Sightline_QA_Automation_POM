@@ -56,6 +56,24 @@ public class ProjectFieldsPage {
 	public Element filterNameTextFieldLabel() {
 		return driver.FindElementByXPath("//div[@class='col-md-2 pd-lab']/div/strong");
 	}
+	
+	//Added by Gopinath - 25/03/2022
+	public Element getFieldTableCurrentPageNumber() {
+		return driver.FindElementByXPath("//li[@class='paginate_button active']/a");
+	}
+	
+	public Element getFieldNameEdititButton(String fieldName) {
+		return driver.FindElementByXPath("//table[@id='ProjectFieldsDataTable']/tbody/tr/td[text()='"+fieldName+"']/following-sibling::td/a[contains(text(),'Edit')]");
+	}
+	
+	
+	public Element getFieldTableNextButton() {
+		return driver.FindElementByXPath("//li[@id='ProjectFieldsDataTable_next']/a");
+	}
+	
+	public Element getFieldTableNextButtonDisabled() {
+		return driver.FindElementByXPath("//li[@class='paginate_button next disabled']/a");
+	}
     //Annotation Layer added successfully
     public ProjectFieldsPage(Driver driver){
 
@@ -393,6 +411,119 @@ public class ProjectFieldsPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while verifying field names due to " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @DEscription: method to navigate to field available page number
+	 * @param fieldName(name of the filed)
+	 */
+	public void navigateTofieldPageInProjectFieldTable(String fieldName) {
+		try {
+			boolean fieldfound = false;
+			while (true) {
+				String currentPageNumber = getFieldTableCurrentPageNumber().getText().trim();
+				if (getProjectGridFieldNameValue(fieldName).isElementAvailable(3)) {
+					base.passedStep("field name '" + fieldName + "' is found in  page number " + currentPageNumber);
+					fieldfound = true;//break loop if field name found
+					break;
+				} else if (!fieldfound) {
+					driver.scrollingToBottomofAPage();
+					if (getFieldTableNextButtonDisabled().isElementAvailable(3)) {
+						break;//break loop if it is last page
+					} else {
+						getFieldTableNextButton().waitAndClick(10);
+					}
+				} 
+			}
+			if (!fieldfound) {
+				base.failedMessage("field name '" + fieldName + "' is not found in project field table");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while navigating to field name");
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @description: method to verify filter field by text filed and apply buttons are displayed
+	 */
+	public void verifyFilterFieldByNameAndApplyButton() {
+		try {
+			base.waitForElement(filterNameTextFieldLabel());
+			if (filterNameTextFieldLabel().isElementAvailable(5)) {
+				base.waitForElement(getFiltersByTextField());
+				if (getFiltersByTextField().getWebElement().isDisplayed()
+						&& getFiltersByTextField().GetAttribute("placeholder").equals("Field Name")) {
+					base.passedStep("filter field by is displayed with filter text box and text 'filter name'");
+				} else {
+					base.failedStep("filter text box eith text filter name is not displayed");
+				}
+			} else {
+				base.failedStep("filter field By label is not displayed");
+			}
+			base.waitForElement(getApplyButton());
+			if (getApplyButton().getWebElement().isDisplayed()) {
+				base.passedStep("filter apply button is displayed");
+			} else {
+				base.failedStep("filter apply button is not displayed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verify filter text box and apply button");
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description:  method to edit field description 
+	 * @param fieldName : fieldName is String value that name of field.
+	 * @param description : description is String value that description need to enter in edit box.
+	 */
+	public void editprojectFieldFieldDescription(String fieldName,String description) {
+		try {
+		base.waitForElement(getFieldNameEdititButton(fieldName));
+		getFieldNameEdititButton(fieldName).waitAndClick(10);
+		base.waitForElement(getFieldDescriptionTextArea());
+		getFieldDescriptionTextArea().SendKeys(description);
+		base.waitForElement(getSaveButton());
+		getSaveButton().waitAndClick(10);
+		base.VerifySuccessMessage("Edit Project Field successful");
+		base.passedStep(fieldName+" field description edited successfully");
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while editing field description due to "+e.getMessage());
+		}
+		
+	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * @Description method to verify application  retained on same page number and filter text not cleared in filter field by text field after edit the filed
+	 * @param fieldName(field name to edit description)
+	 * @param description
+	 */
+	public void verifyPageNumberRetainedAfterEditField(String fieldName,String description) {
+		base.waitForElement(getFiltersByTextField());
+		String filterValueInTextField = getFiltersByTextField().GetAttribute("value");
+		base.waitForElement(getFieldTableCurrentPageNumber());
+		String PageNumberBeforeEdit=getFieldTableCurrentPageNumber().getText();
+		editprojectFieldFieldDescription(fieldName,description);
+		base.waitForElement(getFiltersByTextField());
+		String filterValueInTextFieldAFter = getFiltersByTextField().GetAttribute("value");
+		base.waitForElement(getFieldTableCurrentPageNumber());
+		String PageNumberAfterEdit=getFieldTableCurrentPageNumber().getText();
+		if(filterValueInTextField.equals(filterValueInTextFieldAFter)) {
+			if(PageNumberBeforeEdit.equals(PageNumberAfterEdit)) {
+				base.passedStep("After edit the field Application is on same page number and filter filed by text is not cleared");
+			}else {
+				base.failedStep("After edit field application is not retained on same page number");
+			}
+		}else {
+			base.passedStep("After edit project field, filter field by text is cleared from text area");
 		}
 	}
 	
