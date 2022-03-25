@@ -3199,6 +3199,166 @@ public class SavedSearchRegression_New_Set_05 {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description :RMU User - Verify that User can move appropriate Search to
+	 *              respective Search Group on Saved Search Screen. [RPMXCON-48127]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	public void verifyMovedSearchGroupInSgAsRmu() throws Exception {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String securityTab = "Shared with " + securityGroup;
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48127 Saved Search");
+		base.stepInfo(
+				"RMU User - Verify that User can move appropriate Search to respective Search Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to Rmu
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+
+		login.logout();
+
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// create Node In Other SG
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected Security Group : " + securityGroup);
+		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		// create Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		String defNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+		String defNode2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		session.basicContentSearch(Input.searchString2);
+		session.saveSearchInNewNode(searchName, defNode2);
+
+		// Rename Node In Default SG
+		saveSearch.verifyMoveActionSSMethod(searchName, defNode, defNode2, true, false, false);
+
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected Security Group : " + securityGroup);
+		String passMsg = defNode + " : is Not Available";
+
+		// verify Renamed Node In Other SG
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectRootGroupTab(Input.mySavedSearch);
+		saveSearch.selectNode1(node1);
+		Element MovedNodeInDef = saveSearch.getSavedSearchNodeWithRespectiveSG(Input.mySavedSearch, defNode);
+		base.ValidateElement_Absence(MovedNodeInDef, passMsg);
+
+		// verify Renamed Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		saveSearch.verifyNodePresentInSG(Input.mySavedSearch, defNode);
+		saveSearch.savedSearch_SearchandSelect(searchName, Input.yesButton);
+
+		// Delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, defNode);
+		saveSearch.deleteNode(Input.mySavedSearch, defNode2);
+
+		login.logout();
+
+		// Delete Other SG
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Reviewer User - Verify that User can move appropriate Search to
+	 *              respective Security Group on Saved Search Screen.[RPMXCON-48136]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	public void verifyMovedSearchGroupInSgAsRev() throws Exception {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String securityTab = "Shared with " + securityGroup;
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48136 Saved Search");
+		base.stepInfo(
+				"RMU User - Verify that User can move appropriate Search to respective Search Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to Rmu
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+
+		login.logout();
+
+		login.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// create Node In Other SG
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected Security Group : " + securityGroup);
+		String node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		// create Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		String defNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+		String defNode2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		session.basicContentSearch(Input.searchString2);
+		session.saveSearchInNewNode(searchName, defNode2);
+
+		// Rename Node In Default SG
+		saveSearch.verifyMoveActionSSMethod(searchName, defNode, defNode2, true, false, false);
+
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected Security Group : " + securityGroup);
+		String passMsg = defNode + " : is Not Available & "+searchName + " : Not Available";
+
+		// verify Renamed Node In Other SG
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectRootGroupTab(Input.mySavedSearch);
+		saveSearch.selectNode1(node1);
+		Element MovedNodeInDef = saveSearch.getSavedSearchNodeWithRespectiveSG(Input.mySavedSearch, defNode);
+		base.ValidateElement_Absence(MovedNodeInDef, passMsg);
+
+		// verify Renamed Node in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		saveSearch.verifyNodePresentInSG(Input.mySavedSearch, defNode);
+		saveSearch.savedSearch_SearchandSelect(searchName, Input.yesButton);
+
+		// Delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, defNode);
+		saveSearch.deleteNode(Input.mySavedSearch, defNode2);
+
+		login.logout();
+
+		// Delete Other SG
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		login.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
