@@ -2551,5 +2551,27 @@ public class TagsAndFoldersPage {
 			base.stepInfo(toSelectName + " : " + passMsg);
 		}
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param strFolder
+	 * @Description select folder and perform action in view in docview
+	 */
+	public void selectFolderViewInDocView(String strFolder) {
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		base.waitForElement(getFoldersTab());
+		getFoldersTab().waitAndClick(5);
+		
+		driver.scrollingToBottomofAPage();
+		getFolderName(strFolder).ScrollTo();
+		base.waitForElement(getFolderName(strFolder));
+		getFolderName(strFolder).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		
+		driver.scrollPageToTop();
+		base.waitForElement(getFolderActionDropDownArrow());
+		getFolderActionDropDownArrow().waitAndClick(10);
+		getFolderViewDocView().waitAndClick(10);
+		driver.waitForPageToBeReady();
+	}
 
 }
