@@ -16550,6 +16550,7 @@ for (int i = 0; i < 6; i++) {
 
 	}
 
+
 	/**
 	 * @authorBrundha
 	 * @param Tag
@@ -16559,6 +16560,7 @@ for (int i = 0; i < 6; i++) {
 		base.waitForElement(getAddRule());
 		getAddRule().waitAndClick(10);
 		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
 		getTags().isDisplayed();
 		getTags().waitAndClick(10);
 		base.waitForElement(getTagsCheckbox(Tag));
@@ -16567,8 +16569,10 @@ for (int i = 0; i < 6; i++) {
 		getInsertQueryBtnInPrivGaurd().Click();
 		driver.waitForPageToBeReady();
 		getDocumentMatchesButton().waitAndClick(10);
-
+        driver.scrollPageToTop();
 	}
+
+
 
 	/**
 	 * @authorBrundha
