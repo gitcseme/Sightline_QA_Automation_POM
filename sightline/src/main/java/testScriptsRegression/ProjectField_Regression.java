@@ -176,6 +176,69 @@ public class ProjectField_Regression {
 		
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Gopinath
+	 * @TestCase ID:47065 Verify that 'Filter Fields By' should be displayed on Manage > Project Fields
+	 * @Description:To Verify that 'Filter Fields By' should be displayed on Manage > Project Fields
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	public void verifyFilterFieldByAppliyButtonDisplayed() {
+		baseClass.stepInfo("Test case Id: RPMXCON-47065");
+		baseClass.stepInfo("Verify that 'Filter Fields By' should be displayed on Manage > Project Fields");
+		
+		baseClass.stepInfo("Step 1: Login as Project Admin");
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName);
+		
+		baseClass.stepInfo("Step 2: Go to Manage > Project Fields");
+		projectFieldsPage = new ProjectFieldsPage(driver);
+		projectFieldsPage.navigateToProjectFieldsPage();
+		baseClass.passedStep("Navigated to Project Field Page successfully");
+		
+		baseClass.stepInfo("verify filter field by text field and Apply button are displayed");
+		projectFieldsPage.verifyFilterFieldByNameAndApplyButton();
+		
+		loginPage.logout();
+	}
+	/**
+	 * @author Gopinath
+	 * @TestCase ID:47068:Verify that when filter applied user edits a project field and "saves" the edit, the application should be on the same "page number", where the user picked the field to edit
+	 * @Description:To Verify that when filter applied user edits a project field and "saves" the edit, the application should be on the same "page number", where the user picked the field to edit
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	public void verifyPageNumberRetainedAfterEditField() {
+		baseClass.stepInfo("Test case Id: RPMXCON-47068");
+		baseClass.stepInfo("Verify that when filter applied user edits a project field and 'saves' the edit, the application should be on the same \"page number\", where the user picked the field to edit");
+		utility = new Utility(driver);
+		String filterValue="Data";
+		String fieldName =  filterValue+  Utility.dynamicNameAppender();
+		String fieldDescription= "Edit"+Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("Step 1: Login as Project Admin");
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName);
+		
+		baseClass.stepInfo("Step 2: Go to Manage > Project Fields");
+		projectFieldsPage = new ProjectFieldsPage(driver);
+		projectFieldsPage.navigateToProjectFieldsPage();
+		baseClass.passedStep("Navigated to Project Field Page successfully");
+		
+		baseClass.stepInfo("Create project field");
+		projectFieldsPage.addProjectField(fieldName, fieldName, Input.fldClassification,Input.fldDescription, Input.fieldType, Input.fieldLength);
+		
+		baseClass.stepInfo("Step 3: Enter the text in 'Filter Fields By' and click on Apply");
+		projectFieldsPage.applyFilterByFilterName(filterValue);
+		
+		baseClass.stepInfo("verify All field Names in project grid Contains filter value");
+		projectFieldsPage.validateFilterFieldsByContainsFieldName(filterValue);
+		
+		baseClass.stepInfo("Step 4 :Navigate to field avaliable page number");
+		projectFieldsPage.navigateTofieldPageInProjectFieldTable(fieldName);
+		
+		baseClass.stepInfo("Step 5&6 :edit field and verify page number");
+		projectFieldsPage.verifyPageNumberRetainedAfterEditField(fieldName, fieldDescription);
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
