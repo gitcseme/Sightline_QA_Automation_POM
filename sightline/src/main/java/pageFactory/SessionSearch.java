@@ -10949,5 +10949,42 @@ public class SessionSearch {
 		base.VerifyWarningMessage("Please select the Language Pack/Dialect in Audio search");
 
 	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 * This method will assign/unassign pop up when we try to perform bulk 
+	 * assign from anysource for existing assignment.
+	 * @param assignmentName
+	 */
+	  public void bulkAssignExistingWithoutActionTab(String assignmentName) {
+			UtilityLog.info("performing bulk assign");
+			driver.waitForPageToBeReady();
+			base.waitForElement(getSelectAssignmentExisting(assignmentName));
+			driver.waitForPageToBeReady();
+			getSelectAssignmentExisting(assignmentName).Click();
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getPersistantHitCb_Existing().isElementAvailable(3);
+			getPersistantHitCb_Existing().waitAndClick(5);
+			base.waitTillElemetToBeClickable(getContinueButton());
+			getContinueButton().waitAndClick(20);
+			final BaseClass bc = new BaseClass(driver);
+			final int Bgcount = bc.initialBgCount();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+				}
+			}), Input.wait30);
+			getFinalizeButton().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return bc.initialBgCount() == Bgcount + 1;
+				}
+			}), Input.wait60);
+			UtilityLog.info("Bulk assign is done, assignment is : " + assignmentName);
+			Reporter.log("Bulk assign is done, assignment is : " + assignmentName, true);
+		}
+
 
 }
