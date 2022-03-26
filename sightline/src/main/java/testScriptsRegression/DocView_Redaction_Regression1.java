@@ -166,7 +166,7 @@ public class DocView_Redaction_Regression1 {
 	 * Click on redaction and multipage tab
 	 */
 
-	@Test(description = "RPMXCON-52318", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-52318", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
 	public void saveMultiPageRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -207,7 +207,7 @@ public class DocView_Redaction_Regression1 {
 	 * DocView from "Actions" Click on redaction and multipage tab Multipage pop up
 	 * enabled
 	 */
-	@Test(description = "RPMXCON-52320", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-52320", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
 	public void testShareSteps() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -251,7 +251,7 @@ public class DocView_Redaction_Regression1 {
 	 * if Redaction menu is avilable
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-52255",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
 	public void verifyDocViewRedactionPanel() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -330,7 +330,7 @@ public class DocView_Redaction_Regression1 {
 	 * navigation of docs while redacting
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-52254",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 5)
 	public void verifyRedactionPanel() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -414,7 +414,7 @@ public class DocView_Redaction_Regression1 {
 	 *         : Verify that user should be able to apply rectangle redaction
 	 *         Redaction tag with uncommon click path (F5)
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-52222",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
 
 	public void verifyRectangularRedactionRMU() throws Exception {
 // Selecting Document from DocExplorer
@@ -471,7 +471,7 @@ public class DocView_Redaction_Regression1 {
 	 * redaction appears on page after refresh
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(description = "RPMXCON-52221",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
 	public void checkingRectangleRedactionWhileRefreshingPage() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -501,7 +501,7 @@ public class DocView_Redaction_Regression1 {
 	 * 
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 10)
+	@Test(description = "RPMXCON-52219",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
 	public void chekingRedactionDeleteButton() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -552,7 +552,7 @@ public class DocView_Redaction_Regression1 {
 	 * redacted area/page without deleting redaction
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(description = "RPMXCON-52217",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 9)
 	public void thisPageRedactionAlongWithRemark() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -607,7 +607,7 @@ public class DocView_Redaction_Regression1 {
 	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 52216
 	 * Verifying remarks without text is not possible DocView- sprint 3
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 22)
+	@Test(description = "RPMXCON-52216",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 10)
 	public void textRemarksWithoutText() throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
@@ -636,7 +636,7 @@ public class DocView_Redaction_Regression1 {
 	 * Verifying only delete icon is not present when clicking on multipage rectange
 	 * redaction DocView- sprint 3
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 23)
+	@Test(description = "RPMXCON-52215",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 11)
 	public void verifyDeleteIconRectangleRedaction() throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
@@ -682,7 +682,7 @@ public class DocView_Redaction_Regression1 {
 	 * Verifying remarks alone is deleted when remarks associated with Rectangular
 	 * Redaction DocView/Redactions- sprint 4
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 29)
+	@Test(description = "RPMXCON-52213",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void textRemarksWithTextInRectangleRedaction() throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
@@ -722,7 +722,7 @@ public class DocView_Redaction_Regression1 {
 	 * Verifying text remarks can not be added when no text is present in existing
 	 * rectangular redaction DocView- sprint 4
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 27)
+	@Test(description = "RPMXCON-52212",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 13)
 	public void textRemarksWithoutTextInRectangleRedaction() throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
@@ -764,7 +764,7 @@ public class DocView_Redaction_Regression1 {
 	 * Verifying while navigating from mini doclist child window, persistent hit
 	 * panel stays open DocView-Sprint 4
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 25)
+	@Test(description = "RPMXCON-52190",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 14)
 	public void verifyingPersistenthitAudioPanel() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -788,7 +788,7 @@ public class DocView_Redaction_Regression1 {
 	 * uncommon click path (F5) before clicking the 'Save' from Redaction Tag Save
 	 * Confirmation pop up
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 27)
+	@Test(description = "RPMXCON-52223",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void VerifyThisPageRedactionAfterRefresh() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -830,7 +830,7 @@ public class DocView_Redaction_Regression1 {
 	 * RPMXCON-52214 Verify that multiple Rectangle Redaction does not remain
 	 * selected on DocView Screen
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 29)
+	@Test(description = "RPMXCON-52214",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
 	public void verifyMultiRecRedactionNotRemainSelected() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -937,7 +937,7 @@ public class DocView_Redaction_Regression1 {
 	 * Id:RPMXCON-47723 From Audio search go to DocView Create Redaction in Audio
 	 * Docs
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 36)
+	@Test(description = "RPMXCON-47723",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 17)
 	public void verifyRedactionInAudioDocs() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -963,7 +963,7 @@ public class DocView_Redaction_Regression1 {
 	 * RPMXCON-47034 Verify that error message is present when invalid page range is
 	 * given as input for redaction
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 25)
+	@Test(description = "RPMXCON-47034",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
 	public void VerifyMultiPagePopUpInput() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -998,7 +998,7 @@ public class DocView_Redaction_Regression1 {
 	 * RPMXCON-47033 Verify the error message present when invalid page range is
 	 * given as input for redaction
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 26)
+	@Test(description = "RPMXCON-47033",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void VerifyMultiPagePopUpInputMessage() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1037,7 +1037,7 @@ public class DocView_Redaction_Regression1 {
 	 * clicked
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
+	@Test(description = "RPMXCON-47031",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
 	public void verifyMultiPageRedactionPopup() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1080,7 +1080,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws Exception
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 71)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyRedactionTagSelectionAfterChangingUser() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1153,7 +1153,7 @@ public class DocView_Redaction_Regression1 {
 	 * 'Delete' key from keyboard should be disabled keyboard action
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 76)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 22)
 	public void verifyKeyBoardDelActionDisabledForThisRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1244,7 +1244,7 @@ public class DocView_Redaction_Regression1 {
 	 * 'Delete' key from keyboard should be disabled keyboard action
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 77)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 23)
 	public void verifyKeyBoardDelActionDisabledForRectangleRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1328,7 +1328,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws Exception
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 65)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyRedactionTagReflectionAfterChanged() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1382,7 +1382,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws Exception
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 64)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void VerifyPageSyntaxAgainstMultiPageRedactionsPopup() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1416,7 +1416,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws Exception
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 74)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyAutomaticSelectionOfRedactionTag() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1484,7 +1484,7 @@ public class DocView_Redaction_Regression1 {
 	 * redaction should be applied
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 73)
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyOnlyPageRangeMultipageRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1539,7 +1539,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 72)
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyEditAndApplyRedactionTag() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1616,7 +1616,7 @@ public class DocView_Redaction_Regression1 {
 	 *           redaction, last saved redaction tag should be selected
 	 *           automatically from redaction pop up
 	 */
-	@Test(groups = { "regression" }, priority = 75)
+	@Test(groups = { "regression" }, priority = 29)
 	public void verifyRedactionTagInPopUpDropDown() throws Exception {
 		BaseClass baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1687,7 +1687,7 @@ public class DocView_Redaction_Regression1 {
 	 * icon is clicked again by the user, it must revert to an "off" state DocView
 	 * Page
 	 */
-	@Test(description ="RPMXCON-47878",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 50)
+	@Test(description ="RPMXCON-47878",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 30)
 	public void VerifyOnColourChangeInRedactionMenu() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -1726,7 +1726,7 @@ public class DocView_Redaction_Regression1 {
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-46860
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 51)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
 	public void VerifyRectangleRedactionDeletionFromDocExlorer() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -1764,7 +1764,7 @@ public class DocView_Redaction_Regression1 {
 	 *         
 	 */
 	
-	@Test(description ="RPMXCON-47736",groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-47736",groups = { "regression" }, priority = 32)
 	public void printRedactedDocsAfterImpersonation() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47736");
@@ -1819,7 +1819,7 @@ public class DocView_Redaction_Regression1 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-49994",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
+	@Test(description ="RPMXCON-49994",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 33)
 	public void verifyRedactionTagSelectionAsSA() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-49994");
@@ -1850,7 +1850,7 @@ public class DocView_Redaction_Regression1 {
 	 * applied
 	 * 
 	 */
-	@Test(description ="RPMXCON-49974",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 51)
+	@Test(description ="RPMXCON-49974",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
 	public void VerifyMultiPageRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -1882,7 +1882,7 @@ public class DocView_Redaction_Regression1 {
 	 * RPMXCON-47725
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 57)
+	@Test(description ="RPMXCON-47725",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 35)
 	public void VerifyRectangleRedactionDeletion() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -1918,7 +1918,7 @@ public class DocView_Redaction_Regression1 {
 	 *
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 55)
+	@Test(description ="RPMXCON-49973",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 36)
 	public void VerifyMultiPageRedactionTagSelection() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -1969,7 +1969,7 @@ public class DocView_Redaction_Regression1 {
 	 * RPMXCON-49972
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 56)
+	@Test(description ="RPMXCON-49972",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 37)
 	public void VerifyThisPageRedactionTagSelection() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -2006,7 +2006,7 @@ public class DocView_Redaction_Regression1 {
 	 * RPMXCON-49971
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 54)
+	@Test(description ="RPMXCON-49971",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 38)
 	public void VerifyRectangleRedactionTagSelection() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -2042,7 +2042,7 @@ public class DocView_Redaction_Regression1 {
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-46954
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 80)
+	@Test(description ="RPMXCON-46954",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 39)
 	public void VerifyMultiPageRedactionTagDefaultSelection() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
