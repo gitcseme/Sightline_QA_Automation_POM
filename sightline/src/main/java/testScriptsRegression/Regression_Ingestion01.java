@@ -714,6 +714,24 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyIngestionSaveAsDraftAndDelete();
 		
 		}
+	
+	/** 
+     *Author :Arunkumar date: 28/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47300
+	 * Description :If 'Add Only' option is selected, SourceDocID,SourceParentDocID,CustodianName & Datasource fields
+	 * must be selected in the mapping and  Verify the navigation upon selection of 'Go Back' option
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 33)
+	public void verifyMappingFieldsWithGoBackOption() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47300");
+		baseClass.stepInfo("If 'Add Only' option is selected,Verify Mapping and navigation upon selection of 'Go Back' option");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.AllSourcesFolder,Input.DATFile1);	
+		ingestionPage.verifyMappingFiledPriorSelection(Input.docId,Input.dataSource,Input.custodian);
+		
+	}
+	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
