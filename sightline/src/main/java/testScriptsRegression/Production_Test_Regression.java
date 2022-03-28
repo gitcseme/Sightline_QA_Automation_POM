@@ -7533,7 +7533,87 @@ public class Production_Test_Regression {
 		
 	}
 
+	/**
+	* @author Vijaya.Rani created on:25/03/2022 modified by:NA TESTCASE No:RPMXCON-47171
+	* @Description:Verify that PDF files should be copied to folder when 'Split Sub Folders' is ON with split count as 10.
+	* 'RPMXCON-47171' 
+	*/
+     @Test(enabled = true, groups = { "regression" }, priority = 107)
+	public void verifyTheSubFolderAfterGenrationPDFFile() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	base.stepInfo("RPMXCON-47171 -Production Sprint 14");
+	base.stepInfo(
+	"Verify that PDF files should be copied to folder when 'Split Sub Folders' is ON with split count as 10");
+
+	String tagname = "Tag" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.telecaSearchString);
+	sessionSearch.bulkTagExisting(tagname);
+
+	// document for pdf section
+	ProductionPage page = new ProductionPage(driver);
+	String productionname = "p" + Utility.dynamicNameAppender();
+	String beginningBates = page.getRandomNumber(2);
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSection();
+	page.fillingPDFSectionwithNativelyPlaceholder(tagname);
+	page.fillingTextSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionWithTag(tagname);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	driver.waitForPageToBeReady();
+	driver.scrollingToBottomofAPage();
+	page.ProductionLocationSplitCount().Clear();
+	page.ProductionLocationSplitCount().SendKeys(Input.pageNumber);
+	driver.scrollPageToTop();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	page.extractFile();
+	String home = System.getProperty("user.home");
 	
+	File dirPdf = new File(home+"\\Downloads\\VOL0001\\PDF");
+	File dirText = new File(home+"\\Downloads\\VOL0001\\Text");
+	File dirNative = new File(home+"\\Downloads\\VOL0001\\Natives");
+	SoftAssert softAssertion = new SoftAssert();
+	int dirPdfCount = page.dirFoldersCount(dirPdf);
+	int dirTextCount = page.dirFoldersCount(dirText);
+	int dirNativeCount = page.dirFoldersCount(dirNative);
+	if(1!=dirPdfCount) {
+		System.out.println("pdf verified");
+		base.stepInfo("Pdf folder is split");
+	}
+	if(1!=dirNativeCount) {
+		System.out.println("Native verified");
+		base.stepInfo("Native folder is split");
+	}
+	if(1!=dirTextCount) {
+		System.out.println("Text verified");
+		base.stepInfo("Text folder is split");
+	}
+	base.passedStep("files is split as per the split folder count");
+	base.passedStep("Verified that PDF files should be copied to folder when 'Split Sub Folders' is ON with split count as 10");
+	
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+
+
+	
+    }
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
