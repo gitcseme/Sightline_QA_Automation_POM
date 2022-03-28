@@ -91,7 +91,7 @@ public class DocView_Regression1 {
 	 * assignment. Description : To Verify the tool tip displayed 'Code same as
 	 * last' when document having rectangle redaction in context of assignment
 	 */
-	//// @Test(alwaysRun = true,groups={"regression"},priority = 1)
+	@Test(alwaysRun = true,groups={"regression"},priority = 1)
 	public void verifyToolTipDisplayedWhenDocumentHavingRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		String assignmentName = "assignment" + Utility.dynamicNameAppender();
@@ -138,6 +138,76 @@ public class DocView_Regression1 {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by: NA.
+	 *         ////@Testcase_Id : 47028 - Verify that on click of Save from
+	 *         'Multi-Page Redactions' pop up, all pages other than pages which are
+	 *         excluded should be redacted successfully.
+	 * @Description : Verify that on click of Save from 'Multi-Page Redactions' pop
+	 *              up, all pages other than pages which are excluded should be
+	 *              redacted successfully.
+	 */
+	@Test(groups = { "regression" }, priority = 2)
+	public void verifyMultiplePageRedactionsByExcludePages() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47028 DocView Sprint 06");
+
+		utility = new Utility(driver);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		baseClass.stepInfo(
+				"#### Verify that on click of Save from 'Multi-Page Redactions' pop up, all pages other than pages which are excluded should be redacted successfully. ####");
+		loginPage = new LoginPage(driver);
+		loginPage.logout();
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		Reporter.log("Logged in as User: " + Input.pa2userName);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Navigate to session search");
+		sessionSearch.navigateToSessionSearchPageURL();
+
+		baseClass.stepInfo("Basic content search");
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		baseClass.stepInfo("Bulk Release");
+		sessionSearch.bulkRelease(Input.securityGroup);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+
+		sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Navigate to session search");
+		sessionSearch.navigateToSessionSearchPageURL();
+
+		baseClass.stepInfo("Basic content search");
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.addDocsMetCriteriaToActionBoard();
+
+		redact = new DocViewRedactions(driver);
+
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		baseClass.stepInfo("Perform exclude Multiple Page Redaction by page range");
+		redact.performMultiplePageRedactionForExclude(Input.defaultRedactionTag, Input.pageRange);
+
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		baseClass.stepInfo("Perform exclude Multiple Page Redaction by page number");
+		redact.performMultiplePageRedactionForExclude(Input.defaultRedactionTag, Input.pageNum);
+
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+
+		baseClass.stepInfo("Perform exclude Multiple Page Redaction by page number and page range");
+		redact.performMultiplePageRedactionForExclude(Input.defaultRedactionTag,
+				Input.pageNum + "," + Input.pageRange);
+		loginPage.logout();
+	}
 
 	/**
 	 * Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
@@ -146,7 +216,7 @@ public class DocView_Regression1 {
 	 * the tool tip displayed 'Code same as last' when document having rectangle
 	 * redaction.
 	 */
-	//// @Test(alwaysRun = true,groups={"regression"},priority = 2)
+	@Test(alwaysRun = true,groups={"regression"},priority = 2)
 	public void verifyToolTipMessageDisplayedWhenDocHavingRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52166");
@@ -186,7 +256,7 @@ public class DocView_Regression1 {
 	 * the tool tip displayed 'Code same as last' when document having this page
 	 * redaction.
 	 */
-	//// @Test(alwaysRun = true,groups={"regression"},priority = 3)
+	@Test(alwaysRun = true,groups={"regression"},priority = 3)
 	public void verifyToolTipMsgDisplayedWhenDocHavingThisPageRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52166");
@@ -228,7 +298,7 @@ public class DocView_Regression1 {
 	 * the tool tip displayed 'Code same as last' when document having multi page
 	 * redaction.
 	 */
-	//// @Test(alwaysRun = true,groups={"regression"},priority = 4)
+	@Test(alwaysRun = true,groups={"regression"},priority = 4)
 	public void verifyToolTipMsgDisplayedWhenDocHavingMultiRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52163");
@@ -270,7 +340,7 @@ public class DocView_Regression1 {
 	 * Description : To Verify that blank row should be displayed on the drop down
 	 * when redaction tag is unassigned from security group.
 	 */
-	//// @Test(alwaysRun = true,groups={"regression"},priority = 5)
+	 @Test(alwaysRun = true,groups={"regression"},priority = 5)
 	public void verifyBlankRowDisplayedAppliedRedactionIsUnTaggedFromSecurityGroup() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52151 DocView Sprint 03");
@@ -308,6 +378,9 @@ public class DocView_Regression1 {
 
 		security = new SecurityGroupsPage(driver);
 
+		baseClass.stepInfo("Navigate To Security Gropus Page URL");
+		security.navigateToSecurityGropusPageURL();
+		
 		baseClass.stepInfo("Un tag redaction from security group");
 		security.unTagFromRedatctionTags(redactname);
 
@@ -341,7 +414,7 @@ public class DocView_Regression1 {
 	 * displayed while redaction.
 	 */
 
-	//// @Test(groups = { "regression" }, priority = 6)
+	@Test(groups = { "regression" }, priority = 6)
 	public void verifyBlankRowNotDisplayedFromDefaultRedactionDropdown() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -376,7 +449,7 @@ public class DocView_Regression1 {
 	 * uassigned from security groups.
 	 */
 
-	//// @Test(groups = { "regression" }, priority = 7)
+	@Test(groups = { "regression" }, priority = 7)
 	public void verifyBlankRowDisplayedWhenUnAssginedRedactionTag() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -391,6 +464,9 @@ public class DocView_Regression1 {
 				"#### Verify that when applied redaction tag is unassigned then blank row should be displayed in edit redaction pop up on audio doc view. ####");
 		RedactionPage redactTag = new RedactionPage(driver);
 
+		baseClass.stepInfo("Navigate to redactions page");
+		redactTag.navigateToRedactionsPageURL();
+		
 		baseClass.stepInfo("Add redaction tag");
 		redactTag.AddRedaction(redactname, "RMU");
 
@@ -420,6 +496,9 @@ public class DocView_Regression1 {
 
 		security = new SecurityGroupsPage(driver);
 
+		baseClass.stepInfo("navigate to security groups page");
+		security.navigateToSecurityGropusPageURL();
+		
 		baseClass.stepInfo("Un tag redaction from security group");
 		security.unTagFromRedatctionTags(redactname);
 
@@ -451,7 +530,7 @@ public class DocView_Regression1 {
 	 * 'Code same as last' when document having page Redaction Description : Page
 	 * Range Redaction in context of assignment
 	 */
-	//// @Test(alwaysRun = true,groups={"regression"},priority = 8)
+	@Test(alwaysRun = true,groups={"regression"},priority = 8)
 	public void verifyToolTip() throws Exception {
 		Robot robot = new Robot();
 		baseClass = new BaseClass(driver);
@@ -510,7 +589,7 @@ public class DocView_Regression1 {
 	 * same as last' when document having page Redaction Description : In context of
 	 * SG for page range Redaction
 	 */
-	//// @Test(alwaysRun = true,groups={"regression"},priority = 9)
+	 @Test(alwaysRun = true,groups={"regression"},priority = 9)
 	public void verifyToolTipForSG() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52165");
@@ -547,7 +626,7 @@ public class DocView_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	//// @Test(groups = { "regression" }, priority = 10)
+	@Test(groups = { "regression" }, priority = 10)
 	public void verifyAssignSingleDocumentOnDocList() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 
@@ -558,6 +637,10 @@ public class DocView_Regression1 {
 		baseClass.stepInfo(
 				"#### Verify that the undocked windows should be docked to parent window when the user refreshes the DocView page. ####");
 		manageAssignment = new ManageAssignment(driver);
+		
+		baseClass.stepInfo("Navigate to assignments page");
+		manageAssignment.navigateToAssignmentsPageURL();
+		
 		int row = manageAssignment.getDocViewRowNum();
 
 		baseClass.stepInfo("Selecting assignment from assignment group table");
@@ -572,75 +655,7 @@ public class DocView_Regression1 {
 
 	}
 
-	/**
-	 * @Author : Gopinath Created date: NA Modified date: NA Modified by: NA.
-	 *         ////@Testcase_Id : 47028 - Verify that on click of Save from
-	 *         'Multi-Page Redactions' pop up, all pages other than pages which are
-	 *         excluded should be redacted successfully.
-	 * @Description : Verify that on click of Save from 'Multi-Page Redactions' pop
-	 *              up, all pages other than pages which are excluded should be
-	 *              redacted successfully.
-	 */
-	//// @Test(groups = { "regression" }, priority = 11)
-	public void verifyMultiplePageRedactionsByExcludePages() throws InterruptedException {
-		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-47028 DocView Sprint 06");
 
-		utility = new Utility(driver);
-		docViewMetaDataPage = new DocViewMetaDataPage(driver);
-		baseClass.stepInfo(
-				"#### Verify that on click of Save from 'Multi-Page Redactions' pop up, all pages other than pages which are excluded should be redacted successfully. ####");
-		loginPage = new LoginPage(driver);
-		loginPage.logout();
-
-		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		Reporter.log("Logged in as User: " + Input.pa2userName);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		baseClass.stepInfo("Navigate to session search");
-		sessionSearch.navigateToSessionSearchPageURL();
-
-		baseClass.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(Input.paginationDocId);
-
-		baseClass.stepInfo("Bulk Release");
-		sessionSearch.bulkRelease(Input.securityGroup);
-
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-
-		sessionSearch = new SessionSearch(driver);
-
-		baseClass.stepInfo("Navigate to session search");
-		sessionSearch.navigateToSessionSearchPageURL();
-
-		baseClass.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(Input.paginationDocId);
-		sessionSearch.addDocsMetCriteriaToActionBoard();
-
-		redact = new DocViewRedactions(driver);
-
-		baseClass.stepInfo("Refresh page");
-		driver.Navigate().refresh();
-
-		baseClass.stepInfo("Perform exclude Multiple Page Redaction by page range");
-		redact.performMultiplePageRedactionForExclude(Input.defaultRedactionTag, Input.pageRange);
-
-		baseClass.stepInfo("Refresh page");
-		driver.Navigate().refresh();
-
-		baseClass.stepInfo("Perform exclude Multiple Page Redaction by page number");
-		redact.performMultiplePageRedactionForExclude(Input.defaultRedactionTag, Input.pageNumber);
-
-		baseClass.stepInfo("Refresh page");
-		driver.Navigate().refresh();
-
-		baseClass.stepInfo("Perform exclude Multiple Page Redaction by page number and page range");
-		redact.performMultiplePageRedactionForExclude(Input.defaultRedactionTag,
-				Input.pageNumber + "," + Input.pageRange + "," + Input.documentIdNum);
-		loginPage.logout();
-	}
 
 	/**
 	 * @Author : Gopinath Created date: NA Modified date: NA Modified by: NA.
@@ -651,7 +666,7 @@ public class DocView_Regression1 {
 	 *              should be redacted successfully with changed redaction tag from
 	 *              what is presented in pop up.
 	 */
-	//// @Test(groups = { "regression" }, priority = 12)
+	 @Test(groups = { "regression" }, priority = 12)
 	public void verifyMultiplePageRedactionsIncludeWithDiffRedTag() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47029 DocView Sprint 06");
@@ -672,7 +687,7 @@ public class DocView_Regression1 {
 		sessionSearch.navigateToSessionSearchPageURL();
 
 		baseClass.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(Input.paginationDocId);
+		sessionSearch.basicContentSearch(Input.testData1);
 
 		baseClass.stepInfo("Bulk Release");
 		sessionSearch.bulkRelease(Input.securityGroup);
@@ -690,7 +705,7 @@ public class DocView_Regression1 {
 		sessionSearch.navigateToSessionSearchPageURL();
 
 		baseClass.stepInfo("Basic content search");
-		sessionSearch.basicContentSearch(Input.paginationDocId);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.addDocsMetCriteriaToActionBoard();
 
 		redact = new DocViewRedactions(driver);
@@ -705,14 +720,14 @@ public class DocView_Regression1 {
 	 * @Description : Verify that after impersonation icon should be displayed on
 	 *              doc view header for expand/collapse
 	 */
-	//// @Test(groups = { "regression" }, priority = 13)
+	@Test(groups = { "regression" }, priority = 13)
 	public void verifyingReviewManagerChangesInDocView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		baseClass.stepInfo("Test case Id: RPMXCON-51903 -Production Sprint 07");
 		baseClass.stepInfo(
 				"#### Verify that after impersonation icon should be displayed on doc view header for expand/collapse. ####");
 		baseClass.stepInfo("Impersnated from RMU to Reviewer");
-		baseClass.impersonateRMUtoReviewers();
+		baseClass.impersonateRMUtoReviewer();
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("Navigate to session search");
@@ -727,7 +742,7 @@ public class DocView_Regression1 {
 		driver.Navigate().refresh();
 
 		baseClass.stepInfo("impersnated from reviewer to RMU");
-		baseClass.impersonationReviewertoRMU();
+//		baseClass.impersonateReviewertoRMU();
 		loginPage.logout();
 
 	}
@@ -741,7 +756,7 @@ public class DocView_Regression1 {
 	 *              properly and not eliminate any text characters in the produced
 	 *              document.
 	 */
-	//// @Test(groups = { "regression" }, priority = 13)
+	@Test(groups = { "regression" }, priority = 13)
 	public void verifyProducingTIFFWithReviewerRemarksWorkingProperly() throws Exception {
 		baseClass = new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
@@ -787,7 +802,7 @@ public class DocView_Regression1 {
 		docView.navigateToDocViewPageURL();
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(12, 25, remark);
+		docView.addRemarkToNonAudioDocument(7, 55, remark);
 
 		baseClass.stepInfo("Verify Remark Is Added");
 		docView.verifyRemarkIsAdded(remark);
@@ -864,7 +879,7 @@ public class DocView_Regression1 {
 	 *              properly and not eliminate any text characters in the produced
 	 *              document.
 	 */
-	//// @Test(groups = { "regression" }, priority = 14)
+	@Test(groups = { "regression" }, priority = 14)
 	public void verifyProducingPDFWithReviewerRemarksWorkingProperly() throws Exception {
 		baseClass = new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
@@ -910,7 +925,7 @@ public class DocView_Regression1 {
 		docView.navigateToDocViewPageURL();
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(12, 25, remark);
+		docView.addRemarkToNonAudioDocument(7, 55, remark);
 
 		baseClass.stepInfo("Verify Remark Is Added");
 		docView.verifyRemarkIsAdded(remark);
@@ -989,7 +1004,7 @@ public class DocView_Regression1 {
 	 *              applying the coding stamp from coding form child window.
 	 */
 
-	//// @Test(groups = { "regression" }, priority = 15)
+	@Test(groups = { "regression" }, priority = 15)
 	public void verifyPersistentHitsPanelDisplayedNavigatedToNextDoc() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51855 Production-sprint:07");
@@ -1077,7 +1092,7 @@ public class DocView_Regression1 {
 	 *              no search terms or keywords that apply to this document).
 	 */
 
-	//// @Test(groups = { "regression" }, priority = 16)
+	@Test(groups = { "regression" }, priority = 16)
 	public void verify0HitTermsToogleNotDisplayedToAdvancedWorkProduct() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51761 Production-sprint:07");
@@ -1189,7 +1204,7 @@ public class DocView_Regression1 {
 	 *              document.
 	 */
 
-	//// @Test(groups = { "regression" }, priority = 17)
+	@Test(groups = { "regression" }, priority = 17)
 	public void verifyTwoDifferentAdhocResultsWithTermAndPhrase() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51760 Production-sprint:07");
@@ -1262,7 +1277,7 @@ public class DocView_Regression1 {
 	 *              document.
 	 */
 
-	//// @Test(groups = { "regression" }, priority = 18)
+	@Test(groups = { "regression" }, priority = 18)
 	public void verifyThatProducingTiffWithBlockRedaction() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-52200 Production-sprint:07");
@@ -1386,7 +1401,7 @@ public class DocView_Regression1 {
 	 *              document.
 	 */
 
-	//// @Test(groups = { "regression" }, priority = 19)
+	@Test(groups = { "regression" }, priority = 19)
 	public void verifyThatProducingTiffWithPageRedaction() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-52199 Production-sprint:07");
@@ -1506,7 +1521,7 @@ public class DocView_Regression1 {
 	 * :Verify that Producing a PDF with Page Redaction burning properly and not
 	 * eliminate any characters in the produced document.
 	 */
-	// @Test(alwaysRun = true,groups={"regression"},priority = 18)
+	@Test(alwaysRun = true,groups={"regression"},priority = 18)
 	public void verifyTheRedactionOfTagInProduction() {
 		try {
 			baseClass = new BaseClass(driver);
@@ -1579,7 +1594,7 @@ public class DocView_Regression1 {
 	 * eliminate any characters in the produced document.
 	 * 
 	 */
-	// @Test(alwaysRun = true,groups={"regression"},priority =19)
+	 @Test(alwaysRun = true,groups={"regression"},priority =19)
 	public void verifyThRectangleeRedactionOfTagInProduction() {
 		try {
 			baseClass = new BaseClass(driver);
@@ -1600,10 +1615,13 @@ public class DocView_Regression1 {
 			sessionSearch.basicContentSearch(Input.testData1);
 			sessionSearch.ViewInDocView();
 
-			DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
-			docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+			docViewMetaDataPage = new DocViewMetaDataPage(driver);
+			
+			baseClass.stepInfo("Click on reduction button ");
+			docViewMetaDataPage.clickOnRedactAndRectangle();
+			
 			driver.waitForPageToBeReady();
-			docViewRedactions.selectingRedactionTag(Redactiontag1);
+			docViewMetaDataPage.redactbyrectangle(10, 15, Redactiontag1);
 			String foldername = "FolderProd" + Utility.dynamicNameAppender();
 			String productionname;
 			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1654,7 +1672,7 @@ public class DocView_Regression1 {
 	 *              document.
 	 */
 
-	// @Test(groups = { "regression" }, priority = 20)
+	@Test(groups = { "regression" }, priority = 20)
 	public void verifyThatProducingPDFWithTextRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-52195 Production-sprint:07");
@@ -1776,7 +1794,7 @@ public class DocView_Regression1 {
 	 *              document.
 	 */
 
-	// @Test(groups = { "regression" }, priority = 21)
+	@Test(groups = { "regression" }, priority = 21)
 	public void verifyThatProducingTiffWithTextRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-52198 Production-sprint:07");
@@ -1897,7 +1915,7 @@ public class DocView_Regression1 {
 	 *              same records successfully.
 	 */
 
-	// @Test(groups = { "regression" }, priority = 22)
+	@Test(groups = { "regression" }, priority = 22)
 	public void verifyReamrkByDifferentTabsOnSameBrowser() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51542 Production-sprint:07");
@@ -1923,7 +1941,7 @@ public class DocView_Regression1 {
 		docView.navigateToDocViewPageURL();
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(10, 20, remark);
+		docView.addRemarkToNonAudioDocument(7, 55, remark);
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 
@@ -1944,7 +1962,7 @@ public class DocView_Regression1 {
 		String parentWindow = reusableDocView.switchTochildWindow();
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(10, 20, remark);
+		docView.addRemarkToNonAudioDocument(7, 55, remark);
 
 		baseClass.stepInfo("Switch to parent window from child window");
 		reusableDocView.childWindowToParentWindowSwitching(parentWindow);
@@ -1965,7 +1983,7 @@ public class DocView_Regression1 {
 		driver.Navigate().refresh();
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(10, 20, remark);
+		docView.addRemarkToNonAudioDocument(7,55, remark);
 
 		baseClass.stepInfo("Open Duplicate Tab Of Already Opened Tab");
 		docViewMetaDataPage.openDuplicateTabOfAlreadyOpenedTab();
@@ -1995,7 +2013,7 @@ public class DocView_Regression1 {
 	 * To verify documents should be Folder when document outside of the reviewers
 	 * batch is viewed from analytics panel.
 	 */
-	// @Test(alwaysRun = true,groups={"regression"},priority = 23)
+	@Test(alwaysRun = true,groups={"regression"},priority = 23)
 	public void verifyDocumentsShouldFolderbyFamilyMembersTab() throws Exception {
 		baseClass = new BaseClass(driver);
 		String assignmentName = Input.randomText + Utility.dynamicNameAppender();
@@ -2184,7 +2202,7 @@ public class DocView_Regression1 {
 		loginPage.logout();
 	}
 
-	/**
+	/** 
 	 * Author : Gopinath Created date: NA Modified date: NA Modified by:NA TestCase
 	 * id :RPMXCON- 51906 : Verify that when user in on Images tab and navigates to
 	 * next document then should be on Images tab for next document. Description:

@@ -28,7 +28,7 @@ import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
 public class DocViewMetaDataPage {
-
+ 
 	Driver driver;
 	public static int pureHit;
 	BaseClass base;
@@ -2411,7 +2411,7 @@ public class DocViewMetaDataPage {
 			getAnotherRemarkMessage().isElementAvailable(15);
 			base.waitForElement(getAnotherRemarkMessage());
 			String actualMessage = getAnotherRemarkMessage().getText().trim();
-			if (actualMessage.equalsIgnoreCase(expectedMessage)) {
+			if (actualMessage.toLowerCase().contains(expectedMessage.toLowerCase())) {
 				base.passedStep(actualMessage + " -- message successfully displayed");
 			} else {
 				base.failedStep(actualMessage + " -- messgae is not displayed");

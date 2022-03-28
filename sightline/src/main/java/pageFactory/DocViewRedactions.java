@@ -29,7 +29,7 @@ import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 public class DocViewRedactions {
-
+ 
 	Driver driver;
 	BaseClass base;
 	LoginPage loginPage;
@@ -1480,6 +1480,7 @@ public class DocViewRedactions {
 		redactionIcon().waitAndClick(20);
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
 		wait.until(ExpectedConditions.elementToBeClickable(btnTypeOfRedaction("Text Redaction").getWebElement()));
+		base.waitTime(2);
 		btnTypeOfRedaction("Text Redaction").Click();
 		WebElement src = driver.FindElement(By.cssSelector("g[id='ig0level0surface1'] g text:nth-child(1)"))
 				.getWebElement();
@@ -1869,6 +1870,8 @@ public class DocViewRedactions {
 	 */
 	public void verifyWeatherAudioRedactionDropdownIsBlank(boolean flag) {
 		try {
+			getAudioRedactDropdown().isElementAvailable(15);
+			base.waitTime(3);
 			base.waitForElement(getAudioRedactDropdown());
 			base.waitTillElemetToBeClickable(getAudioRedactDropdown());
 			Select select = new Select(getAudioRedactDropdown().getWebElement());

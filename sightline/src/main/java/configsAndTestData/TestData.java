@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+ 
 @Getter
 @Setter
 //@Builder(toBuilder = true)
@@ -603,7 +603,8 @@ public class TestData {
 		public String documentKeyDSource;
 		public String documentKeyCName;
 		
-		
+		//Added by gopinath - 23/03/2022
+		public String pageNum;
 		
 		
 		
