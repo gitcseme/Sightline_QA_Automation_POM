@@ -19096,5 +19096,76 @@ for (int i = 0; i < 6; i++) {
 		int dirCount = dirContent.length;
 		return dirCount;
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param statusMsg
+	 * @throws InterruptedException
+	 * @Description Verify the Production status of high Volume Project on Generation page.
+	 */
+	public void verifyProductionStatusInGenerationPageForHighVolumeProject(String statusMsg) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		String VerifyGenStatus = null;
+		String lastStatus = "Post-Generation QC checks Complete";
+		
+		// Verifying status of the production from generate page
+		for (int i = 0; i < 180; i++) {
+			if(!getStatusDraftTxt().isElementAvailable(1)) {
+				base.stepInfo("Quality Control & Confirmation page reached");
+				base.stepInfo("All status are completed");
+				base.stepInfo("this status only visible in High Volume Project");
+				break;
+			}
+			VerifyGenStatus = getStatusDraftTxt().getText();
+			if (VerifyGenStatus.contains(statusMsg)) {
+				base.passedStep(statusMsg + " status is displayed in Generation page");
+				break;
+			}else if(VerifyGenStatus.contains(lastStatus)) {
+				base.stepInfo("last status reached");
+				base.stepInfo("this status only visible in High Volume Project");
+				break;
+			}else if (i == 179) {
+				base.stepInfo("time out for status verification");
+				base.stepInfo("this status take more time than automation time limit");
+				base.stepInfo("this status only visible in High Volume Project");
+				break;
+			} else {
+				base.waitTime(1);
+				driver.waitForPageToBeReady();
+			}
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param statusMsg
+	 * @param productionname
+	 * @Description Verifying production status in Tile view on high volume project 
+	 */
+	public void verifyProductionStatusInTileViewForHighVolumeProject(String statusMsg, String productionname) {
+		driver.waitForPageToBeReady();
+		String productionFromHomePage = null;
+		String lastStatus = "Post-Gen QC Checks Complete";
+
+		// Verifying status of the production from home page
+		for (int i = 0; i < 180; i++) {
+			productionFromHomePage = getProductionFromHomePage(productionname).getText();
+			if (productionFromHomePage.contains(statusMsg)) {
+				base.passedStep(statusMsg + " status is displayed in Tile View");
+				break;
+			}else if(productionFromHomePage.contains(lastStatus)) {
+				base.stepInfo("last status reached");
+				base.stepInfo("this status only visible in High Volume Project");
+				break;
+			}else if (i == 179) {
+				base.stepInfo("time out for status verification");
+				base.stepInfo("this status take more time than automation time limit");
+				base.stepInfo("this status only visible in High Volume Project");
+				break;
+			} else {
+				getRefreshButton().waitAndClick(5);
+				driver.waitForPageToBeReady();
+			}
+		}
+		System.out.println("Preparing Data status displayed for " + productionFromHomePage);
+	}
 
 }

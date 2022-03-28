@@ -1491,7 +1491,7 @@ public class Production_Test_Regression_03 {
 	 * @Description Verify that branding is applied on all pages for  image based documents on generated TIFF file
 	 * 
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 10)
+	@Test(enabled = true,groups = { "regression" }, priority = 20)
 	public void verifyBrandingText() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1555,7 +1555,7 @@ public class Production_Test_Regression_03 {
 	 * @Description To Verify Correct  Count of Native Documents produce in (Production in Different Security Group).
 	 * 
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 11)
+	@Test(enabled = true,groups = { "regression" }, priority = 21)
 	public void verifyProdPrivCoutDiffSecuriyGroup() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1614,7 +1614,7 @@ public class Production_Test_Regression_03 {
 	 *         No:RPMXCON-55993
 	 * @Description: Verify that status text along with the docment counts show properly in the space available for the progress bar on tile view
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyStatusTextAndDocumentCountWithDifferentResolution() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1697,7 +1697,7 @@ public class Production_Test_Regression_03 {
 	* @author Aathith created on:NA modified by:NA TESTCASE No:RPMXCON-47926
 	* @Description:To Verify PRIV flag configured in the DAT section of Production is to being honored for all docs in the generated production
 	*/
-	@Test(enabled=true,groups = { "regression" }, priority = 13)
+	@Test(enabled=true,groups = { "regression" }, priority = 23)
 	public void verifyDatFiledisBlank() throws Exception {
 	UtilityLog.info(Input.prodPath);
 
@@ -1782,7 +1782,7 @@ public class Production_Test_Regression_03 {
 	 *         No:RPMXCON-56050
 	 * @Description: Verify that after destination copy is completed it should displays 'Exporting Files Complete' status on Grid  View
 	 */
-	@Test(groups = { "regression" }, priority = 14)
+	@Test(groups = { "regression" }, priority = 24)
 	public void verifyExportinFilesCompleteStatusOnGridView() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-56050 -Production Compinent");
@@ -1837,7 +1837,7 @@ public class Production_Test_Regression_03 {
 	 *         No:RPMXCON-56047
 	 * @Description: Verify that after LST generation completed it should displays ' Generating Load Files Complete' status on Grid View on home page
 	 */
-	@Test(groups = { "regression" }, priority = 15)
+	@Test(groups = { "regression" }, priority = 25)
 	public void verifyGeneratingLoadCompleteStatusOnGridView() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-56047 -Production Compinent");
@@ -1892,7 +1892,7 @@ public class Production_Test_Regression_03 {
 	 * @Description Verify Production should be generated successfully with the redacted documents (for documents with annotation) 
 	 * 
 	 */
-	@Test(enabled= true,groups = { "regression" }, priority = 16)
+	@Test(enabled= true,groups = { "regression" }, priority = 26)
 	public void verifyAnotationForRedactionPdf() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1986,7 +1986,7 @@ public class Production_Test_Regression_03 {
 	* @Description:Verify that PDF files should be copied to folder when 'Split Sub Folders' is ON with split count as 10.
 	* 'RPMXCON-47171' 
 	*/
-     @Test(enabled = true, groups = { "regression" }, priority = 17)
+     @Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyTheSubFolderAfterGenrationPDFFile() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	loginPage.logout();
@@ -2057,10 +2057,132 @@ public class Production_Test_Regression_03 {
 	
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
-
-
-	
+	loginPage.logout();
     }
+     /**
+		 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+		 *         No:RPMXCON-55983
+		 * @Description: Verify that once Archiving is in progress, it will displays status on Production Progress bar Tile View as 'Creating Archive - 10%'
+		 */
+		@Test(enabled = true,groups = { "regression" }, priority = 28)
+		public void verifiyCreateArchicTenPercenteOnTileView() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-55983 - Production Component");
+		base.stepInfo("Verify that once Archiving is in progress, it will displays status on Production Progress bar Tile View as 'Creating Archive - 10%'");
+		String testData1 = Input.testData1;
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		TempName ="Templete" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
+		// Pre-requisites
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.bulkTagExisting(tagname);
+		sessionSearch.bulkFolderExisting(foldername);
+		
+		//Verify archive status on Gen page
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSection(tagname);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.getbtnProductionGenerate().waitAndClick(10);
+		
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		//verification
+		page.verifyProductionStatusInTileViewForHighVolumeProject("Creating Archive - 10%", productionname);
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
+		}
+		/**
+		 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+		 *         No:RPMXCON-55982
+		 * @Description: Verify that once Archiving is in progress, it will displays status on Production Generation page as 'Creating Archive - 10%'
+		 */
+		@Test(enabled = true,groups = { "regression" }, priority = 29)
+		public void createArchivingTenPercentStatusVerifyOnGenPage() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-55982 -Production");
+		base.stepInfo("Verify that once Archiving is in progress, it will displays status on Production Generation page as 'Creating Archive - 10%'");
+		
+		String testData1 = Input.testData1;
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
+		// Pre-requisites
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		//Verify archive status on Gen page
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+
+		// Wait until Generate button enables
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutWait();
+		
+		driver.waitForPageToBeReady();
+		page.verifyProductionStatusInGenerationPageForHighVolumeProject("Creating Archive - 10%");
+		
+		//delete tags and folders
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
+		}
+
+     
+     
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
