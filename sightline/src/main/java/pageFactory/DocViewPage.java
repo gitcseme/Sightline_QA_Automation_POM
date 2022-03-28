@@ -15104,8 +15104,8 @@ public class DocViewPage {
 		base.waitForElementCollection(getMiniDocListDocIdText());
 		driver.waitForPageToBeReady();
 		for (String docId : completedDoc) {
-			getDociD(docId).ScrollTo();
 			base.waitForElement(getDociD(docId));
+			getDociD(docId).ScrollTo();			
 			getDociD(docId).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			boolean flag=getUnCompleteButton().Displayed();
@@ -17210,6 +17210,7 @@ public class DocViewPage {
 		base.waitForElement(getDocView_HistoryButton());
 		getDocView_HistoryButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		base.waitForElement(getHistoryDrp_Dwn());
 		String expectedValues = getHistoryDrp_Dwn().getText().trim();
 		if (expectedValue.equals(expectedValues)) {
 			base.waitForElement(getHistoryDrp_Dwn());

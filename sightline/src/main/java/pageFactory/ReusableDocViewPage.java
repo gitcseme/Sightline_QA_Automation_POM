@@ -765,7 +765,8 @@ public class ReusableDocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_EditMode());
 		getDocView_EditMode().waitAndClick(5);
-		getDocView_HdrAnalytics().WaitUntilPresent().ScrollTo();
+		base.waitForElement(getDocView_HdrAnalytics());
+		getDocView_HdrAnalytics().ScrollTo();
 		base.waitForElement(getDocView_HdrAnalytics());
 		getDocView_HdrAnalytics().waitAndClick(5);
 		base.stepInfo("Analytical panel child window opened");

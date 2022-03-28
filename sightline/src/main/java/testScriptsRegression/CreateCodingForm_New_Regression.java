@@ -3902,7 +3902,6 @@ public class CreateCodingForm_New_Regression {
 			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
 		try {
-			// loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
@@ -3911,12 +3910,9 @@ public class CreateCodingForm_New_Regression {
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		try {
-			// LoginPage.clearBrowserCache();
-
-		} catch (Exception e) {
-			System.out.println("Sessions already closed");
-		}
+		
+		System.out.println("******TEST CASES FOR CODINGFORM EXECUTED******");
+		
 	}
 
 
