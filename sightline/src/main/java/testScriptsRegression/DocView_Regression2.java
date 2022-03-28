@@ -18,7 +18,9 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -47,6 +49,7 @@ import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -4244,6 +4247,83 @@ public class DocView_Regression2 {
 
 		// verifying a corresponding text and highlighting a document.
 		docView.verifyCorrespondingTextIsHighlightedOnDocs(text);
+	}
+	
+	/**
+	 * Author :Sakthivel date: 23/03/2022 Modified date: NA Modified by: NA
+	 * Description Verify that In DocView Reviewer Remarks, when a user while
+	 * deleting a reviewer remark gets an error and yet deletes the remark, the
+	 * remark should be deleted and the highlighting should not be seen.
+	 * 'RPMXCON-60572'
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(description= "RPMXCON-60572",enabled = true, groups = { "regression" }, priority = 99)
+	public void verifyDocViewReviewerRemarkDeletedAndHighlightedNotDisplayed() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-60572");
+		SessionSearch search = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		docView = new DocViewPage(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		baseClass.stepInfo(
+				"Verify that In DocView Reviewer Remarks, when a user while deleting a reviewer remark gets an error and yet deletes the remark, the remark should be deleted and the highlighting should not be seen.");
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		search.basicContentSearch(Input.searchString1);
+		search.bulkAssign();
+		assignmentPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		tagsAndFolderPage.layerAnnotationsAsRMU();
+		baseClass.stepInfo("Annotation layer is already present and released to security group");
+		loginPage.logout();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		assignmentPage.selectAssignmentToViewinDocview(assname);
+		baseClass.stepInfo("Doc view page is selected from assigment page");
+		// verify Remark icon
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_AddRemarkIcon());
+		softAssertion.assertTrue(docView.getDocView_AddRemarkIcon().Displayed());
+		baseClass.stepInfo("Reviewer remarks panel is displayed on selected document");
+		docView.getDocView_AddRemarkIcon().waitAndClick(5);
+		wait.until(
+				ExpectedConditions.elementToBeClickable(docViewRedact.getDocView_Redactrec_textarea().getWebElement()));
+		Thread.sleep(Input.wait3);
+		// Thread sleep added for the page to adjust resolution
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
+				.moveByOffset(100, 20).release().build().perform();
+		baseClass.stepInfo("text for remarks has been highlighted on selected document");
+		softAssertion.assertTrue(docViewRedact.addRemarksBtn().Displayed());
+		baseClass.stepInfo("Remark text area is displayed successfully");
+		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
+		actions.click().build().perform();
+		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
+		actions.click();
+		actions.sendKeys("Remark by RMU");
+		actions.build().perform();
+		actions.moveToElement(docViewRedact.saveRemarksBtn().getWebElement());
+		actions.click().build().perform();
+		baseClass.passedStep("Verified Remarks is saved successfully");
+		if (docViewRedact.deleteRemarksBtn().isDisplayed()) {
+			wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.deleteRemarksBtn().getWebElement()));
+			docViewRedact.deleteRemarksBtn().waitAndClick(3);
+			docViewRedact.confirmDeleteRemarksBtn().Click();
+			baseClass.passedStep(
+					"verified remark is deleted successfully and the highlighted on the document is removed");
+		} else {
+			baseClass.passedStep("Verified Remarks");
+		}
+		loginPage.logout();
+
 	}
 	
 	@AfterMethod(alwaysRun = true)
