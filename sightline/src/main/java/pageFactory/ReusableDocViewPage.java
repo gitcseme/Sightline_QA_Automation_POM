@@ -1596,6 +1596,7 @@ public class ReusableDocViewPage {
 		String currentDocId=getDocView_CurrentDocId().getText();
 		base.waitForElement(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(10);
+		base.stepInfo("Coded as per the coding form for the previous document");
 		base.stepInfo("Code same as last icon clicked");
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_CurrentDocId());
@@ -1603,6 +1604,7 @@ public class ReusableDocViewPage {
 		softAssertion.assertNotEquals(currentDocId, docId);
 		softAssertion.assertAll();
 		base.passedStep("Cursor has moved to the next document in mini doc list..");
+		
 		
 	}
 	
