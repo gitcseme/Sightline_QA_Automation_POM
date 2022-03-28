@@ -2201,7 +2201,7 @@ public class DocView_Regression1 {
 		loginPage.logout();
 	}
 
-	/**
+	/** 
 	 * Author : Gopinath Created date: NA Modified date: NA Modified by:NA TestCase
 	 * id :RPMXCON- 51906 : Verify that when user in on Images tab and navigates to
 	 * next document then should be on Images tab for next document. Description:

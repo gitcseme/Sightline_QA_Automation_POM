@@ -673,6 +673,9 @@ public class Input {
 	public static String documentKeyBNum;
 	public static String documentKeyDSource;
 	public static String documentKeyCName;
+	
+	//Added by gopinath - 23/03/2022
+	public static String pageNum;
 	 
 	@BeforeSuite(alwaysRun = true)
 
@@ -1357,7 +1360,8 @@ public class Input {
 		documentKeyDSource = testData.getDocumentKeyDSource();
 		documentKeyCName = testData.getDocumentKeyCName();
 		
-		
+		//Added by Gopinath -23/03/2022
+		pageNum = testData.getPageNum();
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 

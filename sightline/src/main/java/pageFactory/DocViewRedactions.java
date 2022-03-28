@@ -29,7 +29,7 @@ import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 public class DocViewRedactions {
-
+ 
 	Driver driver;
 	BaseClass base;
 	LoginPage loginPage;

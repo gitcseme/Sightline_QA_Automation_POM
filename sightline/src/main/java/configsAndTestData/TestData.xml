@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- REGRESSION TEST DATA -->
 
-<TestData>
+<TestData> 
 	<!-- Serach strings and expected pure hit counts -->
 	<searchString1>test</searchString1>
 	<searchString2>comments</searchString2>
