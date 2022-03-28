@@ -3257,6 +3257,46 @@ public class DocView_MiniDocList_Regression {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51298 Verify if clicked document from history is present in the
+	 * mini doc list then mini doc list should down/up
+	 * 
+	 * @throws InterruptedException
+	 * 
+	 */
+
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 76)
+	public void verifySelectedDocHistoryIsPresentInMiniDocList(String fullName, String userName, String password)
+			throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51298");
+		baseClass.stepInfo(
+				"Verify if clicked document from history is present in the mini doc list then mini doc list should down/up");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		MiniDocListPage miniDocList = new MiniDocListPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+
+		loginPage.loginToSightLine(userName, password);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Searched documents and go to docviewpage");
+
+		String docid = docView.getVerifyPrincipalDocument().getText();
+		miniDocList.getDociD(docid).waitAndClick(5);
+		baseClass.stepInfo(docid + "document selected in minidoclist");
+		softassertion.assertTrue(miniDocList.getDociD(docid).Displayed());
+		baseClass.passedStep(docid + "Document is viewed from minidoclist");
+		docView.scrollingDocumentInMiniDocList();
+		docView.clickClockIconMiniDocList();
+		driver.waitForPageToBeReady();
+		softassertion.assertTrue(miniDocList.getDociD(docid).Displayed());
+		baseClass.passedStep(docid + "Document is viewed from minidoclist in after selected history dropdown");
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
