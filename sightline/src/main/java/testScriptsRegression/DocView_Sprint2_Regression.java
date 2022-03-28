@@ -95,7 +95,7 @@ public class DocView_Sprint2_Regression {
 	 *         Id: RPMXCON-52030 Description : login as RMU and impersonate as
 	 *         reviewer use search term to get document and redact
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
+	@Test(description = "RPMXCON-52030", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyRedactionasReviewer() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -129,7 +129,7 @@ public class DocView_Sprint2_Regression {
 	 *         navigate through documents Get document list using search input and
 	 *         view in DocView Navigate to first and last document
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-50779",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
 
 	public void verifyDocNavigationRMU() throws Exception {
 // Selecting Document from Session search
@@ -173,7 +173,7 @@ public class DocView_Sprint2_Regression {
 	 *         DocView
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-51863",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
 
 	public void verifyTextRemarks() throws Exception {
 // Selecting Document from Session search
@@ -223,7 +223,7 @@ public class DocView_Sprint2_Regression {
 	 *         document list using search input and view in DocView print document
 	 *         and verify bullhorn notification & background tasks
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-52232,RPMXCON-52230,RPMXCON-52229",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 5)
 
 	public void verifyBullhornNotifications() throws Exception {
 // Selecting Document from Session search
@@ -273,7 +273,7 @@ public class DocView_Sprint2_Regression {
 	 *         Test Case Id: 51758 Description : Verify persitent hit panel As RMU,
 	 *         go to DocView from assignments with key word associated
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 0)
+	@Test(description = "RPMXCON-51758",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
 
 	public void verifyPersistantHitPanal() throws Exception {
 
@@ -323,7 +323,7 @@ public class DocView_Sprint2_Regression {
 	 * for 52194, Delete the performed text redaction
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
+	@Test(description = "RPMXCON-52220,RPMXCON-52194",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
 	public void textRedactionAsRMU() throws Exception {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -363,7 +363,7 @@ public class DocView_Sprint2_Regression {
 	 * Redactions
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(description = "RPMXCON-52303,RPMXCON-52304",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
 	public void verifyRedactionStabilityinAllDocTypes() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -385,7 +385,7 @@ public class DocView_Sprint2_Regression {
 	 * as RMU use search term to get a pdf document and print
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(description = "RPMXCON-52231",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 9)
 	public void printRedactedPdfasReviewer() throws Exception {
 
 // Selecting Document from Session search	
@@ -450,7 +450,7 @@ public class DocView_Sprint2_Regression {
 	 * button is not avilable for audio docs
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 13)
+	@Test(description = "RPMXCON-52202",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 10)
 	public void textRedactionWithAudioDocs() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -518,7 +518,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
+	@Test(description = "RPMXCON-52170",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 11)
 	public void verifyToolTipMouseOverCodeSameAsLast() throws Exception {
 		String assignmentName = "assignmentA1" + Utility.dynamicNameAppender();
 		int pureHitCount = 201;
@@ -580,7 +580,7 @@ public class DocView_Sprint2_Regression {
 	 * bullet points and redaction applied at bullet points
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
+	@Test(description = "RPMXCON-52228",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void printingDocWithBulletPoints() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -627,7 +627,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying persistent hit for audio docs as RMU DocView- sprint 3
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 17)
+	@Test(description = "RPMXCON-52188",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 13)
 	public void persistentHitCheckAudioDocs() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -658,7 +658,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying persistent hit for docs from assignment DocView- sprint 3
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
+	@Test(description = "RPMXCON-51871",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 14)
 	public void persistentHitCheckNonAudioDocs() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -691,7 +691,7 @@ public class DocView_Sprint2_Regression {
 	 * window DocView- sprint 3
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
+	@Test(description = "RPMXCON-51350",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void persistentHitCheckAudioDocsChildWindow() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -707,34 +707,13 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 	}
 
-	/**
-	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 51349
-	 * Verifying persistent hit for audio docs as RMU when navigated from child
-	 * window As PA DocView- sprint 3
-	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
-	public void persistentHitCheckAudioDocsChildWindowAsPA() throws Exception {
-		baseClass = new BaseClass(driver);
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-51349");
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.audioSearch("Morning", Input.language);
-		baseClass.stepInfo("Search for audio docs completed");
-		sessionsearch.ViewInDocView();
-		docViewRedact.checkingPersistentHitPanelAudio();
-		reusabledocviewpage.clickGearIconOpenMiniDocList();
-		docViewRedact.selectingDocFromMiniDocListChildWindow();
-		loginPage.logout();
-	}
+	
 
 	/**
 	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 51626
 	 * Verifying Remarks and colour highliting as RMU DocView- sprint 3
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
+	@Test(description ="RPMXCON-51626",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
 	public void VerifySavedTextRemark() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -796,7 +775,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying persistent hit for non audio docs as RMU and Rev from assignments
 	 * DocView- sprint 3
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
+	@Test(description ="RPMXCON-51764",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 17)
 	public void persistentHitCheckNonAudioAsRev() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -828,7 +807,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying if text redaction option is present under RMU and Rev DocView-
 	 * sprint 4
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 26)
+	@Test(description ="RPMXCON-52191",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
 	public void verifyTextRedactionOption() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52191");
@@ -875,7 +854,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying doc is highlighted using this page and highlight is deleted
 	 * successfully while refreshing page DocView- sprint 4
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 28)
+	@Test(description ="RPMXCON-51655",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void verifyHighlitingInDocView() throws Exception {
 		Robot robot = new Robot();
 		Actions actions = new Actions(driver.getWebDriver());
@@ -925,7 +904,7 @@ public class DocView_Sprint2_Regression {
 	 * Id:RPMXCON-51007 Verify thumbnails icon and check for doc view click
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 30)
+	@Test(description ="RPMXCON-51007",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
 	public void verifyThumbnailsPageNavigation() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51007");
