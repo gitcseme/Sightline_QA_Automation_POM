@@ -19085,5 +19085,16 @@ for (int i = 0; i < 6; i++) {
 			}
 		}
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param file
+	 * @return
+	 * @Description To Get the file count in that location
+	 */
+	public int dirFoldersCount(File file) {
+		File[] dirContent = file.listFiles();
+		int dirCount = dirContent.length;
+		return dirCount;
+	}
 
 }
