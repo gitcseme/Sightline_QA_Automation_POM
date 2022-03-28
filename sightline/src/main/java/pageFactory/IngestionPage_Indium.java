@@ -841,7 +841,11 @@ public class IngestionPage_Indium {
 	public Element indexingSectionDetails() {
 		return driver.FindElementByXPath("//div[@id='Indexingblock']//div//div//div//span");
 	}
-
+	
+	public Element goBackButton() {
+		return driver.FindElementByXPath("//*[@class='ui-dialog-buttonset']//button[text()='Go Back']");
+	}
+	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
 		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[text()='Rollback']");
@@ -5925,5 +5929,44 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		
 	}
 	
+	/**
+	 * @author: Arun Created Date: 28/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify mapping field selection after clicking back button
+	 */
+	
+		public void verifyMappingFiledPriorSelection(String Field1,String Field2,String Field3) {
+		
+		driver.waitForPageToBeReady();
+		getPreviewRun().waitAndClick(10);
+		base.VerifyErrorMessage("Please specify a mapping for the mandatory fields.");
+		
+		getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(Field1);
+		getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText(Field2);
+		getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText(Field3);
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getPreviewRun().Visible()  ;}}), Input.wait30); 
+    	getPreviewRun().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getApproveMessageOKButton().Visible();
+			}
+		}), Input.wait30);
+		getApproveMessageOKButton().waitAndClick(10);
+		
+		goBackButton().waitAndClick(5);
+		
+		String mappedParentDocID= getMappingSOURCEFIELD2().selectFromDropdown().getFirstSelectedOption().getText();
+		String mappedDataSource =getMappingSOURCEFIELD3().selectFromDropdown().getFirstSelectedOption().getText();
+		String mappedCustodian=getMappingSOURCEFIELD4().selectFromDropdown().getFirstSelectedOption().getText();
+		
+		if(mappedParentDocID.equalsIgnoreCase(Field1) && mappedDataSource.equalsIgnoreCase(Field2) && mappedCustodian.equalsIgnoreCase(Field3)) {
+			base.passedStep("Mapped fields displayed with prior selection");
+		}
+		else {
+			base.failedStep("Mapped fields not displayed with prior selection");
+		}			
+	}
 	
 }
