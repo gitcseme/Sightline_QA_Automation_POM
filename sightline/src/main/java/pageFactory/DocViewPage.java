@@ -13987,14 +13987,14 @@ public class DocViewPage {
 	 */
 	public void addRemarkToNonAudioDocument(int off1, int off2, String remark) {
 		try {
-			base.waitTime(5);
+			base.waitTime(4);
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getNonAudioRemarkBtn().isElementAvailable(10);
 				}
 			}), Input.wait60);
 			getNonAudioRemarkBtn().waitAndClick(9);
-
+			base.waitTime(3);
 			if (getDocView_Remark_DeleteIcon().isElementAvailable(2)) {
 				getDocView_Remark_DeleteIcon().waitAndClick(10);
 				base.getPopupYesBtn().waitAndClick(5);
@@ -14010,8 +14010,9 @@ public class DocViewPage {
 			System.out.println(off1 + "...." + off2);
 			Actions actions = new Actions(driver.getWebDriver());
 			driver.waitForPageToBeReady();
+			base.waitTime(3);
 			WebElement text = getSelectedAreaElement().getWebElement();
-			actions.moveToElement(text, 5, 55).clickAndHold().moveByOffset(200, 220).release().perform();
+			actions.moveToElement(text, off1, off2).clickAndHold().moveByOffset(200, 220).release().perform();
 			driver.scrollPageToTop();
 			getAddRemarkbtn().getWebElement().click();
 			driver.WaitUntil((new Callable<Boolean>() {

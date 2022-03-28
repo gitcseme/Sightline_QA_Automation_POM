@@ -603,7 +603,8 @@ public class TestData {
 		public String documentKeyDSource;
 		public String documentKeyCName;
 		
-		
+		//Added by gopinath - 23/03/2022
+		public String pageNum;
 		
 		
 		

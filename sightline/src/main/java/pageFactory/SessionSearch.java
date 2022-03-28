@@ -5030,16 +5030,18 @@ public class SessionSearch {
 	 */
 	public void bulkAssignWithNewAssignment() throws InterruptedException {
 		driver.waitForPageToBeReady();
-		try {
-			base.waitForElement(getPureHitAddButton());
-			Thread.sleep(1000);
+		base.waitTime(2);
+		if(getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().Click();
-		} catch (Exception e) {
+		} else {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 		}
+		base.waitTime(1);
+		getBulkActionButton().isElementAvailable(10);
 		base.waitForElement(getBulkActionButton());
 		getBulkActionButton().Click();
+		getBulkAssignAction().isElementAvailable(10);
 		base.waitForElement(getBulkAssignAction());
 		getBulkAssignAction().Click();
 		UtilityLog.info("performing bulk assign");
@@ -5047,11 +5049,15 @@ public class SessionSearch {
 		getBulkNewTab().waitAndClick(3);
 		for (int i = 0; i < 15; i++) {
 			try {
+				base.waitTime(3);
+				base.waitTillElemetToBeClickable(getContinueButton());
 				getContinueButton().Click();
+				break;
 			} catch (Exception e) {
-				Thread.sleep(1000);
+				base.waitTime(1);
 			}
 		}
+		getFinalizeButton().isElementAvailable(10);
 		base.waitForElement(getFinalizeButton());
 		getFinalizeButton().Click();
 		Reporter.log("Bulk assign is completed", true);
