@@ -775,7 +775,6 @@ public class CreateCodingForm_New_Regression2 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
-			loginPage.logoutWithoutAssert();
 		}
 		try {
 			loginPage.quitBrowser();
