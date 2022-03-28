@@ -1053,7 +1053,8 @@ public class DocExplorerPage {
 			getTag(tagName).Click();
 			for (int i = 0; i < 20; i++) {
 				try {
-					Thread.sleep(1500);
+					bc.waitTime(4);
+					bc.waitTillElemetToBeClickable(getContinueButton());
 					getContinueButton().Click();
 					break;
 				} catch (Exception e) {
@@ -2159,10 +2160,10 @@ public class DocExplorerPage {
 				if (foldername.length() > 18) {
 					Actions ac = new Actions(driver.getWebDriver());
 					ac.moveToElement(folders.get(i)).perform();
-					ac.moveByOffset(50, 50).perform();
-					ac.moveToElement(folders.get(i)).perform();
-					bc.passedStep(
-							"after mouse hover to the folder full name " + foldername + " is displayed in tool tip");
+					//ac.moveByOffset(50, 50).perform();
+					//ac.moveToElement(folders.get(i)).perform();
+					bc.passedStep("after mouse hover to the folder full name " + foldername + " is displayed in tool tip");
+					getFolderToolTip().isElementAvailable(10);
 					if (getFolderToolTip().isDisplayed()) {
 						String folderNameInToolTip = getFolderToolTip().getText();
 						System.out.println(folderNameInToolTip);
