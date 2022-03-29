@@ -241,33 +241,46 @@ public class SecurityGroupsPage {
 		return driver.FindElementByXPath("//span[@id='SecurityGroup-selector']");
 	}
 
-	//Added by gopinath - 21/01/2022
+	// Added by gopinath - 21/01/2022
 	public Element getCommentCheckBox(String name) {
-		return driver.FindElementByXPath("//div[@id='commentJSTree']//a[@data-content = '"+name+"']//i[@class='jstree-icon jstree-checkbox']");
+		return driver.FindElementByXPath("//div[@id='commentJSTree']//a[@data-content = '" + name
+				+ "']//i[@class='jstree-icon jstree-checkbox']");
 	}
+
 	public Element getCommentLink() {
 		return driver.FindElementByXPath("//ul[@id='myTab1']//a[text()='Comments']");
 	}
+
 	public Element getCommentRightShiftButton() {
 		return driver.FindElementByXPath("//div[@id='s5']/div[1]/div[2]/a[1]");
 	}
+
 	public Element getCommentBoard() {
 		return driver.FindElementById("commentJSTree");
 	}
-	
-	//Added by Gopinath - 09/02/2022
+
+	// Added by Gopinath - 09/02/2022
 	public Element getKeywordsLink() {
 		return driver.FindElementByXPath("//ul[@id='myTab1']//a[text()='Keywords']");
 	}
+
 	public Element getKeywordCheckBox(String name) {
-		return driver.FindElementByXPath("//div[@id='myTabContent1']//a[@data-content = '"+name+"']//i[@class='jstree-icon jstree-checkbox']");
+		return driver.FindElementByXPath("//div[@id='myTabContent1']//a[@data-content = '" + name
+				+ "']//i[@class='jstree-icon jstree-checkbox']");
 	}
+
 	public Element getKeywordRightShiftButton() {
 		return driver.FindElementByXPath("//a[@class='btn btn-primary' and contains(@onclick,'KeywordRightshift')]");
 	}
+
 	public Element getKeywordBoard() {
 		return driver.FindElementById("keywordJSTree");
 	}
+
+	public ElementCollection getAvailableSGlist() {
+		return driver.FindElementsByXPath("//select[@id='ddlSecurityGroupsList']//option");
+	}
+
 	public SecurityGroupsPage(Driver driver) {
 
 		this.driver = driver;
@@ -277,7 +290,7 @@ public class SecurityGroupsPage {
 
 	}
 
-	//modified for stabilisation
+	// modified for stabilisation
 	public void AddSecurityGroup(String securitygroupname) {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -316,7 +329,6 @@ public class SecurityGroupsPage {
 		 * securitygroupname);
 		 */
 	}
-
 
 	public List<String> GetSecurityGrouplist() {
 
@@ -454,8 +466,9 @@ public class SecurityGroupsPage {
 	 *                          add to security group).
 	 * @param folderName        -- (folderName is a string value that name of
 	 *                          folder)
-	 *  
-	 *  @Modifed On : 22/03/2022 change try catch to if else on the button getYesButton()
+	 * 
+	 * @Modifed On : 22/03/2022 change try catch to if else on the button
+	 *          getYesButton()
 	 */
 	public void addFolderToSecurityGroup(String securityGroupName, String folderName) {
 		try {
@@ -473,7 +486,7 @@ public class SecurityGroupsPage {
 			bc.waitForElement(getFolderRightShiftButton());
 			getFolderRightShiftButton().Click();
 			getProjectLevelEmailCheckBox().Click();
-			if(getYesButton().isElementAvailable(1)) {
+			if (getYesButton().isElementAvailable(1)) {
 				getYesButton().waitAndClick(10);
 			} else {
 				getSG_AnnSaveButton().waitAndClick(10);
@@ -484,6 +497,7 @@ public class SecurityGroupsPage {
 					bc.getSuccessMsg().getWebElement().isDisplayed());
 			if (bc.getSuccessMsg().getWebElement().isDisplayed()) {
 				bc.passedStep("Success message is displayed successfully");
+				bc.CloseSuccessMsgpopup();
 			}
 
 		} catch (Exception e) {
@@ -565,6 +579,7 @@ public class SecurityGroupsPage {
 					bc.getSuccessMsg().getWebElement().isDisplayed());
 			if (bc.getSuccessMsg().getWebElement().isDisplayed()) {
 				bc.passedStep("Success message is displayed successfully");
+				bc.CloseSuccessMsgpopup();
 			}
 
 		} catch (Exception e) {
@@ -587,7 +602,7 @@ public class SecurityGroupsPage {
 			bc.waitForElement(getSelectSecurityGroup());
 			bc.waitTillElemetToBeClickable(getSelectSecurityGroup());
 			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
-			bc.stepInfo("Selected "+securityGroupName+" from available SG's");
+			bc.stepInfo("Selected " + securityGroupName + " from available SG's");
 		} catch (Exception e) {
 			e.printStackTrace();
 			bc.failedStep("Exception occcured while selecting security group" + e.getMessage());
@@ -684,7 +699,7 @@ public class SecurityGroupsPage {
 			Assert.assertEquals("Success message is not displayed", true,
 					bc.getSuccessMsg().getWebElement().isDisplayed());
 			if (bc.getSuccessMsg().getWebElement().isDisplayed()) {
-				bc.passedStep("Success message is displayed successfully for this reduction "+reductionTag);
+				bc.passedStep("Success message is displayed successfully for this reduction " + reductionTag);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -859,16 +874,15 @@ public class SecurityGroupsPage {
 			bc.failedStep("Exception occured while navigating to security groups is failed" + e.getMessage());
 		}
 	}
-	
-	
- 
+
 	/**
 	 * @author : Gopinath Created date: 08-09-2021 Modified date: NA Modified
 	 *         by:Gopinath.
 	 * @Description: Method for adding comment to security field..
 	 * @param securityGroupName -- (securityGroupName is a string value that need to
 	 *                          add to security group).
-	 * @param commentName           -- (commentName is a string value that name of comment field)
+	 * @param commentName       -- (commentName is a string value that name of
+	 *                          comment field)
 	 */
 	public void addCommentToSecurityGroup(String securityGroupName, String commentName) {
 		try {
@@ -915,8 +929,10 @@ public class SecurityGroupsPage {
 
 		}
 	}
+
 	/**
-	 * @author : Gopinath Created date: 08-09-2021 Modified date: NA Modified by:Gopinath.
+	 * @author : Gopinath Created date: 08-09-2021 Modified date: NA Modified
+	 *         by:Gopinath.
 	 * @Description: Method for adding keyword to security field..
 	 * @param securityGroupName -- (securityGroupName is a string value that need to
 	 *                          add to security group).
@@ -965,6 +981,33 @@ public class SecurityGroupsPage {
 			bc.failedStep("Exception occcured while adding keyword to security group" + e.getMessage());
 
 		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param securitygroupname - security group name to create or pick
+	 * @return
+	 */
+	public String createOrPickSG(String securitygroupname) {
+		Boolean defaultSG = true;
+		List<String> sgList = new ArrayList<>();
+		sgList = bc.availableListofElements(getAvailableSGlist());
+		int listSize = sgList.size();
+		System.out.println(listSize);
+		if (listSize > 1) {
+			while (defaultSG) {
+				int indexTOSelect = bc.randNumber(listSize);
+				securitygroupname = sgList.get(indexTOSelect);
+				System.out.println(securitygroupname);
+				if (!securitygroupname.equalsIgnoreCase(Input.securityGroup)) {
+					defaultSG = false;
+				}
+			}
+		} else {
+			AddSecurityGroup(securitygroupname);
+			driver.waitForPageToBeReady();
+		}
+		return securitygroupname;
 	}
 
 }
