@@ -697,7 +697,7 @@ public class ProductionNew_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("Generated production with ingested text");
 		
 		//To delete the created Tag and folder 
@@ -753,7 +753,7 @@ public class ProductionNew_Regression {
 	 *         No:RPMXCON_56077
 	 * @Description:generateProductionWithIngestedText1.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = false, groups = { "regression" }, priority = 16)
 	public void generateProductionWithIngestedText1() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -793,7 +793,7 @@ public class ProductionNew_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("generate Production With Ingested Text");
 		
 		//To delete the created Tag and folder 
@@ -895,9 +895,25 @@ public class ProductionNew_Regression {
 
 		// create production under default directory
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
-		page.CreateNewProduction(productionname, prefixID, suffixID, foldername, tagname);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTiffSectionBranding();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("generate Production Under Default Directory");
 		
 		//To delete the created Tag and folder 
@@ -988,7 +1004,7 @@ public class ProductionNew_Regression {
 		// Pre-requisites
 		// create folder and tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Technical Issue");
+		tagsAndFolderPage.CreateTagwithClassification(tagname,"Technical Issue");
 
 		sessionSearch = new SessionSearch(driver);
 		// passing orphan redacted DOCID as string
@@ -1075,7 +1091,7 @@ public class ProductionNew_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("Validate text on Text redactions applied documents with PDF generated files");
 	
 		//To delete the created Tag and folder 
@@ -1132,7 +1148,7 @@ public class ProductionNew_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("Validate text for Text redactions and Batch redactions are applied area on documents with TIFF generated files");
 	
 		//To delete the created Tag and folder 
@@ -1180,7 +1196,7 @@ public class ProductionNew_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("To verify In Production user can select the only DAT and TIFF component and Production should generated successfully");
 		
 		//To delete the created Tag and folder 
@@ -1236,7 +1252,7 @@ public class ProductionNew_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("To verify that the all the pages are together in proper sequence for a document in OPT.");
 		 
 		//To delete the created Tag and folder 
@@ -1297,7 +1313,7 @@ public class ProductionNew_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("verified that the order of docs in Text, Native, MP3, PDF LST is matching the order of docs in DAT");
 	
 		//To delete the created Tag and folder 
@@ -1312,7 +1328,7 @@ public class ProductionNew_Regression {
 	 *         No:RPMXCON_49225
 	 * @Description:To verify that Family members having the same FamilyID must be withheld, if 'Withhold Natives for Entire Family for Priv and Redacted Docs' option is enabled
 	 */                      
-	@Test(enabled = false, groups = { "regression" }, priority = 25)
+	@Test(enabled = false, groups = { "regression" }, priority = 26)
 	public void verifyParentIDInPrivAndRedactedDocs() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49225 Production- Sprint 04");
@@ -1331,6 +1347,7 @@ public class ProductionNew_Regression {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		//search for parent document and adding to bulk folder
+		base=new BaseClass(driver);
 		base.selectproject();
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.documentID);
