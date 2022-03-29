@@ -1294,6 +1294,302 @@ public class TagAndFolder {
 		lp.logout();
 	}
 
+	/**
+	 * @author Raghuram A Date: 03/25/21 Modified date:N/A Modified by: Description
+	 *         : Verify that RMU User - can NOT edit/delete Folder names that have
+	 *         released to other SecurityGroup on \"Tags and Folders\" >> Folders
+	 *         screen - RPMXCON-59305 Sprint 14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	public void verifyRMUCannotEditAndDeleteFolderAfterReleasToSGs() throws Exception {
+
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		SecurityGroupsPage sgPage = new SecurityGroupsPage(driver);
+
+		String folder = "newFolder" + Utility.dynamicNameAppender();
+		String renamedFolder = "renamedFolder" + Utility.dynamicNameAppender();
+		String securitygroupname = "securitygroupname" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("Test case Id: RPMXCON-59305 TagsAndFolder Sprint 14");
+		bc.stepInfo(
+				"Verify that RMU User - can NOT edit/delete Folder names that have released to other SecurityGroup on \"Tags and Folders\" >> Folders screen");
+		bc.failedMessage(
+				"---------Expecected Failure--------RMU allowed to delete the folder  released to multiple groups--------");
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("Logged in as : " + Input.pa1FullName);
+
+		// create Folder
+		tagAndFolderPage.CreateFolder(folder, Input.securityGroup);
+
+//		Navigate to SG page
+		sgPage.navigateToSecurityGropusPageURL();
+		driver.waitForPageToBeReady();
+		securitygroupname = sgPage.createOrPickSG(securitygroupname);
+		System.out.println(securitygroupname);
+
+		// adding folder to SGs
+		sgPage.addFolderToSecurityGroup(Input.securityGroup, folder);
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		sgPage.addFolderToSecurityGroup(securitygroupname, folder);
+
+		// logout
+		lp.logout();
+
+		// login as RMU
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Logged in as : " + Input.rmu1FullName);
+
+		// rename created folder
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.verifyNodePresent(folder, true, "Folder");
+		tagAndFolderPage.editFolder(Input.securityGroup, folder, renamedFolder, "Failure-Error", null);
+		driver.waitForPageToBeReady();
+
+		// delete renamed folder
+		tagAndFolderPage.deleteAllFolderGroup(folder, "");
+		tagAndFolderPage.verifyNotificationMsg("Failure-Error", "Folder", "", "");
+		tagAndFolderPage.verifyNodePresent(folder, false, "Folder");
+
+		// logout
+		lp.logout();
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("Logged in as : " + Input.pa1FullName);
+
+		// delete SG
+		sgPage.deleteSecurityGroups(securitygroupname);
+
+		// logout
+		lp.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A Date: 03/29/21 Modified date:N/A Modified by: Description
+	 *         : Verify that RMU User - can NOT edit/delete Tag names that have
+	 *         released to other SecurityGroup on \"Tags and Folders\" >> Folders
+	 *         screen - RPMXCON-59306 Sprint 14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	public void verifyRMUCannotEditAndDeleteTagAfterReleasToSGs() throws Exception {
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		SecurityGroupsPage sgPage = new SecurityGroupsPage(driver);
+
+		bc.stepInfo("Test case Id: RPMXCON-59306 TagsAndFolder Sprint 14");
+		bc.stepInfo(
+				"Verify that RMU User - can NOT edit/delete Tag names that have released to other SecurityGroup on \"Tags and Folders\" >> Folders screen");
+		bc.failedMessage(
+				"---------Expecected Failure--------RMU allowed to delete the tag released to multiple groups--------");
+
+		String tag = "newTag" + Utility.dynamicNameAppender();
+		String renamedTag = "renamedTag" + Utility.dynamicNameAppender();
+		String securitygroupname = "securitygroupname" + Utility.dynamicNameAppender();
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("Logged in as : " + Input.pa1FullName);
+
+		// create Tag
+		tagAndFolderPage.CreateTag(tag, Input.securityGroup);
+
+		// Navigate to SG page
+		sgPage.navigateToSecurityGropusPageURL();
+		driver.waitForPageToBeReady();
+		securitygroupname = sgPage.createOrPickSG(securitygroupname);
+		System.out.println(securitygroupname);
+
+		// adding folder to SGs
+		sgPage.addTagToSecurityGroup(Input.securityGroup, tag);
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		sgPage.addTagToSecurityGroup(securitygroupname, tag);
+
+		// logout
+		lp.logout();
+
+		// login as RMU
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Logged in as : " + Input.rmu1FullName);
+
+		// rename created folder
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.verifyNodePresent(tag, true, "Folder");
+		tagAndFolderPage.editTag(Input.securityGroup, tag, renamedTag, "Failure-Error", null);
+		driver.waitForPageToBeReady();
+
+		// delete renamed tag
+		tagAndFolderPage.deleteAllTagsGroups(tag, "");
+		tagAndFolderPage.verifyNotificationMsg("Failure-Error", "Tag", "", "");
+		tagAndFolderPage.verifyNodePresent(tag, false, "Tag");
+
+		// logout
+		lp.logout();
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("Logged in as : " + Input.pa1FullName);
+
+		// delete SG
+		sgPage.deleteSecurityGroups(securitygroupname);
+
+		// logout
+		lp.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A Date: 03/29/21 Modified date:N/A Modified by: Description
+	 *         : Verify that RMU User - can NOT edit/delete Tag Group name that have
+	 *         released to other SecurityGroup on "Tags and Folders" >> Folders
+	 *         screen - RPMXCON-59307 Sprint 14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	public void verifyAfterRMUEditAndDeleteTagGroupSGMultiple() throws Exception {
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		SecurityGroupsPage sgPage = new SecurityGroupsPage(driver);
+
+		String securitygroupname = "securitygroupname" + Utility.dynamicNameAppender();
+		String tagGroupSG = "newTagGroup" + Utility.dynamicNameAppender();
+		String renamedTagGroupSG = "renamedTagGroup" + Utility.dynamicNameAppender();
+
+		bc.failedMessage("---------Expecected Failure--------RPMXCON-63671--------");
+		bc.stepInfo("Test case Id: RPMXCON-59307 TagsAndFolder Sprint 14");
+		bc.stepInfo(
+				"Verify that  RMU  User - can NOT edit/delete Tag Group name that have  released to other SecurityGroup   on \"Tags and Folders\" >> Folders screen");
+
+		// login as RMU
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Logged in as : " + Input.rmu1FullName);
+
+		// Create Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.createTagGroup(Input.securityGroup, tagGroupSG, "Success", null);
+
+		lp.logout();
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("Logged in as : " + Input.pa1FullName + " to release into SG");
+
+//		Navigate to SG page
+		sgPage.navigateToSecurityGropusPageURL();
+		driver.waitForPageToBeReady();
+		securitygroupname = sgPage.createOrPickSG(securitygroupname);
+		System.out.println(securitygroupname);
+
+		// Add Tag to SG
+		sgPage.addTagToSecurityGroup(securitygroupname, tagGroupSG);
+		bc.passedStep("Created TagGroup : " + tagGroupSG + " added to Security Group");
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		sgPage.addTagToSecurityGroup(Input.securityGroup, tagGroupSG);
+		bc.passedStep("Created TagGroup : " + tagGroupSG + " added to Security Group");
+
+		lp.logout();
+
+		// login as RMU
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Logged in as : " + Input.rmu1FullName
+				+ " :- to verify Tag group edit/delete after released to two different SG's");
+
+		// Rename Tag group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallTagRoot();
+		tagAndFolderPage.verifyNodePresent(tagGroupSG, true, "Tag");
+		tagAndFolderPage.editTagGroup(Input.securityGroup, tagGroupSG, renamedTagGroupSG, "Failure-Error", null);
+
+		// Delete Tag group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllTagsGroups(tagGroupSG, "Failure-Error");
+		tagAndFolderPage.verifyNodePresent(tagGroupSG, false, "Tag");
+
+//		To add - delete SG once issue is fixed
+
+		lp.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 03/29/21 Modified date:N/A Modified by: Description
+	 *         : Verify that RMU User - can NOT edit/delete Folder Group name that
+	 *         have released to other SecurityGroup on "Tags and Folders" >> Folders
+	 *         screen - RPMXCON-59308 Sprint 14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	public void verifyAfterRMUEditAndDeleteFolderGroupSGMultiple() throws Exception {
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		SecurityGroupsPage sgPage = new SecurityGroupsPage(driver);
+
+		String securitygroupname = "securitygroupname" + Utility.dynamicNameAppender();
+		String folderGroupSG = "newFolderGroup" + Utility.dynamicNameAppender();
+		String renamedfolderGroupSG = "renamedFolderGroup" + Utility.dynamicNameAppender();
+
+		bc.failedMessage("---------Expecected Failure--------RPMXCON-63671--------");
+		bc.stepInfo("Test case Id: RPMXCON-59308 TagsAndFolder Sprint 14");
+		bc.stepInfo(
+				"Verify that RMU User - can NOT edit/delete Folder Group name that have  released to other SecurityGroup   on \"Tags and Folders\" >> Folders screen");
+
+		// login as RMU
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Logged in as : " + Input.rmu1FullName);
+
+		// create Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.createFolderGroup(Input.securityGroup, folderGroupSG, "Success", null);
+
+		lp.logout();
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("Logged in as : " + Input.pa1FullName + " to release into SG");
+
+//		Navigate to SG page
+		sgPage.navigateToSecurityGropusPageURL();
+		driver.waitForPageToBeReady();
+		securitygroupname = sgPage.createOrPickSG(securitygroupname);
+		System.out.println(securitygroupname);
+
+		// Add Tag to SG
+		sgPage.addFolderToSecurityGroup(securitygroupname, folderGroupSG);
+		bc.passedStep("Created FolderGroup : " + folderGroupSG + " added to Security Group");
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		sgPage.addFolderToSecurityGroup(Input.securityGroup, folderGroupSG);
+		bc.passedStep("Created FolderGroup : " + folderGroupSG + " added to Security Group");
+
+		lp.logout();
+
+		// login as RMU
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo(
+				"Logged in as : " + Input.rmu1FullName + " :- to verify Folder group edit/delete after released to SG");
+
+		// rename Folder group
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.selectallFolderRoot();
+		tagAndFolderPage.verifyNodePresent(folderGroupSG, true, "Folder");
+		tagAndFolderPage.editFolderGroup(Input.securityGroup, folderGroupSG, renamedfolderGroupSG, "Failure-Error",
+				null);
+
+		// delete folder group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllFolderGroup(folderGroupSG, "Failure-Error");
+		tagAndFolderPage.verifyNodePresent(folderGroupSG, false, "Folder");
+
+//		To add - delete SG once issue is fixed 
+
+		lp.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
