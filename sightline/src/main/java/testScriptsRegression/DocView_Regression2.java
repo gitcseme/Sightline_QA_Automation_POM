@@ -3275,6 +3275,7 @@ public class DocView_Regression2 {
 	 * RPMXCON-51540 Verify that when two different users deletes reviewer remarks
 	 * to the same record successfully, and confirm that the XML nodes are all
 	 * properly created/reflected in the XML
+	 * stabilization done
 	 */
 	@Test(description ="RPMXCON-51540",enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 77)
 	public void verifyRemarkPanelRemarkDetailsAfterDeletionBetweenTwoUsers(String firstUserName,
