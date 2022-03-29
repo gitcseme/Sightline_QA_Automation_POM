@@ -526,6 +526,9 @@ public class TallyPage {
 	public Element getTallyPageHeader() {
 		return driver.FindElementByXPath("//h1[@class='page-title' and contains(text(),'Tally')]");
 	}
+	public Element getSubTally_ExportData() {
+		return driver.FindElementById("SubTallyToExportDataId");
+	}
 	
 	public TallyPage(Driver driver) {
 
@@ -2154,5 +2157,13 @@ public String applyFilterToSubTallyBy(String ApplyFilterMetaData, String metaDat
 	}
 	return ApplyFilterMetaData;
 }
-
+/**
+ * @author Jayanthi.Ganesan
+ * This method will navigate from tally page[sub tally report] to export page 
+ */
+public void subTallyToExport() {
+	base.waitForElement(getSubTally_ExportData());
+	getSubTally_ExportData().Click();
+	driver.waitForPageToBeReady();
+}
 }
