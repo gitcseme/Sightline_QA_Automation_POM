@@ -519,6 +519,10 @@ public class BatchRedactionPage {
 	public Element getInformativeErrorMessageText() {
 		return driver.FindElementByXPath("//div[@class='form-group']//strong//label");
 	}
+	
+	public Element getRedactDisabledBtn() {
+		return driver.FindElementByXPath("//button[text()='Redact' and @disabled='disabled']]");
+		}
 
 	public BatchRedactionPage(Driver driver) {
 
