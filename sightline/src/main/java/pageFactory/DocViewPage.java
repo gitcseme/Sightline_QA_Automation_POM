@@ -3281,6 +3281,32 @@ public class DocViewPage {
 		return driver.FindElementByXPath("(//label[@class='checkbox'])["+i+"]");
 	}
 	
+	
+	// Added by Mohan
+	public Element getDocView_MiniDoclist_GearIcon() {
+		return driver.FindElementByXPath("//*[@id='miniDocListConfig']//i[@class='fa fa-gear']");
+	}
+
+	public Element getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields() {
+		return driver.FindElementByXPath("//li[text()='FamilyRelationship']//following-sibling::i");
+	}
+
+	public Element getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount() {
+		return driver.FindElementByXPath("//li[text()='FamilyMemberCount']//following-sibling::i");
+	}
+
+	public Element getDocView_MiniDoclist_Header_Webfields(String fieldName) {
+		return driver.FindElementByXPath("//*[@class='dataTables_scrollHeadInner']//th[text()='" + fieldName + "']");
+	}
+
+	public Element getFromAvailableFieldPickColumnDisplay(String name) {
+		return driver.FindElementByXPath("//ul[@id='sortable1PickColumns']//li//i[@value='" + name + "']");
+	}
+
+	public Element getToSelectedField() {
+		return driver.FindElementByXPath(
+				"//div[@id='divColumnDisplay']//p//strong[text()='SelectedFields']//..//..//ul[@id='sortable2PickColumns']");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -7109,6 +7135,7 @@ public class DocViewPage {
 
 		try {
 			driver.waitForPageToBeReady();
+			selectSourceDocIdInAvailableField("SourceDocID");
 			for (int i = 0; i < 20; i++) {
 				try {
 					driver.waitForPageToBeReady();
@@ -7130,6 +7157,49 @@ public class DocViewPage {
 			e.printStackTrace();
 			System.out.println("Docs Arenot selected from mini doclist");
 		}
+	}
+	
+	/**
+	 * @author Indium Mohan Description : Method to select a from
+	 *         Available field Date: 30/03/22 Modified date: NA Modified by: N/A
+	 */
+	public void selectSourceDocIdInAvailableField(String filterName) {
+
+		try {
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getDocView_MiniDoclist_GearIcon());
+			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
+
+			base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields());
+			getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().waitAndClick(10);
+			
+			base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount());
+			getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount().waitAndClick(10);
+			
+			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay(filterName);
+
+			getMiniDocListConfirmationButton("Save").waitAndClick(10);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ConfigureMiniDocist popup is not opened");
+		}
+	}
+	
+	/**
+	 * @author Indium Raghuram Description : Perform Drag and Drop fields from
+	 *         available field to selected fields of 'Pick Column Display' Date:
+	 *         8/15/21 Modified date: NA Modified by: N/A
+	 */
+	public void dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay(String name) {
+		driver.waitForPageToBeReady();
+		getFromAvailableFieldPickColumnDisplay(name).ScrollTo();
+		Actions actions = new Actions(driver.getWebDriver());
+		actions.clickAndHold(getFromAvailableFieldPickColumnDisplay(name).getWebElement());
+		actions.moveToElement(getToSelectedField().getWebElement());
+		actions.release(getToSelectedField().getWebElement());
+		actions.build().perform();
 	}
 
 	/**

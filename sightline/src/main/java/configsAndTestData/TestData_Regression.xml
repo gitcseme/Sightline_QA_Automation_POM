@@ -473,11 +473,11 @@
 
 	<!-- DocView Analytical Panel PT environment -->
 
-	<historyClockIconDocId>ID00000350</historyClockIconDocId>
-	<nearDupeCompletedDocId>ID00004707</nearDupeCompletedDocId>
-	<familyDocument>ID00003711</familyDocument>
-	<MetaDataId>ID00003739</MetaDataId>
-	<conceptualDocumentReviewer>ID00004989</conceptualDocumentReviewer>
+	<historyClockIconDocId>T1310D</historyClockIconDocId>
+	<nearDupeCompletedDocId>ID00001418</nearDupeCompletedDocId>
+	<familyDocument>T1288D</familyDocument>
+	<MetaDataId>T2392D</MetaDataId>
+	<conceptualDocumentReviewer>331ID00000186</conceptualDocumentReviewer>
 	<threadDocId>ID00004943</threadDocId>
 	<conceptualDocs1>ID00000941</conceptualDocs1>
 	<familyDocumentForReviewer>ID00003745</familyDocumentForReviewer>
