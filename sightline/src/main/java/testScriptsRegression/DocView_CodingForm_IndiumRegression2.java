@@ -139,6 +139,8 @@ public class DocView_CodingForm_IndiumRegression2 {
 		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
 		keywordPage = new KeywordPage(driver);
 		reusableDocView = new ReusableDocViewPage(driver);
+		miniDocListPage = new MiniDocListPage(driver);
+		userManagementPage = new UserManagement(driver);
 
 	}
 
@@ -305,8 +307,8 @@ public class DocView_CodingForm_IndiumRegression2 {
 		baseClass.stepInfo(
 				"Reviewer of an assignment can not complete the document outside his batch when 'Allow coding outside reviewer batch' is off at assignment level");
 		String assName = "2022Loading" + Utility.dynamicNameAppender();
-		int id = 23;
-		int reviewerId = 1;
+		int id = 70;
+		int reviewerId = 3;
 
 		// Login As Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -353,7 +355,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 
 		baseClass.VerifyErrorMessage(
 				"Some selected docs are not distributed to you, and coding documents outside of your batch is not allowed by your review manager. Please uncheck them and try again.");
-		baseClass.CloseSuccessMsgpopup();
+		//baseClass.CloseSuccessMsgpopup();
 
 		driver.waitForPageToBeReady();
 		docViewPage.editCodingFormComplete();
@@ -416,10 +418,10 @@ public class DocView_CodingForm_IndiumRegression2 {
 		baseClass.stepInfo(
 				"Verify that when coding stamp is created/saved using the coding of a completed document viewed from analytics panel outside of reviewers batch, then on mouse hover tool tip should be displayed for the stamp icon.");
 		String assName = "2022Loading" + Utility.dynamicNameAppender();
-		int id = 23;
-		String stampName = "Bee" + Utility.dynamicNameAppender();
+		int id = 70;
+		String stampName = "Stamp" + Utility.dynamicNameAppender();
 		String colour = "BLUE";
-		int reviewerId = 1;
+		int reviewerId = 3;
 
 		// Login As Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -481,6 +483,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 
 		Actions act = new Actions(driver.getWebDriver());
 		act.moveToElement(docViewPage.getDocView_CodingForm_BlueIcon().getWebElement());
+		baseClass.waitForElement(docViewPage.getDocView_CodingForm_BlueIcon());
 		String toolTipName = docViewPage.getDocView_CodingForm_BlueIcon().getWebElement().getAttribute("title");
 		softAssertion.assertEquals(stampName, toolTipName);
 		softAssertion.assertAll();
@@ -540,7 +543,6 @@ public class DocView_CodingForm_IndiumRegression2 {
 
 		// logout
 		loginPage.logout();
-
 	}
 
 
@@ -892,6 +894,15 @@ public class DocView_CodingForm_IndiumRegression2 {
 		softAssertion.assertAll();
 		// logout
 		loginPage.logout();
+	}
+	@DataProvider(name = "userDetails")
+	public Object[][] userLoginSaPaRmu() {
+		return new Object[][] { { "sa", Input.sa1userName, Input.sa1password, "rmu" },
+				{ "sa", Input.sa1userName, Input.sa1password, "rev" },
+				{ "da", Input.da1userName, Input.da1password, "rmu" },
+				{ "da", Input.da1userName, Input.da1password, "rev" },
+				{ "pa", Input.pa1userName, Input.pa1password, "rmu" },
+				{ "pa", Input.pa1userName, Input.pa1password, "rev" } };
 	}
 
 	/**
@@ -1328,6 +1339,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 		sessionSearch.advancedNewContentSearch1(Input.testData1);
 		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getCodeSameAsLast());
 		if (docViewPage.getCodeSameAsLast().isDisplayed()) {
 			baseClass.passedStep("Code same as last icon is displayed");
 		} else {
@@ -2884,6 +2896,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 
 		reusableDocView.stampColourSelection(fieldText, Input.stampColour);
 		// mouse over action over the tool tip
+		baseClass.waitForElement(docViewPage.getCodingStampLastIcon(Input.stampColour));
 		if (docViewPage.getCodingStampLastIcon(Input.stampColour).isDisplayed()) {
 			Actions builder = new Actions(driver.getWebDriver());
 			driver.waitForPageToBeReady();
@@ -2891,6 +2904,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 			builder.moveToElement(docViewPage.getCodingStampLastIcon(Input.stampColour).getWebElement()).build()
 					.perform();
 			driver.waitForPageToBeReady();
+			baseClass.waitForElement(docViewPage.getSavedCodingStamp(Input.stampColour));
 			String ActualText = docViewPage.getSavedCodingStamp(Input.stampColour).getWebElement()
 					.getAttribute("title");
 			baseClass.textCompareEquals(fieldText, ActualText, "Mouseover Text is displayed as expected",
@@ -3795,6 +3809,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 		// Login As Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		codingForm.assignCodingFormToSG(Input.codingFormName);
 
 		// Searching audio document and basic search
 		baseClass.stepInfo("Searching audio documents based on search string");
@@ -8102,9 +8117,10 @@ public class DocView_CodingForm_IndiumRegression2 {
 	    }else {
 	    	baseClass.stepInfo("Logged in as reviewer");
 	    }
-	    sessionSearch.basicContentSearch("null");
+	    sessionSearch.basicContentSearch("null");    
 	    sessionSearch.ViewInDocView();
 	    baseClass.stepInfo("Navigated to doc view page");
+	    String ExpectedValue = codingForm.getObjectsInPreviewBox("Responsive").GetAttribute("checked");
 	    baseClass.waitForElement(codingForm.selectObjectsInPreviewBox("Technical_Issue"));
 	    codingForm.selectObjectsInPreviewBox("Technical_Issue").waitAndClick(10);
 	    baseClass.waitForElement(baseClass.getSignoutMenu());
@@ -8120,26 +8136,9 @@ public class DocView_CodingForm_IndiumRegression2 {
 	    docViewPage.getNavigationMsgPopupYesBtn().waitAndClick(10);
 	    loginPage.loginToSightLine(username, password);
 	    sessionSearch.basicContentSearch("null");
-	    driver.getWebDriver().get(Input.url + "Search/Searches");
-	    driver.scrollPageToTop();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return sessionSearch.getBulkActionButton().Visible();
-			}
-		}), Input.wait30);
-		Thread.sleep(2000); // App synch
-		sessionSearch.getBulkActionButton().waitAndClick(5);
-		Thread.sleep(2000); // App Synch
-		docViewPage.getDocViewAction().waitAndClick(10);
-		baseClass.waitTime(3); // added for stabilization
-		System.out.println("Navigated to docView to view docs");
-		UtilityLog.info("Navigated to docView to view docs");
-	    driver.waitForPageToBeReady();
-	    baseClass.waitTime(3);
-	    driver.waitForPageToBeReady();
-	    baseClass.waitTime(3);
-	    String value = codingForm.getObjectsInPreviewBox("Responsive").GetAttribute("checked");
-	    softAssertion.assertEquals(value, "true");
+	    sessionSearch.ViewInDocView();
+	    String Actualvalue = codingForm.getObjectsInPreviewBox("Responsive").GetAttribute("checked");
+	    softAssertion.assertEquals(Actualvalue, ExpectedValue);
 	    baseClass.passedStep("No changes are saved after clicking yes button to navigate some other page");
 	    softAssertion.assertAll();
 	    loginPage.logout();
