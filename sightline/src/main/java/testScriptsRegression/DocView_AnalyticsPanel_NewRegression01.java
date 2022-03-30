@@ -2830,7 +2830,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
-		reusableDocViewPage = new ReusableDocViewPage(driver);
+		ReusableDocViewPage reusableDocViewPage = new ReusableDocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		baseClass.stepInfo(
 				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
@@ -2966,7 +2966,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
-		reusableDocViewPage = new ReusableDocViewPage(driver);
+		ReusableDocViewPage reusableDocViewPage = new ReusableDocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		baseClass.stepInfo(
 				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
@@ -3103,7 +3103,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
-		reusableDocViewPage = new ReusableDocViewPage(driver);
+		ReusableDocViewPage reusableDocViewPage = new ReusableDocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		baseClass.stepInfo(
 				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
