@@ -162,7 +162,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *               upload same file in Saved Search Screen. [RPMXCON-48535]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyBatchFileRenamedHeader() throws InterruptedException {
 
 		String fileName = Input.BatchFileWithMultiplesheetFile;
@@ -199,7 +199,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *         to upload same file in Saved Search Screen.(RPMXCON-48540)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void saveSearchBatchUploadInvalidHeaderDataMS() throws InterruptedException {
 
 		String fileName = Input.batchFileWithMultiSheetColumnMissing;
@@ -242,7 +242,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *         tries to upload same file in Saved Search Screen.(RPMXCON-48541)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void saveSearchBatchUploadInvalidHeaderDataMSDuplicateHeader() throws InterruptedException {
 
 		String fileLocation = System.getProperty("user.dir") + Input.invalidBatchFileNewLocation;
@@ -294,7 +294,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              Security Group on Saved Search Screen. [RPMXCON-48123]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, dataProvider = "rmuAndRev", groups = { "regression" }, priority = 4)
+	@Test(enabled = true, dataProvider = "rmuAndRev", groups = { "regression" }, priority = 4)
 	public void verifyAppropriateSearchGroupAppears(String user, String addImp) throws Exception {
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
 
@@ -356,7 +356,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              Security Group on Saved Search Screen. [RPMXCON-48124]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, dataProvider = "rmuAndRev", groups = { "regression" }, priority = 5)
+	@Test(enabled = true, dataProvider = "rmuAndRev", groups = { "regression" }, priority = 5)
 	public void verifySearchGroupAsSA(String user, String addImp) throws Exception {
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
 
@@ -416,7 +416,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              [RPMXCON-48122]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifySearchGroupAsRev() throws Exception {
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
 
@@ -479,7 +479,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *         and tries to upload same file in Saved Search Screen.(RPMXCON-48543)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void saveSearchBatchUploadInvalidHeaderDataMScolumnInterChange() throws InterruptedException {
 
 		String fileLocation = System.getProperty("user.dir") + Input.invalidBatchFileNewLocation;
@@ -531,7 +531,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *         upload same file in Saved Search Screen.(RPMXCON-48542)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void saveSearchBatchUploadInvalidHeaderDatacolumnInterChange() throws InterruptedException {
 
 		String fileLocation = System.getProperty("user.dir") + Input.invalidBatchFileNewLocation;
@@ -579,7 +579,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void executionErrorInProgress() throws InterruptedException, ParseException {
 
 		String savedSearchName = "Search Name" + UtilityLog.dynamicNameAppender();
@@ -625,7 +625,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              Screen. [RPMXCON-48135]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyRenamedAsRev() throws Exception {
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
 
@@ -690,7 +690,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              [RPMXCON-48129]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 11)
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyExecutedSearchGroup() throws Exception {
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
 		String searchName = "Search" + Utility.dynamicNameAppender();
@@ -758,7 +758,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              [RPMXCON-48131]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 12)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifySharedQueryInSG() throws Exception {
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
 		String securityTab = "Shared with " + securityGroup;
@@ -824,7 +824,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              search Query [RPMXCON-48488]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 13)
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyConceptuallYColumn() throws Exception {
 		String Search1 = "Search" + Utility.dynamicNameAppender();
 		String conceptually = "Conceptually Similar Count";
@@ -866,7 +866,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 14)
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void executionErrorInProgressDraft() throws InterruptedException, ParseException {
 
 		String savedSearchName = "Search Name" + UtilityLog.dynamicNameAppender();
@@ -914,7 +914,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 15)
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 15)
 	public void verifyWarningMessageForInProgressSStoDocView(String username, String password, String fullName)
 			throws InterruptedException, ParseException {
 
@@ -969,7 +969,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 16)
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 16)
 	public void validateErrorSearchViaBatchUpload(String username, String password, String fullName) throws Exception {
 		String file = saveSearch.renameFile(Input.errorQueryFileLocation);
 		String statusToCheck = "ERROR";
@@ -1023,7 +1023,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              [RPMXCON-48132]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 17)
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifySearchGroupAfterExport() throws Exception {
 		String savedSearchName = "SEARCH" + Utility.dynamicNameAppender();
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
@@ -1100,7 +1100,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              [RPMXCON-48130]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 18)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyAssignmnetInOtherSG() throws Exception {
 		String savedSearchName = "SEARCH" + Utility.dynamicNameAppender();
 		String assignment = "Assign" + Utility.dynamicNameAppender();
@@ -1183,7 +1183,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              Saved Search screen [RPMXCON-48590]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyLastSubmittedAfterExecute() throws Exception {
 		String searchName = "SEARCH" + Utility.dynamicNameAppender();
 		String headername = "Last Submitted By";
@@ -1233,7 +1233,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 20)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void searchFilterBasedOnStatus() throws InterruptedException, ParseException {
 
 		String SearchName = "SearchName" + Utility.dynamicNameAppender();
@@ -1282,7 +1282,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void searchBasedOnStatusAsRev() throws InterruptedException, ParseException {
 
 		String SearchName = "SearchName" + Utility.dynamicNameAppender();
@@ -1329,7 +1329,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              search query[RPMXCON-48475] sprint 13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 22)
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void saveSearchScreenOnBasicQueryWithBulkDatas() throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
 		String searchName = "search" + Utility.dynamicNameAppender();
@@ -1394,7 +1394,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              search query[RPMXCON-48452] sprint 13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 23)
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyInprogressStatusWithTileSpinningForBasicSearch() throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
 		String searchName = "search" + Utility.dynamicNameAppender();
@@ -1453,7 +1453,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              Similar count but the Basic search is saved as a saved search.
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyConceptuallYColumn_BasicSearch() throws Exception {
 		String Search1 = "Search" + Utility.dynamicNameAppender();
 		String conceptually = "Conceptually Similar Count";
@@ -1497,7 +1497,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              error message in the UI[RPMXCON-48297]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyUploadingSameBatchFileWillThrowError() throws Exception {
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
 		String file = saveSearch.renameFile(Input.WPbatchFile);
@@ -1573,7 +1573,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              [RPMXCON-48126]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyRenameExistingSearchGroupAsRmu() throws Exception {
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
 		String securityTab = "Shared with " + securityGroup;
@@ -1653,7 +1653,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @param fullname
 	 * @throws Exception
 	 */
-	@Test(enabled = false, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 27)
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 27)
 	public void verifyAllSearchGroupsAreExecuted(String username, String password, String fullname) throws Exception {
 		String file = saveSearch.renameFile(Input.WPbatchFile);
 		String fileName = file.substring(file.indexOf(""), file.indexOf("."));
@@ -1694,7 +1694,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              Saved Search Screen.[RPMXCON-49827]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, dataProvider = "SavedSearchwithRMUandREV", groups = { "regression" }, priority = 28)
+	@Test(enabled = true, dataProvider = "SavedSearchwithRMUandREV", groups = { "regression" }, priority = 28)
 	public void verifyAppDoesnotDisplayWarning(String username, String password, String fullname) throws Exception {
 
 		String Search1 = "search" + Utility.dynamicNameAppender();
@@ -1751,7 +1751,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              Advanced search query[RPMXCON-48476] sprint 13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void saveSearchScreenOnAdvancedQueryWithBulkDatas() throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
 		String searchName = "search" + Utility.dynamicNameAppender();
@@ -1818,7 +1818,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 30)
+	@Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifyInprogressStatusWithTileSpinningForAdvancedSearch() throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
 		String searchName = "search" + Utility.dynamicNameAppender();
@@ -1877,7 +1877,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              sprint 13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 31)
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 31)
 	public void overWriteNotAllowedInProgressState(String username, String password, String fullName)
 			throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
@@ -1925,7 +1925,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *         Child Search groups(RPMXCON-48920)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 32)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyExportDocsWithHierarchialNodes() throws InterruptedException {
 
 		ReportsPage report = new ReportsPage(driver);
@@ -2005,7 +2005,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              In-Progress status[RPMXCON-49052] sprint 13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 33)
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 33)
 	public void overWriteNewSSInProgressState(String username, String password, String fullName)
 			throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
@@ -2078,7 +2078,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *         and searches when User Navigate Child Search groups to DocView.-
 	 *         RPMXCON-48915 Sprint 12
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyDocsDisplayAndNavigatingToDocviewP() throws Exception {
 
 		int latencyCheckTime = 5;
@@ -2156,7 +2156,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              still loading[RPMXCON-48909] sprint 13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 35)
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void statusAndCountBasedonSessionSavedSearch() throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
 		String searchName = "search" + Utility.dynamicNameAppender();
@@ -2221,7 +2221,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              relogin to Saved Search Screen [RPMXCON-48906] sprint 13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 36)
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
 	public void statusAndCountBasedonSessionAdvSavedSearch() throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
 		String searchName = "search" + Utility.dynamicNameAppender();
@@ -2288,7 +2288,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              Child Search groups[RPMXCON-48919]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 37)
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
 	public void verifyApplicationDisplaysAllDocAfterExecute() throws Exception {
 		int noOfNodesToCreate = 6, nodeIndex = 0;
 		List<String> newNodeList = new ArrayList<>();
@@ -2336,7 +2336,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              performs Execute option with Child Search groups[RPMXCON-49068]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 38)
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
 	public void verifyAfterAddingSavedQuery() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		int noOfNodesToCreate = 6, nodeIndex = 0;
@@ -2390,7 +2390,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              are complete. [RPMXCON-48908] sprint 13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 39)
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void statusAndCountBasedonAdvSessionSavedSearch() throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
 		String searchName = "searchAdv" + Utility.dynamicNameAppender();
@@ -2457,7 +2457,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void statusAndCountBasedonEditSessionSavedSearch() throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
 		String searchName = "search" + Utility.dynamicNameAppender();
@@ -2531,7 +2531,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 41)
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
 	public void saveSearchScreenOnBasicQueryWithBulkDatasSave() throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
 		String searchName = "search" + Utility.dynamicNameAppender();
@@ -2588,7 +2588,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              [RPMXCON-48451] sprint 13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 42)
+	@Test(enabled = true, groups = { "regression" }, priority = 42)
 	public void saveSearchScreenOnAdvQueryWithBulkDatasSave() throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
 		String searchName = "search" + Utility.dynamicNameAppender();
@@ -2644,7 +2644,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @Description : Verify on selecting saved search with Pending status and Doc
 	 *              View option user should not navigate to Doc View screen
 	 */
-	@Test(enabled = false, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 43)
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 43)
 	public void verifyInvalidQueryBatchUploadSavedSearch(String username, String password, String fullName)
 			throws Exception {
 		String fileName = saveSearch.renameFile(Input.errorQueryFileLocation);
@@ -2690,7 +2690,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = false, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 44)
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 44)
 	public void verifyMultipleTabWorkSheets(String userName, String password, String fullanme)
 			throws InterruptedException, IOException {
 
@@ -2739,7 +2739,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *               resize(RPMXCON-48857)
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 45)
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
 	public void verifyGridAfterResize() throws Exception {
 		// Minimize browser
 		Dimension n = new Dimension(800, 800);
@@ -2766,7 +2766,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 46)
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
 	public void aggregateResultDocExportSGandSearchesUpdated() throws Exception {
 
 		ReportsPage report = new ReportsPage(driver);
@@ -2854,7 +2854,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              13
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 47)
+	@Test(enabled = true, groups = { "regression" }, priority = 47)
 	public void saveSearchScreenOnBasicQueryCountWithBulkDatas() throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
 		String searchName = "search" + Utility.dynamicNameAppender();
@@ -2927,7 +2927,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = false, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 48)
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 48)
 	public void verifyActualDocsCountFromBackgroundPage(String username, String password, String fullname)
 			throws InterruptedException, IOException {
 		BatchRedactionPage batch = new BatchRedactionPage(driver);
@@ -3022,7 +3022,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 49)
+	@Test(enabled = true, groups = { "regression" }, priority = 49)
 	public void masterDateISoperator() throws InterruptedException, IOException {
 		String expSSURL = Input.url + "Search/Searches";
 		String fileLocation = Input.validBatchFileLocation;
@@ -3115,7 +3115,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 50)
+	@Test(enabled = true, groups = { "regression" }, priority = 50)
 	public void masterDateRangeSoperator() throws InterruptedException, IOException {
 		String expSSURL = Input.url + "Search/Searches";
 		String fileLocation = Input.validBatchFileLocation;
@@ -3206,7 +3206,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              respective Search Group on Saved Search Screen. [RPMXCON-48127]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyMovedSearchGroupInSgAsRmu() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
@@ -3286,7 +3286,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              respective Security Group on Saved Search Screen.[RPMXCON-48136]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyMovedSearchGroupInSgAsRev() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
