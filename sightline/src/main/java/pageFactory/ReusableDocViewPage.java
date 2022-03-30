@@ -535,7 +535,7 @@ public class ReusableDocViewPage {
 	 * @author Indium-Baskar
 	 */
 //	Reusable method for verifying coding stamp colour in Stamp popup window
-	public void verifyingPostFixAssignedColour() {
+	public void verifyingPostFixAssignedColour(String textBox) {
 		driver.waitForPageToBeReady();
 		getCodingStampPopup().Visible();
 		String expected = getCodingEditStampTextBox().GetAttribute("value");

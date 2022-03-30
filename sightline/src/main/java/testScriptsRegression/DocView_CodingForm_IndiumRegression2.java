@@ -155,17 +155,31 @@ public class DocView_CodingForm_IndiumRegression2 {
 	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void codingFormChildWindowCodeSameAsLast() throws AWTException, InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52159");
+		// login as Rmu
+		String assignmentName = "AssName" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.failedStep("Expected failure case RPMXCON-52159");
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
+
 		// Login as Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.failedStep("Expected failure case RPMXCON-52159");
 		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
 
 		// Assignment Selection
-		assignmentPage.SelectAssignmentByReviewer(assignmentCreationOn);
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		// child window code as last
-		docViewPage.codingFormChildWindowCodeAsLast();
+		docViewPage.codingFormChildWindowCodeAsLast(comment);
 
 		// logout
 		loginPage.logout();
@@ -184,21 +198,35 @@ public class DocView_CodingForm_IndiumRegression2 {
 	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void codingFormAssignmentLevelCodingStampOFF() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52160");
-		// Login as Reviewer
+		// login as Rmu
+		String assignmentName = "AssName" + Utility.dynamicNameAppender();
 		String comment = "comment" + Utility.dynamicNameAppender();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.failedStep("Expected failure case RPMXCON-52160");
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
 
 		// Assignment Selection in Reviewer Login
-		assignmentPage.SelectAssignmentByReviewer(assignmentCreationStampOff);
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
-		docViewPage.docViewCodingFormPanelStampSelection(Input.stampSelection,comment);
-		docViewPage.codingFormChildWindowCodeAsLast();
+		docViewPage.docViewCodingFormPanelStampSelection(Input.stampSelection, comment);
+		docViewPage.codingFormChildWindowCodeAsLast(comment);
 
 		// logout
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
 
 	}
 
@@ -216,24 +244,50 @@ public class DocView_CodingForm_IndiumRegression2 {
 	public void verifyingCodingStampPostFixColourParentWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52226");
 		String assgnColour = "AssignColour" + Utility.dynamicNameAppender();
+		String assignmentName = "AssName" + Utility.dynamicNameAppender();
 		// Login As Reviewer
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.failedStep("Expected Failure Parent window Pencil gear icon is not clickable");
 
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		codingForm.assignCodingFormToSG(Input.codeFormName);
 
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
 
 		// Stamp selection
-		docViewPage.clickStampBtnAndVerifyINPopUp(assgnColour, Input.stampSelection, Input.stampSelection);
-		docViewPage.deleteStampColour(Input.stampSelection);
+		docViewPage.clickStampBtnAndVerifyINPopUp(assgnColour, Input.stampColours, Input.stampColours);
+
+		// assignment creation
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		baseClass.waitForElement(sessionSearch.getBulkActionButton());
+		sessionSearch.getBulkActionButton().waitAndClick(3);
+		baseClass.waitForElement(sessionSearch.getBulkAssignAction());
+		sessionSearch.getBulkAssignAction().waitAndClick(3);
+		baseClass.stepInfo("performing bulk assign");
+		UtilityLog.info("performing bulk assign");
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// Stamp selection
+		docViewPage.clickStampBtnAndVerifyINPopUp(assgnColour, Input.stampColours, Input.stampColours);
 
 		// logout
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
-
 	}
 
 	/**
@@ -248,21 +302,53 @@ public class DocView_CodingForm_IndiumRegression2 {
 	public void verifyingCodingStampPostFixColourAndEditing() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52227");
 		String assgnColour = "AssignColour" + Utility.dynamicNameAppender();
+		String assignmentName = "AssName" + Utility.dynamicNameAppender();
 		// Login As Reviewer
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.failedStep("Expected Failure:Gear stamp icon is not clickable in parent window");
+
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		codingForm.assignCodingFormToSG(Input.codeFormName);
 
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
 
 		// Stamp selection
-		docViewPage.clickStampBtnAndVerifyINPopUp(assgnColour, Input.stampSelection, Input.stampSelection);
+		docViewPage.openStampPopUpFromChildWindow(assgnColour, Input.stampColours, Input.stampColours);
+
+		// assignment creation
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.switchTo().alert().accept();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sessionSearch.getBulkActionButton());
+		sessionSearch.getBulkActionButton().waitAndClick(3);
+		baseClass.waitForElement(sessionSearch.getBulkAssignAction());
+		sessionSearch.getBulkAssignAction().waitAndClick(3);
+		baseClass.stepInfo("performing bulk assign");
+		UtilityLog.info("performing bulk assign");
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// Stamp selection
+		docViewPage.openStampPopUpFromChildWindow(assgnColour, Input.stampColours, Input.stampColours);
 
 		// logout
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
 
 	}
 
@@ -287,10 +373,11 @@ public class DocView_CodingForm_IndiumRegression2 {
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocList();
-		docViewPage.codeSameAsLastSelectDocInDocList(assgnColour, Input.stampSelection, Input.stampSelection,
-				Input.stampSelection);
+		docViewPage.codeSameAsLastSelectDocInDocList(assgnColour, Input.stampColour, Input.stampColour,
+				Input.stampColour);
 
 		loginPage.logout();
+
 
 	}
 
@@ -418,10 +505,10 @@ public class DocView_CodingForm_IndiumRegression2 {
 		baseClass.stepInfo(
 				"Verify that when coding stamp is created/saved using the coding of a completed document viewed from analytics panel outside of reviewers batch, then on mouse hover tool tip should be displayed for the stamp icon.");
 		String assName = "2022Loading" + Utility.dynamicNameAppender();
-		int id = 70;
+		int id = 1;
 		String stampName = "Stamp" + Utility.dynamicNameAppender();
 		String colour = "BLUE";
-		int reviewerId = 3;
+		int reviewerId = 16;
 
 		// Login As Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -469,8 +556,9 @@ public class DocView_CodingForm_IndiumRegression2 {
 		baseClass.VerifyErrorMessage(
 				"Some selected docs are not distributed to you, and coding documents outside of your batch is not allowed by your review manager. Please uncheck them and try again.");
 		baseClass.CloseSuccessMsgpopup();
-
+		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
+
 		docViewPage.editCodingFormComplete();
 
 		baseClass.waitForElement(docViewPage.getDocView_DefaultViewTab());
@@ -478,11 +566,14 @@ public class DocView_CodingForm_IndiumRegression2 {
 		docViewPage.getDocView_NumTextBox().Clear();
 		docViewPage.getDocView_NumTextBox().SendKeys(Integer.toString(id));
 		docViewPage.getDocView_NumTextBox().Enter();
+		driver.waitForPageToBeReady();
 
 		reusableDocView.stampColourSelection(stampName, colour);
+		driver.waitForPageToBeReady();
 
 		Actions act = new Actions(driver.getWebDriver());
-		act.moveToElement(docViewPage.getDocView_CodingForm_BlueIcon().getWebElement());
+		act.moveToElement(docViewPage.getDocView_CodingForm_BlueIcon().getWebElement()).build().perform();
+		baseClass.waitTime(3);
 		baseClass.waitForElement(docViewPage.getDocView_CodingForm_BlueIcon());
 		String toolTipName = docViewPage.getDocView_CodingForm_BlueIcon().getWebElement().getAttribute("title");
 		softAssertion.assertEquals(stampName, toolTipName);
@@ -523,7 +614,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 		baseClass.VerifyErrorMessage(
 				"Some selected docs are not distributed to you, and coding documents outside of your batch is not allowed by your review manager. Please uncheck them and try again.");
 		baseClass.CloseSuccessMsgpopup();
-
+        driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		docViewPage.editCodingFormComplete();
 
@@ -532,17 +623,21 @@ public class DocView_CodingForm_IndiumRegression2 {
 		docViewPage.getDocView_NumTextBox().Clear();
 		docViewPage.getDocView_NumTextBox().SendKeys(Integer.toString(reviewerId));
 		docViewPage.getDocView_NumTextBox().Enter();
+		driver.waitForPageToBeReady();
 
 		reusableDocView.stampColourSelection(stampName, colour);
-
+		driver.waitForPageToBeReady();
 		Actions act1 = new Actions(driver.getWebDriver());
-		act1.moveToElement(docViewPage.getDocView_CodingForm_BlueIcon().getWebElement());
+		act1.moveToElement(docViewPage.getDocView_CodingForm_BlueIcon().getWebElement()).build().perform();
+		baseClass.waitTime(3);
+		baseClass.waitForElement(docViewPage.getDocView_CodingForm_BlueIcon());
 		String toolTipName1 = docViewPage.getDocView_CodingForm_BlueIcon().getWebElement().getAttribute("title");
 		softAssertion.assertEquals(stampName, toolTipName1);
 		softAssertion.assertAll();
 
 		// logout
 		loginPage.logout();
+
 	}
 
 
@@ -621,6 +716,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 		// verify the coding form panel
 		int size = docViewPage.verifyCommentAndMetadataUsingComplete(addComment, commentText, projectFieldINT,
 				metadataText);
+		baseClass.waitTime(10);
 		baseClass.stepInfo("Checking index of comment and metadata for saved document");
 		int pureHit = sessionSearch.metadataAndCommentSearch(projectFieldINT, metadataText, addComment, commentText);
 

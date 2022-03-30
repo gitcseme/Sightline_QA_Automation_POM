@@ -9339,11 +9339,6 @@ public class SessionSearch {
 			}
 		}), Input.wait90);
 		int pureHit = Integer.parseInt(getPureHitsLastCount().getText());
-		System.out.println(
-				"Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
-		base.stepInfo("Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
-		base.stepInfo(
-				"Search is done for " + projectFieldINT + " with value " + metadataText + " purehit is : " + pureHit);
 		return pureHit;
 	}
 

@@ -5581,90 +5581,33 @@ public class DocViewPage {
 	 *         CASE Description:Code Same as last in child window
 	 */
 
-	public void codingFormChildWindowCodeAsLast() throws AWTException, InterruptedException {
+	public void codingFormChildWindowCodeAsLast(String comment) throws AWTException, InterruptedException {
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocView_EditMode().Visible();
-			}
-		}), Input.wait30);
-		getDocView_EditMode().waitAndClick(5);
-		Robot robot = new Robot();
-		robot.mouseMove(200, 200);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocView_HdrCoddingForm().Visible();
-			}
-		}), Input.wait30);
-		getDocView_HdrCoddingForm().Click();
-		String parentWindowID = driver.getWebDriver().getWindowHandle();
-		Set<String> childWindowID = driver.getWebDriver().getWindowHandles();
-		for (String codingFormChildWindow : childWindowID) {
-			if (!parentWindowID.equals(codingFormChildWindow)) {
-				driver.switchTo().window(codingFormChildWindow);
-				driver.waitForPageToBeReady();
-				driver.waitForPageToBeReady();
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDocument_CommentsTextBox().Displayed() && getDocument_CommentsTextBox().Enabled();
-					}
-				}), Input.wait30);
-				getDocument_CommentsTextBox().SendKeys("Verifycodingformchildwindow");
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getCodingFormSaveBtn().Visible();
-					}
-				}), Input.wait30);
-				getCodingFormSaveBtn().Click();
-				base.stepInfo("Document saved successfully");
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getCodeSameAsLast().Visible();
-					}
-				}), Input.wait30);
-				getCodeSameAsLast().Click();
-				softAssertion.assertFalse(
-						getCodeSameAsLast().Displayed() && getCodeSameAsLast().getWebElement().isSelected());
-				if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().getWebElement().isSelected()) {
-					base.stepInfo("coded as per the previous document..");
-					base.passedStep("Cursor has moved to the next document in mini doc list..");
-				} else {
-					base.failedStep("Code same as last not clickable");
-					base.failedStep("Failed to move next document in mini doc list..");
-				}
-				driver.waitForPageToBeReady();
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getCodeSameAsLast().Visible();
-					}
-				}), Input.wait30);
-				getCodeSameAsLast().Click();
-				base.stepInfo("Again click code same as last");
-				softAssertion.assertTrue(
-						getCodeSameAsLast().Displayed() && getCodeSameAsLast().getWebElement().isSelected());
-				if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().getWebElement().isSelected()) {
-					base.stepInfo("coded as per the previous document..");
-					base.passedStep("Cursor has moved to the next document in mini doc list..");
-				} else {
-					base.failedStep("Code same as last not clickable");
-					base.failedStep("Failed to move next document in mini doc list..");
-				}
-				driver.close();
-			}
-		}
-		driver.switchTo().window(parentWindowID);
-		driver.waitForPageToBeReady();
-		for (int i = 1; i <= 1; i++) {
-			getClickDocviewID(i).Click();
-			String getAttribute = getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
-			softAssertion.assertEquals("Verifycodingformchildwindow", getAttribute);
-			if (getAttribute.equals("Verifycodingformchildwindow")) {
-				base.passedStep("Document is saved with the last applied coding of  the document..");
-				base.passedStep("Expected Message - code same as last scuessfully..");
-			} else {
-				base.failedStep("Expected Message - code NOT same as last scuessfully..");
-			}
-		}
+		base.waitForElement(getVerifyPrincipalDocument());
+		String prnDoc=getVerifyPrincipalDocument().getText();
+		reusableDocView.clickGearIconOpenCodingFormChildWindow();
+		switchToNewWindow(2);
+		editCodingForm(comment);
+		codingFormSaveButton();
+		// click code same as last
+		clickCodeSameAsLast();
+		switchToNewWindow(1);
+		base.waitForElement(getVerifyPrincipalDocument());
+		String SecDoc=getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnDoc, SecDoc);
+		// Again click code same as last
+		switchToNewWindow(2);
+		clickCodeSameAsLast();
+		switchToNewWindow(1);
+		base.waitForElement(getVerifyPrincipalDocument());
+		String thrdDoc=getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(thrdDoc, SecDoc);
+		base.waitForElement(getDociD(SecDoc));
+		getDociD(SecDoc).waitAndClick(5);
+		switchToNewWindow(2);
+		verifyComments(comment);
+		closeWindow(1);
+		switchToNewWindow(1);
 	}
 
 	/**
@@ -7197,7 +7140,7 @@ public class DocViewPage {
 	public void clickStampBtnAndVerifyINPopUp(String textBox, String colour, String icon) {
 		reusableDocView.stampColourSelection(textBox, colour);
 		reusableDocView.pencilGearicon(icon);
-		reusableDocView.verifyingPostFixAssignedColour();
+		reusableDocView.verifyingPostFixAssignedColour(textBox);
 
 	}
 
@@ -7212,7 +7155,7 @@ public class DocViewPage {
 		String parentWindow = reusableDocView.switchTochildWindow();
 		reusableDocView.pencilGearicon(iconColour);
 		reusableDocView.childWindowToParentWindowSwitching(parentWindow);
-		reusableDocView.verifyingPostFixAssignedColour();
+		reusableDocView.verifyingPostFixAssignedColour(textBox);
 
 	}
 
@@ -11867,7 +11810,7 @@ public class DocViewPage {
 		reusableDocView.stampColourSelection(textBox, colour);
 		driver.getWebDriver().navigate().refresh();
 		reusableDocView.pencilGearicon(iconColour);
-		reusableDocView.verifyingPostFixAssignedColour();
+		reusableDocView.verifyingPostFixAssignedColour(textBox);
 
 	}
 
