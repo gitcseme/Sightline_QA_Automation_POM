@@ -2724,7 +2724,7 @@ public class ProductionPage {
 	}
 
 	public Element getDocPages() {
-		return driver.FindElementByXPath("//label[contains(text(),'Number of Natives:')]/following-sibling:: i");
+		return driver.FindElementByXPath("//label[contains(text(),'Number of Natives:')]/following-sibling:: label");
 	}
 
 	public Element getRedactDATCheckBox(int i) {
@@ -18338,14 +18338,28 @@ for (int i = 0; i < 6; i++) {
 	 * @authorAathith.Senthilkumar
 	 * @throws ZipException
 	 * @Description Extract downloaded file
+	 * 
 	 */
-	public void extractFile() throws ZipException {
+	public void extractFile() throws ZipException, InterruptedException {
 		driver.waitForPageToBeReady();
 		String name = getProduction().getText().trim();
 		String home = System.getProperty("user.home");
-
+		
+		File file = new File(home + "/Downloads/"+name+".zip");
+		File file1 = new File(Input.fileDownloadLocation+name+".zip");
+		
+		if(file.exists()) {
+		driver.waitForPageToBeReady();	
 		unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads/");
 		System.out.println("Unzipped the downloaded files");
+		}else if(file1.exists()) {
+			driver.waitForPageToBeReady();
+			unzipping(Input.fileDownloadLocation+name+".zip", home + "/Downloads/");
+			System.out.println("Unzipped the downloaded files in BatchDownload");
+		}else {
+			System.out.println("Unzipped failed");
+			base.failedStep("file not found");
+		}
 		driver.waitForPageToBeReady();
 		base.stepInfo("Downloaded zip file was extracted");
 	}

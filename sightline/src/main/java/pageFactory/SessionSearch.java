@@ -1687,6 +1687,10 @@ public class SessionSearch {
 				.FindElementByXPath("(.//*[@data-original-title='Docs That Met Your Criteria']/span/count)[" + i + "]");
 	}
 
+	public Element getView() {
+		return driver.FindElementByXPath("//a[@class='submenu-a']");
+	}
+	
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -10106,6 +10110,9 @@ public class SessionSearch {
 		base.waitForElement(getSearchButton());
 		getSearchButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		base.waitForElement(getTallyContinue());
+		getTallyContinue().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
@@ -10366,6 +10373,13 @@ public class SessionSearch {
 		getBulkActionButton().waitAndClick(5);
 		Thread.sleep(2000); // App Synch
 
+		if(getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+		}else {
+			System.out.println("View is not found");
+		}
 		getDocViewAction().waitAndClick(10);
 		base.waitTime(3); // added for stabilization
 

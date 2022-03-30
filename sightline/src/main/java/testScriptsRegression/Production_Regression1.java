@@ -3220,7 +3220,7 @@ public class Production_Regression1 {
 		sessionSearch = new SessionSearch(driver);
 
 		base.stepInfo("Select Docview At Action");
-		sessionSearch.ViewInDocView();
+		sessionSearch.ViewInDocViewWithoutPureHit();
 
 		DocViewPage docViewPage = new DocViewPage(driver);
 
@@ -7085,7 +7085,7 @@ public class Production_Regression1 {
 		sessionSearch.audioSearch("morning", "North American English");
 		sessionSearch.bulkFolderExisting(foldername);
 		driver.waitForPageToBeReady();
-		sessionSearch.ViewInDocView();
+		sessionSearch.ViewInDocViewWithoutPureHit();
 
 		docView = new DocViewPage(driver);
 		docView.navigateToDocViewPageURL();
