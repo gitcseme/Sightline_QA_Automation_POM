@@ -228,7 +228,7 @@
 	<docHighlightColor>#CDD9E1</docHighlightColor>
 	<sortDataBy>DocID</sortDataBy>
 	<sortType>Ascending</sortType>
-	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads</fileDownloadLocation>
+	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads\\</fileDownloadLocation>
 	<completedWithErrColorCodeBR>#F88C00</completedWithErrColorCodeBR>
 	<shareSearchPA>Shared With Project Administrator</shareSearchPA>
 	<shareSearchDefaultSG>Shared with Default Security Group</shareSearchDefaultSG>
