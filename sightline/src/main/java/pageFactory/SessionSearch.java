@@ -2921,7 +2921,15 @@ public class SessionSearch {
 		}
 
 		getBulkActionButton().waitAndClick(5);
-		Thread.sleep(2000);
+		
+		base.waitTime(2);
+		if(getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+			}else {
+			System.out.println("View is not found");
+			}
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
