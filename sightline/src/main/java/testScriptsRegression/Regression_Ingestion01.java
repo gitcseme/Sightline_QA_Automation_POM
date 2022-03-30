@@ -763,6 +763,48 @@ public class Regression_Ingestion01 {
 		
 	}
 	
+	/** 
+     *Author :Arunkumar date: 30/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49020
+	 * Description :Verify two ingestions with step ( Cataloging, copying, indexing) having ingestion type add only  must run simultaneously
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 35)
+	public void verifyTwoIngestionFromCatalogToIndexingSimultaneously() throws InterruptedException   {
+		
+		String[] dataset= {Input.TiffImagesFolder,Input.HiddenPropertiesFolder};
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49020");
+		baseClass.stepInfo("Verify two ingestions with step ( Cataloging, copying, indexing) having ingestion type add only  must run simultaneously");
+		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		// Perform catalog,copy and indexing for two ingestion
+		ingestionPage.multipleIngestionCopying(2);
+		ingestionPage.multipleIngestionIndexing(dataset, 2);
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 30/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49021
+	 * Description :Verify two ingestions with step ( copying, indexing) having ingestion type add only  must run simultaneously
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 36)
+	public void verifyTwoIngestionRunSimultaneously() throws InterruptedException   {
+		
+		String[] dataset= {Input.TiffImagesFolder,Input.HiddenPropertiesFolder};
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49021");
+		baseClass.stepInfo("Verify two ingestions with step ( copying, indexing) having ingestion type add only  must run simultaneously");
+		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		// Perform Copying and indexing for two ingestion
+		ingestionPage.multipleIngestionCopying(2);
+		ingestionPage.multipleIngestionIndexing(dataset, 2);
+		
+	}
+	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

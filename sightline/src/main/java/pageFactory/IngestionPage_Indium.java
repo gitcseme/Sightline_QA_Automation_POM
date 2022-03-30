@@ -854,6 +854,10 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath("//dt[contains(.,'Wizard')]");
 	}
 	
+	public Element getIngestionDetailPopup(int ingestionNumber) {
+		return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li["+ingestionNumber+"]//a//span");
+	}
+	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
 		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[text()='Rollback']");
@@ -6130,6 +6134,217 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 	    			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
 	    	getbtnRunIngestion().waitAndClick(10);
 			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 30/03/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform catalogging and copying for two ingestion
+		 */
+		
+		public void multipleIngestionCopying(int numberOfIngestion) {
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+	    	getFilterByButton().waitAndClick(10);
+	    	
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
+	    	getFilterByFAILED().waitAndClick(10);
+	    	
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
+	    	getFilterByCATALOGED().waitAndClick(10);
+	    	
+	    	//catlogging
+	    	for(int j=1;j<=numberOfIngestion;j++) {
+	    		for(int i=0;i<60;i++) {
+	    			base.waitTime(2);
+					String status = getStatus(j).getText().trim();
+					
+		    		if(status.contains("Cataloged")) {
+		    			base.passedStep("Cataloged completed for ingestion - "+j+"");
+		    			break;
+		    		}
+		    		else if (status.contains("In Progress")) {
+		    			base.waitTime(5);
+		    			getRefreshButton().waitAndClick(5);
+		    		}
+		    		else if (status.contains("Failed")){
+		    			base.failedStep("Cataloged Failed for ingestion - "+j+"");
+		    		}
+	    		}
+	    	}
+	    	
+	    	//copy
+	    	for(int j=1;j<=numberOfIngestion;j++) {
+		    	    		
+		    	getIngestionDetailPopup(j).waitAndClick(Input.wait30);
+		    
+		    	driver.scrollingToElementofAPage(getRunCopying());
+		    	base.waitForElement(getRunCopying());
+		        getRunCopying().waitAndClick(10);
+		        
+		        base.VerifySuccessMessage("Ingestion copy has Started.");
+		       
+		    	driver.waitForPageToBeReady();
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getCloseButton().Enabled()  ;}}), Input.wait30); 
+		    	getCloseButton().waitAndClick(10);	
+		}
+	    	
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+	    	getFilterByButton().waitAndClick(10);
+	    	
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByCOPIED().Visible()  ;}}), Input.wait30); 
+	    	getFilterByCOPIED().waitAndClick(10);
+	    	
+	    	getRefreshButton().waitAndClick(10);
+	    for(int k=1;k<=numberOfIngestion;k++) {
+	    	for(int i=0;i<40;i++) {
+	    		base.waitTime(2);
+				String status = getStatus(k).getText().trim();
+			
+	    		if(status.contains("Copied")) {
+	    			base.passedStep("Copied completed for ingestion - "+k+"");
+	    			break;
+	    		}
+	    		else if (status.contains("In Progress")) {
+	    			base.waitTime(10);
+	    			getRefreshButton().waitAndClick(5);
+	    		}
+	    		else if (status.contains("Failed")){
+	    			base.failedStep("copied Failed for ingestion - "+k+"");
+	    		}
+	    	}
+		 }
+		}
+		
+		/**
+		 * @author: Arun Created Date: 30/03/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform indexing for more than one ingestion
+		 */
+		public void multipleIngestionIndexing(String dataset[],int numberOfIngestion) {
+			
+	    	getRefreshButton().waitAndClick(5);
+	   
+			for(int i=1;i<=numberOfIngestion;i++) {
+			getIngestionDetailPopup(i).waitAndClick(Input.wait30);
+
+			driver.scrollingToElementofAPage(getMP3Count());
+			
+			if (dataset[i-1].contains("AllSources") || dataset[i-1].contains("SSAudioSpeech_Transcript")) {
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getIsAudioCheckbox().Visible();
+					}
+				}), Input.wait60);
+				getIsAudioCheckbox().waitAndClick(10);
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getLanguage().Visible();
+					}
+				}), Input.wait60);
+				getLanguage().selectFromDropdown().selectByVisibleText("North American English");
+			} else if (dataset[i-1].contains("CJK_GermanAudioTestData")) {
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getIsAudioCheckbox().Visible();
+					}
+				}), Input.wait60);
+				getIsAudioCheckbox().waitAndClick(10);
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getLanguage().Visible();
+					}
+				}), Input.wait60);
+				getLanguage().selectFromDropdown().selectByVisibleText("German");
+			} else if (dataset[i-1].contains("CJK_JapaneseAudioTestData")) {
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getIsAudioCheckbox().Visible();
+					}
+				}), Input.wait60);
+				getIsAudioCheckbox().waitAndClick(10);
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getLanguage().Visible();
+					}
+				}), Input.wait60);
+				getLanguage().selectFromDropdown().selectByVisibleText("Japanese");
+			} else if (dataset[i-1].contains("0002_H13696_1_Latest")) {
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getIsAudioCheckbox().Visible();
+					}
+				}), Input.wait60);
+				getIsAudioCheckbox().waitAndClick(10);
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getLanguage().Visible();
+					}
+				}), Input.wait60);
+				getLanguage().selectFromDropdown().selectByVisibleText("International English");
+			} else {
+				System.out.println("No need to select for other datasets");
+			}
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getRunIndexing().Visible();
+				}
+			}), Input.wait60);
+			getRunIndexing().waitAndClick(10);
+
+			base.VerifySuccessMessage("Ingestion Indexing has Started.");		
+			
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getCloseButton().Enabled();
+				}
+			}), Input.wait30);
+			getCloseButton().waitAndClick(10);
+			}
+	    
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByButton().Visible();
+				}
+			}), Input.wait30);
+			getFilterByButton().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByINDEXED().Visible();
+				}
+			}), Input.wait30);
+			getFilterByINDEXED().waitAndClick(10);
+			getRefreshButton().waitAndClick(5);
+			for(int j=1;j<=numberOfIngestion;j++) {
+				for(int i=0;i<50;i++) {
+					base.waitTime(2);
+					String status = getStatus(j).getText().trim();
+		    		if(status.contains("Indexed")) {
+		    			base.passedStep("Indexing completed for ingestion - "+j+"");
+		    			break;
+		    		}
+		    		else if (status.contains("failed")) {
+		    			base.failedStep("Indexing failed for ingestion - "+j+"");
+		    		}
+		    		else{
+		    			base.waitTime(10);
+		    			getRefreshButton().waitAndClick(5);
+		    		}
+		    	}
+			}
 		}
 	
 }
