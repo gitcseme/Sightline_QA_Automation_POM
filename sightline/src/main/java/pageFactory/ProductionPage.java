@@ -19181,5 +19181,36 @@ for (int i = 0; i < 6; i++) {
 		}
 		System.out.println("Preparing Data status displayed for " + productionFromHomePage);
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description Delete downloaded zip file and extracted file
+	 */
+	 public void deleteFiles() {
+			String name = getProduction().getText().trim();
+			String home = System.getProperty("user.home");
+			File extacted = new File(home+"/Downloads/VOL0001/");
+			File zipped = new File(home + "/Downloads/" + name + ".zip");
+			deleteDirectory(extacted);
+			zipped.delete();
+			base.stepInfo("downloaded zip file and extracted file was deleted");
+	 }
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param path
+	  * @Description delete method for directory deletion
+	  */
+	 public boolean deleteDirectory(File path) {
+		    if (path.exists()) {
+		        File[] files = path.listFiles();
+		        for (int i = 0; i < files.length; i++) {
+		            if (files[i].isDirectory()) {
+		                deleteDirectory(files[i]);
+		            } else {
+		                files[i].delete();
+		            }
+		        }
+		    }
+		    return (path.delete());
+		}
 
 }
