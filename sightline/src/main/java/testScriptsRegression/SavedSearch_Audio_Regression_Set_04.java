@@ -105,9 +105,9 @@ public class SavedSearch_Audio_Regression_Set_04 {
 	 *         MySearches : RPMXCON-49949 - Sprint 03
 	 * @throws InterruptedException
 	 * @throws ParseException
-	 * @Stabilization - done
+	 * @Stabilization - done - new imp
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 41)
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
 	public void validateSAuserisAllowedtoMoveSearchGroupsSearches() throws InterruptedException {
 		base.stepInfo("Test case Id: RPMXCON-49949");
 		// Login as SA
@@ -125,9 +125,9 @@ public class SavedSearch_Audio_Regression_Set_04 {
 	 *         MySearches : RPMXCON-49950 - Sprint 03
 	 * @throws InterruptedException
 	 * @throws ParseException
-	 * @Stabilization - done
+	 * @Stabilization - done - new imp
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 42)
+	@Test(enabled = true, groups = { "regression" }, priority = 42)
 	public void validatePAUisabletoMoveSharedSearchGroupsSearches() throws InterruptedException {
 		base.stepInfo("Test case Id: RPMXCON-49950");
 		// Login as PA
@@ -145,9 +145,9 @@ public class SavedSearch_Audio_Regression_Set_04 {
 	 * @param password
 	 * @param fullName
 	 * @throws InterruptedException
-	 * @Stabilization - done
+	 * @Stabilization - done - new imp
 	 */
-	@Test(enabled = false, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 43)
+	@Test(enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 43)
 	public void saveSearchBatchUpload1(String username, String password, String fullName) throws InterruptedException {
 		String search = "Search" + Utility.dynamicNameAppender();
 		base.stepInfo("Test case Id: RPMXCON-49614 - Saved Search Sprint 03");
@@ -156,7 +156,7 @@ public class SavedSearch_Audio_Regression_Set_04 {
 		login.loginToSightLine(username, password);
 
 		// upload batch file
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		saveSearch.navigateToSavedSearchPage();
 		saveSearch.uploadBatchFile_New(saveSearch.renameFile(Input.batchFileNewLocation));
 
 		login.logout();
@@ -169,7 +169,7 @@ public class SavedSearch_Audio_Regression_Set_04 {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 44)
+	@Test(enabled = true, groups = { "regression" }, priority = 44)
 	public void shareSGAndVerifyCount() throws InterruptedException {
 		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
 		String tagName = "TAG" + Utility.dynamicNameAppender();
@@ -220,8 +220,10 @@ public class SavedSearch_Audio_Regression_Set_04 {
 		base.waitForElement(saveSearch.getSavedSearchGroupName(securityGroup));
 		saveSearch.getSavedSearchGroupName(securityGroup).waitAndClick(10);
 		saveSearch.savedSearch_SearchandSelect(searchName1, "Yes");
+		driver.waitForPageToBeReady();
 
 		String actualDocCount2 = saveSearch.getCountofDocs().getText();
+		base.stepInfo("Document count : " + actualDocCount2);
 		softAssertion.assertEquals(pureHit, Integer.parseInt(actualDocCount2));
 
 		base.impersonateSAtoPA();
@@ -237,7 +239,7 @@ public class SavedSearch_Audio_Regression_Set_04 {
 	 *         on Search Screen(RPMXCON-48634)
 	 * @Stabilization - done
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 45)
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
 	public void verifyRelevantMessageInBS() {
 		String searchName1 = "Search" + Utility.dynamicNameAppender();
 
@@ -278,7 +280,7 @@ public class SavedSearch_Audio_Regression_Set_04 {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 46)
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
 	public void verifyRelevantMessageAS() throws InterruptedException {
 		String searchName2 = "Search" + Utility.dynamicNameAppender();
 
@@ -326,16 +328,12 @@ public class SavedSearch_Audio_Regression_Set_04 {
 		base.stepInfo("Test case Id: RPMXCON-49853 - Saved Search Sprint 04");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(search);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode1 = saveSearch.getSavedSearchNewNode().getText();
-
+		String newNode1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 		String subNode = saveSearch.createNewSearchGrp(newNode1, 2);
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(search);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode2 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 
 		// Search and save in First Node
 		session.basicContentSearch(Input.searchString1);
@@ -347,8 +345,8 @@ public class SavedSearch_Audio_Regression_Set_04 {
 		session.saveSearchInNewNode(search2, newNode2);
 
 		// verify SHared node AN delete Node
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.rootGroupExpansion();
 		String searchID1 = saveSearch.shareSavedNodePA(Input.shareSearchPA, newNode1, true, true, search);
 
 		saveSearch.deleteFunctionality();
@@ -357,7 +355,7 @@ public class SavedSearch_Audio_Regression_Set_04 {
 
 		// verify Shared node and Delete Search IN node
 		driver.Navigate().refresh();
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.rootGroupExpansion();
 		String searchID2 = saveSearch.shareSavedNodePA(Input.shareSearchPA, newNode2, true, true, search2);
 
 		saveSearch.savedSearch_SearchandSelect(search2, "Yes");
@@ -455,6 +453,9 @@ public class SavedSearch_Audio_Regression_Set_04 {
 		softAssertion.assertEquals(hitCount, sizeofList);
 		softAssertion.assertAll();
 
+		// delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0));
+
 		login.logout();
 	}
 
@@ -527,6 +528,9 @@ public class SavedSearch_Audio_Regression_Set_04 {
 		softAssertion.assertEquals(hitCount, finalCountresult);
 		softAssertion.assertAll();
 
+		// delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0));
+
 		login.logout();
 	}
 
@@ -574,6 +578,10 @@ public class SavedSearch_Audio_Regression_Set_04 {
 		saveSearch.selectNode1(newNodeList.get(0));
 
 		saveSearch.methodTocheckHideandShowFunction(specificHeaderName);
+
+		// delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0));
+
 		login.logout();
 	}
 
@@ -625,7 +633,7 @@ public class SavedSearch_Audio_Regression_Set_04 {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 54)
+	@Test(enabled = true, groups = { "regression" }, priority = 54)
 	public void validatePerformingAnyAction() throws InterruptedException {
 		String search = "String" + Utility.dynamicNameAppender();
 		String search2 = "String" + Utility.dynamicNameAppender();
@@ -634,19 +642,13 @@ public class SavedSearch_Audio_Regression_Set_04 {
 		base.stepInfo("Test case Id: RPMXCON-49888 - Saved Search Sprint 04");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(search);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode1 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(search);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode2 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(search);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode3 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode3 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 
 		// Search and save in First Node
 		int purehit1 = session.basicContentSearch(Input.searchString1);
@@ -658,16 +660,19 @@ public class SavedSearch_Audio_Regression_Set_04 {
 		session.saveSearchInNewNode(search2, newNode2);
 
 		// perform action on Node
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
 		saveSearch.selectNode1(newNode1);
 		saveSearch.moveSearchToAnotherFolder(newNode3);
 		saveSearch.moveActionButton("Save");
+		driver.waitForPageToBeReady();
 		String ExpectedMSg = "Save search tree node successfully moved.";
 		base.VerifySuccessMessage(ExpectedMSg);
 		base.stepInfo("Moved : " + newNode1 + " to " + newNode3);
 
 		// perform action on search in node
 		driver.Navigate().refresh();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
 		saveSearch.selectNode1(newNode2);
 		saveSearch.savedSearch_SearchandSelect(search2, "Yes");
 		saveSearch.savedSearchExecute2(search2, purehit2);
@@ -691,16 +696,12 @@ public class SavedSearch_Audio_Regression_Set_04 {
 		base.stepInfo("Test case Id: RPMXCON-49886 - Saved Search Sprint 04");
 
 //		 create new searchgroup 
-		saveSearch.createNewSearchGrp(search);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode1 = saveSearch.getSavedSearchNewNode().getText();
-
+		String newNode1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 		String subNode = saveSearch.createNewSearchGrp(newNode1, 2);
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(search);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode2 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
 
 		// Search and save in First Node
 		session.basicContentSearch(Input.searchString1);
@@ -712,8 +713,8 @@ public class SavedSearch_Audio_Regression_Set_04 {
 		session.saveSearchInNewNode(search2, newNode2);
 
 		// verify SHared node AN delete Node
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.rootGroupExpansion();
 		String searchID1 = saveSearch.shareSavedNodePA(Input.shareSearchDefaultSG, newNode1, true, true, search);
 
 		saveSearch.deleteFunctionality();
@@ -722,7 +723,7 @@ public class SavedSearch_Audio_Regression_Set_04 {
 
 		// verify Shared node and Delete Search IN node
 		driver.Navigate().refresh();
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.rootGroupExpansion();
 		String searchID2 = saveSearch.shareSavedNodePA(Input.shareSearchDefaultSG, newNode2, true, true, search2);
 
 		saveSearch.savedSearch_SearchandSelect(search2, "Yes");
@@ -766,7 +767,7 @@ public class SavedSearch_Audio_Regression_Set_04 {
 	 * @throws Exception
 	 * @Stabilization - ToDO -advancedContentSearchWithSearchChanges()
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 56)
+	@Test(enabled = true, groups = { "regression" }, priority = 56)
 	public void verifyDocument() throws Exception {
 		String savedSearch = "Search1" + Utility.dynamicNameAppender();
 		String savedSearch2 = "Search2" + Utility.dynamicNameAppender();
