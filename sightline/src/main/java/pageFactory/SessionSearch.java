@@ -3038,11 +3038,11 @@ public class SessionSearch {
 
 	public void bulkAssign() {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		if (getPureHitAddButton().isElementAvailable(2)) {
-			getPureHitAddButton().waitAndClick(5);
-		} else {
+		if (getRemovePureHit().isElementAvailable(3)) {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
+		} else if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(10);
 		}
 
 		getBulkActionButton().waitAndClick(3);
@@ -3052,7 +3052,6 @@ public class SessionSearch {
 				return getBulkAssignAction().Visible();
 			}
 		}), Input.wait60);
-
 		getBulkAssignAction().waitAndClick(10);
 
 		base.stepInfo("performing bulk assign");
