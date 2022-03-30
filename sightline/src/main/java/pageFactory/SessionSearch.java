@@ -34,7 +34,7 @@ import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
 public class SessionSearch {
- 
+
 	Driver driver;
 	public static int pureHit;
 	BaseClass base;
@@ -1690,7 +1690,7 @@ public class SessionSearch {
 	public Element getView() {
 		return driver.FindElementByXPath("//a[@class='submenu-a']");
 	}
-	
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -2921,15 +2921,15 @@ public class SessionSearch {
 		}
 
 		getBulkActionButton().waitAndClick(5);
-		
+
 		base.waitTime(2);
-		if(getView().isDisplayed()) {
+		if (getView().isDisplayed()) {
 			driver.waitForPageToBeReady();
 			Actions act = new Actions(driver.getWebDriver());
 			act.moveToElement(getView().getWebElement()).build().perform();
-			}else {
+		} else {
 			System.out.println("View is not found");
-			}
+		}
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -5057,7 +5057,7 @@ public class SessionSearch {
 	public void bulkAssignWithNewAssignment() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		base.waitTime(2);
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().Click();
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -5282,6 +5282,7 @@ public class SessionSearch {
 
 		// base.waitForElement(getSaveSearch_SaveButton());
 		getSaveSearch_SaveButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
 
 		base.VerifySuccessMessage("Saved search saved successfully");
 
@@ -10375,11 +10376,11 @@ public class SessionSearch {
 		getBulkActionButton().waitAndClick(5);
 		Thread.sleep(2000); // App Synch
 
-		if(getView().isDisplayed()) {
+		if (getView().isDisplayed()) {
 			driver.waitForPageToBeReady();
 			Actions act = new Actions(driver.getWebDriver());
 			act.moveToElement(getView().getWebElement()).build().perform();
-		}else {
+		} else {
 			System.out.println("View is not found");
 		}
 		getDocViewAction().waitAndClick(10);
@@ -10971,42 +10972,41 @@ public class SessionSearch {
 		base.VerifyWarningMessage("Please select the Language Pack/Dialect in Audio search");
 
 	}
+
 	/**
-	 * @author Jayanthi.Ganesan
-	 * This method will assign/unassign pop up when we try to perform bulk 
-	 * assign from anysource for existing assignment.
+	 * @author Jayanthi.Ganesan This method will assign/unassign pop up when we try
+	 *         to perform bulk assign from anysource for existing assignment.
 	 * @param assignmentName
 	 */
-	  public void bulkAssignExistingWithoutActionTab(String assignmentName) {
-			UtilityLog.info("performing bulk assign");
-			driver.waitForPageToBeReady();
-			base.waitForElement(getSelectAssignmentExisting(assignmentName));
-			driver.waitForPageToBeReady();
-			getSelectAssignmentExisting(assignmentName).Click();
-			driver.scrollingToBottomofAPage();
-			driver.waitForPageToBeReady();
-			getPersistantHitCb_Existing().isElementAvailable(3);
-			getPersistantHitCb_Existing().waitAndClick(5);
-			base.waitTillElemetToBeClickable(getContinueButton());
-			getContinueButton().waitAndClick(20);
-			final BaseClass bc = new BaseClass(driver);
-			final int Bgcount = bc.initialBgCount();
+	public void bulkAssignExistingWithoutActionTab(String assignmentName) {
+		UtilityLog.info("performing bulk assign");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectAssignmentExisting(assignmentName));
+		driver.waitForPageToBeReady();
+		getSelectAssignmentExisting(assignmentName).Click();
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		getPersistantHitCb_Existing().isElementAvailable(3);
+		getPersistantHitCb_Existing().waitAndClick(5);
+		base.waitTillElemetToBeClickable(getContinueButton());
+		getContinueButton().waitAndClick(20);
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
-				}
-			}), Input.wait30);
-			getFinalizeButton().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait30);
+		getFinalizeButton().Click();
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return bc.initialBgCount() == Bgcount + 1;
-				}
-			}), Input.wait60);
-			UtilityLog.info("Bulk assign is done, assignment is : " + assignmentName);
-			Reporter.log("Bulk assign is done, assignment is : " + assignmentName, true);
-		}
-
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		UtilityLog.info("Bulk assign is done, assignment is : " + assignmentName);
+		Reporter.log("Bulk assign is done, assignment is : " + assignmentName, true);
+	}
 
 }
