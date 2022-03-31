@@ -3308,6 +3308,9 @@ public class DocViewPage {
 				"//div[@id='divColumnDisplay']//p//strong[text()='SelectedFields']//..//..//ul[@id='sortable2PickColumns']");
 	}
 
+	public Element getTranscriptsTab() {
+		return driver.FindElementByXPath("//li[@class='active text-center clsTranscript']");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -26543,5 +26546,23 @@ public class DocViewPage {
 			e.printStackTrace();
 			base.failedStep("Failed to download selection documents" + e.getMessage());
 		}
+	}
+	
+	/**
+	 * @author Vijaya.Rani  Modify Date: 31/03/22 NA Modified date: NA Modified by:NA
+	 * @Description: verify TranScripts Tab Display In AudioPage
+	 * 
+	 */
+	public void verifyTranScriptsTabDisplayInAudioPage() {
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_MiniDoc_Selectdoc(3));
+		getDocView_MiniDoc_Selectdoc(3).waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTranscriptsTab());
+		softAssertion.assertTrue(getTranscriptsTab().Displayed());
+		base.passedStep("Audio doc view and Transcript tab displayed successfully");
+		softAssertion.assertAll();
 	}
 }
