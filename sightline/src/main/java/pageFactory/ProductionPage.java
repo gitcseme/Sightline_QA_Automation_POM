@@ -1,5 +1,9 @@
 package pageFactory;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -2781,6 +2785,9 @@ public class ProductionPage {
 	}
 	public Element getNumberOfNativeDocs() {
 		return driver.FindElementByXPath("//label[contains(text(),'Number of Natives: ')]//following-sibling::label");
+	}
+	public Element getFileDir(String dir) {
+		return driver.FindElementByXPath("//a[@class='icon dir' and contains(text(),'"+dir+"')]");
 	}
 	
 	public ProductionPage(Driver driver) {
@@ -19211,6 +19218,21 @@ for (int i = 0; i < 6; i++) {
 		        }
 		    }
 		    return (path.delete());
+		}
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @return
+	  * @throws UnsupportedFlavorException
+	  * @throws IOException
+	  * @Description get text from copied ClipBoard
+	  */
+	 public String getCopiedTextFromClipBoard() throws UnsupportedFlavorException, IOException {
+			driver.waitForPageToBeReady();
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+	        Clipboard clipboard = toolkit.getSystemClipboard();
+	        String actualCopedText = (String) clipboard.getData(DataFlavor.stringFlavor);
+			System.out.println(actualCopedText);
+			return actualCopedText;
 		}
 
 }
