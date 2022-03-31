@@ -424,8 +424,7 @@ public class DocView_MiniDocList_Regression2 {
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
 
-		// Click Gear Icon Check Child windoe Symbol
-		docViewPage.performGearIconChildWindowSymbol();
+	
 		loginPage.logout();
 	}
 
@@ -1524,8 +1523,8 @@ public class DocView_MiniDocList_Regression2 {
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
 
 		// Select Assignment in Manage Assignment to DocViewPage
-		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
-		assignmentsPage.manageAssignmentToDocViewAsRmu(assname);
+		driver.getWebDriver().navigate().back();
+		assignmentPage.manageAssignmentToDocViewAsRmu(assname);
 
 		// Configure gearIcon Perform
 		miniDocListpage.afterImpersonateWebFieldsSelectionManualMode();
