@@ -203,6 +203,7 @@ public class TestData {
 	public String query;
 	public String miniDocListID;
 	public String DATFile3;
+	public String indexingWarningMessage;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22 

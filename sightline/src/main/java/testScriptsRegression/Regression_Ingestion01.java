@@ -805,6 +805,35 @@ public class Regression_Ingestion01 {
 		
 	}
 	
+	/** 
+     *Author :Arunkumar date: 31/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48861
+	 * Description :Validate warning message is not prompted when rolling back an add only ingestion(copying/cataloging/indexing step)
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 37)
+	public void verifyWarningMessageNotPromptedWhenRollingbackIngestion() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48861");
+		baseClass.stepInfo("Validate warning message is not prompted when rolling back an add only ingestion(copying/cataloging/indexing step)");
+		//Catalogging and rollback
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+		//Copying and rollback
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+		//indexing and rollback
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+
+		}
+	
+	
+	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
