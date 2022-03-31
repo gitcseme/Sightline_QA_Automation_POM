@@ -17479,27 +17479,6 @@ public class DocViewPage {
 		// base.VerifySuccessMessage("Coding stamp deleted successfully");
 	}
 
-	/**
-	 * @Author Vijaya.Rani Created on 22/12/2021
-	 * @Description To perform Click Gear Icon Check Child Window Symbol
-	 * 
-	 */
-	public void performGearIconChildWindowSymbol() {
-		driver.waitForPageToBeReady();
-		boolean flag = getDocView_ChildWindowPopOut().isDisplayed();
-		softAssertion.assertTrue(flag);
-		base.passedStep(" Analytical panel Child window displayed for parent window");
-		boolean flag1 = getDocView_CodingFormPopOut().isDisplayed();
-		softAssertion.assertTrue(flag);
-		base.passedStep("Coding form Child window displayed for parent window");
-		boolean flag2 = getDocView_MiniDocListPopOut().isDisplayed();
-		softAssertion.assertTrue(flag);
-		base.passedStep("Mini Doc List Child window displayed for parent window");
-		boolean flag3 = getDocView_MetaDataPopOut().isDisplayed();
-		softAssertion.assertTrue(flag);
-		base.passedStep("MetaData Child window displayed for parent window");
-		softAssertion.assertAll();
-	}
 
 	/**
 	 * @author Vijaya.Rani date: 22/12/2021 Modified date: NA
