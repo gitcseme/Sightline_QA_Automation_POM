@@ -90,6 +90,9 @@ public class SavedSearch_Regression1 {
 		baseClass.stepInfo("Click on select button");
 		saveSearch.getSubmitToUpload().Click();
 		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
 		baseClass.stepInfo("Open uploded batch file.");
 		saveSearch.openUplodedBatchFile(fileName);
 		
