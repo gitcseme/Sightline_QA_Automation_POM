@@ -2372,6 +2372,101 @@ public class Production_Test_Regression_03 {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 		loginPage.logout();
 		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * 			RPMXCON-58561
+		 * @Description Verify the load files should be created under the mentioned default directory in the Export location
+		 * 
+		 */
+			@Test(groups = { "regression" }, priority = 33)
+			public void verifyLoadFileMentionedDirectory() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-58561 -Production");
+			base.stepInfo("Verify the load files should be created under the mentioned default directory in the Export location");
+			
+			foldername = "FolderProd" + Utility.dynamicNameAppender();
+			tagname = "Tag" + Utility.dynamicNameAppender();
+			String newExport = "Ex" + Utility.dynamicNameAppender();
+
+			// Pre-requisites
+			// create tag and folder
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+			tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+			// search for folder
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+			sessionSearch.bulkTagExisting(tagname);
+
+			//Verify 
+			ProductionPage page = new ProductionPage(driver);
+			productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			String text = page.getProdExport_ProductionSets().getText();
+			if (text.contains("Export Set")) {
+				page.selectExportSetFromDropDown();
+			} else {
+				page.createNewExport(newExport);
+			}
+			page.addANewExport(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.fillingTIFFSection(tagname);
+			page.fillingTextSection();
+			page.fillingMP3();
+			page.getAdvancedProductionComponent().waitAndClick(10);
+			page.advancedProductionComponentsTranslations();
+			page.navigateToNextSection();
+			page.fillingExportNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.GetVolumeLocation().selectFromDropdown().selectByVisibleText("In Delivery Folder");
+			page.visibleCheck("Load Files:");
+			page.visibleCheck("Folder Name:");
+			page.fillingExportLocationPage(productionname);
+			
+			String location = page.getProductionOutputLocation_VolumeName().GetAttribute("value");
+			String loadfile = page.getProductionComponentsFolderDetails_FolderName_LoadFiles().GetAttribute("value");
+			
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+			String name = page.getProduction().getText().trim();
+			page.getCopyPath().waitAndClick(10);
+			
+	        String actualCopedText = page.getCopiedTextFromClipBoard();
+	        
+			String parentTab = page.openNewTab(actualCopedText);
+			page.getFileDir(location).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			page.getFileDir(loadfile).waitAndClick(10);
+	        driver.waitForPageToBeReady();
+	        
+	        page.visibleCheck(name+"_DAT.dat");
+	        page.visibleCheck(name+"_MP3.lst");
+	        page.visibleCheck(name+"_Native.lst");
+	        page.visibleCheck(name+"_Text.lst");
+	        page.visibleCheck(name+"_TIFF.OPT");
+	        page.visibleCheck(name+"_TRANSLATION.lst");
+	        
+	        driver.close();
+			driver.getWebDriver().switchTo().window(parentTab);
+			base.passedStep("Verified the load files should be created under the mentioned default directory in the Export location");
+			
+			//delete tags and folders
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+			tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+			loginPage.logout();
+			
+		 }
      
      
 	@AfterMethod(alwaysRun = true)
