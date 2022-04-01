@@ -691,7 +691,7 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
 		docViewRedact.clickingRemarksIcon();
-		Thread.sleep(Input.wait3);
+		Thread.sleep(4000);
 		wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.deleteRemarksBtn().getWebElement()));
 		docViewRedact.deleteRemarksBtn().waitAndClick(5);
 		docViewRedact.confirmDeleteRemarksBtn().waitAndClick(5);

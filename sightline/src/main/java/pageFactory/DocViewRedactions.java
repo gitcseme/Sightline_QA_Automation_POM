@@ -81,7 +81,7 @@ public class DocViewRedactions {
 	}
 
 	public Element multiPageIcon() {
-		return driver.FindElementByXPath("//li[@id='multipageRedaction_divDocViewer']");
+		return driver.FindElementById("multipageRedaction_divDocViewer");
 	}
 
 	public Element multiPageInputTextbox() {
@@ -1661,6 +1661,7 @@ public class DocViewRedactions {
 
 	public void verifyingMultipageIconColour(String expectedColor) throws Exception {
 		base = new BaseClass(driver);
+		driver.waitForPageToBeReady();
 		base.waitForElement(multiPageIconColourCheck());
 		String color = multiPageIconColourCheck().getWebElement().getCssValue("color");
 		String hex = Color.fromString(color).asHex();
