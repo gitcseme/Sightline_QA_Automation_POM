@@ -68,35 +68,29 @@ public class Production_Test_Regression_01 {
 	String productionname;
 	String TempName;
 
-	@BeforeClass(alwaysRun = true)
-
-	private void TestStart() throws Exception, InterruptedException, IOException {
-
+	@BeforeMethod(alwaysRun = true)
+	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-
-	}
-
-	@BeforeMethod(alwaysRun = true)
-	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
-
-		Reporter.setCurrentTestResult(result);
-		System.out.println("------------------------------------------");
-		System.out.println("Executing method :  " + testMethod.getName());
-		UtilityLog.info(testMethod.getName());
-		base = new BaseClass(driver);
 		Input input = new Input();
 		input.loadEnvConfig();
 		base = new BaseClass(driver);
 		driver = new Driver();
-
-		// Login as a PA
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
+
 	}
 
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.info(testMethod.getName());
+	}
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-56052
@@ -4358,12 +4352,11 @@ public class Production_Test_Regression_01 {
 	}
 	
 	@AfterMethod(alwaysRun = true)
-	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-		base = new BaseClass(driver);
-		Reporter.setCurrentTestResult(result);
+	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 //			loginPage.logoutWithoutAssert();
 		}
 		try {
@@ -4374,14 +4367,12 @@ public class Production_Test_Regression_01 {
 	}
 
 	@AfterClass(alwaysRun = true)
-
 	public void close() {
-		System.out.println("******TEST CASES FOR PRODUCTION EXECUTED******");
-//		try {
-//			loginPage.quitBrowser();
-//		} catch (Exception e) {
-//			loginPage.quitBrowser();
-//
-//		}
+		try {
+			// LoginPage.clearBrowserCache();
+
+		} catch (Exception e) {
+			System.out.println("Sessions already closed");
+		}
 	}
 }

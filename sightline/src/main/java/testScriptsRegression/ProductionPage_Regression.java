@@ -71,8 +71,8 @@ public class ProductionPage_Regression {
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		Reporter.log("Logged in as User: " + Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 
 	}
 
@@ -3106,31 +3106,27 @@ public class ProductionPage_Regression {
 //60 cases
 
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
-		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
+	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			loginPage.logoutWithoutAssert();
+			System.out.println("Executed :" + result.getMethod().getMethodName());
+//			loginPage.logoutWithoutAssert();
 		}
 		try {
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
 	@AfterClass(alwaysRun = true)
-
 	public void close() {
-		System.out.println("******TEST CASES FOR Batch Redactions EXECUTED******");
 		try {
-//			login.clearBrowserCache();
-		} catch (Exception e) {
-			// no session avilable
+			// LoginPage.clearBrowserCache();
 
+		} catch (Exception e) {
+			System.out.println("Sessions already closed");
 		}
 	}
 }
