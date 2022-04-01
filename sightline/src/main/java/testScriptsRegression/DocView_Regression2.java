@@ -233,39 +233,6 @@ public class DocView_Regression2 {
 		loginPage.logout();
 	}
 
-	/**
-	 * Author : Sai Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
-	 * RPMXCON-51745 Verify persistent hit panel remains selected when navigation
-	 * from child window
-	 */
-
-	@Test(description ="RPMXCON-51745",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 6)
-	public void verifyPersistentHitPanelChildWindow(String fullName, String userName, String password)
-			throws Exception {
-		baseClass = new BaseClass(driver);
-		loginPage.loginToSightLine(userName, password);
-		baseClass.stepInfo("login as" + fullName);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-51745");
-		baseClass.stepInfo(
-				"Verify that on document navigation from mini doc list when hits panel is open then enable/disable should be retained");
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.randomText);
-		baseClass.stepInfo("Search for non audio docs completed");
-		sessionsearch.ViewInDocView();
-		docViewRedact.checkingPersistentHitPanel();
-		reusabledocviewpage.clickGearIconOpenMiniDocList();
-		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
-		if (docViewRedact.persistantHitToggle().isDisplayed()) {
-			assertTrue(true);
-			baseClass.passedStep(
-					"The persistent hit panel is visible for audio documents After navigating from child window");
-		} else {
-			assertTrue(false);
-		}
-		loginPage.logout();
-	}
 
 	/**
 	 * Author : Sai Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
@@ -585,41 +552,6 @@ public class DocView_Regression2 {
 		loginPage.logout();
 	}
 
-	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-51750
-	 * 
-	 */
-	@Test(description ="RPMXCON-51425",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 16)
-	public void verifyPersistentHitPanelRetainedWhenDocNumberEntered(String fullName, String userName, String password)
-			throws Exception {
-		baseClass = new BaseClass(driver);
-		loginPage.loginToSightLine(userName, password);
-		baseClass.stepInfo("Test case Id: RPMXCON-51750");
-		baseClass.stepInfo(
-				"Verify that on entering the document number when hits panel is open then enable/disable should be retained after loading the document");
-		docViewRedact = new DocViewRedactions(driver);
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		baseClass.stepInfo("login as" + fullName);
-		sessionsearch.basicContentSearch(Input.randomText);
-		baseClass.stepInfo("Search for text input completed");
-		sessionsearch.ViewInDocView();
-		baseClass.stepInfo("Docs Viewed in Doc View");
-		docViewRedact.checkingPersistentHitPanel();
-		driver.scrollPageToTop();
-		docViewRedact.pageNumberTextBox().waitAndClick(10);
-		docViewRedact.pageNumberTextBox().getWebElement().clear();
-		docViewRedact.pageNumberTextBox().getWebElement().sendKeys(Input.pageNumber);
-		baseClass.stepInfo("Clicked on Analytics panel button and moved to other doc by entering page number");
-		driver.waitForPageToBeReady();
-		if (docViewRedact.persistantHitToggle().isDisplayed()) {
-			baseClass.passedStep("Persistent hit panel is retained after loding the new page by entering page number");
-		} else {
-			baseClass.failedStep(
-					"Persistent hit panel is NOT retained after loding the new page by entering page number");
-		}
-		loginPage.logout();
-	}
 
 	/**
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case

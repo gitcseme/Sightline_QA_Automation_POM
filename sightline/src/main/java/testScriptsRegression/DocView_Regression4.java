@@ -6525,6 +6525,84 @@ public class DocView_Regression4 {
 		softAssertion.assertTrue(assignmentsPage.getBatchAssignmentBar(assname).isDisplayed());
 		baseClass.passedStep("Assignment progress bar refreshed on completed doc");
 	}
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws Exception
+	 */
+	@Test(description ="RPMXCON-59583",alwaysRun = true, groups = { "regression" }, priority = 68)
+	public void verifyConfigureManualMode_RMUDashboard() throws Exception {
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		MiniDocListPage  miniDocListpage=new MiniDocListPage(driver);
+		ReusableDocViewPage reusableDocViewPage=new ReusableDocViewPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-59583");
+		baseClass.stepInfo("Verify the context on navigating to doc view from RMU dashboard "
+				+ "after configuring the mini doc list should be assignment");
+
+		// login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// creating And Distributing the Assignment
+		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.verifyPureHitsCount();
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentsPage.add2ReviewerAndDistribute();
+		String expectedCount = assignmentsPage.getDistibuteDocsCount(Input.rmu1userName);
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+
+		// impersonate as Reviewer
+		driver.waitForPageToBeReady();
+		assignmentsPage.selectAssignmentfromRMUDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+		baseClass.stepInfo("***Verification for Manual Sort Order**");
+		// Configuring mini doc list in manual mode
+		driver.waitForPageToBeReady();
+
+		miniDocListpage.verifyDefaultWebfieldsInManualSortOrder();
+		// performing Add and Remove action on Selected Web Fields and validating the
+		// same.
+		miniDocListpage.verifyManualModeSortingConfigure(assignmentName);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentsPage.selectAssignmentfromRMUDashborad(assignmentName);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+		DocViewPage dc = new DocViewPage(driver);
+		driver.waitForPageToBeReady();
+		String ActualCount = dc.verifyDocCountDisplayed_DocView();
+		System.out.println(ActualCount);
+		String codingFormName = miniDocListpage.getDocView_CodingFromName().getText();
+		if (miniDocListpage.getDocumentCompleteButton().isDisplayed()) {
+			softAssertion.assertEquals(codingFormName, Input.codeFormName);
+			softAssertion.assertEquals(ActualCount, expectedCount);
+			softAssertion.assertAll();
+			baseClass.passedStep(
+					"RMU user not viewed Completed icon and assigned coding form is viewed in mini doc list in context of RMU dashboard.");
+			baseClass.passedStep("Document Count displayed in doc view  is same as assigned to the assignment.");
+		} else {
+			baseClass.failedStep("RMU user viewed Completed icon in mini doc list in context of RMU dashboard.");
+		}
+		reusableDocViewPage.defaultHeaderValue();
+		baseClass.stepInfo("***Verification for Optimized Sort Order**");
+		miniDocListpage.sortingVerifyAfterSelectedWebFields();
+		String ActualCount1 = dc.verifyDocCountDisplayed_DocView();
+		if (miniDocListpage.getDocumentCompleteButton().isDisplayed()) {
+			softAssertion.assertEquals(codingFormName, Input.codeFormName);
+			softAssertion.assertEquals(ActualCount1, expectedCount);
+			softAssertion.assertAll();
+			baseClass.passedStep(
+					"RMU user not viewed Completed icon and assigned coding form is viewed in mini doc list in context of manage assignment.");
+			baseClass.passedStep("Document Count displayed in doc view  is same as assigned to the assignment.");
+		} else {
+			baseClass.failedStep("RMU user viewed Completed icon in mini doc list in context of manage assignment.");
+		}
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
