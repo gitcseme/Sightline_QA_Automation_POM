@@ -3296,6 +3296,267 @@ public class DocView_MiniDocList_Regression {
 		baseClass.passedStep(docid + "Document is viewed from minidoclist in after selected history dropdown");
 	}
 	
+	/**
+	 * @Author : Baskar date: 31/03/2022 Modified date: NA Modified by: Baskar
+	 * @Description : Verify context on navigating to doc view with draw from pool
+	 *              on impersonating by DA to Reviewer
+	 */
+
+	@Test(description = "RPMXCON-59618", enabled = true, groups = { "regression" }, priority = 77)
+	public void validateAssignmentDaImpersoanteRev() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59618");
+		baseClass.stepInfo(
+				"Verify context on navigating to doc view with draw from pool on" + " impersonating by DA to Reviewer");
+		String assignmentName = "AssgnDa" + Utility.dynamicNameAppender();
+		String webField = "DocID";
+		String webField2 = "DocFileType";
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// search to Assignment creation
+		int pureHItCount = sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributeToDa();
+		baseClass.passedStep("Assignment created and assigned to DA user");
+		baseClass.stepInfo("Created Assignment " + assignmentName);
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
+
+		// Login as Domain admin
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.da1userName + "'");
+
+		baseClass.impersonateDAtoReviewer();
+		baseClass.stepInfo("User successfully impersoanted domain user to reviewer user");
+
+		// Selecting the assignment from dashboard
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// Main method
+		docViewPage.validatingAfterImpersonate(pureHItCount, webField, 3, 2);
+
+		// Selecting the assignment from dashboard again
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.passedStep("Again navigating to reviewer dashboard page to select same assignment");
+
+		// Main method
+		docViewPage.validatingAfterImpersonate(pureHItCount, webField2, 2, 2);
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 31/03/2022 Modified date: NA Modified by: Baskar
+	 * @Description : Verify context on navigating to doc view with draw from pool
+	 *              on impersonating by PA to Reviewer
+	 */
+
+	@Test(description = "RPMXCON-59616", enabled = true, groups = { "regression" }, priority = 78)
+	public void validateAssignmentPAImpersoanteRev() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59616");
+		baseClass.stepInfo(
+				"Verify context on navigating to doc view with " + "draw from pool on impersonating by PA to Reviewer");
+		String assignmentName = "AssgnDa" + Utility.dynamicNameAppender();
+		String webField = "DocID";
+		String webField2 = "DocFileType";
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// search to Assignment creation
+		int pureHItCount = sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributeToPa();
+		baseClass.passedStep("Assignment created and assigned to PA user");
+		baseClass.stepInfo("Created Assignment " + assignmentName);
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
+
+		// Login as Pa admin
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.pa1userName + "'");
+
+		baseClass.impersonatePAtoReviewer();
+		baseClass.stepInfo("User successfully impersoanted PA user to reviewer user");
+
+		// Selecting the assignment from dashboard
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// Main method
+		docViewPage.validatingAfterImpersonate(pureHItCount, webField, 3, 2);
+
+		// Selecting the assignment from dashboard again
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.passedStep("Again navigating to reviewer dashboard page to select same assignment");
+
+		// Main method
+		docViewPage.validatingAfterImpersonate(pureHItCount, webField2, 2, 2);
+
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 31/03/2022 Modified date: NA Modified by: Baskar
+	 * @Description : Verify context on navigating to doc view from Reviewer dashboard after
+	 *                draw from pool should be assignment
+	 */
+
+	@Test(description = "RPMXCON-59594", enabled = true, groups = { "regression" }, priority = 79)
+	public void validateAssignmentRmuImpersoanteRev() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59594");
+		baseClass.stepInfo(
+				"Verify context on navigating to doc view from Reviewer "
+				+ "dashboard after draw from pool should be assignmentr");
+		String assignmentName = "AssgnDa" + Utility.dynamicNameAppender();
+		String webField = "DocID";
+		String webField2 = "DocFileType";
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// search to Assignment creation
+		int pureHItCount = sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributingToReviewerManager();
+		baseClass.passedStep("Assignment created and assigned to PA user");
+		baseClass.stepInfo("Created Assignment " + assignmentName);
+
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("User successfully impersoanted Rmu user to reviewer user");
+
+		// Selecting the assignment from dashboard
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// Main method
+		docViewPage.validatingAfterImpersonate(pureHItCount, webField, 3, 2);
+
+		// Selecting the assignment from dashboard again
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.passedStep("Again navigating to reviewer dashboard page to select same assignment");
+
+		// Main method
+		docViewPage.validatingAfterImpersonate(pureHItCount, webField2, 2, 2);
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 31/03/2022 Modified date: NA Modified by: Baskar
+	 * @Description : Verify context on navigating to doc view from RMU dashboard
+	 *              and then from manage assignment when DA impersonates as RMU
+	 */
+
+	@Test(description = "RPMXCON-59617", enabled = true, groups = { "regression" }, priority = 80)
+	public void validateAssignmentDaImpersoanteRmu() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59617");
+		baseClass.stepInfo("Verify context on navigating to doc view from RMU dashboard and then from "
+				+ "manage assignment when DA impersonates as RMU");
+		String assignmentName = "AssgnDa" + Utility.dynamicNameAppender();
+		String webField = "DocID";
+		String webField2 = "DocFileType";
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// search to Assignment creation
+		int pureHItCount = sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributeToDa();
+		baseClass.passedStep("Assignment created and assigned to DA user");
+		baseClass.stepInfo("Created Assignment " + assignmentName);
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
+
+		// Login as Domain admin
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.da1userName + "'");
+
+		baseClass.impersonateDAtoRMU();
+		baseClass.stepInfo("User successfully impersoanted domain user to reviewer Manager user");
+		miniDocListpage.chooseAnAssignmentFromDashBoard(assignmentName);
+
+		// Main method
+		String header = docViewPage.validatingAfterImpersonate(pureHItCount, webField, 3, 2);
+
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		driver.waitForPageToBeReady();
+		assignmentPage.assignmentPagination(assignmentName);
+		baseClass.waitForElement(assignmentPage.getAssignmentAction_ViewinDocView());
+		assignmentPage.getAssignmentAction_ViewinDocView().waitAndClick(10);
+		baseClass.stepInfo("Assignment selected and viewAllDocs in docview");
+
+		// Main method
+		docViewPage.validatingFromManageAssgn(pureHItCount, webField2, 2, 2, header);
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 31/03/2022 Modified date: NA Modified by: Baskar
+	 * @Description : Verify context on navigating to doc view from RMU dashboard
+	 *              after draw from pool should be assignment
+	 */
+
+	@Test(description = "RPMXCON-59592", enabled = true, groups = { "regression" }, priority = 81)
+	public void validateAssignmentRmuDashboardRMu() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59592");
+		baseClass.stepInfo("Verify context on navigating to doc view from RMU "
+				+ "dashboard after draw from pool should be assignment");
+		String assignmentName = "AssgnDa" + Utility.dynamicNameAppender();
+		String webField = "DocID";
+		String webField2 = "DocFileType";
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// search to Assignment creation
+		int pureHItCount = sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributingToReviewerManager();
+		baseClass.passedStep("Assignment created and assigned to Rmu user");
+		baseClass.stepInfo("Created Assignment " + assignmentName);
+		
+		// Navigating to Rmu dashboard page
+		this.driver.getWebDriver().get(Input.url + "Dashboard/Dashboard");
+		miniDocListpage.chooseAnAssignmentFromDashBoard(assignmentName);
+
+		// Main method
+		String header = docViewPage.validatingAfterImpersonate(pureHItCount, webField, 3, 2);
+
+		this.driver.getWebDriver().get(Input.url + "Dashboard/Dashboard");
+		miniDocListpage.chooseAnAssignmentFromDashBoard(assignmentName);
+
+		// Main method
+		docViewPage.validatingAfterImpersonate(pureHItCount, webField2, 2, 2);
+
+		loginPage.logout();
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

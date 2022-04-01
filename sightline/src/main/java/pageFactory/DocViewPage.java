@@ -26672,5 +26672,165 @@ public class DocViewPage {
 		return firstDocId;
 	}
 	
+	/**
+	 * @author Indium-Baskar
+	 */
+//  Reusable Method for checking header value in mini doc list
+//  without editing the configure minido list
+	public String defaultHeaderValue(int size) {
+		driver.waitForPageToBeReady();
+		List<WebElement> allValues = getMiniDocListHeaderValue().FindWebElements();
+		List<String> arrayMiniDocList = new ArrayList<String>();
+		driver.waitForPageToBeReady();
+		for (int j = 1; j < allValues.size(); j++) {
+			arrayMiniDocList.add(allValues.get(j).getText());
+			if (j == size) {
+				JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+				jse.executeScript("document.querySelector('.dataTables_scrollBody').scrollBy(400,0)");
+				driver.waitForPageToBeReady();
+			}
+		}
+		String miniDocListText = arrayMiniDocList.toString();
+		return miniDocListText;
+	}
+	/**
+	 * @author Indium-Baskar
+	 * @Description:This method used after impersonate
+	 * @param pureHItCount
+	 * @param webField
+	 * @param sizeOne
+	 * @param sizeTwo
+	 * 
+	 */
+	public String validatingAfterImpersonate(int pureHItCount, String webField, int sizeOne, int sizeTwo) {
+		// Collecting MiniDocList Header
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		base.waitTime(5);
+		String miniDocListHeaders = defaultHeaderValue(sizeOne);
+		// Manual sort order button
+		miniDocListpage.clickManualSortButton();
+		// Collecting selected fields in pickcolumn display
+		base.waitTime(5);
+		List<String> selectedFields = base.availableListofElements(getDocView_Config_Selectedfield());
+		// comparing both value
+		softAssertion.assertEquals(miniDocListHeaders.toString().toLowerCase(),
+				selectedFields.toString().toLowerCase());
+		base.waitForElement(miniDocListpage.getSelectedFieldToInterchange(webField));
+		Element sourcefromPickColumDisplay = miniDocListpage.getSelectedFieldToInterchange(webField);
+		Actions actions = new Actions(driver.getWebDriver());
+		// Drag and Drop to x,y
+		actions.clickAndHold(miniDocListpage.getSelectedFieldToInterchange(webField).getWebElement());
+		actions.dragAndDropBy(miniDocListpage.getSelectedFieldToInterchange(webField).getWebElement(), 50, 100).build()
+				.perform();
+		System.out.println("Drag and Dropped");
+		base.waitTime(5);
+		ElementCollection pickColumnafterSelectedfieldLists = miniDocListpage
+				.getSelectedFieldsAvailablePickColumnDisplay();
+		List<String> afterInterchanging = base.availableListofElements(pickColumnafterSelectedfieldLists);
+		miniDocListpage.saveConfigureMiniDocList();
+		driver.waitForPageToBeReady();
+		// Collecting MiniDocList Header after sorting
+		base.waitTime(5);
+		String miniDocListHeaders2 = defaultHeaderValue(sizeTwo);
+		// comparing both value after sorting
+		softAssertion.assertEquals(afterInterchanging.toString().toLowerCase(),
+				miniDocListHeaders2.toString().toLowerCase());
+		driver.waitForPageToBeReady();
+		// validating doc count
+		base.waitForElement(getDocView_info());
+		String firstDocCount = getDocView_info().getText();
+		String[] count = firstDocCount.split(" ");
+		String actualCount = count[1];
+		softAssertion.assertEquals(String.valueOf(pureHItCount), actualCount);
+		base.stepInfo(
+				"Assignment created doc count and after selecting assignment and navigating to docview page doc count are same");
+		// validating coding form name
+		base.waitForElement(getDocView_CFName());
+		String codingFormName = getDocView_CFName().getText();
+		softAssertion.assertEquals(codingFormName, Input.codeFormName);
+		base.stepInfo("coding form displayed as per the assigned one");
+		// Validating complete and save btn
+		base.waitForElement(getCompleteDocBtn());
+		boolean completeFalg = getCompleteDocBtn().Displayed();
+		base.waitForElement(getCodingFormSaveButton());
+		boolean saveFalg = getCodingFormSaveButton().Displayed();
+		softAssertion.assertEquals(completeFalg, saveFalg);
+		base.stepInfo("Complete and save button displayed successfully");
+		softAssertion.assertAll();
+		return miniDocListHeaders2;
+
+	}
+
+	/**
+	 * @author Indium-Baskar
+	 * @Description:This method manage assgn
+	 * @param pureHItCount
+	 * @param webField
+	 * @param sizeOne
+	 * @param sizeTwo
+	 * @param header
+	 * 
+	 */
+	public void validatingFromManageAssgn(int pureHItCount, String webField, int sizeOne, int sizeTwo,String header)  {
+		// Collecting MiniDocList Header
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		base.waitTime(5);
+		String miniDocListHeaders = defaultHeaderValue(sizeOne);
+		softAssertion.assertEquals(miniDocListHeaders.toString().toLowerCase(),
+				header.toString().toLowerCase());
+
+		base.passedStep("Minidoclist header value as per the expected one before configure");
+		base.waitForElement(miniDocListpage.getGearIcon());
+		miniDocListpage.getGearIcon().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		ElementCollection pickColumnafterSelectedfieldList = miniDocListpage
+				.getSelectedFieldsAvailablePickColumnDisplay();
+		afterActionselectedFieldsList = availableListofElements(pickColumnafterSelectedfieldList);
+		for (String element : afterActionselectedFieldsList) {
+			System.out.println(element);
+			miniDocListpage.getValueToRemoveFromSelectedWebFields(element).waitAndClick(3);
+		}
+		// Drag and Drop from Available to Selected field
+		driver.waitForPageToBeReady();
+		for (String element : afterActionselectedFieldsList) {
+			System.out.println(element);
+			Element sourcefromPickColumDisplay = miniDocListpage.getFromAvailableFieldPickColumnDisplay(element);
+			Element destinationfromPickColumDisplay = miniDocListpage.getToSelectedField();
+			miniDocListpage.dragAndDropAction(sourcefromPickColumDisplay, destinationfromPickColumDisplay);
+		}
+		ElementCollection afterSelectinFourWebField = miniDocListpage.getSelectedFieldsAvailablePickColumnDisplay();
+		afterActionselectedFieldsList = availableListofElements(afterSelectinFourWebField);
+		miniDocListpage.saveConfigureMiniDocList();
+		driver.waitForPageToBeReady();
+		
+		// validating doc count
+		base.waitForElement(getDocView_info());
+		String firstDocCount = getDocView_info().getText();
+		String[] count = firstDocCount.split(" ");
+		String actualCount = count[1];
+		softAssertion.assertEquals(String.valueOf(pureHItCount), actualCount);
+		base.stepInfo(
+				"Assignment created doc count and after selecting assignment and navigating to docview page doc count are same");
+		// validating coding form name
+		base.waitForElement(getDocView_CFName());
+		String codingFormName = getDocView_CFName().getText();
+		softAssertion.assertEquals(codingFormName, Input.codeFormName);
+		base.stepInfo("coding form displayed as per the assigned one");
+		// Validating complete and save btn
+		boolean completeFalg = getCompleteDocBtn().Displayed();
+		softAssertion.assertFalse(completeFalg);
+		base.passedStep("Complete btn not displayed");
+		boolean saveNextFlag=getSaveAndNextButton().Displayed();
+		softAssertion.assertTrue(saveNextFlag);
+		base.waitForElement(getCodingFormSaveButton());
+		boolean saveFalg = getCodingFormSaveButton().Displayed();
+		softAssertion.assertEquals(saveFalg,saveNextFlag);
+		base.stepInfo("SaveAndNext and save button displayed successfully");
+		softAssertion.assertAll();
+
+	}
+	
+	
+	
 
 }
