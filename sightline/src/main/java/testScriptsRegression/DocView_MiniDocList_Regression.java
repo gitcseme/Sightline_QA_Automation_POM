@@ -3558,6 +3558,180 @@ public class DocView_MiniDocList_Regression {
 	}
 	
 	
+	/**
+	 * Author :Sakthivel date: 31/03/21 Modified date: NA Modified by:NA Description
+	 * :Verify that on navigating to doc view from manage assignment and then from
+	 * RMU dashboard then after configuring the mini doc list should not change
+	 * context.'RPMXCON-59585' Sprint : 14
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 82)
+	public void verifyNavigateDocViewManageAssignmentFromRMU() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-59585");
+		baseClass.stepInfo(
+				"Verify that on navigating to doc view from manage assignment and then from RMU dashboard then after configuring the mini doc list should not change context");
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codeFormName;
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.waitForElement(sessionSearch.getPureHitsCount());
+		int beforepureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
+		baseClass.stepInfo("DocView Assigned Docs Count :" + beforepureHit);
+		sessionSearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Configure gearIcon Perform
+		miniDocListpage.afterImpersonateWebFieldsSelectionManualMode();
+
+		// verify Doc Count
+		baseClass.waitForElement(docViewPage.getDocView_info());
+		String AfterDocCount = docViewPage.getDocView_info().getText();
+		baseClass.stepInfo("DocView Assigned Docs Count :" + AfterDocCount);
+
+		// Coding Form Name Display
+		baseClass.waitForElement(docViewPage.getDocView_CFName());
+		String codingFormName = docViewPage.getDocView_CFName().getText();
+		baseClass.stepInfo("DocView Assigned codingForm Name :" + codingFormName);
+		baseClass.passedStep("Selected Coding Form Name is Display");
+
+		// Complete Btn Display
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		softAssertion.assertTrue(docViewPage.getCompleteDocBtn().Displayed());
+		baseClass.passedStep("Complete Button is Displayed");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Select Assignment in Manage Assignment to DocViewPage
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentsPage.manageAssignmentToDocViewAsRmu(assname);
+
+		// Configure gearIcon Perform
+		miniDocListpage.afterImpersonateWebFieldsSelectionManualMode();
+
+		// verify Doc Count
+		baseClass.waitForElement(docViewPage.getDocView_info());
+		String AfterDocCount1 = docViewPage.getDocView_info().getText();
+		baseClass.stepInfo("DocView Assigned Docs Count :" + AfterDocCount1);
+
+		// Coding Form Name Display
+		baseClass.waitForElement(docViewPage.getDocView_CFName());
+		String codingFormName2 = docViewPage.getDocView_CFName().getText();
+		baseClass.stepInfo("DocView Assigned codingForm Name :" + codingFormName2);
+		baseClass.passedStep("Selected Coding Form Name is Display");
+
+		// Complete Btn Not Display
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		softAssertion.assertFalse(docViewPage.getCompleteDocBtn().Displayed());
+		baseClass.passedStep("Complete Button is Not Displayed");
+		baseClass.passedStep("Save Button is Displayed");
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * Author :Sakthivel date: 28/03/22 Modified date: NA Modified by:NA Description
+	 * :Verify that on navigating to doc view from manage assignment and then from
+	 * RMU dashboard then after configuring the mini doc list should not change
+	 * context RPMXCON-59586' Sprint : 14
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 83)
+	public void verifyManageAssigmentRMUAfterConfiguringInMiniDocList() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59586");
+		baseClass.stepInfo(
+				"Verify that on navigating to doc view from manage assignment and then from RMU dashboard then after configuring the mini doc list should not change context");
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Review Manager with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.waitForElement(sessionSearch.getPureHitsCount());
+		int beforepureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
+		baseClass.stepInfo("DocView Assigned Docs Count :" + beforepureHit);
+		sessionSearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Selecting the assignment
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		driver.waitForPageToBeReady();
+		assignmentPage.selectAssignmentToViewinDocView(assname);
+
+		// verify Doc Count
+		baseClass.waitForElement(docViewPage.getDocView_info());
+		String AfterDocCount = docViewPage.getDocView_info().getText();
+		baseClass.stepInfo("DocView Assigned Docs Count :" + AfterDocCount);
+
+		// Coding Form Name Display
+		baseClass.waitForElement(docViewPage.getDocView_CFName());
+		String codingFormName = docViewPage.getDocView_CFName().getText();
+		baseClass.stepInfo("DocView Assigned codingForm Name :" + codingFormName);
+		baseClass.passedStep("Selected Coding Form Name is Display");
+
+		// Complete Btn Not Display
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		softAssertion.assertFalse(docViewPage.getCompleteDocBtn().Displayed());
+		baseClass.passedStep("Complete Button is Not Displayed");
+		if (docViewPage.getCompleteDocBtn().isDisplayed()) {
+			baseClass.failedStep("save button is not displayed");
+		} else {
+			baseClass.passedStep("Save button is displayed");
+		}
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Configure gearIcon Perform
+		miniDocListpage.afterImpersonateWebFieldsSelectionManualMode();
+
+		// verify Doc Count
+		baseClass.waitForElement(docViewPage.getDocView_info());
+		String AfterDocCount1 = docViewPage.getDocView_info().getText();
+		baseClass.stepInfo("DocView Assigned Docs Count :" + AfterDocCount1);
+
+		// Coding Form Name Display
+		baseClass.waitForElement(docViewPage.getDocView_CFName());
+		String codingFormName2 = docViewPage.getDocView_CFName().getText();
+		baseClass.stepInfo("DocView Assigned codingForm Name :" + codingFormName2);
+		baseClass.passedStep("Selected Coding Form Name is Display");
+
+		// Complete Btn Display
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		softAssertion.assertTrue(docViewPage.getCompleteDocBtn().Displayed());
+		baseClass.passedStep("Complete Button is Displayed");
+		softAssertion.assertAll();
+	}
+
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
