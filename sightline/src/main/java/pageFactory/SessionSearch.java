@@ -2379,7 +2379,8 @@ public class SessionSearch {
 				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait90);
-
+		getPureHitsCount().isElementAvailable(10);
+		base.waitTime(5);
 		int pureHit = Integer.parseInt(getPureHitsCount().getText());
 		System.out.println("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
 		UtilityLog.info("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
@@ -9637,6 +9638,7 @@ public class SessionSearch {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 		}
+		base.waitTime(3);
 		base.waitForElement(getBulkActionButton());
 		getBulkActionButton().Click();
 		base.waitForElement(getBulkAssignAction());
