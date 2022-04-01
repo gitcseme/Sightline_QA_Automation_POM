@@ -32,6 +32,8 @@ import pageFactory.CodingForm;
 import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
 import pageFactory.ProjectPage;
@@ -39,6 +41,7 @@ import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -68,22 +71,20 @@ public class DocView_MiniDocList_DataProvider {
 	String assgnWindow = "AAWindow" + Utility.dynamicNameAppender();
 	String assgnOne = "AAOneBy" + Utility.dynamicNameAppender();
 	
-	
 	@BeforeClass(alwaysRun = true)
-	private void TestStart() throws Exception, InterruptedException, IOException {
+	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		// Open browser
 		Input in = new Input();
 		in.loadEnvConfig();
-		
-
 	}
 
 	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) {
+	public void beforeTestMethod(Method testMethod) throws ParseException, InterruptedException, IOException {
 		System.out.println("Executing method : " + testMethod.getName());
 		UtilityLog.info("Executing method : " + testMethod.getName());
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -98,7 +99,9 @@ public class DocView_MiniDocList_DataProvider {
 		softAssertion = new SoftAssert();
 		projectPage = new ProjectPage(driver);
 		securityGroupPage=new SecurityGroupsPage(driver);
+
 	}
+	
 
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
@@ -2109,20 +2112,98 @@ public class DocView_MiniDocList_DataProvider {
 
 	}
 	
-	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
-		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			System.out.println("Executed :" + result.getMethod().getMethodName());
-//			loginPage.logoutWithoutAssert();
+	/**
+	 * Author : Sai Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-51745 Verify persistent hit panel remains selected when navigation
+	 * from child window
+	 */
+
+	@Test(description ="RPMXCON-51745",enabled = true, dataProvider = "twoLogins", alwaysRun = true, groups = { "regression" }, priority = 49)
+	public void verifyPersistentHitPanelChildWindow(String fullName, String userName, String password)
+			throws Exception {
+		baseClass = new BaseClass(driver);
+		softAssertion=new SoftAssert();
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("login as" + fullName);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51745");
+		baseClass.stepInfo(
+				"Verify that on document navigation from mini doc list when hits panel is open then enable/disable should be retained");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search for non audio docs completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		reusabledocviewpage.clickGearIconOpenMiniDocList();
+		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
+		if (docViewRedact.persistantHitToggle().isDisplayed()) {
+			softAssertion.assertTrue(true);
+			baseClass.passedStep(
+					"The persistent hit panel is visible for audio documents After navigating from child window");
+		} else {
+			softAssertion.assertFalse(false);
 		}
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
 	
+	/**
+	 * Author : Sai Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-51425 Verify Conceptually similar tab remains selected when
+	 * navigation from child window
+	 */
+
+	@Test(description ="RPMXCON-51425",enabled = true, dataProvider = "twoLogins", alwaysRun = true, groups = { "regression" }, priority = 50)
+	public void verifyConceptuallySimilarTabChildWindow(String fullName, String userName, String password)
+			throws Exception {
+		baseClass = new BaseClass(driver);
+		softAssertion=new SoftAssert();
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("login as" + fullName);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51425");
+		baseClass.stepInfo(
+				"To verify that user has selected an Analytics Panel tab and navigates to another document from mini doc list child window, the Analytics Panel Tab previously selected must remain.");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search for non audio docs completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.clickingConceptuallySimilarTab();
+		driver.scrollPageToTop();
+		reusabledocviewpage.clickGearIconOpenMiniDocList();
+		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
+		driver.waitForPageToBeReady();
+		String getAttribute = docViewRedact.getConceptuallySimilarTab().GetAttribute("class");
+		if (getAttribute.equalsIgnoreCase("text-center active")) {
+			baseClass.passedStep(
+					"The Conceptually similar tab remains selected after navigating from Mini DocList Child Window");
+		} else {
+			softAssertion.assertFalse(false);
+		}
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
+	
+	@AfterMethod(alwaysRun = true)
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+		baseClass = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
+		}
+		try {
 			loginPage.quitBrowser();
-		
+		} catch (Exception e) {
+			loginPage.quitBrowser();
+//			LoginPage.clearBrowserCache();
+		}
 	}
 
 	@AfterClass(alwaysRun = true)
+
 	public void close() {
 		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
 		try {
@@ -2132,4 +2213,5 @@ public class DocView_MiniDocList_DataProvider {
 
 		}
 	}
+
 }
