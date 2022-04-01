@@ -1650,7 +1650,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		if (executionURL.contains("pt"))
 			documentToBeSelected = Input.newNearDupeDocId;
 		else
-			documentToBeSelected = Input.conceptualDocs1;
+			documentToBeSelected = Input.threadDocWithToolTip;
 
 		baseClass.stepInfo(
 				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
@@ -1761,7 +1761,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		documentToBeSelected = Input.nearDupeCompletedDocId;
-		revDocToBeSelected = Input.nearDupeDocId;
+		revDocToBeSelected = Input.conceptualDocIdForReviewer01;
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
@@ -1831,8 +1831,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		if (executionURL.contains("pt"))
 			documentToBeSelected = Input.MetaDataId;
 		else
-			documentToBeSelected = Input.conceptualDocument;
-
+			documentToBeSelected = Input.MetaDataId;
+			revDocToBeSelected= Input.threadMapDocId01;
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
@@ -1879,7 +1879,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 
 		baseClass.stepInfo("Verify columns in conceptual tab in Analytical columns");
 		docViewAnalytics.verifyConceptualTabColumns();
@@ -1892,9 +1892,9 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify when Code same action selected from Analytics Panel >
 	 *              thread map and Save/Complete clicked from coding form child
 	 *              window'RPMXCON-51371'
-	 * @throws InterruptedException stabilization done
+	 * @throws InterruptedException stabilization not done- threaded docs are not avialble for reviwer
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	//@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyCodeAsSameWithCodingFormChildWindowForThreadedDocs() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2451,7 +2451,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 			revDocToBeSelected = Input.familyDocumentForReviewer;
 		} else {
 			documentToBeSelected = Input.familyDocument;
-			revDocToBeSelected = Input.familyDocumentForReviewer;
+			revDocToBeSelected = Input.threadDocId;
 		}
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
