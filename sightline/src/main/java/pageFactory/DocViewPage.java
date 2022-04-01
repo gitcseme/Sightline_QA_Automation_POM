@@ -3280,6 +3280,11 @@ public class DocViewPage {
 	public Element getSelectDocument(int i) {
 		return driver.FindElementByXPath("(//label[@class='checkbox'])["+i+"]");
 	}
+
+	//Added by Gopinath - 01/04/2022
+	public Element getFirstDocumentId() {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr[1]//td[2]");
+=
 	
 	
 	// Added by Mohan
@@ -25035,18 +25040,17 @@ public class DocViewPage {
 	public void verifyChainIconIsDisplayedAfterCodeSameAsOperation(int documentCount) {
 		try {
 			driver.waitForPageToBeReady();
-			base.waitTime(1);
+			base.waitTime(2);
 			for (int i = 0; i < documentCount; i++) {
 				driver.waitForPageToBeReady();
-				if (!chainLink(i + 2).isDisplayed()) {
+				if ((!chainLink(i + 2).isDisplayed()) && (i<documentCount-1)) {
 					base.failedStep("Chain link is not displayed for applied code same as document -- " + (i + 1));
 				}
 			}
 			base.passedStep("Chain link is displayed for all applied code same as documents");
 		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep(
-					"Exception occred while selecting uncompleted documents check boxes." + e.getLocalizedMessage());
+			base.failedStep("Exception occred while selecting uncompleted documents check boxes." + e.getLocalizedMessage());
 		}
 
 	}
@@ -26544,4 +26548,24 @@ public class DocViewPage {
 			base.failedStep("Failed to download selection documents" + e.getMessage());
 		}
 	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description Method for getting first document id from mini doc list.
+	 * @return firstDocId : firstDocId is String value that first document id.
+	 */
+	public String getFirstDocumentIdFromMiniDocList() {
+		String firstDocId = null;
+		try {
+			driver.waitForPageToBeReady();
+			getFirstDocumentId().isElementAvailable(15);
+			base.waitTime(2);
+			firstDocId = getFirstDocumentId().getText().trim();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while getting first document id from mini doc list." + e.getMessage());
+		}
+		return firstDocId;
+	}
+	
 }

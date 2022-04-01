@@ -1033,6 +1033,8 @@ public class ReportsPage {
 
 			driver.waitForPageToBeReady();
 			base.waitForElement(getApplyChanges());
+			base.waitTime(3);
+			getApplyChanges().isElementAvailable(10);
 			getApplyChanges().Click();
 
 			Thread.sleep(Input.wait30 / 10);
@@ -1047,7 +1049,9 @@ public class ReportsPage {
 					getApplyChanges().Click();
 				}
 			}
-
+			if(!getActionsRowCount().isElementAvailable(6)) {
+				driver.Navigate().refresh();
+			}
 			List<WebElement> RowData = getActionsRowCount().FindWebElements();
 			System.out.println(RowData.size());
 			List<String> values = new ArrayList<String>();

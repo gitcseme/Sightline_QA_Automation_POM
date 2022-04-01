@@ -11859,16 +11859,21 @@ public class ProductionPage {
 	public void verifyDownloadProductionUsingSharableLink() throws InterruptedException {
 		try {
 			driver.waitForPageToBeReady();
+			base.waitTime(3);
+			getQC_Download().isElementAvailable(10);
 			base.waitForElement(getQC_Download());
 			String name = getProduction().getText().trim();
 			base.waitTillElemetToBeClickable(getQC_Download());
 			getQC_Download().waitAndClick(10);
 			driver.waitForPageToBeReady();
+			getSelectSharableLinks().isElementAvailable(10);
 			base.waitForElement(getSelectSharableLinks());
 			getSelectSharableLinks().waitAndClick(10);
 			driver.waitForPageToBeReady();
+			getAllFilesLink().isElementAvailable(10);
 			base.waitForElement(getAllFilesLink());
 			getAllFilesLink().ScrollTo();
+			base.waitTime(2);
 			String sharableLink = getAllFilesLink().GetAttribute("value").trim();
 			String password = getShareLinkPassword().getText().trim();
 			String parentWindow = driver.getWebDriver().getWindowHandle();
@@ -11877,14 +11882,17 @@ public class ProductionPage {
 			driver.getWebDriver().switchTo().window(tabs.get(1));
 			driver.waitForPageToBeReady();
 			driver.getWebDriver().get(sharableLink);
+			base.waitTime(2);
+			getEnterPasswordTextField().isElementAvailable(10);
 			base.waitForElement(getEnterPasswordTextField());
 			getEnterPasswordTextField().SendKeys(password);
 			driver.waitForPageToBeReady();
 			base.waitForElement(getDownloadButton());
 			getDownloadButton().waitAndClick(10);
 			Thread.sleep(Input.wait30 / 10);
-			String home = System.getProperty("user.home");
-			String downloadsHome = home + "/Downloads";
+			///String home = System.getProperty("user.home");
+			//String downloadsHome = home + "/Downloads";
+			String downloadsHome ="C:\\BatchPrintFiles\\downloads";
 			isFileDownloaded(downloadsHome, name);
 			driver.close();
 			driver.getWebDriver().switchTo().window(parentWindow);
