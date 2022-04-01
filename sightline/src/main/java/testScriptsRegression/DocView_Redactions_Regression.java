@@ -112,7 +112,7 @@ public class DocView_Redactions_Regression {
 	 * RPMXCON-52214 Verify that multiple Rectangle Redaction does not remain
 	 * selected on DocView Screen
 	 */
-//	@Test(description = "RPMXCON-52214",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
+	@Test(description = "RPMXCON-52214",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyMultiRecRedactionNotRemainSelected() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -220,7 +220,7 @@ public class DocView_Redactions_Regression {
 	 * 'Delete' key from keyboard should be disabled keyboard action
 	 * 
 	 */
-	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
 	public void verifyKeyBoardDelActionDisabledForThisRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -311,7 +311,7 @@ public class DocView_Redactions_Regression {
 	 * 'Delete' key from keyboard should be disabled keyboard action
 	 * 
 	 */
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
 	public void verifyKeyBoardDelActionDisabledForRectangleRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -395,7 +395,7 @@ public class DocView_Redactions_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-//	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyEditAndApplyRedactionTag() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -471,7 +471,7 @@ public class DocView_Redactions_Regression {
 	 *           redaction, last saved redaction tag should be selected
 	 *           automatically from redaction pop up
 	 */
-//	@Test(groups = { "regression" }, priority = 29)
+	@Test(groups = { "regression" }, priority = 5)
 	public void verifyRedactionTagInPopUpDropDown() throws Exception {
 		BaseClass baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
