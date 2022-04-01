@@ -3284,7 +3284,7 @@ public class DocViewPage {
 	//Added by Gopinath - 01/04/2022
 	public Element getFirstDocumentId() {
 		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr[1]//td[2]");
-=
+	}
 	
 	
 	// Added by Mohan
@@ -26653,7 +26653,7 @@ public class DocViewPage {
 		}
 	}
 
-
+/*
 	 * @author Gopinath
 	 * @Description Method for getting first document id from mini doc list.
 	 * @return firstDocId : firstDocId is String value that first document id.
