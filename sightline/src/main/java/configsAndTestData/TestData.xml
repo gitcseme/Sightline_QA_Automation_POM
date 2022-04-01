@@ -481,7 +481,6 @@
 	<threadDocId>331ID00000005</threadDocId>
 	<conceptualDocs1>H16135-0188-001844</conceptualDocs1>
 	<familyDocumentForReviewer>T2421D</familyDocumentForReviewer>
-	<newNearDupeDocId>ID00005181</newNearDupeDocId>
 	<nearDupeDocId>T556D</nearDupeDocId>
 	<nearDupeDocument>ID00001175</nearDupeDocument>
 	<threadDocWithToolTip>ID00001224</threadDocWithToolTip>
@@ -489,7 +488,7 @@
 	
 	<TermOperator>ALL</TermOperator>
 
-	<familyDocWhichIsNotInMiniDoc>T2534D</familyDocWhichIsNotInMiniDoc>
+	<familyDocWhichIsNotInMiniDoc>ID00000192</familyDocWhichIsNotInMiniDoc>
 	<bgColorOnMouseHover>rgba(212, 230, 237, 1)</bgColorOnMouseHover>
 
 	<hiddenDocId>ID00000206</hiddenDocId>

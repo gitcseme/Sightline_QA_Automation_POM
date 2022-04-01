@@ -45,7 +45,7 @@ import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 public class DocViewPage {
- 
+
 	Driver driver;
 	BaseClass base;
 	SessionSearch sp;
@@ -2614,7 +2614,7 @@ public class DocViewPage {
 
 	public Element getAttachCountTextBox() {
 		return driver.FindElementByXPath("//label[@id='l_it_0']//input");
-		}
+	}
 
 	// added sakthivel
 	public Element getVerifyNearDuppin() {
@@ -2805,9 +2805,10 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//li[@id='liDocumentDefaultView' and @class='ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active']");
 	}
+
 	public Element getDocViewAnaliticalFamilTab() {
 		return driver.FindElementByXPath("//li[@id='liDocumentFamilyMember']");
-		}
+	}
 
 	// verfifying the docid on docview panal by passing required docid
 	public Element getDocViewPanelDocId(String docId) {
@@ -3262,8 +3263,7 @@ public class DocViewPage {
 		return driver.FindElementsByXPath("//ul[@id='documentTypeDropDown']/li/a");
 	}
 
-
-	//Added by gopinath - 16/03/2022
+	// Added by gopinath - 16/03/2022
 	public Element remarkElement() {
 		return driver.FindElementByXPath("(//*[local-name()='g']//*[name()='rect'])[2]");
 	}
@@ -3271,22 +3271,21 @@ public class DocViewPage {
 	public Element getChildWindowGearIcons() {
 		return driver.FindElementByXPath("//i[@class='fa fa-gear']");
 	}
-	
+
 	public Element getSearchIcons() {
 		return driver.FindElementByXPath("//i[@class='fa fa-lg fa-fw fa-search']");
 	}
-	
-	//add by Aathith
+
+	// add by Aathith
 	public Element getSelectDocument(int i) {
-		return driver.FindElementByXPath("(//label[@class='checkbox'])["+i+"]");
+		return driver.FindElementByXPath("(//label[@class='checkbox'])[" + i + "]");
 	}
 
 	//Added by Gopinath - 01/04/2022
-	public Element getFirstDocumentId() {
-		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr[1]//td[2]");
-	}
-	
-	
+		public Element getFirstDocumentId() {
+			return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr[1]//td[2]");
+		}
+		
 	// Added by Mohan
 	public Element getDocView_MiniDoclist_GearIcon() {
 		return driver.FindElementByXPath("//*[@id='miniDocListConfig']//i[@class='fa fa-gear']");
@@ -3316,6 +3315,7 @@ public class DocViewPage {
 	public Element getTranscriptsTab() {
 		return driver.FindElementByXPath("//li[@class='active text-center clsTranscript']");
 	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -5450,7 +5450,7 @@ public class DocViewPage {
 	 * @Description:Doc view coding form stamp selection
 	 */
 
-	public void docViewCodingFormPanelStampSelection(String colour,String comment1) throws AWTException {
+	public void docViewCodingFormPanelStampSelection(String colour, String comment1) throws AWTException {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getResponsiveCheked());
 		getResponsiveCheked().Click();
@@ -5477,7 +5477,6 @@ public class DocViewPage {
 		getCodingFormSaveBtn().waitAndClick(5);
 		base.stepInfo("Document saved successfully");
 	}
-
 
 	/**
 	 * @author Indium-Baskar date: 10/8/2021 Modified date: 24/8/2021 Modified
@@ -5618,7 +5617,7 @@ public class DocViewPage {
 	public void codingFormChildWindowCodeAsLast(String comment) throws AWTException, InterruptedException {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getVerifyPrincipalDocument());
-		String prnDoc=getVerifyPrincipalDocument().getText();
+		String prnDoc = getVerifyPrincipalDocument().getText();
 		reusableDocView.clickGearIconOpenCodingFormChildWindow();
 		switchToNewWindow(2);
 		editCodingForm(comment);
@@ -5627,14 +5626,14 @@ public class DocViewPage {
 		clickCodeSameAsLast();
 		switchToNewWindow(1);
 		base.waitForElement(getVerifyPrincipalDocument());
-		String SecDoc=getVerifyPrincipalDocument().getText();
+		String SecDoc = getVerifyPrincipalDocument().getText();
 		softAssertion.assertNotEquals(prnDoc, SecDoc);
 		// Again click code same as last
 		switchToNewWindow(2);
 		clickCodeSameAsLast();
 		switchToNewWindow(1);
 		base.waitForElement(getVerifyPrincipalDocument());
-		String thrdDoc=getVerifyPrincipalDocument().getText();
+		String thrdDoc = getVerifyPrincipalDocument().getText();
 		softAssertion.assertNotEquals(thrdDoc, SecDoc);
 		base.waitForElement(getDociD(SecDoc));
 		getDociD(SecDoc).waitAndClick(5);
@@ -7150,8 +7149,6 @@ public class DocViewPage {
 //					getDocView_DocId(docId).ScrollTo();
 					base.waitForElement(getDocView_DocId(docId));
 					getDocView_DocId(docId).waitAndClick(15);
-					softAssertion.assertTrue(getDocView_DocId(docId).isDisplayed());
-					softAssertion.assertAll();
 					base.passedStep("Doc is selected from MiniDoclist successfully");
 					break;
 
@@ -7166,10 +7163,10 @@ public class DocViewPage {
 			System.out.println("Docs Arenot selected from mini doclist");
 		}
 	}
-	
+
 	/**
-	 * @author Indium Mohan Description : Method to select a from
-	 *         Available field Date: 30/03/22 Modified date: NA Modified by: N/A
+	 * @author Indium Mohan Description : Method to select a from Available field
+	 *         Date: 30/03/22 Modified date: NA Modified by: N/A
 	 */
 	public void selectSourceDocIdInAvailableField(String filterName) {
 
@@ -7179,13 +7176,23 @@ public class DocViewPage {
 			base.waitForElement(getDocView_MiniDoclist_GearIcon());
 			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
 
-			base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields());
-			getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().waitAndClick(10);
-			
-			base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount());
-			getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount().waitAndClick(10);
-			
-			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay(filterName);
+			if (getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().isElementAvailable(2)
+					|| getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount().isElementAvailable(2)) {
+				base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields());
+				getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().waitAndClick(10);
+
+				base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount());
+				getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount().waitAndClick(10);
+
+				dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay(filterName);
+			} else {
+				if (getShowCompletedDocsToggle().isDisplayed()) {
+					base.waitForElement(getShowCompletedDocsToggle());
+					getShowCompletedDocsToggle().waitAndClick(5);
+				}
+				base.stepInfo("The available field " + filterName + " is already added.");
+				System.out.println("The available field " + filterName + " is already added.");
+			}
 
 			getMiniDocListConfirmationButton("Save").waitAndClick(10);
 
@@ -7194,7 +7201,7 @@ public class DocViewPage {
 			System.out.println("ConfigureMiniDocist popup is not opened");
 		}
 	}
-	
+
 	/**
 	 * @author Indium Raghuram Description : Perform Drag and Drop fields from
 	 *         available field to selected fields of 'Pick Column Display' Date:
@@ -9589,35 +9596,34 @@ public class DocViewPage {
 		reusableDocView.clickGearIconOpenAnalyticalPanel();
 		String parentWindow = reusableDocView.switchTochildWindow();
 		// no docs 1
-		List<String> analyticalDocsAgain= new ArrayList<>();
+		List<String> analyticalDocsAgain = new ArrayList<>();
 		List<String> analytics = reusableDocView.analyticalDocs();
 		for (String analytical : analytics) {
 			if (duplicates.add(analytical)) {
-			}
-			else {
+			} else {
 				uniqueDocuments.add(analytical);
 			}
 		}
-			if (uniqueDocuments.size()<1) {
-				switchToNewWindow(1);
-				driver.waitForPageToBeReady();
-				driver.scrollPageToTop();
+		if (uniqueDocuments.size() < 1) {
+			switchToNewWindow(1);
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
 			for (int i = 1; i < duplicates.size(); i++) {
 				getClickDocviewID(++i).waitAndClick(5);
 				driver.waitForPageToBeReady();
 				switchToNewWindow(2);
 				base.waitTime(4);
-				ElementCollection analyticsElementAgain=getAnalyticalPanelDocIdText();
-				analyticalDocsAgain=availableListofElements(analyticsElementAgain);
+				ElementCollection analyticsElementAgain = getAnalyticalPanelDocIdText();
+				analyticalDocsAgain = availableListofElements(analyticsElementAgain);
 				for (String analyticalAgain : analyticalDocsAgain) {
 					if (!duplicates.add(analyticalAgain)) {
 						uniqueDocuments.add(analyticalAgain);
-						}
+					}
 				}
 				break;
-				
+
 			}
-				}
+		}
 		String DocIdName = uniqueDocuments.get(0);
 		getAnalyCheckBox(DocIdName).WaitUntilPresent().ScrollTo();
 		base.waitTime(3);
@@ -9838,7 +9844,6 @@ public class DocViewPage {
 		getMiniDocListText(expectedLast).waitAndClick(10);
 		reusableDocView.VerifyTheDocument();
 		base.stepInfo("Document is saved with last applied coding of the document");
-
 
 	}
 
@@ -10175,7 +10180,7 @@ public class DocViewPage {
 
 			}
 			String originalDocPageNumberAfterClick = getOriginalDocPageNumber().GetAttribute("placeholder");
-			
+
 			if (originalDocPageNumberAfterClick.equals("1")) {
 				base.passedStep(
 						"Expected Last Page Number is displayed in page number text box after clicking on pagination icon");
@@ -12202,7 +12207,6 @@ public class DocViewPage {
 			driver.getPageSource();
 			driver.waitForPageToBeReady();
 
-
 			for (int i = 2; i <= 3; i++) {
 				base.waitForElement(getDocView_Analytics_Concept_DocCheckBox(i));
 				getDocView_Analytics_Concept_DocCheckBox(i).waitAndClick(10);
@@ -13235,7 +13239,6 @@ public class DocViewPage {
 		System.out.println("Enter 3rd time");
 		getSaveAudioBtn().waitAndClick(10);
 	}
-
 
 	/**
 	 * @author sowndarya.velraj
@@ -15127,13 +15130,14 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		for (String docId : completedDoc) {
 			base.waitForElement(getDociD(docId));
-			getDociD(docId).ScrollTo();			
+			getDociD(docId).ScrollTo();
 			getDociD(docId).waitAndClick(5);
 			driver.waitForPageToBeReady();
-			boolean flag=getUnCompleteButton().Displayed();
+			boolean flag = getUnCompleteButton().Displayed();
 			System.out.println(flag);
 			softAssertion.assertTrue(flag);
-			softAssertion.assertAll();		}
+			softAssertion.assertAll();
+		}
 		base.passedStep("Uncomplete button displayed for completed document");
 		driver.waitForPageToBeReady();
 	}
@@ -16537,7 +16541,7 @@ public class DocViewPage {
 	/**
 	 * @author Indium-Baskar
 	 */
-	
+
 //	Reusable method for verify unComplete to click complete button in random order
 	public void unCompleteButtonToCompleteBtn() {
 		driver.waitForPageToBeReady();
@@ -16548,7 +16552,7 @@ public class DocViewPage {
 			getUnCompleteButton().waitAndClick(5);
 			driver.waitForPageToBeReady();
 			base.waitTime(3);
-			boolean flag=getCompleteDocBtn().Displayed();
+			boolean flag = getCompleteDocBtn().Displayed();
 			System.out.println(flag);
 			softAssertion.assertTrue(flag);
 			softAssertion.assertAll();
@@ -16913,7 +16917,7 @@ public class DocViewPage {
 		getDocFileType().waitAndClick(15);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocViewAnaliticalFamilTab());
-		//driver.scrollingToElementofAPage(getDocViewAnaliticalFamilTab());
+		// driver.scrollingToElementofAPage(getDocViewAnaliticalFamilTab());
 		getDocViewAnaliticalFamilTab().ScrollTo();
 		getDocViewAnaliticalFamilTab().waitAndClick(15);
 		base.waitForElement(getDocView_Analytics_ChildWindow_FamilyTab_doc(2));
@@ -16923,8 +16927,7 @@ public class DocViewPage {
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
 		getDocView_Analytics_Family_Member_CodeSameAs().waitAndClick(15);
 		base.VerifySuccessMessage("Code same performed successfully.");
-		}
-		
+	}
 
 	/**
 	 * @author Aathith.Senthilkumar
@@ -17486,7 +17489,6 @@ public class DocViewPage {
 		}
 		// base.VerifySuccessMessage("Coding stamp deleted successfully");
 	}
-
 
 	/**
 	 * @author Vijaya.Rani date: 22/12/2021 Modified date: NA
@@ -18839,7 +18841,7 @@ public class DocViewPage {
 //	Reusable method for edit coding without complete btn and verify scroll
 	public void editCodingFormScrollComplete() throws InterruptedException {
 		driver.waitForPageToBeReady();
-		String prnDoc=getVerifyPrincipalDocument().getText();
+		String prnDoc = getVerifyPrincipalDocument().getText();
 		base.waitForElement(getResponsiveCheked());
 		getResponsiveCheked().waitAndClick(5);
 		base.waitForElement(getNonPrivilegeRadio());
@@ -20382,7 +20384,6 @@ public class DocViewPage {
 		base.stepInfo("Document saved successfully");
 		driver.waitForPageToBeReady();
 	}
-
 
 	/**
 	 * @Author Jeevitha
@@ -24587,12 +24588,11 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @author Steffy.D 
-	 * Method is to verify warning message which is getting
+	 * @author Steffy.D Method is to verify warning message which is getting
 	 *         displayed when two users make changes to same document
-	 * @param	highlightIcon Icon Name for which warning message needs to be verified
+	 * @param highlightIcon Icon Name for which warning message needs to be verified
 	 */
-	
+
 	public void verifyWarningMessage(String highLightIcon) {
 		try {
 			base.stepInfo("Verifying warning message for " + highLightIcon);
@@ -24639,14 +24639,10 @@ public class DocViewPage {
 		}
 	}
 
-	
-	
-	
-	
 	/**
-	 * @author Steffy.D
-	 * Method is to verify whether remark panel items are displayed or not
-	 * @param actionItem The action icon which need to be verified
+	 * @author Steffy.D Method is to verify whether remark panel items are displayed
+	 *         or not
+	 * @param actionItem  The action icon which need to be verified
 	 * @param remarkValue Remark value which needs to be verified
 	 */
 	public void verifyReviewRemarkActionPanel(String actionItem, String remarkValue) {
@@ -25057,6 +25053,7 @@ public class DocViewPage {
 		}
 
 	}
+
 
 	/**
 	 * @author Gopinath
@@ -26261,45 +26258,45 @@ public class DocViewPage {
 		}
 		softAssertion.assertAll();
 	}
-	
-	
+
 	/**
 	 * @author Indium-Baskar date: 03/03/2022 Modified date: 03/03/2022
 	 * @Description:This method used to pass alpha character
-	 * @param tiny Nvachar Datatype
-	 * @param small Nvachar Datatype
+	 * @param tiny    Nvachar Datatype
+	 * @param small   Nvachar Datatype
 	 * @param average Nvachar Datatype
-	 * @param bit Nvachar Datatype
-	 * @param tinys passing count
-	 * @param smalls passing count
-	 * @param big passing count
+	 * @param bit     Nvachar Datatype
+	 * @param tinys   passing count
+	 * @param smalls  passing count
+	 * @param big     passing count
 	 * @param average passing count
 	 */
 
-	public void passingNvacharDatatypeUsingLength(String tiny, String small, String average,
-			String bit,int tinys,int smalls,int averages,int big ) {
+	public void passingNvacharDatatypeUsingLength(String tiny, String small, String average, String bit, int tinys,
+			int smalls, int averages, int big) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getReadOnlyTextBox(tiny));
-		String character20=passingLengthCharacter(tinys);
+		String character20 = passingLengthCharacter(tinys);
 		getReadOnlyTextBox(tiny).SendKeys(character20);
 		base.waitForElement(getReadOnlyTextBox(small));
-		String character50=passingLengthCharacter(smalls);
+		String character50 = passingLengthCharacter(smalls);
 		getReadOnlyTextBox(small).SendKeys(character50);
 		base.waitForElement(getReadOnlyTextBox(average));
-		String character400=passingCharacterUsingCommaSeparator(averages);
+		String character400 = passingCharacterUsingCommaSeparator(averages);
 		getReadOnlyTextBox(average).SendKeys(character400);
 		base.waitForElement(getReadOnlyTextBox(bit));
-		String character4000=passingLengthCharacter(big);
+		String character4000 = passingLengthCharacter(big);
 		getReadOnlyTextBox(bit).SendKeys(character4000);
 		codingFormSaveButton();
 		base.VerifySuccessMessage("Document saved successfully");
 	}
+
 	/**
 	 * @author Indium-Baskar date: 03/03/2022 Modified date: 03/03/2022
 	 * @Description:This method used to pass lenght character
-	 *  @param size passing count
+	 * @param size passing count
 	 */
-	
+
 	public String passingLengthCharacter(int size) {
 		char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 		StringBuilder sb = new StringBuilder(4000);
@@ -26311,7 +26308,7 @@ public class DocViewPage {
 		String output = sb.toString();
 		return output;
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 03/03/2022 Modified date: 03/03/2022
 	 * @Description:This method used to pass lenght character using comma separator
@@ -26329,12 +26326,12 @@ public class DocViewPage {
 		return output;
 	}
 
- 
-	
 	/**
-	 * @author Gopinath Created date: 16/03/2022 Modified date: N/A 
-	 * @Description:This method used to add remark by cicking on text on doc view page.
-	 * @param remark : remark is String value that need to enter in remark text field.
+	 * @author Gopinath Created date: 16/03/2022 Modified date: N/A
+	 * @Description:This method used to add remark by cicking on text on doc view
+	 *                   page.
+	 * @param remark : remark is String value that need to enter in remark text
+	 *               field.
 	 */
 	public void addRemarkByText(String remark) {
 		try {
@@ -26371,14 +26368,14 @@ public class DocViewPage {
 			}), Input.wait30);
 			getRemarkTextArea().SendKeys(remark);
 			getSaveRemark().Click();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while  adding remark"+e.getLocalizedMessage());
+			base.failedStep("Exception occured while  adding remark" + e.getLocalizedMessage());
 		}
 	}
 
 	/**
-	 * @author Vijaya.Rani  Modify Date: 16/03/22 NA Modified date: NA Modified by:NA
+	 * @author Vijaya.Rani Modify Date: 16/03/22 NA Modified date: NA Modified by:NA
 	 * @Description: This method used verify navigation confirmation popup buttons
 	 * 
 	 */
@@ -26386,42 +26383,42 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getSearchIcons());
 		getSearchIcons().waitAndClick(5);
-		
+
 		if (getNavigationMsg().Displayed() == true) {
 			base.passedStep("Navigation popup window is dsiplayed");
 		} else {
 			base.failedStep("Navigation popup window is not dsiplayed");
 		}
-		
+
 		base.waitForElement(getNavigationMsgPopupNoBtn());
 		getNavigationMsgPopupNoBtn().waitAndClick(5);
 		base.stepInfo("Confirm Navigation Yes Button Clicked Successfully");
-		
+
 		base.waitForElement(getChildWindowGearIcons());
 		softAssertion.assertTrue(getChildWindowGearIcons().Displayed());
 		base.passedStep("User can see the 'Doc View' page successfully");
-		
+
 	}
-	
+
 	/**
-	 * @author Vijaya.Rani  Modify Date: 16/03/22 NA Modified date: NA Modified by:NA
+	 * @author Vijaya.Rani Modify Date: 16/03/22 NA Modified date: NA Modified by:NA
 	 * @Description: This method used verify navigation confirmation popup buttons
 	 * 
 	 */
 	public void verifyNavigationPopUpWindowYesButton() {
 		base.waitForElement(getSearchIcons());
 		getSearchIcons().waitAndClick(5);
-		
+
 		base.waitForElement(getNavigationMsgPopupYesBtn());
 		getNavigationMsgPopupYesBtn().waitAndClick(5);
 		base.stepInfo("Confirm Navigation Yes Button Clicked Successfully");
-		
+
 		base.waitForElement(getChildWindowGearIcons());
 		softAssertion.assertTrue(getChildWindowGearIcons().Displayed());
 		base.passedStep("Users actions is saved and user should redirect to the clicked page");
 
 	}
-	
+
 	/**
 	 * @author Krishna 14/03/22 NA Modified date: NA Modified by:NA
 	 * @throws InterruptedException
@@ -26482,7 +26479,7 @@ public class DocViewPage {
 			base.failedStep("corresponding text is not highlighted in the document");
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 21/03/2022 Modified date: 21/03/2022
 	 * @Description:This method used for download icon validation
@@ -26511,7 +26508,7 @@ public class DocViewPage {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -26521,7 +26518,8 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getDocumetCountMiniDocList());
 		for (int i = 1; i <= count; i++) {
-			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);;
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+			;
 		}
 		base.waitForElement(getDocView_Mini_ActionButton());
 		getDocView_Mini_ActionButton().waitAndClick(5);
@@ -26531,6 +26529,7 @@ public class DocViewPage {
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
 		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param noOfDocuments
@@ -26552,6 +26551,7 @@ public class DocViewPage {
 		}
 	}
 	
+
 	/**
 	 * @author Vijaya.Rani  Modify Date: 31/03/22 NA Modified date: NA Modified by:NA
 	 * @Description: verify TranScripts Tab Display In AudioPage
