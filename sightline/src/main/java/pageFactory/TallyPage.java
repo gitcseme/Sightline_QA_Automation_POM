@@ -266,7 +266,7 @@ public class TallyPage {
 
 	public Element getTally_SelectSearches(String searchName) {
 		return driver.FindElementByXPath(
-				"//a[@class='jstree-anchor' and text()='" + searchName + "']//i[@class='jstree-icon jstree-checkbox']");
+				"//a[contains(@class,'jstree-anchor') and text()='" + searchName + "']//i[@class='jstree-icon jstree-checkbox']");
 	}
 
 	public Element getTally_SearchSaveSelections() {
@@ -529,7 +529,12 @@ public class TallyPage {
 	public Element getSubTally_ExportData() {
 		return driver.FindElementById("SubTallyToExportDataId");
 	}
-	
+	public ElementCollection getSelectedColumnDocs_Subtally() {
+		return driver.FindElementsByXPath("//table[@class='table table-striped dataGrid']/tbody/tr/td[@class='active']");
+	}
+	public Element getHeaderSubtally(int i) {
+		return driver.FindElementByXPath("//table[@class='table table-striped dataGrid']/thead/tr/th["+i+"]");
+	}
 	public TallyPage(Driver driver) {
 
 		this.driver = driver;
@@ -2166,4 +2171,73 @@ public void subTallyToExport() {
 	getSubTally_ExportData().Click();
 	driver.waitForPageToBeReady();
 }
+
+/**
+ * @author Jayanthi.ganesan
+ */
+public void SelectSource_MultipleSavedSearch(String saveSearch[]) {
+	base.stepInfo("**selecting source as search--" + saveSearch + "**");
+	base.waitForElement(getTally_SelectSource());
+	getTally_SelectSource().Click();
+	base.waitForElement(getTally_Searches());
+	getTally_Searches().Click();
+	for(int i=0;i<saveSearch.length;i++) {
+	driver.scrollingToElementofAPage(getTally_SelectSearches(saveSearch[i]));
+	getTally_SelectSearches(saveSearch[i]).ScrollTo();
+	base.waitTime(2);
+	getTally_SelectSearches(saveSearch[i]).waitAndClick(5);
+	}
+	driver.scrollingToElementofAPage(getTally_SearchSaveSelections());
+	base.waitForElement(getTally_SearchSaveSelections());
+	base.waitTime(2);
+	getTally_SearchSaveSelections().Click();
+	driver.waitForPageToBeReady();
+	verifySourceSelected();
+	base.stepInfo("Selected " + saveSearch + " as source to generate tally report");
+}
+
+/**
+ * @author Jayanthi.ganesan
+ * This method will select the column in sub tally table based on the value 'k' we are passing.
+ * @return selected docs count in sub tally table
+ */
+public int getSelectedColumnDocCountSubTally(int k) {
+	Integer sum = 0;
+	if (getSubtallyTable().isElementAvailable(10)) {
+		getHeaderSubtally(k).ScrollTo();
+		getHeaderSubtally(k).waitAndClick(10);
+		List<WebElement> elementList = null;
+		List<Integer> docCount = new ArrayList<>();
+		elementList = getSelectedColumnDocs_Subtally().FindWebElements();
+		for (WebElement webElementNames : elementList) {
+			String elementName = webElementNames.getText();
+			docCount.add(Integer.parseInt(elementName));
+		}
+		System.out.println(docCount);
+		if (docCount == null || docCount.size() < 1) {
+			System.out.println("List size is zero");
+		} else {
+			for (int i : docCount) {
+				sum = sum + i;
+			}
+		}
+		base.stepInfo("Total Count of  docs selected in sub tally Table" + sum.toString());
+	
+	} else {
+		base.failedStep("sub tally report not displayed.");
+	}
+	return sum;
+}
+/**
+ * @author Jayanthi.Ganesan
+ * this method will click on sub tally action button
+ */
+public void subTallyActionsWithOutTallyAllSelection() {
+	base.waitForElement(getTally_SubTallyActionButton());	
+	getTally_SubTallyActionButton().waitAndClick(25);
+
+}
+
+
+
 }
