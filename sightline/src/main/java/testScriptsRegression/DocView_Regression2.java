@@ -4348,6 +4348,7 @@ public class DocView_Regression2 {
 
 	}
 	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

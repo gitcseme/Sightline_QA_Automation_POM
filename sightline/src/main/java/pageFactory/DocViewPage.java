@@ -26570,6 +26570,90 @@ public class DocViewPage {
 		softAssertion.assertAll();
 	}
 
+	
+	/**
+	 * @author 
+	 * @Description:Method to verify warning message is displayed and closed afetr 3 seconds
+	 * @param warningMessage
+	 */
+	public void verifyWarningMessageTime(String warningMessage) {
+		try {
+			long start = System.currentTimeMillis();
+			base.VerifyWarningMessage(warningMessage);
+			base.passedStep("Warning message is displayed ");
+			base.waitForElementToBeGone(base.getSuccessMsgHeader(), 5);
+			long end = System.currentTimeMillis();
+			long totalTime = end - start;
+			long timeSeconds = TimeUnit.MILLISECONDS.toSeconds(totalTime);
+			if (timeSeconds >= 3) {
+				base.passedStep("Warning massage popup is closed after 3 seconds");
+				if (timeSeconds >= 4) {
+					base.failedStep("Warning is  closed before 3 secods");
+				}
+			} else {
+				base.failedStep("Warning is  closed before 3 secods");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying Warning message");
+		}
+
+	}
+	/**
+	 * @author method to verify warning message is displayed for document having field value hidden properties
+	 * @param docId
+	 */
+	public void verifyhiddenPropertiesDOcWaringMessage(String docId) {
+		try {
+			base.waitForElement(getGearIcon());
+			getGearIcon().waitAndClick(10);
+			base.waitForElement(getDocView_MiniDoclistChildWindow());
+			getDocView_MiniDoclistChildWindow().waitAndClick(5);
+			reusableDocView = new ReusableDocViewPage(driver);
+			String parentWindowId = reusableDocView.switchTochildWindow();
+			
+			base.waitForElement(getDocView_DocId(docId));
+			getDocView_DocId(docId).waitAndClick(5);
+			driver.switchTo().window(parentWindowId);
+			verifyWarningMessageTime(
+					"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+			DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+			base.waitForElement(docViewRedact.hiddenInfoIcon());
+			docViewRedact.hiddenInfoIcon().waitAndClick(5);
+			verifyWarningMessageTime(
+					"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+			base.passedStep("warning message is displayed after click on hidden info icon");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+
+/**
+	 * @author 
+	 * @Description:Methoad to verify warning message for document having Excel protected sheet field value
+	 * @param docId
+	 */
+	public void verifyWaringMessageForExternalProtectSheet(String docId) {
+		try {
+			base.waitForElement(getDocView_DocId(docId));
+			getDocView_DocId(docId).waitAndClick(5);
+			base.VerifyWarningMessage(
+					"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
+			if (base.getSecondLineSuccessMsg(2).getText().trim().equals("Protected Excel Sheets")) {
+				base.passedStep(
+						"warning message is displayed for External Protected sheet with message 'Protected Excel sheets");
+			} else {
+				base.failedStep("'Protected excel sheet' warning message is not displayed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying warning message due to " + e.getMessage());
+		}
+	}
+
+
 	 * @author Gopinath
 	 * @Description Method for getting first document id from mini doc list.
 	 * @return firstDocId : firstDocId is String value that first document id.
