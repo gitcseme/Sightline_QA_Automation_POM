@@ -858,6 +858,14 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li["+ingestionNumber+"]//a//span");
 	}
 	
+	public Element getRollbackWarningMessage() {
+		return driver.FindElementByXPath("//*[@id='MsgBoxBack']//p");
+	}
+	
+	public Element rollbackOptionInPopup() {
+		return driver.FindElementByXPath("//ul[@role='menu']//li[contains(.,'Rollback')]");
+	}
+	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
 		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[text()='Rollback']");
@@ -5670,8 +5678,8 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
     	
     	//catlogging
     	for(int i=0;i<40;i++) {
+    		base.waitTime(2);
 			String status = getStatus(1).getText().trim();
-			getRefreshButton().waitAndClick(10);
 			
     		if(status.contains("Cataloged")) {
     			base.passedStep("Cataloged completed");
@@ -5679,7 +5687,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
     		}
     		else if (status.contains("In Progress")) {
     			base.waitTime(10);
-    			getRefreshButton().waitAndClick(10);
+    			getRefreshButton().waitAndClick(5);
     		}
     		else if (status.contains("Failed")){
     			base.failedStep("Failed");
@@ -6345,6 +6353,52 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		    		}
 		    	}
 			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 31/03/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the indexing warning message and rollback
+		 */
+		public void verifyWarningMessageAndRollbackAddOnlyIngestion() {
+			
+			getRefreshButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return ingestionDetailActionDropdown().Visible();
+				}
+			}), Input.wait30);
+			ingestionDetailActionDropdown().waitAndClick(10);
+			
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return rollbackOptionInPopup().Visible();
+				}
+			}), Input.wait30);
+			rollbackOptionInPopup().waitAndClick(10);
+			base.waitTime(2);
+			String warningMessage = getRollbackWarningMessage().getText();
+			
+			if(warningMessage.equalsIgnoreCase(Input.indexingWarningMessage)) {
+				base.failedStep("Indexing warning message prompted when rollingback add only ingestion");
+			}
+			else {
+				base.passedStep("Indexing warning message not prompted when rollingback add only ingestion");
+			}
+			if(getApproveMessageOKButton().isElementAvailable(5)) {
+			getApproveMessageOKButton().waitAndClick(5);
+			}
+			
+			base.VerifySuccessMessage("Rollback of this ingestion has been started. Refresh the page to view for updated status.");
+			base.passedStep("Rollback Done Successfully");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getCloseButton().Enabled();
+				}
+			}), Input.wait30);
+			getCloseButton().waitAndClick(5);
+			
 		}
 	
 }
