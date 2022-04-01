@@ -13506,7 +13506,7 @@ for (int i = 0; i < 6; i++) {
 	}
 
 	/**
-	 * @authorGopinath
+	 * @authorGopinath.Modified on 04/01/2022
 	 * @description : Method for copy Path In QC Tab.
 	 */
 	public void copyPathInQCTab() throws InterruptedException {
@@ -13519,34 +13519,27 @@ for (int i = 0; i < 6; i++) {
 					return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
 				}
 			}), Input.wait30);
-			getbtnProductionGenerate().Click();
+			getbtnProductionGenerate().waitAndClick(10);
 
+			getbtnContinueGeneration().isElementAvailable(150);
 			if (getbtnContinueGeneration().isDisplayed()) {
 				base.waitForElement(getbtnContinueGeneration());
 				getbtnContinueGeneration().waitAndClick(10);
 			}
-			
+
 			Reporter.log("Wait for generate to complete", true);
 			System.out.println("Wait for generate to complete");
 			UtilityLog.info("Wait for generate to complete");
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDocumentGeneratetext().isElementAvailable(540);
-				}
-			}), Input.wait120);
+			getDocumentGeneratetext().isElementAvailable(180);
+			base.stepInfo("wait until Document Generated Text is visible");
 			String actualText = getStatusSuccessTxt().getText();
 			System.out.println(actualText);
 
 			softAssertion.assertTrue(actualText.contains(expectedText));
 			base.passedStep("Documents Generated successfully");
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
-				}
-			}), Input.wait60);
-
+			base.waitForElement(getConfirmProductionCommit());
 			// added thread.sleep to avoid exception while executing in batch
 			Thread.sleep(Input.wait30 / 10);
 			getConfirmProductionCommit().waitAndClick(10);
@@ -13582,6 +13575,7 @@ for (int i = 0; i < 6; i++) {
 
 		}
 	}
+
 
 	/*
 	 * @author: Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
