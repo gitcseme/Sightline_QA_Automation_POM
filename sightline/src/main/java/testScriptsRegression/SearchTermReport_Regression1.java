@@ -41,7 +41,7 @@ public class SearchTermReport_Regression1 {
 	BaseClass bc;
 	SearchTermReportPage st;
 	String saveSearchNamePA = "ST" + Utility.dynamicNameAppender();
-	String saveSearchNameRMU = "ST" + Utility.dynamicNameAppender();
+	String saveSearchNameRMU ="ST" + Utility.dynamicNameAppender();
 	String saveSearchNamePA1 = "ST" + Utility.dynamicNameAppender();
 	String saveSearchNameRMU1 = "ST" + Utility.dynamicNameAppender();
 	String saveSearchNamePA2 = "ST" + Utility.dynamicNameAppender();
@@ -61,9 +61,9 @@ public class SearchTermReport_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
-
+		//Input in = new Input();
+		//in.loadEnvConfig();
+		
 		// Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);
@@ -699,6 +699,44 @@ public class SearchTermReport_Regression1 {
 		} else {
 			bc.failedStep("Report not generated / columns are not displayed as expected");
 		}
+	}
+	
+	
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @throws InterruptedException
+	 */
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 14, enabled = true)
+	public void VerifyTotalDocsSelectedFontSize(String username, String password, String role) throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-61220");
+		bc.stepInfo("Verify that in Reports/Search Term Report , Doc Count Font Size is Increased");
+		st = new SearchTermReportPage(driver);
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(username, password);
+		bc.stepInfo("Logged in as -" + role);
+		String saveSearchName = null;
+		if (role == "RMU") {
+			saveSearchName = saveSearchNameRMU;
+		}
+		if (role == "PA") {
+			saveSearchName = saveSearchNamePA;
+		}
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		String actualHitCount = st.GenerateReport(saveSearchName);
+		bc.passedStep("Report  generated for selected search ");
+		bc.waitForElement(st.getTotalSelectedCount_fontSize());
+		bc.stepInfo("Total selected Hit count " + actualHitCount);
+		if(st.getTotalSelectedCount_fontSize().isElementAvailable(3)) {
+			bc.stepInfo("Total selected doc count size is 16px");
+		bc.passedStep("Sucessfully verified that in Reports/Search Term Report page, Doc Count Font Size is Increased");
+		}else {
+			bc.failedStep("Total selected doc count size is not  16px which is expected.");
+		}
+		lp.logout();
 	}
 
 	@BeforeMethod

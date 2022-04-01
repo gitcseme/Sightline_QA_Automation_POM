@@ -34,6 +34,7 @@ import pageFactory.SavedSearch;
 import pageFactory.SearchTermReportPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -58,8 +59,8 @@ public class CustomDocumentDataReport_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -78,7 +79,7 @@ public class CustomDocumentDataReport_Regression1 {
 		search = new SessionSearch(driver);
 		search.basicContentSearch(Input.testData1);
 		search.saveSearch(saveSearchNamePA);
-		lp.quitBrowser();
+	    lp.quitBrowser();
 
 	}
 
@@ -792,6 +793,110 @@ public class CustomDocumentDataReport_Regression1 {
 		ReportsPage rp = new ReportsPage(driver);
 		rp.deleteCustomReport(report1);
 
+	}
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+
+	@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 11)
+	public void verifyExportFromTally(String username, String password, String role) throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-58575");
+		bc.stepInfo("Verify saved Document Data Export Report from Tally/Sub-Tally should retain "
+				+ "the selected criteria in custom report");
+		lp.loginToSightLine(username, password);
+		bc.stepInfo("Logged in as " + role);
+		TallyPage tp = new TallyPage(driver);
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+		String[] workProductFields = { tagName };
+		String[] metaDataFields = { Input.metaDataName };
+		String textFormat1 = "039";
+		String textFormat2 = "034";
+		String[] metaDataField_afterReport = { Input.docId };
+		//report 1
+		tp.navigateTo_Tallypage();
+		tp.SelectSource_SecurityGroup(Input.securityGroup);
+		tp.selectTallyByMetaDataField(Input.metaDataName);
+		tp.validateMetaDataFieldName(Input.metaDataName);
+		tp.verifyTallyChart();
+		tp.tallyActions();
+		bc.waitTime(2);
+		tp.getTally_actionSubTally().Click();
+		tp.selectMetaData_SubTally(Input.MetaDataEAName);
+		driver.waitForPageToBeReady();
+		tp.subTallyActions();
+		tp.subTallyToExport();
+		
+		cddr.validateSourceSelction("tally");
+		cddr.selectExportFieldFormat(textFormat1);
+		cddr.selectExportTextFormat(textFormat1);
+		cddr.selectMetaDataFields(metaDataFields);
+		cddr.selectWorkProductFields(workProductFields);
+		cddr.SaveReport(report1);
+		bc.stepInfo("Saved the Custom report " + report1);
+		cddr.getRunReport().waitAndClick(3);
+		cddr.reportRunSuccessMsg();
+		
+		//report 2
+		tp.navigateTo_Tallypage();
+		tp.SelectSource_SecurityGroup(Input.securityGroup);
+		tp.selectTallyByMetaDataField(Input.metaDataName);
+		tp.validateMetaDataFieldName(Input.metaDataName);
+		tp.verifyTallyChart();
+		tp.tallyActions();
+		bc.waitTime(2);
+		tp.getTally_actionSubTally().Click();
+		tp.selectMetaData_SubTally(Input.MetaDataEAName);
+		driver.waitForPageToBeReady();
+		tp.subTallyActions();
+		tp.subTallyToExport();
+		
+		cddr.validateSourceSelction("tally");
+		cddr.selectExportFieldFormat(textFormat2);
+		cddr.selectExportTextFormat(textFormat2);
+		cddr.selectMetaDataFields(metaDataFields);
+		cddr.selectWorkProductFields(workProductFields);
+		cddr.SaveReport(report2);
+		bc.stepInfo("Saved the Custom report " + report2);
+		cddr.SavedCDDRToExportPage(report1);
+		cddr.selectSources("Security Groups", Input.securityGroup);
+		cddr.validateSelectedExports(workProductFields);
+		cddr.validateSelectedExports(metaDataFields);
+		cddr.getRunReport().Click();
+		cddr.reportRunSuccessMsg();
+
+		cddr.SavedCDDRToExportPage(report2);
+		cddr.selectSources("Security Groups", Input.securityGroup);
+		driver.scrollPageToTop();
+		cddr.validateSelectedExports(metaDataFields);
+		cddr.validateSelectedExports(workProductFields);
+		cddr.selectMetaDataFields(metaDataField_afterReport);
+		final int Bgcount = bc.initialBgCount();
+		cddr.getRunReport().Click();
+     	cddr.reportRunSuccessMsg();
+		SoftAssert softAssertion = new SoftAssert();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		cddr.downloadExport();
+		bc.waitTime(5);
+		String Filename2 = bc.GetLastModifiedFileName();
+		bc.stepInfo(Filename2 + "Last Modified File name after Downloading the report");
+		String actualValue = cddr.csvfileVerification("", Filename2);
+		System.out.println(actualValue);
+		softAssertion.assertTrue(actualValue.contains("CustodianName\"\"\"All Tags\\" + tagName + "\"\"\"DocID\"\""));
+		softAssertion.assertAll();
+		bc.passedStep("Sucessfully verified that saved Document Data Export Report from Tally page "
+				+ " should retain the selected criteria in custom report");
+		ReportsPage rp = new ReportsPage(driver);
+		rp.deleteCustomReport(report1);
+		rp.deleteCustomReport(report2);
+
+			
 	}
 
 	@BeforeMethod

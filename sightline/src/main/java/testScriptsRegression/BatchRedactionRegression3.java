@@ -2904,7 +2904,7 @@ public class BatchRedactionRegression3 {
 
 		// Rollback confirmation from Tab 2
 		batch.getPopupYesBtn().waitAndClick(2);
-		String ExpectedMsgErr = "DE-A Rollback for this Batch Redaction has already been requested. Please refresh to see status.";
+		String ExpectedMsgErr = "DE: A Rollback for this Batch Redaction has already been requested. Please refresh to see status.";
 		base.VerifyErrorMessageInGerman(ExpectedMsgErr);
 
 		// Edit Profile To German
@@ -2943,7 +2943,7 @@ public class BatchRedactionRegression3 {
 		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
 
 		// Create saved search
-		int purehit = session.basicContentSearch(Input.testData1);
+		int purehit = session.basicContentSearch(Input.searchString1);
 		session.saveSearchInNewNode(searchName, newNode);
 
 		// navigate to saved search page and execute
@@ -2965,6 +2965,7 @@ public class BatchRedactionRegression3 {
 		// first tab
 		driver.switchToWindow(firstUserWindow);
 		base.stepInfo("Switched To first Window");
+		base.waitTime(2);
 		saveSearch.getExecuteContinueBtn().waitAndClick(10);
 
 		// second tab
@@ -2979,6 +2980,48 @@ public class BatchRedactionRegression3 {
 		saveSearch.deleteNode(Input.mySavedSearch, newNode);
 		login.logout();
 
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify when user selects the saved search is with metadata/
+	 *              Conceptual search for batch redaction [RPMXCON-53407]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 47)
+	public void verifyRedactButtonForMetadataAndConceptual() throws Exception {
+		String metadataSearch = "Search" + Utility.dynamicNameAppender();
+		String conceptSearch = "Search" + Utility.dynamicNameAppender();
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("Test case Id:RPMXCON-53407 Batch Redaction");
+		base.stepInfo(
+				"Verify when user selects the saved search is with metadata/ Conceptual search for batch redaction");
+
+		session.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+		session.saveSearch(metadataSearch);
+
+		base.selectproject();
+		session.conceptualSearch_new(Input.conceptualSearchString1, "mid");
+		session.saveSearch(conceptSearch);
+
+		// perform Batch redaction and verify Status
+		batch.VerifyBatchRedaction_ElementsDisplay(metadataSearch, true);
+
+		// check redact btn disabled for metadata search
+		base.ValidateElement_Presence(batch.getRedactDisabledBtn(), "Disabled Redact Button");
+		base.stepInfo("Redact Button is Disabled for Metadata Search");
+
+		// perform Batch redaction and verify Status
+		batch.VerifyBatchRedaction_ElementsDisplay(conceptSearch, true);
+
+		// check redact btn disabled for conceptual search
+		base.ValidateElement_Presence(batch.getRedactDisabledBtn(), "Disabled Redact Button");
+		base.stepInfo("Redact Button is disabled for Conceptual Search");
+
+		login.logout();
 	}
 
 	@BeforeMethod(alwaysRun = true)

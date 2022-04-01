@@ -1,5 +1,9 @@
 package pageFactory;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -2724,7 +2728,7 @@ public class ProductionPage {
 	}
 
 	public Element getDocPages() {
-		return driver.FindElementByXPath("//label[contains(text(),'Number of Natives:')]/following-sibling:: i");
+		return driver.FindElementByXPath("//label[contains(text(),'Number of Natives:')]/following-sibling:: label");
 	}
 
 	public Element getRedactDATCheckBox(int i) {
@@ -2781,6 +2785,9 @@ public class ProductionPage {
 	}
 	public Element getNumberOfNativeDocs() {
 		return driver.FindElementByXPath("//label[contains(text(),'Number of Natives: ')]//following-sibling::label");
+	}
+	public Element getFileDir(String dir) {
+		return driver.FindElementByXPath("//a[@class='icon dir' and contains(text(),'"+dir+"')]");
 	}
 	
 	public ProductionPage(Driver driver) {
@@ -18346,14 +18353,28 @@ for (int i = 0; i < 6; i++) {
 	 * @authorAathith.Senthilkumar
 	 * @throws ZipException
 	 * @Description Extract downloaded file
+	 * 
 	 */
-	public void extractFile() throws ZipException {
+	public void extractFile() throws ZipException, InterruptedException {
 		driver.waitForPageToBeReady();
 		String name = getProduction().getText().trim();
 		String home = System.getProperty("user.home");
-
+		
+		File file = new File(home + "/Downloads/"+name+".zip");
+		File file1 = new File(Input.fileDownloadLocation+name+".zip");
+		
+		if(file.exists()) {
+		driver.waitForPageToBeReady();	
 		unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads/");
 		System.out.println("Unzipped the downloaded files");
+		}else if(file1.exists()) {
+			driver.waitForPageToBeReady();
+			unzipping(Input.fileDownloadLocation+name+".zip", home + "/Downloads/");
+			System.out.println("Unzipped the downloaded files in BatchDownload");
+		}else {
+			System.out.println("Unzipped failed");
+			base.failedStep("file not found");
+		}
 		driver.waitForPageToBeReady();
 		base.stepInfo("Downloaded zip file was extracted");
 	}
@@ -19175,5 +19196,51 @@ for (int i = 0; i < 6; i++) {
 		}
 		System.out.println("Preparing Data status displayed for " + productionFromHomePage);
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description Delete downloaded zip file and extracted file
+	 */
+	 public void deleteFiles() {
+			String name = getProduction().getText().trim();
+			String home = System.getProperty("user.home");
+			File extacted = new File(home+"/Downloads/VOL0001/");
+			File zipped = new File(home + "/Downloads/" + name + ".zip");
+			deleteDirectory(extacted);
+			zipped.delete();
+			base.stepInfo("downloaded zip file and extracted file was deleted");
+	 }
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param path
+	  * @Description delete method for directory deletion
+	  */
+	 public boolean deleteDirectory(File path) {
+		    if (path.exists()) {
+		        File[] files = path.listFiles();
+		        for (int i = 0; i < files.length; i++) {
+		            if (files[i].isDirectory()) {
+		                deleteDirectory(files[i]);
+		            } else {
+		                files[i].delete();
+		            }
+		        }
+		    }
+		    return (path.delete());
+		}
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @return
+	  * @throws UnsupportedFlavorException
+	  * @throws IOException
+	  * @Description get text from copied ClipBoard
+	  */
+	 public String getCopiedTextFromClipBoard() throws UnsupportedFlavorException, IOException {
+			driver.waitForPageToBeReady();
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+	        Clipboard clipboard = toolkit.getSystemClipboard();
+	        String actualCopedText = (String) clipboard.getData(DataFlavor.stringFlavor);
+			System.out.println(actualCopedText);
+			return actualCopedText;
+		}
 
 }

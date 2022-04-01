@@ -546,8 +546,8 @@ public class DocView_AnalyticsPanel_DataProvider {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.conceptualDocumentReviewer;
-		String revDocToBeSelected = Input.MetaDataId;
+		String documentToBeSelected = Input.MetaDataId;
+		String revDocToBeSelected = Input.conceptualDocumentReviewer;
 
 		// Login as a Admin
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);

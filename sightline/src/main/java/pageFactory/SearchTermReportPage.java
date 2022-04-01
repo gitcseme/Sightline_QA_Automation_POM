@@ -176,7 +176,7 @@ public class SearchTermReportPage {
 	public Element getTotalSelectedCount() {
 		return driver.FindElementByXPath("//div//label[@id='lblTotal']");
 	}
-
+	
 	// added by jayanthi 16/12/21
 	public Element mySavedSearchCheckbox() {
 		return driver.FindElementByXPath(
@@ -232,7 +232,9 @@ public class SearchTermReportPage {
 	public Element getActionExportData() {
 		return driver.FindElementByXPath("//a[text()=' Export Data']");
 	}
-	
+	public Element getTotalSelectedCount_fontSize() {
+		return driver.FindElementByXPath("//div//label[@id='lblTotal' and @style[contains(.,'font-size: 16px')]]");
+	}
 	public SearchTermReportPage(Driver driver) {
 		this.driver = driver;
 		bc = new BaseClass(driver);
@@ -334,7 +336,9 @@ public class SearchTermReportPage {
 	public String GenerateReport(String searchName) {
 		bc.waitForElement(getSearchTermReport());
 		getSearchTermReport().Click();
-		bc.waitTillElemetToBeClickable(getNodeCheckBox(searchName));
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getNodeCheckBox(searchName));
+		bc.waitTime(2);
 		getNodeCheckBox(searchName).waitAndClick(5);
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();

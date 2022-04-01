@@ -25,6 +25,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
+import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
@@ -2796,7 +2797,416 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 	}
 
-	
+	/**
+	 * Author : Vijaya.Rani date: 15/12/21 NA Modified date: NA Modified by:NA
+	 * Description :Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
+	 * preceding document is completed by selecting 'Code same as this' action from
+	 * analytics panel > conceptual.'RPMXCON-51071' Sprint : 8
+	 * 
+	 * @Stabilization - done
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	//@Test(enabled = true, groups = { "regression" }, priority = 41)
+	public void verifyCompleteLastDocsAndCodeSameAsActionConceptual() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51071");
+		baseClass.stepInfo(
+				"Verify when RMU/Reviewer clicks Complete Same as Last Doc, when preceding document is completed by selecting 'Code same as this' action from analytics panel > conceptual");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		String documentToBeSelected = Input.conceptualDocId01;
+		String unSelectedDoc=Input.conceptualDocId02;
+		String unSelectedDoc1=Input.conceptualDocId03;
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		ReusableDocViewPage reusableDocViewPage = new ReusableDocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignConceptualDocuments();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select Docid from MiniDocList
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		// perform code same as Conceptual Documents
+		docView.performCodeSameForConceptualDocuments();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+		
+		
+		//Select unselected Docs and perform Code same as last
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(unSelectedDoc);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+		baseClass.waitForElement(docView.getLastCodeSameAsIcon());
+		docView.getLastCodeSameAsIcon().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
+
+		// perform code same as Conceptual Documents
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(unSelectedDoc1);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+		docView.performCodeSameAsForConceptualDocuments();
+
+		// Coding Stamp Selection And code Same As Verify
+		driver.waitForPageToBeReady();
+		docView.perfromCodingStampSelection(Input.stampColour);
+
+		driver.waitForPageToBeReady();
+		docView.perfromLastCodeSameAsIcon();
+
+		// logout
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select Docid from MiniDocList
+		String docsToBeSelected =  Input.conceptualDocIdForReviewer01;
+		String unSelectedDocs2 =  Input.conceptualDocIdForReviewer02;
+		String unSelectedDocs3 = Input.conceptualDocIdForReviewer03;
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		// perform code same as Conceptual Documents
+		docView.performCodeSameForConceptualDocuments();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// Select unselected Docs and perform Code same as last
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(unSelectedDocs2);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+		baseClass.waitForElement(docView.getLastCodeSameAsIcon());
+		docView.getLastCodeSameAsIcon().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
+
+		// perform code same as Conceptual Documents
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(unSelectedDocs3);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+		docView.performCodeSameForConceptualDocuments();
+
+		// Coding Stamp Selection And code Same As Verify
+		driver.waitForPageToBeReady();
+		docView.perfromCodingStampSelection(Input.stampColour);
+
+		driver.waitForPageToBeReady();
+		docView.perfromLastCodeSameAsIcon();
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 20/12/21 NA Modified date: NA Modified by:NA
+	 * Description :Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
+	 * preceding document is completed by selecting 'Code same as this' action from
+	 * analytics panel > family member.'RPMXCON-51070' Sprint : 8
+	 * 
+	 * @Stabilization - not done [code same as last icon is not clickable]
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	//@Test(enabled = true, groups = { "regression" }, priority = 42)
+	public void verifyCompleteLastDocsAndCodeSameAsActionFamilyMember() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51070");
+		baseClass.stepInfo(
+				"Verify when RMU/Reviewer clicks Complete Same as Last Doc, when preceding document is completed by selecting 'Code same as this' action from analytics panel > family member");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		String documentToBeSelected = Input.familyDocId01;
+		String unSelectedDocs=Input.familyDocId02;
+		String unSelectedDocs1=Input.familyDocId03;
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		ReusableDocViewPage reusableDocViewPage = new ReusableDocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignFamilyMemberDocuments();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignFamilyDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select Docid from MiniDocList
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		// select docs from family member and action as code same as
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+		
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// Select unselected Docs and perform Code same as last
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(unSelectedDocs);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+		baseClass.waitForElement(docView.getLastCodeSameAsIcon());
+		docView.getLastCodeSameAsIcon().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
+
+		// select docs from family member and action as code same as
+		
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(unSelectedDocs1);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSameAsThirdDocs();
+
+
+		// Coding Stamp Selection And code Same As Verify
+		driver.waitForPageToBeReady();
+		docView.perfromCodingStampSelection(Input.stampColour);
+
+		driver.waitForPageToBeReady();
+		docView.perfromLastCodeSameAsIcon();
+
+		// logout
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select Docid from MiniDocList
+		String docsToBeSelected=Input.familyDocIdForReviewer01;
+		String unSelectedDocs2=Input.familyDocIdForReviewer02;
+		String unSelectedDocs3=Input.familyDocIdForReviewer03;;
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		// select docs from family member and action as code same as
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// Select unselected Docs and perform Code same as last
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(unSelectedDocs2);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+		baseClass.waitForElement(docView.getLastCodeSameAsIcon());
+		docView.getLastCodeSameAsIcon().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
+
+		// select docs from family member and action as code same as
+
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(unSelectedDocs3);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSameAsThirdDocs();
+
+		// Coding Stamp Selection And code Same As Verify
+		driver.waitForPageToBeReady();
+		docView.perfromCodingStampSelection(Input.stampColour);
+
+		driver.waitForPageToBeReady();
+		docView.perfromLastCodeSameAsIcon();
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 24/12/21 NA Modified date: NA Modified by:NA
+	 * Description :Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
+	 * preceding document is completed by selecting 'Code same as this' action from
+	 * analytics panel > Near Dupe.'RPMXCON-51072' Sprint : 8
+	 * 
+	 * @Stabilization - done [code same as last icon is disabled]
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	//@Test(enabled = true, groups = { "regression" }, priority = 43)
+	public void verifyCompleteLastDocsAndCodeSameAsActionNearDupe() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51072");
+		baseClass.stepInfo(
+				"Verify when RMU/Reviewer clicks Complete Same as Last Doc, when preceding document is completed by selecting 'Code same as this' action from analytics panel > NearDupe");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+		String documentToBeSelected = Input.nearDupeDocId01;
+		String unSelectedDocs=Input.nearDupeDocId02;
+		String unSelectedDocs1=Input.nearDupeDocId03;
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		ReusableDocViewPage reusableDocViewPage = new ReusableDocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		docView.selectNearDupePureHit();
+		sessionSearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(documentToBeSelected);
+
+		// select docs from NearDupe and action as code same as
+		docView.performCodeSameForNearDupeDocuments(1);
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// Select unselected Docs and perform Code same as last
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(unSelectedDocs);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+		baseClass.waitForElement(docView.getLastCodeSameAsIcon());
+		docView.getLastCodeSameAsIcon().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(unSelectedDocs1);
+
+		// select docs from family member and action as code same as
+		docView.performCodeSameForNearDupeDocuments(1);
+
+		// Coding Stamp Selection And code Same As Verify
+		driver.waitForPageToBeReady();
+		docView.perfromCodingStampSelection(Input.stampColour);
+
+		driver.waitForPageToBeReady();
+		docView.perfromLastCodeSameAsIcon();
+
+		// logout
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// select Doc In MiniDoc List
+		String docsToBeSelected=Input.nearDupeDocIdForReviewer01;
+		String unSelectedDocs2=Input.nearDupeDocIdForReviewer02;
+		String unSelectedDocs3=Input.nearDupeDocIdForReviewer03;
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(docsToBeSelected);
+
+		// select docs from NearDupe and action as code same as
+		docView.performCodeSameForNearDupeDocuments(1);
+		
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// Select unselected Docs and perform Code same as last
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(unSelectedDocs2);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+		baseClass.waitForElement(docView.getLastCodeSameAsIcon());
+		docView.getLastCodeSameAsIcon().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(unSelectedDocs3);
+
+		// select docs from family member and action as code same as
+		docView.performCodeSameForNearDupeDocuments(1);
+
+		// Coding Stamp Selection And code Same As Verify
+		driver.waitForPageToBeReady();
+		docView.perfromCodingStampSelection(Input.stampColour);
+
+		driver.waitForPageToBeReady();
+		docView.perfromLastCodeSameAsIcon();
+
+		// logout
+		loginPage.logout();
+
+	}
+
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {

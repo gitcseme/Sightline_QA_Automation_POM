@@ -732,6 +732,79 @@ public class Regression_Ingestion01 {
 		
 	}
 	
+	/** 
+     *Author :Arunkumar date: 29/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47595
+	 * Description :After Rollback, ingestion should go back to the Draft state. Rollback will just take the ingestion in Draft mode.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 34)
+	public void verifyIngestionStatusAfterRollback() throws InterruptedException   {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47595");
+		baseClass.stepInfo("After Rollback, ingestion should go back to the Draft state. Rollback will just take the ingestion in Draft mode.");
+		// verify ingestion Draft status after saving as draft
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		// Verify ingestion Draft status after Catalogging
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
+		//Verify ingestion Draft status after Copying
+		ingestionPage.IngestionFromDraftMode();
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
+		// Verify ingestion Draft status after indexing
+		ingestionPage.IngestionFromDraftMode();
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();		
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 30/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49020
+	 * Description :Verify two ingestions with step ( Cataloging, copying, indexing) having ingestion type add only  must run simultaneously
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 35)
+	public void verifyTwoIngestionFromCatalogToIndexingSimultaneously() throws InterruptedException   {
+		
+		String[] dataset= {Input.TiffImagesFolder,Input.HiddenPropertiesFolder};
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49020");
+		baseClass.stepInfo("Verify two ingestions with step ( Cataloging, copying, indexing) having ingestion type add only  must run simultaneously");
+		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		// Perform catalog,copy and indexing for two ingestion
+		ingestionPage.multipleIngestionCopying(2);
+		ingestionPage.multipleIngestionIndexing(dataset, 2);
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 30/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49021
+	 * Description :Verify two ingestions with step ( copying, indexing) having ingestion type add only  must run simultaneously
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 36)
+	public void verifyTwoIngestionRunSimultaneously() throws InterruptedException   {
+		
+		String[] dataset= {Input.TiffImagesFolder,Input.HiddenPropertiesFolder};
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49021");
+		baseClass.stepInfo("Verify two ingestions with step ( copying, indexing) having ingestion type add only  must run simultaneously");
+		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		// Perform Copying and indexing for two ingestion
+		ingestionPage.multipleIngestionCopying(2);
+		ingestionPage.multipleIngestionIndexing(dataset, 2);
+		
+	}
+	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

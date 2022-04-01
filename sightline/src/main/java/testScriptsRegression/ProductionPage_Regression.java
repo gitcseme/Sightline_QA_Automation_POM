@@ -510,11 +510,11 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch("ID00005183");
+		sessionSearch.basicContentSearch(Input.parentDocument);
 		sessionSearch.ViewInDocList();
 
 		docPage = new DocListPage(driver);
-		docPage.selectChildDocumentAndSave("ID00005183");
+		docPage.selectChildDocumentAndSave(Input.parentDocument);
 		driver.scrollPageToTop();
 		docPage.bulkTagExistingFromDoclist(tagname);
 

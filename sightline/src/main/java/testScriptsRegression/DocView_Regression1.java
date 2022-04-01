@@ -6285,6 +6285,7 @@ public class DocView_Regression1 {
 	 * Author : Steffy Created date: NA Modified date: NA Modified by:NA TestCase id
 	 * : RPMXCON-50957 - To verify that user can redirect doc view page from Doc
 	 * List->'Back to Source
+	 * stabilization done
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 45)
 	public void verifyBackToSourceBtnRedirectToDocViewPage() throws Exception {
@@ -7353,7 +7354,7 @@ public class DocView_Regression1 {
 	 * @Description:Verify assignment progress bar refreshesh after completing the
 	 *                     document same as last prior documents should be completed
 	 *                     by clicking complete button after selecting code same as
-	 *                     this action.
+	 *                     this action. stabilization done
 	 */
 
 	@Test(enabled = true, groups = { "regression" }, priority = 198)
@@ -7372,9 +7373,9 @@ public class DocView_Regression1 {
 		String docTextbox = "assignment click";
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
-		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+//		// Login as Reviewer Manager
+//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+//		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");

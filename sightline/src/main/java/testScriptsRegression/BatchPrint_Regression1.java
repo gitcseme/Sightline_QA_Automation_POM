@@ -22,7 +22,9 @@ import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
+import pageFactory.ProductionPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -295,7 +297,7 @@ public class BatchPrint_Regression1 {
 		// Select TAG
 		batchPrint.navigateToBatchPrintPage();
 		batchPrint.fillingSourceSelectionTab(Input.tag, tagName, true);
-		batchPrint.fillingBasisForPrinting(true, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
 		batchPrint.navigateToNextPage(2);
 
 		// filling SlipSheet WIth metadata
@@ -336,7 +338,7 @@ public class BatchPrint_Regression1 {
 		// Select TAG
 		batchPrint.navigateToBatchPrintPage();
 		batchPrint.fillingSourceSelectionTab(Input.tag, tagName, true);
-		batchPrint.fillingBasisForPrinting(true, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
 		batchPrint.navigateToNextPage(2);
 
 		// filling SlipSheet WIth metadata
@@ -385,7 +387,7 @@ public class BatchPrint_Regression1 {
 		// Select TAG
 		batchPrint.navigateToBatchPrintPage();
 		batchPrint.fillingSourceSelectionTab(Input.tag, tagName, true);
-		batchPrint.fillingBasisForPrinting(true, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
 		batchPrint.navigateToNextPage(2);
 
 		// filling SlipSheet WIth metadata
@@ -430,7 +432,7 @@ public class BatchPrint_Regression1 {
 		// Select TAG
 		batchPrint.navigateToBatchPrintPage();
 		batchPrint.fillingSourceSelectionTab(Input.tag, tagName, true);
-		batchPrint.fillingBasisForPrinting(true, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
 		batchPrint.navigateToNextPage(2);
 
 		// filling SlipSheet WIth metadata
@@ -442,7 +444,140 @@ public class BatchPrint_Regression1 {
 		loginPage.logout();
 
 	}
-	
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Validate Batch Print generated PDF docs Sort by DocID,
+	 *              ExportFileName as 'DocFileName' [Prior Productions
+	 *              (TIFFs/PDFs)]with one PDF for all documents [RPMXCON-58921]
+	 * @throws InterruptedException
+	 * @throws ZipException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	public void validateBatchPrintWithProduction() throws InterruptedException, ZipException {
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagName = "Tag" + Utility.dynamicNameAppender();
+
+		SessionSearch search = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+		// Login As User
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-58921 Batch Print");
+		baseClass.stepInfo(
+				"Validate Batch Print generated PDF docs Sort by DocID, ExportFileName as 'DocFileName' [Prior Productions (TIFFs/PDFs)]with one PDF for all documents");
+
+		// Create tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagName, Input.tagNamePrev);
+
+		// Bulk Tag
+		search.basicMetaDataSearch(Input.docFileName, null, "conFIdenTial", null);
+		search.bulkFolderExisting(foldername);
+
+		// Generate Production
+		String productionname = "P" + Utility.dynamicNameAppender();
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSection(tagName);
+		page.navigateToNextSection();
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
+
+		// Select Folder
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Folder", foldername, true);
+		batchPrint.fillingBasisForPrinting(false, true, productionname);
+		batchPrint.navigateToNextPage(3);
+
+		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
+		batchPrint.fillingExportFormatPage(Input.docFileName, Input.documentKey, true, 20);
+
+		// Download ABtch Print File
+		String fileName = batchPrint.DownloadBatchPrintFile();
+
+		// extract zip file
+		String extractedFile = batchPrint.extractFile(fileName);
+
+		// verify Downloaded File Count and Format
+		batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify when user does Batch Print with prior production -
+	 *              While printing specific produced documents with DocID, All the
+	 *              documents with name as DocID should be displayed.[RPMXCON-60553]
+	 * @throws InterruptedException
+	 * @throws ZipException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	public void validateBatchPrintWithPriorProduction() throws InterruptedException, ZipException {
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagName = "Tag" + Utility.dynamicNameAppender();
+
+		SessionSearch search = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+		// Login As User
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60553 Batch Print");
+		baseClass.stepInfo(
+				"Verify when user does Batch Print with prior production - While printing specific produced documents with DocID, All the documents with name as DocID should be displayed.");
+
+		// Create tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagName, Input.tagNamePrev);
+
+		// Bulk Tag
+		search.basicMetaDataSearch(Input.docFileName, null, "conFIdenTial", null);
+		search.bulkFolderExisting(foldername);
+
+		// Generate Production
+		String productionname = "P" + Utility.dynamicNameAppender();
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSection(tagName);
+		page.navigateToNextSection();
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
+
+		// Select Folder
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Folder", foldername, true);
+		batchPrint.fillingBasisForPrinting(false, true, productionname);
+		batchPrint.navigateToNextPage(2);
+
+		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
+		batchPrint.fillingExportFormatPage(Input.documentKey, Input.documentKey, false, 20);
+
+		// Download Batch Print File
+		String fileName = batchPrint.DownloadBatchPrintFile();
+
+		// extract zip file
+		String extractedFile = batchPrint.extractFile(fileName);
+
+		// verify Downloaded File Count ,filename and Format
+		batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+		loginPage.logout();
+
+	}
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {

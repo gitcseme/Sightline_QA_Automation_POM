@@ -1463,6 +1463,7 @@ public class DocView_Regression3 {
 	 * : 48251 - Same doc in different security groups: Verify without shared
 	 * annotation layer and shared redaction tags, no redaction info (coordinates,
 	 * tags and history) shown in the doc in 2nd sec group
+	 * stabilization done
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
 	public void verifyRedactionInfoAcrossSecurityGroups() throws Exception {
@@ -1545,8 +1546,8 @@ public class DocView_Regression3 {
 		Reporter.log("Logged in as User: " + Input.pa1userName);
 
 		AnnotationLayer annotation = new AnnotationLayer(driver);
-		annotation.deleteAnnotation(AnnotationLayerNew);
-		annotation.deleteAnnotation(AnnotationLayerNew1);
+		annotation.deleteAnnotationByPagination(AnnotationLayerNew);
+		annotation.deleteAnnotationByPagination(AnnotationLayerNew1);
 		loginPage.logout();
 	}
 
@@ -1554,6 +1555,7 @@ public class DocView_Regression3 {
 	 * Author : Steffy Created date: NA Modified date: NA Modified by:NA TestCase id
 	 * : 47724 - Verify user can not see annotation, redaction, reviewer remarks
 	 * icons on doc view after deleting the annotation layer
+	 * stabilization done
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void verifyRedactionInfoAfterDletingAnnotationLayer() throws Exception {
@@ -1637,7 +1639,7 @@ public class DocView_Regression3 {
 		Reporter.log("Logged in as User: " + Input.pa1userName);
 
 		AnnotationLayer annotation = new AnnotationLayer(driver);
-		annotation.deleteAnnotation(AnnotationLayerNew);
+		annotation.deleteAnnotationByPagination(AnnotationLayerNew);
 
 		loginPage.logout();
 		baseClass.stepInfo("Verifying the redaction , annotation and remark outside of an assignment");
@@ -2131,6 +2133,7 @@ public class DocView_Regression3 {
 	 * : 51052 - Verify RMU/Reviewer can see the annotations of document on doc view
 	 * page in different security group if the same annotation layer is mapped to
 	 * different security groups
+	 * stabilization done
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void verifyAnnotationAcrossSecurityGroupsWhnSameAnnotationLayerIsMapped() throws Exception {
@@ -2554,6 +2557,7 @@ public class DocView_Regression3 {
 	 *           different security group sharing annotation layer adds/edit/delete
 	 *           highlighting to the same record successfully, and confirm that the
 	 *           XML nodes are all properly created/reflected in the XML
+	 *           stabilization done
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 23)
 	public void verifyRemarkPanelRemarkDetailsAfterAddingHighlightingBetweenTwoUsers() throws Exception {
@@ -2895,7 +2899,9 @@ public class DocView_Regression3 {
 			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			securityGroupsPage = new SecurityGroupsPage(driver);
 			securityGroupsPage.deleteSecurityGroups(namesg2);
-			securityGroupsPage.deleteSecurityGroups(namesg3);
+			if (!(namesg3== null)) {
+				securityGroupsPage.deleteSecurityGroups(namesg3);
+			}
 			driver.Navigate().refresh();
 			driver.scrollPageToTop();
 			loginPage.logout();

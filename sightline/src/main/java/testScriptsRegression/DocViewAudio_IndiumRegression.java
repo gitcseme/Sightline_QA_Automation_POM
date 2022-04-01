@@ -25,6 +25,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import akka.japi.Util;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AnnotationLayer;
@@ -90,8 +91,8 @@ public class DocViewAudio_IndiumRegression {
 	public void beforeTestMethod(Method testMethod) throws ParseException, InterruptedException, IOException {
 		System.out.println("Executing method : " + testMethod.getName());
 		UtilityLog.info("Executing method : " + testMethod.getName());
-		Input in = new Input();
-		in.loadEnvConfig();
+	//	Input in = new Input();
+	//	in.loadEnvConfig();
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
@@ -990,7 +991,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * Author :Aathith date: NA Modified date: NA Modified by: NA Test Case
+	 * Author :Aathith date: NA Modified date: NA Modified by: NA @Test Case
 	 * Id:RPMXCON-51862 Description : When a user tries to navigate to Audio DocView
 	 * with some documents, the first document must present completely and be ready
 	 * to be acted upon fully
@@ -1055,7 +1056,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * Author :Aathith date: NA Modified date: NA Modified by: NA Test Case
+	 * Author :Aathith date: NA Modified date: NA Modified by: NA @Test Case
 	 * Id:RPMXCON-51818 Description : Verify that when audio file is playing and
 	 * clicked to Save the document, then waveform should be loaded [Less than 1 hr
 	 * audio file]
@@ -1394,7 +1395,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * Author :Aathith date: NA Modified date: NA Modified by: NA Test Case
+	 * Author :Aathith date: NA Modified date: NA Modified by: NA @Test Case
 	 * Id:RPMXCON-51780 Description : Verify that audio hits should be displayed
 	 * when documents searched with same term and different/same threshold from
 	 * session search
@@ -1873,7 +1874,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * Author : Brundha Created date: NA Modified date: NA Modified by:NA TestCase
+	 * Author : Brundha Created date: NA Modified date: NA Modified by:NA @TestCase
 	 * id :RPMXCON- 51858 Description:Audio only - If user modified Search Term and
 	 * re-execute the same query then modified Term does not appear in Persistent
 	 * Search panel in DocView screen.
@@ -2376,7 +2377,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA Test Case
+	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA @Test Case
 	 *         Id:RPMXCON-52009 Description : Verify that when applies audio
 	 *         redaction for the first time then application should automatically
 	 *         select the â€˜Default Redaction Tagâ€™ Sprint 12
@@ -2685,7 +2686,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA Test Case
+	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA @Test Case
 	 *         Id:RPMXCON-46922 Description : Verify when audio document present in
 	 *         two different save searches with common term, then on navigating to
 	 *         doc view with selection of search group it should not display
@@ -3094,7 +3095,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * @author Vijaya.Rani date: 17/03/22 Modified date: NA Modified by: NA Test
+	 * @author Vijaya.Rani date: 17/03/22 Modified date: NA Modified by: NA @Test
 	 *         Case Description : Verify the automatically selected audio redaction
 	 *         tag when shared annotation layer with un-shared redactation tags in
 	 *         security groups and all documents are released to security groups.
@@ -3207,7 +3208,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * @author Vijaya.Rani date: 17/03/22 Modified date: NA Modified by: NA Test
+	 * @author Vijaya.Rani date: 17/03/22 Modified date: NA Modified by: NA @Test
 	 *         Case Description :Verify the automatically selected audio redaction
 	 *         tag when shared annotation layer with shared redactation tags in
 	 *         security groups and all propogated documents are not released to
@@ -4175,6 +4176,209 @@ public class DocViewAudio_IndiumRegression {
 			loginPage.logout();
 
 		}
+        /**
+      	 * Author :Jayanthi date: NA Modified date: NA Modified by: NA @Test Case
+      	 * Id:RPMXCON-51793 
+      	 * @throws InterruptedException
+      	 * 
+      	 */
+      	@Test(enabled = true, groups = { "regression" }, priority = 55)
+      	public void verifySameDifferentThresholdInSessionSearchBulkAssign() throws InterruptedException {
+      		baseClass = new BaseClass(driver);
+      		docViewPage = new DocViewPage(driver);
+      		SessionSearch sessionSearch = new SessionSearch(driver);
+            AssignmentsPage assgnPage=new AssignmentsPage(driver);
+      		baseClass.stepInfo("Test case id :RPMXCON-51793");
+      		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with same term and different/same "
+      				+ "threshold are assigned to assignment at different time from session search");
+
+      		loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
+    		baseClass.stepInfo("Successfully login as RMU");
+
+    		String searchString = Input.audioSearchString2;
+    		String assignmentName="assgnAudio"+Utility.dynamicNameAppender();
+    		// First audio Search
+    		sessionSearch.audioSearch(searchString, Input.language);
+    		sessionSearch.getPureHitAddButton().waitAndClick(10);
+
+    		// second audio search with same term and same threshold
+    		sessionSearch.clickOnNewSearch();
+    		sessionSearch.audioSearchTwoTimesandAddingTwoPureHits(searchString, Input.language);
+    		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+    		// view All audio Docs in DocList
+    		sessionSearch.bulkAssign();
+    		assgnPage.FinalizeAssignmentAfterBulkAssign();
+    		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+    		assgnPage.getAssignmentSaveButton().waitAndClick(5);
+    		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+    		assgnPage.navigateToAssignmentsPage();
+    		
+    		assgnPage.viewSelectedAssgnUsingPagination(assignmentName);
+    		assgnPage.Checkclickedstatus(assignmentName);
+    		assgnPage.assgnViewInAllDocView();
+    		driver.waitForPageToBeReady();
+
+    		// view selected documents from assignment in Docview
+    		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+    		baseClass.stepInfo("**Verifying that audio hits should be displayed when documents searched with same term and "
+    				+ "same threshold navigated to doc view from session search > Bulk Assign**");
+    		// verifying the audio hits and triangular arrow Icon
+    		docViewPage.clickOnPersistantHitEyeIcon();
+    		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString);
+
+    		// removing the pure Hits in Selected Result
+    		driver.getWebDriver().get(Input.url + "Search/Searches");
+    		sessionSearch.removePureHitsFromSelectedResult();
+
+    		// First audio search term with max threshold value
+    		sessionSearch.clickOnNewSearch();
+    		sessionSearch.newAudioSearchThreshold(searchString, Input.language, "max");
+    		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+
+    		// second audio search with same term and min threshold value
+    		sessionSearch.clickOnNewSearch();
+    		sessionSearch.newAudioSearchThreshold(searchString, Input.language, "min");
+    		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+
+    		String assignmentName1="assgnAudio"+Utility.dynamicNameAppender();
+    		// view All audio Docs in DocList
+    		sessionSearch.bulkAssign();
+    		assgnPage.FinalizeAssignmentAfterBulkAssign();
+    		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName1, Input.codeFormName);
+    		assgnPage.getAssignmentSaveButton().waitAndClick(5);
+    		baseClass.stepInfo("Created Assignment name : " + assignmentName1);
+    		assgnPage.navigateToAssignmentsPage();
+    		
+    		assgnPage.viewSelectedAssgnUsingPagination(assignmentName1);
+    		assgnPage.Checkclickedstatus(assignmentName1);
+    		assgnPage.assgnViewInAllDocView();
+    		driver.waitForPageToBeReady();
+
+    		// view selected documents from assignment in Docview
+    		baseClass.stepInfo("After selected  Assignment user navigating to Docview Page");
+
+    		baseClass.stepInfo("Verifying audio hits  displayed when documents searched with same term and different"
+    				+ "threshold navigated to doc view from session search > Assignments Page>Docview");
+    		
+
+    		// verifying the audio hits and triangular arrow Icon
+    		docViewPage.clickOnPersistantHitEyeIcon();
+    		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString);
+    		loginPage.logout();
+
+      	}
+        /**
+      	 * Author :Jayanthi  Test Case Id:RPMXCON-51787 
+      	 * 
+      	 * @throws InterruptedException
+      	 * 
+      	 */
+      	@Test(enabled = true, groups = { "regression" }, priority = 56)
+      	public void verifySameDifferentThresholdInSavedSaerchBulkAssign() throws InterruptedException {
+      		baseClass = new BaseClass(driver);
+      		docViewPage = new DocViewPage(driver);
+      		SessionSearch sessionSearch = new SessionSearch(driver);
+            AssignmentsPage assgnPage=new AssignmentsPage(driver);
+            SavedSearch ss=new SavedSearch(driver);
+      		baseClass.stepInfo("Test case id :RPMXCON-51787");
+      		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with "
+      				+ "same term and different/same threshold are assigned to assignment from saved search with search group");
+
+      		loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
+    		baseClass.stepInfo("Successfully login as RMU");
+			String saveSaerchName = "ss" + Utility.dynamicNameAppender();
+			String saveSaerchName1 = "ss" + Utility.dynamicNameAppender();
+			String searchString = Input.audioSearchString2;
+			// Creating saerch group
+			ss.navigateToSavedSearchPage();
+			String revNode = ss.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "");
+
+    		// First audio Search
+    		sessionSearch.audioSearch(searchString, Input.language);
+    		sessionSearch.getPureHitAddButton().waitAndClick(10);
+
+    		// second audio search
+			sessionSearch.clickOnNewSearch();
+			sessionSearch.audioSearchTwoTimesandAddingTwoPureHits(searchString, Input.language);
+			sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+			sessionSearch.saveSearchInNewNode(saveSaerchName, revNode);
+			String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
+			
+			ss.navigateToSavedSearchPage();
+    		ss.selectNode1(revNode);
+    		ss.savedSearch_SearchandSelect(saveSaerchName, "Yes");
+    		ss.getSavedSearchToBulkAssign().waitAndClick(10);  
+			// view All audio Docs in DocList
+    		sessionSearch.bulkAssign();
+    		assgnPage.FinalizeAssignmentAfterBulkAssign();
+    		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+    		assgnPage.getAssignmentSaveButton().waitAndClick(5);
+    		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+    		assgnPage.navigateToAssignmentsPage();
+    		
+    		assgnPage.viewSelectedAssgnUsingPagination(assignmentName);
+    		assgnPage.Checkclickedstatus(assignmentName);
+    		assgnPage.assgnViewInAllDocView();
+    		driver.waitForPageToBeReady();
+
+    		// view selected documents from assignment in Docview
+    		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+    		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with same term and "
+    				+ "same threshold navigated to doc view from session search > Saved Search>Bulk Assign");
+    		// verifying the audio hits and triangular arrow Icon
+    		baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
+    		
+    		docViewPage.getAudioPersistantHitEyeIcon().Click();
+    		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString);
+
+			// Creating saerch group
+			ss.navigateToSavedSearchPage();
+			String revNode1 = ss.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "");
+			// removing the pure Hits in Selected Result
+    		driver.getWebDriver().get(Input.url + "Search/Searches");
+    		sessionSearch.removePureHitsFromSelectedResult();
+
+    		// First audio search term with max threshold value
+    		sessionSearch.clickOnNewSearch();
+    		sessionSearch.newAudioSearchThreshold(searchString, Input.language, "max");
+    		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+
+    		// second audio search with same term and min threshold value
+    		sessionSearch.clickOnNewSearch();
+    		sessionSearch.newAudioSearchThreshold(searchString, Input.language, "min");
+    		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+    		sessionSearch.saveSearchInNewNode(saveSaerchName1, revNode1);
+    		String assignmentName1="assgnAudio"+Utility.dynamicNameAppender();
+    		// Bulk assign from saved saerch
+    		
+    		ss.navigateToSavedSearchPage();
+    		ss.selectNode1(revNode1);
+    		ss.savedSearch_SearchandSelect(saveSaerchName1, "Yes");
+    		ss.getSavedSearchToBulkAssign().waitAndClick(10);    		
+    		sessionSearch.bulkAssign();
+    		assgnPage.FinalizeAssignmentAfterBulkAssign();
+    		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName1, Input.codeFormName);
+    		assgnPage.getAssignmentSaveButton().waitAndClick(5);
+    		baseClass.stepInfo("Created Assignment name : " + assignmentName1);
+    		assgnPage.navigateToAssignmentsPage();
+    		
+    		assgnPage.viewSelectedAssgnUsingPagination(assignmentName1);
+    		assgnPage.Checkclickedstatus(assignmentName1);
+    		assgnPage.assgnViewInAllDocView();
+    		driver.waitForPageToBeReady();
+
+    		// view selected documents from assignment in Docview
+    		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+    		baseClass.stepInfo("Verifying audio hits  displayed when documents searched with same term and different"
+    				+ "threshold navigated to doc view from session search > Saved Search> Bulk Assign");
+    		
+    		// verifying the audio hits and triangular arrow Icon
+    		baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
+    		docViewPage.getAudioPersistantHitEyeIcon().Click();
+    		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString);
+    		loginPage.logout();
+
+      	}
 
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {

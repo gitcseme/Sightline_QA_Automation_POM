@@ -2036,7 +2036,7 @@ public class BatchPrintPage {
 			base.waitForElement(getSelectFolder(searchOrTagOrFol));
 			getSelectFolder(searchOrTagOrFol).waitAndClick(10);
 			System.out.println("Selected Tag : " + searchOrTagOrFol);
-			base.passedStep("Select Tag From Sorce Selection Tab is : " + searchOrTagOrFol);
+			base.passedStep("Select Folder From Sorce Selection Tab is : " + searchOrTagOrFol);
 
 		}
 		if (Next) {
@@ -2050,13 +2050,19 @@ public class BatchPrintPage {
 	 * @param Native : If Native Checkbox or not
 	 * @param Next   : Next Button
 	 */
-	public void fillingBasisForPrinting(boolean Native, boolean Next) {
+	public void fillingBasisForPrinting(boolean Native, boolean Next,String production) {
 		driver.waitForPageToBeReady();
 
 		if (Native) {
 			base.waitForElement(getNativeCB_BasisPage());
 			getNativeCB_BasisPage().waitAndClick(3);
 			base.stepInfo("Checked Viewable file variant in DocView (typically natives)");
+		}else {
+			base.waitForElement(getProductionRadioButton());
+			getProductionRadioButton().waitAndClick(5);
+
+			base.waitForElement(getSelectProduction());
+			getSelectProduction().selectFromDropdown().selectByVisibleText(production);
 		}
 
 		if (Next) {

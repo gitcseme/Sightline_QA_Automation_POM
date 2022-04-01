@@ -3357,17 +3357,7 @@ public class SavedSearch {
 		search = new SessionSearch(driver);
 		driver.waitForPageToBeReady();
 
-		try {
-//			base.waitForElement(getSaveSearch_Button());
-			search.getSaveSearch_Button().waitAndClick(5);
-		} catch (Exception e) {
-			try {
-//				base.waitForElement(getAdvanceS_SaveSearch_Button());
-				search.getAdvanceS_SaveSearch_Button().waitAndClick(5);
-			} catch (Exception e1) {
-				search.getBsSecondSaveSearch_Button().waitAndClick(5);
-			}
-		}
+		search.saveSearchAction();
 
 		base.waitForElement(search.getExpandAllTab());
 		search.getExpandAllTab().waitAndClick(5);
@@ -3700,28 +3690,22 @@ public class SavedSearch {
 
 	/**
 	 * @author Raghuram A Date: 10/5/21 Modified date:10/28/21 Modified by:
-	 *         Description :
+	 *         Description : - updated based on new implementations
 	 */
 	public void moveNodeToNode(String nodeToBeMoved, String moveToNode) {
-		// Move Search from one folder to another folder
 		selectNode1(nodeToBeMoved);
 		moveSearchToAnotherFolder(moveToNode);
 		moveActionButton("Save");
 		base.stepInfo("Moved : " + nodeToBeMoved + " to " + moveToNode);
 		driver.waitForPageToBeReady();
+		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
 		driver.getWebDriver().navigate().refresh();
 		driver.waitForPageToBeReady();
-		getSavedSearchNewGroupExpand().waitAndClick(20);
-		getSavedSearchNewNode().waitAndClick(10);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
+		selectNode1(moveToNode);
+		rootGroupExpansion();
 		driver.waitForPageToBeReady();
-		try {
-			softAssertion.assertEquals(getSavedSearchNewNode().getText(), nodeToBeMoved);
-			base.passedStep("Moved Node is Available at right destination");
-		} catch (Exception e) {
-			base.failedStep("Fails");
-		}
-		softAssertion.assertAll();
+		base.textCompareEquals(getLastNodeFromTab(moveToNode).getText(), nodeToBeMoved,
+				"Moved Node is Available at right destination", "Move Action Failed");
 	}
 
 	/**
@@ -3748,11 +3732,11 @@ public class SavedSearch {
 
 			for (int i = 0; i < 2; i++) {
 
-				createNewSearchGrp("PA" + Utility.dynamicNameAppender());
-				getSavedSearchNewGroupExpand().waitAndClick(20);
-				newNodeList.add(getSavedSearchNewNode().getText());
+				String newNode = createSearchGroupAndReturn(Input.mySavedSearch, "", "No");
+				newNodeList.add(newNode);
 				// To make sure we are in basic search page
 				driver.getWebDriver().get(Input.url + "Search/Searches");
+				driver.waitForPageToBeReady();
 				if (i == 0) {
 					// Create saved search
 					search.basicContentSearch("transport");
@@ -3761,12 +3745,14 @@ public class SavedSearch {
 				String name2 = "SearchName" + Utility.dynamicNameAppender();
 				savedInRoot.add(name1);
 				savedInNode.add(name2);
-				search.saveSearch(name1);
-				search.saveSearchInNode(name2);
+				search.saveSearchAtAnyRootGroup(name1, Input.mySavedSearch);
+				search.saveSearchInNewNode(name2, newNode);
 			}
-			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+			navigateToSavedSearchPage();
+			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 			moveSavedSearchToNode(savedInRoot.get(0), newNodeList.get(1));
-			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+			navigateToSavedSearchPage();
+			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 			moveNodeToNode(newNodeList.get(0), newNodeList.get(1));
 		}
 	}
@@ -3794,9 +3780,8 @@ public class SavedSearch {
 			List<String> savedInNode = new ArrayList<String>();// to store name of saved file in the newly created node
 
 			for (int i = 0; i < 2; i++) {
-				createNewSearchGrp("PA" + Utility.dynamicNameAppender());
-				getSavedSearchNewGroupExpand().waitAndClick(20);
-				newNodeList.add(getSavedSearchNewNode().getText());
+				String newNode = createSearchGroupAndReturn(Input.mySavedSearch, "", "No");
+				newNodeList.add(newNode);
 				// To make sure we are in basic search page
 				driver.getWebDriver().get(Input.url + "Search/Searches");
 				if (i == 0) {
@@ -3807,26 +3792,32 @@ public class SavedSearch {
 				String name2 = "Oct0" + Utility.dynamicNameAppender();
 				savedInRoot.add(name1);
 				savedInNode.add(name2);
-				search.saveSearch(name1);
-				search.saveSearchInNode(name2);
+				search.saveSearchAtAnyRootGroup(name1, Input.mySavedSearch);
+				search.saveSearchInNewNode(name2, newNode);
 			}
 			if (a == 0) {
-				driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+				navigateToSavedSearchPage();
+				getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 				selectNode1(newNodeList.get(0));
 				shareSavedNodeWithDesiredGroup(newNodeList.get(0), "Default Security Group");
 				driver.Navigate().refresh();
+				driver.waitForPageToBeReady();
 				softAssertion.assertEquals(verifySharedNode(newNodeList.get(0)), true);
 
-				driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+				navigateToSavedSearchPage();
+				getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 				selectNode1(newNodeList.get(0));
 				shareSavedNodeWithDesiredGroup(newNodeList.get(0), "Project Administrator");
 				driver.Navigate().refresh();
+				driver.waitForPageToBeReady();
 				softAssertion.assertEquals(verifySharedNodeInProjectAdminGroup(newNodeList.get(0)), true);
 			}
 
 			navigateToSavedSearchPage();
+			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 			moveSavedSearchToNode(savedInRoot.get(0), newNodeList.get(1));
 			navigateToSavedSearchPage();
+			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 			moveNodeToNode(newNodeList.get(0), newNodeList.get(1));
 		}
 	}
@@ -6930,10 +6921,11 @@ public class SavedSearch {
 	public void openUplodedBatchFile(String batchFile) {
 		try {
 			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
 			getMySeraches().isElementAvailable(15);
-			getMySeraches().Click();
+			getMySeraches().waitAndClick(2);
 			getSelectUploadedFile(batchFile).isElementAvailable(15);
-			getSelectUploadedFile(batchFile).Click();
+			getSelectUploadedFile(batchFile).waitAndClick(2);
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while open uploded batch file." + e.getMessage());
