@@ -320,6 +320,7 @@ public class Input {
 	public static String query;
 	public static String miniDocListID;
 	public static String DATFile3;
+	public static String indexingWarningMessage;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -969,6 +970,8 @@ public class Input {
 		query = testData.getQuery();
 		miniDocListID = testData.getMiniDocListID();
 		DATFile3 = testData.getDATFile3();
+		indexingWarningMessage = testData.getIndexingWarningMessage();
+		
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

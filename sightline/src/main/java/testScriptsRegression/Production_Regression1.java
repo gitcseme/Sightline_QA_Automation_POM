@@ -3457,6 +3457,12 @@ public class Production_Regression1 {
 		base.stepInfo("Bulk folder existing");
 		sessionSearch.bulkFolderExisting(foldername);
 
+		docView = new DocViewPage(driver);
+		
+		docView.selectViewInDocView();
+		
+		String firstDocID = docView.getFirstDocumentIdFromMiniDocList();
+		
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Selecting Default Security Group");
@@ -3507,7 +3513,7 @@ public class Production_Regression1 {
 		ReportsPage reportPage = new ReportsPage(driver);
 
 		base.stepInfo("Select Document Audit Report");
-		reportPage.selectDocumentAuditReport(Input.crammerDocId, Input.produced);
+		reportPage.selectDocumentAuditReport(firstDocID, Input.produced);
 
 		page = new ProductionPage(driver);
 
@@ -3522,7 +3528,7 @@ public class Production_Regression1 {
 		reportPage = new ReportsPage(driver);
 
 		base.stepInfo("Select Document Audit Report");
-		reportPage.selectDocumentAuditReport(Input.crammerDocId, Input.producedDeleted);
+		reportPage.selectDocumentAuditReport(firstDocID, Input.producedDeleted);
 		loginPage.logout();
 
 	}
