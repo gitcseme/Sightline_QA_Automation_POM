@@ -4348,6 +4348,61 @@ public class DocView_Regression2 {
 
 	}
 	
+	/**
+	 * @author 
+	 * @TestCase Id:51963 Verify that document having any of the field value "Hidden Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook viewed from analytics panel child window should display alert message
+	 * @Description:To Verify that document having any of the field value "Hidden Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook viewed from analytics panel child window should display alert message
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void verifyWarningMsgForHiddenProportiesDocChildWindow() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51963");
+		baseClass.stepInfo("###Verify that document having any of the field value \"Hidden Properties\" \"ExcelProtectedSheets\" ExcelProtectedWorkbook viewed from analytics panel child window should display alert message####");
+		
+		baseClass.stepInfo("Log in as user");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		baseClass.stepInfo("basic content search");
+		sessionsearch.basicContentSearch(Input.HiddenLinkDocId);
+		
+		baseClass.stepInfo("view in docView");
+		sessionsearch.ViewInDocView();
+		
+		baseClass.stepInfo("verify warning message for hidden properties document");
+		docView.verifyhiddenPropertiesDOcWaringMessage(Input.HiddenLinkDocId);
+		
+	}
+	
+	/**
+	 * @author 
+	 * @TestCase Id:51950 Verify that when viewing the document having the 'ExcelProtectedSheets' value should provide indicator in viewer to convey that document is having hidden content
+	 * @Description:To Verify that when viewing the document having the 'ExcelProtectedSheets' value should provide indicator in viewer to convey that document is having hidden content
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void verifyWarningMsgForHiddenProportiesExternalProtectedSheet() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51950");
+		baseClass.stepInfo("###Verify that when viewing the document having the 'ExcelProtectedSheets' value should provide indicator in viewer to convey that document is having hidden content####");
+		
+		baseClass.stepInfo("Log in as user");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		baseClass.stepInfo("basic content search");
+		sessionsearch.basicContentSearch(Input.HiddenLinkDocId);
+		
+		baseClass.stepInfo("view in docView");
+		sessionsearch.ViewInDocView();
+		
+		baseClass.stepInfo("verify warning message for hidden properties document");
+		docView.verifyWaringMessageForExternalProtectSheet(Input.HiddenLinkDocId);
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
