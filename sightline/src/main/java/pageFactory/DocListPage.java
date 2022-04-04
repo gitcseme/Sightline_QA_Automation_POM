@@ -1180,6 +1180,15 @@ public class DocListPage {
 	public Element getDocList_TallyButton() {
 		return driver.FindElementById("idTally");
 	}
+	
+	//Added by Gopinath - 04/04/2022
+	public Element getDocListPreview_AudioStartTime() {
+		return driver.FindElementByXPath("//div[@class='jp-current-time start']");
+		}
+		public Element getDocList_Preview_AudioEndTime() {
+		return driver.FindElementByXPath("//div[@class='jp-duration end']");
+
+		}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -4561,5 +4570,31 @@ public List<String> gettingAllDocIDs(){
 			base.failedStep("failed to navigate to tally");
 		}
 		
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description:method to verify 3 play counters are displayed in preview document 
+	 */
+	public void verifyPlayCountersDisplay() {
+		base.waitForElement(getColumnText(1, 8));
+		getColumnText(1, 8).waitAndClick(10);
+		base.waitForElement(getDocListPreview_AudioStartTime());
+		if(getDocListPreview_AudioStartTime().getWebElement().isDisplayed()) {
+			base.waitForElement(getDocList_Preview_AudioEndTime());
+			if(getDocList_Preview_AudioEndTime().getWebElement().isDisplayed()) {
+				base.passedStep("Audio start and end counter are displayed in preview document");
+			}else {
+				base.failedStep("Audio end counter is not displayed in preview document");
+			}
+		}else {
+			base.failedStep("Audio Start counter is not displayed in preview document");
+		}
+		base.waitForElement(getDocList_Preview_AudioDuration());
+		if(getDocList_Preview_AudioDuration().getWebElement().isDisplayed()) {
+			base.passedStep("Audio play header is displayed in preview document");
+		}else {
+			base.failedStep("Audio play header is not displayed in preview document");
+		}
 	}
 }
