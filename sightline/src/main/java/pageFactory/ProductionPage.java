@@ -1480,7 +1480,7 @@ public class ProductionPage {
 
 	public Element getClkCheckBox_defaultRedactionTag() {
 		return driver
-				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])[1]");
+				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])");
 	}
 
 	public Element getClkLink_selectingRedactionTags() {
@@ -6806,7 +6806,7 @@ public class ProductionPage {
 		}), Input.wait30);
 		getbtnProductionGenerate().waitAndClick(10);
 
-		getbtnContinueGeneration().isElementAvailable(150);
+		getbtnContinueGeneration().isElementAvailable(320);
 		if (getbtnContinueGeneration().isDisplayed()) {
 			base.waitForElement(getbtnContinueGeneration());
 			getbtnContinueGeneration().waitAndClick(10);
@@ -12351,9 +12351,9 @@ for (int i = 0; i < 6; i++) {
 				return getRegenerateContinueButton().isElementAvailable(540);
 			}
 		}), Input.wait120);
-		try {
+		if(getRegenerateContinueButton().isDisplayed()) {
 			getRegenerateContinueButton().Click();
-		} catch (Exception e) {
+		}else {
 		}
 		Reporter.log("Wait for generate to complete", true);
 		System.out.println("Wait for generate to complete");
@@ -14309,11 +14309,14 @@ for (int i = 0; i < 6; i++) {
 		}), Input.wait30);
 		
 		getbtnProductionGenerate().Click();
-
+		getbtnContinueGenerate().isElementAvailable(120);
+if(getbtnContinueGenerate().isDisplayed()) {
 		driver.waitForPageToBeReady();
-		getbtnContinueGenerate().isElementAvailable(320);
 		getbtnContinueGenerate().Click();
-
+}else {
+	System.out.println("Continue generation not found");
+	
+}
 	}
 
 	/**
