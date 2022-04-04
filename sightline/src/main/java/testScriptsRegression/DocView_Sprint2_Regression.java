@@ -1017,7 +1017,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description ="RPMXCON-51356", enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyAfterImpersonationAllMenusInDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51356");
@@ -1170,7 +1170,7 @@ public class DocView_Sprint2_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(description = "RPMXCON-51274",enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyAssignmentProgressBarCodeSameAsAction() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51274");
@@ -1582,7 +1582,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description = "RPMXCON-48783",enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyAllRelevantHitTermsOnDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48783");
@@ -1626,7 +1626,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(description = "RPMXCON-51917",enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyImageTabOnViewDocsFromAnalyticsPanel() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51917");
