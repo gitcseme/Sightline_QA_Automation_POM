@@ -19239,5 +19239,88 @@ if(getbtnContinueGenerate().isDisplayed()) {
 			System.out.println(actualCopedText);
 			return actualCopedText;
 		}
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @Description verify the generated production file contains with dat file
+	  */
+	 public void isdatFileExist() {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			String name = getProduction().getText().trim();
+			driver.waitForPageToBeReady();
+			File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
+			if (DatFile.exists()) {
+				base.passedStep("Dat file is exists in generated production");
+			} else {
+				base.failedStep("Dat file is not displayed as expected");
+			}
+		}
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param file
+	  * @Description verify that file is exists or not
+	  */
+	 public void isfileisExists(File file) {
+			if (file.exists()) {
+	            System.out.println(" file is Exists in pointed directory");
+	            base.passedStep(file+" file is Exists in pointed directory");
+	            }
+	        else {
+	            System.out.println(" Does not Exists");
+	            base.stepInfo(file+" load file is not generated");
+	    }
+		}
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param prefixID
+	  * @param suffixID
+	  * @param beginningBates
+	  * @param verificationText
+	  * @throws IOException
+	  * @Description Verify that generated pdf file is generated with placleholder
+	  */
+	 public void pdf_Verification_In_Generated_PlaceHolder( String prefixID, String suffixID,String beginningBates, String verificationText) throws IOException {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			PDDocument document = PDDocument.load(new File(home+"/Downloads/VOL0001/PDF/0001/"+prefixID+beginningBates+suffixID+".pdf"));
+			if (!document.isEncrypted()) {
+			    PDFTextStripper stripper = new PDFTextStripper();
+			    String text = stripper.getText(document);
+			    System.out.println("Text:" + text);
+			    if(text.contains(verificationText)) {
+			    	base.passedStep(verificationText+" text is produced in this document");
+			    }
+			document.close();
+			}
+		}
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param prefixID
+	  * @param suffixID
+	  * @param beginningBates
+	  * @Description verify that generated tiff file
+	  */
+	 public void OCR_Verification_In_Generated_Tiff_tess4j( String prefixID, String suffixID, String beginningBates) {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			
+			File imageFile = new File(home+"/Downloads/VOL0001/Images/0001/"+prefixID+beginningBates+suffixID+".tiff");
+		       // ITesseract instance = new Tesseract();  // JNA Interface Mapping
+		         ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+		         File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+		         instance.setDatapath(tessDataFolder.getPath());
+
+		        try {
+		            String result = instance.doOCR(imageFile);
+		            System.out.println(result);
+		            if (result!=null) {
+						base.passedStep("Document is produced as expect");
+					} else {
+						base.failedStep("document validation failed");
+					}
+		        } catch (TesseractException e) {
+		            System.err.println(e.getMessage());
+		        }
+		}
 
 }

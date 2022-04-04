@@ -2467,6 +2467,172 @@ public class Production_Test_Regression_03 {
 			loginPage.logout();
 			
 		 }
+			/**
+			 * @author Aathith Test case id-RPMXCON-48314
+			 * @Description Verify that Producing a PDF with text highlighting and reviewer remarks, 
+			 * 		block redactions and 'this page', must not eliminate any text characters 
+			 * 		unintentionally in the produced document 
+			 * 
+			 */
+			@Test(enabled =true,groups = { "regression" }, priority = 34)
+			public void verifyProducedPadWithTextReviewRemarkRedaction() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48314 -Production Component");
+				base.stepInfo("Verify that Producing a PDF with text highlighting and reviewer remarks, block redactions and 'this page', must not eliminate any text characters unintentionally in the produced document");
+				
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+				
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolderInRMU(foldername);
+				
+				RedactionPage redactionpage=new RedactionPage(driver);
+		        driver.waitForPageToBeReady();
+		        redactionpage.manageRedactionTagsPage(Redactiontag1);
+				
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				int docCount =sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+				sessionSearch.ViewInDocViewWithoutPureHit();
+				
+				DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				docView.documentSelection(docCount);
+	            driver.waitForPageToBeReady();
+	            docViewRedactions.RedactTextInDocView(10,10,20,20);
+	            driver.waitForPageToBeReady();
+	            docViewRedactions.selectingRedactionTag2(Redactiontag1);
+	            
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingPDFSectionwithNativelyPlaceholder(tagname);
+				page.getClk_burnReductiontoggle().ScrollTo();
+				page.getClk_burnReductiontoggle().waitAndClick(10);
+				page.burnRedactionWithRedactionTag(Redactiontag1);
+				page.fillingTextSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				String home = System.getProperty("user.home");
+				File Native = new File(home + "/Downloads/VOL0001/Natives/");
+				page.extractFile();
+				page.isdatFileExist();
+				page.isfileisExists(Native);
+				page.pdf_Verification_In_Generated_Pdf(prefixID, suffixID, beginningBates);
+				page.pdf_Verification_In_Generated_PlaceHolder(prefixID, suffixID, beginningBates, "REDACTED");
+				
+				base.passedStep("Verified that Producing a PDF with text highlighting and reviewer remarks, block redactions and 'this page', must not eliminate any text characters unintentionally in the produced document");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);	
+				tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+				loginPage.logout();
+				
+			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-48315
+			 * @Description Verify that Producing a TIFF with text highlighting and reviewer remarks, block redactions and 'this page', must not eliminate any text characters unintentionally in the produced document
+			 * 
+			 */
+			@Test(enabled =true,groups = { "regression" }, priority = 35)
+			public void verifyProducedTiffWithTextReviewRemarkRedaction() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48315 -Production Component");
+				base.stepInfo("Verify that Producing a TIFF with text highlighting and reviewer remarks, block redactions and 'this page', must not eliminate any text characters unintentionally in the produced document");
+				
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+				
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolderInRMU(foldername);
+				
+				RedactionPage redactionpage=new RedactionPage(driver);
+		        driver.waitForPageToBeReady();
+		        redactionpage.manageRedactionTagsPage(Redactiontag1);
+				
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				int docCount =sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+				sessionSearch.ViewInDocViewWithoutPureHit();
+				
+				DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				docView.documentSelection(docCount);
+	            driver.waitForPageToBeReady();
+	            docViewRedactions.RedactTextInDocView(10,10,20,20);
+	            driver.waitForPageToBeReady();
+	            docViewRedactions.selectingRedactionTag2(Redactiontag1);
+	            
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingTIFFSectionBurnRedaction(Redactiontag1, "REDACTED");
+				page.fillingTextSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				String home = System.getProperty("user.home");
+				File Native = new File(home + "/Downloads/VOL0001/Natives/");
+				page.extractFile();
+				page.isdatFileExist();
+				page.isfileisExists(Native);
+				page.OCR_Verification_In_Generated_Tiff_tess4j(prefixID, suffixID, beginningBates);
+				
+				base.passedStep("Verified that Producing a TIFF with text highlighting and reviewer remarks, block redactions and 'this page', must not eliminate any text characters unintentionally in the produced document");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);	
+				tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+				loginPage.logout();
+				
+			}
      
      
 	@AfterMethod(alwaysRun = true)
