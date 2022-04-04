@@ -40,7 +40,7 @@ public class Assignment_Regression2 {
 	BaseClass bc;
 	AssignmentsPage agnmt;
 	KeywordPage keyword;
-	String searchText = Input.TallySearch;
+	String searchText;
 	SoftAssert assertion;
 	StringWriter sw;
 	PrintWriter pw;
@@ -49,6 +49,7 @@ public class Assignment_Regression2 {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		//Input in = new Input();
 	  //  in.loadEnvConfig();
+		searchText = Input.TallySearch;
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 	}
 
@@ -1831,7 +1832,6 @@ public class Assignment_Regression2 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
-			lp.logoutWithoutAssert();
 		}
 		try {			
 			lp.quitBrowser();

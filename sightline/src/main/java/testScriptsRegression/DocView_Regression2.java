@@ -233,39 +233,6 @@ public class DocView_Regression2 {
 		loginPage.logout();
 	}
 
-	/**
-	 * Author : Sai Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
-	 * RPMXCON-51745 Verify persistent hit panel remains selected when navigation
-	 * from child window
-	 */
-
-	@Test(description ="RPMXCON-51745",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 6)
-	public void verifyPersistentHitPanelChildWindow(String fullName, String userName, String password)
-			throws Exception {
-		baseClass = new BaseClass(driver);
-		loginPage.loginToSightLine(userName, password);
-		baseClass.stepInfo("login as" + fullName);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-51745");
-		baseClass.stepInfo(
-				"Verify that on document navigation from mini doc list when hits panel is open then enable/disable should be retained");
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.randomText);
-		baseClass.stepInfo("Search for non audio docs completed");
-		sessionsearch.ViewInDocView();
-		docViewRedact.checkingPersistentHitPanel();
-		reusabledocviewpage.clickGearIconOpenMiniDocList();
-		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
-		if (docViewRedact.persistantHitToggle().isDisplayed()) {
-			assertTrue(true);
-			baseClass.passedStep(
-					"The persistent hit panel is visible for audio documents After navigating from child window");
-		} else {
-			assertTrue(false);
-		}
-		loginPage.logout();
-	}
 
 	/**
 	 * Author : Sai Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
@@ -585,41 +552,6 @@ public class DocView_Regression2 {
 		loginPage.logout();
 	}
 
-	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-51750
-	 * 
-	 */
-	@Test(description ="RPMXCON-51425",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 16)
-	public void verifyPersistentHitPanelRetainedWhenDocNumberEntered(String fullName, String userName, String password)
-			throws Exception {
-		baseClass = new BaseClass(driver);
-		loginPage.loginToSightLine(userName, password);
-		baseClass.stepInfo("Test case Id: RPMXCON-51750");
-		baseClass.stepInfo(
-				"Verify that on entering the document number when hits panel is open then enable/disable should be retained after loading the document");
-		docViewRedact = new DocViewRedactions(driver);
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		baseClass.stepInfo("login as" + fullName);
-		sessionsearch.basicContentSearch(Input.randomText);
-		baseClass.stepInfo("Search for text input completed");
-		sessionsearch.ViewInDocView();
-		baseClass.stepInfo("Docs Viewed in Doc View");
-		docViewRedact.checkingPersistentHitPanel();
-		driver.scrollPageToTop();
-		docViewRedact.pageNumberTextBox().waitAndClick(10);
-		docViewRedact.pageNumberTextBox().getWebElement().clear();
-		docViewRedact.pageNumberTextBox().getWebElement().sendKeys(Input.pageNumber);
-		baseClass.stepInfo("Clicked on Analytics panel button and moved to other doc by entering page number");
-		driver.waitForPageToBeReady();
-		if (docViewRedact.persistantHitToggle().isDisplayed()) {
-			baseClass.passedStep("Persistent hit panel is retained after loding the new page by entering page number");
-		} else {
-			baseClass.failedStep(
-					"Persistent hit panel is NOT retained after loding the new page by entering page number");
-		}
-		loginPage.logout();
-	}
 
 	/**
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
@@ -4354,7 +4286,7 @@ public class DocView_Regression2 {
 	 * @Description:To Verify that document having any of the field value "Hidden Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook viewed from analytics panel child window should display alert message
 	 * @throws InterruptedException
 	 */
-	@Test
+	@Test(description ="RPMXCON-51963",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 93)
 	public void verifyWarningMsgForHiddenProportiesDocChildWindow() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -4384,7 +4316,7 @@ public class DocView_Regression2 {
 	 * @Description:To Verify that when viewing the document having the 'ExcelProtectedSheets' value should provide indicator in viewer to convey that document is having hidden content
 	 * @throws InterruptedException
 	 */
-	@Test
+	@Test(description ="RPMXCON-51950",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 94)
 	public void verifyWarningMsgForHiddenProportiesExternalProtectedSheet() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -4404,6 +4336,62 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("verify warning message for hidden properties document");
 		docView.verifyWaringMessageForExternalProtectSheet(Input.HiddenLinkDocId);
 	}
+	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51976
+	 * 
+	 */
+
+	@Test(description ="RPMXCON-51976",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 95)
+	public void verifySinglePageTiffInDocView()
+			throws Exception {
+		baseClass = new BaseClass(driver);
+		 DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51976");
+		baseClass.stepInfo("Verify that Single page TIFF image should be load successfully in doc view");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		// Searching for document with single page tiff
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sessionsearch.basicContentSearch(Input.SinglePageTiffSourceDocID);
+		baseClass.stepInfo("Searching a documents having 'RequiredPDFGenertion is TRUE' ");
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Single page tiff successfully viewed in DocViw");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51975
+	 * 
+	 */
+
+	@Test(description ="RPMXCON-51976",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 96)
+	public void verifyStitchedPageTiffInDocViewImageTab()
+			throws Exception {
+		baseClass = new BaseClass(driver);
+		 DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51975");
+		baseClass.stepInfo("Verify that stitched TIFF should be load on Image tab in Doc View");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		// Searching for document with single page tiff
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sessionsearch.basicContentSearch(Input.StitchedTiffSourceDocID);
+		baseClass.stepInfo("Searching a documents having 'RequiredPDFGenertion is TRUE' ");
+		sessionsearch.ViewInDocView();
+		docViewRedact.clickingImagesTab();
+		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
+		System.out.println(status);
+		if (status.equalsIgnoreCase("true")) {
+			baseClass.passedStep("Single page tiff successfully viewed in DocViw Images tab");
+		} else {
+			baseClass.failedStep("Single page tiff not viewed in DocViw Images tab");
+		}
+		loginPage.logout();	
+	}
+	
 	
 	
 	@AfterMethod(alwaysRun = true)

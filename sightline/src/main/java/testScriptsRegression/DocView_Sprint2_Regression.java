@@ -12,12 +12,16 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
@@ -34,6 +38,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
 import pageFactory.ABMReportPage;
 import pageFactory.AssignmentsPage;
@@ -522,7 +527,7 @@ public class DocView_Sprint2_Regression {
 	 * bullet points and redaction applied at bullet points
 	 */
 
-	@Test(description = "RPMXCON-52228", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(description = "RPMXCON-52228", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 11)
 	public void printingDocWithBulletPoints() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -569,7 +574,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying persistent hit for audio docs as RMU DocView- sprint 3
 	 */
 
-	@Test(description = "RPMXCON-52188", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 13)
+	@Test(description = "RPMXCON-52188", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void persistentHitCheckAudioDocs() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -596,34 +601,166 @@ public class DocView_Sprint2_Regression {
 	}
 
 	/**
-	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 51871
-	 * Verifying persistent hit for docs from assignment DocView- sprint 3
+	 * Author : Mohan date: 11/01/22 NA Modified date: NA Modified by:NA Description
+	 * :Verify after impersonation all hits of the document should be highlighted
+	 * without clicking the eye icon when user redirects to doc view from basic
+	 * search.'RPMXCON-51326' Sprint : 10
+	 * 
+	 * @throws Exception
 	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	public void verifyAfterImpersonationHitsOfDocsWithoutSaveQueryHighlightedWithoutClickingEyeIcon() throws Exception {
 
-	@Test(description = "RPMXCON-51871", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 14)
-	public void persistentHitCheckNonAudioDocs() throws Exception {
-		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
-		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-51871");
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.bulkAssign();
-		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
-		assignmentspage.toggleEnableAnalyticsPanel();
+		baseClass.stepInfo("Test case Id: RPMXCON-51326");
 		baseClass.stepInfo(
-				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
-		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
-		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
-		docViewRedact.checkingPersistentHitPanel();
-		docViewRedact.VerifyKeywordHitsinDoc();
-		docViewRedact.forwardToLastDoc().Click();
+				"Verify after impersonation all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from basic search");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+
+		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
 		driver.waitForPageToBeReady();
-		docViewRedact.VerifyKeywordHitsinDoc();
-		docViewRedact.backwardToFirstDoc().Click();
+		baseClass.waitTime(2);
+		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		String hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+
+		if (docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+
+		} else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+
+		loginPage.logout();
+
+		// login Reviewer
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
+		baseClass.impersonatePAtoRMU();
+
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
 		driver.waitForPageToBeReady();
-		docViewRedact.VerifyKeywordHitsinDoc();
+		baseClass.waitTime(2);
+		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+
+		if (docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+
+		} else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+
+		loginPage.logout();
+
+		// login PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
+		baseClass.impersonatePAtoReviewer();
+
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+
+		if (docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+
+		} else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+
+		loginPage.logout();
+
+		// login PA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		baseClass.impersonateSAtoRMU();
+
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+
+		if (docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+
+		} else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
+
+		loginPage.logout();
+
+		// login PA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Step 1: Impersonating SA to Reviewer");
+		baseClass.impersonateSAtoReviewer();
+
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+
+		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		hex1 = Color.fromString(color).asHex();
+		System.out.println(hex1);
+
+		if (docViewRedact.get_textHighlightedColor().isDisplayed()) {
+			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
+
+		} else {
+			baseClass.failedStep("Search term hits is not highlighted in the document without clicking the eye icon");
+		}
 		loginPage.logout();
 	}
 
@@ -633,7 +770,7 @@ public class DocView_Sprint2_Regression {
 	 * window DocView- sprint 3
 	 */
 
-	@Test(description = "RPMXCON-51350", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
+	@Test(description = "RPMXCON-51350", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 14)
 	public void persistentHitCheckAudioDocsChildWindow() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -653,7 +790,7 @@ public class DocView_Sprint2_Regression {
 	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 51626
 	 * Verifying Remarks and colour highliting as RMU DocView- sprint 3
 	 */
-	@Test(description = "RPMXCON-51626", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
+	@Test(description = "RPMXCON-51626", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void VerifySavedTextRemark() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -691,7 +828,7 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
 		docViewRedact.clickingRemarksIcon();
-		Thread.sleep(Input.wait3);
+		Thread.sleep(4000);
 		wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.deleteRemarksBtn().getWebElement()));
 		docViewRedact.deleteRemarksBtn().waitAndClick(5);
 		docViewRedact.confirmDeleteRemarksBtn().waitAndClick(5);
@@ -715,7 +852,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying persistent hit for non audio docs as RMU and Rev from assignments
 	 * DocView- sprint 3
 	 */
-	@Test(description = "RPMXCON-51764", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 17)
+	@Test(description = "RPMXCON-51764", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
 	public void persistentHitCheckNonAudioAsRev() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -744,7 +881,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying if text redaction option is present under RMU and Rev DocView-
 	 * sprint 4
 	 */
-	@Test(description = "RPMXCON-52191", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
+	@Test(description = "RPMXCON-52191", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 17)
 	public void verifyTextRedactionOption() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52191");
@@ -789,7 +926,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying doc is highlighted using this page and highlight is deleted
 	 * successfully while refreshing page DocView- sprint 4
 	 */
-	@Test(description = "RPMXCON-51655", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
+	@Test(description = "RPMXCON-51655", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
 	public void verifyHighlitingInDocView() throws Exception {
 		Robot robot = new Robot();
 		Actions actions = new Actions(driver.getWebDriver());
@@ -837,7 +974,7 @@ public class DocView_Sprint2_Regression {
 	 * Id:RPMXCON-51007 Verify thumbnails icon and check for doc view click
 	 */
 
-	@Test(description = "RPMXCON-51007", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
+	@Test(description = "RPMXCON-51007", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void verifyThumbnailsPageNavigation() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51007");
@@ -871,35 +1008,90 @@ public class DocView_Sprint2_Regression {
 	}
 
 	/**
-	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-51008 Verify thumbnails in Doc View From assignments page
+	 * Author : Vijaya.Rani date: 26/01/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify after impersonation when Highlighting, Persistent Hit
+	 * panel, Reviewer Remarks panel, Redactios menu is selected from doc view and
+	 * views other document from analytics panel previously selected panels/menus
+	 * should remain.'RPMXCON-51356' Sprint: 11
+	 * 
+	 * 
+	 * @throws Exception
 	 */
+	@Test(description ="RPMXCON-51356", enabled = true, groups = { "regression" }, priority = 20)
+	public void verifyAfterImpersonationAllMenusInDocView() throws Exception {
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
-	public void checkingThumbnailsIconFromAssignment() throws Exception {
-		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
-		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Test case id : RPMXCON-51008");
+		baseClass.stepInfo("Test case Id: RPMXCON-51356");
 		baseClass.stepInfo(
-				"Verify user can see the thumbnail image of each page of the document being viewed on doc view page in thumbnail panel when redirecting from assignment page");
+				"Verify after impersonation when Highlighting, Persistent Hit panel, Reviewer Remarks panel, Redactios menu is selected from doc view and views other document from analytics panel previously selected panels/menus should remain.");
 
-		baseClass.stepInfo("Create new assignment");
-		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.docIdThumbnails);
-		sessionSearch.bulkAssign();
-		assignmentspage.assignmentCreation(assignmentName, Input.codingFormName);
-		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		docViewRedact.clickingThumbnailIcon();
-		if (docViewRedact.thumbNailsPanel().isElementPresent() == true) {
-			baseClass.passedStep("The thumbnails panel is clicked and menu is visible");
-		} else {
-			baseClass.failedStep("The thumbnail Panel menu is NOT displayed");
-		}
-		assignmentspage.deleteAssignment(assignmentName);
+		docView = new DocViewPage(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		docView.performDisplayIconReviewerHighlightingMenus();
 		loginPage.logout();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Assisent with " + Input.sa1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		docView.performDisplayIconReviewerHighlightingMenus();
+		loginPage.logout();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Assisent with " + Input.sa1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating SA to Reviewer");
+		baseClass.impersonateSAtoReviewer();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		docView.performDisplayIconReviewerHighlightingMenus();
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		docView.performDisplayIconReviewerHighlightingMenus();
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as project Assisent with " + Input.pa1userName + "");
+		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
+		baseClass.impersonatePAtoReviewer();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
+		docView.performDisplayIconReviewerHighlightingMenus();
+		loginPage.logout();
+
 	}
+
 
 	/**
 	 * Author : Vijaya.Rani date: 2/12/21 NA Modified date: NA Modified by:NA
@@ -908,7 +1100,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 23)
+	@Test(description = "RPMXCON-51560",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
 	public void verifyClickXAtAnyStateAndBringItBackToOriginalSearchIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51560");
@@ -971,53 +1163,91 @@ public class DocView_Sprint2_Regression {
 	}
 
 	/**
-	 * Author : Vijaya.Rani date: 10/12/21 NA Modified date: NA Modified by:NA
-	 * Description :To verify that count should be updated if document is marked is
-	 * Uncompleted 'RPMXCON-51031' Sprint : 7
+	 * Author : Vijaya.Rani date: 1/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify assignment progress bar refreshesh after completing the
+	 * document on selecting code same as this action. 'RPMXCON-51274' Sprint : 11
 	 * 
+	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
-	public void verifyCountShouldBeUpdatedDocumentIsMarkedIsUncompleted() throws Exception {
-		baseClass.stepInfo("Test case Id: RPMXCON-51031");
-		baseClass
-				.stepInfo("To verify that once document is marked as 'Un-Completed'assignment progress bar is updated");
-		sessionSearch = new SessionSearch(driver);
+	@Test(description = "RPMXCON-51274",enabled = true, groups = { "regression" }, priority = 22)
+	public void verifyAssignmentProgressBarCodeSameAsAction() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51274");
+		baseClass.stepInfo(
+				"Verify assignment progress bar refreshesh after completing the document on selecting code same as this action.");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		String searchString = Input.searchString1;
-		String codingForm = Input.codeFormName;
+		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
-		// Basic Search and select the pure hit count
-		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
-		sessionSearch.basicContentSearch(searchString);
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.toggleEnableSaveWithoutCompletion();
+		assignmentsPage.add2ReviewerAndDistribute();
 
-		// create Assignment and disturbute docs
-		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
-		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		baseClass.stepInfo("Step 2: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
 
-		driver.waitForPageToBeReady();
-		System.out.println(assname);
-		baseClass
-				.stepInfo("Doc is Assigned from basic Search and Assignment '" + assname + "' is created Successfully");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
 
+		// perform MiniDocList CodeSame As
+		docView.selectDocsFromMiniDocsAndCodeSameAs();
+		// edit coding form
+		docView.editCodingFormComplete();
 		driver.waitForPageToBeReady();
-		System.out.println(assname);
-		docViewRedact.getHomeDashBoard();
-		docViewRedact.selectAssignmentfromDashborad(assname);
-		docViewRedact.performCompleteToDocs();
-		docViewRedact.performGeerIcon();
-		docViewRedact.performUnCompleteToDocs();
-		docViewRedact.clickManage().waitAndClick(30);
-		docViewRedact.manageAssignments().waitAndClick(20);
-		driver.waitForPageToBeReady();
-		baseClass.passedStep("The Documents is marked Uncompleted successfully");
+		driver.scrollPageToTop();
+		baseClass.waitForElement(docView.getDashboardButton());
+		docView.getDashboardButton().Click();
+
+		// verify assignment progress bar in completed docs
+		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+
+		} else {
+			System.out.println("not completed");
+			baseClass.failedStep("Doc not completed");
+		}
 		loginPage.logout();
 
-	}
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
 
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		// perform MiniDocList CodeSame As
+		docView.selectDocsFromMiniDocsAndCodeSameAs();
+		// edit coding form
+		docView.editCodingFormComplete();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(docView.getDashboardButton());
+		docView.getDashboardButton().Click();
+
+		// verify assignment progress bar in completed docs
+		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+
+		} else {
+			System.out.println("not completed");
+			baseClass.failedStep("Doc not completed");
+		}
+		loginPage.logout();
+	}
 	/**
 	 * Author : Vijaya.Rani date: 10/12/21 NA Modified date: NA Modified by:NA
 	 * Description :To verify that once document is marked as 'Un-Completed',
@@ -1025,7 +1255,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description = "RPMXCON-51030",enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyOnceDocumentIsMarkedAsUnCompleteUpdateProgressBar() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51030");
@@ -1073,7 +1303,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(description = "RPMXCON-51914",enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyImageTabOnCompleteDocsShouldNavigateToNextDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51914");
@@ -1161,7 +1391,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(description = "RPMXCON-51915",enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyImageTabOnCompleteDocsAndApplyCodingStampShouldNavigateToNextDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51915");
@@ -1255,7 +1485,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	@Test(description = "RPMXCON-51916",enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyImageTabOnCompleteDocsAndCodeSameAsLastShouldNavigateToNextDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51916");
@@ -1352,7 +1582,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	@Test(description = "RPMXCON-48783",enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyAllRelevantHitTermsOnDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48783");
@@ -1396,7 +1626,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	@Test(description = "RPMXCON-51917",enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyImageTabOnViewDocsFromAnalyticsPanel() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51917");
@@ -1487,7 +1717,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 33)
+	@Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyCompleteIconOnThreadMapOutsideOfAnAssignment() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51452");
@@ -1537,7 +1767,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifyUserCanEnterTextAndSearchText() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51559");
@@ -1662,7 +1892,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	@Test(enabled = true, groups = { "regression" }, priority = 31)
 	public void verifyHitsOfDocsHighlightedWithoutClickingEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51325");
@@ -1768,7 +1998,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyHitsOfDocsWithoutSaveQueryHighlightedWithoutClickingEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51323");
@@ -1862,7 +2092,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifySearchTermHighlightedInEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51395");
@@ -1918,83 +2148,77 @@ public class DocView_Sprint2_Regression {
 	}
 
 	/**
-	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
-	 * Description :Verify search term, assigned keywords should be highlighted and
-	 * should be displayed on click of the eye icon when redirected to doc view from
-	 * assignment. 'RPMXCON-51397' Sprint : 10
+	 * @author Raghuram.A date: NA Modified date: 01/18/21 Modified by: Raghuram A
+	 *         Description : Verify that when text redaction added for different
+	 *         file types (e.g. XLS, XLSX, CSV, etc...) then redaction should not be
+	 *         shifted when visiting these documents : RPMXCON-52302 Sprint : 11
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 41)
-	public void verifyCreateAssignSearchTermHighlightedInEyeIcon() throws Exception {
-
-		baseClass.stepInfo("Test case Id: RPMXCON-51397");
-		baseClass.stepInfo(
-				"Verify search term, assigned keywords should be highlighted and should be displayed on click of the eye icon when redirected to doc view from assignment.");
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
+	public void verifyTextRedactionPosition() throws Exception {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		softAssertion = new SoftAssert();
-		docView = new DocViewPage(driver);
-		keywordPage = new KeywordPage(driver);
-		String hitTerms = "Test" + Utility.dynamicNameAppender();
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
 
-		String codingForm = Input.codeFormName;
-		String assname = "assgnment" + Utility.dynamicNameAppender();
+		List<String> docIDlist = new ArrayList<>();
+		int sizeofList;
+		String firnstDocname, secondDocname, docName, xAxis, yAxis;
+		HashMap<String, String> xyMap = new HashMap<String, String>();
 
-		// Login as RMU
+		baseClass.stepInfo("Test case Id: RPMXCON-52302 Sprint 11");
 		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+				"Verify that when text redaction added for different file types (e.g. XLS, XLSX, CSV, etc...) then redaction should not be shifted when visiting these documents");
 
-		// Add keywords
-		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
-		keywordPage.AddKeyword(hitTerms, hitTerms);
+		// search and View in DocView
+		sessionSearch.basicContentSearch(Input.searchString8);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 
-		sessionsearch.basicContentSearch(Input.searchString1);
-		baseClass.stepInfo("Search for text input completed");
-		sessionsearch.bulkAssign();
+		// Main method
+		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
+		sizeofList = miniDocListpage.getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
+		docIDlist = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
 
-		// create Assignment and disturbute docs
-		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
-		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		firnstDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Current Document Viewed : " + firnstDocname);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
 
-		// Impersonate RMU to Reviewer
-		baseClass.impersonateRMUtoReviewer();
+		// Check for this page highlighted and remove
+		docViewRedact.removeThisPageHighlight();
 
-		// Select the Assignment from dashboard
-		assignmentsPage.SelectAssignmentByReviewer(assname);
-		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		// do Rectangle Redact With XY Points
+		xyMap = docViewRedact.doTextRedactWithXYPoints();
+		xAxis = xyMap.get("xAxis");
+		yAxis = xyMap.get("yAxis");
 
-		// color highlighting
-		softAssertion.assertTrue(docViewRedact.get_textHighlightedColor().Displayed());
-		softAssertion.assertAll();
-		baseClass.passedStep("The color for the Highlighted text is verfied- Successfully");
+		// Switch to a different document
+		driver.waitForPageToBeReady();
+		secondDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Switched Document : " + secondDocname);
+		baseClass.stepInfo("Switched Document : " + secondDocname);
 
-		docView.getPersistentHit(hitTerms);
-		docView.verifyPersistentHitPanelAndCount(hitTerms);
+		// Back to Initial Document
+		baseClass.stepInfo("Back to Initial document");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+//		baseClass.waitForElement(miniDocListpage.getDociD(firnstDocname));
+		miniDocListpage.getDociD(firnstDocname).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docName = miniDocListpage.getMainWindowActiveDocID().getText();
+		System.out.println("Current Document Viewed : " + docName);
+		baseClass.stepInfo("Current Document Viewed : " + docName);
+
+		// Verify Position Retained
+		docViewRedact.verifyTextRedactionPositionRetained(xAxis, yAxis, true);
 		loginPage.logout();
 
-		// Login as REVU
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
-
-		// Select the Assignment from dashboard
-		assignmentsPage.SelectAssignmentByReviewer(assname);
-		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
-
-		// color highlighting
-		softAssertion.assertTrue(docViewRedact.get_textHighlightedColor().Displayed());
-		softAssertion.assertAll();
-		baseClass.passedStep("The color for the Highlighted text is verfied- Successfully");
-
-		docView.getPersistentHit(hitTerms);
-		docView.verifyPersistentHitPanelAndCount(hitTerms);
-		loginPage.logout();
 	}
 
-	@Test(enabled = true, groups = { "regression" }, priority = 42)
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
 
 	public void VerifyRMUToDocView() throws Exception {
 		String expectedURL = Input.url + "DocumentViewer/DocView";
@@ -2047,7 +2271,7 @@ public class DocView_Sprint2_Regression {
 	 * @author Jayanthi.ganesan
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 44)
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
 	public void verifyDocCount_ABM() throws Exception {
 		String SaveSaerchName = "ABMSaveSearch" + UtilityLog.dynamicNameAppender();
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -2094,7 +2318,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 45)
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
 	public void verifyAfterImpersonationHitsOfDocsWithoutSaveQueryHighlightedWithoutClickingEyeIconFromAdvanceSearch()
 			throws Exception {
 
@@ -2236,7 +2460,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 46)
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
 	public void verifyAfterImpersonateHitsOfDocsHighlightedWithoutClickingEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51328");
@@ -2397,7 +2621,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 47)
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyHitsOfDocsHighlightedWithoutClickingEyeIconBasicSearchDocList() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51329");
@@ -2559,7 +2783,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 49)
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void verifySearchTermHighlightingWorkingForSearchablePDF() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51981");
@@ -2623,90 +2847,78 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 
 	}
-
 	/**
-	 * Author : Mohan date: 27/01/22 NA Modified date: NA Modified by:NA Description
-	 * :Verify Keyword highlighting is working for Searchable PDF (with Mapped
-	 * dataset having RequiredPDFGenartion is TRUE)'RPMXCON-51982'
-	 * 
-	 * @throws Exception
+	 * @author Sakthivel TestCase Id:51874 Verify that Action > Remove Code Same As
+	 *         works fine when all records in the reviewers batch are in an
+	 *         Uncompleted state, and the user selects only some/select records
+	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 50)
-	public void verifyKeywordHighlightingWorkingForSearchablePDF() throws Exception {
-
-		baseClass.stepInfo("Test case Id: RPMXCON-51981");
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 41)
+	public void verifyCodeSameAsMiniDocListAndChildWindow() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51874");
+		String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
 		baseClass.stepInfo(
-				"Verify Search Term highlighting is working for Searchable PDF (with Mapped dataset having RequiredPDFGenartion is TRUE)");
-		sessionSearch = new SessionSearch(driver);
-		docView = new DocViewPage(driver);
-		keywordPage = new KeywordPage(driver);
-		softAssertion = new SoftAssert();
-		String keyword = "to" + Utility.dynamicNameAppender();
-		String color = "Gold";
+				"Verify that Action > Remove Code Same As works fine when all records in the reviewers batch are in an Uncompleted state, and the user selects only some/select records");
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softAssert = new SoftAssert();
 
-		baseClass.stepInfo("Step 1: Prerequisites: Keyword groups should be created   with different Keywords");
+		// searching document for assignmnet creation
+		baseClass.stepInfo("bascic contant search");
+		sessionSearch.basicContentSearch(Input.searchString2);
+		baseClass.stepInfo("performing bulk assign");
+		sessionSearch.bulkAssign();
+		baseClass.stepInfo("Create assignment WIth allow user to save with out complete option");
 
-		keywordPage.addKeywordWithColor(keyword, color);
-
-		baseClass.stepInfo("Step 2:  Go to Basic/Advanced Search Search by term   Go to Doc View and ");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocView();
-
-		baseClass.stepInfo(
-				"Step 3: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(5);
-
-		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
-		softAssertion.assertAll();
-		baseClass.passedStep("Keyword is highlighted with specified color in the Doc View successfully");
-
+		// create new assignment with allow user to save without complete
+		assignmentPage.createAssignmentWithAllowUserToSave(AssignStamp, Input.codingFormName);
+		baseClass.stepInfo("editing assignment");
+		assignmentPage.editAssignment(AssignStamp);
+		baseClass.stepInfo("Reviewers added and distributed to Reviewer");
+		assignmentPage.assignmentDistributingToReviewer();
 		loginPage.logout();
+		baseClass.stepInfo("Successfully logout RUM '" + Input.rev1userName + "'");
 
-		// login As PA
-		baseClass.stepInfo("Step 1: Login As PA");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
-
-		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
-
-		baseClass.stepInfo("Step 2:  Go to Basic/Advanced Search Search by term   Go to Doc View and ");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocView();
-
-		baseClass.stepInfo(
-				"Step 3: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(5);
-
-		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
-		softAssertion.assertAll();
-		baseClass.passedStep("Keyword is highlighted with specified color in the Doc View successfully");
-
-		loginPage.logout();
-
-		// login As Reviewer
-		baseClass.stepInfo("Step 1: Login As Reviewer");
+		// Login As Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
 
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+		// selecting the assignment
+		baseClass.stepInfo("select the assignment and view in docview");
+		assignmentPage.SelectAssignmentByReviewer(AssignStamp);
 
-		baseClass.stepInfo("Step 3:  Go to Basic/Advanced Search Search by term   Go to Doc View and ");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocView();
+		// verify CodeSameAs icon is displayed in selected doc
+		baseClass.stepInfo("performing Code sameas for min doc list documents");
+		docView.selectDocsFromMiniDocsAndCodeSameAs();
+		docView.selectDocsFromMiniDocsAndRemoveCodeAsSame();
+		driver.waitForPageToBeReady();
+		softAssert.assertFalse(docView.geDocView_MiniList_CodeSameAsIcon().isDisplayed());
+		if (docView.geDocView_MiniList_CodeSameAsIcon().isElementAvailable(1)) {
+			baseClass.failedStep("CodeSameAs icon is displayed for the selected docs ");
+		} else {
+			baseClass.passedStep("CodeSameAs icon is not displayed for the selected docs");
+		}
 
-		baseClass.stepInfo(
-				"Step 4: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		baseClass.stepInfo("save the configuration");
+		docView.saveConfigFromChildWindow();
+		docView.popOutMiniDocList();
 
-		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
-		softAssertion.assertAll();
-		baseClass.passedStep("Keyword is highlighted with specified color in the Doc View successfully");
-		loginPage.logout();
+		// verify CodeSameAs icon is displayed in selected doc in childWindow
+		driver.waitForPageToBeReady();
+		docView.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 2; i++) {
+			baseClass.waitForElement(docView.getDocView_MiniDoc_SelectRow(i));
+			docView.getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+		}
+		docView.clickCodeSameAs();
+		docView.selectDocsFromMiniDocsAndRemoveCodeAsSameInChildWindow();
+		docView.closeWindow(1);
+		softAssert.assertAll();
 	}
+
+
+	
 
 	/**
 	 * Author : Mohan date: 28/01/22 NA Modified date: NA Modified by:NA Description
@@ -2715,7 +2927,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 53)
+	@Test(enabled = true, groups = { "regression" }, priority = 42)
 	public void verifyAssociatedTiffImage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51105");
@@ -2806,7 +3018,7 @@ public class DocView_Sprint2_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 61)
+	@Test(enabled = true, groups = { "regression" }, priority = 43)
 	public void verifyAssignmentProgressBarSameAsLastBtnAndCopmlete() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51273");
@@ -2922,7 +3134,7 @@ public class DocView_Sprint2_Regression {
 	 *                      testcase hint : used project
 	 *                      :AutomationAdditionalDataProject , Runs On : PT env
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 62)
+	@Test(enabled = true, groups = { "regression" }, priority = 44)
 	public void verifyLargeExcelInDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52203");
@@ -2976,189 +3188,815 @@ public class DocView_Sprint2_Regression {
 
 		baseClass.passedStep("Verified that large Excels are loading properly without any issues in DocView.");
 	}
-
+	
 	/**
-	 * Author : Vijaya.Rani date: 05/02/22 NA Modified date: NA Modified by:NA
-	 * Description :User can load the produced document by clicking the drop down
-	 * selection.'RPMXCON-51269' Sprint: 12
-	 * 
-	 * 
-	 * @throws Exception
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-51568 Verify when user navigates to other document while viewing the
+	 * search hits and comes back to same document
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 64)
-	public void verifyProducedDocumentClickingDropDownSelection() throws Exception {
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 45)
+	public void verifyTextSearchAfterUserNavigatesToAnotherDoc() throws Exception {
+		baseClass = new BaseClass(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		loginPage = new LoginPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		SoftAssert softAssert = new SoftAssert();
+		DocViewPage docViewPage = new DocViewPage(driver);
 
-		baseClass.stepInfo("Test case Id: RPMXCON-51269");
-		baseClass.stepInfo("User can load the produced document by clicking the drop down selection.");
-		sessionSearch = new SessionSearch(driver);
-		docView = new DocViewPage(driver);
-		savedSearch = new SavedSearch(driver);
-		UtilityLog.info(Input.prodPath);
-
-		// Login as RMU
+		baseClass.stepInfo("Test case Id: RPMXCON-51568");
 		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+				"Verify when user navigates to other document while viewing the search hits and comes back to same document");
+		sessionsearch.basicContentSearch(Input.searchDocId);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifySearchUsingMagnifyingIcon(true);
 
-		String foldername = "Folder" + Utility.dynamicNameAppender();
-		String tagname = "Tag" + Utility.dynamicNameAppender();
-		String productionname = "p" + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		baseClass.stepInfo("Navigate to another document");
+		docViewPage.selectDocIdInMiniDocList(Input.searchDocId);
 
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		baseClass.stepInfo(
+				"Verify whether search is cleared,Magnifying icon is displayed when navigates to other doc and come back to same doc where the user did search");
+		baseClass.waitForElement(docViewRedact.getMagnifyingIcon());
+		softAssert.assertEquals(docViewRedact.getMagnifyingIcon().Displayed().booleanValue(), true);
+		Element element = docViewRedact.getHitIcon();
+		try {
+			if (!element.Stale()) {
+				baseClass.failedStep("Search is not cleared");
+			} else {
+				baseClass.passedStep("Search is cleared successfully");
+			}
+		} catch (Exception e) {
+			baseClass.passedStep("Search is cleared successfully");
 
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkFolderExisting(foldername);
-
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		page = new ProductionPage(driver);
-		page.selectingDefaultSecurityGroup();
-		page.addANewProduction(productionname);
-		page.fillingDATSection();
-		page.fillingNativeSection();
-		page.fillingPDFSection(tagname, Input.searchString4);
-		page.fillingTextSection();
-		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-		page.navigateToNextSection();
-		page.fillingDocumentSelectionPage(foldername);
-		page.navigateToNextSection();
-		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
-		page.navigateToNextSection();
-		page.viewingPreviewInSummaryTab();
-		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
-
-		baseClass.stepInfo("View searched for audio docs in Doc view");
-		sessionSearch.ViewInDocView();
-
-		driver.waitForPageToBeReady();
-		docView.clickOnImageTab();
-		driver.waitForPageToBeReady();
-		docView.verifyProductionNameForPDFFileInDocView(productionname);
-		baseClass.passedStep("Document produced the clicked production is loaded successfully");
+		}
 		loginPage.logout();
 
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
-
-		baseClass.stepInfo("View searched for audio docs in Doc view");
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.ViewInDocView();
-
-		driver.waitForPageToBeReady();
-		docView.clickOnImageTab();
-		driver.waitForPageToBeReady();
-		docView.verifyProductionNameForPDFFileInDocView(productionname);
-		baseClass.passedStep("Document produced the clicked production is loaded successfully");
-		loginPage.logout();
-
-		// Login as REVU
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in using Reviewer account");
+		sessionsearch.basicContentSearch(Input.searchDocId);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifySearchUsingMagnifyingIcon(true);
+		baseClass.stepInfo("Navigate to another document");
+		docViewPage.selectDocIdInMiniDocList(Input.searchDocId);
 		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
+				"Verify whether search is cleared,Magnifying icon is displayed when navigates to other doc and come back to same doc where the user did search");
+		baseClass.waitForElement(docViewRedact.getMagnifyingIcon());
+		softAssert.assertEquals(docViewRedact.getMagnifyingIcon().Displayed().booleanValue(), true);
+		element = docViewRedact.getHitIcon();
+		try {
+			if (!element.Stale()) {
+				baseClass.failedStep("Search is not cleared");
+			} else {
+				baseClass.passedStep("Search is cleared successfully");
+			}
+		} catch (Exception e) {
+			baseClass.passedStep("Search is cleared successfully");
 
-		baseClass.stepInfo("View searched for audio docs in Doc view");
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.ViewInDocView();
+		}
+		loginPage.logout();
 
-		driver.waitForPageToBeReady();
-		docView.clickOnImageTab();
-		driver.waitForPageToBeReady();
-		docView.verifyProductionNameForPDFFileInDocView(productionname);
-		baseClass.passedStep("Document produced the clicked production is loaded successfully");
-
-	}
-
-	/**
-	 * Author : sowndarya.velraj date: 07/02/22 Description:In the Persistent Search
-	 * Hits Panel, in the upper right of each card is a date should be removed for
-	 * non-audio documents (for Platinum) 'RPMXCON-51501'.sprint 12
-	 * 
-	 * @throws Exception
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 65)
-	public void verifyDateRemovalInPersistentSearchPanel() throws Exception {
-
-		baseClass.stepInfo("Test case Id: RPMXCON-51501");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in using PA account");
+		sessionsearch.basicContentSearch(Input.searchDocId);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifySearchUsingMagnifyingIcon(true);
+		baseClass.stepInfo("Navigate to another document");
+		docViewPage.selectDocIdInMiniDocList(Input.searchDocId);
 		baseClass.stepInfo(
-				"In the Persistent Search Hits Panel, in the upper right of each card is a date should be removed for non-audio documents (for Platinum)");
-		sessionSearch = new SessionSearch(driver);
-		docView = new DocViewPage(driver);
-		keywordPage = new KeywordPage(driver);
-		softAssertion = new SoftAssert();
-		String keyword = "to" + Utility.dynamicNameAppender();
-		String color = "Gold";
+				"Verify whether search is cleared,Magnifying icon is displayed when navigates to other doc and come back to same doc where the user did search");
+		baseClass.waitForElement(docViewRedact.getMagnifyingIcon());
+		softAssert.assertEquals(docViewRedact.getMagnifyingIcon().Displayed().booleanValue(), true);
+		element = docViewRedact.getHitIcon();
+		try {
+			if (!element.Stale()) {
+				baseClass.failedStep("Search is not cleared");
+			} else {
+				baseClass.passedStep("Search is cleared successfully");
+			}
+		} catch (Exception e) {
+			baseClass.passedStep("Search is cleared successfully");
 
-		baseClass.stepInfo(" Prerequisites: Keyword groups should be created   with different Keywords");
-
-		keywordPage.addKeywordWithColor(keyword, color);
-
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocView();
-
-		baseClass.stepInfo(
-				" Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(5);
-
-		String upperCard = docView.getTermCardInPersistentPanel().getText();
-		System.out.println(upperCard);
-
-		if (upperCard.contains("2022")) {
-			baseClass.failedStep("Date is displayed");
-		} else {
-			baseClass.passedStep("Date is not displayed");
 		}
 		loginPage.logout();
 	}
 
+
+
 	/**
-	 * Author :Vijaya.Rani date: 18/02/2022 Modified date: NA Modified by: NA
-	 * Description :Verify to ensure that multiple terms submitted, one with a space
-	 * and other without are also handled. 'RPMXCON-51613' Sprint-12
-	 * 
+	 * @Author Raghuram A date:2/8/2022 Modified date: NA Modified by:N/A
+	 * @Description : To verify document view panel from doc view page
+	 *              [RPMXCON-50777]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 66)
-	public void verifyMultipleTermsSubmittedAndHandled() throws InterruptedException {
-		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-51613  sprint 12");
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
+	public void verifyDocViewPanel() throws InterruptedException {
+		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
+		String assignment = "Assignment" + Utility.dynamicNameAppender();
+		String cascadeSettings_yes = "Yes";
+		List<String> docIDlist = new ArrayList<>();
+		String sortBy = "DocID";
+
+		loginPage = new LoginPage(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
 		SessionSearch search = new SessionSearch(driver);
-		softAssertion = new SoftAssert();
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50777 Assignments Sprint-12");
+		baseClass.stepInfo("To verify document view panel from doc view page");
+
+		// Assignment group creation
+		agnmt.navigateToAssignmentsPage();
+		agnmt.createCascadeNonCascadeAssgnGroup_withoutSave(cascadeAsgnGrpName, cascadeSettings_yes);
+		agnmt.Assgnwithdocumentsequence(sortBy, Input.sortType);
+
+		// Assignment creation under group via search -> bulk assign
+		search.basicContentSearch(Input.TallySearch);
+		search.bulkAssignWithNewAssgn(cascadeAsgnGrpName);
+		agnmt.quickAssignmentCreation(assignment, Input.codeFormName);
+		agnmt.saveAssignment(assignment, Input.codeFormName);
+		baseClass.stepInfo("Created Assignment name : " + assignment);
+
+		// Distribute to RMU
+		agnmt.selectAssignmentGroup(cascadeAsgnGrpName);
+		agnmt.getSelectAssignment(assignment).waitAndClick(5);
+		agnmt.NavigateToNewEditAssignmentPage("edit");
+		agnmt.assignmentDistributingToReviewer();
+
+		// Selecting the assignment from group
+		agnmt.navigateToAssignmentsPage();
+		agnmt.selectAssignmentGroup(cascadeAsgnGrpName);
+		agnmt.selectAssignmentToViewinDocView(assignment);
+
+		// Verify default doc details
+		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
+		docIDlist = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
+		Collections.sort(docIDlist);
+		String defaultDocName = docIDlist.get(0);
+		baseClass.stepInfo("First document from the list : " + defaultDocName);
+
+		// Result
+		baseClass.printResutInReport(miniDocListpage.verifySelectedDocHighlight(defaultDocName),
+				"Default Document is selected : " + defaultDocName,
+				"Failed to select default document" + defaultDocName, "Pass");
+
+		String docName = miniDocListpage.getMainWindowActiveDocID().getText();
+		baseClass.stepInfo("Current Document Viewed : " + docName);
+		baseClass.textCompareEquals(docName, defaultDocName,
+				"Document View panel contains detail/content view of selected document - In default first document of mini doc list is selected",
+				"Failed in Default document view");
+
+		// Delete Assign group and assign
+		agnmt.deleteAssignmentFromSingleAssgnGrp(cascadeAsgnGrpName, assignment);
+		agnmt.DeleteAssgnGroup(cascadeAsgnGrpName);
+		loginPage.logout();
+	}
+
+
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51936 Verify that when performing doc-to-doc navigation after
+	 * navigating to document on entering the document number the same document in
+	 * mini-DocList must always present fully in the visible area of the
+	 * mini-DocList
+	 * 
+	 * stabilization - done
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 47)
+	public void verifyDocInMiniDocListAfterPerformDocNavigation() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51936");
+		baseClass.stepInfo(
+				"Verify that when performing doc-to-doc navigation after navigating to document on entering the document number the same document in mini-DocList must always present fully in the visible area of the mini-DocList");
+
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.ViewInDocViews();
+
+		baseClass.waitForElement(docView.getDocumetId());
+		docView.searchDocumentBasedOnId(13);
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		String miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
 
 		baseClass.stepInfo(
-				"Verify to ensure that multiple terms submitted, one with a space and other without are also handled");
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.verifyThatIsLastDoc();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			System.err.println(docViewId);
+			System.err.println(miniDocListId);
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.getWebDriver().navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		docView.enterDocumentNumberTillLoading();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		driver.waitForPageToBeReady();
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+		System.err.println(miniDocListId);
+		System.err.println(docViewId);
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.verifyThatIsLastDoc();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.ViewInDocViews();
+
+		baseClass.waitTillElemetToBeClickable(docView.getDocumetId());
+		baseClass.waitForElement(docView.getDocumetId());
+		docView.searchDocumentBasedOnId(13);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.verifyThatIsLastDoc();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.getWebDriver().navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		docView.enterDocumentNumberTillLoading();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		driver.waitForPageToBeReady();
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+		System.err.println(miniDocListId);
+		System.err.println(docViewId);
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.verifyThatIsLastDoc();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		loginPage.logout();
+
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.ViewInDocViews();
+
+		baseClass.waitForElement(docView.getDocumetId());
+		docView.searchDocumentBasedOnId(13);
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.verifyThatIsLastDoc();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.getWebDriver().navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		docView.enterDocumentNumberTillLoading();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		driver.waitForPageToBeReady();
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+		System.err.println(miniDocListId);
+		System.err.println(docViewId);
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.verifyThatIsLastDoc();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		softAssertion.assertAll();
+		loginPage.logout();
+
+	}
+	
+
+	
+	/**
+	 * Author : Vijaya.Rani date: 1/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify assignment progress bar refreshesh after applying coding
+	 * stamp. 'RPMXCON-51276' Sprint : 11
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 48)
+	public void verifyAssignmentProgressBarCompleteTheCodingStamp() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51276");
+		baseClass.stepInfo("Verify assignment progress bar refreshesh after applying coding stamp.");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
 
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
 
-		// First audio Search
-		search.audioSearch(Input.audioString1, Input.language);
-		String firstStringCount = search.getPureHitsCount().getText();
-		System.out.println(firstStringCount);
-		baseClass.stepInfo("First String persistent hit count is : " + firstStringCount);
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		baseClass.stepInfo("Step 2: Impersonating RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		reusableDocView.stampColourSelection(Input.searchString2, Input.stampColour);
+		// edit coding form
+		docView.editCodingFormComplete();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(docView.getDashboardButton());
+		docView.getDashboardButton().Click();
+
+		// verify assignment progress bar in completed docs
+		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
+		if ((assignmentsPage.getBatchAssignmentBar(assname).isDisplayed())) {
+			System.out.println("completed doc is refreshed in assignment bar");
+			baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+
+		} else {
+			System.out.println("not completed");
+			baseClass.failedStep("Doc not completed");
+		}
 		loginPage.logout();
 
-		// login As RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		// second audio search
-		search.audioSearch(Input.audioString2, Input.language);
-		String secondStringCount = search.getPureHitsCount().getText();
-		System.out.println(secondStringCount);
-		baseClass.stepInfo("Second String persistent hit count is : " + secondStringCount);
+		// login As Reviewer
+		baseClass.stepInfo("Step 1: Login As Reviewer");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
 
-		softAssertion.assertEquals(firstStringCount, secondStringCount);
-		softAssertion.assertAll();
-		baseClass.passedStep("persistent hit count is matched successfully");
+		baseClass.stepInfo("Step 3: Search the documents with search term from basic search and go to doc view");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		reusableDocView.stampColourSelection(Input.searchString2, Input.stampColour);
+		// edit coding form
+		docView.editCodingFormComplete();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(docView.getDashboardButton());
+		docView.getDashboardButton().Click();
+		softAssertion.assertTrue(assignmentsPage.getBatchAssignmentBar(assname).isDisplayed());
+		baseClass.passedStep("Assignment progress bar refreshed on completed doc");
+		loginPage.logout();
+
 	}
+
 
 	/**
 	 * Author :Vijaya.Rani date: 18/02/2022 Modified date: NA Modified by: NA
@@ -3167,7 +4005,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 67)
+	@Test(enabled = true, groups = { "regression" }, priority = 49)
 	public void verifyDocViewThreadMapEmailsParticipants() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51638  sprint 12");
@@ -3219,7 +4057,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 68)
+	@Test(enabled = true, groups = { "regression" }, priority = 50)
 	public void verifyDocViewRedactionAnnotationsRemarksIconDisplay() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-57088  sprint 12");
@@ -3265,7 +4103,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51995 & 51996 - sprint 3- DocView Description : Verify redaction for
 	 * page range and all pages in a doc
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 0)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 51)
 	public void RedactPageRange() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -3306,7 +4144,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51998 & 51997 - sprint 3- DocView Description : Verify redaction for
 	 * page range and all pages in a doc after impersonating user
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 52)
 	public void RedactPageRangeImpersonatingUser() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51998, RPMXCON-51997");
@@ -3350,7 +4188,7 @@ public class DocView_Sprint2_Regression {
 	 * DocView
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 53)
 	public void verifyRedactionTagBlank() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -3393,7 +4231,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying persistent hit for audio docs DocView- sprint 3
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 54)
 	public void persistentHitAudioDocs() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -3421,36 +4259,777 @@ public class DocView_Sprint2_Regression {
 
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-51398 Verify highlighted keywords should be displayed on click of
-	 * the eye icon when redirected to doc view from session search when documents
-	 * searched with work product
+	 * Id:RPMXCON-51937 Verify that when performing doc-to-doc navigation after
+	 * navigating to document on entering the document number the same document in
+	 * mini-DocList child window must present fully in the visible area of the
+	 * mini-DocList child window
+	 * 
+	 * stabilization - done
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 49)
-	public void validatePersistentPanelHitCountAgainstDocHighlightedCount() throws Exception {
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 55)
+	public void verifyDocInMiniDocListChildWindowsAfterPerformNavigation() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
 		docViewRedact = new DocViewRedactions(driver);
-		docView = new DocViewPage(driver);
-		loginPage = new LoginPage(driver);
-
-		baseClass.stepInfo("Test case id : RPMXCON-51398");
+		baseClass.stepInfo("Test case id : RPMXCON-51937");
 		baseClass.stepInfo(
-				"Verify highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search when documents searched with work product");
-		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+				"Verify that when performing doc-to-doc navigation after navigating to document on entering the document number the same document in mini-DocList child window must present fully in the visible area of the mini-DocList child window");
+
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.ViewInDocViews();
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		baseClass.waitForElement(docView.getDocumetId());
+		docView.searchDocumentBasedOnId(13);
 		driver.waitForPageToBeReady();
-		sessionSearch.switchToWorkproduct();
-		sessionSearch.getSavedSearchBtn1().Click();
-		sessionSearch.selectSavedsearchesInTree("My Saved Search");
-		baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
-		sessionSearch.getMetaDataInserQuery().waitAndClick(5);
-		sessionSearch.serarchWP();
-		sessionSearch.ViewInDocView();
+
+		// Popout MiniDocList
+		docView.popOutMiniDocList();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		String docViewId = docView.getDocView_CurrentDocId().getText();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		String miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.getDocView_Last().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().Click();
-		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(keywordsArrayPT[0]);
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		driver.getWebDriver().navigate().refresh();
+		try {
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			System.out.println("Alert data: " + alertText);
+			UtilityLog.info("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+			// e.printStackTrace();
+		}
+
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		docView.enterDocumentNumberTillLoading();
+		driver.waitForPageToBeReady();
+
+		// Popout MiniDocList
+		docView.popOutMiniDocList();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		driver.waitForPageToBeReady();
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+		System.err.println(miniDocListId);
+		System.err.println(docViewId);
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.getWebDriver().close();
+
+		driver.switchTo().window(parentWindowID);
+
 		loginPage.logout();
 
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.ViewInDocViews();
+		driver.waitForPageToBeReady();
+
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		baseClass.waitForElement(docView.getDocumetId());
+		docView.searchDocumentBasedOnId(13);
+		driver.waitForPageToBeReady();
+
+		// Popout MiniDocList
+		docView.popOutMiniDocList();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		driver.getWebDriver().navigate().refresh();
+		try {
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			System.out.println("Alert data: " + alertText);
+			UtilityLog.info("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+			// e.printStackTrace();
+		}
+
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		docView.enterDocumentNumberTillLoading();
+		driver.waitForPageToBeReady();
+
+		// Popout MiniDocList
+		docView.popOutMiniDocList();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		driver.waitForPageToBeReady();
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+		System.err.println(miniDocListId);
+		System.err.println(docViewId);
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.getWebDriver().close();
+
+		driver.switchTo().window(parentWindowID);
+
+		loginPage.logout();
+
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.ViewInDocViews();
+
+		parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		baseClass.waitForElement(docView.getDocumetId());
+		docView.searchDocumentBasedOnId(13);
+		driver.waitForPageToBeReady();
+
+		// Popout MiniDocList
+		docView.popOutMiniDocList();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		driver.getWebDriver().navigate().refresh();
+		try {
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			System.out.println("Alert data: " + alertText);
+			UtilityLog.info("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+			// e.printStackTrace();
+		}
+
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		docView.enterDocumentNumberTillLoading();
+		driver.waitForPageToBeReady();
+
+		// Popout MiniDocList
+		docView.popOutMiniDocList();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after scrolling down to document");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+
+		}
+
+		driver.waitForPageToBeReady();
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+		System.err.println(miniDocListId);
+		System.err.println(docViewId);
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
+		}
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify document loaded in mini doc list and docview is same after Doc navigation");
+		docView.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
+
+		if (docView.getSelectedDocIdInMiniDocList().isDisplayed()) {
+			baseClass.passedStep("Doc is getting displayed after performing doc navigation");
+			softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not getting displated after performing doc navigation");
+
+		}
+
+		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
+
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+
+		if (docView.getDocView_CurrentDocId().isDisplayed()) {
+			baseClass.passedStep("Doc is getting loaded in DocView");
+			softAssertion.assertEquals(docView.getDocView_CurrentDocId().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Doc is not loaded in DocView");
+		}
+
+		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		docViewId = docView.getDocView_CurrentDocId().getText();
+
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.stepInfo(
+				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+		if (docViewId.equals(miniDocListId)) {
+			baseClass.passedStep(
+					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView after performing doc navigation");
+			softAssertion.assertEquals(docViewId, miniDocListId);
+		} else {
+			baseClass.failedStep(
+					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView after performing doc navigation");
+		}
+
+		driver.getWebDriver().close();
+
+		driver.switchTo().window(parentWindowID);
+
+		softAssertion.assertAll();
+		loginPage.logout();
 	}
 
 	/**
@@ -3463,7 +5042,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 *                   stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 47)
+	@Test(enabled = true, groups = { "regression" }, priority = 56)
 	public void verifyMiniDocListChildWindow() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51938");
@@ -3565,7 +5144,7 @@ public class DocView_Sprint2_Regression {
 	 * Id: RPMXCON-51992 DocView and Doc Explorer_Performance_Navigate through
 	 * documents one by one for 15 mins_RMU/Rev
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 57)
 	public void DocViewAndDocExplorerPerformanceNavigate() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51992");
@@ -3581,7 +5160,7 @@ public class DocView_Sprint2_Regression {
 	 * Id: RPMXCON-51731 Verify that text highlighting should not be present on doc
 	 * view
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 58)
 	public void VerifyTextHightingNotPresent() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51731");
@@ -3601,7 +5180,7 @@ public class DocView_Sprint2_Regression {
 	 * Id: RPMXCON-51755 Verify that when the toggle is ON will hide the 0 hit terms
 	 * on hits panel
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 59)
 	public void VerifyToggleONhideZeroHits() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51755");
@@ -3621,7 +5200,7 @@ public class DocView_Sprint2_Regression {
 	 * Id: RPMXCON-51756 Verify that when the toggle is OFF will show the 0 hit
 	 * terms on hits panel
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 60)
 	public void VerifyToggleOFFshowZeroHits() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51756");
@@ -3640,7 +5219,7 @@ public class DocView_Sprint2_Regression {
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-51989 Verify colour is same when remarks edited by different RMU user
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 61)
 	public void VerifyColourRemarksEditing() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -3710,7 +5289,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51558 Verify if X icon is visible after clicking on the
 	 * magnfifying/search icon in docView page
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 62)
 	public void VerifyMagnifyingIconInDocViewForAllUsers() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -3734,7 +5313,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51316 Verify if color changes for any annotation icon when clicked on
 	 * DocView Page
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 63)
 	public void VerifyOnOffColourChangeInDocViewPage() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -3765,7 +5344,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-50848 Verify if the persistent hit icon is present in DocView from
 	 * Basic Search for non-audio Docs
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 64)
 	public void verifyPersistantHitIconFromBasicSearch() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -3792,7 +5371,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51346 Verify if highlights panel once open is not closed while
 	 * navigating docs from mini doc list
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 65)
 	public void verifyHighlitesPanelisOpenWhileNavigatingFromMiniDocList() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -3818,7 +5397,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51345 Verify that reviewer remarks panel remains selected while
 	 * navigating through docs
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 66)
 	public void VerifyReviewerRemarksPanel() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -3842,7 +5421,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51344 Verify that reviewer Persistent hits panel remains selected
 	 * while navigating through docs
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 14)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 67)
 	public void VerifyReviewerPersistentHitPanel() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -3869,7 +5448,7 @@ public class DocView_Sprint2_Regression {
 	 * stabilization done
 	 */
 
-	@Test(enabled = true, alwaysRun = false, groups = { "regression" }, priority = 50)
+	@Test(enabled = true, alwaysRun = false, groups = { "regression" }, priority = 68)
 	public void verifyPersistentHitsAfterCompletingDocumentsNotRetain() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3940,99 +5519,68 @@ public class DocView_Sprint2_Regression {
 		softAssert.assertAll();
 		loginPage.logout();
 	}
-
+	
 	/**
-	 * Author : Sakthivel date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-51851 Verify that persistent hits panel should not retain
-	 * previously viewed hits for the document on completing the document after
-	 * applying the coding stamp.
+	 * @Author : Aathith Modified date: NA Modified by: Aathith RPMXCON-50786
+	 * @Description : To verify document should be displayed in doc view panel as
+	 *              per the entered document number in the inputbox.
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 43)
-	public void verifyPersistentHitsCompletingDocumentsAfterCodingStamp() throws Exception {
-		baseClass = new BaseClass(driver);
+	@Test(enabled = true, groups = { "regression" }, priority = 69)
+	public void verifyDocumentAsPerEnteredDocument() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50786");
+		baseClass.stepInfo(
+				"To verify document should be displayed in doc view panel as per the entered document number in the inputbox.");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		SavedSearch savedSearch = new SavedSearch(driver);
-		SoftAssert softAssert = new SoftAssert();
-		DocViewPage docView = new DocViewPage(driver);
-		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		baseClass.stepInfo("Test case id : RPMXCON-51851");
-		baseClass.stepInfo(
-				"Verify that persistent hits panel should not retain previously viewed hits for the document on completing the document after applying the coding stamp");
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 
-		String codingForm = Input.codeFormName;
-		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String filedText = "Stamp" + Utility.dynamicNameAppender();
 
-		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearch(searchName);
+		sessionSearch.bulkAssign();
 
-		// Share Search via Saved Search
-		savedSearch.shareSavedSearchRMU(searchName, Input.securityGroup);
-		baseClass.stepInfo("Sharing the saved search with security group");
+		assignmentPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
 
-		savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		baseClass.stepInfo("Select the Assigment go to Docview");
+		assignmentPage.selectAssignmentToViewinDocview(assname);
+		baseClass.stepInfo("Doc view page is selected from assigment page");
 
-		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
-
-		// Logout as ReviewManager
-		loginPage.logout();
-
-		baseClass.stepInfo(
-				"Logging in to reviewer account to verify whether reviewer can view docs in doc view from assignment");
-
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
-		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
-		baseClass.stepInfo("Verify whether the user is in doc view in context of an assignment");
+		docViewPage.document_Navigation_verification(15);
+		docViewPage.navigation_Bar_EnableDisableCheck();
+		docViewPage.lastDoc_Navigation_Bar_EnableDisableCheck();
+		docViewPage.document_Navigation_verification(25);
 
-		// Verify AssignmentName is Displayed
-		baseClass.waitForElement(assignmentsPage.getAssignmentNameInDocView());
-		if (assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue()) {
-			baseClass.passedStep("User is in doc view in context of an assignment");
-			softAssert.assertEquals(assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue(), true);
-		} else {
-			baseClass.failedStep("User is in doc view in context of an assignment is not assigned");
-		}
+		int lastdoc = docViewPage.verifyingDocCount();
 
-		// verify PeristantHitEyeIcon is Displayed
-		baseClass.stepInfo("Verify whether the panels are displayed in doc view");
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().Click();
-		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
-		if (docView.getHitPanel().isDisplayed()) {
-			baseClass.passedStep("Persistent hit panels are displayed");
-			softAssert.assertEquals(docView.getHitPanel().isDisplayed().booleanValue(), true);
-		} else {
-			baseClass.failedStep("Persistent hit panels are not displayed");
-		}
+		docViewPage.document_Navigation_verification(lastdoc);
+		docViewPage.navigation_Bar_EnableDisableCheck();
+		docViewPage.lastDoc_Navigation_Bar_EnableDisableCheck();
 
-		baseClass.waitForElement(docView.getHitPanelCount());
-		String beforeComplete = docView.getHitPanelCount().getText();
-		System.out.println(beforeComplete);
-		docView.editCodingFormAndSaveWithStamp(filedText, Input.stampColour);
-		String getAttribute = docView.getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
-		docView.lastAppliedStamp(Input.stampColour);
-		softAssert.assertEquals("Saving with Stamp", getAttribute);
-		if (getAttribute.equals("Saving with Stamp")) {
-			baseClass.passedStep("Expected Message -StamplastIcon is clicked scuessfully..");
-		} else {
-			baseClass.failedStep("Expected Message - StamplastIcon is not clicked");
-		}
-		baseClass.waitForElement(docView.getCompleteDocBtn());
-		docView.getCompleteDocBtn().waitAndClick(10);
-		baseClass.stepInfo("Document completed successfully");
-		baseClass.waitForElement(docView.getHitPanelCount());
-		String afterComplete = docView.getHitPanelCount().WaitUntilPresent().getText();
-		System.out.println(afterComplete);
-		baseClass.stepInfo("persistent hits panel is not retain previously viewed hits");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Doc view page is selected from sessionsearch page");
 
-		softAssert.assertNotEquals(beforeComplete, afterComplete);
-		softAssert.assertAll();
+		driver.waitForPageToBeReady();
+		docViewPage.document_Navigation_verification(15);
+		docViewPage.navigation_Bar_EnableDisableCheck();
+		docViewPage.lastDoc_Navigation_Bar_EnableDisableCheck();
+		docViewPage.document_Navigation_verification(25);
+
+		int lastdoc1 = docViewPage.verifyingDocCount();
+
+		docViewPage.document_Navigation_verification(lastdoc1);
+		docViewPage.navigation_Bar_EnableDisableCheck();
+		docViewPage.lastDoc_Navigation_Bar_EnableDisableCheck();
+
+		baseClass.passedStep(
+				"verified document should be displayed in doc view panel as per the entered document number in the inputbox.");
 		loginPage.logout();
 	}
+	
+
 
 	/**
 	 * Author : Sakthivel date: NA Modified date: NA Modified by: NA Test Case
@@ -4040,7 +5588,7 @@ public class DocView_Sprint2_Regression {
 	 * previously viewed hits for the document on completing the document same as
 	 * last from coding form child window.
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 44)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 70)
 	public void verifyPersistentHitsCompletingDocumentsCodeSameAsLastChildWindow() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4145,7 +5693,7 @@ public class DocView_Sprint2_Regression {
 	 * Id:RPMXCON-51331 Verify text from review mode outside of an assignment
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 45)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 71)
 	public void verifyReviewModeTextOutsideAssignment() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4188,7 +5736,7 @@ public class DocView_Sprint2_Regression {
 	 * visible area of the mini-DocList child window stabilization -done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 72)
 	public void verifyDocInMiniDocListChildWindowAfterScrollingDown() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4447,7 +5995,7 @@ public class DocView_Sprint2_Regression {
 	 * stabilization - done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 30)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 73)
 	public void verifyDocInMiniDocsAfterScrollingDownTillLoadingTextDisplayedWhenDocIsSearchedUsingDocId()
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -4625,7 +6173,7 @@ public class DocView_Sprint2_Regression {
 	 * stabilization - done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 74)
 	public void verifyPersistentHitsAfterRemoveAndReassignDocumentsSavedSearchGroup() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4746,7 +6294,7 @@ public class DocView_Sprint2_Regression {
 	 * stabilization - done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 75)
 	public void verifyPersistentHitsAfterReassignDocumentsSavedSearchGroup() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4843,7 +6391,290 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51746 Verify that on document navigation options when hits panel
+	 * is open then enable/disable should be retained
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 76)
+	public void verifyPersistentHitPanelIsRetained() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51746");
+		baseClass.stepInfo(
+				"Verify that on document navigation options when hits panel is open then enable/disable should be retained");
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardNextDocBtn());
+		docViewRedact.forwardNextDocBtn().Click();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.persistantHitToggle());
+		docViewRedact.persistantHitToggle().Click();
+		if (docViewRedact.persistantHitToggle().Enabled() == true) {
+			baseClass.passedStep("Persistent hit panel is open when navigated to first Doc");
+		} else {
+			baseClass.failedStep("Persistent hit panel is NOT open when navigated to first Doc");
+		}
+		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardToLastDoc());
+		docViewRedact.forwardToLastDoc().Click();
+		baseClass.waitForElement(docViewRedact.persistantHitToggle());
+		String getAttribute = docViewRedact.persistantHitToggle().GetAttribute("data-class");
+		System.out.println(getAttribute);
+		if (getAttribute.equalsIgnoreCase("true")) {
+			baseClass.stepInfo("The persistent hit is ON while document is navigated to last");
 
+		} else {
+			baseClass.failedStep("The persistent hit toggle is OFF while document is navigated to last");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Raghuram.A date: NA Modified date: 01/18/21 Modified by: Raghuram A
+	 *         Description : Verify that when page highlighting added for different
+	 *         file types (e.g. XLS, XLSX, CSV, etc...) then highlighting should not
+	 *         be shifted when visiting these documents : RPMXCON-52309 Sprint : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 77)
+	public void verifyHighlightedThisPage() throws Exception {
+
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		List<String> docIDlist = new ArrayList<>();
+		int sizeofList;
+		String firnstDocname, secondDocname, docName;
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52309 Sprint 10");
+		baseClass.stepInfo(
+				"Verify that when page highlighting added for different file types (e.g. XLS, XLSX, CSV, etc...) then highlighting should not be shifted when visiting these documents");
+
+		// search and View in DocView
+		sessionSearch.basicContentSearch(Input.searchString8);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// Main method
+		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
+		sizeofList = miniDocListpage.getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
+		docIDlist = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
+
+		firnstDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Current Document Viewed : " + firnstDocname);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// check And DO ThisPage Redact
+		docViewRedact.checkANdDOThisPageHighlight();
+
+		// Switch to a different document
+		secondDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Switched Document : " + secondDocname);
+		baseClass.stepInfo("Switched Document : " + secondDocname);
+
+		// Back to Iniital Document
+		baseClass.stepInfo("Back to Initial document");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+//		baseClass.waitForElement(miniDocListpage.getDociD(firnstDocname));
+		miniDocListpage.getDociD(firnstDocname).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docName = miniDocListpage.getMainWindowActiveDocID().getText();
+		System.out.println("Current Document Viewed : " + docName);
+		baseClass.stepInfo("Current Document Viewed : " + docName);
+
+		// verify ThisPage Redacted Maintained
+		docViewRedact.verifyThisPageHighlightMaintained(true);
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
+	 * RPMXCON-51567 Verify when the user clicks on the X after the text search in a
+	 * document
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 78)
+	public void verifyTextSearchAfterUserClicksX() throws Exception {
+		baseClass = new BaseClass(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		loginPage = new LoginPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51567");
+		sessionsearch.basicContentSearch(Input.searchDocId);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		baseClass.waitForElement(docViewRedact.redactionIcon());
+		docViewRedact.verifySearchUsingMagnifyingIcon(true);
+		docViewRedact.verifySearchUsingMagnifyingIcon(false);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in using Reviewer account");
+		sessionsearch.basicContentSearch(Input.searchDocId);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifySearchUsingMagnifyingIcon(true);
+		docViewRedact.verifySearchUsingMagnifyingIcon(false);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in using PA account");
+		sessionsearch.basicContentSearch(Input.searchDocId);
+		baseClass.stepInfo("Search with text input is completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.verifySearchUsingMagnifyingIcon(true);
+		docViewRedact.verifySearchUsingMagnifyingIcon(false);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Raghuram.A date: NA Modified date: 01/18/21 Modified by: Raghuram A
+	 *         Description : Verify that when rectangle redaction added for
+	 *         different file types (e.g. XLS, XLSX, CSV, etc...) then redaction
+	 *         should not be shifted when visiting these documents : RPMXCON-52301
+	 *         Sprint : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 79)
+	public void verifyRectangleRedactionPosition() throws Exception {
+
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		List<String> docIDlist = new ArrayList<>();
+		int sizeofList, x = 20, y = 10;
+		int xOffset = 20, yOffset = 10;
+		String firnstDocname, secondDocname, docName, xAxis, yAxis;
+		HashMap<String, String> xyMap = new HashMap<String, String>();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52301 Sprint 10");
+		baseClass.stepInfo(
+				"Verify that when rectangle redaction added for different file types (e.g. XLS, XLSX, CSV, etc...) then redaction should not be shifted when visiting these documents");
+
+		// search and View in DocView
+		sessionSearch.basicContentSearch(Input.searchString8);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// Main method
+		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
+		sizeofList = miniDocListpage.getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
+		docIDlist = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
+
+		firnstDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Current Document Viewed : " + firnstDocname);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Check for this page highlighted and remove
+		docViewRedact.removeThisPageHighlight();
+
+		// do Rectangle Redact With XY Points
+		xyMap = docViewRedact.doRectangleRedactWithXYPoints(x, y, xOffset, yOffset);
+		xAxis = xyMap.get("xAxis");
+		yAxis = xyMap.get("yAxis");
+
+		// Switch to a different document
+		secondDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Switched Document : " + secondDocname);
+		baseClass.stepInfo("Switched Document : " + secondDocname);
+
+		// Back to Initial Document
+		baseClass.stepInfo("Back to Initial document");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+//		baseClass.waitForElement(miniDocListpage.getDociD(firnstDocname));
+		miniDocListpage.getDociD(firnstDocname).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docName = miniDocListpage.getMainWindowActiveDocID().getText();
+		System.out.println("Current Document Viewed : " + docName);
+		baseClass.stepInfo("Current Document Viewed : " + docName);
+
+		// Verify Position Retained
+		docViewRedact.verifyRectangleRedactionPositionRetained(xAxis, yAxis, true);
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Raghuram.A date: NA Modified date: 01/18/21 Modified by: Raghuram A
+	 *         Description : Verify that when rectangle redaction added for
+	 *         different file types (e.g. XLS, XLSX, CSV, etc...) then redaction
+	 *         should not be shifted when visiting these documents : RPMXCON-52310
+	 *         Sprint : 10
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 80)
+	public void verifyRectangleHighlightingPosition() throws Exception {
+
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+
+		List<String> docIDlist = new ArrayList<>();
+		int sizeofList, x = 20, y = 10;
+		int xOffset = 20, yOffset = 10;
+		String firnstDocname, secondDocname, docName, xAxis, yAxis;
+		HashMap<String, String> xyMap = new HashMap<String, String>();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52310 Sprint 10");
+		baseClass.stepInfo(
+				"Verify that when highlighting added for different file types (e.g. XLS, XLSX, CSV, etc...) on different pages then highlighting should not be shifted when visiting these documents");
+
+		// search and View in DocView
+		sessionSearch.basicContentSearch(Input.searchString8);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// Main method
+		baseClass.waitForElementCollection(miniDocListpage.getListofDocIDinCW());
+		sizeofList = miniDocListpage.getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
+		docIDlist = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
+
+		firnstDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Current Document Viewed : " + firnstDocname);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Check for this page highlight and remove
+		docViewRedact.removeThisPageHighlight();
+
+		// do Rectangle Redact With XY Points
+		xyMap = docViewRedact.doRectangleHighlightWithXYPoints(x, y, xOffset, yOffset);
+		xAxis = xyMap.get("xAxis");
+		yAxis = xyMap.get("yAxis");
+
+		// Switch to a different document
+		secondDocname = miniDocListpage.docToCHoose(sizeofList, docIDlist);
+		System.out.println("Switched Document : " + secondDocname);
+		baseClass.stepInfo("Switched Document : " + secondDocname);
+
+		// Back to Initial Document
+		baseClass.stepInfo("Back to Initial document");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+//		baseClass.waitForElement(miniDocListpage.getDociD(firnstDocname));
+		miniDocListpage.getDociD(firnstDocname).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docName = miniDocListpage.getMainWindowActiveDocID().getText();
+		System.out.println("Current Document Viewed : " + docName);
+		baseClass.stepInfo("Current Document Viewed : " + docName);
+
+		// Verify Position Retained
+		docViewRedact.verifyRectangleHighlightPositionRetained(xAxis, yAxis, true);
+		loginPage.logout();
+
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

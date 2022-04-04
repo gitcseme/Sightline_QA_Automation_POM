@@ -5219,7 +5219,7 @@ public class SessionSearch {
 
 		// Click on Search button
 		if (select.equals("Yes")) {
-			getAdvanceSearch_btn_Current().Click();
+			getAdvanceSearch_btn_Current().waitAndClick(5);
 
 			// look for warnings, in case of proximity search
 			try {
@@ -5270,9 +5270,13 @@ public class SessionSearch {
 			UtilityLog.info("Radio button already selected");
 		}
 		try {
-			softAssert.assertTrue(getSaveSearchPopupFolderName(groupName).isElementAvailable(3));
-			base.stepInfo(groupName + " : is present");
-			getSaveSearchPopupFolderName(groupName).waitAndClick(10);
+			if (getSaveSearchPopupFolderName(groupName).isElementAvailable(3)) {
+				base.stepInfo(groupName + " : is present");
+				getSaveSearchPopupFolderName(groupName).waitAndClick(10);
+			} else {
+				System.out.println(groupName + " : SG not available");
+				base.stepInfo(groupName + " : SG not available");
+			}
 		} catch (Exception e) {
 			System.out.println(groupName + " : SG not available");
 			base.stepInfo(groupName + " : SG not available");

@@ -55,8 +55,8 @@ public class AdvancedSearch_Regression2 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -239,8 +239,8 @@ public class AdvancedSearch_Regression2 {
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit);
 			int ExpectedPureHit3 = search.verifyCombinedSearch(TagName, "tag", "yes", "OR", "NOT", "OR");
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit3);
-			softAssertion.assertEquals(837, ExpectedPureHit3);
-			softAssertion.assertEquals(53, ExpectedPureHit);
+			softAssertion.assertEquals(Input.expectedCombinedSearchHits1, ExpectedPureHit3);
+			softAssertion.assertEquals(Input.expectedCombinedSearchHits2, ExpectedPureHit);
 			softAssertion.assertAll();
 			baseClass.passedStep(
 					"Sucessfully verified search with combination of Content/Metadata, Audio, Conceptual, WorkProduct");
@@ -1149,7 +1149,6 @@ public class AdvancedSearch_Regression2 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
-			loginPage.logoutWithoutAssert();
 		}
 		try {
 			loginPage.quitBrowser();

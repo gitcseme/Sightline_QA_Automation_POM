@@ -75,8 +75,8 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -96,10 +96,10 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 *         : TC05_Verify that application does not display any warnings when a
 	 *         user execute search group which contains only Advanced Search(es) in
 	 *         Draft and Completed state on Saved Search Screen. -RPMXCON-49829
-	 *         Sprint 03
+	 *         Sprint 03 - new imp - done
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 26)  //need to check with raghu
+	@Test(enabled = true, groups = { "regression" }, priority = 26) // need to check with raghu
 	public void verifyAdvancesearch() throws InterruptedException {
 		String Search1 = "search" + Utility.dynamicNameAppender();
 		String Search2 = "search" + Utility.dynamicNameAppender();
@@ -110,14 +110,10 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		base.stepInfo("Loggedin As : " + Input.pa1FullName);
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchName1);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode = saveSearch.getSavedSearchNewNode().getText();
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		System.out.println(newNode);
 
-		saveSearch.createNewSearchGrp(searchName1);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode1 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		System.out.println(newNode1);
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -142,6 +138,10 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		saveSearch.savedSearch_SearchandSelect(Search2, "Yes");
 		saveSearch.savedSearchExecute_Draft(Search2, pureHit2);
 
+		base.stepInfo("Initiating delete search");
+		saveSearch.deleteNode(Input.mySavedSearch, newNode);
+		saveSearch.deleteNode(Input.mySavedSearch, newNode1);
+
 		login.logout();
 
 	}
@@ -151,10 +151,10 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 *         : TC03_Verify that application does not display any warnings when a
 	 *         user execute search group which contains Basic and Advanced
 	 *         Search(es) in Draft state on Saved Search Screen. -RPMXCON-49831
-	 *         Sprint 03
+	 *         Sprint 03 - new imp - done
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 27)  //check with jeevitha
+	@Test(enabled = true, groups = { "regression" }, priority = 27) // check with jeevitha
 	public void verifyBasicAdvance_save() throws InterruptedException {
 		String Search1 = "search" + Utility.dynamicNameAppender();
 		String Search2 = "search" + Utility.dynamicNameAppender();
@@ -165,14 +165,10 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		base.stepInfo("Loggedin As : " + Input.pa1FullName);
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchName1);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode = saveSearch.getSavedSearchNewNode().getText();
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		System.out.println(newNode);
 
-		saveSearch.createNewSearchGrp(searchName1);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode1 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		System.out.println(newNode1);
 
 		// Draft Query
@@ -197,6 +193,10 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		saveSearch.savedSearch_SearchandSelect(Search2, "Yes");
 		saveSearch.savedSearchExecute_Draft(Search2, pureHit2);
 
+		base.stepInfo("Initiating delete search");
+		saveSearch.deleteNode(Input.mySavedSearch, newNode);
+		saveSearch.deleteNode(Input.mySavedSearch, newNode1);
+
 		login.logout();
 
 	}
@@ -206,8 +206,7 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 *         any warnings when a user execute search group which contains only
 	 *         Basic Search(es) in Draft and Completed state on Saved Search
 	 *         Screen.(RPMXCON-49830)
-	 * @Modified on: 12/4/21 by : Jeevitha
-	 * 
+	 * @Modified on: 12/4/21 by : Jeevitha - new imp done
 	 * @param username
 	 * @param password
 	 * @param fullname
@@ -224,14 +223,10 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchName1);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode = saveSearch.getSavedSearchNewNode().getText();
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		System.out.println(newNode);
 
-		saveSearch.createNewSearchGrp(searchName1);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode1 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		System.out.println(newNode1);
 
 		// Draft Query
@@ -254,6 +249,10 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		saveSearch.savedSearch_SearchandSelect(search, "Yes");
 		saveSearch.savedSearchExecute_Draft(search, purehit2);
 
+		base.stepInfo("Initiating delete search");
+		saveSearch.deleteNode(Input.mySavedSearch, newNode);
+		saveSearch.deleteNode(Input.mySavedSearch, newNode1);
+
 		login.logout();
 
 	}
@@ -263,7 +262,7 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 *         Validate UI changes on Saved Search screen -RPMXCON-49842 Sprint 03
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 29) 
+	@Test(enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 29)
 	public void UIchangesonSSScreen(String userName, String password, String fullName) throws InterruptedException {
 		base.stepInfo("Test case Id: RPMXCON-49842 - Saved Search Sprint 03");
 		// Login as PA
@@ -293,13 +292,11 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		base.stepInfo("Loggedin As : " + Input.pa1FullName + "for Pre-requesties");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchName1);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode = saveSearch.getSavedSearchNewNode().getText();
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 
 		// add save search in node
 		int purehit = session.basicContentSearch(Input.searchString1);
-		session.saveSearchInNode(searchName1);
+		session.saveSearchInNewNode(searchName1, newNode);
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		saveSearch.selectNode1(newNode);
@@ -770,7 +767,7 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 39)
+	// @Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void sharingLastLeafNode() throws InterruptedException, ParseException {
 		int noOfNodesToCreate = 6;
 		int selectIndex = 4;
@@ -849,7 +846,7 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 40)
+	// @Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void VerifyTheDocumentCountforRMU() throws InterruptedException {
 		base.stepInfo("Test case Id: RPMXCON-57391");
 		String tagName = "TAG" + Utility.dynamicNameAppender();

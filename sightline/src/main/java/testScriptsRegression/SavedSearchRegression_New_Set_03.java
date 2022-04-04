@@ -923,7 +923,7 @@ public class SavedSearchRegression_New_Set_03 {
 		base.stepInfo("Root node : " + newNode);
 
 		saveSearch.selectNode1(newNode);
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 
 		// Load latency Verification
 		Element loadingElement = session.getspinningWheel();

@@ -7200,47 +7200,6 @@ public class DocView_Regression1 {
 		loginPage.logout();
 	}
 	
-	/**
-	 * @Author : Baskar date:09/12/21 Modified date: NA Modified by: Baskar
-	 * @Description : Verify user can apply coding stamp for the document once
-	 *              marked as un-complete in an assignment
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 83)
-	public void afterImpersonateCanSaveStamp() throws InterruptedException, AWTException {
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
-		DocViewPage docViewPage = new DocViewPage(driver);
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-51049");
-		baseClass.stepInfo(
-				"Verify user can apply coding stamp for the " + "document once marked as un-complete in an assignment");
-		String assignName = "Assignment" + Utility.dynamicNameAppender();
-		String filedText = "stampName" + Utility.dynamicNameAppender();
-		String comment = "commentValue" + Utility.dynamicNameAppender();
-
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
-		if (roll.equalsIgnoreCase("rmu")) {
-//			searching document for assignment creation
-			sessionSearch.basicContentSearch(Input.searchString2);
-			sessionSearch.bulkAssign();
-			assignmentPage.assignmentCreation(assignName, Input.codingFormName);
-			assignmentPage.toggleCodingStampEnabled();
-			assignmentPage.add2ReviewerAndDistribute();
-			driver.waitForPageToBeReady();
-			System.out.println(assignName);
-		}
-		baseClass.impersonateRMUtoReviewer();
-		// selecting the assignment
-		assignmentPage.SelectAssignmentByReviewer(assignName);
-		baseClass.stepInfo("User on the doc view after selecting the assignment");
-
-		// validation of completing document
-		docViewPage.validateSavedStampAfterImpersonate(filedText, comment);
-
-		driver.waitForPageToBeReady();
-		loginPage.logout();
-	}
 	
 	/**
 	 * @Author : Sakthivel date:30/12/2021 Modified date:NA

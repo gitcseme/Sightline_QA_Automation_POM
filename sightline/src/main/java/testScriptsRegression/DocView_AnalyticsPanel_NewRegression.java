@@ -388,7 +388,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		docView = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected = Input.threadDocId;
+		String docsToBeSelected = Input.familyDocumentForReviewer;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		// Basic Search and select the pure hit count
@@ -433,7 +433,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// Select docs from Mini docs List and perform action
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.familyDocumentForReviewer);
+		docView.selectDocIdInMiniDocList(Input.threadDocId);
 
 		// select docs from family member and action as code same as
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
@@ -519,8 +519,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		docView = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected = Input.newNearDupeDocId;
-		String revDocToBeSelected = Input.threadDocId;
+		String docsToBeSelected = Input.threadDocId;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		// Basic Search and select the pure hit count
@@ -569,7 +568,6 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo(
 				"Step 3: Select docs having thread docs from Mini Doc list and select docs from ThreadMap Tab and perform action CodeSamAs");
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(revDocToBeSelected);
 		// select docs from ThreadMap and action as code same as
 		docView.selectDocsFromThreadMapTabAndActionCodeSame();
 
@@ -1016,8 +1014,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo("Logged in as User: " + Input.rmu1FullName);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = Input.nearDupeCompletedDocId;
-		String revDocToBeSelected = Input.nearDupeDocId;
+		String documentToBeSelected = Input.nearDupeDocIdForReviewer03;
+		String revDocToBeSelected = Input.nearDupeCompletedDocId;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
@@ -1085,8 +1083,9 @@ public class DocView_AnalyticsPanel_NewRegression {
 		docView.verifyCheckMark();
 
 		// verify Near Dupe Check Mark
-		softAssertion.assertTrue(docView.getDocView_NearDupeCheckMark().isElementPresent());
-		baseClass.passedStep("check Mark Icon Is Displayed In Near Dupe Tab");
+		if(docView.getDocView_NearDupeCheckMark().isElementAvailable(5))
+		softAssertion.assertTrue(docView.getDocView_NearDupeCheckMark().isElementAvailable(5));
+		softAssertion.assertAll();
 		loginPage.logout();
 
 	}
@@ -1114,7 +1113,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo("Logged in as User: " + Input.rmu1FullName);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = Input.nearDupeCompletedDocId;
+		String documentToBeSelected = Input.conceptualDocId01;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
@@ -1168,7 +1167,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
-		docView.selectDocIdInMiniDocList(Input.nearDupeDocumentForReviewer);
+		docView.selectDocIdInMiniDocList(Input.conceptualDocIdForReviewer01);
 		// perform code same as NearDupe Documents
 		docView.selectDocsFromConceptualTabAndActionCodeSame();
 
@@ -1180,7 +1179,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// verify Near Dupe Check Mark
 		softAssertion = new SoftAssert();
-		docView.selectDocIdInMiniDocList(Input.nearDupeDocId);
+		if(docView.getDocView_ConceptuallySimilarCheckMark().isElementAvailable(5))
 		actualFlag = docView.getDocView_ConceptuallySimilarCheckMark().isElementAvailable(5);
 		softAssertion.assertTrue(actualFlag);
 
@@ -1258,9 +1257,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		driver.scrollPageToTop();
 		docView.getSaveIcon().Click();
-		driver.Navigate().refresh();
-		// select docs from mini doc list
-		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
 		docView.selectDocIdInMiniDocList(docToBeSelected);
 
 		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
@@ -1293,9 +1290,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		driver.scrollPageToTop();
 		docView.getSaveIcon().Click();
-		driver.Navigate().refresh();
-		// select docs from mini doc list
-		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
 		docView.selectDocIdInMiniDocList(docToBeSelected);
 
 		String parentWindowID2 = driver.getWebDriver().getWindowHandle();
@@ -1468,7 +1463,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Step 3: View the document from analytics panel which is part of assignment");
-		docViewPage.selectDocIdInMiniDocList(Input.newNearDupeDocId);
+		docViewPage.selectDocIdInMiniDocList(Input.threadDocId);
 		docViewPage.performViewDocumentFromThreadMapTab();
 
 		baseClass.stepInfo("Step 4: Once document is loaded check the Coding Form/ metadata from respective panels");
@@ -2049,7 +2044,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.threadMapDocId01);
+		docView.selectDocIdInMiniDocList(Input.familyDocumentForReviewer);
 
 		// threadmap tab View in DocList
 		driver.scrollPageToTop();
@@ -2071,7 +2066,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.threadMapDocId01);
+		docView.selectDocIdInMiniDocList(Input.familyDocumentForReviewer);
 
 		// threadmap tab View in DocList
 		driver.scrollPageToTop();

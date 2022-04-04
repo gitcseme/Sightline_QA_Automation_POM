@@ -25,6 +25,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -159,6 +160,106 @@ public class DocView_ProductionFlow_Regression {
 		page.fillingGeneratePage();
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 05/02/22 NA Modified date: NA Modified by:NA
+	 * Description :User can load the produced document by clicking the drop down
+	 * selection.'RPMXCON-51269' Sprint: 12
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	public void verifyProducedDocumentClickingDropDownSelection() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51269");
+		baseClass.stepInfo("User can load the produced document by clicking the drop down selection.");
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		UtilityLog.info(Input.prodPath);
+
+		// Login as RMU
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingPDFSection(tagname, Input.searchString4);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.viewingPreviewInSummaryTab();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		baseClass.stepInfo("View searched for audio docs in Doc view");
+		sessionSearch.ViewInDocView();
+
+		driver.waitForPageToBeReady();
+		docView.clickOnImageTab();
+		driver.waitForPageToBeReady();
+		docView.verifyProductionNameForPDFFileInDocView(productionname);
+		baseClass.passedStep("Document produced the clicked production is loaded successfully");
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("View searched for audio docs in Doc view");
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+
+		driver.waitForPageToBeReady();
+		docView.clickOnImageTab();
+		driver.waitForPageToBeReady();
+		docView.verifyProductionNameForPDFFileInDocView(productionname);
+		baseClass.passedStep("Document produced the clicked production is loaded successfully");
+		loginPage.logout();
+
+		// Login as REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
+
+		baseClass.stepInfo("View searched for audio docs in Doc view");
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+
+		driver.waitForPageToBeReady();
+		docView.clickOnImageTab();
+		driver.waitForPageToBeReady();
+		docView.verifyProductionNameForPDFFileInDocView(productionname);
+		baseClass.passedStep("Document produced the clicked production is loaded successfully");
+
+	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

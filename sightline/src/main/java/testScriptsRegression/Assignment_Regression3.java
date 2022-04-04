@@ -38,6 +38,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.ClientsPage;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
@@ -56,6 +57,7 @@ public class Assignment_Regression3 {
 	KeywordPage keyword;
 	SoftAssert softAssertion;
 	DocExplorerPage DocExpPage;
+	ClientsPage clientsPage;
 	String assignmentName1 = "AR3assignment" + Utility.dynamicNameAppender();
 	String ActualCount = null;
 	String ingestionDataName;
@@ -76,6 +78,9 @@ public class Assignment_Regression3 {
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		Input in = new Input();
+     	in.loadEnvConfig();
+
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		softAssertion = new SoftAssert();
@@ -1703,6 +1708,39 @@ public class Assignment_Regression3 {
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description: Verify that help text pop does not appear when the user just hovers the "?" icon on "Create Client" page.
+	 */
+	@Test(description ="RPMXCON-54960",enabled = true, groups = { "regression" }, priority = 26)
+	public void validateHelpPopUpWhenHoveringInClientPg() throws InterruptedException, ParseException, IOException {
+		loginPage = new LoginPage(driver);
+		baseClass = new BaseClass(driver);
+		clientsPage = new ClientsPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-54960");
+		baseClass.stepInfo("Verify that help text pop does not appear when the user just hovers the \"?\" icon on \"Create Client\" page.");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA user");
+		clientsPage.verifyHelpTextPopUpWhenHovering();
+		loginPage.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description: Verify that when user clicks on the "?" icon against "Initial Size of Project Database" then help text appears on "Create Client" page.
+	 */
+	@Test(description ="RPMXCON-54958",enabled = true, groups = { "regression" }, priority = 27)
+	public void verifyHelpTextPopUpWhenClickingInClientPg() throws InterruptedException, ParseException, IOException {
+		loginPage = new LoginPage(driver);
+		baseClass = new BaseClass(driver);
+		clientsPage = new ClientsPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-54958, RPMXCON-54959");
+		baseClass.stepInfo("Verify that when user clicks on the \"?\" icon against \"Initial Size of Project Database\" then help text appears on \"Create Client\" page.");
+		baseClass.stepInfo("Verify that help text pop up disappear when the user clicks on elsewhere in the application on \"Create Client\" page.");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA user");
+		clientsPage.verifyHelpTextPopUpWhenClicking();
+		loginPage.logout();
+	}
 	
 	/**
 	 * @author Jayanthi.ganesan
@@ -1854,7 +1892,6 @@ public class Assignment_Regression3 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
-			loginPage.logoutWithoutAssert();
 		}
 		try {
 //			loginPage.logout();

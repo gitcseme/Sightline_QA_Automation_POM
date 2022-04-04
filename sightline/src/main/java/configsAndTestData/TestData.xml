@@ -93,7 +93,7 @@
 	<threadDocumentForReviewer>H16135-0188-002339</threadDocumentForReviewer>
 	<familyDocumentForReviewer>H16135-0188-002292</familyDocumentForReviewer>
 	<nearDupeCompletedDocIdReviewer>H16135-0188-002469</nearDupeCompletedDocIdReviewer>
-	<newNearDupeDocId>H16135-0188-002468</newNearDupeDocId>
+	<newNearDupeDocId>ICE010058-9-00000006</newNearDupeDocId>
 	<warningDocId>H16135-0188-002241</warningDocId>
 	<threadData1>ID00005182</threadData1>
 	<nearDupeBulkAssign>T1310D</nearDupeBulkAssign>
@@ -210,6 +210,9 @@
 	 <pptDocId>H16135-0188-002275</pptDocId>
 	 <messageDocId>H16135-0188-001174</messageDocId>
 	 <defaultPdfDocId>ID00005228</defaultPdfDocId>
+	 <multiplePageSourceDocID>ID00000230</multiplePageSourceDocID>
+	 <StitchedTiffSourceDocID>921ID00000166</StitchedTiffSourceDocID>
+	 <SinglePageTiffSourceDocID>ID00001483</SinglePageTiffSourceDocID>
 
 
 	<!-- Baskar Indium Audio Search to DocView MiniList - modify on 9/01/21 -->
@@ -481,7 +484,6 @@
 	<threadDocId>331ID00000005</threadDocId>
 	<conceptualDocs1>H16135-0188-001844</conceptualDocs1>
 	<familyDocumentForReviewer>T2421D</familyDocumentForReviewer>
-	<newNearDupeDocId>ID00005181</newNearDupeDocId>
 	<nearDupeDocId>T556D</nearDupeDocId>
 	<nearDupeDocument>ID00001175</nearDupeDocument>
 	<threadDocWithToolTip>ID00001224</threadDocWithToolTip>
@@ -489,7 +491,7 @@
 	
 	<TermOperator>ALL</TermOperator>
 
-	<familyDocWhichIsNotInMiniDoc>T2534D</familyDocWhichIsNotInMiniDoc>
+	<familyDocWhichIsNotInMiniDoc>ID00000192</familyDocWhichIsNotInMiniDoc>
 	<bgColorOnMouseHover>rgba(212, 230, 237, 1)</bgColorOnMouseHover>
 
 	<hiddenDocId>ID00000206</hiddenDocId>
@@ -631,5 +633,11 @@
 		
 		<!--   Added by Gopinath Created date - 23/03/2022	-->
 		<pageNum>2</pageNum>
+		
+		<maxAudioThresholdValue>90</maxAudioThresholdValue>
+		<minAudioThresholdValue>50</minAudioThresholdValue>
+		<defaultAudioThresholdValue>70</defaultAudioThresholdValue>
+		<expectedCombinedSearchHits1>837</expectedCombinedSearchHits1>
+		<expectedCombinedSearchHits2>53</expectedCombinedSearchHits2>
 		
 </TestData>
