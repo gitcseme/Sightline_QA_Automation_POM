@@ -541,7 +541,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		documentToBeSelected = Input.nearDupeCompletedDocId;
+		documentToBeSelected = Input.nearDupeDocIdForReviewer03;
 		revDocToBeSelected = Input.nearDupeDocId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -560,6 +560,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		driver.waitForPageToBeReady();
+		
+		docViewPage.selectSourceDocIdInAvailableField("SourceDocID");
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -574,7 +576,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Select DocId In MiniDocList
-		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewPage.selectDocInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -626,7 +628,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.scrollPageToTop();
 
 		// Select docs from MiniDocList
-		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewPage.selectDocInMiniDocList(documentToBeSelected);
 
 		if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 			baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
@@ -663,6 +665,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		driver.waitForPageToBeReady();
+		docViewPage.selectSourceDocIdInAvailableField("SourceDocID");
+
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// popout MiniDocList
@@ -676,7 +680,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Select MiniDocList Docs
-		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewPage.selectDocInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -734,7 +738,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.scrollPageToTop();
 
 		// Select docs from miniDoclist
-		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewPage.selectDocInMiniDocList(revDocToBeSelected);
 		try {
 			if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
@@ -795,7 +799,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		documentToBeSelected = Input.nearDupeCompletedDocId;
+		documentToBeSelected = Input.nearDupeDocIdForReviewer03;
 		revDocToBeSelected = Input.nearDupeDocId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -830,7 +834,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Pop-out Coding form and Docs are completed successfully");
 
 		// Select docs Form MiniDocsList
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Verify CheckMark is present
@@ -864,7 +868,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Pop-out Coding form and Docs are completed successfully");
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Verify CheckMark is present
@@ -876,6 +880,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"To Verify when Code same action selected from Analytics Panel > Near Dupe and Save/Complete clicked from coding form child window");
 		loginPage.logout();
 	}
+
 
 	/**
 	 * 
@@ -903,7 +908,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		documentToBeSelected = Input.nearDupeCompletedDocId;
+		documentToBeSelected = Input.nearDupeDocIdForReviewer03;
 		revDocToBeSelected = Input.nearDupeDocId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -953,7 +958,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select docs Form MiniDocsList
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Expand Analytics Panel
@@ -1013,7 +1018,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Expand Analytics Panel
@@ -1526,7 +1531,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		if (executionURL.contains("pt")) {
 			documentToBeSelected = Input.nearDupeDoc05;
 		} else {
-			documentToBeSelected = Input.nearDupeDocumentForReviewer;
+			documentToBeSelected = "ID00001406";
 		}
 
 		loginPage = new LoginPage(driver);
@@ -1549,7 +1554,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the near dedupe documents are getting listed in Mini Doc List");
 		docViewPage.verifyNdDocumentsPureHits(ndPureHit);
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocIdForReviewer03);
 
 		baseClass.stepInfo("To Verify that document pagination should work from near dupe comparison window");
 
@@ -1578,7 +1583,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the near dedupe documents are getting listed in Mini Doc List");
 		docViewPage.verifyNdDocumentsPureHits(ndPureHit);
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocIdForReviewer03);
 
 		baseClass.stepInfo(
 				"Verify that Near dupe window to see the differences should open, on click of the icon from Analytics Panel > Near Dupe child window");
@@ -1607,7 +1612,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the near dedupe documents are getting listed in Mini Doc List");
 		docViewPage.verifyNdDocumentsPureHits(ndPureHit);
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocIdForReviewer03);
 
 		baseClass.stepInfo(
 				"Verify that Near dupe window to see the differences should open, on click of the icon from Analytics Panel > Near Dupe child window");
@@ -2030,7 +2035,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 			documentToBeSelected = Input.newNearDupeDocId;
 			revDocToBeSelected = Input.threadDocId;
 		} else {
-			documentToBeSelected = Input.conceptualDocs1;
+			documentToBeSelected = Input.threadDocId;
 			revDocToBeSelected = Input.newNearDupeDocId;
 		}
 
@@ -2093,7 +2098,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select docs Form MiniDocsList
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Expand Analytics Panel
@@ -2120,10 +2125,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select assgn by reviewer
 		assignmentPage.SelectAssignmentByReviewer(assname);
-
-		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
-		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -2152,10 +2153,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 		docViewAnalytics.editCodingFormComplete();
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
-		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
-		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
-
 		// Expand Analytics Panel
 		try {
 			if (docViewAnalytics.getDocView_AnalyticalPanelExpand().isDisplayed()) {
@@ -2175,7 +2172,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 		loginPage.logout();
 
 	}
-
 	/**
 	 * 
 	 * @Author: Steffy Created date: NA Modified date: NA Modified by: NA
@@ -2206,7 +2202,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 			documentToBeSelected = Input.newNearDupeDocId;
 			revDocToBeSelected = Input.threadDocId;
 		} else {
-			documentToBeSelected = Input.conceptualDocs1;
+			documentToBeSelected = Input.threadDocId;
 			revDocToBeSelected = Input.newNearDupeDocId;
 		}
 
@@ -2227,6 +2223,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		driver.waitForPageToBeReady();
+		
+		docViewPage.selectSourceDocIdInAvailableField("SourceDocID");
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -2241,7 +2239,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Select DocId In MiniDocList
-		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewPage.selectDocInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -2300,7 +2298,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		driver.scrollPageToTop();
 
 		// Select docs from MiniDocList
-		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewPage.selectDocInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		try {
@@ -2340,6 +2338,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		driver.waitForPageToBeReady();
+		
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// popout MiniDocList
@@ -2353,7 +2352,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Select MiniDocList Docs
-		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -2401,8 +2399,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		driver.scrollPageToTop();
 
-		// Select docs from miniDoclist
-		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 		try {
 			if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
@@ -2563,7 +2559,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 			revDocToBeSelected = Input.familyDocumentForReviewer;
 		} else {
 			documentToBeSelected = Input.familyDocument;
-			revDocToBeSelected = Input.familyDocumentForReviewer;
+			revDocToBeSelected = Input.familyDocIdForReviewer01;
 		}
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2611,7 +2607,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select docs Form MiniDocsList
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		try {
@@ -2668,7 +2664,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select docs Form MiniDocsList
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		try {
@@ -2699,6 +2695,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		loginPage.logout();
 	}
+
 
 	/**
 	 * 
