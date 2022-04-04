@@ -3316,6 +3316,10 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//li[@class='active text-center clsTranscript']");
 	}
 	
+	public Element getConfigureMiniDocTab() {
+		return driver.FindElementByXPath("//span[text()='Configure Mini DocList']");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -26858,6 +26862,82 @@ public class DocViewPage {
 		System.out.println("Docs Arenot selected from mini doclist");
 		}
 		
+	}
+	
+	
+	/**
+	 * @author Indium-Steffy date: 02/12/2021 This method is to configure the mini
+	 *         doc list to show completed docs
+	 */
+	public void configureMiniDocListToShowCompletedDocs() {
+		configureMiniDocListPopupOpen();
+		base.waitForElement(this.getShowCompletedDocsToggle());
+		this.getShowCompletedDocsToggle().waitAndClick(5);
+		saveConfigureMiniDocList();
+	}
+	
+	/**
+	 * @author Indium Baskar
+	 * @Description : this method used to verify Configure minidoc list open should
+	 *              open
+	 */
+
+	public void configureMiniDocListPopupOpen() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getGearIcon());
+		getGearIcon().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getConfigureMiniDocTab());
+		String configureMiniDocTab = getConfigureMiniDocTab().getText();
+		Assert.assertEquals(configureMiniDocTab, "Configure Mini DocList");
+		base.passedStep("Minidoclist popup opened on clicking  the gear icon");
+	}
+	
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//  Reusable Method for saving minidoclist configuration
+
+	public void saveConfigureMiniDocList() {
+		base.waitForElement(getMiniDocListConfirmationButton("Save"));
+		getMiniDocListConfirmationButton("Save").waitAndClick(5);
+	}
+	
+	/**
+	 * @Author Mohan Created on 07/10/2021
+	 * @Description To perform CodeSame for threaded documents in the DocView Test
+	 *              Case id: RPMXCON-51370 & RPMXCON - 51371
+	 * 
+	 */
+	public void performCodeSameForThreadedDocumentsForReviewerUsingParamteres(int columnNo) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+		driver.waitForPageToBeReady();
+		Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
+		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+		base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(columnNo));
+		getDocView_Analytics_ThreadMap_DocCheckBox(columnNo).waitAndClick(10);
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+		base.waitForElement(getDocView_Analytics_Thread_CodeSameAs());
+		getDocView_Analytics_Thread_CodeSameAs().waitAndClick(15);
+		base.VerifySuccessMessage("Code same performed successfully.");
+		driver.waitForPageToBeReady();
+		base.waitForElement(geDocView_ThreadMap_CodeSameAsIconForReviewer(columnNo));
+		softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIconForReviewer(columnNo).isDisplayed().booleanValue(), true);
+		try {
+			if (geDocView_ThreadMap_CodeSameAsIconForReviewer(4).isDisplayed()) {
+				base.passedStep("CodeAsSame icon is displayed for the selected docs ");
+			}
+		} catch (Exception e) {
+			base.failedStep("CodeAsSame icon is not displayed for the selected docs");
+			UtilityLog.info("Verification failed due to " + e.getMessage());
+		}
+		codeSameDocumentid = getThreadedDocumentWhichHasCodeSameIcon().getText();
+		softAssertion.assertAll();
 	}
 
 }
