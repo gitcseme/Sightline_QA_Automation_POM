@@ -42,7 +42,6 @@ public class ProductionDBVerification {
 	String tagname;
 	String productionname;
 	String TempName;
-
 	@BeforeMethod(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -66,6 +65,7 @@ public class ProductionDBVerification {
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.info(testMethod.getName());
 	}
+	
 	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void getTIFFpageCountAlwaysOne() throws Exception {
 		UtilityLog.info(Input.prodPath);
@@ -188,7 +188,7 @@ public class ProductionDBVerification {
 	 *         No:RPMXCON-56081
 	 * @Description: To Verify in production if selects DAT,Native ,TIFF AND Text (ingested) then it will not skip the page count.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = false, groups = { "regression" }, priority = 3)
 	public void getProductionPageCountWithoutSkip() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56081 -Production Sprint 06");
@@ -266,7 +266,6 @@ public class ProductionDBVerification {
 		} catch (Exception e) {
 			System.out.println("Sessions already closed");
 		}
-	}
-	
+	}	
 }
 

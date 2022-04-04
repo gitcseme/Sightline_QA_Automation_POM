@@ -29,7 +29,7 @@ import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 public class DocViewRedactions {
- 
+
 	Driver driver;
 	BaseClass base;
 	LoginPage loginPage;
@@ -125,8 +125,6 @@ public class DocViewRedactions {
 	public Element rectangleClick() {
 		return driver.FindElementById("blackRectRedact_divDocViewer");
 	}
-
-
 
 	public Element redactionSave() {
 		return driver.FindElementByXPath("//*[@id=\"btnSave\"]");
@@ -300,7 +298,6 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath("//*[@id=\"2\"]/i");
 	}
 
-
 	public Element editUserRMUSecurity() {
 		return driver.FindElementByXPath("//td[contains(text(),'Consilio RMU1')]");
 	}
@@ -359,7 +356,6 @@ public class DocViewRedactions {
 	}
 
 // adding to create new annotation layer-04/08
-
 
 	public Element selectSecurityGroup() {
 		return driver.FindElementByXPath("//select[@id='ddlSecurityGroup']");
@@ -674,7 +670,7 @@ public class DocViewRedactions {
 
 	public Element selectSecondDoc() {
 
-		return driver.FindElementByXPath("//input[@id='chkMiniDocList_2']/following-sibling::i");
+		return driver.FindElementByXPath("(// *[@id='SearchDataTable']//tr['row']//td[2])[2]");
 	}
 
 	public Element selectThirdDoc() {
@@ -1272,31 +1268,30 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath("//div[@class='pull-right']//div[@id='counterAll']");
 	}
 
-	
 	public Element textViewTab() {
 		return driver.FindElementById("liDocumentTxtView");
 	}
-	
+
 	public Element translationsViewTab() {
 		return driver.FindElementById("liDocumentTranslationsView");
 	}
-	
+
 	public Element defaultViewTab() {
 		return driver.FindElementById("liDocumentDefaultView");
 	}
-	
+
 	public Element imagesTabSlider() {
 		return driver.FindElementById("slider_divDocViewerImage");
 	}
-	
+
 	public Element ImagesTabRightRotate() {
 		return driver.FindElementById("rotateRight_divDocViewerImage");
 	}
-	
+
 	public Element ImagesTabLeftRotate() {
 		return driver.FindElementById("rotateLeft_divDocViewerImage");
 	}
-	
+
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements
@@ -1304,7 +1299,6 @@ public class DocViewRedactions {
 		softAssertion = new SoftAssert();
 		base = new BaseClass(driver);
 	}
-
 
 	/**
 	 * Author : Krishna D date: NA Modified date: 24/08/21 Modified by: Krishna D
@@ -1380,7 +1374,6 @@ public class DocViewRedactions {
 		multiPageInputTextbox().SendKeys(pagerange);
 		multiPageInputSavaBtn().waitAndClick(4);
 	}
-
 
 	/**
 	 * Author : Krishna D date: NA Modified date: NA Modified by: Krishna D Krishna
@@ -3988,46 +3981,46 @@ public class DocViewRedactions {
 	}
 
 	/**
-     * @author Raghuram.A Date: 01/27/22 Modified date: N/A Modified by: N/A
-     * @param docIDlist
-     * @param dataToVerify
-     */
-    public void verifyContentPresentForListOfDocs(List<String> docIDlist, String[] dataToVerify) {
-        base = new BaseClass(driver);
-        MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
-        Boolean check = false;
- 
-        for (String nb : docIDlist) {
-            System.out.println(nb);
-            miniDocListpage.getDociD(nb).waitAndClick(10);
-            driver.waitForPageToBeReady();
- 
-            base.stepInfo(nb + " : Docs Viewed in Doc View");
-            base.waitTillElemetToBeClickable(textTab());
-            textTab().waitAndClick(10);
-            driver.waitForPageToBeReady();
-            base.waitTime(2);
- 
-            String datas = textData().getText();
- 
-            String[] count = datas.split("\\r"); // change - replacing \\r?\\n with \\r
-            for (String a : count) {
-                check = false;
-                System.out.println(a);
-                for (String datasToCheck : dataToVerify) {
-                    if (a.contains(datasToCheck)) {
-                        base.passedStep("Expected data is present in current doucment");
-                        base.stepInfo(datasToCheck);
-                        check = true;
-                        break;
-                    }
-                }
-            }
-            if (!check) {
-                base.failedStep("Unrelavent document is filtered");
-            }
-        }
-    }
+	 * @author Raghuram.A Date: 01/27/22 Modified date: N/A Modified by: N/A
+	 * @param docIDlist
+	 * @param dataToVerify
+	 */
+	public void verifyContentPresentForListOfDocs(List<String> docIDlist, String[] dataToVerify) {
+		base = new BaseClass(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		Boolean check = false;
+
+		for (String nb : docIDlist) {
+			System.out.println(nb);
+			miniDocListpage.getDociD(nb).waitAndClick(10);
+			driver.waitForPageToBeReady();
+
+			base.stepInfo(nb + " : Docs Viewed in Doc View");
+			base.waitTillElemetToBeClickable(textTab());
+			textTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+
+			String datas = textData().getText();
+
+			String[] count = datas.split("\\r"); // change - replacing \\r?\\n with \\r
+			for (String a : count) {
+				check = false;
+				System.out.println(a);
+				for (String datasToCheck : dataToVerify) {
+					if (a.contains(datasToCheck)) {
+						base.passedStep("Expected data is present in current doucment");
+						base.stepInfo(datasToCheck);
+						check = true;
+						break;
+					}
+				}
+			}
+			if (!check) {
+				base.failedStep("Unrelavent document is filtered");
+			}
+		}
+	}
 
 	public void RedactTextInDocView(int x, int y, int offsetx, int offsety) {
 		Actions actions = new Actions(driver.getWebDriver());
@@ -4039,12 +4032,12 @@ public class DocViewRedactions {
 				.moveByOffset(offsetx, offsety).release().build().perform();
 
 	}
-	
+
 	/**
 	 * @author Krishna Date: 03/02/22 Modified date: N/A Modified by: N/A
 	 * @description Verify ThumnbnailsPanel is displayed on Docview.
 	 */
-	
+
 	public void verifyThumbNailsPanelDisplayed() {
 		driver.waitForPageToBeReady();
 		base = new BaseClass(driver);
@@ -4056,13 +4049,15 @@ public class DocViewRedactions {
 			base.failedStep("The thumbnail Panel menu is NOT displayed");
 		}
 	}
-	
+
 	/**
 	 * @author Krishna Date: 03/02/22 Modified date: N/A Modified by: N/A
-	 * @description verify different type of Documents in minidocList on Thumbnailspanel is displayed.
+	 * @description verify different type of Documents in minidocList on
+	 *              Thumbnailspanel is displayed.
 	 * @Param pdfDocId,xlsExcelDocId,tiffDocId,pptDocId,messageDocId
 	 */
-	public void verifyDifferentTypesOfDocsInThumbNailsPanel(String pdfDocId,String xlsExcelDocId,String tiffDocId,String pptDocId,String messageDocId ) throws InterruptedException {
+	public void verifyDifferentTypesOfDocsInThumbNailsPanel(String pdfDocId, String xlsExcelDocId, String tiffDocId,
+			String pptDocId, String messageDocId) throws InterruptedException {
 		driver.waitForPageToBeReady();
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4101,9 +4096,9 @@ public class DocViewRedactions {
 		docView.ScrollAndSelectDocument(messageDocId);
 		driver.waitForPageToBeReady();
 		docViewRedact.clickingThumbnailIcon();
-		docViewRedact.verifyThumbNailsPanelDisplayed();	
+		docViewRedact.verifyThumbNailsPanelDisplayed();
 		base.passedStep("Thumbnails of messagedocs page is displayed in thumbnail panel");
-	
+
 	}
 
 }
