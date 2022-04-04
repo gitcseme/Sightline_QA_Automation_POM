@@ -349,7 +349,8 @@ public class WorkflowPage {
 		return driver.FindElementByXPath("//*[@id='accordion7']/div/div[1]/h4/a");
 
 	}
-	//added  by jayanthi
+
+	// added by jayanthi
 	public Element getSummaryTab_WFName() {
 		return driver.FindElementByXPath("//label[contains(text(),'Workflow Name:')]/following-sibling::div");
 	}
@@ -360,6 +361,15 @@ public class WorkflowPage {
 
 	public Element getAction_EditWF() {
 		return driver.FindElementById("lnkEditWorkflow");
+	}
+
+	// Added by Vijaya.Rani
+	public Element getSummaryTab_SourceAssignment() {
+		return driver.FindElementByXPath("//label[contains(text(),'Assignments:')]/following-sibling::div");
+	}
+
+	public Element getSummaryTab_SourceSavedSearch() {
+		return driver.FindElementByXPath("//label[contains(text(),'Saved Search:')]/following-sibling::div");
 	}
 
 	public WorkflowPage(Driver driver) {
@@ -1332,7 +1342,7 @@ public class WorkflowPage {
 		baseClass.passedStep("'Completed' status is displayed in the list successfully");
 		softAssertion.assertAll();
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani Modified Date:24/3/2022
 	 * @throws ParseException
@@ -1398,9 +1408,9 @@ public class WorkflowPage {
 		baseClass.passedStep("Notification is Display in SummaryTab");
 		softAssertion.assertAll();
 	}
+
 	/**
-	 * @author Jayanthi
-	 * This method will select and open the work flow in edit mode
+	 * @author Jayanthi This method will select and open the work flow in edit mode
 	 * @param wfName[Name of work flow]
 	 */
 	public void editWorkFlow(String wfName) {
