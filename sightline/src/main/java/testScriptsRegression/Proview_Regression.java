@@ -232,6 +232,66 @@ public class Proview_Regression {
 		lp.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description :To Verify On Browser Refresh should not cause the
+	 *              Categorization page to lose its settings [RPMXCON-54279]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	public void verifyCategorizeAfterRefresh() throws InterruptedException {
+		Categorization categorize = new Categorization(driver);
+		sessionSearch = new SessionSearch(driver);
+		String folderName = "FOLDER" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("RPMXC0N-54279  Proview");
+		bc.stepInfo("To Verify On Browser Refresh should not cause the Categorization page to lose its settings");
+
+		// Login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// basic Content search
+		sessionSearch.basicContentSearch(Input.searchString1);
+
+		// perform bulk folder
+		sessionSearch.bulkFolder(folderName);
+
+		// RUN CATEGORIZATION
+		categorize.navigateToCategorizePage();
+		categorize.CategorizationFunctionalityVerification(Input.securityGroup, folderName, "SG");
+
+		// browser refresh
+		driver.Navigate().refresh();
+		softAssert.assertEquals(categorize.getSelectedCorpusToAnalyze(folderName).isDisplayed(), true);
+		softAssert.assertAll();
+		bc.passedStep(
+				"Browser Refresh didn't cause any changes in Catagorization page. the content of catagorization page remains same even after refershing the page");
+
+		lp.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :To verify that RMU can view the Categorization page.[RPMXCON-54103]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	public void verifyCategorizePage() throws InterruptedException {
+		Categorization categorize = new Categorization(driver);
+		sessionSearch = new SessionSearch(driver);
+		String folderName = "FOLDER" + Utility.dynamicNameAppender();
+
+		bc.stepInfo("RPMXC0N-54103  Proview");
+		bc.stepInfo("To verify that RMU can view the Categorization page.");
+
+		// Login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Open CATEGORIZATION
+		categorize.navigateToCategorizePage();
+		
+		lp.logout();
+	}
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
