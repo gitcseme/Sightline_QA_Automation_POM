@@ -680,6 +680,13 @@ public class Input {
 	
 	//Added by gopinath - 23/03/2022
 	public static String pageNum;
+	
+	//Added by Iyappan
+	public static String maxAudioThresholdValue;
+	public static String minAudioThresholdValue;
+	public static String defaultAudioThresholdValue;
+	public static int expectedCombinedSearchHits1;
+	public static int expectedCombinedSearchHits2;
 	 
 	@BeforeSuite(alwaysRun = true)
 
@@ -1371,6 +1378,12 @@ public class Input {
 		
 		//Added by Gopinath -23/03/2022
 		pageNum = testData.getPageNum();
+		maxAudioThresholdValue = testData.getMaxAudioThresholdValue();
+		minAudioThresholdValue = testData.getMinAudioThresholdValue();
+		defaultAudioThresholdValue = testData.getDefaultAudioThresholdValue();
+		expectedCombinedSearchHits1 = testData.getExpectedCombinedSearchHits1();
+		expectedCombinedSearchHits2 = testData.getExpectedCombinedSearchHits2();
+		
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 

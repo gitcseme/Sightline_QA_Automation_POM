@@ -47,8 +47,8 @@ public class AdvancedSearch_Regression1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -75,7 +75,6 @@ public class AdvancedSearch_Regression1 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
-			loginPage.logoutWithoutAssert();
 		}
 		try {
 			//loginPage.logout();
@@ -264,7 +263,7 @@ public class AdvancedSearch_Regression1 {
 		String AcutalValue = search.VerifyaudioSearchThreshold("right", "North American English", "Max");
 		try {
 			baseClass.stepInfo("Threshold Value displayed in Advanced search screen is" + AcutalValue);
-			softAssertion.assertEquals(AcutalValue, "90");
+			softAssertion.assertEquals(AcutalValue, Input.maxAudioThresholdValue);
 			baseClass.passedStep(
 					"Sucessfully Verified that Maximum confidence level is set proper on Advanced Search screen");
 			softAssertion.assertAll();
@@ -288,7 +287,7 @@ public class AdvancedSearch_Regression1 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		String AcutalValue = search.VerifyaudioSearchThreshold(Input.audioSearchString1, Input.language, "Min");
 		try {
-			softAssertion.assertEquals(AcutalValue, "50");
+			softAssertion.assertEquals(AcutalValue, Input.minAudioThresholdValue);
 			baseClass.stepInfo("Threshold Value displayed in Advanced search screen is" + AcutalValue);
 			baseClass.passedStep(
 					"Sucessfully Verified that Minimum confidence level is set proper on Advanced Search screen");
@@ -314,7 +313,7 @@ public class AdvancedSearch_Regression1 {
 		String AcutalValue = search.VerifyaudioSearchThreshold(Input.audioSearchString1, Input.language, "default");
 		try {
 			baseClass.stepInfo("Threshold Value displayed in Advanced search screen is" + AcutalValue);
-			softAssertion.assertEquals(AcutalValue, "70");
+			softAssertion.assertEquals(AcutalValue, Input.defaultAudioThresholdValue);
 			baseClass.passedStep(
 					"Sucessfully Verified that Default confidence level is set proper on Advanced Search screen");
 			softAssertion.assertAll();

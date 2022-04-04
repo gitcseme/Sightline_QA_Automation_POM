@@ -1,11 +1,11 @@
 package configsAndTestData;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder; 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
- 
+
 @Getter
 @Setter
 //@Builder(toBuilder = true)
@@ -23,7 +23,7 @@ public class TestData {
 	public int searchString1NOTsearchString2;
 	public int searchString2NOTsearchString1;
 	public String audioSearchString1;
-	public int audioSearchString1pureHit; 
+	public int audioSearchString1pureHit;
 	public String conceptualSearchString1;
 	public int conceptualSearchString1PureHit;
 	public String metaDataCN;
@@ -59,7 +59,7 @@ public class TestData {
 	public String principalDocId4;
 	public String principalDocId5;
 	public String principalDocId6;
-	public String sourceDocId; 
+	public String sourceDocId;
 	public String sourceDocId1;
 	public String sourceDocId2;
 	public String sourceDocId3;
@@ -157,9 +157,9 @@ public class TestData {
 	public String prodPathUAT;
 	public String bates;
 	public String batesNumber;
-	public  String ChildBates;
-	public  String Production;
-	public  String TIFFPageCount;
+	public String ChildBates;
+	public String Production;
+	public String TIFFPageCount;
 	public String translationDocumentId;
 	public String parentDocument;
 	public String masterDateText;
@@ -194,9 +194,8 @@ public class TestData {
 	public String multiplePageSourceDocID;
 	public String StitchedTiffSourceDocID;
 	public String SinglePageTiffSourceDocID;
-	
 
-	//Added by arunkumar
+	// Added by arunkumar
 	public String pageRange1;
 	public String pageRange2;
 	public String pageRange3;
@@ -208,9 +207,8 @@ public class TestData {
 	public String miniDocListID;
 	public String DATFile3;
 	public String indexingWarningMessage;
-	
 
-	// Added by Raghuram - Last Modified 02/24/22 
+	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;
 	public String sortType;
 	public String sortDataBy;
@@ -238,17 +236,17 @@ public class TestData {
 	public String specialString1;
 	public String specialString2;
 	public String specialString3;
-    public String docSelectionHighlight;
-    public String batchFileWithMultiSheetColumnMissing;
-    public String batchFileWithMultiSheetColumnDuplicate;
-    public String searchString9;
-    public String batchFileWithColumnOrderChange;
-    public String batchFileWithMultiSheetColumnOrderChange;
-    public String highVolumeProject;
-    public String bulkSearchSting1;
-    public String validBatchFile;
-    public String masterDateBatchFile;
-    
+	public String docSelectionHighlight;
+	public String batchFileWithMultiSheetColumnMissing;
+	public String batchFileWithMultiSheetColumnDuplicate;
+	public String searchString9;
+	public String batchFileWithColumnOrderChange;
+	public String batchFileWithMultiSheetColumnOrderChange;
+	public String highVolumeProject;
+	public String bulkSearchSting1;
+	public String validBatchFile;
+	public String masterDateBatchFile;
+
 	// Added by jeevitha
 	public String colorCodeOfRed;
 	public String crammerdocumentID;
@@ -256,7 +254,7 @@ public class TestData {
 	public String bullHornIconColor;
 	public String progresBarColor;
 	public String BatchFileduplicateHeader;
-	
+
 	/**
 	 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
 	 *         by:Gopinath.
@@ -295,39 +293,37 @@ public class TestData {
 	// Added by Gopinath - 05/10/2021
 	public String docFileSize;
 	public String docFileName;
-	
-	 //Added by Gopinath - 06/10/2021
-    public String docFileType;
-    
-    public String docIdRemarks;
-    public String docIdRemarks2;
-    
-  //Added by Gopinath- 11/10/2021
-  	public String atternoyClient;
-  	public String confidential;
-  	public String reviewed;
+
+	// Added by Gopinath - 06/10/2021
+	public String docFileType;
+
+	public String docIdRemarks;
+	public String docIdRemarks2;
+
+	// Added by Gopinath- 11/10/2021
+	public String atternoyClient;
+	public String confidential;
+	public String reviewed;
 	public String documentComments;
-	
-	
-	
-	//Added by Gopinath - 25/10/2021
+
+	// Added by Gopinath - 25/10/2021
 	public String audioSearch;
 	public String audioLanguage;
-	
-	//Added by Gopinath - 27/10/2021
+
+	// Added by Gopinath - 27/10/2021
 	public String excelFileDocument;
 	public String mp3FileDocument;
-	
-	//Added by Iyappan - 1/11/2021
+
+	// Added by Iyappan - 1/11/2021
 	public String WPbatchFile;
-	
-	//Added by Gopinath- 03/11/2021
+
+	// Added by Gopinath- 03/11/2021
 	public String fileExtDiffDocument;
 	public String fileExtBlankDocument;
 	public String translationDocument;
-	
-	//Added by krishna 08/11/2021
-	
+
+	// Added by krishna 08/11/2021
+
 	public String docIdKeyWordTest;
 	public String keyWordHexCode;
 	public String docIdThumbnails;
@@ -338,282 +334,274 @@ public class TestData {
 	public String HiddenIngestionName;
 	public String HiddenLinkDocId;
 	public String defaultPdfDocId;
-	
-	
 
-	
-	
-	//Added by Gopinath - 16/11/2021
-		public String signDocumentId;
-		public String technicalIssue;
-		public String crammerDocId;
-		public String produced;
-		public String producedDeleted;
+	// Added by Gopinath - 16/11/2021
+	public String signDocumentId;
+	public String technicalIssue;
+	public String crammerDocId;
+	public String produced;
+	public String producedDeleted;
 
 	public String performaceBatchFile;
-	
-	//Added by jayanthi
+
+	// Added by jayanthi
 	public String EmailAuthourName;
 	public String MetaDataEAName;
 	public String MetaDataReciepientsDomain;
 	public String MetaDataDomainName;
-    public String KeyWordColour;
-    public  String sameThreadDocs_EmailThreadID;
-   	public  String sameFamilyDocs_FamilyID;
-   	public  String IngestionName_PT;
-   	public  String IngestionName_UAT;
-   	public  String metadataIngestion;
-   	public  String custodianName_Andrew;
-   	public  String custodianName_allen;
-    public  String TermOperator;
-    public  String SearchString_HighVolume;
-    public  String DocCount_BG_Page;
- 
+	public String KeyWordColour;
+	public String sameThreadDocs_EmailThreadID;
+	public String sameFamilyDocs_FamilyID;
+	public String IngestionName_PT;
+	public String IngestionName_UAT;
+	public String metadataIngestion;
+	public String custodianName_Andrew;
+	public String custodianName_allen;
+	public String TermOperator;
+	public String SearchString_HighVolume;
+	public String DocCount_BG_Page;
+
 	public String signDocumentId() {
 		// TODO Auto-generated method stub
-		return null; 
+		return null;
 	}
-	
-	//Added by Gopinath - 22/11/2021
-		public String batesDocumentId;
-		
+
+	// Added by Gopinath - 22/11/2021
+	public String batesDocumentId;
+
 //		Added by Baskar
-		public String tinyInt; 
-		public String smallInt;
-		public String averageInt;
-		public String bigInt;
-		public String hugeInt;
-		public String docBasic;
-		
-		//Added by Gopinath - 25/11/2021
-		public String exText;
-		
-		//Added by Gopinath - 29/11/2021
-		public String paginationDocId;
-		
+	public String tinyInt;
+	public String smallInt;
+	public String averageInt;
+	public String bigInt;
+	public String hugeInt;
+	public String docBasic;
+
+	// Added by Gopinath - 25/11/2021
+	public String exText;
+
+	// Added by Gopinath - 29/11/2021
+	public String paginationDocId;
+
 //		Added by Baskar -29/11/2021
-		public String hidden;
-		public String notSelectable;
-		public String optional;
-		public String required;
-		public String tag;
-		public String comments;
-		public String metaData;
-		public String checkItem; 
-		public String staticText;
-		public String radioGroup;
-		public String checkGroup;
-		public String yesButton;
-		public String oneHourAudio;
-		
-		//added by Aathith
-		public String pageCount;
-		public String errorMsg;
-		public String helpText;
-		public String thisHidden;
-		public String thisReadOnly;
-		public String thisOptional;
-		public String thisRequired;
-		public String select;
-		public String notSelect;
-		public String securityGroup_sg47;
-		public String regressionConsilio;
-		public String regressionConsilio1;
-		public String audioSearchString2;
-		public String audioSearchString3;
-		public String audioSearchString4;
-		public String audioSearchString5;
-		public String audioSearchString6;
-		public String audioSearchString7;
-		public String pdfDataSet;
-		public String dbFile;
-		public String sourceDocIdDB992;
-	
-		//Added by Gopinath - 30/11/2021
-		public String postGenQcChecks;
-		
-		//Added by Gopinath - 03/12/2021
-		public String thankyouText;
+	public String hidden;
+	public String notSelectable;
+	public String optional;
+	public String required;
+	public String tag;
+	public String comments;
+	public String metaData;
+	public String checkItem;
+	public String staticText;
+	public String radioGroup;
+	public String checkGroup;
+	public String yesButton;
+	public String oneHourAudio;
 
-		//added by Brundha
-		
-		public String documentId;
-		public String telecaSearchString;
-		public String docFile;
-		public String stampRed;
-		public String stampGreen;
-		public String fileGroup;
-		public String document;
-		public String fileTypeInNativeDocs;
-		
-		//Added by gopinath - 08/12/2021
-		public String anotherRemarkMessage;
-		
+	// added by Aathith
+	public String pageCount;
+	public String errorMsg;
+	public String helpText;
+	public String thisHidden;
+	public String thisReadOnly;
+	public String thisOptional;
+	public String thisRequired;
+	public String select;
+	public String notSelect;
+	public String securityGroup_sg47;
+	public String regressionConsilio;
+	public String regressionConsilio1;
+	public String audioSearchString2;
+	public String audioSearchString3;
+	public String audioSearchString4;
+	public String audioSearchString5;
+	public String audioSearchString6;
+	public String audioSearchString7;
+	public String pdfDataSet;
+	public String dbFile;
+	public String sourceDocIdDB992;
 
-		//Added by gopinath - 09/12/2021
-		public String familyMembersDocId;
-		
-		//Added by Gopinath - 15/Dec/2021
-		public String proximity;
-		public String masterDate;
-		
-		//Added by gopinath  - 16/Dec/2021
-		public String productionText;
-		public String tiffPageCountNam;
-		public String tiffPageCountText;
-		
-		//Added by Gopinath - 27/12/2021
-	    public String errorQueryFileLocation;
-		public String invalidNameText;
-				
-		public String threadDocWithToolTip;
-		public String conceptualDoc;
-		//Added by jayanthi
-		public String TallySearch;
-		public String TallyCN;
-		
+	// Added by Gopinath - 30/11/2021
+	public String postGenQcChecks;
 
-		//Added by Gopinath - 05/01/2021
-		public String downloadDocID;
-		public String translationDocId;
-		
-		//Added by Iyappan
-		public String hiddenDocId;
-		public String excelProtectedHiddenDocId;
-		
-		// Added by Mohan (Ingestion DataSets)
+	// Added by Gopinath - 03/12/2021
+	public String thankyouText;
 
-		public String Collection1KFolder;
-		public String FamilyFolder;
-		public String AllSourcesFolder;
-		public String H1369Folder;
-		public String MultiPTIFFFolder;
-		public String SinglePageTIFFFolder;
-		public String CJK_FrenchAudioTestDataFolder;
-		public String EmailConcatenatedDataFolder;
-		public String SSAudioSpeechFolder;
-		public String GD994NativeTextForProductionFolder;
-		public String GNonsearchablePDFLoadfileFolder;
-		public String HiddenPropertiesFolder;
-		public String UniCodeFilesFolder;
-		public String IngestionEmailDataFolder;
-		public String DATFile;
-		public String TextFile;
-		public String NativeFile;
-		public String TIFFFile;
-		public String TIFFFile1;
-		public String TranslationFile;
-		public String PDFFile;
-		public String TranscriptFile;
-		public String MP3File;
-		public String DATGermanFile;
-		public String DATJapneseFile;
-		public String TranscriptGermanFile;
-		public String MP3GermanFile;
-		public String TranscriptJapneseFile;
-		public String MP3JapneseFile;
-		public String YYYYMMDDHHMISSDat;
-		public String YYYYMMDDHHMISSLst;
-		public String DATFile1;
+	// added by Brundha
 
+	public String documentId;
+	public String telecaSearchString;
+	public String docFile;
+	public String stampRed;
+	public String stampGreen;
+	public String fileGroup;
+	public String document;
+	public String fileTypeInNativeDocs;
+
+	// Added by gopinath - 08/12/2021
+	public String anotherRemarkMessage;
+
+	// Added by gopinath - 09/12/2021
+	public String familyMembersDocId;
+
+	// Added by Gopinath - 15/Dec/2021
+	public String proximity;
+	public String masterDate;
+
+	// Added by gopinath - 16/Dec/2021
+	public String productionText;
+	public String tiffPageCountNam;
+	public String tiffPageCountText;
+
+	// Added by Gopinath - 27/12/2021
+	public String errorQueryFileLocation;
+	public String invalidNameText;
+
+	public String threadDocWithToolTip;
+	public String conceptualDoc;
+	// Added by jayanthi
+	public String TallySearch;
+	public String TallyCN;
+
+	// Added by Gopinath - 05/01/2021
+	public String downloadDocID;
+	public String translationDocId;
+
+	// Added by Iyappan
+	public String hiddenDocId;
+	public String excelProtectedHiddenDocId;
+
+	// Added by Mohan (Ingestion DataSets)
+
+	public String Collection1KFolder;
+	public String FamilyFolder;
+	public String AllSourcesFolder;
+	public String H1369Folder;
+	public String MultiPTIFFFolder;
+	public String SinglePageTIFFFolder;
+	public String CJK_FrenchAudioTestDataFolder;
+	public String EmailConcatenatedDataFolder;
+	public String SSAudioSpeechFolder;
+	public String GD994NativeTextForProductionFolder;
+	public String GNonsearchablePDFLoadfileFolder;
+	public String HiddenPropertiesFolder;
+	public String UniCodeFilesFolder;
+	public String IngestionEmailDataFolder;
+	public String DATFile;
+	public String TextFile;
+	public String NativeFile;
+	public String TIFFFile;
+	public String TIFFFile1;
+	public String TranslationFile;
+	public String PDFFile;
+	public String TranscriptFile;
+	public String MP3File;
+	public String DATGermanFile;
+	public String DATJapneseFile;
+	public String TranscriptGermanFile;
+	public String MP3GermanFile;
+	public String TranscriptJapneseFile;
+	public String MP3JapneseFile;
+	public String YYYYMMDDHHMISSDat;
+	public String YYYYMMDDHHMISSLst;
+	public String DATFile1;
 
 //		public String query;
 //		public String miniDocListID;
 
-		public String StitchedTIFF;		
-		public String DATFile2;
-		public String TiffImagesFolder;
-		public String DAT_MMDDYYYY;
-		public String Natives_MMDDYYYY;
-		public String DAT_YYYYDDMM_Slash;
-		public String Natives_YYYYDDMM_Slash;
-		public String DAT_YYYYMMDD_Slash;
-		public String Natives_YYYYMMDD_Slash;
-		public String DAT_DDMMYYYY_Slash;
-		public String Natives_DDMMYYYY_Slash;
-		public String DAT_MMDDYYYY_Slash;
-		public String Natives_MMDDYYYY_Slash;
-		public String DAT_MMDDYYYY_HHMI;
-		public String Natives_MMDDYYYY_HHMI;
-		public String DAT_DDMMYYYY_HHMI;
-		public String Natives_DDMMYYYY_HHMI;
-		public String DAT_MMDDYYYY_HHMISS;
-		public String Natives_MMDDYYYY_HHMISS;
-		public String DAT_DDMMYYYY_HHMISS;
-		public String Natives_DDMMYYYY_HHMISS;
-		public String DAT_DDMMYYYY;
-		public String Natives_DDMMYYYY;
-		public String differentDateFormatError;
-		
-		//Added by Gopinath - 02/03/2022
-		public String ingestionProjectName;
-		public String ingestionType ;
-		public String sourceSystem;
-		public String sourceLocation ;
-		public String sourceFolder;
-		public String fieldSeperator ;
-		public String textQualifier ;
-		public String multiValue ;
-		public String datLoadFile ;
-		public String documentKey ;
-		public String mp3LoadFile ;
-		public String dateFormat ;
-		public String docId ;
-		public String dataSource ;
-		public String custodian ;
-		public String fileExt ;
-		public String fileName ;
-		public String fileSize ;
-		public String fileType ;
-		public String ingDocBasic ;
-		public String docFileExt ;
-		public String ingDocFileName ;
-		public String ingDocFileSize ;
-		public String ingDocFileType ;
-		public String lessThan500PagesDocId;
-		public String d500PagesDocId;
-		public String SearchString_Audio;
+	public String StitchedTIFF;
+	public String DATFile2;
+	public String TiffImagesFolder;
+	public String DAT_MMDDYYYY;
+	public String Natives_MMDDYYYY;
+	public String DAT_YYYYDDMM_Slash;
+	public String Natives_YYYYDDMM_Slash;
+	public String DAT_YYYYMMDD_Slash;
+	public String Natives_YYYYMMDD_Slash;
+	public String DAT_DDMMYYYY_Slash;
+	public String Natives_DDMMYYYY_Slash;
+	public String DAT_MMDDYYYY_Slash;
+	public String Natives_MMDDYYYY_Slash;
+	public String DAT_MMDDYYYY_HHMI;
+	public String Natives_MMDDYYYY_HHMI;
+	public String DAT_DDMMYYYY_HHMI;
+	public String Natives_DDMMYYYY_HHMI;
+	public String DAT_MMDDYYYY_HHMISS;
+	public String Natives_MMDDYYYY_HHMISS;
+	public String DAT_DDMMYYYY_HHMISS;
+	public String Natives_DDMMYYYY_HHMISS;
+	public String DAT_DDMMYYYY;
+	public String Natives_DDMMYYYY;
+	public String differentDateFormatError;
 
-		
-		
-		//Added by Mohan (PT Env DocIDs)
-		public String conceptualDocId01; 
-		public String conceptualDocId02;
-		public String conceptualDocId03;
-		public String conceptualDocId04;
-		public String conceptualDocIdForReviewer01;
-		public String conceptualDocIdForReviewer02;
-		public String conceptualDocIdForReviewer03;
-		public String familyDocId01; 
-		public String familyDocId02;
-		public String familyDocId03;
-		public String familyDocIdForReviewer01;
-		public String familyDocIdForReviewer02;
-		public String familyDocIdForReviewer03;
-		public String nearDupeDocId01;  
-		public String nearDupeDocId02;
-		public String nearDupeDocId03;
-		public String nearDupeDocIdForReviewer01;
-		public String nearDupeDocIdForReviewer02;
-		public String nearDupeDocIdForReviewer03;
-		public String threadMapDocId01;
-		public String threadMapWithNonEmailAttachment;
-		
-		
-		//Added by Gopinath - 21/03/2022
-		public String iceSourceSystem;
-		public String multiPageTIFFSourceFolder;
-		public String multiPageTIFFDATLoadFile;
-		public String documentKeyBNum;
-		public String documentKeyDSource;
-		public String documentKeyCName;
-		
-		//Added by gopinath - 23/03/2022
-		public String pageNum;
-		
-		
-		
+	// Added by Gopinath - 02/03/2022
+	public String ingestionProjectName;
+	public String ingestionType;
+	public String sourceSystem;
+	public String sourceLocation;
+	public String sourceFolder;
+	public String fieldSeperator;
+	public String textQualifier;
+	public String multiValue;
+	public String datLoadFile;
+	public String documentKey;
+	public String mp3LoadFile;
+	public String dateFormat;
+	public String docId;
+	public String dataSource;
+	public String custodian;
+	public String fileExt;
+	public String fileName;
+	public String fileSize;
+	public String fileType;
+	public String ingDocBasic;
+	public String docFileExt;
+	public String ingDocFileName;
+	public String ingDocFileSize;
+	public String ingDocFileType;
+	public String lessThan500PagesDocId;
+	public String d500PagesDocId;
+	public String SearchString_Audio;
 
-		
+	// Added by Mohan (PT Env DocIDs)
+	public String conceptualDocId01;
+	public String conceptualDocId02;
+	public String conceptualDocId03;
+	public String conceptualDocId04;
+	public String conceptualDocIdForReviewer01;
+	public String conceptualDocIdForReviewer02;
+	public String conceptualDocIdForReviewer03;
+	public String familyDocId01;
+	public String familyDocId02;
+	public String familyDocId03;
+	public String familyDocIdForReviewer01;
+	public String familyDocIdForReviewer02;
+	public String familyDocIdForReviewer03;
+	public String nearDupeDocId01;
+	public String nearDupeDocId02;
+	public String nearDupeDocId03;
+	public String nearDupeDocIdForReviewer01;
+	public String nearDupeDocIdForReviewer02;
+	public String nearDupeDocIdForReviewer03;
+	public String threadMapDocId01;
+	public String threadMapWithNonEmailAttachment;
+
+	// Added by Gopinath - 21/03/2022
+	public String iceSourceSystem;
+	public String multiPageTIFFSourceFolder;
+	public String multiPageTIFFDATLoadFile;
+	public String documentKeyBNum;
+	public String documentKeyDSource;
+	public String documentKeyCName;
+
+	// Added by gopinath - 23/03/2022
+	public String pageNum;
+
+	// Added by Iyappan
+	public String maxAudioThresholdValue;
+	public String minAudioThresholdValue;
+	public String defaultAudioThresholdValue;
+	public int expectedCombinedSearchHits1;
+	public int expectedCombinedSearchHits2;
+
 }
-
