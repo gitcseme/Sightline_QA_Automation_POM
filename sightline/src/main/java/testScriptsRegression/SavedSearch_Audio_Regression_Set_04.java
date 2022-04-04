@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -430,7 +431,7 @@ public class SavedSearch_Audio_Regression_Set_04 {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Root node : " + newNodeList.get(0));
 		saveSearch.selectNode1(newNodeList.get(0));
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 
 		// Load latency Verification
 		Element loadingElement = session.getspinningWheel();

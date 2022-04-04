@@ -950,7 +950,7 @@ public class SavedSearchRegression_New_Set_05 {
 		saveSearch.savedSearch_SearchandSelect(savedSearchName, "Yes");
 		base.waitForElement(saveSearch.getSearchStatus(savedSearchName, statusToCheck));
 		base.stepInfo("Search is in " + statusToCheck + " status before clicking DocView");
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 		base.stepInfo("Clicked DocView button");
 		driver.waitForPageToBeReady();
 		base.VerifyWarningMessage(warningMessage);
@@ -1004,7 +1004,7 @@ public class SavedSearchRegression_New_Set_05 {
 		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", false);
 		base.stepInfo("Search is in " + statusToCheck + " status before clicking DocView");
 		saveSearch.getLastStatusSelectionFromGrid(statusToCheck).waitAndClick(5);
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 		base.stepInfo("Clicked DocView button");
 		driver.waitForPageToBeReady();
 		base.VerifyWarningMessage(warningMessage);
@@ -2121,7 +2121,7 @@ public class SavedSearchRegression_New_Set_05 {
 		saveSearch.navigateToSSPage();
 		base.stepInfo("Root node selected : " + nodeIndex);
 		saveSearch.selectNode1(nodeToSelect);
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 
 		// Load latency Verification
 		Element loadingElement = session.getspinningWheel();
