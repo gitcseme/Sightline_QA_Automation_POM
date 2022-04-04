@@ -4476,6 +4476,58 @@ public class DocViewAudio_IndiumRegression {
 
 	}
 
+	/**
+	 * @Author Vijaya.Rani date:04/04/2022 Modified date: NA Modified by:N/A
+	 * @Description : Verify that Audio Remark functionality is working properly for
+	 *              Video file inside Doc view screen. 'RPMXCON-59966' Sprint-14
+	 * 
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, dataProvider = "RMUandREV", groups = { "regression" }, priority = 58)
+	public void VerifyAddedReviewerRemarkForAudioDocInVideoFile(String username, String password, String fullName)
+			throws Exception {
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewpage = new DocViewPage(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+
+		Map<String, String> datas = new HashMap<String, String>();
+		String remark = "Remark" + Utility.dynamicNameAppender();
+		String searchName = "SS" + Utility.dynamicNameAppender();
+		int iteration = 1;
+
+		baseClass.stepInfo("Test case Id:RPMXCON-59966 Sprint 14");
+		baseClass.stepInfo(
+				"Verify that Audio Remark functionality is working properly for Video file inside Doc view screen.");
+
+		// login as RMU/reviewer
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Loggedin As : " + fullName);
+
+		// adding remark to audio documents
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.saveSearch(searchName);
+		sessionSearch.ViewInDocView();
+		datas = docviewpage.addRemarkToDocumentsT(iteration, remark, true, "Success");
+
+		// SavedSearch to DocVIew
+		saveSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+
+		// Verify Existing remarks + Edit File
+		docviewpage.verifyExistingRemarks(iteration, datas, true, true);
+		baseClass.stepInfo("Audio Remark functionality is work properly for Video file inside Doc view screen successfully");
+
+		// Delete Search
+		baseClass.stepInfo("Initiating Delete Search");
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		loginPage.logout();
+
+	}
+	
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
 		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
