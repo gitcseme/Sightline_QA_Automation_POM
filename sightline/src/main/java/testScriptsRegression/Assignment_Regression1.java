@@ -38,15 +38,16 @@ public class Assignment_Regression1 {
 	AssignmentsPage agnmt;
 	StringWriter sw;
 	PrintWriter pw;
-	String searchText = Input.TallySearch;
+	String searchText;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		softAssertion=new SoftAssert ();
+		searchText = Input.TallySearch;
 	}
 
 	/**
@@ -327,7 +328,7 @@ public class Assignment_Regression1 {
 		bc.stepInfo("Test case Id:RPMXCON-54962");
 		search = new SessionSearch(driver);
 		agnmt.createCascadeAssgnGroupWithSortBymetadata(assignmentGroup);
-		search.basicContentSearch(searchText);
+		search.basicContentSearch(Input.TallySearch);
 		search.bulkAssignWithNewAssgn(assignmentGroup);
 		agnmt.validateMetadataOption(assignmentName, Input.codeFormName);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -349,7 +350,7 @@ public class Assignment_Regression1 {
 		String assignmentName = "AR1assignment" + Utility.dynamicNameAppender();
 		search = new SessionSearch(driver);
 		agnmt.createAssignment(assignmentName, Input.codeFormName);
-		search.basicContentSearch(searchText);
+		search.basicContentSearch(Input.TallySearch);
 		search.bulkAssignExisting(assignmentName);
 		bc.stepInfo("Created a assignment " + assignmentName);
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
@@ -838,7 +839,6 @@ public class Assignment_Regression1 {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
-			lp.logoutWithoutAssert();
 		}
 		try {			
 			lp.quitBrowser();

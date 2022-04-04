@@ -634,4 +634,10 @@
 		<!--   Added by Gopinath Created date - 23/03/2022	-->
 		<pageNum>2</pageNum>
 		
+		<maxAudioThresholdValue>90</maxAudioThresholdValue>
+		<minAudioThresholdValue>50</minAudioThresholdValue>
+		<defaultAudioThresholdValue>70</defaultAudioThresholdValue>
+		<expectedCombinedSearchHits1>837</expectedCombinedSearchHits1>
+		<expectedCombinedSearchHits2>53</expectedCombinedSearchHits2>
+		
 </TestData>
