@@ -866,6 +866,34 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath("//ul[@role='menu']//li[contains(.,'Rollback')]");
 	}
 	
+	public Element getIngestion_TileView() {
+		return driver.FindElementById("TileView");
+	}
+	
+	public Element getSourceCount() {
+		return driver.FindElementByXPath("//div[text()='Source']//span");
+	}
+	
+	public Element getIngestedCount() {
+		return driver.FindElementByCssSelector("[class*='ingestCt'] span");
+	}
+	
+	public Element getProjectNameInPopup() {
+		return driver.FindElementByXPath("//label[text()='Project Name :']/following-sibling::div");
+	}
+	
+	public Element getIngestionStatusInPopup() {
+		return driver.FindElementByXPath("//label[text()='% Complete :']/following-sibling::div");
+	}
+	
+	public Element getTimeStampInPopup() {
+		return driver.FindElementByXPath("//label[text()='End Date :']/following-sibling::div");
+	}
+	
+	public Element getApproveMessageCancelButton() {
+		return driver.FindElementById("bot2-Msg1");
+	}
+	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
 		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[text()='Rollback']");
@@ -6397,6 +6425,124 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 					return getCloseButton().Enabled();
 				}
 			}), Input.wait30);
+			getCloseButton().waitAndClick(5);
+			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 04/04/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the details in ingestion pop up
+		 */
+		public void verifyIngestionDetails() {
+			
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByButton().Visible();
+				}
+			}), Input.wait30);
+			getFilterByButton().waitAndClick(10);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByINPROGRESS().Visible()  ;}}), Input.wait30); 
+			getFilterByINPROGRESS().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByAPPROVED().Visible()  ;}}), Input.wait30); 
+			getFilterByINDEXED().waitAndClick(10);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByAPPROVED().Visible()  ;}}), Input.wait30); 
+			getFilterByAPPROVED().waitAndClick(10);
+	    	
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
+	    	getFilterByPUBLISHED().waitAndClick(10);
+	    	
+	    	getRefreshButton().waitAndClick(5);
+	    	
+	    	String viewStatus =getIngestion_TileView().GetAttribute("class");
+	    	if(viewStatus.equalsIgnoreCase("active")) {
+	    		base.passedStep("Information displayed on Tiles view");
+	    	}
+	    	else {
+	    		base.failedMessage("Information displayed on grid view");
+	    		
+	    	}
+	    	
+	    	if(getStatus(1).isElementPresent()) {
+	    		int sourceCount =Integer.parseInt(getSourceCount().getText());
+	    		int ingestedCount =Integer.parseInt(getIngestedCount().getText());
+	    		int errorCount =Integer.parseInt(errorCountStatus().getText());
+	    		if(sourceCount>0 && ingestedCount>0 && errorCount==0) {
+	    			base.passedStep("Source , Ingested and Error count details displayed");
+	    		}
+	    		else {
+	    			base.failedStep("Source,Ingested and Error count details not displayed");
+	    		}
+	    		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+	    		base.waitTime(2);
+	    		
+	    		String projectName =getProjectNameInPopup().getText();
+	    		String ingestionStatus = getIngestionStatusInPopup().getText();
+	    		String timeStamp = getTimeStampInPopup().getText();
+	    		
+	    		if(projectName.isBlank() && ingestionStatus.isBlank() && timeStamp.isBlank()) {
+	    			base.failedStep("project name, ingestion Status and Time stamp details are blank");
+	    		}
+	    		else {
+	    			base.passedStep("Project name, ingestion Status and Time stamp details are present");
+	    		}
+	    		
+	    		String catalogData = catalogSectionDetails().getText();
+	    		String copyData = catalogSectionDetails().getText();
+	    		String indexData = indexingSectionDetails().getText();
+	    		
+	    		if(catalogData.isBlank() && copyData.isBlank() && indexData.isBlank()) {
+	    			base.failedStep("Cataloging,Copying and Indexing field details are blank");
+	    		}
+	    		else {
+	    			base.passedStep("Cataloging,Copying and Indexing field details are present");
+	    		}
+	    		
+	    	}
+	    	else {
+	    		base.failedStep("Ingestion details not present");
+	    	}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 04/04/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the availability of rollback option
+		 */
+		public void verifyRollbackOptionStatus() {
+			
+			getRefreshButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return ingestionDetailActionDropdown().Visible();
+				}
+			}), Input.wait30);
+			ingestionDetailActionDropdown().waitAndClick(10);
+			
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return rollbackOptionInPopup().Visible();
+				}
+			}), Input.wait30);
+			rollbackOptionInPopup().waitAndClick(10);
+			base.waitTime(2);
+			if(getRollbackWarningMessage().isElementAvailable(5)) {
+				base.passedStep("Rollback option is displayed and available to perform rollback action");
+			}
+			else {
+				base.failedStep("Rollback option is not available");
+			}
+			if(getApproveMessageCancelButton().isElementAvailable(5)) {
+				getApproveMessageCancelButton().waitAndClick(5);
+				}
+			base.waitForElement(getCloseButton());
 			getCloseButton().waitAndClick(5);
 			
 		}

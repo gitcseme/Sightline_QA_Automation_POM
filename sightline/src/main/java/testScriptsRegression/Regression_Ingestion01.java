@@ -832,6 +832,53 @@ public class Regression_Ingestion01 {
 
 		}
 	
+	/** 
+     *Author :Arunkumar date: 04/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47369
+	 * Description :To verify 'Ingestion Details' pop up display
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 38)
+	public void verifyIngestionDetailsPopupDisplay() {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47369");
+		baseClass.stepInfo("To verify 'Ingestion Details' pop up display");
+		ingestionPage.verifyIngestionDetails();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 04/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47593
+	 * Description :As a project admin I will be able to rollback an ingestion - new approach
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 39)
+	public void verifyRollbackOptionAtDifferentIngestionStages() throws InterruptedException   {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47593");
+		baseClass.stepInfo("As a project admin I will be able to rollback an ingestion - new approach");
+		// verify rollback option after saving ingestion as draft
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		// Verify rollback option status after Catalogging stage
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.verifyRollbackOptionStatus();
+		ingestionPage.rollBackIngestion();
+		//Verify rollback option status after Copying stage
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyRollbackOptionStatus();
+		ingestionPage.rollBackIngestion();
+		// Verify rollback option status after indexing stage
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyRollbackOptionStatus();	
+		ingestionPage.rollBackIngestion();
+	}
+	
 	
 	
 		
