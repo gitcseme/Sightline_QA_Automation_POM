@@ -1899,7 +1899,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              window'RPMXCON-51371'
 	 * @throws InterruptedException stabilization not done- threaded docs are not avialble for reviwer
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyCodeAsSameWithCodingFormChildWindowForThreadedDocs() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1959,7 +1959,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Selected docs From MiniDocsList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(documentToBeSelected);
 
 		// Verify CheckMark is present
 		baseClass.stepInfo("Verify whether the Complete CheckMark is displayed or not");
@@ -1977,11 +1977,12 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select Docid from MiniDocLis
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
+		docViewAnalytics.configureMiniDocListToShowCompletedDocs();
 		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 
 		// Perform Code Same for Conceptual Docs
 		baseClass.stepInfo("CodeAsSame is performed for the selected docs");
-		docViewAnalytics.performCodeSameForThreadedDocumentsForReviewer();
+		docViewAnalytics.performCodeSameForThreadedDocumentsForReviewerUsingParamteres(3);
 
 		// verify Code As Same Icon Displayed
 		baseClass.stepInfo("Verify code same icon is displayed for the selected documents");
@@ -1994,7 +1995,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select Docid from MiniDocLis
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(revDocToBeSelected);
 
 		// Verify CheckMark is present
 		baseClass.stepInfo("Verify whether the Complete CheckMark is displayed or not");
