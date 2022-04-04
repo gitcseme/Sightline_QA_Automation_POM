@@ -4861,34 +4861,30 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @author Aathith.Senthilkumar
-	 * @Description Second dat field choosed value TiffPageCount
-	 */
+	* @author Aathith.Senthilkumar.Modified on 04/04/22
+	* @Description Second dat field choosed value TiffPageCount
+	*/
 	public void datMetaDataTiffPageCount() {
-		addNewFieldOnDAT();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDAT_FieldClassification2().Visible() && getDAT_FieldClassification2().Enabled();
-			}
-		}), Input.wait30);
-		getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText(Input.Production);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDAT_SourceField2().Visible() && getDAT_SourceField2().Enabled();
-			}
-		}), Input.wait30);
-		getDAT_SourceField2().selectFromDropdown().selectByVisibleText(Input.TIFFPageCount);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDAT_DATField2().Visible() && getDAT_DATField2().Enabled();
-			}
-		}), Input.wait30);
-		getDAT_DATField2().SendKeys("TIFFPAGECOUNT");
-		base.stepInfo("Dat section is filled with TIFFPAGECOUNT");
-
+	addNewFieldOnDAT();
+	driver.WaitUntil((new Callable<Boolean>() {
+	public Boolean call() {
+	return getDAT_FieldClassification2().Visible() && getDAT_FieldClassification2().Enabled();
 	}
+	}), Input.wait30);
+	getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText("Production"); driver.WaitUntil((new Callable<Boolean>() {
+	public Boolean call() {
+	return getDAT_SourceField2().Visible() && getDAT_SourceField2().Enabled();
+	}
+	}), Input.wait30);
+	getDAT_SourceField2().selectFromDropdown().selectByVisibleText("TIFFPageCount"); driver.WaitUntil((new Callable<Boolean>() {
+	public Boolean call() {
+	return getDAT_DATField2().Visible() && getDAT_DATField2().Enabled();
+	}
+	}), Input.wait30);
+	getDAT_DATField2().SendKeys("TIFFPAGECOUNT");
+	base.stepInfo("Dat section is filled with TIFFPAGECOUNT"); }
+
+
 
 	/**
 	 * 
@@ -14170,92 +14166,42 @@ for (int i = 0; i < 6; i++) {
 	}
 
 	/**
-	 * @author Aathith.Senthilkumar
-	 * @throws InterruptedException
-	 * @Description Production reverse bates range failed check
-	 */
-	public void prodReservingBatesRangeFailedProduction1() throws InterruptedException {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Enabled();
-			}
-		}), Input.wait30);
-		getFilterByButton().Click();
-		base.stepInfo("Filtering the failed production");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByDRAFT().Enabled();
-			}
-		}), Input.wait30);
-		getFilterByDRAFT().Click();
-		base.stepInfo("Removing filter by draft");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByINPROGRESS().Enabled();
-			}
-		}), Input.wait30);
-		getFilterByINPROGRESS().Click();
-		base.stepInfo("Removing filter by in progress");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterDropDown().Enabled();
-			}
-		}), Input.wait30);
-		getFilterDropDown().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return gettxtReservingBatesFailedAt1stProdShown().Enabled();
-			}
-		}), Input.wait30);
-		base.stepInfo("Reserving Bates Range Failed production displays");
-
-		if (gettxtReservingBatesFailedAt1stProdShown().Enabled()) {
-			String batesFailedMsg = gettxtReservingBatesFailedAt1stProdShown().getText();
-			base.passedStep("verifing the failed status :" + batesFailedMsg);
-			Assert.assertTrue(true, batesFailedMsg);
-		} else {
-			base.passedStep("No Reserving Bates Range failed production occurs");
+	* @author Aathith.Senthilkumar.Modified on 04/04/2022
+	* @throws InterruptedException
+	* @Description Production reverse bates range failed check
+	*/
+	public void prodReservingBatesRangeFailedProduction1() throws InterruptedException { driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+		return gettxtReservingBatesFailedAt1stProdShown().Enabled();
 		}
-		driver.waitForPageToBeReady();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getGearIcon().Enabled() && getGearIcon().isDisplayed();
-			}
 		}), Input.wait30);
-
-		getGearIcon().Click();
+		base.stepInfo("Reserving Bates Range Failed production displays"); if (gettxtReservingBatesFailedAt1stProdShown().Enabled()) {
+		String batesFailedMsg = gettxtReservingBatesFailedAt1stProdShown().getText();
+		base.passedStep("verifing the failed status :" + batesFailedMsg);
+		Assert.assertTrue(true, batesFailedMsg);
+		} else {
+		base.passedStep("No Reserving Bates Range failed production occurs");
+		}
+		driver.waitForPageToBeReady(); driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+		return getGearIcon().Enabled() && getGearIcon().isDisplayed();
+		}
+		}), Input.wait30); getGearIcon().Click();
+		driver.waitForPageToBeReady(); driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+		return getOpenWizard().Enabled() && getOpenWizard().isDisplayed();
+		}
+		}), Input.wait30); getOpenWizard().Click(); base.waitForElement(getbtnReGenerateMarkComplete());
+		getbtnReGenerateMarkComplete().waitAndClick(5); base.waitForElement(getbtnRegenerateContinue());
+		getbtnRegenerateContinue().Click(); verifyProductionStatusInGenPage("Preparing Data In Progress");
 		driver.waitForPageToBeReady();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getOpenWizard().Enabled() && getOpenWizard().isDisplayed();
-			}
-		}), Input.wait30);
-
-		getOpenWizard().Click();
-
-		base.waitForElement(getbtnReGenerateMarkComplete());
-		getbtnReGenerateMarkComplete().waitAndClick(5);
-
-		base.waitForElement(getbtnRegenerateContinue());
-		getbtnRegenerateContinue().Click();
-
 		Reporter.log("Wait for generate to complete", true);
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
-
-		getbtnReGenerateMarkComplete().isElementAvailable(200);
-		getbtnReGenerateMarkComplete().waitAndClick(10);
-
-		base.waitForElement(getbtnRegenerateCancel());
-		getbtnRegenerateCancel().Click();
-
-	}
+		driver.waitForPageToBeReady(); getbtnReGenerateMarkComplete().isElementAvailable(180);
+		base.waitForElement(getbtnReGenerateMarkComplete());
+		getbtnReGenerateMarkComplete().waitAndClick(10); base.waitForElement(getbtnRegenerateCancel());
+		getbtnRegenerateCancel().Click(); }
 
 	/**
 	 * @author Aathith.Senthilkumar
