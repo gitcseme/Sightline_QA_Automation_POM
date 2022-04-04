@@ -622,5 +622,26 @@ public class CustomDocumentDataReport {
 		driver.waitForPageToBeReady();
 		
 	}
-
+	/**
+	 * @author Jayanthi.Ganesan
+	 * This method will retrieve the value from csv file downloaded 
+	 * @param fileLocation
+	 * @param fileName[Name of file]
+	 * @return return a list of string [Values from csv file column]
+	 */
+	public List<String> csvfileSize(String fileLocation, String fileName) {
+		FileReader file = bc.fileLocate(fileLocation, fileName);
+		List<String> lines = new ArrayList<>();
+		try {
+			BufferedReader br = new BufferedReader(file);
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				lines.add(line.trim().replaceAll("ï»¿\"", ""));
+			}
+			System.out.println(lines);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lines;
+	}
 }

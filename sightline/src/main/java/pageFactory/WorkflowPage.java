@@ -349,6 +349,18 @@ public class WorkflowPage {
 		return driver.FindElementByXPath("//*[@id='accordion7']/div/div[1]/h4/a");
 
 	}
+	//added  by jayanthi
+	public Element getSummaryTab_WFName() {
+		return driver.FindElementByXPath("//label[contains(text(),'Workflow Name:')]/following-sibling::div");
+	}
+
+	public Element getSummaryTab_WFDesc() {
+		return driver.FindElementByXPath("//label[contains(text(),'Workflow Description:')]/following-sibling::div");
+	}
+
+	public Element getAction_EditWF() {
+		return driver.FindElementById("lnkEditWorkflow");
+	}
 
 	public WorkflowPage(Driver driver) {
 
@@ -1386,5 +1398,19 @@ public class WorkflowPage {
 		baseClass.passedStep("Notification is Display in SummaryTab");
 		softAssertion.assertAll();
 	}
-
+	/**
+	 * @author Jayanthi
+	 * This method will select and open the work flow in edit mode
+	 * @param wfName[Name of work flow]
+	 */
+	public void editWorkFlow(String wfName) {
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		selectWorkFlowUsingPagination(wfName);
+		// action to edit
+		baseClass.waitForElement(getWorkFlow_ActionDropdown());
+		getWorkFlow_ActionDropdown().waitAndClick(10);
+		baseClass.waitForElement(getAction_EditWF());
+		getAction_EditWF().waitAndClick(10);
+		driver.waitForPageToBeReady();
+	}
 }
