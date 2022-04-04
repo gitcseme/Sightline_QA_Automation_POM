@@ -4528,6 +4528,312 @@ public class DocViewAudio_IndiumRegression {
 
 	}
 	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify the waveform from audio player for the audio files greater
+	 * than 1 hour
+	 * 
+	 */
+	
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 59)
+	public void validateZoomInFunctionForOneHourAudioDocs(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-46889");
+		baseClass.stepInfo("Verify the waveform from audio player for the audio " + "files greater than 1 hour");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+
+		// search to docview
+		int audioPurehit = sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigating to docview with audio docs: " + audioPurehit + " document");
+
+		driver.waitForPageToBeReady();
+		docViewPage.getDociD(Input.oneHourAudio).waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		// verifying more than one hour audio docs
+		String overAllAudioTime = docViewPage.getDocview_Audio_EndTime().getText();
+		String[] splitData = overAllAudioTime.split(":");
+		String data = splitData[0].toString();
+		System.out.println(data);
+		if (Integer.parseInt(data) >= 01) {
+			baseClass.stepInfo("Audio docs have more than:" + overAllAudioTime + " hour to check zoom function");
+		} else {
+			baseClass.failedMessage("Lesser than one hour");
+		}
+
+		// checking zoom in function working for more than one hour audio docs
+		baseClass.waitForElement(docViewPage.getAudioDocZoom());
+		boolean zoomIN = docViewPage.getAudioDocZoom().Displayed();
+		softAssertion.assertTrue(zoomIN);
+		docViewPage.getAudioDocZoom().waitAndClick(5);
+		boolean zoomBar = docViewPage.getAudioZoomBar().Displayed();
+		softAssertion.assertTrue(zoomBar);
+		baseClass.passedStep("Zoom functionality working for more than one hour of document");
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the jplayer", "Audio hits not highlighted on the jplayer");
+
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify that Video files Play functionality is working properly inside Doc view screen
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 60)
+	public void validatePlayFunctionInVideoDocs(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59791");
+		baseClass.stepInfo("Verify that Video files Play functionality is working "
+				+ "properly inside Doc view screen");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		
+		// validating video player docs
+		Long beforeTime=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(beforeTime);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+		baseClass.waitTime(5);
+		Double afterTime=(Double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(afterTime);
+        softAssertion.assertNotEquals(Long.toString(beforeTime), Double.toString(afterTime));
+        baseClass.passedStep("Video play functionality working properly inside docview screen");
+		
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify that Video files Pause functionality is working properly inside Doc view screen
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 61)
+	public void validatePauseFunctionInVideoDocs(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59792");
+		baseClass.stepInfo("Verify that Video files Play functionality is working "
+				+ "properly inside Doc view screen");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		
+		// validating video player docs
+		Long beforeTime=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(beforeTime);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+		baseClass.stepInfo("video file is playing");
+		baseClass.waitTime(5);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').pause()");
+		baseClass.waitTime(1);
+		boolean paused=(boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').paused;");
+        Assert.assertTrue(paused);
+        baseClass.passedStep("Video file pause functionality working properly");
+		Double beforePaused=(Double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(beforePaused);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+		Double afterPaused=(Double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(afterPaused);
+		if (beforePaused<afterPaused) {
+			 baseClass.passedStep("Video pause and resume function working properly inside docview screen");
+		}
+		else {
+			baseClass.failedStep("pause button function not working");
+		}
+		
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify that Video files Increase volume functionality is working properly inside Doc view screen
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 62)
+	public void validateIncreaseVolumeFunctionInVideoDocs(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59813");
+		baseClass.stepInfo("Verify that Video files Increase volume functionality is "
+				+ "working properly inside Doc view screen");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		
+		// validating video player docs
+		Long beforeplay=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(beforeplay);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+		baseClass.stepInfo("Video file started playing");
+		baseClass.waitTime(5);
+		Double afterPlay=(double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(afterPlay);
+		softAssertion.assertNotEquals(Long.toString(beforeplay), Double.toString(afterPlay));
+        // setting the volume
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').volume=0.75;");
+		// validating volume button
+		baseClass.waitTime(2);
+		Double volumeSize=(double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').volume;");
+		if (volumeSize==0.75) {
+	        baseClass.passedStep("Video file volume increase/decrease function working properly inside docview screen");
+		}
+		else {
+			baseClass.failedStep("Volume button increase/decrease not working properly");
+		}
+        baseClass.passedStep("Video file volume increase/decrease function working properly inside docview screen");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify that Video files Mute functionality is working properly inside Doc view screen
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 63)
+	public void validateMuteFunctionInVideoDocs(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59812");
+		baseClass.stepInfo("Verify that Video files Mute functionality is working "
+				+ "properly inside Doc view screen");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		
+		// validating video player docs
+		Long beforeplay=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(beforeplay);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+		baseClass.stepInfo("video file is playing");
+		baseClass.waitTime(5);
+		Double afterPlay=(double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(afterPlay);
+		softAssertion.assertNotEquals(Long.toString(beforeplay), Double.toString(afterPlay));
+        baseClass.passedStep("Video file started playing");
+        // muteing the volume button
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').muted=true;");
+		// validating volume button
+		baseClass.waitTime(2);
+		boolean paused=(boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').muted;");
+		Assert.assertTrue(paused);
+        baseClass.passedStep("Video file volume button is muted inside docview screen");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify that User can complete Video file document inside Doc view screen
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="RMUandREV", groups = { "regression" }, priority = 64)
+	public void validateCompleteDocsFunctionInVideoDocs(String userName,String password,String fullName) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59814");
+		baseClass.stepInfo("Verify that User can complete Video file document inside Doc view screen");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		
+		// validating video player docs
+		Long beforeplay=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(beforeplay);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+		baseClass.stepInfo("Video file started playing");
+		baseClass.waitTime(5);
+		Double afterPlay=(double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(afterPlay);
+		softAssertion.assertNotEquals(Long.toString(beforeplay), Double.toString(afterPlay));
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingFormSaveButton();
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.passedStep("user can able to complete the document inside having the video file docs");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify that audio player gets display inside Doc view screen when User 
+	 *             Ingest only MP3 files and no natives
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 65)
+	public void validateMp3VersionOnDefaultTab(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59969");
+		baseClass.stepInfo("Verify that audio player gets display inside Doc view screen when "
+				+ "User Ingest only MP3 files and no natives");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		baseClass.passedStep("Mp3 version in Default tab displayed for video and player docs");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+
+	
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
 		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
