@@ -296,6 +296,9 @@ public class Input {
 	public static String tiffDocId1;
 	public static String pptDocId;
 	public static String messageDocId;
+	public static String multiplePageSourceDocID;
+	public static String StitchedTiffSourceDocID;
+	public static String SinglePageTiffSourceDocID;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -958,6 +961,9 @@ public class Input {
 		HiddenIngestionName = testData.getHiddenIngestionName();
 		HiddenLinkDocId = testData.getHiddenLinkDocId();
 		defaultPdfDocId= testData.getDefaultPdfDocId();
+		multiplePageSourceDocID = testData.getMultiplePageSourceDocID();
+		StitchedTiffSourceDocID = testData.getStitchedTiffSourceDocID();
+		SinglePageTiffSourceDocID = testData.getSinglePageTiffSourceDocID();
 
 		// Added by Arun
 		pageRange1 = testData.getPageRange1();

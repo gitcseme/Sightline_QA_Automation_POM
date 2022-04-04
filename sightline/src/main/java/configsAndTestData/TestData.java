@@ -191,6 +191,10 @@ public class TestData {
 	public String tiffDocId1;
 	public String pptDocId;
 	public String messageDocId;
+	public String multiplePageSourceDocID;
+	public String StitchedTiffSourceDocID;
+	public String SinglePageTiffSourceDocID;
+	
 
 	//Added by arunkumar
 	public String pageRange1;

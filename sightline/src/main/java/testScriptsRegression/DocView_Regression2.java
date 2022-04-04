@@ -4286,7 +4286,7 @@ public class DocView_Regression2 {
 	 * @Description:To Verify that document having any of the field value "Hidden Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook viewed from analytics panel child window should display alert message
 	 * @throws InterruptedException
 	 */
-	@Test
+	@Test(description ="RPMXCON-51963",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 93)
 	public void verifyWarningMsgForHiddenProportiesDocChildWindow() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -4316,7 +4316,7 @@ public class DocView_Regression2 {
 	 * @Description:To Verify that when viewing the document having the 'ExcelProtectedSheets' value should provide indicator in viewer to convey that document is having hidden content
 	 * @throws InterruptedException
 	 */
-	@Test
+	@Test(description ="RPMXCON-51950",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 94)
 	public void verifyWarningMsgForHiddenProportiesExternalProtectedSheet() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -4336,6 +4336,62 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("verify warning message for hidden properties document");
 		docView.verifyWaringMessageForExternalProtectSheet(Input.HiddenLinkDocId);
 	}
+	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51976
+	 * 
+	 */
+
+	@Test(description ="RPMXCON-51976",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 95)
+	public void verifySinglePageTiffInDocView()
+			throws Exception {
+		baseClass = new BaseClass(driver);
+		 DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51976");
+		baseClass.stepInfo("Verify that Single page TIFF image should be load successfully in doc view");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		// Searching for document with single page tiff
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sessionsearch.basicContentSearch(Input.SinglePageTiffSourceDocID);
+		baseClass.stepInfo("Searching a documents having 'RequiredPDFGenertion is TRUE' ");
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.passedStep("Single page tiff successfully viewed in DocViw");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51975
+	 * 
+	 */
+
+	@Test(description ="RPMXCON-51976",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 96)
+	public void verifyStitchedPageTiffInDocViewImageTab()
+			throws Exception {
+		baseClass = new BaseClass(driver);
+		 DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51975");
+		baseClass.stepInfo("Verify that stitched TIFF should be load on Image tab in Doc View");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		// Searching for document with single page tiff
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sessionsearch.basicContentSearch(Input.StitchedTiffSourceDocID);
+		baseClass.stepInfo("Searching a documents having 'RequiredPDFGenertion is TRUE' ");
+		sessionsearch.ViewInDocView();
+		docViewRedact.clickingImagesTab();
+		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
+		System.out.println(status);
+		if (status.equalsIgnoreCase("true")) {
+			baseClass.passedStep("Single page tiff successfully viewed in DocViw Images tab");
+		} else {
+			baseClass.failedStep("Single page tiff not viewed in DocViw Images tab");
+		}
+		loginPage.logout();	
+	}
+	
 	
 	
 	@AfterMethod(alwaysRun = true)
