@@ -557,24 +557,16 @@ public class SavedSearchRegression_New {
 		base.stepInfo("Impersonated as : " + role);
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(savedSearch);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode1 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, role, "No");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(savedSearch);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode2 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, role, "No");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(savedSearch);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode3 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode3 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, role, "No");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(savedSearch);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode4 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode4 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, role, "No");
 
 		int pureHit1 = session.advancedMetaDataSearch("CustodianName", null, Input.metaDataCN, null);
 		session.saveSearchInNewNode(savedSearch, newNode1);
@@ -660,24 +652,16 @@ public class SavedSearchRegression_New {
 		base.stepInfo("Test case Id: RPMXCON-57394 - Saved Search Sprint 04");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(savedSearch);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode1 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, userName, "No");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(savedSearch);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode2 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, userName, "No");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(savedSearch);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode3 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode3 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, userName, "No");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(savedSearch);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode4 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode4 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, userName, "No");
 
 		int pureHit1 = session.advancedMetaDataSearch("CustodianName", null, Input.metaDataCN, null);
 		session.saveSearchInNewNode(savedSearch, newNode1);
