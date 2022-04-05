@@ -73,10 +73,13 @@ public class DocView_Sprint2_Regression {
 	KeywordPage keywordPage;
 	SavedSearch savedSearch;
 	ReusableDocViewPage reusableDocView;
+	Utility utility;
 
 	String keywordsArray[] = { "test", "hi", "Than8617167" };
 	String keywordsArrayPT[] = { "test" };
 	String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+	String AnnotationLayerNew = null;
+	String AnnotationLayerNew1 = null;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -6675,6 +6678,70 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * Author :Vijaya.Rani date: 05/04/2022  Modified date: NA Modified by: NA
+	 * Description:Verify that message to reload the document should not be displayed when two users under different project views the document with 
+	 * same doc id, with different mapped annotation layer id and adds redaction
+	 * 'RPMXCON-52210' Sprint-14
+	 * 
+	 * @throws Exception 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 81)
+	public void verifySameDocIdAndDifferentAnnotationAddRedaction() throws Exception {
+		
+		baseClass = new BaseClass(driver);
+		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
+		baseClass = new BaseClass(driver);
+		utility = new Utility(driver);
+		loginPage = new LoginPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.logout();
+		baseClass.stepInfo("Test case Id: RPMXCON-52210 sprint 14");
+
+		baseClass.stepInfo(
+				"Verify that message to reload the document should not be displayed when two users under different project views the document with same doc id, with different mapped annotation layer id and adds redaction");
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
+		
+		// Creating annotation layer 
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+		baseClass.passedStep("Annation Layer is Created successully");
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew1);
+		baseClass.passedStep("Annation Layer1 is Created successully");
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		Reporter.log("Logged in as User: " + Input.rmu1userName);
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Viewed the Doc View Page");
+		docViewRedact.clickingRedactionIcon();
+		driver.waitForPageToBeReady();
+		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
+		baseClass.stepInfo("Redaction Is Added Succesully " + Input.rmu1userName);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		Reporter.log("Logged in as User: " + Input.rmu2userName);
+		baseClass.selectproject("AutomationAdditionalDataProject");
+		baseClass.stepInfo("Succesfully Selected Project1");
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Viewed the Doc View Page");
+		docViewRedact.clickingRedactionIcon();
+		driver.waitForPageToBeReady();
+		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
+		baseClass.stepInfo("Redaction Is Added Succesully " + Input.rmu2userName);
+		loginPage.logout();
+	}
+		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
