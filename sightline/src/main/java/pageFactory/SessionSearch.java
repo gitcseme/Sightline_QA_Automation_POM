@@ -11014,5 +11014,28 @@ public class SessionSearch {
 		UtilityLog.info("Bulk assign is done, assignment is : " + assignmentName);
 		Reporter.log("Bulk assign is done, assignment is : " + assignmentName, true);
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param Text
+	 * @param Value
+	 * @Description without passing url for keep previous used data and search in metadata
+	 */
+	public void SearchMetaDataWithoutUrlPassing(String Text, String Value) {
+		// To make sure we are in basic search page
+		driver.waitForPageToBeReady();
+		base.waitForElement(getBasicSearch_MetadataBtn());
+		getBasicSearch_MetadataBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectMetaData());
+		getSelectMetaData().selectFromDropdown().selectByVisibleText(Text);
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(Value);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(5);
+		// Click on Search button
+		base.waitForElement(getSearchButton());
+		getSearchButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+	}
 
 }
