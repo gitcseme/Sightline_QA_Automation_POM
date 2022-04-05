@@ -186,16 +186,16 @@ public class Element {
 			return;
 		Actions actions = new Actions(driver.getWebDriver());
 		actions.moveToElement(element);
-	//	actions.moveToElement(element);
+		// actions.moveToElement(element);
 		actions.build().perform();
 
-	/*	try {
-			((JavascriptExecutor) (driver.getWebDriver())).executeScript("arguments[0].scrollIntoView(true);", element);
-		} catch (Exception e) {
-			// System.out.println("Scrolling Into View Exception");
-			e.printStackTrace(pw);
-			UtilityLog.info(sw.toString());
-		}*/
+		/*
+		 * try { ((JavascriptExecutor)
+		 * (driver.getWebDriver())).executeScript("arguments[0].scrollIntoView(true);",
+		 * element); } catch (Exception e) { //
+		 * System.out.println("Scrolling Into View Exception"); e.printStackTrace(pw);
+		 * UtilityLog.info(sw.toString()); }
+		 */
 	}
 
 	public void javascriptclick() {
@@ -809,6 +809,20 @@ public class Element {
 			return this.Exists();
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			return false;
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param text - Input String
+	 */
+	public void sendKeys(String text) {
+		try {
+			AssertExists();
+			element.sendKeys(text);
+		} catch (Exception E) {
+			E.printStackTrace(pw);
+			base.failedStep(sw.toString());
 		}
 	}
 

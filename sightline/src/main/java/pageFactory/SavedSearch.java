@@ -2994,7 +2994,7 @@ public class SavedSearch {
 		}
 
 		getRenameButton().waitAndClick(5);
-		getRenameSearchGroupNode(newNode).SendKeys(SearchGroupRenamed);
+		getRenameSearchGroupNode(newNode).sendKeys(SearchGroupRenamed);
 		getTermReportTitle().Click();
 		base.VerifySuccessMessage("Save search tree node successfully updated.");
 		base.CloseSuccessMsgpopup();
@@ -6307,7 +6307,7 @@ public class SavedSearch {
 		getSavedSearchGroupName(sg).waitAndClick(10);
 		rootGroupExpansion();
 
-		boolean flag = getSavedSearchGroupName(Node).isElementPresent();
+		boolean flag = getSavedSearchGroupName(Node).isElementAvailable(5);
 		if (flag == true) {
 			getSavedSearchGroupName(Node).waitAndClick(10);
 			System.out.println(Node + " is present in  " + "'" + sg + "'");
