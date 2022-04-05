@@ -1271,8 +1271,7 @@ public class DocViewPage {
 
 	public Element geDocView_ThreadMap_CheckMarkIcon(int rowno) {
 		return driver
-				.FindElementByXPath("//*[@id='dtDocumentThreadedDocuments']//*[@id='threadedDocumentIdRowStatus']//th["
-						+ rowno + "]//i[@class='fa fa-check-circle ']");
+				.FindElementByXPath("//*[@id='dtDocumentThreadedDocuments']//*[@id='threadedDocumentIdRowStatus']//th["+ rowno + "]//i[@class='fa fa-check-circle ']");
 	}
 
 	public Element geDocView_ThreadMap_ArrowDownIcon(int rowno) {
@@ -10955,6 +10954,7 @@ public class DocViewPage {
 		getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 //		base.waitForElement(getCodeCompleteIconThreadTab());
+		driver.waitForPageToBeReady();
 
 		for (int i = docRow; i <= docRow; i++) {
 			try {
@@ -16788,7 +16788,7 @@ public class DocViewPage {
 	 *              id: RPMXCON-51071
 	 *
 	 */
-	public void performCodeSameAsForConceptualDocuments() throws InterruptedException {
+	public void performCodeSameAsForConceptualDocumentsForThirdDoc() throws InterruptedException {
 
 		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
 		driver.waitForPageToBeReady();
@@ -26929,7 +26929,7 @@ public class DocViewPage {
 		base.waitForElement(geDocView_ThreadMap_CodeSameAsIconForReviewer(columnNo));
 		softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIconForReviewer(columnNo).isDisplayed().booleanValue(), true);
 		try {
-			if (geDocView_ThreadMap_CodeSameAsIconForReviewer(4).isDisplayed()) {
+			if (geDocView_ThreadMap_CodeSameAsIconForReviewer(columnNo).isDisplayed()) {
 				base.passedStep("CodeAsSame icon is displayed for the selected docs ");
 			}
 		} catch (Exception e) {
@@ -26938,6 +26938,29 @@ public class DocViewPage {
 		}
 		codeSameDocumentid = getThreadedDocumentWhichHasCodeSameIcon().getText();
 		softAssertion.assertAll();
+	}
+	
+	
+	/**
+	 * @author Mohan 05/04/22 NA Modified date: NA Modified by:NA
+	 * @description To edit coding form
+	 */
+	public void editCodingForm() {
+
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getResponsiveCheked());
+		getResponsiveCheked().Click();
+		base.waitForElement(getNonPrivilegeRadio());
+		getNonPrivilegeRadio().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocument_CommentsTextBox().Displayed() && getDocument_CommentsTextBox().Enabled();
+			}
+		}), Input.wait30);
+		getDocument_CommentsTextBox().SendKeys("Editing and click complete button");
+		base.stepInfo("Coding Form edited Sucessfully");
+
 	}
 
 }

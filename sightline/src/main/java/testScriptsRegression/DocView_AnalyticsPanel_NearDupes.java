@@ -15,6 +15,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import com.fasterxml.jackson.databind.deser.Deserializers.Base;
+
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
@@ -1227,7 +1229,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// complete the docs
 		docViewPage.completeDocsAndVerifyCheckMark();
-
+		docViewPage.selectSourceDocIdInAvailableField("SourceDocID");
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocIdForReviewer02);
 		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
 
 		// Open Near Dupe Comparison window and click Apply coding button
@@ -1977,7 +1980,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select Docid from MiniDocLis
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewAnalytics.configureMiniDocListToShowCompletedDocs();
+		docViewAnalytics.selectSourceDocIdInAvailableField("SourceDocID");
 		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 
 		// Perform Code Same for Conceptual Docs
@@ -1991,11 +1994,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Edit Coding form and Complete the docs
 		baseClass.stepInfo("Pop-out Coding form and Docs are completed");
+		driver.scrollPageToTop();
+		docViewAnalytics.selectDocInMiniDocList("331ID00000155");
 		docViewAnalytics.popOutCodingFormAndCompleteDocument();
 
 		// Select Docid from MiniDocLis
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewAnalytics.selectDocInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList("331ID00000155");
 
 		// Verify CheckMark is present
 		baseClass.stepInfo("Verify whether the Complete CheckMark is displayed or not");
@@ -2717,7 +2722,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 			revDocToBeSelected = Input.familyDocumentForReviewer;
 		} else {
 			documentToBeSelected = Input.familyDocument;
-			revDocToBeSelected = Input.familyDocumentForReviewer;
+			revDocToBeSelected = Input.threadDocId;
 		}
 
 		softAssertion = new SoftAssert();
@@ -2746,7 +2751,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select assgn by reviewer
 		docViewAnalytics.selectAssignmentfromDashborad(assname);
-
+		docViewAnalytics.selectSourceDocIdInAvailableField("SourceDocID");
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// Popout MiniDocList
@@ -2760,7 +2765,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Select DocId In MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
+		
+		docViewAnalytics.selectDocInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -2818,7 +2824,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select docs Form MiniDocsList
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Expand Analytics Panel
@@ -2845,7 +2851,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select assgn by reviewer
 		assignmentsPage.SelectAssignmentByReviewer(assname);
-
+		docViewAnalytics.selectSourceDocIdInAvailableField("SourceDocID");
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// Popout MiniDocList
@@ -2859,7 +2865,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		}
 
 		// Select DocId In MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -2917,7 +2923,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo("Edit Coding form and docs are completed successfully");
 
 		// Select Docid from MiniDocLis
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Expand Analytics Panel
@@ -2968,8 +2974,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 			documentToBeSelected = Input.nearDupeCompletedDocId;
 			revDocToBeSelected = Input.nearDupeDocumentForReviewer;
 		} else {
-			documentToBeSelected = Input.nearDupeDocId1;
-			revDocToBeSelected = Input.nearDupeDocId;
+			documentToBeSelected = Input.nearDupeDoc05;
+			revDocToBeSelected = Input.conceptualDocIdForReviewer01;
 		}
 
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -3103,7 +3109,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		driver.waitForPageToBeReady();
-
+		docViewPage.selectSourceDocIdInAvailableField("SourceDocID");
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// Popout MiniDocList
@@ -3118,7 +3124,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select DocId In MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewPage.selectDocInMiniDocList(documentToBeSelected);
 
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
@@ -3172,7 +3178,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select docs from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewPage.selectDocInMiniDocList(documentToBeSelected);
 		try {
 			if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
@@ -3210,6 +3216,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		driver.waitForPageToBeReady();
+		docViewPage.selectSourceDocIdInAvailableField("SourceDocID");
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// popout MiniDocList
@@ -3224,7 +3231,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select MiniDocList Docs
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewPage.selectDocInMiniDocList(revDocToBeSelected);
 
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
@@ -3282,7 +3289,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select docs from miniDoclist
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewPage.selectDocInMiniDocList(revDocToBeSelected);
 		try {
 			if (docViewPage.getCodeCompleteIconMiniDocList().isDisplayed()) {
 				baseClass.waitForElement(docViewPage.getCodeCompleteIconMiniDocList());
@@ -3334,7 +3341,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 			documentToBeSelected = Input.newNearDupeDocId;
 			revDocToBeSelected = Input.threadDocId;
 		} else {
-			documentToBeSelected = Input.conceptualDocs1;
+			documentToBeSelected = Input.threadDocWithToolTip;
 			revDocToBeSelected = Input.newNearDupeDocId;
 		}
 
@@ -3372,6 +3379,13 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// Select Code Same In Thread Map tab
 		// Edit Coding form and Complete the docs
 		baseClass.stepInfo("Coding form is edited and Docs are completed");
+		if (docViewAnalytics.getUnCompleteButton().isElementAvailable(5)) {
+			docViewAnalytics.getUnCompleteButton().waitAndClick(5);
+			baseClass.stepInfo("Uncomplete button is clicked successfully");
+			
+		}else {
+			baseClass.stepInfo("Complete button is vissible");
+		}
 		docViewAnalytics.editCodingFormCompleteForThreadDocs();
 
 		// Select Docid from MiniDocList
@@ -3396,6 +3410,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select Docid from MiniDocLis
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
+		docViewAnalytics.selectSourceDocIdInAvailableField("SourceDocID");
 		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
 
 		// Edit Coding form and Complete the docs
@@ -3404,9 +3419,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewAnalytics.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(revDocToBeSelected);
 
 		baseClass.stepInfo("Verify completed check mark on thread map tab");
+		driver.waitForPageToBeReady();
 		docViewAnalytics.verifyCompleteCheckMarkForThreadMapTabDocs(3);
 		loginPage.logout();
 	}
@@ -3619,10 +3635,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 		if (executionURL.contains("pt")) {
 			documentToBeSelected = Input.nearDupeCompletedDocId;
 			revDocToBeSelected = Input.nearDupeDocumentForReviewer;
-		} else {
-			documentToBeSelected = Input.nearDupeDocId1;
+			} else {
+			documentToBeSelected = Input.nearDupeDocIdForReviewer03;
 			revDocToBeSelected = Input.nearDupeDocId;
-		}
+			}
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 
@@ -3821,8 +3837,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 			documentToBeSelected = Input.conceptualDocumentReviewer;
 			revDocToBeSelected = Input.MetaDataId;
 		} else {
-			documentToBeSelected = Input.NewDocId;
-			revDocToBeSelected = Input.conceptualDocument;
+			documentToBeSelected = Input.MetaDataId;
+			revDocToBeSelected = Input.NewDocId;
 		}
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51420");
@@ -4021,10 +4037,10 @@ public class DocView_AnalyticsPanel_NearDupes {
 		if (executionURL.contains("pt")) {
 			documentToBeSelected = Input.nearDupeCompletedDocId;
 			revDocToBeSelected = Input.nearDupeDocumentForReviewer;
-		} else {
-			documentToBeSelected = Input.nearDupeCompletedDocId;
-			revDocToBeSelected = Input.nearDupeDocumentForReviewer;
-		}
+			} else {
+			documentToBeSelected = Input.nearDupeDocIdForReviewer03;
+			revDocToBeSelected = Input.nearDupeDocId;
+			}
 
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
@@ -4290,8 +4306,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 			documentToBeSelected = Input.conceptualDocumentReviewer;
 			revDocToBeSelected = Input.MetaDataId;
 		} else {
-			documentToBeSelected = Input.NewDocId;
-			revDocToBeSelected = Input.conceptualDocument;
+			documentToBeSelected = Input.MetaDataId;
+			revDocToBeSelected = Input.NewDocId;
 		}
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51424");
@@ -4543,6 +4559,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description :Verify that for email threaded documents should be displayed
 	 *              though Inclusive Email is either Yes or NO'RPMXCON-51514'
 	 * @throws InterruptedException stabilization done
+	 * 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyInclusiveEmailThreadMapDocuments() throws InterruptedException {
@@ -4826,34 +4843,21 @@ public class DocView_AnalyticsPanel_NearDupes {
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
-		loginPage = new LoginPage(driver);
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
-			loginPage.logoutWithoutAssert();
+
 		}
-		try {
-//			loginPage.logout();
-			loginPage.closeBrowser();
-//			loginPage.quitBrowser();
-		} catch (Exception e) {
-			loginPage.closeBrowser();
-//			loginPage.quitBrowser();
-			// Indium-Stabilized
-//			LoginPage.clearBrowserCache();
-		}
+
+		loginPage.quitBrowser();
+
 	}
 
 	@AfterClass(alwaysRun = true)
-	public void close2() {
-		try {
-			loginPage.closeBrowser();
-			// Indium-Stabilized
-//			LoginPage.clearBrowserCache();
-		} catch (Exception e) {
-			// no such session
-		}
+
+	public void close() {
+		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
 
 	}
 }

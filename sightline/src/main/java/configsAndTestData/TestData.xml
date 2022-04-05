@@ -72,11 +72,11 @@
 	<SavedSearch>TDM54178</SavedSearch>
 	<pureHitCount1>267</pureHitCount1>
 	<docName>DocID</docName>
-	<MiniDocId>H16135-0188-001005</MiniDocId>
+	<MiniDocId>331ID00000200</MiniDocId>
 	<ThreadQuery>"testing the same"</ThreadQuery>
-	<NewDocId>H16135-0188-002115</NewDocId>
+	<NewDocId>331ID00000199</NewDocId>
 	<documentToBeScrolled>H16135-0188-002289</documentToBeScrolled>
-	<conceptualDocs1>H16135-0188-001606</conceptualDocs1>
+	<conceptualDocs1>T2393D</conceptualDocs1>
 	<principalDocId>5168</principalDocId>
 	<principalDocId1>5138</principalDocId1>
 	<principalDocId2>5161</principalDocId2>
@@ -92,7 +92,7 @@
 	<sourceDocId5>T2554D</sourceDocId5>
 	<threadDocumentForReviewer>H16135-0188-002339</threadDocumentForReviewer>
 	<familyDocumentForReviewer>H16135-0188-002292</familyDocumentForReviewer>
-	<nearDupeCompletedDocIdReviewer>H16135-0188-002469</nearDupeCompletedDocIdReviewer>
+	<nearDupeCompletedDocIdReviewer>T2393D</nearDupeCompletedDocIdReviewer>
 	<newNearDupeDocId>ICE010058-9-00000006</newNearDupeDocId>
 	<warningDocId>H16135-0188-002241</warningDocId>
 	<threadData1>ID00005182</threadData1>
@@ -106,8 +106,8 @@
 	<conceptualDocId1>ID00000055</conceptualDocId1>
 	<nearDupeDocId1>H16135-0188-001799</nearDupeDocId1>
 	<nearDupeImageDoc>H16135-0188-001994</nearDupeImageDoc>
-	<analyticsConceptualDocId1>H16135-0188-002412</analyticsConceptualDocId1>
-	<analyticsConceptualDocId2>H16135-0188-001174</analyticsConceptualDocId2>
+	<analyticsConceptualDocId1>331ID00000201</analyticsConceptualDocId1>
+	<analyticsConceptualDocId2>T2396D</analyticsConceptualDocId2>
 	<miniConceptualNoDoc>ID00001511</miniConceptualNoDoc>
 	<tiffSearchQuery>.tif</tiffSearchQuery>
 	<nearDupePagination>ID00000230</nearDupePagination>
@@ -510,11 +510,11 @@
 		<familyDocIdForReviewer02>331ID00000008</familyDocIdForReviewer02>
 	<familyDocIdForReviewer03>331ID00000176</familyDocIdForReviewer03>
 	<nearDupeDocId01>T1796D</nearDupeDocId01> 
-		<nearDupeDocId02>T1848D</nearDupeDocId02>
+		<nearDupeDocId02>STC4_00000877</nearDupeDocId02>
 		 <nearDupeDocId03>T1862D</nearDupeDocId03>
-	<nearDupeDocIdForReviewer01>ID00005182</nearDupeDocIdForReviewer01>
-	 <nearDupeDocIdForReviewer02>T556D</nearDupeDocIdForReviewer02>
-	<nearDupeDocIdForReviewer03>T2541D</nearDupeDocIdForReviewer03>
+	<nearDupeDocIdForReviewer01>ICE010058-9-00000007</nearDupeDocIdForReviewer01>
+	<nearDupeDocIdForReviewer02>H16135-0188-003146</nearDupeDocIdForReviewer02>
+	<nearDupeDocIdForReviewer03>ICE010058-21-00000010</nearDupeDocIdForReviewer03>
 	<threadMapDocId01>H16135-0188-003979</threadMapDocId01>
 	<threadMapWithNonEmailAttachment>H16135-0188-001001</threadMapWithNonEmailAttachment>
 	<conceptualDocId04>331ID00000187</conceptualDocId04>
