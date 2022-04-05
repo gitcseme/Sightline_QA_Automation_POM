@@ -4833,6 +4833,63 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Vijaya.Rani date: 05/04/22 Modified date: NA Modified by: NA @Test
+	 *         Description :Verify that Audio Redaction functionality is working
+	 *         properly for Video file inside Doc view screen. 'RPMXCON-59965'
+	 *         Sprint 14
+	 * 
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "RMUandREV", groups = { "regression" }, priority = 66)
+	public void audioRedactionDefaultTagSelectionVideoFile(String username, String password, String fullName)
+			throws InterruptedException, ParseException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		String headerName = "RedactionTags";
+		int index;
+
+		List<String> docIDlist = new ArrayList<>();
+		String firnstDocname;
+		String audioSearchInput = Input.audioSearchString1;
+
+		baseClass.stepInfo("Test case id :RPMXCON-59965 Sprint 14");
+		baseClass.stepInfo(
+				"Verify that Audio Redaction functionality is working properly for Video file inside Doc view screen.");
+
+		// login as RMU/reviewer
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Loggedin As : " + fullName);
+
+		// Audio Search
+		sessionSearch.audioSearch(audioSearchInput, Input.language);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.audioReduction(Input.defaultRedactionTag);
+
+		index = baseClass.getIndex(docViewPage.getAudioRedactionTableHeader(), headerName);
+		baseClass.stepInfo("Audio Redaction functionality is work properly for Video file inside Doc view screen");
+
+		// Audio Redaction Tag deletion
+		docViewPage.deleteAudioRedactionTag();
+
+		loginPage.logout();
+
+	}
+
 	
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
