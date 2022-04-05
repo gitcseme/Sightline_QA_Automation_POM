@@ -879,8 +879,34 @@ public class Regression_Ingestion01 {
 		ingestionPage.rollBackIngestion();
 	}
 	
+	/** 
+     *Author :Arunkumar date: 05/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47362
+	 * Description :To verify that on Ingestion Home page, user is able to access all page by navigation controls.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 40)
+	public void verifyIngestionHomePageNavigation() {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47362");
+		baseClass.stepInfo("To verify that on Ingestion Home page, user is able to access all page by navigation controls.");
+		ingestionPage.verifyHomePageNavigationControl();
+	}
 	
-	
+	/** 
+     *Author :Arunkumar date: 05/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47258
+	 * Description :To Verify Contents of Ingestion Tiles On Ingestions Home.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 41)
+	public void verifyIngestionTileContentInHomePage() {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47258");
+		baseClass.stepInfo("To Verify Contents of Ingestion Tiles On Ingestions Home.");
+		ingestionPage.verifyContentOnIngestionTiles();
+		
+	}
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

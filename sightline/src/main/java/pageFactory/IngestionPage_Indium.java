@@ -894,6 +894,41 @@ public class IngestionPage_Indium {
 		return driver.FindElementById("bot2-Msg1");
 	}
 	
+	public Element ingestionNextButton(){
+		return driver.FindElementByXPath("//li[@id='IngestionGridViewtable_next']//a");
+	}
+
+	public Element ingestionPreviousButton(){
+		return driver.FindElementByXPath("//li[@id='IngestionGridViewtable_previous']//a");
+	}
+	public Element ingestionPaginationNext(){
+		return driver.FindElementById("IngestionGridViewtable_next");
+	}
+
+	public Element ingestionPaginationPrevious(){
+		return driver.FindElementById("IngestionGridViewtable_previous");
+	}
+	public Element moveToNextPage() {
+		return driver.FindElementByXPath("//li[@class='paginate_button ']//a");
+	}
+	
+	public Element showAllIngestion() {
+	return driver.FindElementByXPath("//label[@class='checkbox']//i");
+	}
+	public Element currentActivePage() {
+		return driver.FindElementByXPath("//li[@class='paginate_button active']");
+	}
+
+	public Element ingestionModifiedUser() {
+		return driver.FindElementByXPath("//div[@class='bottomStamps row']//span");
+	}
+	public Element ingestionCompletedDate() {
+		return driver.FindElementByXPath("//strong[contains(text(),'Status')]/following-sibling::div");
+	}
+	public Element ingestionProgressBar() {
+		return driver.FindElementByXPath("//div[@role='progressbar']");
+	}
+	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
 		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[text()='Rollback']");
@@ -6545,6 +6580,146 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			base.waitForElement(getCloseButton());
 			getCloseButton().waitAndClick(5);
 			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 05/04/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the Navigation control in ingestion home page
+		 */
+		public void verifyHomePageNavigationControl() {
+			driver.waitForPageToBeReady();
+			base.waitForElement(showAllIngestion());
+	    	showAllIngestion().waitAndClick(5);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByButton().Visible();
+				}
+			}), Input.wait30);
+			getFilterByButton().waitAndClick(10);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByINPROGRESS().Visible()  ;}}), Input.wait30); 
+			getFilterByDRAFT().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByAPPROVED().Visible()  ;}}), Input.wait30); 
+			getFilterByINDEXED().waitAndClick(10);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByAPPROVED().Visible()  ;}}), Input.wait30); 
+			getFilterByAPPROVED().waitAndClick(10);
+	    	
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
+	    	getFilterByPUBLISHED().waitAndClick(10);
+	    	
+	    	getRefreshButton().waitAndClick(5);
+	    	
+	    	getIngestion_GridView().waitAndClick(5);
+	    	driver.waitForPageToBeReady();
+	    	driver.scrollingToBottomofAPage();
+	    	
+	    	try {
+	    		String nextbuttonStatus = ingestionPaginationNext().GetAttribute("class").trim();
+	    		String previousbuttonStatus = ingestionPaginationPrevious().GetAttribute("class").trim();
+				if(nextbuttonStatus.equalsIgnoreCase("paginate_button next disabled") && previousbuttonStatus.equalsIgnoreCase("paginate_button previous disabled")) {
+					base.passedStep("only one page available in ingestion home page");
+				}
+				else {
+					int currentPageNumber = Integer.parseInt(currentActivePage().getText());
+					ingestionNextButton().waitAndClick(5);
+					base.stepInfo("Clicked Next button");
+					base.waitTime(2);
+					int currentPageNumberAfterNext = Integer.parseInt(currentActivePage().getText());
+					if(currentPageNumberAfterNext>currentPageNumber) {
+						base.passedStep("After clicking next button it displays next page");
+					}
+					else {
+						base.failedStep("After clicking next button , next page not displayed");
+					}
+					ingestionPreviousButton().waitAndClick(5);
+					base.stepInfo("Clicked Previous button");
+					base.waitTime(2);
+					int currentPageNumberAfterPrevious = Integer.parseInt(currentActivePage().getText());
+					if(currentPageNumberAfterPrevious==currentPageNumber) {
+						base.passedStep("After clicking previous button it displays previous page");
+					}
+					else {
+						base.failedStep("After clicking previous button , previous page not displayed");
+					}
+					moveToNextPage().waitAndClick(5);
+					base.stepInfo("Clicked Next available page number");
+					base.waitTime(2);
+					int currentPageAfterPagination = Integer.parseInt(currentActivePage().getText());
+					if(currentPageAfterPagination>currentPageNumber) {
+						base.passedStep("After clicking next available page number , it displays particular page");
+					}
+					else {
+						base.failedStep("After clicking page number ,particular page not displayed");
+					}
+				}
+		
+			}catch(Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while navigating page in ingestion home page");
+			}
+	    	
+		}
+		
+		/**
+		 * @author: Arun Created Date: 05/04/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the contents present in the ingestion tiles
+		 */
+		
+		public void verifyContentOnIngestionTiles() {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByButton().Visible();
+				}
+			}), Input.wait30);
+			getFilterByButton().waitAndClick(10);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByINPROGRESS().Visible()  ;}}), Input.wait30); 
+			getFilterByINPROGRESS().waitAndClick(10);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
+			getFilterByFAILED().waitAndClick(10);
+	    	
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
+	    	getFilterByPUBLISHED().waitAndClick(10);
+	    	
+	    	getRefreshButton().waitAndClick(5);
+	    	
+	    	if(getIngestionDetailPopup(1).isElementAvailable(5)) {
+	    		int sourceCount =Integer.parseInt(getSourceCount().getText());
+	    		int ingestedCount =Integer.parseInt(getIngestedCount().getText());
+	    		int errorCount =Integer.parseInt(errorCountStatus().getText());
+	    		String status = getStatus(1).getText().trim();
+	    		if(sourceCount>0 && ingestedCount>0 && errorCount>=0) {
+	    			base.passedStep("Source , Ingested and Error count details displayed");
+	    		}
+	    		else {
+	    			base.failedStep("Source,Ingested and Error count details not displayed");
+	    		}
+	    		if(status.contains("Published") || status.contains("Failed") ) {
+	    			base.passedStep("Ingestion Status details are displayed");	
+	    		}
+	    		else {
+	    			base.failedStep("Ingestion Status details are not displayed");
+	    		}
+	    		if(ingestionCompletedDate().isDisplayed() && ingestionProgressBar().isDisplayed() && ingestionModifiedUser().isDisplayed()) {
+	    			base.passedStep("Latest time stamp.modified admin name and progress bar present");
+	    		}
+	    		else {
+	    			base.failedStep("Latest time stamp.modified admin name  and progress bar not present");
+	    		}
+	    	}
+	    	else {
+	    		base.failedMessage("No ingestion is present in Failed/Published state");
+	    	}
 		}
 	
 }
