@@ -19268,5 +19268,56 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		            System.err.println(e.getMessage());
 		        }
 		}
+	 /**
+		 * @author Aathith.Senthilkumar
+		 * @Description wait for generated zip file download
+		 */
+		public void waitForFileDownload() {
+			String home = System.getProperty("user.home");
+			String name = getProduction().getText().trim();
+			File file = new File(home + "/Downloads/"+name+".zip");
+			int i = 1;
+			
+			while(!file.exists()) {
+				base.waitTime(1);
+				driver.waitForPageToBeReady();
+				if (file.exists()) {
+		            System.out.println(" file is Exists in pointed directory");
+		            base.passedStep(file+" file is Exists in pointed directory");
+		            break;
+				}else {
+		            System.out.println(" Does not Exists");
+				}
+				if(i==30) {
+					base.failedStep("file not download failed");
+					break;
+				}
+				i++;
+			}
+			
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param firstFile
+		 * @param lastFile
+		 * @param prefixID
+		 * @param suffixID
+		 * @Description verifying downloaded mp3 file in generated production
+		 */
+		public void isMp3FileExist(int firstFile, int lastFile, String prefixID, String suffixID) {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			driver.waitForPageToBeReady();
+			
+			for(int i=firstFile; i<lastFile ;i++) {
+			File mp3 = new File(home+"/Downloads/VOL0001/MP3 Files/0001/"+prefixID+i+suffixID+".MP3");
+			if (mp3.exists()) {
+				System.out.println("mp3 is available");
+				base.passedStep("mp3 file is exists in generated production");
+			} else {
+				base.failedStep("mp3 file not exists in this directory");
+			}
+			}
+		}
 
 }

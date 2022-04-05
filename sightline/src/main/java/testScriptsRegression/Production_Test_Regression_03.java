@@ -2633,6 +2633,100 @@ public class Production_Test_Regression_03 {
 				loginPage.logout();
 				
 			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-48494
+			 * @Description To verify that If user select RedactionTag and if Audio document is associated to the selected Redaction Tag then Native should not produced
+			 * 
+			 */
+			@Test(enabled =true,groups = { "regression" }, priority = 36)
+			public void verifyRedactionTagforAudioDoc() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48494-Production Component");
+				base.stepInfo("To verify that If user select RedactionTag and if Audio document is associated to the selected Redaction Tag then Native should not produced");
+				
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+				
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+				
+		        SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.SearchMetaData("IngestionName", "B2F9_Automation_AllSources_20211130043120500");
+				sessionSearch.selectOperatorInBasicSearch("AND");
+				sessionSearch.SearchMetaDataWithoutUrlPassing("AudioPlayerReady", "1");
+				sessionSearch.addPureHit();
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+	            
+	            loginPage.logout();
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				
+				RedactionPage redactionpage=new RedactionPage(driver);
+		        driver.waitForPageToBeReady();
+		        redactionpage.manageRedactionTagsPage(Redactiontag1);
+				
+				tagsAndFolderPage.selectFolderViewInDocView(foldername);
+				DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+				docViewRedactions.deleteAllAppliedRedactions();
+				driver.waitForPageToBeReady();
+	            docViewRedactions.clickOnAddRedactionForAudioDocument();
+	            docViewRedactions.addAudioRedaction(Input.startTime, Input.endTime, Redactiontag1);
+	            
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				int firstFile = Integer.parseInt(beginningBates);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingTIFFSectionBurnRedaction(Redactiontag1, "REDACTED");
+				page.fillingTextSection();
+				page.fillingMP3FileWithBurnRedaction(Redactiontag1);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				int doccount =page.fillingGeneratePageWithContinueGenerationPopup();
+				int lastFile = firstFile + doccount;
+				String home = System.getProperty("user.home");
+				File Native = new File(home + "/Downloads/VOL0001/Natives/"+prefixID+beginningBates+suffixID+".MP3");
+				driver.waitForPageToBeReady();
+				
+				page.waitForFileDownload();
+				page.extractFile();
+				
+				page.isMp3FileExist(firstFile, lastFile, prefixID, suffixID);
+				
+				if (Native.exists()) {
+		            System.out.println(" file is Exists in pointed directory");
+		            base.failedStep(Native+" file is Exists in pointed directory");
+		            }
+		        else {
+		            base.passedStep("Natives is not be produced for MP3 if it is associated to selected Redaction Tag ");
+		        }
+				
+				base.passedStep("verifed that If user select RedactionTag and if Audio document is associated to the selected Redaction Tag then Native should not produced");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);	
+				tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+				loginPage.logout();
+				
+			}
      
      
 	@AfterMethod(alwaysRun = true)
