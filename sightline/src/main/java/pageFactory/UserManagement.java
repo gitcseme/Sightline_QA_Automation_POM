@@ -356,14 +356,19 @@ public class UserManagement {
 	public Element getFirstNameTab() {
 		return driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr[1]/td[1]");
 	}
-	
+
 	public Element getLastNameTab() {
 		return driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr[1]/td[2]");
 	}
-	 public Element getPopUpMessageEditUser(){ return driver.FindElementByXPath("//p[text()='User profile was successfully modified']"); }
- 	 public ElementCollection getSecurityGroupList(){ return driver.FindElementsByXPath("//select[@id='ddlSg']//option"); }
 
-	
+	public Element getPopUpMessageEditUser() {
+		return driver.FindElementByXPath("//p[text()='User profile was successfully modified']");
+	}
+
+	public ElementCollection getSecurityGroupList() {
+		return driver.FindElementsByXPath("//select[@id='ddlSg']//option");
+	}
+
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -1263,7 +1268,7 @@ public class UserManagement {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 08/03/2022 Modified date: 08/03/2022
 	 * @Description:Methods for Search icon validation
@@ -1271,23 +1276,23 @@ public class UserManagement {
 	 * @param downloadTrue  [True will return Categorize icon present]
 	 */
 
-	public void verifySearchIcon(boolean downloadFalse, boolean downloadTrue,String rollUser) {
+	public void verifySearchIcon(boolean downloadFalse, boolean downloadTrue, String rollUser) {
 		driver.waitForPageToBeReady();
 		if (downloadFalse == false) {
 			if (getSearchTab().isElementAvailable(4)) {
-				bc.failedStep("Search tab icon available:" +rollUser);
+				bc.failedStep("Search tab icon available:" + rollUser);
 			} else {
-				bc.passedStep("Search tab icon not present in left of the menu:" +rollUser);
+				bc.passedStep("Search tab icon not present in left of the menu:" + rollUser);
 			}
 		} else if (downloadTrue == true) {
 			if (getSearchTab().isElementAvailable(4)) {
-				bc.passedStep("Search tab icon  present in left of the menu:" +rollUser);
+				bc.passedStep("Search tab icon  present in left of the menu:" + rollUser);
 			} else {
-				bc.failedStep("Search tab icon available:" +rollUser);
+				bc.failedStep("Search tab icon available:" + rollUser);
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 08/03/2022 Modified date: 08/03/2022
 	 * @Description:Methods for Categorize icon validation
@@ -1295,110 +1300,135 @@ public class UserManagement {
 	 * @param downloadTrue  [True will return Categorize icon present]
 	 */
 
-	public void verifyBulkCategorizeIcon(boolean downloadFalse, boolean downloadTrue,String rollUser) {
+	public void verifyBulkCategorizeIcon(boolean downloadFalse, boolean downloadTrue, String rollUser) {
 		driver.waitForPageToBeReady();
 		if (downloadFalse == false) {
 			if (getCategorizeTab().isElementAvailable(4)) {
-				bc.failedStep("Categorize tab icon available :" +rollUser+"");
+				bc.failedStep("Categorize tab icon available :" + rollUser + "");
 			} else {
-				bc.passedStep("Categorize tab icon not present in left of the menu :" +rollUser+"");
+				bc.passedStep("Categorize tab icon not present in left of the menu :" + rollUser + "");
 			}
 		} else if (downloadTrue == true) {
 			if (getCategorizeTab().isElementAvailable(4)) {
-				bc.passedStep("Categorize tab icon present in left of the menu :" +rollUser+"");
+				bc.passedStep("Categorize tab icon present in left of the menu :" + rollUser + "");
 			} else {
-				bc.failedStep("Categorize tab icon available :" +rollUser+"");
+				bc.failedStep("Categorize tab icon available :" + rollUser + "");
 			}
 		}
 	}
+
 	public Element getSearchCheck() {
 		return driver.FindElementByXPath("(//input[@id='UserRights_CanSearching'][position()=1])");
 	}
+
 	public Element getSearchTab() {
 		return driver.FindElementByXPath("//label[text()='Search']//parent::a");
 	}
+
 	public Element getBulkUserAccessTab() {
 		return driver.FindElementById("btnBulkUserAccessControl");
 	}
+
 	public Element getSelectRollId() {
 		return driver.FindElementByXPath("//select[@id='ddlBulkUserRoles']");
 	}
+
 	public Element getBulkManage() {
 		return driver.FindElementByXPath("//label[@id='lblCanManage']//i");
 	}
+
 	public Element getBulkIngestion() {
 		return driver.FindElementByXPath("//label[@id='lblCanIngestion']//i");
 	}
+
 	public Element getBulkProduction() {
 		return driver.FindElementByXPath("//label[@id='lblCanProductions']//i");
 	}
+
 	public Element getBulkSearch() {
 		return driver.FindElementByXPath("//label[@id='lblCanSearching']//i");
 	}
+
 	public Element getBulkExplorer() {
 		return driver.FindElementByXPath("//label[@id='lblCanConceptExplorer']//i");
 	}
+
 	public Element getBulkComExp() {
 		return driver.FindElementByXPath("//label[@id='lblCanCommunicationsExplorer']//i");
 	}
+
 	public Element getBulkCatagories() {
 		return driver.FindElementByXPath("//input[@id='chkCanProview']//parent::label//i");
 	}
-	
+
 	public Element getBulkDataSet() {
 		return driver.FindElementByXPath("//input[@id='chkCanDataSets']//parent::label//i");
 	}
+
 	public Element getBulkCollection() {
 		return driver.FindElementByXPath("//label[@id='lblCanCollections']//i");
 	}
+
 	public Element getBulkReport() {
 		return driver.FindElementByXPath("//label[@id='lblCanAllReports']//i");
 	}
+
 	public Element getBulkDownLoadNative() {
 		return driver.FindElementByXPath("//label[@id='lblCanDownloadNative']//i");
 	}
+
 	public Element getBulkRedaction() {
 		return driver.FindElementByXPath("//label[@id='lblCanRedactions']//i");
 	}
+
 	public Element getBulkHighlighting() {
 		return driver.FindElementByXPath("//label[@id='lblCanHighlighting']//i");
 	}
+
 	public Element getBulkReviewerRemark() {
 		return driver.FindElementByXPath("//label[@id='lblCanReviewerRemarks']//i");
 	}
+
 	public Element getBulkAnalyticalPanel() {
 		return driver.FindElementByXPath("//label[@id='lblCanAnalyticsPanels']//i");
 	}
+
 	public Element getSelectingProject() {
 		return driver.FindElementByXPath("//select[@id='ddlBulkUserProjects']");
 	}
+
 	public Element getEnableRadioBtn() {
 		return driver.FindElementByXPath("//input[@id='rbEnable']//parent::label");
 	}
+
 	public Element getDisableRadioBtn() {
 		return driver.FindElementByXPath("//input[@id='rbDisable']//parent::label");
 	}
+
 	public Element getSelectBulkUser(String userName) {
-		return driver.FindElementByXPath("//div[@id='divBulkUserList']//label[contains(text(),'"+userName+"')]//i");
+		return driver.FindElementByXPath("//div[@id='divBulkUserList']//label[contains(text(),'" + userName + "')]//i");
 	}
+
 	public Element getSelectDropProject(String projectName) {
-		return driver.FindElementByXPath("//option[@title='"+projectName+"']");
+		return driver.FindElementByXPath("//option[@title='" + projectName + "']");
 	}
+
 	public Element getBulkUserSaveBtn() {
 		return driver.FindElementById("btnSaveBulkAccessControls");
 	}
+
 	public Element getBulkUserSecurityGroup() {
 		return driver.FindElementById("ddlBulkUserSecurityGroup");
 	}
+
 	public Element getSelectDropSG(String sgName) {
-		return driver.FindElementByXPath("//option[.='"+sgName+"']");
+		return driver.FindElementByXPath("//option[.='" + sgName + "']");
 	}
-	
-	
-	public void defaultSelectionCheckboxForAllRole(boolean manage,boolean ingestion,boolean production,boolean search,
-			boolean explorer,boolean comExplorer,boolean catagories,boolean dataSet,boolean collection,
-			boolean report,boolean downloadNative,boolean redaction,boolean highlighted,boolean reviewerRemark,
-			boolean analyticalPanel ) {
+
+	public void defaultSelectionCheckboxForAllRole(boolean manage, boolean ingestion, boolean production,
+			boolean search, boolean explorer, boolean comExplorer, boolean catagories, boolean dataSet,
+			boolean collection, boolean report, boolean downloadNative, boolean redaction, boolean highlighted,
+			boolean reviewerRemark, boolean analyticalPanel) {
 		driver.waitForPageToBeReady();
 		if (manage == true) {
 			getBulkManage().waitAndClick(5);
@@ -1446,7 +1476,7 @@ public class UserManagement {
 			getBulkAnalyticalPanel().waitAndClick(5);
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 08/03/2022 Modified date: 08/03/2022
 	 * @Description:Methods for Manage icon validation
@@ -1454,19 +1484,19 @@ public class UserManagement {
 	 * @param downloadTrue  [True will return Manage icon present]
 	 */
 
-	public void verifyBulkManageIcon(boolean downloadFalse, boolean downloadTrue,String rollUser) {
+	public void verifyBulkManageIcon(boolean downloadFalse, boolean downloadTrue, String rollUser) {
 		driver.waitForPageToBeReady();
 		if (downloadFalse == false) {
 			if (getManageTab().isElementAvailable(4)) {
-				bc.failedStep("Manage tab icon available:" +rollUser+"");
+				bc.failedStep("Manage tab icon available:" + rollUser + "");
 			} else {
-				bc.passedStep("Manage tab icon not present in left of the menu:" +rollUser+"");
+				bc.passedStep("Manage tab icon not present in left of the menu:" + rollUser + "");
 			}
 		} else if (downloadTrue == true) {
 			if (getManageTab().isElementAvailable(4)) {
-				bc.passedStep("Manage tab icon present in left of the menu:" +rollUser+"");
+				bc.passedStep("Manage tab icon present in left of the menu:" + rollUser + "");
 			} else {
-				bc.failedStep("Manage tab icon available:" +rollUser+"");
+				bc.failedStep("Manage tab icon available:" + rollUser + "");
 			}
 		}
 	}
@@ -1478,27 +1508,27 @@ public class UserManagement {
 	 * @param downloadTrue  [True will return ingestion icon present]
 	 */
 
-	public void verifyBulkUserIngestionIcon(boolean downloadFalse, boolean downloadTrue,String rollUser) {
+	public void verifyBulkUserIngestionIcon(boolean downloadFalse, boolean downloadTrue, String rollUser) {
 		driver.waitForPageToBeReady();
 		if (downloadFalse == false) {
 			if (getIngestionTab().isElementAvailable(4)) {
-				bc.failedStep("Ingestion tab icon available:" +rollUser+"");
+				bc.failedStep("Ingestion tab icon available:" + rollUser + "");
 			} else {
-				bc.passedStep("Ingestion tab icon not present in left of the menu:" +rollUser+"");
+				bc.passedStep("Ingestion tab icon not present in left of the menu:" + rollUser + "");
 			}
 		} else if (downloadTrue == true) {
 			if (getIngestionTab().isElementAvailable(4)) {
-				bc.passedStep("Ingestion tab icon present in left of the menu:" +rollUser+"");
+				bc.passedStep("Ingestion tab icon present in left of the menu:" + rollUser + "");
 			} else {
-				bc.failedStep("Ingestion tab icon available:" +rollUser+"");
+				bc.failedStep("Ingestion tab icon available:" + rollUser + "");
 			}
 		}
 	}
-	
+
 	public Element getAllReportTab() {
 		return driver.FindElementByXPath("//label[text()='Reports']//parent::a");
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 21/03/2022 Modified date: 21/03/2022
 	 * @Description:Methods for All report validation icon
@@ -1506,32 +1536,35 @@ public class UserManagement {
 	 * @param downloadTrue  [True will return report icon present]
 	 */
 
-	public void verifyBulkUserAllReportIcon(boolean downloadFalse, boolean downloadTrue,String rollUser) {
+	public void verifyBulkUserAllReportIcon(boolean downloadFalse, boolean downloadTrue, String rollUser) {
 		driver.waitForPageToBeReady();
 		if (downloadFalse == false) {
 			if (getAllReportTab().isElementAvailable(4)) {
-				bc.failedStep("AllReport tab icon available:" +rollUser+"");
+				bc.failedStep("AllReport tab icon available:" + rollUser + "");
 			} else {
-				bc.passedStep("AllReport tab icon not present in left of the menu:" +rollUser+"");
+				bc.passedStep("AllReport tab icon not present in left of the menu:" + rollUser + "");
 			}
 		} else if (downloadTrue == true) {
 			if (getAllReportTab().isElementAvailable(4)) {
-				bc.passedStep("AllReport tab icon present in left of the menu:" +rollUser+"");
+				bc.passedStep("AllReport tab icon present in left of the menu:" + rollUser + "");
 			} else {
-				bc.failedStep("AllReport tab icon available:" +rollUser+"");
+				bc.failedStep("AllReport tab icon available:" + rollUser + "");
 			}
 		}
 	}
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/**
+	 * @author Raghuram.A
+	 */
+	public void saveSecurityGroup() {
+		try {
+			if (getSavePassword().isElementAvailable(3)) {
+				getSavePassword().waitAndClick(3);
+				driver.waitForPageToBeReady();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

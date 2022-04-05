@@ -645,6 +645,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to REV
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -711,6 +712,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to REV
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -778,6 +780,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to RMU
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -1047,6 +1050,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to RMU
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -1124,6 +1128,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to RMU
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -1521,6 +1526,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to REV
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -1594,6 +1600,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -2673,7 +2680,7 @@ public class SavedSearchRegression_New_Set_05 {
 		base.textCompareEquals(status, "ERROR", passMsg, failMsg);
 
 		// verify warning msg
-		saveSearch.getDocView_button().waitAndClick(10);
+		saveSearch.docViewFromSS("View in DocView");
 		base.VerifyWarningMessage(expectedMsg);
 
 		// Delete Uploaded File
@@ -2807,6 +2814,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// To Pick Expected Aggregate count
 		session.selectSavedsearchInASWp(nodeToSelect);
+		driver.waitForPageToBeReady();
 		session.SearchBtnAction();
 		int purehit = session.returnPurehitCount();
 		base.stepInfo("Expected aggregate purehit count from Export : " + purehit);
@@ -3206,7 +3214,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              respective Search Group on Saved Search Screen. [RPMXCON-48127]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 51)
 	public void verifyMovedSearchGroupInSgAsRmu() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
@@ -3228,6 +3236,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -3286,7 +3295,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              respective Security Group on Saved Search Screen.[RPMXCON-48136]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 52)
 	public void verifyMovedSearchGroupInSgAsRev() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
@@ -3308,6 +3317,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -3367,7 +3377,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              [RPMXCON-48125]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 53)
 	public void verifyEditSearchGroupInSgAsRmu() throws Exception {
 		String defSgSearch = "Search" + Utility.dynamicNameAppender();
 		String otherSgSearch = "Search" + Utility.dynamicNameAppender();
@@ -3390,6 +3400,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		// Release docs To SG
 		session.basicContentSearch(Input.searchString1);
@@ -3481,7 +3492,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              Screen. [RPMXCON-48133]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 54)
 	public void verifyTallySearchGroupInSg() throws Exception {
 		String defSgSearch = "Search" + Utility.dynamicNameAppender();
 		String otherSgSearch = "Search" + Utility.dynamicNameAppender();
@@ -3498,14 +3509,16 @@ public class SavedSearchRegression_New_Set_05 {
 		base.stepInfo(
 				"RMU User - Verify that User can perform the Tally from search Group under the respective Security Group on Saved Search Screen.");
 
-		base.failedMessage("Expected Failure : Tally Button should be Enabled But It is Disabled when Searchgroup is selected");
-		
+		base.failedMessage(
+				"Expected Failure : Tally Button should be Enabled But It is Disabled when Searchgroup is selected");
+
 		// Create security group
 		security.navigateToSecurityGropusPageURL();
 		security.AddSecurityGroup(securityGroup);
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		// Release docs To SG
 		session.basicContentSearch(Input.searchString2);
@@ -3552,7 +3565,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              [RPMXCON-48134]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, groups = { "regression" }, priority = 55)
 	public void verifyEditSearchGroupInSgAsRev() throws Exception {
 		String defSgSearch = "Search" + Utility.dynamicNameAppender();
 		String otherSgSearch = "Search" + Utility.dynamicNameAppender();
@@ -3575,6 +3588,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+		userManagement.saveSecurityGroup();
 
 		// Release docs To SG
 		session.basicContentSearch(Input.searchString1);
@@ -3658,8 +3672,6 @@ public class SavedSearchRegression_New_Set_05 {
 		login.logout();
 
 	}
-
-	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
