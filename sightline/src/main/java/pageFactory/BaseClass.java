@@ -222,8 +222,8 @@ public class BaseClass {
 		return driver.FindElementById("btnsubmit");
 	}
 
-	public Element selectSecurityGroup() {
-		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='SG1134047']");
+	public Element selectSecurityGroup(String SecurityGrp) {
+		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='"+SecurityGrp+"']");
 	}
 
 	public Element selectDefaultSecurityGroup() {
@@ -2554,7 +2554,7 @@ public class BaseClass {
 		softAssertion.assertAll();
 	}
 
-	public void SelectSecurityGrp(String username) {
+	public void SelectSecurityGrp(String username,String SecurityGrp) {
 		waitForElement(SelectSearchOption());
 		SelectSearchOption().SendKeys(username);
 		SelectSearchOption().Enter();
@@ -2562,10 +2562,10 @@ public class BaseClass {
 		waitTillElemetToBeClickable(getEditButton());
 		getEditButton().waitAndClick(10);
 		driver.scrollingToBottomofAPage();
-		selectSecurityGroup().ScrollTo();
-		selectSecurityGroup().isDisplayed();
-		waitTillElemetToBeClickable(selectSecurityGroup());
-		selectSecurityGroup().waitAndClick(10);
+		selectSecurityGroup(SecurityGrp).ScrollTo();
+		selectSecurityGroup(SecurityGrp).isDisplayed();
+		waitTillElemetToBeClickable(selectSecurityGroup(SecurityGrp));
+		selectSecurityGroup(SecurityGrp).Click();
 		getSaveBtn().waitAndClick(5);
 		VerifySuccessMessage("User profile was successfully modified");
 		CloseSuccessMsgpopup();
@@ -3022,7 +3022,7 @@ public class BaseClass {
 		}
 
 		System.out.println(lines.size());
-		for (int i = 1; i < lines.size() - 1; i++) {
+		for (int i = 1; i < lines.size()-1; i++) {
 			String value = lines.get(i);
 			String[] arrOfStr = value.split(",");
 

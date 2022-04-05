@@ -73,7 +73,19 @@ public class DataSets {
 		return driver.FindElementByXPath("//div[@id='DataSetListContainer']//div[@id='tileContainer']//div[@id='cardCanvas']");
 	
 	}
-	
+	public Element getPublishedCount(int i) {
+		return driver.FindElementByXPath("(//input[contains(@value,'View Set' )]/../../../following-sibling::div//div[@class='ingestCt col-md-4 txt-color-green']//span)["+i+"]");
+		}
+		public Element getSelectAction(int i) {
+		return driver.FindElementByXPath("(//button[@id='idAction'])["+i+"]");
+		}
+		public Element getSelectDocList(int i) {
+		return driver.FindElementByXPath("(//a[@id='idBulkTag'][text()='DocList'])["+i+"]");
+
+		}
+		public ElementCollection getPublishedCount() {
+		return driver.FindElementsByXPath("//input[contains(@value,'View Set' )]/../../../following-sibling::div//div[@class='ingestCt col-md-4 txt-color-green']//span");
+		}
 	
 	public DataSets(Driver driver) {
 
@@ -248,15 +260,22 @@ public class DataSets {
 	*@description : Method to select dataset.
 	*/
 	public void SelectingUploadedDataSet() {
-		driver.waitForPageToBeReady();
-		base.waitTillElemetToBeClickable(getDataSetTypeList());
-		getDataSetTypeList().selectFromDropdown().selectByVisibleText("Only Uploaded Sets");
-		driver.waitForPageToBeReady();
-		base.waitForElement(getSelectAction());
-		getSelectAction().waitAndClick(10);
-		base.waitForElement(getSelectDocList());
-		getSelectDocList().waitAndClick(10);
-		
+	driver.waitForPageToBeReady();
+	base.waitForElement(getDataSetTypeList());
+	getDataSetTypeList().selectFromDropdown().selectByVisibleText("Only Uploaded Sets");
+	driver.waitForPageToBeReady();
+	for(int i = 1 ; i < getPublishedCount().size() ; i++) {
+	String count = getPublishedCount(i).getText();
+	int count1 =Integer.parseInt(count);
+	if(count1 == 0) {
+	continue;
+	}else if(count1 != 0)
+	base.waitForElement(getSelectAction(i));
+	getSelectAction(i).waitAndClick(10);
+	base.waitForElement(getSelectDocList(i));
+	getSelectDocList(i).waitAndClick(10);
+	break;
+	}
 	}
 	/**
 	 * @author Aathith.Senthilkumar
