@@ -10097,7 +10097,6 @@ public class SessionSearch {
 		base.waitForElement(getAs_AudioTextBox_CombinationSearch());
 		getAs_AudioTextBox_CombinationSearch().SendKeys(Input.audioSearchString1);
 	}
-
 	/**
 	 * @Author :Aathith
 	 * @Description :Selecting metadata in search
@@ -10119,9 +10118,11 @@ public class SessionSearch {
 		base.waitForElement(getSearchButton());
 		getSearchButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
+	if(	getTallyContinue().isDisplayed()) {
 		base.waitForElement(getTallyContinue());
 		getTallyContinue().waitAndClick(5);
-		driver.waitForPageToBeReady();
+	}else {
+		driver.waitForPageToBeReady();}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");

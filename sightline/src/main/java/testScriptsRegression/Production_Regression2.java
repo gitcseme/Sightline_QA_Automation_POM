@@ -334,7 +334,10 @@ public class Production_Regression2 {
 		driver.Navigate().refresh();
 		base.impersonateSAtoPA();
 
+		driver.waitForPageToBeReady();
+		String productionname="prod"+Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		driver.waitForPageToBeReady();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -586,7 +589,7 @@ public class Production_Regression2 {
 				"Verify that RMU can access the Production by copying the Production URL if user is part of that security group/Project");
 
 		base = new BaseClass(driver);
-		base.SelectSecurityGrp(Input.rmu1userName);
+		base.SelectSecurityGrp(Input.rmu1userName,Input.securityGroup_sg47);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		productionname = "p" + Utility.dynamicNameAppender();
