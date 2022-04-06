@@ -929,6 +929,14 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath("//div[@role='progressbar']");
 	}
 	
+	public Element getIgnoreOptionSelection() {
+		return driver.FindElementByXPath("//input[@id='rbignore']");
+	}
+	
+	public Element ignoreOptionInErrorList() {
+		return driver.FindElementByXPath("//tr[@role='row']//label[text()='Ignore']");
+	}
+	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
 		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[text()='Rollback']");
@@ -4576,7 +4584,7 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 	
 	
 	/**
-	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
+	 * @author: Mohan Created Date: 24/02/2022 Modified by: Arunkumar Modified Date: 06/04/2022
 	 * @description: Verify ingestion at catalog status
 	 */
 	public void ingestionAtCatlogState(String dataset) {
@@ -4594,11 +4602,13 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
     	getFilterByCATALOGED().waitAndClick(10);
     	
     	//catlogging
-    	for (int i = 0; i < 5; i++) {
-			if (getCatalogedIngestionStatus().isElementAvailable(5)) {
+    	for (int i = 0; i < 10; i++) {
+    		base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+			if (status.contains("Cataloged")) {
 				base.passedStep("Cataloged completed");
 				break;
-			}else if (getFailedIngestionStatus().isElementAvailable(5)) {
+			}else if (status.contains("Failed")) {
 				System.out.println("Execution aborted!");
 				UtilityLog.info("Execution aborted!");
 				System.out.println(dataset+" is failed in catalog stage. Take a look and continue!");
@@ -6721,5 +6731,75 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 	    		base.failedMessage("No ingestion is present in Failed/Published state");
 	    	}
 		}
+		
+		/**
+		 * @author: Arun Created Date: 06/04/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform Copying stage ingestion
+		 */
+		public void ingestionCopying() {
+			
+			base.waitTime(2);
+	        getIngestionDetailPopup(1).waitAndClick(10);
+	        driver.scrollingToElementofAPage(getRunCopying());
+	    	base.waitForElement(getRunCopying());
+	        getRunCopying().waitAndClick(10);
+
+	        driver.waitForPageToBeReady();
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getCloseButton().Enabled()  ;}}), Input.wait30); 
+	    	getCloseButton().waitAndClick(10);
+	    	
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+	    	getFilterByButton().waitAndClick(10);
+	    	
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
+	    	getFilterByCOPIED().waitAndClick(10);
+	    	
+	    	//copying
+	    	for(int i=0;i<50;i++) {
+	    		getRefreshButton().Click();
+	    		base.waitTime(2);
+				String status = getStatus(1).getText().trim();
+				
+	    		if(status.contains("Copied")) {
+	    			base.passedStep("Copied completed");
+	    			break;
+	    		}
+	    		else if (status.contains("In Progress")) {
+	    			base.waitTime(10);
+	    			getRefreshButton().waitAndClick(5);
+	    		}
+	    		else if (status.contains("Failed")){
+	    			base.failedStep("Failed");
+	    		}
+	    	}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 06/04/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify ignore option and checkbox in ingestion error list
+		 */
+		public void verifyIgnoreOptionAndCheckbox() {
+			  getIngestionDetailPopup(1).waitAndClick(5);
+			  base.waitTime(1);
+			  driver.scrollingToElementofAPage(errorCountCatalogingStage());
+		      base.waitForElement(errorCountCatalogingStage());
+		      errorCountCatalogingStage().waitAndClick(10);
+		      base.waitForElement(ignoreOptionInErrorList());
+		      String type = getIgnoreOptionSelection().GetAttribute("type").trim();
+		      
+		      if(ignoreOptionInErrorList().isDisplayed() && type.equalsIgnoreCase("checkbox")) {
+		    	  base.passedStep("Ignore option displayed with checkbox in error list");
+		      }
+		      else {
+		    	  base.failedStep("Ignore option not displayed with check box in error list");
+		      }
+		      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getCloseButton().Enabled()  ;}}), Input.wait30); 
+		    	getCloseButton().waitAndClick(10);
+		}
+		
 	
 }
