@@ -82,61 +82,15 @@ public class BatchRedactionRegression2 {
 		DCRedactions = new DocViewRedactions(driver);
 	}
 
-	@DataProvider(name = "reserveWords")
-	public Object[][] dataMethod() {
-		return new Object[][] { { "\"##[0-9]{5}-[0-9]{4}\"", "RPMXCON-53377" },
-				{ "\"##[5-9]{5}-[1-4]{4}\"", "RPMXCON-53376" },
-				{ " \"##[0-9]{3}-[0-1]{2}-[1-4]{4}\"", "RPMXCON-53374" },
-				{ "\"##[0-9]{3}-[0-9]{3}-[0-9]{4}\"", "RPMXCON-53373" }, };
-	}
-
 	/**
+	 * @Author Jeevitha
+	 * @Dsecription : [Details for the saved search each row]Verify the 'Select a
+	 *              search' section from batch redactions for saved searches row
+	 *              details [RPMXCON-53393]
 	 * @throws InterruptedException
-	 * @created By Jeevitha.R Description: Verify that batch redaction with saved
-	 *          search for zip code ,phonenumber
-	 * 
 	 */
-	@Test(enabled = true, dataProvider = "reserveWords", groups = { "regression" }, priority = 1)
-	public void verifyBatchRedact(String data, String testCaseId) throws InterruptedException {
-		String searchName = "SearchName" + Utility.dynamicNameAppender();
 
-		// Login as a RMU
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		base.stepInfo("Testcase ID : " + testCaseId + "  Bacth Redaction");
-
-		// Test Case Description
-		if (testCaseId.contentEquals("RPMXCON-53377")) {
-			base.stepInfo(
-					"Verify that batch redaction with saved search for zip code with format like \"##[0-9]{5}-[0-9]{4}\"");
-		} else if (testCaseId.contentEquals("RPMXCON-53376")) {
-			base.stepInfo(
-					"Verify that batch redaction should be successful with saved search for ZIPCODE with format like \"##[5-9]{5}-[1-4]{4}\"");
-		} else if (testCaseId.contentEquals("RPMXCON-53374")) {
-			base.stepInfo(
-					"Verify that Batch Redaction when Saved search is with regular expression including SSN like \"##[0-9]{3}-[0-1]{2}-[1-4]{4}\" /SSN starting with charactersfrom Batch Redaction Home page");
-		} else if (testCaseId.contentEquals("RPMXCON-53373")) {
-			base.stepInfo(
-					"Verify that Batch Redaction when Saved search is with regular expression with phone number format like \"##[0-9]{3}-[0-9]{3}-[0-9]{4}\" from Batch Redaction Home page");
-		}
-
-		// Search The Query
-		int purehit = session.basicContentSearch(data);
-		session.saveSearch(searchName);
-
-		batch.savedSearchBatchRedaction1(Input.defaultRedactionTag, searchName);
-		// verify Popup Yes Button
-		batch.getPopupYesBtn().Click();
-		base.stepInfo("Clicked Yes Button");
-
-		// verify History status
-		batch.verifyBatchHistoryStatus(searchName);
-
-		// Delete Search
-		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
-		login.logout();
-	}
-
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyBatch() throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 
@@ -172,7 +126,7 @@ public class BatchRedactionRegression2 {
 	 *              containing question mark or Single quote or astriek special
 	 *              character.
 	 */
-	@Test(enabled = true, dataProvider = "SpecialCharsSearchName", groups = { "regression" }, priority = 3)
+	@Test(enabled = true, dataProvider = "SpecialCharsSearchName", groups = { "regression" }, priority = 2)
 	public void verifyApplyRedactPopUp_Astriek(String name, String testCaseId) throws InterruptedException {
 		String searchName = name + Utility.dynamicNameAppender();
 
@@ -214,7 +168,7 @@ public class BatchRedactionRegression2 {
 	 *         on Saved Query. (RPMXCON-53514)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyRelevantMessageAppear() throws InterruptedException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -247,7 +201,7 @@ public class BatchRedactionRegression2 {
 	 *         (RPMXCON-53391)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifySearchGroupWithMultipleSearches() throws InterruptedException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String searchName1 = "Search" + Utility.dynamicNameAppender();
@@ -275,7 +229,7 @@ public class BatchRedactionRegression2 {
 		// verify History status
 		base.waitForElement(batch.getSavedSearch(searchName));
 		String savedSearch = batch.getSavedSearch(searchName).getText();
-		batch.verifyBatchHistoryStatus(savedSearch);
+		batch.verifyHistoryStatus(savedSearch);
 
 		// Delete Created Node
 		saveSearch.deleteNode(Input.mySavedSearch, newNode);
@@ -296,7 +250,7 @@ public class BatchRedactionRegression2 {
 	 *         with regular expression (RPMXCON- 53380)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "cjkAndRegular", groups = { "regression" }, priority = 6)
+	@Test(enabled = true, dataProvider = "cjkAndRegular", groups = { "regression" }, priority = 5)
 	public void verifyBatchRedactWithCJKAndSpelling(String data, String testCaseID) throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 
@@ -336,7 +290,7 @@ public class BatchRedactionRegression2 {
 	 *         on Saved Query. (RPMXCON-53515)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyMessageFontSize() throws InterruptedException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -357,6 +311,8 @@ public class BatchRedactionRegression2 {
 
 		batch.verifyNodeAnalyseAndViewBtn(newNode, searchName, null, null);
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "No");
+		base.waitForElement(batch.getCloseBtn());
+		batch.getCloseBtn().waitAndFind(10);
 
 		// Delete Search
 		saveSearch.deleteNode(Input.mySavedSearch, newNode);
@@ -370,7 +326,7 @@ public class BatchRedactionRegression2 {
 	 *         batch redactions from batch redactions home paage (RPMXCON-53390)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyBathcRedactionWithMultipleSearchGroups() throws InterruptedException {
 		String savedSearch1 = "Search" + Utility.dynamicNameAppender();
 		String savedSearch2 = "Search" + Utility.dynamicNameAppender();
@@ -415,7 +371,7 @@ public class BatchRedactionRegression2 {
 	 *              message displays" on click of delete icon from doc view
 	 *              redaction
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyDeletePopUp() throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 		// Login as a RMU
@@ -458,7 +414,7 @@ public class BatchRedactionRegression2 {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyRedactionHistoryInj() throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 		String tagName = "TAG" + Utility.dynamicNameAppender();
@@ -501,7 +457,7 @@ public class BatchRedactionRegression2 {
 	 *         Report' link from Pre-Redaction Report pop up (RPMXCON-53363)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyPreRedactionReport() throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 
@@ -527,7 +483,7 @@ public class BatchRedactionRegression2 {
 	 *         History of Batch Redactions page (RPMXCON-53371)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyColumnSorting() throws InterruptedException {
 		String searchName = "test" + Utility.dynamicNameAppender();
 		List<String> originalOrderedList;
@@ -592,7 +548,7 @@ public class BatchRedactionRegression2 {
 	 *         should not overcount the expected redactions (RPMXCON-53512)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyAnalysisReport() throws InterruptedException, IOException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 
@@ -606,7 +562,7 @@ public class BatchRedactionRegression2 {
 		session.saveSearch(searchName);
 
 		batch.loadBatchRedactionPage(searchName);
-		batch.performAnalysisGroupForRedcation(searchName, null, purehit, true);
+		batch.performAnalysisGroupForRedcation(searchName, null, purehit, true, true);
 
 		// Delete Search
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
@@ -619,7 +575,7 @@ public class BatchRedactionRegression2 {
 	 *         (RPMXCON-53366)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyWhenUserClickAnalyzeGroup() throws InterruptedException, IOException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -639,10 +595,10 @@ public class BatchRedactionRegression2 {
 		session.saveSearchInNewNode(searchName, newNode);
 
 		batch.loadBatchRedactionPage(searchName);
-		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false);
+		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false, true);
 
 		// Delete Search
-		saveSearch.deleteNode( Input.mySavedSearch, newNode);
+		saveSearch.deleteNode(Input.mySavedSearch, newNode);
 
 		login.logout();
 	}
@@ -653,7 +609,7 @@ public class BatchRedactionRegression2 {
 	 *         not have the 'Redactions' rights (RPMXCON-53430)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyRedactionRight() throws InterruptedException, IOException {
 
 		// will login As PA
@@ -674,6 +630,7 @@ public class BatchRedactionRegression2 {
 
 		// verify Redaction Panel
 		docview.verifyPanel();
+
 		login.logout();
 
 		// will login As PA
@@ -688,7 +645,7 @@ public class BatchRedactionRegression2 {
 	 *         same saved search (RPMXCON-53378)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyBatchRedactionAfterSearchEdit() throws InterruptedException, IOException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String searchName1 = "Search" + Utility.dynamicNameAppender();
@@ -731,7 +688,7 @@ public class BatchRedactionRegression2 {
 	 *         report' link for same from batch redaction history
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyReport() throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 		// will login as RMU
@@ -792,7 +749,7 @@ public class BatchRedactionRegression2 {
 						"RPMXCON-53346", "RPMXCON-53347" }, };
 	}
 
-	@Test(enabled = true, dataProvider = "phraseSentenceAndReg", groups = { "regression" }, priority = 18)
+	@Test(enabled = true, dataProvider = "phraseSentenceAndReg", groups = { "regression" }, priority = 17)
 	public void verifyBatchRedactWithPhraseAndSentence(String data, String testCaseId1, String testCaseId2)
 			throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
@@ -846,72 +803,13 @@ public class BatchRedactionRegression2 {
 	}
 
 	/**
-	 * @author Jeevitha
-	 * @Description : Verify that Batch Redaction should be successful when selected
-	 *              Saved search is with regular expression with format like
-	 *              \"##77\" from Batch Redaction Home page (RPMXCON-53348)
-	 * @Description : Verify that Rollback should be successful when selected Saved
-	 *              search is with regular expression [Pattern] (RPMXCON-53349)
-	 * @throws InterruptedException
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
-	public void verifyBatchRedactWithRegExp() throws InterruptedException {
-		String searchName = "SearchName" + Utility.dynamicNameAppender();
-		String data = "\"##77\"";
-
-		// Login as a RMU
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		base.stepInfo("Testcase ID : RPMXCON-53348  Bacth Redaction");
-		// Test Case Description
-		base.stepInfo(
-				"Verify that Batch Redaction should be successful when selected Saved search is with regular expression with format like \"##77\" from Batch Redaction Home page");
-		base.stepInfo("Testcase ID : RPMXCON-53349  Bacth Redaction");
-		base.stepInfo(
-				"Verify that Rollback should be successful when selected Saved search is with regular expression [Pattern]");
-		
-		// Search The Query
-		int purehit = session.basicContentSearch(data);
-		session.saveSearch(searchName);
-
-		batch.savedSearchBatchRedaction1(Input.defaultRedactionTag, searchName);
-		// verify Popup Yes Button
-		batch.getPopupYesBtn().Click();
-		base.stepInfo("Clicked Yes Button");
-
-		// verify History status
-		batch.verifyBatchHistoryStatus(searchName);
-
-		base.stepInfo("Testcase ID : RPMXCON-53349  Bacth Redaction");
-		base.stepInfo(
-				"Verify that Rollback should be successful when selected Saved search is with regular expression [Pattern]");
-
-		// perform RollBack
-		batch.verifyRollback(searchName, "No");
-		batch.verifyRollback(searchName, "Yes");
-
-		// verify Rollback Notification
-		batch.rollbackBatchRedactionReport();
-
-		// To make sure we are in basic search page
-		driver.getWebDriver().get(Input.url + "Search/Searches");
-
-		session.ViewInDocView();
-		driver.waitForPageToBeReady();
-		docviewMetadata.verifyBrowseAllHistory_RedactionAddedStatus(false);
-
-		// Delete Search
-		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
-		login.logout();
-	}
-
-	/**
 	 * @author Jayanthi
 	 * @Description :Verify that result should be displayed on ''My BackgroundTask
 	 *              Page' for the selected Filter type 'Batch redaction' / 'Batch
 	 *              unredaction'.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyBGTask() throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 		// will login as RMU
@@ -948,7 +846,7 @@ public class BatchRedactionRegression2 {
 	 *              for search group on batch redaction page(RPMXCON-53357)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyTabsInBR() throws InterruptedException, IOException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String searchName1 = "Search2" + Utility.dynamicNameAppender();
@@ -984,7 +882,7 @@ public class BatchRedactionRegression2 {
 
 		// Check Analyse btn After search is saved
 		batch.loadBatchRedactionPage(newNode);
-		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false);
+		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false, true);
 		batch.performViewReportAndApplyRedactions(newNode);
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
 
@@ -1000,7 +898,7 @@ public class BatchRedactionRegression2 {
 
 		// Check Analyse btn after performing Batch redaction
 		batch.loadBatchRedactionPage(newNode);
-		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false);
+		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false, true);
 
 		// check Analyse from default tab after performing Batch redaction
 		batch.performAnalysisFromDefaultTab(searchName1, null);
@@ -1023,7 +921,7 @@ public class BatchRedactionRegression2 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyMoveAction() throws InterruptedException, IOException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -1047,7 +945,7 @@ public class BatchRedactionRegression2 {
 
 		// Check Analyse btn After search is saved
 		batch.loadBatchRedactionPage(newNode);
-		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false);
+		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false, true);
 
 		// Delete Created Node
 		saveSearch.deleteNode(Input.mySavedSearch, newNode);
@@ -1064,7 +962,7 @@ public class BatchRedactionRegression2 {
 	 *              (RPMXCON-53355)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyBatchRedactWithOR_operator() throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 
@@ -1117,7 +1015,7 @@ public class BatchRedactionRegression2 {
 	 *              Redaction Home Screen. (RPMXCON-53504)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyDateAndTimeFormat() throws InterruptedException, IOException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -1152,7 +1050,7 @@ public class BatchRedactionRegression2 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyAnalysisBtnForZeroDoc() throws InterruptedException, IOException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 
@@ -1166,7 +1064,7 @@ public class BatchRedactionRegression2 {
 		session.saveSearch(searchName);
 
 		batch.loadBatchRedactionPage(searchName);
-		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false);
+		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false, true);
 
 		// Delete Search
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
@@ -1179,7 +1077,7 @@ public class BatchRedactionRegression2 {
 	 *              view which is added with batch redactions(RPMXCON-53408)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void deleteRedactionAndVerifyCount() throws InterruptedException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -1213,7 +1111,7 @@ public class BatchRedactionRegression2 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyCancelAndRollback() throws InterruptedException, IOException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 
@@ -1250,7 +1148,7 @@ public class BatchRedactionRegression2 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyBROnClickOfViewRedact() throws InterruptedException, IOException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -1259,7 +1157,7 @@ public class BatchRedactionRegression2 {
 		base.stepInfo("Tescase ID :RPMXCON-53334 Saved Search ");
 		base.stepInfo(
 				"Verify that batch redaction should be successful on click of 'View and Redact' for the saved search[10/100 Batch Redacting] under the search group which is 'Analyzed Group for Redaction'");
-		
+
 		login.editProfile("English - United States");
 
 		// create new search group
@@ -1271,7 +1169,7 @@ public class BatchRedactionRegression2 {
 
 		// Check Analyse btn Before batch readction
 		batch.loadBatchRedactionPage(newNode);
-		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false);
+		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false, true);
 		batch.performViewReportAndApplyRedactions(newNode);
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
 
@@ -1281,7 +1179,7 @@ public class BatchRedactionRegression2 {
 		// Check Analyse btn After batch readction
 		driver.Navigate().refresh();
 		batch.loadBatchRedactionPage(newNode);
-		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false);
+		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false, true);
 
 		// Delete Created Node
 		saveSearch.deleteNode(Input.mySavedSearch, newNode);
@@ -1298,7 +1196,7 @@ public class BatchRedactionRegression2 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyAnalysisReportInGerman() throws InterruptedException, IOException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 
@@ -1314,12 +1212,9 @@ public class BatchRedactionRegression2 {
 
 		batch.loadBatchRedactionPage(searchName);
 		login.editProfile("German - Germany");
-		try {
-			batch.loadBatchRedactionPage(searchName);
-			batch.performAnalysisGroupForRedcation(searchName, null, purehit, false);
-		} catch (InterruptedException e) {
-			base.failedMessage("FAILED TestCase");
-		}
+		batch.loadBatchRedactionPage(searchName);
+		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false, true);
+
 		login.editProfile("English - United States");
 		batch.verifyBatchRedactionFileDownload2(true);
 
@@ -1335,7 +1230,7 @@ public class BatchRedactionRegression2 {
 	 *              message (RPMXCON-53339)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyBatchRedactRollbackInGerman() throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 
@@ -1346,6 +1241,8 @@ public class BatchRedactionRegression2 {
 		// Test Case Description
 		base.stepInfo(
 				"Verify that belly band message should be displayed on click of 'Rollback' button and message on confirming from the belly band message");
+
+		login.editProfile("English - United States");
 
 		// Search The Query
 		int purehit = session.basicContentSearch(Input.testData1);
@@ -1358,16 +1255,11 @@ public class BatchRedactionRegression2 {
 		batch.verifyBatchHistoryStatus(searchName);
 
 		login.editProfile("German - Germany");
-		try {
-			// perform RollBack
-			batch.verifyRollback(searchName, "Yes");
+		// perform RollBack
+		batch.verifyRollback(searchName, "Yes");
 
-			// verify Rollback Notification
-			batch.rollbackBatchRedactionReport();
-		} catch (InterruptedException e) {
-			base.failedMessage("FAILED TestCase");
-
-		}
+		// verify Rollback Notification
+		batch.rollbackBatchRedactionReport();
 
 		login.editProfile("English - United States");
 		// Delete Search
@@ -1390,6 +1282,7 @@ public class BatchRedactionRegression2 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			login.editProfile("English - United States");
 			login.logoutWithoutAssert();
 
 		}

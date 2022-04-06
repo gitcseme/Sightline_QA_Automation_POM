@@ -1002,6 +1002,11 @@ public class UserManagement {
 		Thread.sleep(2000);
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
+		
+		if (getSavePassword().isElementAvailable(3)) {
+			getSavePassword().waitAndClick(3);
+			driver.waitForPageToBeReady();
+		}
 	}
 
 	/**
