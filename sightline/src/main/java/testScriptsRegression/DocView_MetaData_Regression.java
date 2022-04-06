@@ -16,11 +16,13 @@ import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
+import pageFactory.DocExplorerPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
 import pageFactory.ProjectFieldsPage;
+import pageFactory.ReusableDocViewPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagCountbyTagReport;
@@ -1386,7 +1388,44 @@ public class DocView_MetaData_Regression {
 		assgnPage.deleteAssignment(assignmentName);
 	}
 
-
+	/**
+	 * @author Gopinath
+	 * @TestCase Id:60556 Verify whether Metadata fields are sorted in ascending order in DocView Page
+	 * @Description:To Verify whether Metadata fields are sorted in ascending order in DocView Page
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 198)
+	public void verifyMetaDataListSortingOrder() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-60556");
+		baseClass.stepInfo("Verify whether Metadata fields are sorted in ascending order in DocView Page");
+		utility = new Utility(driver);
+		DocExplorerPage docExpPage=new DocExplorerPage(driver);
+		docView = new DocViewPage(driver);
+		ReusableDocViewPage reUsableDocPage = new ReusableDocViewPage(driver);
+		
+		baseClass.stepInfo("Navigating to docExplorer page");
+		docExpPage.navigateToDocExplorerPage();
+		
+		baseClass.stepInfo("Select document in doc explorer page");
+		docExpPage.selectAllDocumentsFromCurrentPage();
+		
+		baseClass.stepInfo("View in DocView");
+		docExpPage.docExpViewInDocView();
+		
+		baseClass.stepInfo("verify meta data fields are sorted in ascending oredr");
+		docView.verifyMetaDataFieldNameSorting();
+		
+		baseClass.stepInfo("open meta data list in child window");
+		docView.popOutMetaDataPanel();
+		
+		baseClass.stepInfo("verify meta data fields are sorted in ascending oredr in child window");
+		String patentWindowId = reUsableDocPage.switchTochildWindow();
+		docView.verifyMetaDataFieldNameSorting();
+		reUsableDocPage.childWindowToParentWindowSwitching(patentWindowId);
+		
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
