@@ -4756,7 +4756,9 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getRedactBtn().waitAndClick(10);
-
+		
+		docviewpage.selectBatchRedactedDoc();
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getBatchRedactionCount().Visible();

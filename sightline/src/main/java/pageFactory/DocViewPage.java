@@ -1669,6 +1669,10 @@ public class DocViewPage {
 	}
 
 	// Added by Jeevitha
+	public Element errorIcon() {
+		return driver.FindElementByXPath("//a[@class='iconError']");
+	}
+
 	public Element getAllRedactionNavigationIcon() {
 		return driver.FindElementByXPath("//i[@id='NextAllRedaction']/parent::div");
 	}
@@ -3315,11 +3319,11 @@ public class DocViewPage {
 	public Element getTranscriptsTab() {
 		return driver.FindElementByXPath("//li[@class='active text-center clsTranscript']");
 	}
-	
+
 	public Element getConfigureMiniDocTab() {
 		return driver.FindElementByXPath("//span[text()='Configure Mini DocList']");
 	}
-	
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -7467,18 +7471,16 @@ public class DocViewPage {
 	public void verifyRedactionPanel() {
 
 		this.driver.getWebDriver().get(Input.url + "DocumentViewer/DocView");
-//		try {
-//			base.waitForElement(getDocumentId2());
-//			getDocumentId2().waitAndClick(20);
-//		} catch (Exception e) {
-//
-//		}
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDocView_RedactIcon().Visible();
 			}
 		}), Input.wait60);
 		getDocView_RedactIcon().waitAndClick(10);
+		
+		selectBatchRedactedDoc();
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDocView_AllRedaction().Visible();
@@ -26845,37 +26847,35 @@ public class DocViewPage {
 		softAssertion.assertAll();
 
 	}
-	
+
 	/**
-	* @author Mohan 9/02/21 NA Modified date: NA Modified by:NA
-	* @description To Select DocId From mini doclist
-	*/
+	 * @author Mohan 9/02/21 NA Modified date: NA Modified by:NA
+	 * @description To Select DocId From mini doclist
+	 */
 	public void selectDocInMiniDocList(String docId) {
 
+		try {
+			driver.waitForPageToBeReady();
+			for (int i = 0; i < 20; i++) {
+				try {
+					driver.waitForPageToBeReady();
+					// getDocView_DocId(docId).ScrollTo();
+					base.waitForElement(getDocView_DocId(docId));
+					getDocView_DocId(docId).waitAndClick(15);
+					base.passedStep("Doc is selected from MiniDoclist successfully");
+					break;
+				} catch (Exception e) {
+					driver.Navigate().refresh();
+				}
 
-
-	try {
-	driver.waitForPageToBeReady();
-	for (int i = 0; i < 20; i++) {
-	try {
-	driver.waitForPageToBeReady();
-	// getDocView_DocId(docId).ScrollTo();
-	base.waitForElement(getDocView_DocId(docId));
-	getDocView_DocId(docId).waitAndClick(15);
-	base.passedStep("Doc is selected from MiniDoclist successfully");
-	break;
-	} catch (Exception e) {
-	driver.Navigate().refresh();
-	}
-	
-	}}catch (Exception e) {
-		e.printStackTrace();
-		System.out.println("Docs Arenot selected from mini doclist");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Docs Arenot selected from mini doclist");
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * @author Indium-Steffy date: 02/12/2021 This method is to configure the mini
 	 *         doc list to show completed docs
@@ -26886,7 +26886,7 @@ public class DocViewPage {
 		this.getShowCompletedDocsToggle().waitAndClick(5);
 		saveConfigureMiniDocList();
 	}
-	
+
 	/**
 	 * @author Indium Baskar
 	 * @Description : this method used to verify Configure minidoc list open should
@@ -26903,8 +26903,7 @@ public class DocViewPage {
 		Assert.assertEquals(configureMiniDocTab, "Configure Mini DocList");
 		base.passedStep("Minidoclist popup opened on clicking  the gear icon");
 	}
-	
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -26914,14 +26913,15 @@ public class DocViewPage {
 		base.waitForElement(getMiniDocListConfirmationButton("Save"));
 		getMiniDocListConfirmationButton("Save").waitAndClick(5);
 	}
-	
+
 	/**
 	 * @Author Mohan Created on 07/10/2021
 	 * @Description To perform CodeSame for threaded documents in the DocView Test
 	 *              Case id: RPMXCON-51370 & RPMXCON - 51371
 	 * 
 	 */
-	public void performCodeSameForThreadedDocumentsForReviewerUsingParamteres(int columnNo) throws InterruptedException {
+	public void performCodeSameForThreadedDocumentsForReviewerUsingParamteres(int columnNo)
+			throws InterruptedException {
 		driver.waitForPageToBeReady();
 		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
 		driver.waitForPageToBeReady();
@@ -26938,7 +26938,8 @@ public class DocViewPage {
 		base.VerifySuccessMessage("Code same performed successfully.");
 		driver.waitForPageToBeReady();
 		base.waitForElement(geDocView_ThreadMap_CodeSameAsIconForReviewer(columnNo));
-		softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIconForReviewer(columnNo).isDisplayed().booleanValue(), true);
+		softAssertion.assertEquals(geDocView_ThreadMap_CodeSameAsIconForReviewer(columnNo).isDisplayed().booleanValue(),
+				true);
 		try {
 			if (geDocView_ThreadMap_CodeSameAsIconForReviewer(columnNo).isDisplayed()) {
 				base.passedStep("CodeAsSame icon is displayed for the selected docs ");
@@ -26950,8 +26951,7 @@ public class DocViewPage {
 		codeSameDocumentid = getThreadedDocumentWhichHasCodeSameIcon().getText();
 		softAssertion.assertAll();
 	}
-	
-	
+
 	/**
 	 * @author Mohan 05/04/22 NA Modified date: NA Modified by:NA
 	 * @description To edit coding form
@@ -26974,4 +26974,21 @@ public class DocViewPage {
 
 	}
 
+	/**
+	 * @aUTHOR Jeevitha
+	 * @Description : Selects Errorless Docs
+	 */
+	public void selectBatchRedactedDoc() {
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getMiniDocListDocIdText());
+		List<String> DocIDInMiniDocList = base.availableListofElements(getMiniDocListDocIdText());
+		for (int i = 0; i < DocIDInMiniDocList.size(); i++) {
+			if (errorIcon().isElementAvailable(3)) {
+				base.waitForElement(getDocView_DocId(DocIDInMiniDocList.get(i)));
+				getDocView_DocId(DocIDInMiniDocList.get(i)).waitAndClick(15);
+			} else {
+				break;
+			}
+		}
+	}
 }
