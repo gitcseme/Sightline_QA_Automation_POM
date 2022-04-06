@@ -1666,8 +1666,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	// @Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
-	// }, priority = 22)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
+	}, priority = 22)
 	public void verifySeeAllTheThreadedDocsInAnalyticsPanelSelectedDocInDocView(String fullName, String userName,
 			String password) throws InterruptedException {
 
