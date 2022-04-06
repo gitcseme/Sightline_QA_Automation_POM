@@ -132,7 +132,25 @@ public class ABMReportPage {
 	public ElementCollection getElements() {
 		return driver.FindElementsByXPath("//*[@class='a-menu']");
 	}
-
+	public Element getBG_NotificationPopUp() {
+		return driver.FindElementByXPath("//p[contains(text(),'Your report is taking a')]");
+	}
+	public Element getNoButton() {
+		return driver.FindElementById("btnNo");
+	}
+	public Element getBullHornIcon_CC() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']//following::b[contains(@class,'badge')]");
+	}
+	public Element getRedBullHornIcon_CC() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']//following::b[@class='badge bg-color-red bounceIn animated']");
+	}
+	public Element getBullHornIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']");
+	}
+	public Element getBullHornIconNotification(int i) {
+		return driver.FindElementByXPath("(//a[contains(text(),'Your Background Report with Notification ')])["+i+"]");
+	}
+	 
 	public ABMReportPage(Driver driver) {
 
 		this.driver = driver;
@@ -437,4 +455,92 @@ public class ABMReportPage {
 		return sum;
 	}
 
+	/**
+	 * @author Jayanthi.Ganesan This method will generate ABM report [Report
+	 *         generation goes background] and verify whether report displayed from
+	 *         back ground notification
+	 * @param savedsearch
+	 * @param savedsearch_docLevel[this saved search should be having docs upto
+	 *                             10000 only because we have to use this
+	 *                             search to generate report at doc level ]
+	 * @param assgnname
+	 * @param assignmentName1
+	 * @param manageBatch[if manage batch option is document level this
+	 *                    should be 'true']
+	 * @throws InterruptedException
+	 */
+	public void generateABM_BackGroundReportGeneration(String savedsearch, String savedsearch_docLevel,
+			String assgnname, String assignmentName1, boolean manageBatch) throws InterruptedException {
+
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getReport_ABM());
+		getReport_ABM().Click();
+		driver.waitForPageToBeReady();
+		if (manageBatch) {
+			getManageBatchAt().selectFromDropdown().selectByVisibleText("Document");
+		}
+		getBullHornIcon().Click();
+		getBullHornIcon().Click();
+		String bullHornValue = getBullHornIcon_CC().getText();
+		int valueBeforeAnalysis = Integer.parseInt(bullHornValue);
+		bc.waitForElement(getABM_SelectSource());
+		getABM_SelectSource().Click();
+		getABM_SearchButton().waitAndClick(10);
+		if (manageBatch) {
+			bc.waitForElement(getABM_SelectSearch(savedsearch_docLevel));
+			getABM_SelectSearch(savedsearch_docLevel).Click();
+		} else {
+			bc.waitForElement(getABM_SelectSearch(savedsearch_docLevel));
+			getABM_SelectSearch(savedsearch_docLevel).Click();
+			bc.waitForElement(getABM_SelectSearch(savedsearch));
+			getABM_SelectSearch(savedsearch).Click();
+		}
+		bc.waitForElement(getABM_Searchsavebutton());
+		getABM_Searchsavebutton().Click();
+		bc.waitForElement(getABM_ReviewerExpandbutton());
+		getABM_ReviewerExpandbutton().Click();
+		bc.waitForElement(getABM_Reviewer_SelectAll());
+		getABM_Reviewer_SelectAll().Click();
+		getABM_ReviewerExpandbutton().ScrollTo();
+		getABM_ReviewerExpandbutton().Click();
+		bc.waitForElement(getABM_SelectAssignment());
+		getABM_SelectAssignment().waitAndClick(10);
+		bc.waitTime(1);
+		getABM_SelectAssgn(assgnname).ScrollTo();
+		getABM_SelectAssgn(assgnname).waitAndClick(10);
+		bc.waitTime(1);
+		getABM_SelectAssgn(assignmentName1).ScrollTo();
+		getABM_SelectAssgn(assignmentName1).waitAndClick(10);
+		driver.scrollPageToTop();
+		getApplyBtn().waitAndClick(10);
+		bc.waitForElement(getBG_NotificationPopUp());
+		if (getBG_NotificationPopUp().isElementAvailable(1)) {
+			getNoButton().Click();
+			bc.passedStep("Back ground report generation notification displayed.");
+		} else {
+			bc.failedMessage("Advanced Batch Management  Back ground report generation notification not  displayed.");
+		}
+		// checking for notification for BG search completed status.
+		bc.waitForElement(getRedBullHornIcon_CC());
+		bc.waitForElement(getRedBullHornIcon_CC());
+		String bullHornValue2 = getRedBullHornIcon_CC().getText();
+		int valueAfterAnalysis = Integer.parseInt(bullHornValue2);
+		if (valueAfterAnalysis > valueBeforeAnalysis) {
+			bc.passedStep("Bull horn icon has New Notification");
+			getBullHornIcon().Click();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getBullHornIconNotification(1));
+			getBullHornIconNotification(1).waitAndClick(10);
+			bc.waitForElement(getABM_SummaryPage());
+			if (getABM_SummaryPage().isDisplayed()) {
+				bc.passedStep("Advanced Batch Manage Report generated with saved search " + savedsearch
+						+ " as Source and assignment seelcted is " + assgnname);
+			} else {
+				bc.failedMessage("Advanced Batch Management report not generated.");
+			}
+		} else {
+			bc.failedMessage("No new notification added in bull horn icon");
+		}
+	}
 }
