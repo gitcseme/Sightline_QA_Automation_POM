@@ -26991,4 +26991,26 @@ public class DocViewPage {
 			}
 		}
 	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : Selects incomplete batch redaction i.e..,Error File 
+	 */
+	public void selectErrorFile() {
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getMiniDocListDocIdText());
+		List<String> DocIDInMiniDocList = base.availableListofElements(getMiniDocListDocIdText());
+		for (int i = 0; i < DocIDInMiniDocList.size(); i++) {
+			if (errorIcon().isElementAvailable(3)) {
+				String actualMsg=errorIcon().GetAttribute("data-content");
+				String ExpectedMsg= "in this document have been batch redacted. Please review and redact them manually as required.";
+				base.compareTextViaContains(actualMsg, ExpectedMsg,actualMsg , "The Error Msg Is Not As Expected");
+				break;
+			} else {
+				base.waitForElement(getDocView_DocId(DocIDInMiniDocList.get(i)));
+				getDocView_DocId(DocIDInMiniDocList.get(i)).waitAndClick(15);
+			}
+		}
+	}
+
 }
