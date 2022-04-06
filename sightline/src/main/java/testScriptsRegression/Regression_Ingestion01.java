@@ -907,6 +907,46 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyContentOnIngestionTiles();
 		
 	}
+	
+	/** 
+     *Author :Arunkumar date: 06/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47589
+	 * Description :Ingestion error list changes for  ignore fields in UI
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 42)
+	public void verifyIgnoreOptionInErrorList() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47589");
+		baseClass.stepInfo("Ingestion error list changes for  ignore fields in UI");
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyIgnoringErrorsAndContinueIngestion();
+		ingestionPage.ingestionCopying();
+		ingestionPage.verifyIgnoreOptionAndCheckbox();
+		//rollback
+		ingestionPage.rollBackIngestion();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 06/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49526
+	 * Description :Verify when user selects date & time format 'YYYY/MM/DD HH:MI:SS' for ingestion which is same as in the DAT file
+     * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 43)
+	public void verifyDateFormatYYYYMMDDHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49526");
+		baseClass.stepInfo("Verify when user selects date & time format 'YYYY/MM/DD HH:MI:SS' for ingestion which is same as in the DAT file");
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
+		//rollback
+		ingestionPage.rollBackIngestion();
+	}
+	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
