@@ -2727,6 +2727,179 @@ public class Production_Test_Regression_03 {
 				loginPage.logout();
 				
 			}
+			/**
+			 * @author Aathith.Senthilkumar
+			 * 			RPMXCONO-47172
+			 * @Description Verify that PDF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 10
+			 */
+			@Test(enabled = true,groups = { "regression" }, priority = 37)
+			public void verifyPdfFileAreNotSplit() throws Exception {
+				
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-47172 -Production");
+				base.stepInfo("Verify that PDF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 10");
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.telecaSearchString);
+				sessionSearch.bulkTagExisting(tagname);
+				sessionSearch.bulkFolderExisting(foldername);
+				
+				//Verify archive status on Gen page
+				ProductionPage page = new ProductionPage(driver);
+				productionname = "p" + Utility.dynamicNameAppender();
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingPDFSectionwithNativelyPlaceholder(tagname);
+				page.fillingTextSection();
+				page.navigateToNextSection();
+				page.visibleCheck("Numbering and Sorting");
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.visibleCheck("Priv Guard");
+				page.fillingPrivGuardPage();
+				page.visibleCheck("Production Location");
+				driver.scrollingToBottomofAPage();
+				page.getsplitSubFolderbtn().waitAndClick(10);
+				base.stepInfo("split sub folder toggle as OFF");
+				driver.scrollPageToTop();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.visibleCheck("Summary & Preview");
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				page.extractFile();
+				String home = System.getProperty("user.home");
+				
+				File dirPdf = new File(home+"\\Downloads\\VOL0001\\PDF");
+				File dirNative = new File(home+"\\Downloads\\VOL0001\\Natives");
+				File dirText = new File(home+"\\Downloads\\VOL0001\\Text");
+				softAssertion = new SoftAssert();
+				int dirPdfCount = page.dirFoldersCount(dirPdf);
+				int dirTextCount = page.dirFoldersCount(dirText);
+				softAssertion.assertEquals(1, dirPdfCount);
+				softAssertion.assertEquals(1, dirTextCount);
+				softAssertion.assertEquals(1, dirNative);
+				base.passedStep("files is not split as 'Split Folder' toggle was OFF");
+				base.passedStep("Verified that PDF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 10");
+				
+				page.deleteFiles();
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-48316
+			 * @Description Verify the production for Audio files which includes the Audio redaction extend to end of the audio file 
+			 * 
+			 */
+			@Test(enabled = true,groups = { "regression" }, priority = 38)
+			public void verifyProductionMp3File() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48316 -Production Component");
+				base.stepInfo("Verify the production for Audio files which includes the Audio redaction extend to end of the audio file");
+				
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+				BaseClass base = new BaseClass(driver);
+				base.selectproject(Input.additionalDataProject);
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				
+				DataSets dataset = new DataSets(driver);
+				base.stepInfo("Navigating to dataset page");
+				dataset.navigateToDataSetsPage();
+				base.stepInfo("Selecting uploadedset and navigating to doclist page");
+				dataset.selectDataSetWithName("AudioEndFile");
+				DocListPage doc = new DocListPage(driver);
+				driver.waitForPageToBeReady();
+
+				doc.selectAllDocs();
+				doc.docListToBulkRelease(Input.securityGroup);
+				doc.bulkTagExistingFromDoclist(tagname);
+				doc.selectAllDocs();
+				doc.bulkFolderExisting(foldername);
+				
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				base.selectproject(Input.additionalDataProject);
+				
+				RedactionPage redactionpage=new RedactionPage(driver);
+		        driver.waitForPageToBeReady();
+		        redactionpage.manageRedactionTagsPage(Redactiontag1);
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.selectFolderViewInDocView(foldername);
+				
+				DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				driver.waitForPageToBeReady();
+				docView.documentSelection(3);
+	            docViewRedactions.deleteAllAppliedRedactions();
+				driver.waitForPageToBeReady();
+	            docViewRedactions.clickOnAddRedactionForAudioDocument();
+	            docViewRedactions.addAudioRedaction(Input.startTime, Input.endTime, Redactiontag1);
+
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				int firstFile = Integer.parseInt(beginningBates);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingMP3FileWithBurnRedaction(Redactiontag1);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				int doccount =page.fillingGeneratePageWithContinueGenerationPopup();
+				int lastFile = firstFile + doccount;
+				page.waitForFileDownload();
+				page.extractFile();
+				
+				page.isMp3FileExist(firstFile, lastFile, prefixID, suffixID);
+				base.passedStep("Verified the production for Audio files which includes the Audio redaction extend to end of the audio file");
+				
+				page.deleteFiles();
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+				tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+				loginPage.logout();
+				
+			}
      
      
 	@AfterMethod(alwaysRun = true)
