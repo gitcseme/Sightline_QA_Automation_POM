@@ -530,7 +530,6 @@ public class BatchRedactionRegression3 {
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 	}
 
-
 	/**
 	 * @author Jeevitha
 	 * @Description:Verify on click of 'Cancel and Rollback' when batch redaction is
@@ -833,8 +832,8 @@ public class BatchRedactionRegression3 {
 		base.waitForElement(docview.getDocView_RedactIcon());
 		base.waitTillElemetToBeClickable(docview.getDocView_RedactIcon());
 		docview.getDocView_RedactIcon().waitAndClick(10);
-        docview.selectBatchRedactedDoc();
-        
+		docview.selectBatchRedactedDoc();
+
 		// getting the All Redaction total Count
 		Element allRedacCount = docview.getDocView_AllRedactionCount();
 		int redactionCount = docview.getRedactionCount(allRedacCount, "All Redaction");
@@ -903,7 +902,7 @@ public class BatchRedactionRegression3 {
 		base.waitForElement(docview.getDocView_RedactIcon());
 		base.waitTillElemetToBeClickable(docview.getDocView_RedactIcon());
 		docview.getDocView_RedactIcon().waitAndClick(10);
-        docview.selectBatchRedactedDoc();
+		docview.selectBatchRedactedDoc();
 
 		// getting the All Redaction total Count
 		Element allRedacCount = docview.getDocView_AllRedactionCount();
@@ -958,7 +957,7 @@ public class BatchRedactionRegression3 {
 		docview.getDocView_RedactIcon().waitAndClick(10);
 		dcRedact.verifyRedactionsSubMenu();
 		docview.selectBatchRedactedDoc();
-		
+
 		// getting the Batch Redaction total count
 		Element batchRedactCount = docview.getDocView_BatchRedactionCount();
 		int batchRedactionCount = docview.getRedactionCount(batchRedactCount, "Batch Redaction");
@@ -1014,7 +1013,7 @@ public class BatchRedactionRegression3 {
 		docview.getDocView_RedactIcon().waitAndClick(10);
 		dcRedact.verifyRedactionsSubMenu();
 		docview.selectBatchRedactedDoc();
-		
+
 		// getting the Component Batch Redaction total count
 		Element componentCount = docview.getComponentBatchRedactionsRatioCount();
 		int ComponentBatchCount = docview.getRedactionCount(componentCount, "Component Batch Redaction");
@@ -2762,6 +2761,46 @@ public class BatchRedactionRegression3 {
 		login.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that tool tip should be displayed for the failed batch
+	 *              redactions on doc view redactions panel [RPMXCON-53396]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 48)
+	public void veriryToolTipOfFailedBR() throws Exception {
+		String metadataSearch = "Search" + Utility.dynamicNameAppender();
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("Test case Id:RPMXCON-53396 Batch Redaction");
+		base.stepInfo(
+				"Verify that tool tip should be displayed for the failed batch redactions on doc view redactions panel");
+
+		// Basic search
+		session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
+
+		// verify History status
+		batch.verifyBatchHistoryStatus(searchName);
+
+		// selecting the Configured Saved search
+		saveSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+
+		docview.verifyPanel();
+		docview.selectErrorFile();
+
+		login.logout();
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
@@ -2782,10 +2821,11 @@ public class BatchRedactionRegression3 {
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
+		login.switchProjectToEnglish();
+
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			login.editProfile("English - United States");
 			login.logoutWithoutAssert();
 		}
 		try {

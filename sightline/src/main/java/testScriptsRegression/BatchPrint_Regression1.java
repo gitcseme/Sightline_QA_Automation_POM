@@ -579,6 +579,38 @@ public class BatchPrint_Regression1 {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify the ‘back’ button from top left (above page title) to
+	 *              top right (next to the group of buttons) in Batch Print -all
+	 *              tabs [RPMXCON-58909]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	public void verifyBackBtnInBatchPrintPage() throws InterruptedException {
+		String tagName = "TagName" + utility.dynamicNameAppender();
+		SessionSearch search = new SessionSearch(driver);
+		batchPrint = new BatchPrintPage(driver);
+
+		// login as PAU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-58909");
+		baseClass.stepInfo(
+				"Verify the ‘back’ button from top left (above page title) to top right (next to the group of buttons) in Batch Print -all tabs");
+
+		// creating tag
+		search.basicContentSearch(Input.searchString1);
+		search.bulkTag(tagName);
+
+		// navigating through Batch Print Tabs
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.navigateAndVerifyBackBtn("tag", tagName, false);
+
+		// logout
+		loginPage.logout();
+	}
+
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }, };
