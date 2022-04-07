@@ -368,6 +368,128 @@ public class UserManagement {
 	public ElementCollection getSecurityGroupList() {
 		return driver.FindElementsByXPath("//select[@id='ddlSg']//option");
 	}
+	
+	public Element getCategorizeStatusCheck() {
+		return driver.FindElementByXPath("//input[@id='UserRights_CanProview'][@checked='checked']");
+	}
+	public Element getSelectUserToSaUserEdit() {
+		return driver.FindElementByXPath(
+				"//table[@id='dtUserList']//tr//td//..//a[contains(text(),'Edit')]");
+	}
+	public Element getIngestionStatus() {
+		return driver.FindElementByXPath("//input[@id='UserRights_CanIngestions'][@checked='checked']");
+	}
+	
+	public Element getSearchCheck() {
+		return driver.FindElementByXPath("(//input[@id='UserRights_CanSearching'][position()=1])");
+	}
+
+	public Element getSearchTab() {
+		return driver.FindElementByXPath("//label[text()='Search']//parent::a");
+	}
+
+	public Element getBulkUserAccessTab() {
+		return driver.FindElementById("btnBulkUserAccessControl");
+	}
+
+	public Element getSelectRollId() {
+		return driver.FindElementByXPath("//select[@id='ddlBulkUserRoles']");
+	}
+
+	public Element getBulkManage() {
+		return driver.FindElementByXPath("//label[@id='lblCanManage']//i");
+	}
+
+	public Element getBulkIngestion() {
+		return driver.FindElementByXPath("//label[@id='lblCanIngestion']//i");
+	}
+
+	public Element getBulkProduction() {
+		return driver.FindElementByXPath("//label[@id='lblCanProductions']//i");
+	}
+
+	public Element getBulkSearch() {
+		return driver.FindElementByXPath("//label[@id='lblCanSearching']//i");
+	}
+
+	public Element getBulkExplorer() {
+		return driver.FindElementByXPath("//label[@id='lblCanConceptExplorer']//i");
+	}
+
+	public Element getBulkComExp() {
+		return driver.FindElementByXPath("//label[@id='lblCanCommunicationsExplorer']//i");
+	}
+
+	public Element getBulkCatagories() {
+		return driver.FindElementByXPath("//input[@id='chkCanProview']//parent::label//i");
+	}
+
+	public Element getBulkDataSet() {
+		return driver.FindElementByXPath("//input[@id='chkCanDataSets']//parent::label//i");
+	}
+
+	public Element getBulkCollection() {
+		return driver.FindElementByXPath("//label[@id='lblCanCollections']//i");
+	}
+
+	public Element getBulkReport() {
+		return driver.FindElementByXPath("//label[@id='lblCanAllReports']//i");
+	}
+
+	public Element getBulkDownLoadNative() {
+		return driver.FindElementByXPath("//label[@id='lblCanDownloadNative']//i");
+	}
+
+	public Element getBulkRedaction() {
+		return driver.FindElementByXPath("//label[@id='lblCanRedactions']//i");
+	}
+
+	public Element getBulkHighlighting() {
+		return driver.FindElementByXPath("//label[@id='lblCanHighlighting']//i");
+	}
+
+	public Element getBulkReviewerRemark() {
+		return driver.FindElementByXPath("//label[@id='lblCanReviewerRemarks']//i");
+	}
+
+	public Element getBulkAnalyticalPanel() {
+		return driver.FindElementByXPath("//label[@id='lblCanAnalyticsPanels']//i");
+	}
+
+	public Element getSelectingProject() {
+		return driver.FindElementByXPath("//select[@id='ddlBulkUserProjects']");
+	}
+
+	public Element getEnableRadioBtn() {
+		return driver.FindElementByXPath("//input[@id='rbEnable']//parent::label");
+	}
+
+	public Element getDisableRadioBtn() {
+		return driver.FindElementByXPath("//input[@id='rbDisable']//parent::label");
+	}
+
+	public Element getSelectBulkUser(String userName) {
+		return driver.FindElementByXPath("//div[@id='divBulkUserList']//label[contains(text(),'" + userName + "')]//i");
+	}
+
+	public Element getSelectDropProject(String projectName) {
+		return driver.FindElementByXPath("//option[@title='" + projectName + "']");
+	}
+
+	public Element getBulkUserSaveBtn() {
+		return driver.FindElementById("btnSaveBulkAccessControls");
+	}
+
+	public Element getBulkUserSecurityGroup() {
+		return driver.FindElementById("ddlBulkUserSecurityGroup");
+	}
+
+	public Element getSelectDropSG(String sgName) {
+		return driver.FindElementByXPath("//option[.='" + sgName + "']");
+	}
+	public Element getAllReportTab() {
+		return driver.FindElementByXPath("//label[text()='Reports']//parent::a");
+	}
 
 	public UserManagement(Driver driver) {
 
@@ -1322,114 +1444,7 @@ public class UserManagement {
 		}
 	}
 
-	public Element getSearchCheck() {
-		return driver.FindElementByXPath("(//input[@id='UserRights_CanSearching'][position()=1])");
-	}
-
-	public Element getSearchTab() {
-		return driver.FindElementByXPath("//label[text()='Search']//parent::a");
-	}
-
-	public Element getBulkUserAccessTab() {
-		return driver.FindElementById("btnBulkUserAccessControl");
-	}
-
-	public Element getSelectRollId() {
-		return driver.FindElementByXPath("//select[@id='ddlBulkUserRoles']");
-	}
-
-	public Element getBulkManage() {
-		return driver.FindElementByXPath("//label[@id='lblCanManage']//i");
-	}
-
-	public Element getBulkIngestion() {
-		return driver.FindElementByXPath("//label[@id='lblCanIngestion']//i");
-	}
-
-	public Element getBulkProduction() {
-		return driver.FindElementByXPath("//label[@id='lblCanProductions']//i");
-	}
-
-	public Element getBulkSearch() {
-		return driver.FindElementByXPath("//label[@id='lblCanSearching']//i");
-	}
-
-	public Element getBulkExplorer() {
-		return driver.FindElementByXPath("//label[@id='lblCanConceptExplorer']//i");
-	}
-
-	public Element getBulkComExp() {
-		return driver.FindElementByXPath("//label[@id='lblCanCommunicationsExplorer']//i");
-	}
-
-	public Element getBulkCatagories() {
-		return driver.FindElementByXPath("//input[@id='chkCanProview']//parent::label//i");
-	}
-
-	public Element getBulkDataSet() {
-		return driver.FindElementByXPath("//input[@id='chkCanDataSets']//parent::label//i");
-	}
-
-	public Element getBulkCollection() {
-		return driver.FindElementByXPath("//label[@id='lblCanCollections']//i");
-	}
-
-	public Element getBulkReport() {
-		return driver.FindElementByXPath("//label[@id='lblCanAllReports']//i");
-	}
-
-	public Element getBulkDownLoadNative() {
-		return driver.FindElementByXPath("//label[@id='lblCanDownloadNative']//i");
-	}
-
-	public Element getBulkRedaction() {
-		return driver.FindElementByXPath("//label[@id='lblCanRedactions']//i");
-	}
-
-	public Element getBulkHighlighting() {
-		return driver.FindElementByXPath("//label[@id='lblCanHighlighting']//i");
-	}
-
-	public Element getBulkReviewerRemark() {
-		return driver.FindElementByXPath("//label[@id='lblCanReviewerRemarks']//i");
-	}
-
-	public Element getBulkAnalyticalPanel() {
-		return driver.FindElementByXPath("//label[@id='lblCanAnalyticsPanels']//i");
-	}
-
-	public Element getSelectingProject() {
-		return driver.FindElementByXPath("//select[@id='ddlBulkUserProjects']");
-	}
-
-	public Element getEnableRadioBtn() {
-		return driver.FindElementByXPath("//input[@id='rbEnable']//parent::label");
-	}
-
-	public Element getDisableRadioBtn() {
-		return driver.FindElementByXPath("//input[@id='rbDisable']//parent::label");
-	}
-
-	public Element getSelectBulkUser(String userName) {
-		return driver.FindElementByXPath("//div[@id='divBulkUserList']//label[contains(text(),'" + userName + "')]//i");
-	}
-
-	public Element getSelectDropProject(String projectName) {
-		return driver.FindElementByXPath("//option[@title='" + projectName + "']");
-	}
-
-	public Element getBulkUserSaveBtn() {
-		return driver.FindElementById("btnSaveBulkAccessControls");
-	}
-
-	public Element getBulkUserSecurityGroup() {
-		return driver.FindElementById("ddlBulkUserSecurityGroup");
-	}
-
-	public Element getSelectDropSG(String sgName) {
-		return driver.FindElementByXPath("//option[.='" + sgName + "']");
-	}
-
+	
 	public void defaultSelectionCheckboxForAllRole(boolean manage, boolean ingestion, boolean production,
 			boolean search, boolean explorer, boolean comExplorer, boolean catagories, boolean dataSet,
 			boolean collection, boolean report, boolean downloadNative, boolean redaction, boolean highlighted,
@@ -1530,9 +1545,7 @@ public class UserManagement {
 		}
 	}
 
-	public Element getAllReportTab() {
-		return driver.FindElementByXPath("//label[text()='Reports']//parent::a");
-	}
+	
 
 	/**
 	 * @author Indium-Baskar date: 21/03/2022 Modified date: 21/03/2022
@@ -1571,5 +1584,62 @@ public class UserManagement {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
+	 * @Description:Methods Ingestion status checkbox
+	 */
+	public void verifyStatusIngestion(String status) throws Exception {
+		driver.waitForPageToBeReady();
+		
+	    boolean flagChecked=getIngestionStatus().isElementAvailable(3);
+	    System.out.println(flagChecked);
+	    if (flagChecked==false) {
+	    	bc.stepInfo("Ingestion checkbox is unchecked");
+		}
+	    if (flagChecked==true&& status=="false") {
+	    	bc.waitForElement(getIngestion());
+			getIngestion().waitAndClick(5);
+			bc.waitForElement(getSaveEditUser());
+			getSaveEditUser().waitAndClick(10);
+		}
+	    if (flagChecked==false&& status=="true") {
+	    	bc.waitForElement(getIngestion());
+			getIngestion().waitAndClick(5);
+			bc.waitForElement(getSaveEditUser());
+			getSaveEditUser().waitAndClick(10);
+			bc.stepInfo("Ingestion checkbox is checked");
+		}
+		
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
+	 * @Description:Methods Categorize status checkbox
+	 */
+	public void verifyStatusCategorize(String status) throws Exception {
+		driver.waitForPageToBeReady();
+		
+	    boolean flagChecked=getCategorizeStatusCheck().isElementAvailable(3);
+	    System.out.println(flagChecked);
+	    if (flagChecked==false) {
+	    	bc.stepInfo("Ingestion checkbox is unchecked");
+		}
+	    if (flagChecked==true&& status=="false") {
+	    	bc.waitForElement(getCategorizeCheck());
+			getCategorizeCheck().waitAndClick(5);
+			bc.waitForElement(getSaveEditUser());
+			getSaveEditUser().waitAndClick(10);
+		}
+	    if (flagChecked==false&& status=="true") {
+	    	bc.waitForElement(getIngestion());
+	    	getCategorizeCheck().waitAndClick(5);
+			bc.waitForElement(getSaveEditUser());
+			getSaveEditUser().waitAndClick(10);
+			bc.stepInfo("Ingestion checkbox is checked");
+		}
+		
+	}
+	
 
 }
