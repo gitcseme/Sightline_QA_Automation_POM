@@ -108,13 +108,13 @@
 	<analyticsConceptualDocId2>T2396D</analyticsConceptualDocId2>
 	<miniConceptualNoDoc>ID00001511</miniConceptualNoDoc>
 	<tiffSearchQuery>.tif</tiffSearchQuery>
-	<nearDupePagination>ID00000230</nearDupePagination>
+	<nearDupePagination>ICE010058-13-00000004</nearDupePagination>
 	<fieldByValue>Custodian</fieldByValue>
 	<highlightDocId>H16135-0188-002427</highlightDocId>
 	<highlightedDocsQuery>DupeCount:[1 TO 10000]</highlightedDocsQuery>
-	<ingestionQuery>B2F9_Automation_AllSources_20211130043120500</ingestionQuery>
+	<ingestionQuery>8DFD_Automation_AllSources_20220321095504183</ingestionQuery>
 	<ingestionDocIdFamilyMember>H16135-0188-002093</ingestionDocIdFamilyMember>
-	<ingestionDocIdNearDupe>H16135-0188-002523</ingestionDocIdNearDupe>
+	<ingestionDocIdNearDupe>H16135-0188-001027</ingestionDocIdNearDupe>
 
 
 
