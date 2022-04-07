@@ -105,7 +105,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @description: To verify that user can select document in the Threaded map panel and view in the doc list when redirects from Manage Assignment > Doc View.
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyUserCanSelectDocsFromThreadMapAndViewInDocList() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -161,7 +161,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * or saving 'Code same as this' action from analytics panel > Thread map 'RPMXCON-50917' Sprint 9
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 2) 
+	@Test(enabled = true, groups = { "regression" }, priority = 2) 
 	public void verifyWarningMsgWhenUserClicksLeftMenuForThreadMap() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -330,7 +330,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * saving 'Code same as this' action from analytics panel > Family Members 'RPMXCON-50918' Sprint 9
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 3) 
+	@Test(enabled = true, groups = { "regression" }, priority = 3) 
 	public void verifyWarningMsgWhenUserClicksLeftMenuForFamilyMember() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -354,7 +354,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignFamilyMemberDocuments();
-		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		assignmentsPage.assignFamilyDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
 		
 		baseClass.stepInfo("Step 2: Go to doc view from my assignment");
 		assignmentsPage.selectAssignmentToViewinDocview(assname);
@@ -430,7 +430,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		
 		baseClass.stepInfo("Step 3: Select documents from mini doc list and action as 'Code same as this'  Do not click on 'Complete' or 'Save'");
-		docView.selectDocIdInMiniDocList(docToBeSelected);
+		docView.selectDocIdInMiniDocList(Input.familyDocIdForReviewer01);
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 		
 		driver.waitForPageToBeReady();
@@ -455,7 +455,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		driver.Navigate().refresh();
 		driver.switchTo().alert().accept();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docToBeSelected);
+		docView.selectDocIdInMiniDocList(Input.familyDocIdForReviewer01);
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 		
 		driver.waitForPageToBeReady();
@@ -477,7 +477,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		
 		baseClass.stepInfo("Step 4: Select documents from analytics panel and action as 'Code same as this'  Do not click on 'Complete' or 'Save' and click browser back button");
-		docView.selectDocIdInMiniDocList(docToBeSelected);
+		docView.selectDocIdInMiniDocList(Input.familyDocIdForReviewer01);
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();	
 		
 		driver.waitForPageToBeReady();
@@ -503,7 +503,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * saving 'Code same as this' action from analytics panel >Conceptual 'RPMXCON-50919' Sprint 9
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 4) 
+	@Test(enabled = true, groups = { "regression" }, priority = 4) 
 	public void verifyWarningMsgWhenUserClicksLeftMenuForConceptual() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -604,7 +604,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		
 		baseClass.stepInfo("Step 3: Select documents from mini doc list and action as 'Code same as this'  Do not click on 'Complete' or 'Save'");
-		docView.selectDocIdInMiniDocList(docToBeSelected);
+		docView.selectDocIdInMiniDocList(Input.MiniDocId);
 		docView.selectDocsFromConceptualTabAndActionCodeSame();
 		
 		driver.waitForPageToBeReady();
@@ -629,7 +629,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		driver.Navigate().refresh();
 		driver.switchTo().alert().accept();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docToBeSelected);
+		docView.selectDocIdInMiniDocList(Input.MiniDocId);
 		docView.selectDocsFromConceptualTabAndActionCodeSame();
 		
 		driver.waitForPageToBeReady();
@@ -651,7 +651,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		
 		baseClass.stepInfo("Step 4: Select documents from analytics panel and action as 'Code same as this'  Do not click on 'Complete' or 'Save' and click browser back button");
-		docView.selectDocIdInMiniDocList(docToBeSelected);
+		docView.selectDocIdInMiniDocList(Input.MiniDocId);
 		docView.selectDocsFromConceptualTabAndActionCodeSame();
 		
 		driver.waitForPageToBeReady();
@@ -679,7 +679,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyNotViewAnalyticalPanelDocViewOffFromAssigment() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50859");
@@ -728,7 +728,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyAfterImpersonatingSelectDocInFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50813");
@@ -774,7 +774,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-    @Test(enabled = false, groups = { "regression" }, priority = 7)
+    @Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyProjectNoFamilyMemberTab() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50814");
@@ -808,7 +808,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		assignmentsPage.selectAssignmentToViewinDocview(assname);
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.miniConceptualNoDoc);
+		docView.selectDocIdInMiniDocList(Input.MetaDataId);
 		
         driver.waitForPageToBeReady();
         baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
@@ -834,7 +834,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 8)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 8)
 	public void verifySelectDocsInFolderFromConceptalSimilarTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -874,7 +874,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifySelectMultipleDocsCodeSameAsThreadMapTab() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51127");
@@ -950,7 +950,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 10)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 10)
 	public void verifySelectDocsInFolderFromNearDupeTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -976,7 +976,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
+		docView.selectDocIdInMiniDocList(Input.nearDupeDocId01);
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -1005,7 +1005,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 11)
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifySelectMultipleDocsFolderFamilyMemberTab() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50818");
@@ -1036,7 +1036,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 
 		// FamilyMember Folder Action
 		docView.Analytics_FamilyActionsFolderMultipleDocument(text);
-
+		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		tagsAndFolderPage.getFolderName(text).ScrollTo();
 		softAssertion.assertTrue(tagsAndFolderPage.getFolderName(text).isDisplayed());
@@ -1054,7 +1054,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 12)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyThereAreNoDocsInConceptualSimilartab() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50830");
@@ -1088,7 +1088,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.miniConceptualNoDoc);
+		docView.selectDocIdInMiniDocList("ID00000903");
 
 		//No Data For Conceptual Tab
 		driver.waitForPageToBeReady();
@@ -1116,7 +1116,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 13)
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyAfterImpersonatingSelectDocsViewConceptualSimilarTab() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50829");
@@ -1208,7 +1208,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 14)
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyAfterImpersonatingSelectDocsViewFamilyMemberTab() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50812");
@@ -1279,7 +1279,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 15)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 15)
 	public void verifyPaginationInNearDupeChildWindow(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -1843,9 +1843,12 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * Author : Mohan date: 17/02/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51322 
 	 * @description: Verify after impersonation on click of 'View All Documents' all the documents should be 
 	 * displayed on Analytics panel > family member, Near Dupe, Conceptual child window 'RPMXCON-51322' Sprint 12
+	 * 
+	 * Stabilization- Not done
+	 * Reason: DA useris not working in this buid 8.0
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 21) 
+	//@Test(enabled = true, groups = { "regression" }, priority = 21) 
 	public void verifyViewAllDocsEnabledInAnFamilyNearDupeConceptualChildWindow() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1861,7 +1864,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		
 		String saveSearch = "SaveSearch" + Utility.dynamicNameAppender();
 		String folderName = "FolderName"+ Utility.dynamicNameAppender();
-		String docId= Input.ingestionDocIdFamilyMember;
+		String docId= Input.nearDupeDocId01;
 		String docId1= Input.ingestionDocIdNearDupe;
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
@@ -1912,7 +1915,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		driver.switchTo().window(parentWindowID);
 		
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		docView.selectDocInMiniDocList(docId1);
 		
 		driver.switchTo().window(childWindow);
 		
@@ -1956,7 +1959,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		driver.switchTo().window(parentWindowID);
 		
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		docView.selectDocInMiniDocList(docId1);
 		
 		driver.switchTo().window(childWindow);
 		
@@ -2000,7 +2003,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		driver.switchTo().window(parentWindowID);
 		
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		docView.selectDocInMiniDocList(docId1);
 		
 		driver.switchTo().window(childWindow);
 		
@@ -2045,7 +2048,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		driver.switchTo().window(parentWindowID);
 
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		docView.selectDocInMiniDocList(docId1);
 
 		driver.switchTo().window(childWindow);
 
@@ -2089,7 +2092,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		driver.switchTo().window(parentWindowID);
 
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		docView.selectDocInMiniDocList(docId1);
 
 		driver.switchTo().window(childWindow);
 
@@ -2133,7 +2136,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		driver.switchTo().window(parentWindowID);
 
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		docView.selectDocInMiniDocList(docId1);
 
 		driver.switchTo().window(childWindow);
 
@@ -2177,7 +2180,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		driver.switchTo().window(parentWindowID);
 
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		docView.selectDocInMiniDocList(docId1);
 
 		driver.switchTo().window(childWindow);
 
@@ -2221,7 +2224,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		driver.switchTo().window(parentWindowID);
 
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		docView.selectDocInMiniDocList(docId1);
 
 		driver.switchTo().window(childWindow);
 
@@ -2257,13 +2260,13 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		
 		String saveSearch = "SaveSearch" + Utility.dynamicNameAppender();
 		String folderName = "FolderName"+ Utility.dynamicNameAppender();
-		String docId=Input.ingestionDocIdFamilyMember;
+		String docId=Input.nearDupeDocId01;
 		String docId1=Input.ingestionDocIdNearDupe;
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		softAssertion = new SoftAssert();
 		
-		sessionSearch.basicSearchWithMetaDataQuery("Input.ingestionQuery", "IngestionName");
+		sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery, "IngestionName");
 		sessionSearch.saveSearchAtAnyRootGroup(saveSearch, Input.shareSearchDefaultSG);
 
 		loginPage.logout();
@@ -2294,7 +2297,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
 		
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		docView.selectDocInMiniDocList(docId1);
 		
 		docView.verifyNearDupeTabWithMoreDocs();
 		docView.verifyConceptualTabWithMoreDocs();
@@ -2319,7 +2322,8 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
 		
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		driver.scrollPageToTop();
+		docView.selectDocInMiniDocList(docId1);
 		
 		docView.verifyNearDupeTabWithMoreDocs();
 		docView.verifyConceptualTabWithMoreDocs();
@@ -2345,7 +2349,8 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
 		
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		driver.scrollPageToTop();
+		docView.selectDocInMiniDocList(docId1);
 		
 		docView.verifyNearDupeTabWithMoreDocs();
 		docView.verifyConceptualTabWithMoreDocs();
@@ -2369,7 +2374,8 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
 
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		driver.scrollPageToTop();
+		docView.selectDocInMiniDocList(docId1);
 		docView.verifyNearDupeTabWithMoreDocs();
 		docView.verifyConceptualTabWithMoreDocs();
 
@@ -2392,7 +2398,8 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 
 		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		driver.scrollPageToTop();
+		docView.selectDocInMiniDocList(docId1);
 
 		docView.verifyNearDupeTabWithMoreDocs();
 		docView.verifyConceptualTabWithMoreDocs();
@@ -2416,7 +2423,8 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 
 		docView.performFamilyMemberDocsCheckAndViewAllDocuments();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		driver.scrollPageToTop();
+		docView.selectDocInMiniDocList(docId1);
 
 		docView.verifyNearDupeTabWithMoreDocs();
 		docView.verifyConceptualTabWithMoreDocs();
@@ -2452,7 +2460,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		docView = new DocViewPage(driver);
 		softAssertion = new SoftAssert();
 		
-		sessionSearch.basicSearchWithMetaDataQuery("Input.ingestionQuery", "IngestionName");
+		sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery, "IngestionName");
 		sessionSearch.saveSearchAtAnyRootGroup(saveSearch, Input.shareSearchDefaultSG);
 
 		loginPage.logout();
