@@ -77,7 +77,7 @@ public class DocViewRedactions {
 	}
 
 	public Element redactionIcon() {
-		return driver.FindElementByXPath("//li[@id='gray-tab']");
+		return driver.FindElementById("gray-tab");
 	}
 
 	public Element multiPageIcon() {
@@ -1401,12 +1401,15 @@ public class DocViewRedactions {
 	 * click---Edited------- For TC_RPMXCON52255
 	 */
 	public void doubleClickRedactionBtn() throws Exception {
-		Actions actions = new Actions(driver.getWebDriver());
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
-		wait.until(ExpectedConditions.elementToBeClickable(redactionIcon().getWebElement()));
-		actions.moveToElement(redactionIcon().getWebElement());
-		actions.click().build().perform();
-		actions.click().build().perform();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return redactionIcon().Visible() && redactionIcon().Enabled();
+			}
+		}), Input.wait30);
+		redactionIcon().waitAndClick(20);
+		redactionIcon().waitAndClick(20);	
+	
 	}
 
 	/**
@@ -1430,7 +1433,7 @@ public class DocViewRedactions {
 				return btnpreviewDocClose().Visible() && btnpreviewDocClose().Enabled();
 			}
 		}), Input.wait30);
-		btnpreviewDocClose().waitAndClick(5);
+		btnpreviewDocClose().waitAndClick(10);
 	}
 
 	public void selectSideMenu(String menuName) throws Exception {
@@ -1504,7 +1507,7 @@ public class DocViewRedactions {
 					return rectangleRedactionTagSelect().Visible() && rectangleRedactionTagSelect().Enabled();
 				}
 			}), Input.wait30);
-			rectangleRedactionTagSelect().waitAndFind(5);
+			rectangleRedactionTagSelect().waitAndFind(10);
 		} catch (Exception e) {
 
 		}

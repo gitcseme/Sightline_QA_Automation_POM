@@ -353,8 +353,11 @@ public class ReportsPage {
 				getSaveSelectionBtn().Click();
 				System.out.println("selectMySavedSearch action performed");
 			}
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
 			base.waitForElement(getMetaDataChoose(Input.sortDataBy));
-			getMetaDataChoose(Input.sortDataBy).Click();
+			driver.scrollingToElementofAPage(getMetaDataChoose(Input.sortDataBy));
+			getMetaDataChoose(Input.sortDataBy).waitAndClick(10);
 			System.out.println(Input.sortDataBy + "clicked");
 
 			if (!folderName.equalsIgnoreCase("")) {
@@ -481,6 +484,7 @@ public class ReportsPage {
 				return base.initialBgCount() == bgCount + 1;
 			}
 		}), Input.wait60);
+		System.out.println("notification count : " + base.initialBgCount());
 		base.waitForElement(getBullHornIcon());
 		getBullHornIcon().waitAndClick(10);
 		base.waitForElement(getFileDownloaded());
@@ -1049,7 +1053,7 @@ public class ReportsPage {
 					getApplyChanges().Click();
 				}
 			}
-			if(!getActionsRowCount().isElementAvailable(6)) {
+			if (!getActionsRowCount().isElementAvailable(6)) {
 				driver.Navigate().refresh();
 			}
 			List<WebElement> RowData = getActionsRowCount().FindWebElements();

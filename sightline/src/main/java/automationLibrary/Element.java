@@ -811,19 +811,4 @@ public class Element {
 			return false;
 		}
 	}
-
-	/**
-	 * @author Raghuram.A
-	 * @param text - Input String
-	 */
-	public void sendKeys(String text) {
-		try {
-			AssertExists();
-			element.sendKeys(text);
-		} catch (Exception E) {
-			E.printStackTrace(pw);
-			base.failedStep(sw.toString());
-		}
-	}
-
 }

@@ -2994,7 +2994,7 @@ public class SavedSearch {
 		}
 
 		getRenameButton().waitAndClick(5);
-		getRenameSearchGroupNode(newNode).sendKeys(SearchGroupRenamed);
+		getRenameSearchGroupNode(newNode).SendKeysNoClear(SearchGroupRenamed);
 		getTermReportTitle().Click();
 		base.VerifySuccessMessage("Save search tree node successfully updated.");
 		base.CloseSuccessMsgpopup();

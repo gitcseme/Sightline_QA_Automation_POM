@@ -150,14 +150,15 @@ public class Categorization {
 	public Element getSGCheckbox(String sgName) {
 		return driver.FindElementByXPath("//div[@class='tagselector']//label[normalize-space()='" + sgName + "']");
 	}
+
 	public Element getSelectedCorpusToAnalyze(String analyzesdName) {
 		return driver.FindElementByXPath("//div[@class='bootstrap-tagsinput']//span[text()='" + analyzesdName + "']");
 	}
-	
+
 	public Element getDocCount() {
 		return driver.FindElementByXPath("//div[@class='proview-result']//div[@class='docs']");
 	}
-	
+
 	public Categorization(Driver driver) {
 
 		this.driver = driver;
@@ -310,7 +311,7 @@ public class Categorization {
 		selectTrainingSet("Identify by Saved Search");
 		base.stepInfo("Identify by Saved Search Result  as : " + currentRole);
 
-		reportPage.checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1, "RMU");
+		checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1, "RMU");
 
 		selectTrainingSet("Identify by Saved Search");
 		getGoToStepTwoBtn().waitAndClick(5);
@@ -337,6 +338,7 @@ public class Categorization {
 		} finally {
 			base.stepInfo("Analyze Select Saved Search Results Sets Result  as : " + currentRole);
 			checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1, currentRole);
+//			reportPage.checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1, currentRole);
 
 			getSelectSavedSearchPopupCloseBtn().waitAndClick(5);
 		}
@@ -385,20 +387,17 @@ public class Categorization {
 	 * @throws InterruptedException
 	 */
 	public boolean checkdata(String nodeName) {
-		try {
-			getNode(nodeName).Visible();
+		if (getNode(nodeName).isElementAvailable(3)) {
 			System.out.println("Element Present");
 			return true;
-			// getNode(nodeName).Click();
-		} catch (Exception e) {
-			// e.printStackTrace();
+		} else {
 			System.out.println("Element Not present");
 			return false;
 		}
 	}
 
 	/**
-	 * @author Jayanthi.ganesan    @Modified By Jeevitha
+	 * @author Jayanthi.ganesan @Modified By Jeevitha
 	 * @param tagName
 	 * @param folderName
 	 * @throws InterruptedException
@@ -422,7 +421,7 @@ public class Categorization {
 //		getSelectTag(tagName).ScrollTo();
 			getSelectTag(tagNameORSG).Click();
 //		 selectTagInCat(tagName);
-			
+
 		} else if (select.equalsIgnoreCase("SG")) {
 			selectTrainingSet("Identify by Security Group");
 			driver.scrollingToBottomofAPage();
