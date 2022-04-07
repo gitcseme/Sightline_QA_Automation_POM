@@ -6678,10 +6678,10 @@ public class DocView_Sprint2_Regression {
 	public void verifySameDocIdAndDifferentAnnotationAddRedaction() throws Exception {
 
 		baseClass = new BaseClass(driver);
-		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
-		AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
+		String AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		String AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
-		utility = new Utility(driver);
+		Utility utility = new Utility(driver);
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		loginPage.logout();
@@ -6742,10 +6742,10 @@ public class DocView_Sprint2_Regression {
 	public void verifySameDocIdAndSameAnnotationAddRedaction() throws Exception {
 
 		baseClass = new BaseClass(driver);
-		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
-		AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
+		String AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		String AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
-		utility = new Utility(driver);
+		Utility utility = new Utility(driver);
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 

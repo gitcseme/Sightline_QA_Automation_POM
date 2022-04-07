@@ -641,5 +641,11 @@
 		<defaultAudioThresholdValue>70</defaultAudioThresholdValue>
 		<expectedCombinedSearchHits1>837</expectedCombinedSearchHits1>
 		<expectedCombinedSearchHits2>53</expectedCombinedSearchHits2>
+		<expectedPH_german>2</expectedPH_german>
+	<expectedPH_Japanese>4</expectedPH_Japanese>
+	<langName_german>German</langName_german>
+	<langName_japnese>Japanese</langName_japnese>
+	<createDate>2021-02-25</createDate>
+	<highVolumeProjSearchString>2</highVolumeProjSearchString>
 		
 </TestData>

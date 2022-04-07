@@ -691,7 +691,13 @@ public class Input {
 	public static String defaultAudioThresholdValue;
 	public static int expectedCombinedSearchHits1;
 	public static int expectedCombinedSearchHits2;
-
+	public static String expectedPH_german;
+	public static String expectedPH_Japanese;
+	public static String langName_german;
+	public static String langName_japnese;
+	public static String createDate;
+	public static String highVolumeProjSearchString;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1389,7 +1395,12 @@ public class Input {
 		defaultAudioThresholdValue = testData.getDefaultAudioThresholdValue();
 		expectedCombinedSearchHits1 = testData.getExpectedCombinedSearchHits1();
 		expectedCombinedSearchHits2 = testData.getExpectedCombinedSearchHits2();
-
+		expectedPH_german= testData.getExpectedPH_german();
+		 expectedPH_Japanese= testData.getExpectedPH_Japanese();
+		 langName_german= testData.getLangName_german();
+		langName_japnese= testData.getLangName_japnese();
+		 createDate= testData.getCreateDate();
+		 highVolumeProjSearchString= testData.getHighVolumeProjSearchString();
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 
