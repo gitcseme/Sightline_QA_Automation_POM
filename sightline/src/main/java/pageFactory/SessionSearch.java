@@ -3789,49 +3789,28 @@ public class SessionSearch {
 	 */
 	public void validateModifiedAdvnSearch(String option, String expectedPureHitCount, String modifiableQueryType) {
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getModifyASearch().Visible();
-			}
-		}), Input.wait90);
-		getModifyASearch().waitAndClick(10);
+		base.waitTillElemetToBeClickable(getModifyASearch());
+		getModifyASearch().ScrollTo();
+		getModifyASearch().waitAndClick(20);
 		driver.waitForPageToBeReady();
 		if (modifiableQueryType == "savedsearch") {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getModifiableSavedSearchQueryAS().Visible();
-				}
-			}), Input.wait30);
 			driver.waitForPageToBeReady();
-			getModifiableSavedSearchQueryAS().waitAndClick(5);
+			base.waitTillElemetToBeClickable(getModifiableSavedSearchQueryAS());
+			getModifiableSavedSearchQueryAS().waitAndClick(20);
 		}
 
 		else {
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getModifiableSearchQuery(modifiableQueryType).Visible()
-							&& getModifiableSearchQuery(modifiableQueryType).Enabled();
-				}
-			}), Input.wait30);
 			driver.waitForPageToBeReady();
-			getModifiableSearchQuery(modifiableQueryType).waitAndClick(5);
+			base.waitTillElemetToBeClickable(getModifiableSearchQuery(modifiableQueryType));
+			getModifiableSearchQuery(modifiableQueryType).waitAndClick(20);
 
 		}
 		if (option == "YES") {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getModifysearchOKBtn().Visible();
-				}
-			}), Input.wait30);
-			getModifysearchOKBtn().waitAndClick(5);
+			base.waitTillElemetToBeClickable( getModifysearchOKBtn());
+			getModifysearchOKBtn().waitAndClick(10);
 		} else {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getModifysearchNOBtn().Visible();
-				}
-			}), Input.wait30);
-			getModifysearchNOBtn().waitAndClick(5);
+			base.waitTillElemetToBeClickable(getModifysearchNOBtn());
+			getModifysearchNOBtn().waitAndClick(10);
 		}
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3862,6 +3841,7 @@ public class SessionSearch {
 		base.passedStep("Sucessfully verified the PureHits count after modify Search when option is" + option);
 		softAssertion.assertAll();
 	}
+
 
 	/**
 	 * @author Jayanthi.ganesan

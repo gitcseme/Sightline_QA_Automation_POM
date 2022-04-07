@@ -607,5 +607,11 @@ public class TestData {
 	public String defaultAudioThresholdValue;
 	public int expectedCombinedSearchHits1;
 	public int expectedCombinedSearchHits2;
+	public String expectedPH_german;
+	public String expectedPH_Japanese;
+	public String langName_german;
+	public String langName_japnese;
+	public String createDate;
+	public String highVolumeProjSearchString;
 
 }

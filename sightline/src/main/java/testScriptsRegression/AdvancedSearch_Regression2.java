@@ -585,40 +585,36 @@ public class AdvancedSearch_Regression2 {
 	 */
 	@Test(description ="RPMXCON-47140",dataProvider = "Users", groups = { "regression" }, priority = 14)
 	public void VerifyAudio_ModifySearchWithOtherLanguages(String username, String password)
-			throws InterruptedException {
-		String Search1 = "AudioSearch" + Utility.dynamicNameAppender();
-		baseClass.stepInfo("Test case Id: RPMXCON-47140");
-		baseClass.stepInfo(
-				"Verify that user should be able to edit the existing saved audio search which with the content"
-						+ " in other languages - eg. German, Japanese in search text");
-		loginPage.loginToSightLine(username, password);
-		search.VerifyaudioSearchThreshold(Input.audioSearchString1, Input.language, "min");
-		String actualPH1 = search.verifyPureHitsCount();
-		baseClass.stepInfo("Audio Search is done PureHit is : " + actualPH1);
-		search.saveSearchAdvanced_New(Search1, Input.mySavedSearch);
-		try {
-			savedSearch.savedSearch_Searchandclick(Search1);
-			savedSearch.VerifyPureHitInSavedAudiosearch(Search1);
-			baseClass.waitTillElemetToBeClickable(savedSearch.getSavedSearchEditButton());
-			savedSearch.getSavedSearchEditButton().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			search.modifyAudioSearch("grün", "German", "max");
-			search.getPureHitsCount_ModifySearch().getText();
-			baseClass.passedStep("Sucessfully modified the query and get the search results for the german language");
-			driver.Navigate().refresh();
-			driver.waitForPageToBeReady();
-			search.modifyAudioSearch("が", "Japanese", "min");
-			search.getPureHitsCount_ModifySearch().getText();
-			baseClass.passedStep("Sucessfully modified the query and get the search results for the japanese language");
-			loginPage.logout();
-		} catch (Exception e) {
-			e.printStackTrace();
-			baseClass.failedStep("Threshold or PureHit count mismatched from sessions search page");
-
-		}
-
-	}
-
+            throws InterruptedException {
+        String Search1 = "AudioSearch" + Utility.dynamicNameAppender();
+        SoftAssert sa = new SoftAssert();
+        baseClass.stepInfo("Test case Id: RPMXCON-47140");
+        baseClass.stepInfo(
+                "Verify that user should be able to edit the existing saved audio search which with the content"
+                        + " in other languages - eg. German, Japanese in search text");
+        loginPage.loginToSightLine(username, password);
+        search.VerifyaudioSearchThreshold(Input.audioSearchString1, Input.language, "min");
+        String actualPH1 = search.verifyPureHitsCount();
+        baseClass.stepInfo("Audio Search is done PureHit is : " + actualPH1);
+        search.saveSearchAdvanced_New(Search1, Input.mySavedSearch);
+        savedSearch.savedSearch_Searchandclick(Search1);
+        savedSearch.VerifyPureHitInSavedAudiosearch(Search1);
+        baseClass.waitTillElemetToBeClickable(savedSearch.getSavedSearchEditButton());
+        savedSearch.getSavedSearchEditButton().waitAndClick(10);
+        driver.waitForPageToBeReady();
+        search.modifyAudioSearch("grün", "German", "max");
+        String expectedGermaneHits = search.getPureHitsCount_ModifySearch().getText();
+        sa.assertEquals(expectedGermaneHits,Input.expectedPH_german);
+        baseClass.passedStep("Sucessfully modified the query and get the search results for the german language");
+        driver.Navigate().refresh();
+        driver.waitForPageToBeReady();
+        search.modifyAudioSearch("が", "Japanese", "min");
+        String expectedJapaneseHits = search.getPureHitsCount_ModifySearch().getText();
+        sa.assertEquals(expectedJapaneseHits, Input.expectedPH_Japanese);
+        sa.assertAll();
+        baseClass.passedStep("Sucessfully modified the query and get the search results for the japanese language");
+        loginPage.logout();
+    }
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @throws InterruptedException
@@ -675,8 +671,8 @@ public class AdvancedSearch_Regression2 {
 		search.VerifyaudioSearchThreshold("です", "Japanese", "min");
 		String actualPH2 = search.verifyPureHitsCount();
 		try {
-			softAssertion.assertEquals(actualPH1, "2");
-			softAssertion.assertEquals(actualPH2, "3");
+			softAssertion.assertEquals(actualPH1, Input.expectedPH_german);
+			softAssertion.assertEquals(actualPH2, Input.expectedPH_Japanese);
 			softAssertion.assertAll();
 			baseClass.passedStep(
 					"Audio Search is done using german language PureHit is displayed as expected : " + actualPH1 + "");

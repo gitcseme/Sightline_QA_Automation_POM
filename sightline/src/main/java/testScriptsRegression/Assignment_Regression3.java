@@ -78,9 +78,6 @@ public class Assignment_Regression3 {
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-     	in.loadEnvConfig();
-
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		softAssertion = new SoftAssert();
