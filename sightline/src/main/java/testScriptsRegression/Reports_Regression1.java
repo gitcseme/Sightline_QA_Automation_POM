@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FilenameUtils;
 import org.testng.Assert;
@@ -521,6 +522,78 @@ public class Reports_Regression1 {
 		softAssertion.assertAll();
 		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, true, true);
 		baseClass.passedStep("Sucessfully Validated data on Advanced batch management report when Domain and Project Admin associated to Assignments of a project");
+		loginPage.logout();
+	}
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	public void verifyABM_BG_Notification() throws Exception {
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		String SaveSaerchName ="ABMSaveSearch" + UtilityLog.dynamicNameAppender();
+		String SaveSaerch_docLevel ="ABMSaveSearch" + UtilityLog.dynamicNameAppender();
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		baseClass.selectproject(Input.highVolumeProject);
+		String assignmentName1="assgnment" + Utility.dynamicNameAppender();
+		String assignmentName ="assgnment" + Utility.dynamicNameAppender();
+		UtilityLog.info("Logged in as RMU User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case Id:RPMXCON-56807");
+		baseClass.stepInfo("Validate ABM report loads successfully from notification with source as Searches");
+		//  Search and Bulk Assign
+		search.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		search.getAdvancedSearchLinkCurrent().Click();
+		driver.waitForPageToBeReady();
+		int Bgcount = baseClass.initialBgCount();
+		// Content search in advanced search page
+		search.advancedContentBGSearch(Input.TallyCN, 1, false);
+		baseClass.stepInfo("performed a content search in advanced search pagae and it goes to back ground. ");
+		// checking for notification for BG search completed status.
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return baseClass.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120);
+		baseClass.stepInfo("Notifications are notified after BackGround Search completion.");
+		sessionsearch.saveSearch(SaveSaerch_docLevel);
+		baseClass.stepInfo("Search with text input "+Input.TallyCN); 
+		sessionsearch.bulkAssign();
+		// create Assignment and distrubute docs
+		sessionsearch.bulkAssign();
+		assignmentsPage.FinalizeAssignmentAfterBulkAssign();
+		assignmentsPage.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+		assignmentsPage.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created a assignment " + assignmentName); 
+
+		baseClass.selectproject(Input.highVolumeProject);
+		//  Search and saving the saerch
+		search.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		search.getAdvancedSearchLinkCurrent().Click();
+		driver.waitForPageToBeReady();
+		search.advancedContentBGSearch(Input.SearchString_HighVolume, 1, false);
+		baseClass.stepInfo("performed a content search in advanced search pagae and it goes to back ground. ");
+		// checking for notification for BG search completed status.
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return baseClass.initialBgCount() == Bgcount + 2;
+			}
+		}), Input.wait120);
+		baseClass.stepInfo("Notifications are notified after BackGround Search completion.");
+		baseClass.stepInfo("Search with text input " + Input.SearchString_HighVolume);
+		sessionsearch.saveSearch(SaveSaerchName);
+		sessionsearch.bulkAssign();
+		// create Assignment 
+		assignmentsPage.FinalizeAssignmentAfterBulkAssign();
+		assignmentsPage.createAssignment_fromAssignUnassignPopup(assignmentName1, Input.codeFormName);
+		assignmentsPage.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created a assignment " + assignmentName1);
+		
+		ABMReportPage AbmReportPage = new ABMReportPage(driver);
+		baseClass.stepInfo("Generating ABM with manage batch at document level.");
+		AbmReportPage.generateABM_BackGroundReportGeneration(SaveSaerchName,SaveSaerch_docLevel, assignmentName1,assignmentName,true);
+		baseClass.selectproject(Input.highVolumeProject);
+		baseClass.stepInfo("Generating ABM with manage batch at assignment level.");
+		AbmReportPage.generateABM_BackGroundReportGeneration(SaveSaerchName,SaveSaerch_docLevel, assignmentName1,assignmentName,false);
 		loginPage.logout();
 	}
 
