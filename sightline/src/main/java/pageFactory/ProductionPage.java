@@ -2789,6 +2789,17 @@ public class ProductionPage {
 	public Element getFileDir(String dir) {
 		return driver.FindElementByXPath("//a[@class='icon dir' and contains(text(),'"+dir+"')]");
 	}
+	public Element keepFamiliesTogetherChkbox_sortByTags() {
+		return driver.FindElementByXPath("//div[@id='divSpecifyTagOrder_1']//label[text()='Keep Families Together:']//..//..//label[@class='checkbox col-md-3']//i");
+	}
+
+	public Element selectingTagsFromSortByTags(String tag) {
+		return driver.FindElementByXPath("//div[@id='tagsTree']//a[contains(text(),'"+tag+"')]");
+	}
+
+	public Element sortByTagsRadioButton() {
+		return driver.FindElementByXPath("//span[text()='Sort by Selected Tags: ']//.//..//i");
+	}
 	
 	public ProductionPage(Driver driver) {
 
@@ -19322,6 +19333,47 @@ if(getbtnContinueGenerate().isDisplayed()) {
 				base.failedStep("mp3 file not exists in this directory");
 			}
 			}
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param prefixId
+		 * @param suffixId
+		 * @param beginningBates
+		 * @param tagname
+		 * @throws InterruptedException
+		 */
+		public void fillingNumberingAndSortingPageWithSortByTags(String prefixId, String suffixId, String beginningBates,String tagname)
+				throws InterruptedException {
+
+			base.waitForElement(getBeginningBates());
+			driver.waitForPageToBeReady();
+			getBeginningBates().waitAndClick(10);
+			getBeginningBates().SendKeys(beginningBates);
+			num = getRandomNumber(2);
+
+			base.waitForElement(gettxtBeginningBatesIDPrefix());
+			gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
+
+			base.waitForElement(gettxtBeginningBatesIDSuffix());
+			gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
+
+			base.waitForElement(gettxtBeginningBatesIDMinNumLength());
+			gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
+			num1 = getRandomNumber(1);
+			System.out.println("Beginning BatesID Min Num Length=" + num1);
+			gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+
+			driver.scrollingToBottomofAPage();
+
+			sortByTagsRadioButton().waitAndClick(10);
+			base.stepInfo("sorting by tags option is selected");
+
+			selectingTagsFromSortByTags(tagname).waitAndClick(10);
+			keepFamiliesTogetherChkbox_sortByTags().waitAndClick(10);
+			base.waitForElement(getAddSelected());
+			getAddSelected().waitAndClick(10);
+			base.stepInfo("Keep families checkbox selected");
+
 		}
 
 }
