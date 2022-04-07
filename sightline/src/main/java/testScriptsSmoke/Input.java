@@ -198,6 +198,10 @@ public class Input {
 	public static String ingestionDocIdFamilyMember;
 	public static String ingestionDocIdNearDupe;
 	public static String nearDupeDoc05;
+	public static String nearDoc1;
+	public static String familyDoc1;
+	public static String conceptDoc1;
+	public static String highlightDoc1;
 
 	// DocView codingform Baskar Indium
 
@@ -549,8 +553,8 @@ public class Input {
 	public static String custodianName_Andrew;
 	public static String custodianName_allen;
 	public static String SearchString_Audio;
-    public static String SearchString_HighVolume;
-    public static String DocCount_BG_Page;
+	public static String SearchString_HighVolume;
+	public static String DocCount_BG_Page;
 	// Added by Gopinath - 05/01/2021
 	public static String downloadDocID;
 	public static String translationDocId;
@@ -670,24 +674,24 @@ public class Input {
 	public static String conceptualDocId04;
 	public static String defaultPdfDocId;
 
-	//Added by Gopinath -21/03/2022
+	// Added by Gopinath -21/03/2022
 	public static String iceSourceSystem;
 	public static String multiPageTIFFSourceFolder;
 	public static String multiPageTIFFDATLoadFile;
 	public static String documentKeyBNum;
 	public static String documentKeyDSource;
 	public static String documentKeyCName;
-	
-	//Added by gopinath - 23/03/2022
+
+	// Added by gopinath - 23/03/2022
 	public static String pageNum;
-	
-	//Added by Iyappan
+
+	// Added by Iyappan
 	public static String maxAudioThresholdValue;
 	public static String minAudioThresholdValue;
 	public static String defaultAudioThresholdValue;
 	public static int expectedCombinedSearchHits1;
 	public static int expectedCombinedSearchHits2;
-	 
+
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -867,7 +871,11 @@ public class Input {
 		ingestionDocIdFamilyMember = testData.getIngestionDocIdFamilyMember();
 		ingestionDocIdNearDupe = testData.getIngestionDocIdNearDupe();
 		nearDupeDoc05 = testData.getNearDupeDoc05();
-
+		nearDoc1 = testData.getNearDoc1();
+		familyDoc1 = testData.getFamilyDoc1();
+		conceptDoc1 = testData.getConceptDoc1();
+		highlightDoc1 = testData.getHighlightDoc1();
+		
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
 		codingFormName = testData.getCodingFormName();
@@ -967,7 +975,7 @@ public class Input {
 		HiddenIngestionDocId = testData.getHiddenIngestionDocId();
 		HiddenIngestionName = testData.getHiddenIngestionName();
 		HiddenLinkDocId = testData.getHiddenLinkDocId();
-		defaultPdfDocId= testData.getDefaultPdfDocId();
+		defaultPdfDocId = testData.getDefaultPdfDocId();
 		multiplePageSourceDocID = testData.getMultiplePageSourceDocID();
 		StitchedTiffSourceDocID = testData.getStitchedTiffSourceDocID();
 		SinglePageTiffSourceDocID = testData.getSinglePageTiffSourceDocID();
@@ -984,8 +992,7 @@ public class Input {
 		miniDocListID = testData.getMiniDocListID();
 		DATFile3 = testData.getDATFile3();
 		indexingWarningMessage = testData.getIndexingWarningMessage();
-		
-		
+
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
 		docHighlightColor = testData.getDocHighlightColor();
@@ -1266,10 +1273,10 @@ public class Input {
 		custodianName_Andrew = testData.getCustodianName_Andrew();
 		custodianName_allen = testData.getCustodianName_allen();
 		SearchString_Audio = testData.getSearchString_Audio();
-		SearchString_HighVolume=testData.getSearchString_HighVolume();
-		DocCount_BG_Page=testData.getDocCount_BG_Page();
+		SearchString_HighVolume = testData.getSearchString_HighVolume();
+		DocCount_BG_Page = testData.getDocCount_BG_Page();
 		TermOperator = testData.getTermOperator();
-		
+
 		// Added by Gopinath 05/01/2021
 		downloadDocID = testData.getDownloadDocID();
 		translationDocId = testData.getTranslationDocId();
@@ -1338,8 +1345,7 @@ public class Input {
 		DAT_DDMMYYYY = testData.getDAT_DDMMYYYY();
 		Natives_DDMMYYYY = testData.getNatives_DDMMYYYY();
 		differentDateFormatError = testData.getDifferentDateFormatError();
-		
-		
+
 		// Added by Gopinath - 02/03/2022
 		ingestionProjectName = testData.getIngestionProjectName();
 		ingestionType = testData.getIngestionType();
@@ -1368,22 +1374,22 @@ public class Input {
 		lessThan500PagesDocId = testData.getLessThan500PagesDocId();
 		d500PagesDocId = testData.getD500PagesDocId();
 
-		//Added by Gopinath -21/03/2022
+		// Added by Gopinath -21/03/2022
 		iceSourceSystem = testData.getIceSourceSystem();
 		multiPageTIFFSourceFolder = testData.getMultiPageTIFFSourceFolder();
 		multiPageTIFFDATLoadFile = testData.getMultiPageTIFFDATLoadFile();
 		documentKeyBNum = testData.getDocumentKeyBNum();
 		documentKeyDSource = testData.getDocumentKeyDSource();
 		documentKeyCName = testData.getDocumentKeyCName();
-		
-		//Added by Gopinath -23/03/2022
+
+		// Added by Gopinath -23/03/2022
 		pageNum = testData.getPageNum();
 		maxAudioThresholdValue = testData.getMaxAudioThresholdValue();
 		minAudioThresholdValue = testData.getMinAudioThresholdValue();
 		defaultAudioThresholdValue = testData.getDefaultAudioThresholdValue();
 		expectedCombinedSearchHits1 = testData.getExpectedCombinedSearchHits1();
 		expectedCombinedSearchHits2 = testData.getExpectedCombinedSearchHits2();
-		
+
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 
