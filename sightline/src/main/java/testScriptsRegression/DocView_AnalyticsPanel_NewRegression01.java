@@ -5,8 +5,6 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.Set;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.support.Color;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -121,7 +119,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String docToBeSelected = "331ID00000210";
+		String docToBeSelected = Input.conceptDoc1;
 		sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		docView = new DocViewPage(driver);
@@ -712,7 +710,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		assignmentspage.SelectAssignmentByReviewer(assignmentName);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList("T2378D");
+		docView.selectDocIdInMiniDocList(Input.familyDoc1);
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 		loginPage.logout();
@@ -1406,7 +1404,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
-		docView.selectDocIdInMiniDocList(Input.nearDupeDocIdForReviewer02);
+		docView.selectDocIdInMiniDocList(Input.nearDupeDocId);
 		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
 		docView.performConceptualSelectSetOfDocsActionViewInDocList();
 		loginPage.logout();
@@ -1418,7 +1416,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		assignmentspage.SelectAssignmentByReviewer(assignmentName);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.nearDupeDocIdForReviewer02);
+		docView.selectDocIdInMiniDocList(Input.nearDupeDocId);
 		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
 		docView.performConceptualSelectSetOfDocsActionViewInDocList();
 		loginPage.logout();
@@ -2681,7 +2679,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 *              'RPMXCON-48693'
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
 	public void verifyUserCanSelectDocumentFromAnalyticsPanelConceputuallySimilarTab()
 			throws ParseException, InterruptedException, IOException {
 		softAssertion = new SoftAssert();
@@ -2793,7 +2791,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @Description Verify that on thread map tab when the principal document is F1,
 	 *              the thread map should not present any emails. 'RPMXCON-51521'
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	//@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyThreadMapPrincipalDocIsF1NotPresentAnyEmails() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		docView = new DocViewPage(driver);
@@ -2836,7 +2834,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 41)
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void verifyCompleteLastDocsAndCodeSameAsActionConceptual() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51071");
@@ -2902,12 +2900,12 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		driver.waitForPageToBeReady();
 		docView.selectDocInMiniDocList(unSelectedDoc1);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
-		//docView.performCodeSameAsForConceptualDocumentsForThirdDoc();
+		docView.performCodeSameAsForConceptualDocumentsForThirdDoc();
 
 		// Coding Stamp Selection And code Same As Verify
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
-		//docView.editCodingForm();
+		docView.editCodingForm();
 		docView.perfromCodingStampSelection(Input.stampColour);
 
 		driver.waitForPageToBeReady();
@@ -2952,12 +2950,12 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		driver.waitForPageToBeReady();
 		docView.selectDocInMiniDocList(unSelectedDocs3);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
-		//docView.performCodeSameAsForConceptualDocumentsForThirdDoc();
+		docView.performCodeSameAsForConceptualDocumentsForThirdDoc();
 
 		// Coding Stamp Selection And code Same As Verify
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
-		//docView.editCodingForm();
+		docView.editCodingForm();
 		docView.perfromCodingStampSelection(Input.stampColour);
 
 		driver.waitForPageToBeReady();
@@ -2977,7 +2975,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 42)
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
 	public void verifyCompleteLastDocsAndCodeSameAsActionFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51070");
@@ -3047,7 +3045,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		// Coding Stamp Selection And code Same As Verify
 		driver.waitForPageToBeReady();
-		//docView.editCodingForm();
+		docView.editCodingForm();
 		docView.perfromCodingStampSelection(Input.stampColour);
 
 		driver.waitForPageToBeReady();
@@ -3097,7 +3095,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		// Coding Stamp Selection And code Same As Verify
 		driver.waitForPageToBeReady();
-		//docView.editCodingForm();
+		docView.editCodingForm();
 		docView.perfromCodingStampSelection(Input.stampColour);
 
 		driver.waitForPageToBeReady();
@@ -3117,7 +3115,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 43)
+	@Test(enabled = true, groups = { "regression" }, priority = 42)
 	public void verifyCompleteLastDocsAndCodeSameAsActionNearDupe() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51072");
@@ -3184,7 +3182,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		// Coding Stamp Selection And code Same As Verify
 		driver.waitForPageToBeReady();
-	//	docView.editCodingForm();
+		docView.editCodingForm();
 		docView.perfromCodingStampSelection(Input.stampColour);
 
 		driver.waitForPageToBeReady();
@@ -3233,7 +3231,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		// Coding Stamp Selection And code Same As Verify
 		driver.waitForPageToBeReady();
-		//docView.editCodingForm();
+		docView.editCodingForm();
 		docView.perfromCodingStampSelection(Input.stampColour);
 
 		driver.waitForPageToBeReady();
