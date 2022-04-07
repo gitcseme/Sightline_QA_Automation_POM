@@ -1542,7 +1542,7 @@ public class BatchPrintPage {
 			}), Input.wait60);
 			getSavedSearch_dropdown().waitAndClick(5);
 			driver.scrollingToBottomofAPage();
-			if (getSelectSavedSearch(SearchName).Displayed()) {
+			if (getSelectSavedSearch(SearchName).isElementAvailable(5)) {
 				driver.WaitUntil((new Callable<Boolean>() {
 					public Boolean call() {
 						return getSelectSavedSearch(SearchName).Visible();
