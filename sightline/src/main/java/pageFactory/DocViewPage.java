@@ -2865,10 +2865,6 @@ public class DocViewPage {
 		return driver.FindElementById("tabExiting");
 	}
 
-	public Element getDocView_AnalyticsExitingFolderName() {
-		return driver.FindElementById("472_anchor");
-	}
-
 	// Added by Iyappan
 	public Element getRemarksId(String remarksName) {
 		return driver.FindElementByXPath(".//*[@id='newRemarks']//p[text()='" + remarksName + "']");
@@ -3324,10 +3320,16 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//span[text()='Configure Mini DocList']");
 	}
 
-	//Added by Gopinath - 06/04/2022
+	// Added by Gopinath - 06/04/2022
 	public ElementCollection getMetadatFieldNameList() {
 		return driver.FindElementsByXPath("//table[@id='MetaDataDT']/tbody/tr/td[1]");
 	}
+
+	public Element getDocView_AnalyticsExitingFolderName() {
+		return driver.FindElementByXPath(
+				"//*[@id='divBulkFolderJSTree']//a[@id='19_anchor']//i[@class='jstree-icon jstree-checkbox']");
+	}
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -7475,16 +7477,16 @@ public class DocViewPage {
 	public void verifyRedactionPanel() {
 
 		this.driver.getWebDriver().get(Input.url + "DocumentViewer/DocView");
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDocView_RedactIcon().Visible();
 			}
 		}), Input.wait60);
 		getDocView_RedactIcon().waitAndClick(10);
-		
+
 		selectBatchRedactedDoc();
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDocView_AllRedaction().Visible();
@@ -26994,10 +26996,11 @@ public class DocViewPage {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
-	 * @Description:methoad to verify metadat list are sorted in ascending order in docView page
+	 * @Description:methoad to verify metadat list are sorted in ascending order in
+	 *                      docView page
 	 */
 	public void verifyMetaDataFieldNameSorting() {
 		try {
@@ -27024,9 +27027,11 @@ public class DocViewPage {
 		}
 
 	}
-/*
+
+	/*
 	 * @Author Jeevitha
-	 * @Description : Selects incomplete batch redaction i.e..,Error File 
+	 * 
+	 * @Description : Selects incomplete batch redaction i.e..,Error File
 	 */
 	public void selectErrorFile() {
 		driver.waitForPageToBeReady();
@@ -27035,9 +27040,9 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		for (int i = 0; i < DocIDInMiniDocList.size(); i++) {
 			if (errorIcon().isElementAvailable(3)) {
-				String actualMsg=errorIcon().GetAttribute("data-content");
-				String ExpectedMsg= "in this document have been batch redacted. Please review and redact them manually as required.";
-				base.compareTextViaContains(actualMsg, ExpectedMsg,actualMsg , "The Error Msg Is Not As Expected");
+				String actualMsg = errorIcon().GetAttribute("data-content");
+				String ExpectedMsg = "in this document have been batch redacted. Please review and redact them manually as required.";
+				base.compareTextViaContains(actualMsg, ExpectedMsg, actualMsg, "The Error Msg Is Not As Expected");
 				break;
 			} else {
 				base.waitForElement(getDocView_DocId(DocIDInMiniDocList.get(i)));
@@ -27045,6 +27050,5 @@ public class DocViewPage {
 			}
 		}
 	}
-
 
 }
