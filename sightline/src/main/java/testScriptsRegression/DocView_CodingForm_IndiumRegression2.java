@@ -152,7 +152,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 * in context of assignment RPMXCON-52159 DocView/Coding Forms Sprint 01
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void codingFormChildWindowCodeSameAsLast() throws AWTException, InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52159");
 		// login as Rmu
@@ -195,7 +195,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 * DocView/CodingForms Sprint 01
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void codingFormAssignmentLevelCodingStampOFF() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52160");
 		// login as Rmu
@@ -240,7 +240,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 99)
 	public void verifyingCodingStampPostFixColourParentWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52226");
 		String assgnColour = "AssignColour" + Utility.dynamicNameAppender();
@@ -499,7 +499,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 *              outside of reviewers batch, then on mouse hover tool tip should
 	 *              be displayed for the stamp icon. 'RPMXCON-51577'
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void assignmentCannotCompleteDocsOutsideBatchCodingStamp() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51577");
 		baseClass.stepInfo(
@@ -1133,7 +1133,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 * for the document in security group context
 	 */
 
-    @Test(enabled = true, groups = { "regression" }, priority = 15)
+    @Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void validateCommentAndMetadataPureHitCountSavedStamp() throws InterruptedException, AWTException {
 		projectPage = new ProjectPage(driver);
 		securityGroupPage = new SecurityGroupsPage(driver);
@@ -5268,17 +5268,6 @@ public class DocView_CodingForm_IndiumRegression2 {
 
 		// logout
 		loginPage.logout();
-		
-//		Doing house keeping activity
-		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-		
-		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
-		codingForm.deleteCodingForm(codingfrom,codingfrom);
-		
-		// logout
-		loginPage.logout();
 
 	}
 	
@@ -6295,7 +6284,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "rmuAndrev", groups = { "regression" }, priority = 99)
+	@Test(enabled = true, dataProvider = "rmuAndrev", groups = { "regression" }, priority = 3)
 	public void verifyCfEditableOrNotBasedOnDocStatusWithDiffrentCodingFormsWithSecurityGruop(String userName,
 			String password, String user) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-50972");
@@ -8051,7 +8040,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 *                on click of 'Yes' it should redirect to the respective page
 	 */
 	@Test(enabled = true, dataProvider = "UsersWithoutPA", groups = { "regression" }, priority = 125)
-	public void verifyNavigationMsgByNavigateToOtherPg(String userName, String password) throws Exception {
+	public void verifyNavigationMsgByNavigateToOtherPg(String role,String userName, String password) throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-51621");
 	    baseClass.stepInfo("Doc View: On navigating to other page after editing the coding form then from confirmation navigation message"
 	    		+ " on click of 'Yes' it should redirect to the respective page");  
@@ -8097,7 +8086,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 *                on click of 'Yes' it should redirect to the respective page
 	 */
 	@Test(enabled = true,dataProvider = "UsersWithoutPA", groups = { "regression" }, priority = 126)
-	public void verifyNavigationMsgByClickEditProfile(String username, String password) throws Exception {
+	public void verifyNavigationMsgByClickEditProfile(String role, String username, String password) throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-51622");
 	    baseClass.stepInfo("Doc View: On click of Edit Profile link after editing the coding form then from confirmation navigation message"
 	    		+ "	on click of 'Yes' it should redirect to the respective page");  
@@ -8148,12 +8137,12 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 *                message on click of 'Yes' it should redirect to the respective page
 	 */
 	@Test(enabled = true,dataProvider = "UsersWithoutPA", groups = { "regression" }, priority = 127)
-	public void verifyNavigationMsgByClickChangeRole(String username, String password) throws Exception {
+	public void verifyNavigationMsgByClickChangeRole(String role, String username, String password) throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-51623");
 	    baseClass.stepInfo("Doc View: On click of Change Role link after editing the coding form then from confirmation navigation"+
 	                       " message on click of 'Yes' it should redirect to the respective page");  
 	    loginPage.loginToSightLine(username, password);
-	    if(username==Input.rmu1userName) {
+	    if(role=="RMU") {
 	    	baseClass.stepInfo("Logged in as rmu user");
 	    }else {
 	    	baseClass.stepInfo("Logged in as reviewer");
@@ -8203,14 +8192,15 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 *                it should redirect to the respective page
 	 */
 	@Test(enabled = true,dataProvider = "UsersWithoutPA", groups = { "regression" }, priority = 128)
-	public void verifyNavigationMsgByClickSignOut(String username, String password) throws Exception {
+	public void verifyNavigationMsgByClickSignOut(String role,String username, String password) throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-51624");
 	    baseClass.stepInfo("Doc View: On click of Sign Out link after editing the coding form then from confirmation navigation"+
 	                      " message on click of 'Yes' it should redirect to the respective page");  
 	    loginPage.loginToSightLine(username, password);
-	    if(username==Input.rmu1userName) {
+	    if(role=="RMU") {
 	    	baseClass.stepInfo("Logged in as rmu user");
-	    }else {
+	    	codingForm.assignCodingFormToSG(Input.codeFormName);
+	    	}else {
 	    	baseClass.stepInfo("Logged in as reviewer");
 	    }
 	    sessionSearch.basicContentSearch("null");    
@@ -8589,7 +8579,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	
 	@DataProvider(name = "UsersWithoutPA")
 	public Object[][] UsersWithoutPA() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.rev1userName, Input.rev1password } };
+		Object[][] users = { { "RMU" ,Input.rmu1userName, Input.rmu1password }, {"REV", Input.rev1userName, Input.rev1password } };
 		return users;
 	}
 	

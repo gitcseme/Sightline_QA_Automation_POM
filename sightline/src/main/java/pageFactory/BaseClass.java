@@ -253,6 +253,15 @@ public class BaseClass {
 	public Element getGlobalMessagePopUpClose() {
 		return driver.FindElementById("btnDialogClose");
 	}
+	
+	// added by iyappan
+	public Element getWarningsMsgHeader() {
+		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//span[text()='Warning !']");
+	}
+	
+	public Element getWarningMsg() {
+		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div/p");
+	}
 
 	public BaseClass(Driver driver) {
 
@@ -606,11 +615,11 @@ public class BaseClass {
 	public void VerifyWarningMessage(String ExpectedMsg) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getSuccessMsgHeader().Visible();
+				return getWarningsMsgHeader().Visible();
 			}
 		}), Input.wait30);
-		Assert.assertEquals("Warning !", getSuccessMsgHeader().getText().toString());
-		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+		Assert.assertEquals("Warning !", getWarningsMsgHeader().getText().toString());
+		Assert.assertEquals(ExpectedMsg, getWarningMsg().getText().toString());
 		UtilityLog.info("Expected message - " + ExpectedMsg);
 		Reporter.log("Expected message - " + ExpectedMsg, true);
 	}
