@@ -3324,6 +3324,10 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//span[text()='Configure Mini DocList']");
 	}
 
+	//Added by Gopinath - 06/04/2022
+	public ElementCollection getMetadatFieldNameList() {
+		return driver.FindElementsByXPath("//table[@id='MetaDataDT']/tbody/tr/td[1]");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -26992,6 +26996,35 @@ public class DocViewPage {
 	}
 	
 	/**
+	 * @author Gopinath
+	 * @Description:methoad to verify metadat list are sorted in ascending order in docView page
+	 */
+	public void verifyMetaDataFieldNameSorting() {
+		try {
+			getMetadatFieldNameList().isElementAvailable(10);
+			List<String> fieldNamesBeforeSort = new ArrayList<String>();
+			List<WebElement> allFieldNames = getMetadatFieldNameList().FindWebElements();
+			for (WebElement filedName : allFieldNames) {
+				String filedNameText = filedName.getText().trim().toLowerCase();
+				fieldNamesBeforeSort.add(filedNameText);
+			}
+			System.out.println(fieldNamesBeforeSort);
+			List<String> fieldNamesAfterSort = new ArrayList<String>(fieldNamesBeforeSort);
+			Collections.sort(fieldNamesAfterSort);
+			System.out.println(fieldNamesAfterSort);
+			if (fieldNamesBeforeSort.equals(fieldNamesAfterSort)) {
+				base.passedStep("MetaData fileds are sorted in ascending order");
+			} else {
+				base.failedStep("MetaData fields are not sorted in ascending");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occured while verifying sorting oredr of metadata fileds due to " + e.getMessage());
+		}
+
+	}
+/*
 	 * @Author Jeevitha
 	 * @Description : Selects incomplete batch redaction i.e..,Error File 
 	 */
@@ -27012,5 +27045,6 @@ public class DocViewPage {
 			}
 		}
 	}
+
 
 }
