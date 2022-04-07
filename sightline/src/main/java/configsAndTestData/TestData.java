@@ -103,6 +103,10 @@ public class TestData {
 	public String ingestionDocIdFamilyMember;
 	public String ingestionDocIdNearDupe;
 	public String nearDupeDoc05;
+	public String nearDoc1;
+	public String conceptDoc1;
+	public String familyDoc1;
+	public String highlightDoc1;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;

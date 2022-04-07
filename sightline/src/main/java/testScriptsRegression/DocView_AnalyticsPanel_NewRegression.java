@@ -1014,7 +1014,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo("Logged in as User: " + Input.rmu1FullName);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = Input.nearDupeDocIdForReviewer03;
+		String documentToBeSelected = Input.nearDoc1;
 		String revDocToBeSelected = Input.nearDupeCompletedDocId;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();

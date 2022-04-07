@@ -253,6 +253,7 @@ public class DocView_Redaction_Regression1 {
 
 	@Test(description = "RPMXCON-52255",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
 	public void verifyDocViewRedactionPanel() throws Exception {
+
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -322,6 +323,7 @@ public class DocView_Redaction_Regression1 {
 			assertTrue(false);
 		}
 		loginPage.logout();
+	
 	}
 
 	/**
@@ -1312,23 +1314,27 @@ public class DocView_Redaction_Regression1 {
 		DocExplorerPage docexp = new DocExplorerPage(driver);
 		docexp.documentSelectionIteration();
 		docexp.docExpViewInDocView();
-		docViewRedact.redactRectangleUsingOffset(0, 0, 200, 100);
+		docViewRedact.redactRectangleUsingOffset(0, 0, 50, 100);
 		docViewRedact.selectingRectangleRedactionTag();
+		baseClass.CloseSuccessMsgpopup();
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return docViewRedact.rectangleClick().Visible() && docViewRedact.rectangleClick().Enabled();
 			}
 		}), Input.wait30);
-		docViewRedact.rectangleClick().waitAndClick(8);
+		docViewRedact.rectangleClick().waitAndClick(20);
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).click();
 		actions.build().perform();
+		if(docViewRedact.deleteClick().isDisplayed() == true) {
 		actions.moveToElement(docViewRedact.deleteClick().getWebElement());
 		actions.click();
 		actions.build().perform();
 		baseClass.VerifySuccessMessage("Redaction Removed successfully.");
+		}
 		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Deleted successfully");
 
+	
 	}
 
 	
