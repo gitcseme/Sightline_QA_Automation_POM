@@ -2900,6 +2900,112 @@ public class Production_Test_Regression_03 {
 				loginPage.logout();
 				
 			}
+			/**
+			 * @author Aathith.Senthilkumar
+			 * @Description :To verify that in Production, if sorting option is Sort by
+			 *              Selected Tags and 'Keep Families Together' check box is selected
+			 *              then produced document should be sorted by Tags with FamilyID [
+			 *              RPMXCON-49228]
+			 * @throws Exception
+			 */
+			@Test(enabled = true, groups = { "regression" }, priority = 39)
+			public void verifySortByTags() throws Exception {
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				ProductionPage page = new ProductionPage(driver);
+
+				String tagname = "TAG" + Utility.dynamicNameAppender();
+				String foldername = "prodFolder" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String beginningBates = page.getRandomNumber(2);
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+				base.stepInfo("Test case Id: RPMXCON-49228 Production Sprint 13");
+				base.stepInfo(
+						"To verify that in Production, if sorting option is Sort by Selected Tags and 'Keep Families Together' check box is selected then produced document should be sorted by Tags with FamilyID");
+
+				// create tag and folder
+				tagsAndFolderPage.navigateToTagsAndFolderPage();
+				tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+				tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+				
+				// search for folder
+				sessionSearch.basicContentSearch(Input.telecaSearchString);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.ViewInDocListWithOutPureHit();
+				
+				DocListPage doclist = new DocListPage(driver);
+				doclist.selectFirstParentDocumentWithChildDocument();
+				String docId = doclist.getParentDocumetId();
+				System.out.println(docId);
+				driver.scrollPageToTop();
+				doclist.bulkTagExistingFromDoclist(tagname);
+
+				base.stepInfo("Starting the production");
+				page.navigateToProductionPage();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.addNewFieldOnDAT();
+				page.addDatField(1, "Doc Basic", "DocID");
+				page.fillingNativeSection();
+				page.fillingTiffSectionDisablePrivilegedDocs();
+				page.fillingTextSection();
+				page.advancedProductionComponentsTranslations();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPageWithSortByTags(prefixID, suffixID, beginningBates, tagname);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				page.waitForFileDownload();
+				page.extractFile();
+				
+				driver.waitForPageToBeReady();
+				String home = System.getProperty("user.home");
+				String name = page.getProduction().getText().trim();
+				driver.waitForPageToBeReady();
+				File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
+				if (DatFile.exists()) {
+				base.passedStep("Dat file is exists in generated production");
+				} else {
+				base.failedStep("Dat file is not displayed as expected");
+				}
+
+				String line;
+				List<String> lines = new ArrayList<>();
+				BufferedReader brReader = new BufferedReader(new InputStreamReader(new FileInputStream(DatFile), "UTF16"));
+				while ((line = brReader.readLine()) != null) {
+				lines.add(line);
+				}
+				for (String a : lines) {
+				System.out.println(a);
+				}
+
+				System.out.println("secount row value : "+lines.get(1));
+				if (lines.get(1).contains(docId)) {
+				base.passedStep("Document is sorted as per order");
+				} else {
+				base.failedStep("failed");
+				}
+				
+				brReader.close();
+				
+				base.passedStep("verified that in Production, if sorting option is Sort by Selected Tags and 'Keep Families Together' check box is selected then produced document should be sorted by Tags with FamilyID");
+				page.deleteFiles();
+				
+				// Delete Tag and folder
+				tagsAndFolderPage.navigateToTagsAndFolderPage();
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+				loginPage.logout();
+			}
      
      
 	@AfterMethod(alwaysRun = true)
