@@ -41,9 +41,6 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-/*
- * Author : Raghuram A
- */
 
 public class DocView_MiniDocList_Regression {
 	Driver driver;
@@ -63,10 +60,19 @@ public class DocView_MiniDocList_Regression {
 	String assignmentNew = "Assignment06" + Utility.dynamicNameAppender();
 	String assignmentComplete = "Assignment" + Utility.dynamicNameAppender();
 
-	@BeforeMethod(alwaysRun = true)
-	private void TestStart() throws Exception, InterruptedException, IOException {
+	
+	@BeforeClass(alwaysRun = true)
+	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		Input in = new Input();
+		in.loadEnvConfig();
+	}
+	
+	@BeforeMethod
+	public void beforeTestMethod(Method testMethod) throws ParseException, InterruptedException, IOException {
+		System.out.println("Executing method : " + testMethod.getName());
+		UtilityLog.info("Executing method : " + testMethod.getName());
 		// Open browser
 		Input in = new Input();
 		in.loadEnvConfig();
@@ -86,11 +92,6 @@ public class DocView_MiniDocList_Regression {
 
 	}
 
-	@BeforeMethod(alwaysRun = true)
-	public void beforeTestMethod(Method testMethod) {
-		System.out.println("Executing method : " + testMethod.getName());
-		UtilityLog.info("Executing method : " + testMethod.getName());
-	}
 
 	/**
 	 * Author : Raghuram A date: NA Modified date: 8/24/21 Modified by: Raghuram A
@@ -575,8 +576,6 @@ public class DocView_MiniDocList_Regression {
 	 */
 	@Test(description ="RPMXCON-51803",enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyOptimizedSortOrderViaChildWindow() throws InterruptedException, Exception {
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
 		baseClass.stepInfo("Test case Id: RPMXCON-51803");
 
 		// Login as a Reviewer Manager
@@ -812,26 +811,26 @@ public class DocView_MiniDocList_Regression {
 		String assignment = "Assignment07" + Utility.dynamicNameAppender();
 
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+//		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// search to Assignment creation
-		sessionSearch.basicContentSearch(Input.searchString2);
-		sessionSearch.bulkAssign();
-		assignmentPage.assignmentCreation(assignment, Input.codingFormName);
-		assignmentPage.assignmentDistributingToReviewer();
-		baseClass.passedStep("Assignment created and assigned to reviewer");
+//		sessionSearch.basicContentSearch(Input.searchString2);
+//		sessionSearch.bulkAssign();
+//		assignmentPage.assignmentCreation(assignment, Input.codingFormName);
+//		assignmentPage.assignmentDistributingToReviewer();
+//		baseClass.passedStep("Assignment created and assigned to reviewer");
 
 		// logout
-		loginPage.logout();
-		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
+//		loginPage.logout();
+//		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
 
 		// Login as a Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Successfully login as Project Administration'" + Input.rev1userName + "'");
 
 		// Selecting the assignment from dashboard
-		assignmentPage.SelectAssignmentByReviewer(assignment);
+		assignmentPage.SelectAssignmentByReviewer("Assignment073732369");
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 		docViewPage.verifyWarningMessage();
 
@@ -889,7 +888,7 @@ public class DocView_MiniDocList_Regression {
 	 *              principal document being viewing from mini doc list child window
 	 *              must be the first
 	 */
-
+	
 	@Test(description ="RPMXCON-51595",enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyingBothParentAndChildWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51595");
@@ -1510,16 +1509,16 @@ public class DocView_MiniDocList_Regression {
 	@Test(description ="RPMXCON-51394",enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyDocsShouldNotSelectFromMiniDocListInHistrotyDropDown() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51394");
-
+		String value="comment";
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// search to Assignment creation
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(value);
 		sessionSearch.ViewInDocView();
 
-		miniDocListpage.docsShouldNotOfMiniDocList(0);
+		miniDocListpage.docsShouldNotOfMiniDocList(4,"ID00000663");
 		loginPage.logout();
 
 	}
@@ -1530,7 +1529,6 @@ public class DocView_MiniDocList_Regression {
 	 *              mini doc list child window when prior document is viewed from
 	 *              history drop down of mini doc list child window
 	 */
-
 	@Test(description ="RPMXCON-51392",enabled = true, groups = { "regression" }, priority = 40)
 	public void childWindowHistoryDropDownFocus() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51392");
@@ -1599,10 +1597,6 @@ public class DocView_MiniDocList_Regression {
 		docViewPage.getPersistentHit(hitTerms);
 		docViewPage.verifyPersistentHitPanel(hitTerms);
 
-		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
-		keywordPage.getDeleteButton(hitTerms).waitAndClick(5);
-		keywordPage.getYesButton().waitAndClick(5);
-		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 	}
@@ -2548,7 +2542,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		// Launching Mini doc list Child WIndow
-		miniDocListpage.launchingMindoclistChildWindow();
+		reusableDocViewPage.clickGearIconOpenMiniDocList();
 		docViewPage.switchToNewWindow(2);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(miniDocListpage.getDocView_MiniDoclist_GearIcon());
@@ -2558,6 +2552,7 @@ public class DocView_MiniDocList_Regression {
 		miniDocListpage.getShowCompleteDocsButton().waitAndClick(10);
 		baseClass.waitForElement(miniDocListpage.getMiniDocListConfirmationButton("Save"));
 		miniDocListpage.getMiniDocListConfirmationButton("Save").Click();
+		baseClass.waitTime(3);
 		baseClass.stepInfo("Doc Toggle is on");
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
@@ -2785,7 +2780,6 @@ public class DocView_MiniDocList_Regression {
 
 		// creating And Distributing the Assignment
 		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
-		;
 		sessionSearch.basicContentSearch(Input.testData1);
 		String expectedCount = sessionSearch.verifyPureHitsCount();
 		sessionSearch.bulkAssign();
@@ -2921,6 +2915,7 @@ public class DocView_MiniDocList_Regression {
 		softAssertion.assertTrue(docViewPage.getCompleteDocBtn().Displayed());
 		baseClass.passedStep("Complete Button is Displayed");
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 	
@@ -3280,42 +3275,89 @@ public class DocView_MiniDocList_Regression {
 		loginPage.logout();
 	}
 	
+
+	
 	/**
-	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-51298 Verify if clicked document from history is present in the
-	 * mini doc list then mini doc list should down/up
+	 * Author : Vijaya.Rani date: 31/03/21 Modified date: NA Modified by:NA
+	 * Description :Verify that on navigating to doc view from RMU dashboard and
+	 * then from manage assignment then after configuring the mini doc list should
+	 * not change context.'RPMXCON-59587' Sprint : 14
 	 * 
-	 * @throws InterruptedException
-	 * 
+	 * @throws Exception
 	 */
-
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 76)
-	public void verifySelectedDocHistoryIsPresentInMiniDocList(String fullName, String userName, String password)
-			throws InterruptedException {
-		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-51298");
+	@Test(enabled = true, groups = { "regression" }, priority = 76)
+	public void verifyNavigateDocViewRMUDashboardManageAssignment() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-59587");
 		baseClass.stepInfo(
-				"Verify if clicked document from history is present in the mini doc list then mini doc list should down/up");
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		DocViewPage docView = new DocViewPage(driver);
-		MiniDocListPage miniDocList = new MiniDocListPage(driver);
-		SoftAssert softassertion = new SoftAssert();
+				"Verify that on navigating to doc view from RMU dashboard and then from manage assignment then after configuring the mini doc list should not change context.");
 
-		loginPage.loginToSightLine(userName, password);
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.ViewInDocView();
-		baseClass.stepInfo("Searched documents and go to docviewpage");
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codeFormName;
 
-		String docid = docView.getVerifyPrincipalDocument().getText();
-		miniDocList.getDociD(docid).waitAndClick(5);
-		baseClass.stepInfo(docid + "document selected in minidoclist");
-		softassertion.assertTrue(miniDocList.getDociD(docid).Displayed());
-		baseClass.passedStep(docid + "Document is viewed from minidoclist");
-		docView.scrollingDocumentInMiniDocList();
-		docView.clickClockIconMiniDocList();
-		driver.waitForPageToBeReady();
-		softassertion.assertTrue(miniDocList.getDociD(docid).Displayed());
-		baseClass.passedStep(docid + "Document is viewed from minidoclist in after selected history dropdown");
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.waitForElement(sessionSearch.getPureHitsCount());
+		int beforepureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
+		baseClass.stepInfo("DocView Assigned Docs Count :" + beforepureHit);
+		sessionSearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Select Assignment in Manage Assignment to DocViewPage
+		driver.getWebDriver().navigate().back();
+		assignmentPage.manageAssignmentToDocViewAsRmu(assname);
+
+		baseClass.waitForElement(docViewPage.getDocView_info());
+		String AfterDocCount1 = docViewPage.getDocView_info().getText();
+		baseClass.stepInfo("DocView Assigned Docs Count :" + AfterDocCount1);
+
+		// Coding Form Name Display
+		baseClass.waitForElement(docViewPage.getDocView_CFName());
+		String codingFormName1 = docViewPage.getDocView_CFName().getText();
+		baseClass.stepInfo("DocView Assigned codingForm Name :" + codingFormName1);
+		baseClass.passedStep("Selected Coding Form Name is Display");
+
+		// Complete Btn Not Display
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		softAssertion.assertFalse(docViewPage.getCompleteDocBtn().Displayed());
+		baseClass.passedStep("Save Button is Displayed");
+		softAssertion.assertAll();
+
+		// select Assignment in ManageAssignment page
+		driver.getWebDriver().navigate().back();
+		assignmentPage.manageAssignmentToDocViewAsRmu(assname);
+
+		// Configure gearIcon Perform
+		miniDocListpage.verifyDefaultWebfieldsInManualSortOrder();
+		miniDocListpage.afterImpersonateWebFieldsSelectionManualMode();
+
+		// verify Doc Count
+		baseClass.waitForElement(docViewPage.getDocView_info());
+		String AfterDocCount = docViewPage.getDocView_info().getText();
+		baseClass.stepInfo("DocView Assigned Docs Count :" + AfterDocCount);
+
+		// Coding Form Name Display
+		baseClass.waitForElement(docViewPage.getDocView_CFName());
+		String codingFormName2 = docViewPage.getDocView_CFName().getText();
+		baseClass.stepInfo("DocView Assigned codingForm Name :" + codingFormName2);
+		baseClass.passedStep("Selected Coding Form Name is Display");
+
+		// Complete Btn Not Display
+		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
+		softAssertion.assertFalse(docViewPage.getCompleteDocBtn().Displayed());
+		baseClass.passedStep("Complete Button is Not Displayed");
+		baseClass.passedStep("Save Button is Displayed");
+		softAssertion.assertAll();
+		loginPage.logout();
+
 	}
 	
 	/**
@@ -3751,6 +3793,7 @@ public class DocView_MiniDocList_Regression {
 		softAssertion.assertTrue(docViewPage.getCompleteDocBtn().Displayed());
 		baseClass.passedStep("Complete Button is Displayed");
 		softAssertion.assertAll();
+		loginPage.logout();
 	}
 	
 	/**
@@ -4569,6 +4612,7 @@ public class DocView_MiniDocList_Regression {
 		} else {
 			baseClass.failedStep("User Can not View the DashBoard Page");
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -4623,6 +4667,7 @@ public class DocView_MiniDocList_Regression {
 		} else {
 			baseClass.passedStep("Verified Before Assignment is manual mode sort sequence is not retain the new Assignment.");
 		}
+		loginPage.logout();
 		
 	}
 	
@@ -4705,11 +4750,11 @@ public class DocView_MiniDocList_Regression {
 		
 		//DocExploer to viewindocView Page
 		baseClass.stepInfo("step 1:DocExplorer Navigate To ViewInDocView");
+		docEx.selectAllDocumentsFromCurrentPage();
 		docEx.docExpViewInDocView();
 		
 		//Configure MiniDoclist 
 		miniDocListpage.afterImpersonateWebFieldsSelectionManualMode();
-		
 		loginPage.logout();
 	}
 	
@@ -4937,6 +4982,7 @@ public class DocView_MiniDocList_Regression {
 		softAssertion.assertTrue(docViewPage.getCodingFormSaveBtn().Displayed());
 		baseClass.passedStep("Save Button is Displayed Successfully");
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 	
@@ -5013,6 +5059,7 @@ public class DocView_MiniDocList_Regression {
 		softAssertion.assertTrue(docViewPage.getCompleteDocBtn().Displayed());
 		baseClass.passedStep("Complete Button is Displayed Successfully");
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 	
@@ -5106,6 +5153,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.passedStep("Complete Button is Not Displayed");
 		baseClass.passedStep("Save Button is Displayed");
 		softAssertion.assertAll();
+		loginPage.logout();
 	
 	}
 
@@ -5194,125 +5242,29 @@ public class DocView_MiniDocList_Regression {
 		softAssertion.assertTrue(docViewPage.getCompleteDocBtn().Displayed());
 		baseClass.passedStep("Complete Button is Displayed");
 		softAssertion.assertAll();
+		loginPage.logout();
 
 	}
 	
-	
-	
-	/**
-	 * Author : Vijaya.Rani date: 31/03/21 Modified date: NA Modified by:NA
-	 * Description :Verify that on navigating to doc view from RMU dashboard and
-	 * then from manage assignment then after configuring the mini doc list should
-	 * not change context.'RPMXCON-59587' Sprint : 14
-	 * 
-	 * @throws Exception
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 106)
-	public void verifyNavigateDocViewRMUDashboardManageAssignment() throws Exception {
-
-		baseClass.stepInfo("Test case Id: RPMXCON-59587");
-		baseClass.stepInfo(
-				"Verify that on navigating to doc view from RMU dashboard and then from manage assignment then after configuring the mini doc list should not change context.");
-
-		String assname = "assgnment" + Utility.dynamicNameAppender();
-		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		String codingForm = Input.codeFormName;
-
-		// login as RMU
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
-
-		sessionSearch.basicContentSearch(Input.searchString1);
-		baseClass.waitForElement(sessionSearch.getPureHitsCount());
-		int beforepureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
-		baseClass.stepInfo("DocView Assigned Docs Count :" + beforepureHit);
-		sessionSearch.bulkAssign();
-
-		// create Assignment and disturbute docs
-		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
-		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
-
-		// Select Assignment in Manage Assignment to DocViewPage
-		driver.getWebDriver().navigate().back();
-		assignmentPage.manageAssignmentToDocViewAsRmu(assname);
-
-		baseClass.waitForElement(docViewPage.getDocView_info());
-		String AfterDocCount1 = docViewPage.getDocView_info().getText();
-		baseClass.stepInfo("DocView Assigned Docs Count :" + AfterDocCount1);
-
-		// Coding Form Name Display
-		baseClass.waitForElement(docViewPage.getDocView_CFName());
-		String codingFormName1 = docViewPage.getDocView_CFName().getText();
-		baseClass.stepInfo("DocView Assigned codingForm Name :" + codingFormName1);
-		baseClass.passedStep("Selected Coding Form Name is Display");
-
-		// Complete Btn Not Display
-		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
-		softAssertion.assertFalse(docViewPage.getCompleteDocBtn().Displayed());
-		baseClass.passedStep("Save Button is Displayed");
-		softAssertion.assertAll();
-
-		// select Assignment in ManageAssignment page
-		driver.getWebDriver().navigate().back();
-		assignmentPage.manageAssignmentToDocViewAsRmu(assname);
-
-		// Configure gearIcon Perform
-		miniDocListpage.verifyDefaultWebfieldsInManualSortOrder();
-		miniDocListpage.afterImpersonateWebFieldsSelectionManualMode();
-
-		// verify Doc Count
-		baseClass.waitForElement(docViewPage.getDocView_info());
-		String AfterDocCount = docViewPage.getDocView_info().getText();
-		baseClass.stepInfo("DocView Assigned Docs Count :" + AfterDocCount);
-
-		// Coding Form Name Display
-		baseClass.waitForElement(docViewPage.getDocView_CFName());
-		String codingFormName2 = docViewPage.getDocView_CFName().getText();
-		baseClass.stepInfo("DocView Assigned codingForm Name :" + codingFormName2);
-		baseClass.passedStep("Selected Coding Form Name is Display");
-
-		// Complete Btn Not Display
-		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
-		softAssertion.assertFalse(docViewPage.getCompleteDocBtn().Displayed());
-		baseClass.passedStep("Complete Button is Not Displayed");
-		baseClass.passedStep("Save Button is Displayed");
-		softAssertion.assertAll();
-
-	}
-	
-	
-	
-
 	
 	@AfterMethod(alwaysRun = true)
-	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-		baseClass = new BaseClass(driver);
+	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
-			loginPage.logoutWithoutAssert();
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
 		try {
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
-//			LoginPage.clearBrowserCache();
 		}
 	}
 
 	@AfterClass(alwaysRun = true)
-
 	public void close() {
-		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
-		try {
-//			loginPage.clearBrowserCache();
-		} catch (Exception e) {
-			// no session avilable
-
-		}
+		System.out.println("******TEST CASES FOR CODINGFORM EXECUTED******");
 	}
 
 }

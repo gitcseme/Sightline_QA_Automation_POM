@@ -104,36 +104,11 @@ public class UsersAndRoleManagement_Regression {
 
 		baseClass.stepInfo("Delete added users");
 		userManage.deleteAddedUser(firstName);
+		
+		loginPage.logout();
 	}
 
-	/**
-	 * Author : Baskar date: NA Modified date:21/01/2021 Modified by: Baskar
-	 * Description :Verify that System Admin can create user with Domain Admin role
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
-	public void createNewUserForDomain() throws Exception {
-		baseClass = new BaseClass(driver);
-		String firstName = Input.randomText + Utility.dynamicNameAppender();
-		String lastName = Input.randomText + Utility.dynamicNameAppender();
-		String role = "Domain Administrator";
-		String emailId = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
-		baseClass.stepInfo("Test case Id: RPMXCON-52773");
-		utility = new Utility(driver);
-		baseClass.stepInfo("Verify that System Admin can create user with Domain Admin role");
-		userManage = new UserManagement(driver);
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		UtilityLog.info("Logged in as User: " + Input.sa1userName);
-		Reporter.log("Logged in as User: " + Input.sa1password);
-
-		baseClass.stepInfo("Create new user for domain administration");
-		userManage.createNewUser(firstName, lastName, role, emailId, " ", Input.projectName);
-
-		baseClass.stepInfo("Domain admin role displayed in dropdown field");
-		baseClass.passedStep("Created new user with Domain admin rule");
-
-		baseClass.stepInfo("Delete added users");
-		userManage.deleteAddedUser(firstName);
-	}
+	
 
 	/**
 	 * @author Gopinath
@@ -142,7 +117,7 @@ public class UsersAndRoleManagement_Regression {
 	 * @Description:To To verify users authentication session, from same machine in
 	 *                 browsers new window/new tab
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
 	public void verifyuserAuthenticationSession() {
 		String userName = Input.rmu1userName;
 		String password = Input.rmu1password;
@@ -203,7 +178,7 @@ public class UsersAndRoleManagement_Regression {
 		}
 		reusb.childWindowToParentWindowSwitching(childWindow);
 		baseClass.stepInfo("login to appliction in second tab");
-		loginPage.loginToSightLine(userName, password);
+		loginPage.logout();
 	}
 
 	/**
@@ -220,7 +195,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "pa", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "combinationRole", groups = { "regression" }, priority = 4)
+	@Test(alwaysRun = true, dataProvider = "combinationRole", groups = { "regression" }, priority = 3)
 	public void validatingNativeDownload(String roll, String userName, String password, String userNameTwo,
 			String passWordTwo) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52699");
@@ -303,7 +278,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "pa", Input.pa1userName, Input.pa1password, Input.pa1userName, Input.pa1password }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "saAndPa", groups = { "regression" }, priority = 5)
+	@Test(alwaysRun = true, dataProvider = "saAndPa", groups = { "regression" }, priority = 4)
 	public void validatingIngestionIcon(String roll, String userName, String password, String userNameTwo,
 			String passWordTwo) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52696");
@@ -326,7 +301,7 @@ public class UsersAndRoleManagement_Regression {
 
 		// Ingestion uncheckbox
 		userManage.getFunctionalityTab().waitAndClick(5);
-		userManage.verifyIngestion();
+		userManage.verifyStatusIngestion("false");
 
 		// logout
 		loginPage.logout();
@@ -355,7 +330,7 @@ public class UsersAndRoleManagement_Regression {
 			userManage.editLoginUser();
 		}
 		userManage.getFunctionalityTab().waitAndClick(5);
-		userManage.verifyIngestion();
+		userManage.verifyStatusIngestion("true");
 
 		// logout
 		loginPage.logout();
@@ -386,7 +361,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "pa", Input.rmu2userName, Input.rmu2password, Input.rmu1userName, Input.rmu1password }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "differentRole", groups = { "regression" }, priority = 6)
+	@Test(alwaysRun = true, dataProvider = "differentRole", groups = { "regression" }, priority = 5)
 	public void validatingManageIcon(String roll, String userName, String password, String userNameTwo,
 			String passWordTwo) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52694");
@@ -466,7 +441,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "pa", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "fourRole", groups = { "regression" }, priority = 7)
+	@Test(alwaysRun = true, dataProvider = "fourRole", groups = { "regression" }, priority = 6)
 	public void validatingCategorizeIcon(String roll, String userName, String password, String userNameTwo,
 			String passWordTwo) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52692");
@@ -488,7 +463,7 @@ public class UsersAndRoleManagement_Regression {
 
 		// Categorize uncheckbox
 		userManage.getFunctionalityTab().waitAndClick(5);
-		userManage.verifyCategorizeCheckBox();
+		userManage.verifyStatusCategorize("false");
 
 		// logout
 		loginPage.logout();
@@ -516,7 +491,8 @@ public class UsersAndRoleManagement_Regression {
 
 		// Categorize checkbox applying
 		userManage.getFunctionalityTab().waitAndClick(5);
-		userManage.verifyCategorizeCheckBox();
+		userManage.verifyStatusCategorize("true");
+
 		// logout
 		loginPage.logout();
 
@@ -536,8 +512,7 @@ public class UsersAndRoleManagement_Regression {
 	 * Description :To Verify User can not access to 'RunAnalytics' and 'Unpublish'
 	 * even though 'INGESTIONS' right is unchecked. 'RPMXCON-52689' sprint-13
 	 */
-
-	@Test(alwaysRun = true, dataProvider = "saAndPa", groups = { "regression" }, priority = 8)
+	@Test(alwaysRun = true, dataProvider = "saImpPa", groups = { "regression" }, priority = 7)
 	public void validatingIngestionInLeftMenu(String roll, String userName, String password, String userNameTwo,
 			String passWordTwo) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52689");
@@ -549,16 +524,24 @@ public class UsersAndRoleManagement_Regression {
 		// login
 		loginPage.loginToSightLine(userName, password);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(userName);
+		userManage.applyFilter();
+		if (roll == "sa") {
+			baseClass.waitForElement(userManage.getSelectUserToSaUserEdit());
+			userManage.getSelectUserToSaUserEdit().waitAndClick(5);
+		}
+		// Ingestion uncheckbox
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusIngestion("false");
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		userManage.passingUserName(userNameTwo);
 		userManage.applyFilter();
 		if (roll == "sa") {
 			userManage.editFunctionality(Input.projectName);
-			userManage.editLoginUser();
 		}
-
 		// Ingestion uncheckbox
 		userManage.getFunctionalityTab().waitAndClick(5);
-		userManage.verifyIngestion();
+		userManage.verifyStatusIngestion("false");
 
 		// logout
 		loginPage.logout();
@@ -577,18 +560,32 @@ public class UsersAndRoleManagement_Regression {
 		// login
 		loginPage.loginToSightLine(userNameTwo, passWordTwo);
 		driver.waitForPageToBeReady();
+		// validating ingestion icon
+		userManage.verifyIngestionIcon(false, false);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		userManage.passingUserName(userNameTwo);
 		userManage.applyFilter();
-		if (roll == "sa") {
-			userManage.editFunctionality(Input.projectName);
-			userManage.editLoginUser();
-		}
+		userManage.editLoginUser();
 
+		// Ingestion checkbox
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusIngestion("true");
+
+		// logout
+		loginPage.logout();
+
+		// login
+		loginPage.loginToSightLine(userName, password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(userName);
+		userManage.applyFilter();
+		if (roll == "sa") {
+			baseClass.waitForElement(userManage.getSelectUserToSaUserEdit());
+			userManage.getSelectUserToSaUserEdit().waitAndClick(5);
+		}
 		// Ingestion uncheckbox
 		userManage.getFunctionalityTab().waitAndClick(5);
-		userManage.verifyIngestion();
-
+		userManage.verifyStatusIngestion("true");
 		// logout
 		loginPage.logout();
 	}
@@ -599,7 +596,7 @@ public class UsersAndRoleManagement_Regression {
 	 * name' text box and hits enter key. 'RPMXCON-53179' sprint-13
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
 	public void validatingEnterFirstNameSearchFilterByUserName() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53179");
 		baseClass.stepInfo(
@@ -635,7 +632,7 @@ public class UsersAndRoleManagement_Regression {
 	 * name' text box and clicks to Apply. 'RPMXCON-53178' sprint-13
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
 	public void validatingEnterLastNameSearchFilterByUserName() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53178");
 		baseClass.stepInfo(
@@ -670,7 +667,7 @@ public class UsersAndRoleManagement_Regression {
 	 * Description :Verify RMU can edit the user within his security group
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
 	public void validatingRmuUser() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52680");
 		baseClass.stepInfo("Verify RMU can edit the user within his security group");
@@ -710,7 +707,7 @@ public class UsersAndRoleManagement_Regression {
 	 * user pop up for RMU and Reviewer
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 11)
 	public void validatingForRmuUserSecurityGroupListBox() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52660");
 		baseClass.stepInfo(
@@ -753,28 +750,28 @@ public class UsersAndRoleManagement_Regression {
 	public Object[][] bulkSearch() {
 		return new Object[][] {
 				{ "pa", Input.sa1userName, Input.sa1password, Input.pa1userName, Input.pa1password,
-						"Project Administrator", "sa",Input.pa1FullName },
+						"Project Administrator", "sa", Input.pa1FullName },
 				{ "rmu", Input.sa1userName, Input.sa1password, Input.rmu1userName, Input.rmu1password, "Review Manager",
-						"sa",Input.rmu1FullName},
-				{ "rev", Input.sa1userName, Input.sa1password, Input.rev1userName, Input.rev1password, "Reviewer",
-						"sa",Input.rev1FullName },
+						"sa", Input.rmu1FullName },
+				{ "rev", Input.sa1userName, Input.sa1password, Input.rev1userName, Input.rev1password, "Reviewer", "sa",
+						Input.rev1FullName },
 				{ "pa", Input.pa1userName, Input.pa1password, Input.pa1userName, Input.pa1password,
-						"Project Administrator", "pa",Input.pa1FullName },
+						"Project Administrator", "pa", Input.pa1FullName },
 				{ "rmu", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password, "Review Manager",
-						"pa",Input.rmu1FullName },
-				{ "rev", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password, "Reviewer",
-						"pa" },
+						"pa", Input.rmu1FullName },
+				{ "rev", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password, "Reviewer", "pa",
+						Input.rev1FullName },
 				{ "pa", Input.da1userName, Input.da1password, Input.pa1userName, Input.pa1password,
-						"Project Administrator", "da",Input.pa1FullName },
+						"Project Administrator", "da", Input.pa1FullName },
 				{ "rmu", Input.da1userName, Input.da1password, Input.rmu1userName, Input.rmu1password, "Review Manager",
-						"da",Input.rmu1FullName },
-				{ "rev", Input.da1userName, Input.da1password, Input.rev1userName, Input.rev1password, "Reviewer",
-						"da",Input.rev1FullName }, };
+						"da", Input.rmu1FullName },
+				{ "rev", Input.da1userName, Input.da1password, Input.rev1userName, Input.rev1password, "Reviewer", "da",
+						Input.rev1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "bulkSearch", groups = { "regression" }, priority = 13)
+	@Test(alwaysRun = true, dataProvider = "bulkSearch", groups = { "regression" }, priority = 12)
 	public void validatingBulkuserSearchIcon(String roll, String loginuser, String loginPass, String rollUser,
-			String rollPass, String rollId, String assignRole,String fullName) throws Exception {
+			String rollPass, String rollId, String assignRole, String fullName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52690");
 		baseClass.stepInfo("To verify landing page for User when 'Search' is Checked from Bulk User Access Control");
 		userManage = new UserManagement(driver);
@@ -843,7 +840,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "rev", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "threeRole", groups = { "regression" }, priority = 14)
+	@Test(alwaysRun = true, dataProvider = "threeRole", groups = { "regression" }, priority = 13)
 	public void validatingSearchIcon(String roll, String loginuser, String loginPass, String assignUser,
 			String assignPass) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52691");
@@ -909,7 +906,7 @@ public class UsersAndRoleManagement_Regression {
 						"da", Input.rmu1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "bulkCategorize", groups = { "regression" }, priority = 15)
+	@Test(alwaysRun = true, dataProvider = "bulkCategorize", groups = { "regression" }, priority = 14)
 	public void validatingBulkUserCategorizeIcon(String roll, String loginuser, String loginPass, String rollId,
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52693");
@@ -1033,7 +1030,7 @@ public class UsersAndRoleManagement_Regression {
 						"da", Input.rmu1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "bulkManage", groups = { "regression" }, priority = 16)
+	@Test(alwaysRun = true, dataProvider = "bulkManage", groups = { "regression" }, priority = 15)
 	public void validatingBulkUserManageIcon(String roll, String loginuser, String loginPass, String rollId,
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52695");
@@ -1151,7 +1148,7 @@ public class UsersAndRoleManagement_Regression {
 						Input.pa1password, "da", Input.pa1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "bulkIngestion", groups = { "regression" }, priority = 17)
+	@Test(alwaysRun = true, dataProvider = "bulkIngestion", groups = { "regression" }, priority = 16)
 	public void validatingBulkUserIngestionIcon(String roll, String loginuser, String loginPass, String rollId,
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52697");
@@ -1267,7 +1264,7 @@ public class UsersAndRoleManagement_Regression {
 						"da", Input.rmu1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "bulkAllReport", groups = { "regression" }, priority = 18)
+	@Test(alwaysRun = true, dataProvider = "bulkAllReport", groups = { "regression" }, priority = 17)
 	public void validatingBulkUserAllReportIcon(String roll, String loginuser, String loginPass, String rollId,
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52700");
@@ -1388,17 +1385,16 @@ public class UsersAndRoleManagement_Regression {
 				{ "rmu", Input.pa1userName, Input.pa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
 						"pa", Input.rmu1FullName },
 				{ "rev", Input.pa1userName, Input.pa1password, "Reviewer", Input.rev1userName, Input.rev1password, "pa",
-						Input.rev1FullName },
+						Input.rev1FullName, },
 				{ "pa", Input.da1userName, Input.da1password, "Project Administrator", Input.pa1userName,
 						Input.pa1password, "da", Input.pa1FullName },
 				{ "rmu", Input.da1userName, Input.da1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
 						"da", Input.rmu1FullName },
 				{ "rev", Input.da1userName, Input.da1password, "Reviewer", Input.rev1userName, Input.rev1password, "da",
-						Input.rev1FullName },
-				};
+						Input.rev1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "bulkDwNative", groups = { "regression" }, priority = 19)
+	@Test(alwaysRun = true, dataProvider = "bulkDwNative", groups = { "regression" }, priority = 18)
 	public void validatingBulkUserDownloadNativeIcon(String roll, String loginuser, String loginPass, String rollId,
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52701");
@@ -1407,7 +1403,6 @@ public class UsersAndRoleManagement_Regression {
 		userManage = new UserManagement(driver);
 		sessionSearch = new SessionSearch(driver);
 		docViewPage = new DocViewPage(driver);
-
 		// login
 		loginPage.loginToSightLine(loginuser, loginPass);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
@@ -1430,7 +1425,7 @@ public class UsersAndRoleManagement_Regression {
 		if (assignRole == "pa") {
 			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
 			userManage.getDisableRadioBtn().waitAndClick(5);
-			if (roll == "rmu"||roll=="rev") {
+			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
@@ -1440,7 +1435,7 @@ public class UsersAndRoleManagement_Regression {
 			userManage.getDisableRadioBtn().waitAndClick(5);
 			userManage.getSelectingProject().waitAndClick(5);
 			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
-			if (roll == "rmu"||roll=="rev") {
+			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
@@ -1482,7 +1477,7 @@ public class UsersAndRoleManagement_Regression {
 		if (assignRole == "pa") {
 			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
 			userManage.getEnableRadioBtn().waitAndClick(5);
-			if (roll == "rmu"||roll=="rev") {
+			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
@@ -1492,7 +1487,7 @@ public class UsersAndRoleManagement_Regression {
 			userManage.getEnableRadioBtn().waitAndClick(5);
 			userManage.getSelectingProject().waitAndClick(5);
 			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
-			if (roll == "rmu"||roll=="rev") {
+			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
@@ -1514,9 +1509,16 @@ public class UsersAndRoleManagement_Regression {
 		loginPage.logout();
 
 	}
+	
+	@DataProvider(name = "saImpPa")
+	public Object[][] saImpPa() {
+		return new Object[][] { { "sa", Input.sa1userName, Input.sa1password, Input.pa1userName, Input.pa1password },
+				};
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);

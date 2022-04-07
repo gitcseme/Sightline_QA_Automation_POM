@@ -1333,6 +1333,7 @@ public class MiniDocListPage {
 				baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
 				getMiniDocListConfirmationButton("Save").Click();
 				System.out.println("Saved Confirmed");
+				baseClass.waitTime(3);
 				Robot robot = new Robot();
 				robot.keyPress(KeyEvent.VK_ENTER);
 				System.out.println("Handled Alert");
@@ -1389,12 +1390,12 @@ public class MiniDocListPage {
 			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
 			baseClass.waitForElement(getGearIcon1());
-			getGearIcon1().Click();
+			getGearIcon1().waitAndClick(5);
 			System.out.println("Clicked Gear Icon");
 
 			driver.waitForPageToBeReady();
 			baseClass.waitForElement(getMiniDocChildWindowExpandIcon());
-			getMiniDocChildWindowExpandIcon().Click();
+			getMiniDocChildWindowExpandIcon().waitAndClick(5);
 			System.out.println("Launched ChildWindow");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1676,21 +1677,21 @@ public class MiniDocListPage {
 
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getDashBoardLink());
-		getDashBoardLink().Click();
+		getDashBoardLink().waitAndClick(5);
 		chooseAnAssignmentFromDashBoard(assignmentNameToChoose);
 		baseClass.stepInfo("Selected " + assignmentNameToChoose);
-
-		launchingMindoclistChildWindow();
-
-		String parentId = childWindowTransfer();
+		baseClass.waitTime(2);
+        reusableDocViewPage.clickGearIconOpenMiniDocList();
+        docViewPage.switchToNewWindow(2);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getChildWindowGearIcons());
 		getChildWindowGearIcons().waitAndClick(5);
-		childWIndowCloseHandles(parentId);
+		docViewPage.closeWindow(1);
+	    docViewPage.switchToNewWindow(1);
 
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getManualSortRadioButton());
-		getManualSortRadioButton().Click();
+		getManualSortRadioButton().waitAndClick(5);
 
 		// Pick Column Display
 		afterActionselectedFieldsPickColumnDisplayFirstAssignment = methodforPickColumndisplay();
@@ -1698,11 +1699,9 @@ public class MiniDocListPage {
 		afterActionselectedFieldsSetDocumentFirstAssignment = methodforSetDocumetSort();
 
 		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
-		getMiniDocListConfirmationButton("Save").Click();
-
-		Robot robot = new Robot();
-		robot.keyPress(KeyEvent.VK_ENTER);
-		System.out.println("Handled Alert");
+		getMiniDocListConfirmationButton("Save").waitAndClick(5);
+		baseClass.waitTime(3);
+		driver.getWebDriver().switchTo().alert().accept();
 
 		driver.getWebDriver().navigate().refresh();
 		try {
@@ -1713,8 +1712,7 @@ public class MiniDocListPage {
 
 		// Verify Impact
 		driver.waitForPageToBeReady();
-		launchingMindoclistChildWindow();
-
+		reusableDocViewPage.clickGearIconOpenMiniDocList();
 		String parentId1 = childWindowTransfer();
 		baseClass.waitForElement(getChildWindowGearIcons());
 		getChildWindowGearIcons().waitAndClick(5);
@@ -2893,42 +2891,33 @@ public class MiniDocListPage {
 	 *              history drop down
 	 */
 
-	public void docsShouldNotOfMiniDocList(int count) throws InterruptedException {
+	public void docsShouldNotOfMiniDocList(int count,String docIdText) throws InterruptedException {
 		driver.waitForPageToBeReady();
-		for (int i = 1; i <= 11; i++) {
+		for (int i = 1; i <= 10; i++) {
 			getClickDocviewID(i).waitAndClick(5);
 			driver.waitForPageToBeReady();
-
-		}
-		baseClass.waitForElementCollection(getDocView_MiniListDocuments());
-		List<String> uniqueDocuments = new ArrayList<>();
-		Set<String> duplicates = new HashSet<String>();
-		List<String> miniDocList = new ArrayList<>();
-		ElementCollection miniDocListelement = getMiniDocListDocIdText();
-		miniDocList = availableListofElements(miniDocListelement);
-		for (String minidoclist : miniDocList) {
-			duplicates.add(minidoclist);
 		}
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getDocView_HistoryButton());
 		getDocView_HistoryButton().waitAndClick(5);
 		baseClass.stepInfo("User clicked clock icon in minidoclist");
-		baseClass.waitForElementCollection(getHistoryDropDown());
+		baseClass.waitTime(3);
 		int docId = getHistoryDropDown().size();
 		baseClass.stepInfo("History drop down docId : " + docId);
+		baseClass.waitTime(3);
+		docViewPage.getHeader().waitAndClick(5);
+		List<String> miniDocList = new ArrayList<>();
+		ElementCollection miniDocListelement = getMiniDocListDocIdText();
+		miniDocList = availableListofElements(miniDocListelement);
+		baseClass.waitForElement(getClickDocviewID(count));
+		getClickDocviewID(count).waitAndClick(5);
+		driver.waitForPageToBeReady();
 		getDocView_Analytics_NearDupeTab().WaitUntilPresent().ScrollTo();
 		getDocView_Analytics_NearDupeTab().waitAndClick(5);
 		Thread.sleep(Input.wait30);// Mandatory thread.sleep no need to delete
 		List<String> analyticalDocs = new ArrayList<>();
 		ElementCollection analyticsElement = getAnalyticalPanelDocIdText();
 		analyticalDocs = availableListofElements(analyticsElement);
-		for (String analytical : analyticalDocs) {
-			if (duplicates.add(analytical)) {
-				uniqueDocuments.add(analytical);
-			}
-		}
-		System.out.println(uniqueDocuments);
-		String docIdText = uniqueDocuments.get(count);
 		getAnalyCheckBox(docIdText).WaitUntilPresent().ScrollTo();
 		baseClass.waitForElement(getAnalyCheckBox(docIdText));
 		getAnalyCheckBox(docIdText).waitAndClick(10);
@@ -2942,8 +2931,15 @@ public class MiniDocListPage {
 		getDocView_HistoryButton().waitAndClick(5);
 		baseClass.waitForElement(getHistoryClock(docIdText));
 		getHistoryClock(docIdText).waitAndClick(5);
-		baseClass.passedStep("DocId selected from history drop down : " + docIdText);
-		baseClass.passedStep(docIdText + ": Is not part of MiniDocList");
+		System.out.println(miniDocList);
+		if (miniDocList.contains(docIdText)) {
+			baseClass.failedStep("Minidoclist part of history drop down");
+		}
+		else {
+			baseClass.passedStep("DocId selected from history drop down : " + docIdText);
+			baseClass.passedStep(docIdText + ": Is not part of MiniDocList");
+		}
+		
 	}
 
 	/**
@@ -2954,14 +2950,19 @@ public class MiniDocListPage {
 	 */
 
 	public void focusOnChildWindowHistoryDrpDw() throws InterruptedException {
-		String historyId = "ID00000011";
+		String prnDoc = null;
 		driver.waitForPageToBeReady();
 		for (int i = 1; i <= 10; i++) {
 			getClickDocviewID(i).waitAndClick(5);
+			if (i==10) {
+				prnDoc=docViewPage.getVerifyPrincipalDocument().getText();
+				
+			}
 		}
 		baseClass.waitForElement(getDocView_HistoryButton());
 		getDocView_HistoryButton().waitAndClick(5);
-		getHistoryDocId().waitAndClick(5);
+		baseClass.waitForElement(getCurrentSelectionIconFromHistoryDD(prnDoc));
+		getCurrentSelectionIconFromHistoryDD(prnDoc).waitAndClick(5);
 		reusableDocViewPage.clickGearIconOpenMiniDocList();
 		String parentWindow = reusableDocViewPage.switchTochildWindow();
 		baseClass.waitForElement(getDocView_HistoryButton());
@@ -2971,11 +2972,12 @@ public class MiniDocListPage {
 		int count = getHistoryDropDown().size();
 		baseClass.stepInfo("History drop down docId : " + count);
 		System.out.println(count);
-		getHistoryDocId().waitAndClick(5);
+		baseClass.waitForElement(getCurrentSelectionIconFromHistoryDD(prnDoc));
+		getCurrentSelectionIconFromHistoryDD(prnDoc).waitAndClick(5);
 		reusableDocViewPage.childWindowToParentWindowSwitching(parentWindow);
 		driver.waitForPageToBeReady();
 		String currentDocID = getMainWindowActiveDocID().getText();
-		if (currentDocID.equals(historyId)) {
+		if (currentDocID.equals(prnDoc)) {
 			baseClass.passedStep("Selected document from history drop down are loaded and displayed in docview panel");
 		} else {
 			baseClass.failedMessage("document not displayed in docview panel");
@@ -2990,21 +2992,25 @@ public class MiniDocListPage {
 	 */
 
 	public void selectDocFromHistoryDropDown() throws InterruptedException {
-		String historyId = "ID00000011";
+		String prnDoc = null;
 		driver.waitForPageToBeReady();
 		for (int i = 1; i <= 2; i++) {
 			getClickDocviewID(i).waitAndClick(5);
+			if (i==2) {
+				prnDoc=docViewPage.getVerifyPrincipalDocument().getText();
+			}
 		}
 		reusableDocViewPage.clickGearIconOpenMiniDocList();
 		String parentWindow = reusableDocViewPage.switchTochildWindow();
 		baseClass.waitForElement(getDocView_HistoryButton());
 		getDocView_HistoryButton().waitAndClick(5);
 		baseClass.stepInfo("User clicked clock icon in minidoclist");
-		getHistoryDocId().waitAndClick(5);
+		baseClass.waitForElement(getCurrentSelectionIconFromHistoryDD(prnDoc));
+		getCurrentSelectionIconFromHistoryDD(prnDoc).waitAndClick(5);
 		reusableDocViewPage.childWindowToParentWindowSwitching(parentWindow);
 		driver.waitForPageToBeReady();
 		String currentDocID = getMainWindowActiveDocID().getText();
-		if (currentDocID.equals(historyId)) {
+		if (currentDocID.equals(prnDoc)) {
 			baseClass.passedStep("Selected document from history drop down are loaded and displayed in docview panel");
 		} else {
 			baseClass.failedMessage("document not displayed in docview panel");
@@ -3981,6 +3987,7 @@ public class MiniDocListPage {
 	public void verifyDefaultWebfieldsInManualSortOrder() {
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
 		// default list to be displayed in configure opo up selected fields
 		String headerfieldtoCompare = reusableDocViewPage.defaultHeaderValue().toLowerCase();
 		baseClass.waitForElement(getGearIcon());
@@ -3989,6 +3996,7 @@ public class MiniDocListPage {
 		baseClass.waitForElement(getManualSortRadioButton());
 		getManualSortRadioButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
 		ElementCollection pickColumnSelectedListAssignmentTwo = getSelectedFieldsAvailablePickColumnDisplay();
 		pickColumnDisplaySelectedListAssignmentTwo = availableListofElements(pickColumnSelectedListAssignmentTwo);
 		baseClass.stepInfo("Default Selected Web fields in Manual sort Order are Displayed Below");
