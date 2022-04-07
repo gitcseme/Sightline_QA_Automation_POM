@@ -119,6 +119,7 @@ public class SavedSearchAudio_Regresssion {
 		base.stepInfo("Shared Successfuly with  Default Security Group");
 
 		// Shared with Security group
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 		saveSearch.shareSavedSearchAsPA(searchName, securitygroupname);
 		base.stepInfo("Shared Successfuly with  Security group");
 
@@ -150,7 +151,7 @@ public class SavedSearchAudio_Regresssion {
 		// Search audio file and save the file
 		session.AudioAndNonAudioSearch(Input.audioSearchString1, "North American English");
 		session.saveSearchadvanced(searchName);
-		saveSearch = new SavedSearch(driver);
+		saveSearch.navigateToSavedSearchPage();
 
 		// Shared with Default Security group
 		saveSearch.shareSavedSearchRMU(searchName, "Default");
@@ -175,14 +176,14 @@ public class SavedSearchAudio_Regresssion {
 	public void searchAudioAndShareToDefaultsgRev() throws InterruptedException, ParseException {
 		// Login as a Rev
 		login.loginToSightLine(Input.rev1userName, Input.rev1password);
-		base.stepInfo("RPMXCON-57420  SavedSearch ");
+		base.stepInfo("RPMXCON-57421  SavedSearch ");
 
 		base.selectsecuritygroup("Default Security Group");
 
 		// search audio file and save
 		session.AudioAndNonAudioSearch(Input.audioSearchString1, "North American English");
 		session.saveSearchadvanced(searchName);
-		saveSearch = new SavedSearch(driver);
+		saveSearch.navigateToSavedSearchPage();
 
 		// Shared with Default Security group
 		saveSearch.shareSavedSearchRMU(searchName, "Default");
@@ -291,7 +292,7 @@ public class SavedSearchAudio_Regresssion {
 		// Login via PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Loggedin As PA");
-		String newNodeFromPA = saveSearch.createSearchGroupAndReturn(searchName, "PA");
+		String newNodeFromPA = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		int purehit = session.basicContentSearch(Input.searchString1);
 
 		// Get Count
@@ -301,27 +302,22 @@ public class SavedSearchAudio_Regresssion {
 		// Impersonate As RMU via PA and create new searchgroup
 		base.impersonatePAtoRMU();
 		base.stepInfo("Impersonated As RMU");
-		String newNodeFromRMU = saveSearch.createSearchGroupAndReturn(searchName, "RMU");
-
-		// create folder and add save search in folder
-		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateFolder(folderName, "Default Security Group");
+		String newNodeFromRMU = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
 
 		// Save Search
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName);
-		session.saveSearchInNode(searchName);
+		session.saveSearchInNewNode(searchName, newNodeFromRMU);
 
 		// impersonate As REV and create new searchgroup
 		base.impersonateRMUtoReviewer();
 		base.stepInfo("Impersonated As Reviewer");
-		String newNodeFromRev = saveSearch.createSearchGroupAndReturn(searchName, "REV");
+		String newNodeFromRev = saveSearch.createSearchGroupAndReturn(searchName, "REV", "No");
 
 		// Save search
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName1);
-		session.saveSearchInNode(searchName1);
+		session.saveSearchInNewNode(searchName1, newNodeFromRev);
 		driver.waitForPageToBeReady();
 
 		// impersonate As Reviewer to RMU
@@ -329,7 +325,7 @@ public class SavedSearchAudio_Regresssion {
 		base.impersonateReviewertoRMU();
 		base.stepInfo("Impersonated As RMU");
 
-		report.VerificationAndreportGenerator(newNodeFromPA, newNodeFromRMU, newNodeFromRev, folderName, searchName,
+		report.VerificationAndreportGenerator(newNodeFromPA, newNodeFromRMU, newNodeFromRev, "", searchName,
 				searchName1, aggregateHitCount);
 
 		login.logout();
@@ -356,12 +352,12 @@ public class SavedSearchAudio_Regresssion {
 		// Login via PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Loggedin As PA");
-		String newNodeFromPA = saveSearch.createSearchGroupAndReturn(searchName, "PA");
+		String newNodeFromPA = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 
 		// impersonate As RMU via PA and create new searchgroup
 		base.impersonatePAtoRMU();
 		base.stepInfo("Impersonated As RMU");
-		String newNodeFromRMU = saveSearch.createSearchGroupAndReturn(searchName, "RMU");
+		String newNodeFromRMU = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
 
 		// create folder and add save search in folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -369,17 +365,17 @@ public class SavedSearchAudio_Regresssion {
 		tagsAndFolderPage.CreateFolder(folderName, "Default Security Group");
 		int purehit = session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName);
-		session.saveSearchInNode(searchName);
+		session.saveSearchInNewNode(searchName, newNodeFromRMU);
 
 		// impersonate As REV and create new searchgroup
 		base.impersonateRMUtoReviewer();
 		base.stepInfo("Impersonated As Reviewer");
-		String newNodeFromRev = saveSearch.createSearchGroupAndReturn(searchName, "REV");
+		String newNodeFromRev = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", "No");
 
 		// create folder and add save search in folder
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName1);
-		session.saveSearchInNode(searchName1);
+		session.saveSearchInNewNode(searchName1, newNodeFromRev);
 
 		driver.waitForPageToBeReady();
 		// impersonate As Reviewer to RMU
@@ -390,7 +386,7 @@ public class SavedSearchAudio_Regresssion {
 		categorize.categorizationFlow(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1, "RMU");
 
 		// impersonate As PA via RMU
-		base.impersonateDAtoPA();
+		base.rolesToImp("RMU", "PA");
 		base.stepInfo("Back As PA");
 
 		categorize.categorizationFlow(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1, "PA");
@@ -420,9 +416,7 @@ public class SavedSearchAudio_Regresssion {
 		base.impersonatePAtoRMU();
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchName1);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode = saveSearch.getSavedSearchNewNode().getText();
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
 
 		// create folder and add save search in folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -430,7 +424,7 @@ public class SavedSearchAudio_Regresssion {
 		tagsAndFolderPage.CreateFolder(folderName, "Default Security Group");
 		int purehit = session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName1);
-		session.saveSearchInNode(searchName1);
+		session.saveSearchInNewNode(searchName1, newNode);
 		session.bulkFolderExisting(folderName);
 		assign = new AssignmentsPage(driver);
 		assign.createAssignment(assignmentName, codingform);
@@ -439,14 +433,12 @@ public class SavedSearchAudio_Regresssion {
 		base.impersonateRMUtoReviewer();
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchName1);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode1 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", "No");
 
 		// create folder and add save search in folder
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName1);
-		session.saveSearchInNode(searchName1);
+		session.saveSearchInNewNode(searchName1, newNode1);
 
 		session.bulkFolderExisting(folderName);
 
@@ -474,7 +466,7 @@ public class SavedSearchAudio_Regresssion {
 	 *                              searches in PAU role RPMXCON-57413
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = false, groups = { "regression" }, priority = 8)
 	public void reviewResultReport() throws InterruptedException {
 		String TagName = "Tag" + Utility.dynamicNameAppender();
 		String folderName = "Folder" + Utility.dynamicNameAppender();
@@ -519,7 +511,7 @@ public class SavedSearchAudio_Regresssion {
 		// impersonate As PA
 		driver.waitForPageToBeReady();
 		base.waitForElement(report.getPageHeader());
-		base.impersonateDAtoPA();
+		base.rolesToImp("RMU", "PA");
 
 		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		report.reviewResultReport();
@@ -567,14 +559,12 @@ public class SavedSearchAudio_Regresssion {
 		base.impersonatePAtoRMU();
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchGroup);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String Node1 = saveSearch.getSavedSearchNewNode().getText();
+		String Node1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
 
 		// add save search
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(saveSearch1);
-		session.saveSearchInNode(saveSearch2);
+		session.saveSearchInNewNode(saveSearch2, Node1);
 
 		// impersonate As REV
 		driver.Manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
@@ -582,14 +572,12 @@ public class SavedSearchAudio_Regresssion {
 		base.impersonateRMUtoReviewer();
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchGroup);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String Node2 = saveSearch.getSavedSearchNewNode().getText();
+		String Node2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", "No");
 
 		// add save search
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(saveSearch1);
-		session.saveSearchInNode(saveSearch2);
+		session.saveSearchInNewNode(saveSearch2, Node2);
 
 		// impersonate As RMU
 		driver.Manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
@@ -603,7 +591,7 @@ public class SavedSearchAudio_Regresssion {
 		page.fillingDATSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocuSelectionPage(saveSearch1, saveSearch2);
 		page.navigateToNextSection();
@@ -612,12 +600,10 @@ public class SavedSearchAudio_Regresssion {
 
 		// impersonate As PA
 		driver.Manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-		base.impersonateDAtoPA();
+		base.rolesToImp("RMU", "PA");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(saveSearch2);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String nw_node = saveSearch.getSavedSearchNewNode().getText();
+		String nw_node = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 
 		// To check searches Not present in PA
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
@@ -625,7 +611,7 @@ public class SavedSearchAudio_Regresssion {
 		page.fillingDATSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocuSelectionPage(searchGroup, saveSearch2);
 		System.out.println("Search groups and search Of RMU is not available");
@@ -634,7 +620,7 @@ public class SavedSearchAudio_Regresssion {
 		// add save search
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(saveSearch2);
-		session.saveSearchInNode(SearchNodeNamePA);
+		session.saveSearchInNewNode(SearchNodeNamePA, nw_node);
 
 		// To Select & check mySavedSearch and savedNodeSearch
 		driver.getWebDriver().get(Input.url + "Production/Home");
@@ -642,7 +628,7 @@ public class SavedSearchAudio_Regresssion {
 		page.fillingDATSection();
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocuSelectionPage(saveSearch2, SearchNodeNamePA);
 		page.navigateToNextSection();
@@ -674,27 +660,23 @@ public class SavedSearchAudio_Regresssion {
 		base.impersonatePAtoRMU();
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchGroup);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode = saveSearch.getSavedSearchNewNode().getText();
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
 
 		// create folder and add save search in folder
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(saveSearch1);
-		session.saveSearchInNode(saveSearch2);
+		session.saveSearchInNewNode(saveSearch2, newNode);
 
 		// impersonate As REV
 		base.impersonateRMUtoReviewer();
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchGroup);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode1 = saveSearch.getSavedSearchNewNode().getText();
+		String newNode1 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", "No");
 		System.out.println(newNode1);
 		// create folder and add save search in folder
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(saveSearch1);
-		session.saveSearchInNode(saveSearch2);
+		session.saveSearchInNewNode(saveSearch2, newNode1);
 
 		// impersonate As RMU
 		driver.waitForPageToBeReady();
@@ -707,15 +689,13 @@ public class SavedSearchAudio_Regresssion {
 		// impersonate As PA
 		driver.Manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
 		base.waitForElement(base.getSignoutMenu());
-		base.impersonateDAtoPA();
+		base.rolesToImp("RMU", "PA");
 
 		batch = new BatchPrintPage(driver);
 		batch.saveSearchRadiobutton(saveSearch1);
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchName);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String new_node = saveSearch.getSavedSearchNewNode().getText();
+		String new_node = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName);
 		driver.getWebDriver().get(Input.url + "BatchPrint/");
@@ -735,9 +715,7 @@ public class SavedSearchAudio_Regresssion {
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-57418 SavedSearch ");
 
-		saveSearch.createNewSearchGrp(searchName);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode = saveSearch.getSavedSearchNewNode().getText();
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		session.AudioAndNonAudioSearch(Input.audioSearchString1, "North American English");
 		session.saveAdvanceSearchInNode(searchName, newNode);
 
@@ -747,18 +725,9 @@ public class SavedSearchAudio_Regresssion {
 
 		// Schedule save search
 		driver.getWebDriver().navigate().refresh();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return saveSearch.getCollapsedSharedWithDefaultSecurityGroup().Visible();
-			}
-		}), Input.wait60);
-		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(10);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return saveSearch.getSharedGroupName(newNode).Visible();
-			}
-		}), Input.wait60);
-		saveSearch.getSharedGroupName(newNode).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		saveSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(3);
+		saveSearch.selectNode1(newNode);
 		saveSearch.scheduleSavedSearch(searchName);
 
 		System.out.println("Successfully ran for PA user");
@@ -787,27 +756,23 @@ public class SavedSearchAudio_Regresssion {
 		base.stepInfo("RPMXCON-57410 Saved Search");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchGroup);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNodeRMU = saveSearch.getSavedSearchNewNode().getText();
+		String newNodeRMU = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
 		System.out.println(newNodeRMU);
 
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(saveSearch1);
-		session.saveSearchInNode(saveSearch2);
+		session.saveSearchInNewNode(saveSearch2, newNodeRMU);
 
 //		impersonate As REV
 		base.impersonateRMUtoReviewer();
 
 //		create new searchgroup
-		saveSearch.createNewSearchGrp(searchGroup);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNodeREV = saveSearch.getSavedSearchNewNode().getText();
+		String newNodeREV = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", "No");
 		System.out.println(newNodeREV);
 
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(saveSearch1);
-		session.saveSearchInNode(saveSearch2);
+		session.saveSearchInNewNode(saveSearch2, newNodeREV);
 
 //		impersonate as RMU
 		Thread.sleep(2000);
@@ -820,12 +785,10 @@ public class SavedSearchAudio_Regresssion {
 		base.impersonateSAtoPA();
 
 //		create new searchgroup
-		saveSearch.createNewSearchGrp(searchGroup);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNodePA = saveSearch.getSavedSearchNewNode().getText();
+		String newNodePA = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(saveSearch2);
-		session.saveSearchInNode(newNodePA);
+		session.saveSearchInNewNode(newNodePA, newNodePA);
 
 //		impersonate As PA
 		Thread.sleep(3000);
@@ -849,9 +812,7 @@ public class SavedSearchAudio_Regresssion {
 		base.stepInfo("RPMXCON-49885 Saved Search");
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(SearchNamePA);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNodePA = saveSearch.getSavedSearchNewNode().getText();
+		String newNodePA = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		System.out.println(newNodePA);
 		saveSearch.shareSavedNodePA(newNodePA);
 		saveSearch.verifySharedNode(Input.shareSearchDefaultSG, newNodePA, "", false, "", false);
