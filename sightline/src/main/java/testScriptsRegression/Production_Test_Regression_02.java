@@ -110,7 +110,8 @@ public class Production_Test_Regression_02{
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -248,7 +249,9 @@ public class Production_Test_Regression_02{
 		String currentURL = driver.getWebDriver().getCurrentUrl();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		base.switchProject(Input.regressionConsilio1);
+		//base.switchProject(Input.regressionConsilio1);
+		BaseClass base=new BaseClass(driver);
+		base.selectproject(Input.regressionConsilio1);
 		base.stepInfo("Logined as RMU");
 
 		driver.Navigate().to(currentURL);
@@ -283,7 +286,8 @@ public class Production_Test_Regression_02{
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -350,6 +354,7 @@ public class Production_Test_Regression_02{
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingSecurityGroup(Input.securityGroup_sg47);
+		//page.selectingSecurityGroup(Input.securityGroup);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		driver.waitForPageToBeReady();
@@ -357,7 +362,9 @@ public class Production_Test_Regression_02{
 		String currentURL = driver.getWebDriver().getCurrentUrl();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		base.switchProject(Input.regressionConsilio1);
+		//base.switchProject(Input.regressionConsilio1);
+		BaseClass base=new BaseClass(driver);
+		base.selectproject(Input.regressionConsilio1);
 		base.stepInfo("Logined as another PA");
 
 		driver.Navigate().to(currentURL);
@@ -386,7 +393,8 @@ public class Production_Test_Regression_02{
 	public void verifyStatusBarTextWithResolutionAndZoomSize() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		base.stepInfo("RPMXCON-55994 -Production Sprint 10");
 		base.stepInfo(
 				"Verify that the text should not go out the progress bar or wrap, even when the user zooms out/in the browser with different screen resolution  on tile view");
@@ -507,7 +515,8 @@ public class Production_Test_Regression_02{
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -574,7 +583,7 @@ public class Production_Test_Regression_02{
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
 		prefixID = Utility.randomCharacterAppender(50);
-
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -630,7 +639,8 @@ public class Production_Test_Regression_02{
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -774,8 +784,8 @@ public class Production_Test_Regression_02{
 				"To Verify Native Section with various options(Produce Native Files selection/Generate Load LST/Advance Show Hide/and Toggles in Advance)");
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-		// tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -832,7 +842,8 @@ public class Production_Test_Regression_02{
 				"To Verify On grid view of the productions  the start date and end date  for a production that is still in Completed state.");
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-		// tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -865,17 +876,8 @@ public class Production_Test_Regression_02{
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
-		driver.Navigate().refresh();
-		base.waitForElement(page.getFilterByButton());
-		page.getFilterByButton().waitAndClick(10);
-		base.waitForElement(page.getFilterByCOMPLETED());
-		page.getFilterByCOMPLETED().waitAndClick(10);
-		page.getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		page.getGridView().waitAndClick(10);
-		driver.waitForPageToBeReady();
-		base.stepInfo("Nativated to production Grid View");
+		page.goToProductionGridView();
 		int startDateIndex = base.getIndex(page.getGridWebTableHeader(), "START DATE");
 		int endDateIndex = base.getIndex(page.getGridWebTableHeader(), "END DATE");
 		String startDate = page.getGridProdValues(productionname, startDateIndex).getText();
@@ -926,7 +928,8 @@ public class Production_Test_Regression_02{
 				"Verify that Production should export Native with  the Text file in selected format if Text is not ingested");
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-		// tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
 		// create tag and folder
@@ -977,7 +980,8 @@ public class Production_Test_Regression_02{
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1042,8 +1046,8 @@ public class Production_Test_Regression_02{
 				"Verify that Production should generated with redaction text if user selects the annotation layer");
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-		// tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1100,7 +1104,8 @@ public class Production_Test_Regression_02{
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1178,7 +1183,8 @@ public class Production_Test_Regression_02{
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String Redactiontag1;
 		Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		RedactionPage redactionpage = new RedactionPage(driver);
 
 		driver.waitForPageToBeReady();
@@ -1256,7 +1262,8 @@ public class Production_Test_Regression_02{
 				"Verify that redaction text displays on generated Tiff/PDF for orphan redactions documents, if user selects the option as 'All redactions in annotation layer' for Burn Redactions");
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1314,7 +1321,8 @@ public class Production_Test_Regression_02{
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1364,9 +1372,10 @@ public class Production_Test_Regression_02{
 		base.stepInfo("RPMXCON-47846 Production- Sprint 11");
 		base.stepInfo("To Verify the View of the already created Template with existing Project and Production Set");
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-		// tagname = "Tag" + Utility.dynamicNameAppender();
+		 tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "templateName" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1390,8 +1399,9 @@ public class Production_Test_Regression_02{
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
 				beginningBates);
-
-		page.addProductionFilter();
+		
+		page = new ProductionPage(driver);
+		driver.waitForPageToBeReady();
 		page.getprod_ActionButton_Reusable(productionname).Click();
 		driver.waitForPageToBeReady();
 		page.getprod_Action_SaveTemplate_Reusable(productionname).Click();
@@ -1445,7 +1455,8 @@ public class Production_Test_Regression_02{
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String tagname1 = "Tag1" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1513,7 +1524,8 @@ public class Production_Test_Regression_02{
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String tagname1 = "Tag1" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1777,10 +1789,7 @@ public class Production_Test_Regression_02{
 			base.passedStep("There Should not be any error message  such as WidthAndHeightCannotBeNegative");
 		}
 		base.passedStep("Verified Production for a document with no error message as 'WidthAndHeightCannotBeNegative'");
-		page.getbtnContinueGenerate().isElementAvailable(60);
-		page.getbtnContinueGenerate().waitAndClick(10);
-		page.getConfirmProductionCommit().isElementAvailable(60);
-		page.getConfirmProductionCommit().waitAndClick(10);
+		
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -1800,7 +1809,8 @@ public class Production_Test_Regression_02{
 		base.stepInfo("To verify that Rotate 90 degrees clockwise page is rotated before the branding is applied");
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1847,7 +1857,8 @@ public class Production_Test_Regression_02{
 		base.stepInfo("Verify that production should be generated successfully for audio files");
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2166,7 +2177,8 @@ public class Production_Test_Regression_02{
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		// tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2240,7 +2252,8 @@ public class Production_Test_Regression_02{
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2328,7 +2341,8 @@ public class Production_Test_Regression_02{
 		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2409,6 +2423,8 @@ public class Production_Test_Regression_02{
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		base = new BaseClass(driver);
 
 		// Pre-requisites
@@ -2437,7 +2453,8 @@ public class Production_Test_Regression_02{
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname, beginningBates);
 
-		page.filterCompletedProduction();
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.waitForPageToBeReady();
 		page.getprod_ActionButton_Reusable(productionname).waitAndClick(10);
 		driver.waitForPageToBeReady();
 		page.getprod_Action_SaveTemplate_Reusable(productionname).waitAndClick(10);
@@ -2456,6 +2473,8 @@ public class Production_Test_Regression_02{
 		driver.waitForPageToBeReady();
 		page.getDATTab().waitAndClick(10);
 		page.getElementDisplayCheck(page.getDAT_FieldClassification1());
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
 		base.waitTillElemetToBeClickable(page.getMarkCompleteLink());
 		page.getMarkCompleteLink().waitAndClick(10);
 		base.VerifySuccessMessage("Mark Complete successful");
@@ -2483,7 +2502,8 @@ public class Production_Test_Regression_02{
 		base.stepInfo("To Verify regenerate Option in Production");
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2574,6 +2594,8 @@ public class Production_Test_Regression_02{
 		// foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		TempName = "Templete" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		base = new BaseClass(driver);
 
 		// Pre-requisites
@@ -2781,8 +2803,8 @@ public class Production_Test_Regression_02{
 
 		driver.waitForPageToBeReady();
 
-		page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
-		System.out.println("Unzipped the downloaded files");
+		page.extractFile();
+		
 
 		File f = new File(home + "/Downloads/" + location + "/" + loadfile + "/");
 		File dat = new File(home + "/Downloads/" + location + "/" + loadfile + "/" + name + "_DAT.dat");
@@ -2889,6 +2911,8 @@ public class Production_Test_Regression_02{
 		base.stepInfo("RPMXCON-47930 -Production Sprint 09");
 		base.stepInfo("To verify, Priv Guard in Production should show correct document counts");
 
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String Redactiontag1;
@@ -3048,12 +3072,8 @@ public class Production_Test_Regression_02{
 
 		String home = System.getProperty("user.home");
 
-		page.isFileDownloaded(home + "/Downloads", production);
-
 		driver.waitForPageToBeReady();
-
-		page.unzipping(home + "/Downloads/" + production + ".zip", home + "/Downloads");
-		System.out.println("Unzipped the downloaded files");
+		page.extractFile();
 
 		for (int i = number + 3; i < lastfile; i++) {
 			File f = new File(
@@ -3081,30 +3101,22 @@ public class Production_Test_Regression_02{
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-		base = new BaseClass(driver);
-		Reporter.setCurrentTestResult(result);
-		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
-			loginPage.logoutWithoutAssert();
-		}
-		try {
-			loginPage.quitBrowser();
-		} catch (Exception e) {
-			loginPage.quitBrowser();
-		}
+	base = new BaseClass(driver);
+	Reporter.setCurrentTestResult(result);
+	if (ITestResult.FAILURE == result.getStatus()) {
+	Utility baseClass = new Utility(driver);
+	baseClass.screenShot(result);
+	}
+
+	loginPage.quitBrowser();
+
 	}
 
 	@AfterClass(alwaysRun = true)
 
 	public void close() {
-		System.out.println("******TEST CASES FOR PRODUCTION EXECUTED******");
-//		try {
-//			loginPage.quitBrowser();
-//		} catch (Exception e) {
-//			loginPage.quitBrowser();
-//
-//		}
+	System.out.println("******TEST CASES FOR PRODUCTION EXECUTED******");
+
 	}
 
 }
