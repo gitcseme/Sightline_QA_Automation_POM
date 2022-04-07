@@ -34,6 +34,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -73,13 +74,10 @@ public class DocView_Sprint2_Regression {
 	KeywordPage keywordPage;
 	SavedSearch savedSearch;
 	ReusableDocViewPage reusableDocView;
-	Utility utility;
 
 	String keywordsArray[] = { "test", "hi", "Than8617167" };
 	String keywordsArrayPT[] = { "test" };
 	String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
-	String AnnotationLayerNew = null;
-	String AnnotationLayerNew1 = null;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -123,7 +121,7 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Search with text input --test-- completed");
 		sessionsearch.ViewInDocView();
 // Redacting using rectangular redaction
-		docViewRedact.redactRectangleUsingOffset(-8, 10, 150, 200);
+		docViewRedact.redactRectangleUsingOffset(0, 0, 50, 100);
 		baseClass.stepInfo("A rectangle redaction has been applied");
 		docViewRedact.selectingRectangleRedactionTag();
 		baseClass.stepInfo("A rectangle redaction has been saved under Default Redaction Tag");
@@ -237,8 +235,7 @@ public class DocView_Sprint2_Regression {
 	 *         document list using search input and view in DocView print document
 	 *         and verify bullhorn notification & background tasks
 	 */
-	@Test(description = "RPMXCON-52232,RPMXCON-52230,RPMXCON-52229", enabled = true, alwaysRun = true, groups = {
-			"regression" }, priority = 4)
+	@Test(description = "RPMXCON-52232,RPMXCON-52230,RPMXCON-52229", enabled = true, alwaysRun = true, groups = {"regression" }, priority = 4)
 
 	public void verifyBullhornNotifications() throws Exception {
 // Selecting Document from Session search
@@ -338,8 +335,7 @@ public class DocView_Sprint2_Regression {
 	 * for 52194, Delete the performed text redaction
 	 */
 
-	@Test(description = "RPMXCON-52220,RPMXCON-52194", enabled = true, alwaysRun = true, groups = {
-			"regression" }, priority = 6)
+	@Test(description = "RPMXCON-52220,RPMXCON-52194", enabled = true, alwaysRun = true, groups = {"regression" }, priority = 6)
 	public void textRedactionAsRMU() throws Exception {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -379,8 +375,7 @@ public class DocView_Sprint2_Regression {
 	 * Redactions
 	 */
 
-	@Test(description = "RPMXCON-52303,RPMXCON-52304", enabled = true, alwaysRun = true, groups = {
-			"regression" }, priority = 7)
+	@Test(description = "RPMXCON-52303,RPMXCON-52304", enabled = true, alwaysRun = true, groups = {"regression" }, priority = 7)
 	public void verifyRedactionStabilityinAllDocTypes() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -629,7 +624,7 @@ public class DocView_Sprint2_Regression {
 
 		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(2);
+		baseClass.waitTime(5);
 		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
 		String hex1 = Color.fromString(color).asHex();
 		System.out.println(hex1);
@@ -876,6 +871,7 @@ public class DocView_Sprint2_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		docViewRedact.checkingPersistentHitPanel();
+		assignmentspage.deleteAssgnmntUsingPagination(assignmentName);		
 		loginPage.logout();
 	}
 
@@ -945,7 +941,7 @@ public class DocView_Sprint2_Regression {
 		robot.keyPress(KeyEvent.VK_F5);
 		robot.keyRelease(KeyEvent.VK_F5);
 		driver.waitForPageToBeReady();
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).click();
 		actions.build().perform();
 		if (docViewRedact.highliteDeleteBtn().Displayed() && docViewRedact.highliteDeleteBtn().Enabled()) {
@@ -961,7 +957,7 @@ public class DocView_Sprint2_Regression {
 		driver.waitForPageToBeReady();
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).click();
 		actions.build().perform();
-		if (docViewRedact.highliteDeleteBtn().isElementAvailable(5) == false) {
+		if (docViewRedact.highliteDeleteBtn().isElementAvailable(5) == true) {
 			docViewRedact.highliteDeleteBtn().Click();
 			baseClass.failedStep("the highlite has not been deleted after refresh");
 		} else {
@@ -1191,7 +1187,7 @@ public class DocView_Sprint2_Regression {
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
 
 		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch("test");
 		sessionSearch.bulkAssign();
 		assignmentsPage.assignmentCreation(assname, codingForm);
 		assignmentsPage.toggleEnableSaveWithoutCompletion();
@@ -2095,7 +2091,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 33)
+//	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifySearchTermHighlightedInEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51395");
@@ -4214,7 +4210,7 @@ public class DocView_Sprint2_Regression {
 			}
 		}), Input.wait30);
 		docViewRedact.redactionIcon().waitAndClick(5);
-		docViewRedact.redactRectangleUsingOffset(-8, 10, 200, 100);
+		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
 		Select redactionTag = new Select(docViewRedact.rectangleRedactionTagSelect().getWebElement());
 		List<WebElement> options = redactionTag.getOptions();
 		WebElement webElement = options.get(0);
@@ -5965,7 +5961,7 @@ public class DocView_Sprint2_Regression {
 				softAssertion.assertEquals(docView.getSelectedDocIdInMiniDocList().Displayed().booleanValue(), true);
 			}
 		} catch (Exception e) {
-			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
+			baseClass.failedStep("Doc is not getting displayed after scrolling down to document");
 
 		}
 
@@ -6678,103 +6674,6 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 
 	}
-	
-	/**
-	 * Author :Vijaya.Rani date: 05/04/2022  Modified date: NA Modified by: NA
-	 * Description:Verify that message to reload the document should not be displayed when two users under different project views the document with 
-	 * same doc id, with different mapped annotation layer id and adds redaction
-	 * 'RPMXCON-52210' Sprint-14
-	 * 
-	 * @throws Exception 
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 81)
-	public void verifySameDocIdAndDifferentAnnotationAddRedaction() throws Exception {
-		
-		baseClass = new BaseClass(driver);
-		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
-		AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
-		baseClass = new BaseClass(driver);
-		utility = new Utility(driver);
-		loginPage = new LoginPage(driver);
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		loginPage.logout();
-		baseClass.stepInfo("Test case Id: RPMXCON-52210 sprint 14");
-
-		baseClass.stepInfo(
-				"Verify that message to reload the document should not be displayed when two users under different project views the document with same doc id, with different mapped annotation layer id and adds redaction");
-
-		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		Reporter.log("Logged in as User: " + Input.pa1userName);
-		
-		// Creating annotation layer 
-		docViewRedact = new DocViewRedactions(driver);
-		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
-		baseClass.passedStep("Annation Layer is Created successully");
-		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew1);
-		baseClass.passedStep("Annation Layer1 is Created successully");
-		loginPage.logout();
-		
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		Reporter.log("Logged in as User: " + Input.rmu1userName);
-		sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.ViewInDocView();
-		baseClass.stepInfo("Viewed the Doc View Page");
-		docViewRedact.clickingRedactionIcon();
-		driver.waitForPageToBeReady();
-		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
-		baseClass.stepInfo("Redaction Is Added Succesully " + Input.rmu1userName);
-		loginPage.logout();
-
-		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-		Reporter.log("Logged in as User: " + Input.rmu2userName);
-		baseClass.selectproject("AutomationAdditionalDataProject");
-		baseClass.stepInfo("Succesfully Selected Project1");
-		sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.ViewInDocView();
-		baseClass.stepInfo("Viewed the Doc View Page");
-		docViewRedact.clickingRedactionIcon();
-		driver.waitForPageToBeReady();
-		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
-		baseClass.stepInfo("Redaction Is Added Succesully " + Input.rmu2userName);
-		loginPage.logout();
-	}
-		
-	/**
-	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-52241 Verify that for the exception document with hidden content
-	 * should show the icon for hidden properties and also the warning message
-	 */
-
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 82)
-	public void verifyDocWithHiddenContentIconForHiddenProperties() throws Exception {
-		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-52241");
-		baseClass.stepInfo(
-				"Verify that for the exception document with hidden content should show the icon for hidden properties and also the warning message");
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		docViewRedact = new DocViewRedactions(driver);
-
-		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
-		baseClass.stepInfo("Login as RMU");
-		sessionsearch.basicContentSearch(Input.HiddenIngestionDocId);
-		sessionsearch.ViewInDocView();
-		baseClass.stepInfo("Docs Viewed in Doc View");
-		driver.waitForPageToBeReady();
-
-		// verify Hidden info icon is visible on DocView
-		if (docViewRedact.hiddenInfoIcon().isDisplayed() == true) {
-			baseClass.passedStep("Hidden info icon is visible for document with hidden content");
-		} else {
-			baseClass.failedStep("Hidden info Icon is not visible for document without hidden content");
-		}
-		baseClass.VerifyWarningMessage(
-				"The document has the following hidden information that is presented in the Viewer.");
-	}
-
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
