@@ -1020,7 +1020,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51356", enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description = "RPMXCON-51356", enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyAfterImpersonationAllMenusInDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51356");
@@ -1095,7 +1095,6 @@ public class DocView_Sprint2_Regression {
 
 	}
 
-
 	/**
 	 * Author : Vijaya.Rani date: 2/12/21 NA Modified date: NA Modified by:NA
 	 * Description :Verify that the user can click on X at any state and bring it
@@ -1103,7 +1102,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51560",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
+	@Test(description = "RPMXCON-51560", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
 	public void verifyClickXAtAnyStateAndBringItBackToOriginalSearchIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51560");
@@ -1173,7 +1172,7 @@ public class DocView_Sprint2_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51274",enabled = true, groups = { "regression" }, priority = 22)
+	@Test(description = "RPMXCON-51274", enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyAssignmentProgressBarCodeSameAsAction() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51274");
@@ -1251,6 +1250,7 @@ public class DocView_Sprint2_Regression {
 		}
 		loginPage.logout();
 	}
+
 	/**
 	 * Author : Vijaya.Rani date: 10/12/21 NA Modified date: NA Modified by:NA
 	 * Description :To verify that once document is marked as 'Un-Completed',
@@ -1258,7 +1258,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51030",enabled = true, groups = { "regression" }, priority = 23)
+	@Test(description = "RPMXCON-51030", enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyOnceDocumentIsMarkedAsUnCompleteUpdateProgressBar() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51030");
@@ -1306,7 +1306,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51914",enabled = true, groups = { "regression" }, priority = 24)
+	@Test(description = "RPMXCON-51914", enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyImageTabOnCompleteDocsShouldNavigateToNextDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51914");
@@ -1394,7 +1394,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51915",enabled = true, groups = { "regression" }, priority = 25)
+	@Test(description = "RPMXCON-51915", enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyImageTabOnCompleteDocsAndApplyCodingStampShouldNavigateToNextDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51915");
@@ -1488,7 +1488,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51916",enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description = "RPMXCON-51916", enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyImageTabOnCompleteDocsAndCodeSameAsLastShouldNavigateToNextDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51916");
@@ -1585,7 +1585,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-48783",enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description = "RPMXCON-48783", enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyAllRelevantHitTermsOnDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48783");
@@ -1629,7 +1629,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51917",enabled = true, groups = { "regression" }, priority = 28)
+	@Test(description = "RPMXCON-51917", enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyImageTabOnViewDocsFromAnalyticsPanel() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51917");
@@ -2850,6 +2850,7 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 
 	}
+
 	/**
 	 * @author Sakthivel TestCase Id:51874 Verify that Action > Remove Code Same As
 	 *         works fine when all records in the reviewers batch are in an
@@ -2919,9 +2920,6 @@ public class DocView_Sprint2_Regression {
 		docView.closeWindow(1);
 		softAssert.assertAll();
 	}
-
-
-	
 
 	/**
 	 * Author : Mohan date: 28/01/22 NA Modified date: NA Modified by:NA Description
@@ -3191,7 +3189,7 @@ public class DocView_Sprint2_Regression {
 
 		baseClass.passedStep("Verified that large Excels are loading properly without any issues in DocView.");
 	}
-	
+
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-51568 Verify when user navigates to other document while viewing the
@@ -3285,8 +3283,6 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 	}
 
-
-
 	/**
 	 * @Author Raghuram A date:2/8/2022 Modified date: NA Modified by:N/A
 	 * @Description : To verify document view panel from doc view page
@@ -3355,7 +3351,6 @@ public class DocView_Sprint2_Regression {
 		agnmt.DeleteAssgnGroup(cascadeAsgnGrpName);
 		loginPage.logout();
 	}
-
 
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
@@ -3920,9 +3915,7 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 
 	}
-	
 
-	
 	/**
 	 * Author : Vijaya.Rani date: 1/02/22 NA Modified date: NA Modified by:NA
 	 * Description :Verify assignment progress bar refreshesh after applying coding
@@ -3999,7 +3992,6 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 
 	}
-
 
 	/**
 	 * Author :Vijaya.Rani date: 18/02/2022 Modified date: NA Modified by: NA
@@ -5522,7 +5514,7 @@ public class DocView_Sprint2_Regression {
 		softAssert.assertAll();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Aathith Modified date: NA Modified by: Aathith RPMXCON-50786
 	 * @Description : To verify document should be displayed in doc view panel as
@@ -5582,8 +5574,6 @@ public class DocView_Sprint2_Regression {
 				"verified document should be displayed in doc view panel as per the entered document number in the inputbox.");
 		loginPage.logout();
 	}
-	
-
 
 	/**
 	 * Author : Sakthivel date: NA Modified date: NA Modified by: NA Test Case
@@ -6394,7 +6384,7 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51746 Verify that on document navigation options when hits panel
@@ -6433,7 +6423,7 @@ public class DocView_Sprint2_Regression {
 		}
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Raghuram.A date: NA Modified date: 01/18/21 Modified by: Raghuram A
 	 *         Description : Verify that when page highlighting added for different
@@ -6496,7 +6486,7 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.verifyThisPageHighlightMaintained(true);
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-51567 Verify when the user clicks on the X after the text search in a
@@ -6606,7 +6596,7 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.verifyRectangleRedactionPositionRetained(xAxis, yAxis, true);
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Raghuram.A date: NA Modified date: 01/18/21 Modified by: Raghuram A
 	 *         Description : Verify that when rectangle redaction added for
@@ -6678,18 +6668,19 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 
 	}
-	
+
 	/**
-	 * Author :Vijaya.Rani date: 05/04/2022  Modified date: NA Modified by: NA
-	 * Description:Verify that message to reload the document should not be displayed when two users under different project views the document with 
-	 * same doc id, with different mapped annotation layer id and adds redaction
+	 * Author :Vijaya.Rani date: 05/04/2022 Modified date: NA Modified by: NA
+	 * Description:Verify that message to reload the document should not be
+	 * displayed when two users under different project views the document with same
+	 * doc id, with different mapped annotation layer id and adds redaction
 	 * 'RPMXCON-52210' Sprint-14
 	 * 
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 81)
 	public void verifySameDocIdAndDifferentAnnotationAddRedaction() throws Exception {
-		
+
 		baseClass = new BaseClass(driver);
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
@@ -6706,15 +6697,15 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Login with project administrator");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		Reporter.log("Logged in as User: " + Input.pa1userName);
-		
-		// Creating annotation layer 
+
+		// Creating annotation layer
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
 		baseClass.passedStep("Annation Layer is Created successully");
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew1);
 		baseClass.passedStep("Annation Layer1 is Created successully");
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		Reporter.log("Logged in as User: " + Input.rmu1userName);
 		sessionsearch = new SessionSearch(driver);
@@ -6741,7 +6732,69 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Redaction Is Added Succesully " + Input.rmu2userName);
 		loginPage.logout();
 	}
+
+	/**
+	 * Author :Vijaya.Rani date: 07/04/2022 Modified date: NA Modified by: NA
+	 * Description:Verify that message to reload the document should not be
+	 * displayed when two users under different project views the document with same
+	 * doc id, with same mapped annotation layer id and adds redaction
+	 * 'RPMXCON-52209' Sprint-14
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 82)
+	public void verifySameDocIdAndSameAnnotationAddRedaction() throws Exception {
+
+		baseClass = new BaseClass(driver);
+		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
+		AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
+		baseClass = new BaseClass(driver);
+		utility = new Utility(driver);
+		loginPage = new LoginPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52209 sprint 14");
+
+		baseClass.stepInfo(
+				"Verify that message to reload the document should not be displayed when two users under different project views the document with same doc id, with same mapped annotation layer id and adds redaction.");
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
 		
+		// Creating annotation layer
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+		baseClass.passedStep("Annation Layer is Created successully");
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		Reporter.log("Logged in as User: " + Input.rmu1userName);
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Viewed the Doc View Page");
+		docViewRedact.clickingRedactionIcon();
+		driver.waitForPageToBeReady();
+		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
+		baseClass.stepInfo("Redaction Is Added Succesully " + Input.rmu1userName);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		Reporter.log("Logged in as User: " + Input.rmu2userName);
+		baseClass.selectproject("AutomationAdditionalDataProject");
+		baseClass.stepInfo("Succesfully Selected Project1");
+		sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Viewed the Doc View Page");
+		docViewRedact.clickingRedactionIcon();
+		driver.waitForPageToBeReady();
+		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
+		baseClass.stepInfo("Redaction Is Added Succesully " + Input.rmu2userName);
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
