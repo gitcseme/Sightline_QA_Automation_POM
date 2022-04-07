@@ -6742,6 +6742,39 @@ public class DocView_Sprint2_Regression {
 		loginPage.logout();
 	}
 		
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-52241 Verify that for the exception document with hidden content
+	 * should show the icon for hidden properties and also the warning message
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 82)
+	public void verifyDocWithHiddenContentIconForHiddenProperties() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52241");
+		baseClass.stepInfo(
+				"Verify that for the exception document with hidden content should show the icon for hidden properties and also the warning message");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
+		baseClass.stepInfo("Login as RMU");
+		sessionsearch.basicContentSearch(Input.HiddenIngestionDocId);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.waitForPageToBeReady();
+
+		// verify Hidden info icon is visible on DocView
+		if (docViewRedact.hiddenInfoIcon().isDisplayed() == true) {
+			baseClass.passedStep("Hidden info icon is visible for document with hidden content");
+		} else {
+			baseClass.failedStep("Hidden info Icon is not visible for document without hidden content");
+		}
+		baseClass.VerifyWarningMessage(
+				"The document has the following hidden information that is presented in the Viewer.");
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

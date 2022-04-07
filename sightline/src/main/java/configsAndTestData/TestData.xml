@@ -108,13 +108,13 @@
 	<analyticsConceptualDocId2>T2396D</analyticsConceptualDocId2>
 	<miniConceptualNoDoc>ID00001511</miniConceptualNoDoc>
 	<tiffSearchQuery>.tif</tiffSearchQuery>
-	<nearDupePagination>ID00000230</nearDupePagination>
+	<nearDupePagination>ICE010058-13-00000004</nearDupePagination>
 	<fieldByValue>Custodian</fieldByValue>
 	<highlightDocId>H16135-0188-002427</highlightDocId>
 	<highlightedDocsQuery>DupeCount:[1 TO 10000]</highlightedDocsQuery>
-	<ingestionQuery>B2F9_Automation_AllSources_20211130043120500</ingestionQuery>
+	<ingestionQuery>8DFD_Automation_AllSources_20220321095504183</ingestionQuery>
 	<ingestionDocIdFamilyMember>H16135-0188-002093</ingestionDocIdFamilyMember>
-	<ingestionDocIdNearDupe>H16135-0188-002523</ingestionDocIdNearDupe>
+	<ingestionDocIdNearDupe>H16135-0188-001027</ingestionDocIdNearDupe>
 
 
 
@@ -492,8 +492,8 @@
 	<familyDocWhichIsNotInMiniDoc>ID00000192</familyDocWhichIsNotInMiniDoc>
 	<bgColorOnMouseHover>rgba(212, 230, 237, 1)</bgColorOnMouseHover>
 
-	<hiddenDocId>ID00000206</hiddenDocId>
-	<excelProtectedHiddenDocId>H16135-0188-001062</excelProtectedHiddenDocId>
+	<hiddenDocId>ICE010044-18-00000035</hiddenDocId>
+	<excelProtectedHiddenDocId>ID00000053</excelProtectedHiddenDocId>
 	<warningMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup because that would overwrite the markup work done by the other user. Please reload the document.</warningMessage>
 	<conceptualDocId01>ID00000012</conceptualDocId01>
 	<conceptualDocId02>ID00000013</conceptualDocId02>

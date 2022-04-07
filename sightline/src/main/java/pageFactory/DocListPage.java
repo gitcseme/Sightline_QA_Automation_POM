@@ -1189,6 +1189,18 @@ public class DocListPage {
 		return driver.FindElementByXPath("//div[@class='jp-duration end']");
 
 		}
+		
+		//added by Aathith
+		public Element getParentDocumentCheckBox() {
+			return driver.FindElementByXPath("//td[@class=' details-control']/following-sibling::td//i");
+		}
+		public ElementCollection getTableRowHeader() {
+			return driver.FindElementsByXPath("//tr[@role='row']/th");
+		}
+		public Element getParentDocumentID(int i) {
+			return driver.FindElementByXPath("//td[@class=' details-control']/..//td["+i+"]");
+		}
+		
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -1641,9 +1653,10 @@ public class DocListPage {
 
 	public void bulkTagExisting(final String tagname) throws AWTException, InterruptedException {
 
-		try {
+		if(getPureHitAddButton().isDisplayed()) {
 			getPureHitAddButton().waitAndClick(10);
-		} catch (Exception e) {
+		}else {
+	driver.waitForPageToBeReady();
 			// System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 			Reporter.log("Pure hit block already moved to action panel", true);
@@ -4596,5 +4609,25 @@ public List<String> gettingAllDocIDs(){
 		}else {
 			base.failedStep("Audio play header is not displayed in preview document");
 		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description selecting the first parent document
+	 */
+	public void selectFirstParentDocumentWithChildDocument() {
+		base.waitForElement(getParentDocumentCheckBox());
+		getParentDocumentCheckBox().waitAndClick(10);
+		base.waitForElement(getPopUpOkBtn());
+		getPopUpOkBtn().waitAndClick(10);
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @return
+	 * @Description Get parent Document Id
+	 */
+	public String getParentDocumetId() {
+		int index = base.getIndex(getTableRowHeader(), "DOCID");
+		String docId = getParentDocumentID(index).getText().trim();
+		return docId;
 	}
 }

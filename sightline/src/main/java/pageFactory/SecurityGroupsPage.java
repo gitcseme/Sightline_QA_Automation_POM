@@ -280,6 +280,12 @@ public class SecurityGroupsPage {
 	public ElementCollection getAvailableSGlist() {
 		return driver.FindElementsByXPath("//select[@id='ddlSecurityGroupsList']//option");
 	}
+	
+	public Element getAnnotationDD() {
+		return driver.FindElementByXPath("//div[@id='annotationJSTree']//ul[@class='jstree-children']");
+	}
+	
+	
 
 	public SecurityGroupsPage(Driver driver) {
 
@@ -802,16 +808,22 @@ public class SecurityGroupsPage {
 	 * @param annotation
 	 */
 	public void assignAnnotationToSG(String annotation) {
+		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
 
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getAnnotationLayerLink());
 		getAnnotationLayerLink().waitAndClick(10);
-
+		
 		Actions actions = new Actions(driver.getWebDriver());
 		actions.sendKeys(Keys.SPACE).build().perform();
+		
+		bc.waitTime(2); 
+		bc.waitForElement(getAnnotationDD());
+		getAnnotationDD().waitAndClick(10);
 
 		bc.waitForElement(getAnnotation(annotation));
 		getAnnotation(annotation).waitAndClick(10);
+		
 		System.out.println("Selected Annotation layer : " + annotation);
 		bc.stepInfo("Selected Annotation layer : " + annotation);
 

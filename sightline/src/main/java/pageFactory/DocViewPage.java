@@ -16650,6 +16650,7 @@ public class DocViewPage {
 	public void lastAppliedStamp(String icon) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodingStampLastIcon(icon));
+		getCodingStampLastIcon(icon).ScrollTo();
 		getCodingStampLastIcon(icon).waitAndClick(10);
 	}
 
@@ -17638,9 +17639,6 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_FamilyViewInDocView());
 		getDocView_FamilyViewInDocView().waitAndClick(3);
-
-		driver.waitForPageToBeReady();
-		driver.scrollPageToTop();
 
 //		String text2 = getDocView_CurrentDocId().getText();
 
@@ -26986,6 +26984,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getMiniDocListDocIdText());
 		List<String> DocIDInMiniDocList = base.availableListofElements(getMiniDocListDocIdText());
+		driver.waitForPageToBeReady();
 		for (int i = 0; i < DocIDInMiniDocList.size(); i++) {
 			if (errorIcon().isElementAvailable(3)) {
 				base.waitForElement(getDocView_DocId(DocIDInMiniDocList.get(i)));
@@ -27025,4 +27024,27 @@ public class DocViewPage {
 		}
 
 	}
+/*
+	 * @Author Jeevitha
+	 * @Description : Selects incomplete batch redaction i.e..,Error File 
+	 */
+	public void selectErrorFile() {
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getMiniDocListDocIdText());
+		List<String> DocIDInMiniDocList = base.availableListofElements(getMiniDocListDocIdText());
+		driver.waitForPageToBeReady();
+		for (int i = 0; i < DocIDInMiniDocList.size(); i++) {
+			if (errorIcon().isElementAvailable(3)) {
+				String actualMsg=errorIcon().GetAttribute("data-content");
+				String ExpectedMsg= "in this document have been batch redacted. Please review and redact them manually as required.";
+				base.compareTextViaContains(actualMsg, ExpectedMsg,actualMsg , "The Error Msg Is Not As Expected");
+				break;
+			} else {
+				base.waitForElement(getDocView_DocId(DocIDInMiniDocList.get(i)));
+				getDocView_DocId(DocIDInMiniDocList.get(i)).waitAndClick(15);
+			}
+		}
+	}
+
+
 }

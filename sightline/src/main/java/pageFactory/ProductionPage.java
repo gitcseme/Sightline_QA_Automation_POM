@@ -2406,7 +2406,7 @@ public class ProductionPage {
 	}
 
 	public Element getErrorMsgText() {
-		return driver.FindElementByXPath("//span//h1");
+		return driver.FindElementByXPath("//div[@id='content']//h2");
 	}
 
 	public Element getDocList() {
@@ -2788,6 +2788,17 @@ public class ProductionPage {
 	}
 	public Element getFileDir(String dir) {
 		return driver.FindElementByXPath("//a[@class='icon dir' and contains(text(),'"+dir+"')]");
+	}
+	public Element keepFamiliesTogetherChkbox_sortByTags() {
+		return driver.FindElementByXPath("//div[@id='divSpecifyTagOrder_1']//label[text()='Keep Families Together:']//..//..//label[@class='checkbox col-md-3']//i");
+	}
+
+	public Element selectingTagsFromSortByTags(String tag) {
+		return driver.FindElementByXPath("//div[@id='tagsTree']//a[contains(text(),'"+tag+"')]");
+	}
+
+	public Element sortByTagsRadioButton() {
+		return driver.FindElementByXPath("//span[text()='Sort by Selected Tags: ']//.//..//i");
 	}
 	
 	public ProductionPage(Driver driver) {
@@ -15403,6 +15414,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 			}
 		}), Input.wait30);
 		getDAT_DATField(i).waitAndClick(10);
+		driver.waitForPageToBeReady();
 		getDAT_DATField(i).SendKeys("B" + Utility.dynamicNameAppender());
 		base.stepInfo(i + "th Dat section is filled");
 	}
@@ -17261,6 +17273,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 			getCheckBoxCheckedVerification(getGenrateTIFFRadioButton());
 		} else if ("pdf".equals(GenerateButton)) {
 			base.stepInfo("Verifying  Generate TIFF radio button in Component tab");
+			driver.waitForPageToBeReady();
 			getCheckBoxCheckedVerification(getGenratePDFRadioButton());
 		}
 		Select select = new Select(
@@ -18300,6 +18313,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	 */
 	public void extractFile() throws ZipException, InterruptedException {
 		driver.waitForPageToBeReady();
+		waitForFileDownload();
 		String name = getProduction().getText().trim();
 		String home = System.getProperty("user.home");
 		
@@ -19270,29 +19284,30 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		}
 	 /**
 		 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException 
 		 * @Description wait for generated zip file download
 		 */
-		public void waitForFileDownload() {
+		public void waitForFileDownload() throws InterruptedException {
 			String home = System.getProperty("user.home");
 			String name = getProduction().getText().trim();
 			File file = new File(home + "/Downloads/"+name+".zip");
-			int i = 1;
+			File file1 = new File(Input.fileDownloadLocation+name+".zip");
 			
-			while(!file.exists()) {
+			for(int i = 0; i < 30 ; i++) {
 				base.waitTime(1);
 				driver.waitForPageToBeReady();
 				if (file.exists()) {
 		            System.out.println(" file is Exists in pointed directory");
 		            base.passedStep(file+" file is Exists in pointed directory");
 		            break;
+				}else if(file1.exists()){
+					System.out.println(" file is Exists in pointed directory");
+		            base.passedStep(file+" file is Exists in pointed directory");
+		            break;
 				}else {
-		            System.out.println(" Does not Exists");
+					base.wait(1);
+					driver.waitForPageToBeReady();
 				}
-				if(i==30) {
-					base.failedStep("file not download failed");
-					break;
-				}
-				i++;
 			}
 			
 		}
@@ -19318,6 +19333,47 @@ if(getbtnContinueGenerate().isDisplayed()) {
 				base.failedStep("mp3 file not exists in this directory");
 			}
 			}
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param prefixId
+		 * @param suffixId
+		 * @param beginningBates
+		 * @param tagname
+		 * @throws InterruptedException
+		 */
+		public void fillingNumberingAndSortingPageWithSortByTags(String prefixId, String suffixId, String beginningBates,String tagname)
+				throws InterruptedException {
+
+			base.waitForElement(getBeginningBates());
+			driver.waitForPageToBeReady();
+			getBeginningBates().waitAndClick(10);
+			getBeginningBates().SendKeys(beginningBates);
+			num = getRandomNumber(2);
+
+			base.waitForElement(gettxtBeginningBatesIDPrefix());
+			gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
+
+			base.waitForElement(gettxtBeginningBatesIDSuffix());
+			gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
+
+			base.waitForElement(gettxtBeginningBatesIDMinNumLength());
+			gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
+			num1 = getRandomNumber(1);
+			System.out.println("Beginning BatesID Min Num Length=" + num1);
+			gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+
+			driver.scrollingToBottomofAPage();
+
+			sortByTagsRadioButton().waitAndClick(10);
+			base.stepInfo("sorting by tags option is selected");
+
+			selectingTagsFromSortByTags(tagname).waitAndClick(10);
+			keepFamiliesTogetherChkbox_sortByTags().waitAndClick(10);
+			base.waitForElement(getAddSelected());
+			getAddSelected().waitAndClick(10);
+			base.stepInfo("Keep families checkbox selected");
+
 		}
 
 }
