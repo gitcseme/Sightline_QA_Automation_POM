@@ -26980,6 +26980,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getMiniDocListDocIdText());
 		List<String> DocIDInMiniDocList = base.availableListofElements(getMiniDocListDocIdText());
+		driver.waitForPageToBeReady();
 		for (int i = 0; i < DocIDInMiniDocList.size(); i++) {
 			if (errorIcon().isElementAvailable(3)) {
 				base.waitForElement(getDocView_DocId(DocIDInMiniDocList.get(i)));
@@ -26998,6 +26999,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getMiniDocListDocIdText());
 		List<String> DocIDInMiniDocList = base.availableListofElements(getMiniDocListDocIdText());
+		driver.waitForPageToBeReady();
 		for (int i = 0; i < DocIDInMiniDocList.size(); i++) {
 			if (errorIcon().isElementAvailable(3)) {
 				String actualMsg=errorIcon().GetAttribute("data-content");

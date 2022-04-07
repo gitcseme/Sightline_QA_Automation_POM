@@ -524,7 +524,7 @@ public class BatchRedactionPage {
 	}
 	
 	public Element getRedactDisabledBtn() {
-		return driver.FindElementByXPath("//button[text()='Redact' and @disabled='disabled']]");
+		return driver.FindElementByXPath("//button[text()='Redact' and @disabled='disabled']");
 		}
 
 	public BatchRedactionPage(Driver driver) {
@@ -566,6 +566,7 @@ public class BatchRedactionPage {
 		
 		boolean flag=verifyAnalyzeBtn(searchname,null);
 		if(flag=false) {
+			driver.Navigate().refresh();
 		loadBatchRedactionPage(Input.mySavedSearch);
 		}
 		
@@ -670,6 +671,7 @@ public class BatchRedactionPage {
 		final int Bgcount = base.initialBgCount();
 		boolean flag=verifyAnalyzeBtn(searchname,null);
 		if(flag=false) {
+			driver.Navigate().refresh();
 		loadBatchRedactionPage(Input.mySavedSearch);
 		}
 		
@@ -1095,6 +1097,7 @@ public class BatchRedactionPage {
 		
 		boolean flag=verifyAnalyzeBtn(searchname,null);
 		if(flag=false) {
+			driver.Navigate().refresh();
 		loadBatchRedactionPage(Input.mySavedSearch);
 		}
 		
@@ -1516,6 +1519,7 @@ public class BatchRedactionPage {
 		
 		boolean flag=verifyAnalyzeBtn(searchname,null);
 		if(flag=false) {
+			driver.Navigate().refresh();
 		loadBatchRedactionPage(Input.mySavedSearch);
 		}
 		
@@ -1741,6 +1745,7 @@ public class BatchRedactionPage {
 		if(checkAnalyze) {
 		boolean flag=verifyAnalyzeBtn(searchname,newNode);
 		if(flag=false) {
+			driver.Navigate().refresh();
 		loadBatchRedactionPage(Input.mySavedSearch);
 		}
 		}
@@ -2064,6 +2069,7 @@ public class BatchRedactionPage {
 
 		boolean flag=verifyAnalyzeBtn(searchname,null);
 		if(flag=false) {
+			driver.Navigate().refresh();
 		loadBatchRedactionPage(Input.shareSearchDefaultSG);
 		}
 		
