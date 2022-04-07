@@ -245,6 +245,7 @@ public class BatchRedactionRegression3 {
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		driver.waitForPageToBeReady();
 		security.selectSecurityGroup(securityGroup);
+		driver.waitForPageToBeReady();
 		security.assignAnnotationToSG(layer);
 		security.assignRedactionTagtoSG(tagName);
 
@@ -432,7 +433,7 @@ public class BatchRedactionRegression3 {
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
 
 		// verify History status
-		batch.verifyBatchHistoryStatus(search);
+		batch.verifyHistoryStatus(search);
 
 		// Navigate to BAckGroundTAsk PAge
 		base.waitForElement(batch.getDocCountFromTable(search));
@@ -699,7 +700,7 @@ public class BatchRedactionRegression3 {
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
 
 		// verify History status
-		batch.verifyBatchHistoryStatus(search);
+		batch.verifyHistoryStatus(search);
 
 		// perform RollBack first time for the same search
 		batch.verifyRollback(search, "Yes");
@@ -708,7 +709,7 @@ public class BatchRedactionRegression3 {
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
 
 		// verify History status
-		batch.verifyBatchHistoryStatus(search);
+		batch.verifyHistoryStatus(search);
 
 		// perform RollBack Second time for the same search
 		batch.verifyRollback(search, "Yes");
@@ -1453,7 +1454,7 @@ public class BatchRedactionRegression3 {
 		driver.waitForPageToBeReady();
 
 		// verify Failed status
-		batch.verifyBatchHistoryStatus(searchName);
+		batch.verifyHistoryStatus(searchName);
 
 		String tooltipMsg = batch.getColorStatusToolTip(searchName).GetAttribute("data-content");
 		String expectedMsg = "Hard failure.  There may be partial redactions.  Please contact your administrator.";
@@ -1461,7 +1462,7 @@ public class BatchRedactionRegression3 {
 
 		// verify Doc count
 		String docCount = batch.getDocCountFromTable(searchName).getText();
-		base.compareTextViaContains(docCount, "0 /", docCount + " : is the docCount Displayed", "");
+		base.compareTextViaContains(docCount, "/", docCount + " : is the docCount Displayed", "");
 
 		base.selectsecuritygroup(Input.securityGroup);
 		login.logout();
@@ -1892,6 +1893,7 @@ public class BatchRedactionRegression3 {
 		int batchRedactionCount = docview.getRedactionCount(batchRedactCount, "Batch Redaction");
 
 		// perform ROLLBACK and view docs in DOCVIEW
+		driver.waitForPageToBeReady();
 		batch.loadBatchRedactionPage(searchName);
 		batch.verifyRollback(searchName, Input.yesButton);
 		session.ViewInDocView();
@@ -2746,17 +2748,21 @@ public class BatchRedactionRegression3 {
 		batch.VerifyBatchRedaction_ElementsDisplay(metadataSearch, true);
 
 		// check redact btn disabled for metadata search
-		base.waitForElement(batch.getRedactionTagDropDown());
+		base.waitForElement(batch.getCloseBtn());
+		driver.waitForPageToBeReady();
 		base.ValidateElement_Presence(batch.getRedactDisabledBtn(), "Disabled Redact Button");
 		base.stepInfo("Redact Button is Disabled for Metadata Search");
-
+		batch.getCloseBtn().waitAndClick(10);
+		
 		// perform Batch redaction and verify Status
 		batch.VerifyBatchRedaction_ElementsDisplay(conceptSearch, true);
 
 		// check redact btn disabled for conceptual search
-		base.waitForElement(batch.getRedactionTagDropDown());
+		base.waitForElement(batch.getCloseBtn());
+		driver.waitForPageToBeReady();
 		base.ValidateElement_Presence(batch.getRedactDisabledBtn(), "Disabled Redact Button");
 		base.stepInfo("Redact Button is disabled for Conceptual Search");
+		batch.getCloseBtn().waitAndClick(10);
 
 		login.logout();
 	}
@@ -2821,11 +2827,11 @@ public class BatchRedactionRegression3 {
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
-		login.switchProjectToEnglish();
 
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			login.switchProjectToEnglish();
 			login.logoutWithoutAssert();
 		}
 		try {

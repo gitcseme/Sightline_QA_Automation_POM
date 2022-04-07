@@ -98,7 +98,7 @@ public class BatchRedactionRegression {
 	@Test(groups = { "regression" }, priority = 1)
 	public void verifyBatchRedactYesPopup() throws InterruptedException {
 		// Login as a RMU
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		base.stepInfo("Test case Id:RPMXCON-53523");
 
 		// Create saved search
@@ -145,7 +145,7 @@ public class BatchRedactionRegression {
 	public void verifyBatchRedactNoPopup() throws InterruptedException {
 
 		// Login as a RMU
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Edit Profile Language to English.
 		login.editProfile("English - United States");
@@ -179,7 +179,7 @@ public class BatchRedactionRegression {
 	 */
 	@Test(groups = { "regression" }, priority = 3)
 	public void verifyBatchRedactHelpText() throws InterruptedException {
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		base.stepInfo("Test case Id:RPMXCON-53451");
 
 		// Create saved search
@@ -213,7 +213,7 @@ public class BatchRedactionRegression {
 	@Test(groups = { "regression" }, priority = 4)
 	public void verifySearchRollback() throws InterruptedException {
 
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		base.stepInfo("Test case Id:RPMXCON-53469");
 		base.stepInfo("RPMXCON-48808 Batch Redaction");
@@ -259,7 +259,7 @@ public class BatchRedactionRegression {
 	public void deleteSavedSearchAndRollback() throws InterruptedException {
 
 		// Login as a RMU
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		base.stepInfo("Test case Id:RPMXCON-53470");
 
 		// Delete Saved Search
@@ -1185,8 +1185,8 @@ public class BatchRedactionRegression {
 
 		login.logout();
 
-		// login as REV
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		// login as RMU
+		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		batch.verifyBatchReductionMenuFlow(assignName);
 
 		login.logout();
@@ -1697,10 +1697,11 @@ public class BatchRedactionRegression {
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
 		Reporter.setCurrentTestResult(result);
+
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
-			login.editProfile("English - United States");
+			login.switchProjectToEnglish();
 			login.logoutWithoutAssert();
 		}
 		login.closeBrowser();

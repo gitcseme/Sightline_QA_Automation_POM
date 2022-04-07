@@ -311,6 +311,7 @@ public class BatchRedactionRegression2 {
 
 		batch.verifyNodeAnalyseAndViewBtn(newNode, searchName, null, null);
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "No");
+		driver.waitForPageToBeReady();
 		base.waitForElement(batch.getCloseBtn());
 		batch.getCloseBtn().waitAndFind(10);
 
@@ -674,7 +675,7 @@ public class BatchRedactionRegression2 {
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
 
 		// verify History status
-		batch.verifyBatchHistoryStatus(searchName1);
+		batch.verifyHistoryStatus(searchName1);
 
 		// Delete Search
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
@@ -824,7 +825,7 @@ public class BatchRedactionRegression2 {
 		// will perform the batchRedaction action
 		batch.savedSearchBatchRedaction1(Input.defaultRedactionTag, searchName);
 		batch.getPopupYesBtn().Click();
-		batch.verifyBatchHistoryStatus(searchName);
+		batch.verifyHistoryStatus(searchName);
 
 		final int Bgcount = base.initialBgCount();
 		System.out.println(Bgcount);
@@ -1279,13 +1280,15 @@ public class BatchRedactionRegression2 {
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
+
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			login.editProfile("English - United States");
+			login.switchProjectToEnglish();
 			login.logoutWithoutAssert();
 
 		}
+
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 

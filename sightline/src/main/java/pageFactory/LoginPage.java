@@ -103,6 +103,11 @@ public class LoginPage {
 		return driver.FindElementByXPath("//span[@class='clsUserName']");
 	}
 
+	public Element getProjectLang() {
+		return driver.FindElementByXPath("//div[@class='project-context hidden-xs projclass']//span[text()='DE: Project:']");
+	
+	}
+	
 	public LoginPage(Driver driver) {
 
 		this.driver = driver;
@@ -606,5 +611,17 @@ public class LoginPage {
 		System.out.println("Logged In Username : " + username);
 		getSignoutMenu().waitAndClick(10);
 		return username;
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : switch Language to English
+	 */
+	public void switchProjectToEnglish() {
+		if(getProjectLang().isElementAvailable(3)) {
+		editProfile("English - United States");
+		}else {
+			System.out.println("Selected language : English");
+		}
 	}
 }
