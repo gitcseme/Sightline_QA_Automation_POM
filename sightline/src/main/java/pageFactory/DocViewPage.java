@@ -16646,6 +16646,7 @@ public class DocViewPage {
 	public void lastAppliedStamp(String icon) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodingStampLastIcon(icon));
+		getCodingStampLastIcon(icon).ScrollTo();
 		getCodingStampLastIcon(icon).waitAndClick(10);
 	}
 
@@ -17634,9 +17635,6 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_FamilyViewInDocView());
 		getDocView_FamilyViewInDocView().waitAndClick(3);
-
-		driver.waitForPageToBeReady();
-		driver.scrollPageToTop();
 
 //		String text2 = getDocView_CurrentDocId().getText();
 
