@@ -688,6 +688,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 		loginPage.logout();
@@ -699,6 +700,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 		loginPage.logout();
@@ -711,6 +713,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.familyDoc1);
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 		loginPage.logout();
@@ -723,6 +726,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 		loginPage.logout();
@@ -2558,7 +2562,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 *              'RPMXCON-50950' Require DA credentials
 	 */
 
-	//@Test(enabled = true, groups = { "regression" }, priority = 37)
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
 	public void verifyAfterImpersonatingThreadedDocumentsForSelectedDocsInMiniDocList() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);

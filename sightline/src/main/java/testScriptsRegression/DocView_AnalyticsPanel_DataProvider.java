@@ -1007,8 +1007,8 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @throws InterruptedException
 	 * @Stabilization - not done [We need doc with highlighted]
 	 */
-	// @Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
-	// }, priority = 14) // Doc are need to be ingested
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 14) // Doc are need to be
+																									// ingested
 	public void verifyNearDupeWindowToSeeDifferenceInTheDocs(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1030,14 +1030,14 @@ public class DocView_AnalyticsPanel_DataProvider {
 		if (executionURL.contains("pt")) {
 			documentToBeSelected = Input.nearDupeCompletedDocId;
 		} else {
-			documentToBeSelected = Input.threadData1;
+			documentToBeSelected = Input.highlightDoc1;
 		}
 		baseClass.stepInfo(
 				"Step 2 : Search for documents to get the near dupe documents and drag the result to shopping cart, select action as View in Doc View");
 		// Session search to doc view Coding Form
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewNearDupeDocumentsInDocView();
-
+		sessionSearch.basicContentSearch(Input.highlightedDocsQuery);
+		sessionSearch.ViewInDocView();
+		
 		baseClass.stepInfo("Step 3: View the document from mini doc list having near dupe documents");
 		driver.waitForPageToBeReady();
 		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
@@ -1081,7 +1081,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		String docidinchildwinodw = docViewPage.getDocView_NearDupe_DocID().getText().toString();
 		System.out.println(docidinchildwinodw);
 
-		String color = docViewPage.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		String color = docViewPage.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
 		String hex2 = Color.fromString(color).asHex();
 		System.out.println(hex2);
 		baseClass.passedStep(
@@ -1099,8 +1099,6 @@ public class DocView_AnalyticsPanel_DataProvider {
 				{ Input.pa1FullName, Input.pa1userName, Input.pa1password, "PA", "RMU" },
 				{ Input.pa1FullName, Input.pa1userName, Input.pa1password, "PA", "rev" } };
 	}
-
-	
 
 	/**
 	 * @Author : Steffy date: 20/01/2022 Modified date: NA Modified by: Mohan
