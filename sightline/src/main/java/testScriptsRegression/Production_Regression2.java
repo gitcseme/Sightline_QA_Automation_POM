@@ -23,6 +23,10 @@ import com.asprise.ocr.Ocr;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import net.sourceforge.tess4j.ITesseract;
+import net.sourceforge.tess4j.Tesseract1;
+import net.sourceforge.tess4j.TesseractException;
+import net.sourceforge.tess4j.util.LoadLibs;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
@@ -390,7 +394,7 @@ public class Production_Regression2 {
 		page.selectPrivDocsInTiffSection(tagname);
 		page.navigateToNextSection();
 
-		base.stepInfo_DataBase("Navigating back to Production home page");
+		base.stepInfo("Navigating back to Production home page");
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		driver.Navigate().refresh();
 
@@ -625,6 +629,7 @@ public class Production_Regression2 {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		base = new BaseClass(driver);
+		driver.Navigate().refresh();
 		base.SelectDefaultSecurityGrp(Input.rmu1userName);
 		loginPage.logout();
 	}
@@ -831,14 +836,14 @@ public class Production_Regression2 {
 		// document for pdf section
 		page = new ProductionPage(driver);
 		String productionname2 = "p" + Utility.dynamicNameAppender();
-		beginningBates = page.getRandomNumber(2);
+		String beginningBates3 = page.getRandomNumber(2);
 		page.addANewProduction(productionname2);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingPDFSection(tagname1, Input.tagNamePrev);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates3);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname1);
 		page.navigateToNextSection();
@@ -856,14 +861,14 @@ public class Production_Regression2 {
 		// document for tiff section
 		page = new ProductionPage(driver);
 		String productionname3 = "p" + Utility.dynamicNameAppender();
-		String beginningBates2 = page.getRandomNumber(2);
+		String beginningBates4 = page.getRandomNumber(2);
 		page.addANewProduction(productionname3);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.selectPrivDocsInTiffSection(tagname1);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates2);
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates4);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname1);
 		page.navigateToNextSection();
@@ -2507,17 +2512,16 @@ public class Production_Regression2 {
 		driver.waitForPageToBeReady();
 		String home= System.getProperty("user.home");
 		page.extractFile();
-		Ocr.setUp();
-		Ocr ocr = new Ocr();
-		ocr.startEngine("eng", Ocr.SPEED_FASTEST);
+		File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".SS.tiff");
+	       
+	     ITesseract instance = new Tesseract1();
+	     File tessDataFolder = LoadLibs.extractTessResources("tessdata");
+	     instance.setDatapath(tessDataFolder.getPath());
 
-		String Tifffile = ocr.recognize(
-				new File[] { new File(
-						home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".SS.tiff") },
-				Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
-		System.out.println(Tifffile);
+	    String result = instance.doOCR(imageFile);
+		System.out.println(result);
 
-		if (Tifffile.contains(foldername)) {
+		if (result.contains(foldername)) {
 			base.passedStep("Workproduct  is displayed as expected");
 		} else {
 			base.failedStep("Workproduct is not displayed as expected");
@@ -2737,6 +2741,7 @@ public class Production_Regression2 {
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		driver.waitForPageToBeReady();
 		String home= System.getProperty("user.home");
+		driver.waitForPageToBeReady();
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		File dir = new File(home + "/Downloads/VOL0001/Natives/0001/");
@@ -2988,25 +2993,25 @@ public class Production_Regression2 {
 		page.extractFile();
 
 		String home = System.getProperty("user.home");
-		Ocr.setUp();
-		Ocr ocr = new Ocr();
-		ocr.startEngine("eng", Ocr.SPEED_FASTEST);
+		
 
-		for (int i = firstFile; i < lastFile; i++) {
-			String Tifffile = ocr.recognize(
-					new File[] {
-							new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff") },
-					Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
-			System.out.println(Tifffile);
-			if (Tifffile.contains(Text)) {
-				base.passedStep("Placeholder Text is displayed for particular document");
-			} else {
-				base.failedStep(" verification failed");
-			}
-			
+		for(int i=firstFile; i<lastFile ;i++) {
+		
+		File imageFile = new File(home+"/Downloads/VOL0001/Images/0001/"+prefixID+i+suffixID+".tiff");
+	     
+	         ITesseract instance = new Tesseract1();
+	         File tessDataFolder = LoadLibs.extractTessResources("tessdata");
+	         instance.setDatapath(tessDataFolder.getPath());
+	            String result = instance.doOCR(imageFile);
+	            System.out.println(result);
+	            if (result.contains(Text)) {
+					base.passedStep(Text+" is displayed in "+prefixID+i+suffixID+".tiff"+" file as expected");
+				} else {
+					base.failedStep(Text+" verification failed");
+				}
+	       
 		}
 
-		ocr.stopEngine();
 		for (int i = firstFile; i < lastFile; i++) {
 			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".doc");
 
@@ -3129,27 +3134,21 @@ public class Production_Regression2 {
 	
 	
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
-		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			System.out.println("Executed :" + result.getMethod().getMethodName());
-			loginPage.logoutWithoutAssert();
-		}
-		try {
-			loginPage.quitBrowser();
-		} catch (Exception e) {
-			loginPage.quitBrowser();
-		}
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+	base = new BaseClass(driver);
+	Reporter.setCurrentTestResult(result);
+	if (ITestResult.FAILURE == result.getStatus()) {
+	Utility baseClass = new Utility(driver);
+	baseClass.screenShot(result);
 	}
-
+	loginPage.quitBrowser();
+	}
 	@AfterClass(alwaysRun = true)
-	public void close() {
-		try {
-			// LoginPage.clearBrowserCache();
 
-		} catch (Exception e) {
-			System.out.println("Sessions already closed");
-		}
+	public void close() {
+	System.out.println("******TEST CASES FOR PRODUCTION EXECUTED******");
+
+
+
 	}
 }

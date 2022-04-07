@@ -2406,7 +2406,7 @@ public class ProductionPage {
 	}
 
 	public Element getErrorMsgText() {
-		return driver.FindElementByXPath("//span//h1");
+		return driver.FindElementByXPath("//div[@id='content']//h2");
 	}
 
 	public Element getDocList() {
@@ -15403,6 +15403,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 			}
 		}), Input.wait30);
 		getDAT_DATField(i).waitAndClick(10);
+		driver.waitForPageToBeReady();
 		getDAT_DATField(i).SendKeys("B" + Utility.dynamicNameAppender());
 		base.stepInfo(i + "th Dat section is filled");
 	}
@@ -17261,6 +17262,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 			getCheckBoxCheckedVerification(getGenrateTIFFRadioButton());
 		} else if ("pdf".equals(GenerateButton)) {
 			base.stepInfo("Verifying  Generate TIFF radio button in Component tab");
+			driver.waitForPageToBeReady();
 			getCheckBoxCheckedVerification(getGenratePDFRadioButton());
 		}
 		Select select = new Select(
@@ -18300,6 +18302,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	 */
 	public void extractFile() throws ZipException, InterruptedException {
 		driver.waitForPageToBeReady();
+		waitForFileDownload();
 		String name = getProduction().getText().trim();
 		String home = System.getProperty("user.home");
 		
@@ -19270,29 +19273,30 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		}
 	 /**
 		 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException 
 		 * @Description wait for generated zip file download
 		 */
-		public void waitForFileDownload() {
+		public void waitForFileDownload() throws InterruptedException {
 			String home = System.getProperty("user.home");
 			String name = getProduction().getText().trim();
 			File file = new File(home + "/Downloads/"+name+".zip");
-			int i = 1;
+			File file1 = new File(Input.fileDownloadLocation+name+".zip");
 			
-			while(!file.exists()) {
+			for(int i = 0; i < 30 ; i++) {
 				base.waitTime(1);
 				driver.waitForPageToBeReady();
 				if (file.exists()) {
 		            System.out.println(" file is Exists in pointed directory");
 		            base.passedStep(file+" file is Exists in pointed directory");
 		            break;
+				}else if(file1.exists()){
+					System.out.println(" file is Exists in pointed directory");
+		            base.passedStep(file+" file is Exists in pointed directory");
+		            break;
 				}else {
-		            System.out.println(" Does not Exists");
+					base.wait(1);
+					driver.waitForPageToBeReady();
 				}
-				if(i==30) {
-					base.failedStep("file not download failed");
-					break;
-				}
-				i++;
 			}
 			
 		}

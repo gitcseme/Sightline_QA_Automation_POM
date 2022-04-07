@@ -1641,9 +1641,10 @@ public class DocListPage {
 
 	public void bulkTagExisting(final String tagname) throws AWTException, InterruptedException {
 
-		try {
+		if(getPureHitAddButton().isDisplayed()) {
 			getPureHitAddButton().waitAndClick(10);
-		} catch (Exception e) {
+		}else {
+	driver.waitForPageToBeReady();
 			// System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 			Reporter.log("Pure hit block already moved to action panel", true);
